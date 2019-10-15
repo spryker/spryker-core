@@ -14,7 +14,7 @@
         <property name="status" type="int"/>
         <property name="code" type="string"/>
         <property name="detail" type="string"/>
-        <property name="parameters" type="array"/>
+        <property name="parameters" type="array" singular="parameters"/>
         <property name="errorIdentifier" type="string"/>
     </transfer>
 
@@ -83,7 +83,7 @@
 
     <transfer name="RestPaymentMethod">
         <property name="paymentMethodName" type="string"/>
-        <property name="requiredRequestData" type="array"/>
+        <property name="requiredRequestData" type="array" singular="requiredRequestData"/>
     </transfer>
 
     <transfer name="RestShipmentMethod">
@@ -114,6 +114,8 @@
         <property name="isSuccess" type="bool"/>
         <property name="errors" type="CheckoutError[]" singular="error"/>
         <property name="saveOrder" type="SaveOrder" deprecated="Use SaveOrderTransfer directly/decoupled from the checkout response"/>
+        <property name="redirectUrl" type="string"/>
+        <property name="isExternalRedirect" type="bool"/>
     </transfer>
 
     <transfer name="SaveOrder">
@@ -123,10 +125,11 @@
     <transfer name="CheckoutError">
         <property name="errorCode" type="int"/>
         <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
     <transfer name="Addresses">
-        <property name="addresses" type="Address[]" singular="Address"/>
+        <property name="addresses" type="Address[]" singular="address"/>
     </transfer>
 
     <transfer name="Address">
@@ -147,7 +150,7 @@
     </transfer>
 
     <transfer name="ShipmentMethodsCollection">
-        <property name="shipmentMethods" type="ShipmentMethods[]" singular="ShipmentMethods"/>
+        <property name="shipmentMethods" type="ShipmentMethods[]" singular="shipmentMethods"/>
     </transfer>
 
     <transfer name="PaymentProviderCollection">
@@ -169,11 +172,15 @@
 
     <transfer name="Quote">
         <property name="customer" type="Customer"/>
-        <property name="items" type="Item[]"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
+        <property name="uuid" type="string"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="Item">
         <property name="sku" type="string"/>
+        <property name="shipment" type="Shipment"/>
     </transfer>
 
     <transfer name="Customer">
@@ -187,6 +194,29 @@
     <transfer name="CustomerResponse">
         <property name="hasCustomer" type="bool"/>
         <property name="customerTransfer" type="Customer"/>
+    </transfer>
+
+    <transfer name="CheckoutData">
+    </transfer>
+
+    <transfer name="RestErrorCollection">
+        <property name="restErrors" type="RestErrorMessage[]" singular="restError"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="status" type="int"/>
+        <property name="code" type="string"/>
+        <property name="detail" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="errors" type="QuoteError[]" singular="error"/>
+        <property name="quoteTransfer" type="Quote"/>
+    </transfer>
+
+    <transfer name="QuoteError">
+        <property name="message" type="string"/>
     </transfer>
 
 </transfers>

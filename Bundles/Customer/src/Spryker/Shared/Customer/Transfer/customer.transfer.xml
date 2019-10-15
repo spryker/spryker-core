@@ -5,6 +5,8 @@
 
     <transfer name="Mail">
         <property name="customer" type="Customer"/>
+        <property name="type" type="string"/>
+        <property name="locale" type="Locale"/>
     </transfer>
 
     <transfer name="Address">
@@ -36,7 +38,7 @@
     </transfer>
 
     <transfer name="Addresses">
-        <property name="addresses" type="Address[]" singular="Address"/>
+        <property name="addresses" type="Address[]" singular="address"/>
     </transfer>
 
     <transfer name="Customer">
@@ -51,8 +53,8 @@
         <property name="salutation" type="string"/>
         <property name="password" type="string"/>
         <property name="newPassword" type="string"/>
-        <property name="billingAddress" type="Address[]"/>
-        <property name="shippingAddress" type="Address[]"/>
+        <property name="billingAddress" type="Address[]" singular="billingAddress"/>
+        <property name="shippingAddress" type="Address[]" singular="shippingAddress"/>
         <property name="addresses" type="Addresses" singular="address"/>
         <property name="defaultBillingAddress" type="string"/>
         <property name="defaultShippingAddress" type="string"/>
@@ -89,12 +91,13 @@
 
     <transfer name="Message">
         <property name="value" type="string"/>
-        <property name="parameters" type="array"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
     <transfer name="Order">
         <property name="fkCustomer" type="int"/>
         <property name="customer" type="Customer"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="CustomerCollection">
@@ -107,6 +110,9 @@
         <property name="isAddressSavingSkipped" type="bool" deprecated="Use address transfer property (shippingAddress.isAddressSavingSkipped) instead."/>
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="billingAddress" type="Address"/>
+        <property name="customer" type="Customer"/>
+        <property name="billingSameAsShipping" type="bool"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="Item">
@@ -115,5 +121,50 @@
 
     <transfer name="Shipment">
         <property name="shippingAddress" type="Address"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="saveOrder" type="SaveOrder"/>
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="errorCode" type="int"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="previousPage" type="int"/>
+    </transfer>
+
+    <transfer name="Country">
+        <property name="idCountry" type="int"/>
+        <property name="name" type="string"/>
+        <property name="iso2Code" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="Button">
+        <property name="url" type="string"/>
+        <property name="title" type="string"/>
+        <property name="defaultOptions" type="array" singular="defaultOptions"/>
+        <property name="customOptions" type="array" singular="customOptions"/>
+    </transfer>
+
+    <transfer name="SequenceNumberSettings">
+        <property name="name" type="string"/>
+        <property name="prefix" type="string"/>
     </transfer>
 </transfers>

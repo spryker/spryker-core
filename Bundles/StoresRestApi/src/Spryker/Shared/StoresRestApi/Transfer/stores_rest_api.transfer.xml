@@ -35,4 +35,30 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="Country">
+        <property name="iso2Code" type="string"/>
+    </transfer>
+
+    <transfer name="Currency">
+    </transfer>
+
+    <transfer name="Store">
+        <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
+        <property name="defaultCurrencyIsoCode" type="string"/>
+        <property name="timezone" type="string"/>
+        <property name="name" type="string"/>
+        <property name="countries" type="array" singular="country"/>
+        <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode"/>
+    </transfer>
+
+    <transfer name="CountryCollection">
+        <property name="countries" type="Country[]" singular="countries"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string"/>
+        <property name="status" type="int"/>
+        <property name="detail" type="string"/>
+    </transfer>
+
 </transfers>
