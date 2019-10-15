@@ -34,6 +34,8 @@ SKU,SKU
 "You can add slots on this page. During slot creation you can assign products from a catalog to this slot one by one, import CSV file or assign several categories.","You can add slots on this page. During slot creation you can assign products from a catalog to this slot one by one, import CSV file or assign several categories."
 "Configurable bundle template with id ""%id%"" was not found.","Configurable bundle template with id ""%id%"" was not found."
 "Configurable bundle template slot with id ""%id%"" was not found.","Configurable bundle template slot with id ""%id%"" was not found."
+"Configurable bundle template slot was successfully created.","Configurable bundle template slot was successfully created."
+"Configurable bundle template slot was successfully updated.","Configurable bundle template slot was successfully updated."
 "Configurable bundle template slot was successfully deleted.","Configurable bundle template slot was successfully deleted."
 "Create Slot","Create Slot"
 "Edit Slot","Edit Slot"

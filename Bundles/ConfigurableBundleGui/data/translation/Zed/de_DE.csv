@@ -34,6 +34,8 @@ SKU,SKU
 "You can add slots on this page. During slot creation you can assign products from a catalog to this slot one by one, import CSV file or assign several categories.","Sie können Slots auf dieser Seite hinzufügen. Während der Slot-Erstellung können Sie diesem Slot nacheinander Produkte aus einem Katalog zuweisen, eine CSV-Datei importieren oder mehrere Kategorien zuweisen."
 "Configurable bundle template with id ""%id%"" was not found.","Vorlage des konfigurierbaren Bündels mit ID ""%id%"" wurde nicht gefunden."
 "Configurable bundle template slot with id ""%id%"" was not found.","Vorlagenslot des konfigurierbaren Bündels mit ID ""%id%"" wurde nicht gefunden."
+"Configurable bundle template slot was successfully created.","Vorlagenslot des konfigurierbaren Bündels wurde erfolgreich erstellt."
+"Configurable bundle template slot was successfully updated.","Vorlagenslot des konfigurierbaren Bündels wurde erfolgreich aktualisiert."
 "Configurable bundle template slot was successfully deleted.","Vorlagenslot des konfigurierbaren Bündels wurde erfolgreich gelöscht."
 "Create Slot","Slot erstellen"
 "Edit Slot","Slot bearbeiten"

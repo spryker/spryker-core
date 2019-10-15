@@ -48,7 +48,7 @@ class ProductListAggregateFormDataProviderExpander implements ProductListAggrega
         $productListTransfer = $productListAggregateFormTransfer->getProductList();
 
         if (!$productListTransfer->getProductListProductConcreteRelation()) {
-            $productListProductConcreteRelationTransfer = new ProductListProductConcreteRelationTransfer();
+            $productListTransfer->setProductListProductConcreteRelation(new ProductListProductConcreteRelationTransfer());
         }
 
         $productListCategoryRelationTransfer = $this->productListCategoryRelationFormDataProvider

@@ -40,6 +40,8 @@ class SlotController extends AbstractController
     protected const ROUTE_EDIT_TEMPLATE = '/configurable-bundle-gui/template/edit';
 
     protected const ERROR_MESSAGE_SLOT_NOT_FOUND = 'Configurable bundle template slot with id "%id%" was not found.';
+    protected const SUCCESS_MESSAGE_SLOT_CREATED = 'Configurable bundle template slot was successfully created.';
+    protected const SUCCESS_MESSAGE_SLOT_UPDATED = 'Configurable bundle template slot was successfully updated.';
     protected const SUCCESS_MESSAGE_SLOT_DELETED = 'Configurable bundle template slot was successfully deleted.';
 
     protected const SLOTS_TAB_ANCHOR = '#tab-content-slots';
@@ -174,6 +176,8 @@ class SlotController extends AbstractController
                     static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT => $idConfigurableBundleTemplateSlot,
                 ]);
 
+                $this->addSuccessMessage(static::SUCCESS_MESSAGE_SLOT_CREATED);
+
                 return $this->redirectResponse($redirectUrl);
             }
 
@@ -241,6 +245,8 @@ class SlotController extends AbstractController
                 $redirectUrl = Url::generate(static::ROUTE_EDIT_TEMPLATE_SLOT, [
                     static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT => $idConfigurableBundleTemplateSlot,
                 ]);
+
+                $this->addSuccessMessage(static::SUCCESS_MESSAGE_SLOT_UPDATED);
 
                 return $this->redirectResponse($redirectUrl);
             }
