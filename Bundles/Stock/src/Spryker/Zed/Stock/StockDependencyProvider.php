@@ -49,7 +49,6 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function providePersistenceLayerDependencies(Container $container): Container
     {
-        $container = parent::providePersistenceLayerDependencies($container);
         $container = $this->addStorePropelQuery($container);
 
         return $container;
