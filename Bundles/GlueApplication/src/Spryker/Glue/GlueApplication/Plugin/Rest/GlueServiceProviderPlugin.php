@@ -25,15 +25,7 @@ class GlueServiceProviderPlugin extends AbstractPlugin implements ServiceProvide
      */
     public function register(Application $app): void
     {
-        $eventDispatcher = $this->getEventDispatcher($app);
 
-        $eventDispatcher->addListener(
-            KernelEvents::CONTROLLER,
-            [
-                $this->getFactory()->createRestControllerListener(),
-                'onKernelController',
-            ]
-        );
     }
 
     /**
@@ -43,6 +35,15 @@ class GlueServiceProviderPlugin extends AbstractPlugin implements ServiceProvide
      */
     public function boot(Application $app): void
     {
+        $eventDispatcher = $this->getEventDispatcher($app);
+
+        $eventDispatcher->addListener(
+            KernelEvents::CONTROLLER,
+            [
+                $this->getFactory()->createRestControllerListener(),
+                'onKernelController',
+            ]
+        );
     }
 
     /**

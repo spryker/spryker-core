@@ -8,10 +8,16 @@
 namespace Spryker\Glue\Kernel\Controller;
 
 use Spryker\Glue\Kernel\ClassResolver\Factory\FactoryResolver;
+use Spryker\Shared\Storage\StorageConstants;
+use Spryker\Yves\Storage\Controller\StorageCacheControllerTrait;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 abstract class AbstractController
 {
+    use StorageCacheControllerTrait;
+
+    public const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE;
+
     /**
      * @var \Silex\Application|\Spryker\Service\Container\ContainerInterface
      */
@@ -27,6 +33,7 @@ abstract class AbstractController
      */
     public function initialize()
     {
+        $this->initializeStorageCacheStrategy(static::STORAGE_CACHE_STRATEGY);
     }
 
     /**
