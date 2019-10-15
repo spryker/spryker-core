@@ -7,21 +7,22 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchronization;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Shared\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
 
 /**
- * @deprecated Use ProductAbstractPackagingSynchronizationDataBulkPlugin instead.
- *
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Communication\ProductPackagingUnitStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig getConfig()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Persistence\ProductPackagingUnitStorageRepositoryInterface getRepository()
  */
-class ProductAbstractPackagingSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
+class ProductAbstractPackagingSynchronizationDataBulkPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -33,16 +34,20 @@ class ProductAbstractPackagingSynchronizationDataPlugin extends AbstractPlugin i
 
     /**
      * {@inheritDoc}
+     * - Returns SynchronizationDataTransfer collection.
      *
      * @api
      *
+     * @param int $offset
+     * @param int $limit
      * @param int[] $ids
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getData(array $ids = []): array
+    public function getData(int $offset, int $limit, array $ids = []): array
     {
-        $productAbstractPackagingStorageEntities = $this->findProductAbstractPackagingStorageEntities($ids);
+        $filterTransfer = $this->createFilterTransfer($offset, $limit);
+        $productAbstractPackagingStorageEntities = $this->findProductAbstractPackagingStorageEntities($filterTransfer, $ids);
 
         return $this->getFactory()
             ->createProductAbstractPackagingStorageMapper()
@@ -52,20 +57,8 @@ class ProductAbstractPackagingSynchronizationDataPlugin extends AbstractPlugin i
     }
 
     /**
-     * @param int[] $ids
+     * {@inheritDoc}
      *
-     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
-     */
-    protected function findProductAbstractPackagingStorageEntities(array $ids): array
-    {
-        if ($ids === []) {
-            return $this->getRepository()->findAllProductAbstractPackagingStorageEntities();
-        }
-
-        return $this->getRepository()->findProductAbstractPackagingStorageEntitiesByProductAbstractIds($ids);
-    }
-
-    /**
      * @api
      *
      * @return bool
@@ -76,6 +69,8 @@ class ProductAbstractPackagingSynchronizationDataPlugin extends AbstractPlugin i
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return array
@@ -86,6 +81,8 @@ class ProductAbstractPackagingSynchronizationDataPlugin extends AbstractPlugin i
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -96,6 +93,8 @@ class ProductAbstractPackagingSynchronizationDataPlugin extends AbstractPlugin i
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string|null
@@ -103,5 +102,33 @@ class ProductAbstractPackagingSynchronizationDataPlugin extends AbstractPlugin i
     public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getConfig()->getProductAbstractPackagingSynchronizationPoolName();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
+     */
+    protected function findProductAbstractPackagingStorageEntities(FilterTransfer $filterTransfer, array $ids): array
+    {
+        if ($ids === []) {
+            return $this->getFacade()->getAllProductAbstractPackagingStorageByFilter($filterTransfer);
+        }
+
+        return $this->getFacade()->getProductAbstractPackagingStorageEntitiesByFilter($filterTransfer, $ids);
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\FilterTransfer
+     */
+    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
+    {
+        return (new FilterTransfer())
+            ->setOffset($offset)
+            ->setLimit($limit);
     }
 }

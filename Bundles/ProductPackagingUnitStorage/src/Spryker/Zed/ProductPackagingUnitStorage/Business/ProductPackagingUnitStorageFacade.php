@@ -94,4 +94,33 @@ class ProductPackagingUnitStorageFacade extends AbstractFacade implements Produc
     {
         return $this->getRepository()->getProductPackagingLeadProductByFilter($filterTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
+     */
+    public function getAllProductAbstractPackagingStorageByFilter(FilterTransfer $filterTransfer): array
+    {
+        return $this->getRepository()->getAllProductAbstractPackagingStorageByFilter($filterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
+     */
+    public function getProductAbstractPackagingStorageEntitiesByFilter(FilterTransfer $filterTransfer, array $productAbstractIds): array
+    {
+        return $this->getRepository()->getProductAbstractPackagingStorageEntitiesByFilter($filterTransfer, $productAbstractIds);
+    }
 }

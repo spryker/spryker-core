@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface ProductPackagingUnitStorageRepositoryInterface
 {
     /**
+     * @deprecated Use getProductAbstractPackagingStorageEntitiesByFilter instead.
+     *
      * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
@@ -26,6 +28,8 @@ interface ProductPackagingUnitStorageRepositoryInterface
     public function findPackagingProductsByProductAbstractId(int $idProductAbstract): array;
 
     /**
+     * @deprecated Use getAllProductAbstractPackagingStorageByFilter instead.
+     *
      * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
     public function findAllProductAbstractPackagingStorageEntities(): array;
@@ -53,4 +57,19 @@ interface ProductPackagingUnitStorageRepositoryInterface
      * @return \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer[]
      */
     public function getProductPackagingLeadProductByFilter(FilterTransfer $filterTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
+     */
+    public function getAllProductAbstractPackagingStorageByFilter(FilterTransfer $filterTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
+     */
+    public function getProductAbstractPackagingStorageEntitiesByFilter(FilterTransfer $filterTransfer, array $productAbstractIds): array;
 }
