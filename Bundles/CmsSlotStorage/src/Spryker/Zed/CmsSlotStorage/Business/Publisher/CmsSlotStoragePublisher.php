@@ -68,19 +68,21 @@ class CmsSlotStoragePublisher implements CmsSlotStoragePublisherInterface
         $cmsSlotStorageEntities = $this->getMappedCmsSlotStorageEntitiesByKeys($cmsSlotStorageEntities);
 
         foreach ($cmsSlotTransfers as $cmsSlotTransfer) {
-            if (!$cmsSlotTransfer->getIsActive() && isset($cmsSlotStorageEntities[$cmsSlotTransfer->getKey()])) {
-                $idCmsSlotStorage = $cmsSlotStorageEntities[$cmsSlotTransfer->getKey()]->getIdCmsSlotStorage();
-                $this->cmsSlotStorageEntityManager->deleteCmsSlotStorageById($idCmsSlotStorage);
+            if ($cmsSlotTransfer->getIsActive()) {
+                $this->cmsSlotStorageEntityManager->saveCmsSlotStorage(
+                    $this->cmsSlotStorageMapper->mapCmsSlotTransferToCmsSlotStorageTransfer(
+                        new CmsSlotStorageTransfer(),
+                        $cmsSlotTransfer
+                    )
+                );
 
                 continue;
             }
 
-            $this->cmsSlotStorageEntityManager->saveCmsSlotStorage(
-                $this->cmsSlotStorageMapper->mapCmsSlotTransferToCmsSlotStorageTransfer(
-                    new CmsSlotStorageTransfer(),
-                    $cmsSlotTransfer
-                )
-            );
+            if (isset($cmsSlotStorageEntities[$cmsSlotTransfer->getKey()])) {
+                $idCmsSlotStorage = $cmsSlotStorageEntities[$cmsSlotTransfer->getKey()]->getIdCmsSlotStorage();
+                $this->cmsSlotStorageEntityManager->deleteCmsSlotStorageById($idCmsSlotStorage);
+            }
         }
     }
 
