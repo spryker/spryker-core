@@ -81,12 +81,12 @@ class PermissionContextProviderTest extends Unit
     {
         /** @var \Spryker\Zed\QuoteApproval\QuoteApprovalConfig $quoteApprovalConfigMock */
         $quoteApprovalConfigMock = $this->getMockBuilder(QuoteApprovalZedConfig::class)
-            ->setMethods(['isPermissionCalculationIncludeShipment'])
+            ->setMethods(['isShipmentPriceIncludedInQuoteApprovalPermissionCheck'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $quoteApprovalConfigMock
-            ->method('isPermissionCalculationIncludeShipment')
+            ->method('isShipmentPriceIncludedInQuoteApprovalPermissionCheck')
             ->willReturn($isPermissionCalculationIncludeShipment);
 
         return $quoteApprovalConfigMock;
