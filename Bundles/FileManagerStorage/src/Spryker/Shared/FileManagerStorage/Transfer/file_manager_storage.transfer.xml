@@ -27,4 +27,9 @@
         <property name="locale" type="string"/>
         <property name="key" type="string"/>
     </transfer>
+
+    <transfer name="Filter">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+    </transfer>
 </transfers>

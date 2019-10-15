@@ -13,6 +13,7 @@
         <property name="voucherDiscounts" type="Discount[]"/>
         <property name="items" type="Item[]"/>
         <property name="incomingItems" type="Item[]" singular="incomingItem"/>
+        <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
     </transfer>
 
     <transfer name="Item">
@@ -22,7 +23,14 @@
         <property name="sourceUnitNetPrice" type="int"/>
         <property name="offerDiscount" type="int"/>
         <property name="offerFee" type="int"/>
-        <property name="stock" type="decimal"/>
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="grandTotal" type="int"/>
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="grandTotal" type="int"/>
     </transfer>
 
 </transfers>

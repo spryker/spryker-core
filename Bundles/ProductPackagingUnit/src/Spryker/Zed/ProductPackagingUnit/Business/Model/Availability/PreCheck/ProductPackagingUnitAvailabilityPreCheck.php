@@ -37,7 +37,7 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
      */
     protected function isPackagingUnitLeadProductSellable(ItemTransfer $item, iterable $items, StoreTransfer $storeTransfer): bool
     {
-        $itemLeadProductSku = $item->getAmountLeadProduct()->getProduct()->getSku();
+        $itemLeadProductSku = $item->getAmountLeadProduct()->getSku();
         $accumulatedItemLeadProductQuantity = $this->getAccumulatedQuantityForLeadProduct($items, $itemLeadProductSku);
 
         return $this->isProductSellableForStore(
@@ -66,7 +66,7 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
                 continue;
             }
 
-            if ($item->getAmountLeadProduct()->getProduct()->getSku() === $leadProductSku) { // Item in cart has the searched lead product
+            if ($item->getAmountLeadProduct()->getSku() === $leadProductSku) { // Item in cart has the searched lead product
                 $quantity = $quantity->add($item->getAmount());
             }
         }

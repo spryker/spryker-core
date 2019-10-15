@@ -179,9 +179,9 @@ class BundledProductAvailabilityTable extends AbstractTable
             $result[] = [
                 AvailabilityQueryContainer::CONCRETE_SKU => $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
                 AvailabilityQueryContainer::CONCRETE_NAME => $productItem[AvailabilityQueryContainer::CONCRETE_NAME],
-                AvailabilityQueryContainer::CONCRETE_AVAILABILITY => $productItem[AvailabilityQueryContainer::CONCRETE_AVAILABILITY] ? $productItem[AvailabilityQueryContainer::CONCRETE_AVAILABILITY] : 0,
-                AvailabilityQueryContainer::STOCK_QUANTITY => $productItem[AvailabilityQueryContainer::STOCK_QUANTITY] ? $productItem[AvailabilityQueryContainer::STOCK_QUANTITY] : 0,
-                AvailabilityQueryContainer::RESERVATION_QUANTITY => $this->calculateReservation($productItem)->toString(),
+                AvailabilityQueryContainer::CONCRETE_AVAILABILITY => $this->getConcreteAvailability($productItem)->trim(),
+                AvailabilityQueryContainer::STOCK_QUANTITY => $this->getStock($productItem)->trim(),
+                AvailabilityQueryContainer::RESERVATION_QUANTITY => $this->calculateReservation($productItem)->trim(),
                 SpyProductBundleTableMap::COL_QUANTITY => $productItem[static::COL_BUNDLED_ITEMS],
                 AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => $neverOutOfStockFlag,
                 static::TABLE_COL_ACTION => $this->createEditButton($productItem),
@@ -218,8 +218,28 @@ class BundledProductAvailabilityTable extends AbstractTable
     {
         $reservation = $this->omsFacade->getReservationsFromOtherStores($productItem[AvailabilityQueryContainer::CONCRETE_SKU], $this->storeTransfer);
 
-        return (new Decimal($productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY]))
+        return (new Decimal($productItem[AvailabilityQueryContainer::RESERVATION_QUANTITY] ?? 0))
             ->add($reservation);
+    }
+
+    /**
+     * @param array $productItem
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    protected function getStock(array $productItem): Decimal
+    {
+        return (new Decimal($productItem[AvailabilityQueryContainer::STOCK_QUANTITY] ?? 0));
+    }
+
+    /**
+     * @param array $productItem
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    protected function getConcreteAvailability(array $productItem): Decimal
+    {
+        return (new Decimal($productItem[AvailabilityQueryContainer::CONCRETE_AVAILABILITY] ?? 0));
     }
 
     /**

@@ -15,4 +15,25 @@
         <property name="idWhitelists" type="array"/>
     </transfer>
 
+    <transfer name="Customer">
+        <property name="customerProductListCollection" type="CustomerProductListCollection"/>
+    </transfer>
+
+    <transfer name="CustomerProductListCollection">
+        <property name="whitelistIds" type="int[]" singular="whitelistId"/>
+        <property name="blacklistIds" type="int[]" singular="blacklistId"/>
+    </transfer>
+
+    <transfer name="ProductView">
+        <property name="attributeMap" type="AttributeMapStorage"/>
+        <property name="availableAttributes" type="array" singular="availableAttribute"/>
+        <property name="selectedAttributes" type="array" singular="selectedAttribute"/>
+    </transfer>
+
+    <transfer name="AttributeMapStorage">
+        <property name="productConcreteIds" type="array"/>
+        <property name="attributeVariants" type="array"/>
+        <property name="superAttributes" type="array"/>
+    </transfer>
+
 </transfers>

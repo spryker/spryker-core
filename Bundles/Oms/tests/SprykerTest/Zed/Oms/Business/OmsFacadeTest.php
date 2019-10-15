@@ -140,17 +140,6 @@ class OmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testReservedItemsByNonExistentSku(): void
-    {
-        $omsFacade = $this->createOmsFacade();
-        $items = $omsFacade->getReservedOrderItemsForSku('non-existent-sku');
-
-        $this->assertSame(0, $items->count());
-    }
-
-    /**
-     * @return void
-     */
     public function testGetReservedStateNames(): void
     {
         $expected = [

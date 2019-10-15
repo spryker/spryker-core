@@ -129,7 +129,7 @@ class AvailabilityHandlerTest extends Unit
         if ($availabilityToStoreFacade === null) {
             $availabilityToStoreFacade = $this->createStoreFacade();
             $availabilityToStoreFacade->method('getCurrentStore')
-                ->willReturn($this->createStoreTransfer());
+                ->willReturn(new StoreTransfer());
         }
 
         if ($availabilityToEventFacade === null) {
@@ -196,6 +196,10 @@ class AvailabilityHandlerTest extends Unit
         $availabilityQueryMock = $this->getMockBuilder(SpyAvailabilityQuery::class)->getMock();
         $availabilityAbstractQueryMock = $this->getMockBuilder(SpyAvailabilityAbstractQuery::class)->getMock();
 
+        $availabilityAbstractEntityMock = $this->createAvailabilityAbstractEntityMock();
+        $availabilityAbstractQueryMock->method('findOne')->willReturn($availabilityAbstractEntityMock);
+        $availabilityAbstractEntityMock->method('getIdAvailabilityAbstract')->willReturn(1);
+
         $availabilityEntity = $this->createAvailabilityEntityMock();
         $availabilityEntity->method('getQuantity')
             ->willReturn($availabilityQuantity);
@@ -206,6 +210,8 @@ class AvailabilityHandlerTest extends Unit
         $availabilityEntity = $this->createAvailabilityEntityMock();
         $availabilityQueryMock->method('findOneOrCreate')
             ->willReturn($availabilityEntity);
+        $availabilityEntity->method('getFkAvailabilityAbstract')
+            ->willReturn($availabilityAbstractEntityMock->getIdAvailabilityAbstract());
 
         $availabilityEntity = $this->createAvailabilityEntityMock();
         $availabilityQueryMock->method('findOneOrCreate')
@@ -213,9 +219,6 @@ class AvailabilityHandlerTest extends Unit
 
         $availabilityContainerMock->method('queryAvailabilityBySkuAndIdStore')
             ->willReturn($availabilityQueryMock);
-
-        $availabilityAbstractEntityMock = $this->createAvailabilityAbstractEntityMock();
-        $availabilityAbstractQueryMock->method('findOne')->willReturn($availabilityAbstractEntityMock);
 
         $availabilityContainerMock->method('queryAvailabilityAbstractByIdAvailabilityAbstract')
             ->willReturn($availabilityAbstractQueryMock);
@@ -227,20 +230,11 @@ class AvailabilityHandlerTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    protected function createStoreTransfer()
-    {
-        return new StoreTransfer();
-    }
-
-    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Availability\Persistence\SpyAvailability
      */
     protected function createAvailabilityEntityMock()
     {
-        return $this->getMockBuilder(SpyAvailability::class)
-            ->getMock();
+        return $this->getMockBuilder(SpyAvailability::class)->getMock();
     }
 
     /**
@@ -248,8 +242,7 @@ class AvailabilityHandlerTest extends Unit
      */
     protected function createAvailabilityAbstractEntityMock()
     {
-        return $this->getMockBuilder(SpyAvailabilityAbstract::class)
-            ->getMock();
+        return $this->getMockBuilder(SpyAvailabilityAbstract::class)->getMock();
     }
 
     /**
@@ -257,8 +250,7 @@ class AvailabilityHandlerTest extends Unit
      */
     protected function createAvailabilityToProductFacade()
     {
-        return $this->getMockBuilder(AvailabilityToProductInterface::class)
-            ->getMock();
+        return $this->getMockBuilder(AvailabilityToProductInterface::class)->getMock();
     }
 
     /**
@@ -266,8 +258,7 @@ class AvailabilityHandlerTest extends Unit
      */
     protected function createStoreFacade()
     {
-        return $this->getMockBuilder(AvailabilityToStoreFacadeInterface::class)
-            ->getMock();
+        return $this->getMockBuilder(AvailabilityToStoreFacadeInterface::class)->getMock();
     }
 
     /**
@@ -275,7 +266,6 @@ class AvailabilityHandlerTest extends Unit
      */
     protected function createAvailabilityToEventFacade()
     {
-        return $this->getMockBuilder(AvailabilityToEventFacadeInterface::class)
-            ->getMock();
+        return $this->getMockBuilder(AvailabilityToEventFacadeInterface::class)->getMock();
     }
 }

@@ -28,11 +28,15 @@
     </transfer>
 
     <transfer name="Item">
+        <property name="id" type="int"/>
+        <property name="idProductAbstract" type="int"/>
         <property name="sku" type="string"/>
+        <property name="abstractSku" type="string"/>
         <property name="groupKeyPrefix" type="string"/>
         <property name="bundleItemIdentifier" type="string"/>
         <property name="relatedBundleItemIdentifier" type="string"/>
         <property name="productOptions" type="ProductOption[]" singular="productOption"/>
+        <property name="metadata" type="ItemMetadata"/>
 
         <property name="unitNetPrice" type="int"/>
         <property name="sumNetPrice" type="int"/>
@@ -48,10 +52,15 @@
 
         <property name="images" type="ProductImage[]" singular="image"/>
 
+        <property name="sumSubtotalAggregation" type="int"/>
+        <property name="unitSubtotalAggregation" type="int"/>
+
+        <property name="unitPriceToPayAggregation" type="int"/>
+        <property name="sumPriceToPayAggregation" type="int"/>
     </transfer>
 
     <transfer name="ItemCollection">
-        <property name="Items" type="Item[]" singular="item"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="Quote">
@@ -66,6 +75,7 @@
 
     <transfer name="CartChange">
         <property name="items" type="Item[]" singular="item"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="Order">
@@ -74,7 +84,7 @@
     </transfer>
 
     <transfer name="ProductConcrete">
-        <property name="ProductBundle" type="ProductBundle"/>
+        <property name="productBundle" type="ProductBundle"/>
     </transfer>
 
     <transfer name="ProductBundleGroup">
@@ -97,6 +107,10 @@
 
     <transfer name="ProductBundleCriteriaFilter">
         <property name="idBundledProduct" type="int"/>
+    </transfer>
+
+    <transfer name="ItemMetadata">
+        <property name="image" type="string"/>
     </transfer>
 
 </transfers>

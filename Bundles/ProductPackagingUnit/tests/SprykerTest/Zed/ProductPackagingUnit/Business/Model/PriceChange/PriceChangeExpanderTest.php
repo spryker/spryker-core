@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\ProductPackagingUnit\Business\Model\PriceChange;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\PriceChange\PriceChangeExpander;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReader;
 
 /**
  * Auto-generated group annotations
@@ -37,23 +36,11 @@ class PriceChangeExpanderTest extends Unit
      */
     public function testCustomAmountPriceIsCorrect(): void
     {
-        $priceChangeExpander = new PriceChangeExpander($this->getProductPackagingUnitReaderMock());
+        $priceChangeExpander = new PriceChangeExpander();
         $cartChangeTransfer = $priceChangeExpander->setCustomAmountPrice($this->tester->getCartChangeTransfer());
 
         foreach ($cartChangeTransfer->getItems() as $item) {
             $this->assertEquals(static::EXPECTED_UNIT_NET_PRICE, $item->getUnitNetPrice());
         }
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface
-     */
-    protected function getProductPackagingUnitReaderMock()
-    {
-        $productPackagingUnitReaderMock = $this->getMockBuilder(ProductPackagingUnitReader::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        return $productPackagingUnitReaderMock;
     }
 }

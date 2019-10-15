@@ -22,6 +22,7 @@ use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Orm\Zed\Stock\Persistence\SpyStockStoreQuery;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
 use Spryker\Zed\Stock\Business\StockFacade;
 use Spryker\Zed\Stock\Persistence\StockQueryContainer;
@@ -254,7 +255,7 @@ class StockFacadeTest extends Unit
         $this->stockFacade->decrementStockProduct(
             self::CONCRETE_SKU,
             $this->stockEntity1->getName(),
-            10
+            new Decimal(10)
         );
 
         $stockSize = $this->stockFacade->calculateStockForProduct(self::CONCRETE_SKU);
@@ -270,7 +271,7 @@ class StockFacadeTest extends Unit
         $this->stockFacade->incrementStockProduct(
             self::CONCRETE_SKU,
             $this->stockEntity1->getName(),
-            10
+            new Decimal(10)
         );
 
         $stockSize = $this->stockFacade->calculateStockForProduct(self::CONCRETE_SKU);
@@ -579,11 +580,10 @@ class StockFacadeTest extends Unit
     public function testFindStockByNameWillReturnNullForNonExistedStockName(): void
     {
         //Act
-        $stockTransfer = $this->stockFacade->findStockByName($this->stockTransfer1->getName());
+        $result = $this->stockFacade->findStockByName('Non-existing stock name');
 
         //Assert
-        $this->assertEquals($stockTransfer->getIdStock(), $this->stockTransfer1->getIdStock(), 'Stock ID does not match expected value.');
-        $this->assertEquals($stockTransfer->getName(), $this->stockTransfer1->getName(), 'Stock name does not match expected value.');
+        $this->assertNull($result, 'Result should be null.');
     }
 
     /**
@@ -656,7 +656,7 @@ class StockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindStockByIdShouldReturnStockTransferForNonExistingStockId(): void
+    public function testFindStockByIdShouldReturnNullForNonExistingStockId(): void
     {
         //Act
         $result = $this->stockFacade->findStockById(-1);

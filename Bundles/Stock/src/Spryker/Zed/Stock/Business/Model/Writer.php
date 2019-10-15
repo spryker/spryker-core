@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\TypeTransfer;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
@@ -169,11 +170,11 @@ class Writer implements WriterInterface
     /**
      * @param string $sku
      * @param string $stockType
-     * @param int $decrementBy
+     * @param \Spryker\DecimalObject\Decimal $decrementBy
      *
      * @return void
      */
-    public function decrementStock($sku, $stockType, $decrementBy = 1)
+    public function decrementStock($sku, $stockType, Decimal $decrementBy): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($sku, $stockType, $decrementBy) {
             $this->executeDecrementStockTransaction($sku, $stockType, $decrementBy);
@@ -183,11 +184,11 @@ class Writer implements WriterInterface
     /**
      * @param string $sku
      * @param string $stockType
-     * @param int $decrementBy
+     * @param \Spryker\DecimalObject\Decimal $decrementBy
      *
      * @return void
      */
-    protected function executeDecrementStockTransaction($sku, $stockType, $decrementBy = 1)
+    protected function executeDecrementStockTransaction($sku, $stockType, Decimal $decrementBy): void
     {
         $idProduct = $this->reader->getProductConcreteIdBySku($sku);
         $idStock = $this->reader->getStockTypeIdByName($stockType);
@@ -196,17 +197,18 @@ class Writer implements WriterInterface
             ->findOneOrCreate();
 
         $stockProductEntity->decrement($decrementBy);
+        $stockProductEntity->save();
         $this->insertActiveTouchRecordStockProduct($stockProductEntity);
     }
 
     /**
      * @param string $sku
      * @param string $stockType
-     * @param int $incrementBy
+     * @param \Spryker\DecimalObject\Decimal $incrementBy
      *
      * @return void
      */
-    public function incrementStock($sku, $stockType, $incrementBy = 1)
+    public function incrementStock($sku, $stockType, Decimal $incrementBy): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($sku, $stockType, $incrementBy) {
             $this->executeIncrementStockTransaction($sku, $stockType, $incrementBy);
@@ -216,11 +218,11 @@ class Writer implements WriterInterface
     /**
      * @param string $sku
      * @param string $stockType
-     * @param int $incrementBy
+     * @param \Spryker\DecimalObject\Decimal $incrementBy
      *
      * @return void
      */
-    protected function executeIncrementStockTransaction($sku, $stockType, $incrementBy = 1)
+    protected function executeIncrementStockTransaction($sku, $stockType, Decimal $incrementBy): void
     {
         $idProduct = $this->reader->getProductConcreteIdBySku($sku);
         $idStock = $this->reader->getStockTypeIdByName($stockType);
@@ -230,6 +232,7 @@ class Writer implements WriterInterface
             ->findOneOrCreate();
 
         $stockProductEntity->increment($incrementBy);
+        $stockProductEntity->save();
         $this->insertActiveTouchRecordStockProduct($stockProductEntity);
     }
 

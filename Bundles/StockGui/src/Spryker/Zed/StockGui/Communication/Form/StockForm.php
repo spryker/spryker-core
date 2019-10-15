@@ -9,7 +9,6 @@ namespace Spryker\Zed\StockGui\Communication\Form;
 
 use Generated\Shared\Transfer\StockTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\StockGui\Communication\Form\Constraint\StockNameUniqueConstraint;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -18,7 +17,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\StockGui\Communication\StockGuiCommunicationFactory getFactory()
@@ -33,8 +31,6 @@ class StockForm extends AbstractType
     protected const FIELD_STORE_RELATION = 'storeRelation';
 
     protected const FIELD_NAME_MAX_LENGTH = 256;
-
-    protected const ERROR_MESSAGE_NAME_ALREADY_USED = 'This name is already used';
 
     /**
      * @return string
@@ -96,9 +92,7 @@ class StockForm extends AbstractType
                 new Required(),
                 new NotBlank(['normalizer' => 'trim']),
                 new Length(['max' => static::FIELD_NAME_MAX_LENGTH]),
-                new StockNameUniqueConstraint([
-                    StockNameUniqueConstraint::OPTION_STOCK_FACADE => $this->getFactory()->getStockFacade(),
-                ]),
+                $this->getFactory()->createStockNameUniqueConstraint(),
             ],
         ]);
 
@@ -113,7 +107,7 @@ class StockForm extends AbstractType
     protected function addIsActiveField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IS_ACTIVE, ChoiceType::class, [
-            'label' => 'Is this warehouse available',
+            'label' => 'Is this warehouse available?',
             'choices' => [
                 'Yes' => true,
                 'No' => false,
@@ -145,19 +139,5 @@ class StockForm extends AbstractType
         );
 
         return $this;
-    }
-
-    /**
-     * @return callable
-     */
-    public function isStockNameUniqueCallback(): callable
-    {
-        $stockFacade = $this->getFactory()->getStockFacade();
-
-        return function (string $name, ExecutionContextInterface $context) use ($stockFacade): void {
-            if ($stockFacade->findStockByName($name) !== null) {
-                $context->addViolation(static::ERROR_MESSAGE_NAME_ALREADY_USED);
-            }
-        };
     }
 }

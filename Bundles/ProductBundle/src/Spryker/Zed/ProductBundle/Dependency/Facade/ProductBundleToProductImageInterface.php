@@ -10,13 +10,6 @@ namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 interface ProductBundleToProductImageInterface
 {
     /**
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
-     */
-    public function getProductImagesSetCollectionByProductId($idProduct);
-
-    /**
      * @param int $idProductConcrete
      * @param int $idProductAbstract
      * @param int $idLocale

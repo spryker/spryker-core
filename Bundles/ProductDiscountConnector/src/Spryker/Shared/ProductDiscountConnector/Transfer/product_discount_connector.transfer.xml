@@ -24,5 +24,11 @@
         <property name="acceptedTypes" type="array"/>
     </transfer>
 
+    <transfer name="Item">
+        <property name="unitNetPrice" type="int"/>
+        <property name="unitGrossPrice" type="int"/>
+        <property name="id" type="int"/>
+    </transfer>
+
 </transfers>
 

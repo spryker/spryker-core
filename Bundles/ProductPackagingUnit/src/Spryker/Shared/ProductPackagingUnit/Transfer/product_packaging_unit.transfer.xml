@@ -18,7 +18,7 @@
         <property name="idProductPackagingUnit" type="int"/>
         <property name="productPackagingUnitType" type="ProductPackagingUnitType"/>
         <property name="productPackagingUnitAmount" type="ProductPackagingUnitAmount"/>
-        <property name="leadProduct" type="ProductPackagingLeadProduct"/>
+        <property name="leadProduct" type="ProductConcrete"/>
     </transfer>
 
     <transfer name="ProductPackagingUnitAmount">
@@ -30,16 +30,14 @@
         <property name="amountInterval" type="decimal"/>
     </transfer>
 
-    <transfer name="ProductPackagingLeadProduct">
-        <property name="idProductAbstract" type="int"/>
-        <property name="product" type="ProductConcrete"/>
-    </transfer>
-
     <transfer name="Item">
-        <property name="amountLeadProduct" type="ProductPackagingLeadProduct"/>
+        <property name="amountLeadProduct" type="ProductConcrete"/>
         <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
         <property name="amount" type="decimal"/>
         <property name="productPackagingUnit" type="ProductPackagingUnit"/>
+        <property name="id" type="int"/>
+        <property name="productOptions" type="ProductOption[]" singular="productOption"/>
+        <property name="unitNetPrice" type="int"/>
     </transfer>
 
     <transfer name="ProductMeasurementSalesUnit">
@@ -77,7 +75,20 @@
         <property name="sku" type="string"/>
         <property name="processName" type="string"/>
         <property name="stateName" type="string"/>
-        <property name="sumAmount" type="int"/>
+        <property name="sumAmount" type="decimal"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="CartPreCheckResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="priceMode" type="string"/>
     </transfer>
 
 </transfers>

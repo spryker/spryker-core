@@ -9,4 +9,10 @@
         <property name="productConcreteIds" type="array" singular="productConcreteId"/>
     </transfer>
 
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+        <property name="id" type="int"/>
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
 </transfers>

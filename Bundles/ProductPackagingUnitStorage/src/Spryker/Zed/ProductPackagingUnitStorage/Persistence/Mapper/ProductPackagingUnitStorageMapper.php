@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductPackagingUnitStorage\Persistence\Mapper;
 
 use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer;
+use Spryker\DecimalObject\Decimal;
 
 class ProductPackagingUnitStorageMapper implements ProductPackagingUnitStorageMapperInterface
 {
@@ -26,6 +27,24 @@ class ProductPackagingUnitStorageMapper implements ProductPackagingUnitStorageMa
             ->fromArray($productPackagingUnitEntityTransfer->toArray(), true)
             ->setIdLeadProduct($productPackagingUnitEntityTransfer->getLeadProduct()->getIdProduct())
             ->setIdProduct($productPackagingUnitEntityTransfer->getFkProduct())
+            ->setAmountInterval($this->trimDecimalValue($productPackagingUnitEntityTransfer->getAmountInterval()))
+            ->setDefaultAmount($this->trimDecimalValue($productPackagingUnitEntityTransfer->getDefaultAmount()))
+            ->setAmountMin($this->trimDecimalValue($productPackagingUnitEntityTransfer->getAmountMin()))
+            ->setAmountMax($this->trimDecimalValue($productPackagingUnitEntityTransfer->getAmountMax()))
             ->setTypeName($productPackagingUnitEntityTransfer->getProductPackagingUnitType()->getName());
+    }
+
+    /**
+     * @param \Spryker\DecimalObject\Decimal|null $decimalValue
+     *
+     * @return \Spryker\DecimalObject\Decimal|null
+     */
+    protected function trimDecimalValue(?Decimal $decimalValue): ?Decimal
+    {
+        if ($decimalValue === null) {
+            return $decimalValue;
+        }
+
+        return $decimalValue->trim();
     }
 }

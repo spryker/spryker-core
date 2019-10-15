@@ -46,8 +46,8 @@ class StockEntityManager extends AbstractEntityManager implements StockEntityMan
     public function addStockStoreRelations(int $idStock, array $storeIds): void
     {
         foreach ($storeIds as $idStore) {
-            $stockStoreEntity = new SpyStockStore();
-            $stockStoreEntity->setFkStock($idStock)
+            (new SpyStockStore())
+                ->setFkStock($idStock)
                 ->setFkStore($idStore)
                 ->save();
         }

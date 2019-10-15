@@ -66,7 +66,7 @@ class ProductPackagingUnitStorageFacadeTest extends Unit
 
         $this->tester->haveProductPackagingUnit([
             SpyProductPackagingUnitEntityTransfer::FK_PRODUCT_PACKAGING_UNIT_TYPE => $boxProductPackagingUnitType->getIdProductPackagingUnitType(),
-            SpyProductPackagingUnitEntityTransfer::LEAD_PRODUCT_SKU => $leadProductConcreteTransfer->getSku(),
+            SpyProductPackagingUnitEntityTransfer::FK_LEAD_PRODUCT => $leadProductConcreteTransfer->getIdProductConcrete(),
             SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
         ]);
 

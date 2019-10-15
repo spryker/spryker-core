@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer;
 use Spryker\DecimalObject\Decimal;
-use Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface;
+use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
 
 class ProductPackagingUnitAmountRestrictionValidator implements ProductPackagingUnitAmountRestrictionValidatorInterface
 {
@@ -29,16 +29,16 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
     ];
 
     /**
-     * @var \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface
+     * @var \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface
      */
-    protected $productPackagingUnitReader;
+    protected $productPackagingUnitRepository;
 
     /**
-     * @param \Spryker\Zed\ProductPackagingUnit\Business\Model\ProductPackagingUnit\ProductPackagingUnitReaderInterface $productPackagingUnitReader
+     * @param \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository
      */
-    public function __construct(ProductPackagingUnitReaderInterface $productPackagingUnitReader)
+    public function __construct(ProductPackagingUnitRepositoryInterface $productPackagingUnitRepository)
     {
-        $this->productPackagingUnitReader = $productPackagingUnitReader;
+        $this->productPackagingUnitRepository = $productPackagingUnitRepository;
     }
 
     /**
@@ -271,9 +271,10 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
     protected function mapProductPackagingUnitAmountTransfersBySku(array $itemTransfers): array
     {
         $productPackagingUnitAmountTransferMap = [];
-
         foreach ($itemTransfers as $itemTransfer) {
-            $productPackagingUnitTransfer = $this->productPackagingUnitReader->findProductPackagingUnitByProductSku($itemTransfer->getSku());
+            $productPackagingUnitTransfer = $this->productPackagingUnitRepository
+                ->findProductPackagingUnitByProductSku($itemTransfer->getSku());
+
             if ($productPackagingUnitTransfer) {
                 $productPackagingUnitAmountTransferMap[$itemTransfer->getSku()] = $productPackagingUnitTransfer->getProductPackagingUnitAmount();
             }

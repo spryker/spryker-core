@@ -17,10 +17,13 @@
         <property name="originUnitGrossPrice" type="int"/>
         <property name="originUnitNetPrice" type="int"/>
         <property name="quantity" type="int"/>
+        <property name="sumNetPrice" type="int"/>
+        <property name="unitNetPrice" type="int"/>
     </transfer>
 
     <transfer name="Quote">
         <property name="store" type="Store"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="Store">
@@ -41,6 +44,11 @@
         <property name="operation" type="string"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="CartPreCheckResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
 </transfers>

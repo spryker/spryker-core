@@ -27,6 +27,10 @@
         <property name="abstractSku" type="string"/>
         <property name="maxQuantity" type="int"/>
         <property name="idDiscountPromotion" type="int"/>
+        <property name="quantity" type="int"/>
+        <property name="unitPrice" type="int"/>
+        <property name="unitGrossPrice" type="int"/>
+        <property name="groupKey" type="string"/>
     </transfer>
 
     <transfer name="DiscountableItem">
@@ -53,6 +57,14 @@
 
     <transfer name="StorageProduct">
          <property name="promotionItem" type="PromotionItem"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="PersistentCartChange">
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
 </transfers>

@@ -45,7 +45,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
         $bundledItemSku = 'sku-3';
         $bundleQuantity = 2;
         $bundledItemAvailability = new Decimal(15);
-        $expectedBundleAvailability = $bundledItemAvailability->divide($bundleQuantity, 10); // 7.5
+        $expectedBundleAvailability = new Decimal(7); // floor(15 / 2)
 
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $productBundleAvailabilityHandlerMock = $this->createProductBundleAvailabilityHandler($availabilityFacadeMock);
@@ -80,7 +80,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
         $bundledItemSku = 'sku-3';
         $bundleQuantity = 2;
         $bundledItemAvailability = new Decimal(15);
-        $expectedBundleAvailability = $bundledItemAvailability->divide($bundleQuantity, 10); // 7.5
+        $expectedBundleAvailability = new Decimal(7); // floor(15 / 2)
 
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $productBundleAvailabilityHandlerMock = $this->createProductBundleAvailabilityHandler($availabilityFacadeMock);

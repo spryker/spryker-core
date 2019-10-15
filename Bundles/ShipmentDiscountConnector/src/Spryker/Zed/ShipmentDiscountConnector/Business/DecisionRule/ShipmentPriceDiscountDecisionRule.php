@@ -84,7 +84,7 @@ class ShipmentPriceDiscountDecisionRule extends ShipmentPriceDiscountDecisionRul
     {
         $moneyAmount = $this->moneyFacade->convertIntegerToDecimal($expenseTransfer->getUnitGrossPrice());
 
-        return $this->discountFacade->queryStringCompare($clauseTransfer, $moneyAmount);
+        return $this->discountFacade->queryStringCompare($clauseTransfer, (string)$moneyAmount);
     }
 
     /**

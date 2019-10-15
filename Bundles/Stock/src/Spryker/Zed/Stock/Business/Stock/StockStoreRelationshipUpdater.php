@@ -8,11 +8,14 @@
 namespace Spryker\Zed\Stock\Business\Stock;
 
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Stock\Persistence\StockEntityManagerInterface;
 use Spryker\Zed\Stock\Persistence\StockRepositoryInterface;
 
 class StockStoreRelationshipUpdater implements StockStoreRelationshipUpdaterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Stock\Persistence\StockRepositoryInterface
      */
@@ -45,6 +48,19 @@ class StockStoreRelationshipUpdater implements StockStoreRelationshipUpdaterInte
             return;
         }
 
+        $this->getTransactionHandler()->handleTransaction(function () use ($idStock, $storeRelationTransfer): void {
+            $this->executeUpdateStockStoreRelationshipTransaction($idStock, $storeRelationTransfer);
+        });
+    }
+
+    /**
+     * @param int $idStock
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
+     *
+     * @return void
+     */
+    protected function executeUpdateStockStoreRelationshipTransaction(int $idStock, StoreRelationTransfer $storeRelationTransfer): void
+    {
         $storeRelationTransfer->requireIdStores();
 
         $originalStoreRelationTransfer = $this->stockRepository->getStoreRelationByIdStock($idStock);

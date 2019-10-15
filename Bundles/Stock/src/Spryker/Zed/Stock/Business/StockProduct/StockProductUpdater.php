@@ -8,10 +8,13 @@
 namespace Spryker\Zed\Stock\Business\StockProduct;
 
 use Generated\Shared\Transfer\StockTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Stock\Persistence\StockRepositoryInterface;
 
 class StockProductUpdater implements StockProductUpdaterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Stock\Persistence\StockRepositoryInterface
      */
@@ -38,6 +41,18 @@ class StockProductUpdater implements StockProductUpdaterInterface
      * @return void
      */
     public function updateStockProductsRelatedToStock(StockTransfer $stockTransfer): void
+    {
+        $this->getTransactionHandler()->handleTransaction(function () use ($stockTransfer): void {
+            $this->executeUpdateStockProductsRelatedToStockTransaction($stockTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     *
+     * @return void
+     */
+    protected function executeUpdateStockProductsRelatedToStockTransaction(StockTransfer $stockTransfer): void
     {
         $stockProducts = $this->stockRepository->getStockProductsByIdStock($stockTransfer->getIdStock());
         foreach ($stockProducts as $stockProductTransfer) {

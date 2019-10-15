@@ -16,7 +16,7 @@
     <transfer name="AvailabilityNotificationSubscriptionResponse">
         <property name="availabilityNotificationSubscription" type="AvailabilityNotificationSubscription"/>
         <property name="product" type="ProductConcrete"/>
-        <property name="isSuccess" type="bool" default="true"/>
+        <property name="isSuccess" type="bool"/>
         <property name="errorMessage" type="string"/>
     </transfer>
 
