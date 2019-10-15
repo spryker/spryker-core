@@ -24,3 +24,9 @@ merchant_profile.deactivated,"Händlerprofil erfolgreich deaktiviert."
 "Contact Person",Kontaktperson
 "Merchant Profile",Händler-Profil
 "Legal Information",Rechtsinformation
+City,Stadt
+"Zip Code",Postleitzahl
+Country,Land
+Street,Straße
+Number,Nummer
+"Addition to address","Zusatz zur Adresse"

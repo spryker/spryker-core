@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace SprykerTest\Zed\MerchantDataImport\Communication\Plugin;
+namespace SprykerTest\Zed\MerchantProfileDataImport\Communication\Plugin;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
@@ -13,27 +13,27 @@ use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use ReflectionClass;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker;
-use Spryker\Zed\MerchantDataImport\Business\MerchantDataImportBusinessFactory;
-use Spryker\Zed\MerchantDataImport\Business\MerchantDataImportFacade;
-use Spryker\Zed\MerchantDataImport\Business\MerchantDataImportFacadeInterface;
-use Spryker\Zed\MerchantDataImport\Communication\Plugin\MerchantAddressDataImportPlugin;
-use Spryker\Zed\MerchantDataImport\MerchantDataImportConfig;
+use Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfileDataImportBusinessFactory;
+use Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfileDataImportFacade;
+use Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfileDataImportFacadeInterface;
+use Spryker\Zed\MerchantProfileDataImport\Communication\Plugin\MerchantProfileAddressDataImportPlugin;
+use Spryker\Zed\MerchantProfileDataImport\MerchantProfileDataImportConfig;
 
 /**
  * Auto-generated group annotations
  *
  * @group SprykerTest
  * @group Zed
- * @group MerchantDataImport
+ * @group MerchantProfileDataImport
  * @group Communication
  * @group Plugin
- * @group MerchantAddressDataImportPluginTest
+ * @group MerchantProfileAddressDataImportPluginTest
  * Add your own group annotations below this line
  */
-class MerchantAddressDataImportPluginTest extends Unit
+class MerchantProfileAddressDataImportPluginTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\MerchantDataImport\MerchantDataImportCommunicationTester
+     * @var \SprykerTest\Zed\MerchantProfileDataImport\MerchantProfileDataImportCommunicationTester
      */
     protected $tester;
 
@@ -43,13 +43,14 @@ class MerchantAddressDataImportPluginTest extends Unit
     public function testImportAddressesImportsData(): void
     {
         $this->tester->truncateMerchantRelations();
-        $this->tester->truncateMerchantAddressRelations();
+        $this->tester->truncateMerchantProfileAddressRelations();
 
-        $this->tester->assertMerchantAddressDatabaseTableIsEmpty();
+        $this->tester->assertMerchantProfileAddressDatabaseTableIsEmpty();
 
-        $this->tester->haveMerchant([
+        $merchantTransfer = $this->tester->haveMerchant([
             'merchant_key' => 'kudu-merchant-1',
         ]);
+        $this->tester->haveMerchantProfile($merchantTransfer);
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/merchant_address.csv');
@@ -57,7 +58,7 @@ class MerchantAddressDataImportPluginTest extends Unit
         $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
-        $dataImportPlugin = new MerchantAddressDataImportPlugin();
+        $dataImportPlugin = new MerchantProfileAddressDataImportPlugin();
         $pluginReflection = new ReflectionClass($dataImportPlugin);
 
         $facadePropertyReflection = $pluginReflection->getParentClass()->getProperty('facade');
@@ -68,7 +69,7 @@ class MerchantAddressDataImportPluginTest extends Unit
 
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
 
-        $this->tester->assertMerchantAddressDatabaseTableContainsData();
+        $this->tester->assertMerchantProfileAddressDatabaseTableContainsData();
     }
 
     /**
@@ -76,16 +77,16 @@ class MerchantAddressDataImportPluginTest extends Unit
      */
     public function testGetImportTypeReturnsTypeOfImporter(): void
     {
-        $dataImportPlugin = new MerchantAddressDataImportPlugin();
-        $this->assertSame(MerchantDataImportConfig::IMPORT_TYPE_MERCHANT_ADDRESS, $dataImportPlugin->getImportType());
+        $dataImportPlugin = new MerchantProfileAddressDataImportPlugin();
+        $this->assertSame(MerchantProfileDataImportConfig::IMPORT_TYPE_MERCHANT_PROFILE_ADDRESS, $dataImportPlugin->getImportType());
     }
 
     /**
-     * @return \Spryker\Zed\MerchantDataImport\Business\MerchantDataImportFacade
+     * @return \Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfileDataImportFacade
      */
-    public function getFacadeMock(): MerchantDataImportFacadeInterface
+    public function getFacadeMock(): MerchantProfileDataImportFacadeInterface
     {
-        $factoryMock = $this->getMockBuilder(MerchantDataImportBusinessFactory::class)
+        $factoryMock = $this->getMockBuilder(MerchantProfileDataImportBusinessFactory::class)
             ->setMethods(
                 [
                     'createTransactionAwareDataSetStepBroker',
@@ -99,9 +100,9 @@ class MerchantAddressDataImportPluginTest extends Unit
             ->willReturn(new DataSetStepBroker());
 
         $factoryMock->method('getConfig')
-            ->willReturn(new MerchantDataImportConfig());
+            ->willReturn(new MerchantProfileDataImportConfig());
 
-        $facade = new MerchantDataImportFacade();
+        $facade = new MerchantProfileDataImportFacade();
         $facade->setFactory($factoryMock);
 
         return $facade;

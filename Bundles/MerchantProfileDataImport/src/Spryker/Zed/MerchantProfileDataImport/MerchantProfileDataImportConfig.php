@@ -13,6 +13,7 @@ use Spryker\Zed\DataImport\DataImportConfig;
 class MerchantProfileDataImportConfig extends DataImportConfig
 {
     public const IMPORT_TYPE_MERCHANT_PROFILE = 'merchant-profile';
+    public const IMPORT_TYPE_MERCHANT_PROFILE_ADDRESS = 'merchant-profile-address';
 
     /**
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
@@ -22,6 +23,16 @@ class MerchantProfileDataImportConfig extends DataImportConfig
         $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
 
         return $this->buildImporterConfiguration($moduleDataImportDirectory . 'merchant_profile.csv', static::IMPORT_TYPE_MERCHANT_PROFILE);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
+     */
+    public function getMerchantProfileAddressDataImporterConfiguration(): DataImporterConfigurationTransfer
+    {
+        $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
+
+        return $this->buildImporterConfiguration($moduleDataImportDirectory . 'merchant_profile_address.csv', static::IMPORT_TYPE_MERCHANT_PROFILE_ADDRESS);
     }
 
     /**

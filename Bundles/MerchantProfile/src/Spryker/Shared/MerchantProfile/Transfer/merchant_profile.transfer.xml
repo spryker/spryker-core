@@ -30,6 +30,7 @@
         <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]"/>
         <property name="urlCollection" type="Url[]"/>
         <property name="merchantName" type="string"/>
+        <property name="addressCollection" type="MerchantProfileAddressCollection"/>
     </transfer>
 
     <transfer name="MerchantProfileCollection">
@@ -69,4 +70,22 @@
     <transfer name="Locale">
         <property name="idLocale" type="int" />
     </transfer>
+
+    <transfer name="MerchantProfileAddressCollection">
+        <property name="addresses" type="MerchantProfileAddress[]" singular="address"/>
+    </transfer>
+
+    <transfer name="MerchantProfileAddress">
+        <property name="idMerchantProfileAddress" type="int"/>
+        <property name="key" type="string"/>
+        <property name="fkCountry" type="int"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="address3" type="string"/>
+        <property name="city" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="email" type="string"/>
+        <property name="fkMerchantProfile" type="int"/>
+    </transfer>
+
 </transfers>

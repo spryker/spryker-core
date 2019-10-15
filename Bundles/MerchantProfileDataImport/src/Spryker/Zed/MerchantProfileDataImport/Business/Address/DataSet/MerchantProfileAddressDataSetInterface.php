@@ -5,9 +5,9 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Spryker\Zed\MerchantDataImport\Business\Address\DataSet;
+namespace Spryker\Zed\MerchantProfileDataImport\Business\Address\DataSet;
 
-interface MerchantAddressDataSetInterface
+interface MerchantProfileAddressDataSetInterface
 {
     public const MERCHANT_KEY = 'merchant_key';
     public const KEY = 'key';
@@ -18,6 +18,6 @@ interface MerchantAddressDataSetInterface
     public const ADDRESS3 = 'address3';
     public const CITY = 'city';
     public const ZIP_CODE = 'zip_code';
-    public const ID_MERCHANT = 'id_merchant';
+    public const ID_MERCHANT_PROFILE = 'id_merchant_profile';
     public const ID_COUNTRY = 'id_country';
 }

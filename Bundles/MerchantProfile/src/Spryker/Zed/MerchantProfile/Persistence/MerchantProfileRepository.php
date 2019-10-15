@@ -49,7 +49,9 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
         $merchantProfileCollectionTransfer = new MerchantProfileCollectionTransfer();
         $merchantProfileQuery = $this->getFactory()
             ->createMerchantProfileQuery()
-            ->joinSpyMerchant();
+            ->joinSpyMerchant()
+            ->leftJoinSpyMerchantProfileAddress();
+
         if ($merchantProfileCriteriaFilterTransfer) {
             $merchantProfileQuery = $this->applyFilters($merchantProfileQuery, $merchantProfileCriteriaFilterTransfer);
         }

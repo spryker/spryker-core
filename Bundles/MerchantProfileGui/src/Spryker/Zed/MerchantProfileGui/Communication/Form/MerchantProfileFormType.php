@@ -106,7 +106,8 @@ class MerchantProfileFormType extends AbstractType
             ->addCancellationPolicyGlossaryKeyField($builder)
             ->addImprintGlossaryKeyField($builder)
             ->addDataPrivacyGlossaryKeyField($builder)
-            ->addMerchantProfileLocalizedGlossaryAttributesSubform($builder);
+            ->addMerchantProfileLocalizedGlossaryAttributesSubform($builder)
+            ->addAddressCollectionSubform($builder);
     }
 
     /**
@@ -391,6 +392,24 @@ class MerchantProfileFormType extends AbstractType
             'allow_add' => true,
             'allow_delete' => true,
         ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addAddressCollectionSubform(FormBuilderInterface $builder)
+    {
+        $merchantProfileAddressFormDataProvider = $this->getFactory()->createMerchantProfileAddressFormDataProvider();
+
+        $builder->add(
+            'addressCollection',
+            MerchantProfileAddressFormType::class,
+            $merchantProfileAddressFormDataProvider->getOptions()
+        );
 
         return $this;
     }

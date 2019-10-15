@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantGui\Dependency\Facade;
+namespace Spryker\Zed\MerchantProfileGui\Dependency\Facade;
 
-interface MerchantGuiToCountryFacadeInterface
+interface MerchantProfileGuiToCountryFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer

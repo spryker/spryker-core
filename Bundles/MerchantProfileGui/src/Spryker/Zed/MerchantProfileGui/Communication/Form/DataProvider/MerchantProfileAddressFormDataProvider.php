@@ -5,24 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantGui\Communication\Form\DataProvider;
+namespace Spryker\Zed\MerchantProfileGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\MerchantAddressTransfer;
-use Spryker\Zed\MerchantGui\Communication\Form\MerchantAddressForm;
-use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToCountryFacadeInterface;
+use Generated\Shared\Transfer\MerchantProfileAddressTransfer;
+use Spryker\Zed\MerchantProfileGui\Communication\Form\MerchantProfileAddressFormType;
+use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToCountryFacadeInterface;
 
-class MerchantAddressFormDataProvider
+class MerchantProfileAddressFormDataProvider
 {
     /**
-     * @var \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToCountryFacadeInterface
+     * @var \Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToCountryFacadeInterface
      */
     protected $countryFacade;
 
     /**
-     * @param \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToCountryFacadeInterface $countryFacade
+     * @param \Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToCountryFacadeInterface $countryFacade
      */
     public function __construct(
-        MerchantGuiToCountryFacadeInterface $countryFacade
+        MerchantProfileGuiToCountryFacadeInterface $countryFacade
     ) {
         $this->countryFacade = $countryFacade;
     }
@@ -33,9 +33,9 @@ class MerchantAddressFormDataProvider
     public function getOptions(): array
     {
         return [
-            'data_class' => MerchantAddressTransfer::class,
+            'data_class' => MerchantProfileAddressTransfer::class,
             'label' => false,
-            MerchantAddressForm::OPTION_COUNTRY_CHOICES => $this->prepareCountryChoices(),
+            MerchantProfileAddressFormType::OPTION_COUNTRY_CHOICES => $this->prepareCountryChoices(),
         ];
     }
 

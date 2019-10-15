@@ -14,6 +14,8 @@ use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileReader;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileReaderInterface;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileWriter;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileWriterInterface;
+use Spryker\Zed\MerchantProfile\Business\MerchantProfileAddress\MerchantProfileAddressWriter;
+use Spryker\Zed\MerchantProfile\Business\MerchantProfileAddress\MerchantProfileAddressWriterInterface;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary\MerchantProfileGlossaryWriter;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary\MerchantProfileGlossaryWriterInterface;
 use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToGlossaryFacadeInterface;
@@ -36,7 +38,8 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
         return new MerchantProfileWriter(
             $this->getEntityManager(),
             $this->createMerchantProfileGlossaryWriter(),
-            $this->getUrlFacade()
+            $this->getUrlFacade(),
+            $this->createMerchantProfileAddressWriter()
         );
     }
 
@@ -59,6 +62,16 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
             $this->getGlossaryFacade(),
             $this->getLocaleFacade(),
             $this->createMerchantProfileGlossaryKeyBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProfile\Business\MerchantProfileAddress\MerchantProfileAddressWriterInterface
+     */
+    public function createMerchantProfileAddressWriter(): MerchantProfileAddressWriterInterface
+    {
+        return new MerchantProfileAddressWriter(
+            $this->getEntityManager()
         );
     }
 

@@ -8,11 +8,7 @@
 namespace SprykerTest\Zed\Merchant;
 
 use Codeception\Actor;
-use Generated\Shared\DataBuilder\MerchantAddressBuilder;
-use Generated\Shared\DataBuilder\MerchantAddressCollectionBuilder;
 use Generated\Shared\DataBuilder\MerchantBuilder;
-use Generated\Shared\Transfer\MerchantAddressCollectionTransfer;
-use Generated\Shared\Transfer\MerchantAddressTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 
@@ -54,35 +50,13 @@ class MerchantBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    public function createMerchantTransferWithAddressTransfer(?int $merchantId = null): MerchantTransfer
+    public function createMerchantTransfer(?int $merchantId = null): MerchantTransfer
     {
         $merchantTransfer = (new MerchantBuilder())
             ->build()
             ->setIdMerchant($merchantId);
 
-        $merchantTransfer->setAddressCollection($this->createMerchantAddressCollectionTransfer());
-
         return $merchantTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\MerchantAddressCollectionTransfer
-     */
-    public function createMerchantAddressCollectionTransfer(): MerchantAddressCollectionTransfer
-    {
-        $merchantAddressCollectionTransfer = (new MerchantAddressCollectionBuilder())->build();
-        $merchantAddressCollectionTransfer->addAddress($this->createMerchantAddressTransfer());
-
-        return $merchantAddressCollectionTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\MerchantAddressTransfer
-     */
-    public function createMerchantAddressTransfer(): MerchantAddressTransfer
-    {
-        return (new MerchantAddressBuilder())
-            ->build();
     }
 
     /**

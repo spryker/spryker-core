@@ -9,10 +9,13 @@ namespace SprykerTest\Zed\MerchantProfile\Helper;
 
 use ArrayObject;
 use Codeception\Module;
+use Generated\Shared\DataBuilder\MerchantProfileAddressBuilder;
+use Generated\Shared\DataBuilder\MerchantProfileAddressCollectionBuilder;
 use Generated\Shared\DataBuilder\MerchantProfileBuilder;
 use Generated\Shared\DataBuilder\MerchantProfileGlossaryAttributeValuesBuilder;
 use Generated\Shared\DataBuilder\MerchantProfileLocalizedGlossaryAttributesBuilder;
 use Generated\Shared\DataBuilder\UrlBuilder;
+use Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileLocalizedGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
@@ -36,6 +39,7 @@ class MerchantProfileHelper extends Module
 
         $merchantProfileTransfer = $this->addMerchantProfileLocalizedGlossaryAttributes($merchantProfileTransfer);
         $merchantProfileTransfer->setUrlCollection($this->createMerchantUrlCollection());
+        $merchantProfileTransfer->setAddressCollection($this->creatMerchantProfileAddressCollection());
 
         return $this->getLocator()
             ->merchantProfile()
@@ -108,5 +112,17 @@ class MerchantProfileHelper extends Module
     protected function getLocaleTransferCollection(): array
     {
         return $this->getLocator()->locale()->facade()->getLocaleCollection();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer
+     */
+    protected function creatMerchantProfileAddressCollection(): MerchantProfileAddressCollectionTransfer
+    {
+        $merchantProfileAddressTransfer = (new MerchantProfileAddressBuilder())->build();
+        $merchantProfileAddressCollectionTransfer = (new MerchantProfileAddressCollectionBuilder())->build();
+        $merchantProfileAddressCollectionTransfer->addAddress($merchantProfileAddressTransfer);
+
+        return $merchantProfileAddressCollectionTransfer;
     }
 }

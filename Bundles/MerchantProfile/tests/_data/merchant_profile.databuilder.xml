@@ -24,6 +24,7 @@
         <property name="dataPrivacyGlossaryKey" dataBuilderRule="word" />
         <property name="fkMerchant" dataBuilderRule="randomNumber(5)" />
         <property name="isActive" dataBuilderRule="boolean(100)" />
+        <property name="addressCollection" type="MerchantProfileAddressCollection" />
         <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" />
     </transfer>
 

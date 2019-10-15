@@ -5,19 +5,19 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Spryker\Zed\MerchantDataImport\Communication\Plugin;
+namespace Spryker\Zed\MerchantProfileDataImport\Communication\Plugin;
 
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\MerchantDataImport\MerchantDataImportConfig;
+use Spryker\Zed\MerchantProfileDataImport\MerchantProfileDataImportConfig;
 
 /**
- * @method \Spryker\Zed\MerchantDataImport\Business\MerchantDataImportFacadeInterface getFacade()
- * @method \Spryker\Zed\MerchantDataImport\MerchantDataImportConfig getConfig()
+ * @method \Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfileDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\MerchantProfileDataImport\MerchantProfileDataImportConfig getConfig()
  */
-class MerchantAddressDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
+class MerchantProfileAddressDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -31,7 +31,7 @@ class MerchantAddressDataImportPlugin extends AbstractPlugin implements DataImpo
     public function import(
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer {
-        return $this->getFacade()->importAddresses($dataImporterConfigurationTransfer);
+        return $this->getFacade()->importProfileAddresses($dataImporterConfigurationTransfer);
     }
 
     /**
@@ -43,6 +43,6 @@ class MerchantAddressDataImportPlugin extends AbstractPlugin implements DataImpo
      */
     public function getImportType(): string
     {
-        return MerchantDataImportConfig::IMPORT_TYPE_MERCHANT_ADDRESS;
+        return MerchantProfileDataImportConfig::IMPORT_TYPE_MERCHANT_PROFILE_ADDRESS;
     }
 }

@@ -5,14 +5,14 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Spryker\Zed\MerchantDataImport\Business\Address\Step;
+namespace Spryker\Zed\MerchantProfileDataImport\Business\Address\Step;
 
 use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\MerchantDataImport\Business\Address\DataSet\MerchantAddressDataSetInterface;
+use Spryker\Zed\MerchantProfileDataImport\Business\Address\DataSet\MerchantProfileAddressDataSetInterface;
 
 class CountryIsoCodeToIdCountryStep implements DataImportStepInterface
 {
@@ -36,7 +36,7 @@ class CountryIsoCodeToIdCountryStep implements DataImportStepInterface
             $idCountry = $this->getIdCountryFromDatabase($iso2Code, $iso3Code);
         }
 
-        $dataSet[MerchantAddressDataSetInterface::ID_COUNTRY] = $idCountry;
+        $dataSet[MerchantProfileAddressDataSetInterface::ID_COUNTRY] = $idCountry;
     }
 
     /**
@@ -46,8 +46,8 @@ class CountryIsoCodeToIdCountryStep implements DataImportStepInterface
      */
     protected function findIso2Code(DataSetInterface $dataSet): ?string
     {
-        if (!empty($dataSet[MerchantAddressDataSetInterface::COUNTRY_ISO2_CODE])) {
-            return $dataSet[MerchantAddressDataSetInterface::COUNTRY_ISO2_CODE];
+        if (!empty($dataSet[MerchantProfileAddressDataSetInterface::COUNTRY_ISO2_CODE])) {
+            return $dataSet[MerchantProfileAddressDataSetInterface::COUNTRY_ISO2_CODE];
         }
 
         return null;
@@ -60,8 +60,8 @@ class CountryIsoCodeToIdCountryStep implements DataImportStepInterface
      */
     protected function findIso3Code(DataSetInterface $dataSet): ?string
     {
-        if (!empty($dataSet[MerchantAddressDataSetInterface::COUNTRY_ISO3_CODE])) {
-            return $dataSet[MerchantAddressDataSetInterface::COUNTRY_ISO3_CODE];
+        if (!empty($dataSet[MerchantProfileAddressDataSetInterface::COUNTRY_ISO3_CODE])) {
+            return $dataSet[MerchantProfileAddressDataSetInterface::COUNTRY_ISO3_CODE];
         }
 
         return null;

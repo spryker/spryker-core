@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Merchant\Persistence\Propel;
+namespace Spryker\Zed\MerchantProfile\Persistence\Propel;
 
-use Orm\Zed\Merchant\Persistence\Base\SpyMerchantAddress as BaseSpyMerchantAddress;
+use Orm\Zed\MerchantProfile\Persistence\Base\SpyMerchantProfileAddress as BaseSpyMerchantProfileAddress;
 
 /**
- * Skeleton subclass for representing a row from the 'spy_merchant_address' table.
+ * Skeleton subclass for representing a row from the 'spy_merchant_profile_address' table.
  *
  *
  *
@@ -18,6 +18,6 @@ use Orm\Zed\Merchant\Persistence\Base\SpyMerchantAddress as BaseSpyMerchantAddre
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpyMerchantAddress extends BaseSpyMerchantAddress
+abstract class AbstractSpyMerchantProfileAddress extends BaseSpyMerchantProfileAddress
 {
 }

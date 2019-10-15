@@ -81,12 +81,14 @@ class MerchantProfileFacadeTest extends Unit
             ->setContactPersonFirstName('First Name Two');
 
         // Act
+        /** @var \Generated\Shared\Transfer\MerchantProfileTransfer $updatedMerchantProfileTransfer */
         $updatedMerchantProfileTransfer = $this->tester->getFacade()->updateMerchantProfile($merchantProfileTransfer);
 
         // Assert
         $this->assertSame($expectedIdMerchantProfile, $updatedMerchantProfileTransfer->getIdMerchantProfile());
         $this->assertEquals('Role two', $updatedMerchantProfileTransfer->getContactPersonRole());
         $this->assertEquals('First Name Two', $updatedMerchantProfileTransfer->getContactPersonFirstName());
+        $this->assertNotEmpty($updatedMerchantProfileTransfer->getAddressCollection()->getAddresses()->offsetGet(0));
     }
 
     /**

@@ -5,6 +5,7 @@
 
     <table name="spy_merchant" phpName="SpyMerchant" identifierQuoting="true">
         <column name="id_merchant" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="merchant_key" type="VARCHAR" size="255"  description="Identifier for existing entities. It should never be changed."/>
         <column name="name" required="true" size="255" type="VARCHAR"/>
 
         <behavior name="timestampable"/>
@@ -17,27 +18,11 @@
             <unique-column name="email"/>
         </unique>
 
+        <unique name="spy_merchant-merchant_key">
+            <unique-column name="merchant_key"/>
+        </unique>
+
         <id-method-parameter value="spy_merchant_pk_seq"/>
-    </table>
-
-    <table name="spy_merchant_address" identifierQuoting="true">
-        <column name="id_merchant_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_country" required="true" type="INTEGER"/>
-        <column name="address1" size="255" type="VARCHAR"/>
-        <column name="address2" size="255" type="VARCHAR"/>
-        <column name="address3" size="255" type="VARCHAR"/>
-        <column name="city" size="255" type="VARCHAR"/>
-        <column name="zip_code" size="15" type="VARCHAR"/>
-        <column name="fk_merchant" required="true" type="INTEGER"/>
-
-        <foreign-key name="spy_merchant_address-fk_country" foreignTable="spy_country">
-            <reference local="fk_country" foreign="id_country"/>
-        </foreign-key>
-        <foreign-key name="spy_merchant_address-fk_merchant" foreignTable="spy_merchant">
-            <reference local="fk_merchant" foreign="id_merchant"/>
-        </foreign-key>
-
-        <id-method-parameter value="spy_merchant_address_pk_seq"/>
     </table>
 
 </database>

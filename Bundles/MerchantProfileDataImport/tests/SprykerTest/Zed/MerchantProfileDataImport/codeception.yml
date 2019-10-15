@@ -19,9 +19,12 @@ suites:
          enabled:
              - Asserts
              - \SprykerTest\Shared\Testify\Helper\Environment
+             - \SprykerTest\Shared\Testify\Helper\LocatorHelper
              - \SprykerTest\Shared\Testify\Helper\DependencyHelper
              - \SprykerTest\Shared\Propel\Helper\TransactionHelper
              - \SprykerTest\Shared\Testify\Helper\PropelTableRelationSanitizer
              - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
              - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
+             - \SprykerTest\Zed\MerchantProfile\Helper\MerchantProfileHelper
              - \SprykerTest\Zed\MerchantDataImport\Helper\MerchantDataImportHelper
+             - \SprykerTest\Zed\MerchantProfileDataImport\Helper\MerchantProfileAddressDataImportHelper

@@ -5,23 +5,23 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Spryker\Zed\MerchantDataImport\Business\Address;
+namespace Spryker\Zed\MerchantProfileDataImport\Business\Address\Step;
 
-use Orm\Zed\Merchant\Persistence\SpyMerchantAddressQuery;
+use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddressQuery;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\MerchantDataImport\Business\Address\DataSet\MerchantAddressDataSetInterface;
+use Spryker\Zed\MerchantProfileDataImport\Business\Address\DataSet\MerchantProfileAddressDataSetInterface;
 
-class MerchantAddressWriterStep implements DataImportStepInterface
+class MerchantProfileAddressWriterStep implements DataImportStepInterface
 {
     protected const REQUIRED_DATA_SET_KEYS = [
-        MerchantAddressDataSetInterface::KEY,
-        MerchantAddressDataSetInterface::ADDRESS1,
-        MerchantAddressDataSetInterface::ADDRESS2,
-        MerchantAddressDataSetInterface::CITY,
-        MerchantAddressDataSetInterface::ZIP_CODE,
-        MerchantAddressDataSetInterface::MERCHANT_KEY,
+        MerchantProfileAddressDataSetInterface::KEY,
+        MerchantProfileAddressDataSetInterface::ADDRESS1,
+        MerchantProfileAddressDataSetInterface::ADDRESS2,
+        MerchantProfileAddressDataSetInterface::CITY,
+        MerchantProfileAddressDataSetInterface::ZIP_CODE,
+        MerchantProfileAddressDataSetInterface::MERCHANT_KEY,
     ];
 
     /**
@@ -33,18 +33,18 @@ class MerchantAddressWriterStep implements DataImportStepInterface
     {
         $this->validateDataSet($dataSet);
 
-        $merchantEntity = SpyMerchantAddressQuery::create()
-            ->filterByKey($dataSet[MerchantAddressDataSetInterface::KEY])
+        $merchantEntity = SpyMerchantProfileAddressQuery::create()
+            ->filterByKey($dataSet[MerchantProfileAddressDataSetInterface::KEY])
             ->findOneOrCreate();
 
         $merchantEntity
-            ->setAddress1($dataSet[MerchantAddressDataSetInterface::ADDRESS1])
-            ->setAddress2($dataSet[MerchantAddressDataSetInterface::ADDRESS2])
-            ->setAddress3($dataSet[MerchantAddressDataSetInterface::ADDRESS3])
-            ->setCity($dataSet[MerchantAddressDataSetInterface::CITY])
-            ->setZipCode($dataSet[MerchantAddressDataSetInterface::ZIP_CODE])
-            ->setFkMerchant($dataSet[MerchantAddressDataSetInterface::ID_MERCHANT])
-            ->setFkCountry($dataSet[MerchantAddressDataSetInterface::ID_COUNTRY])
+            ->setAddress1($dataSet[MerchantProfileAddressDataSetInterface::ADDRESS1])
+            ->setAddress2($dataSet[MerchantProfileAddressDataSetInterface::ADDRESS2])
+            ->setAddress3($dataSet[MerchantProfileAddressDataSetInterface::ADDRESS3])
+            ->setCity($dataSet[MerchantProfileAddressDataSetInterface::CITY])
+            ->setZipCode($dataSet[MerchantProfileAddressDataSetInterface::ZIP_CODE])
+            ->setFkMerchantProfile($dataSet[MerchantProfileAddressDataSetInterface::ID_MERCHANT_PROFILE])
+            ->setFkCountry($dataSet[MerchantProfileAddressDataSetInterface::ID_COUNTRY])
             ->save();
     }
 
@@ -82,7 +82,7 @@ class MerchantAddressWriterStep implements DataImportStepInterface
     protected function validateRequireDataSetByKey(DataSetInterface $dataSet, string $requiredDataSetKey): void
     {
         if (!$dataSet[$requiredDataSetKey]) {
-            throw new InvalidDataException('"' . $requiredDataSetKey . '" is required.');
+            throw new InvalidDataException(sprintf('"%s" is required.', $requiredDataSetKey));
         }
     }
 
@@ -95,8 +95,14 @@ class MerchantAddressWriterStep implements DataImportStepInterface
      */
     protected function validateCombinedRequiredDataSet(DataSetInterface $dataSet): void
     {
-        if (!$dataSet[MerchantAddressDataSetInterface::COUNTRY_ISO2_CODE] && !$dataSet[MerchantAddressDataSetInterface::COUNTRY_ISO3_CODE]) {
-            throw new InvalidDataException('"' . MerchantAddressDataSetInterface::COUNTRY_ISO2_CODE . '" or "' . MerchantAddressDataSetInterface::COUNTRY_ISO3_CODE . '" are required.');
+        if (!$dataSet[MerchantProfileAddressDataSetInterface::COUNTRY_ISO2_CODE] && !$dataSet[MerchantProfileAddressDataSetInterface::COUNTRY_ISO3_CODE]) {
+            throw new InvalidDataException(
+                sprintf(
+                    '"%s" or "%s" are required.',
+                    MerchantProfileAddressDataSetInterface::COUNTRY_ISO2_CODE,
+                    MerchantProfileAddressDataSetInterface::COUNTRY_ISO3_CODE
+                )
+            );
         }
     }
 }

@@ -5,22 +5,22 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Spryker\Zed\MerchantDataImport\Business\Address\Step;
+namespace Spryker\Zed\MerchantProfileDataImport\Business\Address\Step;
 
-use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
+use Orm\Zed\MerchantProfile\Persistence\Map\SpyMerchantProfileTableMap;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\MerchantDataImport\Business\Address\DataSet\MerchantAddressDataSetInterface;
+use Spryker\Zed\MerchantProfileDataImport\Business\Address\DataSet\MerchantProfileAddressDataSetInterface;
 
-class MerchantKeyToIdMerchantStep implements DataImportStepInterface
+class MerchantKeyToIdMerchantProfileStep implements DataImportStepInterface
 {
     /**
      * @var array
      */
-    protected $idMerchantCache = [];
+    protected $idMerchantProfileCache = [];
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -31,17 +31,17 @@ class MerchantKeyToIdMerchantStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $merchantKey = $dataSet[MerchantAddressDataSetInterface::MERCHANT_KEY];
+        $merchantKey = $dataSet[MerchantProfileAddressDataSetInterface::MERCHANT_KEY];
 
         if (!$merchantKey) {
-            throw new InvalidDataException('"' . MerchantAddressDataSetInterface::MERCHANT_KEY . '" is required.');
+            throw new InvalidDataException(sprintf('"%s" is required.', MerchantProfileAddressDataSetInterface::MERCHANT_KEY));
         }
 
-        if (!isset($this->idMerchantCache[$merchantKey])) {
-            $this->idMerchantCache[$merchantKey] = $this->getIdMerchant($merchantKey);
+        if (!isset($this->idMerchantProfileCache[$merchantKey])) {
+            $this->idMerchantProfileCache[$merchantKey] = $this->getIdMerchantProfile($merchantKey);
         }
 
-        $dataSet[MerchantAddressDataSetInterface::ID_MERCHANT] = $this->idMerchantCache[$merchantKey];
+        $dataSet[MerchantProfileAddressDataSetInterface::ID_MERCHANT_PROFILE] = $this->idMerchantProfileCache[$merchantKey];
     }
 
     /**
@@ -51,18 +51,19 @@ class MerchantKeyToIdMerchantStep implements DataImportStepInterface
      *
      * @return int
      */
-    protected function getIdMerchant(string $merchantKey): int
+    protected function getIdMerchantProfile(string $merchantKey): int
     {
         /** @var \Orm\Zed\Merchant\Persistence\SpyMerchantQuery $merchantQuery */
         $merchantQuery = SpyMerchantQuery::create()
-            ->select(SpyMerchantTableMap::COL_ID_MERCHANT);
-        /** @var int $idMerchant */
-        $idMerchant = $merchantQuery->findOneByMerchantKey($merchantKey);
+            ->select(SpyMerchantProfileTableMap::COL_ID_MERCHANT_PROFILE);
+        /** @var int $idMerchantProfile */
+        $idMerchantProfile = $merchantQuery->innerJoinSpyMerchantProfile()
+            ->findOneByMerchantKey($merchantKey);
 
-        if (!$idMerchant) {
+        if (!$idMerchantProfile) {
             throw new EntityNotFoundException(sprintf('Could not find Merchant by key "%s"', $merchantKey));
         }
 
-        return $idMerchant;
+        return $idMerchantProfile;
     }
 }

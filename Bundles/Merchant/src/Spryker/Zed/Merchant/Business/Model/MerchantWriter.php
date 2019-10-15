@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface;
-use Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriterInterface;
 use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface;
 use Spryker\Zed\Merchant\MerchantConfig;
 use Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface;
@@ -42,11 +41,6 @@ class MerchantWriter implements MerchantWriterInterface
     protected $merchantKeyGenerator;
 
     /**
-     * @var \Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriterInterface
-     */
-    protected $merchantAddressWriter;
-
-    /**
      * @var \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface
      */
     protected $merchantStatusValidator;
@@ -65,7 +59,6 @@ class MerchantWriter implements MerchantWriterInterface
      * @param \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface $merchantEntityManager
      * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $merchantRepository
      * @param \Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface $merchantKeyGenerator
-     * @param \Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriterInterface $merchantAddressWriter
      * @param \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface $merchantStatusValidator
      * @param \Spryker\Zed\Merchant\MerchantConfig $merchantConfig
      * @param \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[] $merchantPostSavePlugins
@@ -74,7 +67,6 @@ class MerchantWriter implements MerchantWriterInterface
         MerchantEntityManagerInterface $merchantEntityManager,
         MerchantRepositoryInterface $merchantRepository,
         MerchantKeyGeneratorInterface $merchantKeyGenerator,
-        MerchantAddressWriterInterface $merchantAddressWriter,
         MerchantStatusValidatorInterface $merchantStatusValidator,
         MerchantConfig $merchantConfig,
         array $merchantPostSavePlugins
@@ -82,7 +74,6 @@ class MerchantWriter implements MerchantWriterInterface
         $this->merchantEntityManager = $merchantEntityManager;
         $this->merchantRepository = $merchantRepository;
         $this->merchantKeyGenerator = $merchantKeyGenerator;
-        $this->merchantAddressWriter = $merchantAddressWriter;
         $this->merchantStatusValidator = $merchantStatusValidator;
         $this->merchantConfig = $merchantConfig;
         $this->merchantPostSavePlugins = $merchantPostSavePlugins;
@@ -106,7 +97,7 @@ class MerchantWriter implements MerchantWriterInterface
         $merchantTransfer->setStatus($this->merchantConfig->getDefaultMerchantStatus());
 
         $merchantTransfer = $this->getTransactionHandler()->handleTransaction(function () use ($merchantTransfer) {
-            return $this->executeCreateTransaction($merchantTransfer);
+            return $this->executeMerchantSaveTransaction($merchantTransfer);
         });
 
         $merchantResponseTransfer = $this->createMerchantResponseTransfer();
@@ -152,7 +143,7 @@ class MerchantWriter implements MerchantWriterInterface
         }
 
         $merchantTransfer = $this->getTransactionHandler()->handleTransaction(function () use ($merchantTransfer) {
-            return $this->executeUpdateTransaction($merchantTransfer);
+            return $this->executeMerchantSaveTransaction($merchantTransfer);
         });
 
         $merchantResponseTransfer = $merchantResponseTransfer
@@ -167,32 +158,8 @@ class MerchantWriter implements MerchantWriterInterface
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    protected function executeCreateTransaction(MerchantTransfer $merchantTransfer): MerchantTransfer
+    protected function executeMerchantSaveTransaction(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        $merchantAddressCollectionTransfer = $merchantTransfer->getAddressCollection();
-        $merchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
-        $merchantAddressCollectionTransfer = $this->merchantAddressWriter->saveMerchantAddressCollection(
-            $merchantAddressCollectionTransfer,
-            $merchantTransfer->getIdMerchant()
-        );
-        $merchantTransfer->setAddressCollection($merchantAddressCollectionTransfer);
-        $merchantTransfer = $this->executeMerchantPostSavePlugins($merchantTransfer);
-
-        return $merchantTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
-     */
-    protected function executeUpdateTransaction(MerchantTransfer $merchantTransfer): MerchantTransfer
-    {
-        $merchantAddressCollectionTransfer = $this->merchantAddressWriter->saveMerchantAddressCollection(
-            $merchantTransfer->getAddressCollection(),
-            $merchantTransfer->getIdMerchant()
-        );
-        $merchantTransfer->setAddressCollection($merchantAddressCollectionTransfer);
         $merchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
         $merchantTransfer = $this->executeMerchantPostSavePlugins($merchantTransfer);
 

@@ -34,4 +34,24 @@
         </unique>
     </table>
 
+    <table name="spy_merchant_profile_address" identifierQuoting="true">
+        <column name="id_merchant_profile_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_country" required="true" type="INTEGER"/>
+        <column name="address1" size="255" type="VARCHAR"/>
+        <column name="address2" size="255" type="VARCHAR"/>
+        <column name="address3" size="255" type="VARCHAR"/>
+        <column name="city" size="255" type="VARCHAR"/>
+        <column name="zip_code" size="15" type="VARCHAR"/>
+        <column name="fk_merchant_profile" required="true" type="INTEGER"/>
+
+        <foreign-key name="spy_merchant_profile_address-fk_country" foreignTable="spy_country">
+            <reference local="fk_country" foreign="id_country"/>
+        </foreign-key>
+        <foreign-key name="spy_merchant_profile_address-fk_merchant_profile" foreignTable="spy_merchant_profile">
+            <reference local="fk_merchant_profile" foreign="id_merchant_profile"/>
+        </foreign-key>
+
+        <id-method-parameter value="spy_merchant_profile_address_pk_seq"/>
+    </table>
+
 </database>

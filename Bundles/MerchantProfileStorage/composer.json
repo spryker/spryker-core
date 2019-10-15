@@ -18,11 +18,11 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
-    "spryker/testify": "*",
-    "spryker/url-storage": "*",
     "spryker/merchant": "*",
     "spryker/propel": "*",
-    "spryker/queue": "*"
+    "spryker/queue": "*",
+    "spryker/testify": "*",
+    "spryker/url-storage": "*"
   },
   "suggest": {
     "spryker/event": "To use event behavior.",
@@ -30,7 +30,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\MerchantProfileStorage\\Helper\\": "tests/SprykerTest/Zed/MerchantProfileStorage/_support/Helper/"
     }
   },
   "autoload-dev": {

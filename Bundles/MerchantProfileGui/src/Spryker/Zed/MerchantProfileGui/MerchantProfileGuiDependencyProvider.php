@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantProfileGui;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToCountryFacadeBridge;
 use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToGlossaryFacadeBridge;
 use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToLocaleFacadeBridge;
 use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToMerchantProfileFacadeBridge;
@@ -25,6 +26,7 @@ class MerchantProfileGuiDependencyProvider extends AbstractBundleDependencyProvi
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_URL = 'FACADE_URL';
+    public const FACADE_COUNTRY = 'FACADE_COUNTRY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -40,6 +42,7 @@ class MerchantProfileGuiDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addGlossaryFacade($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addUrlFacade($container);
+        $container = $this->addCountryFacade($container);
 
         return $container;
     }
@@ -110,6 +113,20 @@ class MerchantProfileGuiDependencyProvider extends AbstractBundleDependencyProvi
         $container[static::FACADE_URL] = function (Container $container) {
             return new MerchantProfileGuiToUrlFacadeBridge($container->getLocator()->url()->facade());
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCountryFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_COUNTRY, function (Container $container) {
+            return new MerchantProfileGuiToCountryFacadeBridge($container->getLocator()->country()->facade());
+        });
 
         return $container;
     }

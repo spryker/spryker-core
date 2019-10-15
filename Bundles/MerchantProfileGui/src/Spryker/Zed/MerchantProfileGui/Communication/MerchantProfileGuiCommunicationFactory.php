@@ -9,8 +9,10 @@ namespace Spryker\Zed\MerchantProfileGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantProfileGui\Communication\Form\Constraint\UniqueUrl;
+use Spryker\Zed\MerchantProfileGui\Communication\Form\DataProvider\MerchantProfileAddressFormDataProvider;
 use Spryker\Zed\MerchantProfileGui\Communication\Form\DataProvider\MerchantProfileFormDataProvider;
 use Spryker\Zed\MerchantProfileGui\Communication\Form\MerchantProfileFormType;
+use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToCountryFacadeInterface;
 use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToGlossaryFacadeInterface;
 use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToLocaleFacadeInterface;
 use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToMerchantProfileFacadeInterface;
@@ -55,6 +57,16 @@ class MerchantProfileGuiCommunicationFactory extends AbstractCommunicationFactor
     }
 
     /**
+     * @return \Spryker\Zed\MerchantProfileGui\Communication\Form\DataProvider\MerchantProfileAddressFormDataProvider
+     */
+    public function createMerchantProfileAddressFormDataProvider(): MerchantProfileAddressFormDataProvider
+    {
+        return new MerchantProfileAddressFormDataProvider(
+            $this->getCountryFacade()
+        );
+    }
+
+    /**
      * @return \Twig\Environment
      */
     public function getTwigEnvironment(): Environment
@@ -92,5 +104,13 @@ class MerchantProfileGuiCommunicationFactory extends AbstractCommunicationFactor
     public function getUrlFacade(): MerchantProfileGuiToUrlFacadeInterface
     {
         return $this->getProvidedDependency(MerchantProfileGuiDependencyProvider::FACADE_URL);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToCountryFacadeInterface
+     */
+    public function getCountryFacade(): MerchantProfileGuiToCountryFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProfileGuiDependencyProvider::FACADE_COUNTRY);
     }
 }

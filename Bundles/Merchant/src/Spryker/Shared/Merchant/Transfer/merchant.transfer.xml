@@ -10,7 +10,6 @@
         <property name="registrationNumber" type="string"/>
         <property name="email" type="string"/>
         <property name="status" type="string"/>
-        <property name="addressCollection" type="MerchantAddressCollection"/>
     </transfer>
 
     <transfer name="MerchantCriteriaFilter">
@@ -49,26 +48,9 @@
         <property name="message" type="string"/>
     </transfer>
 
-    <transfer name="MerchantAddress">
-        <property name="idMerchantAddress" type="int"/>
-        <property name="key" type="string"/>
-        <property name="fkCountry" type="int"/>
-        <property name="address1" type="string"/>
-        <property name="address2" type="string"/>
-        <property name="address3" type="string"/>
-        <property name="city" type="string"/>
-        <property name="zipCode" type="string"/>
-        <property name="email" type="string"/>
-        <property name="fkMerchant" type="int"/>
-    </transfer>
-
     <transfer name="MerchantCollection">
         <property name="merchants" type="Merchant[]"/>
         <property name="pagination" type="Pagination"/>
-    </transfer>
-
-    <transfer name="MerchantAddressCollection">
-        <property name="addresses" type="MerchantAddress[]" singular="address"/>
     </transfer>
 
 </transfers>

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProfile\Persistence;
 
+use Generated\Shared\Transfer\MerchantProfileAddressTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfile;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
@@ -57,5 +58,30 @@ class MerchantProfileEntityManager extends AbstractEntityManager implements Merc
         $merchantProfileTransfer->setIdMerchantProfile($merchantProfileEntity->getIdMerchantProfile());
 
         return $merchantProfileTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProfileAddressTransfer $merchantProfileAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileAddressTransfer
+     */
+    public function saveMerchantProfileAddress(MerchantProfileAddressTransfer $merchantProfileAddressTransfer): MerchantProfileAddressTransfer
+    {
+        $spyMerchantProfileAddress = $this->getFactory()
+            ->createMerchantProfileAddressQuery()
+            ->filterByIdMerchantProfileAddress($merchantProfileAddressTransfer->getIdMerchantProfileAddress())
+            ->findOneOrCreate();
+
+        $spyMerchantProfileAddress = $this->getFactory()
+            ->createMerchantProfileAddressMapper()
+            ->mapMerchantProfileAddressTransferToSpyMerchantProfileAddressEntity($merchantProfileAddressTransfer, $spyMerchantProfileAddress);
+
+        $spyMerchantProfileAddress->save();
+
+        $merchantProfileAddressTransfer = $this->getFactory()
+            ->createMerchantProfileAddressMapper()
+            ->mapMerchantProfileAddressEntityToMerchantProfileAddressTransfer($spyMerchantProfileAddress, $merchantProfileAddressTransfer);
+
+        return $merchantProfileAddressTransfer;
     }
 }
