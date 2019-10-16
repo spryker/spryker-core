@@ -87,6 +87,10 @@ class ProductReviewReader implements ProductReviewReaderInterface
             $restRequest->getMetadata()->getLocale()
         );
 
+        if (!$abstractProductData) {
+            return $this->createProductAbstractNotFoundError();
+        }
+
         $productReviews = $this->findProductReviewsInSearch(
             $restRequest,
             $abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT]
@@ -134,10 +138,6 @@ class ProductReviewReader implements ProductReviewReaderInterface
             $localeName
         );
 
-        if (!$abstractProductData) {
-            return [];
-        }
-
         $productReviewTransfers = $this->findProductReviewsInSearch(
             $restRequest,
             $abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT]
@@ -156,7 +156,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
         RestRequestInterface $restRequest,
         string $idProductAbstract
     ): array {
-        return $this->productReviewClient->findProductReviewsInSearch(
+        return $this->productReviewClient->findAllProductReviewsInSearch(
             (new ProductReviewSearchRequestTransfer())
                 ->setRequestParams($restRequest->getHttpRequest()->query->all())
                 ->setIdProductAbstract($idProductAbstract)
@@ -202,6 +202,19 @@ class ProductReviewReader implements ProductReviewReaderInterface
             ->setCode(ProductsRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED);
+
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function createProductAbstractNotFoundError(): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CANT_FIND_ABSTRACT_PRODUCT)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_ABSTRACT_PRODUCT);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
     }

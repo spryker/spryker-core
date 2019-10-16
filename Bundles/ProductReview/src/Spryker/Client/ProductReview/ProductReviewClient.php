@@ -10,6 +10,7 @@ namespace Spryker\Client\ProductReview;
 use Generated\Shared\Transfer\ProductReviewRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\ProductReviewsResultFormatterPlugin;
 
 /**
  * @method \Spryker\Client\ProductReview\ProductReviewFactory getFactory()
@@ -44,6 +45,25 @@ class ProductReviewClient extends AbstractClient implements ProductReviewClientI
     public function findProductReviewsInSearch(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer)
     {
         $searchQuery = $this->getFactory()->createProductReviewsQueryPlugin($productReviewSearchRequestTransfer);
+        $resultFormatters = $this->getFactory()->getProductReviewsSearchResultFormatterPlugins();
+
+        return $this->getFactory()
+            ->getSearchClient()
+            ->search($searchQuery, $resultFormatters, $productReviewSearchRequestTransfer->getRequestParams());
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer
+     *
+     * @return array
+     */
+    public function findAllProductReviewsInSearch(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer): array
+    {
+        $searchQuery = $this->getFactory()->createAllProductReviewsQueryPlugin($productReviewSearchRequestTransfer);
         $resultFormatters = $this->getFactory()->getProductReviewsSearchResultFormatterPlugins();
 
         return $this->getFactory()

@@ -36,6 +36,16 @@ class ProductReviewsRestApiToProductReviewClientBridge implements ProductReviews
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer
+     *
+     * @return array
+     */
+    public function findAllProductReviewsInSearch(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer): array
+    {
+        return $this->productReviewClient->findAllProductReviewsInSearch($productReviewSearchRequestTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductReviewRequestTransfer $productReviewRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductReviewResponseTransfer

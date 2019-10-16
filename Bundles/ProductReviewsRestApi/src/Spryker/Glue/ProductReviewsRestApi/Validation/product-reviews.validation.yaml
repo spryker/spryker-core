@@ -1,0 +1,16 @@
+product-reviews:
+  post:
+    rating:
+      - NotBlank
+      - Type:
+          type: numeric
+      - GreaterThanOrEqual:
+          value: 1
+      - LessThanOrEqual:
+          value: 5
+    description:
+          - NotBlank
+    summary:
+          - NotBlank
+    nickname:
+          - NotBlank

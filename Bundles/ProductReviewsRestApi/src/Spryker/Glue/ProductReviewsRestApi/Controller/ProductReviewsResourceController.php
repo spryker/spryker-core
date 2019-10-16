@@ -28,8 +28,8 @@ class ProductReviewsResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "Product review id is missing.",
-     *              "404": "Product review is not found."
+     *              "400": "Abstract product id is not specified.",
+     *              "404": "Abstract product not found."
      *          }
      *     }
      * })
@@ -47,12 +47,15 @@ class ProductReviewsResourceController extends AbstractController
      * @Glue({
      *     "getResourceById": {
      *          "summary": [
-     *              "Creates review."
+     *              "Creates a product review."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
+     *          "responses": {
+     *              "403": "Unauthorized request.",
+     *          }
      *     }
      * })
      *
