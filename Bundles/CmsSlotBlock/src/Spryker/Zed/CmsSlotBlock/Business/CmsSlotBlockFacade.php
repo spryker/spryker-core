@@ -17,6 +17,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CmsSlotBlockFacade extends AbstractFacade implements CmsSlotBlockFacadeInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer
