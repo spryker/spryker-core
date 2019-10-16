@@ -14,11 +14,11 @@
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
+    "spryker/auth-rest-api": "*",
     "spryker/code-sniffer": "*",
     "spryker/installer": "*",
     "spryker/propel": "*",
-    "spryker/testify": "*",
-    "spryker/auth-rest-api": "*"
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/installer": "If you want to use Installer plugins."
