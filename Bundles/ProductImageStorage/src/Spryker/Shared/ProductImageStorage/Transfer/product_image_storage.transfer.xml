@@ -30,4 +30,9 @@
         <property name="images" singular="image" type="ProductImageStorage[]"/>
     </transfer>
 
+    <transfer name="SynchronizationData">
+        <property name="locale" type="string"/>
+        <property name="reference" type="string"/>
+    </transfer>
+
 </transfers>

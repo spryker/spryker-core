@@ -5,34 +5,28 @@
 
     <transfer name="Discount">
         <property name="discountPromotion" type="DiscountPromotion"/>
+        <property name="idDiscount" type="int"/>
+        <property name="voucherCode" type="string"/>
     </transfer>
 
     <transfer name="Quote">
         <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
         <property name="usedNotAppliedVoucherCodes" type="array" singular="usedNotAppliedVoucherCode"/>
-    </transfer>
-
-    <transfer name="CartChange">
-        <property name="items" type="Item[]" singular="item"/>
-    </transfer>
-
-    <transfer name="PersistentCartChange">
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="PromotionItem">
         <property name="idDiscountPromotion" type="int"/>
         <property name="idProductAbstract" type="int"/>
+        <property name="maxQuantity" type="int"/>
         <property name="sku" type="string"/>
         <property name="abstractSku" type="string"/>
-        <property name="maxQuantity" type="int"/>
         <property name="discount" type="Discount"/>
     </transfer>
 
     <transfer name="Item">
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
         <property name="sku" type="string"/>
-        <property name="quantity" type="int"/>
         <property name="abstractSku" type="string"/>
         <property name="maxQuantity" type="int"/>
         <property name="idDiscountPromotion" type="int"/>
@@ -45,12 +39,14 @@
     <transfer name="DiscountableItem">
         <property name="quantity" type="int"/>
         <property name="unitGrossPrice" type="int"/>
-        <property name="originalItemCalculatedDiscounts" type="CalculatedDiscount[]"/>
+        <property name="originalItemCalculatedDiscounts" type="CalculatedDiscount[]" singular="originalItemCalculatedDiscounts"/>
         <property name="originalItem" type="Item"/>
+        <property name="unitPrice" type="int"/>
     </transfer>
 
     <transfer name="DiscountCalculator">
         <property name="discountPromotion" type="DiscountPromotion"/>
+        <property name="collectorStrategyType" type="string"/>
     </transfer>
 
     <transfer name="DiscountPromotion">
@@ -68,5 +64,35 @@
          <property name="promotionItem" type="PromotionItem"/>
     </transfer>
 
-</transfers>
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
 
+    <transfer name="PersistentCartChange">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="ProductAbstractAvailability">
+        <property name="isNeverOutOfStock" type="bool"/>
+        <property name="availability" type="int"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="DiscountConfigurator">
+        <property name="discountGeneral" type="DiscountGeneral"/>
+        <property name="discountCalculator" type="DiscountCalculator"/>
+    </transfer>
+
+    <transfer name="CollectedDiscount">
+        <property name="discount" type="Discount"/>
+        <property name="discountableItems" type="DiscountableItem[]" singular="discountableItems"/>
+    </transfer>
+
+    <transfer name="DiscountGeneral">
+        <property name="idDiscount" type="int"/>
+    </transfer>
+
+</transfers>

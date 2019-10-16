@@ -13,8 +13,8 @@
     </transfer>
 
     <transfer name="RestCatalogSearchSort">
-        <property name="sortParamNames" type="array"/>
-        <property name="sortParamLocalizedNames" type="array"/>
+        <property name="sortParamNames" type="array" singular="sortParamNames"/>
+        <property name="sortParamLocalizedNames" type="array" singular="sortParamLocalizedNames"/>
         <property name="currentSortParam" type="string"/>
         <property name="currentSortOrder" type="string"/>
     </transfer>
@@ -27,10 +27,10 @@
     </transfer>
 
     <transfer name="RestCatalogSearchAbstractProducts">
-        <property name="images" type="RestCatalogSearchProductImage[]"/>
+        <property name="images" type="RestCatalogSearchProductImage[]" singular="images"/>
         <property name="price" type="int"/>
         <property name="abstractName" type="string"/>
-        <property name="prices" type="array"/>
+        <property name="prices" type="array" singular="prices"/>
         <property name="abstractSku" type="string"/>
     </transfer>
 
@@ -60,14 +60,14 @@
     </transfer>
 
     <transfer name="RestCatalogSearchSuggestionsAttributes">
-        <property name="completion" type="string[]"/>
+        <property name="completion" type="string[]" singular="completion"/>
         <property name="abstractProducts" type="RestCatalogSearchSuggestionAbstractProducts[]" singular="abstractProduct"/>
-        <property name="categories" type="array"/>
-        <property name="cmsPages" type="array"/>
+        <property name="categories" type="array" singular="categories"/>
+        <property name="cmsPages" type="array" singular="cmsPages"/>
     </transfer>
 
     <transfer name="RestCatalogSearchSuggestionAbstractProducts">
-        <property name="images" type="RestCatalogSearchSuggestionProductImage[]"/>
+        <property name="images" type="RestCatalogSearchSuggestionProductImage[]" singular="images"/>
         <property name="price" type="int"/>
         <property name="abstractName" type="string"/>
         <property name="abstractSku" type="string"/>
@@ -111,6 +111,19 @@
     </transfer>
 
     <transfer name="FacetConfig">
+    </transfer>
+
+    <transfer name="RestErrorCollection">
+        <property name="restErrors" type="RestErrorMessage[]" singular="restError"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string"/>
+        <property name="status" type="int"/>
+        <property name="detail" type="string"/>
+    </transfer>
+
+    <transfer name="Currency">
     </transfer>
 
 </transfers>

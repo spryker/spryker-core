@@ -6,8 +6,8 @@
     <transfer name="ManualOrder">
         <property name="voucherCode" type="string"/>
         <property name="storeCurrency" type="string"/>
-        <property name="products" type="Item[]"/>
-        <property name="items" type="Item[]"/>
+        <property name="products" type="Item[]" singular="products"/>
+        <property name="items" type="Item[]" singular="items"/>
         <property name="isProductPosted" type="bool"/>
         <property name="isSubmitOrder" type="bool"/>
     </transfer>
@@ -18,27 +18,163 @@
         <property name="customer" type="Customer"/>
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="billingAddress" type="Address"/>
-        <property name="voucherDiscounts" type="Discount[]"/>
-        <property name="items" type="Item[]"/>
+        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
+        <property name="items" type="Item[]" singular="item"/>
         <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
         <property name="payment" type="Payment"/>
-        <property name="payments" type="Payment[]"/>
+        <property name="payments" type="Payment[]" singular="payment"/>
         <property name="manualOrder" type="ManualOrder"/>
         <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
         <property name="giftCards" type="GiftCard[]" singular="giftCard"/>
         <property name="notApplicableGiftCardCodes" type="array" singular="notApplicableGiftCardCode"/>
         <property name="bundleItems" type="Item[]" singular="bundleItem"/>
         <property name="voucherCode" type="string"/>
+        <property name="billingSameAsShipping" type="bool"/>
+        <property name="totals" type="Totals"/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="priceMode" type="string"/>
+        <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
+        <property name="orderSource" type="OrderSource"/>
     </transfer>
 
     <transfer name="Item">
         <property name="forcedUnitGrossPrice" type="bool"/>
+        <property name="shipment" type="Shipment"/>
+        <property name="unitGrossPrice" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="CalculableObject">
         <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
         <property name="giftCards" type="GiftCard[]" singular="giftCard"/>
         <property name="notApplicableGiftCardCodes" type="array" singular="notApplicableGiftCardCode"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="totals" type="Totals"/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="priceMode" type="string"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
+        <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
+        <property name="originalQuote" type="Quote"/>
+        <property name="payments" type="Payment[]" singular="payment"/>
+        <property name="payment" type="Payment"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="saveOrder" type="SaveOrder"/>
+    </transfer>
+
+    <transfer name="CustomerResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="customerTransfer" type="Customer"/>
+        <property name="errors" type="CustomerError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="password" type="string"/>
+        <property name="sendPasswordToken" type="bool"/>
+        <property name="idCustomer" type="int"/>
+        <property name="defaultShippingAddress" type="string"/>
+        <property name="defaultBillingAddress" type="string"/>
+        <property name="addresses" type="Addresses" singular="address"/>
+    </transfer>
+
+    <transfer name="SaveOrder">
+        <property name="idSalesOrder" type="int"/>
+    </transfer>
+
+    <transfer name="Address">
+        <property name="idCustomerAddress" type="int"/>
+        <property name="fkCustomer" type="int"/>
+        <property name="salutation" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="city" type="string"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="method" type="ShipmentMethod"/>
+    </transfer>
+
+    <transfer name="ShipmentMethods">
+        <property name="methods" type="ShipmentMethod[]" singular="method"/>
+    </transfer>
+
+    <transfer name="ShipmentMethodsCollection">
+        <property name="shipmentMethods" type="ShipmentMethods[]" singular="shipmentMethods"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="StoreWithCurrency">
+        <property name="store" type="Store"/>
+        <property name="currencies" type="Currency[]" singular="currency"/>
+    </transfer>
+
+    <transfer name="Payment">
+        <property name="paymentSelection" type="string"/>
+        <property name="paymentProvider" type="string"/>
+        <property name="paymentMethod" type="string"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="Expense">
+        <property name="type" type="string"/>
+        <property name="unitNetPrice" type="int"/>
+        <property name="unitGrossPrice" type="int"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="storeCurrencyPrice" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="carrierName" type="string"/>
+        <property name="name" type="string"/>
+        <property name="idShipmentMethod" type="int"/>
+    </transfer>
+
+    <transfer name="Discount">
+        <property name="voucherCode" type="string"/>
+    </transfer>
+
+    <transfer name="FlashMessages">
+        <property name="successMessages" type="array" singular="successMessage"/>
+        <property name="errorMessages" type="array" singular="errorMessage"/>
+        <property name="infoMessages" type="array" singular="infoMessage"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="OrderSource">
+        <property name="name" type="string"/>
+        <property name="idOrderSource" type="int"/>
+    </transfer>
+
+    <transfer name="CustomerError">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="Addresses">
+        <property name="addresses" type="Address[]" singular="address"/>
     </transfer>
 
 </transfers>
