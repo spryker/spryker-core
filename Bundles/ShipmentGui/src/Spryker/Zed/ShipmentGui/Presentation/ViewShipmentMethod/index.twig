@@ -14,7 +14,7 @@
 
 {% block content %}
     {{ form_start(form) }}
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Configuration' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Configuration'| trans } %}
         {% block widget_content %}
             <div class="row">
                 <div class="col-xs-12 col-md-6 col-lg-3">
@@ -75,13 +75,13 @@
         {% endblock %}
     {% endembed %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Store relation' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Store relation' | trans } %}
         {% block widget_content %}
             {{ form_row(form.storeRelation) }}
         {% endblock %}
     {% endembed %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Price & Tax' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Price & Tax' | trans } %}
         {% block widget_content %}
             {{ form_money_collection(form.prices) }}
             {{ form_row(form.fkTaxSet) }}

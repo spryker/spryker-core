@@ -17,6 +17,7 @@ class ViewShipmentMethodController extends AbstractController
 {
     protected const PARAM_ID_SHIPMENT_METHOD = 'id-shipment-method';
     protected const REDIRECT_URL = '/shipment-gui/shipment-method';
+    protected const ERROR_MESSAGE_SHIPMENT_METHOD_NOT_FOUND = 'Shipment method is not found';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -32,6 +33,8 @@ class ViewShipmentMethodController extends AbstractController
             ->findMethodById($idShipmentMethod);
 
         if ($shipmentMethodTransfer === null) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_SHIPMENT_METHOD_NOT_FOUND);
+
             return $this->redirectResponse(static::REDIRECT_URL);
         }
 
