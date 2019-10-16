@@ -300,4 +300,19 @@ interface StockFacadeInterface
      * @return \Generated\Shared\Transfer\StockResponseTransfer
      */
     public function createStock(StockTransfer $stockTransfer): StockResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Updates stock.
+     *  - Updates stock store relationships.
+     *  - Persists stock entity to database.
+     *  - Touches the newly created stock.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockResponseTransfer
+     */
+    public function updateStock(StockTransfer $stockTransfer): StockResponseTransfer;
 }

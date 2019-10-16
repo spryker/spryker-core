@@ -42,7 +42,7 @@ class Writer implements WriterInterface
     protected $touchFacade;
 
     /**
-     * @var \Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface[]
+     * @var \Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface[]
      */
     protected $stockUpdateHandlerPlugins;
 
@@ -50,7 +50,7 @@ class Writer implements WriterInterface
      * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Stock\Business\Model\ReaderInterface $readerInterface
      * @param \Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface $touchFacade
-     * @param \Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface[] $stockUpdateHandlerPlugins
+     * @param \Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface[] $stockUpdateHandlerPlugins
      */
     public function __construct(
         StockQueryContainerInterface $queryContainer,

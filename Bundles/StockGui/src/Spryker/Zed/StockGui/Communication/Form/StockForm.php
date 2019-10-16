@@ -10,6 +10,7 @@ namespace Spryker\Zed\StockGui\Communication\Form;
 use Generated\Shared\Transfer\StockTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,6 +25,7 @@ class StockForm extends AbstractType
 {
     protected const BLOCK_PREFIX = 'stock';
 
+    protected const FIELD_ID_STOCK = 'idStock';
     protected const FIELD_NAME = 'name';
     protected const FIELD_IS_ACTIVE = 'isActive';
     protected const FIELD_STORE_RELATION = 'storeRelation';
@@ -59,9 +61,22 @@ class StockForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addNameField($builder)
+        $this->addIdStockField($builder)
+            ->addNameField($builder)
             ->addIsActiveField($builder)
             ->addStoreRelationForm($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addIdStockField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_ID_STOCK, HiddenType::class);
+
+        return $this;
     }
 
     /**

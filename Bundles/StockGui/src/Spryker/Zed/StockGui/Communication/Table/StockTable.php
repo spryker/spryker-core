@@ -183,7 +183,7 @@ class StockTable extends AbstractTable
     protected function generateStockEditButton(int $idStock): string
     {
         return $this->generateEditButton(
-            Url::generate('/stock-gui/edit-stock', [
+            Url::generate('/stock-gui/edit-warehouse', [
                 'id-stock' => $idStock,
             ]),
             'Edit'

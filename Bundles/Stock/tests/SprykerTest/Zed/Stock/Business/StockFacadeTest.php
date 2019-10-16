@@ -437,7 +437,6 @@ class StockFacadeTest extends Unit
         $this->assertIsArray($stockCollection, 'Stock types collection should be an array.');
         $this->assertEquals([
             $this->stockTransfer1->getName() => $this->stockTransfer1->getName(),
-            $this->stockTransfer2->getName() => $this->stockTransfer2->getName(),
         ], $stockCollection, 'Stock types collection does not match expected value.');
     }
 
@@ -483,13 +482,22 @@ class StockFacadeTest extends Unit
         $storeToWarehouseMapping = $this->stockFacade->getStoreToWarehouseMapping();
 
         //Assert
-        $this->assertArrayHasKey($this->storeTransfer->getName(), $storeToWarehouseMapping);
+        $this->assertArrayHasKey(
+            $this->storeTransfer->getName(),
+            $storeToWarehouseMapping,
+            'Store to warehouse mapping collection does not have expected key.'
+        );
         $this->assertEquals(
             [$this->stockTransfer1->getName()],
-            $storeToWarehouseMapping[$this->storeTransfer->getName()]
+            $storeToWarehouseMapping[$this->storeTransfer->getName()],
+            'Store to warehouse mapping collection does not match expected value.'
         );
 
-        $this->assertArrayHasKey($storeTransfer2->getName(), $storeToWarehouseMapping);
+        $this->assertArrayHasKey(
+            $storeTransfer2->getName(),
+            $storeToWarehouseMapping,
+            'Store to warehouse mapping collection does not have expected key.'
+        );
         $this->assertEquals(
             [
                 $this->stockTransfer1->getName(),
@@ -640,9 +648,9 @@ class StockFacadeTest extends Unit
         $stockTransfer = $this->stockFacade->findStockById($this->stockTransfer1->getIdStock());
 
         //Assert
-        $this->assertEquals($this->stockTransfer1->getIdStock(), $stockTransfer->getIdStock());
-        $this->assertEquals($this->stockTransfer1->getName(), $stockTransfer->getName());
-        $this->assertEquals($this->stockTransfer1->getIsActive(), $stockTransfer->getIsActive());
+        $this->assertEquals($this->stockTransfer1->getIdStock(), $stockTransfer->getIdStock(), 'Stock ID should be integer value.');
+        $this->assertEquals($this->stockTransfer1->getName(), $stockTransfer->getName(), 'Stock name does not match expected value.');
+        $this->assertEquals($this->stockTransfer1->getIsActive(), $stockTransfer->getIsActive(), 'Stock active status does not match expected value.');
     }
 
     /**
@@ -654,7 +662,84 @@ class StockFacadeTest extends Unit
         $result = $this->stockFacade->findStockById(-1);
 
         //Assert
-        $this->assertNull($result);
+        $this->assertNull($result, 'The result must be null');
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateStockShouldUpdateStockName(): void
+    {
+        //Arrange
+        $originStockTransfer = $this->stockTransfer1;
+        $originStockTransfer->setName(static::STOCK_NAME);
+
+        //Act
+        $stockResponseTransfer = $this->stockFacade->updateStock($originStockTransfer);
+
+        //Assert
+        $this->assertTrue($stockResponseTransfer->getIsSuccessful(), 'Stock response should be successful.');
+        $stockTransfer = $stockResponseTransfer->getStock();
+        $this->assertEquals($originStockTransfer->getName(), $stockTransfer->getName(), 'Stock name does not match expected value.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateStockShouldUpdateStockStatus(): void
+    {
+        //Arrange
+        $originStockTransfer = $this->stockTransfer1;
+        $originStockTransfer->setIsActive(false);
+
+        //Act
+        $stockResponseTransfer = $this->stockFacade->updateStock($originStockTransfer);
+
+        //Assert
+        $this->assertTrue($stockResponseTransfer->getIsSuccessful(), 'Stock response should be successful.');
+        $stockTransfer = $stockResponseTransfer->getStock();
+        $this->assertEquals($originStockTransfer->getIsActive(), $stockTransfer->getIsActive(), 'Stock active status does not match expected value.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateStockShouldAddStoreRelations(): void
+    {
+        //Arrange
+        $storeRelationTransfer = (new StoreRelationTransfer())
+            ->setIdStores([$this->storeTransfer->getIdStore()]);
+        $originStockTransfer = $this->stockTransfer2;
+        $originStockTransfer->setStoreRelation($storeRelationTransfer);
+
+        //Act
+        $stockResponseTransfer = $this->stockFacade->updateStock($originStockTransfer);
+        $storeStockRelation = $this->stockFacade->getStockTypesForStore($this->storeTransfer);
+
+        //Assert
+        $this->assertTrue($stockResponseTransfer->getIsSuccessful(), 'Stock response should be successful.');
+        $stockTransfer = $stockResponseTransfer->getStock();
+        $this->assertContains($stockTransfer->getName(), $storeStockRelation, 'Store relation does not contain expected store name.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateStockShouldRemoveStoreRelations(): void
+    {
+        //Arrange
+        $storeRelationTransfer = (new StoreRelationTransfer())->setIdStores([]);
+        $originStockTransfer = $this->stockTransfer1;
+        $originStockTransfer->setStoreRelation($storeRelationTransfer);
+
+        //Act
+        $stockResponseTransfer = $this->stockFacade->updateStock($originStockTransfer);
+        $storeStockRelation = $this->stockFacade->getStockTypesForStore($this->storeTransfer);
+
+        //Assert
+        $this->assertTrue($stockResponseTransfer->getIsSuccessful(), 'Stock response should be successful.');
+        $stockTransfer = $stockResponseTransfer->getStock();
+        $this->assertNotContains($stockTransfer->getName(), $storeStockRelation, 'Store relation should not contain store name.');
     }
 
     /**
