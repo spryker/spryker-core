@@ -1,5 +1,5 @@
 {
   "include": {
-    "spryker/synchronization-behavior": "SynchronizationBehavior adds the alias_keys column, which is required key mappings resolving."
+    "spryker/synchronization-behavior": "SynchronizationBehavior adds the alias_keys column, which is required for key mappings resolving."
   }
 }
