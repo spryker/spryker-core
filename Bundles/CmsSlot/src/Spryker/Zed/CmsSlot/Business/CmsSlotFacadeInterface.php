@@ -9,13 +9,14 @@ namespace Spryker\Zed\CmsSlot\Business;
 
 use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 
 interface CmsSlotFacadeInterface
 {
     /**
      * Specification:
-     * - Validates cms slot transfer.
+     * - Validates CMS slot transfer.
      * - Returns ValidationResponseTransfer with status and messages in case of fail.
      *
      * @api
@@ -28,7 +29,7 @@ interface CmsSlotFacadeInterface
 
     /**
      * Specification:
-     * - Validates cms slot template transfer.
+     * - Validates CMS slot template transfer.
      * - Returns ValidationResponseTransfer with status and messages in case of fail.
      *
      * @api
@@ -41,7 +42,7 @@ interface CmsSlotFacadeInterface
 
     /**
      * Specification:
-     * - Activates cms slot by id.
+     * - Activates CMS slot by id.
      *
      * @api
      *
@@ -53,7 +54,7 @@ interface CmsSlotFacadeInterface
 
     /**
      * Specification:
-     * - Deactivates cms slot by id.
+     * - Deactivates CMS slot by id.
      *
      * @api
      *
@@ -62,4 +63,28 @@ interface CmsSlotFacadeInterface
      * @return void
      */
     public function deactivateByIdCmsSlot(int $idCmsSlot): void;
+
+    /**
+     * Specification:
+     * - Retrieves CMS slots according to given offset and limit.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
+     */
+    public function getFilteredCmsSlots(FilterTransfer $filterTransfer): array;
+
+    /**
+     * Specification:
+     * - Retrieves CMS slots according to given CMS slot ids.
+     *
+     * @api
+     *
+     * @param int[] $cmsSlotIds
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
+     */
+    public function getCmsSlotsByCmsSlotIds(array $cmsSlotIds): array;
 }

@@ -1,0 +1,46 @@
+{
+  "name": "spryker/cms-slot-storage",
+  "type": "library",
+  "description": "CmsSlotStorage module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/cms-slot": "^0.4.0",
+    "spryker/event-behavior": "^1.8.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/storage": "^3.0.0",
+    "spryker/synchronization": "^1.0.0",
+    "spryker/synchronization-behavior": "^1.0.0",
+    "spryker/synchronization-extension": "^1.1.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/event": "*",
+    "spryker/propel": "*",
+    "spryker/queue": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
