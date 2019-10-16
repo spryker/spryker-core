@@ -12,18 +12,18 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class ShipmentDataImportConfig extends DataImportConfig
 {
-    public const IMPORT_TYPE_SHIPMENT_STORE = 'shipment-method-store';
+    public const IMPORT_TYPE_SHIPMENT_METHOD_STORE = 'shipment-method-store';
     public const IMPORT_TYPE_SHIPMENT = 'shipment';
     public const IMPORT_TYPE_SHIPMENT_PRICE = 'shipment-price';
 
     /**
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
-    public function getShipmentStoreDataImporterConfiguration(): DataImporterConfigurationTransfer
+    public function getShipmentMethodStoreDataImporterConfiguration(): DataImporterConfigurationTransfer
     {
         $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
 
-        return $this->buildImporterConfiguration($moduleDataImportDirectory . 'shipment_method_store.csv', static::IMPORT_TYPE_SHIPMENT_STORE);
+        return $this->buildImporterConfiguration($moduleDataImportDirectory . 'shipment_method_store.csv', static::IMPORT_TYPE_SHIPMENT_METHOD_STORE);
     }
 
     /**
@@ -39,7 +39,7 @@ class ShipmentDataImportConfig extends DataImportConfig
     /**
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
-    public function getShipmentPriceDataImporterConfiguration(): DataImporterConfigurationTransfer
+    public function getShipmentMethodPriceDataImporterConfiguration(): DataImporterConfigurationTransfer
     {
         $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
 

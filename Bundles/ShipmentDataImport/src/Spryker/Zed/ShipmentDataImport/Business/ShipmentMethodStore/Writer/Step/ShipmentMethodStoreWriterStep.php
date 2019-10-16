@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShipmentDataImport\Business\ShipmentStore\Writer\Step;
+namespace Spryker\Zed\ShipmentDataImport\Business\ShipmentMethodStore\Writer\Step;
 
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodStoreQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\ShipmentDataImport\Business\ShipmentStore\Writer\DataSet\ShipmentMethodStoreDataSetInterface;
+use Spryker\Zed\ShipmentDataImport\Business\ShipmentMethodStore\Writer\DataSet\ShipmentMethodStoreDataSetInterface;
 
 class ShipmentMethodStoreWriterStep implements DataImportStepInterface
 {
@@ -22,8 +22,8 @@ class ShipmentMethodStoreWriterStep implements DataImportStepInterface
     public function execute(DataSetInterface $dataSet): void
     {
         SpyShipmentMethodStoreQuery::create()
-            ->filterByFkStore($dataSet[ShipmentMethodStoreDataSetInterface::COLUMN_ID_STORE])
-            ->filterByFkShipmentMethod($dataSet[ShipmentMethodStoreDataSetInterface::COLUMN_ID_SHIPMENT_METHOD])
+            ->filterByFkStore($dataSet[ShipmentMethodStoreDataSetInterface::COL_ID_STORE])
+            ->filterByFkShipmentMethod($dataSet[ShipmentMethodStoreDataSetInterface::COL_ID_SHIPMENT_METHOD])
             ->findOneOrCreate()
             ->save();
     }

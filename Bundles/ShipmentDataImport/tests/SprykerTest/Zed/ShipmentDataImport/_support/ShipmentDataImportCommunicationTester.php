@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ShipmentDataImport;
 
 use Codeception\Actor;
+use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodStoreQuery;
@@ -56,5 +57,13 @@ class ShipmentDataImportCommunicationTester extends Actor
     public function ensureShipmentMethodPriceTableIsEmpty(): void
     {
         SpyShipmentMethodPriceQuery::create()->deleteAll();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureShipmentCarrierTableIsEmpty(): void
+    {
+        SpyShipmentCarrierQuery::create()->deleteAll();
     }
 }

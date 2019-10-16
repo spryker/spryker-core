@@ -10,7 +10,9 @@ namespace SprykerTest\Zed\ShipmentDataImport\Communication\Plugin;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
-use Spryker\Zed\ShipmentDataImport\Communication\Plugin\ShipmentPriceDataImportPlugin;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\ShipmentDataImport\Communication\Plugin\ShipmentMethodStoreDataImportPlugin;
 
 /**
  * Auto-generated group annotations
@@ -20,10 +22,10 @@ use Spryker\Zed\ShipmentDataImport\Communication\Plugin\ShipmentPriceDataImportP
  * @group ShipmentDataImport
  * @group Communication
  * @group Plugin
- * @group ShipmentPriceDataImportPluginTest
+ * @group ShipmentMethodStoreDataImportPluginTest
  * Add your own group annotations below this line
  */
-class ShipmentPriceDataImportPluginTest extends Unit
+class ShipmentMethodStoreDataImportPluginTest extends Unit
 {
     protected const EXPECTED_IMPORT_COUNT = 2;
 
@@ -35,17 +37,28 @@ class ShipmentPriceDataImportPluginTest extends Unit
     /**
      * @return void
      */
-    public function testImportImportsShipment(): void
+    public function testImportImportsShipmentStore(): void
     {
         //Arrange
-        $this->tester->ensureShipmentMethodPriceTableIsEmpty();
+        $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
+        $this->tester->haveStore([
+            StoreTransfer::NAME => 'AT',
+        ]);
+
+        $this->tester->haveShipmentMethod([
+            ShipmentMethodTransfer::SHIPMENT_METHOD_KEY => 'method-1',
+        ]);
+
+        $this->tester->ensureShipmentMethodStoreTableIsEmpty();
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
-        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/shipment_price.csv');
+        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/shipment_method_store.csv');
 
         $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
-        $shipmentStoreDataImportPlugin = new ShipmentPriceDataImportPlugin();
+        $shipmentStoreDataImportPlugin = new ShipmentMethodStoreDataImportPlugin();
 
         //Act
         $dataImporterReportTransfer = $shipmentStoreDataImportPlugin->import($dataImportConfigurationTransfer);
@@ -57,7 +70,7 @@ class ShipmentPriceDataImportPluginTest extends Unit
             static::EXPECTED_IMPORT_COUNT,
             $dataImporterReportTransfer->getImportedDataSetCount(),
             sprintf(
-                'Imported number of shipments is %s expected %s.',
+                'Imported number of price product schedules is %s expected %s.',
                 $dataImporterReportTransfer->getImportedDataSetCount(),
                 static::EXPECTED_IMPORT_COUNT
             )

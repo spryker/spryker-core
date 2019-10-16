@@ -17,7 +17,7 @@ use Spryker\Zed\ShipmentDataImport\ShipmentDataImportConfig;
  * @method \Spryker\Zed\ShipmentDataImport\Business\ShipmentDataImportFacadeInterface getFacade()
  * @method \Spryker\Zed\ShipmentDataImport\ShipmentDataImportConfig getConfig()
  */
-class ShipmentStoreDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
+class ShipmentMethodStoreDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -44,6 +44,6 @@ class ShipmentStoreDataImportPlugin extends AbstractPlugin implements DataImport
      */
     public function getImportType(): string
     {
-        return ShipmentDataImportConfig::IMPORT_TYPE_SHIPMENT_STORE;
+        return ShipmentDataImportConfig::IMPORT_TYPE_SHIPMENT_METHOD_STORE;
     }
 }

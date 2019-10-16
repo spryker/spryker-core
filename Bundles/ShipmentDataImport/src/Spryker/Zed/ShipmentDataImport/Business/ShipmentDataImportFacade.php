@@ -59,11 +59,11 @@ class ShipmentDataImportFacade extends AbstractFacade implements ShipmentDataImp
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importShipmentPrice(
+    public function importShipmentMethodPrice(
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer {
         return $this->getFactory()
-            ->getShipmentPriceDataImporter()
+            ->getShipmentMethodPriceDataImporter()
             ->import($dataImporterConfigurationTransfer);
     }
 }

@@ -10,13 +10,13 @@ namespace Spryker\Zed\ShipmentDataImport\Business;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\ShipmentDataImport\Business\Shipment\Writer\Step\ShipmentCarrierWriterStep;
-use Spryker\Zed\ShipmentDataImport\Business\Shipment\Writer\Step\ShipmentWriterStep;
+use Spryker\Zed\ShipmentDataImport\Business\Shipment\Writer\Step\ShipmentMethodWriterStep;
 use Spryker\Zed\ShipmentDataImport\Business\Shipment\Writer\Step\TaxSetNameToIdTaxSetStep;
-use Spryker\Zed\ShipmentDataImport\Business\ShipmentPrice\Writer\Step\CurrencyCodeToIdCurrencyStep;
-use Spryker\Zed\ShipmentDataImport\Business\ShipmentPrice\Writer\Step\ShipmentPriceWriterStep;
-use Spryker\Zed\ShipmentDataImport\Business\ShipmentStore\Writer\Step\ShipmentMethodKeyToIdShipmentMethodStep;
-use Spryker\Zed\ShipmentDataImport\Business\ShipmentStore\Writer\Step\ShipmentMethodStoreWriterStep;
-use Spryker\Zed\ShipmentDataImport\Business\ShipmentStore\Writer\Step\StoreNameToIdStoreStep;
+use Spryker\Zed\ShipmentDataImport\Business\ShipmentMethodPrice\Writer\Step\CurrencyCodeToIdCurrencyStep;
+use Spryker\Zed\ShipmentDataImport\Business\ShipmentMethodPrice\Writer\Step\ShipmentMethodPriceWriterStep;
+use Spryker\Zed\ShipmentDataImport\Business\ShipmentMethodStore\Writer\Step\ShipmentMethodKeyToIdShipmentMethodStep;
+use Spryker\Zed\ShipmentDataImport\Business\ShipmentMethodStore\Writer\Step\ShipmentMethodStoreWriterStep;
+use Spryker\Zed\ShipmentDataImport\Business\ShipmentMethodStore\Writer\Step\StoreNameToIdStoreStep;
 
 /**
  * @method \Spryker\Zed\ShipmentDataImport\ShipmentDataImportConfig getConfig()
@@ -30,7 +30,7 @@ class ShipmentDataImportBusinessFactory extends DataImportBusinessFactory
     {
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
         $dataImporter = $this->getCsvDataImporterFromConfig(
-            $this->getConfig()->getShipmentStoreDataImporterConfiguration()
+            $this->getConfig()->getShipmentMethodStoreDataImporterConfiguration()
         );
 
         /** @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware $dataSetStepBroker */
@@ -51,11 +51,11 @@ class ShipmentDataImportBusinessFactory extends DataImportBusinessFactory
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
         $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getShipmentDataImporterConfiguration());
 
-        $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker(ShipmentWriterStep::BULK_SIZE);
+        $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker(ShipmentMethodWriterStep::BULK_SIZE);
         $dataSetStepBroker
             ->addStep($this->createTaxSetNameToIdTaxSetStep())
             ->addStep($this->createShipmentCarrierWriterStep())
-            ->addStep($this->createShipmentWriterStep());
+            ->addStep($this->createShipmentMethodWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
@@ -65,16 +65,16 @@ class ShipmentDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
      */
-    public function getShipmentPriceDataImporter()
+    public function getShipmentMethodPriceDataImporter()
     {
-        $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getShipmentPriceDataImporterConfiguration());
+        $dataImporter = $this->getCsvDataImporterFromConfig($this->getConfig()->getShipmentMethodPriceDataImporterConfiguration());
 
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker(100);
         $dataSetStepBroker
             ->addStep($this->createShipmentMethodKeyToIdShipmentMethodStep())
             ->addStep($this->createStoreNameToIdStoreStep())
             ->addStep($this->createCurrencyCodeToIdCurrencyStep())
-            ->addStep($this->createShipmentPriceWriterStep());
+            ->addStep($this->createShipmentMethodPriceWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
@@ -84,9 +84,9 @@ class ShipmentDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createShipmentPriceWriterStep(): DataImportStepInterface
+    public function createShipmentMethodPriceWriterStep(): DataImportStepInterface
     {
-        return new ShipmentPriceWriterStep();
+        return new ShipmentMethodPriceWriterStep();
     }
 
     /**
@@ -116,9 +116,9 @@ class ShipmentDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createShipmentWriterStep(): DataImportStepInterface
+    public function createShipmentMethodWriterStep(): DataImportStepInterface
     {
-        return new ShipmentWriterStep();
+        return new ShipmentMethodWriterStep();
     }
 
     /**

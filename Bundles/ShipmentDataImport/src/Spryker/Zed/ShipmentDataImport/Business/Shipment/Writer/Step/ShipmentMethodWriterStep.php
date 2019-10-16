@@ -12,7 +12,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\ShipmentDataImport\Business\Shipment\Writer\DataSet\ShipmentDataSetInterface;
 
-class ShipmentWriterStep implements DataImportStepInterface
+class ShipmentMethodWriterStep implements DataImportStepInterface
 {
     public const BULK_SIZE = 100;
 

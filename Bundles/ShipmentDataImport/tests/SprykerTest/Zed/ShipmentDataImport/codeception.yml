@@ -26,3 +26,4 @@ suites:
         - \SprykerTest\Shared\Propel\Helper\TransactionHelper
         - \SprykerTest\Shared\Shipment\Helper\ShipmentMethodDataHelper
         - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+        - \SprykerTest\Shared\Currency\Helper\CurrencyDataHelper

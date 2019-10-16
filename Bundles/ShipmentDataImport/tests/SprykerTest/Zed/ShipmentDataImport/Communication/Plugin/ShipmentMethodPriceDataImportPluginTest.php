@@ -8,11 +8,12 @@
 namespace SprykerTest\Zed\ShipmentDataImport\Communication\Plugin;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Zed\ShipmentDataImport\Communication\Plugin\ShipmentStoreDataImportPlugin;
+use Spryker\Zed\ShipmentDataImport\Communication\Plugin\ShipmentMethodPriceDataImportPlugin;
 
 /**
  * Auto-generated group annotations
@@ -22,10 +23,10 @@ use Spryker\Zed\ShipmentDataImport\Communication\Plugin\ShipmentStoreDataImportP
  * @group ShipmentDataImport
  * @group Communication
  * @group Plugin
- * @group ShipmentStoreDataImportPluginTest
+ * @group ShipmentMethodPriceDataImportPluginTest
  * Add your own group annotations below this line
  */
-class ShipmentStoreDataImportPluginTest extends Unit
+class ShipmentMethodPriceDataImportPluginTest extends Unit
 {
     protected const EXPECTED_IMPORT_COUNT = 2;
 
@@ -37,28 +38,29 @@ class ShipmentStoreDataImportPluginTest extends Unit
     /**
      * @return void
      */
-    public function testImportImportsShipmentStore(): void
+    public function testImportImportsShipmentMethodPrices(): void
     {
         //Arrange
+        $this->tester->ensureShipmentMethodPriceTableIsEmpty();
         $this->tester->haveStore([
             StoreTransfer::NAME => 'DE',
         ]);
-        $this->tester->haveStore([
-            StoreTransfer::NAME => 'AT',
+        $this->tester->haveCurrency([
+            CurrencyTransfer::CODE => 'EUR',
         ]);
-
         $this->tester->haveShipmentMethod([
-            ShipmentMethodTransfer::SHIPMENT_METHOD_KEY => 'method-1',
+            ShipmentMethodTransfer::SHIPMENT_METHOD_KEY => 'spryker_dummy_shipment-standard',
         ]);
-
-        $this->tester->ensureShipmentMethodStoreTableIsEmpty();
+        $this->tester->haveShipmentMethod([
+            ShipmentMethodTransfer::SHIPMENT_METHOD_KEY => 'spryker_dummy_shipment-express',
+        ]);
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
-        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/shipment_method_store.csv');
+        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/shipment_price.csv');
 
         $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
-        $shipmentStoreDataImportPlugin = new ShipmentStoreDataImportPlugin();
+        $shipmentStoreDataImportPlugin = new ShipmentMethodPriceDataImportPlugin();
 
         //Act
         $dataImporterReportTransfer = $shipmentStoreDataImportPlugin->import($dataImportConfigurationTransfer);
@@ -70,7 +72,7 @@ class ShipmentStoreDataImportPluginTest extends Unit
             static::EXPECTED_IMPORT_COUNT,
             $dataImporterReportTransfer->getImportedDataSetCount(),
             sprintf(
-                'Imported number of price product schedules is %s expected %s.',
+                'Imported number of shipments is %s expected %s.',
                 $dataImporterReportTransfer->getImportedDataSetCount(),
                 static::EXPECTED_IMPORT_COUNT
             )

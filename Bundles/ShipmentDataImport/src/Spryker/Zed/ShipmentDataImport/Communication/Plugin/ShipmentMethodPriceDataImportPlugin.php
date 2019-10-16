@@ -17,7 +17,7 @@ use Spryker\Zed\ShipmentDataImport\ShipmentDataImportConfig;
  * @method \Spryker\Zed\ShipmentDataImport\Business\ShipmentDataImportFacadeInterface getFacade()
  * @method \Spryker\Zed\ShipmentDataImport\ShipmentDataImportConfig getConfig()
  */
-class ShipmentPriceDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
+class ShipmentMethodPriceDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -32,7 +32,7 @@ class ShipmentPriceDataImportPlugin extends AbstractPlugin implements DataImport
     public function import(
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer {
-        return $this->getFacade()->importShipmentPrice($dataImporterConfigurationTransfer);
+        return $this->getFacade()->importShipmentMethodPrice($dataImporterConfigurationTransfer);
     }
 
     /**

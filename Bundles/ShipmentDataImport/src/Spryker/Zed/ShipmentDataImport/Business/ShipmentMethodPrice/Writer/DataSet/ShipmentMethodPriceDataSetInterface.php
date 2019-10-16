@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShipmentDataImport\Business\ShipmentPrice\Writer\DataSet;
+namespace Spryker\Zed\ShipmentDataImport\Business\ShipmentMethodPrice\Writer\DataSet;
 
-interface ShipmentPriceDataSetInterface
+interface ShipmentMethodPriceDataSetInterface
 {
     public const COL_STORE_NAME = 'store';
     public const COL_ID_STORE = 'fk_store';

@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShipmentDataImport\Business\ShipmentStore\Writer\Step;
+namespace Spryker\Zed\ShipmentDataImport\Business\ShipmentMethodStore\Writer\Step;
 
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\ShipmentDataImport\Business\ShipmentStore\Writer\DataSet\ShipmentMethodStoreDataSetInterface;
+use Spryker\Zed\ShipmentDataImport\Business\ShipmentMethodStore\Writer\DataSet\ShipmentMethodStoreDataSetInterface;
 
 class ShipmentMethodKeyToIdShipmentMethodStep implements DataImportStepInterface
 {
@@ -31,7 +31,7 @@ class ShipmentMethodKeyToIdShipmentMethodStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $shipmentMethodKey = $dataSet[ShipmentMethodStoreDataSetInterface::COLUMN_SHIPMENT_METHOD_KEY];
+        $shipmentMethodKey = $dataSet[ShipmentMethodStoreDataSetInterface::COL_SHIPMENT_METHOD_KEY];
 
         if (!$shipmentMethodKey) {
             throw new DataKeyNotFoundInDataSetException('Shipment method key is missing');
@@ -49,6 +49,6 @@ class ShipmentMethodKeyToIdShipmentMethodStep implements DataImportStepInterface
             static::$idShipmentMethodCache[$shipmentMethodKey] = $shipmentMethodEntity->getIdShipmentMethod();
         }
 
-        $dataSet[ShipmentMethodStoreDataSetInterface::COLUMN_ID_SHIPMENT_METHOD] = static::$idShipmentMethodCache[$shipmentMethodKey];
+        $dataSet[ShipmentMethodStoreDataSetInterface::COL_ID_SHIPMENT_METHOD] = static::$idShipmentMethodCache[$shipmentMethodKey];
     }
 }

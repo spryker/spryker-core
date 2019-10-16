@@ -39,6 +39,7 @@ class ShipmentDataImportPluginTest extends Unit
     {
         //Arrange
         $this->tester->ensureShipmentMethodTableIsEmpty();
+        $this->tester->ensureShipmentCarrierTableIsEmpty();
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/shipment.csv');
 

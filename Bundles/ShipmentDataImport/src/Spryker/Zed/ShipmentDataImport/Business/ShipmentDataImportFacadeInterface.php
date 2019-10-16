@@ -42,7 +42,7 @@ interface ShipmentDataImportFacadeInterface
 
     /**
      * Specification:
-     * - Imports shipment price data.
+     * - Imports shipment method price data.
      *
      * @api
      *
@@ -50,7 +50,7 @@ interface ShipmentDataImportFacadeInterface
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importShipmentPrice(
+    public function importShipmentMethodPrice(
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer;
 }

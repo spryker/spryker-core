@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShipmentDataImport\Business\ShipmentPrice\Writer\Step;
+namespace Spryker\Zed\ShipmentDataImport\Business\ShipmentMethodPrice\Writer\Step;
 
 use Orm\Zed\Currency\Persistence\SpyCurrencyQuery;
 use Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\ShipmentDataImport\Business\ShipmentPrice\Writer\DataSet\ShipmentPriceDataSetInterface;
+use Spryker\Zed\ShipmentDataImport\Business\ShipmentMethodPrice\Writer\DataSet\ShipmentMethodPriceDataSetInterface;
 
 class CurrencyCodeToIdCurrencyStep implements DataImportStepInterface
 {
@@ -31,7 +31,7 @@ class CurrencyCodeToIdCurrencyStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $currencyCode = $dataSet[ShipmentPriceDataSetInterface::COL_CURRENCY_NAME];
+        $currencyCode = $dataSet[ShipmentMethodPriceDataSetInterface::COL_CURRENCY_NAME];
 
         if (!$currencyCode) {
             throw new DataKeyNotFoundInDataSetException('Currency ISO code is missing');
@@ -49,6 +49,6 @@ class CurrencyCodeToIdCurrencyStep implements DataImportStepInterface
             static::$idCurrencyCache[$currencyCode] = $currencyEntity->getIdCurrency();
         }
 
-        $dataSet[ShipmentPriceDataSetInterface::COL_ID_CURRENCY] = static::$idCurrencyCache[$currencyCode];
+        $dataSet[ShipmentMethodPriceDataSetInterface::COL_ID_CURRENCY] = static::$idCurrencyCache[$currencyCode];
     }
 }
