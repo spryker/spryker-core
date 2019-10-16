@@ -4,7 +4,7 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="CmsSlotBlockCollection">
-        <property name="cmsSlotBlocks" type="CmsSlotBlock[]"/>
+        <property name="cmsSlotBlocks" type="CmsSlotBlock[]" singular="CmsSlotBlock"/>
     </transfer>
 
     <transfer name="CmsSlotBlock">
