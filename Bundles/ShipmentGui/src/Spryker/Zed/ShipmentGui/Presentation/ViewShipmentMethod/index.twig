@@ -1,0 +1,91 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'View Delivery Method: %s' | format(shipmentMethod.name) | trans %}
+
+{% block head_title -%}
+    {{ widget_title }}
+{%- endblock %}
+
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ backActionButton('/shipment-gui/shipment-method', 'List Shipment Methods' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form) }}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Configuration' } %}
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <dl>
+                        <dt>{{ 'Delivery Method Key' | trans }}</dt>
+                        <dd>{{ shipmentMethod.shipmentMethodKey }}</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <dl>
+                        <dt>{{ 'Name' | trans }}</dt>
+                        <dd>{{ shipmentMethod.name }}</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <dl>
+                        <dt>{{ 'Carrier Company' | trans }}</dt>
+                        <dd>{{ shipmentMethod.carrierName }}</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <dl>
+                        <dt>{{ 'Availability plugin' | trans }}</dt>
+                        <dd>{{ shipmentMethod.availabilityPlugin ?? 'None' }}</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <dl>
+                        <dt>{{ 'Price plugin' | trans }}</dt>
+                        <dd>{{ shipmentMethod.pricePlugin ?? 'None' }}</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <dl>
+                        <dt>{{ 'Delivery Time plugin' | trans }}</dt>
+                        <dd>{{ shipmentMethod.deliveryTimePlugin ?? 'None' }}</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <dl>
+                        <dt>{{ 'Is this delivery method active?' | trans }}</dt>
+                        <dd><input type="checkbox" disabled {% if shipmentMethod.isActive %}checked="checked"{% endif %}</dd>
+                    </dl>
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Store relation' } %}
+        {% block widget_content %}
+            {{ form_row(form.storeRelation) }}
+        {% endblock %}
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Price & Tax' } %}
+        {% block widget_content %}
+            {{ form_money_collection(form.prices) }}
+            {{ form_row(form.fkTaxSet) }}
+        {% endblock %}
+    {% endembed %}
+    {{ form_end(form) }}
+{% endblock %}
