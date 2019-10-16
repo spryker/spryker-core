@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CategoryImageStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -42,5 +43,20 @@ class CategoryImageStorageFacade extends AbstractFacade implements CategoryImage
     public function unpublishCategoryImages(array $categoryIds)
     {
         $this->getFactory()->createCategoryImageStorageWriter()->unpublish($categoryIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $categoryIds
+     *
+     * @return \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer[]
+     */
+    public function getCategoryImageStorageByFilter(FilterTransfer $filterTransfer, array $categoryIds): array
+    {
+        return $this->getRepository()->getCategoryImageStorageByFilter($filterTransfer, $categoryIds);
     }
 }

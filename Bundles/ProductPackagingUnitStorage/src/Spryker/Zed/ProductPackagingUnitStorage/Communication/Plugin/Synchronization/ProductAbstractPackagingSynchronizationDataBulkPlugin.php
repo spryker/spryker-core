@@ -34,7 +34,6 @@ class ProductAbstractPackagingSynchronizationDataBulkPlugin extends AbstractPlug
 
     /**
      * {@inheritDoc}
-     * - Returns SynchronizationDataTransfer collection.
      *
      * @api
      *

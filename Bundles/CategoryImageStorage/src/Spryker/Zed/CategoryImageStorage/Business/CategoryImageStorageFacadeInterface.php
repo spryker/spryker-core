@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CategoryImageStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 /**
  * @method \Spryker\Zed\CategoryImageStorage\Business\CategoryImageStorageBusinessFactory getFactory()
  */
@@ -33,4 +35,17 @@ interface CategoryImageStorageFacadeInterface
      * @return void
      */
     public function unpublishCategoryImages(array $categoryIds);
+
+    /**
+     * Specification:
+     * - Returns CategoryImageStorage collection by filter and categoryIds.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $categoryIds
+     *
+     * @return \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer[]
+     */
+    public function getCategoryImageStorageByFilter(FilterTransfer $filterTransfer, array $categoryIds): array;
 }

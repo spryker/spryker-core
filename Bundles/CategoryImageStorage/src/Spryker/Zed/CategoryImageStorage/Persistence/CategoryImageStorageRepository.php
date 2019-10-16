@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CategoryImageStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\CategoryImage\Persistence\Map\SpyCategoryImageSetTableMap;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -83,6 +84,23 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
             ->select([static::FK_CATEGORY])
             ->addAnd(SpyCategoryImageSetTableMap::COL_FK_CATEGORY, null, ModelCriteria::NOT_EQUAL)
             ->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $categoryIds
+     *
+     * @return \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer[]
+     */
+    public function getCategoryImageStorageByFilter(FilterTransfer $filterTransfer, array $categoryIds): array
+    {
+        $categoryImageStorageQuery = $this->getFactory()
+            ->createSpyCategoryImageStorageQuery()
+            ->filterByFkCategory_In($categoryIds)
+            ->limit($filterTransfer->getLimit())
+            ->offset($filterTransfer->getOffset());
+
+        return $this->buildQueryFromCriteria($categoryImageStorageQuery)->find();
     }
 
     /**

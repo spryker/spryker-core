@@ -7,21 +7,20 @@
 
 namespace Spryker\Zed\CategoryImageStorage\Communication\Plugin\Synchronization;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Shared\CategoryImageStorage\CategoryImageStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
 
 /**
- * @deprecated Use CategoryImageSynchronizationDataBulkPlugin instead.
- *
  * @method \Spryker\Zed\CategoryImageStorage\Persistence\CategoryImageStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\CategoryImageStorage\Business\CategoryImageStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\CategoryImageStorage\Communication\CategoryImageStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\CategoryImageStorage\CategoryImageStorageConfig getConfig()
  */
-class CategoryImageSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface
+class CategoryImageSynchronizationDataBulkPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -52,14 +51,17 @@ class CategoryImageSynchronizationDataPlugin extends AbstractPlugin implements S
      *
      * @api
      *
+     * @param int $offset
+     * @param int $limit
      * @param int[] $ids
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getData(array $ids = []): array
+    public function getData(int $offset, int $limit, array $ids = []): array
     {
         $synchronizationDataTransfers = [];
-        $categoryImageStorageEntityTransfers = $this->getRepository()->getCategoryImageStorageByFkCategoryIn($ids);
+        $filterTransfer = $this->createFilterTransfer($offset, $limit);
+        $categoryImageStorageEntityTransfers = $this->getFacade()->getCategoryImageStorageByFilter($filterTransfer, $ids);
 
         foreach ($categoryImageStorageEntityTransfers as $categoryImageStorageEntityTransfer) {
             $synchronizationDataTransfers[] = $this->createSynchronizationDataTransfer($categoryImageStorageEntityTransfer);
@@ -118,5 +120,18 @@ class CategoryImageSynchronizationDataPlugin extends AbstractPlugin implements S
         return (new SynchronizationDataTransfer())
             ->setData($categoryImageStorageData)
             ->setKey($categoryImageStorageEntityTransfer->getKey());
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\FilterTransfer
+     */
+    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
+    {
+        return (new FilterTransfer())
+            ->setOffset($offset)
+            ->setLimit($limit);
     }
 }
