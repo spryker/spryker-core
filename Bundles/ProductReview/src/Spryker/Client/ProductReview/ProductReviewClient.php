@@ -10,7 +10,6 @@ namespace Spryker\Client\ProductReview;
 use Generated\Shared\Transfer\ProductReviewRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\ProductReviewsResultFormatterPlugin;
 
 /**
  * @method \Spryker\Client\ProductReview\ProductReviewFactory getFactory()
