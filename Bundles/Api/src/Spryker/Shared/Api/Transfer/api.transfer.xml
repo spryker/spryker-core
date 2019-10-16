@@ -8,15 +8,15 @@
         <property name="requestUri" type="string"/>
         <property name="requestType" type="string"/>
         <property name="formatType" type="string"/>
-        <property name="queryData" type="array"/>
-        <property name="serverData" type="array"/>
-        <property name="headerData" type="array"/>
-        <property name="requestData" type="array"/>
+        <property name="queryData" type="array" singular="queryData"/>
+        <property name="serverData" type="array" singular="serverData"/>
+        <property name="headerData" type="array" singular="headerData"/>
+        <property name="requestData" type="array" singular="requestData"/>
         <property name="path" type="string"/>
         <property name="resource" type="string"/>
         <property name="resourceAction" type="string"/>
         <property name="resourceId" type="int"/>
-        <property name="resourceParameters" type="array"/>
+        <property name="resourceParameters" type="array" singular="resourceParameters"/>
 
         <property name="filter" type="ApiFilter"/>
     </transfer>
@@ -26,30 +26,30 @@
         <property name="code" type="string"/>
         <property name="message" type="string"/>
         <property name="stackTrace" type="string"/>
-        <property name="headers" type="array"/>
+        <property name="headers" type="array" singular="headers"/>
         <property name="meta" type="ApiMeta"/>
         <property name="pagination" type="ApiPagination"/>
-        <property name="data" type="array"/>
+        <property name="data" type="array" singular="data"/>
         <property name="validationErrors" type="ApiValidationError[]" singular="validationError"/>
-        <property name="options" type="array"/>
+        <property name="options" type="array" singular="options"/>
     </transfer>
 
     <transfer name="ApiValidationError">
         <property name="field" type="string"/>
-        <property name="messages" type="array"/>
+        <property name="messages" type="array" singular="messages"/>
     </transfer>
 
     <transfer name="ApiFilter">
-        <property name="fields" type="array"/>
+        <property name="fields" type="array" singular="fields"/>
         <property name="criteriaJson" type="string"/>
         <property name="offset" type="int"/>
         <property name="limit" type="int"/>
-        <property name="sort" type="array"/>
+        <property name="sort" type="array" singular="sort"/>
     </transfer>
 
     <transfer name="ApiData">
-        <property name="fields" type="array"/>
-        <property name="data" type="array"/>
+        <property name="fields" type="array" singular="fields"/>
+        <property name="data" type="array" singular="data"/>
     </transfer>
 
     <transfer name="ApiPagination">
@@ -64,26 +64,26 @@
     </transfer>
 
     <transfer name="ApiCollection">
-        <property name="data" type="array"/>
+        <property name="data" type="array" singular="data"/>
         <property name="pagination" type="ApiPagination"/>
-        <property name="options" type="array"/>
+        <property name="options" type="array" singular="options"/>
     </transfer>
 
     <transfer name="ApiItem">
         <property name="id" type="string"/>
-        <property name="data" type="array"/>
-        <property name="options" type="array"/>
+        <property name="data" type="array" singular="data"/>
+        <property name="options" type="array" singular="options"/>
     </transfer>
 
     <transfer name="ApiOptions">
-        <property name="options" type="array"/>
+        <property name="options" type="array" singular="options"/>
     </transfer>
 
     <transfer name="ApiMeta">
         <property name="resourceId" type="string"/>
         <property name="self" type="string"/>
-        <property name="links" type="array"/>
-        <property name="data" type="array"/>
+        <property name="links" type="array" singular="links"/>
+        <property name="data" type="array" singular="data"/>
     </transfer>
 
 </transfers>

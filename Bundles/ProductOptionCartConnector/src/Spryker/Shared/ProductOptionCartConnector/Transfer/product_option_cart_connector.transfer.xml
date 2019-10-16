@@ -10,6 +10,8 @@
         <property name="sumGrossPrice" type="int"/>
         <property name="productOptions" type="ProductOption[]" singular="productOption"/>
         <property name="unitNetPrice" type="int"/>
+        <property name="name" type="string"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="ProductOption">
@@ -28,10 +30,22 @@
 
     <transfer name="CartChange">
         <property name="items" type="Item[]" singular="item"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="Quote">
         <property name="priceMode" type="string"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="CartPreCheckResponse">
+        <property name="messages" type="Message[]" singular="message"/>
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
 </transfers>

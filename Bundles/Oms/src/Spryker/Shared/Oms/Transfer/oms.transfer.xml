@@ -12,10 +12,19 @@
     <transfer name="Mail">
         <property name="order" type="Order"/>
         <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup"/>
+        <property name="type" type="string"/>
+        <property name="locale" type="Locale"/>
     </transfer>
 
     <transfer name="Order">
         <property name="locale" type="Locale"/>
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
+        <property name="billingAddress" type="Address"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="email" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="orderReference" type="string"/>
     </transfer>
 
     <transfer name="OmsAvailabilityReservationRequest">
@@ -83,6 +92,26 @@
         <property name="sku" type="string"/>
         <property name="quantity" type="int"/>
         <property name="unitPrice" type="int"/>
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="state" type="ItemState"/>
+        <property name="process" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+        <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="saveOrder" type="SaveOrder"/>
+    </transfer>
+
+    <transfer name="SaveOrder">
+        <property name="orderItems" type="Item[]" singular="orderItem"/>
     </transfer>
 
 </transfers>
