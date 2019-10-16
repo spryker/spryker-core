@@ -8,7 +8,7 @@
     "spryker/availability": "^9.0.0",
     "spryker/cart-extension": "^1.0.0 || ^2.0.0 || ^4.0.0",
     "spryker/decimal-object": "^1.0.0",
-    "spryker/kernel": "^3.39.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.0.0",
     "spryker/messenger": "^3.0.0",
     "spryker/persistent-cart-extension": "^1.0.0",

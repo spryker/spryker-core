@@ -8,7 +8,7 @@
     "spryker/decimal-object": "^1.0.0",
     "spryker/graph": "^3.0.0",
     "spryker/gui": "^3.0.0",
-    "spryker/kernel": "^3.39.0",
+    "spryker/kernel": "^3.33.0",
     "spryker/mail": "^4.0.0",
     "spryker/oms-extension": "^1.0.0",
     "spryker/propel-orm": "^1.0.0",
