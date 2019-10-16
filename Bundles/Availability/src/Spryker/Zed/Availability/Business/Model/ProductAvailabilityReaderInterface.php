@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Availability\Business\Model;
 
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
-use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
@@ -23,15 +22,6 @@ interface ProductAvailabilityReaderInterface
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
     public function getProductAbstractAvailability(int $idProductAbstract, int $idLocale): ProductAbstractAvailabilityTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
-     */
-    public function findProductConcreteAvailability(
-        ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
-    ): ?ProductConcreteAvailabilityTransfer;
 
     /**
      * @param int $idProductAbstract

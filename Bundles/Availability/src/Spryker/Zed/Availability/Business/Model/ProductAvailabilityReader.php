@@ -8,10 +8,8 @@
 namespace Spryker\Zed\Availability\Business\Model;
 
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
-use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
@@ -152,29 +150,6 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
-     */
-    public function findProductConcreteAvailability(
-        ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
-    ): ?ProductConcreteAvailabilityTransfer {
-        $productConcreteAvailabilityRequestTransfer->requireSku();
-
-        $storeTransfer = $this->storeFacade->getCurrentStore();
-
-        $availabilityEntity = $this->availabilityQueryContainer
-            ->queryAvailabilityBySkuAndIdStore($productConcreteAvailabilityRequestTransfer->getSku(), $storeTransfer->getIdStore())
-            ->findOne();
-
-        if ($availabilityEntity === null) {
-            return null;
-        }
-
-        return $this->mapProductConcreteAvailabilityEntityToTransfer($availabilityEntity);
-    }
-
-    /**
      * @param string $reservationQuantity
      *
      * @return \Spryker\DecimalObject\Decimal
@@ -205,18 +180,6 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
         }
 
         return $reservation;
-    }
-
-    /**
-     * @param \Orm\Zed\Availability\Persistence\SpyAvailability $availabilityEntity
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer
-     */
-    protected function mapProductConcreteAvailabilityEntityToTransfer(SpyAvailability $availabilityEntity)
-    {
-        return (new ProductConcreteAvailabilityTransfer())
-            ->setAvailability($availabilityEntity->getQuantity())
-            ->setIsNeverOutOfStock($availabilityEntity->getIsNeverOutOfStock());
     }
 
     /**

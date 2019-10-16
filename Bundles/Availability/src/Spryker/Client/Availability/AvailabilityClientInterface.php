@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\Availability;
 
-use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
-
 /**
  * @method \Spryker\Client\Availability\AvailabilityFactory getFactory()
  */
@@ -20,7 +18,7 @@ interface AvailabilityClientInterface
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use `\Spryker\Client\AvailabilityStorage\AvailabilityStorageClientInterface::getProductAvailabilityByIdProductAbstract() instead`.
      *
      * @param int $idProductAbstract
      *
@@ -42,18 +40,4 @@ interface AvailabilityClientInterface
      * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer|null
      */
     public function findProductAvailabilityByIdProductAbstract($idProductAbstract);
-
-    /**
-     * Specification:
-     *  - Reads product concrete availability as it's persisted in Zed database
-     *
-     * @api
-     *
-     * @deprecated Will be removed without replacement.
-     *
-     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
-     */
-    public function findProductConcreteAvailability(ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer);
 }

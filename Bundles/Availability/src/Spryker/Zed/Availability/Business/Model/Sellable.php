@@ -67,7 +67,7 @@ class Sellable implements SellableInterface
         $productConcreteAvailabilityTransfer = $this->availabilityRepository
             ->findProductConcreteAvailabilityBySkuAndStore($sku, $storeTransfer);
 
-        return $this->isProductConcretSellable($productConcreteAvailabilityTransfer, $quantity);
+        return $this->isProductConcreteSellable($productConcreteAvailabilityTransfer, $quantity);
     }
 
     /**
@@ -83,7 +83,7 @@ class Sellable implements SellableInterface
                 $this->storeFacade->getCurrentStore()
             );
 
-        return $this->isProductConcretSellable($productConcreteAvailabilityTransfer, new Decimal(0));
+        return $this->isProductConcreteSellable($productConcreteAvailabilityTransfer, new Decimal(0));
     }
 
     /**
@@ -92,7 +92,7 @@ class Sellable implements SellableInterface
      *
      * @return bool
      */
-    protected function isProductConcretSellable(
+    protected function isProductConcreteSellable(
         ?ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer,
         Decimal $quantity
     ): bool {
