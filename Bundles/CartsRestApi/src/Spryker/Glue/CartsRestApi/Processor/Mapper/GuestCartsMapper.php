@@ -9,7 +9,7 @@ namespace Spryker\Glue\CartsRestApi\Processor\Mapper;
 
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 
-class GuestCartsResourceMapper extends CartsResourceMapper implements CartsResourceMapperInterface
+class GuestCartsMapper extends CartsMapper implements CartsMapperInterface
 {
     /**
      * @return string

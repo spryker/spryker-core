@@ -11,14 +11,14 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\RestCartItemCalculationsTransfer;
 use Generated\Shared\Transfer\RestItemsAttributesTransfer;
 
-class CartItemsResourceMapper implements CartItemsResourceMapperInterface
+class CartItemsMapper implements CartItemsMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\RestItemsAttributesTransfer
      */
-    public function mapCartItemAttributes(ItemTransfer $itemTransfer): RestItemsAttributesTransfer
+    public function mapItemTransferToRestItemsAttributesTransfer(ItemTransfer $itemTransfer): RestItemsAttributesTransfer
     {
         $itemData = $itemTransfer->toArray();
 

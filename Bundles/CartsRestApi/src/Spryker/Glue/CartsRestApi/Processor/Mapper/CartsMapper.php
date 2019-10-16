@@ -23,10 +23,10 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class CartsResourceMapper implements CartsResourceMapperInterface
+class CartsMapper implements CartsMapperInterface
 {
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsMapperInterface
      */
     protected $cartItemsResourceMapper;
 
@@ -41,12 +41,12 @@ class CartsResourceMapper implements CartsResourceMapperInterface
     protected $config;
 
     /**
-     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface $cartItemsResourceMapper
+     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsMapperInterface $cartItemsResourceMapper
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CartsRestApi\CartsRestApiConfig $config
      */
     public function __construct(
-        CartItemsResourceMapperInterface $cartItemsResourceMapper,
+        CartItemsMapperInterface $cartItemsResourceMapper,
         RestResourceBuilderInterface $restResourceBuilder,
         CartsRestApiConfig $config
     ) {
@@ -189,7 +189,7 @@ class CartsResourceMapper implements CartsResourceMapperInterface
             $itemResource = $this->restResourceBuilder->createRestResource(
                 $this->getCartItemResourceName(),
                 $itemTransfer->getGroupKey(),
-                $this->cartItemsResourceMapper->mapCartItemAttributes($itemTransfer)
+                $this->cartItemsResourceMapper->mapItemTransferToRestItemsAttributesTransfer($itemTransfer)
             );
             $itemResource->addLink(
                 RestLinkInterface::LINK_SELF,

@@ -10,8 +10,8 @@ namespace Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
-use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface;
-use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
+use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsMapperInterface;
+use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -22,27 +22,27 @@ class GuestCartRestResponseBuilder extends AbstractCartRestResponseBuilder imple
     protected const KEY_REST_RESOURCE_SELF_LINK = 'self';
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsMapperInterface
      */
-    protected $cartsResourceMapper;
+    protected $cartsMapper;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsMapperInterface
      */
     protected $cartItemsResourceMapper;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
-     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface $cartItemsResourceMapper
+     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsMapperInterface $cartsMapper
+     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsMapperInterface $cartItemsResourceMapper
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        CartsResourceMapperInterface $cartsResourceMapper,
-        CartItemsResourceMapperInterface $cartItemsResourceMapper
+        CartsMapperInterface $cartsMapper,
+        CartItemsMapperInterface $cartItemsResourceMapper
     ) {
-        parent::__construct($restResourceBuilder, $cartsResourceMapper);
-        $this->cartsResourceMapper = $cartsResourceMapper;
+        parent::__construct($restResourceBuilder, $cartsMapper);
+        $this->cartsMapper = $cartsMapper;
         $this->cartItemsResourceMapper = $cartItemsResourceMapper;
     }
 
@@ -64,7 +64,7 @@ class GuestCartRestResponseBuilder extends AbstractCartRestResponseBuilder imple
         $cartResource = $this->restResourceBuilder->createRestResource(
             CartsRestApiConfig::RESOURCE_GUEST_CARTS,
             $quoteTransfer->getUuid(),
-            $this->cartsResourceMapper->mapQuoteTransferToRestCartsAttributesTransfer($quoteTransfer)
+            $this->cartsMapper->mapQuoteTransferToRestCartsAttributesTransfer($quoteTransfer)
         );
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
@@ -85,7 +85,7 @@ class GuestCartRestResponseBuilder extends AbstractCartRestResponseBuilder imple
         $itemResource = $this->restResourceBuilder->createRestResource(
             CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
             $itemTransfer->getGroupKey(),
-            $this->cartItemsResourceMapper->mapCartItemAttributes($itemTransfer)
+            $this->cartItemsResourceMapper->mapItemTransferToRestItemsAttributesTransfer($itemTransfer)
         );
         $itemResource->addLink(
             static::KEY_REST_RESOURCE_SELF_LINK,
