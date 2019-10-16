@@ -17,11 +17,22 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Currency\Persistence\SpyCurrency;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
-use Orm\Zed\Store\Persistence\SpyStore;
-use Propel\Runtime\Collection\ObjectCollection;
 
 class ShipmentMethodMapper implements ShipmentMethodMapperInterface
 {
+    /**
+     * @var \Spryker\Zed\Shipment\Persistence\Propel\Mapper\StoreRelationMapper
+     */
+    protected $storeRelationMapper;
+
+    /**
+     * @param \Spryker\Zed\Shipment\Persistence\Propel\Mapper\StoreRelationMapper $storeRelationMapper
+     */
+    public function __construct(StoreRelationMapper $storeRelationMapper)
+    {
+        $this->storeRelationMapper = $storeRelationMapper;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $salesShipmentMethodEntity
@@ -65,32 +76,16 @@ class ShipmentMethodMapper implements ShipmentMethodMapperInterface
         $shipmentMethodTransfer = $shipmentMethodTransfer->fromArray($salesShipmentMethodEntity->toArray(), true);
         $shipmentMethodTransfer->setCarrierName($salesShipmentMethodEntity->getShipmentCarrier()->getName());
         $shipmentMethodTransfer->setPrices($this->getPriceCollection($salesShipmentMethodEntity));
+        $storeRelationTransfer = new StoreRelationTransfer();
+        $storeRelationTransfer->setIdEntity($salesShipmentMethodEntity->getIdShipmentMethod());
         $shipmentMethodTransfer->setStoreRelation(
-            $this->mapShipmentMethodStoreEntitiesToStoreRelationTransfer(
+            $this->storeRelationMapper->mapShipmentMethodStoreEntitiesToStoreRelationTransfer(
                 $salesShipmentMethodEntity->getShipmentMethodStores(),
-                new StoreRelationTransfer()
+                $storeRelationTransfer
             )
         );
 
         return $shipmentMethodTransfer;
-    }
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Shipment\Persistence\SpyShipmentMethodStore[] $shipmentMethodStoreEntities
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
-     *
-     * @return \Generated\Shared\Transfer\StoreRelationTransfer
-     */
-    protected function mapShipmentMethodStoreEntitiesToStoreRelationTransfer(
-        ObjectCollection $shipmentMethodStoreEntities,
-        StoreRelationTransfer $storeRelationTransfer
-    ): StoreRelationTransfer {
-        foreach ($shipmentMethodStoreEntities as $shipmentMethodStoreEntity) {
-            $storeRelationTransfer->addStore($this->mapStoreEntityToStoreTransfer($shipmentMethodStoreEntity->getStore(), new StoreTransfer()));
-            $storeRelationTransfer->addIdStores($shipmentMethodStoreEntity->getFkStore());
-        }
-
-        return $storeRelationTransfer;
     }
 
     /**
@@ -104,19 +99,6 @@ class ShipmentMethodMapper implements ShipmentMethodMapperInterface
         CurrencyTransfer $currencyTransfer
     ): CurrencyTransfer {
         return $currencyTransfer->fromArray($currencyEntity->toArray(), true);
-    }
-
-    /**
-     * @param \Orm\Zed\Store\Persistence\SpyStore $storeEntity
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function mapStoreEntityToStoreTransfer(
-        SpyStore $storeEntity,
-        StoreTransfer $storeTransfer
-    ): StoreTransfer {
-        return $storeTransfer->fromArray($storeEntity->toArray(), true);
     }
 
     /**
@@ -154,7 +136,7 @@ class ShipmentMethodMapper implements ShipmentMethodMapperInterface
         );
         $moneyValueTransfer->setCurrency($currencyTransfer);
 
-        $storeTransfer = $this->mapStoreEntityToStoreTransfer(
+        $storeTransfer = $this->storeRelationMapper->mapStoreEntityToStoreTransfer(
             $shipmentMethodPriceEntity->getStore(),
             new StoreTransfer()
         );

@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewShipmentMethodController extends AbstractController
 {
-    protected const REQUEST_ID_SHIPMENT_METHOD = 'id-shipment-method';
+    protected const PARAM_ID_SHIPMENT_METHOD = 'id-shipment-method';
     protected const REDIRECT_URL = '/shipment-gui/shipment-method';
 
     /**
@@ -25,7 +25,7 @@ class ViewShipmentMethodController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idShipmentMethod = $request->query->getInt(static::REQUEST_ID_SHIPMENT_METHOD);
+        $idShipmentMethod = $request->query->getInt(static::PARAM_ID_SHIPMENT_METHOD);
 
         $shipmentMethodTransfer = $this->getFactory()
             ->getShipmentFacade()

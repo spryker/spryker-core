@@ -11,11 +11,9 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentPriceTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Currency\Persistence\SpyCurrency;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
-use Orm\Zed\Store\Persistence\SpyStore;
 
 interface ShipmentMethodMapperInterface
 {
@@ -62,17 +60,6 @@ interface ShipmentMethodMapperInterface
         SpyCurrency $currencyEntity,
         CurrencyTransfer $currencyTransfer
     ): CurrencyTransfer;
-
-    /**
-     * @param \Orm\Zed\Store\Persistence\SpyStore $storeEntity
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function mapStoreEntityToStoreTransfer(
-        SpyStore $storeEntity,
-        StoreTransfer $storeTransfer
-    ): StoreTransfer;
 
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice $shipmentMethodPrice
