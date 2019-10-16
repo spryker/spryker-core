@@ -9,10 +9,12 @@ namespace Spryker\Client\Wishlist;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistCollectionTransfer;
+use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
+use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 
 /**
@@ -113,6 +115,8 @@ interface WishlistClientInterface
     /**
      * @api
      *
+     * @deprecated Use WishlistClient::getWishlistByFilter() instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -147,7 +151,8 @@ interface WishlistClientInterface
     public function getCustomerWishlistCollection();
 
     /**
-     * - Specification: Retrieving wishlist collection by customer transfer.
+     * Specification:
+     * - Retrieves wishlist collection by customer transfer.
      *
      * @api
      *
@@ -156,4 +161,20 @@ interface WishlistClientInterface
      * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
      */
     public function getWishlistCollection(CustomerTransfer $customerTransfer): WishlistCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - WishlistFilterTransfer.idCustomer is required.
+     * - Retrieves wishlist by data provided in the WishlistFilterTransfer.
+     * - If WishlistFilterTransfer.name is set the wishlist will be looked up by name.
+     * - If WishlistFilterTransfer.uuid is set the wishlist will be looked up by uuid.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistFilterTransfer $wishlistFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function getWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer;
 }

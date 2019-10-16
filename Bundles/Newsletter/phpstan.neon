@@ -1,0 +1,5 @@
+parameters:
+    excludes_analyse:
+        - 'vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/Communication/Plugin/DoubleOptInSubscriptionSender.php'
+    ignoreErrors:
+    - '#Method .+NewsletterQueryContainer::querySubscriptionByEmailAndNewsletterTypeName\(\) should return .+SpyNewsletterSubscriptionQuery but returns Propel\\Runtime\\ActiveQuery\\Criteria.#'

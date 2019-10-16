@@ -17,7 +17,7 @@
         <property name="createdAt" type="string"/>
         <property name="isTest" type="string"/>
         <property name="expenses" type="Expense[]" singular="expense"/>
-        <property name="invoice" type="Invoice[]"/>
+        <property name="invoice" type="Invoice[]" singular="invoice"/>
         <property name="invoiceReference" type="string"/>
         <property name="invoiceCreatedAt" type="string"/>
         <property name="fkShipmentMethod" type="int" deprecated="Use item level shipment method (item.shipment.method.fkShipmentMethod) instead."/>
@@ -35,6 +35,22 @@
 
     <transfer name="Quote">
         <property name="currency" type="Currency"/>
+        <property name="customer" type="Customer"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="totals" type="Totals"/>
+        <property name="billingAddress" type="Address"/>
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
+        <property name="priceMode" type="string"/>
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="refundTotal" type="int"/>
+        <property name="grandTotal" type="int"/>
+        <property name="taxTotal" type="TaxTotal"/>
+        <property name="expenseTotal" type="int"/>
+        <property name="subtotal" type="int"/>
+        <property name="discountTotal" type="int"/>
+        <property name="canceledTotal" type="int"/>
     </transfer>
 
     <transfer name="OrderList">
@@ -42,6 +58,14 @@
         <property name="filter" type="Filter"/>
         <property name="orders" type="Order[]" singular="order"/>
         <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ShipmentCarrier">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="saveOrder" type="SaveOrder" deprecated="Use SaveOrderTransfer directly/decoupled from the checkout response"/>
     </transfer>
 
     <transfer name="Address">
@@ -68,6 +92,7 @@
         <property name="comment" type="string"/>
         <property name="description" type="string"/>
         <property name="country" type="Country"/>
+        <property name="fkCountry" type="int"/>
     </transfer>
 
     <transfer name="Comment">
@@ -106,17 +131,39 @@
         <property name="process" type="string"/>
         <property name="sku" type="string"/>
         <property name="groupKey" type="string"/>
+        <property name="unitPrice" type="int"/>
         <property name="unitGrossPrice" type="int"/>
         <property name="sumGrossPrice" type="int"/>
         <property name="taxRate" type="float"/>
+        <property name="unitTaxAmount" type="int"/>
+        <property name="sumTaxAmount" type="int"/>
         <property name="quantity" type="int"/>
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
         <property name="variety" type="string"/>
         <property name="state" type="ItemState"/>
         <property name="canceledAmount" type="int"/>
-        <property name="stateHistory" type="ItemState[]"/>
+        <property name="stateHistory" type="ItemState[]" singular="stateHistory"/>
         <property name="isOrdered" type="bool"/>
         <property name="shipment" type="Shipment"/>
+        <property name="productOptions" type="ProductOption[]" singular="productOption"/>
+        <property name="sumNetPrice" type="int"/>
+        <property name="sumPrice" type="int"/>
+        <property name="sumSubtotalAggregation" type="int"/>
+        <property name="refundableAmount" type="int"/>
+        <property name="sumDiscountAmountAggregation" type="int"/>
+        <property name="sumDiscountAmountFullAggregation" type="int"/>
+        <property name="sumExpensePriceAggregation" type="int"/>
+        <property name="sumTaxAmountFullAggregation" type="int"/>
+        <property name="sumPriceToPayAggregation" type="int"/>
+        <property name="unitNetPrice" type="int"/>
+        <property name="unitSubtotalAggregation" type="int"/>
+        <property name="unitDiscountAmountAggregation" type="int"/>
+        <property name="unitDiscountAmountFullAggregation" type="int"/>
+        <property name="unitExpensePriceAggregation" type="int"/>
+        <property name="unitTaxAmountFullAggregation" type="int"/>
+        <property name="unitPriceToPayAggregation" type="int"/>
+        <property name="sumProductOptionPriceAggregation" type="int"/>
+        <property name="unitProductOptionPriceAggregation" type="int"/>
     </transfer>
 
     <transfer name="ItemCollection">
@@ -144,6 +191,7 @@
         <property name="sumPriceToPayAggregation" type="int"/>
         <property name="isOrdered" type="bool"/>
         <property name="fkSalesOrder" type="int"/>
+        <property name="sumDiscountAmountAggregation" type="int"/>
     </transfer>
 
     <transfer name="TaxSet">
@@ -163,7 +211,7 @@
     <transfer name="StatemachineTrigger" deprecated="Not in use anymore, will be removed with next major">
         <property name="eventName" type="string"/>
         <property name="orderId" type="string"/>
-        <property name="references" type="array"/>
+        <property name="references" type="array" singular="references"/>
         <property name="context" type="string"/>
         <property name="observer" type="string"/>
     </transfer>
@@ -221,6 +269,54 @@
 
     <transfer name="Shipment">
         <property name="shippingAddress" type="Address"/>
+    </transfer>
+
+    <transfer name="ProductOption">
+        <property name="idProductOptionValue" type="int"/>
+        <property name="quantity" type="int"/>
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
+    </transfer>
+
+    <transfer name="Country">
+        <property name="idCountry" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ItemState">
+        <property name="idSalesOrder" type="int"/>
+        <property name="createdAt" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="TaxTotal">
+        <property name="amount" type="int"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="customerReference" type="string"/>
+        <property name="idCustomer" type="int"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="User">
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+    </transfer>
+
+    <transfer name="CountryCollection">
+        <property name="countries" type="Country[]" singular="countries"/>
+    </transfer>
+
+    <transfer name="SequenceNumberSettings">
+        <property name="name" type="string"/>
+        <property name="prefix" type="string"/>
     </transfer>
 
 </transfers>

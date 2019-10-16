@@ -11,6 +11,9 @@ use InvalidArgumentException;
 use Symfony\Component\Finder\Finder;
 use Zend\Filter\FilterInterface;
 
+/**
+ * @deprecated Use `AllModuleFinder` instead.
+ */
 class AllBundleFinder implements AllBundleFinderInterface
 {
     /**

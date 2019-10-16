@@ -9,6 +9,7 @@ namespace Spryker\Zed\CartsRestApi\Business;
 
 use Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer;
 use Generated\Shared\Transfer\CartItemRequestTransfer;
+use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -159,6 +160,39 @@ interface CartsRestApiFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function addToCart(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Adds items from guest quote to customer quote.
+     * - Reads anonymous customer quote.
+     * - Reads registered customer quote.
+     * - Aborts if anonymous customer reference or customer reference are not set on the OauthResponseTransfer.
+     * - Aborts if guest customer quote is not found or is empty.
+     * - Adds all guest cart items to the customer quote.
+     * - Deletes guest quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OauthResponseTransfer $oauthResponseTransfer
+     *
+     * @return void
+     */
+    public function mergeGuestQuoteAndCustomerQuote(OauthResponseTransfer $oauthResponseTransfer): void;
+
+    /**
+     * Specification:
+     * - Updates non-empty guest quote to new customer quote.
+     * - OauthResponseTransfer.customerReference and OauthResponseTransfer.anonymousCustomerReference must be set.
+     * - Anonymous customer has to have a cart.
+     * - Anonymous customer's cart has to contain items. Otherwise method terminates without errors.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OauthResponseTransfer $oauthResponseTransfer
+     *
+     * @return void
+     */
+    public function convertGuestQuoteToCustomerQuote(OauthResponseTransfer $oauthResponseTransfer): void;
 
     /**
      * Specification:
