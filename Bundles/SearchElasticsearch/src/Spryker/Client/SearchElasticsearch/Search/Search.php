@@ -113,7 +113,7 @@ class Search implements SearchInterface
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface $query
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $query
      *
      * @return string|null
      */

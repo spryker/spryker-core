@@ -38,8 +38,9 @@ use Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilder;
 use Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilderInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
+use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToLocaleClientInterface;
+use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
 use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactory;
 use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactoryInterface;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolver;
@@ -192,11 +193,19 @@ class SearchElasticsearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface
      */
-    public function getStore(): Store
+    public function getStoreClient(): SearchElasticsearchToStoreClientInterface
     {
-        return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::STORE);
+        return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
+     * @return \Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToLocaleClientInterface
+     */
+    public function getLocaleClient(): SearchElasticsearchToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::CLIENT_LOCALE);
     }
 
     /**

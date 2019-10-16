@@ -10,7 +10,7 @@ namespace Spryker\Client\SearchElasticsearch\Aggregation;
 use Elastica\Aggregation\AbstractAggregation;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 
-class CategoryFacetAggregation extends AbstractTermsFacetAggregation
+class CategoryFacetAggregation extends AbstractFacetAggregation
 {
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer
@@ -45,7 +45,6 @@ class CategoryFacetAggregation extends AbstractTermsFacetAggregation
             ->createTermsAggregation($nestedFieldName)
             ->setField($fieldName);
 
-        $this->setTermsAggregationSize($aggregation, $this->facetConfigTransfer->getSize());
         $aggregation = $this->applyAggregationParams($aggregation, $this->facetConfigTransfer);
 
         return $aggregation;

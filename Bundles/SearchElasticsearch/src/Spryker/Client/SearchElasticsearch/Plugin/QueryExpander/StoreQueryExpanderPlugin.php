@@ -30,7 +30,7 @@ class StoreQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
-    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface
+    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
     {
         $this->addStoreFilterToQuery($searchQuery->getSearchQuery());
 
@@ -49,7 +49,7 @@ class StoreQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
         $matchQuery = $this->getFactory()
             ->createQueryBuilder()
             ->createMatchQuery()
-            ->setField(PageIndexMap::STORE, $this->getStore());
+            ->setField(PageIndexMap::STORE, $this->getStoreName());
 
         $boolQuery->addMust($matchQuery);
     }
@@ -78,8 +78,10 @@ class StoreQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
     /**
      * @return string
      */
-    protected function getStore(): string
+    protected function getStoreName(): string
     {
-        return $this->getFactory()->getStore()->getStoreName();
+        $storeTransfer = $this->getFactory()->getStoreClient()->getCurrentStore();
+
+        return $storeTransfer->requireName()->getName();
     }
 }

@@ -24,7 +24,6 @@
         <property name="fieldName" type="string" />
         <property name="type" type="string" />
         <property name="isMultiValued" type="bool" />
-        <property name="size" type="int" deprecated="Use aggregationParams instead" />
         <property name="valueTransformer" type="string" />
         <property name="aggregationParams" type="array" />
     </transfer>

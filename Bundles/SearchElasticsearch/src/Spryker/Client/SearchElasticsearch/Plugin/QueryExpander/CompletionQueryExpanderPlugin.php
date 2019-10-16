@@ -34,7 +34,7 @@ class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpan
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
-    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface
+    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
     {
         $searchQuery = $this->assertSearchStringGetterQuery($searchQuery);
 
@@ -51,7 +51,7 @@ class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpan
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\SearchStringGetterInterface
      */
-    protected function assertSearchStringGetterQuery(QueryInterface $searchQuery): QueryInterface
+    protected function assertSearchStringGetterQuery(QueryInterface $searchQuery)
     {
         if (!$searchQuery instanceof SearchStringGetterInterface) {
             throw new InvalidSearchQueryException(sprintf(

@@ -31,7 +31,7 @@ abstract class AbstractSuggestionExpanderPlugin extends AbstractPlugin implement
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
-    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface
+    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
     {
         $this->setCompletionTerm($searchQuery->getSearchQuery(), $requestParameters);
 

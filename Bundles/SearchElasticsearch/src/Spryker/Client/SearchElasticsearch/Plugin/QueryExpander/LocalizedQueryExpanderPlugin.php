@@ -31,7 +31,7 @@ class LocalizedQueryExpanderPlugin extends AbstractPlugin implements QueryExpand
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
-    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface
+    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
     {
         $this->addLocaleFilterToQuery($searchQuery->getSearchQuery());
 
@@ -81,6 +81,6 @@ class LocalizedQueryExpanderPlugin extends AbstractPlugin implements QueryExpand
      */
     protected function getCurrentLocale(): string
     {
-        return $this->getFactory()->getStore()->getCurrentLocale();
+        return $this->getFactory()->getLocaleClient()->getCurrentLocale();
     }
 }

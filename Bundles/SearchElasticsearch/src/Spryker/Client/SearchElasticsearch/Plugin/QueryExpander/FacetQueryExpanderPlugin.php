@@ -252,4 +252,32 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
 
         return $boolQuery;
     }
+
+    /**
+     * @param mixed $filterValue
+     *
+     * @return bool
+     */
+    protected function isFilterValueEmpty($filterValue): bool
+    {
+        if ($this->isFilterValueEmptyArray($filterValue)) {
+            return true;
+        }
+
+        return empty($filterValue) && !is_numeric($filterValue);
+    }
+
+    /**
+     * @param mixed $filterValue
+     *
+     * @return bool
+     */
+    protected function isFilterValueEmptyArray($filterValue): bool
+    {
+        if (is_array($filterValue) && empty(array_filter($filterValue, 'strlen'))) {
+            return true;
+        }
+
+        return false;
+    }
 }
