@@ -9,29 +9,19 @@ namespace Spryker\Zed\CmsSlotBlock\Business\Writer;
 
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockEntityManagerInterface;
-use Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockRepositoryInterface;
 
 class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterface
 {
-    /**
-     * @var \Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockRepositoryInterface
-     */
-    protected $cmsSlotBlockRepository;
-
     /**
      * @var \Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockEntityManagerInterface
      */
     protected $cmsSlotBlockEntityManager;
 
     /**
-     * @param \Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockRepositoryInterface $cmsSlotBlockRepository
      * @param \Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockEntityManagerInterface $cmsSlotBlockEntityManager
      */
-    public function __construct(
-        CmsSlotBlockRepositoryInterface $cmsSlotBlockRepository,
-        CmsSlotBlockEntityManagerInterface $cmsSlotBlockEntityManager
-    ) {
-        $this->cmsSlotBlockRepository = $cmsSlotBlockRepository;
+    public function __construct(CmsSlotBlockEntityManagerInterface $cmsSlotBlockEntityManager)
+    {
         $this->cmsSlotBlockEntityManager = $cmsSlotBlockEntityManager;
     }
 
@@ -40,88 +30,31 @@ class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterfac
      *
      * @return void
      */
-    public function writeCmsSlotBlockRelations(CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer): void
+    public function saveCmsSlotBlockRelations(CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer): void
     {
-        $mappedCmsSlotBlockTransfers = $this->getMappedCmsSlotBlockTransfers(
-            $cmsSlotBlockCollectionTransfer->getCmsSlotBlocks()->getArrayCopy()
-        );
-        $mappedCmsSlotBlockTransfersFromDb = $this->getMappedCmsSlotBlockTransfers(
-            $this->cmsSlotBlockRepository->getCmsSlotBlocksBySlotIds(array_keys($mappedCmsSlotBlockTransfers))
-        );
+        $cmsSlotBlockTransfers = $cmsSlotBlockCollectionTransfer->getCmsSlotBlocks()->getArrayCopy();
+        $cmsSlotIds = $this->getUniqueCmsSlotIds($cmsSlotBlockTransfers);
 
-        $this->deleteCmsSlotBlockRelations($mappedCmsSlotBlockTransfersFromDb, $mappedCmsSlotBlockTransfers);
-
-        foreach ($mappedCmsSlotBlockTransfers as $idCmsSlot => $cmsSlotBlockTransfers) {
-            $cmsSlotBlockTransfersFromDb = $mappedCmsSlotBlockTransfersFromDb[$idCmsSlot] ?? [];
-
-            $this->updateCmsSlotBlockRelations($cmsSlotBlockTransfers, $cmsSlotBlockTransfersFromDb);
-            $this->createCmsSlotBlockRelations($cmsSlotBlockTransfers, $cmsSlotBlockTransfersFromDb);
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[][] $mappedCmsSlotBlockTransfersFromDb
-     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[][] $mappedCmsSlotBlockTransfers
-     *
-     * @return void
-     */
-    protected function deleteCmsSlotBlockRelations(
-        array $mappedCmsSlotBlockTransfersFromDb,
-        array $mappedCmsSlotBlockTransfers
-    ): void {
-        foreach ($mappedCmsSlotBlockTransfersFromDb as $idCmsSlot => $cmsSlotBlockTransfersFromDb) {
-            $cmsBlockIds = array_keys(array_diff_key($cmsSlotBlockTransfersFromDb, $mappedCmsSlotBlockTransfers[$idCmsSlot]));
-
-            $this->cmsSlotBlockEntityManager->deleteCmsSlotBlocks($idCmsSlot, $cmsBlockIds);
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
-     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfersFromDb
-     *
-     * @return void
-     */
-    protected function updateCmsSlotBlockRelations(
-        array $cmsSlotBlockTransfers,
-        array $cmsSlotBlockTransfersFromDb
-    ): void {
-        $cmsSlotBlockTransfers = array_intersect_key($cmsSlotBlockTransfers, $cmsSlotBlockTransfersFromDb);
-
-        foreach ($cmsSlotBlockTransfers as $cmsSlotBlockTransfer) {
-            $this->cmsSlotBlockEntityManager->updateCmsSlotBlock($cmsSlotBlockTransfer);
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
-     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfersFromDb
-     *
-     * @return void
-     */
-    protected function createCmsSlotBlockRelations(
-        array $cmsSlotBlockTransfers,
-        array $cmsSlotBlockTransfersFromDb
-    ): void {
-        $cmsSlotBlockTransfers = array_diff_key($cmsSlotBlockTransfers, $cmsSlotBlockTransfersFromDb);
-
-        foreach ($cmsSlotBlockTransfers as $cmsSlotBlockTransfer) {
-            $this->cmsSlotBlockEntityManager->createCmsSlotBlock($cmsSlotBlockTransfer);
-        }
+        $this->cmsSlotBlockEntityManager->deleteCmsSlotBlocks($cmsSlotIds);
+        $this->cmsSlotBlockEntityManager->createCmsSlotBlocks($cmsSlotBlockTransfers);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
      *
-     * @return \Generated\Shared\Transfer\CmsSlotBlockTransfer[][]
+     * @return int[]
      */
-    protected function getMappedCmsSlotBlockTransfers(array $cmsSlotBlockTransfers): array
+    protected function getUniqueCmsSlotIds(array $cmsSlotBlockTransfers): array
     {
-        $mappedCmsSlotBlockTransfers = [];
+        $cmsSlotIds = [];
         foreach ($cmsSlotBlockTransfers as $cmsSlotBlockTransfer) {
-            $mappedCmsSlotBlockTransfers[$cmsSlotBlockTransfer->getIdSlot()][$cmsSlotBlockTransfer->getIdCmsBlock()] = $cmsSlotBlockTransfer;
+            $cmsSlotId = $cmsSlotBlockTransfer->getIdSlot();
+
+            if (!in_array($cmsSlotId, $cmsSlotIds)) {
+                $cmsSlotIds[] = $cmsSlotId;
+            }
         }
 
-        return $mappedCmsSlotBlockTransfers;
+        return $cmsSlotIds;
     }
 }

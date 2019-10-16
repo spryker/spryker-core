@@ -12,12 +12,13 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockEntityManagerInterface getEntityManager()
- * @method \Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockRepositoryInterface getRepository()
  * @method \Spryker\Zed\CmsSlotBlock\Business\CmsSlotBlockBusinessFactory getFactory()
  */
 class CmsSlotBlockFacade extends AbstractFacade implements CmsSlotBlockFacadeInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer
@@ -28,6 +29,6 @@ class CmsSlotBlockFacade extends AbstractFacade implements CmsSlotBlockFacadeInt
     {
         $this->getFactory()
             ->createCmsSlotBlockRelationsWriter()
-            ->writeCmsSlotBlockRelations($cmsSlotBlockCollectionTransfer);
+            ->saveCmsSlotBlockRelations($cmsSlotBlockCollectionTransfer);
     }
 }

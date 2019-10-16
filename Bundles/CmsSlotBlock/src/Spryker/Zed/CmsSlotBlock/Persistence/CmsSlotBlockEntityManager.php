@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CmsSlotBlock\Persistence;
 
-use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlock;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -17,63 +17,44 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class CmsSlotBlockEntityManager extends AbstractEntityManager implements CmsSlotBlockEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer $cmsSlotBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
      *
      * @return void
      */
-    public function createCmsSlotBlock(CmsSlotBlockTransfer $cmsSlotBlockTransfer): void
+    public function createCmsSlotBlocks(array $cmsSlotBlockTransfers): void
     {
-        $cmsSlotBlockTransfer->requireIdCmsBlock()
-            ->requireIdSlot()
-            ->requirePosition();
+        $cmsSlotBlockEntityCollection = new ObjectCollection();
+        $cmsSlotBlockEntityCollection->setModel(SpyCmsSlotBlock::class);
 
-        $cmsSlotBlockEntity = $this->getFactory()
-            ->createCmsSlotBlockMapper()
-            ->mapCmsSlotBlockTransferToEntity($cmsSlotBlockTransfer, new SpyCmsSlotBlock());
+        $cmsSlotBlockMapper = $this->getFactory()->createCmsSlotBlockMapper();
 
-        $cmsSlotBlockEntity->save();
-    }
+        foreach ($cmsSlotBlockTransfers as $cmsSlotBlockTransfer) {
+            $cmsSlotBlockTransfer->requireIdSlot()
+                ->requireIdCmsBlock()
+                ->requireIdSlotTemplate()
+                ->requirePosition();
 
-    /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer $cmsSlotBlockTransfer
-     *
-     * @return void
-     */
-    public function updateCmsSlotBlock(CmsSlotBlockTransfer $cmsSlotBlockTransfer): void
-    {
-        $cmsSlotBlockTransfer->requireIdCmsBlock()
-            ->requireIdSlot()
-            ->requirePosition();
+            $cmsSlotBlockEntity = $cmsSlotBlockMapper->mapCmsSlotBlockTransferToEntity(
+                $cmsSlotBlockTransfer,
+                new SpyCmsSlotBlock()
+            );
 
-        $cmsSlotBlockEntity = $this->getFactory()
-            ->getCmsSLotBlockQuery()
-            ->filterByFkCmsBlock($cmsSlotBlockTransfer->getIdCmsBlock())
-            ->filterByFkCmsSlot($cmsSlotBlockTransfer->getIdSlot())
-            ->findOne();
-
-        if (!$cmsSlotBlockEntity) {
-            return;
+            $cmsSlotBlockEntityCollection->append($cmsSlotBlockEntity);
         }
 
-        $cmsSlotBlockEntity = $this->getFactory()
-            ->createCmsSlotBlockMapper()
-            ->mapCmsSlotBlockTransferToEntity($cmsSlotBlockTransfer, $cmsSlotBlockEntity);
-
-        $cmsSlotBlockEntity->save();
+        $cmsSlotBlockEntityCollection->save();
     }
 
     /**
-     * @param int $idCmsSlot
-     * @param int[] $cmsBlockIds
+     * @param int[] $cmsSlotIds
      *
      * @return void
      */
-    public function deleteCmsSlotBlocks(int $idCmsSlot, array $cmsBlockIds): void
+    public function deleteCmsSlotBlocks(array $cmsSlotIds): void
     {
         $this->getFactory()
-            ->getCmsSLotBlockQuery()
-            ->filterByFkCmsSlot($idCmsSlot)
-            ->filterByFkCmsBlock_In($cmsBlockIds)
+            ->getCmsSlotBlockQuery()
+            ->filterByFkCmsSlot_In($cmsSlotIds)
             ->delete();
     }
 }

@@ -13,7 +13,6 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockEntityManagerInterface getEntityManager()
- * @method \Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockRepositoryInterface getRepository()
  */
 class CmsSlotBlockBusinessFactory extends AbstractBusinessFactory
 {
@@ -22,9 +21,6 @@ class CmsSlotBlockBusinessFactory extends AbstractBusinessFactory
      */
     public function createCmsSlotBlockRelationsWriter(): CmsSlotBlockRelationsWriterInterface
     {
-        return new CmsSlotBlockRelationsWriter(
-            $this->getRepository(),
-            $this->getEntityManager()
-        );
+        return new CmsSlotBlockRelationsWriter($this->getEntityManager());
     }
 }

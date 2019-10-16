@@ -5,9 +5,9 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/cms-block": "^1.5.0 || ^2.0.0 || ^3.0.0",
+    "spryker/cms-block": "^1.0.0 || ^2.0.0",
     "spryker/cms-slot": "^0.3.0",
-    "spryker/kernel": "^3.37.0",
+    "spryker/kernel": "^3.33.0",
     "spryker/propel-orm": "^1.0.0"
   },
   "require-dev": {
