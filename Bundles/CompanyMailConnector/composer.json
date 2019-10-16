@@ -21,7 +21,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
+      "SprykerTest\\": "tests/SprykerTest/",
+      "SprykerTest\\Zed\\CompanyMailConnector\\Helper\\": "tests/SprykerTest/Zed/CompanyMailConnector/_support/Helper/"
     }
   },
   "minimum-stability": "dev",
