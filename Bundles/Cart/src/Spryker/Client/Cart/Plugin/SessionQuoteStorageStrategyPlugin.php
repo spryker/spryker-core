@@ -209,7 +209,7 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
 
     /**
      * Specification:
-     * - Makes zed request.
+     * - Makes Zed request.
      * - Adds items to quote.
      * - Stores quote in session internally after success zed request.
      * - Returns response with updated quote.
@@ -227,7 +227,7 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
 
     /**
      * Specification:
-     * - Makes zed request.
+     * - Makes Zed request.
      * - Adds items to quote.
      * - Stores quote in session internally after success zed request.
      * - Returns response with updated quote.
@@ -245,7 +245,7 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
 
     /**
      * Specification:
-     * - Makes zed request.
+     * - Makes Zed request.
      * - Updates quantity for given items.
      * - Stores quote in session internally after successful zed request.
      * - Returns response with updated quote.

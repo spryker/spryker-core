@@ -14,7 +14,7 @@ interface CartOperationQuoteStorageStrategyPluginInterface
 {
     /**
      * Specification:
-     * - Makes zed request.
+     * - Makes Zed request.
      * - Adds items to quote.
      * - Stores quote in session internally after success zed request.
      * - Returns response with updated quote.
@@ -29,7 +29,7 @@ interface CartOperationQuoteStorageStrategyPluginInterface
 
     /**
      * Specification:
-     * - Makes zed request.
+     * - Makes Zed request.
      * - Removes items from quote.
      * - Stores quote in session internally after success zed request.
      * - Returns response with updated quote.
@@ -44,7 +44,7 @@ interface CartOperationQuoteStorageStrategyPluginInterface
 
     /**
      * Specification:
-     * - Makes zed request.
+     * - Makes Zed request.
      * - Updates quantity for given items.
      * - Stores quote in session internally after success zed request.
      * - Returns response with updated quote.
