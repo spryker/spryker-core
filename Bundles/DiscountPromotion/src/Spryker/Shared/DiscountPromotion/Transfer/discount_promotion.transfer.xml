@@ -21,7 +21,6 @@
         <property name="maxQuantity" type="int"/>
         <property name="sku" type="string"/>
         <property name="abstractSku" type="string"/>
-        <property name="maxQuantity" type="int"/>
         <property name="discount" type="Discount"/>
     </transfer>
 
