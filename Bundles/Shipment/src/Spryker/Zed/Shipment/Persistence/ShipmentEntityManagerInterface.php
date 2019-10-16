@@ -54,6 +54,20 @@ interface ShipmentEntityManagerInterface
     public function deleteMethodByIdMethod(int $idShipmentMethod): void;
 
     /**
+     * @param int $idShipmentMethod
+     *
+     * @return void
+     */
+    public function deleteShipmentMethodStoreRelationsByIdShipmentMethod(int $idShipmentMethod): void;
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return void
+     */
+    public function deleteShipmentMethodPriceByIdShipmentMethod(int $idShipmentMethod): void;
+
+    /**
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *

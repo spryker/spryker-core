@@ -16,3 +16,8 @@ Actions,Actions
 "Delivery Methods","Delivery Methods"
 "Add new Carrier Company","Add new Carrier Company"
 "Add new Shipment Method","Add new Shipment Method"
+"Delivery method not found.","Delivery method not found."
+"Delivery method was deleted successfully.","Delivery method was deleted successfully."
+"Delete Delivery Method","Delete Delivery Method"
+"No, I want to keep this delivery method","No, I want to keep this delivery method"
+"Yes, delete this delivery method","Yes, delete this delivery method"

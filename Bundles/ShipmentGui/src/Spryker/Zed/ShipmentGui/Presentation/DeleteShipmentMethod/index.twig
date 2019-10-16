@@ -1,0 +1,27 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Delete Delivery Method' ~ ': ' ~ shipmentMethod.name | trans %}
+
+{% block head_title %}
+    {{ widget_title }}
+{% endblock %}
+{% block section_title %}
+    {{ widget_title }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+
+            <a href="{{ app.request.headers.get('referer') }}" class="btn btn-success">{{ 'No, I want to keep this delivery method' | trans}}</a>
+            <a href="{{ url('/shipment-gui/delete-shipment-method/confirm', {
+                'id-shipment-method': shipmentMethod.idShipmentMethod
+            }) }}" class="btn btn-danger safe-submit">{{ 'Yes, delete this delivery method' | trans}}</a>
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

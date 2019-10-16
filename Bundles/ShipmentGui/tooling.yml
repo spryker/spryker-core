@@ -1,5 +1,5 @@
 architecture-sniffer:
-  priority: 7
+  priority: 2
 
   code-sniffer:
     level: 2
