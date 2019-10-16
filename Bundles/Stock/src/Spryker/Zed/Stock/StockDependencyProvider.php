@@ -127,7 +127,7 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface[]
+     * @return \Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface[]
      */
     protected function getStockUpdateHandlerPlugins(Container $container)
     {

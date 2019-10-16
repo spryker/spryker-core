@@ -53,8 +53,7 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
         $spyAvailabilityAbstractTransfer = $this->getAvailabilityAbstract($idProductAbstract);
         $storageAvailabilityTransfer = new StorageAvailabilityTransfer();
 
-        $isAbstractProductAvailable = $spyAvailabilityAbstractTransfer->getQuantity() !== null &&
-            $spyAvailabilityAbstractTransfer->getQuantity()->greaterThan(0);
+        $isAbstractProductAvailable = $this->isAbstractProductAvailable($spyAvailabilityAbstractTransfer);
         $storageAvailabilityTransfer->setIsAbstractProductAvailable($isAbstractProductAvailable);
 
         $concreteAvailabilities = [];
@@ -69,6 +68,17 @@ class AvailabilityStorageReader implements AvailabilityStorageReaderInterface
         $storageAvailabilityTransfer->setConcreteProductAvailableItems($concreteAvailabilities);
 
         return $storageAvailabilityTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer $spyAvailabilityAbstractTransfer
+     *
+     * @return bool
+     */
+    protected function isAbstractProductAvailable(SpyAvailabilityAbstractEntityTransfer $spyAvailabilityAbstractTransfer): bool
+    {
+        return $spyAvailabilityAbstractTransfer->getQuantity() !== null &&
+            $spyAvailabilityAbstractTransfer->getQuantity()->greaterThan(0);
     }
 
     /**
