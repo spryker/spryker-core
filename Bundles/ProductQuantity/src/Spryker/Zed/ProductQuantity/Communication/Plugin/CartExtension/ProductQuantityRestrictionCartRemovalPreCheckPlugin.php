@@ -21,7 +21,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ProductQuantityRestrictionCartRemovalPreCheckPlugin extends AbstractPlugin implements CartRemovalPreCheckPluginInterface, TerminationAwareCartPreCheckPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,7 +36,7 @@ class ProductQuantityRestrictionCartRemovalPreCheckPlugin extends AbstractPlugin
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

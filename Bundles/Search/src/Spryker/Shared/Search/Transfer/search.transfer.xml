@@ -5,8 +5,8 @@
 
     <transfer name="ElasticsearchIndexDefinition">
         <property name="indexName" type="string"/>
-        <property name="settings" type="array"/>
-        <property name="mappings" type="array"/>
+        <property name="settings" type="array" singular="settings"/>
+        <property name="mappings" type="array" singular="mappings"/>
     </transfer>
 
     <transfer name="FacetConfig">
@@ -18,7 +18,7 @@
         <property name="isMultiValued" type="bool"/>
         <property name="size" type="int" deprecated="Use aggregationParams instead"/>
         <property name="valueTransformer" type="string"/>
-        <property name="aggregationParams" type="array"/>
+        <property name="aggregationParams" type="array" singular="aggregationParams"/>
     </transfer>
 
     <transfer name="SortConfig">
@@ -32,22 +32,22 @@
         <property name="parameterName" type="string"/>
         <property name="itemsPerPageParameterName" type="string"/>
         <property name="defaultItemsPerPage" type="int"/>
-        <property name="validItemsPerPageOptions" type="array"/>
+        <property name="validItemsPerPageOptions" type="array" singular="validItemsPerPageOptions"/>
     </transfer>
 
     <transfer name="PageMap">
-        <property name="searchResultData" type="SearchResultDataMap[]"/>
+        <property name="searchResultData" type="SearchResultDataMap[]" singular="searchResultData"/>
         <property name="type" type="string"/>
         <property name="store" type="string"/>
         <property name="locale" type="string"/>
-        <property name="fullText" type="array"/>
-        <property name="fullTextBoosted" type="array"/>
-        <property name="stringFacet" type="StringFacetMap[]"/>
-        <property name="integerFacet" type="IntegerFacetMap[]"/>
-        <property name="completionTerms" type="array"/>
-        <property name="suggestionTerms" type="array"/>
-        <property name="stringSort" type="StringSortMap[]"/>
-        <property name="integerSort" type="IntegerSortMap[]"/>
+        <property name="fullText" type="array" singular="fullText"/>
+        <property name="fullTextBoosted" type="array" singular="fullTextBoosted"/>
+        <property name="stringFacet" type="StringFacetMap[]" singular="stringFacet"/>
+        <property name="integerFacet" type="IntegerFacetMap[]" singular="integerFacet"/>
+        <property name="completionTerms" type="array" singular="completionTerms"/>
+        <property name="suggestionTerms" type="array" singular="suggestionTerms"/>
+        <property name="stringSort" type="StringSortMap[]" singular="stringSort"/>
+        <property name="integerSort" type="IntegerSortMap[]" singular="integerSort"/>
         <property name="category" type="CategoryMap"/>
         <property name="isActive" type="bool"/>
         <property name="activeFrom" type="string"/>
@@ -61,12 +61,12 @@
 
     <transfer name="StringFacetMap">
         <property name="name" type="string"/>
-        <property name="value" type="array"/>
+        <property name="value" type="array" singular="value"/>
     </transfer>
 
     <transfer name="IntegerFacetMap">
         <property name="name" type="string"/>
-        <property name="value" type="array"/>
+        <property name="value" type="array" singular="value"/>
     </transfer>
 
     <transfer name="StringSortMap">
@@ -80,8 +80,8 @@
     </transfer>
 
     <transfer name="CategoryMap">
-        <property name="directParents" type="array"/>
-        <property name="allParents" type="array"/>
+        <property name="directParents" type="array" singular="directParents"/>
+        <property name="allParents" type="array" singular="allParents"/>
     </transfer>
 
     <transfer name="FacetSearchResult">
@@ -116,7 +116,7 @@
     </transfer>
 
     <transfer name="SortSearchResult">
-        <property name="sortParamNames" type="array"/>
+        <property name="sortParamNames" type="array" singular="sortParamNames"/>
         <property name="currentSortParam" type="string"/>
         <property name="currentSortOrder" type="string"/>
     </transfer>
@@ -128,7 +128,7 @@
 
     <transfer name="SearchDocument">
         <property name="id" type="string"/>
-        <property name="data" type="array"/>
+        <property name="data" type="array" singular="data"/>
         <property name="type" type="string"/>
         <property name="index" type="string"/>
     </transfer>

@@ -44,6 +44,16 @@
         <property name="sumGrossPrice" type="int"/>
         <property name="taxRate" type="float"/>
         <property name="sku" type="string"/>
+        <property name="sumDiscountAmountAggregation" type="int"/>
+        <property name="sumPrice" type="int"/>
+        <property name="productOptions" type="ProductOption[]" singular="productOption"/>
+        <property name="unitDiscountAmountAggregation" type="int"/>
+        <property name="unitPrice" type="int"/>
+        <property name="sumPriceToPayAggregation" type="int"/>
+        <property name="taxRateAverageAggregation" type="float"/>
+        <property name="canceledAmount" type="int"/>
+        <property name="sumTaxAmountFullAggregation" type="int"/>
+        <property name="taxAmountAfterCancellation" type="int"/>
     </transfer>
 
     <transfer name="Expense">
@@ -53,6 +63,13 @@
         <property name="sumTaxAmount" type="int"/>
         <property name="unitGrossPrice" type="int"/>
         <property name="sumGrossPrice" type="int"/>
+        <property name="sumDiscountAmountAggregation" type="int"/>
+        <property name="sumPrice" type="int"/>
+        <property name="unitDiscountAmountAggregation" type="int"/>
+        <property name="unitPrice" type="int"/>
+        <property name="canceledAmount" type="int"/>
+        <property name="sumPriceToPayAggregation" type="int"/>
+        <property name="taxAmountAfterCancellation" type="int"/>
     </transfer>
 
     <transfer name="Country">
@@ -73,19 +90,31 @@
 
     <transfer name="Address">
         <property name="iso2Code" type="string"/>
+        <property name="fkCountry" type="int"/>
     </transfer>
 
     <transfer name="Totals">
         <property name="taxTotal" type="TaxTotal"/>
     </transfer>
 
-    <transfer name="TaxTotal">
-        <property name="amount" type="int"/>
+    <transfer name="CalculableObject">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="priceMode" type="string"/>
     </transfer>
 
-    <transfer name="Address">
-        <property name="iso2Code" type="string"/>
-        <property name="fkCountry" type="int"/>
+    <transfer name="CountryCollection">
+        <property name="countries" type="Country[]" singular="countries"/>
+    </transfer>
+
+    <transfer name="ProductOption">
+        <property name="sumTaxAmount" type="int"/>
+        <property name="taxRate" type="float"/>
+        <property name="sumDiscountAmountAggregation" type="int"/>
+        <property name="sumPrice" type="int"/>
+        <property name="unitTaxAmount" type="int"/>
+        <property name="unitDiscountAmountAggregation" type="int"/>
+        <property name="unitPrice" type="int"/>
     </transfer>
 
 </transfers>

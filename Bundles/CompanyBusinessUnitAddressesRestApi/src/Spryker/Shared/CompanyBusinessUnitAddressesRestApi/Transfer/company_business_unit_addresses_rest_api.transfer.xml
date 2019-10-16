@@ -16,6 +16,7 @@
 
     <transfer name="CompanyBusinessUnit">
         <property name="addressCollection" type="CompanyUnitAddressCollection"/>
+        <property name="defaultBillingAddress" type="int"/>
     </transfer>
 
     <transfer name="CompanyUnitAddressCollection">
@@ -25,6 +26,7 @@
     <transfer name="CompanyUnitAddress">
         <property name="uuid" type="string"/>
         <property name="fkCompany" type="int"/>
+        <property name="idCompanyUnitAddress" type="int"/>
     </transfer>
 
     <transfer name="CompanyUnitAddressResponse">
@@ -40,6 +42,10 @@
         <property name="status" type="int"/>
         <property name="code" type="string"/>
         <property name="detail" type="string"/>
+    </transfer>
+
+    <transfer name="RestCompanyBusinessUnitAttributes">
+        <property name="defaultBillingAddress" type="string"/>
     </transfer>
 
 </transfers>

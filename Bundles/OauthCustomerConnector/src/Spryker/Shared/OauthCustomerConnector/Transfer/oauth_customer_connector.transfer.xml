@@ -8,4 +8,35 @@
         <property name="idCustomer" type="int"/>
     </transfer>
 
+    <transfer name="OauthScope">
+        <property name="identifier" type="string"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="email" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="idCustomer" type="int"/>
+        <property name="password" type="string"/>
+    </transfer>
+
+    <transfer name="OauthUser">
+        <property name="username" type="string"/>
+        <property name="password" type="string"/>
+        <property name="isSuccess" type="bool"/>
+        <property name="userIdentifier" type="string"/>
+        <property name="grantType" type="string"/>
+    </transfer>
+
+    <transfer name="OauthClient">
+        <property name="identifier" type="string"/>
+        <property name="secret" type="string"/>
+        <property name="isConfidential" type="bool"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="OauthScopeRequest">
+        <property name="defaultScopes" type="OauthScope[]" singular="scope"/>
+        <property name="grantType" type="string"/>
+    </transfer>
+
 </transfers>

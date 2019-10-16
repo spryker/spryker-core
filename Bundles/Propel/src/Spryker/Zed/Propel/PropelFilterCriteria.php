@@ -26,7 +26,7 @@ class PropelFilterCriteria implements PropelFilterCriteriaInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getFilterTransfer()
     {
@@ -34,7 +34,7 @@ class PropelFilterCriteria implements PropelFilterCriteriaInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function setFilterTransfer(FilterTransfer $filterTransfer)
     {
@@ -42,7 +42,7 @@ class PropelFilterCriteria implements PropelFilterCriteriaInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function toCriteria()
     {

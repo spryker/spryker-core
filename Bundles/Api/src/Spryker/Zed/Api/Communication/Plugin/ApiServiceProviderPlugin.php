@@ -24,7 +24,7 @@ class ApiServiceProviderPlugin extends AbstractPlugin implements ServiceProvider
     /**
      * @deprecated Please don't use this property anymore. The needed ControllerListenerInterface is now retrieved by the Factory.
      *
-     * @var \Spryker\Zed\Api\Communication\Plugin\ApiControllerListenerInterface
+     * @var \Spryker\Zed\Api\Communication\Plugin\ApiControllerListenerInterface|null
      */
     protected $controllerListener;
 

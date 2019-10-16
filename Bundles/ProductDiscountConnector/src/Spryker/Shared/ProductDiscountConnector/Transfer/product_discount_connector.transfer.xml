@@ -7,7 +7,7 @@
         <property name="quantity" type="int"/>
         <property name="unitGrossPrice" type="int" deprecated="use unitPrice instead"/>
         <property name="unitPrice" type="int"/>
-        <property name="originalItemCalculatedDiscounts" type="CalculatedDiscount[]"/>
+        <property name="originalItemCalculatedDiscounts" type="CalculatedDiscount[]" singular="originalItemCalculatedDiscounts"/>
         <property name="originalItem" type="Item"/>
     </transfer>
 
@@ -21,7 +21,18 @@
         <property name="attribute" type="string"/>
         <property name="operator" type="string"/>
         <property name="value" type="string"/>
-        <property name="acceptedTypes" type="array"/>
+        <property name="acceptedTypes" type="array" singular="acceptedTypes"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="unitNetPrice" type="int"/>
+        <property name="unitGrossPrice" type="int"/>
+        <property name="id" type="int"/>
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="idProductConcrete" type="int"/>
     </transfer>
 
 </transfers>

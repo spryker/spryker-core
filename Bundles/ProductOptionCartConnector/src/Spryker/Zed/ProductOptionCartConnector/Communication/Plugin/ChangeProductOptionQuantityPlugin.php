@@ -19,13 +19,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ChangeProductOptionQuantityPlugin extends AbstractPlugin implements PostSavePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function postSave(QuoteTransfer $quoteTransfer)
     {

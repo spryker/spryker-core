@@ -4,7 +4,7 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ProductSetPageSearch">
-        <property name="idProductAbstracts" type="array"/>
+        <property name="idProductAbstracts" type="array" singular="idProductAbstracts"/>
         <property name="idProductSet" type="int"/>
         <property name="isActive" type="bool"/>
         <property name="weight" type="int"/>
@@ -15,10 +15,32 @@
         <property name="metaKeywords" type="string"/>
         <property name="metaDescription" type="string"/>
         <property name="url" type="string"/>
-        <property name="imageSets" type="array"/>
+        <property name="imageSets" type="array" singular="imageSets"/>
         <property name="locale" type="string"/>
         <property name="store" type="string"/>
         <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="ProductImageSet">
+        <property name="name" type="string"/>
+        <property name="productImages" type="ProductImage[]" singular="productImage"/>
+    </transfer>
+
+    <transfer name="StorageProductImage">
+    </transfer>
+
+    <transfer name="PageMap">
+        <property name="store" type="string"/>
+        <property name="locale" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="ProductImage">
     </transfer>
 
 </transfers>

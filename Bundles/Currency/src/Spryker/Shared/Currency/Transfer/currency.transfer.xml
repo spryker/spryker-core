@@ -19,12 +19,12 @@
 
     <transfer name="QuoteValidationResponse">
         <property name="isSuccessful" type="bool"/>
-        <property name="errors" type="QuoteError[]"/>
+        <property name="errors" type="QuoteError[]" singular="errors"/>
     </transfer>
 
     <transfer name="QuoteError">
         <property name="message" type="string"/>
-        <property name="parameters" type="array"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
     <transfer name="Quote">
@@ -35,11 +35,12 @@
     <transfer name="Store">
         <property name="name" type="string"/>
         <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode"/>
+        <property name="defaultCurrencyIsoCode" type="string"/>
+        <property name="selectedCurrencyIsoCode" type="string"/>
     </transfer>
 
-    <transfer name="Currency">
-        <property name="code" type="string"/>
+    <transfer name="Message">
+        <property name="value" type="string"/>
     </transfer>
 
 </transfers>
-

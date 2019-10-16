@@ -6,15 +6,19 @@
   "require": {
     "php": ">=7.1",
     "spryker/kernel": "^3.30.0",
-    "spryker/symfony": "^3.0.0"
+    "spryker/symfony": "^3.0.0",
+    "spryker/web-profiler-extension": "^1.0.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/container": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",
     "spryker/twig": "*"
   },
   "suggest": {
+    "spryker/container": "You need to have the Container installed to use the WebProfiler",
     "spryker/silex": "You need to have Silex installed to use the Config Profiler",
     "spryker/twig": "You need to have Twig installed to use the Config Profiler"
   },

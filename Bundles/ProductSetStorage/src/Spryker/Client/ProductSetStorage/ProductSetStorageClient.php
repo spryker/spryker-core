@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductSetStorageClient extends AbstractClient implements ProductSetStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,7 +32,7 @@ class ProductSetStorageClient extends AbstractClient implements ProductSetStorag
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

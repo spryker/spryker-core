@@ -1,3 +1,7 @@
 parameters:
     ignoreErrors:
         - '#Call to an undefined method .+Criteria::.+\(\).#'
+        - '#Parameter \#2 \$constraint of method .+ProductAttributeUniqueCombinationValidator::validateAttributeUniqueCombination\(\) expects .+ProductAttributeUniqueCombination, Symfony\\Component\\Validator\\Constraint given.#'
+        - '#Parameter \#2 \$constraint of method .+ProductAttributesNotBlankValidator::validateAttributeNotBlank\(\) expects .+ProductAttributesNotBlank, Symfony\\Component\\Validator\\Constraint given.#'
+        - '#Parameter \#2 \$constraint of method .+ProductPriceNotBlankValidator::validateProductPriceNotBlank\(\) expects .+ProductPriceNotBlank, Symfony\\Component\\Validator\\Constraint given.#'
+        - '#Parameter \#2 \$constraint of method .+SkuUniqueValidator::validateUniqueness\(\) expects .+SkuUnique, Symfony\\Component\\Validator\\Constraint given.#'

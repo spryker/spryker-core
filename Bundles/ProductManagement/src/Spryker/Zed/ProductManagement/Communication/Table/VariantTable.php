@@ -70,7 +70,7 @@ class VariantTable extends AbstractProductTable
         $this->idProductAbstract = $idProductAbstract;
         $this->localeTransfer = $localeTransfer;
         $this->defaultUrl = sprintf(
-            'variantTable?%s=%d&type=%s',
+            'variant-table?%s=%d&type=%s',
             EditController::PARAM_ID_PRODUCT_ABSTRACT,
             $idProductAbstract,
             $type

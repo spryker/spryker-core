@@ -22,7 +22,7 @@ class CategoryNodeCategoryPageSearchUnpublishListener extends AbstractPlugin imp
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

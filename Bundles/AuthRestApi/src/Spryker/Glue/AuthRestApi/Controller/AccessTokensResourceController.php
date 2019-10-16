@@ -47,7 +47,7 @@ class AccessTokensResourceController extends AbstractController
     {
         return $this->getFactory()
             ->createAccessTokensReader()
-            ->processAccessTokenRequest($restAccessTokensAttributesTransfer);
+            ->processAccessTokenRequest($restRequest, $restAccessTokensAttributesTransfer);
     }
 
     /**
