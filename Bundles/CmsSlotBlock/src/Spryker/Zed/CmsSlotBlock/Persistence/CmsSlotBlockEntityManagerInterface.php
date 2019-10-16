@@ -7,29 +7,19 @@
 
 namespace Spryker\Zed\CmsSlotBlock\Persistence;
 
-use Generated\Shared\Transfer\CmsSlotBlockTransfer;
-
 interface CmsSlotBlockEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer $cmsSlotBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
      *
      * @return void
      */
-    public function createCmsSlotBlock(CmsSlotBlockTransfer $cmsSlotBlockTransfer): void;
+    public function createCmsSlotBlocks(array $cmsSlotBlockTransfers): void;
 
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer $cmsSlotBlockTransfer
+     * @param int[] $cmsSlotIds
      *
      * @return void
      */
-    public function updateCmsSlotBlock(CmsSlotBlockTransfer $cmsSlotBlockTransfer): void;
-
-    /**
-     * @param int $idCmsSlot
-     * @param int[] $cmsBlockIds
-     *
-     * @return void
-     */
-    public function deleteCmsSlotBlocks(int $idCmsSlot, array $cmsBlockIds): void;
+    public function deleteCmsSlotBlocks(array $cmsSlotIds): void;
 }

@@ -14,14 +14,13 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockEntityManagerInterface getEntityManager()
- * @method \Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockRepositoryInterface getRepository()
  */
 class CmsSlotBlockPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
      * @return \Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlockQuery
      */
-    public function getCmsSLotBlockQuery(): SpyCmsSlotBlockQuery
+    public function getCmsSlotBlockQuery(): SpyCmsSlotBlockQuery
     {
         return SpyCmsSlotBlockQuery::create();
     }

@@ -8,6 +8,7 @@
     </transfer>
 
     <transfer name="CmsSlotBlock">
+        <property name="idSlotTemplate" type="int"/>
         <property name="idSlot" type="int"/>
         <property name="idCmsBlock" type="int"/>
         <property name="position" type="int"/>

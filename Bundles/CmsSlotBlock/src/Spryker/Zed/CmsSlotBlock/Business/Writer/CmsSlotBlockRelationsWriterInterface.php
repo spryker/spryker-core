@@ -16,5 +16,5 @@ interface CmsSlotBlockRelationsWriterInterface
      *
      * @return void
      */
-    public function writeCmsSlotBlockRelations(CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer): void;
+    public function saveCmsSlotBlockRelations(CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer): void;
 }
