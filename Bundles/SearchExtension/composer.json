@@ -1,13 +1,14 @@
 {
   "name": "spryker/search-extension",
+  "type": "library",
   "description": "SearchExtension module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1"
   },
   "require-dev": {
-    "spryker/elastica": "*",
     "spryker/code-sniffer": "*",
+    "spryker/elastica": "*",
     "spryker/log": "*",
     "spryker/testify": "*"
   },
