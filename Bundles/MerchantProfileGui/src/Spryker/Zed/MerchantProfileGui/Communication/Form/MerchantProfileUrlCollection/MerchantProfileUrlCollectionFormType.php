@@ -16,6 +16,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\MerchantProfileGui\Communication\MerchantProfileGuiCommunicationFactory getFactory()
@@ -82,8 +83,9 @@ class MerchantProfileUrlCollectionFormType extends AbstractType
     {
         $builder->add(static::FIELD_URL, TextType::class, [
             'label' => static::LABEL_URL,
-            'required' => true,
+            'required' => false,
             'constraints' => [
+                new Required(),
                 new NotBlank(),
                 new Regex([
                     'pattern' => static::URL_PATH_PATTERN,

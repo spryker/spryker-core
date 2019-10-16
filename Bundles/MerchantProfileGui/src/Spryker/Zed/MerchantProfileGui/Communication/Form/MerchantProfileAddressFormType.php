@@ -92,6 +92,7 @@ class MerchantProfileAddressFormType extends AbstractType
     {
         $builder->add(static::FIELD_FK_COUNTRY, ChoiceType::class, [
             'label' => static::LABEL_FK_COUNTRY,
+            'required' => false,
             'placeholder' => 'Select one',
             'choices' => array_flip($choices),
             'constraints' => $this->getRequiredConstraints(),
@@ -109,7 +110,7 @@ class MerchantProfileAddressFormType extends AbstractType
     {
         $builder->add(static::FIELD_CITY, TextType::class, [
             'label' => static::LABEL_CITY,
-            'required' => true,
+            'required' => false,
             'constraints' => array_merge(
                 $this->getRequiredConstraints(),
                 [new Length(['max' => 255])]
@@ -128,7 +129,7 @@ class MerchantProfileAddressFormType extends AbstractType
     {
         $builder->add(static::FIELD_ZIP_CODE, TextType::class, [
             'label' => static::LABEL_ZIP_CODE,
-            'required' => true,
+            'required' => false,
             'constraints' => array_merge(
                 $this->getRequiredConstraints(),
                 [new Length(['max' => 10])]
@@ -147,7 +148,7 @@ class MerchantProfileAddressFormType extends AbstractType
     {
         $builder->add(static::FIELD_ADDRESS_1, TextType::class, [
             'label' => static::LABEL_ADDRESS_1,
-            'required' => true,
+            'required' => false,
             'constraints' => array_merge(
                 $this->getRequiredConstraints(),
                 [new Length(['max' => 255])]
