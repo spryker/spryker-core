@@ -219,7 +219,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
 
     /**
      * Specification:
-     *  - Makes zed request with items and customer.
+     *  - Makes Zed request with items and customer.
      *  - Loads customer quote from database.
      *  - Adds items to quote.
      *  - Recalculates quote totals.
@@ -244,7 +244,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
 
     /**
      * Specification:
-     *  - Makes zed request with items and customer.
+     *  - Makes Zed request with items and customer.
      *  - Loads customer quote from database.
      *  - Removes items from quote.
      *  - Recalculates quote totals.
@@ -269,7 +269,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
 
     /**
      * Specification:
-     *  - Makes zed request with items and customer.
+     *  - Makes Zed request with items and customer.
      *  - Loads customer quote from database.
      *  - Changes quantity for given items.
      *  - Recalculates quote totals.
