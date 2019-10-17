@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -37,22 +38,26 @@ class DeleteShipmentMethodController extends AbstractController
             return $this->redirectResponse(static::REDIRECT_URL);
         }
 
+        $deleteShipmentMethodForm = $this->getFactory()->createShipmentMethodDeleteForm();
+        $deleteShipmentMethodForm->handleRequest($request);
+        if ($deleteShipmentMethodForm->isSubmitted() && $deleteShipmentMethodForm->isValid()) {
+            return $this->handleSubmitForm($idShipmentMethod);
+        }
+
         return $this->viewResponse([
             'shipmentMethod' => $shipmentMethodTransfer,
+            'deleteShipmentMethodForm' => $deleteShipmentMethodForm->createView(),
         ]);
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $idShipmentMethod
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function confirmAction(Request $request)
+    protected function handleSubmitForm(int $idShipmentMethod): RedirectResponse
     {
-        $idShipmentMethod = $this->castId($request->query->get(static::PARAM_ID_SHIPMENT_METHOD));
-
         $this->getFactory()->getShipmentFacade()->deleteMethod($idShipmentMethod);
-
         $this->addSuccessMessage(static::MESSAGE_SUCCESS);
 
         return $this->redirectResponse(static::REDIRECT_URL);
