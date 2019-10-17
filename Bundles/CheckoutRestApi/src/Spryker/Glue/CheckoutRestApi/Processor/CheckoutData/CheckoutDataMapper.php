@@ -69,7 +69,8 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
 
         $restCheckoutDataResponseAttributesTransfer = $this->mapSelectedShipmentMethods(
             $restCheckoutDataTransfer,
-            $restCheckoutDataResponseAttributesTransfer
+            $restCheckoutDataResponseAttributesTransfer,
+            $restCheckoutRequestAttributesTransfer
         );
 
         return $restCheckoutDataResponseAttributesTransfer;
@@ -99,6 +100,8 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     }
 
     /**
+     * @deprecated Will be removed in next major release.
+     *
      * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $checkoutDataTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
      *
@@ -224,21 +227,26 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
      * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
      */
     protected function mapSelectedShipmentMethods(
         RestCheckoutDataTransfer $restCheckoutDataTransfer,
-        RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
+        RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer,
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
-        $shipmentMethodTransfers = $restCheckoutDataTransfer->getSelectedShipmentMethods()->getMethods();
-        foreach ($shipmentMethodTransfers as $shipmentMethodTransfer) {
-            $restShipmentMethodTransfer = $this->mapShipmentMethodTransferToRestShipmentMethodTransfer(
-                $shipmentMethodTransfer,
-                new RestShipmentMethodTransfer()
-            );
+        $idSelectedShipmentMethod = $restCheckoutRequestAttributesTransfer->getShipment()->getIdShipmentMethod();
 
-            $restCheckoutDataResponseAttributesTransfer->addSelectedShipmentMethod($restShipmentMethodTransfer);
+        foreach ($restCheckoutDataTransfer->getShipmentMethods()->getMethods() as $shipmentMethodTransfer) {
+            if ($shipmentMethodTransfer->getIdShipmentMethod() === $idSelectedShipmentMethod) {
+                $restShipmentMethodTransfer = $this->mapShipmentMethodTransferToRestShipmentMethodTransfer(
+                    $shipmentMethodTransfer,
+                    new RestShipmentMethodTransfer()
+                );
+
+                $restCheckoutDataResponseAttributesTransfer->addSelectedShipmentMethod($restShipmentMethodTransfer);
+            }
         }
 
         return $restCheckoutDataResponseAttributesTransfer;
@@ -256,6 +264,10 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
+        if (!$restCheckoutRequestAttributesTransfer->getPayments()) {
+            return $restCheckoutDataResponseAttributesTransfer;
+        }
+
         $availablePaymentMethodsList = $this->getAvailablePaymentMethodsList($checkoutDataTransfer->getAvailablePaymentMethods());
 
         $paymentProviders = $checkoutDataTransfer->getPaymentProviders()->getPaymentProviders();

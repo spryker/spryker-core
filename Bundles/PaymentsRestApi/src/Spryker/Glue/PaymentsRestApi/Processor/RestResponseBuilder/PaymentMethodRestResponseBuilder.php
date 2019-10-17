@@ -9,7 +9,6 @@ namespace Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig;
 use Spryker\Glue\PaymentsRestApi\Processor\Mapper\PaymentMethodMapperInterface;
 

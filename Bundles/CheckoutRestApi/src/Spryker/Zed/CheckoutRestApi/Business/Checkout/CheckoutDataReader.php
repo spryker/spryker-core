@@ -91,11 +91,9 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         }
 
         $shipmentMethodsTransfer = $this->getShipmentMethodsTransferFilteredByCurrentStore($quoteTransfer);
-        $selectedShipmentMethodsTransfer = $this->getSelectedShipmentMethodsTransfer($restCheckoutRequestAttributesTransfer, $shipmentMethodsTransfer);
 
         $checkoutDataTransfer = (new RestCheckoutDataTransfer())
             ->setShipmentMethods($shipmentMethodsTransfer)
-            ->setSelectedShipmentMethods($selectedShipmentMethodsTransfer)
             ->setPaymentProviders($this->getPaymentProviders())
             ->setAddresses($this->addressReader->getAddressesTransfer($quoteTransfer))
             ->setAvailablePaymentMethods($this->getAvailablePaymentMethods($quoteTransfer));
@@ -121,35 +119,6 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         }
 
         return $shipmentMethodsTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
-     * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
-     */
-    protected function getSelectedShipmentMethodsTransfer(
-        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
-        ShipmentMethodsTransfer $shipmentMethodsTransfer
-    ): ShipmentMethodsTransfer {
-        $selectedShipmentMethodsTransfer = new ShipmentMethodsTransfer();
-        $restShipmentTransfer = $restCheckoutRequestAttributesTransfer->getShipment();
-
-        if (!$restShipmentTransfer) {
-            return $selectedShipmentMethodsTransfer;
-        }
-
-        $selectedShipmentMethodId = $restShipmentTransfer->getIdShipmentMethod();
-
-        foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
-            if ($shipmentMethodTransfer->getIdShipmentMethod() === $selectedShipmentMethodId) {
-                $selectedShipmentMethodsTransfer->addMethod($shipmentMethodTransfer);
-                break;
-            }
-        }
-
-        return $selectedShipmentMethodsTransfer;
     }
 
     /**

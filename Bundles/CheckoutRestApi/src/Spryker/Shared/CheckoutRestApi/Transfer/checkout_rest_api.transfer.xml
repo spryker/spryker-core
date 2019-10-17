@@ -6,10 +6,8 @@
     <transfer name="RestCheckoutData">
         <property name="addresses" type="Addresses" singular="address"/>
         <property name="shipmentMethods" type="ShipmentMethods" singular="shipmentMethod"/>
-        <property name="selectedShipmentMethods" type="ShipmentMethods" singular="selectedShipmentMethod"/>
         <property name="paymentProviders" type="PaymentProviderCollection" singular="paymentProvider"/>
         <property name="availablePaymentMethods" type="PaymentMethods"/>
-        <property name="selectedPaymentMethods" type="RestPaymentMethod[]" singular="selectedPaymentMethod"/>
     </transfer>
 
     <transfer name="RestCheckoutError">
