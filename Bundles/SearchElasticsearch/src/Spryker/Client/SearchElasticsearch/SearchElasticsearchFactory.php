@@ -53,11 +53,6 @@ use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
 class SearchElasticsearchFactory extends AbstractFactory
 {
     /**
-     * @var \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface
-     */
-    protected static $searchConfig;
-
-    /**
      * @return \Spryker\Client\SearchElasticsearch\Search\SearchInterface
      */
     public function createSearch(): SearchInterface
