@@ -1,0 +1,4 @@
+template_path,slot_key,block_name,conditions.product.all,conditions.product.skus,conditions.category.all,conditions.category.category_key
+"@ProductDetailPage/views/pdp/pdp.twig",slt-1,"Home Page",0,"13,122",1,
+"@ProductDetailPage/views/pdp/pdp.twig",slt-1,"Product SEO content",1,,,
+"@ProductDetailPage/views/pdp/pdp.twig",slt-2,"Teaser for home page",,,0,"tablets,smartphones"

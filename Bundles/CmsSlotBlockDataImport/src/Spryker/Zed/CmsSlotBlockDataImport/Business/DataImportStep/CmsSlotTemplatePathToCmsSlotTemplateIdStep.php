@@ -1,0 +1,69 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep;
+
+use Orm\Zed\CmsSlot\Persistence\Map\SpyCmsSlotTemplateTableMap;
+use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplateQuery;
+use Spryker\Zed\CmsSlotBlockDataImport\Business\DataSet\CmsSlotBlockDataSetInterface;
+use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
+use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+
+class CmsSlotTemplatePathToCmsSlotTemplateIdStep implements DataImportStepInterface
+{
+    /**
+     * @var int[]
+     */
+    protected $idCmsSlotTemplateCache = [];
+
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
+     *
+     * @return void
+     */
+    public function execute(DataSetInterface $dataSet)
+    {
+        if (!$dataSet[CmsSlotBlockDataSetInterface::CMS_SLOT_TEMPLATE_PATH]) {
+            throw new InvalidDataException(sprintf('Column %s is required, please check the data.', CmsSlotBlockDataSetInterface::CMS_SLOT_TEMPLATE_PATH));
+        }
+
+        $dataSet[CmsSlotBlockDataSetInterface::CMS_SLOT_TEMPLATE_ID] = $this->getTemplateIdByPath(
+            $dataSet[CmsSlotBlockDataSetInterface::CMS_SLOT_TEMPLATE_PATH]
+        );
+    }
+
+    /**
+     * @param string $templatePath
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
+     *
+     * @return int
+     */
+    protected function getTemplateIdByPath(string $templatePath): int
+    {
+        if (isset($this->idCmsSlotTemplateCache[$templatePath])) {
+            return $this->idCmsSlotTemplateCache[$templatePath];
+        }
+
+        $idCmsSlotTemplate = SpyCmsSlotTemplateQuery::create()
+            ->filterByPath($templatePath)
+            ->select([SpyCmsSlotTemplateTableMap::COL_ID_CMS_SLOT_TEMPLATE])
+            ->findOne();
+
+        if (!$idCmsSlotTemplate) {
+            throw new EntityNotFoundException(sprintf('Could not find id cms slot template by path "%s".', $templatePath));
+        }
+
+        $this->idCmsSlotTemplateCache[$templatePath] = $idCmsSlotTemplate;
+
+        return $idCmsSlotTemplate;
+    }
+}

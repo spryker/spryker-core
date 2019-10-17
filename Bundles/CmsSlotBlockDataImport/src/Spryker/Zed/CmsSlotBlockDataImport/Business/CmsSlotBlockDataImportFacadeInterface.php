@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\CmsSlotBlockDataImport\src\Spryker\Zed\CmsSlotBlockDataImport\Business;
+namespace Spryker\Zed\CmsSlotBlockDataImport\Business;
 
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
@@ -13,6 +13,11 @@ use Generated\Shared\Transfer\DataImporterReportTransfer;
 interface CmsSlotBlockDataImportFacadeInterface
 {
     /**
+     * Specification:
+     * - Imports relationships cms slots to cms blocks.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer

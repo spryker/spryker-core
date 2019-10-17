@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\CmsSlotBlockDataImport\src\Spryker\Zed\CmsSlotBlockDataImport\Communication\Plugin;
-
+namespace Spryker\Zed\CmsSlotBlockDataImport\Communication\Plugin;
 
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
-use Spryker\CmsSlotBlockDataImport\src\Spryker\Zed\CmsSlotBlockDataImport\CmsSlotBlockDataImportConfig;
-use Spryker\Glue\Kernel\AbstractPlugin;
+use Spryker\Zed\CmsSlotBlockDataImport\CmsSlotBlockDataImportConfig;
 use Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\CmsSlotBlockDataImport\src\Spryker\Zed\CmsSlotBlockDataImport\Business\CmsSlotBlockDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\CmsSlotBlockDataImport\Business\CmsSlotBlockDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\CmsSlotBlockDataImport\CmsSlotBlockDataImportConfig getConfig()
  */
 class CmsSlotBlockDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
