@@ -7,21 +7,21 @@
 
 namespace Spryker\Shared\SearchElasticsearch\Index;
 
-use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreInterface;
+use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
 
 class IndexNameResolver implements IndexNameResolverInterface
 {
     /**
-     * @var \Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreInterface
+     * @var \Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface
      */
-    protected $store;
+    protected $storeClient;
 
     /**
-     * @param \Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreInterface $storeClient
+     * @param \Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface $storeClient
      */
-    public function __construct(SearchElasticsearchToStoreInterface $storeClient)
+    public function __construct(SearchElasticsearchToStoreClientInterface $storeClient)
     {
-        $this->store = $storeClient;
+        $this->storeClient = $storeClient;
     }
 
     /**
@@ -33,10 +33,20 @@ class IndexNameResolver implements IndexNameResolverInterface
     {
         $indexName = sprintf(
             '%s_%s',
-            $this->store->getStoreName(),
+            $this->getStoreName(),
             $sourceIdentifier
         );
 
         return mb_strtolower($indexName);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getStoreName(): string
+    {
+        $storeTransfer = $this->storeClient->getCurrentStore();
+
+        return $storeTransfer->requireName()->getName();
     }
 }

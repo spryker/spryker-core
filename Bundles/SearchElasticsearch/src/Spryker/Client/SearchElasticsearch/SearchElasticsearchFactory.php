@@ -73,7 +73,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     public function createIndexNameResolver(): IndexNameResolverInterface
     {
         return new IndexNameResolver(
-            $this->getStore()
+            $this->getStoreClient()
         );
     }
 

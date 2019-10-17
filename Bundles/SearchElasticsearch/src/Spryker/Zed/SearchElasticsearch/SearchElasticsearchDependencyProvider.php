@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\SearchElasticsearch;
 
-use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreBridge;
+use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientBridge;
+use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingBridge;
@@ -18,7 +18,7 @@ use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingBridg
  */
 class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const STORE = 'STORE';
+    public const CLIENT_STORE = 'CLIENT_STORE';
     public const CLIENT_SEARCH = 'search client';
     public const SERVICE_UTIL_ENCODING = 'util encoding service';
     public const PLUGIN_SEARCH_PAGE_MAPS = 'PLUGIN_SEARCH_PAGE_MAPS';
@@ -73,9 +73,9 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addStore(Container $container): Container
     {
-        $container->set(static::STORE, function (Container $container) {
-            return new SearchElasticsearchToStoreBridge(
-                Store::getInstance()
+        $container->set(static::CLIENT_STORE, function (Container $container): SearchElasticsearchToStoreClientInterface {
+            return new SearchElasticsearchToStoreClientBridge(
+                $container->getLocator()->store()->client()
             );
         });
 

@@ -8,8 +8,9 @@
 namespace SprykerTest\Zed\SearchElasticsearch\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\StoreTransfer;
 use Psr\Log\NullLogger;
-use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreInterface;
+use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
 use Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchDependencyProvider;
 
@@ -53,7 +54,7 @@ class SearchElasticsearchFacadeTest extends Unit
     {
         // Arrange
         $this->tester->mockConfigMethod('getJsonSchemaDefinitionDirectories', $this->tester->getFixturesSchemaDirectory());
-        $this->setupStoreDependency();
+        $this->setupStoreClientDependency();
         $expectedIndexName = $this->tester->translateSourceIdentifierToIndexName(static::SOURCE_IDENTIFIER);
         $this->tester->addCleanupForIndexByName($expectedIndexName);
         $this->searchElasticsearchFacade->setFactory(
@@ -89,21 +90,24 @@ class SearchElasticsearchFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setupStoreDependency(): void
+    protected function setupStoreClientDependency(): void
     {
         $this->tester->setDependency(
-            SearchElasticsearchDependencyProvider::STORE,
-            $this->getStoreMock()
+            SearchElasticsearchDependencyProvider::CLIENT_STORE,
+            $this->getStoreClientMock()
         );
     }
 
     /**
-     * @return \Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreInterface|\PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getStoreMock(): SearchElasticsearchToStoreInterface
+    protected function getStoreClientMock(): SearchElasticsearchToStoreClientInterface
     {
-        $storeMock = $this->createMock(SearchElasticsearchToStoreInterface::class);
-        $storeMock->method('getStoreName')->willReturn(static::CURRENT_STORE);
+        $mockStoreTransfer = new StoreTransfer();
+        $mockStoreTransfer->setName(static::CURRENT_STORE);
+
+        $storeMock = $this->createMock(SearchElasticsearchToStoreClientInterface::class);
+        $storeMock->method('getCurrentStore')->willReturn($mockStoreTransfer);
 
         return $storeMock;
     }
