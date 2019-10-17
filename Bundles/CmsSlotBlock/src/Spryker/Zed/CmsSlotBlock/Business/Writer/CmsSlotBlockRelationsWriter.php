@@ -76,10 +76,10 @@ class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterfac
     {
         $cmsSlotIds = [];
         foreach ($cmsSlotBlockTransfers as $cmsSlotBlockTransfer) {
-            $cmsSlotId = $cmsSlotBlockTransfer->getIdSlot();
+            $idCmsSlot = $cmsSlotBlockTransfer->getIdSlot();
 
-            if (!in_array($cmsSlotId, $cmsSlotIds)) {
-                $cmsSlotIds[] = $cmsSlotId;
+            if (!isset($cmsSlotIds[$idCmsSlot])) {
+                $cmsSlotIds[] = $idCmsSlot;
             }
         }
 
