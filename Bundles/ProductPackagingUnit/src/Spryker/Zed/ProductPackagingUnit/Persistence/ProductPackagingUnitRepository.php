@@ -26,11 +26,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductPackagingUnitRepository extends AbstractRepository implements ProductPackagingUnitRepositoryInterface
 {
-    protected const SUM_COLUMN = 'sumAmount';
-    protected const SKU_COLUMN = 'sku';
-    protected const PROCESS_NAME_COLUMN = 'processName';
-    protected const STATE_NAME_COLUMN = 'stateName';
-
     /**
      * @param string $productPackagingUnitTypeName
      *
@@ -271,9 +266,8 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
             ->innerJoinProcess()
             ->groupByFkOmsOrderProcess()
             ->select([SpySalesOrderItemTableMap::COL_SKU])
-            ->withColumn(SpyOmsOrderProcessTableMap::COL_NAME, static::PROCESS_NAME_COLUMN)
-            ->withColumn(SpyOmsOrderItemStateTableMap::COL_NAME, static::STATE_NAME_COLUMN)
-            ->withColumn(SpySalesOrderItemTableMap::COL_AMOUNT_SKU, static::SKU_COLUMN)
+            ->withColumn(SpyOmsOrderProcessTableMap::COL_NAME, SalesOrderItemStateAggregationTransfer::PROCESS_NAME)
+            ->withColumn(SpyOmsOrderItemStateTableMap::COL_NAME, SalesOrderItemStateAggregationTransfer::STATE_NAME)
             ->withColumn(
                 sprintf(
                     'CASE WHEN %s = %s THEN SUM(%s) WHEN %s IS NULL THEN SUM(%s) ELSE SUM(%s) + SUM(%s) END',
@@ -285,7 +279,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
                     SpySalesOrderItemTableMap::COL_QUANTITY,
                     SpySalesOrderItemTableMap::COL_AMOUNT
                 ),
-                static::SUM_COLUMN
+                SalesOrderItemStateAggregationTransfer::SUM_AMOUNT
             )
             ->condition('NO_PU', 'spy_sales_order_item.sku = ?', $sku)
             ->condition('PU', 'spy_sales_order_item.amount_sku = ?', $sku)
@@ -301,7 +295,9 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
 
         $salesAggregationTransfers = [];
         foreach ($salesOrderItemQuery->find() as $salesOrderItemAggregation) {
-            $salesAggregationTransfers[] = (new SalesOrderItemStateAggregationTransfer())->fromArray($salesOrderItemAggregation, true);
+            $salesAggregationTransfers[] = (new SalesOrderItemStateAggregationTransfer())
+                ->fromArray($salesOrderItemAggregation, true)
+                ->setSku($sku);
         }
 
         return $salesAggregationTransfers;

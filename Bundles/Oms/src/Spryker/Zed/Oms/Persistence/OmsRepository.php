@@ -19,11 +19,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
 {
-    protected const SUM_COLUMN = 'sumAmount';
-    protected const SKU_COLUMN = 'sku';
-    protected const PROCESS_NAME_COLUMN = 'processName';
-    protected const STATE_NAME_COLUMN = 'stateName';
-
     /**
      * @param int[] $processIds
      * @param int[] $stateBlackList
@@ -61,10 +56,10 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
             ->groupByFkOmsOrderItemState()
             ->innerJoinProcess()
             ->groupByFkOmsOrderProcess()
-            ->withColumn(SpySalesOrderItemTableMap::COL_SKU, static::SKU_COLUMN)
-            ->withColumn(SpyOmsOrderProcessTableMap::COL_NAME, static::PROCESS_NAME_COLUMN)
-            ->withColumn(SpyOmsOrderItemStateTableMap::COL_NAME, static::STATE_NAME_COLUMN)
-            ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_QUANTITY . ')', static::SUM_COLUMN)
+            ->withColumn(SpySalesOrderItemTableMap::COL_SKU, SalesOrderItemStateAggregationTransfer::SKU)
+            ->withColumn(SpyOmsOrderProcessTableMap::COL_NAME, SalesOrderItemStateAggregationTransfer::PROCESS_NAME)
+            ->withColumn(SpyOmsOrderItemStateTableMap::COL_NAME, SalesOrderItemStateAggregationTransfer::STATE_NAME)
+            ->withColumn('SUM(' . SpySalesOrderItemTableMap::COL_QUANTITY . ')', SalesOrderItemStateAggregationTransfer::SUM_AMOUNT)
             ->select([
                 SpySalesOrderItemTableMap::COL_SKU,
             ]);
@@ -78,7 +73,8 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
 
         $salesAggregationTransfers = [];
         foreach ($salesOrderItemQuery->find() as $salesOrderItemAggregation) {
-            $salesAggregationTransfers[] = (new SalesOrderItemStateAggregationTransfer())->fromArray($salesOrderItemAggregation, true);
+            $salesAggregationTransfers[] = (new SalesOrderItemStateAggregationTransfer())
+                ->fromArray($salesOrderItemAggregation, true);
         }
 
         return $salesAggregationTransfers;

@@ -79,32 +79,24 @@ class ProductPackagingUnitBusinessTester extends Actor
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $boxProductConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer
-     * @param int $quoteAmount
-     * @param int $quoteQuantity
+     * @param int $itemAmount
+     * @param int $itemQuantity
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function createCartChangeTransferForProductPackagingUnitValidation(
         ProductConcreteTransfer $boxProductConcreteTransfer,
         ProductMeasurementSalesUnitTransfer $productMeasurementSalesUnitTransfer,
-        int $quoteAmount,
-        int $quoteQuantity
+        int $itemAmount,
+        int $itemQuantity
     ): CartChangeTransfer {
         $cartChangeTransfer = (new CartChangeTransfer())
-            ->setQuote(
-                (new QuoteTransfer())
-                    ->addItem(
-                        (new ItemTransfer())
-                            ->setSku($boxProductConcreteTransfer->getSku())
-                            ->setGroupKey(uniqid())
-                            ->setQuantity($quoteQuantity)
-                    )
-            )
+            ->setQuote((new QuoteTransfer()))
             ->addItem(
                 (new ItemTransfer())
                     ->setSku($boxProductConcreteTransfer->getSku())
-                    ->setQuantity($quoteQuantity)
-                    ->setAmount($quoteAmount)
+                    ->setQuantity($itemQuantity)
+                    ->setAmount($itemAmount)
                     ->setAmountSalesUnit($productMeasurementSalesUnitTransfer)
                     ->setGroupKey(uniqid())
             );

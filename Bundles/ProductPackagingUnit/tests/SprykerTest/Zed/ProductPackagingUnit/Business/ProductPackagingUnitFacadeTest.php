@@ -541,8 +541,8 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      *
      * @param bool $expectedIsSuccess
      * @param int $defaultAmount
-     * @param int $quoteAmount
-     * @param int $quoteQuantity
+     * @param int $itemAmount
+     * @param int $itemQuantity
      * @param int|null $minRestriction
      * @param int|null $maxRestriction
      * @param int|null $intervalRestriction
@@ -553,8 +553,8 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     public function testValidateItemAddAmountRestrictions(
         bool $expectedIsSuccess,
         int $defaultAmount,
-        int $quoteAmount,
-        int $quoteQuantity,
+        int $itemAmount,
+        int $itemQuantity,
         ?int $minRestriction,
         ?int $maxRestriction,
         ?int $intervalRestriction,
@@ -602,7 +602,12 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $productMeasurementSalesUnitTransfer = (new ProductMeasurementSalesUnitTransfer())
             ->fromArray($productMeasurementSalesUnitEntityTransfer->toArray(), true);
 
-        $cartChangeTransfer = $this->tester->createCartChangeTransferForProductPackagingUnitValidation($boxProductConcreteTransfer, $productMeasurementSalesUnitTransfer, $quoteAmount, $quoteQuantity);
+        $cartChangeTransfer = $this->tester->createCartChangeTransferForProductPackagingUnitValidation(
+            $boxProductConcreteTransfer,
+            $productMeasurementSalesUnitTransfer,
+            $itemAmount,
+            $itemQuantity
+        );
 
         // Act
         $cartPreCheckResponseTransfer = $this->getFacade()->validateItemAddAmountRestrictions($cartChangeTransfer);
@@ -617,6 +622,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     public function itemAdditionAmounts(): array
     {
         return [
+            // expectedResult, defaultAmount, itemAmount, itemQuantity, minRestriction, maxRestriction, intervalRestriction, isVariable
             [true, 1, 2, 1, 1, null, 1, true], // general rule
             [true, 1, 7, 1, 7, null, 1, true], // min equals new amount
             [true, 1, 5, 1, 5, 5,    1, true], // max equals new amount
@@ -625,6 +631,9 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
             [false, 1, 5, 1, 8, null, 1, true], // min above new amount
             [false, 1, 5, 1, 1, 3,    1, true], // max below new amount
             [false, 1, 5, 1, 1, null, 3, true], // interval does not match new amount
+            [true, 1, 1, 1, null, null, null, false], // is not variable
+            [true, 2, 4, 2, null, null, null, false], // is not variable with quantity more than 1
+            [false, 2, 5, 2, null, null, null, false], // is not variable with amount per quantity not equal to default amount
         ];
     }
 
