@@ -17,7 +17,7 @@ use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInter
 class SessionApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
     protected const SERVICE_SESSION = 'session';
-    protected const SERVICE_SESSION_TEST = 'session.test';
+    protected const FLAG_SESSION_TEST = 'session.test';
 
     /**
      * {@inheritDoc}
@@ -45,7 +45,7 @@ class SessionApplicationPlugin extends AbstractPlugin implements ApplicationPlug
      */
     protected function addSessionTestService(ContainerInterface $container): ContainerInterface
     {
-        $container->set(static::SERVICE_SESSION_TEST, false);
+        $container->set(static::FLAG_SESSION_TEST, false);
 
         return $container;
     }
