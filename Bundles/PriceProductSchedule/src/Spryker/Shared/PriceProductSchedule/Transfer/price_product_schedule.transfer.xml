@@ -10,6 +10,20 @@
         <property name="activeTo" type="string"/>
         <property name="isCurrent" type="bool"/>
         <property name="priceProductScheduleList" type="PriceProductScheduleList"/>
+        <property name="store" type="Store"/>
+        <property name="currency" type="Currency"/>
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="moneyValue" type="MoneyValue"/>
+        <property name="priceTypeName" type="string"/>
+        <property name="skuProductAbstract" type="string"/>
+        <property name="skuProduct" type="string"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="idProduct" type="int"/>
+        <property name="priceDimension" type="PriceProductDimension"/>
+        <property name="fkPriceType" type="int"/>
+        <property name="priceType" type="PriceType"/>
     </transfer>
 
     <transfer name="PriceProductScheduleCriteriaFilter">
@@ -30,6 +44,11 @@
         <property name="limit" type="int"/>
     </transfer>
 
+    <transfer name="PriceProductScheduleListMetaData">
+        <property name="numberOfPrices" type="int"/>
+        <property name="numberOfProducts" type="int"/>
+    </transfer>
+
     <transfer name="PriceProductScheduleList">
         <property name="idPriceProductScheduleList" type="int"/>
         <property name="name" type="string"/>
@@ -38,6 +57,7 @@
         <property name="updatedAt" type="string"/>
         <property name="fkUser" type="int"/>
         <property name="user" type="User"/>
+        <property name="metaData" type="PriceProductScheduleListMetaData"/>
     </transfer>
 
     <transfer name="PriceProductScheduleImport">
@@ -65,7 +85,7 @@
     <transfer name="PriceProductScheduleListImportError">
         <property name="priceProductScheduleImport" type="PriceProductScheduleImport"/>
         <property name="message" type="string"/>
-        <property name="parameters" type="string[]"/>
+        <property name="parameters" type="string[]" singular="parameters"/>
     </transfer>
 
     <transfer name="PriceProductScheduleListError">
@@ -86,10 +106,55 @@
 
     <transfer name="MoneyValue">
         <property name="store" type="Store"/>
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
+        <property name="currency" type="Currency"/>
+        <property name="fkStore" type="int"/>
+        <property name="fkCurrency" type="int"/>
     </transfer>
 
     <transfer name="PriceProductScheduleCsvValidationResult">
         <property name="error" type="string" singular="error"/>
         <property name="isSuccess" type="bool"/>
     </transfer>
+
+    <transfer name="PriceProductScheduleError">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductScheduleResponse">
+        <property name="priceProductSchedule" type="PriceProductSchedule"/>
+        <property name="errors" type="PriceProductScheduleError[]" singular="error"/>
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="PriceProductFilter">
+        <property name="priceTypeName" type="string"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="PriceType">
+        <property name="name" type="string"/>
+        <property name="idPriceType" type="int"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="idCurrency" type="int"/>
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+        <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="PriceProductDimension">
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="User">
+        <property name="idUser" type="int"/>
+    </transfer>
+
 </transfers>

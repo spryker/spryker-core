@@ -16,6 +16,7 @@ use Spryker\Zed\DataImport\Dependency\Client\DataImportToQueueClientInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DataImport

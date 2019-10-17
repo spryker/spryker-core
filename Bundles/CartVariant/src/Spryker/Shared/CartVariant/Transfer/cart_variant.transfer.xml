@@ -4,9 +4,18 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="StorageAttributeMap">
-        <property name="attributeVariants" type="array" singular="attributeVariant" />
-        <property name="superAttributes" type="array" singular="superAttribute" />
-        <property name="productConcreteIds" type="array" singular="productConcreteId" />
+        <property name="attributeVariants" type="array" singular="attributeVariant"/>
+        <property name="superAttributes" type="array" singular="superAttribute"/>
+        <property name="productConcreteIds" type="array" singular="productConcreteId"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+        <property name="id" type="int"/>
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="StorageAvailability">
     </transfer>
 
 </transfers>

@@ -89,7 +89,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Api\Business\Model\Validator\ApiValidatorInterface[]
+     * @return \Spryker\Zed\Api\Dependency\Plugin\ApiValidatorPluginInterface[]
      */
     protected function getApiValidatorPlugins()
     {

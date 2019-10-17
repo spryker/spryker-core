@@ -16,6 +16,7 @@ use Spryker\Shared\Money\Formatter\MoneyFormatterWithTypeInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Money

@@ -25,12 +25,14 @@ interface ViewExpanderTableFactoryInterface
 
     /**
      * @param int $idProductConcrete
+     * @param int $idProductAbstract
      * @param int $idPriceType
      *
      * @return \Spryker\Zed\PriceProductScheduleGui\Communication\Table\PriceProductScheduleConcreteTable
      */
     public function createPriceProductScheduleConcreteTable(
         int $idProductConcrete,
+        int $idProductAbstract,
         int $idPriceType
     ): PriceProductScheduleConcreteTable;
 }

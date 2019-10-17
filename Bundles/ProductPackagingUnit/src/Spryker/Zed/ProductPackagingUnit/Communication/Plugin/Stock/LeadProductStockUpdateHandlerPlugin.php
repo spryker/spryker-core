@@ -18,7 +18,7 @@ use Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface;
 class LeadProductStockUpdateHandlerPlugin extends AbstractPlugin implements StockUpdateHandlerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

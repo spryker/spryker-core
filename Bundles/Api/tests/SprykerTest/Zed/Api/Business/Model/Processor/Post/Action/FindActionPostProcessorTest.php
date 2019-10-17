@@ -17,6 +17,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Post\Action\FindActionPostProcessor
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Api

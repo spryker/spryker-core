@@ -16,6 +16,7 @@ use Spryker\Zed\PriceCartConnector\Business\Sanitizer\SourcePriceSanitizer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceCartConnector

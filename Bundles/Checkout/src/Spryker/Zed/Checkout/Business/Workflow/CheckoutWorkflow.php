@@ -88,6 +88,20 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function isPlaceableOrder(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer
+    {
+        $checkoutResponseTransfer = $this->createCheckoutResponseTransfer();
+
+        $checkoutResponseTransfer->setIsSuccess($this->checkPreConditions($quoteTransfer, $checkoutResponseTransfer));
+
+        return $checkoutResponseTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void

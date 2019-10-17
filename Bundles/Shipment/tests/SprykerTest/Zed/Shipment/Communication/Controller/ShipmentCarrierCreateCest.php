@@ -12,6 +12,7 @@ use SprykerTest\Zed\Shipment\ShipmentCommunicationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Shipment

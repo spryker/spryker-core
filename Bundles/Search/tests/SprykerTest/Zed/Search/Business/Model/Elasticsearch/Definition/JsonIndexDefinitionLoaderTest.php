@@ -15,6 +15,7 @@ use Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Search

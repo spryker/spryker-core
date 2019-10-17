@@ -4,17 +4,20 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ShoppingListItem">
-        <property name="shoppingListItemNote" type="ShoppingListItemNote" />
+        <property name="shoppingListItemNote" type="ShoppingListItemNote"/>
+        <property name="idShoppingListItem" type="int"/>
     </transfer>
 
     <transfer name="ShoppingListItemNote">
-        <property name="idShoppingListItemNote" type="int" />
-        <property name="fkShoppingListItem" type="int" />
+        <property name="idShoppingListItemNote" type="int"/>
+        <property name="fkShoppingListItem" type="int"/>
         <property name="note" type="string"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="cartNote" type="string" />
+        <property name="cartNote" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="groupKeyPrefix" type="string"/>
     </transfer>
 
 </transfers>

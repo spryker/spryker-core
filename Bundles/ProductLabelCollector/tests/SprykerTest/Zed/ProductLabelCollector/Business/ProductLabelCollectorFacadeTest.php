@@ -12,6 +12,7 @@ use Spryker\Shared\ProductLabel\ProductLabelConstants;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group ProductLabelCollector
  * @group Business

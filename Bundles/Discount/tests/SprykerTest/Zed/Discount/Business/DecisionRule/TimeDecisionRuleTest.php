@@ -15,6 +15,7 @@ use SprykerTest\Zed\Discount\Business\BaseRuleTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount

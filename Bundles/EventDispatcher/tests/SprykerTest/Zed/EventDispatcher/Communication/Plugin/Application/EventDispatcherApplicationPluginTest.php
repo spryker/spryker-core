@@ -18,6 +18,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group EventDispatcher
@@ -31,6 +32,11 @@ class EventDispatcherApplicationPluginTest extends Unit
 {
     public const SERVICE_DISPATCHER = 'dispatcher';
     public const DUMMY_EVENT = 'DUMMY_EVENT';
+
+    /**
+     * @var \SprykerTest\Zed\EventDispatcher\EventDispatcherCommunicationTester
+     */
+    protected $tester;
 
     /**
      * @return void

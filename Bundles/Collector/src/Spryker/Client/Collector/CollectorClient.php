@@ -18,7 +18,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CollectorClient extends AbstractClient implements UrlMatcherInterface, CollectorClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ZedNavigation\Business;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ZedNavigation

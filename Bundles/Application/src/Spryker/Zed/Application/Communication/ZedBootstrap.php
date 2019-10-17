@@ -84,14 +84,6 @@ class ZedBootstrap
     protected function setUp()
     {
         $this->optimizeApp();
-
-        // For BC
-        if ($this->isInternalRequest() && !$this->isAuthenticationEnabled()) {
-            $this->registerServiceProviderForInternalRequest();
-            $this->setupApplication();
-
-            return;
-        }
         // For BC
         if ($this->isInternalRequest()) {
             $this->registerServiceProviderForInternalRequestWithAuthentication();
@@ -146,28 +138,26 @@ class ZedBootstrap
     /**
      * @return void
      */
-    protected function registerServiceProviderForInternalRequest()
+    protected function registerServiceProviderForInternalRequestWithAuthentication()
     {
-        foreach ($this->getInternalCallServiceProvider() as $provider) {
+        $serviceProviders = $this->getMergedServiceProviders();
+
+        foreach ($serviceProviders as $provider) {
             $this->application->register($provider);
         }
     }
 
     /**
-     * @return void
+     * @return \Silex\ServiceProviderInterface[]
      */
-    protected function registerServiceProviderForInternalRequestWithAuthentication()
+    protected function getMergedServiceProviders(): array
     {
-        $serviceProviders = $this->getInternalCallServiceProviderWithAuthentication();
+        $serviceProviders = $this->getServiceProvider();
+        $internalCallServiceProvidersWithAuth = $this->getInternalCallServiceProviderWithAuthentication();
+        $internalCallServiceProviders = $this->getInternalCallServiceProvider();
+        $mergedServiceProviders = array_merge($serviceProviders, $internalCallServiceProvidersWithAuth, $internalCallServiceProviders);
 
-        /** @deprecated This added to keep Backward Compatibility and will be removed in major release */
-        if (!$serviceProviders) {
-            $serviceProviders = $this->getServiceProvider();
-        }
-
-        foreach ($serviceProviders as $provider) {
-            $this->application->register($provider);
-        }
+        return array_unique($mergedServiceProviders, SORT_REGULAR);
     }
 
     /**
@@ -262,7 +252,7 @@ class ZedBootstrap
      * @param \Spryker\Zed\Kernel\AbstractBundleDependencyProvider $dependencyProvider
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container $container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function provideExternalDependencies(AbstractBundleDependencyProvider $dependencyProvider, Container $container)
     {
@@ -292,19 +282,5 @@ class ZedBootstrap
     protected function isInternalRequest()
     {
         return array_key_exists('HTTP_X_INTERNAL_REQUEST', $_SERVER);
-    }
-
-    /**
-     * For performance reasons you can disable this in your project
-     * Set `AuthConstants::AUTH_ZED_ENABLED` in your config to false
-     * if you don't need authentication enabled.
-     *
-     * If set to false only a subset of ServiceProvider will be added.
-     *
-     * @return bool
-     */
-    protected function isAuthenticationEnabled()
-    {
-        return true;
     }
 }

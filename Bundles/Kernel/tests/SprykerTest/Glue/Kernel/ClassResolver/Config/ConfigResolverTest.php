@@ -13,6 +13,7 @@ use SprykerTest\Glue\Kernel\ClassResolver\AbstractResolverTest;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group Kernel

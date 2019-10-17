@@ -86,7 +86,7 @@ class ComposerJsonUpdaterConsole extends AbstractCoreModuleAwareConsole
             $commands = [];
 
             foreach ($modifiedModules as $modifiedModule) {
-                $commands[] = 'console ' . static::COMMAND_NAME . ' ' . $modifiedModule;
+                $commands[] = 'vendor/bin/console ' . static::COMMAND_NAME . ' ' . $modifiedModule;
             }
 
             $this->info(

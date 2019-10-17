@@ -18,6 +18,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Symfony

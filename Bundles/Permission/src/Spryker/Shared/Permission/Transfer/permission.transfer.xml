@@ -6,13 +6,13 @@
     <transfer name="Permission">
         <property name="idPermission" type="int"/>
         <property name="key" type="string"/>
-        <property name="configuration" type="array" />
-        <property name="configurationSignature" type="array" />
-        <property name="isInfrastructural" type="bool" />
+        <property name="configuration" type="array" singular="configuration"/>
+        <property name="configurationSignature" type="array" singular="configurationSignature"/>
+        <property name="isInfrastructural" type="bool"/>
     </transfer>
 
     <transfer name="PermissionCollection">
-        <property name="permissions" type="Permission[]" singular="permission" />
+        <property name="permissions" type="Permission[]" singular="permission"/>
     </transfer>
 
 </transfers>

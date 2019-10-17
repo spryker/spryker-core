@@ -13,6 +13,7 @@ use Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptio
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group PersistentCartShare
@@ -52,7 +53,7 @@ class PersistentCartShareClientTest extends Unit
     }
 
     /**
-     * @return \Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptionPluginInterface|\PHPUnit\Framework\MockObject\MockObject $cartShareOptionPluginMock
+     * @return \Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptionPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createShareOptionPluginMock()
     {

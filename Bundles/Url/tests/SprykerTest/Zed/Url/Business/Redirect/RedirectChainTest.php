@@ -17,6 +17,7 @@ use Spryker\Zed\Url\Business\UrlFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Url

@@ -12,6 +12,7 @@ use Spryker\Zed\ProductQuantity\Communication\Plugin\Cart\ProductQuantityRestric
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductQuantity

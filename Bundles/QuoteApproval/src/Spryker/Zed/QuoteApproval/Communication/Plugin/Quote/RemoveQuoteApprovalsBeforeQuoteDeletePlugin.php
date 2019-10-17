@@ -18,7 +18,7 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
 class RemoveQuoteApprovalsBeforeQuoteDeletePlugin extends AbstractPlugin implements QuoteWritePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Removes quote approvals from Persistence before quote deletion.
      *
      * @api

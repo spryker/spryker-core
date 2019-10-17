@@ -68,7 +68,7 @@ class DiscountsTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $url = Url::generate('listTable')->build();
+        $url = Url::generate('list-table')->build();
         $config->setUrl($url);
 
         $config->setHeader([

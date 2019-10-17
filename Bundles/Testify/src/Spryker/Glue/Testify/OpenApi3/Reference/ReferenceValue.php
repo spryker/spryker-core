@@ -81,7 +81,7 @@ class ReferenceValue implements PropertyValueInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function __debugInfo()
     {

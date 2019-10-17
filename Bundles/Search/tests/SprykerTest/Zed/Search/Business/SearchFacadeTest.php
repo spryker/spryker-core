@@ -16,6 +16,7 @@ use Spryker\Zed\Search\Business\SearchFacadeInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Search

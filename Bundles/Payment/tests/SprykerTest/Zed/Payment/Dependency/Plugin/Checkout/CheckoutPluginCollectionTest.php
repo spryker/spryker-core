@@ -15,6 +15,7 @@ use Spryker\Zed\Payment\Exception\CheckoutPluginNotFoundException;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Payment

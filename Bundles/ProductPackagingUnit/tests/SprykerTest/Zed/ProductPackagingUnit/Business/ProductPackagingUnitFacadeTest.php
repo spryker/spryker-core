@@ -103,7 +103,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      *
      * @return void
      */
-    public function testCreateProductPackagingUnitTypeShouldPersistPackagingUnitType(string $name, ProductPackagingUnitTypeTranslationTransfer ... $nameTranslations): void
+    public function testCreateProductPackagingUnitTypeShouldPersistPackagingUnitType(string $name, ProductPackagingUnitTypeTranslationTransfer ...$nameTranslations): void
     {
         $productPackagingUnitTypeTransfer = (new ProductPackagingUnitTypeBuilder())
             ->build()
@@ -129,7 +129,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      *
      * @return void
      */
-    public function testCreateProductPackagingUnitTypeShouldThrowExceptionIfDuplicateUnitTypeIsTryingToBeAdded(string $name, ProductPackagingUnitTypeTranslationTransfer ... $nameTranslations): void
+    public function testCreateProductPackagingUnitTypeShouldThrowExceptionIfDuplicateUnitTypeIsTryingToBeAdded(string $name, ProductPackagingUnitTypeTranslationTransfer ...$nameTranslations): void
     {
         // Arrange
         $productPackagingUnitTypeTransfer = (new ProductPackagingUnitTypeBuilder())
@@ -808,13 +808,13 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     public function testDefaultProductPackagingUnitTypeName(): void
     {
         // Assign
-        $configDefaultProductPackagingUnitTypMockeName = $this->getConfigStub()->getDefaultProductPackagingUnitTypeName();
+        $configDefaultProductPackagingUnitTypMockName = $this->getConfigStub()->getDefaultProductPackagingUnitTypeName();
 
         //Act
         $defaultProductPackagingUnitTypeName = $this->getFacade()->getDefaultProductPackagingUnitTypeName();
 
         //Assert
-        $this->assertSame($configDefaultProductPackagingUnitTypMockeName, $defaultProductPackagingUnitTypeName);
+        $this->assertSame($configDefaultProductPackagingUnitTypMockName, $defaultProductPackagingUnitTypeName);
     }
 
     /**

@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductDiscontinuedProductBundleConnectorFacade extends AbstractFacade implements ProductDiscontinuedProductBundleConnectorFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class ProductDiscontinuedProductBundleConnectorFacade extends AbstractFacade imp
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -51,7 +51,7 @@ class ProductDiscontinuedProductBundleConnectorFacade extends AbstractFacade imp
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

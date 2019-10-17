@@ -8,16 +8,19 @@
     </transfer>
 
     <transfer name="ItemMetadata">
-        <property name="superAttributes" type="array" />
-        <property name="image" type="string" />
-        <property name="fkSalesOrderItem" type="int" />
+        <property name="superAttributes" type="array" singular="superAttributes"/>
+        <property name="image" type="string"/>
+        <property name="fkSalesOrderItem" type="int"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="sku" type="string" />
-        <property name="id" type="int" />
-        <property name="idProductAbstract" type="int" />
-        <property name="metadata" type="ItemMetadata" />
+        <property name="sku" type="string"/>
+        <property name="id" type="int"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="metadata" type="ItemMetadata"/>
+        <property name="images" type="ProductImage[]" singular="image"/>
+        <property name="concreteAttributes" type="array" singular="concreteAttribute"/>
+        <property name="idSalesOrderItem" type="int"/>
     </transfer>
 
     <transfer name="Quote">
@@ -25,9 +28,9 @@
     </transfer>
 
     <transfer name="CheckoutResponse">
-        <property name="isSuccess" type="bool" />
-        <property name="errors" type="CheckoutError[]" singular="error" />
-        <property name="saveOrder" type="SaveOrder" />
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+        <property name="saveOrder" type="SaveOrder"/>
     </transfer>
 
 </transfers>

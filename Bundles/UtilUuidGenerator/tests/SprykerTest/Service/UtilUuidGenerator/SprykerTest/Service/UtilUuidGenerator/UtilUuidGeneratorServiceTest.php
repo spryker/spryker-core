@@ -13,6 +13,7 @@ use Spryker\Service\UtilUuidGenerator\UtilUuidGeneratorServiceInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group UtilUuidGenerator

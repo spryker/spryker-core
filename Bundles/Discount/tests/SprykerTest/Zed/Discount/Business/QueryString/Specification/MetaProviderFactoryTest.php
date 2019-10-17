@@ -16,6 +16,7 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProvide
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount

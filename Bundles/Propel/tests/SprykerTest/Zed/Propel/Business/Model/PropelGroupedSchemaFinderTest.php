@@ -12,6 +12,7 @@ use Spryker\Zed\Propel\Business\Model\PropelSchemaFinder;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Propel
