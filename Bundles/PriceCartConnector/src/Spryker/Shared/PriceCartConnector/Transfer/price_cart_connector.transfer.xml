@@ -24,6 +24,8 @@
     <transfer name="Quote">
         <property name="store" type="Store"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="currency" type="Currency"/>
+        <property name="priceMode" type="string"/>
     </transfer>
 
     <transfer name="Store">
@@ -49,6 +51,25 @@
     <transfer name="CartPreCheckResponse">
         <property name="isSuccess" type="bool"/>
         <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="skuProduct" type="string"/>
+        <property name="moneyValue" type="MoneyValue"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="grossAmount" type="int"/>
+        <property name="netAmount" type="int"/>
     </transfer>
 
 </transfers>

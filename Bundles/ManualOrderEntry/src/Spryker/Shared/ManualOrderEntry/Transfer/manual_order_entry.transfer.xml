@@ -12,4 +12,8 @@
         <property name="idOrderSource" type="int"/>
     </transfer>
 
+    <transfer name="Order">
+        <property name="fkOrderSource" type="int"/>
+    </transfer>
+
 </transfers>

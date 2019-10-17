@@ -26,4 +26,20 @@
         <property name="idsCustomerToDeAssign" singular="idCustomerToDeAssign" type="array"/>
     </transfer>
 
+    <transfer name="Customer">
+        <property name="idCustomer" type="int"/>
+    </transfer>
+
+    <transfer name="TabsView">
+        <property name="isNavigable" type="bool"/>
+        <property name="tabs" type="TabItem[]" singular="tab"/>
+        <property name="footerTemplate" type="string"/>
+    </transfer>
+
+    <transfer name="TabItem">
+        <property name="name" type="string"/>
+        <property name="title" type="string"/>
+        <property name="template" type="string"/>
+    </transfer>
+
 </transfers>

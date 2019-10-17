@@ -189,4 +189,12 @@ class PropelConfig extends AbstractBundleConfig
     {
         return static::PROCESS_TIMEOUT;
     }
+
+    /**
+     * @return bool
+     */
+    public function allowIndexOverriding(): bool
+    {
+        return false;
+    }
 }

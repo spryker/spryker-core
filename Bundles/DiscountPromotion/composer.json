@@ -19,6 +19,7 @@
     "spryker/calculation": "*",
     "spryker/cart": "*",
     "spryker/code-sniffer": "*",
+    "spryker/decimal-object": "*",
     "spryker/propel": "*",
     "spryker/stock": "*",
     "spryker/store": "*",

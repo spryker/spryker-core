@@ -27,21 +27,25 @@
     </transfer>
 
     <transfer name="OauthAccessTokenData">
-        <property name="oauthScopes" type="array"/>
+        <property name="oauthScopes" type="array" singular="oauthScopes"/>
         <property name="oauthUserId" type="string"/>
     </transfer>
 
     <transfer name="OauthRequest">
         <property name="customerReference" type="string"/>
+        <property name="grantType" type="string"/>
     </transfer>
 
     <transfer name="OauthResponse">
         <property name="anonymousCustomerReference" type="string"/>
         <property name="customerReference" type="string"/>
+        <property name="isValid" type="bool"/>
     </transfer>
 
     <transfer name="RestUser">
         <property name="naturalIdentifier" type="string"/>
+        <property name="surrogateIdentifier" type="int"/>
+        <property name="scopes" type="string[]" singular="scope"/>
     </transfer>
 
     <transfer name="RestErrorMessage">
@@ -61,7 +65,7 @@
 
     <transfer name="OauthAccessTokenValidationResponse">
         <property name="isValid" type="bool"/>
-        <property name="oauthScopes" type="array"/>
+        <property name="oauthScopes" type="array" singular="oauthScopes"/>
         <property name="oauthUserId" type="string"/>
     </transfer>
 

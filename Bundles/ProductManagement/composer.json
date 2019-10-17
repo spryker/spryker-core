@@ -9,6 +9,7 @@
     "spryker/availability": "^9.0.0",
     "spryker/category": "^3.0.0 || ^4.0.0",
     "spryker/currency": "^2.1.0 || ^3.0.0",
+    "spryker/decimal-object": "^0.1.0",
     "spryker/gui": "^3.17.0",
     "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.0.0",
