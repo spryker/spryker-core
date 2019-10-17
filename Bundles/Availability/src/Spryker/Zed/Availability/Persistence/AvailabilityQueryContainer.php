@@ -14,7 +14,6 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMa
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -310,41 +309,5 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     public function queryAllAvailabilityAbstracts()
     {
         return $this->getFactory()->createSpyAvailabilityAbstractQuery();
-    }
-
-    /**
-     * @api
-     *
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     *
-     * @return string
-     */
-    public function getAvailabilityQuantity(SpyProductAbstract $productAbstractEntity): string
-    {
-        return $productAbstractEntity->getVirtualColumn(static::AVAILABILITY_QUANTITY);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     *
-     * @return string
-     */
-    public function getReservationQuantity(SpyProductAbstract $productAbstractEntity): string
-    {
-        return $productAbstractEntity->getVirtualColumn(static::RESERVATION_QUANTITY);
-    }
-
-    /**
-     * @api
-     *
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     *
-     * @return string
-     */
-    public function getConcreteNeverOutOfStockSet(SpyProductAbstract $productAbstractEntity): string
-    {
-        return $productAbstractEntity->getVirtualColumn(static::CONCRETE_NEVER_OUT_OF_STOCK_SET);
     }
 }
