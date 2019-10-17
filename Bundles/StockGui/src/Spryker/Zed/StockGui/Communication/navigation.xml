@@ -23,8 +23,8 @@
                         <visible>0</visible>
                     </warehouse-view>
                     <create-warehouses>
-                        <label>Create Warehouses</label>
-                        <title>Create Warehouses</title>
+                        <label>Create Warehouse</label>
+                        <title>Create Warehouse</title>
                         <bundle>stock-gui</bundle>
                         <controller>create-warehouse</controller>
                         <action>index</action>
@@ -32,8 +32,8 @@
                         <visible>0</visible>
                     </create-warehouses>
                     <edit-warehouses>
-                        <label>Edit Warehouses</label>
-                        <title>Edit Warehouses</title>
+                        <label>Edit Warehouse</label>
+                        <title>Edit Warehouse</title>
                         <bundle>stock-gui</bundle>
                         <controller>edit-warehouse</controller>
                         <action>index</action>
