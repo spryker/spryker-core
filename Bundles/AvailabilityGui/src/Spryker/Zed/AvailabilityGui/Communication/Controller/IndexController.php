@@ -63,12 +63,6 @@ class IndexController extends AbstractController
             ->getAvailabilityFacade()
             ->findProductAbstractAvailability($idProductAbstract, $localeTransfer->getIdLocale(), $idStore);
 
-        if ($productAbstractAvailabilityTransfer) {
-            $productAbstractAvailabilityTransfer = $this->getFactory()
-                ->createProductStockHelper()
-                ->trimProductAbstractAvailabilityQuantities($productAbstractAvailabilityTransfer);
-        }
-
         $bundledProductAvailabilityTable = $this->getBundledProductAvailabilityTable($idStore);
 
         $storeTransfer = $this->getFactory()->getStoreFacade()->getCurrentStore();
