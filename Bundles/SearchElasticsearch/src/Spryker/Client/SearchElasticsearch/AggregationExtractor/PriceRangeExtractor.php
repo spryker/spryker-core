@@ -48,7 +48,7 @@ class PriceRangeExtractor extends RangeExtractor
     /**
      * @param array $requestParameters
      *
-     * @return array
+     * @return (float|null)[]
      */
     protected function getActiveRangeParameters(array $requestParameters): array
     {
