@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Store\Persistence\SpyStore;
 use Propel\Runtime\Collection\ObjectCollection;
 
-class StoreRelationMapper implements StoreRelationMapperInterface
+interface StoreRelationMapperInterface
 {
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Shipment\Persistence\SpyShipmentMethodStore[] $shipmentMethodStoreEntities
@@ -20,17 +20,7 @@ class StoreRelationMapper implements StoreRelationMapperInterface
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function mapShipmentMethodStoreEntitiesToStoreRelationTransfer(
-        ObjectCollection $shipmentMethodStoreEntities,
-        StoreRelationTransfer $storeRelationTransfer
-    ): StoreRelationTransfer {
-        foreach ($shipmentMethodStoreEntities as $shipmentMethodStoreEntity) {
-            $storeRelationTransfer->addStore($this->mapStoreEntityToStoreTransfer($shipmentMethodStoreEntity->getStore(), new StoreTransfer()));
-            $storeRelationTransfer->addIdStores($shipmentMethodStoreEntity->getFkStore());
-        }
-
-        return $storeRelationTransfer;
-    }
+    public function mapShipmentMethodStoreEntitiesToStoreRelationTransfer(ObjectCollection $shipmentMethodStoreEntities, StoreRelationTransfer $storeRelationTransfer): StoreRelationTransfer;
 
     /**
      * @param \Orm\Zed\Store\Persistence\SpyStore $storeEntity
@@ -38,10 +28,5 @@ class StoreRelationMapper implements StoreRelationMapperInterface
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function mapStoreEntityToStoreTransfer(
-        SpyStore $storeEntity,
-        StoreTransfer $storeTransfer
-    ): StoreTransfer {
-        return $storeTransfer->fromArray($storeEntity->toArray(), true);
-    }
+    public function mapStoreEntityToStoreTransfer(SpyStore $storeEntity, StoreTransfer $storeTransfer): StoreTransfer;
 }
