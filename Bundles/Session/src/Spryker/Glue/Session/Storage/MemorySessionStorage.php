@@ -78,7 +78,7 @@ class MemorySessionStorage implements SessionStorageInterface
     /**
      * @return bool
      */
-    public function start()
+    public function start(): bool
     {
         if ($this->started) {
             return true;
@@ -99,7 +99,7 @@ class MemorySessionStorage implements SessionStorageInterface
      *
      * @return bool
      */
-    public function regenerate($destroy = false, $lifetime = null)
+    public function regenerate($destroy = false, $lifetime = null): bool
     {
         if (!$this->started) {
             $this->start();
@@ -114,7 +114,7 @@ class MemorySessionStorage implements SessionStorageInterface
     /**
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
@@ -126,7 +126,7 @@ class MemorySessionStorage implements SessionStorageInterface
      *
      * @return void
      */
-    public function setId($id)
+    public function setId($id): void
     {
         if ($this->started) {
             throw new LogicException('Cannot set session ID after the session has started.');
@@ -138,7 +138,7 @@ class MemorySessionStorage implements SessionStorageInterface
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -148,7 +148,7 @@ class MemorySessionStorage implements SessionStorageInterface
      *
      * @return void
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }
@@ -158,7 +158,7 @@ class MemorySessionStorage implements SessionStorageInterface
      *
      * @return void
      */
-    public function save()
+    public function save(): void
     {
         if (!$this->started || $this->closed) {
             throw new RuntimeException('Trying to save a session that was not started yet or was already closed');
@@ -171,7 +171,7 @@ class MemorySessionStorage implements SessionStorageInterface
     /**
      * @return void
      */
-    public function clear()
+    public function clear(): void
     {
         // clear out the bags
         foreach (static::$bags as $bag) {
@@ -190,7 +190,7 @@ class MemorySessionStorage implements SessionStorageInterface
      *
      * @return void
      */
-    public function registerBag(SessionBagInterface $bag)
+    public function registerBag(SessionBagInterface $bag): void
     {
         static::$bags[$bag->getName()] = $bag;
     }
@@ -200,9 +200,9 @@ class MemorySessionStorage implements SessionStorageInterface
      *
      * @throws \InvalidArgumentException
      *
-     * @return mixed|\Symfony\Component\HttpFoundation\Session\SessionBagInterface
+     * @return \Symfony\Component\HttpFoundation\Session\SessionBagInterface
      */
-    public function getBag($name)
+    public function getBag($name): SessionBagInterface
     {
         if (!isset(static::$bags[$name])) {
             throw new InvalidArgumentException(sprintf('The SessionBagInterface %s is not registered.', $name));
@@ -218,7 +218,7 @@ class MemorySessionStorage implements SessionStorageInterface
     /**
      * @return bool
      */
-    public function isStarted()
+    public function isStarted(): bool
     {
         return $this->started;
     }
