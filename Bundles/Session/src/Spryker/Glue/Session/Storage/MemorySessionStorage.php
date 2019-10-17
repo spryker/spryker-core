@@ -136,7 +136,7 @@ class MemorySessionStorage implements SessionStorageInterface
     }
 
     /**
-     * @return mixed|string
+     * @return string
      */
     public function getName()
     {
