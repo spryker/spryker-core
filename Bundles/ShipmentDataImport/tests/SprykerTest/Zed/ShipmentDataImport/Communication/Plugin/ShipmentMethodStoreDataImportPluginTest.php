@@ -37,7 +37,7 @@ class ShipmentMethodStoreDataImportPluginTest extends Unit
     /**
      * @return void
      */
-    public function testImportImportsShipmentStore(): void
+    public function testImportImportsShipmentMethodStore(): void
     {
         //Arrange
         $this->tester->haveStore([
