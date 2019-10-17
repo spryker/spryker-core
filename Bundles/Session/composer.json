@@ -5,7 +5,9 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/application-extension": "^1.0.0",
     "spryker/config": "^3.0.0",
+    "spryker/event-dispatcher-extension": "^1.0.0",
     "spryker/kernel": "^3.33.0",
     "spryker/monitoring": "^1.0.0 || ^2.0.0",
     "spryker/redis": "^2.0.0",
@@ -15,6 +17,8 @@
   },
   "require-dev": {
     "spryker/application": "*",
+    "spryker/container": "*",
+    "spryker/event-dispatcher": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
@@ -38,5 +42,9 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "suggest": {
+    "spryker/container": "If you want to use application plugins and event dispatcher plugins.",
+    "spryker/event-dispatcher": "If you want to use application plugins and event dispatcher plugins."
   }
 }
