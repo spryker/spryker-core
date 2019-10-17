@@ -12,7 +12,7 @@
         <property name="idSlot" type="int"/>
         <property name="idCmsBlock" type="int"/>
         <property name="position" type="int"/>
-        <property name="conditions" type="array" associative="true"/>
+        <property name="conditions" type="array" singular="condition" associative="true"/>
     </transfer>
 
     <transfer name="CmsSlotTemplateConfiguration">
