@@ -55,6 +55,13 @@
 
     <transfer name="ProductConcrete">
         <property name="stocks" type="StockProduct[]" singular="stock"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+        <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence"/>
     </transfer>
 
 </transfers>

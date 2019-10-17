@@ -5,6 +5,7 @@
 
     <transfer name="ShoppingListItem">
         <property name="shoppingListItemNote" type="ShoppingListItemNote"/>
+        <property name="idShoppingListItem" type="int"/>
     </transfer>
 
     <transfer name="ShoppingListItemNote">
@@ -15,6 +16,8 @@
 
     <transfer name="Item">
         <property name="cartNote" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="groupKeyPrefix" type="string"/>
     </transfer>
 
 </transfers>

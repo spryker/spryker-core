@@ -12,6 +12,10 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class EntityDefinitionNormalizer extends DefinitionNormalizer
 {
+    protected const TYPE_MAPPING = [
+        'double' => 'float',
+    ];
+
     public const KEY_TYPE = 'type';
     public const KEY_COLUMN = 'column';
     public const KEY_FOREIGN_KEY = 'foreign-key';
@@ -109,11 +113,11 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
     protected function getTransferType($type)
     {
         $type = mb_strtolower($type);
-        if (!preg_match('/^int|^integer|^float|^decimal|^string|^array|^\[\]|^bool|^boolean/', $type)) {
+        if (!preg_match('/^int|^integer|^float|^double|^decimal|^string|^array|^\[\]|^bool|^boolean/', $type)) {
             return 'string';
         }
 
-        return $type;
+        return static::TYPE_MAPPING[$type] ?? $type;
     }
 
     /**

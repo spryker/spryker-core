@@ -15,6 +15,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
+use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
 
 class ProductReservationReader implements ProductReservationReaderInterface
@@ -126,13 +127,13 @@ class ProductReservationReader implements ProductReservationReaderInterface
     }
 
     /**
-     * @param string $reservationQuantity
+     * @param string $reservationQuantitySet
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    protected function calculateReservation(string $reservationQuantity): Decimal
+    protected function calculateReservation(string $reservationQuantitySet): Decimal
     {
-        $reservationItems = explode(',', (string)$reservationQuantity);
+        $reservationItems = explode(',', $reservationQuantitySet);
         $reservationItems = array_unique($reservationItems);
 
         return $this->getReservationUniqueValue($reservationItems);
@@ -179,9 +180,9 @@ class ProductReservationReader implements ProductReservationReaderInterface
     {
         $availabilityData = $productAbstractEntity->toArray();
         $availabilityData[ProductAbstractAvailabilityTransfer::IS_NEVER_OUT_OF_STOCK] = $this->getAbstractNeverOutOfStock($productAbstractEntity);
-        $availabilityData[ProductAbstractAvailabilityTransfer::AVAILABILITY] = $this->availabilityQueryContainer->getAvailabilityQuantity($productAbstractEntity);
+        $availabilityData[ProductAbstractAvailabilityTransfer::AVAILABILITY] = $productAbstractEntity->getVirtualColumn(AvailabilityQueryContainer::AVAILABILITY_QUANTITY);
         $availabilityData[ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY] = $this->calculateReservation(
-            $this->availabilityQueryContainer->getReservationQuantity($productAbstractEntity)
+            $productAbstractEntity->getVirtualColumn(AvailabilityQueryContainer::RESERVATION_QUANTITY) ?? ''
         );
 
         return (new ProductAbstractAvailabilityTransfer())->fromArray($availabilityData, true);
@@ -194,7 +195,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
      */
     protected function getAbstractNeverOutOfStock(SpyProductAbstract $productAbstractEntity): bool
     {
-        $neverOutOfStockSet = explode(',', $this->availabilityQueryContainer->getConcreteNeverOutOfStockSet($productAbstractEntity));
+        $neverOutOfStockSet = explode(',', $productAbstractEntity->getVirtualColumn(AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET) ?? '');
 
         foreach ($neverOutOfStockSet as $status) {
             if (filter_var($status, FILTER_VALIDATE_BOOLEAN)) {

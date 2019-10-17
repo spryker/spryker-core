@@ -7,9 +7,11 @@
         <property name="idOffer" type="int" description="Indicates an offer id, when it's a source of an order"/>
         <property name="offerFee" type="int"/>
         <property name="incomingItems" type="Item[]" singular="incomingItem"/>
-        <property name="voucherDiscounts" type="Discount[]"/>
+        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
         <property name="priceMode" type="string"/>
         <property name="checkoutConfirmed" type="bool"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="Item">
@@ -22,10 +24,15 @@
         <property name="offerDiscount" type="int"/>
         <property name="offerFee" type="int"/>
         <property name="savingAmount" type="int"/>
+
         <property name="originUnitGrossPrice" type="int"/>
         <property name="originUnitNetPrice" type="int"/>
+
         <property name="unitSubtotalAggregation" type="int"/>
         <property name="sumSubtotalAggregation" type="int"/>
+
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="OfferList">
@@ -70,5 +77,22 @@
 
     <transfer name="Totals">
         <property name="grandTotal" type="int"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="quote" type="Quote"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="previousPage" type="int"/>
     </transfer>
 </transfers>

@@ -8,4 +8,9 @@
         <property name="type" type="string"/>
     </transfer>
 
+    <transfer name="CartCodeOperationResult">
+        <property name="quote" type="Quote"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
 </transfers>

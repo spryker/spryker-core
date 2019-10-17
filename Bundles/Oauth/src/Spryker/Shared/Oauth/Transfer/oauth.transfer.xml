@@ -26,7 +26,7 @@
         <property name="isValid" type="bool"/>
         <property name="oauthAccessTokenId" type="string"/>
         <property name="oauthClientId" type="string"/>
-        <property name="oauthScopes" type="array"/>
+        <property name="oauthScopes" type="array" singular="oauthScopes"/>
         <property name="oauthUserId" type="string"/>
         <property name="error" type="OauthError"/>
     </transfer>
@@ -82,15 +82,15 @@
     <transfer name="OauthAccessTokenData">
         <property name="oauthAccessTokenId" type="string"/>
         <property name="oauthClientId" type="string"/>
-        <property name="oauthScopes" type="array"/>
+        <property name="oauthScopes" type="array" singular="oauthScopes"/>
         <property name="oauthUserId" type="string"/>
     </transfer>
 
     <transfer name="JwtToken">
-        <property name="headers" type="array"/>
-        <property name="claims" type="array"/>
+        <property name="headers" type="array" singular="headers"/>
+        <property name="claims" type="array" singular="claims"/>
         <property name="signature" type="string"/>
-        <property name="payload" type="array"/>
+        <property name="payload" type="array" singular="payload"/>
     </transfer>
 
 </transfers>

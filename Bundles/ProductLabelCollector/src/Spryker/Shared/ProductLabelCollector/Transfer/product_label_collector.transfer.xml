@@ -7,4 +7,22 @@
         <property name="idLocale" type="int"/>
     </transfer>
 
+    <transfer name="ProductLabel">
+        <property name="name" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="validFrom" type="string"/>
+        <property name="validTo" type="string"/>
+        <property name="localizedAttributesCollection" singular="localizedAttributes" type="ProductLabelLocalizedAttributes[]"/>
+    </transfer>
+
+    <transfer name="StorageProductLabel">
+        <property name="key" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ProductLabelLocalizedAttributes">
+        <property name="fkLocale" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
 </transfers>

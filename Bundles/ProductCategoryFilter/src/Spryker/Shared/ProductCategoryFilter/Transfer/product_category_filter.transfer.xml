@@ -7,7 +7,7 @@
         <property name="idProductCategoryFilter" type="int"/>
         <property name="fkCategory" type="int"/>
         <property name="filterData" type="string"/>
-        <property name="filterDataArray" type="array"/>
+        <property name="filterDataArray" type="array" singular="filterDataArray"/>
         <property name="filters" type="ProductCategoryFilterItem[]" singular="productCategoryFilterItem"/>
     </transfer>
 

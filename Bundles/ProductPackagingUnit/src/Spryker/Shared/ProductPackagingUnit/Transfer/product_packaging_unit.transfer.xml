@@ -38,24 +38,11 @@
         <property name="id" type="int"/>
         <property name="productOptions" type="ProductOption[]" singular="productOption"/>
         <property name="unitNetPrice" type="int"/>
-    </transfer>
-
-    <transfer name="ProductMeasurementSalesUnit">
-        <property name="idProductMeasurementSalesUnit" type="int"/>
-        <property name="conversion" type="float"/>
-        <property name="precision" type="int"/>
-        <property name="productMeasurementBaseUnit" type="ProductMeasurementBaseUnit"/>
-        <property name="productMeasurementUnit" type="ProductMeasurementUnit"/>
-        <property name="value" type="int"/>
-    </transfer>
-
-    <transfer name="ProductMeasurementBaseUnit">
-        <property name="productMeasurementUnit" type="ProductMeasurementUnit"/>
-    </transfer>
-
-    <transfer name="ProductMeasurementUnit">
-        <property name="name" type="string"/>
-        <property name="code" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+        <property name="groupKey" type="string"/>
+        <property name="unitGrossPrice" type="int"/>
+        <property name="idSalesOrderItem" type="int"/>
     </transfer>
 
     <transfer name="OmsStateCollection">
@@ -80,6 +67,7 @@
 
     <transfer name="CartChange">
         <property name="quote" type="Quote"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="CartPreCheckResponse">
@@ -89,6 +77,75 @@
 
     <transfer name="Quote">
         <property name="priceMode" type="string"/>
+        <property name="store" type="Store"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="PersistentCartChange">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementSalesUnit">
+        <property name="idProductMeasurementSalesUnit" type="int"/>
+        <property name="conversion" type="float"/>
+        <property name="precision" type="int"/>
+        <property name="productMeasurementBaseUnit" type="ProductMeasurementBaseUnit"/>
+        <property name="productMeasurementUnit" type="ProductMeasurementUnit"/>
+        <property name="value" type="int"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="sku" type="string"/>
+        <property name="fkProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="idSalesOrder" type="int"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementUnit">
+        <property name="name" type="string"/>
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementBaseUnit">
+        <property name="productMeasurementUnit" type="ProductMeasurementUnit"/>
+    </transfer>
+
+    <transfer name="ItemCollection">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="ProductOption">
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="Translation">
+        <property name="value" type="string"/>
     </transfer>
 
 </transfers>

@@ -10,7 +10,7 @@
 
     <transfer name="CmsBlockCategory">
         <property name="position" type="string"/>
-        <property name="blockNames" type="array"/>
+        <property name="blockNames" type="array" singular="blockNames"/>
     </transfer>
 
 </transfers>

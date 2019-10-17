@@ -287,12 +287,15 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      */
     public function testPreCheckCartAvailability(): void
     {
+        // Arrange
         $cartChangeTransfer = (new CartChangeTransfer())
             ->setQuote($this->createTestQuoteTransfer())
             ->addItem($this->createTestPackagingUnitItemTransfer());
 
-        // Action
+        // Act
         $cartPreCheckResponseTransfer = $this->getFacade()->checkCartChangeAmountAvailability($cartChangeTransfer);
+
+        //Assert
         $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
     }
 
@@ -447,7 +450,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
             ->setId($boxProductConcreteTransfer->getIdProductConcrete())
             ->setSku($boxProductConcreteTransfer->getSku())
             ->setAmount(static::PACKAGE_AMOUNT)
-            ->setAmountLeadProduct($boxProductConcreteTransfer);
+            ->setAmountLeadProduct($itemProductConcreteTransfer);
     }
 
     /**

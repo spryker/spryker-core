@@ -23,6 +23,8 @@
 
     <transfer name="CompanyRoleResponse">
         <property name="companyRoleCollection" type="CompanyRoleCollection"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="companyRoleTransfer" type="CompanyRole"/>
     </transfer>
 
     <transfer name="RestUser">
@@ -34,6 +36,10 @@
         <property name="status" type="int"/>
         <property name="code" type="string"/>
         <property name="detail" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyRoleCriteriaFilter">
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
 </transfers>
