@@ -6,7 +6,7 @@
     <transfer name="AvailabilityStock">
         <property name="idAvailability" type="int"/>
         <property name="sku" type="string"/>
-        <property name="stocks" type="StockProduct[]" singular="StockProduct"/>
+        <property name="stocks" type="StockProduct[]" singular="stockProduct"/>
     </transfer>
 
     <transfer name="StorageAvailability">
@@ -42,5 +42,31 @@
         <property name="store" type="Store"/>
     </transfer>
 
-</transfers>
+    <transfer name="CheckoutError">
+        <property name="errorCode" type="int"/>
+        <property name="message" type="string"/>
+        <property name="errorType" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
 
+    <transfer name="CheckoutResponse">
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence"/>
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="StockProduct">
+        <property name="sku" type="string"/>
+    </transfer>
+
+</transfers>

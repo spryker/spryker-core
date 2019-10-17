@@ -26,4 +26,24 @@
         <property name="idProductConcrete" type="int"/>
     </transfer>
 
+    <transfer name="ProductMeasurementSalesUnit">
+        <property name="isDefault" type="bool"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="ProductPackagingUnitAmount">
+        <property name="amountInterval" type="decimal"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="orderBy" type="string"/>
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
 </transfers>

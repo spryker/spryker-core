@@ -11,6 +11,10 @@
     <transfer name="CompanyUser">
         <property name="isActive" type="bool"/>
         <property name="uuid" type="string"/>
+        <property name="idCompanyUser" type="int"/>
+        <property name="company" type="Company"/>
+        <property name="fkCompany" type="int"/>
+        <property name="companyRoleCollection" type="CompanyRoleCollection"/>
     </transfer>
 
     <transfer name="OauthResponse">
@@ -33,19 +37,22 @@
     <transfer name="RestUser">
         <property name="idCompanyUser" type="int"/>
         <property name="idCompany" type="int"/>
+        <property name="naturalIdentifier" type="string"/>
     </transfer>
 
     <transfer name="CompanyUserCriteriaFilter">
         <property name="idCompany" type="int"/>
         <property name="filter" type="Filter"/>
-        <property name="companyUserIds" type="array"/>
-        <property name="companyBusinessUnitUuids" type="string[]"/>
-        <property name="companyRolesUuids" type="string[]"/>
+        <property name="companyUserIds" type="array" singular="companyUserIds"/>
+        <property name="companyBusinessUnitUuids" type="string[]" singular="companyBusinessUnitUuids"/>
+        <property name="companyRolesUuids" type="string[]" singular="companyRolesUuids"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
     <transfer name="CompanyUserCollection">
         <property name="filter" type="Filter"/>
         <property name="total" type="int"/>
+        <property name="companyUsers" type="CompanyUser[]" singular="companyUser"/>
     </transfer>
 
     <transfer name="CustomerCollection">
@@ -59,6 +66,27 @@
 
     <transfer name="ShareDetail">
         <property name="companyUser" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="CompanyUserStorage">
+        <property name="idCompanyUser" type="int"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="status" type="int"/>
+        <property name="code" type="string"/>
+        <property name="detail" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyRoleCollection">
+        <property name="roles" type="CompanyRole[]" singular="role"/>
+    </transfer>
+
+    <transfer name="CompanyRole">
+    </transfer>
+
+    <transfer name="Company">
+        <property name="idCompany" type="int"/>
     </transfer>
 
 </transfers>

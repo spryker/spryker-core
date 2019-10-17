@@ -14,7 +14,7 @@
     </transfer>
 
     <transfer name="CountryCollection">
-        <property name="countries" type="Country[]"/>
+        <property name="countries" type="Country[]" singular="countries"/>
     </transfer>
 
     <transfer name="Region">
@@ -40,6 +40,7 @@
 
     <transfer name="CheckoutError">
         <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
 </transfers>

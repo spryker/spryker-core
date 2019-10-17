@@ -6,8 +6,18 @@
     <transfer name="ProductView">
         <property name="idProductAbstract" type="int"/>
         <property name="idProductConcrete" type="int"/>
-        <property name="sku" type="string"/>
         <property name="available" type="bool"/>
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="StorageAvailability">
+        <property name="concreteProductAvailableItems" type="array" singular="concreteProductAvailableItem"/>
+        <property name="isAbstractProductAvailable" type="bool"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="store" type="string"/>
+        <property name="reference" type="string"/>
     </transfer>
 
 </transfers>

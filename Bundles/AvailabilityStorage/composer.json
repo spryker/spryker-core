@@ -5,7 +5,8 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/availability": "^5.4.1 || ^6.0.0 || ^8.0.0 || ^9.0.0",
+    "spryker/availability": "^9.0.0",
+    "spryker/decimal-object": "^0.1.0",
     "spryker/event-behavior": "^1.10.0",
     "spryker/kernel": "^3.30.0",
     "spryker/product": "^5.5.0 || ^6.0.0",
@@ -14,7 +15,8 @@
     "spryker/storage": "^3.4.0",
     "spryker/synchronization": "^0.2.0 || ^1.0.0",
     "spryker/synchronization-behavior": "^1.0.0",
-    "spryker/synchronization-extension": "^1.0.0"
+    "spryker/synchronization-extension": "^1.0.0",
+    "spryker/transfer": "^3.15.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
