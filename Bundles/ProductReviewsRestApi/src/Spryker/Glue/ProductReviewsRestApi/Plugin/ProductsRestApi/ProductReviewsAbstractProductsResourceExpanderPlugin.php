@@ -8,7 +8,6 @@
 namespace Spryker\Glue\ProductReviewsRestApi\Plugin\ProductsRestApi;
 
 use Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\ProductsRestApiExtension\Dependency\Plugin\AbstractProductsResourceExpanderPluginInterface;
 
@@ -23,19 +22,17 @@ class ProductReviewsAbstractProductsResourceExpanderPlugin extends AbstractPlugi
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer
      * @param int $idProductAbstract
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer
      */
     public function expand(
-        AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer,
         int $idProductAbstract,
-        RestRequestInterface $restRequest
+        AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer
     ): AbstractProductsRestAttributesTransfer {
         return $this->getFactory()
             ->createProductReviewsAbstractProductsResourceExpander()
-            ->expand($abstractProductsRestAttributesTransfer);
+            ->expand($idProductAbstract, $abstractProductsRestAttributesTransfer);
     }
 }

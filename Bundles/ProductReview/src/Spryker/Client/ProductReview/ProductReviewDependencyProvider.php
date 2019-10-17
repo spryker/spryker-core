@@ -12,7 +12,6 @@ use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductReview\Dependency\Client\ProductReviewToSearchBridge;
 use Spryker\Client\ProductReview\Dependency\Client\ProductReviewToStorageBridge;
 use Spryker\Client\ProductReview\Dependency\Client\ProductReviewToZedRequestBridge;
-use Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander\AllProductReviewsQueryExpanderPlugin;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander\PaginatedProductReviewsQueryExpanderPlugin;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander\RatingAggregationQueryExpanderPlugin;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander\SortByCreatedAtQueryExpanderPlugin;
@@ -31,7 +30,6 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
 
     public const PRODUCT_REVIEWS_QUERY_EXPANDER_PLUGINS = 'PRODUCT_REVIEWS_QUERY_EXPANDER_PLUGINS';
-    public const PRODUCT_ALL_REVIEWS_QUERY_EXPANDER_PLUGINS = 'PRODUCT_ALL_REVIEWS_QUERY_EXPANDER_PLUGINS';
     public const PRODUCT_REVIEWS_SEARCH_RESULT_FORMATTER_PLUGINS = 'PRODUCT_REVIEWS_SEARCH_RESULT_FORMATTER_PLUGINS';
     public const PAGINATION_CONFIG_BUILDER_PLUGIN = 'PAGINATION_CONFIG_BUILDER_PLUGIN';
 
@@ -46,7 +44,6 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
         $container = $this->addStorageClient($container);
         $container = $this->addSearchClient($container);
         $container = $this->addProductReviewsQueryExpanderPlugins($container);
-        $container = $this->addAllProductReviewsQueryExpanderPlugins($container);
         $container = $this->addProductReviewsSearchResultFormatterPlugins($container);
         $container = $this->addPaginationConfigBuilderPlugin($container);
 
@@ -124,38 +121,12 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addAllProductReviewsQueryExpanderPlugins(Container $container)
-    {
-        $container[static::PRODUCT_ALL_REVIEWS_QUERY_EXPANDER_PLUGINS] = function () {
-            return $this->getAllProductReviewsQueryExpanderPlugins();
-        };
-
-        return $container;
-    }
-
-    /**
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     protected function getProductReviewsQueryExpanderPlugins()
     {
         return [
             new PaginatedProductReviewsQueryExpanderPlugin(),
-            new RatingAggregationQueryExpanderPlugin(),
-            new SortByCreatedAtQueryExpanderPlugin(),
-        ];
-    }
-
-    /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
-     */
-    protected function getAllProductReviewsQueryExpanderPlugins(): array
-    {
-        return [
-            new AllProductReviewsQueryExpanderPlugin(),
             new RatingAggregationQueryExpanderPlugin(),
             new SortByCreatedAtQueryExpanderPlugin(),
         ];

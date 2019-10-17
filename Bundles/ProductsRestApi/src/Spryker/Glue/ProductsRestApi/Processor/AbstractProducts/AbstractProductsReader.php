@@ -196,9 +196,8 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
 
         foreach ($this->abstractProductsResourceExpanderPlugins as $abstractProductsResourceExpanderPlugin) {
             $concreteProductsRestAttributesTransfer = $abstractProductsResourceExpanderPlugin->expand(
-                $concreteProductsRestAttributesTransfer,
                 $idProductAbstract,
-                $restRequest
+                $abstractProductsRestAttributesTransfer
             );
         }
 

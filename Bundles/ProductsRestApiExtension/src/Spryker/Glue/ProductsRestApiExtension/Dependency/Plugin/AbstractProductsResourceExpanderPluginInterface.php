@@ -8,7 +8,6 @@
 namespace Spryker\Glue\ProductsRestApiExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface AbstractProductsResourceExpanderPluginInterface
 {
@@ -18,15 +17,13 @@ interface AbstractProductsResourceExpanderPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer
      * @param int $idProductAbstract
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer
      */
     public function expand(
-        AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer,
         int $idProductAbstract,
-        RestRequestInterface $restRequest
+        AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer
     ): AbstractProductsRestAttributesTransfer;
 }

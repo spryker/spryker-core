@@ -41,22 +41,6 @@ class ProductReviewFactory extends AbstractFactory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer
-     *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
-     */
-    public function createAllProductReviewsQueryPlugin(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer)
-    {
-        $productReviewsQueryPlugin = new ProductReviewsQueryPlugin($productReviewSearchRequestTransfer);
-
-        return $this->getSearchClient()->expandQuery(
-            $productReviewsQueryPlugin,
-            $this->getAllProductReviewsQueryExpanderPlugins(),
-            $productReviewSearchRequestTransfer->getRequestParams()
-        );
-    }
-
-    /**
      * @return \Spryker\Client\ProductReview\Dependency\Client\ProductReviewToSearchInterface
      */
     public function getSearchClient()
@@ -70,14 +54,6 @@ class ProductReviewFactory extends AbstractFactory
     protected function getProductReviewsQueryExpanderPlugins()
     {
         return $this->getProvidedDependency(ProductReviewDependencyProvider::PRODUCT_REVIEWS_QUERY_EXPANDER_PLUGINS);
-    }
-
-    /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
-     */
-    protected function getAllProductReviewsQueryExpanderPlugins()
-    {
-        return $this->getProvidedDependency(ProductReviewDependencyProvider::PRODUCT_ALL_REVIEWS_QUERY_EXPANDER_PLUGINS);
     }
 
     /**

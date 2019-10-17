@@ -39,18 +39,6 @@ interface ProductReviewClientInterface
 
     /**
      * Specification:
-     * - Retrieves all approved product abstract related product reviews from Search.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer
-     *
-     * @return array
-     */
-    public function findAllProductReviewsInSearch(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer): array;
-
-    /**
-     * Specification:
      * - Retrieves provided product abstract and locale related review details from Storage.
      *
      * @api

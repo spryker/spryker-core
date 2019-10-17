@@ -44,6 +44,18 @@ class PaginatedProductReviewsQueryExpanderPlugin extends AbstractPlugin implemen
         $currentPage = $paginationConfigBuilder->getCurrentPage($requestParameters);
         $itemsPerPage = $paginationConfigBuilder->getCurrentItemsPerPage($requestParameters);
 
+        $page = $requestParameters['page'] ?? [];
+
+        $pageOffset = $page['offset'] ?? 0;
+        if ((int)$pageOffset !== 0) {
+            $currentPage = $pageOffset;
+        }
+
+        $pageLimit = $page['limit'] ?? 0;
+        if ((int)$pageLimit !== 0) {
+            $itemsPerPage = $pageLimit;
+        }
+
         $query->setFrom(($currentPage - 1) * $itemsPerPage);
         $query->setSize($itemsPerPage);
     }

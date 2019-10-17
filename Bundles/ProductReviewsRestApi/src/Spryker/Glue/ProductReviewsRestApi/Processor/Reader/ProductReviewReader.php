@@ -14,6 +14,7 @@ use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\ProductRev
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\Page;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewClientInterface;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface;
@@ -28,6 +29,21 @@ class ProductReviewReader implements ProductReviewReaderInterface
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     protected const FORMAT_SELF_LINK_PRODUCT_REVIEWS_RESOURCE = '%s/%s/%s';
+
+    /**
+     * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::DEFAULT_ITEMS_PER_PAGE;
+     */
+    protected const DEFAULT_ITEMS_PER_PAGE = 3;
+
+    /**
+     * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::PARAMETER_NAME_PAGE;
+     */
+    protected const PARAMETER_NAME_PAGE = 'page';
+
+    /**
+     * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::PARAMETER_NAME_ITEMS_PER_PAGE;
+     */
+    protected const PARAMETER_NAME_ITEMS_PER_PAGE = 'ipp';
 
     /**
      * @var \Spryker\Glue\ProductReviewsRestApi\Processor\Mapper\ProductReviewMapperInterface
@@ -74,8 +90,6 @@ class ProductReviewReader implements ProductReviewReaderInterface
      */
     public function findProductReviews(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
         $parentResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS);
         if (!$parentResource || !$parentResource->getId()) {
             return $this->createProductAbstractSkuMissingError();
@@ -94,6 +108,14 @@ class ProductReviewReader implements ProductReviewReaderInterface
         $productReviews = $this->findProductReviewsInSearch(
             $restRequest,
             $abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT]
+        );
+
+        if (!$restRequest->getPage()) {
+            $restRequest->setPage(new Page(1, static::DEFAULT_ITEMS_PER_PAGE));
+        }
+        $restResponse = $this->restResourceBuilder->createRestResponse(
+            $productReviews['pagination']->getNumFound(),
+            $restRequest->getPage()->getLimit()
         );
 
         /** @var \Generated\Shared\Transfer\ProductReviewTransfer[] $productReviewTransfers */
@@ -156,7 +178,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
         RestRequestInterface $restRequest,
         string $idProductAbstract
     ): array {
-        return $this->productReviewClient->findAllProductReviewsInSearch(
+        return $this->productReviewClient->findProductReviewsInSearch(
             (new ProductReviewSearchRequestTransfer())
                 ->setRequestParams($restRequest->getHttpRequest()->query->all())
                 ->setIdProductAbstract($idProductAbstract)

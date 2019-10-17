@@ -17,6 +17,8 @@ class ResponsePagination implements ResponsePaginationInterface
 
     protected const DOMAIN_LINK_TEMPLATE = '%s/%s?%spage[offset]=';
 
+    protected const DOMAIN_LINK_WITH_PARENT_RESOURCE_TEMPLATE = '%s/%s/%s/%s?%spage[offset]=';
+
     protected const LINK_PATTERN = '%s%s%s';
 
     /**
@@ -53,21 +55,21 @@ class ResponsePagination implements ResponsePaginationInterface
             return [];
         }
 
-        $domain = $this->buildDomainLink($restRequest);
+        $domain = $this->domainName . $restRequest->getHttpRequest()->getPathInfo() . '?page[offset]=';
         $limit = $this->buildLimitParameter($pageOffsetsTransfer);
 
         $offsetLinks = [
-            RestLinkInterface::LINK_LAST => sprintf(static::LINK_PATTERN, $domain, $pageOffsetsTransfer->getLastOffset(), $limit),
-            RestLinkInterface::LINK_FIRST => sprintf(static::LINK_PATTERN, $domain, 0, $limit),
+            RestLinkInterface::LINK_LAST =>  $domain . $pageOffsetsTransfer->getLastOffset() . $limit,
+            RestLinkInterface::LINK_FIRST => $domain . 0 . $limit,
         ];
 
         if ($restRequest->getPage()->getOffset() > 0) {
             $offsetLinks[RestLinkInterface::LINK_PREV]
-                = sprintf(static::LINK_PATTERN, $domain, $pageOffsetsTransfer->getPrevOffset(), $limit);
+                = $domain . $pageOffsetsTransfer->getPrevOffset() . $limit;
         }
         if ($pageOffsetsTransfer->getNextOffset() < $restResponse->getTotals()) {
             $offsetLinks[RestLinkInterface::LINK_NEXT]
-                = sprintf(static::LINK_PATTERN, $domain, $pageOffsetsTransfer->getNextOffset(), $limit);
+                = $domain . $pageOffsetsTransfer->getNextOffset() . $limit;
         }
 
         return array_merge(

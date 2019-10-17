@@ -12,9 +12,13 @@ use Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer;
 interface ProductReviewsAbstractProductsResourceExpanderInterface
 {
     /**
+     * @param string $idProductAbstract
      * @param \Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer
      */
-    public function expand(AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer): AbstractProductsRestAttributesTransfer;
+    public function expand(
+        string $idProductAbstract,
+        AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer
+    ): AbstractProductsRestAttributesTransfer;
 }
