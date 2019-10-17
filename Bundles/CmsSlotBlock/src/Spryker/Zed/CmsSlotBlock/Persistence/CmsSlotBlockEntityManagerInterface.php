@@ -18,7 +18,7 @@ interface CmsSlotBlockEntityManagerInterface
 
     /**
      * @param int $idSlotTemplate
-     * @param array $cmsSlotIds
+     * @param int[] $cmsSlotIds
      *
      * @return void
      */

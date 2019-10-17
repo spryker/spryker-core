@@ -47,7 +47,7 @@ class CmsSlotBlockEntityManager extends AbstractEntityManager implements CmsSlot
 
     /**
      * @param int $idSlotTemplate
-     * @param array $cmsSlotIds
+     * @param int[] $cmsSlotIds
      *
      * @return void
      */
