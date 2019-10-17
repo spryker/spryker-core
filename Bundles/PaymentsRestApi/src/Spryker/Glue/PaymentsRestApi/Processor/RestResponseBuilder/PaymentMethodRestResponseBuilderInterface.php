@@ -7,14 +7,14 @@
 
 namespace Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder;
 
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
+use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 
 interface PaymentMethodRestResponseBuilderInterface
 {
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $checkoutDataRestResource
+     * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function createRestPaymentMethodsResources(RestResourceInterface $checkoutDataRestResource): array;
+    public function createRestPaymentMethodsResources(RestCheckoutDataTransfer $restCheckoutDataTransfer): array;
 }

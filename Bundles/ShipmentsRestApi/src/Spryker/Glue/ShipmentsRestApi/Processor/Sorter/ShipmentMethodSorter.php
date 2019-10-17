@@ -26,7 +26,7 @@ class ShipmentMethodSorter implements ShipmentMethodSorterInterface
         array $restShipmentMethodAttributeTransfers,
         RestRequestInterface $restRequest
     ): array {
-        $sorts = $this->filterSorts($restRequest->getSort());
+        $sorts = array_values($this->filterSorts($restRequest->getSort()));
 
         if (!$sorts) {
             return $restShipmentMethodAttributeTransfers;

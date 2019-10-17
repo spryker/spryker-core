@@ -40,8 +40,7 @@ class PaymentMethodMapper implements PaymentMethodMapperInterface
         RestCheckoutDataTransfer $restCheckoutDataTransfer,
         array $restPaymentMethodsAttributesTransfers = []
     ): array {
-        /** @var \Generated\Shared\Transfer\PaymentProviderTransfer[] $paymentProviderTransfers */
-        $paymentProviderTransfers = $restCheckoutDataTransfer->getPaymentProviders()->getPaymentProviders()->getArrayCopy() ?? [];
+        $paymentProviderTransfers = $restCheckoutDataTransfer->getPaymentProviders()->getPaymentProviders() ?? [];
         $availablePaymentMethodsList = $this->getAvailablePaymentMethodsList($restCheckoutDataTransfer->getAvailablePaymentMethods());
 
         foreach ($paymentProviderTransfers as $paymentProviderTransfer) {
@@ -119,16 +118,16 @@ class PaymentMethodMapper implements PaymentMethodMapperInterface
      */
     protected function getPaymentSelectionByPaymentProviderAndMethodNames(string $paymentProviderName, string $paymentMethodName): string
     {
-        $paymentProviderMethodToStateMachineMapping = $this->config->getPaymentProviderMethodToStateMachineMapping();
+        $paymentProviderMethodToPaymentSelectionMapping = $this->config->getPaymentProviderMethodToPaymentSelectionMapping();
 
-        if (!isset($paymentProviderMethodToStateMachineMapping[$paymentProviderName][$paymentMethodName])) {
+        if (!isset($paymentProviderMethodToPaymentSelectionMapping[$paymentProviderName][$paymentMethodName])) {
             throw new PaymentMethodNotConfiguredException(sprintf(
-                'Payment method "%s" for payment provider "%s" is not configured in PaymentsRestApiConfig::getPaymentProviderMethodToStateMachineMapping()',
+                'Payment method "%s" for payment provider "%s" is not configured in PaymentsRestApiConfig::getPaymentProviderMethodToPaymentSelectionMapping()',
                 $paymentMethodName,
                 $paymentProviderName
             ));
         }
 
-        return $paymentProviderMethodToStateMachineMapping[$paymentProviderName][$paymentMethodName];
+        return $paymentProviderMethodToPaymentSelectionMapping[$paymentProviderName][$paymentMethodName];
     }
 }

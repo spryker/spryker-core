@@ -57,7 +57,7 @@ class PaymentsRestApiConfig extends AbstractBundleConfig
      *
      * @return array
      */
-    public function getPaymentProviderMethodToStateMachineMapping(): array
+    public function getPaymentProviderMethodToPaymentSelectionMapping(): array
     {
         return [];
     }

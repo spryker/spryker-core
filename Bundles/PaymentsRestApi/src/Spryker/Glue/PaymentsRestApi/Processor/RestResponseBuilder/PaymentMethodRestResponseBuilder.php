@@ -38,30 +38,25 @@ class PaymentMethodRestResponseBuilder implements PaymentMethodRestResponseBuild
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $checkoutDataRestResource
+     * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function createRestPaymentMethodsResources(RestResourceInterface $checkoutDataRestResource): array
+    public function createRestPaymentMethodsResources(RestCheckoutDataTransfer $restCheckoutDataTransfer): array
     {
-        $resources = [];
-
-        $restCheckoutDataTransfer = $checkoutDataRestResource->getPayload();
-        if (!$restCheckoutDataTransfer instanceof RestCheckoutDataTransfer) {
-            return $resources;
-        }
+        $restResources = [];
 
         $restPaymentMethodsAttributesTransfers = $this->paymentMethodMapper
             ->mapRestCheckoutDataTransferToRestPaymentMethodsAttributesTransfers($restCheckoutDataTransfer);
 
         foreach ($restPaymentMethodsAttributesTransfers as $idPaymentMethod => $restPaymentMethodsAttributesTransfer) {
-            $resources[] = $this->restResourceBuilder->createRestResource(
+            $restResources[] = $this->restResourceBuilder->createRestResource(
                 PaymentsRestApiConfig::RESOURCE_PAYMENT_METHODS,
                 (string)$idPaymentMethod,
                 $restPaymentMethodsAttributesTransfer
             );
         }
 
-        return $resources;
+        return $restResources;
     }
 }

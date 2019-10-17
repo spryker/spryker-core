@@ -67,7 +67,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
             $restCheckoutRequestAttributesTransfer
         );
 
-        $restCheckoutDataResponseAttributesTransfer = $this->mapSelectedRestShipmentMethodTransfers(
+        $restCheckoutDataResponseAttributesTransfer = $this->mapSelectedShipmentMethods(
             $restCheckoutDataTransfer,
             $restCheckoutDataResponseAttributesTransfer
         );
@@ -227,7 +227,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer
      */
-    protected function mapSelectedRestShipmentMethodTransfers(
+    protected function mapSelectedShipmentMethods(
         RestCheckoutDataTransfer $restCheckoutDataTransfer,
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
@@ -260,17 +260,16 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
 
         $paymentProviders = $checkoutDataTransfer->getPaymentProviders()->getPaymentProviders();
         foreach ($paymentProviders as $paymentProviderTransfer) {
-            $isPaymentProviderExistsInRequestedPaymentProviders =
-                $this->isPaymentProviderExistsInRequestedPaymentProviders(
-                    $restCheckoutRequestAttributesTransfer,
-                    $paymentProviderTransfer
-                );
+            $isPaymentProviderRequested = $this->isPaymentProviderRequested(
+                $restCheckoutRequestAttributesTransfer,
+                $paymentProviderTransfer
+            );
 
-            if (!$isPaymentProviderExistsInRequestedPaymentProviders) {
+            if (!$isPaymentProviderRequested) {
                 continue;
             }
 
-            $this->addSelectedPaymentMethodsToRestCheckoutDataResponseAttributesTransfer(
+            $this->addSelectedPaymentMethodToRestCheckoutDataResponseAttributesTransfer(
                 $restCheckoutDataResponseAttributesTransfer,
                 $paymentProviderTransfer,
                 $restCheckoutRequestAttributesTransfer,
@@ -287,7 +286,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
      *
      * @return bool
      */
-    protected function isPaymentProviderExistsInRequestedPaymentProviders(
+    protected function isPaymentProviderRequested(
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         PaymentProviderTransfer $paymentProviderTransfer
     ): bool {
@@ -308,14 +307,14 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
      *
      * @return void
      */
-    protected function addSelectedPaymentMethodsToRestCheckoutDataResponseAttributesTransfer(
+    protected function addSelectedPaymentMethodToRestCheckoutDataResponseAttributesTransfer(
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer,
         PaymentProviderTransfer $paymentProviderTransfer,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         array $availablePaymentMethodsList
     ): void {
         foreach ($paymentProviderTransfer->getPaymentMethods() as $paymentMethodTransfer) {
-            $isPaymentMethodExistsInRequestedPaymentMethods = $this->isPaymentMethodExistsInRequestedPaymentMethods(
+            $isPaymentMethodExistsInRequestedPaymentMethods = $this->isPaymentMethodRequested(
                 $restCheckoutRequestAttributesTransfer,
                 $paymentMethodTransfer
             );
@@ -346,7 +345,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
      *
      * @return bool
      */
-    protected function isPaymentMethodExistsInRequestedPaymentMethods(
+    protected function isPaymentMethodRequested(
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
         PaymentMethodTransfer $paymentMethodTransfer
     ): bool {

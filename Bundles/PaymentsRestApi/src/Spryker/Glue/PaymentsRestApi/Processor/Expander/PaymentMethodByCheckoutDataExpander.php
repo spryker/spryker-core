@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\PaymentsRestApi\Processor\Expander;
 
+use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\PaymentsRestApi\Processor\RestResponseBuilder\PaymentMethodRestResponseBuilderInterface;
 
@@ -35,7 +36,12 @@ class PaymentMethodByCheckoutDataExpander implements PaymentMethodByCheckoutData
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            $restPaymentMethodsResources = $this->paymentMethodRestResponseBuilder->createRestPaymentMethodsResources($resource);
+            $restCheckoutDataTransfer = $resource->getPayload();
+            if (!$restCheckoutDataTransfer instanceof RestCheckoutDataTransfer) {
+                continue;
+            }
+
+            $restPaymentMethodsResources = $this->paymentMethodRestResponseBuilder->createRestPaymentMethodsResources($restCheckoutDataTransfer);
 
             foreach ($restPaymentMethodsResources as $restPaymentMethodsResource) {
                 $resource->addRelationship($restPaymentMethodsResource);
