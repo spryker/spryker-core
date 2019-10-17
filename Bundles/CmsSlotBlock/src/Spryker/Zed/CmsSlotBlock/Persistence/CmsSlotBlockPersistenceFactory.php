@@ -8,6 +8,8 @@
 namespace Spryker\Zed\CmsSlotBlock\Persistence;
 
 use Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlockQuery;
+use Spryker\Zed\CmsSlotBlock\CmsSlotBlockDependencyProvider;
+use Spryker\Zed\CmsSlotBlock\Dependency\Service\CmsSlotBlockToUtilEncodingServiceInterface;
 use Spryker\Zed\CmsSlotBlock\Persistence\Propel\Mapper\CmsSlotBlockMapper;
 use Spryker\Zed\CmsSlotBlock\Persistence\Propel\Mapper\CmsSlotBlockMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -30,6 +32,14 @@ class CmsSlotBlockPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createCmsSlotBlockMapper(): CmsSlotBlockMapperInterface
     {
-        return new CmsSlotBlockMapper();
+        return new CmsSlotBlockMapper($this->getUtilEncodingService());
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsSlotBlock\Dependency\Service\CmsSlotBlockToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): CmsSlotBlockToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(CmsSlotBlockDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }
