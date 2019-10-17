@@ -167,8 +167,6 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
      */
     protected function getProductPackagingUnitAmountTransferMap(array $itemTransfers): array
     {
-        $skus = $this->getChangedSkuMap($itemTransfers);
-
         $productPackagingUnitAmountTransferMap = $this->mapProductPackagingUnitAmountTransfersBySku($itemTransfers);
 
         return $productPackagingUnitAmountTransferMap;
