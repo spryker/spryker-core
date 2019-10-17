@@ -27,15 +27,23 @@ class ShipmentMethodCreator implements ShipmentMethodCreatorInterface
     protected $methodPrice;
 
     /**
+     * @var \Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodStoreRelationUpdaterInterface
+     */
+    protected $storeRelationUpdater;
+
+    /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface $shipmentEntityManager
      * @param \Spryker\Zed\Shipment\Business\Model\MethodPriceInterface $methodPrice
+     * @param \Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodStoreRelationUpdaterInterface $storeRelationUpdater
      */
     public function __construct(
         ShipmentEntityManagerInterface $shipmentEntityManager,
-        MethodPriceInterface $methodPrice
+        MethodPriceInterface $methodPrice,
+        ShipmentMethodStoreRelationUpdaterInterface $storeRelationUpdater
     ) {
         $this->shipmentEntityManager = $shipmentEntityManager;
         $this->methodPrice = $methodPrice;
+        $this->storeRelationUpdater = $storeRelationUpdater;
     }
 
     /**
@@ -46,7 +54,11 @@ class ShipmentMethodCreator implements ShipmentMethodCreatorInterface
     public function createShipmentMethod(ShipmentMethodTransfer $shipmentMethodTransfer): ?int
     {
         $shipmentMethodTransfer = $this->shipmentEntityManager->saveSalesShipmentMethod($shipmentMethodTransfer);
+        $shipmentMethodTransfer->requireStoreRelation()
+            ->getStoreRelation()
+                ->setIdEntity($shipmentMethodTransfer->getIdShipmentMethod());
         $this->methodPrice->save($shipmentMethodTransfer);
+        $this->storeRelationUpdater->update($shipmentMethodTransfer->getStoreRelation());
 
         return $shipmentMethodTransfer->getIdShipmentMethod();
     }

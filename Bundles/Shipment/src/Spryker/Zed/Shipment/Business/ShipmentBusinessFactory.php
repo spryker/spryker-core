@@ -65,6 +65,10 @@ use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodCreator;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodCreatorInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodDeleter;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodDeleterInterface;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodStoreRelationReader;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodStoreRelationReaderInterface;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodStoreRelationUpdater;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodStoreRelationUpdaterInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodUpdater;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodUpdaterInterface;
 use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolver;
@@ -111,8 +115,28 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     {
         return new ShipmentMethodCreator(
             $this->getEntityManager(),
-            $this->createMethodPrice()
+            $this->createMethodPrice(),
+            $this->createShipmentMethodStoreRelationUpdater()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodStoreRelationUpdaterInterface
+     */
+    public function createShipmentMethodStoreRelationUpdater(): ShipmentMethodStoreRelationUpdaterInterface
+    {
+        return new ShipmentMethodStoreRelationUpdater(
+            $this->createShipmentMethodStoreRelationReader(),
+            $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodStoreRelationReaderInterface
+     */
+    public function createShipmentMethodStoreRelationReader(): ShipmentMethodStoreRelationReaderInterface
+    {
+        return new ShipmentMethodStoreRelationReader($this->getRepository());
     }
 
     /**

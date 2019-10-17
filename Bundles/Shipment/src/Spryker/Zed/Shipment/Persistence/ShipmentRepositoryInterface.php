@@ -150,4 +150,11 @@ interface ShipmentRepositoryInterface
      * @return bool
      */
     public function isShipmentMethodUniqueForCarrier(ShipmentMethodTransfer $shipmentMethodTransfer): bool;
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getReladedStoresByIdShipmentMethod(int $idShipmentMethod): ArrayObject;
 }

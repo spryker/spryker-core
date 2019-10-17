@@ -187,6 +187,7 @@ class ShipmentFacadeTest extends Test
      */
     public function testFindAvailableMethodByIdShouldReturnShipmentMethodById($currencyCode, $expectedPriceResult): void
     {
+        $this->tester->ensureShipmentMethodTableIsEmpty();
         // Arrange
         $quoteTransfer = (new QuoteTransfer())
             ->setPriceMode(ShipmentConstants::PRICE_MODE_GROSS)

@@ -11,6 +11,7 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\MoneyValueBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodStore;
@@ -73,10 +74,11 @@ class ShipmentMethodDataHelper extends Module
             }
         }
         $shipmentMethodTransfer->setPrices($moneyValueTransferCollection);
+        $storeRelationTransfer = (new StoreRelationTransfer())->setIdStores($idStoreList);
+        $shipmentMethodTransfer->setStoreRelation($storeRelationTransfer);
 
         $idShipmentMethod = $this->getShipmentFacade()->createMethod($shipmentMethodTransfer);
         $shipmentMethodTransfer->setIdShipmentMethod($idShipmentMethod);
-        $this->setShipmentMethodToStoreList($idShipmentMethod, $idStoreList);
 
         return $shipmentMethodTransfer;
     }

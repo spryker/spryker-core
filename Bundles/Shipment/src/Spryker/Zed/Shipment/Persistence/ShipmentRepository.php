@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentPriceTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
@@ -627,5 +628,24 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
             ->filterByIdShipmentMethod($shipmentMethodTransfer->getIdShipmentMethod(), Criteria::NOT_EQUAL)
             ->filterByFkShipmentCarrier($shipmentMethodTransfer->getFkShipmentCarrier())
             ->exists();
+    }
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getReladedStoresByIdShipmentMethod(int $idShipmentMethod): ArrayObject
+    {
+        $shipmentMethodStoreEntities = $this->getFactory()
+            ->createShipmentMethodStoreQuery()
+            ->filterByFkShipmentMethod($idShipmentMethod)
+            ->leftJoinWithStore()
+            ->find();
+
+        return $this->getFactory()
+            ->createStoreRelationMapper()
+            ->mapShipmentMethodStoreEntitiesToStoreRelationTransfer($shipmentMethodStoreEntities, new StoreRelationTransfer())
+            ->getStores();
     }
 }
