@@ -47,9 +47,7 @@ interface AvailabilityFacadeInterface
 
     /**
      * Specification:
-     *  - Checks if product has stock in stock table for current store.
-     *  - Checks if have placed orders where items have state machine state flagged as reserved.
-     *  - Returns integer value which is Product stock - reserved state machine items.
+     *  - Returns calculated availability value which is product stock minus reserved state machine items quantities.
      *
      * @api
      *
@@ -79,9 +77,9 @@ interface AvailabilityFacadeInterface
 
     /**
      * Specification:
-     *  - Calculates current item stock, take into account reserved items
-     *  - Stores new stock for concrete product
-     *  - Stores sum of all concrete product stocks for abstract product
+     *  - Calculates current item availability, take into account reserved items
+     *  - Stores new availability for concrete product
+     *  - Stores sum of all concrete product availability for abstract product
      *  - Touches availability abstract collector if data changed
      *
      * @api
@@ -94,9 +92,9 @@ interface AvailabilityFacadeInterface
 
     /**
      * Specification:
-     *  - Calculates current item stock, for given store take into account reserved items
-     *  - Stores new stock for concrete product
-     *  - Stores sum of all concrete product stocks for abstract product
+     *  - Calculates current item availability, for given store take into account reserved items
+     *  - Stores availability for concrete product
+     *  - Stores sum of all concrete product availability for abstract product
      *  - Touches availability abstract collector if data changed
      *
      * @api
@@ -115,7 +113,7 @@ interface AvailabilityFacadeInterface
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use `AvailabilityFacadeInterface::findProductAbstractAvailabilityBySkuForStore() instead`.
      *
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -131,7 +129,7 @@ interface AvailabilityFacadeInterface
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use `AvailabilityFacadeInterface::findProductAbstractAvailabilityBySkuForStore() instead`.
      *
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -147,7 +145,7 @@ interface AvailabilityFacadeInterface
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use `AvailabilityFacadeInterface::findProductConcreteAvailabilityBySkuForStore() instead`.
      *
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *
@@ -158,6 +156,7 @@ interface AvailabilityFacadeInterface
     /**
      * Specification:
      *  - Finds product abstract availability as is stored in persistence.
+     *  - If nothing was stored in persistence, abstract availability gets calculated and stored.
      *
      * @api
      *
@@ -187,8 +186,6 @@ interface AvailabilityFacadeInterface
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
-     *
      * @param int $idAvailabilityAbstract
      *
      * @return void
@@ -197,7 +194,8 @@ interface AvailabilityFacadeInterface
 
     /**
      * Specification:
-     *  - Updates availability for given concrete sku, by quantity
+     *  - Updates availability for given concrete sku, by quantity.
+     *  - Doesn't update the flag `isNeverOutOfStock`.
      *  - Touches availability collector if data changed
      *  - Returns id of availability abstract
      *

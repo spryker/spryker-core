@@ -8,50 +8,43 @@
 namespace Spryker\Zed\Availability\Business\Model;
 
 use Generated\Shared\Transfer\AvailabilityNotificationDataTransfer;
+use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityTableMap;
-use Orm\Zed\Availability\Persistence\SpyAvailability;
-use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Shared\Availability\AvailabilityConfig;
 use Spryker\Zed\Availability\Business\Exception\ProductNotFoundException;
 use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface;
-use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
-use Spryker\Zed\Product\Business\Exception\MissingProductException;
+use Spryker\Zed\Availability\Persistence\AvailabilityEntityManagerInterface;
+use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
 
 class AvailabilityHandler implements AvailabilityHandlerInterface
 {
-    protected const PRODUCT_NOT_FOUND_EXCEPTION_MESSAGE_FORMAT = 'The product was not found with this SKU: %s';
+    protected const PRODUCT_SKU_NOT_FOUND_EXCEPTION_MESSAGE_FORMAT = 'The product was not found with this SKU: %s';
+    protected const PRODUCT_ID_NOT_FOUND_EXCEPTION_MESSAGE_FORMAT = 'The product was not found with this ID: %d';
 
     /**
-     * @var \Spryker\Zed\Availability\Business\Model\SellableInterface
+     * @var \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface
      */
-    protected $sellable;
+    protected $availabilityRepository;
 
     /**
-     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface
+     * @var \Spryker\Zed\Availability\Persistence\AvailabilityEntityManagerInterface
      */
-    protected $stockFacade;
+    protected $availabilityEntityManager;
+
+    /**
+     * @var \Spryker\Zed\Availability\Business\Model\ProductAvailabilityCalculatorInterface
+     */
+    protected $availabilityCalculator;
 
     /**
      * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface
      */
     protected $touchFacade;
-
-    /**
-     * @var \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface
-     */
-    protected $queryContainer;
-
-    /**
-     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface
-     */
-    protected $productFacade;
 
     /**
      * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface
@@ -64,167 +57,97 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     protected $eventFacade;
 
     /**
-     * @param \Spryker\Zed\Availability\Business\Model\SellableInterface $sellable
-     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface $stockFacade
+     * @param \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface $availabilityRepository
+     * @param \Spryker\Zed\Availability\Persistence\AvailabilityEntityManagerInterface $availabilityEntityManager
+     * @param \Spryker\Zed\Availability\Business\Model\ProductAvailabilityCalculatorInterface $availabilityCalculator
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface $touchFacade
-     * @param \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface $productFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface $eventFacade
      */
     public function __construct(
-        SellableInterface $sellable,
-        AvailabilityToStockInterface $stockFacade,
+        AvailabilityRepositoryInterface $availabilityRepository,
+        AvailabilityEntityManagerInterface $availabilityEntityManager,
+        ProductAvailabilityCalculatorInterface $availabilityCalculator,
         AvailabilityToTouchInterface $touchFacade,
-        AvailabilityQueryContainerInterface $queryContainer,
-        AvailabilityToProductInterface $productFacade,
         AvailabilityToStoreFacadeInterface $storeFacade,
         AvailabilityToEventFacadeInterface $eventFacade
     ) {
-        $this->sellable = $sellable;
-        $this->stockFacade = $stockFacade;
+        $this->availabilityCalculator = $availabilityCalculator;
+        $this->availabilityRepository = $availabilityRepository;
+        $this->availabilityEntityManager = $availabilityEntityManager;
         $this->touchFacade = $touchFacade;
-        $this->queryContainer = $queryContainer;
-        $this->productFacade = $productFacade;
         $this->storeFacade = $storeFacade;
         $this->eventFacade = $eventFacade;
     }
 
     /**
-     * @param string $sku
+     * @param string $concreteSku
      *
      * @return void
      */
-    public function updateAvailability($sku)
+    public function updateAvailability($concreteSku)
     {
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
-        $this->updateAvailabilityForStore($sku, $storeTransfer);
+        $this->updateAvailabilityForStore($concreteSku, $storeTransfer);
 
         $sharedStores = $storeTransfer->getStoresWithSharedPersistence();
         foreach ($sharedStores as $storeName) {
             $storeTransfer = $this->storeFacade->getStoreByName($storeName);
-            $this->updateAvailabilityForStore($sku, $storeTransfer);
+            $this->updateAvailabilityForStore($concreteSku, $storeTransfer);
         }
     }
 
     /**
-     * @param string $sku
+     * @param string $concreteSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return void
      */
-    public function updateAvailabilityForStore(string $sku, StoreTransfer $storeTransfer): void
+    public function updateAvailabilityForStore(string $concreteSku, StoreTransfer $storeTransfer): void
     {
-        $quantity = $this->sellable->calculateAvailabilityForProductWithStore($sku, $storeTransfer);
-        $quantityWithReservedItems = $this->getQuantity($quantity);
+        $quantity = $this->availabilityCalculator->calculateAvailabilityForProductConcrete($concreteSku, $storeTransfer);
 
-        $this->saveAndTouchAvailability($sku, $quantityWithReservedItems, $storeTransfer);
+        $this->saveAndTouchAvailability($concreteSku, $quantity, $storeTransfer);
     }
 
     /**
-     * @param string $sku
+     * @param string $concreteSku
      * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
-    public function saveCurrentAvailabilityForStore(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): int
+    public function saveAndTouchAvailability(string $concreteSku, Decimal $quantity, StoreTransfer $storeTransfer): int
     {
-        $spyAvailabilityEntity = $this->saveAndTouchAvailability($sku, $quantity, $storeTransfer);
-
-        return $spyAvailabilityEntity->getFkAvailabilityAbstract();
-    }
-
-    /**
-     * @param string $sku
-     * @param \Spryker\DecimalObject\Decimal $quantity
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailability
-     */
-    protected function saveAndTouchAvailability(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): SpyAvailability
-    {
-        $currentQuantity = $this->findCurrentPhysicalQuantity($sku, $storeTransfer) ?? new Decimal(0);
-        $spyAvailabilityEntity = $this->prepareAvailabilityEntityForSave($sku, $quantity, $storeTransfer);
-        $isNeverOutOfStockModified = $spyAvailabilityEntity->isColumnModified(SpyAvailabilityTableMap::COL_IS_NEVER_OUT_OF_STOCK);
-        $isAvailabilityChanged = $isNeverOutOfStockModified || $this->isAvailabilityStatusChanged($currentQuantity, $quantity);
-
-        $spyAvailabilityEntity->save();
-
-        $this->updateAbstractAvailabilityQuantity($spyAvailabilityEntity->getFkAvailabilityAbstract(), $storeTransfer);
-
-        if ($isAvailabilityChanged) {
-            $this->touchAvailabilityAbstract($spyAvailabilityEntity->getFkAvailabilityAbstract());
-        }
-
-        if ($isAvailabilityChanged && ($quantity->greaterThan(0) || $spyAvailabilityEntity->getIsNeverOutOfStock() === true)) {
-            $this->triggerProductIsAvailableAgainEvent($sku, $storeTransfer);
-        }
-
-        return $spyAvailabilityEntity;
-    }
-
-    /**
-     * @param string $sku
-     * @param \Spryker\DecimalObject\Decimal $quantity
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailability
-     */
-    protected function prepareAvailabilityEntityForSave(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): SpyAvailability
-    {
-        $spyAvailabilityEntity = $this->querySpyAvailabilityBySku($sku, $storeTransfer)->findOneOrCreate();
-
-        if ($spyAvailabilityEntity->isNew()) {
-            $availabilityAbstractEntity = $this->findOrCreateSpyAvailabilityAbstract($sku, $storeTransfer);
-            $spyAvailabilityEntity->setFkAvailabilityAbstract($availabilityAbstractEntity->getIdAvailabilityAbstract());
-        }
-
-        $spyAvailabilityEntity->setQuantity($quantity);
-        $spyAvailabilityEntity->setIsNeverOutOfStock(
-            $this->stockFacade->isNeverOutOfStockForStore($sku, $storeTransfer)
+        $wasProductConcreteAvailable = $this->isProductConcreteAvailable(
+            $this->availabilityRepository->findProductConcreteAvailabilityBySkuAndStore($concreteSku, $storeTransfer)
         );
 
-        return $spyAvailabilityEntity;
-    }
+        $abstractSku = $this->availabilityRepository->getAbstractSkuFromProductConcrete($concreteSku);
+        $productConcreteAvailabilityTransfer = (new ProductConcreteAvailabilityTransfer())
+            ->setSku($concreteSku)
+            ->setAvailability($quantity);
 
-    /**
-     * @param \Spryker\DecimalObject\Decimal|null $currentQuantity
-     * @param \Spryker\DecimalObject\Decimal|null $quantityWithReservedItems
-     *
-     * @return bool
-     */
-    protected function isAvailabilityStatusChanged(?Decimal $currentQuantity, ?Decimal $quantityWithReservedItems): bool
-    {
-        if ($currentQuantity === null && $quantityWithReservedItems !== null) {
-            return true;
+        $this->updateProductAbstractAvailabilityBySku($abstractSku, $storeTransfer);
+        $idAvailabilityAbstract = $this->availabilityRepository
+            ->findIdProductAbstractAvailabilityBySku($abstractSku, $storeTransfer);
+
+        $isAvailabilityChanged = $this->availabilityEntityManager->saveProductConcreteAvailability(
+            $productConcreteAvailabilityTransfer,
+            $storeTransfer,
+            $abstractSku
+        );
+
+        if ($isAvailabilityChanged) {
+            $this->touchAvailabilityAbstract($idAvailabilityAbstract);
         }
 
-        if ($currentQuantity === null || $quantityWithReservedItems === null) {
-            return false;
+        if ($isAvailabilityChanged && !$wasProductConcreteAvailable && $this->isProductConcreteAvailable($productConcreteAvailabilityTransfer)) {
+            $this->triggerProductIsAvailableAgainEvent($concreteSku, $storeTransfer);
         }
 
-        if ($currentQuantity->equals(0) && $quantityWithReservedItems->greaterThan($currentQuantity)) {
-            return true;
-        }
-
-        if (!$currentQuantity->equals(0) && $quantityWithReservedItems->equals(0)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityQuery
-     */
-    protected function querySpyAvailabilityBySku($sku, StoreTransfer $storeTransfer)
-    {
-        return $this->queryContainer->queryAvailabilityBySkuAndIdStore($sku, $storeTransfer->getIdStore());
+        return $idAvailabilityAbstract;
     }
 
     /**
@@ -238,121 +161,142 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     }
 
     /**
-     * @param \Spryker\DecimalObject\Decimal $quantity
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    protected function getQuantity(Decimal $quantity): Decimal
-    {
-        return $quantity->greaterThan(0) ? $quantity : new Decimal(0);
-    }
-
-    /**
-     * @param string $sku
+     * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Spryker\DecimalObject\Decimal|null
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer
      */
-    protected function findCurrentPhysicalQuantity(string $sku, StoreTransfer $storeTransfer): ?Decimal
-    {
-        $availabilityEntity = $this->querySpyAvailabilityBySku($sku, $storeTransfer)->findOne();
+    public function updateProductConcreteAvailabilityById(
+        int $idProductConcrete,
+        StoreTransfer $storeTransfer
+    ): ProductConcreteAvailabilityTransfer {
+        $concreteSku = $this->getProductConcreteSkuByConcreteId($idProductConcrete);
 
-        if ($availabilityEntity === null) {
-            return null;
-        }
-
-        return new Decimal($availabilityEntity->getQuantity());
+        return $this->updateProductConcreteAvailabilityBySku($concreteSku, $storeTransfer);
     }
 
     /**
-     * @param int $idAvailabilityAbstract
+     * @param string $concreteSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer
      */
-    protected function updateAbstractAvailabilityQuantity(int $idAvailabilityAbstract, StoreTransfer $storeTransfer): void
-    {
-        $availabilityAbstractEntity = $this->queryContainer
-            ->queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract, $storeTransfer->getIdStore())
-            ->findOne();
+    public function updateProductConcreteAvailabilityBySku(
+        string $concreteSku,
+        StoreTransfer $storeTransfer
+    ): ProductConcreteAvailabilityTransfer {
+        $wasProductConcreteAvailable = $this->isProductConcreteAvailable(
+            $this->availabilityRepository->findProductConcreteAvailabilityBySkuAndStore($concreteSku, $storeTransfer)
+        );
 
-        /** @var string|null $sumQuantity */
-        $sumQuantity = $this->queryContainer
-            ->querySumQuantityOfAvailabilityAbstract($idAvailabilityAbstract, $storeTransfer->getIdStore())
-            ->findOne();
+        $productConcreteAvailabilityTransfer = $this->availabilityCalculator
+            ->getCalculatedProductConcreteAvailabilityTransfer($concreteSku, $storeTransfer);
 
-        $availabilityAbstractEntity->setFkStore($storeTransfer->getIdStore());
-        $availabilityAbstractEntity->setQuantity($sumQuantity);
-        $availabilityAbstractEntity->save();
-    }
+        $abstractSku = $this->getAbstractSkuFromProductConcrete($concreteSku);
 
-    /**
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract
-     */
-    protected function findOrCreateSpyAvailabilityAbstract(string $sku, StoreTransfer $storeTransfer): SpyAvailabilityAbstract
-    {
-        $abstractSku = $this->getAbstractSkuFromProductConcrete($sku);
-        $availabilityAbstractEntity = $this->queryContainer
-            ->querySpyAvailabilityAbstractByAbstractSku($abstractSku)
-            ->filterByFkStore($storeTransfer->getIdStore())
-            ->findOne();
+        $this->updateProductAbstractAvailabilityBySku($abstractSku, $storeTransfer);
 
-        if ($availabilityAbstractEntity !== null) {
-            return $availabilityAbstractEntity;
+        $isAvailabilityChanged = $this->availabilityEntityManager->saveProductConcreteAvailability(
+            $productConcreteAvailabilityTransfer,
+            $storeTransfer,
+            $abstractSku
+        );
+
+        if ($isAvailabilityChanged && !$wasProductConcreteAvailable && $this->isProductConcreteAvailable($productConcreteAvailabilityTransfer)) {
+            $this->triggerProductIsAvailableAgainEvent($productConcreteAvailabilityTransfer->getSku(), $storeTransfer);
         }
 
-        return $this->createSpyAvailabilityAbstract($abstractSku, $storeTransfer);
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @throws \Spryker\Zed\Availability\Business\Exception\ProductNotFoundException
-     *
-     * @return string
-     */
-    protected function getAbstractSkuFromProductConcrete(string $sku): string
-    {
-        try {
-            return $this->productFacade->getAbstractSkuFromProductConcrete($sku);
-        } catch (MissingProductException $exception) {
-            throw new ProductNotFoundException(
-                sprintf(static::PRODUCT_NOT_FOUND_EXCEPTION_MESSAGE_FORMAT, $sku)
-            );
-        }
+        return $productConcreteAvailabilityTransfer;
     }
 
     /**
      * @param string $abstractSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
-    protected function createSpyAvailabilityAbstract(string $abstractSku, StoreTransfer $storeTransfer): SpyAvailabilityAbstract
-    {
-        $availableAbstractEntity = (new SpyAvailabilityAbstract())
-            ->setAbstractSku($abstractSku)
-            ->setFkStore($storeTransfer->getIdStore());
+    public function updateProductAbstractAvailabilityBySku(
+        string $abstractSku,
+        StoreTransfer $storeTransfer
+    ): ProductAbstractAvailabilityTransfer {
+        $productAbstractAvailabilityTransfer = $this->availabilityCalculator
+            ->getCalculatedProductAbstractAvailabilityTransfer($abstractSku, $storeTransfer);
 
-        $availableAbstractEntity->save();
+        $this->availabilityEntityManager->saveProductAbstractAvailability(
+            $productAbstractAvailabilityTransfer,
+            $storeTransfer
+        );
 
-        return $availableAbstractEntity;
+        return $productAbstractAvailabilityTransfer;
     }
 
     /**
-     * @param string $sku
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null $productConcreteAvailabilityTransfer
+     *
+     * @return bool
+     */
+    protected function isProductConcreteAvailable(?ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer): bool
+    {
+        if ($productConcreteAvailabilityTransfer === null) {
+            return false;
+        }
+
+        return $productConcreteAvailabilityTransfer->getAvailability()->greaterThan(0) ||
+            $productConcreteAvailabilityTransfer->getIsNeverOutOfStock() === true;
+    }
+
+    /**
+     * @param string $concreteSku
+     *
+     * @throws \Spryker\Zed\Availability\Business\Exception\ProductNotFoundException
+     *
+     * @return string
+     */
+    protected function getAbstractSkuFromProductConcrete(string $concreteSku): string
+    {
+        $abstractSku = $this->availabilityRepository->getAbstractSkuFromProductConcrete($concreteSku);
+
+        if ($abstractSku === null) {
+            throw new ProductNotFoundException(
+                sprintf(static::PRODUCT_SKU_NOT_FOUND_EXCEPTION_MESSAGE_FORMAT, $concreteSku)
+            );
+        }
+
+        return $abstractSku;
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @throws \Spryker\Zed\Availability\Business\Exception\ProductNotFoundException
+     *
+     * @return string
+     */
+    protected function getProductConcreteSkuByConcreteId(int $idProductConcrete): string
+    {
+        $concreteSku = $this->availabilityRepository->getProductConcreteSkuByConcreteId($idProductConcrete);
+
+        if ($concreteSku === null) {
+            throw new ProductNotFoundException(
+                sprintf(static::PRODUCT_ID_NOT_FOUND_EXCEPTION_MESSAGE_FORMAT, $idProductConcrete)
+            );
+        }
+
+        return $concreteSku;
+    }
+
+    /**
+     * @param string $concreteSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return void
      */
-    protected function triggerProductIsAvailableAgainEvent(string $sku, StoreTransfer $storeTransfer): void
+    protected function triggerProductIsAvailableAgainEvent(string $concreteSku, StoreTransfer $storeTransfer): void
     {
         $availabilityNotificationDataTransfer = (new AvailabilityNotificationDataTransfer())
-            ->setSku($sku)
+            ->setSku($concreteSku)
             ->setStore($storeTransfer);
+
         $this->eventFacade->trigger(
             AvailabilityEvents::AVAILABILITY_NOTIFICATION,
             $availabilityNotificationDataTransfer

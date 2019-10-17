@@ -10,15 +10,18 @@ namespace Spryker\Zed\Availability\Business;
 use Spryker\Zed\Availability\AvailabilityDependencyProvider;
 use Spryker\Zed\Availability\Business\Model\AvailabilityHandler;
 use Spryker\Zed\Availability\Business\Model\AvailabilityHandlerInterface;
+use Spryker\Zed\Availability\Business\Model\ProductAvailabilityCalculator;
+use Spryker\Zed\Availability\Business\Model\ProductAvailabilityCalculatorInterface;
 use Spryker\Zed\Availability\Business\Model\ProductAvailabilityReader;
 use Spryker\Zed\Availability\Business\Model\ProductAvailabilityReaderInterface;
+use Spryker\Zed\Availability\Business\Model\ProductReservationReader;
+use Spryker\Zed\Availability\Business\Model\ProductReservationReaderInterface;
 use Spryker\Zed\Availability\Business\Model\ProductsAvailableCheckoutPreCondition;
 use Spryker\Zed\Availability\Business\Model\ProductsAvailableCheckoutPreConditionInterface;
 use Spryker\Zed\Availability\Business\Model\Sellable;
 use Spryker\Zed\Availability\Business\Model\SellableInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface;
@@ -27,6 +30,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 /**
  * @method \Spryker\Zed\Availability\AvailabilityConfig getConfig()
  * @method \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Availability\Persistence\AvailabilityEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface getRepository()
  */
 class AvailabilityBusinessFactory extends AbstractBusinessFactory
@@ -37,10 +41,21 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     public function createSellableModel(): SellableInterface
     {
         return new Sellable(
+            $this->getRepository(),
+            $this->createAvailabilityHandler(),
+            $this->getStoreFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Availability\Business\Model\ProductAvailabilityCalculatorInterface
+     */
+    public function createProductAvailabilityCalculator(): ProductAvailabilityCalculatorInterface
+    {
+        return new ProductAvailabilityCalculator(
+            $this->getRepository(),
             $this->getOmsFacade(),
-            $this->getStockFacade(),
-            $this->getStoreFacade(),
-            $this->getRepository()
+            $this->getStockFacade()
         );
     }
 
@@ -50,11 +65,10 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     public function createAvailabilityHandler(): AvailabilityHandlerInterface
     {
         return new AvailabilityHandler(
-            $this->createSellableModel(),
-            $this->getStockFacade(),
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->createProductAvailabilityCalculator(),
             $this->getTouchFacade(),
-            $this->getQueryContainer(),
-            $this->getProductFacade(),
             $this->getStoreFacade(),
             $this->getEventFacade()
         );
@@ -66,8 +80,20 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     public function createProductAvailabilityReader(): ProductAvailabilityReaderInterface
     {
         return new ProductAvailabilityReader(
-            $this->getQueryContainer(),
             $this->getRepository(),
+            $this->createAvailabilityHandler()
+        );
+    }
+
+    /**
+     * @deprecated Use `AvailabilityBusinessFactory::createProductAvailabilityReader()` instead.
+     *
+     * @return \Spryker\Zed\Availability\Business\Model\ProductReservationReaderInterface
+     */
+    public function createProductReservationReader(): ProductReservationReaderInterface
+    {
+        return new ProductReservationReader(
+            $this->getQueryContainer(),
             $this->getStockFacade(),
             $this->getStoreFacade()
         );
@@ -95,14 +121,6 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     public function getTouchFacade(): AvailabilityToTouchInterface
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_TOUCH);
-    }
-
-    /**
-     * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface
-     */
-    public function getProductFacade(): AvailabilityToProductInterface
-    {
-        return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_PRODUCT);
     }
 
     /**

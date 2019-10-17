@@ -10,6 +10,7 @@ namespace Spryker\Zed\Availability\Persistence\Mapper;
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
+use Spryker\DecimalObject\Decimal;
 
 class AvailabilityMapper implements AvailabilityMapperInterface
 {
@@ -39,13 +40,66 @@ class AvailabilityMapper implements AvailabilityMapperInterface
         array $availabilityAbstractEntityArray,
         ProductAbstractAvailabilityTransfer $productAbstractAvailabilityTransfer
     ): ProductAbstractAvailabilityTransfer {
+        $availabilityAbstractEntityArray = $this->processAvailabilityAbstractEntityArray($availabilityAbstractEntityArray);
+
         return $productAbstractAvailabilityTransfer
-            ->fromArray($availabilityAbstractEntityArray, true)
-            ->setIsNeverOutOfStock(
-                stripos(
-                    $availabilityAbstractEntityArray[ProductAbstractAvailabilityTransfer::IS_NEVER_OUT_OF_STOCK],
-                    'true'
-                ) !== false
+            ->fromArray($availabilityAbstractEntityArray, true);
+    }
+
+    /**
+     * @param array $availabilityAbstractData
+     *
+     * @return array
+     */
+    protected function processAvailabilityAbstractEntityArray(array $availabilityAbstractData): array
+    {
+        if (isset($availabilityAbstractData[ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY])) {
+            $availabilityAbstractData[ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY] = $this->calculateReservation(
+                $availabilityAbstractData[ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY]
             );
+        }
+
+        if (isset($availabilityAbstractData[ProductAbstractAvailabilityTransfer::IS_NEVER_OUT_OF_STOCK])) {
+            $availabilityAbstractData[ProductAbstractAvailabilityTransfer::IS_NEVER_OUT_OF_STOCK] = $this->isNeverOutOfStock($availabilityAbstractData[ProductAbstractAvailabilityTransfer::IS_NEVER_OUT_OF_STOCK]);
+        }
+
+        if (isset($availabilityAbstractData[ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY]) &&
+            isset($availabilityAbstractData[ProductAbstractAvailabilityTransfer::STOCK_QUANTITY])) {
+            $availabilityAbstractData[ProductAbstractAvailabilityTransfer::AVAILABILITY] = (new Decimal($availabilityAbstractData[ProductAbstractAvailabilityTransfer::STOCK_QUANTITY]))
+                ->subtract($availabilityAbstractData[ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY]);
+        }
+
+        return $availabilityAbstractData;
+    }
+
+    /**
+     * @param string $reservationAggregationSet
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    protected function calculateReservation(string $reservationAggregationSet): Decimal
+    {
+        $reservation = new Decimal(0);
+        $reservationItems = array_unique(explode(',', $reservationAggregationSet));
+        foreach ($reservationItems as $item) {
+            $itemParts = array_filter(explode(':', $item));
+            if (!isset($itemParts[0])) {
+                continue;
+            }
+
+            $reservation = $reservation->add(new Decimal($itemParts[1] ?? 0));
+        }
+
+        return $reservation;
+    }
+
+    /**
+     * @param string $neverOutOfStockSet
+     *
+     * @return bool
+     */
+    protected function isNeverOutOfStock(string $neverOutOfStockSet): bool
+    {
+        return stripos($neverOutOfStockSet, 'true') !== false;
     }
 }

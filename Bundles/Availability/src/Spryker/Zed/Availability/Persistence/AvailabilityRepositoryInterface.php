@@ -25,24 +25,60 @@ interface AvailabilityRepositoryInterface
     ): ?ProductConcreteAvailabilityTransfer;
 
     /**
-     * @param string $sku
+     * @param string $concreteSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
     public function findProductConcreteAvailabilityBySkuAndStore(
-        string $sku,
+        string $concreteSku,
         StoreTransfer $storeTransfer
     ): ?ProductConcreteAvailabilityTransfer;
 
     /**
-     * @param string $sku
+     * @param string $abstractSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
      */
     public function findProductAbstractAvailabilityBySkuAndStore(
-        string $sku,
+        string $abstractSku,
         StoreTransfer $storeTransfer
     ): ?ProductAbstractAvailabilityTransfer;
+
+    /**
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return int
+     */
+    public function findIdProductAbstractAvailabilityBySku(
+        string $abstractSku,
+        StoreTransfer $storeTransfer
+    ): int;
+
+    /**
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
+     */
+    public function getCalculatedProductAbstractAvailabilityBySkuAndStore(
+        string $abstractSku,
+        StoreTransfer $storeTransfer
+    ): ProductAbstractAvailabilityTransfer;
+
+    /**
+     * @param string $concreteSku
+     *
+     * @return string|null
+     */
+    public function getAbstractSkuFromProductConcrete(string $concreteSku): ?string;
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return string|null
+     */
+    public function getProductConcreteSkuByConcreteId(int $idProductConcrete): ?string;
 }

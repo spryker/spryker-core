@@ -11,7 +11,9 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
@@ -56,6 +58,7 @@ class AvailabilityFacadeTest extends Unit
     public function testIsProductSellableWhenNeverOutOfStockShouldReturnSuccess()
     {
         // Arrange
+        $this->tester->haveProduct([ProductConcreteTransfer::SKU => static::CONCRETE_SKU]);
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
         $this->createProductWithStock(
             static::ABSTRACT_SKU,
@@ -276,34 +279,114 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductAbstractAvailabilityForStore(): void
+    public function testFindProductAbstractAvailabilityForStoreWithCachedAvailability(): void
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
         $productTransfer = $this->tester->haveProduct([], ['sku' => static::ABSTRACT_SKU]);
-        $this->createProductWithStock(
-            static::ABSTRACT_SKU,
-            static::CONCRETE_SKU,
-            ['quantity' => 3],
-            $storeTransfer
-        );
+        $this->tester->haveAvailabilityAbstract($productTransfer, new Decimal(2));
 
         // Act
-        $this->getAvailabilityFacade()->saveProductAvailabilityForStore(
-            static::CONCRETE_SKU,
-            new Decimal(2),
-            $storeTransfer
-        );
-
-        // Assert
         $productAbstractAvailabilityTransfer = $this->getAvailabilityFacade()
             ->findProductAbstractAvailabilityBySkuForStore(
                 $productTransfer->getAbstractSku(),
                 $storeTransfer
             );
 
+        // Assert
         $this->assertNotNull($productAbstractAvailabilityTransfer);
-        $this->assertTrue($productAbstractAvailabilityTransfer->getAvailability()->equals(2));
+        $this->assertEquals($productAbstractAvailabilityTransfer->getAvailability()->trim()->toString(), 2);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindProductAbstractAvailabilityForStoreWithStockAndNoCachedAvailability(): void
+    {
+        // Arrange
+        $abstractSku = 'testFindProductAbstractAvailabilityForStoreAbstract';
+        $concreteSku1 = 'testFindProductAbstractAvailabilityForStore1';
+        $concreteSku2 = 'testFindProductAbstractAvailabilityForStore2';
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $productQuantity1 = rand(1, 10);
+        $productQuantity2 = rand(1, 10);
+        $this->createProductWithStock(
+            $abstractSku,
+            $concreteSku1,
+            ['quantity' => $productQuantity1],
+            $storeTransfer
+        );
+
+        $this->createProductWithStock(
+            $abstractSku,
+            $concreteSku2,
+            ['quantity' => $productQuantity2],
+            $storeTransfer
+        );
+
+        // Act
+        $productAbstractAvailabilityTransfer = $this->getAvailabilityFacade()
+            ->findProductAbstractAvailabilityBySkuForStore(
+                $abstractSku,
+                $storeTransfer
+            );
+
+        // Assert
+        $this->assertNotNull($productAbstractAvailabilityTransfer);
+        $this->assertEquals(
+            $productAbstractAvailabilityTransfer->getAvailability()->trim()->toString(),
+            ($productQuantity1 + $productQuantity2)
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindProductConcreteAvailabilityBySkuForStoreWithCachedAvailability(): void
+    {
+        // Arrange
+        $productQuantity = 6;
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $productTransfer = $this->tester->haveProduct(['sku' => static::CONCRETE_SKU], ['sku' => static::ABSTRACT_SKU]);
+        $this->tester->haveAvailabilityConcrete($productTransfer->getSku(), $storeTransfer, new Decimal($productQuantity));
+
+        // Act
+        $productConcreteAvailabilityTransfer = $this->getAvailabilityFacade()
+            ->findProductConcreteAvailabilityBySkuForStore(
+                $productTransfer->getSku(),
+                $storeTransfer
+            );
+
+        // Assert
+        $this->assertNotNull($productConcreteAvailabilityTransfer);
+        $this->assertEquals($productConcreteAvailabilityTransfer->getAvailability()->trim()->toString(), $productQuantity);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindProductConcreteAvailabilityBySkuForStoreWithStockAndNoCachedAvailability(): void
+    {
+        // Arrange
+        $productQuantity = 13;
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $productTransfer = $this->tester->haveProduct(['sku' => static::CONCRETE_SKU], ['sku' => static::ABSTRACT_SKU]);
+        $this->tester->haveProductInStock([
+            StockProductTransfer::FK_STOCK => $storeTransfer->getIdStore(),
+            StockProductTransfer::SKU => $productTransfer->getSku(),
+            StockProductTransfer::QUANTITY => $productQuantity,
+        ]);
+
+        // Act
+        $productConcreteAvailabilityTransfer = $this->getAvailabilityFacade()
+            ->findProductConcreteAvailabilityBySkuForStore(
+                $productTransfer->getSku(),
+                $storeTransfer
+            );
+
+        // Assert
+        $this->assertNotNull($productConcreteAvailabilityTransfer);
+        $this->assertEquals($productConcreteAvailabilityTransfer->getAvailability()->trim()->toString(), $productQuantity);
     }
 
     /**

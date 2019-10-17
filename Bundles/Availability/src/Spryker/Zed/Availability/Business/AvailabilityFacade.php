@@ -18,6 +18,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Availability\Business\AvailabilityBusinessFactory getFactory()
+ * @method \Spryker\Zed\Availability\Persistence\AvailabilityEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface getRepository()
  */
 class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInterface
@@ -69,8 +70,8 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     public function calculateAvailabilityForProductWithStore(string $sku, StoreTransfer $storeTransfer): Decimal
     {
         return $this->getFactory()
-            ->createSellableModel()
-            ->calculateAvailabilityForProductWithStore($sku, $storeTransfer);
+            ->createProductAvailabilityCalculator()
+            ->calculateAvailabilityForProductConcrete($sku, $storeTransfer);
     }
 
     /**
@@ -124,7 +125,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     {
         $this->getFactory()
             ->createAvailabilityHandler()
-            ->updateAvailabilityForStore($sku, $storeTransfer);
+            ->updateProductConcreteAvailabilityBySku($sku, $storeTransfer);
     }
 
     /**
@@ -132,7 +133,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use `AvailabilityFacade::findProductAbstractAvailabilityBySkuForStore() instead`.
      *
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -142,7 +143,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     public function getProductAbstractAvailability($idProductAbstract, $idLocale)
     {
         return $this->getFactory()
-            ->createProductAvailabilityReader()
+            ->createProductReservationReader()
             ->getProductAbstractAvailability($idProductAbstract, $idLocale);
     }
 
@@ -151,7 +152,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use `AvailabilityFacade::findProductAbstractAvailabilityBySkuForStore() instead`.
      *
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -162,7 +163,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     public function findProductAbstractAvailability($idProductAbstract, $idLocale, $idStore)
     {
         return $this->getFactory()
-            ->createProductAvailabilityReader()
+            ->createProductReservationReader()
             ->findProductAbstractAvailability($idProductAbstract, $idLocale, $idStore);
     }
 
@@ -171,7 +172,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use `AvailabilityFacade::findProductConcreteAvailabilityBySkuForStore() instead`.
      *
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *
@@ -181,7 +182,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
         ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
     ) {
         return $this->getFactory()
-            ->createProductAvailabilityReader()
+            ->createProductReservationReader()
             ->findProductConcreteAvailability($productConcreteAvailabilityRequestTransfer);
     }
 
@@ -224,8 +225,6 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
-     *
      * @param int $idAvailabilityAbstract
      *
      * @return void
@@ -252,6 +251,6 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     {
         return $this->getFactory()
             ->createAvailabilityHandler()
-            ->saveCurrentAvailabilityForStore($sku, $quantity, $storeTransfer);
+            ->saveAndTouchAvailability($sku, $quantity, $storeTransfer);
     }
 }

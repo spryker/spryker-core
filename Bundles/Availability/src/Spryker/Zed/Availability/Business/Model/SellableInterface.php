@@ -13,13 +13,13 @@ use Spryker\DecimalObject\Decimal;
 interface SellableInterface
 {
     /**
-     * @param string $sku
+     * @param string $concreteSku
      * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    public function isProductSellableForStore(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): bool;
+    public function isProductSellableForStore(string $concreteSku, Decimal $quantity, StoreTransfer $storeTransfer): bool;
 
     /**
      * @param int $idProductConcrete
@@ -27,12 +27,4 @@ interface SellableInterface
      * @return bool
      */
     public function isProductConcreteAvailable(int $idProductConcrete): bool;
-
-    /**
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    public function calculateAvailabilityForProductWithStore(string $sku, StoreTransfer $storeTransfer): Decimal;
 }

@@ -7,17 +7,19 @@
 
 namespace Spryker\Zed\Availability\Business\Model;
 
+use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
 interface AvailabilityHandlerInterface
 {
     /**
-     * @param string $sku
+     * @param string $concreteSku
      *
      * @return void
      */
-    public function updateAvailability($sku);
+    public function updateAvailability($concreteSku);
 
     /**
      * @param int $idAvailabilityAbstract
@@ -27,19 +29,44 @@ interface AvailabilityHandlerInterface
     public function touchAvailabilityAbstract($idAvailabilityAbstract);
 
     /**
-     * @param string $sku
+     * @param string $concreteSku
      * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
-    public function saveCurrentAvailabilityForStore(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): int;
+    public function saveAndTouchAvailability(string $concreteSku, Decimal $quantity, StoreTransfer $storeTransfer): int;
 
     /**
-     * @param string $sku
+     * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer
      */
-    public function updateAvailabilityForStore(string $sku, StoreTransfer $storeTransfer): void;
+    public function updateProductConcreteAvailabilityById(
+        int $idProductConcrete,
+        StoreTransfer $storeTransfer
+    ): ProductConcreteAvailabilityTransfer;
+
+    /**
+     * @param string $concreteSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer
+     */
+    public function updateProductConcreteAvailabilityBySku(
+        string $concreteSku,
+        StoreTransfer $storeTransfer
+    ): ProductConcreteAvailabilityTransfer;
+
+    /**
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
+     */
+    public function updateProductAbstractAvailabilityBySku(
+        string $abstractSku,
+        StoreTransfer $storeTransfer
+    ): ProductAbstractAvailabilityTransfer;
 }

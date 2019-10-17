@@ -18,6 +18,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 /**
  * @method \Spryker\Zed\Availability\AvailabilityConfig getConfig()
  * @method \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Availability\Persistence\AvailabilityEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface getRepository()
  */
 class AvailabilityPersistenceFactory extends AbstractPersistenceFactory
