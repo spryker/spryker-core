@@ -38,22 +38,22 @@ class SearchConfig implements SearchConfigInterface
      * @param \Spryker\Client\SearchElasticsearch\Config\SortConfigInterface $sortConfig
      * @param \Spryker\Client\SearchElasticsearch\Config\PaginationConfigInterface $paginationConfig
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface|null $configBuilderPlugin
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface[] $configExpanderPlugins
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface[] $searchConfigExpanderPlugins
      */
     public function __construct(
         FacetConfigInterface $facetConfig,
         SortConfigInterface $sortConfig,
         PaginationConfigInterface $paginationConfig,
-        ?SearchConfigBuilderPluginInterface $configBuilderPlugin = null,
-        array $configExpanderPlugins = []
+        ?SearchConfigBuilderPluginInterface $configBuilderPlugin,
+        array $searchConfigExpanderPlugins
     ) {
         $this->facetConfig = $facetConfig;
         $this->sortConfig = $sortConfig;
         $this->paginationConfig = $paginationConfig;
-        $this->configExpanderPlugins = $configExpanderPlugins;
+        $this->configExpanderPlugins = $searchConfigExpanderPlugins;
 
         $this->buildSearchConfig($configBuilderPlugin);
-        $this->expandSearchConfig($configExpanderPlugins);
+        $this->expandSearchConfig($searchConfigExpanderPlugins);
     }
 
     /**
