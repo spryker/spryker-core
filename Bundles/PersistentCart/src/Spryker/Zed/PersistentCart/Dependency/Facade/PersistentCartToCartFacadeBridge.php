@@ -67,6 +67,16 @@ class PersistentCartToCartFacadeBridge implements PersistentCartToCartFacadeInte
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function removeFromCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        return $this->cartFacade->removeFromCart($cartChangeTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -81,7 +91,7 @@ class PersistentCartToCartFacadeBridge implements PersistentCartToCartFacadeInte
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function validateQuote($quoteTransfer)
+    public function validateQuote(QuoteTransfer $quoteTransfer)
     {
         return $this->cartFacade->validateQuote($quoteTransfer);
     }
