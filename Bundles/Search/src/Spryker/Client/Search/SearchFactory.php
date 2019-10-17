@@ -81,7 +81,7 @@ class SearchFactory extends AbstractFactory
      */
     public function getSearchContextMapperPlugins(): array
     {
-        return $this->getProvidedDependency(SearchDependencyProvider::SEARCH_CONTEXT_MAPPER_PLUGINS);
+        return $this->getProvidedDependency(SearchDependencyProvider::PLUGINS_SEARCH_CONTEXT_MAPPER);
     }
 
     /**
