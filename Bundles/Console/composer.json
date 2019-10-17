@@ -42,7 +42,6 @@
   },
   "bin": [
     "bin/console",
-    "bin/yves",
-    "bin/zed"
+    "bin/yves"
   ]
 }

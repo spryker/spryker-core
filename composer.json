@@ -21,8 +21,7 @@
   },
   "bin": [
     "Bundles/Console/bin/console",
-    "Bundles/Console/bin/yves",
-    "Bundles/Console/bin/zed"
+    "Bundles/Console/bin/yves"
   ],
   "scripts": {
     "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p --ignore=/node_modules/ Bundles/"
