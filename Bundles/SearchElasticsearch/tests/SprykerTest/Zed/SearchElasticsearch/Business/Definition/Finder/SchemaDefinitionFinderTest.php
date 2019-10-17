@@ -27,6 +27,7 @@ use Spryker\Zed\SearchElasticsearch\Business\Definition\Finder\SchemaDefinitionF
 class SchemaDefinitionFinderTest extends Unit
 {
     protected const SCHEMA_DEFINITION_FILE_NAME = 'index-name.json';
+
     /**
      * @var \SprykerTest\Zed\Search\SearchBusinessTester
      */

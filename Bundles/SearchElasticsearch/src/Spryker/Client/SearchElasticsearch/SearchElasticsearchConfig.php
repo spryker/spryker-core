@@ -26,14 +26,6 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
-     */
-    public function getIndexNameMap(): array
-    {
-        return $this->getSharedConfig()->getIndexNameMap();
-    }
-
-    /**
      * @return int
      */
     public function getFullTextBoostedBoostingValue(): int
@@ -52,8 +44,8 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     /**
      * @return string[]
      */
-    public function getSupportedSourceNames(): array
+    public function getSupportedSourceIdentifiers(): array
     {
-        return $this->getSharedConfig()->getSupportedSourceNames();
+        return $this->getSharedConfig()->getSupportedSourceIdentifiers();
     }
 }

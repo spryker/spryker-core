@@ -112,7 +112,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
      */
     public function getSchemaInstallerPlugins(): array
     {
-        return $this->getProvidedDependency(SearchDependencyProvider::SEARCH_SOURCE_INSTALLER_PLUGINS);
+        return $this->getProvidedDependency(SearchDependencyProvider::PLUGINS_SEARCH_SOURCE_INSTALLER);
     }
 
     /**
@@ -120,7 +120,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
      */
     public function getMapInstallerPlugins(): array
     {
-        return $this->getProvidedDependency(SearchDependencyProvider::SEARCH_MAP_INSTALLER_PLUGINS);
+        return $this->getProvidedDependency(SearchDependencyProvider::PLUGINS_SEARCH_MAP_INSTALLER);
     }
 
     /**

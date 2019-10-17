@@ -208,7 +208,9 @@ class ProductSetPageSearchListQueryPlugin extends AbstractPlugin implements Quer
      */
     protected function setupSearchContext(): void
     {
-        $this->searchContextTransfer = new SearchContextTransfer();
-        $this->searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
+        $searchContextTransfer = new SearchContextTransfer();
+        $searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
+
+        $this->searchContextTransfer = $searchContextTransfer;
     }
 }

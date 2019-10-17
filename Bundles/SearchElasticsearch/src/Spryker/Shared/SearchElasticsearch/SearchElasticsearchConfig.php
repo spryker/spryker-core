@@ -19,13 +19,7 @@ class SearchElasticsearchConfig extends AbstractSharedConfig
     public const FACET_TYPE_PRICE_RANGE = 'price-range';
     public const FACET_TYPE_CATEGORY = 'category';
 
-    /**
-     * @return array
-     */
-    public function getIndexNameMap(): array
-    {
-        return $this->get(SearchElasticsearchConstants::INDEX_NAME_MAP, []);
-    }
+    protected const SUPPORTED_SOURCE_IDENTIFIERS = [];
 
     /**
      * @return array
@@ -56,8 +50,8 @@ class SearchElasticsearchConfig extends AbstractSharedConfig
     /**
      * @return string[]
      */
-    public function getSupportedSourceNames(): array
+    public function getSupportedSourceIdentifiers(): array
     {
-        return [];
+        return static::SUPPORTED_SOURCE_IDENTIFIERS;
     }
 }

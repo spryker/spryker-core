@@ -112,9 +112,21 @@ class Search implements SearchInterface
      */
     protected function getIndexName(SearchContextTransfer $searchContextTransfer): string
     {
-        return $searchContextTransfer->requireElasticsearchContext()
+        $this->assertSearchContextTransferHasIndexName($searchContextTransfer);
+
+        return $searchContextTransfer
             ->getElasticsearchContext()
             ->requireSourceName()
             ->getSourceName();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     *
+     * @return void
+     */
+    protected function assertSearchContextTransferHasIndexName(SearchContextTransfer $searchContextTransfer): void
+    {
+        $searchContextTransfer->requireElasticsearchContext()->getElasticsearchContext()->requireSourceName();
     }
 }

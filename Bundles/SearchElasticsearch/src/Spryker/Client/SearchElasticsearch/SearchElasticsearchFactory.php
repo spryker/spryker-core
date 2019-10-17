@@ -26,8 +26,8 @@ use Spryker\Client\SearchElasticsearch\Config\SearchConfig;
 use Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface;
 use Spryker\Client\SearchElasticsearch\Config\SortConfig;
 use Spryker\Client\SearchElasticsearch\Config\SortConfigInterface;
-use Spryker\Client\SearchElasticsearch\Index\SourceIdentifierChecker;
-use Spryker\Client\SearchElasticsearch\Index\SourceIdentifierCheckerInterface;
+use Spryker\Client\SearchElasticsearch\Index\SourceIdentifier;
+use Spryker\Client\SearchElasticsearch\Index\SourceIdentifierInterface;
 use Spryker\Client\SearchElasticsearch\Plugin\Query\SearchKeysQuery;
 use Spryker\Client\SearchElasticsearch\Plugin\Query\SearchStringQuery;
 use Spryker\Client\SearchElasticsearch\Query\QueryBuilder;
@@ -215,11 +215,11 @@ class SearchElasticsearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\SearchElasticsearch\Index\SourceIdentifierChecker
+     * @return \Spryker\Client\SearchElasticsearch\Index\SourceIdentifier
      */
-    public function createSourceIdentifierChecker(): SourceIdentifierCheckerInterface
+    public function createSourceIdentifierChecker(): SourceIdentifierInterface
     {
-        return new SourceIdentifierChecker($this->getConfig());
+        return new SourceIdentifier($this->getConfig());
     }
 
     /**

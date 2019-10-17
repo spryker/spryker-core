@@ -15,7 +15,7 @@ use Elastica\Index;
 use Elastica\Request;
 use Spryker\Shared\SearchElasticsearch\SearchElasticsearchConfig;
 
-class ElasticsearchDataHelper extends Module
+class ElasticsearchHelper extends Module
 {
     /**
      * @var array

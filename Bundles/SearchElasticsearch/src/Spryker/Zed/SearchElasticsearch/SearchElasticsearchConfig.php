@@ -139,14 +139,6 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     /**
      * @return array
      */
-    public function getIndexNameMap(): array
-    {
-        return $this->getSharedConfig()->getIndexNameMap();
-    }
-
-    /**
-     * @return array
-     */
     public function getClientConfig(): array
     {
         return $this->getSharedConfig()->getClientConfig();

@@ -54,14 +54,14 @@ class SearchFactory extends AbstractFactory
     {
         return new SearchDelegator(
             $this->getClientAdapterPlugins(),
-            $this->createSourceIdentifierMapperInterface()
+            $this->createSourceIdentifierMapper()
         );
     }
 
     /**
      * @return \Spryker\Client\Search\SearchContext\SearchContextMapperInterface
      */
-    public function createSourceIdentifierMapperInterface(): SearchContextMapperInterface
+    public function createSourceIdentifierMapper(): SearchContextMapperInterface
     {
         return new SearchContextMapper(
             $this->getSearchContextMapperPlugins()

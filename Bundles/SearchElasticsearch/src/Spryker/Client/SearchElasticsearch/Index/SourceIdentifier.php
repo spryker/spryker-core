@@ -10,7 +10,7 @@ namespace Spryker\Client\SearchElasticsearch\Index;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig;
 
-class SourceIdentifierChecker implements SourceIdentifierCheckerInterface
+class SourceIdentifier implements SourceIdentifierInterface
 {
     /**
      * @var \Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig
@@ -33,7 +33,7 @@ class SourceIdentifierChecker implements SourceIdentifierCheckerInterface
     public function isSupported(SearchContextTransfer $searchContextTransfer): bool
     {
         $sourceIdentifier = $searchContextTransfer->requireSourceIdentifier()->getSourceIdentifier();
-        $supportedSourceNames = $this->config->getSupportedSourceNames();
+        $supportedSourceNames = $this->config->getSupportedSourceIdentifiers();
 
         return in_array($sourceIdentifier, $supportedSourceNames, true);
     }

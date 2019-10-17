@@ -20,8 +20,8 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_SEARCH = 'search client';
     public const SERVICE_UTIL_ENCODING = 'util encoding service';
     public const PLUGIN_SEARCH_PAGE_MAPS = 'PLUGIN_SEARCH_PAGE_MAPS';
-    public const SEARCH_SOURCE_INSTALLER_PLUGINS = 'SEARCH_SCHEMA_INSTALLER_PLUGINS';
-    public const SEARCH_MAP_INSTALLER_PLUGINS = 'SEARCH_MAP_INSTALLER_PLUGINS';
+    public const PLUGINS_SEARCH_SOURCE_INSTALLER = 'SEARCH_SCHEMA_INSTALLER_PLUGINS';
+    public const PLUGINS_SEARCH_MAP_INSTALLER = 'PLUGINS_SEARCH_MAP_INSTALLER';
     public const GUZZLE_CLIENT = 'GUZZLE_CLIENT';
 
     /**
@@ -98,7 +98,7 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSearchSourceInstallerPlugins(Container $container): Container
     {
-        $container->set(static::SEARCH_SOURCE_INSTALLER_PLUGINS, function () {
+        $container->set(static::PLUGINS_SEARCH_SOURCE_INSTALLER, function () {
             return $this->getSearchSourceInstallerPlugins();
         });
 
@@ -120,7 +120,7 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSearchMapInstallerPlugins(Container $container): Container
     {
-        $container->set(static::SEARCH_MAP_INSTALLER_PLUGINS, function () {
+        $container->set(static::PLUGINS_SEARCH_MAP_INSTALLER, function () {
             return $this->getSearchMapInstallerPlugins();
         });
 

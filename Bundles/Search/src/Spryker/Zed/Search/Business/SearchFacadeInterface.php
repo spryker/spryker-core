@@ -153,10 +153,10 @@ interface SearchFacadeInterface
 
     /**
      * Specification:
-     * - Loads schema definition json files from the folders
-     * - Creates or update IndexMapper classes by found schema definition files.
-     * - The generated IndexMaps are not store specific and has the class name of the mapping types suffixed with "IndexMap".
-     * - The generated files will be removed and re-created always when the command runs.
+     * - Loads schema definition json files.
+     * - Creates or updates map classes by found schema definition files.
+     * - The generated map classes are not store specific.
+     * - Previously generated files will be removed.
      *
      * @api
      *

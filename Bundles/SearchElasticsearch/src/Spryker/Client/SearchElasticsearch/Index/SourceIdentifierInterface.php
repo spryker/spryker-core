@@ -9,7 +9,7 @@ namespace Spryker\Client\SearchElasticsearch\Index;
 
 use Generated\Shared\Transfer\SearchContextTransfer;
 
-interface SourceIdentifierCheckerInterface
+interface SourceIdentifierInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer

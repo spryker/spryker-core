@@ -37,6 +37,6 @@ class IndexNameResolver implements IndexNameResolverInterface
             $sourceIdentifier
         );
 
-        return strtolower($indexName);
+        return mb_strtolower($indexName);
     }
 }

@@ -20,7 +20,7 @@ suites:
         modules:
             enabled:
             - Asserts
-            - \SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchDataHelper
+            - \SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchHelper
             - \SprykerTest\Shared\Testify\Helper\BusinessHelper
             - \SprykerTest\Shared\Testify\Helper\Environment
             - \SprykerTest\Shared\Testify\Helper\ConfigHelper
