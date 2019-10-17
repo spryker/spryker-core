@@ -29,6 +29,10 @@
         <property name="isNeverOutOfStock" type="bool"/>
     </transfer>
 
+    <transfer name="ProductConcreteAvailabilityRequest">
+        <property name="sku" type="string"/>
+    </transfer>
+
     <transfer name="Quote">
         <property name="store" type="Store"/>
         <property name="items" type="Item[]" singular="item"/>

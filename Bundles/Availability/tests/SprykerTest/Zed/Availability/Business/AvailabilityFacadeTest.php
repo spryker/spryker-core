@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Availability\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
@@ -303,6 +304,34 @@ class AvailabilityFacadeTest extends Unit
 
         $this->assertNotNull($productAbstractAvailabilityTransfer);
         $this->assertTrue($productAbstractAvailabilityTransfer->getAvailability()->equals(2));
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveProductAvailabilityForStoreShouldStoreAvailability()
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $this->createProductWithStock(
+            static::ABSTRACT_SKU,
+            static::CONCRETE_SKU,
+            ['quantity' => 0],
+            $storeTransfer
+        );
+
+        // Act
+        $this->getAvailabilityFacade()
+            ->saveProductAvailabilityForStore(static::CONCRETE_SKU, new Decimal(2), $storeTransfer);
+
+        // Assert
+        $productConcreteAvailabilityTransfer = $this->getAvailabilityFacade()
+            ->findProductConcreteAvailability(
+                (new ProductConcreteAvailabilityRequestTransfer())
+                    ->setSku(static::CONCRETE_SKU)
+            );
+
+        $this->assertTrue($productConcreteAvailabilityTransfer->getAvailability()->equals(2));
     }
 
     /**

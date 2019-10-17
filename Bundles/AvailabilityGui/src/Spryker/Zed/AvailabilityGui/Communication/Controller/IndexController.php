@@ -8,21 +8,19 @@
 namespace Spryker\Zed\AvailabilityGui\Communication\Controller;
 
 use Generated\Shared\Transfer\AvailabilityStockTransfer;
-use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
-use Orm\Zed\Oms\Persistence\Map\SpyOmsProductReservationTableMap;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityAbstractTable;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityTable;
 use Spryker\Zed\AvailabilityGui\Communication\Table\BundledProductAvailabilityTable;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\AvailabilityGui\Communication\AvailabilityGuiCommunicationFactory getFactory()
  */
 class IndexController extends AbstractController
 {
+    public const AVAILABILITY_LIST_URL = '/availability-gui/index';
     public const URL_PARAM_ID_STORE = 'id-store';
 
     /**
@@ -50,7 +48,7 @@ class IndexController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function viewAction(Request $request)
     {
@@ -66,7 +64,12 @@ class IndexController extends AbstractController
             ->findProductAbstractAvailabilityTransfer($idProductAbstract, $localeTransfer->getIdLocale(), $idStore);
 
         if ($productAbstractAvailabilityTransfer === null) {
-            throw new NotFoundHttpException();
+            $this->addErrorMessage(
+                'The product [%d] you are trying to view, does not exist.',
+                ['%d' => $idProductAbstract]
+            );
+
+            return $this->redirectResponse(static::AVAILABILITY_LIST_URL);
         }
 
         $storeTransfer = $this->getFactory()->getStoreFacade()->getCurrentStore();

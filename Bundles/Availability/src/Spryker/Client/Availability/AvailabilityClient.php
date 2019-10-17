@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Availability;
 
+use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -48,5 +49,23 @@ class AvailabilityClient extends AbstractClient implements AvailabilityClientInt
         return $this->getFactory()
             ->createCurrentLocaleAvailabilityStorage()
             ->findProductAvailability($idProductAbstract);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
+     */
+    public function findProductConcreteAvailability(ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer)
+    {
+        return $this->getFactory()
+            ->createAvailabilityStub()
+            ->findProductConcreteAvailability($productConcreteAvailabilityRequestTransfer);
     }
 }

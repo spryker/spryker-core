@@ -8,9 +8,12 @@
 namespace Spryker\Client\Availability;
 
 use Spryker\Client\Availability\Dependency\Client\AvailabilityToLocaleInterface;
+use Spryker\Client\Availability\Dependency\Client\AvailabilityToZedRequestClientInterface;
 use Spryker\Client\Availability\KeyBuilder\AvailabilityResourceKeyBuilder;
 use Spryker\Client\Availability\Storage\AvailabilityStorage;
 use Spryker\Client\Availability\Storage\AvailabilityStorageInterface;
+use Spryker\Client\Availability\Zed\AvailabilityStub;
+use Spryker\Client\Availability\Zed\AvailabilityStubInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
@@ -29,11 +32,29 @@ class AvailabilityFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return \Spryker\Client\Availability\Zed\AvailabilityStubInterface
+     */
+    public function createAvailabilityStub(): AvailabilityStubInterface
+    {
+        return new AvailabilityStub($this->getZedRequestClient());
+    }
+
+    /**
      * @return \Spryker\Client\Availability\Dependency\Client\AvailabilityToStorageInterface
      */
     public function getStorage()
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::KV_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Client\Availability\Dependency\Client\AvailabilityToZedRequestClientInterface
+     */
+    public function getZedRequestClient(): AvailabilityToZedRequestClientInterface
+    {
+        return $this->getProvidedDependency(AvailabilityDependencyProvider::CLIENT_ZED_REQUEST);
     }
 
     /**
