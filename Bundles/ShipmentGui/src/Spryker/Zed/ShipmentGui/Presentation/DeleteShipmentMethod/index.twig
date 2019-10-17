@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Delete Delivery Method' ~ ': ' ~ shipmentMethod.name | trans %}
+{% set widget_title = 'Delete Delivery Method: %s' | format(shipmentMethod.name) | trans %}
 
 {% block head_title %}
     {{ widget_title }}
