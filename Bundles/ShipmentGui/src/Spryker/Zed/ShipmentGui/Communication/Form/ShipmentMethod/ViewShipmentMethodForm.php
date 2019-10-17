@@ -45,6 +45,9 @@ class ViewShipmentMethodForm extends AbstractType
         ]);
         $resolver->setRequired([
             ViewShipmentMethodFormDataProvider::OPTION_TAX_SET_CHOICES,
+            ViewShipmentMethodFormDataProvider::OPTION_STORE_RELATION_DISABLED,
+            ViewShipmentMethodFormDataProvider::OPTION_PRICES_DISABLED,
+            ViewShipmentMethodFormDataProvider::OPTION_TAX_SET_DISABLED,
         ]);
     }
 
@@ -56,17 +59,18 @@ class ViewShipmentMethodForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addStoreRelationForm($builder)
-            ->addPricesField($builder)
+        $this->addStoreRelationForm($builder, $options)
+            ->addPricesField($builder, $options)
             ->addTaxSetField($builder, $options);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addStoreRelationForm(FormBuilderInterface $builder)
+    protected function addStoreRelationForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
             static::FIELD_STORE_RELATION,
@@ -74,7 +78,7 @@ class ViewShipmentMethodForm extends AbstractType
             [
                 'label' => false,
                 'required' => false,
-                'disabled' => true,
+                'disabled' => $options[ViewShipmentMethodFormDataProvider::OPTION_STORE_RELATION_DISABLED],
             ]
         );
 
@@ -83,17 +87,18 @@ class ViewShipmentMethodForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addPricesField(FormBuilderInterface $builder)
+    protected function addPricesField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
             static::FIELD_PRICES,
             $this->getFactory()->getMoneyCollectionFormTypePlugin()->getType(),
             [
                 static::OPTION_AMOUNT_PER_STORE => true,
-                'disabled' => true,
+                'disabled' => $options[ViewShipmentMethodFormDataProvider::OPTION_PRICES_DISABLED],
             ]
         );
 
@@ -115,7 +120,7 @@ class ViewShipmentMethodForm extends AbstractType
                 'label' => 'Tax set',
                 'choices' => array_flip($options[ViewShipmentMethodFormDataProvider::OPTION_TAX_SET_CHOICES]),
                 'required' => false,
-                'disabled' => true,
+                'disabled' => $options[ViewShipmentMethodFormDataProvider::OPTION_TAX_SET_DISABLED],
             ]
         );
 

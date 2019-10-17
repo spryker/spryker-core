@@ -9,6 +9,7 @@ namespace Spryker\Zed\ShipmentGui\Communication;
 
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
@@ -16,11 +17,14 @@ use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentCarrierFormD
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentGroupFormType;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentCarrier\ShipmentCarrierFormType;
+use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentMethod\ShipmentMethodForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentMethod\ViewShipmentMethodForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\Transformer\StringToNumberTransformer;
 use Spryker\Zed\ShipmentGui\Communication\Mapper\ShipmentCarrierMapper;
+use Spryker\Zed\ShipmentGui\Communication\Provider\ShipmentMethodFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Provider\ViewShipmentMethodFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Table\ShipmentMethodTable;
+use Spryker\Zed\ShipmentGui\Communication\Tabs\ShipmentMethodTabs;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface;
@@ -34,6 +38,10 @@ use Symfony\Component\Form\FormInterface;
  */
 class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
 {
+    public const KEY_AVAILABILITY = 'availability';
+    public const KEY_PRICE = 'price';
+    public const KEY_DELIVERY_TIME = 'delivery_time';
+
     /**
      * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDataProvider
      */
@@ -138,11 +146,62 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ShipmentGui\Communication\Tabs\ShipmentMethodTabs
+     */
+    public function createShipmentMethodTabs(): ShipmentMethodTabs
+    {
+        return new ShipmentMethodTabs();
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentGui\Communication\Provider\ShipmentMethodFormDataProvider
+     */
+    public function createShipmentMethodFormDataProvider(): ShipmentMethodFormDataProvider
+    {
+        return new ShipmentMethodFormDataProvider(
+            $this->getPlugins(),
+            $this->getShipmentCarrierQuery(),
+            $this->getTaxFacade()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createShipmentMethodForm(ShipmentMethodTransfer $data, $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(ShipmentMethodForm::class, $data, $options);
+    }
+
+    /**
+     * @return array
+     */
+    public function getPlugins(): array
+    {
+        return [
+            static::KEY_AVAILABILITY => $this->getProvidedDependency(ShipmentGuiDependencyProvider::AVAILABILITY_PLUGINS),
+            static::KEY_PRICE => $this->getProvidedDependency(ShipmentGuiDependencyProvider::PRICE_PLUGINS),
+            static::KEY_DELIVERY_TIME => $this->getProvidedDependency(ShipmentGuiDependencyProvider::DELIVERY_TIME_PLUGINS),
+        ];
+    }
+
+    /**
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function getShipmentMethodQuery(): SpyShipmentMethodQuery
     {
         return $this->getProvidedDependency(ShipmentGuiDependencyProvider::PROPEL_QUERY_SHIPMENT_METHOD);
+    }
+
+    /**
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
+     */
+    public function getShipmentCarrierQuery(): SpyShipmentCarrierQuery
+    {
+        return $this->getProvidedDependency(ShipmentGuiDependencyProvider::PROPEL_QUERY_SHIPMENT_CARRIER);
     }
 
     /**

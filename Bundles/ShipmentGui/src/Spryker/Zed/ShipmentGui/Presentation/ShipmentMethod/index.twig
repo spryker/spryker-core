@@ -7,7 +7,7 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: widget_title | trans } %}
         {% block widget_header_content %}
             {{ createActionButton('/shipment-gui/create-carrier/index', 'Add new Carrier Company' | trans) }}
-            {{ createActionButton('/shipment/method/add', 'Add new Shipment Method' | trans) }}
+            {{ createActionButton('/shipment-gui/create-shipment-method', 'Add new Shipment Method' | trans) }}
         {% endblock %}
 
         {% block widget_content %}

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShipmentGui;
 
+use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
@@ -24,6 +25,10 @@ use Spryker\Zed\ShipmentGui\Dependency\Service\ShipmentGuiToShipmentServiceBridg
  */
 class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const AVAILABILITY_PLUGINS = 'AVAILABILITY_PLUGINS';
+    public const PRICE_PLUGINS = 'PRICE_PLUGINS';
+    public const DELIVERY_TIME_PLUGINS = 'DELIVERY_TIME_PLUGINS';
+
     public const FACADE_SALES = 'FACADE_SALES';
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
@@ -32,6 +37,7 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
 
     public const PROPEL_QUERY_SHIPMENT_METHOD = 'PROPEL_QUERY_SHIPMENT_METHOD';
+    public const PROPEL_QUERY_SHIPMENT_CARRIER = 'PROPEL_QUERY_SHIPMENT_CARRIER';
 
     public const PLUGIN_MONEY_COLLECTION_FORM_TYPE = 'PLUGIN_MONEY_COLLECTION_FORM_TYPE';
     public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
@@ -49,8 +55,54 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addTaxFacade($container);
         $container = $this->addShipmentService($container);
         $container = $this->addShipmentMethodQuery($container);
+        $container = $this->addShipmentCarrierQuery($container);
         $container = $this->addMoneyCollectionFormTypePlugin($container);
         $container = $this->addStoreRelationFormTypePlugin($container);
+        $container = $this->addAvailabilityPlugins($container);
+        $container = $this->addPricePlugins($container);
+        $container = $this->addDeliveryTimePlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAvailabilityPlugins(Container $container): Container
+    {
+        $container->set(static::AVAILABILITY_PLUGINS, function (Container $container) {
+            return $this->getAvailabilityPlugins($container);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPricePlugins(Container $container): Container
+    {
+        $container->set(static::PRICE_PLUGINS, function (Container $container) {
+            return $this->getPricePlugins($container);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDeliveryTimePlugins(Container $container): Container
+    {
+        $container->set(static::DELIVERY_TIME_PLUGINS, function (Container $container) {
+            return $this->getDeliveryTimePlugins($container);
+        });
 
         return $container;
     }
@@ -83,6 +135,36 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodAvailabilityPluginInterface[]|\Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface[]
+     */
+    protected function getAvailabilityPlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodPricePluginInterface[]|\Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodPricePluginInterface[]
+     */
+    protected function getPricePlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodDeliveryTimePluginInterface[]|\Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface[]
+     */
+    protected function getDeliveryTimePlugins(Container $container)
+    {
+        return [];
     }
 
     /**
@@ -200,6 +282,20 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::PROPEL_QUERY_SHIPMENT_METHOD, function () {
             return SpyShipmentMethodQuery::create();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addShipmentCarrierQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_SHIPMENT_CARRIER, function () {
+            return SpyShipmentCarrierQuery::create();
         });
 
         return $container;

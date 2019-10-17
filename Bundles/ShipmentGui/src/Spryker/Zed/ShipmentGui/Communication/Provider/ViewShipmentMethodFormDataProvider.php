@@ -13,6 +13,9 @@ use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToTaxFacadeInterface;
 class ViewShipmentMethodFormDataProvider
 {
     public const OPTION_TAX_SET_CHOICES = 'option_tax_set_choices';
+    public const OPTION_STORE_RELATION_DISABLED = 'option_store_relation_disabled';
+    public const OPTION_PRICES_DISABLED = 'option_prices_disabled';
+    public const OPTION_TAX_SET_DISABLED = 'option_tax_set_disabled';
 
     /**
      * @var \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToTaxFacadeInterface
@@ -44,6 +47,9 @@ class ViewShipmentMethodFormDataProvider
     {
         return [
             static::OPTION_TAX_SET_CHOICES => $this->createTaxSetsList(),
+            static::OPTION_STORE_RELATION_DISABLED => true,
+            static::OPTION_PRICES_DISABLED => true,
+            static::OPTION_TAX_SET_DISABLED => true,
         ];
     }
 
