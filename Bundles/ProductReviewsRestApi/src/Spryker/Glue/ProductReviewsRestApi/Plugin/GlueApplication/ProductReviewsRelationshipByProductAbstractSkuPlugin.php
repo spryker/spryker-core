@@ -15,11 +15,11 @@ use Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig;
 /**
  * @method \Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiFactory getFactory()
  */
-class ProductReviewsRelationshipByProductConcreteSku extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class ProductReviewsRelationshipByProductAbstractSkuPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Adds product-reviews relationship by concrete product sku.
+     * - Adds product-reviews relationship by abstract product sku.
      *
      * @api
      *
@@ -32,7 +32,7 @@ class ProductReviewsRelationshipByProductConcreteSku extends AbstractPlugin impl
     {
         $this->getFactory()
             ->createProductReviewResourceRelationshipExpander()
-            ->addRelationshipsByConcreteSku($resources, $restRequest);
+            ->addRelationshipsByAbstractSku($resources, $restRequest);
     }
 
     /**
