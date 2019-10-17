@@ -33,10 +33,38 @@ class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterfac
     public function saveCmsSlotBlockRelations(CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer): void
     {
         $cmsSlotBlockTransfers = $cmsSlotBlockCollectionTransfer->getCmsSlotBlocks()->getArrayCopy();
-        $cmsSlotIds = $this->getUniqueCmsSlotIds($cmsSlotBlockTransfers);
 
-        $this->cmsSlotBlockEntityManager->deleteCmsSlotBlocks($cmsSlotIds);
+        $this->deleteCmsSlotBlocks($cmsSlotBlockTransfers);
         $this->cmsSlotBlockEntityManager->createCmsSlotBlocks($cmsSlotBlockTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
+     *
+     * @return void
+     */
+    protected function deleteCmsSlotBlocks(array $cmsSlotBlockTransfers): void
+    {
+        $mappedCmsSlotBlockTransfers = $this->getMappedCmsSlotBlockTransfersByIdSlotTemplate($cmsSlotBlockTransfers);
+        foreach ($mappedCmsSlotBlockTransfers as $idSlotTemplate => $cmsSlotBlockTransfers) {
+            $cmsSlotIds = $this->getUniqueCmsSlotIds($cmsSlotBlockTransfers);
+            $this->cmsSlotBlockEntityManager->deleteCmsSlotBlocks($idSlotTemplate, $cmsSlotIds);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotBlockTransfer[][]
+     */
+    protected function getMappedCmsSlotBlockTransfersByIdSlotTemplate(array $cmsSlotBlockTransfers): array
+    {
+        $mappedCmsSlotBlockTransfers = [];
+        foreach ($cmsSlotBlockTransfers as $cmsSlotBlockTransfer) {
+            $mappedCmsSlotBlockTransfers[$cmsSlotBlockTransfer->getIdSlotTemplate()][] = $cmsSlotBlockTransfer;
+        }
+
+        return $mappedCmsSlotBlockTransfers;
     }
 
     /**

@@ -17,9 +17,10 @@ interface CmsSlotBlockEntityManagerInterface
     public function createCmsSlotBlocks(array $cmsSlotBlockTransfers): void;
 
     /**
-     * @param int[] $cmsSlotIds
+     * @param int $idSlotTemplate
+     * @param array $cmsSlotIds
      *
      * @return void
      */
-    public function deleteCmsSlotBlocks(array $cmsSlotIds): void;
+    public function deleteCmsSlotBlocks(int $idSlotTemplate, array $cmsSlotIds): void;
 }
