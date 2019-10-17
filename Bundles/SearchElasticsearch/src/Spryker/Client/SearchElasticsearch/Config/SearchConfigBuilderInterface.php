@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\SearchElasticsearch\Config;
 
-use Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface;
-
 interface SearchConfigBuilderInterface
 {
     /**
@@ -17,11 +15,11 @@ interface SearchConfigBuilderInterface
     public function build(): SearchConfigInterface;
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface $searchConfigBuilderPlugin
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface[] $searchConfigBuilderPlugins
      *
      * @return void
      */
-    public function setSearchConfigBuilderPlugin(SearchConfigBuilderPluginInterface $searchConfigBuilderPlugin): void;
+    public function setSearchConfigBuilderPlugins(array $searchConfigBuilderPlugins): void;
 
     /**
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface[] $searchConfigExpanderPlugins

@@ -27,6 +27,7 @@ use Spryker\Client\SearchElasticsearch\Config\SearchConfigBuilderInterface;
 use Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface;
 use Spryker\Client\SearchElasticsearch\Config\SortConfig;
 use Spryker\Client\SearchElasticsearch\Config\SortConfigInterface;
+use Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToMoneyClientInterface;
 use Spryker\Client\SearchElasticsearch\Plugin\Query\SearchKeysQuery;
 use Spryker\Client\SearchElasticsearch\Plugin\Query\SearchStringQuery;
 use Spryker\Client\SearchElasticsearch\Query\QueryBuilder;
@@ -38,8 +39,6 @@ use Spryker\Client\SearchElasticsearch\Search\SearchInterface;
 use Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilder;
 use Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilderInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface;
-use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToLocaleClientInterface;
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
 use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactory;
@@ -206,16 +205,16 @@ class SearchElasticsearchFactory extends AbstractFactory
     {
         return new QueryFactory(
             $this->createQueryBuilder(),
-            $this->getMoneyPlugin()
+            $this->getMoneyClient()
         );
     }
 
     /**
-     * @return \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface
+     * @return \Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToMoneyClientInterface
      */
-    public function getMoneyPlugin(): MoneyPluginInterface
+    public function getMoneyClient(): SearchElasticsearchToMoneyClientInterface
     {
-        return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::PLUGIN_MONEY);
+        return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::CLIENT_MONEY);
     }
 
     /**
@@ -236,8 +235,8 @@ class SearchElasticsearchFactory extends AbstractFactory
             $this->createSortConfig(),
             $this->createPaginationConfig()
         );
-        $searchConfigBuilder->setSearchConfigBuilderPlugin(
-            $this->getSearchConfigBuilderPlugin()
+        $searchConfigBuilder->setSearchConfigBuilderPlugins(
+            $this->getSearchConfigBuilderPlugins()
         );
         $searchConfigBuilder->setSearchConfigExpanderPlugins(
             $this->getSearchConfigExpanderPlugins()
@@ -271,10 +270,10 @@ class SearchElasticsearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface|null
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface[]
      */
-    public function getSearchConfigBuilderPlugin(): ?SearchConfigBuilderPluginInterface
+    public function getSearchConfigBuilderPlugins(): array
     {
-        return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::PLUGIN_SEARCH_CONFIG_BUILDER);
+        return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::PLUGINS_SEARCH_CONFIG_BUILDER);
     }
 }

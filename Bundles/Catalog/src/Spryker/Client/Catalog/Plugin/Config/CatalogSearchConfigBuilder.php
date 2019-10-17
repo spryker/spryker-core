@@ -15,7 +15,7 @@ use Spryker\Client\Search\Dependency\Plugin\SearchConfigBuilderInterface;
 use Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface;
 
 /**
- * @deprecated Use `\Spryker\Catalog\src\Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilderPlugin` instead.
+ * @deprecated Use `\Spryker\Client\Catalog\Plugin\SearchElasticsearch\ElasticsearchCatalogSearchConfigBuilderPlugin` instead.
  *
  * @method \Spryker\Client\Catalog\CatalogFactory getFactory()
  */

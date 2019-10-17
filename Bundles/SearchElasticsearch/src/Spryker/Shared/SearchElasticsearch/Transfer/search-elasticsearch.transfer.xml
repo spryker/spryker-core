@@ -97,4 +97,8 @@
         <property name="paginationConfig" type="PaginationConfig"/>
     </transfer>
 
+    <transfer name="Money">
+        <property name="amount" type="string"/>
+    </transfer>
+
 </transfers>

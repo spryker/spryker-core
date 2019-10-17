@@ -12,7 +12,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\Config\SortConfigBuilder` instead.
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\Config\SortConfig` instead.
  */
 class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInterface
 {

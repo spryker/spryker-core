@@ -33,7 +33,7 @@ class SuggestionByTypeQueryExpanderPlugin extends AbstractPlugin implements Quer
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
-    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
+    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface
     {
         $query = $searchQuery->getSearchQuery();
         $this->addAggregation($query);

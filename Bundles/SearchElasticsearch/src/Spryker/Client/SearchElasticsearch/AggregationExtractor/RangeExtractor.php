@@ -52,7 +52,7 @@ class RangeExtractor extends AbstractAggregationExtractor implements Aggregation
      *
      * @return \Generated\Shared\Transfer\RangeSearchResultTransfer
      */
-    protected function setRangeResultValues(RangeSearchResultTransfer $rangeResultTransfer, array $aggregations, array $requestParameters)
+    protected function setRangeResultValues(RangeSearchResultTransfer $rangeResultTransfer, array $aggregations, array $requestParameters): RangeSearchResultTransfer
     {
         [$min, $max] = $this->extractRangeData($aggregations);
         [$activeMin, $activeMax] = $this->getActiveRangeData($requestParameters, $min, $max);
@@ -112,7 +112,7 @@ class RangeExtractor extends AbstractAggregationExtractor implements Aggregation
     /**
      * @param array $aggregation
      *
-     * @return array
+     * @return (int|float|null)[]
      */
     protected function extractRangeData(array $aggregation)
     {

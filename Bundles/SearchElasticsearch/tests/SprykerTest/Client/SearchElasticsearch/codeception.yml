@@ -17,8 +17,9 @@ suites:
         modules:
             enabled:
             - Asserts
+            - \SprykerTest\Client\SearchElasticsearch\Helper\ElasticsearchHelper
+            - \SprykerTest\Shared\Session\Helper\SessionHelper
             - \SprykerTest\Shared\Testify\Helper\Environment
             - \SprykerTest\Shared\Testify\Helper\ConfigHelper
             - \SprykerTest\Shared\Testify\Helper\LocatorHelper
             - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-            - \SprykerTest\Client\SearchElasticsearch\Helper\ElasticsearchHelper

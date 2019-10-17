@@ -8,7 +8,7 @@
 namespace Spryker\Client\Search\Model\Elasticsearch\Aggregation;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Aggregation` instead.
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\Aggregation\FacetAggregationInterface` instead.
  */
 interface FacetAggregationInterface
 {

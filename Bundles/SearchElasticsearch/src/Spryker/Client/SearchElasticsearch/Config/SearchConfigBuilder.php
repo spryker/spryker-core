@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\SearchElasticsearch\Config;
 
-use Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface;
-
 class SearchConfigBuilder implements SearchConfigBuilderInterface
 {
     /**
@@ -32,9 +30,9 @@ class SearchConfigBuilder implements SearchConfigBuilderInterface
     protected $paginationConfig;
 
     /**
-     * @var \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface
+     * @var \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface[]
      */
-    protected $searchConfigBuilderPlugin;
+    protected $searchConfigBuilderPlugins;
 
     /**
      * @var \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface[]
@@ -66,7 +64,7 @@ class SearchConfigBuilder implements SearchConfigBuilderInterface
                 $this->facetConfig,
                 $this->sortConfig,
                 $this->paginationConfig,
-                $this->searchConfigBuilderPlugin,
+                $this->searchConfigBuilderPlugins,
                 $this->searchConfigExpanderPlugins
             );
         }
@@ -75,13 +73,13 @@ class SearchConfigBuilder implements SearchConfigBuilderInterface
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface $searchConfigBuilderPlugin
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface[] $searchConfigBuilderPlugins
      *
      * @return void
      */
-    public function setSearchConfigBuilderPlugin(SearchConfigBuilderPluginInterface $searchConfigBuilderPlugin): void
+    public function setSearchConfigBuilderPlugins(array $searchConfigBuilderPlugins): void
     {
-        $this->searchConfigBuilderPlugin = $searchConfigBuilderPlugin;
+        $this->searchConfigBuilderPlugins = $searchConfigBuilderPlugins;
     }
 
     /**
