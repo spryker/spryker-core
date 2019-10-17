@@ -76,7 +76,6 @@ class IndexController extends AbstractController
         return [
             'productAbstractAvailability' => $productAbstractAvailabilityTransfer,
             'indexTable' => $availabilityTable->render(),
-            'bundledProductAvailabilityTable' => '',
             'stores' => $stores,
             'idStore' => $idStore,
             'idProduct' => $idProductAbstract,

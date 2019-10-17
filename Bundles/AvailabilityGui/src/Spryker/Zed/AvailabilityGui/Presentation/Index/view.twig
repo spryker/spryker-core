@@ -33,10 +33,10 @@
                     </p>
                 </div>
                 <div class="col-lg-2">
-                    <p><b>{{ 'Current Stock' | trans }}:</b></p><p> {{ productAbstractAvailability.stockQuantity }}</p>
+                    <p><b>{{ 'Current Stock' | trans }}:</b></p><p> {{ productAbstractAvailability.stockQuantity.trim }}</p>
                 </div>
                 <div class="col-lg-2">
-                    <p><b>{{ 'Reserved Products' | trans }}:</b></p><p> {{ productAbstractAvailability.reservationQuantity }}</p>
+                    <p><b>{{ 'Reserved Products' | trans }}:</b></p><p> {{ productAbstractAvailability.reservationQuantity.trim }}</p>
                 </div>
                   <div class="col-lg-2">
                       <p><b>{{ 'Is never out of stock' | trans }}:</b></p>
