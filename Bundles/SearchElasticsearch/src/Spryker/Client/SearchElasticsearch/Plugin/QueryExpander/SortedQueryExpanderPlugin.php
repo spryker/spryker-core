@@ -27,7 +27,7 @@ class SortedQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderP
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
-    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface
+    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
     {
         $this->addSortingToQuery($searchQuery->getSearchQuery(), $requestParameters);
 

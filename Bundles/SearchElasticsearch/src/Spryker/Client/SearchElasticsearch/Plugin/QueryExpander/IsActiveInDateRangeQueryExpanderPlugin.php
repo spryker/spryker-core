@@ -33,7 +33,7 @@ class IsActiveInDateRangeQueryExpanderPlugin extends AbstractPlugin implements Q
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
-    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface
+    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
     {
         $this->addIsActiveInDateRangeFilterToQuery($searchQuery->getSearchQuery());
 

@@ -8,7 +8,6 @@
 namespace Spryker\Client\SearchElasticsearch\AggregationExtractor;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
-use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 
 class PriceRangeExtractor extends RangeExtractor
@@ -27,20 +26,6 @@ class PriceRangeExtractor extends RangeExtractor
         parent::__construct($facetConfigTransfer);
 
         $this->moneyPlugin = $moneyPlugin;
-    }
-
-    /**
-     * @param array $aggregations
-     * @param array $requestParameters
-     *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
-     */
-    public function extractDataFromAggregations(array $aggregations, array $requestParameters): TransferInterface
-    {
-        /** @var \Generated\Shared\Transfer\RangeSearchResultTransfer $rangeResultTransfer */
-        $rangeResultTransfer = parent::extractDataFromAggregations($aggregations, $requestParameters);
-
-        return $rangeResultTransfer;
     }
 
     /**
@@ -63,7 +48,7 @@ class PriceRangeExtractor extends RangeExtractor
     /**
      * @param array $requestParameters
      *
-     * @return array
+     * @return (float|null)[]
      */
     protected function getActiveRangeParameters(array $requestParameters): array
     {

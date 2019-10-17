@@ -32,7 +32,7 @@ interface SearchConstants
     public const ELASTICA_PARAMETER__HOST = 'ELASTICA_PARAMETER__HOST';
 
     /**
-     * @deprecated Use `\Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::HOST` instead.
+     * @deprecated Use `\Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::PORT` instead.
      *
      * Elasticsearch connection port number. (Required)
      *
@@ -41,7 +41,7 @@ interface SearchConstants
     public const ELASTICA_PARAMETER__PORT = 'ELASTICA_PARAMETER__PORT';
 
     /**
-     * @deprecated Use `\Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::HOST` instead.
+     * @deprecated Use `\Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::TRANSPORT` instead.
      *
      * Elasticsearch connection transport name (i.e. "http"). (Required)
      *
@@ -68,7 +68,7 @@ interface SearchConstants
     public const ELASTICA_PARAMETER__DOCUMENT_TYPE = 'ELASTICA_PARAMETER__DOCUMENT_TYPE';
 
     /**
-     * @deprecated Use `\Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::HOST` instead.
+     * @deprecated Use `\Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::AUTH_HEADER` instead.
      *
      * Elasticsearch connection authentication header parameters. (Optional)
      *

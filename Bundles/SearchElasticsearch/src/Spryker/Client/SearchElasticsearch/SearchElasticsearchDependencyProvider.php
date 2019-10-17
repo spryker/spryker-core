@@ -11,16 +11,19 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Money\Plugin\MoneyPlugin;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
-use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreBridge;
+use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToLocaleClientBridge;
+use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToLocaleClientInterface;
+use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientBridge;
+use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
 
 /**
  * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig getConfig()
  */
 class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
 {
-    public const STORE = 'STORE';
+    public const CLIENT_STORE = 'CLIENT_STORE';
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
     public const PLUGINS_SEARCH_CONFIG_EXPANDER = 'PLUGINS_SEARCH_CONFIG_EXPANDER';
     public const PLUGIN_SEARCH_CONFIG_BUILDER = 'PLUGIN_SEARCH_SEARCH_CONFIG_BUILDER';
 
@@ -33,7 +36,8 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container): Container
     {
-        $container = $this->addStore($container);
+        $container = $this->addStoreClient($container);
+        $container = $this->addLocaleClient($container);
         $container = $this->addSearchConfigBuilderPlugin($container);
         $container = $this->addSearchConfigExpanderPlugins($container);
         $container = $this->addMoneyPlugin($container);
@@ -48,7 +52,7 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSearchConfigBuilderPlugin(Container $container): Container
     {
-        $container->set(static::PLUGIN_SEARCH_CONFIG_BUILDER, function (Container $container) {
+        $container->set(static::PLUGIN_SEARCH_CONFIG_BUILDER, function (Container $container): SearchConfigBuilderPluginInterface {
             return $this->getSearchConfigBuilderPlugin($container);
         });
 
@@ -70,11 +74,27 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addStore(Container $container): Container
+    protected function addStoreClient(Container $container): Container
     {
-        $container->set(static::STORE, function (Container $container) {
-            return new SearchElasticsearchToStoreBridge(
-                Store::getInstance()
+        $container->set(static::CLIENT_STORE, function (Container $container): SearchElasticsearchToStoreClientInterface {
+            return new SearchElasticsearchToStoreClientBridge(
+                $container->getLocator()->store()->client()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addLocaleClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_LOCALE, function (Container $container): SearchElasticsearchToLocaleClientInterface {
+            return new SearchElasticsearchToLocaleClientBridge(
+                $container->getLocator()->locale()->client()
             );
         });
 
@@ -88,7 +108,7 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSearchConfigExpanderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_SEARCH_CONFIG_EXPANDER, function (Container $container) {
+        $container->set(static::PLUGINS_SEARCH_CONFIG_EXPANDER, function (Container $container): array {
             return $this->getSearchConfigExpanderPlugins($container);
         });
 
@@ -112,7 +132,7 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function addMoneyPlugin(Container $container): Container
     {
-        $container->set(static::PLUGIN_MONEY, function () {
+        $container->set(static::PLUGIN_MONEY, function (): MoneyPluginInterface {
             return $this->getMoneyPlugin();
         });
 

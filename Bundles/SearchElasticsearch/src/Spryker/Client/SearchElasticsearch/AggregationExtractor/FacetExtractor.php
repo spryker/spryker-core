@@ -148,7 +148,7 @@ class FacetExtractor extends AbstractAggregationExtractor implements Aggregation
 
         $facetResultValueTransfer
             ->setValue($value)
-            ->setDocCount($valueBucket['doc_count']);
+            ->setDocCount($valueBucket[static::DOC_COUNT]);
 
         $facetResultValues->append($facetResultValueTransfer);
 

@@ -30,7 +30,7 @@ class IsActiveQueryExpanderPlugin extends AbstractPlugin implements QueryExpande
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
-    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface
+    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
     {
         $this->addIsActiveFilterToQuery($searchQuery->getSearchQuery());
 

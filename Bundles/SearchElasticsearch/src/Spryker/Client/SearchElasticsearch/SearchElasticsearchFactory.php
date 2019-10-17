@@ -22,7 +22,8 @@ use Spryker\Client\SearchElasticsearch\Config\FacetConfig;
 use Spryker\Client\SearchElasticsearch\Config\FacetConfigInterface;
 use Spryker\Client\SearchElasticsearch\Config\PaginationConfig;
 use Spryker\Client\SearchElasticsearch\Config\PaginationConfigInterface;
-use Spryker\Client\SearchElasticsearch\Config\SearchConfig;
+use Spryker\Client\SearchElasticsearch\Config\SearchConfigBuilder;
+use Spryker\Client\SearchElasticsearch\Config\SearchConfigBuilderInterface;
 use Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface;
 use Spryker\Client\SearchElasticsearch\Config\SortConfig;
 use Spryker\Client\SearchElasticsearch\Config\SortConfigInterface;
@@ -43,7 +44,8 @@ use Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilderInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface;
 use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
-use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreInterface;
+use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToLocaleClientInterface;
+use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
 use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactory;
 use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactoryInterface;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolver;
@@ -55,16 +57,6 @@ use Spryker\Shared\SearchExtension\SourceInterface;
  */
 class SearchElasticsearchFactory extends AbstractFactory
 {
-    /**
-     * @var \Elastica\Client
-     */
-    protected static $client;
-
-    /**
-     * @var \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface
-     */
-    protected static $searchConfig;
-
     /**
      * @return \Spryker\Client\SearchElasticsearch\Search\SearchInterface
      */
@@ -196,11 +188,19 @@ class SearchElasticsearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreInterface
+     * @return \Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface
      */
-    public function getStore(): SearchElasticsearchToStoreInterface
+    public function getStoreClient(): SearchElasticsearchToStoreClientInterface
     {
-        return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::STORE);
+        return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
+     * @return \Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToLocaleClientInterface
+     */
+    public function getLocaleClient(): SearchElasticsearchToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::CLIENT_LOCALE);
     }
 
     /**
@@ -245,17 +245,27 @@ class SearchElasticsearchFactory extends AbstractFactory
      */
     public function getSearchConfig(): SearchConfigInterface
     {
-        if (!static::$searchConfig) {
-            static::$searchConfig = new SearchConfig(
-                $this->createFacetConfig(),
-                $this->createSortConfig(),
-                $this->createPaginationConfig(),
-                $this->getSearchConfigBuilderPlugin(),
-                $this->getSearchConfigExpanderPlugins()
-            );
-        }
+        return $this->createSearchConfigBuilder()->build();
+    }
 
-        return static::$searchConfig;
+    /**
+     * @return \Spryker\Client\SearchElasticsearch\Config\SearchConfigBuilderInterface
+     */
+    public function createSearchConfigBuilder(): SearchConfigBuilderInterface
+    {
+        $searchConfigBuilder = new SearchConfigBuilder(
+            $this->createFacetConfig(),
+            $this->createSortConfig(),
+            $this->createPaginationConfig()
+        );
+        $searchConfigBuilder->setSearchConfigBuilderPlugin(
+            $this->getSearchConfigBuilderPlugin()
+        );
+        $searchConfigBuilder->setSearchConfigExpanderPlugins(
+            $this->getSearchConfigExpanderPlugins()
+        );
+
+        return $searchConfigBuilder;
     }
 
     /**

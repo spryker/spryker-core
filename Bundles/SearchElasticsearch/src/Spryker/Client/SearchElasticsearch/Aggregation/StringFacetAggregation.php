@@ -11,7 +11,7 @@ use Elastica\Aggregation\AbstractAggregation;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig;
 
-class StringFacetAggregation extends AbstractTermsFacetAggregation
+class StringFacetAggregation extends AbstractFacetAggregation
 {
     public const VALUE_SUFFIX = '-value';
 
@@ -95,7 +95,6 @@ class StringFacetAggregation extends AbstractTermsFacetAggregation
             ->createTermsAggregation($nestedFieldName . static::VALUE_SUFFIX)
             ->setField($this->addNestedFieldPrefix($fieldName, static::FACET_VALUE));
 
-        $this->setTermsAggregationSize($aggregation, $this->facetConfigTransfer->getSize());
         $aggregation = $this->applyAggregationParams($aggregation, $this->facetConfigTransfer);
 
         return $aggregation;
