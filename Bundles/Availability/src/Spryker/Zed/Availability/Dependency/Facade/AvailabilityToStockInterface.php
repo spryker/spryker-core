@@ -39,4 +39,11 @@ interface AvailabilityToStockInterface
      * @return array
      */
     public function getStoreToWarehouseMapping();
+
+    /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresWhereProductStockIsDefined(string $sku): array;
 }

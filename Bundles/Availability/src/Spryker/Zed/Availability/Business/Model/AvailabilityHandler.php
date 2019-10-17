@@ -97,13 +97,8 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      */
     public function updateAvailability($sku)
     {
-        $storeTransfer = $this->storeFacade->getCurrentStore();
-
-        $this->updateAvailabilityForStore($sku, $storeTransfer);
-
-        $sharedStores = $storeTransfer->getStoresWithSharedPersistence();
-        foreach ($sharedStores as $storeName) {
-            $storeTransfer = $this->storeFacade->getStoreByName($storeName);
+        $storeTransfers = $this->stockFacade->getStoresWhereProductStockIsDefined($sku);
+        foreach ($storeTransfers as $storeTransfer) {
             $this->updateAvailabilityForStore($sku, $storeTransfer);
         }
     }

@@ -173,4 +173,35 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
 
         return $stockQuery;
     }
+
+    /**
+     * @module Store
+     * @module Product
+     *
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresWhereProductStockIsDefined(string $sku): array
+    {
+        $query = $this->getFactory()
+            ->getStoreQuery()
+            ->leftJoinWithStockStore()
+            ->useStockStoreQuery()
+                ->leftJoinWithStock()
+                ->useStockQuery()
+                    ->leftJoinStockProduct()
+                        ->useStockProductQuery()
+                            ->leftJoinWithSpyProduct()
+                            ->useSpyProductQuery()
+                                ->filterBySku($sku)
+                            ->endUse()
+                        ->endUse()
+                ->endUse()
+            ->endUse();
+
+        return $this->getFactory()
+            ->createStoreMapper()
+            ->mapStoreEntitiesToStoreTransfers($query->find()->getArrayCopy());
+    }
 }

@@ -213,7 +213,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      */
     public function getAvailableStockTypes()
     {
-         return $this->getFactory()->createReaderModel()->getStockTypes();
+        return $this->getFactory()->createReaderModel()->getStockTypes();
     }
 
     /**
@@ -349,5 +349,19 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
         return $this->getFactory()
             ->createStockUpdater()
             ->updateStock($stockTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresWhereProductStockIsDefined(string $sku): array
+    {
+        return $this->getRepository()->getStoresWhereProductStockIsDefined($sku);
     }
 }
