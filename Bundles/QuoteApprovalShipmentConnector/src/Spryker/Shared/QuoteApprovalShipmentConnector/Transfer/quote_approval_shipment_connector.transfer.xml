@@ -9,6 +9,7 @@
         <property name="priceMode" type="string"/>
         <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
     </transfer>
 
     <transfer name="Item">
