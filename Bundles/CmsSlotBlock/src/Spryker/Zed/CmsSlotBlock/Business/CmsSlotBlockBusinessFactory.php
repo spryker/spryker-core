@@ -7,12 +7,15 @@
 
 namespace Spryker\Zed\CmsSlotBlock\Business;
 
+use Spryker\Zed\CmsSlotBlock\Business\Reader\CmsSlotBlockRelationsReader;
+use Spryker\Zed\CmsSlotBlock\Business\Reader\CmsSlotBlockRelationsReaderInterface;
 use Spryker\Zed\CmsSlotBlock\Business\Writer\CmsSlotBlockRelationsWriter;
 use Spryker\Zed\CmsSlotBlock\Business\Writer\CmsSlotBlockRelationsWriterInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockRepositoryInterface getRepository()
  */
 class CmsSlotBlockBusinessFactory extends AbstractBusinessFactory
 {
@@ -22,5 +25,13 @@ class CmsSlotBlockBusinessFactory extends AbstractBusinessFactory
     public function createCmsSlotBlockRelationsWriter(): CmsSlotBlockRelationsWriterInterface
     {
         return new CmsSlotBlockRelationsWriter($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsSlotBlock\Business\Reader\CmsSlotBlockRelationsReaderInterface
+     */
+    public function createCmsSlotBlockRelationsReader(): CmsSlotBlockRelationsReaderInterface
+    {
+        return new CmsSlotBlockRelationsReader($this->getRepository());
     }
 }

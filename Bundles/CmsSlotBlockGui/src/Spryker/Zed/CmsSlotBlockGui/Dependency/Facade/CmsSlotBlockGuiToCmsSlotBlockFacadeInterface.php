@@ -5,18 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsSlotBlock\Business;
+namespace Spryker\Zed\CmsSlotBlockGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 
-interface CmsSlotBlockFacadeInterface
+interface CmsSlotBlockGuiToCmsSlotBlockFacadeInterface
 {
     /**
-     * Specification:
-     * - Saves relations between CMS Slots and CMS blocks.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer
      *
      * @return void

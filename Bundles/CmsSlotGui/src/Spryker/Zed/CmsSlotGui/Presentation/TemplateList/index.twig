@@ -30,4 +30,5 @@
 {% block footer_js %}
     {{ parent() }}
     <script src="/assets/js/spryker-zed-cms-slot-gui-main.js"></script>
+    {% include '@CmsSlotBlockGui/_partial/assets.twig' ignore missing only %}
 {% endblock %}

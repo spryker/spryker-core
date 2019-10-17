@@ -62,4 +62,17 @@ interface CmsSlotFacadeInterface
      * @return void
      */
     public function deactivateByIdCmsSlot(int $idCmsSlot): void;
+
+    /**
+     * Specification:
+     * - Retrieves CMS slot according to given CMS slot id.
+     * - Returns NULL if  CMS slot does not exist.
+     *
+     * @api
+     *
+     * @param int $idCmsSlot
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotTransfer|null
+     */
+    public function findCmsSlotById(int $idCmsSlot): ?CmsSlotTransfer;
 }

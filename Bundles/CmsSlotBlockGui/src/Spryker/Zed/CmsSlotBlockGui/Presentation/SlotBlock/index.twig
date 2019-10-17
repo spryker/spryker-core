@@ -1,0 +1,29 @@
+{% extends '@CmsBlockGui/_layout/layout.twig' %}
+{% block content %}
+{% embed '@Gui/Partials/widget.twig' %}
+
+    {% block widget_title -%}
+        <h5>{{ 'List of Blocks for "%SLOT_NAME%" Slot' | trans({"%SLOT_NAME%": slotName}) }}</h5>
+    {%- endblock %}
+
+    {% block widget_content %}
+        {{ slotBlockTable | raw }}
+ 
+    {{ form_start(slotBlockCollectionForm, {'action': '/cms-slot-block-gui/slot-block'}) }}
+        {{ form_widget(slotBlockCollectionForm.cmsSlotBlocks) }}
+
+        {% for slotBlockItemForm in slotBlockCollectionForm.cmsSlotBlocks %}
+            {{ form_widget(slotBlockItemForm.idSlotTemplate) }}
+            {{ form_widget(slotBlockItemForm.idSlot) }}
+            {{ form_widget(slotBlockItemForm.idCmsBlock) }}
+            {{ form_widget(slotBlockItemForm.position) }}
+        {% endfor %}
+
+        <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
+
+    {{ form_end(slotBlockCollectionForm) }}
+ 
+    {% endblock %}
+
+{% endembed %}
+{% endblock %}
