@@ -5,7 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/decimal-object": "^1.0.0",
+    "spryker/decimal-object": "^0.1.0",
     "spryker/graph": "^3.0.0",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.33.0",

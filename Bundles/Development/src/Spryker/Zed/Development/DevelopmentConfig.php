@@ -264,6 +264,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'Psr\\Container\\' => 'spryker/container',
             'Propel\\' => 'spryker/propel-orm',
             'Silex\\' => 'spryker/silex',
+            'Spryker\\DecimalObject\\' => 'spryker/decimal-object',
             'Pimple' => 'spryker/container',
             'Predis\\' => 'spryker/redis',
             'Guzzle\\' => 'spryker/guzzle',
