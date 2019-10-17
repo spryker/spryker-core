@@ -150,13 +150,13 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
     }
 
     /**
-     * @param string $reservationQuantity
+     * @param string $reservationQuantitySet
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    protected function calculateReservation(string $reservationQuantity): Decimal
+    protected function calculateReservation(string $reservationQuantitySet): Decimal
     {
-        $reservationItems = explode(',', $reservationQuantity);
+        $reservationItems = explode(',', $reservationQuantitySet);
         $reservationItems = array_unique($reservationItems);
 
         return $this->getReservationUniqueValue($reservationItems);
@@ -191,7 +191,7 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
     {
         $availabilityData = $productAbstractEntity->toArray();
         $availabilityData[ProductAbstractAvailabilityTransfer::IS_NEVER_OUT_OF_STOCK] = $this->getAbstractNeverOutOfStock($productAbstractEntity);
-        $availabilityData[ProductAbstractAvailabilityTransfer::AVAILABILITY] = $productAbstractEntity->getVirtualColumn(AvailabilityQueryContainer::AVAILABILITY_QUANTITY) ?? 0;
+        $availabilityData[ProductAbstractAvailabilityTransfer::AVAILABILITY] = $productAbstractEntity->getVirtualColumn(AvailabilityQueryContainer::AVAILABILITY_QUANTITY);
         $availabilityData[ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY] = $this->calculateReservation(
             $productAbstractEntity->getVirtualColumn(AvailabilityQueryContainer::RESERVATION_QUANTITY) ?? ''
         );

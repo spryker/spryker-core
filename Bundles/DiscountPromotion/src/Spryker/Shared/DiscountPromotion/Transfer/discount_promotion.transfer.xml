@@ -74,7 +74,7 @@
 
     <transfer name="ProductAbstractAvailability">
         <property name="isNeverOutOfStock" type="bool"/>
-        <property name="availability" type="int"/>
+        <property name="availability" type="decimal"/>
     </transfer>
 
     <transfer name="Locale">

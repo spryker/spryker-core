@@ -20,7 +20,7 @@
     <transfer name="StockProduct">
         <property name="idStockProduct" type="int"/>
         <property name="isNeverOutOfStock" type="string"/>
-        <property name="quantity" type="int"/>
+        <property name="quantity" type="decimal"/>
         <property name="stockType" type="string"/>
         <property name="sku" type="string"/>
     </transfer>
