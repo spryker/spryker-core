@@ -1,0 +1,37 @@
+{
+  "name": "spryker/cms-slot-block",
+  "type": "library",
+  "description": "CmsSlotBlock module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/cms-block": "^1.0.0 || ^2.0.0",
+    "spryker/cms-slot": "^0.3.0",
+    "spryker/kernel": "^3.33.0",
+    "spryker/propel-orm": "^1.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
