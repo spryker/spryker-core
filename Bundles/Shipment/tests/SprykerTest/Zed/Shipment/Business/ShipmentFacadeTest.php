@@ -465,10 +465,11 @@ class ShipmentFacadeTest extends Test
      */
     public function testNoRenamingShipmentMethodUniqueForCarrierMethodShouldReturnTrue(): void
     {
+        $shipmentCarrierTransfer = $this->tester->haveShipmentCarrier();
         $shipmentExpenseTransfer = (new ShipmentMethodTransfer())
             ->setName(static::NOT_UNIQUE_SHIPMENT_NAME_STANDART)
             ->setIdShipmentMethod(static::FK_SHIPMENT_METHOD)
-            ->setFkShipmentCarrier(static::FK_SHIPMENT_CARRIER);
+            ->setFkShipmentCarrier($shipmentCarrierTransfer->getIdShipmentCarrier());
 
         $isShipmentMethodUniqueForCarrier = $this->tester->getShipmentFacade()
             ->isShipmentMethodUniqueForCarrier($shipmentExpenseTransfer);

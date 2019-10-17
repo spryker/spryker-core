@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Shipment\tests\SprykerTest\Zed\Shipment\Business\Facade\SaveShipment;
+namespace SprykerTest\Zed\Shipment\Business\Facade\SaveShipment;
 
 use Codeception\TestCase\Test;
 use DateTime;
@@ -25,8 +25,6 @@ use Spryker\Shared\Price\PriceConfig;
 /**
  * Auto-generated group annotations
  *
- * @group Shipment
- * @group tests
  * @group SprykerTest
  * @group Zed
  * @group Shipment
@@ -152,7 +150,9 @@ class CreateShipmentWithNewDataTest extends Test
             QuoteTransfer::PRICE_MODE => PriceConfig::PRICE_MODE_NET,
         ]))
             ->withItem(
-                (new ItemBuilder())
+                (new ItemBuilder())->seed([
+                    ItemTransfer::UNIT_PRICE => 500,
+                ])
                     ->withShipment(
                         (new ShipmentBuilder())
                             ->withShippingAddress()
@@ -160,7 +160,9 @@ class CreateShipmentWithNewDataTest extends Test
                     )
             )
             ->withAnotherItem(
-                (new ItemBuilder())
+                (new ItemBuilder())->seed([
+                    ItemTransfer::UNIT_PRICE => 500,
+                ])
                     ->withShipment(
                         (new ShipmentBuilder())
                             ->withShippingAddress()

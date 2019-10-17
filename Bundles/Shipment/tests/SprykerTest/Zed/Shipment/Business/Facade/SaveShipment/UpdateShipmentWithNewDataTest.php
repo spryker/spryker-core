@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Shipment\tests\SprykerTest\Zed\Shipment\Business\Facade\SaveShipment;
+namespace SprykerTest\Zed\Shipment\Business\Facade\SaveShipment;
 
 use Codeception\TestCase\Test;
 use DateTime;
@@ -14,6 +14,7 @@ use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
@@ -22,8 +23,6 @@ use Spryker\Shared\Price\PriceConfig;
 /**
  * Auto-generated group annotations
  *
- * @group Shipment
- * @group tests
  * @group SprykerTest
  * @group Zed
  * @group Shipment
@@ -152,7 +151,9 @@ class UpdateShipmentWithNewDataTest extends Test
             QuoteTransfer::PRICE_MODE => PriceConfig::PRICE_MODE_NET,
         ]))
             ->withItem(
-                (new ItemBuilder())
+                (new ItemBuilder())->seed([
+                    ItemTransfer::UNIT_PRICE => 500,
+                ])
                     ->withShipment(
                         (new ShipmentBuilder())
                             ->withShippingAddress()
@@ -160,7 +161,9 @@ class UpdateShipmentWithNewDataTest extends Test
                     )
             )
             ->withAnotherItem(
-                (new ItemBuilder())
+                (new ItemBuilder())->seed([
+                    ItemTransfer::UNIT_PRICE => 500,
+                ])
                     ->withShipment(
                         (new ShipmentBuilder())
                             ->withShippingAddress()
