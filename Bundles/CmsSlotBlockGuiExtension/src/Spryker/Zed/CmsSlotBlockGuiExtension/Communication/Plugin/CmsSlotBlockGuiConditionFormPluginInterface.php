@@ -14,7 +14,7 @@ interface CmsSlotBlockGuiConditionFormPluginInterface
 {
     /**
      * Specification:
-     * - Returns true if provided conditions applicable for using this plugin.
+     * - Returns true if this plugin is applicable with provided CmsSlotTemplateConfigurationTransfer.
      *
      * @api
      *
@@ -26,7 +26,7 @@ interface CmsSlotBlockGuiConditionFormPluginInterface
 
     /**
      * Specification:
-     * - Adds additional form with conditions.
+     * - Expands form by a form or a form field.
      *
      * @api
      *
