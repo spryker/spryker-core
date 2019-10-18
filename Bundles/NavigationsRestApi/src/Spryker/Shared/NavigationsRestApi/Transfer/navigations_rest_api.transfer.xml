@@ -21,4 +21,14 @@
         <property name="children" type="RestNavigationNode[]" singular="child"/>
     </transfer>
 
+    <transfer name="NavigationStorage">
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string"/>
+        <property name="status" type="int"/>
+        <property name="detail" type="string"/>
+    </transfer>
+
 </transfers>

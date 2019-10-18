@@ -8,7 +8,7 @@
     </transfer>
 
     <transfer name="ItemMetadata">
-        <property name="superAttributes" type="array"/>
+        <property name="superAttributes" type="array" singular="superAttributes"/>
         <property name="image" type="string"/>
         <property name="fkSalesOrderItem" type="int"/>
     </transfer>
@@ -18,6 +18,9 @@
         <property name="id" type="int"/>
         <property name="idProductAbstract" type="int"/>
         <property name="metadata" type="ItemMetadata"/>
+        <property name="images" type="ProductImage[]" singular="image"/>
+        <property name="concreteAttributes" type="array" singular="concreteAttribute"/>
+        <property name="idSalesOrderItem" type="int"/>
     </transfer>
 
     <transfer name="Quote">

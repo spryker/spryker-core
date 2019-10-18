@@ -52,4 +52,20 @@
         <property name="externalUrlLarge" type="string"/>
     </transfer>
 
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="Url">
+        <property name="url" type="string"/>
+        <property name="idUrl" type="int"/>
+        <property name="fkResourceProductSet" type="int"/>
+        <property name="fkLocale" type="int"/>
+    </transfer>
+
+    <transfer name="ProductImageSet">
+        <property name="idProductImageSet" type="int"/>
+        <property name="fkResourceProductSet" type="int"/>
+    </transfer>
+
 </transfers>
