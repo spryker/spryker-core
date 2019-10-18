@@ -101,4 +101,11 @@ interface ShipmentGuiToShipmentFacadeInterface
      * @return int|null
      */
     public function createMethod(ShipmentMethodTransfer $methodTransfer): ?int;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
+     *
+     * @return int|bool
+     */
+    public function updateMethod(ShipmentMethodTransfer $methodTransfer);
 }
