@@ -34,6 +34,10 @@ class CmsSlotBlockFacade extends AbstractFacade implements CmsSlotBlockFacadeInt
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param int $idCmsSlotTemplate
      * @param int $idCmsSlot
      *

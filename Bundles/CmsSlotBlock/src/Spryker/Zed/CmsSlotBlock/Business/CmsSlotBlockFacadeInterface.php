@@ -24,6 +24,11 @@ interface CmsSlotBlockFacadeInterface
     public function saveCmsSlotBlockRelations(CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer): void;
 
     /**
+     * Specification:
+     * - Retrieves collection of CmsSlotBlockTransfers according to given CMS slot template id and CMS slot id.
+     *
+     * @api
+     *
      * @param int $idCmsSlotTemplate
      * @param int $idCmsSlot
      *

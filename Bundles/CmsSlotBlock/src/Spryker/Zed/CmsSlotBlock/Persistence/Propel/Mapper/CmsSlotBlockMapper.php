@@ -10,8 +10,8 @@ namespace Spryker\Zed\CmsSlotBlock\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlock;
-use Spryker\Zed\CmsSlotBlock\Dependency\Service\CmsSlotBlockToUtilEncodingServiceInterface;
 use Propel\Runtime\Collection\Collection;
+use Spryker\Zed\CmsSlotBlock\Dependency\Service\CmsSlotBlockToUtilEncodingServiceInterface;
 
 class CmsSlotBlockMapper implements CmsSlotBlockMapperInterface
 {
