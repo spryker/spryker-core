@@ -19,6 +19,7 @@ use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
 class ShipmentMethodUpdater implements ShipmentMethodUpdaterInterface
 {
     use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface
      */

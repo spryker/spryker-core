@@ -1,16 +1,13 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: kravchenko
- * Date: 2019-10-18
- * Time: 17:58
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Zed\Shipment\Business;
 
-
 use Codeception\Test\Unit;
-use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
@@ -18,6 +15,16 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodStoreQuery;
 
+/**
+ * Auto-generated group annotations
+ *
+ * @group SprykerTest
+ * @group Zed
+ * @group Shipment
+ * @group Business
+ * @group UpdateMethodTest
+ * Add your own group annotations below this line
+ */
 class UpdateMethodTest extends Unit
 {
     /**
