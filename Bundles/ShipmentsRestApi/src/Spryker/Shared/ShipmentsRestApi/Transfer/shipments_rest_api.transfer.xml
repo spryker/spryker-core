@@ -74,7 +74,7 @@
     </transfer>
 
     <transfer name="Currency">
-        <property name="code" type="string" />
+        <property name="code" type="string"/>
     </transfer>
 
 </transfers>

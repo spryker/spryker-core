@@ -25,7 +25,7 @@
         <property name="paymentMethodName" type="string"/>
         <property name="paymentProviderName" type="string"/>
         <property name="priority" type="int"/>
-        <property name="requiredRequestData" type="array"/>
+        <property name="requiredRequestData" type="array" singular="requiredRequestData"/>
     </transfer>
 
 </transfers>
