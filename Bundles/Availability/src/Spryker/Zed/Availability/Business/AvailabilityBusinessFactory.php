@@ -21,10 +21,10 @@ use Spryker\Zed\Availability\Business\Model\ProductsAvailableCheckoutPreConditio
 use Spryker\Zed\Availability\Business\Model\Sellable;
 use Spryker\Zed\Availability\Business\Model\SellableInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -100,25 +100,25 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface
+     * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface
      */
-    public function getStockFacade(): AvailabilityToStockInterface
+    public function getStockFacade(): AvailabilityToStockFacadeInterface
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_STOCK);
     }
 
     /**
-     * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface
+     * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface
      */
-    public function getOmsFacade(): AvailabilityToOmsInterface
+    public function getOmsFacade(): AvailabilityToOmsFacadeInterface
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_OMS);
     }
 
     /**
-     * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface
+     * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchFacadeInterface
      */
-    public function getTouchFacade(): AvailabilityToTouchInterface
+    public function getTouchFacade(): AvailabilityToTouchFacadeInterface
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_TOUCH);
     }

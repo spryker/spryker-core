@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\DecimalObject\Decimal;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
@@ -29,7 +29,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
     protected $availabilityQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface
+     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface
      */
     protected $stockFacade;
 
@@ -40,12 +40,12 @@ class ProductReservationReader implements ProductReservationReaderInterface
 
     /**
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface $availabilityQueryContainer
-     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface $stockFacade
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface $stockFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         AvailabilityQueryContainerInterface $availabilityQueryContainer,
-        AvailabilityToStockInterface $stockFacade,
+        AvailabilityToStockFacadeInterface $stockFacade,
         AvailabilityToStoreFacadeInterface $storeFacade
     ) {
         $this->availabilityQueryContainer = $availabilityQueryContainer;

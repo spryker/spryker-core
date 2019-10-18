@@ -17,7 +17,7 @@ use Spryker\Zed\Availability\Business\Exception\ProductNotFoundException;
 use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityEntityManagerInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
 
@@ -42,7 +42,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     protected $availabilityCalculator;
 
     /**
-     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface
+     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchFacadeInterface
      */
     protected $touchFacade;
 
@@ -60,7 +60,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface $availabilityRepository
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityEntityManagerInterface $availabilityEntityManager
      * @param \Spryker\Zed\Availability\Business\Model\ProductAvailabilityCalculatorInterface $availabilityCalculator
-     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface $touchFacade
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchFacadeInterface $touchFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface $eventFacade
      */
@@ -68,7 +68,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         AvailabilityRepositoryInterface $availabilityRepository,
         AvailabilityEntityManagerInterface $availabilityEntityManager,
         ProductAvailabilityCalculatorInterface $availabilityCalculator,
-        AvailabilityToTouchInterface $touchFacade,
+        AvailabilityToTouchFacadeInterface $touchFacade,
         AvailabilityToStoreFacadeInterface $storeFacade,
         AvailabilityToEventFacadeInterface $eventFacade
     ) {

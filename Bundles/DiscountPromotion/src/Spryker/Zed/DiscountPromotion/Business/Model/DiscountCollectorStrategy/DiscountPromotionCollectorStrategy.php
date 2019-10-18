@@ -59,9 +59,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
     public function collect(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer)
     {
         $quoteTransfer
-            ->requireStore()
-            ->getStore()
-                ->requireIdStore();
+            ->requireStore();
 
         $discountPromotionEntity = $this->findDiscountPromotionByIdDiscount($discountTransfer);
 

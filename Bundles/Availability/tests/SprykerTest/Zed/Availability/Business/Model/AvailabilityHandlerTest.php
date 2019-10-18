@@ -13,9 +13,9 @@ use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Business\Model\AvailabilityHandler;
 use Spryker\Zed\Availability\Business\Model\ProductAvailabilityCalculatorInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityEntityManagerInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
 
@@ -107,7 +107,7 @@ class AvailabilityHandlerTest extends Unit
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface $availabilityRepositoryMock
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityEntityManagerInterface $availabilityEntityManagerMock
      * @param \Spryker\Zed\Availability\Business\Model\ProductAvailabilityCalculatorInterface $availabilityCalculatorMock
-     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface $touchFacade
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchFacadeInterface $touchFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface|null $availabilityToStoreFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface|null $availabilityToEventFacade
      *
@@ -117,7 +117,7 @@ class AvailabilityHandlerTest extends Unit
         AvailabilityRepositoryInterface $availabilityRepositoryMock,
         AvailabilityEntityManagerInterface $availabilityEntityManagerMock,
         ProductAvailabilityCalculatorInterface $availabilityCalculatorMock,
-        AvailabilityToTouchInterface $touchFacade,
+        AvailabilityToTouchFacadeInterface $touchFacade,
         ?AvailabilityToStoreFacadeInterface $availabilityToStoreFacade = null,
         ?AvailabilityToEventFacadeInterface $availabilityToEventFacade = null
     ) {
@@ -142,20 +142,20 @@ class AvailabilityHandlerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface
      */
     protected function createOmsFacadeMock()
     {
-        return $this->getMockBuilder(AvailabilityToOmsInterface::class)
+        return $this->getMockBuilder(AvailabilityToOmsFacadeInterface::class)
             ->getMock();
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchFacadeInterface
      */
     protected function createTouchFacadeMock()
     {
-        return $this->getMockBuilder(AvailabilityToTouchInterface::class)
+        return $this->getMockBuilder(AvailabilityToTouchFacadeInterface::class)
             ->getMock();
     }
 

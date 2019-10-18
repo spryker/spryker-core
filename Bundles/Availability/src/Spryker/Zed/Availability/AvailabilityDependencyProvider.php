@@ -11,7 +11,7 @@ use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeBridge;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeBridge;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchBridge;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchFacadeBridge;
 use Spryker\Zed\Availability\Dependency\QueryContainer\AvailabilityToProductQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -95,7 +95,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
     protected function addTouchFacade(Container $container)
     {
         $container->set(static::FACADE_TOUCH, function (Container $container) {
-            return new AvailabilityToTouchBridge($container->getLocator()->touch()->facade());
+            return new AvailabilityToTouchFacadeBridge($container->getLocator()->touch()->facade());
         });
 
         return $container;
