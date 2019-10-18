@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCalculationFacadeBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyBridge;
-use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToPriceFacadeBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeBridge;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreBridge;
@@ -35,7 +34,6 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 
     public const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
-    public const FACADE_MONEY = 'FACADE_MONEY';
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
     public const FACADE_SALES = 'FACADE_SALES';
     public const FACADE_STORE = 'FACADE_STORE';
@@ -63,7 +61,6 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
             ];
         };
 
-        $container = $this->addMoneyFacade($container);
         $container = $this->addSalesFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addCurrencyFacade($container);
@@ -129,20 +126,6 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::DELIVERY_TIME_PLUGINS, function (Container $container) {
             return $this->getDeliveryTimePlugins($container);
         });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addMoneyFacade(Container $container)
-    {
-        $container[static::FACADE_MONEY] = function (Container $container) {
-            return new ShipmentToMoneyBridge($container->getLocator()->money()->facade());
-        };
 
         return $container;
     }
