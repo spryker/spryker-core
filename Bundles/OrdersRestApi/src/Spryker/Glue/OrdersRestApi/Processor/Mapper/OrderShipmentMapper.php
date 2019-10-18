@@ -56,8 +56,7 @@ class OrderShipmentMapper implements OrderShipmentMapperInterface
         $restOrderShipmentTransfer->setCurrencyIsoCode($currencyIsoCode);
 
         foreach ($expenseTransfers as $expenseTransfer) {
-            if ($expenseTransfer->getType() === ShipmentConstants::SHIPMENT_EXPENSE_TYPE
-                && $shipmentMethodTransfer->getFkSalesExpense()) {
+            if ($expenseTransfer->getIdSalesExpense() === $shipmentMethodTransfer->getFkSalesExpense()) {
                 $restOrderShipmentTransfer
                     ->setDefaultNetPrice($expenseTransfer->getSumNetPrice())
                     ->setDefaultGrossPrice($expenseTransfer->getSumGrossPrice());
