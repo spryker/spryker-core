@@ -120,6 +120,7 @@ class ViewShipmentMethodForm extends AbstractType
             ChoiceType::class,
             [
                 'label' => 'Tax set',
+                'placeholder' => 'Select one',
                 'choices' => array_flip($options[ViewShipmentMethodFormDataProvider::OPTION_TAX_SET_CHOICES]),
                 'required' => false,
                 'disabled' => $options[ViewShipmentMethodFormDataProvider::OPTION_TAX_SET_DISABLED],

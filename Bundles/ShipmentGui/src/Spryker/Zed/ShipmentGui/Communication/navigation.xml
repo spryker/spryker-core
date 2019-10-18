@@ -60,6 +60,14 @@
                                 <action>index</action>
                                 <visible>0</visible>
                             </shipment-method-view>
+                            <shipment-method-create>
+                                <label>Create</label>
+                                <title>Create</title>
+                                <bundle>shipment-gui</bundle>
+                                <controller>create-shipment-method</controller>
+                                <action>index</action>
+                                <visible>0</visible>
+                            </shipment-method-create>
                         </pages>
                     </shipment-method>
                 </pages>
