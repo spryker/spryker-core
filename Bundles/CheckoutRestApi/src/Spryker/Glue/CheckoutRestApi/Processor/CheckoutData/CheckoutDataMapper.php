@@ -234,7 +234,9 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
-        $idSelectedShipmentMethod = $restCheckoutRequestAttributesTransfer->getShipment()->getIdShipmentMethod() ?? null;
+        $idSelectedShipmentMethod = $restCheckoutRequestAttributesTransfer->getShipment() ?
+            $restCheckoutRequestAttributesTransfer->getShipment()->getIdShipmentMethod() : null;
+
         if (!$idSelectedShipmentMethod) {
             return $restCheckoutDataResponseAttributesTransfer;
         }
