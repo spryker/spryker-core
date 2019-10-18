@@ -2,11 +2,10 @@
 {% set mappedBundles = [] %}
 
 {% for bundle in order.salesOrderConfiguredBundles %}
-    {% set break = false %}
-    {% for item in bundle.salesOrderConfiguredBundleItems if mappedItems['_' ~ item.IdSalesOrderItem] is defined and not break %}
+    {% set filteredItems = bundle.salesOrderConfiguredBundleItems|filter(item => mappedItems['_' ~ item.IdSalesOrderItem] is defined) %}
+    {% if (filteredItems|length) %}
         {% set mappedBundles = mappedBundles | merge([bundle]) %}
-        {% set break = true %}
-    {% endfor %}
+    {% endif %}
 {% endfor %}
 
 {% for bundle in mappedBundles %}
