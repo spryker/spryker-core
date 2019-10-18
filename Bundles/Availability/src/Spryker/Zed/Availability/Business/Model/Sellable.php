@@ -7,23 +7,23 @@
 
 namespace Spryker\Zed\Availability\Business\Model;
 
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
+use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
 
 class Sellable implements SellableInterface
 {
     /**
-     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface
+     * @var \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface
      */
-    protected $omsFacade;
+    protected $availabilityRepository;
 
     /**
-     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface
+     * @var \Spryker\Zed\Availability\Business\Model\AvailabilityHandlerInterface
      */
-    protected $stockFacade;
+    protected $availabilityHandler;
 
     /**
      * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface
@@ -31,55 +31,38 @@ class Sellable implements SellableInterface
     protected $storeFacade;
 
     /**
-     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsInterface $omsFacade
-     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockInterface $stockFacade
+     * @param \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface $availabilityRepository
+     * @param \Spryker\Zed\Availability\Business\Model\AvailabilityHandlerInterface $availabilityHandler
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
      */
     public function __construct(
-        AvailabilityToOmsInterface $omsFacade,
-        AvailabilityToStockInterface $stockFacade,
+        AvailabilityRepositoryInterface $availabilityRepository,
+        AvailabilityHandlerInterface $availabilityHandler,
         AvailabilityToStoreFacadeInterface $storeFacade
     ) {
-        $this->omsFacade = $omsFacade;
-        $this->stockFacade = $stockFacade;
+        $this->availabilityRepository = $availabilityRepository;
+        $this->availabilityHandler = $availabilityHandler;
         $this->storeFacade = $storeFacade;
     }
 
     /**
-     * @param string $sku
-     * @param \Spryker\DecimalObject\Decimal $quantity
-     *
-     * @return bool
-     */
-    public function isProductSellable(string $sku, Decimal $quantity): bool
-    {
-        $storeTransfer = $this->storeFacade->getCurrentStore();
-
-        return $this->calculateIsProductSellable($sku, $quantity, $storeTransfer);
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    public function calculateAvailabilityForProduct(string $sku): Decimal
-    {
-        $storeTransfer = $this->storeFacade->getCurrentStore();
-
-        return $this->calculateStock($sku, $storeTransfer);
-    }
-
-    /**
-     * @param string $sku
+     * @param string $concreteSku
      * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    public function isProductSellableForStore(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): bool
+    public function isProductSellableForStore(string $concreteSku, Decimal $quantity, StoreTransfer $storeTransfer): bool
     {
-        return $this->calculateIsProductSellable($sku, $quantity, $storeTransfer);
+        $productConcreteAvailabilityTransfer = $this->availabilityRepository
+            ->findProductConcreteAvailabilityBySkuAndStore($concreteSku, $storeTransfer);
+
+        if ($productConcreteAvailabilityTransfer === null) {
+            $productConcreteAvailabilityTransfer = $this->availabilityHandler
+                ->updateProductConcreteAvailabilityBySku($concreteSku, $storeTransfer);
+        }
+
+        return $this->isProductConcreteSellable($productConcreteAvailabilityTransfer, $quantity);
     }
 
     /**
@@ -89,55 +72,40 @@ class Sellable implements SellableInterface
      */
     public function isProductConcreteAvailable(int $idProductConcrete): bool
     {
-        $stockProductTransfers = $this->stockFacade->getStockProductsByIdProduct($idProductConcrete);
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $productConcreteAvailabilityTransfer = $this->availabilityRepository
+            ->findProductConcreteAvailabilityByIdProductConcreteAndStore($idProductConcrete, $storeTransfer);
 
-        foreach ($stockProductTransfers as $stockProductTransfer) {
-            return $this->isProductSellable($stockProductTransfer->getSku(), new Decimal(1));
+        if ($productConcreteAvailabilityTransfer === null) {
+            $productConcreteAvailabilityTransfer = $this->availabilityHandler
+                ->updateProductConcreteAvailabilityById($idProductConcrete, $storeTransfer);
         }
 
-        return false;
+        return $this->isProductConcreteSellable($productConcreteAvailabilityTransfer, new Decimal(0));
     }
 
     /**
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    public function calculateAvailabilityForProductWithStore(string $sku, StoreTransfer $storeTransfer): Decimal
-    {
-        return $this->calculateStock($sku, $storeTransfer);
-    }
-
-    /**
-     * @param string $sku
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null $productConcreteAvailabilityTransfer
      * @param \Spryker\DecimalObject\Decimal $quantity
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    protected function calculateIsProductSellable(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): bool
-    {
-        if ($this->stockFacade->isNeverOutOfStockForStore($sku, $storeTransfer)) {
+    protected function isProductConcreteSellable(
+        ?ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer,
+        Decimal $quantity
+    ): bool {
+        if ($productConcreteAvailabilityTransfer === null) {
+            return false;
+        }
+
+        if ($productConcreteAvailabilityTransfer->getIsNeverOutOfStock()) {
             return true;
         }
 
-        $realStock = $this->calculateStock($sku, $storeTransfer);
+        if ($quantity->isZero()) {
+            return $productConcreteAvailabilityTransfer->getAvailability()->greaterThan($quantity);
+        }
 
-        return $realStock->greatherThanOrEquals($quantity);
-    }
-
-    /**
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    protected function calculateStock($sku, StoreTransfer $storeTransfer): Decimal
-    {
-        $physicalItems = $this->stockFacade->calculateProductStockForStore($sku, $storeTransfer);
-        $reservedItems = $this->omsFacade->getOmsReservedProductQuantityForSku($sku, $storeTransfer);
-
-        return $physicalItems->subtract($reservedItems);
+        return $productConcreteAvailabilityTransfer->getAvailability()->greatherThanOrEquals($quantity);
     }
 }

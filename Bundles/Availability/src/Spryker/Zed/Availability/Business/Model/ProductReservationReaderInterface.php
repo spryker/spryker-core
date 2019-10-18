@@ -4,15 +4,21 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Zed\Availability\Business\Model;
 
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 
+/**
+ * @deprecated Use ProductAvailabilityReaderInterface instead.
+ */
 interface ProductReservationReaderInterface
 {
     /**
+     * @deprecated Use `ProductAvailabilityReaderInterface::findProductAbstractAvailabilityBySkuForStore() instead`.
+     *
      * @param int $idProductAbstract
      * @param int $idLocale
      *
@@ -21,6 +27,8 @@ interface ProductReservationReaderInterface
     public function getProductAbstractAvailability(int $idProductAbstract, int $idLocale): ProductAbstractAvailabilityTransfer;
 
     /**
+     * @deprecated Use `ProductAvailabilityReaderInterface::findProductConcreteAvailabilityBySkuForStore() instead`.
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
@@ -30,6 +38,8 @@ interface ProductReservationReaderInterface
     ): ?ProductConcreteAvailabilityTransfer;
 
     /**
+     * @deprecated Use `ProductAvailabilityReaderInterface::findProductAbstractAvailabilityBySkuForStore() instead`.
+     *
      * @param int $idProductAbstract
      * @param int $idLocale
      * @param int $idStore

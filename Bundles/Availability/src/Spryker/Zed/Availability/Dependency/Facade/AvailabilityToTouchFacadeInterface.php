@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Availability\Dependency\Facade;
 
-interface AvailabilityToTouchInterface
+interface AvailabilityToTouchFacadeInterface
 {
     /**
      * @param string $itemType

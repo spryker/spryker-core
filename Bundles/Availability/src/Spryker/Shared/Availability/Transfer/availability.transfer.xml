@@ -24,6 +24,7 @@
     </transfer>
 
     <transfer name="ProductConcreteAvailability">
+        <property name="sku" type="string"/>
         <property name="availability" type="decimal"/>
         <property name="isNeverOutOfStock" type="bool"/>
     </transfer>
