@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\MerchantProfileGui\Communication\MerchantProfileGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\MerchantProfileGui\Business\MerchantProfileGuiFacadeInterface getFacade()
  */
 class EditController extends AbstractController
 {

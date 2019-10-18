@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\MerchantGui\Communication\Table\MerchantTableConstants;
+use Spryker\Zed\MerchantGui\MerchantGuiConfig;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -55,7 +55,7 @@ class CreateMerchantController extends AbstractController
      */
     protected function createMerchant(Request $request, FormInterface $merchantForm)
     {
-        $redirectUrl = $request->get(static::PARAM_REDIRECT_URL, MerchantTableConstants::URL_MERCHANT_LIST);
+        $redirectUrl = $request->get(static::PARAM_REDIRECT_URL, MerchantGuiConfig::URL_MERCHANT_LIST);
         $merchantTransfer = $merchantForm->getData();
         $merchantResponseTransfer = $this->getFactory()
             ->getMerchantFacade()

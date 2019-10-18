@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="Merchant">
+        <property name="idMerchant" type="int"/>
+        <property name="status" type="string"/>
+        <property name="addressCollection" type="MerchantAddressCollection"/>
+    </transfer>
+
+    <transfer name="MerchantResponse">
+        <property name="merchant" type="Merchant"/>
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="MerchantError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="MerchantError">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantAddress">
+        <property name="idMerchantAddress" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantAddressCollection">
+        <property name="addresses" type="MerchantAddress[]" singular="address"/>
+    </transfer>
+
+    <transfer name="MerchantCriteriaFilter">
+        <property name="idMerchant" type="int"/>
+        <property name="email" type="string"/>
+    </transfer>
+
+    <transfer name="TabItem">
+        <property name="name" type="string"/>
+        <property name="title" type="string"/>
+        <property name="template" type="string"/>
+        <property name="hasError" type="bool"/>
+    </transfer>
+
+    <transfer name="TabsView">
+        <property name="tabs" type="TabItem[]" singular="tab"/>
+        <property name="activeTabName" type="string"/>
+        <property name="footerTemplate" type="string"/>
+        <property name="isNavigable" type="bool"/>
+        <property name="autoErrors" type="bool"/>
+    </transfer>
+
+    <transfer name="Button">
+        <property name="url" type="string"/>
+        <property name="title" type="string"/>
+        <property name="defaultOptions" type="array"/>
+        <property name="customOptions" type="array"/>
+    </transfer>
+
+</transfers>

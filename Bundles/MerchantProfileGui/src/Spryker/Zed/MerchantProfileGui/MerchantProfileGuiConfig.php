@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MerchantProfileGuiConfig extends AbstractBundleConfig
 {
+    public const COL_IS_ACTIVE = 'is_active';
+
     protected const SALUTATION_CHOICES = [
         'Ms' => 'Ms',
         'Mr' => 'Mr',
@@ -24,5 +26,13 @@ class MerchantProfileGuiConfig extends AbstractBundleConfig
     public function getSalutationChoices(): array
     {
         return static::SALUTATION_CHOICES;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIsActiveColumnName(): string
+    {
+        return static::COL_IS_ACTIVE;
     }
 }

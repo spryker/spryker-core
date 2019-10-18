@@ -4,7 +4,7 @@
 {{ form_widget(merchantForm.merchantProfile.imprint_glossary_key) }}
 
 {% for localizedAttributes in merchantForm.merchantProfile.merchantProfileLocalizedGlossaryAttributes %}
-    {% set localeName = localizedAttributes.vars.value.localeName %}
+    {% set localeName = localizedAttributes.locale.vars.value.localeName %}
 
     {% embed '@Gui/Partials/localized-ibox.twig' with {
         localeName: localeName,

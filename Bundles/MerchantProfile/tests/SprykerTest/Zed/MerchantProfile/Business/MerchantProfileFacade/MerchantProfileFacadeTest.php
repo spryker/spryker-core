@@ -119,11 +119,28 @@ class MerchantProfileFacadeTest extends Unit
 
         // Act
         $merchantProfileCriteriaFilterTransfer = new MerchantProfileCriteriaFilterTransfer();
-        $merchantProfileCriteriaFilterTransfer->setIdMerchant($expectedMerchantProfileTransfer->getFkMerchant());
+        $merchantProfileCriteriaFilterTransfer->setFkMerchant($expectedMerchantProfileTransfer->getFkMerchant());
         $merchantProfileTransfer = $this->tester->getFacade()->findOne($merchantProfileCriteriaFilterTransfer);
 
         // Assert
         $this->assertNotNull($merchantProfileTransfer);
+        $this->assertEquals($expectedMerchantProfileTransfer->getIdMerchantProfile(), $merchantProfileTransfer->getIdMerchantProfile());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandMerchantWithMerchantProfile(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+        $merchantProfileTransfer = $this->tester->haveMerchantProfile($merchantTransfer);
+
+        // Act
+        $expandedMerchantTransfer = $this->tester->getFacade()->expandMerchantWithMerchantProfile($merchantTransfer);
+        $expectedMerchantProfileTransfer = $expandedMerchantTransfer->getMerchantProfile();
+
+        // Assert
         $this->assertEquals($merchantProfileTransfer->getIdMerchantProfile(), $expectedMerchantProfileTransfer->getIdMerchantProfile());
     }
 }

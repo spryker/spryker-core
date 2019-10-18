@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantGui\Communication;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueEmail;
 use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantAddressFormDataProvider;
 use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantFormDataProvider;
 use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantUpdateFormDataProvider;
@@ -32,7 +33,7 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createMerchantTable(): MerchantTable
     {
         return new MerchantTable(
-            $this->getPropelMerchantQuery(),
+            $this->getMerchantPropelQuery(),
             $this->getMerchantFacade(),
             $this->getMerchantTableActionExpanderPlugins(),
             $this->getMerchantTableHeaderExpanderPlugins(),
@@ -94,6 +95,19 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @param int|null $currentIdMerchant
+     *
+     * @return \Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueEmail
+     */
+    public function createUniqueEmailConstraint(?int $currentIdMerchant)
+    {
+        return new UniqueEmail([
+            UniqueEmail::OPTION_MERCHANT_FACADE => $this->getMerchantFacade(),
+            UniqueEmail::OPTION_CURRENT_ID_MERCHANT => $currentIdMerchant,
+        ]);
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToCountryFacadeInterface
      */
     public function getCountryFacade(): MerchantGuiToCountryFacadeInterface
@@ -112,7 +126,7 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
      */
-    public function getPropelMerchantQuery(): SpyMerchantQuery
+    public function getMerchantPropelQuery(): SpyMerchantQuery
     {
         return $this->getProvidedDependency(MerchantGuiDependencyProvider::PROPEL_MERCHANT_QUERY);
     }

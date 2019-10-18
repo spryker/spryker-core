@@ -21,5 +21,5 @@ interface MerchantTableConfigExpanderPluginInterface
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    public function expandConfig(TableConfiguration $config): TableConfiguration;
+    public function expand(TableConfiguration $config): TableConfiguration;
 }

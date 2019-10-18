@@ -65,8 +65,7 @@ class MerchantProfileHelper extends Module
         foreach ($localeTransferCollection as $localeTransfer) {
             $merchantProfileLocalizedGlossaryAttributesTransfer = (new MerchantProfileLocalizedGlossaryAttributesBuilder())->build();
             $merchantProfileLocalizedGlossaryAttributesTransfer = $this->addMerchantProfileGlossaryAttributeValues($merchantProfileLocalizedGlossaryAttributesTransfer);
-            $merchantProfileLocalizedGlossaryAttributesTransfer->setLocaleName($localeTransfer->getLocaleName());
-            $merchantProfileLocalizedGlossaryAttributesTransfer->setFkLocale($localeTransfer->getIdLocale());
+            $merchantProfileLocalizedGlossaryAttributesTransfer->setLocale($localeTransfer);
             $merchantProfileLocalizedGlossaryAttributes->append($merchantProfileLocalizedGlossaryAttributesTransfer);
         }
         $merchantProfileTransfer->setMerchantProfileLocalizedGlossaryAttributes($merchantProfileLocalizedGlossaryAttributes);

@@ -10,9 +10,9 @@ namespace Spryker\Zed\MerchantProfileDataImport\Business;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
-use Spryker\Zed\MerchantProfileDataImport\Business\Profile\DataSet\MerchantProfileDataSetInterface;
-use Spryker\Zed\MerchantProfileDataImport\Business\Profile\MerchantProfileWriterStep;
-use Spryker\Zed\MerchantProfileDataImport\Business\Profile\Step\MerchantKeyToIdMerchantStep;
+use Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfile\DataSet\MerchantProfileDataSetInterface;
+use Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfile\MerchantProfileWriterStep;
+use Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfile\Step\MerchantKeyToIdMerchantStep;
 
 /**
  * @method \Spryker\Zed\MerchantProfileDataImport\MerchantProfileDataImportConfig getConfig()

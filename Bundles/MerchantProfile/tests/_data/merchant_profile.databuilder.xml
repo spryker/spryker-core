@@ -6,7 +6,6 @@
 >
 
     <transfer name="MerchantProfile">
-        <property name="merchantKey" dataBuilderRule="word" />
         <property name="contactPersonRole" dataBuilderRule="word" />
         <property name="contactPersonTitle" dataBuilderRule="=Mr" />
         <property name="contactPersonFirstName" dataBuilderRule="firstName" />

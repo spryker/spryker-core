@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\MerchantProfileDataImport\Communication\Plugin;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
-use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\MerchantProfileDataImport\Communication\Plugin\MerchantProfileDataImportPlugin;
 use Spryker\Zed\MerchantProfileDataImport\MerchantProfileDataImportConfig;
 
@@ -27,7 +26,7 @@ use Spryker\Zed\MerchantProfileDataImport\MerchantProfileDataImportConfig;
  */
 class MerchantProfileDataImportPluginTest extends Unit
 {
-    public const MERCHANT_KEY = 'roan-gmbh-und-co-k-g';
+    public const MERCHANT_KEY = 'merchant-profile-data-import-test-key';
 
     /**
      * @var \SprykerTest\Zed\MerchantProfileDataImport\MerchantProfileDataImportCommunicationTester
@@ -56,11 +55,10 @@ class MerchantProfileDataImportPluginTest extends Unit
         $dataImportPlugin = new MerchantProfileDataImportPlugin();
 
         // Act
-        $dataImporterReportTransfer = $dataImportPlugin->import($dataImportConfigurationTransfer);
+        $dataImportPlugin->import($dataImportConfigurationTransfer);
         $merchantEntity = $this->tester->findMerchantByKey(static::MERCHANT_KEY);
 
         // Assert
-        $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
 
         $this->assertNotEmpty($merchantEntity);
         $this->assertNotEmpty($merchantEntity->getSpyMerchantProfiles()->getArrayCopy());

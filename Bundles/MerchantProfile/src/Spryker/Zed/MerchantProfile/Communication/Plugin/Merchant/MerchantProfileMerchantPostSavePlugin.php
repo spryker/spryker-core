@@ -16,7 +16,7 @@ use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterf
  * @method \Spryker\Zed\MerchantProfile\MerchantProfileConfig getConfig()
  * @method \Spryker\Zed\MerchantProfile\Communication\MerchantProfileCommunicationFactory getFactory()
  */
-class MerchantProfilePostSavePlugin extends AbstractPlugin implements MerchantPostSavePluginInterface
+class MerchantProfileMerchantPostSavePlugin extends AbstractPlugin implements MerchantPostSavePluginInterface
 {
     /**
      * {@inheritDoc}
@@ -28,7 +28,7 @@ class MerchantProfilePostSavePlugin extends AbstractPlugin implements MerchantPo
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    public function postSave(MerchantTransfer $merchantTransfer): MerchantTransfer
+    public function execute(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
         $merchantProfileTransfer = $merchantTransfer->getMerchantProfile();
         $merchantProfileTransfer->setFkMerchant($merchantTransfer->getIdMerchant());

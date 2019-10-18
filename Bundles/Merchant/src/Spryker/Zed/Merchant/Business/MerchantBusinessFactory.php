@@ -12,10 +12,12 @@ use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGenerator;
 use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface;
 use Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriter;
 use Spryker\Zed\Merchant\Business\MerchantAddress\MerchantAddressWriterInterface;
+use Spryker\Zed\Merchant\Business\Model\MerchantCreator;
+use Spryker\Zed\Merchant\Business\Model\MerchantCreatorInterface;
 use Spryker\Zed\Merchant\Business\Model\MerchantReader;
 use Spryker\Zed\Merchant\Business\Model\MerchantReaderInterface;
-use Spryker\Zed\Merchant\Business\Model\MerchantWriter;
-use Spryker\Zed\Merchant\Business\Model\MerchantWriterInterface;
+use Spryker\Zed\Merchant\Business\Model\MerchantUpdater;
+use Spryker\Zed\Merchant\Business\Model\MerchantUpdaterInterface;
 use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusReader;
 use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusReaderInterface;
 use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidator;
@@ -31,17 +33,30 @@ use Spryker\Zed\Merchant\MerchantDependencyProvider;
 class MerchantBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\Merchant\Business\Model\MerchantWriterInterface
+     * @return \Spryker\Zed\Merchant\Business\Model\MerchantCreatorInterface
      */
-    public function createMerchantWriter(): MerchantWriterInterface
+    public function createMerchantCreator(): MerchantCreatorInterface
     {
-        return new MerchantWriter(
+        return new MerchantCreator(
+            $this->getEntityManager(),
+            $this->createMerchantKeyGenerator(),
+            $this->createMerchantAddressWriter(),
+            $this->getConfig(),
+            $this->getMerchantPostSavePlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Business\Model\MerchantUpdaterInterface
+     */
+    public function createMerchantUpdater(): MerchantUpdaterInterface
+    {
+        return new MerchantUpdater(
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createMerchantKeyGenerator(),
             $this->createMerchantAddressWriter(),
             $this->createMerchantStatusValidator(),
-            $this->getConfig(),
             $this->getMerchantPostSavePlugins()
         );
     }

@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Spryker\Zed\MerchantProfileDataImport\Business\Profile;
+namespace Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfile;
 
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
@@ -15,12 +15,10 @@ use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\LocalizedAttributesExtractorStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\MerchantProfileDataImport\Business\Profile\DataSet\MerchantProfileDataSetInterface;
+use Spryker\Zed\MerchantProfileDataImport\Business\MerchantProfile\DataSet\MerchantProfileDataSetInterface;
 
 class MerchantProfileWriterStep implements DataImportStepInterface
 {
-    protected const REQUIRED_DATA_SET_KEYS = [];
-
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -28,8 +26,6 @@ class MerchantProfileWriterStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $this->validateDataSet($dataSet);
-
         $idMerchant = $dataSet[MerchantProfileDataSetInterface::ID_MERCHANT];
         $merchantProfileEntity = SpyMerchantProfileQuery::create()
             ->filterByFkMerchant($idMerchant)
@@ -82,28 +78,6 @@ class MerchantProfileWriterStep implements DataImportStepInterface
         }
 
         return $merchantProfileEntity;
-    }
-
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
-    protected function validateDataSet(DataSetInterface $dataSet): void
-    {
-        $this->validateSimpleRequiredDataSet($dataSet);
-    }
-
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     *
-     * @return void
-     */
-    protected function validateSimpleRequiredDataSet(DataSetInterface $dataSet): void
-    {
-        foreach (static::REQUIRED_DATA_SET_KEYS as $requiredDataSetKey) {
-            $this->validateRequireDataSetByKey($dataSet, $requiredDataSetKey);
-        }
     }
 
     /**

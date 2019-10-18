@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProfile\Communication\Expander;
+namespace Spryker\Zed\MerchantProfile\Business\MerchantProfile\Expander;
 
 use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
@@ -52,7 +52,7 @@ class MerchantProfileExpander implements MerchantProfileExpanderInterface
     protected function createMerchantProfileCriteriaFilterTransfer(MerchantTransfer $merchantTransfer): MerchantProfileCriteriaFilterTransfer
     {
         $merchantProfileCriteriaFilterTransfer = new MerchantProfileCriteriaFilterTransfer();
-        $merchantProfileCriteriaFilterTransfer->setIdMerchant($merchantTransfer->getIdMerchant());
+        $merchantProfileCriteriaFilterTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
 
         return $merchantProfileCriteriaFilterTransfer;
     }

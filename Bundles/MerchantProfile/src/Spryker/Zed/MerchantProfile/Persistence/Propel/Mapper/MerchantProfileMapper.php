@@ -22,7 +22,6 @@ class MerchantProfileMapper implements MerchantProfileMapperInterface
         SpyMerchantProfile $merchantProfileEntity,
         MerchantProfileTransfer $merchantProfileTransfer
     ): MerchantProfileTransfer {
-        $merchantProfileTransfer = new MerchantProfileTransfer();
         $merchantProfileTransfer->fromArray(
             $merchantProfileEntity->toArray(),
             true
