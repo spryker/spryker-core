@@ -10,7 +10,7 @@ namespace Spryker\Zed\Availability\Dependency\Facade;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
-class AvailabilityToStockBridge implements AvailabilityToStockInterface
+class AvailabilityToStockFacadeBridge implements AvailabilityToStockFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Stock\Business\StockFacadeInterface
@@ -45,16 +45,6 @@ class AvailabilityToStockBridge implements AvailabilityToStockInterface
     public function isNeverOutOfStockForStore($sku, StoreTransfer $storeTransfer)
     {
         return $this->stockFacade->isNeverOutOfStockForStore($sku, $storeTransfer);
-    }
-
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
-     */
-    public function getStockProductsByIdProduct($idProductConcrete)
-    {
-        return $this->stockFacade->getStockProductsByIdProduct($idProductConcrete);
     }
 
     /**

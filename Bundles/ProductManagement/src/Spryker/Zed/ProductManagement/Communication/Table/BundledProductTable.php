@@ -23,6 +23,7 @@ use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToAvailabil
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToMoneyInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreFacadeInterface;
 use Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEncodingInterface;
 
 class BundledProductTable extends AbstractTable
@@ -76,6 +77,11 @@ class BundledProductTable extends AbstractTable
     protected $priceFacade;
 
     /**
+     * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Service\ProductManagementToUtilEncodingInterface $utilEncodingService
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface $priceProductFacade
@@ -83,6 +89,7 @@ class BundledProductTable extends AbstractTable
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToAvailabilityInterface $availabilityFacade
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceInterface $priceFacade
+     * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreFacadeInterface $storeFacade
      * @param int|null $idProductConcrete
      */
     public function __construct(
@@ -93,6 +100,7 @@ class BundledProductTable extends AbstractTable
         ProductManagementToAvailabilityInterface $availabilityFacade,
         LocaleTransfer $localeTransfer,
         ProductManagementToPriceInterface $priceFacade,
+        ProductManagementToStoreFacadeInterface $storeFacade,
         $idProductConcrete = null
     ) {
         $this->setTableIdentifier('bundled-product-table');
@@ -104,6 +112,7 @@ class BundledProductTable extends AbstractTable
         $this->idProductConcrete = $idProductConcrete;
         $this->localeTransfer = $localeTransfer;
         $this->priceFacade = $priceFacade;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -269,7 +278,11 @@ class BundledProductTable extends AbstractTable
     protected function getAvailability(SpyProduct $productConcreteEntity): Decimal
     {
         if (!$productConcreteEntity->getIsNeverOutOfStock()) {
-            return $this->availabilityFacade->calculateAvailabilityForProduct($productConcreteEntity->getSku());
+            return $this->availabilityFacade
+                ->calculateAvailabilityForProductWithStore(
+                    $productConcreteEntity->getSku(),
+                    $this->storeFacade->getCurrentStore()
+                );
         }
 
         return new Decimal(0);

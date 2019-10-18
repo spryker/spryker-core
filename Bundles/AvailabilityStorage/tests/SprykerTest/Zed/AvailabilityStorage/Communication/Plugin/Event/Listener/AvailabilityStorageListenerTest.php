@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorageQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
 use Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageBusinessFactory;
 use Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacade;
@@ -182,6 +183,6 @@ class AvailabilityStorageListenerTest extends Unit
 
         $this->assertNotNull($availabilityStorageEntity);
         $data = $availabilityStorageEntity->getData();
-        $this->assertEquals($this->spyAvailabilityAbstract->getQuantity(), $data['quantity']);
+        $this->assertEquals((new Decimal($this->spyAvailabilityAbstract->getQuantity()))->trim(), $data['quantity']);
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
 class ProductManagementToAvailabilityBridge implements ProductManagementToAvailabilityInterface
@@ -26,11 +27,12 @@ class ProductManagementToAvailabilityBridge implements ProductManagementToAvaila
 
     /**
      * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function calculateAvailabilityForProduct(string $sku): Decimal
+    public function calculateAvailabilityForProductWithStore(string $sku, StoreTransfer $storeTransfer): Decimal
     {
-        return $this->availabilityFacade->calculateAvailabilityForProduct($sku);
+        return $this->availabilityFacade->calculateAvailabilityForProductWithStore($sku, $storeTransfer);
     }
 }

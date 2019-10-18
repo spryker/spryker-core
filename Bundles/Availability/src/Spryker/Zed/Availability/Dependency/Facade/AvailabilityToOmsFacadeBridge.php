@@ -10,7 +10,7 @@ namespace Spryker\Zed\Availability\Dependency\Facade;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
-class AvailabilityToOmsBridge implements AvailabilityToOmsInterface
+class AvailabilityToOmsFacadeBridge implements AvailabilityToOmsFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Oms\Business\OmsFacadeInterface

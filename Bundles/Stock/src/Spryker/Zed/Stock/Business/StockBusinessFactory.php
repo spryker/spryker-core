@@ -125,7 +125,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Stock\Dependency\Facade\StockToProductInterface
      */
-    protected function getProductFacade()
+    public function getProductFacade()
     {
         return $this->getProvidedDependency(StockDependencyProvider::FACADE_PRODUCT);
     }
@@ -133,7 +133,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface
      */
-    protected function getTouchFacade()
+    public function getTouchFacade()
     {
         return $this->getProvidedDependency(StockDependencyProvider::FACADE_TOUCH);
     }
@@ -141,7 +141,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface[]
      */
-    protected function getStockUpdateHandlerPlugins()
+    public function getStockUpdateHandlerPlugins()
     {
         return $this->getProvidedDependency(StockDependencyProvider::PLUGINS_STOCK_UPDATE);
     }
@@ -149,7 +149,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Stock\Dependency\Facade\StockToStoreFacadeInterface
      */
-    protected function getStoreFacade()
+    public function getStoreFacade()
     {
         return $this->getProvidedDependency(StockDependencyProvider::FACADE_STORE);
     }
