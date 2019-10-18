@@ -94,6 +94,13 @@ interface ShipmentRepositoryInterface
     public function findShipmentMethodByName(string $shipmentMethodName): ?ShipmentMethodTransfer;
 
     /**
+     * @param string $shipmentMethodKey
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findShipmentMethodByKey(string $shipmentMethodKey): ?ShipmentMethodTransfer;
+
+    /**
      * @param int $idShipmentMethod
      * @param int $idStore
      *

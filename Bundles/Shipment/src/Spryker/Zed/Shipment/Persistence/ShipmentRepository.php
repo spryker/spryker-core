@@ -174,6 +174,30 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     }
 
     /**
+     * @param string $shipmentMethodKey
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findShipmentMethodByKey(string $shipmentMethodKey): ?ShipmentMethodTransfer
+    {
+        $shipmentMethodEntity = $this->queryMethodsWithMethodPricesAndCarrier()
+            ->filterByShipmentMethodKey($shipmentMethodKey)
+            ->find()
+            ->getFirst();
+
+        if ($shipmentMethodEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createShipmentMethodMapper()
+            ->mapShipmentMethodEntityToShipmentMethodTransferWithPrices(
+                $shipmentMethodEntity,
+                new ShipmentMethodTransfer()
+            );
+    }
+
+    /**
      * @param int $idShipmentMethod
      * @param int $idStore
      *

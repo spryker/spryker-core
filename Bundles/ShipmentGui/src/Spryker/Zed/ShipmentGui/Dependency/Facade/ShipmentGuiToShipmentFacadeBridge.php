@@ -116,4 +116,34 @@ class ShipmentGuiToShipmentFacadeBridge implements ShipmentGuiToShipmentFacadeIn
     {
         return $this->shipmentFacade->createCarrier($carrierTransfer);
     }
+
+    /**
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findShipmentMethodByName(string $name): ?ShipmentMethodTransfer
+    {
+        return $this->shipmentFacade->findShipmentMethodByName($name);
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findShipmentMethodByKey(string $key): ?ShipmentMethodTransfer
+    {
+        return $this->shipmentFacade->findShipmentMethodByKey($key);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
+     *
+     * @return int|null
+     */
+    public function createMethod(ShipmentMethodTransfer $methodTransfer): ?int
+    {
+        return $this->shipmentFacade->createMethod($methodTransfer);
+    }
 }

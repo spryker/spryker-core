@@ -98,9 +98,7 @@ class ShipmentMethodForm extends ViewShipmentMethodForm
             'constraints' => [
                 new NotBlank(),
                 new Required(),
-//                new Callback([
-//                    'callback' => $this->validateUniqueName($options),
-//                ]),
+                $this->getFactory()->createShipmentMethodKeyUniqueConstraint(),
             ],
         ]);
 
@@ -119,28 +117,12 @@ class ShipmentMethodForm extends ViewShipmentMethodForm
             'constraints' => [
                 new NotBlank(),
                 new Required(),
-//                new Callback([
-//                    'callback' => $this->validateUniqueName($options),
-//                ]),
+                $this->getFactory()->createShipmentMethodNameUniqueConstraint(),
             ],
         ]);
 
         return $this;
     }
-
-//    /**
-//     * @param array $options
-//     *
-//     * @return callable
-//     */
-//    protected function validateUniqueName(array $options): callable
-//    {
-//        return function ($name, ExecutionContextInterface $contextInterface) use ($options) {
-//            if (!$this->getFacade()->isShipmentMethodUniqueForCarrier($options[static::OPTION_DATA])) {
-//                $contextInterface->addViolation(static::MESSAGE_SHIPMENT_METHOD_NAME_ALREADY_EXISTS_FOR_SELECTED_PROVIDER);
-//            }
-//        };
-//    }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

@@ -458,4 +458,32 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
         return $this->getRepository()
             ->isShipmentMethodUniqueForCarrier($shipmentMethodTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findShipmentMethodByName(string $name): ?ShipmentMethodTransfer
+    {
+        return $this->getRepository()->findShipmentMethodByName($name);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $key
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findShipmentMethodByKey(string $key): ?ShipmentMethodTransfer
+    {
+        return $this->getRepository()->findShipmentMethodByKey($key);
+    }
 }

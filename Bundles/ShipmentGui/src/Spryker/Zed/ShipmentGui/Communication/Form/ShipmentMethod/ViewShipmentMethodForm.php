@@ -98,6 +98,7 @@ class ViewShipmentMethodForm extends AbstractType
             $this->getFactory()->getMoneyCollectionFormTypePlugin()->getType(),
             [
                 static::OPTION_AMOUNT_PER_STORE => true,
+                'required' => false,
                 'disabled' => $options[ViewShipmentMethodFormDataProvider::OPTION_PRICES_DISABLED],
             ]
         );

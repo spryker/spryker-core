@@ -36,7 +36,8 @@ class ShipmentMethodTabs extends AbstractTabs
     {
         $this->addConfigurationTab($tabsViewTransfer)
             ->addPriceTaxTab($tabsViewTransfer)
-            ->addStoreRelationTab($tabsViewTransfer);
+            ->addStoreRelationTab($tabsViewTransfer)
+            ->setFooter($tabsViewTransfer);
 
         return $tabsViewTransfer;
     }

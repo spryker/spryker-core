@@ -17,6 +17,8 @@ use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentCarrierFormD
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentGroupFormType;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentCarrier\ShipmentCarrierFormType;
+use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentMethod\Constraint\ShipmentMethodKeyUniqueConstraint;
+use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentMethod\Constraint\ShipmentMethodNameUniqueConstraint;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentMethod\ShipmentMethodForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentMethod\ViewShipmentMethodForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\Transformer\StringToNumberTransformer;
@@ -174,6 +176,26 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createShipmentMethodForm(ShipmentMethodTransfer $data, $options = []): FormInterface
     {
         return $this->getFormFactory()->create(ShipmentMethodForm::class, $data, $options);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentGui\Communication\Form\ShipmentMethod\Constraint\ShipmentMethodNameUniqueConstraint
+     */
+    public function createShipmentMethodNameUniqueConstraint(): ShipmentMethodNameUniqueConstraint
+    {
+        return new ShipmentMethodNameUniqueConstraint([
+            ShipmentMethodNameUniqueConstraint::OPTION_SHIPMENT_FACADE => $this->getShipmentFacade(),
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentGui\Communication\Form\ShipmentMethod\Constraint\ShipmentMethodKeyUniqueConstraint
+     */
+    public function createShipmentMethodKeyUniqueConstraint(): ShipmentMethodKeyUniqueConstraint
+    {
+        return new ShipmentMethodKeyUniqueConstraint([
+            ShipmentMethodKeyUniqueConstraint::OPTION_SHIPMENT_FACADE => $this->getShipmentFacade(),
+        ]);
     }
 
     /**

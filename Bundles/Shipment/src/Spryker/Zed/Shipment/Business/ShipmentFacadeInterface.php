@@ -401,4 +401,28 @@ interface ShipmentFacadeInterface
      * @return array
      */
     public function groupEventsByShipment(array $events, iterable $orderItemTransfers): array;
+
+    /**
+     * Specification:
+     * - Finds shipment method by the given name.
+     *
+     * @api
+     *
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findShipmentMethodByName(string $name): ?ShipmentMethodTransfer;
+
+    /**
+     * Specification:
+     * - Finds shipment method by the given key.
+     *
+     * @api
+     *
+     * @param string $key
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findShipmentMethodByKey(string $key): ?ShipmentMethodTransfer;
 }
