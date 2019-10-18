@@ -28,18 +28,4 @@ class CustomerService extends AbstractService implements CustomerServiceInterfac
     {
         return $this->getFactory()->createCustomerAddressKeyGenerator()->getUniqueAddressKey($addressTransfer);
     }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
-     *
-     * @return \Generated\Shared\Transfer\AddressTransfer
-     */
-    public function sanitizeUniqueAddressValues(AddressTransfer $addressTransfer): AddressTransfer
-    {
-        return $this->getFactory()->createCustomerAddressSanitizer()->sanitizeUniqueAddressValues($addressTransfer);
-    }
 }
