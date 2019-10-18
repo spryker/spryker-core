@@ -63,7 +63,7 @@ class ResponsePagination implements ResponsePaginationInterface
             RestLinkInterface::LINK_FIRST => $domain . 0 . $limit,
         ];
 
-        if ($restRequest->getPage()->getOffset() > 0) {
+        if ($restRequest->getPage()->getOffset() > 1) {
             $offsetLinks[RestLinkInterface::LINK_PREV]
                 = $domain . $pageOffsetsTransfer->getPrevOffset() . $limit;
         }

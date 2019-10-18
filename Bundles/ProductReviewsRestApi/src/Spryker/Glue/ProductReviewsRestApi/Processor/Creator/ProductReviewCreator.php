@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ProductReviewCreator implements ProductReviewCreatorInterface
 {
-    protected const FORMAT_SELF_LINK_PRODUCT_REVIEWS_RESOURCE = '%s/%s/%s';
+    protected const FORMAT_SELF_LINK_PRODUCT_REVIEWS_RESOURCE = '%s/%s';
 
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -76,14 +76,15 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
             );
         }
 
+        $resourceId = $productReviewResponseTransfer->getProductReview()->getIdProductReview();
         $restResource = $this->restResourceBuilder->createRestResource(
             ProductReviewsRestApiConfig::RESOURCE_PRODUCT_REVIEWS,
-            $productReviewResponseTransfer->getProductReview()->getIdProductReview(),
+            $resourceId,
             $restProductReviewAttributesTransfer
         );
 
         return $restResponse
-            ->addResource($restResource->addLink(RestLinkInterface::LINK_SELF, $this->createSelfLink($parentResource->getId())))
+            ->addResource($restResource->addLink(RestLinkInterface::LINK_SELF, $this->createSelfLink($resourceId)))
             ->setStatus(Response::HTTP_ACCEPTED);
     }
 
@@ -101,17 +102,16 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
     }
 
     /**
-     * @param string $abstractSku
+     * @param string $resourceId
      *
      * @return string
      */
-    protected function createSelfLink(string $abstractSku): string
+    protected function createSelfLink(string $resourceId): string
     {
         return sprintf(
             static::FORMAT_SELF_LINK_PRODUCT_REVIEWS_RESOURCE,
-            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-            $abstractSku,
-            ProductReviewsRestApiConfig::RESOURCE_PRODUCT_REVIEWS
+            ProductReviewsRestApiConfig::RESOURCE_PRODUCT_REVIEWS,
+            $resourceId
         );
     }
 }
