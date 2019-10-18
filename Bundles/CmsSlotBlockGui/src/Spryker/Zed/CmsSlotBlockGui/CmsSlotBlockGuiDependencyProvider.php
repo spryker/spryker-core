@@ -7,15 +7,23 @@
 
 namespace Spryker\Zed\CmsSlotBlockGui;
 
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
+use Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsBlockFacadeBridge;
 use Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotBlockFacadeBridge;
 use Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CmsSlotBlockGui\CmsSlotBlockGuiConfig getConfig()
+ */
 class CmsSlotBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CMS_SLOT_BLOCK = 'FACADE_CMS_SLOT_BLOCK';
     public const FACADE_CMS_SLOT = 'FACADE_CMS_SLOT';
+    public const FACADE_CMS_BLOCK = 'FACADE_CMS_BLOCK';
+
+    public const PROPEL_QUERY_CMS_BLOCK = 'PROPEL_QUERY_CMS_BLOCK';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -28,6 +36,8 @@ class CmsSlotBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addCmsSlotBlockFacade($container);
         $container = $this->addCmsSlotFacade($container);
+        $container = $this->addCmsBlockFacade($container);
+        $container = $this->addCmsBlockPropelQuery($container);
 
         return $container;
     }
@@ -55,6 +65,34 @@ class CmsSlotBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_CMS_SLOT, function (Container $container) {
             return new CmsSlotBlockGuiToCmsSlotFacadeBridge($container->getLocator()->cmsSlot()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCmsBlockFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_CMS_BLOCK, function (Container $container) {
+            return new CmsSlotBlockGuiToCmsBlockFacadeBridge($container->getLocator()->cmsBlock()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCmsBlockPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_CMS_BLOCK, function (Container $container) {
+            return SpyCmsBlockQuery::create();
         });
 
         return $container;

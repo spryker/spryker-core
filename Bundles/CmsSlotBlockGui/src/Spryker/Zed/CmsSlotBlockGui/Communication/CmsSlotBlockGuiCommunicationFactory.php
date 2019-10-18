@@ -8,33 +8,47 @@
 namespace Spryker\Zed\CmsSlotBlockGui\Communication;
 
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
-use Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlockQuery;
 use Spryker\Zed\CmsSlotBlockGui\CmsSlotBlockGuiDependencyProvider;
 use Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\SlotBlockCollectionDataProvider;
-use Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\SlotBlockDataProviderInterface;
+use Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\SlotBlockCollectionDataProviderInterface;
 use Spryker\Zed\CmsSlotBlockGui\Communication\Form\SlotBlock\SlotBlockCollectionForm;
 use Spryker\Zed\CmsSlotBlockGui\Communication\Table\CmsSlotBlockTable;
+use Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsBlockFacadeInterface;
 use Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotBlockFacadeInterface;
 use Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
+/**
+ * @method \Spryker\Zed\CmsSlotBlockGui\CmsSlotBlockGuiConfig getConfig()
+ */
 class CmsSlotBlockGuiCommunicationFactory extends AbstractCommunicationFactory
 {
-    public function createSlotBlockTable(): CmsSlotBlockTable
+    /**
+     * @param int $idCmsSlotTemplate
+     * @param int $idCmsSlot
+     *
+     * @return \Spryker\Zed\CmsSlotBlockGui\Communication\Table\CmsSlotBlockTable
+     */
+    public function createSlotBlockTable(int $idCmsSlotTemplate, int $idCmsSlot): CmsSlotBlockTable
     {
-        return new CmsSlotBlockTable(new SpyCmsBlockQuery(), 1);
+        return new CmsSlotBlockTable(
+            $this->getCmsBlockPropelQuery(),
+            $idCmsSlotTemplate,
+            $idCmsSlot,
+            $this->getCmsBlockFacade()
+        );
     }
 
     /**
-     * @param \Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\SlotBlockDataProviderInterface $slotBlockDataProvider
+     * @param \Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\SlotBlockCollectionDataProviderInterface $slotBlockDataProvider
      * @param int $idCmsSlotTemplate
      * @param int $idCmsSlot
      *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createSlotBlockCollectionForm(
-        SlotBlockDataProviderInterface $slotBlockDataProvider,
+        SlotBlockCollectionDataProviderInterface $slotBlockDataProvider,
         int $idCmsSlotTemplate,
         int $idCmsSlot
     ): FormInterface {
@@ -46,9 +60,9 @@ class CmsSlotBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\SlotBlockDataProviderInterface
+     * @return \Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\SlotBlockCollectionDataProviderInterface
      */
-    public function createSlotBlockCollectionDataProvider(): SlotBlockDataProviderInterface
+    public function createSlotBlockCollectionDataProvider(): SlotBlockCollectionDataProviderInterface
     {
         return new SlotBlockCollectionDataProvider($this->getCmsSlotBlockFacade());
     }
@@ -67,5 +81,21 @@ class CmsSlotBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getCmsSlotFacade(): CmsSlotBlockGuiToCmsSlotFacadeInterface
     {
         return $this->getProvidedDependency(CmsSlotBlockGuiDependencyProvider::FACADE_CMS_SLOT);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsBlockFacadeInterface
+     */
+    public function getCmsBlockFacade(): CmsSlotBlockGuiToCmsBlockFacadeInterface
+    {
+        return $this->getProvidedDependency(CmsSlotBlockGuiDependencyProvider::FACADE_CMS_BLOCK);
+    }
+
+    /**
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
+     */
+    public function getCmsBlockPropelQuery(): SpyCmsBlockQuery
+    {
+        return $this->getProvidedDependency(CmsSlotBlockGuiDependencyProvider::PROPEL_QUERY_CMS_BLOCK);
     }
 }

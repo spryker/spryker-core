@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SlotBlockController extends AbstractController
 {
+    protected const PARAM_ID_CMS_SLOT_TEMPLATE = 'id-cms-slot-template';
+    protected const PARAM_ID_CMS_SLOT = 'id-cms-slot';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -23,9 +26,8 @@ class SlotBlockController extends AbstractController
      */
     public function indexAction(Request $request): array
     {
-        //todo
-        $idCmsSlotTemplate = 1;
-        $idCmsSlot = 1;
+        $idCmsSlotTemplate = $this->castId($request->query->get(static::PARAM_ID_CMS_SLOT_TEMPLATE));
+        $idCmsSlot = $this->castId($request->query->get(static::PARAM_ID_CMS_SLOT));
 
         $slotBlockCollectionDataProvider = $this->getFactory()->createSlotBlockCollectionDataProvider();
         $slotBlockCollectionForm = $this->getFactory()
@@ -42,18 +44,23 @@ class SlotBlockController extends AbstractController
 
         return $this->viewResponse([
             'slotName' => $this->getFactory()->getCmsSlotFacade()->findCmsSlotById($idCmsSlot)->getName(),
-            'slotBlockTable' => $this->getFactory()->createSlotBlockTable()->render(),
+            'slotBlockTable' => $this->getFactory()->createSlotBlockTable($idCmsSlotTemplate, $idCmsSlot)->render(),
             'slotBlockCollectionForm' => $slotBlockCollectionForm->createView(),
         ]);
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function tableAction(): JsonResponse
+    public function tableAction(Request $request): JsonResponse
     {
+        $idCmsSlotTemplate = $this->castId($request->query->get(static::PARAM_ID_CMS_SLOT_TEMPLATE));
+        $idCmsSlot = $this->castId($request->query->get(static::PARAM_ID_CMS_SLOT));
+
         return $this->jsonResponse(
-            $this->getFactory()->createSlotBlockTable()->fetchData()
+            $this->getFactory()->createSlotBlockTable($idCmsSlotTemplate, $idCmsSlot)->fetchData()
         );
     }
 }

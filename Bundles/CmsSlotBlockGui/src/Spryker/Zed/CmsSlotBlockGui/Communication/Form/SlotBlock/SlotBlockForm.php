@@ -15,9 +15,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\CmsSlotBlockGui\Communication\CmsSlotBlockGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsSlotBlockGui\CmsSlotBlockGuiConfig getConfig()
  */
 class SlotBlockForm extends AbstractType
 {
+    protected const FIELD_ID_SLOT_TEMPLATE = 'idSlotTemplate';
+    protected const FIELD_ID_SLOT = 'idSlot';
+    protected const FIELD_ID_CMS_BLOCK = 'idCmsBlock';
+    protected const FIELD_POSITION = 'position';
+
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -49,7 +55,7 @@ class SlotBlockForm extends AbstractType
      */
     protected function addIdSlotTemplateField(FormBuilderInterface $builder)
     {
-        $builder->add('idSlotTemplate', HiddenType::class);
+        $builder->add(static::FIELD_ID_SLOT_TEMPLATE, HiddenType::class);
 
         return $this;
     }
@@ -61,7 +67,7 @@ class SlotBlockForm extends AbstractType
      */
     protected function addIdSlotField(FormBuilderInterface $builder)
     {
-        $builder->add('idSlot', HiddenType::class);
+        $builder->add(static::FIELD_ID_SLOT, HiddenType::class);
 
         return $this;
     }
@@ -73,7 +79,7 @@ class SlotBlockForm extends AbstractType
      */
     protected function addIdBlockField(FormBuilderInterface $builder)
     {
-        $builder->add('idCmsBlock', HiddenType::class);
+        $builder->add(static::FIELD_ID_CMS_BLOCK, HiddenType::class);
 
         return $this;
     }
@@ -85,7 +91,7 @@ class SlotBlockForm extends AbstractType
      */
     protected function addPositionField(FormBuilderInterface $builder)
     {
-        $builder->add('position', HiddenType::class);
+        $builder->add(static::FIELD_POSITION, HiddenType::class);
 
         return $this;
     }

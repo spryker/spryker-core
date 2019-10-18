@@ -11,6 +11,7 @@
 var TemplateTable = function (options) {
     var _self = this;
     this.templateTableId = '';
+    this.slotTemplateClass = '';
     this.templateTable = {};
     this.slotTable = {};
 
@@ -40,11 +41,16 @@ var TemplateTable = function (options) {
     this.loadSlotTable = function (element, api, type, indexes) {
         var rowData = api.row(indexes[0]).data();
         _self.slotTable.loadSlotTableByIdTemplate(rowData[0]);
+        _self.setSlotTemplateName(rowData[1]);
     };
 
     this.getDataTableApi = function (settings) {
         return new $.fn.dataTable.Api(settings);
-    }
+    };
+
+    this.setSlotTemplateName = function (templateName) {
+        $(_self.slotTemplateClass).html(`\`${templateName}\``);
+    };
 };
 
 /**

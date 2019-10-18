@@ -5,10 +5,11 @@ Description,Description
 Edit,Edit
 ID,ID
 "List of Slots","List of Slots"
-"List of Templates","List of Templates"
+"List of Templates for","List of Templates for"
 Name,Name
 "Overview of Slots","Overview of Slots"
 Ownership,Ownership
 Slots,Slots
 "Slot Key","Slot Key"
 Status,Status
+Template,Template

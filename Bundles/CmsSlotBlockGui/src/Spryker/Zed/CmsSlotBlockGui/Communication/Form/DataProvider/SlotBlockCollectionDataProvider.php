@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotBlockFacadeInterface;
 
-class SlotBlockCollectionDataProvider implements SlotBlockDataProviderInterface
+class SlotBlockCollectionDataProvider implements SlotBlockCollectionDataProviderInterface
 {
     /**
      * @var \Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotBlockFacadeInterface

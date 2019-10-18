@@ -15,9 +15,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\CmsSlotBlockGui\Communication\CmsSlotBlockGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsSlotBlockGui\CmsSlotBlockGuiConfig getConfig()
  */
 class SlotBlockCollectionForm extends AbstractType
 {
+    protected const FIELD_CMS_SLOT_BLOCKS = 'cmsSlotBlocks';
+
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -38,8 +41,17 @@ class SlotBlockCollectionForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        // Move individual additions into their own protected methods to allow easy overriding in projects.
-        $builder->add('cmsSlotBlocks', CollectionType::class, [
+        $this->addCmsSlotBlockField($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addCmsSlotBlockField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_CMS_SLOT_BLOCKS, CollectionType::class, [
             'entry_type' => SlotBlockForm::class,
             'label' => false,
             'prototype' => true,
@@ -49,9 +61,14 @@ class SlotBlockCollectionForm extends AbstractType
                 'label' => false,
             ],
         ]);
+
+        return $this;
     }
 
-    public function getBlockPrefix()
+    /**
+     * @return string
+     */
+    public function getBlockPrefix(): string
     {
         return 'slot_blocks';
     }
