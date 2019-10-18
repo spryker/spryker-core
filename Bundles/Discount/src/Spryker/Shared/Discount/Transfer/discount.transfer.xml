@@ -47,19 +47,24 @@
         <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
         <property name="priceMode" type="string"/>
         <property name="currency" type="Currency"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="Item">
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
         <property name="sku" type="string"/>
         <property name="abstractSku" type="string"/>
+        <property name="quantity" type="int"/>
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="productOptions" type="ProductOption[]" singular="productOption"/>
+        <property name="unitPrice" type="int"/>
     </transfer>
 
     <transfer name="DiscountableItem">
         <property name="quantity" type="int"/>
         <property name="unitGrossPrice" type="int" deprecated="use unitPrice instead"/>
         <property name="unitPrice" type="int"/>
-        <property name="originalItemCalculatedDiscounts" type="CalculatedDiscount[]"/>
+        <property name="originalItemCalculatedDiscounts" type="CalculatedDiscount[]" singular="originalItemCalculatedDiscounts"/>
         <property name="originalItem" type="Item"/>
     </transfer>
 
@@ -73,7 +78,7 @@
     </transfer>
 
     <transfer name="CollectedDiscount">
-        <property name="discountableItems" type="DiscountableItem[]"/>
+        <property name="discountableItems" type="DiscountableItem[]" singular="discountableItems"/>
         <property name="discount" type="Discount"/>
     </transfer>
 
@@ -83,6 +88,7 @@
         <property name="totals" type="Totals"/>
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
         <property name="currency" type="Currency"/>
+        <property name="idSalesOrder" type="int"/>
     </transfer>
 
     <transfer name="OrderItems">
@@ -94,7 +100,7 @@
         <property name="attribute" type="string"/>
         <property name="operator" type="string"/>
         <property name="value" type="string"/>
-        <property name="acceptedTypes" type="array"/>
+        <property name="acceptedTypes" type="array" singular="acceptedTypes"/>
     </transfer>
 
     <transfer name="VoucherCreateInfo">
@@ -123,8 +129,8 @@
 
     <transfer name="StoreRelation">
         <property name="idEntity" type="int"/>
-        <property name="idStores" type="int[]"/>
-        <property name="stores" type="Store[]"/>
+        <property name="idStores" type="int[]" singular="idStores"/>
+        <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
 
     <transfer name="Store">
@@ -183,10 +189,13 @@
 
     <transfer name="Message">
         <property name="type" type="string"/>
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
     <transfer name="ProductOption">
         <property name="idSalesOrderItemOption" type="int"/>
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
     </transfer>
 
     <transfer name="Totals">
@@ -196,11 +205,42 @@
 
     <transfer name="Expense">
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
+        <property name="idSalesExpense" type="int"/>
     </transfer>
 
     <transfer name="CheckoutError">
         <property name="message" type="string"/>
         <property name="errorCode" type="int"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="currency" type="Currency"/>
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
+        <property name="fkStore" type="int"/>
+        <property name="idEntity" type="int"/>
+    </transfer>
+
+    <transfer name="StoreWithCurrency">
+        <property name="currencies" type="Currency[]" singular="currency"/>
+    </transfer>
+
+    <transfer name="TabsView">
+        <property name="footerTemplate" type="string"/>
+        <property name="tabs" type="TabItem[]" singular="tab"/>
+        <property name="isNavigable" type="bool"/>
+    </transfer>
+
+    <transfer name="TabItem">
+        <property name="name" type="string"/>
+        <property name="hasError" type="bool"/>
+        <property name="title" type="string"/>
+        <property name="template" type="string"/>
     </transfer>
 
 </transfers>

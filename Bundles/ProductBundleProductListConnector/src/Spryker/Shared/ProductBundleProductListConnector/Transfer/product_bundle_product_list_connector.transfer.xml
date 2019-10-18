@@ -19,7 +19,7 @@
     </transfer>
 
     <transfer name="ProductListProductConcreteRelation">
-        <property name="productIds" type="int[]"/>
+        <property name="productIds" type="int[]" singular="productIds"/>
     </transfer>
 
     <transfer name="ProductListResponse">
@@ -29,7 +29,15 @@
 
     <transfer name="Message">
         <property name="value" type="string"/>
-        <property name="parameters" type="array"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="ProductBundleCriteriaFilter">
+        <property name="idBundledProduct" type="int"/>
+    </transfer>
+
+    <transfer name="ProductBundleCollection">
+        <property name="productBundles" type="ProductBundle[]" singular="productBundle"/>
     </transfer>
 
 </transfers>

@@ -5,6 +5,21 @@
 
     <transfer name="Payment">
         <property name="amount" type="int"/>
+        <property name="giftCard" type="GiftCard"/>
+    </transfer>
+
+    <transfer name="GiftCard">
+        <property name="code" type="string"/>
+        <property name="value" type="int"/>
+        <property name="idGiftCard" type="int"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="saveOrder" type="SaveOrder"/>
+    </transfer>
+
+    <transfer name="SaveOrder">
+        <property name="idSalesOrder" type="int"/>
     </transfer>
 
 </transfers>

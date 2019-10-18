@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Router\Business;
 
+use Spryker\Shared\Router\Cache\CacheInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Router\Business\Cache\Cache;
 use Spryker\Zed\Router\Business\Loader\ClosureLoader;
 use Spryker\Zed\Router\Business\Loader\LoaderInterface;
 use Spryker\Zed\Router\Business\Resource\ResourceInterface;
@@ -88,5 +90,13 @@ class RouterBusinessFactory extends AbstractBusinessFactory
     public function getRouterEnhancerPlugins(): array
     {
         return $this->getProvidedDependency(RouterDependencyProvider::ROUTER_ENHANCER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Shared\Router\Cache\CacheInterface
+     */
+    public function createCache(): CacheInterface
+    {
+        return new Cache($this->createRouter(), $this->getConfig());
     }
 }

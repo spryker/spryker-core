@@ -10,8 +10,8 @@
     </transfer>
 
     <transfer name="QueryJoin">
-        <property name="left" type="array"/>
-        <property name="right" type="array"/>
+        <property name="left" type="array" singular="left"/>
+        <property name="right" type="array" singular="right"/>
         <property name="joinType" type="string"/>
         <property name="relation" type="string"/>
         <property name="condition" type="string"/>
@@ -23,5 +23,11 @@
 
     <transfer name="CompanyBusinessUnit">
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantRelationship">
+        <property name="merchant" type="Merchant"/>
+        <property name="ownerCompanyBusinessUnit" type="CompanyBusinessUnit"/>
+        <property name="idMerchantRelationship" type="int"/>
     </transfer>
 </transfers>

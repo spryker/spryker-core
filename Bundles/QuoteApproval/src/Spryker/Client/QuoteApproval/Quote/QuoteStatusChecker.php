@@ -93,4 +93,32 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
 
         return $quoteTransfer === QuoteApprovalConfig::STATUS_APPROVED;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteDeclined(QuoteTransfer $quoteTransfer): bool
+    {
+        $quoteStatus = $this->quoteStatusCalculator
+            ->calculateQuoteStatus($quoteTransfer);
+
+        return $quoteStatus === QuoteApprovalConfig::STATUS_DECLINED;
+    }
+
+    /**
+     * @see \Spryker\Zed\QuoteApproval\Business\Quote\QuoteStatusChecker::isQuoteInApprovalProcess()
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteInApprovalProcess(QuoteTransfer $quoteTransfer): bool
+    {
+        return in_array($this->quoteStatusCalculator->calculateQuoteStatus($quoteTransfer), [
+            QuoteApprovalConfig::STATUS_WAITING,
+            QuoteApprovalConfig::STATUS_APPROVED,
+        ], true);
+    }
 }

@@ -7,21 +7,11 @@
 
 namespace Spryker\Zed\Console\Dependency\Plugin;
 
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
+use Spryker\Shared\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface as SharedConsolePreRunHookPluginInterface;
 
-interface ConsolePreRunHookPluginInterface
+/**
+ * @deprecated Use `\Spryker\Shared\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface` instead.
+ */
+interface ConsolePreRunHookPluginInterface extends SharedConsolePreRunHookPluginInterface
 {
-    /**
-     * Specification
-     *  - The pre-run plugins will be executed before each console commands
-     *
-     * @api
-     *
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return int
-     */
-    public function preRun(InputInterface $input, OutputInterface $output);
 }
