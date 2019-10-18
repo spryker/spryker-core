@@ -107,7 +107,9 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createViewShipmentMethodFormDataProvider(): ViewShipmentMethodFormDataProvider
     {
-        return new ViewShipmentMethodFormDataProvider($this->getTaxFacade());
+        return new ViewShipmentMethodFormDataProvider(
+            $this->getTaxFacade()
+        );
     }
 
     /**

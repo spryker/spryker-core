@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShipmentGui\Communication\Form\ShipmentMethod;
 
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ShipmentGui\Communication\Provider\ViewShipmentMethodFormDataProvider;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -97,7 +98,7 @@ class ViewShipmentMethodForm extends AbstractType
             static::FIELD_PRICES,
             $this->getFactory()->getMoneyCollectionFormTypePlugin()->getType(),
             [
-                static::OPTION_AMOUNT_PER_STORE => true,
+                ShipmentConstants::OPTION_AMOUNT_PER_STORE => true,
                 'required' => false,
                 'disabled' => $options[ViewShipmentMethodFormDataProvider::OPTION_PRICES_DISABLED],
             ]

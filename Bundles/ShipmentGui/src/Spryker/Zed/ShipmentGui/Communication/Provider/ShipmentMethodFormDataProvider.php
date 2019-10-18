@@ -36,8 +36,11 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery $carrierQuery
      * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToTaxFacadeInterface $taxFacade
      */
-    public function __construct(array $plugins, SpyShipmentCarrierQuery $carrierQuery, ShipmentGuiToTaxFacadeInterface $taxFacade)
-    {
+    public function __construct(
+        array $plugins,
+        SpyShipmentCarrierQuery $carrierQuery,
+        ShipmentGuiToTaxFacadeInterface $taxFacade
+    ) {
         parent::__construct($taxFacade);
         $this->plugins = $plugins;
         $this->carrierQuery = $carrierQuery;

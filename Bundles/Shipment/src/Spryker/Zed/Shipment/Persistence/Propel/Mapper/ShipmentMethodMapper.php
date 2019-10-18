@@ -20,6 +20,7 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
 
 class ShipmentMethodMapper implements ShipmentMethodMapperInterface
 {
+    protected const DEFAULT_FRACTION_DIGITS_VALUE = 2;
     /**
      * @var \Spryker\Zed\Shipment\Persistence\Propel\Mapper\StoreRelationMapperInterface
      */
@@ -98,7 +99,13 @@ class ShipmentMethodMapper implements ShipmentMethodMapperInterface
         SpyCurrency $currencyEntity,
         CurrencyTransfer $currencyTransfer
     ): CurrencyTransfer {
-        return $currencyTransfer->fromArray($currencyEntity->toArray(), true);
+        $currencyTransfer->fromArray($currencyEntity->toArray(), true);
+
+        if (!$currencyTransfer->getFractionDigits()) {
+            $currencyTransfer->setFractionDigits(static::DEFAULT_FRACTION_DIGITS_VALUE);
+        }
+
+        return $currencyTransfer;
     }
 
     /**
