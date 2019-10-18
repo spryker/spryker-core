@@ -51,6 +51,16 @@
                         <controller>shipment-method</controller>
                         <action>index</action>
                         <icon>fa fa-angle-right</icon>
+                        <pages>
+                            <shipment-method-view>
+                                <label>View</label>
+                                <title>View</title>
+                                <bundle>shipment-gui</bundle>
+                                <controller>view-shipment-method</controller>
+                                <action>index</action>
+                                <visible>0</visible>
+                            </shipment-method-view>
+                        </pages>
                     </shipment-method>
                 </pages>
             </shipments>

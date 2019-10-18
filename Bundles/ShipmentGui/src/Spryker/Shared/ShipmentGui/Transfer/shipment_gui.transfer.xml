@@ -34,4 +34,24 @@
         <property name="name" type="string"/>
         <property name="isActive" type="bool"/>
     </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="idShipmentMethod" type="int"/>
+        <property name="fkSalesExpense" type="int"/>
+        <property name="fkShipmentCarrier" type="int"/>
+        <property name="fkTaxSet" type="int"/>
+        <property name="availabilityPlugin" type="string"/>
+        <property name="pricePlugin" type="string"/>
+        <property name="deliveryTimePlugin" type="string"/>
+        <property name="name" type="string"/>
+        <property name="carrierName" type="string"/>
+        <property name="taxRate" type="float"/>
+        <property name="isActive" type="bool"/>
+        <property name="deliveryTime" type="int"/>
+        <property name="prices" type="MoneyValue[]" singular="price"/>
+        <property name="storeCurrencyPrice" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="storeRelation" type="StoreRelation"/>
+        <property name="shipmentMethodKey" type="string"/>
+    </transfer>
 </transfers>
