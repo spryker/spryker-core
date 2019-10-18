@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\AvailabilityGui\AvailabilityGuiDependencyProvider;
 use Spryker\Zed\AvailabilityGui\Communication\Form\AvailabilityStockForm;
 use Spryker\Zed\AvailabilityGui\Communication\Form\DataProvider\AvailabilityStockFormDataProvider;
-use Spryker\Zed\AvailabilityGui\Communication\Helper\ProductStockHelper;
-use Spryker\Zed\AvailabilityGui\Communication\Helper\ProductStockHelperInterface;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityAbstractTable;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityTable;
 use Spryker\Zed\AvailabilityGui\Communication\Table\BundledProductAvailabilityTable;
@@ -127,14 +125,6 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
             $availabilityGuiStockFormDataProvider->getData($idProduct, $sku),
             $availabilityGuiStockFormDataProvider->getOptions()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\AvailabilityGui\Communication\Helper\ProductStockHelperInterface
-     */
-    public function createProductStockHelper(): ProductStockHelperInterface
-    {
-        return new ProductStockHelper();
     }
 
     /**
