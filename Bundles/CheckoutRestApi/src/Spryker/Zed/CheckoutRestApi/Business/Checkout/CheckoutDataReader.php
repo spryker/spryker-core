@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\CheckoutRestApi\Business\Checkout;
 
-use ArrayObject;
-use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -17,8 +15,6 @@ use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestCheckoutErrorTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Address\AddressReaderInterface;
@@ -93,10 +89,8 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
 
         $quoteTransfer = $this->addItemLevelShipmentTransfer($quoteTransfer);
 
-        $shipmentMethodsTransfer = $this->getShipmentMethodsTransfer($quoteTransfer);
-
         $checkoutDataTransfer = (new RestCheckoutDataTransfer())
-            ->setShipmentMethods($shipmentMethodsTransfer)
+            ->setShipmentMethods($this->getShipmentMethodsTransfer($quoteTransfer))
             ->setPaymentProviders($this->getPaymentProviders())
             ->setAddresses($this->addressReader->getAddressesTransfer($quoteTransfer))
             ->setAvailablePaymentMethods($this->getAvailablePaymentMethods($quoteTransfer));
@@ -120,24 +114,6 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
 
         if ($shipmentMethodsTransfer === false) {
             return new ShipmentMethodsTransfer();
-        }
-
-        return $shipmentMethodsTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
-     */
-    protected function getShipmentMethodsTransferFilteredByCurrentStore(QuoteTransfer $quoteTransfer): ShipmentMethodsTransfer
-    {
-        $shipmentMethodsTransfer = $this->shipmentFacade->getAvailableMethods($quoteTransfer);
-
-        foreach ($shipmentMethodsTransfer->getMethods() as $shipmentMethodTransfer) {
-            $moneyValueTransfers = new ArrayObject();
-            $moneyValueTransfers->append($this->findMoneyValueTransfer($shipmentMethodTransfer, $quoteTransfer->getStore()));
-            $shipmentMethodTransfer->setPrices($moneyValueTransfers);
         }
 
         return $shipmentMethodsTransfer;
@@ -172,45 +148,6 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
                 (new RestCheckoutErrorTransfer())
                     ->setErrorIdentifier(CheckoutRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND)
             );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Generated\Shared\Transfer\MoneyValueTransfer|null
-     */
-    protected function findMoneyValueTransfer(
-        ShipmentMethodTransfer $shipmentMethodTransfer,
-        StoreTransfer $storeTransfer
-    ): ?MoneyValueTransfer {
-        foreach ($shipmentMethodTransfer->getPrices() as $moneyValueTransfer) {
-            if ($this->isMoneyValueTransferForCurrentStoreAndCurrency(
-                $moneyValueTransfer,
-                $storeTransfer,
-                $shipmentMethodTransfer
-            )) {
-                return $moneyValueTransfer;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     *
-     * @return bool
-     */
-    protected function isMoneyValueTransferForCurrentStoreAndCurrency(
-        MoneyValueTransfer $moneyValueTransfer,
-        StoreTransfer $storeTransfer,
-        ShipmentMethodTransfer $shipmentMethodTransfer
-    ): bool {
-        return $moneyValueTransfer->getFkStore() === $storeTransfer->getIdStore()
-            && $moneyValueTransfer->getCurrency()->getCode() === $shipmentMethodTransfer->getCurrencyIsoCode();
     }
 
     /**
