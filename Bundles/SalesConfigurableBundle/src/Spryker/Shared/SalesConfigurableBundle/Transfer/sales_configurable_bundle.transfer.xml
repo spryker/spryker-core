@@ -7,10 +7,12 @@
         <property name="configuredBundleItem" type="ConfiguredBundleItem"/>
         <property name="configuredBundle" type="ConfiguredBundle"/>
         <property name="salesOrderConfiguredBundleItem" type="SalesOrderConfiguredBundleItem"/>
+        <property name="idSalesOrderItem" type="int"/>
     </transfer>
 
     <transfer name="Order">
         <property name="salesOrderConfiguredBundles" type="SalesOrderConfiguredBundle[]" singular="salesOrderConfiguredBundle"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="ConfiguredBundle">
@@ -37,7 +39,7 @@
     <transfer name="SalesOrderConfiguredBundleFilter">
         <property name="configurableBundleTemplateUuid" type="string"/>
         <property name="configurableBundleTemplateSlotUuid" type="string"/>
-        <property name="salesOrderItemIds" type="array"/>
+        <property name="salesOrderItemIds" type="array" singular="salesOrderItemIds"/>
     </transfer>
 
     <transfer name="SalesOrderConfiguredBundleCollection">
@@ -57,6 +59,10 @@
         <property name="idSalesOrderConfiguredBundle" type="int"/>
         <property name="idSalesOrderItem" type="int"/>
         <property name="configurableBundleTemplateSlotUuid" type="string"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
 </transfers>

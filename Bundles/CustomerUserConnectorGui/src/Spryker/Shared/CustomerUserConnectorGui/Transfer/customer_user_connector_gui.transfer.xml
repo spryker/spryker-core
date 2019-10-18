@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="User">
+        <property name="idUser" type="int"/>
+    </transfer>
+
+    <transfer name="CustomerUserConnectionUpdate">
+        <property name="idUser" type="int"/>
+    </transfer>
+
+    <transfer name="Button">
+        <property name="url" type="string"/>
+        <property name="title" type="string"/>
+        <property name="defaultOptions" type="array" singular="defaultOptions"/>
+    </transfer>
+
+</transfers>

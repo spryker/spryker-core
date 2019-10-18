@@ -230,11 +230,11 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     }
 
     /**
-     * @param string $idShipmentMethod
+     * @param int $idShipmentMethod
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer|null
      */
-    public function findShipmentById(string $idShipmentMethod): ?ShipmentTransfer
+    public function findShipmentById(int $idShipmentMethod): ?ShipmentTransfer
     {
         $salesShipmentEntity = $this->getFactory()
             ->createSalesShipmentQuery()

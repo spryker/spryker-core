@@ -21,7 +21,7 @@
 
     <transfer name="ValidationResponse">
         <property name="isSuccess" type="bool"/>
-        <property name="constraintViolations" type="ConstraintViolation[]"/>
+        <property name="constraintViolations" type="ConstraintViolation[]" singular="constraintViolations"/>
     </transfer>
 
     <transfer name="ConstraintViolation">
@@ -34,6 +34,6 @@
     </transfer>
 
     <transfer name="CmsSlotExternalData">
-        <property name="values" type="string[]" associative="true" />
+        <property name="values" type="string[]" associative="true" singular="values"/>
     </transfer>
 </transfers>
