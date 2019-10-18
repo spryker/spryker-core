@@ -265,7 +265,7 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         RestCheckoutDataResponseAttributesTransfer $restCheckoutDataResponseAttributesTransfer,
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
-        if (!$restCheckoutRequestAttributesTransfer->getPayments()) {
+        if (!$restCheckoutRequestAttributesTransfer->getPayments()->count()) {
             return $restCheckoutDataResponseAttributesTransfer;
         }
 
