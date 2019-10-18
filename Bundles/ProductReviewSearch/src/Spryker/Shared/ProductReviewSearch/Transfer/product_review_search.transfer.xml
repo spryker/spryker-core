@@ -30,8 +30,8 @@
     </transfer>
 
     <transfer name="ProductPageLoad">
-        <property name="productAbstractIds" type="array"/>
-        <property name="payloadTransfers" type="array"/>
+        <property name="productAbstractIds" type="array" singular="productAbstractIds"/>
+        <property name="payloadTransfers" type="array" singular="payloadTransfers"/>
     </transfer>
 
 </transfers>

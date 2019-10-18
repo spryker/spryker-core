@@ -35,7 +35,7 @@
     </transfer>
 
     <transfer name="ApiData">
-        <property name="data" type="array"/>
+        <property name="data" type="array" singular="data"/>
     </transfer>
 
     <transfer name="Customer">
@@ -43,7 +43,7 @@
     </transfer>
 
     <transfer name="ApiItem">
-        <property name="data" type="array"/>
+        <property name="data" type="array" singular="data"/>
     </transfer>
 
     <transfer name="ApiRequest">

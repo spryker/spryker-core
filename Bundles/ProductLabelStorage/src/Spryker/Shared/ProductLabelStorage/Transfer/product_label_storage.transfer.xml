@@ -5,7 +5,7 @@
 
     <transfer name="ProductAbstractLabelStorage">
         <property name="idProductAbstract" type="int"/>
-        <property name="productLabelIds" type="array"/>
+        <property name="productLabelIds" type="array" singular="productLabelIds"/>
     </transfer>
 
     <transfer name="ProductLabelDictionaryStorage">

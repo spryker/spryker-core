@@ -23,7 +23,7 @@
 
     <transfer name="PropelQueryBuilderCriteriaMapping">
         <property name="alias" type="string"/>
-        <property name="columns" type="array"/>
+        <property name="columns" type="array" singular="columns"/>
     </transfer>
 
     <transfer name="PropelQueryBuilderPagination">

@@ -12,7 +12,7 @@
     </transfer>
 
     <transfer name="PriceProductStorage">
-        <property name="prices" type="array"/>
+        <property name="prices" type="array" singular="prices"/>
     </transfer>
 
     <transfer name="PriceProductMerchantRelationshipStorage">
@@ -21,7 +21,7 @@
         <property name="idCompanyBusinessUnit" type="int"/>
         <property name="idProduct" type="int"/>
         <property name="priceKey" type="string"/>
-        <property name="prices" type="array"/>
+        <property name="prices" type="array" singular="prices"/>
         <property name="ungroupedPrices" type="PriceProductMerchantRelationshipValue[]" singular="ungroupedPrice"/>
     </transfer>
 

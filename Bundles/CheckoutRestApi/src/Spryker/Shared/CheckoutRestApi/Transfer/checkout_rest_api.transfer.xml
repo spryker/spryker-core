@@ -14,7 +14,7 @@
         <property name="status" type="int"/>
         <property name="code" type="string"/>
         <property name="detail" type="string"/>
-        <property name="parameters" type="array"/>
+        <property name="parameters" type="array" singular="parameters"/>
         <property name="errorIdentifier" type="string"/>
     </transfer>
 
@@ -83,7 +83,7 @@
 
     <transfer name="RestPaymentMethod">
         <property name="paymentMethodName" type="string"/>
-        <property name="requiredRequestData" type="array"/>
+        <property name="requiredRequestData" type="array" singular="requiredRequestData"/>
     </transfer>
 
     <transfer name="RestShipmentMethod">
@@ -125,7 +125,7 @@
     <transfer name="CheckoutError">
         <property name="errorCode" type="int"/>
         <property name="message" type="string"/>
-        <property name="parameters" type="array"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
     <transfer name="Addresses">

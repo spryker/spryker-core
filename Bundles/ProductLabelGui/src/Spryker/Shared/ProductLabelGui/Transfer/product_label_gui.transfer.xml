@@ -39,8 +39,8 @@
     </transfer>
 
     <transfer name="ProductLabelProductAbstractRelations">
-        <property name="idsProductAbstractToDeAssign" type="array"/>
-        <property name="idsProductAbstractToAssign" type="array"/>
+        <property name="idsProductAbstractToDeAssign" type="array" singular="idsProductAbstractToDeAssign"/>
+        <property name="idsProductAbstractToAssign" type="array" singular="idsProductAbstractToAssign"/>
         <property name="idProductLabel" type="int"/>
     </transfer>
 

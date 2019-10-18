@@ -24,7 +24,6 @@
         <property name="fkCustomer" type="int"/>
         <property name="customerReference" type="string"/>
         <property name="totals" type="Totals"/>
-        <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="totalOrderCount" type="int"/>
         <property name="uniqueProductQuantity" type="int"/>
         <property name="locale" type="Locale"/>
@@ -211,7 +210,7 @@
     <transfer name="StatemachineTrigger" deprecated="Not in use anymore, will be removed with next major">
         <property name="eventName" type="string"/>
         <property name="orderId" type="string"/>
-        <property name="references" type="array"/>
+        <property name="references" type="array" singular="references"/>
         <property name="context" type="string"/>
         <property name="observer" type="string"/>
     </transfer>

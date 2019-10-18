@@ -7,7 +7,7 @@
         <property name="parameterName" type="string"/>
         <property name="itemsPerPageParameterName" type="string"/>
         <property name="defaultItemsPerPage" type="int"/>
-        <property name="validItemsPerPageOptions" type="array"/>
+        <property name="validItemsPerPageOptions" type="array" singular="validItemsPerPageOptions"/>
     </transfer>
 
     <transfer name="SortConfig">
@@ -26,7 +26,7 @@
     </transfer>
 
     <transfer name="SortSearchResult">
-        <property name="sortParamNames" type="array"/>
+        <property name="sortParamNames" type="array" singular="sortParamNames"/>
         <property name="currentSortParam" type="string"/>
         <property name="currentSortOrder" type="string"/>
     </transfer>

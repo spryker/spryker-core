@@ -4,12 +4,12 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ProductAlternativeStorage">
-        <property name="productAbstractIds" type="array"/>
-        <property name="productConcreteIds" type="array"/>
+        <property name="productAbstractIds" type="array" singular="productAbstractIds"/>
+        <property name="productConcreteIds" type="array" singular="productConcreteIds"/>
     </transfer>
 
     <transfer name="ProductReplacementStorage">
-        <property name="productConcreteIds" type="array"/>
+        <property name="productConcreteIds" type="array" singular="productConcreteIds"/>
     </transfer>
 
     <transfer name="ProductView">
@@ -26,7 +26,7 @@
     </transfer>
 
     <transfer name="AttributeMapStorage">
-        <property name="productConcreteIds" type="array"/>
+        <property name="productConcreteIds" type="array" singular="productConcreteIds"/>
     </transfer>
 
 </transfers>

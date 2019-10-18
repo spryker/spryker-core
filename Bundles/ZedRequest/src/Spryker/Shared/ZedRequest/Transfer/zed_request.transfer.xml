@@ -18,7 +18,7 @@
     </transfer>
 
     <transfer name="Message">
-        <property name="parameters" type="array"/>
+        <property name="parameters" type="array" singular="parameters"/>
         <property name="value" type="string"/>
     </transfer>
 

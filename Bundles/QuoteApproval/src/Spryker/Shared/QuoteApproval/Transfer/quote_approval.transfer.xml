@@ -26,7 +26,8 @@
     </transfer>
 
     <transfer name="QuoteApprovalRequest">
-        <property name="idQuote" type="int"/>
+        <property name="idQuote" type="int" deprecated="Use quote property instead."/>
+        <property name="quote" type="Quote"/>
         <property name="approverCompanyUserId" type="int"/>
         <property name="requesterCompanyUserId" type="int"/>
         <property name="idQuoteApproval" type="int"/>
@@ -49,7 +50,7 @@
 
     <transfer name="Message">
         <property name="value" type="string"/>
-        <property name="parameters" type="array"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
     <transfer name="Customer">
@@ -80,7 +81,7 @@
 
     <transfer name="Permission">
         <property name="key" type="string"/>
-        <property name="configuration" type="array"/>
+        <property name="configuration" type="array" singular="configuration"/>
     </transfer>
 
     <transfer name="Currency">
@@ -137,11 +138,20 @@
     </transfer>
 
     <transfer name="CompanyUserCriteriaFilter">
-        <property name="companyUserIds" type="array"/>
+        <property name="companyUserIds" type="array" singular="companyUserIds"/>
     </transfer>
 
     <transfer name="CompanyUserCollection">
         <property name="companyUsers" type="CompanyUser[]" singular="companyUser"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string"/>
     </transfer>
 
 </transfers>

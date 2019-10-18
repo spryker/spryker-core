@@ -32,7 +32,7 @@
     </transfer>
 
     <transfer name="ProductOptionCriteria">
-        <property name="productOptionIds" type="array"/>
+        <property name="productOptionIds" type="array" singular="productOptionIds"/>
         <property name="productOptionGroupIsActive" type="bool"/>
         <property name="productConcreteSku" type="string"/>
     </transfer>
@@ -137,9 +137,9 @@
 
         <property name="groupNameTranslations" type="ProductOptionTranslation[]" singular="groupNameTranslation"/>
 
-        <property name="productsToBeAssigned" type="array"/>
-        <property name="productsToBeDeAssigned" type="array"/>
-        <property name="productOptionValuesToBeRemoved" type="array"/>
+        <property name="productsToBeAssigned" type="array" singular="productsToBeAssigned"/>
+        <property name="productsToBeDeAssigned" type="array" singular="productsToBeDeAssigned"/>
+        <property name="productOptionValuesToBeRemoved" type="array" singular="productOptionValuesToBeRemoved"/>
 
         <property name="productOptionValues" type="ProductOptionValue[]" singular="productOptionValue"/>
         <property name="productOptionValueTranslations" type="ProductOptionTranslation[]" singular="productOptionValueTranslation"/>
@@ -158,7 +158,7 @@
         <property name="idProductOptionValue" type="int"/>
         <property name="sku" type="string"/>
         <property name="price" type="int"/>
-        <property name="prices" type="array"/>
+        <property name="prices" type="array" singular="prices"/>
         <property name="value" type="string"/>
     </transfer>
 
@@ -167,12 +167,12 @@
     </transfer>
 
     <transfer name="ProductOptionValueStorePricesResponse">
-        <property name="storePrices" type="array"/>
+        <property name="storePrices" type="array" singular="storePrices"/>
     </transfer>
 
     <transfer name="EventEntity">
         <property name="id" type="int"/>
-        <property name="foreignKeys" type="array"/>
+        <property name="foreignKeys" type="array" singular="foreignKeys"/>
     </transfer>
 
     <transfer name="ProductAbstractOptionGroupStatus">

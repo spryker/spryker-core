@@ -119,7 +119,7 @@
         <property name="idCmsPage" type="int"/>
         <property name="name" type="string"/>
         <property name="templatePath" type="string"/>
-        <property name="placeholders" type="array"/>
+        <property name="placeholders" type="array" singular="placeholders"/>
         <property name="metaTitle" type="string"/>
         <property name="metaKeywords" type="string"/>
         <property name="metaDescription" type="string"/>
@@ -133,7 +133,7 @@
     <transfer name="FlattenedLocaleCmsPageDataRequest">
         <property name="idCmsPage" type="int"/>
         <property name="locale" type="Locale"/>
-        <property name="flattenedLocaleCmsPageData" type="array"/>
+        <property name="flattenedLocaleCmsPageData" type="array" singular="flattenedLocaleCmsPageData"/>
     </transfer>
 
     <transfer name="StoreRelation">
@@ -152,8 +152,8 @@
     </transfer>
 
     <transfer name="KeyTranslation">
-        <property _="" name="glossaryKey" type="int"/>
-        <property _="" name="locales" type="array"/>
+        <property name="glossaryKey" type="int"/>
+        <property name="locales" type="array" singular="locales"/>
     </transfer>
 
     <transfer name="Url">
