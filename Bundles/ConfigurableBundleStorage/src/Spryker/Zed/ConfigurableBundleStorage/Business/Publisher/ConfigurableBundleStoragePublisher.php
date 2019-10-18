@@ -84,7 +84,8 @@ class ConfigurableBundleStoragePublisher implements ConfigurableBundleStoragePub
         foreach ($configurableBundleTemplateEntity->getSpyConfigurableBundleTemplateSlots() as $configurableBundleTemplateSlotEntity) {
             $configurableBundleTemplateSlotStorageTransfers[] = (new ConfigurableBundleTemplateSlotStorageTransfer())
                 ->setUuid($configurableBundleTemplateSlotEntity->getUuid())
-                ->setProductListId($configurableBundleTemplateSlotEntity->getFkProductList());
+                ->setName($configurableBundleTemplateSlotEntity->getName())
+                ->setIdProductList($configurableBundleTemplateSlotEntity->getFkProductList());
         }
 
         $configurableBundleTemplateStorageTransfer = (new ConfigurableBundleTemplateStorageTransfer())

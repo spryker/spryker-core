@@ -11,7 +11,8 @@
 
     <transfer name="ConfigurableBundleTemplateSlotStorage">
         <property name="uuid" type="string"/>
-        <property name="productListId" type="int"/>
+        <property name="name" type="string"/>
+        <property name="idProductList" type="int"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplate">
