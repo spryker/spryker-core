@@ -148,8 +148,6 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
     }
 
     /**
-     * @deprecated Will be removed in next major release.
-     *
      * @param string $paymentProviderName
      * @param string $paymentMethodName
      *
@@ -237,6 +235,9 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
     ): RestCheckoutDataResponseAttributesTransfer {
         $idSelectedShipmentMethod = $restCheckoutRequestAttributesTransfer->getShipment()->getIdShipmentMethod();
+        if (!$idSelectedShipmentMethod) {
+            return $restCheckoutDataResponseAttributesTransfer;
+        }
 
         foreach ($restCheckoutDataTransfer->getShipmentMethods()->getMethods() as $shipmentMethodTransfer) {
             if ($shipmentMethodTransfer->getIdShipmentMethod() === $idSelectedShipmentMethod) {
@@ -326,11 +327,11 @@ class CheckoutDataMapper implements CheckoutDataMapperInterface
         array $availablePaymentMethodsList
     ): void {
         foreach ($paymentProviderTransfer->getPaymentMethods() as $paymentMethodTransfer) {
-            $isPaymentMethodExistsInRequestedPaymentMethods = $this->isPaymentMethodRequested(
+            $isPaymentMethodRequested = $this->isPaymentMethodRequested(
                 $restCheckoutRequestAttributesTransfer,
                 $paymentMethodTransfer
             );
-            if (!$isPaymentMethodExistsInRequestedPaymentMethods) {
+            if (!$isPaymentMethodRequested) {
                 continue;
             }
 

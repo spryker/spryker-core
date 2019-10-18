@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer;
-use Spryker\Glue\CheckoutRestApi\Processor\Exception\PaymentMethodNotConfiguredException;
 use Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig;
+use Spryker\Glue\PaymentsRestApi\Processor\Exception\PaymentMethodNotConfiguredException;
 
 class PaymentMethodMapper implements PaymentMethodMapperInterface
 {
@@ -41,7 +41,13 @@ class PaymentMethodMapper implements PaymentMethodMapperInterface
         array $restPaymentMethodsAttributesTransfers = []
     ): array {
         $paymentProviderTransfers = $restCheckoutDataTransfer->getPaymentProviders()->getPaymentProviders() ?? [];
-        $availablePaymentMethodsList = $this->getAvailablePaymentMethodsList($restCheckoutDataTransfer->getAvailablePaymentMethods());
+
+        $availablePaymentMethods = $restCheckoutDataTransfer->getAvailablePaymentMethods();
+        if (!$availablePaymentMethods) {
+            return $restPaymentMethodsAttributesTransfers;
+        }
+
+        $availablePaymentMethodsList = $this->getAvailablePaymentMethodsList($availablePaymentMethods);
 
         foreach ($paymentProviderTransfers as $paymentProviderTransfer) {
             foreach ($paymentProviderTransfer->getPaymentMethods() as $paymentMethodTransfer) {
