@@ -171,7 +171,7 @@ class SearchElasticsearchFactory extends AbstractFactory
      */
     public function createAggregationExtractorFactory(): AggregationExtractorFactoryInterface
     {
-        return new AggregationExtractorFactory();
+        return new AggregationExtractorFactory($this->getMoneyClient());
     }
 
     /**

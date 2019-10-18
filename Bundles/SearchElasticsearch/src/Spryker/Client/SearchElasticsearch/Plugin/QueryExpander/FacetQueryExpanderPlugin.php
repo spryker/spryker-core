@@ -47,7 +47,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
         $facetFilters = $this->getFacetFilters($facetConfig, $requestParameters);
 
         $this->addFacetAggregationToQuery($query, $facetConfig, $facetFilters, $requestParameters);
-        $this->addFacetFiltersToQuery($query, $facetFilters);
+        $this->addFacetFiltersToBoolQuery($query, $facetFilters);
 
         return $searchQuery;
     }
@@ -65,12 +65,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
 
         foreach ($activeFacetConfigTransfers as $facetConfigTransfer) {
             $filterValue = $requestParameters[$facetConfigTransfer->getParameterName()] ?? null;
-
-            if ($facetConfigTransfer->getIsMultiValued() === true) {
-                $query = $this->createMultiValuedFacetFilterQuery($facetConfigTransfer, $filterValue);
-            } else {
-                $query = $this->createFacetFilterQuery($facetConfigTransfer, $filterValue);
-            }
+            $query = $this->createFacetQuery($facetConfigTransfer, $filterValue);
 
             if ($query !== null) {
                 $facetFilters[$facetConfigTransfer->getName()] = $query;
@@ -78,6 +73,21 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
         }
 
         return $facetFilters;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     * @param mixed|null $filterValue
+     *
+     * @return \Elastica\Query\AbstractQuery|null
+     */
+    protected function createFacetQuery(FacetConfigTransfer $facetConfigTransfer, $filterValue): ?AbstractQuery
+    {
+        if ($facetConfigTransfer->getIsMultiValued() === true) {
+            return $this->createMultiValuedFacetFilterQuery($facetConfigTransfer, $filterValue);
+        }
+
+        return $this->createFacetFilterQuery($facetConfigTransfer, $filterValue);
     }
 
     /**
@@ -116,13 +126,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
      */
     protected function createFacetFilterQuery(FacetConfigTransfer $facetConfigTransfer, $filterValue): ?AbstractQuery
     {
-        if (is_array($filterValue) && empty(array_filter($filterValue, 'strlen'))) {
-            // returns null if $filterValue is array of values like null, empty string or false but not 0(zero)
-            return null;
-        }
-
-        if (empty($filterValue) && !is_numeric($filterValue)) {
-            // returns null if $filterValue equals null, empty string or false but not 0(zero)
+        if ($this->isFilterValueEmpty($filterValue)) {
             return null;
         }
 
@@ -134,7 +138,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
             $filterValue = $valueTransformerPlugin->transformFromDisplay($filterValue);
         }
 
-        $query = $this->getFactory()->createQueryFactory()->create($facetConfigTransfer, $filterValue);
+        $query = $this->getFactory()->createQueryFactory()->createQuery($facetConfigTransfer, $filterValue);
 
         return $query;
     }
@@ -163,9 +167,9 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
             $query->addAggregation($facetAggregation);
 
             if (in_array($facetConfigTransfer->getName(), $activeFilters, true)) {
-                $globalAgg = $this->createGlobalAggregation($facetFilters, $facetConfigTransfer, $boolQuery, $facetAggregation);
+                $globalAggregation = $this->createGlobalAggregation($facetFilters, $facetConfigTransfer, $boolQuery, $facetAggregation);
 
-                $query->addAggregation($globalAgg);
+                $query->addAggregation($globalAggregation);
             }
         }
     }
@@ -176,7 +180,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
      *
      * @return void
      */
-    protected function addFacetFiltersToQuery(Query $query, array $facetFilters): void
+    protected function addFacetFiltersToBoolQuery(Query $query, array $facetFilters): void
     {
         $boolQuery = $this->getBoolQuery($query);
 
