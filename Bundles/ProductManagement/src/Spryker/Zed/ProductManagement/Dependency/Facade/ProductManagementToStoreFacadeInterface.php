@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DiscountPromotion\Dependency\Facade;
+namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
-interface DiscountPromotionToLocaleInterface
+interface ProductManagementToStoreFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentLocale();
+    public function getCurrentStore();
 }

@@ -1,5 +1,0 @@
-{
-  "include": {
-    "spryker/decimal-object": "To support decimal property type"
-  }
-}

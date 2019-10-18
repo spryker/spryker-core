@@ -25,6 +25,7 @@
     "spryker/propel": "*",
     "spryker/sales": "*",
     "spryker/stock": "*",
+    "spryker/store": "*",
     "spryker/testify": "*"
   },
   "autoload": {

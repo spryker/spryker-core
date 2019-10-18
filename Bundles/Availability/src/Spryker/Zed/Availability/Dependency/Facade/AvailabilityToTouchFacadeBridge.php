@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Availability\Dependency\Facade;
 
-class AvailabilityToTouchBridge implements AvailabilityToTouchInterface
+class AvailabilityToTouchFacadeBridge implements AvailabilityToTouchFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Touch\Business\TouchFacadeInterface

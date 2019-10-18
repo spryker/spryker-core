@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\CartVariant\Dependency\Client;
 
-interface CartVariantToAvailabilityClientBridgeInterface
+interface CartVariantToAvailabilityStorageClientBridgeInterface
 {
     /**
      * @param int $idProductAbstract

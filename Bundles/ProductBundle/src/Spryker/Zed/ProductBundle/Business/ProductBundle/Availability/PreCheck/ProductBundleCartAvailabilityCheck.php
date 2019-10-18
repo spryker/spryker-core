@@ -188,17 +188,23 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         ArrayObject $itemsInCart,
         StoreTransfer $storeTransfer
     ): Decimal {
-        $itemAvailability = $this->availabilityFacade->calculateAvailabilityForProductWithStore(
-            $itemTransfer->getSku(),
-            $storeTransfer
-        );
+        $productConcreteAvailabilityTransfer = $this->availabilityFacade
+            ->findProductConcreteAvailabilityBySkuForStore(
+                $itemTransfer->getSku(),
+                $storeTransfer
+            );
+
+        if ($productConcreteAvailabilityTransfer === null || $productConcreteAvailabilityTransfer->getAvailability() === null) {
+            return new Decimal(0);
+        }
 
         $bundledItemsQuantity = $this->getAccumulatedItemQuantityForBundledProductsByGivenSku(
             $itemsInCart,
             $itemTransfer->getSku()
         );
 
-        $availabilityAfterBundling = $itemAvailability->subtract($bundledItemsQuantity);
+        $availabilityAfterBundling = $productConcreteAvailabilityTransfer->getAvailability()
+            ->subtract($bundledItemsQuantity);
 
         return $availabilityAfterBundling;
     }

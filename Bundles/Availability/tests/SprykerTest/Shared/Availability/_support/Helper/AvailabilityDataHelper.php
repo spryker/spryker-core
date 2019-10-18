@@ -8,11 +8,14 @@
 namespace SprykerTest\Shared\Availability\Helper;
 
 use Codeception\Module;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract;
+use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
+use Orm\Zed\Availability\Persistence\SpyAvailabilityQuery;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Business\AvailabilityFacadeInterface;
-use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -32,18 +35,48 @@ class AvailabilityDataHelper extends Module
      */
     public function haveAvailabilityAbstract(ProductConcreteTransfer $productConcreteTransfer, ?Decimal $quantity = null): SpyAvailabilityAbstract
     {
-        $availabilityFacade = $this->getAvailabilityFacade();
-        $idAvailabilityAbstract = $availabilityFacade->saveProductAvailability(
-            $productConcreteTransfer->getSku(),
-            $quantity ?? new Decimal(static::DEFAULT_QUANTITY)
+        $quantity = $quantity ?? new Decimal(static::DEFAULT_QUANTITY);
+        $storeTransfer = $this->getStoreFacade()->getCurrentStore();
+
+        $availabilityAbstractEntity = (new SpyAvailabilityAbstractQuery())
+            ->filterByAbstractSku($productConcreteTransfer->getAbstractSku())
+            ->filterByFkStore($storeTransfer->getIdStore())
+            ->findOneOrCreate();
+
+        $availabilityAbstractEntity
+            ->setQuantity($quantity)
+            ->save();
+
+        (new SpyAvailabilityQuery())
+            ->filterByFkStore($storeTransfer->getIdStore())
+            ->filterBySku($productConcreteTransfer->getSku())
+            ->filterByFkAvailabilityAbstract($availabilityAbstractEntity->getIdAvailabilityAbstract())
+            ->findOneOrCreate()
+            ->setQuantity($quantity)
+            ->save();
+
+        return $availabilityAbstractEntity;
+    }
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param string|int|float|null $quantity
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer
+     */
+    public function haveAvailabilityConcrete(string $sku, StoreTransfer $storeTransfer, $quantity = null): ProductConcreteAvailabilityTransfer
+    {
+        $this->getAvailabilityFacade()->saveProductAvailabilityForStore(
+            $sku,
+            $quantity === null ? new Decimal(static::DEFAULT_QUANTITY) : new Decimal($quantity),
+            $storeTransfer
         );
 
-        $idStore = $this->getStoreFacade()->getCurrentStore()->getIdStore();
-
-        return $this
-            ->getAvailabilityQueryContainer()
-            ->queryAvailabilityAbstractByIdAvailabilityAbstract($idAvailabilityAbstract, $idStore)
-            ->findOneOrCreate();
+        return $this->getAvailabilityFacade()->findProductConcreteAvailabilityBySkuForStore(
+            $sku,
+            $storeTransfer
+        );
     }
 
     /**
@@ -52,14 +85,6 @@ class AvailabilityDataHelper extends Module
     private function getAvailabilityFacade(): AvailabilityFacadeInterface
     {
         return $this->getLocator()->availability()->facade();
-    }
-
-    /**
-     * @return \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface
-     */
-    private function getAvailabilityQueryContainer(): AvailabilityQueryContainerInterface
-    {
-        return $this->getLocator()->availability()->queryContainer();
     }
 
     /**
