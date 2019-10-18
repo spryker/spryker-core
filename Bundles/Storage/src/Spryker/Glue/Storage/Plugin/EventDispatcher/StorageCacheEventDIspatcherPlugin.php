@@ -7,11 +7,11 @@
 
 namespace Spryker\Glue\Storage\Plugin\EventDispatcher;
 
+use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
 use Spryker\Shared\Storage\StorageConstants;
-use Spryker\Glue\Kernel\AbstractPlugin;
 use Symfony\Component\HttpKernel\Event\PostResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 

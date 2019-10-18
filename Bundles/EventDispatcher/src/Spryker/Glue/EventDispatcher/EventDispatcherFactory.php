@@ -7,9 +7,9 @@
 
 namespace Spryker\Glue\EventDispatcher;
 
+use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Shared\EventDispatcher\EventDispatcher;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
-use Spryker\Glue\Kernel\AbstractFactory;
 
 class EventDispatcherFactory extends AbstractFactory
 {

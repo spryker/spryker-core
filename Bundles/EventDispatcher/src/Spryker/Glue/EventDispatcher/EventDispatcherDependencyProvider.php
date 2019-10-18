@@ -9,7 +9,6 @@ namespace Spryker\Glue\EventDispatcher;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
-use Spryker\Glue\Storage\Plugin\EventDispatcher\StorageCacheEventDispatcherPlugin;
 
 class EventDispatcherDependencyProvider extends AbstractBundleDependencyProvider
 {

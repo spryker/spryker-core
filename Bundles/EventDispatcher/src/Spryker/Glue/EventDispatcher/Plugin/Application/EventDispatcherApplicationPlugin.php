@@ -7,10 +7,10 @@
 
 namespace Spryker\Glue\EventDispatcher\Plugin\Application;
 
+use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
-use Spryker\Glue\Kernel\AbstractPlugin;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as SymfonyEventDispatcherInterface;
 
 /**

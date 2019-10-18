@@ -25,7 +25,6 @@ class GlueServiceProviderPlugin extends AbstractPlugin implements ServiceProvide
      */
     public function register(Application $app): void
     {
-
     }
 
     /**
