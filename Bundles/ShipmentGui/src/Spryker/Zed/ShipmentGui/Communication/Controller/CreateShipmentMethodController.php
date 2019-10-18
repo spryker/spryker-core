@@ -59,6 +59,7 @@ class CreateShipmentMethodController extends AbstractController
         /** @var \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer */
         $shipmentMethodTransfer = $form->getData();
         $this->getFactory()->getShipmentFacade()->createMethod($shipmentMethodTransfer);
+        $this->addSuccessMessage(static::MESSAGE_SUCCESS);
 
         return $this->redirectResponse(static::REDIRECT_URL);
     }
