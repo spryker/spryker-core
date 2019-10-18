@@ -58,28 +58,27 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
      */
     public function collect(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer)
     {
+        $quoteTransfer
+            ->requireStore();
+
         $discountPromotionEntity = $this->findDiscountPromotionByIdDiscount($discountTransfer);
 
         if (!$discountPromotionEntity) {
             return [];
         }
 
-        $idProductAbstract = $this->productFacade->findProductAbstractIdBySku($discountPromotionEntity->getAbstractSku());
-        if (!$idProductAbstract) {
-            return [];
-        }
-
-        $discountPromotionTransfer = $this->hydrateDiscountPromotion($discountPromotionEntity);
-        $discountTransfer->setDiscountPromotion($discountPromotionTransfer);
-
         $promotionMaximumQuantity = $this->promotionAvailabilityCalculator->getMaximumQuantityBasedOnAvailability(
-            $idProductAbstract,
-            $discountPromotionEntity->getQuantity()
+            $discountPromotionEntity->getAbstractSku(),
+            $discountPromotionEntity->getQuantity(),
+            $quoteTransfer->getStore()
         );
 
         if ($promotionMaximumQuantity === 0) {
             return [];
         }
+
+        $discountPromotionTransfer = $this->hydrateDiscountPromotion($discountPromotionEntity);
+        $discountTransfer->setDiscountPromotion($discountPromotionTransfer);
 
         $promotionItemInQuote = $this->findPromotionItem($quoteTransfer, $discountPromotionEntity);
 

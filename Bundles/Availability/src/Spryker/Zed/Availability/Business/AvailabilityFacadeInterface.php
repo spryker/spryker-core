@@ -8,28 +8,15 @@
 namespace Spryker\Zed\Availability\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
 interface AvailabilityFacadeInterface
 {
-    /**
-     * Specification:
-     *  - Checks if product is never out of stock for current store.
-     *  - Checks if product has stock in stock table.
-     *  - Checks if have placed orders where items have state machine state flagged as reserved.
-     *
-     * @api
-     *
-     * @param string $sku
-     * @param \Spryker\DecimalObject\Decimal $quantity
-     *
-     * @return bool
-     */
-    public function isProductSellable(string $sku, Decimal $quantity): bool;
-
     /**
      * Specification:
      *  - Checks if product is never out of stock for given store.
@@ -60,25 +47,7 @@ interface AvailabilityFacadeInterface
 
     /**
      * Specification:
-     *  - Checks if product has stock in stock table for current store.
-     *  - Checks if have placed orders where items have state machine state flagged as reserved.
-     *  - Returns integer value which is Product stock - reserved state machine items.
-     *
-     * @api
-     *
-     * @deprecated Use calculateAvailabilityForProductWithStore() instead.
-     *
-     * @param string $sku
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    public function calculateAvailabilityForProduct(string $sku): Decimal;
-
-    /**
-     * Specification:
-     *  - Checks if product has stock in stock table for current store.
-     *  - Checks if have placed orders where items have state machine state flagged as reserved.
-     *  - Returns integer value which is Product stock - reserved state machine items.
+     *  - Returns calculated availability value which is product stock minus reserved state machine items quantities.
      *
      * @api
      *
@@ -108,9 +77,9 @@ interface AvailabilityFacadeInterface
 
     /**
      * Specification:
-     *  - Calculates current item stock, take into account reserved items
-     *  - Stores new stock for concrete product
-     *  - Stores sum of all concrete product stocks for abstract product
+     *  - Calculates current item availability, take into account reserved items
+     *  - Stores new availability for concrete product
+     *  - Stores sum of all concrete product availability for abstract product
      *  - Touches availability abstract collector if data changed
      *
      * @api
@@ -123,9 +92,9 @@ interface AvailabilityFacadeInterface
 
     /**
      * Specification:
-     *  - Calculates current item stock, for given store take into account reserved items
-     *  - Stores new stock for concrete product
-     *  - Stores sum of all concrete product stocks for abstract product
+     *  - Calculates current item availability, for given store take into account reserved items
+     *  - Stores availability for concrete product
+     *  - Stores sum of all concrete product availability for abstract product
      *  - Touches availability abstract collector if data changed
      *
      * @api
@@ -144,6 +113,8 @@ interface AvailabilityFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `AvailabilityFacadeInterface::findProductAbstractAvailabilityBySkuForStore() instead`.
+     *
      * @param int $idProductAbstract
      * @param int $idLocale
      *
@@ -157,6 +128,8 @@ interface AvailabilityFacadeInterface
      *  - Returns data for selected abstract product.
      *
      * @api
+     *
+     * @deprecated Use `AvailabilityFacadeInterface::findProductAbstractAvailabilityBySkuForStore() instead`.
      *
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -172,11 +145,40 @@ interface AvailabilityFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `AvailabilityFacadeInterface::findProductConcreteAvailabilityBySkuForStore() instead`.
+     *
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
     public function findProductConcreteAvailability(ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer);
+
+    /**
+     * Specification:
+     *  - Finds product abstract availability as is stored in persistence.
+     *  - If nothing was stored in persistence, abstract availability gets calculated and stored.
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
+     */
+    public function findProductAbstractAvailabilityBySkuForStore(string $sku, StoreTransfer $storeTransfer): ?ProductAbstractAvailabilityTransfer;
+
+    /**
+     * Specification:
+     *  - Finds product concrete availability as is stored in persistence.
+     *
+     * @api
+     *
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
+     */
+    public function findProductConcreteAvailabilityBySkuForStore(string $sku, StoreTransfer $storeTransfer): ?ProductConcreteAvailabilityTransfer;
 
     /**
      * Specification:
@@ -192,22 +194,8 @@ interface AvailabilityFacadeInterface
 
     /**
      * Specification:
-     *  - Updates availability for given sku, by quantity for current store
-     *  - Touches availability collector if data changed
-     *  - Returns id of availability abstract
-     *
-     * @api
-     *
-     * @param string $sku
-     * @param \Spryker\DecimalObject\Decimal $quantity
-     *
-     * @return int
-     */
-    public function saveProductAvailability(string $sku, Decimal $quantity): int;
-
-    /**
-     * Specification:
-     *  - Updates availability for given sku, by quantity
+     *  - Updates availability for given concrete sku, by quantity.
+     *  - Doesn't update the flag `isNeverOutOfStock`.
      *  - Touches availability collector if data changed
      *  - Returns id of availability abstract
      *
