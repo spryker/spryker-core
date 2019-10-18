@@ -174,7 +174,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createShipmentMethodAvailabilityChecker(),
             $this->createShipmentMethodPriceReader(),
-            $this->createShipmentMethodDeliveryTimeReader()
+            $this->createShipmentMethodDeliveryTimeReader(),
+            $this->getStoreFacade()
         );
     }
 
