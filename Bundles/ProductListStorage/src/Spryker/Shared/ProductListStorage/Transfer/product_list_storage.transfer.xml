@@ -5,14 +5,47 @@
 
     <transfer name="ProductAbstractProductListStorage">
         <property name="idProductAbstract" type="int"/>
-        <property name="idBlacklists" type="array"/>
-        <property name="idWhitelists" type="array"/>
+        <property name="idBlacklists" type="array" singular="idBlacklists"/>
+        <property name="idWhitelists" type="array" singular="idWhitelists"/>
     </transfer>
 
     <transfer name="ProductConcreteProductListStorage">
         <property name="idProductConcrete" type="int"/>
-        <property name="idBlacklists" type="array"/>
-        <property name="idWhitelists" type="array"/>
+        <property name="idBlacklists" type="array" singular="idBlacklists"/>
+        <property name="idWhitelists" type="array" singular="idWhitelists"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="customerProductListCollection" type="CustomerProductListCollection"/>
+    </transfer>
+
+    <transfer name="CustomerProductListCollection">
+        <property name="whitelistIds" type="int[]" singular="whitelistId"/>
+        <property name="blacklistIds" type="int[]" singular="blacklistId"/>
+    </transfer>
+
+    <transfer name="ProductView">
+        <property name="attributeMap" type="AttributeMapStorage"/>
+        <property name="availableAttributes" type="array" singular="availableAttribute"/>
+        <property name="selectedAttributes" type="array" singular="selectedAttribute"/>
+    </transfer>
+
+    <transfer name="AttributeMapStorage">
+        <property name="productConcreteIds" type="array" singular="productConcreteIds"/>
+        <property name="attributeVariants" type="array" singular="attributeVariants"/>
+        <property name="superAttributes" type="array" singular="superAttributes"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="orderBy" type="string"/>
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
     </transfer>
 
 </transfers>

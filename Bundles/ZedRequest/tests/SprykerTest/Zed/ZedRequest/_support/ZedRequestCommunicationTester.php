@@ -8,6 +8,10 @@
 namespace SprykerTest\Zed\ZedRequest;
 
 use Codeception\Actor;
+use Codeception\Stub;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
  * Inherited Methods
@@ -29,7 +33,31 @@ class ZedRequestCommunicationTester extends Actor
 {
     use _generated\ZedRequestCommunicationTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @param callable $controller
+     *
+     * @return \Symfony\Component\HttpKernel\Event\FilterControllerEvent
+     */
+    public function createFilterControllerEvent(callable $controller): FilterControllerEvent
+    {
+        $filterControllerEvent = new FilterControllerEvent(
+            $this->getHttpKernelMock(),
+            $controller,
+            Request::createFromGlobals(),
+            HttpKernelInterface::MASTER_REQUEST
+        );
+
+        return $filterControllerEvent;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpKernel\HttpKernelInterface
+     */
+    protected function getHttpKernelMock()
+    {
+        /** @var \Symfony\Component\HttpKernel\HttpKernelInterface $httpKernelMock */
+        $httpKernelMock = Stub::makeEmpty(HttpKernelInterface::class);
+
+        return $httpKernelMock;
+    }
 }

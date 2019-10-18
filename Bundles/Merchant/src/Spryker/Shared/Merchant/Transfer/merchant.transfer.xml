@@ -67,7 +67,7 @@
     </transfer>
 
     <transfer name="MerchantCollection">
-        <property name="merchants" type="Merchant[]" />
+        <property name="merchants" type="Merchant[]" singular="merchants"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
 
