@@ -15,4 +15,7 @@
         <property name="idProductAbstract" type="int"/>
     </transfer>
 
+    <transfer name="StorageAvailability">
+    </transfer>
+
 </transfers>

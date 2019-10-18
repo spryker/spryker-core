@@ -27,4 +27,17 @@
         <property name="sku" type="string"/>
     </transfer>
 
+    <transfer name="Customer">
+        <property name="idCustomer" type="int"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="customer" type="Customer"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
 </transfers>

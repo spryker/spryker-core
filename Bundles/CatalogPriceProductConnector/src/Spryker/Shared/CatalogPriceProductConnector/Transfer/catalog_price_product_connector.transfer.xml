@@ -17,4 +17,13 @@
         <property name="type" type="string"/>
     </transfer>
 
+    <transfer name="CurrentProductPrice">
+        <property name="price" type="int"/>
+        <property name="prices" type="array" singular="price"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
 </transfers>

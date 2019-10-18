@@ -10,6 +10,7 @@
 
     <transfer name="Item">
         <property name="shipment" type="Shipment"/>
+        <property name="idSalesOrderItem" type="int"/>
     </transfer>
 
     <transfer name="Shipment">
@@ -21,5 +22,38 @@
     <transfer name="ShipmentGroup">
         <property name="shipment" type="Shipment"/>
         <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="ShipmentGroupResponse">
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="fkCustomer" type="int"/>
+        <property name="idSalesOrder" type="int"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="Address">
+        <property name="fkCustomer" type="int"/>
+        <property name="salutation" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="city" type="string"/>
+        <property name="idCustomerAddress" type="int"/>
+    </transfer>
+
+    <transfer name="Addresses">
+        <property name="addresses" type="Address[]" singular="address"/>
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="idShipmentMethod" type="int"/>
+        <property name="carrierName" type="string"/>
+        <property name="name" type="string"/>
     </transfer>
 </transfers>

@@ -7,4 +7,8 @@
         <property name="username" type="string"/>
     </transfer>
 
+    <transfer name="QueueSendMessage">
+        <property name="body" type="string"/>
+    </transfer>
+
 </transfers>

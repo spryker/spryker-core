@@ -9,6 +9,7 @@
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="isLocked" type="bool"/>
         <property name="customer" type="Customer"/>
+        <property name="currency" type="Currency"/>
     </transfer>
 
     <transfer name="CartChange">
@@ -32,6 +33,7 @@
         <property name="sumGrossPrice" type="int"/>
         <property name="normalizableFields" type="string[]" singular="normalizableField"/>
         <property name="messages" type="Message[]" singular="message"/>
+        <property name="unitPrice" type="int"/>
     </transfer>
 
     <transfer name="CartPreCheckResponse">
@@ -42,11 +44,26 @@
     <transfer name="Message">
         <property name="value" type="string"/>
         <property name="type" type="string"/>
-        <property name="parameters" type="array"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
     <transfer name="QuoteResponse">
         <property name="errors" type="QuoteError[]" singular="error"/>
+        <property name="quoteTransfer" type="Quote"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="QuoteValidationResponse">
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="FlashMessages">
+        <property name="errorMessages" type="array" singular="errorMessage"/>
+    </transfer>
+
+    <transfer name="QuoteError">
+        <property name="message" type="string"/>
     </transfer>
 
 </transfers>

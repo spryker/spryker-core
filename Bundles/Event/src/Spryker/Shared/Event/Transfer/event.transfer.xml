@@ -4,7 +4,7 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="EventQueueSendMessageBody">
-        <property name="transferData" type="array"/>
+        <property name="transferData" type="array" singular="transferData"/>
         <property name="transferClassName" type="string"/>
         <property name="listenerClassName" type="string"/>
         <property name="eventName" type="string"/>
@@ -12,6 +12,16 @@
 
     <transfer name="QueueReceiveMessage">
         <property name="routingKey" type="string"/>
+        <property name="queueMessage" type="QueueSendMessage"/>
+        <property name="acknowledge" type="bool"/>
+        <property name="reject" type="bool"/>
+        <property name="hasError" type="bool"/>
+        <property name="queueName" type="string"/>
+    </transfer>
+
+    <transfer name="QueueSendMessage">
+        <property name="queuePoolName" type="string"/>
+        <property name="body" type="string"/>
     </transfer>
 
 </transfers>
