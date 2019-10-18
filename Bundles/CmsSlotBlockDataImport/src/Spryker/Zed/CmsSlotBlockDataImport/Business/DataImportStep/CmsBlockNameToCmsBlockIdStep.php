@@ -26,7 +26,7 @@ class CmsBlockNameToCmsBlockIdStep implements DataImportStepInterface
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $dataSet[CmsSlotBlockDataSetInterface::CMS_BLOCK_ID] = $this->getIdCmsBlockByName(
             $dataSet[CmsSlotBlockDataSetInterface::CMS_BLOCK_NAME]

@@ -20,7 +20,7 @@ class CmsSlotBlockWriterStep extends PublishAwareStep implements DataImportStepI
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $cmsSlotBlockEntity = SpyCmsSlotBlockQuery::create()
             ->filterByFkCmsSlot($dataSet[CmsSlotBlockDataSetInterface::CMS_SLOT_ID])
@@ -28,11 +28,7 @@ class CmsSlotBlockWriterStep extends PublishAwareStep implements DataImportStepI
             ->filterByFkCmsSlotTemplate($dataSet[CmsSlotBlockDataSetInterface::CMS_SLOT_TEMPLATE_ID])
             ->findOneOrCreate();
 
-        if (!$cmsSlotBlockEntity->getPosition()) {
-            $position = SpyCmsSlotBlockQuery::create()->count();
-
-            $cmsSlotBlockEntity->setPosition($position + 1);
-        }
+        $cmsSlotBlockEntity->setPosition($dataSet[CmsSlotBlockDataSetInterface::CMS_SLOT_POSITION]);
 
         $cmsSlotBlockEntity->save();
     }

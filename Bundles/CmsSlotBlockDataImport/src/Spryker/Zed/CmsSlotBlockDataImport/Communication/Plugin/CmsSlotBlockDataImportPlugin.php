@@ -37,7 +37,7 @@ class CmsSlotBlockDataImportPlugin extends AbstractPlugin implements DataImportP
      *
      * @return string
      */
-    public function getImportType()
+    public function getImportType(): string
     {
         return CmsSlotBlockDataImportConfig::IMPORT_TYPE_CMS_SLOT_BLOCK;
     }

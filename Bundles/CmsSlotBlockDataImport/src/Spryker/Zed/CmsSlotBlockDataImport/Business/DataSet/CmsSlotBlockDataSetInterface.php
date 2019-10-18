@@ -15,4 +15,5 @@ interface CmsSlotBlockDataSetInterface
     public const CMS_BLOCK_NAME = 'block_name';
     public const CMS_SLOT_TEMPLATE_PATH = 'template_path';
     public const CMS_SLOT_TEMPLATE_ID = 'template_id';
+    public const CMS_SLOT_POSITION = 'position';
 }

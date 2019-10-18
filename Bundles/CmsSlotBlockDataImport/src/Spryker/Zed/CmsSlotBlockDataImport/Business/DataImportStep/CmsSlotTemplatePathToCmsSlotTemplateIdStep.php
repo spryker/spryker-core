@@ -29,7 +29,7 @@ class CmsSlotTemplatePathToCmsSlotTemplateIdStep implements DataImportStepInterf
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         if (!$dataSet[CmsSlotBlockDataSetInterface::CMS_SLOT_TEMPLATE_PATH]) {
             throw new InvalidDataException(sprintf('Column %s is required, please check the data.', CmsSlotBlockDataSetInterface::CMS_SLOT_TEMPLATE_PATH));

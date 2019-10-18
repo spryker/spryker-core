@@ -14,7 +14,7 @@ interface CmsSlotBlockDataImportFacadeInterface
 {
     /**
      * Specification:
-     * - Imports relationships cms slots to cms blocks.
+     * - Imports relationships CMS slots to CMS blocks.
      *
      * @api
      *
