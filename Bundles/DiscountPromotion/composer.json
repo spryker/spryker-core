@@ -5,12 +5,11 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/availability": "^5.0.3 || ^6.0.0 || ^8.0.0",
+    "spryker/availability": "^9.0.0",
     "spryker/cart-extension": "^1.0.0 || ^2.0.0 || ^4.0.0",
     "spryker/discount": "^7.2.4 || ^9.0.0",
     "spryker/discount-extension": "^1.1.0",
     "spryker/kernel": "^3.30.0",
-    "spryker/locale": "^3.0.0",
     "spryker/persistent-cart-extension": "^1.0.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/propel-orm": "^1.0.0",
@@ -20,7 +19,10 @@
     "spryker/calculation": "*",
     "spryker/cart": "*",
     "spryker/code-sniffer": "*",
+    "spryker/decimal-object": "*",
     "spryker/propel": "*",
+    "spryker/stock": "*",
+    "spryker/store": "*",
     "spryker/testify": "*"
   },
   "suggest": {

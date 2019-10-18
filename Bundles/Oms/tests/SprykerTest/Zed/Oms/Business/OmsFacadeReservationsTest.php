@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use Spryker\DecimalObject\Decimal;
 
 /**
  * Auto-generated group annotations
@@ -74,9 +75,9 @@ class OmsFacadeReservationsTest extends Unit
 
         // Other store
         $storeTransfer = $this->createStoreTransfer()->setName('DE');
-        $reservedAmount = $this->getOmsFacade()->getOmsReservedProductQuantityForSku(123, $storeTransfer);
+        $reservedAmount = $this->getOmsFacade()->getOmsReservedProductQuantityForSku('123', $storeTransfer);
 
-        $this->assertSame(1, $reservedAmount);
+        $this->assertTrue($reservedAmount->equals(1));
     }
 
     /**
@@ -139,7 +140,7 @@ class OmsFacadeReservationsTest extends Unit
             'Test03'
         );
 
-        $expectedQuantity = 0;
+        $expectedQuantity = new Decimal(0);
         foreach ([$saveOrderTransfer1, $saveOrderTransfer2] as $orderTransfer) {
             $orderItems = SpySalesOrderQuery::create()
                 ->filterByIdSalesOrder($orderTransfer->getIdSalesOrder())
@@ -150,7 +151,7 @@ class OmsFacadeReservationsTest extends Unit
             $this->setItemsState($orderItems, 'paid');
 
             foreach ($orderItems as $orderItem) {
-                $expectedQuantity += $orderItem->getQuantity();
+                $expectedQuantity = $expectedQuantity->add($orderItem->getQuantity());
             }
         }
 
@@ -162,7 +163,11 @@ class OmsFacadeReservationsTest extends Unit
 
         $this->setItemsState($orderItems, 'paid');
 
-        $this->assertEquals($expectedQuantity, $this->getOmsFacade()->sumReservedProductQuantitiesForSku($testSku));
+        $this->assertTrue(
+            $this->getOmsFacade()
+                ->sumReservedProductQuantitiesForSku($testSku)
+                ->equals($expectedQuantity)
+        );
     }
 
     /**
@@ -201,9 +206,9 @@ class OmsFacadeReservationsTest extends Unit
         $this->getOmsFacade()->importReservation($availabilityReservationRequestTransfer);
 
         $storeTransfer = $this->createStoreTransfer()->setName('DE');
-        $reserved = $this->getOmsFacade()->getReservationsFromOtherStores(123, $storeTransfer);
+        $reserved = $this->getOmsFacade()->getReservationsFromOtherStores('123', $storeTransfer);
 
-        $this->assertSame(1, $reserved);
+        $this->assertTrue($reserved->equals(1));
     }
 
     /**

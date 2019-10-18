@@ -10,6 +10,7 @@ namespace Spryker\Zed\Stock\Business\Model;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
+use Spryker\DecimalObject\Decimal;
 
 interface WriterInterface
 {
@@ -30,20 +31,20 @@ interface WriterInterface
     /**
      * @param string $sku
      * @param string $stockType
-     * @param int $decrementBy
+     * @param \Spryker\DecimalObject\Decimal $decrementBy
      *
      * @return void
      */
-    public function decrementStock($sku, $stockType, $decrementBy = 1);
+    public function decrementStock($sku, $stockType, Decimal $decrementBy): void;
 
     /**
      * @param string $sku
      * @param string $stockType
-     * @param int $incrementBy
+     * @param \Spryker\DecimalObject\Decimal $incrementBy
      *
      * @return void
      */
-    public function incrementStock($sku, $stockType, $incrementBy = 1);
+    public function incrementStock($sku, $stockType, Decimal $incrementBy): void;
 
     /**
      * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct

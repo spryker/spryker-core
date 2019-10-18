@@ -15,16 +15,17 @@
     </transfer>
 
     <transfer name="ProductAbstractAvailability">
-        <property name="availability" type="int"/>
+        <property name="availability" type="decimal"/>
         <property name="productName" type="string"/>
-        <property name="reservationQuantity" type="int"/>
+        <property name="reservationQuantity" type="decimal"/>
         <property name="sku" type="string"/>
-        <property name="stockQuantity" type="int"/>
+        <property name="stockQuantity" type="decimal"/>
         <property name="isNeverOutOfStock" type="bool"/>
     </transfer>
 
     <transfer name="ProductConcreteAvailability">
-        <property name="availability" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="availability" type="decimal"/>
         <property name="isNeverOutOfStock" type="bool"/>
     </transfer>
 
@@ -70,4 +71,3 @@
     </transfer>
 
 </transfers>
-

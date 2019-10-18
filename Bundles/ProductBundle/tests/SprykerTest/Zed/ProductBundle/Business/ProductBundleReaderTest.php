@@ -14,7 +14,8 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
-use Propel\Runtime\Collection\ObjectCollection;
+use PHPUnit\Framework\MockObject\MockObject;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
@@ -58,7 +59,7 @@ class ProductBundleReaderTest extends Unit
         $productForBundleTransfer = $bundledProductsTransferCollection[0];
         $this->assertSame($this->fixtures['bundledProductSku'], $productForBundleTransfer->getSku());
         $this->assertSame($this->fixtures['fkBundledProduct'], $productForBundleTransfer->getIdProductConcrete());
-        $this->assertSame($this->fixtures['bundledProductQuantity'], $productForBundleTransfer->getQuantity());
+        $this->assertTrue((new Decimal($this->fixtures['bundledProductQuantity']))->equals($productForBundleTransfer->getQuantity()));
         $this->assertSame($this->fixtures['idProductBundle'], $productForBundleTransfer->getIdProductBundle());
     }
 
@@ -88,7 +89,7 @@ class ProductBundleReaderTest extends Unit
         $productBundleTransfer = $productConcreteTransfer->getProductBundle();
 
         $this->assertNotNull($productBundleTransfer);
-        $this->assertEquals($bundleAvailability, $productBundleTransfer->getAvailability());
+        $this->assertTrue($productBundleTransfer->getAvailability()->equals($bundleAvailability));
         $this->assertCount(1, $productBundleTransfer->getBundledProducts());
     }
 
@@ -97,14 +98,13 @@ class ProductBundleReaderTest extends Unit
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface|null $productBundleToAvailabilityQueryContainerMock
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface|null $storeFacadeMock
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface
      */
     protected function createProductBundleReader(
         ?ProductBundleQueryContainerInterface $productBundleQueryContainerMock = null,
         ?ProductBundleToAvailabilityQueryContainerInterface $productBundleToAvailabilityQueryContainerMock = null,
         ?ProductBundleToStoreFacadeInterface $storeFacadeMock = null
     ) {
-
         if ($productBundleQueryContainerMock === null) {
             $productBundleQueryContainerMock = $this->createProductQueryContainerMock();
         }
@@ -157,11 +157,11 @@ class ProductBundleReaderTest extends Unit
 
     /**
      * @param array $fixtures
-     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader|\PHPUnit\Framework\MockObject\MockObject $productBundleReaderMock
+     * @param \PHPUnit\Framework\MockObject\MockObject $productBundleReaderMock
      *
      * @return void
      */
-    protected function setupFindBundledProducts(array $fixtures, ProductBundleReader $productBundleReaderMock)
+    protected function setupFindBundledProducts(array $fixtures, MockObject $productBundleReaderMock): void
     {
         $productBundleEntity = new SpyProductBundle();
         $productBundleEntity->setIdProductBundle($fixtures['idProductConcrete']);
@@ -175,12 +175,9 @@ class ProductBundleReaderTest extends Unit
 
         $productBundleEntity->setFkBundledProduct($fixtures['fkBundledProduct']);
 
-        $bundledProducts = new ObjectCollection();
-        $bundledProducts->append($productBundleEntity);
-
         $productBundleReaderMock->expects($this->once())
             ->method('findBundledProducts')
             ->with($fixtures['idProductConcrete'])
-            ->willReturn($bundledProducts);
+            ->willReturn([$productBundleEntity]);
     }
 }

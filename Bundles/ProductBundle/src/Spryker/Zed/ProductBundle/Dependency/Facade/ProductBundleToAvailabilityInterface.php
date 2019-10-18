@@ -7,63 +7,35 @@
 
 namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 
 interface ProductBundleToAvailabilityInterface
 {
     /**
      * @param string $sku
-     * @param int $quantity
-     *
-     * @return bool
-     */
-    public function isProductSellable($sku, $quantity);
-
-    /**
-     * @param string $sku
-     *
-     * @return int
-     */
-    public function calculateStockForProduct($sku);
-
-    /**
-     * @param int $idAvailabilityAbstract
-     *
-     * @return void
-     */
-    public function touchAvailabilityAbstract($idAvailabilityAbstract);
-
-    /**
-     * @param string $sku
-     * @param int $quantity
-     *
-     * @return int
-     */
-    public function saveProductAvailability($sku, $quantity);
-
-    /**
-     * @param string $sku
-     * @param int $quantity
+     * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
-    public function saveProductAvailabilityForStore($sku, $quantity, StoreTransfer $storeTransfer);
+    public function saveProductAvailabilityForStore(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): int;
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    public function isProductSellableForStore($sku, $quantity, StoreTransfer $storeTransfer);
+    public function isProductSellableForStore(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): bool;
 
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
-    public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer);
+    public function findProductConcreteAvailabilityBySkuForStore(string $sku, StoreTransfer $storeTransfer): ?ProductConcreteAvailabilityTransfer;
 }

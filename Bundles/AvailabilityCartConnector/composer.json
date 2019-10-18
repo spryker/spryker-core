@@ -5,11 +5,14 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/availability": "^5.0.0 || ^6.0.0 || ^8.0.0",
+    "spryker/availability": "^9.0.0",
+    "spryker/decimal-object": "^1.0.0",
     "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
-    "spryker/cart": "*"
+    "spryker/cart": "*",
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/cart": "If you want to use Cart plugins."

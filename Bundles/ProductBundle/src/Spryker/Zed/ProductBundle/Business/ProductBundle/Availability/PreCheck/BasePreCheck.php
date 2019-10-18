@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
@@ -63,26 +63,27 @@ class BasePreCheck
     /**
      * @param string $sku
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]
      */
-    protected function findBundledProducts($sku)
+    protected function findBundledProducts(string $sku): array
     {
         return $this->productBundleQueryContainer
             ->queryBundleProductBySku($sku)
-            ->find();
+            ->find()
+            ->getData();
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
-     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection $bundledProducts
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $bundledProducts
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return array
      */
     protected function getUnavailableBundleItems(
-        ArrayObject $items,
-        ObjectCollection $bundledProducts,
+        ArrayObject $itemTransfers,
+        array $bundledProducts,
         ItemTransfer $itemTransfer,
         StoreTransfer $storeTransfer
     ) {
@@ -93,7 +94,7 @@ class BasePreCheck
 
             $sku = $bundledProductConcreteEntity->getSku();
             $totalBundledItemQuantity = $productBundleEntity->getQuantity() * $itemTransfer->getQuantity();
-            if ($this->checkIfItemIsSellable($items, $sku, $storeTransfer, $totalBundledItemQuantity) && $bundledProductConcreteEntity->getIsActive()) {
+            if ($this->checkIfItemIsSellable($itemTransfers, $sku, $storeTransfer, new Decimal($totalBundledItemQuantity)) && $bundledProductConcreteEntity->getIsActive()) {
                 continue;
             }
             $unavailableBundleItems[] = [
@@ -106,39 +107,43 @@ class BasePreCheck
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemsTransfers
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param int $itemQuantity
+     * @param \Spryker\DecimalObject\Decimal|null $itemQuantity
      *
      * @return bool
      */
     protected function checkIfItemIsSellable(
-        ArrayObject $items,
-        $sku,
+        iterable $itemsTransfers,
+        string $sku,
         StoreTransfer $storeTransfer,
-        $itemQuantity = 0
-    ) {
-        $currentItemQuantity = $this->getAccumulatedItemQuantityForGivenSku($items, $sku);
-        $currentItemQuantity += $itemQuantity;
+        ?Decimal $itemQuantity = null
+    ): bool {
+        if ($itemQuantity === null) {
+            $itemQuantity = new Decimal(0);
+        }
+
+        $currentItemQuantity = $this->getAccumulatedItemQuantityForGivenSku($itemsTransfers, $sku);
+        $currentItemQuantity = $currentItemQuantity->add($itemQuantity);
 
         return $this->availabilityFacade->isProductSellableForStore($sku, $currentItemQuantity, $storeTransfer);
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      * @param string $sku
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    protected function getAccumulatedItemQuantityForGivenSku(ArrayObject $items, $sku)
+    protected function getAccumulatedItemQuantityForGivenSku(iterable $itemTransfers, string $sku): Decimal
     {
-        $quantity = 0;
-        foreach ($items as $itemTransfer) {
+        $quantity = new Decimal(0);
+        foreach ($itemTransfers as $itemTransfer) {
             if ($itemTransfer->getSku() !== $sku) {
                 continue;
             }
-            $quantity += $itemTransfer->getQuantity();
+            $quantity = $quantity->add($itemTransfer->getQuantity());
         }
 
         return $quantity;

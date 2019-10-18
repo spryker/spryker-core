@@ -7,14 +7,17 @@
 
 namespace Spryker\Zed\AvailabilityGui\Communication\Form;
 
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Required;
+use Symfony\Component\Validator\Constraints\Type;
 
 /**
  * @method \Spryker\Zed\AvailabilityGui\Communication\AvailabilityGuiCommunicationFactory getFactory()
@@ -46,13 +49,27 @@ class StockSubForm extends AbstractType
      */
     protected function addQuantityField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_QUANTITY, TextType::class, [
+        $builder->add(static::FIELD_QUANTITY, NumberType::class, [
             'label' => 'Quantity',
+            'attr' => ['min' => PHP_INT_MIN, 'max' => PHP_INT_MAX],
+            'html5' => true,
             'constraints' => [
                 new Required(),
-                new Regex(['pattern' => '/[\d]+/']),
+                new Type('numeric'),
             ],
         ]);
+
+        $builder->get(static::FIELD_QUANTITY)
+            ->addModelTransformer(
+                new CallbackTransformer(
+                    function (Decimal $quantity) {
+                        return $quantity->toFloat();
+                    },
+                    function ($dateViewToModel) {
+                        return $dateViewToModel;
+                    }
+                )
+            );
 
         return $this;
     }

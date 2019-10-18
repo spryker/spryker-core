@@ -209,7 +209,7 @@ class ClassDefinitionTest extends Unit
         $methods = $classDefinition->getMethods();
 
         $givenSetter = $methods['setProperty1'];
-        $expectedSetter = $this->getMethod('setProperty1', 'property1', 'string|null', null, null, 'PROPERTY1', [], false);
+        $expectedSetter = $this->getMethod('setProperty1', 'property1', 'string|null', null, null, 'PROPERTY1', [], false, false);
         $this->assertEquals($expectedSetter, $givenSetter);
 
         $givenGetter = $methods['getProperty1'];
@@ -232,7 +232,7 @@ class ClassDefinitionTest extends Unit
 
         $methods = $classDefinition->getMethods();
         $givenSetter = $methods['setProperty1'];
-        $expectedSetter = $this->getMethod('setProperty1', 'property1', 'string|null', null, null, 'PROPERTY1', [], false);
+        $expectedSetter = $this->getMethod('setProperty1', 'property1', 'string|null', null, null, 'PROPERTY1', [], false, false);
 
         $this->assertEquals($expectedSetter, $givenSetter);
     }
@@ -252,7 +252,7 @@ class ClassDefinitionTest extends Unit
 
         $methods = $classDefinition->getMethods();
         $givenSetter = $methods['setProperty1'];
-        $expectedSetter = $this->getMethod('setProperty1', 'property1', '\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'ArrayObject', 'PROPERTY1', [], false);
+        $expectedSetter = $this->getMethod('setProperty1', 'property1', '\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'ArrayObject', 'PROPERTY1', [], false, false);
 
         $this->assertEquals($expectedSetter, $givenSetter);
     }
@@ -274,7 +274,7 @@ class ClassDefinitionTest extends Unit
 
         $methods = $classDefinition->getMethods();
         $given = $methods['setProperty1'];
-        $expected = $this->getMethod('setProperty1', 'property1', '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'ArrayObject', 'PROPERTY1', $bundles, false);
+        $expected = $this->getMethod('setProperty1', 'property1', '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'ArrayObject', 'PROPERTY1', $bundles, false, false);
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperty1'];
@@ -334,7 +334,7 @@ class ClassDefinitionTest extends Unit
 
         $methods = $classDefinition->getMethods();
         $given = $methods['setProperties'];
-        $expected = $this->getMethod('setProperties', 'properties', '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'ArrayObject', 'PROPERTIES', [], false);
+        $expected = $this->getMethod('setProperties', 'properties', '\\ArrayObject|\Generated\Shared\Transfer\TypeTransfer[]', null, 'ArrayObject', 'PROPERTIES', [], false, false);
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperties'];
@@ -355,10 +355,11 @@ class ClassDefinitionTest extends Unit
      * @param string|null $constant
      * @param array $bundles
      * @param bool|null $hasDefaultNull
+     * @param bool|null $decimal
      *
      * @return array
      */
-    private function getMethod($method, $property, $var = null, $return = null, $typeHint = null, $constant = null, array $bundles = [], $hasDefaultNull = null)
+    private function getMethod($method, $property, $var = null, $return = null, $typeHint = null, $constant = null, array $bundles = [], $hasDefaultNull = null, $decimal = null)
     {
         $method = [
             'name' => $method,
@@ -383,6 +384,10 @@ class ClassDefinitionTest extends Unit
 
         if ($hasDefaultNull !== null) {
             $method['hasDefaultNull'] = $hasDefaultNull;
+        }
+
+        if ($decimal !== null) {
+            $method['decimal'] = $decimal;
         }
 
         return $method;

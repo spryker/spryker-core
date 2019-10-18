@@ -25,7 +25,7 @@
         <property name="sourceUnitNetPrice" type="int"/>
         <property name="offerDiscount" type="int"/>
         <property name="offerFee" type="int"/>
-        <property name="stock" type="int"/>
+        <property name="stock" type="decimal"/>
         <property name="quantity" type="int"/>
         <property name="sku" type="string"/>
     </transfer>

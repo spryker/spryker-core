@@ -30,7 +30,7 @@ class AttributeMapperTest extends CartItemsMapperBaseTest
     {
         $subject = new CartItemsAttributeMapper(
             $this->createProductClientBridge('attribute.json'),
-            new CartItemsAvailabilityMapper($this->createAvailabilityClientBridge('availability.json'))
+            new CartItemsAvailabilityMapper($this->createAvailabilityStorageClientBridge('availability.json'))
         );
         $result = $subject->buildMap($this->getItems());
 
@@ -56,7 +56,7 @@ class AttributeMapperTest extends CartItemsMapperBaseTest
     {
         $subject = new CartItemsAttributeMapper(
             $this->createProductClientBridge('attributeNested.json'),
-            new CartItemsAvailabilityMapper($this->createAvailabilityClientBridge('availabilityNested.json'))
+            new CartItemsAvailabilityMapper($this->createAvailabilityStorageClientBridge('availabilityNested.json'))
         );
         $result = $subject->buildMap($this->getNestedItems());
 

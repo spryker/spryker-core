@@ -26,26 +26,6 @@ class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
     }
 
     /**
-     * @param string $sku
-     *
-     * @return int
-     */
-    public function calculateStockForProduct($sku)
-    {
-        return $this->stockFacade->calculateStockForProduct($sku);
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @return bool
-     */
-    public function isNeverOutOfStock($sku)
-    {
-        return $this->stockFacade->isNeverOutOfStock($sku);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\StockProductTransfer $transferStockProduct
      *
      * @return int
@@ -63,14 +43,6 @@ class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
     public function updateStockProduct(StockProductTransfer $stockProductTransfer)
     {
         return $this->stockFacade->updateStockProduct($stockProductTransfer);
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getAvailableStockTypes()
-    {
-        return $this->stockFacade->getAvailableStockTypes();
     }
 
     /**

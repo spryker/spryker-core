@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductBundle\Business\Availability\PreCheck;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCartAvailabilityCheck;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
@@ -45,7 +46,7 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
             ->expects($this->once())
             ->method('isProductSellableForStore')
             ->withConsecutive(
-                [$this->equalTo($this->fixtures['bundledProductSku']), $this->equalTo(15)]
+                [$this->equalTo($this->fixtures['bundledProductSku']), $this->equalTo(new Decimal(15))]
             )
             ->willReturn(true);
 

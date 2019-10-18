@@ -7,7 +7,7 @@
     "php": ">=7.1",
     "spryker/kernel": "^3.30.0",
     "spryker/product": "^6.4.0",
-    "spryker/product-bundle": "^4.11.0 || ^6.0.0",
+    "spryker/product-bundle": "^4.11.0 || ^6.0.0 || ^7.0.0",
     "spryker/product-list-extension": "^1.0.0"
   },
   "require-dev": {

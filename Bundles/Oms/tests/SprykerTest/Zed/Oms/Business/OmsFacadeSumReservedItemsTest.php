@@ -70,16 +70,28 @@ class OmsFacadeSumReservedItemsTest extends Unit
         $this->createTestOrder('123', 'Test01', static::NOT_RESERVED_ITEM_STATE_EXCEPT_PROCESS_3);
         $this->createTestOrder('456', 'Test02', static::NOT_RESERVED_ITEM_STATE_EXCEPT_PROCESS_3);
 
-        $this->assertEquals(100, $this->getOmsFacade()->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU));
+        $this->assertTrue(
+            $this->getOmsFacade()
+                ->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU)
+                ->equals(100)
+        );
 
         $order3 = $this->createTestOrder('789', 'Test03', 'new');
-        $this->assertEquals(150, $this->getOmsFacade()->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU));
+        $this->assertTrue(
+            $this->getOmsFacade()
+                ->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU)
+                ->equals(150)
+        );
 
         foreach ($order3->getItems() as $orderItem) {
             $orderItem->setState($this->createOmsOrderItemState(static::NOT_RESERVED_ITEM_STATE_EXCEPT_PROCESS_3))->save();
         }
 
-        $this->assertEquals(100, $this->getOmsFacade()->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU));
+        $this->assertTrue(
+            $this->getOmsFacade()
+                ->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU)
+                ->equals(100)
+        );
     }
 
     /**
@@ -92,7 +104,7 @@ class OmsFacadeSumReservedItemsTest extends Unit
         $storeTransfer = (new StoreTransfer())->setName(static::DE_STORE_NAME);
         $reservationQuantity = $this->getOmsFacade()->getOmsReservedProductQuantityForSku(static::ORDER_ITEM_SKU, $storeTransfer);
 
-        $this->assertSame(50, $reservationQuantity);
+        $this->assertTrue($reservationQuantity->equals(50));
     }
 
     /**

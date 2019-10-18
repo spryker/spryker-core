@@ -5,22 +5,25 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/decimal-object": "^1.0.0",
     "spryker/event": "^2.3.0",
     "spryker/kernel": "^3.30.0",
     "spryker/key-builder": "^1.0.0",
     "spryker/locale": "^3.0.0",
-    "spryker/oms": "^8.0.0 || ^10.0.0",
+    "spryker/oms": "^11.0.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
     "spryker/product-alternative-extension": "^1.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/stock": "^5.0.0 || ^7.0.0",
+    "spryker/stock": "^8.0.0",
     "spryker/storage": "^3.0.0",
     "spryker/store": "^1.5.0",
     "spryker/touch": "^3.0.0 || ^4.0.0",
+    "spryker/transfer": "^3.15.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/checkout": "*",
+    "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },

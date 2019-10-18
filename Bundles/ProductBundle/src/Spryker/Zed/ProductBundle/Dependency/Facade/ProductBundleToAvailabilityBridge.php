@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 
 class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityInterface
 {
@@ -25,103 +27,37 @@ class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityIn
     }
 
     /**
-     * @deprecated Use isProductSellableForStore() instead.
-     *
      * @param string $sku
-     * @param int $quantity
-     *
-     * @return bool
-     */
-    public function isProductSellable($sku, $quantity)
-    {
-        return $this->availabilityFacade->isProductSellable($sku, $quantity);
-    }
-
-    /**
-     * @deprecated Use calculateStockForProductWithStore() instead.
-     *
-     * @param string $sku
-     *
-     * @return int
-     */
-    public function calculateStockForProduct($sku)
-    {
-        return $this->availabilityFacade->calculateStockForProduct($sku);
-    }
-
-    /**
-     * The method check for "method_exists" is for BC for modules without multi store availability support.
-     *
-     * @param string $sku
+     * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return int
      */
-    public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer)
+    public function saveProductAvailabilityForStore(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): int
     {
-        if (method_exists($this->availabilityFacade, 'calculateStockForProductWithStore')) {
-            return $this->availabilityFacade->calculateStockForProductWithStore($sku, $storeTransfer);
-        }
-
-        return $this->availabilityFacade->calculateStockForProduct($sku);
+        return $this->availabilityFacade->saveProductAvailabilityForStore($sku, $quantity, $storeTransfer);
     }
 
     /**
-     * The method check for "method_exists" is for BC for modules without multi store availability support.
-     *
      * @param string $sku
-     * @param int $quantity
+     * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    public function isProductSellableForStore($sku, $quantity, StoreTransfer $storeTransfer)
+    public function isProductSellableForStore(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): bool
     {
-        if (method_exists($this->availabilityFacade, 'isProductSellableForStore')) {
-            return $this->availabilityFacade->isProductSellableForStore($sku, $quantity, $storeTransfer);
-        }
-
-        return $this->availabilityFacade->isProductSellable($sku, $quantity);
+        return $this->availabilityFacade->isProductSellableForStore($sku, $quantity, $storeTransfer);
     }
 
     /**
-     * @param int $idAvailabilityAbstract
-     *
-     * @return void
-     */
-    public function touchAvailabilityAbstract($idAvailabilityAbstract)
-    {
-        $this->availabilityFacade->touchAvailabilityAbstract($idAvailabilityAbstract);
-    }
-
-    /**
-     * @deprecated Use saveProductAvailabilityForStore() instead.
-     *
      * @param string $sku
-     * @param int $quantity
-     *
-     * @return int
-     */
-    public function saveProductAvailability($sku, $quantity)
-    {
-        return $this->availabilityFacade->saveProductAvailability($sku, $quantity);
-    }
-
-    /**
-     * The method check for "method_exists" is for BC for modules without multi store availability support.
-     *
-     * @param string $sku
-     * @param int $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
-    public function saveProductAvailabilityForStore($sku, $quantity, StoreTransfer $storeTransfer)
+    public function findProductConcreteAvailabilityBySkuForStore(string $sku, StoreTransfer $storeTransfer): ?ProductConcreteAvailabilityTransfer
     {
-        if (method_exists($this->availabilityFacade, 'saveProductAvailabilityForStore')) {
-            return $this->availabilityFacade->saveProductAvailabilityForStore($sku, $quantity, $storeTransfer);
-        }
-
-        return $this->availabilityFacade->saveProductAvailability($sku, $quantity);
+        return $this->availabilityFacade->findProductConcreteAvailabilityBySkuForStore($sku, $storeTransfer);
     }
 }

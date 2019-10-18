@@ -9,8 +9,8 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface;
-use Traversable;
 
 abstract class ProductPackagingUnitAvailabilityPreCheck
 {
@@ -30,12 +30,12 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $item
-     * @param \Traversable|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    protected function isPackagingUnitLeadProductSellable(ItemTransfer $item, Traversable $items, StoreTransfer $storeTransfer): bool
+    protected function isPackagingUnitLeadProductSellable(ItemTransfer $item, iterable $items, StoreTransfer $storeTransfer): bool
     {
         $itemLeadProductSku = $item->getAmountLeadProduct()->getProduct()->getSku();
         $accumulatedItemLeadProductQuantity = $this->getAccumulatedQuantityForLeadProduct($items, $itemLeadProductSku);
@@ -48,18 +48,17 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
     }
 
     /**
-     * @param \Traversable|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
      * @param string $leadProductSku
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    protected function getAccumulatedQuantityForLeadProduct(Traversable $items, string $leadProductSku): int
+    protected function getAccumulatedQuantityForLeadProduct(iterable $items, string $leadProductSku): Decimal
     {
-        $quantity = 0;
-
+        $quantity = new Decimal(0);
         foreach ($items as $item) {
             if ($leadProductSku === $item->getSku()) { // Lead product is in cart as an individual item
-                $quantity += $item->getQuantity();
+                $quantity = $quantity->add($item->getQuantity());
                 continue;
             }
 
@@ -68,7 +67,7 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
             }
 
             if ($item->getAmountLeadProduct()->getProduct()->getSku() === $leadProductSku) { // Item in cart has the searched lead product
-                $quantity += $item->getAmount();
+                $quantity = $quantity->add($item->getAmount());
             }
         }
 
@@ -77,14 +76,13 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    protected function isProductSellableForStore(string $sku, int $quantity, StoreTransfer $storeTransfer): bool
+    protected function isProductSellableForStore(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): bool
     {
-        return $this->availabilityFacade
-            ->isProductSellableForStore($sku, $quantity, $storeTransfer);
+        return $this->availabilityFacade->isProductSellableForStore($sku, $quantity, $storeTransfer);
     }
 }

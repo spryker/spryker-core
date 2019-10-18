@@ -74,7 +74,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     /**
      * @return void
      */
-    protected function initCollectionProperties()
+    protected function initCollectionProperties(): void
     {
         foreach ($this->transferMetadata as $property => $metaData) {
             if ($metaData['is_collection'] && $this->$property === null) {
@@ -98,21 +98,18 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
         foreach ($properties as $property) {
             $value = $this->$property;
 
-            if ($camelCasedKeys) {
-                $arrayKey = $property;
-            } else {
-                $arrayKey = $this->transferMetadata[$property]['name_underscore'];
-            }
+            $arrayKey = $this->getArrayKey($property, $camelCasedKeys);
 
-            if (is_object($value)) {
-                if ($isRecursive && $value instanceof TransferInterface) {
+            if (is_object($value) && $isRecursive) {
+                if ($value instanceof TransferInterface) {
                     $values[$arrayKey] = $value->$childConvertMethodName($isRecursive, $camelCasedKeys);
-                } elseif ($isRecursive && $this->transferMetadata[$property]['is_collection'] && count($value) >= 1) {
-                    $values = $this->addValuesToCollection($value, $values, $arrayKey, $isRecursive, $childConvertMethodName, $camelCasedKeys);
-                } else {
-                    $values[$arrayKey] = $value;
+                    continue;
                 }
-                continue;
+
+                if ($this->transferMetadata[$property]['is_collection'] && is_countable($value) && count($value) >= 1) {
+                    $values = $this->addValuesToCollection($value, $values, $arrayKey, $isRecursive, $childConvertMethodName, $camelCasedKeys);
+                    continue;
+                }
             }
 
             $values[$arrayKey] = $value;
@@ -122,9 +119,24 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     }
 
     /**
+     * @param string $propertyName
+     * @param bool $camelCasedKeys
+     *
+     * @return string
+     */
+    protected function getArrayKey(string $propertyName, bool $camelCasedKeys): string
+    {
+        if ($camelCasedKeys) {
+            return $propertyName;
+        }
+
+        return $this->transferMetadata[$propertyName]['name_underscore'];
+    }
+
+    /**
      * @return array
      */
-    private function getPropertyNames()
+    protected function getPropertyNames(): array
     {
         return array_keys($this->transferMetadata);
     }
@@ -151,11 +163,29 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
                 $value = $this->initializeNestedTransferObject($property, $value, $ignoreMissingProperty);
             }
 
-            $this->$property = $value;
-            $this->modifiedProperties[$property] = true;
+            $this->assignValue($property, $value);
         }
 
         return $this;
+    }
+
+    /**
+     * @param string $propertyName
+     * @param \ArrayObject|mixed|\Spryker\Shared\Kernel\Transfer\TransferInterface|null $value
+     *
+     * @return void
+     */
+    protected function assignValue(string $propertyName, $value): void
+    {
+        if ($this->transferMetadata[$propertyName]['is_value_object'] ?? false) {
+            $propertySetterMethod = $this->getSetterMethod($propertyName);
+            $this->$propertySetterMethod($value);
+
+            return;
+        }
+
+        $this->$propertyName = $value;
+        $this->modifiedProperties[$propertyName] = true;
     }
 
     /**
@@ -165,16 +195,17 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      *
      * @return \ArrayObject
      */
-    protected function processArrayObject($elementType, $arrayObject, $ignoreMissingProperty = false)
+    protected function processArrayObject($elementType, $arrayObject, $ignoreMissingProperty = false): ArrayObject
     {
         $transferObjectsArray = new ArrayObject();
         foreach ($arrayObject as $arrayElement) {
             if (!is_array($arrayElement)) {
                 $transferObjectsArray->append(new $elementType());
+
                 continue;
             }
 
-            if (array_values($arrayElement) !== $arrayElement) { // isAssociativeArray
+            if ($this->isAssociativeArray($arrayElement)) {
                 /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject */
                 $transferObject = new $elementType();
                 $transferObject->fromArray($arrayElement, $ignoreMissingProperty);
@@ -195,13 +226,27 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     }
 
     /**
+     * @param array $arr
+     *
+     * @return bool
+     */
+    protected function isAssociativeArray(array $arr): bool
+    {
+        if ($arr === []) {
+            return false;
+        }
+
+        return array_keys($arr) !== range(0, count($arr) - 1);
+    }
+
+    /**
      * @param string $property
      *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return void
      */
-    protected function assertPropertyIsSet($property)
+    protected function assertPropertyIsSet($property): void
     {
         if ($this->$property === null) {
             throw new RequiredTransferPropertyException(sprintf(
@@ -219,7 +264,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      *
      * @return void
      */
-    protected function assertCollectionPropertyIsSet($property)
+    protected function assertCollectionPropertyIsSet($property): void
     {
         /** @var \ArrayObject $collection */
         $collection = $this->$property;
@@ -252,6 +297,16 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
         }
 
         return $value;
+    }
+
+    /**
+     * @param string $propertyName
+     *
+     * @return string
+     */
+    protected function getSetterMethod(string $propertyName): string
+    {
+        return 'set' . ucfirst($propertyName);
     }
 
     /**

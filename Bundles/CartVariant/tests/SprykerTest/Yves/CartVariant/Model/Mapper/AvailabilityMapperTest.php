@@ -27,7 +27,7 @@ class AvailabilityMapperTest extends CartItemsMapperBaseTest
      */
     public function testBuildMap()
     {
-        $subject = new CartItemsAvailabilityMapper($this->createAvailabilityClientBridge('availability.json'));
+        $subject = new CartItemsAvailabilityMapper($this->createAvailabilityStorageClientBridge('availability.json'));
         $result = $subject->buildMap($this->getItems());
 
         $this->assertArrayHasKey('170_28516206', $result);

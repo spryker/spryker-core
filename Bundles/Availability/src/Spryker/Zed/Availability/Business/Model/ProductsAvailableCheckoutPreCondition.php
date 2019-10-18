@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Availability\Business\Model;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\AvailabilityConfig;
 
 class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckoutPreConditionInterface
@@ -66,12 +66,12 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    protected function isProductSellable($sku, $quantity, StoreTransfer $storeTransfer)
+    protected function isProductSellable(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): bool
     {
         return $this->sellable->isProductSellableForStore($sku, $quantity, $storeTransfer);
     }
@@ -79,19 +79,20 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      *
-     * @return array
+     * @return \Spryker\DecimalObject\Decimal[] [string, \Spryker\DecimalObject\Decimal]
      */
-    private function groupItemsBySku(ArrayObject $items)
+    protected function groupItemsBySku(iterable $items): array
     {
+        /** @var \Spryker\DecimalObject\Decimal[] $result */
         $result = [];
-
         foreach ($items as $itemTransfer) {
             $sku = $itemTransfer->getSku();
 
             if (!isset($result[$sku])) {
-                $result[$sku] = 0;
+                $result[$sku] = new Decimal(0);
             }
-            $result[$sku] += $itemTransfer->getQuantity();
+
+            $result[$sku] = $result[$sku]->add($itemTransfer->getQuantity());
         }
 
         return $result;
@@ -111,7 +112,7 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
      *
      * @return void
      */
-    protected function addAvailabilityErrorToCheckoutResponse(CheckoutResponseTransfer $checkoutResponse, string $sku)
+    protected function addAvailabilityErrorToCheckoutResponse(CheckoutResponseTransfer $checkoutResponse, string $sku): void
     {
         $checkoutErrorTransfer = $this->createCheckoutErrorTransfer();
         $checkoutErrorTransfer

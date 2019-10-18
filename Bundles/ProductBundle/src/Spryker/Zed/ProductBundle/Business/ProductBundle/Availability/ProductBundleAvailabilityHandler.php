@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Availability;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
-use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
@@ -18,6 +18,8 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandlerInterface
 {
+    protected const DIVISION_SCALE = 10;
+
     /**
      * @var \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface
      */
@@ -109,20 +111,21 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      */
     public function removeBundleAvailability($bundleProductSku, StoreTransfer $storeTransfer)
     {
-        $this->availabilityFacade->saveProductAvailabilityForStore($bundleProductSku, 0, $storeTransfer);
+        $this->availabilityFacade->saveProductAvailabilityForStore($bundleProductSku, new Decimal(0), $storeTransfer);
     }
 
     /**
      * @param int $idConcreteProduct
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]
      */
-    protected function getBundleItemsByIdProduct($idConcreteProduct)
+    protected function getBundleItemsByIdProduct($idConcreteProduct): array
     {
         if (!isset(static::$bundleItemEntityCache[$idConcreteProduct]) || count(static::$bundleItemEntityCache[$idConcreteProduct]) == 0) {
             static::$bundleItemEntityCache[$idConcreteProduct] = $this->productBundleQueryContainer
                 ->queryBundleProduct($idConcreteProduct)
-                ->find();
+                ->find()
+                ->getData();
         }
 
         return static::$bundleItemEntityCache[$idConcreteProduct];
@@ -145,12 +148,12 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     }
 
     /**
-     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection $bundleItems
+     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $bundleItems
      * @param string $bundleProductSku
      *
      * @return void
      */
-    protected function updateBundleProductAvailability($bundleItems, $bundleProductSku)
+    protected function updateBundleProductAvailability(array $bundleItems, string $bundleProductSku): void
     {
         $currentStoreTransfer = $this->storeFacade->getCurrentStore();
 
@@ -195,17 +198,16 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     }
 
     /**
-     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection $bundleItems
+     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $bundleItems
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    protected function calculateBundleQuantity(ObjectCollection $bundleItems, StoreTransfer $storeTransfer)
+    protected function calculateBundleQuantity(array $bundleItems, StoreTransfer $storeTransfer): Decimal
     {
-        $bundleAvailabilityQuantity = 0;
+        $bundleAvailabilityQuantity = new Decimal(0);
         foreach ($bundleItems as $bundleItemEntity) {
-            $bundledItemSku = $bundleItemEntity->getSpyProductRelatedByFkBundledProduct()
-                ->getSku();
+            $bundledItemSku = $bundleItemEntity->getSpyProductRelatedByFkBundledProduct()->getSku();
 
             $bundledProductAvailabilityEntity = $this->findBundledItemAvailabilityEntityBySku(
                 $bundledItemSku,
@@ -217,7 +219,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
             }
 
             if ($this->isBundledItemUnavailable($bundledProductAvailabilityEntity)) {
-                return 0;
+                return new Decimal(0);
             }
 
             $bundleAvailabilityQuantity = $this->calculateBundledItemQuantity(
@@ -241,7 +243,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
             return false;
         }
 
-        return ($bundledProductAvailabilityEntity->getQuantity() === 0 && !$bundledProductAvailabilityEntity->getIsNeverOutOfStock());
+        return (new Decimal($bundledProductAvailabilityEntity->getQuantity()))->isZero() && !$bundledProductAvailabilityEntity->getIsNeverOutOfStock();
     }
 
     /**
@@ -261,20 +263,23 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     /**
      * @param \Orm\Zed\Availability\Persistence\SpyAvailability|null $bundledProductAvailabilityEntity
      * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle $bundleItemEntity
-     * @param int $bundleAvailabilityQuantity
+     * @param \Spryker\DecimalObject\Decimal $bundleAvailabilityQuantity
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
     protected function calculateBundledItemQuantity(
         ?SpyAvailability $bundledProductAvailabilityEntity,
         SpyProductBundle $bundleItemEntity,
-        $bundleAvailabilityQuantity
-    ) {
+        Decimal $bundleAvailabilityQuantity
+    ): Decimal {
         if (!$bundledProductAvailabilityEntity) {
-            return 0;
+            return new Decimal(0);
         }
 
-        $bundledItemQuantity = (int)floor($bundledProductAvailabilityEntity->getQuantity() / $bundleItemEntity->getQuantity());
+        $bundledItemQuantity = (new Decimal($bundledProductAvailabilityEntity->getQuantity()))
+            ->divide($bundleItemEntity->getQuantity(), static::DIVISION_SCALE)
+            ->floor();
+
         if ($this->isMaxQuantity($bundleAvailabilityQuantity, $bundledItemQuantity)) {
             return $bundledItemQuantity;
         }
@@ -283,13 +288,13 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     }
 
     /**
-     * @param int $bundleAvailabilityQuantity
-     * @param int $bundledItemQuantity
+     * @param \Spryker\DecimalObject\Decimal $bundleAvailabilityQuantity
+     * @param \Spryker\DecimalObject\Decimal $bundledItemQuantity
      *
      * @return bool
      */
-    protected function isMaxQuantity($bundleAvailabilityQuantity, $bundledItemQuantity)
+    protected function isMaxQuantity(Decimal $bundleAvailabilityQuantity, Decimal $bundledItemQuantity): bool
     {
-        return ($bundleAvailabilityQuantity > $bundledItemQuantity || $bundleAvailabilityQuantity == 0);
+        return $bundleAvailabilityQuantity->greatherThanOrEquals($bundledItemQuantity) || $bundleAvailabilityQuantity->equals(0);
     }
 }

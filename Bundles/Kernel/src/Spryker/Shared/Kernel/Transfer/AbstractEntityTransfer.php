@@ -36,6 +36,7 @@ class AbstractEntityTransfer extends AbstractTransfer implements EntityTransferI
         foreach ($data as $property => $value) {
             if ($this->hasProperty($property, $acceptVirtualProperties) === false) {
                 $this->virtualProperties[$property] = $value;
+
                 continue;
             }
 
@@ -48,8 +49,7 @@ class AbstractEntityTransfer extends AbstractTransfer implements EntityTransferI
                 $value = $this->initializeNestedTransferObject($property, $value, $acceptVirtualProperties);
             }
 
-            $this->$property = $value;
-            $this->modifiedProperties[$property] = true;
+            $this->assignValue($property, $value);
         }
 
         return $this;

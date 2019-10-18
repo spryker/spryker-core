@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityInterface;
 
 class CheckCartAvailability implements CheckCartAvailabilityInterface
@@ -56,13 +57,14 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
             );
             $currentItemQuantity += $itemTransfer->getQuantity();
 
-            $isSellable = $this->isProductSellable($itemTransfer, $currentItemQuantity, $storeTransfer);
+            $isSellable = $this->isProductSellableForStore($itemTransfer, new Decimal($currentItemQuantity), $storeTransfer);
 
             if (!$isSellable) {
-                $stock = $this->calculateStockForProduct($itemTransfer, $storeTransfer);
+                $availability = $this->calculateAvailabilityForProductWithStore($itemTransfer, $storeTransfer);
                 $cartPreCheckResponseTransfer->setIsSuccess(false);
-                $messages[] = $this->createItemIsNotAvailableMessageTransfer($stock, $itemTransfer->getSku());
+                $messages[] = $this->createItemIsNotAvailableMessageTransfer($availability, $itemTransfer->getSku());
             }
+
             $itemsInCart->append($itemTransfer);
         }
 
@@ -91,19 +93,19 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     }
 
     /**
-     * @param int $stock
+     * @param \Spryker\DecimalObject\Decimal $availability
      * @param string $sku
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createItemIsNotAvailableMessageTransfer($stock, $sku)
+    protected function createItemIsNotAvailableMessageTransfer(Decimal $availability, string $sku): MessageTransfer
     {
-        $translationKey = $this->getTranslationKey($stock);
+        $translationKey = $this->getTranslationKey($availability);
 
         $messageTransfer = new MessageTransfer();
         $messageTransfer->setValue($translationKey);
         $messageTransfer->setParameters([
-            static::STOCK_TRANSLATION_PARAMETER => $stock,
+            static::STOCK_TRANSLATION_PARAMETER => $availability->trim()->toString(),
             static::SKU_TRANSLATION_PARAMETER => $sku,
         ]);
 
@@ -111,14 +113,14 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     }
 
     /**
-     * @param int $stock
+     * @param \Spryker\DecimalObject\Decimal $availability
      *
      * @return string
      */
-    protected function getTranslationKey($stock)
+    protected function getTranslationKey(Decimal $availability): string
     {
         $translationKey = static::CART_PRE_CHECK_AVAILABILITY_FAILED;
-        if ($stock <= 0) {
+        if ($availability->lessThanOrEquals(0)) {
             $translationKey = static::CART_PRE_CHECK_AVAILABILITY_EMPTY;
         }
 
@@ -130,49 +132,42 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    protected function getStoreTransfer(CartChangeTransfer $cartChangeTransfer)
+    protected function getStoreTransfer(CartChangeTransfer $cartChangeTransfer): StoreTransfer
     {
-        $storeTransfer = $cartChangeTransfer->getQuote()->getStore();
-        if (!$storeTransfer) {
-            return new StoreTransfer();
-        }
+        $cartChangeTransfer
+            ->getQuote()
+                ->requireStore();
+
+        return $cartChangeTransfer->getQuote()->getStore();
     }
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param int $currentItemQuantity
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Spryker\DecimalObject\Decimal $currentItemQuantity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    protected function isProductSellable(
+    protected function isProductSellableForStore(
         ItemTransfer $itemTransfer,
-        $currentItemQuantity,
-        ?StoreTransfer $storeTransfer = null
+        Decimal $currentItemQuantity,
+        StoreTransfer $storeTransfer
     ) {
-        if ($storeTransfer) {
-            return $this->availabilityFacade->isProductSellableForStore(
-                $itemTransfer->getSku(),
-                $currentItemQuantity,
-                $storeTransfer
-            );
-        }
-
-        return $this->availabilityFacade->isProductSellable($itemTransfer->getSku(), $currentItemQuantity);
+        return $this->availabilityFacade->isProductSellableForStore(
+            $itemTransfer->getSku(),
+            $currentItemQuantity,
+            $storeTransfer
+        );
     }
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    protected function calculateStockForProduct(ItemTransfer $itemTransfer, ?StoreTransfer $storeTransfer = null)
+    protected function calculateAvailabilityForProductWithStore(ItemTransfer $itemTransfer, StoreTransfer $storeTransfer): Decimal
     {
-        if ($storeTransfer) {
-            $this->availabilityFacade->calculateStockForProductWithStore($itemTransfer->getSku(), $storeTransfer);
-        }
-
-        return $this->availabilityFacade->calculateStockForProduct($itemTransfer->getSku());
+        return $this->availabilityFacade->calculateAvailabilityForProductWithStore($itemTransfer->getSku(), $storeTransfer);
     }
 }
