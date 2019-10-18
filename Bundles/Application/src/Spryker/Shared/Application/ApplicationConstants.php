@@ -450,6 +450,8 @@ interface ApplicationConstants
      * - Enables error handling with stacktrace.
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Shared\ErrorHandler\ErrorHandlerConstants::IS_PRETTY_ERROR_HANDLER_ENABLED` instead.
      */
     public const ENABLE_PRETTY_ERROR_HANDLER = 'APPLICATION:ENABLE_PRETTY_ERROR_HANDLER';
 }
