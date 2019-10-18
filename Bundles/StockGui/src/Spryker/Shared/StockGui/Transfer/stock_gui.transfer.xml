@@ -12,9 +12,14 @@
         <property name="messages" type="Message[]"  singular="message"/>
     </transfer>
 
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
     <transfer name="TabsView">
         <property name="tabs" type="TabItem[]" singular="tab"/>
         <property name="footerTemplate" type="string"/>
+        <property name="isNavigable" type="bool"/>
     </transfer>
 
     <transfer name="TabItem">
