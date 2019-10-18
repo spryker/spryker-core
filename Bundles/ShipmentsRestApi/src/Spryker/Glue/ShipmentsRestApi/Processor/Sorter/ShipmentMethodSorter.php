@@ -10,9 +10,12 @@ namespace Spryker\Glue\ShipmentsRestApi\Processor\Sorter;
 use Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface;
+use Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiConfig;
 
 class ShipmentMethodSorter implements ShipmentMethodSorterInterface
 {
+    protected const SORT_VALUE_DELIMITER = '.';
+
     /**
      * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[] $restShipmentMethodAttributeTransfers
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
@@ -23,7 +26,7 @@ class ShipmentMethodSorter implements ShipmentMethodSorterInterface
         array $restShipmentMethodAttributeTransfers,
         RestRequestInterface $restRequest
     ): array {
-        $sorts = $restRequest->getSort();
+        $sorts = array_values($this->filterSorts($restRequest->getSort()));
 
         if (!$sorts) {
             return $restShipmentMethodAttributeTransfers;
@@ -38,7 +41,7 @@ class ShipmentMethodSorter implements ShipmentMethodSorterInterface
                 return $this->compare(
                     $currentRestShipmentMethodAttributeTransfers,
                     $nextRestShipmentMethodAttributeTransfers,
-                    $sorts
+                    $this->filterSorts($sorts)
                 );
             }
         );
@@ -61,10 +64,11 @@ class ShipmentMethodSorter implements ShipmentMethodSorterInterface
         int $index = 0
     ) {
         $currentSort = $sorts[$index];
-        $currentSortedPropertyValue = $currentRestShipmentMethodAttributeTransfer->offsetExists($currentSort->getField())
-            ? $currentRestShipmentMethodAttributeTransfer->offsetGet($currentSort->getField()) : null;
-        $nextSortedPropertyValue = $nextRestShipmentMethodAttributeTransfer->offsetExists($currentSort->getField())
-            ? $nextRestShipmentMethodAttributeTransfer->offsetGet($currentSort->getField()) : null;
+        $field = explode(static::SORT_VALUE_DELIMITER, $currentSort->getField())[1];
+        $currentSortedPropertyValue = $currentRestShipmentMethodAttributeTransfer->offsetExists($field)
+            ? $currentRestShipmentMethodAttributeTransfer->offsetGet($field) : null;
+        $nextSortedPropertyValue = $nextRestShipmentMethodAttributeTransfer->offsetExists($field)
+            ? $nextRestShipmentMethodAttributeTransfer->offsetGet($field) : null;
 
         if ($currentSortedPropertyValue === $nextSortedPropertyValue) {
             if (!isset($sorts[$index + 1])) {
@@ -84,5 +88,17 @@ class ShipmentMethodSorter implements ShipmentMethodSorterInterface
         }
 
         return $currentSortedPropertyValue < $nextSortedPropertyValue ? -1 : 1;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
+     */
+    protected function filterSorts(array $sorts): array
+    {
+        return array_filter($sorts, function (SortInterface $sort) {
+            return explode(static::SORT_VALUE_DELIMITER, $sort->getField())[0] === ShipmentsRestApiConfig::RESOURCE_SHIPMENT_METHODS;
+        });
     }
 }

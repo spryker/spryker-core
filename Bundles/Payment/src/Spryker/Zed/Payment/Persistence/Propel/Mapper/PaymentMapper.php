@@ -15,22 +15,26 @@ use Orm\Zed\Payment\Persistence\SpySalesPaymentMethodType;
 class PaymentMapper implements PaymentMapperInterface
 {
     /**
-     * @param \Orm\Zed\Payment\Persistence\SpySalesPaymentMethodType $productPackagingUnitEntity
+     * @param \Orm\Zed\Payment\Persistence\SpySalesPaymentMethodType $salesPaymentMethodTypeEntity
      * @param \Generated\Shared\Transfer\SalesPaymentMethodTypeTransfer $salesPaymentMethodTypeTransfer
      *
      * @return \Generated\Shared\Transfer\SalesPaymentMethodTypeTransfer
      */
     public function mapSalesPaymentMethodTypeTransfer(
-        SpySalesPaymentMethodType $productPackagingUnitEntity,
+        SpySalesPaymentMethodType $salesPaymentMethodTypeEntity,
         SalesPaymentMethodTypeTransfer $salesPaymentMethodTypeTransfer
     ): SalesPaymentMethodTypeTransfer {
-        $salesPaymentMethodTypeTransfer->fromArray($productPackagingUnitEntity->toArray(), true);
+        $salesPaymentMethodTypeTransfer->fromArray(
+            $salesPaymentMethodTypeEntity->toArray(),
+            true
+        );
         $paymentProviderTransfer = (new PaymentProviderTransfer())
-            ->setName($productPackagingUnitEntity->getPaymentProvider());
+            ->setName($salesPaymentMethodTypeEntity->getPaymentProvider());
         $salesPaymentMethodTypeTransfer->setPaymentProvider($paymentProviderTransfer);
 
         $paymentMethodTransfer = (new PaymentMethodTransfer())
-            ->setMethodName($productPackagingUnitEntity->getPaymentMethod());
+            ->setIdSalesPaymentMethodType($salesPaymentMethodTypeEntity->getIdSalesPaymentMethodType())
+            ->setMethodName($salesPaymentMethodTypeEntity->getPaymentMethod());
         $salesPaymentMethodTypeTransfer->setPaymentMethod($paymentMethodTransfer);
 
         return $salesPaymentMethodTypeTransfer;

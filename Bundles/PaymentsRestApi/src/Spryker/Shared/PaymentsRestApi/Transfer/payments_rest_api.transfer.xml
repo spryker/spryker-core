@@ -24,4 +24,11 @@
         <property name="paymentSelection" type="string"/>
     </transfer>
 
+    <transfer name="RestPaymentMethodsAttributes">
+        <property name="paymentMethodName" type="string"/>
+        <property name="paymentProviderName" type="string"/>
+        <property name="priority" type="int"/>
+        <property name="requiredRequestData" type="array"/>
+    </transfer>
+
 </transfers>
