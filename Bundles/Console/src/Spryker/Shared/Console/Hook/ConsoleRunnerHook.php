@@ -5,29 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Console\Business\Model;
+namespace Spryker\Shared\Console\Hook;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * @deprecated Use `\Spryker\Shared\Console\Hook\ConsoleRunnerHook` instead.
- */
 class ConsoleRunnerHook implements ConsoleRunnerHookInterface
 {
     /**
-     * @var \Spryker\Zed\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface[]
+     * @var \Spryker\Shared\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface[]
      */
     protected $preHookPlugins;
 
     /**
-     * @var \Spryker\Zed\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface[]
+     * @var \Spryker\Shared\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface[]
      */
     protected $postHookPlugins;
 
     /**
-     * @param \Spryker\Zed\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface[] $preHookPlugins
-     * @param \Spryker\Zed\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface[] $postHookPlugins
+     * @param \Spryker\Shared\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface[] $preHookPlugins
+     * @param \Spryker\Shared\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface[] $postHookPlugins
      */
     public function __construct(array $preHookPlugins, array $postHookPlugins)
     {
@@ -41,7 +38,7 @@ class ConsoleRunnerHook implements ConsoleRunnerHookInterface
      *
      * @return void
      */
-    public function preRun(InputInterface $input, OutputInterface $output)
+    public function preRun(InputInterface $input, OutputInterface $output): void
     {
         foreach ($this->preHookPlugins as $preHookPlugin) {
             $preHookPlugin->preRun($input, $output);
@@ -54,7 +51,7 @@ class ConsoleRunnerHook implements ConsoleRunnerHookInterface
      *
      * @return void
      */
-    public function postRun(InputInterface $input, OutputInterface $output)
+    public function postRun(InputInterface $input, OutputInterface $output): void
     {
         foreach ($this->postHookPlugins as $postHookPlugin) {
             $postHookPlugin->postRun($input, $output);

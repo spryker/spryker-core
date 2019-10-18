@@ -8,7 +8,7 @@
     "spryker/application-extension": "^1.0.0",
     "spryker/container": "^1.1.0",
     "spryker/event-dispatcher-extension": "^1.0.0",
-    "spryker/kernel": "^3.30.0",
+    "spryker/kernel": "^3.40.0",
     "spryker/log": "^3.0.0",
     "spryker/router-extension": "^1.0.0",
     "spryker/symfony": "^3.0.0",
