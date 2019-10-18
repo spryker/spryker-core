@@ -7,6 +7,7 @@
         <column name="fk_cms_slot" required="true" type="INTEGER"/>
         <column name="fk_cms_block" required="true" type="INTEGER"/>
         <column name="position" required="true" type="INTEGER" />
+        <column name="conditions" type="LONGVARCHAR"/>
 
         <unique name="spy_cms_slot_block-slot-block">
             <unique-column name="fk_cms_slot_template"/>

@@ -5,17 +5,23 @@
 
     <transfer name="CmsBlock">
         <property name="idCmsBlock" type="int"/>
-        <property name="idCategories" type="array"/>
+        <property name="idCategories" type="array" singular="idCategories"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="Category">
         <property name="idCategory" type="int"/>
-        <property name="idCmsBlocks" type="array"/>
+        <property name="idCmsBlocks" type="array" singular="idCmsBlocks"/>
+        <property name="fkCategoryTemplate" type="int"/>
     </transfer>
 
     <transfer name="CmsBlockCategoryPosition">
         <property name="idCmsBlockCategoryPosition" type="int"/>
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
     </transfer>
 
 </transfers>

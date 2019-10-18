@@ -10,10 +10,24 @@ namespace Spryker\Zed\CmsSlotBlock\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlock;
+use Spryker\Zed\CmsSlotBlock\Dependency\Service\CmsSlotBlockToUtilEncodingServiceInterface;
 use Propel\Runtime\Collection\Collection;
 
 class CmsSlotBlockMapper implements CmsSlotBlockMapperInterface
 {
+    /**
+     * @var \Spryker\Zed\CmsSlotBlock\Dependency\Service\CmsSlotBlockToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
+     * @param \Spryker\Zed\CmsSlotBlock\Dependency\Service\CmsSlotBlockToUtilEncodingServiceInterface $utilEncodingService
+     */
+    public function __construct(CmsSlotBlockToUtilEncodingServiceInterface $utilEncodingService)
+    {
+        $this->utilEncodingService = $utilEncodingService;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer $cmsSlotBlockTransfer
      * @param \Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlock $cmsSlotBlockEntity
@@ -28,6 +42,10 @@ class CmsSlotBlockMapper implements CmsSlotBlockMapperInterface
         $cmsSlotBlockEntity->setFkCmsSlot($cmsSlotBlockTransfer->getIdSlot());
         $cmsSlotBlockEntity->setFkCmsBlock($cmsSlotBlockTransfer->getIdCmsBlock());
         $cmsSlotBlockEntity->setFkCmsSlotTemplate($cmsSlotBlockTransfer->getIdSlotTemplate());
+
+        $cmsSlotBlockEntity->setConditions(
+            $this->utilEncodingService->encodeJson($cmsSlotBlockTransfer->getConditions())
+        );
 
         return $cmsSlotBlockEntity;
     }
