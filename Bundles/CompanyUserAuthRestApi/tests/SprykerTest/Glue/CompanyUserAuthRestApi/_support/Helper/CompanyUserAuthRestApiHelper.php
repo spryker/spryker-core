@@ -34,7 +34,7 @@ class CompanyUserAuthRestApiHelper extends Module
     protected $companyUserProvider;
 
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public function _initialize(): void
     {

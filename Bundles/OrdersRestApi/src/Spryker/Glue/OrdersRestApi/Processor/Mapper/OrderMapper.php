@@ -7,8 +7,8 @@
 
 namespace Spryker\Glue\OrdersRestApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\CountryTransfer;
 use ArrayObject;
+use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RestOrderDetailsAttributesTransfer;
 use Generated\Shared\Transfer\RestOrdersAttributesTransfer;

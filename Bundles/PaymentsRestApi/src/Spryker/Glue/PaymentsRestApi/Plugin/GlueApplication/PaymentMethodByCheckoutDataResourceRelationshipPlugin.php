@@ -18,7 +18,7 @@ use Spryker\Glue\PaymentsRestApi\PaymentsRestApiConfig;
 class PaymentMethodByCheckoutDataResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds payment-methods resource as relationship in case RestCheckoutDataTransfer is provided as payload.
      *
      * @api
@@ -36,7 +36,7 @@ class PaymentMethodByCheckoutDataResourceRelationshipPlugin extends AbstractPlug
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
