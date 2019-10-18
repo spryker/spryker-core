@@ -27,7 +27,7 @@
         <property name="dataPrivacyGlossaryKey" type="string"/>
         <property name="fkMerchant" type="int"/>
         <property name="isActive" type="bool"/>
-        <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]"/>
+        <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" singular="merchantProfileLocalizedGlossaryAttributes"/>
     </transfer>
 
     <transfer name="MerchantProfileLocalizedGlossaryAttributes">

@@ -50,8 +50,17 @@
     <transfer name="Button">
         <property name="url" type="string"/>
         <property name="title" type="string"/>
-        <property name="defaultOptions" type="array"/>
-        <property name="customOptions" type="array"/>
+        <property name="defaultOptions" type="array" singular="defaultOption"/>
+        <property name="customOptions" type="array" singular="customOption"/>
+    </transfer>
+
+    <transfer name="CountryCollection">
+        <property name="countries" type="Country[]" singular="countries"/>
+    </transfer>
+
+    <transfer name="Country">
+        <property name="idCountry" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

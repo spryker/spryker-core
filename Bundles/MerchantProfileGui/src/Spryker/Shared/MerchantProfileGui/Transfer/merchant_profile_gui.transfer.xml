@@ -10,7 +10,7 @@
     <transfer name="MerchantProfile">
         <property name="idMerchantProfile" type="int"/>
         <property name="isActive" type="bool"/>
-        <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]"/>
+        <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" singular="merchantProfileLocalizedGlossaryAttributes"/>
     </transfer>
 
     <transfer name="MerchantProfileLocalizedGlossaryAttributes">
@@ -55,8 +55,8 @@
     <transfer name="Button">
         <property name="url" type="string"/>
         <property name="title" type="string"/>
-        <property name="defaultOptions" type="array"/>
-        <property name="customOptions" type="array"/>
+        <property name="defaultOptions" type="array" singular="defaultOption"/>
+        <property name="customOptions" type="array" singular="customOption"/>
     </transfer>
 
     <transfer name="Translation">
