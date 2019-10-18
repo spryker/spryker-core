@@ -29,8 +29,10 @@ class BaseQueryPlugin implements QueryInterface, SearchStringSetterInterface, Se
 
     public function __construct()
     {
-        $this->query = (new Query())
-            ->setQuery(new BoolQuery());
+        $query = new Query();
+        $query->setQuery(new BoolQuery());
+
+        $this->query = $query;
     }
 
     /**

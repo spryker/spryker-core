@@ -4,84 +4,84 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="IndexDefinition">
-        <property name="indexName" type="string" />
-        <property name="settings" type="array" />
-        <property name="mappings" type="array" />
+        <property name="indexName" type="string"/>
+        <property name="settings" type="array"/>
+        <property name="mappings" type="array"/>
     </transfer>
 
     <transfer name="ElasticsearchSearchContext">
-        <property name="sourceName" type="string" />
+        <property name="sourceName" type="string"/>
     </transfer>
 
     <transfer name="SearchContext">
-        <property name="elasticsearchContext" type="ElasticsearchSearchContext" />
+        <property name="elasticsearchContext" type="ElasticsearchSearchContext"/>
     </transfer>
 
     <transfer name="FacetConfig">
-        <property name="name" type="string" />
-        <property name="parameterName" type="string" />
-        <property name="shortParameterName" type="string" />
-        <property name="fieldName" type="string" />
-        <property name="type" type="string" />
-        <property name="isMultiValued" type="bool" />
-        <property name="valueTransformer" type="string" />
-        <property name="aggregationParams" type="array" />
+        <property name="name" type="string"/>
+        <property name="parameterName" type="string"/>
+        <property name="shortParameterName" type="string"/>
+        <property name="fieldName" type="string"/>
+        <property name="type" type="string"/>
+        <property name="isMultiValued" type="bool"/>
+        <property name="valueTransformer" type="string"/>
+        <property name="aggregationParams" type="array"/>
     </transfer>
 
     <transfer name="PaginationConfig">
-        <property name="parameterName" type="string" />
-        <property name="itemsPerPageParameterName" type="string" />
-        <property name="defaultItemsPerPage" type="int" />
-        <property name="validItemsPerPageOptions" type="array" />
+        <property name="parameterName" type="string"/>
+        <property name="itemsPerPageParameterName" type="string"/>
+        <property name="defaultItemsPerPage" type="int"/>
+        <property name="validItemsPerPageOptions" type="array"/>
     </transfer>
 
     <transfer name="SortConfig">
-        <property name="name" type="string" />
-        <property name="parameterName" type="string" />
-        <property name="fieldName" type="string" />
-        <property name="isDescending" type="bool" />
+        <property name="name" type="string"/>
+        <property name="parameterName" type="string"/>
+        <property name="fieldName" type="string"/>
+        <property name="isDescending" type="bool"/>
     </transfer>
 
     <transfer name="FacetSearchResult">
-        <property name="name" type="string" />
-        <property name="docCount" type="int" />
-        <property name="values" type="FacetSearchResultValue[]" singular="value" />
-        <property name="activeValue" type="string" />
-        <property name="config" type="FacetConfig" />
+        <property name="name" type="string"/>
+        <property name="docCount" type="int"/>
+        <property name="values" type="FacetSearchResultValue[]" singular="value"/>
+        <property name="activeValue" type="string"/>
+        <property name="config" type="FacetConfig"/>
     </transfer>
 
     <transfer name="FacetSearchResultValue">
-        <property name="value" type="string" />
-        <property name="docCount" type="int" />
+        <property name="value" type="string"/>
+        <property name="docCount" type="int"/>
     </transfer>
 
     <transfer name="RangeSearchResult">
-        <property name="name" type="string" />
-        <property name="min" type="float" />
-        <property name="max" type="float" />
-        <property name="activeMin" type="float" />
-        <property name="activeMax" type="float" />
-        <property name="config" type="FacetConfig" />
-        <property name="docCount" type="int" />
+        <property name="name" type="string"/>
+        <property name="min" type="float"/>
+        <property name="max" type="float"/>
+        <property name="activeMin" type="float"/>
+        <property name="activeMax" type="float"/>
+        <property name="config" type="FacetConfig"/>
+        <property name="docCount" type="int"/>
     </transfer>
 
     <transfer name="PaginationSearchResult">
-        <property name="numFound" type="int" />
-        <property name="currentPage" type="int" />
-        <property name="maxPage" type="int" />
-        <property name="currentItemsPerPage" type="int" />
-        <property name="config" type="PaginationConfig" />
+        <property name="numFound" type="int"/>
+        <property name="currentPage" type="int"/>
+        <property name="maxPage" type="int"/>
+        <property name="currentItemsPerPage" type="int"/>
+        <property name="config" type="PaginationConfig"/>
     </transfer>
 
     <transfer name="SortSearchResult">
-        <property name="sortParamNames" type="array" />
-        <property name="currentSortParam" type="string" />
-        <property name="currentSortOrder" type="string" />
+        <property name="sortParamNames" type="array"/>
+        <property name="currentSortParam" type="string"/>
+        <property name="currentSortOrder" type="string"/>
     </transfer>
 
     <transfer name="SearchConfigExtension">
-        <property name="facetConfigs" type="FacetConfig[]" singular="facetConfig" />
-        <property name="sortConfigs" type="SortConfig[]" singular="sortConfig" />
+        <property name="facetConfigs" type="FacetConfig[]" singular="facetConfig"/>
+        <property name="sortConfigs" type="SortConfig[]" singular="sortConfig"/>
     </transfer>
 
     <transfer name="SearchDocument">
