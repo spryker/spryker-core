@@ -13,6 +13,7 @@ use Spryker\Client\Kernel\Container;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Kernel

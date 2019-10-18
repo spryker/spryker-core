@@ -13,6 +13,7 @@ use Spryker\Zed\Twig\Business\TwigBusinessFactory;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Twig

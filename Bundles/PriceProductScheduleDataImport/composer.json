@@ -9,14 +9,14 @@
     "spryker/data-import": "^1.4.3",
     "spryker/kernel": "^3.30.0",
     "spryker/price-product": "^2.9.2 || ^4.0.0",
-    "spryker/price-product-schedule": "^0.1.0 || ^1.0.0",
+    "spryker/price-product-schedule": "^0.1.0 || ^1.0.0 || ^2.0.0",
     "spryker/product": "^6.9.0",
     "spryker/store": "^1.9.1"
   },
   "require-dev": {
-    "spryker/code-sniffer": "^0.9.5",
-    "spryker/propel": "^3.8.0",
-    "spryker/testify": "^3.9.0"
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {

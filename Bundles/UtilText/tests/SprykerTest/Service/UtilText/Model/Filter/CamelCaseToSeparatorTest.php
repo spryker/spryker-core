@@ -12,6 +12,7 @@ use Spryker\Service\UtilText\Model\Filter\CamelCaseToSeparator;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group UtilText

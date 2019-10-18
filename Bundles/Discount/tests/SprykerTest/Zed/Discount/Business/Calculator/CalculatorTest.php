@@ -42,6 +42,7 @@ use SprykerTest\Zed\Discount\Communication\Fixtures\VoucherCollectedDiscountGrou
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount

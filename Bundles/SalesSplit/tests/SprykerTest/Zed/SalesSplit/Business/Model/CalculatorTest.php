@@ -13,6 +13,7 @@ use Spryker\Zed\SalesSplit\Business\Model\Calculator;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group SalesSplit

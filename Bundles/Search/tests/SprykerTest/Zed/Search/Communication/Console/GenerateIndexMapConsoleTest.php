@@ -14,6 +14,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Search

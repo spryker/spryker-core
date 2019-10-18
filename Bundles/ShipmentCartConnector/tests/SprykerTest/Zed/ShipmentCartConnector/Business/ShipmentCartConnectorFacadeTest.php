@@ -9,13 +9,17 @@ namespace SprykerTest\Zed\ShipmentCartConnector\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CartChangeBuilder;
+use Generated\Shared\DataBuilder\ExpenseBuilder;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Spryker\Zed\ShipmentCartConnector\Business\ShipmentCartConnectorFacade;
+use Spryker\Shared\ShipmentCartConnector\ShipmentCartConnectorConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ShipmentCartConnector
@@ -26,6 +30,7 @@ use Spryker\Zed\ShipmentCartConnector\Business\ShipmentCartConnectorFacade;
  */
 class ShipmentCartConnectorFacadeTest extends Unit
 {
+    public const SKU = 'sku';
     public const CURRENCY_ISO_CODE = 'USD';
 
     /**
@@ -38,7 +43,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
      */
     public function testUpdateShipmentPriceShouldUpdatePriceBasedOnCurrency()
     {
-        $shipmentCartConnectorFacade = $this->createShipmentCartConnectorFacade();
+        $shipmentCartConnectorFacade = $this->tester->getFacade();
 
         $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
 
@@ -61,9 +66,38 @@ class ShipmentCartConnectorFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testUpdateShipmentPriceShouldUpdatePriceBasedOnCurrencyWithItemLevelShipments()
+    {
+        $shipmentCartConnectorFacade = $this->tester->getFacade();
+
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
+
+        $shipmentMethodTransfer->setCurrencyIsoCode(static::CURRENCY_ISO_CODE);
+        $shipmentMethodTransfer->setStoreCurrencyPrice(-1);
+
+        $cartChangeTransfer = $this->createCartChangeTransferWithItemLevelShipments($shipmentMethodTransfer);
+
+        $updatedCartChangeTransfer = $shipmentCartConnectorFacade->updateShipmentPrice($cartChangeTransfer);
+
+        $quoteTransfer = $updatedCartChangeTransfer->getQuote();
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $this->assertSame(
+                $itemTransfer->getShipment()->getMethod()->getCurrencyIsoCode(),
+                $quoteTransfer->getCurrency()->getCode()
+            );
+
+            $price = $itemTransfer->getShipment()->getMethod()->getStoreCurrencyPrice();
+            $this->assertNotEmpty($price);
+            $this->assertNotEquals(-1, $price);
+        }
+    }
+
+    /**
+     * @return void
+     */
     public function testValidateShipmentShouldReturnFalseWhenSelectedShipmentHaveNoPrice()
     {
-        $shipmentCartConnectorFacade = $this->createShipmentCartConnectorFacade();
+        $shipmentCartConnectorFacade = $this->tester->getFacade();
 
         $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
 
@@ -80,9 +114,28 @@ class ShipmentCartConnectorFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testValidateShipmentShouldReturnFalseWhenSelectedShipmentHaveNoPriceWithItemLevelShipments()
+    {
+        $shipmentCartConnectorFacade = $this->tester->getFacade();
+
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
+
+        $cartChangeTransfer = $this->createCartChangeTransferWithItemLevelShipments($shipmentMethodTransfer);
+
+        $cartChangeTransfer->getQuote()->getCurrency()->setCode('LTL');
+
+        $cartPreCheckResponseTransfer = $shipmentCartConnectorFacade->validateShipment($cartChangeTransfer);
+
+        $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $cartPreCheckResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
     public function testValidateShipmentShouldReturnTrueWhenSelectedShipmentHavePrice()
     {
-        $shipmentCartConnectorFacade = $this->createShipmentCartConnectorFacade();
+        $shipmentCartConnectorFacade = $this->tester->getFacade();
 
         $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
 
@@ -95,11 +148,20 @@ class ShipmentCartConnectorFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\ShipmentCartConnector\Business\ShipmentCartConnectorFacadeInterface
+     * @return void
      */
-    protected function createShipmentCartConnectorFacade()
+    public function testValidateShipmentShouldReturnTrueWhenSelectedShipmentHavePriceWithItemLevelShipments()
     {
-        return new ShipmentCartConnectorFacade();
+        $shipmentCartConnectorFacade = $this->tester->getFacade();
+
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
+
+        $cartChangeTransfer = $this->createCartChangeTransferWithItemLevelShipments($shipmentMethodTransfer);
+
+        $cartPreCheckResponseTransfer = $shipmentCartConnectorFacade->validateShipment($cartChangeTransfer);
+
+        $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
+        $this->assertCount(0, $cartPreCheckResponseTransfer->getMessages());
     }
 
     /**
@@ -121,6 +183,54 @@ class ShipmentCartConnectorFacadeTest extends Unit
         $shipmentTransfer->setMethod($shipmentMethodTransfer);
 
         $quoteTransfer->setShipment($shipmentTransfer);
+        $quoteTransfer = $this->removeItemLevelShipments($quoteTransfer);
+
+        $cartChangeTransfer->setQuote($quoteTransfer);
+
+        return $cartChangeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function removeItemLevelShipments(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->setShipment(null);
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    protected function createCartChangeTransferWithItemLevelShipments(ShipmentMethodTransfer $shipmentMethodTransfer)
+    {
+        $cartChangeTransfer = (new CartChangeBuilder())->build();
+
+        $quoteTransfer = (new QuoteBuilder())
+            ->withCurrency()
+            ->build();
+
+        $shipmentTransfer = (new ShipmentBuilder())->build();
+        $shipmentTransfer->setMethod($shipmentMethodTransfer);
+
+        $shipmentExpense = (new ExpenseBuilder())->build();
+        $shipmentExpense->setType(ShipmentCartConnectorConfig::SHIPMENT_EXPENSE_TYPE);
+        $shipmentExpense->setShipment($shipmentTransfer);
+
+        $itemTransfer = (new ItemBuilder())->build();
+        $itemTransfer->setSku(static::SKU);
+        $itemTransfer->setGroupKey(static::SKU);
+        $itemTransfer->setShipment($shipmentTransfer);
+
+        $quoteTransfer->addItem($itemTransfer);
+        $quoteTransfer->addExpense($shipmentExpense);
 
         $cartChangeTransfer->setQuote($quoteTransfer);
 

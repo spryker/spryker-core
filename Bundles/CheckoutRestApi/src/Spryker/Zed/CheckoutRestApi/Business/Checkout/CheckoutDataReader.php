@@ -19,6 +19,7 @@ use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Address\AddressReaderInterface;
 use Spryker\Zed\CheckoutRestApi\Business\Checkout\Quote\QuoteReaderInterface;
@@ -90,7 +91,9 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
             $quoteTransfer = $quoteMappingPlugin->map($restCheckoutRequestAttributesTransfer, $quoteTransfer);
         }
 
-        $shipmentMethodsTransfer = $this->getShipmentMethodsTransferFilteredByCurrentStore($quoteTransfer);
+        $quoteTransfer = $this->addItemLevelShipmentTransfer($quoteTransfer);
+
+        $shipmentMethodsTransfer = $this->getShipmentMethodsTransfer($quoteTransfer);
 
         $checkoutDataTransfer = (new RestCheckoutDataTransfer())
             ->setShipmentMethods($shipmentMethodsTransfer)
@@ -101,6 +104,25 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         return (new RestCheckoutDataResponseTransfer())
             ->setIsSuccess(true)
             ->setCheckoutData($checkoutDataTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
+     */
+    protected function getShipmentMethodsTransfer(QuoteTransfer $quoteTransfer): ShipmentMethodsTransfer
+    {
+        $shipmentMethodsCollectionTransfer = $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
+
+        /** @var \Generated\Shared\Transfer\ShipmentMethodsTransfer|false $shipmentMethodsTransfer */
+        $shipmentMethodsTransfer = current($shipmentMethodsCollectionTransfer->getShipmentMethods());
+
+        if ($shipmentMethodsTransfer === false) {
+            return new ShipmentMethodsTransfer();
+        }
+
+        return $shipmentMethodsTransfer;
     }
 
     /**
@@ -189,5 +211,23 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     ): bool {
         return $moneyValueTransfer->getFkStore() === $storeTransfer->getIdStore()
             && $moneyValueTransfer->getCurrency()->getCode() === $shipmentMethodTransfer->getCurrencyIsoCode();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function addItemLevelShipmentTransfer(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getShipment()) {
+                continue;
+            }
+
+            $itemTransfer->setShipment($quoteTransfer->getShipment() ?? new ShipmentTransfer());
+        }
+
+        return $quoteTransfer;
     }
 }

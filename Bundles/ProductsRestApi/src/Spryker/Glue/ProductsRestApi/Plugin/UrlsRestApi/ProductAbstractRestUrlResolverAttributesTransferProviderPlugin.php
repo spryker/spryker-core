@@ -18,7 +18,7 @@ use Spryker\Glue\UrlsRestApiExtension\Dependency\Plugin\RestUrlResolverAttribute
 class ProductAbstractRestUrlResolverAttributesTransferProviderPlugin extends AbstractPlugin implements RestUrlResolverAttributesTransferProviderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns true if the UrlStorageTransfer::fkResourceProductAbstract is not null.
      *
      * @api
@@ -33,7 +33,7 @@ class ProductAbstractRestUrlResolverAttributesTransferProviderPlugin extends Abs
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Looks up the product abstract in the key-value storage by id given in UrlStorageTransfer.
      * - Returns the RestUrlResolverAttributesTransfer with the type and id of the product abstract.
      *

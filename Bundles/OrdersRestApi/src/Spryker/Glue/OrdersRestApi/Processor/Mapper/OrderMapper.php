@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\OrdersRestApi\Processor\Mapper;
 
+use Generated\Shared\Transfer\CountryTransfer;
 use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RestOrderDetailsAttributesTransfer;
@@ -59,13 +60,55 @@ class OrderMapper implements OrderMapperInterface
         $restOrderDetailsAttributesTransfer->getBillingAddress()->setCountry($orderTransfer->getBillingAddress()->getCountry()->getName());
         $restOrderDetailsAttributesTransfer->getBillingAddress()->setIso2Code($orderTransfer->getBillingAddress()->getCountry()->getIso2Code());
 
-        $restOrderDetailsAttributesTransfer->getShippingAddress()->setCountry($orderTransfer->getShippingAddress()->getCountry()->getName());
-        $restOrderDetailsAttributesTransfer->getShippingAddress()->setIso2Code($orderTransfer->getShippingAddress()->getCountry()->getIso2Code());
+        $restOrderDetailsAttributesTransfer = $this->mapOrderShippingAddressTransferToRestOrderDetailsAttributesTransfer($orderTransfer, $restOrderDetailsAttributesTransfer);
+
+        return $restOrderDetailsAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\RestOrderDetailsAttributesTransfer $restOrderDetailsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestOrderDetailsAttributesTransfer
+     */
+    public function mapOrderShippingAddressTransferToRestOrderDetailsAttributesTransfer(
+        OrderTransfer $orderTransfer,
+        RestOrderDetailsAttributesTransfer $restOrderDetailsAttributesTransfer
+    ): RestOrderDetailsAttributesTransfer {
+        $countryTransfer = $this->findItemLevelShippingAddressCountry($orderTransfer);
+        $countryName = $countryTransfer ? $countryTransfer->getName() : null;
+        $countryIso2Code = $countryTransfer ? $countryTransfer->getIso2Code() : null;
+
+        $restOrderDetailsAttributesTransfer->getShippingAddress()->setCountry($countryName);
+        $restOrderDetailsAttributesTransfer->getShippingAddress()->setIso2Code($countryIso2Code);
 
         $restOrderDetailsAttributesTransfer->setShipments(
             $this->orderShipmentMapper->mapOrderTransferToRestOrderShipmentTransfers($orderTransfer, new ArrayObject())
         );
 
         return $restOrderDetailsAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\CountryTransfer|null
+     */
+    protected function findItemLevelShippingAddressCountry(OrderTransfer $orderTransfer): ?CountryTransfer
+    {
+        if ($orderTransfer->getItems()->count() === 0) {
+            return null;
+        }
+
+        $firstItemTransfer = current($orderTransfer->getItems());
+        if ($firstItemTransfer->getShipment() === null
+            || $firstItemTransfer->getShipment()->getShippingAddress() === null
+        ) {
+            return null;
+        }
+
+        return $firstItemTransfer->getShipment()
+            ->getShippingAddress()
+            ->getCountry();
     }
 }

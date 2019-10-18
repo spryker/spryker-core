@@ -4,39 +4,71 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ProductSearchAttributeMap">
-        <property name="attributeName" type="string" />
-        <property name="targetFields" type="array" />
+        <property name="attributeName" type="string"/>
+        <property name="targetFields" type="array" singular="targetFields"/>
     </transfer>
 
     <transfer name="ProductSearchPreferences">
-        <property name="idProductAttributeKey" type="int" />
-        <property name="key" type="string" />
-        <property name="fullText" type="bool" />
-        <property name="fullTextBoosted" type="bool" />
-        <property name="suggestionTerms" type="bool" />
-        <property name="completionTerms" type="bool" />
+        <property name="idProductAttributeKey" type="int"/>
+        <property name="key" type="string"/>
+        <property name="fullText" type="bool"/>
+        <property name="fullTextBoosted" type="bool"/>
+        <property name="suggestionTerms" type="bool"/>
+        <property name="completionTerms" type="bool"/>
     </transfer>
 
     <transfer name="ProductSearchAttribute">
-        <property name="idProductSearchAttribute" type="int" />
-        <property name="key" type="string" />
-        <property name="filterType" type="string" />
-        <property name="position" type="int" />
-        <property name="localizedKeys" type="LocalizedProductSearchAttributeKey[]" singular="localizedKey" />
+        <property name="idProductSearchAttribute" type="int"/>
+        <property name="key" type="string"/>
+        <property name="filterType" type="string"/>
+        <property name="position" type="int"/>
+        <property name="localizedKeys" type="LocalizedProductSearchAttributeKey[]" singular="localizedKey"/>
     </transfer>
 
     <transfer name="LocalizedProductSearchAttributeKey">
-        <property name="localeName" type="string" />
-        <property name="keyTranslation" type="string" />
+        <property name="localeName" type="string"/>
+        <property name="keyTranslation" type="string"/>
     </transfer>
 
     <transfer name="LocalizedAttributes">
-        <property name="isSearchable" type="bool" />
+        <property name="isSearchable" type="bool"/>
+        <property name="locale" type="Locale"/>
     </transfer>
 
     <transfer name="EventEntity">
         <property name="id" type="int"/>
-        <property name="foreignKeys" type="array"/>
+        <property name="foreignKeys" type="array" singular="foreignKeys"/>
+    </transfer>
+
+    <transfer name="SearchConfigExtension">
+        <property name="facetConfigs" type="FacetConfig[]" singular="facetConfig"/>
+    </transfer>
+
+    <transfer name="ProductAttributeKey">
+        <property name="idProductAttributeKey" type="int"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="FacetConfig">
+        <property name="name" type="string"/>
+        <property name="fieldName" type="string"/>
+        <property name="type" type="string"/>
+        <property name="parameterName" type="string"/>
+        <property name="isMultiValued" type="bool"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="idProductConcrete" type="int"/>
+        <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
+    </transfer>
+
+    <transfer name="Translation">
+        <property name="value" type="string"/>
     </transfer>
 
 </transfers>

@@ -15,6 +15,7 @@ use Spryker\Shared\ErrorHandler\ErrorLogger;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group ErrorHandler

@@ -9,7 +9,7 @@
     "spryker/glue-application": "^1.0.0",
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
-    "spryker/shipment": "^6.2.0"
+    "spryker/shipment": "^6.2.0 || ^7.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

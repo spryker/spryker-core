@@ -4,91 +4,111 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="PriceProduct">
-        <property name="idPriceProduct" type="int" />
-        <property name="isActive" type="string" />
-        <property name="priceTypeName" type="string" />
-        <property name="idProduct" type="int" />
-        <property name="skuProduct" type="string" />
-        <property name="idProductAbstract" type="int" />
-        <property name="skuProductAbstract" type="string" />
-        <property name="fkPriceType" type="int" />
-        <property name="priceType"  type="PriceType" />
-        <property name="moneyValue" type="MoneyValue" />
-        <property name="priceDimension" type="PriceProductDimension" />
-        <property name="groupKey" type="string" />
-        <property name="isMergeable" type="bool" />
+        <property name="idPriceProduct" type="int"/>
+        <property name="isActive" type="string"/>
+        <property name="priceTypeName" type="string"/>
+        <property name="idProduct" type="int"/>
+        <property name="skuProduct" type="string"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="skuProductAbstract" type="string"/>
+        <property name="fkPriceType" type="int"/>
+        <property name="priceType"  type="PriceType"/>
+        <property name="moneyValue" type="MoneyValue"/>
+        <property name="priceDimension" type="PriceProductDimension"/>
+        <property name="groupKey" type="string"/>
+        <property name="isMergeable" type="bool"/>
     </transfer>
 
     <transfer name="MoneyValue">
-        <property name="idEntity" type="int" />
-        <property name="priceData" type="string" />
-        <property name="priceDataChecksum" type="string" />
-        <property name="fkCurrency" type="int" />
+        <property name="idEntity" type="int"/>
+        <property name="priceData" type="string"/>
+        <property name="priceDataChecksum" type="string"/>
+        <property name="fkCurrency" type="int"/>
         <property name="fkStore"  type="int"/>
-        <property name="currency" type="Currency" />
-        <property name="netAmount" type="int" />
-        <property name="grossAmount" type="int" />
+        <property name="currency" type="Currency"/>
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
     </transfer>
 
     <transfer name="Currency">
-        <property name="idCurrency" type="int" />
-        <property name="code" type="string" />
+        <property name="idCurrency" type="int"/>
+        <property name="code" type="string"/>
     </transfer>
 
     <transfer name="PriceProductDimension">
-        <property name="type" type="string" />
-        <property name="name" type="string" />
-        <property name="idPriceProductDefault" type="int" />
+        <property name="type" type="string"/>
+        <property name="name" type="string"/>
+        <property name="idPriceProductDefault" type="int"/>
     </transfer>
 
     <transfer name="ProductAbstract">
-        <property name="prices" type="PriceProduct[]" singular="price" />
+        <property name="prices" type="PriceProduct[]" singular="price"/>
     </transfer>
 
     <transfer name="ProductConcrete">
-        <property name="prices" type="PriceProduct[]" singular="price" />
+        <property name="prices" type="PriceProduct[]" singular="price"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="fkProductAbstract" type="int"/>
     </transfer>
 
     <transfer name="StorageProduct">
-        <property name="price" type="int" />
-        <property name="prices" type="array" singular="price" />
+        <property name="price" type="int"/>
+        <property name="prices" type="array" singular="price"/>
     </transfer>
 
     <transfer name="PriceType">
-        <property name="idPriceType" type="int" />
-        <property name="name" type="string" />
-        <property name="priceModeConfiguration" type="string" />
+        <property name="idPriceType" type="int"/>
+        <property name="name" type="string"/>
+        <property name="priceModeConfiguration" type="string"/>
     </transfer>
 
     <transfer name="PriceProductFilter">
-        <property name="currencyIsoCode" type="string" />
-        <property name="currency" type="Currency" />
-        <property name="priceMode" type="string" />
-        <property name="storeName" type="string" />
-        <property name="priceTypeName" type="string" />
-        <property name="priceDimension" type="PriceProductDimension" />
-        <property name="sku" type="string" />
-        <property name="quote" type="Quote" />
-        <property name="quantity" type="int" />
+        <property name="currencyIsoCode" type="string"/>
+        <property name="currency" type="Currency"/>
+        <property name="priceMode" type="string"/>
+        <property name="storeName" type="string"/>
+        <property name="priceTypeName" type="string"/>
+        <property name="priceDimension" type="PriceProductDimension"/>
+        <property name="sku" type="string"/>
+        <property name="quote" type="Quote"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="PriceProductCriteria">
-        <property name="idStore" type="int" />
-        <property name="idCurrency" type="int" />
-        <property name="priceMode" type="string" />
-        <property name="priceType" type="string" />
-        <property name="priceDimension" type="PriceProductDimension" />
-        <property name="quote" type="Quote" />
-        <property name="quantity" type="int" />
+        <property name="idStore" type="int"/>
+        <property name="idCurrency" type="int"/>
+        <property name="priceMode" type="string"/>
+        <property name="priceType" type="string"/>
+        <property name="priceDimension" type="PriceProductDimension"/>
+        <property name="quote" type="Quote"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="CurrentProductPrice">
-        <property name="price" type="int" />
-        <property name="prices" type="array" singular="price" />
-        <property name="currency" type="Currency" />
-        <property name="priceMode" type="string" />
-        <property name="quantity" type="int" />
-        <property name="sumPrice" type="int" />
+        <property name="price" type="int"/>
+        <property name="prices" type="array" singular="price"/>
+        <property name="currency" type="Currency"/>
+        <property name="priceMode" type="string"/>
+        <property name="quantity" type="int"/>
+        <property name="sumPrice" type="int"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="QueryCriteria">
+        <property name="withColumns" type="array" singular="withColumn"/>
+        <property name="joins" type="QueryJoin[]" singular="join"/>
+    </transfer>
+
+    <transfer name="QueryJoin">
+        <property name="condition" type="string"/>
+        <property name="relation" type="string"/>
+        <property name="joinType" type="string"/>
+        <property name="right" type="array" singular="right"/>
+        <property name="left" type="array" singular="left"/>
     </transfer>
 
 </transfers>

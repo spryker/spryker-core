@@ -14,6 +14,7 @@ use Spryker\Zed\Url\Persistence\Propel\AbstractSpyUrl;
 use Spryker\Zed\UrlStorage\Business\Exception\MissingResourceException;
 use Spryker\Zed\UrlStorage\Dependency\Facade\UrlStorageToStoreFacadeInterface;
 use Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface;
+use Spryker\Zed\UrlStorage\Persistence\UrlStorageEntityManagerInterface;
 use Spryker\Zed\UrlStorage\Persistence\UrlStorageRepositoryInterface;
 
 class UrlStorageWriter implements UrlStorageWriterInterface
@@ -32,6 +33,11 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     protected $urlStorageRepository;
 
     /**
+     * @var \Spryker\Zed\UrlStorage\Persistence\UrlStorageEntityManagerInterface
+     */
+    protected $urlStorageEntityManager;
+
+    /**
      * @var \Spryker\Zed\UrlStorage\Dependency\Facade\UrlStorageToStoreFacadeInterface
      */
     protected $storeFacade;
@@ -44,17 +50,20 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     /**
      * @param \Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface $utilSanitize
      * @param \Spryker\Zed\UrlStorage\Persistence\UrlStorageRepositoryInterface $urlStorageRepository
+     * @param \Spryker\Zed\UrlStorage\Persistence\UrlStorageEntityManagerInterface $urlStorageEntityManager
      * @param \Spryker\Zed\UrlStorage\Dependency\Facade\UrlStorageToStoreFacadeInterface $storeFacade
      * @param bool $isSendingToQueue
      */
     public function __construct(
         UrlStorageToUtilSanitizeServiceInterface $utilSanitize,
         UrlStorageRepositoryInterface $urlStorageRepository,
+        UrlStorageEntityManagerInterface $urlStorageEntityManager,
         UrlStorageToStoreFacadeInterface $storeFacade,
         bool $isSendingToQueue
     ) {
         $this->utilSanitize = $utilSanitize;
         $this->urlStorageRepository = $urlStorageRepository;
+        $this->urlStorageEntityManager = $urlStorageEntityManager;
         $this->storeFacade = $storeFacade;
         $this->isSendingToQueue = $isSendingToQueue;
     }
@@ -98,7 +107,13 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     public function unpublish(array $urlIds)
     {
         $spyUrlStorageEntities = $this->urlStorageRepository->findUrlStorageByUrlIds($urlIds);
-        foreach ($spyUrlStorageEntities as $spyUrlStorageEntity) {
+        $indexedUrlStorageEntities = $this->indexUrlStorageEntitiesByUrl($spyUrlStorageEntities);
+        $spyUrlEntities = $this->urlStorageRepository->findUrlEntitiesByUrls(array_keys($indexedUrlStorageEntities));
+        $urlStorageEntitiesWithExistingUrls = $this->getStorageEntitiesWithExistingUrls($indexedUrlStorageEntities, $spyUrlEntities);
+        $indexedUrlStorageEntities = $this->filterOutStorageEntitiesWithExistingUrls($indexedUrlStorageEntities, $urlStorageEntitiesWithExistingUrls);
+
+        $this->deleteUrlStorageEntitiesWithExistingUrls($urlStorageEntitiesWithExistingUrls);
+        foreach ($indexedUrlStorageEntities as $spyUrlStorageEntity) {
             $spyUrlStorageEntity->delete();
         }
     }
@@ -219,5 +234,77 @@ class UrlStorageWriter implements UrlStorageWriterInterface
         }
 
         return $urlStorageTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[] $urlStorageEntities
+     *
+     * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[]
+     */
+    protected function indexUrlStorageEntitiesByUrl(array $urlStorageEntities): array
+    {
+        $indexedUrlStorageEntities = [];
+        foreach ($urlStorageEntities as $urlStorageEntity) {
+            $indexedUrlStorageEntities[$urlStorageEntity->getUrl()] = $urlStorageEntity;
+        }
+
+        return $indexedUrlStorageEntities;
+    }
+
+    /**
+     * @param \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[] $indexedUrlStorageEntities
+     * @param \Orm\Zed\Url\Persistence\SpyUrl[] $urlEntities
+     *
+     * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[]
+     */
+    protected function getStorageEntitiesWithExistingUrls(array $indexedUrlStorageEntities, array $urlEntities): array
+    {
+        $urlStorageEntitiesWithExistingUrls = [];
+        foreach ($urlEntities as $urlEntity) {
+            $url = $urlEntity->getUrl();
+            if (isset($indexedUrlStorageEntities[$url])) {
+                $urlStorageEntitiesWithExistingUrls[] = $indexedUrlStorageEntities[$url];
+            }
+        }
+
+        return $urlStorageEntitiesWithExistingUrls;
+    }
+
+    /**
+     * @param \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[] $indexedUrlStorageEntities
+     * @param \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[] $urlStorageEntitiesWithExistingUrls
+     *
+     * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[]
+     */
+    protected function filterOutStorageEntitiesWithExistingUrls(array $indexedUrlStorageEntities, array $urlStorageEntitiesWithExistingUrls): array
+    {
+        if (count($urlStorageEntitiesWithExistingUrls) === 0) {
+            return $indexedUrlStorageEntities;
+        }
+
+        foreach ($urlStorageEntitiesWithExistingUrls as $urlStorageEntitiesWithExistingUrl) {
+            unset($indexedUrlStorageEntities[$urlStorageEntitiesWithExistingUrl->getUrl()]);
+        }
+
+        return $indexedUrlStorageEntities;
+    }
+
+    /**
+     * @param \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[] $urlStorageEntitiesWithExistingUrls
+     *
+     * @return void
+     */
+    protected function deleteUrlStorageEntitiesWithExistingUrls(array $urlStorageEntitiesWithExistingUrls): void
+    {
+        if (count($urlStorageEntitiesWithExistingUrls) === 0) {
+            return;
+        }
+
+        $urlIds = [];
+        foreach ($urlStorageEntitiesWithExistingUrls as $urlStorageEntitiesWithExistingUrl) {
+            $urlIds[] = $urlStorageEntitiesWithExistingUrl->getIdUrlStorage();
+        }
+
+        $this->urlStorageEntityManager->deleteStorageUrlsByIds($urlIds);
     }
 }

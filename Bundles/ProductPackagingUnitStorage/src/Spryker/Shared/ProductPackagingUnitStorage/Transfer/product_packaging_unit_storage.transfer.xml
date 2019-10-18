@@ -17,8 +17,8 @@
     <transfer name="ProductAbstractPackagingStorage">
         <property name="idProductAbstract" type="int"/>
         <property name="leadProduct" type="int"/>
-        <property name="types" type="ProductConcretePackagingStorage[]"/>
-        <property name="key" type="string" />
+        <property name="types" type="ProductConcretePackagingStorage[]" singular="types"/>
+        <property name="key" type="string"/>
     </transfer>
 
     <transfer name="Item">
@@ -31,7 +31,27 @@
     </transfer>
 
     <transfer name="ProductConcrete">
-        <property name="idProductConcrete" type="int" />
+        <property name="idProductConcrete" type="int"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementSalesUnit">
+        <property name="isDefault" type="bool"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="ProductPackagingUnitAmount">
+        <property name="amountInterval" type="int"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="orderBy" type="string"/>
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
     </transfer>
 
 </transfers>

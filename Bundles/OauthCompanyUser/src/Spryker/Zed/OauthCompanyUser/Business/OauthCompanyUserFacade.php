@@ -21,7 +21,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class OauthCompanyUserFacade extends AbstractFacade implements OauthCompanyUserFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -37,7 +37,7 @@ class OauthCompanyUserFacade extends AbstractFacade implements OauthCompanyUserF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -53,7 +53,7 @@ class OauthCompanyUserFacade extends AbstractFacade implements OauthCompanyUserF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -69,7 +69,7 @@ class OauthCompanyUserFacade extends AbstractFacade implements OauthCompanyUserF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -85,7 +85,7 @@ class OauthCompanyUserFacade extends AbstractFacade implements OauthCompanyUserF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

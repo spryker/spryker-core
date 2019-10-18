@@ -17,6 +17,7 @@ use SprykerTest\Zed\Collector\Business\Fixture\TouchUpdaterStub;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Collector

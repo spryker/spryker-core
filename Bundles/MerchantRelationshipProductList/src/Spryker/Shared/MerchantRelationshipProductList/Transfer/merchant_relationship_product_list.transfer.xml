@@ -5,6 +5,8 @@
 
     <transfer name="ProductList">
         <property name="fkMerchantRelationship" type="int"/>
+        <property name="type" type="string"/>
+        <property name="idProductList" type="int"/>
     </transfer>
 
     <transfer name="Customer">
@@ -24,9 +26,18 @@
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
         <property name="fkCompany" type="int"/>
-        <property name="company" type="Company" />
+        <property name="company" type="Company"/>
         <property name="fkCustomer" type="int"/>
         <property name="customer" type="Customer"/>
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="idCompanyBusinessUnit" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantRelationship">
+        <property name="idMerchantRelationship" type="int"/>
     </transfer>
 
 </transfers>

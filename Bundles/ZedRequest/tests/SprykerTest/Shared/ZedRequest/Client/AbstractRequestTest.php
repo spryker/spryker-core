@@ -12,6 +12,7 @@ use SprykerTest\Shared\ZedRequest\Client\Fixture\AbstractRequest;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group ZedRequest

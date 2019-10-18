@@ -15,6 +15,7 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
 /**
  * Auto-generated group annotations
+ *
  * @group Unit
  * @group Spryker
  * @group Zed

@@ -4,42 +4,43 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Country">
-        <property name="idCountry" type="int" />
-        <property name="iso2Code" type="string" />
-        <property name="iso3Code" type="string" />
-        <property name="name" type="string" />
-        <property name="postalCodeMandatory" type="bool" />
-        <property name="postalCodeRegex" type="string" />
-        <property name="regions" type="Region[]" singular="region" />
+        <property name="idCountry" type="int"/>
+        <property name="iso2Code" type="string"/>
+        <property name="iso3Code" type="string"/>
+        <property name="name" type="string"/>
+        <property name="postalCodeMandatory" type="bool"/>
+        <property name="postalCodeRegex" type="string"/>
+        <property name="regions" type="Region[]" singular="region"/>
     </transfer>
 
     <transfer name="CountryCollection">
-        <property name="countries" type="Country[]" />
+        <property name="countries" type="Country[]" singular="countries"/>
     </transfer>
 
     <transfer name="Region">
-        <property name="idRegion" type="int" />
-        <property name="fkCountry" type="int" />
-        <property name="name" type="string" />
-        <property name="iso2Code" type="string" />
+        <property name="idRegion" type="int"/>
+        <property name="fkCountry" type="int"/>
+        <property name="name" type="string"/>
+        <property name="iso2Code" type="string"/>
     </transfer>
 
     <transfer name="CheckoutData">
-        <property name="billingAddress" type="Address" />
-        <property name="shippingAddress" type="Address" />
+        <property name="billingAddress" type="Address"/>
+        <property name="shippingAddress" type="Address"/>
     </transfer>
 
     <transfer name="Address">
-        <property name="iso2Code" type="string" />
+        <property name="iso2Code" type="string"/>
     </transfer>
 
     <transfer name="CheckoutResponse">
-        <property name="isSuccess" type="bool" />
-        <property name="errors" type="CheckoutError[]" singular="error" />
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
     </transfer>
 
     <transfer name="CheckoutError">
-        <property name="message" type="string" />
+        <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
 </transfers>

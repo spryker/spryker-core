@@ -50,9 +50,10 @@ class YamlBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @throws \Spryker\Service\UtilDataReader\Exception\ResourceNotFoundException
+     *
      * @return void
      */
     protected function initialize()
@@ -71,7 +72,7 @@ class YamlBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function current()
     {
@@ -81,9 +82,7 @@ class YamlBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @return void
+     * @inheritDoc
      */
     public function next()
     {
@@ -93,7 +92,7 @@ class YamlBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function key()
     {
@@ -101,7 +100,7 @@ class YamlBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function valid()
     {
@@ -109,9 +108,7 @@ class YamlBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @return void
+     * @inheritDoc
      */
     public function rewind()
     {
@@ -119,7 +116,7 @@ class YamlBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function count()
     {

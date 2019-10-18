@@ -25,7 +25,7 @@ class CategoryToStorageClientBridge implements CategoryToStorageClientInterface
     /**
      * @param string $key
      *
-     * @return string
+     * @return array
      */
     public function get($key)
     {

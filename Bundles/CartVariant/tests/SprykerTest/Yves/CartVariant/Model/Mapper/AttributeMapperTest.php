@@ -12,6 +12,7 @@ use Spryker\Yves\CartVariant\Mapper\CartItemsAvailabilityMapper;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group CartVariant

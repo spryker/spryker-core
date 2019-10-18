@@ -23,6 +23,7 @@ use SprykerTest\Zed\ProductOption\Business\MockProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductOption

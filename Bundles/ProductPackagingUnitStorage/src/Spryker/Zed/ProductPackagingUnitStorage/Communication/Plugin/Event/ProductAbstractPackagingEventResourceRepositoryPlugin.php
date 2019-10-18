@@ -22,7 +22,7 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\ProductPackagingUnitEvents;
 class ProductAbstractPackagingEventResourceRepositoryPlugin extends AbstractPlugin implements EventResourceRepositoryPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class ProductAbstractPackagingEventResourceRepositoryPlugin extends AbstractPlug
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Retrieves ProductAbstractPackagingStorageTransfer collection, associated with provided product abstract IDs.
      *
      * @api
@@ -49,7 +49,7 @@ class ProductAbstractPackagingEventResourceRepositoryPlugin extends AbstractPlug
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -61,7 +61,7 @@ class ProductAbstractPackagingEventResourceRepositoryPlugin extends AbstractPlug
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns the name of ID column needed in the ProductPackagingUnit.product_abstract_packaging.publish event.
      * - The ID is selected from the key range of ProductAbstractPackagingStorageTransfer.
      *

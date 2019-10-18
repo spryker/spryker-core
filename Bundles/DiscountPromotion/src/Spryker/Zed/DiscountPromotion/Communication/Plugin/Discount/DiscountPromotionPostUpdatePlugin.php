@@ -17,7 +17,7 @@ use Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface;
 class DiscountPromotionPostUpdatePlugin extends BaseDiscountPromotionSaverPlugin implements DiscountPostUpdatePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Checks if given discount CollectorStrategyType is set to "promotion"
      *    then updates Promotion for Discount.
      *  - Sets updated DiscountPromotion to DiscountCalculator of DiscountConfigurator.
@@ -26,7 +26,7 @@ class DiscountPromotionPostUpdatePlugin extends BaseDiscountPromotionSaverPlugin
      *
      * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
      */
     public function postUpdate(DiscountConfiguratorTransfer $discountConfiguratorTransfer)
     {

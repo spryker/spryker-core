@@ -15,12 +15,12 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductOptionStorageClient extends AbstractClient implements ProductOptionStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param int $idAbstractProduct
-     * @param int $localeName
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer|null
      */
@@ -32,7 +32,7 @@ class ProductOptionStorageClient extends AbstractClient implements ProductOption
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

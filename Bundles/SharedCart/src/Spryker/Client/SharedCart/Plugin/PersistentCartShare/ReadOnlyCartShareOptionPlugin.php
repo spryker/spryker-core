@@ -20,7 +20,7 @@ class ReadOnlyCartShareOptionPlugin extends AbstractPlugin implements CartShareO
     protected const SHARE_OPTION_GROUP_INTERNAL = 'internal';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,7 +32,7 @@ class ReadOnlyCartShareOptionPlugin extends AbstractPlugin implements CartShareO
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns true if customer is provided and it is a company user.
      * - Returns false otherwise.
      *
@@ -54,7 +54,7 @@ class ReadOnlyCartShareOptionPlugin extends AbstractPlugin implements CartShareO
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

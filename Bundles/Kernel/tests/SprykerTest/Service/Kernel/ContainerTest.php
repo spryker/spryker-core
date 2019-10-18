@@ -13,6 +13,7 @@ use Spryker\Shared\Kernel\LocatorLocatorInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group Kernel

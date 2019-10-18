@@ -12,6 +12,7 @@ use Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Product

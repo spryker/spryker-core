@@ -14,6 +14,7 @@ use SprykerTest\Glue\GlueApplication\Stub\RestTestAttributesTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group GlueApplication

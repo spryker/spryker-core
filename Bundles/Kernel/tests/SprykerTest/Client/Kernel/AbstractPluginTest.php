@@ -15,6 +15,7 @@ use SprykerTest\Client\Kernel\Fixtures\Plugin\FooPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Kernel

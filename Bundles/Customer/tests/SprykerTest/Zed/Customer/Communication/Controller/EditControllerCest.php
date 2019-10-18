@@ -11,6 +11,7 @@ use SprykerTest\Zed\Customer\CustomerCommunicationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Customer

@@ -25,7 +25,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -41,7 +41,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -57,7 +57,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -73,7 +73,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -89,7 +89,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -105,7 +105,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -121,7 +121,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -137,7 +137,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -153,7 +153,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -169,7 +169,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -185,7 +185,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -201,7 +201,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -217,7 +217,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -233,7 +233,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -250,7 +250,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -264,7 +264,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -280,7 +280,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -296,7 +296,7 @@ class QuoteRequestFacade extends AbstractFacade implements QuoteRequestFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

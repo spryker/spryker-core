@@ -7,99 +7,45 @@
 
 namespace SprykerTest\Glue\AuthRestApi\Helper;
 
-use Codeception\Exception\ModuleException;
 use Codeception\Module;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\OauthRequestTransfer;
+use Generated\Shared\Transfer\OauthResponseTransfer;
 use Spryker\Glue\AuthRestApi\AuthRestApiConfig;
-use SprykerTest\Glue\Testify\Helper\GlueRest;
-use SprykerTest\Shared\Testify\Helper\ModuleLocatorTrait;
+use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class AuthRestApiHelper extends Module
 {
-    use ModuleLocatorTrait;
-
-    /**
-     * @var \SprykerTest\Glue\Testify\Helper\GlueRest|null
-     */
-    protected $glueRestProvider;
-
-    /**
-     * @inheritdoc
-     */
-    public function _initialize(): void
-    {
-        $this->glueRestProvider = $this->getGlueRestProvider();
-    }
+    use LocatorHelperTrait;
 
     /**
      * Specification:
-     * - Sets bearer token.
-     *
-     * @part json
-     *
-     * @param string $token
-     *
-     * @return void
-     */
-    public function amAuthorizedGlueUser(string $token): void
-    {
-        $this->glueRestProvider->amBearerAuthenticated($token);
-    }
-
-    /**
-     * Specification:
-     * - Sets X-Anonymous-Customer-Unique-Id header.
-     *
-     * @part json
-     *
-     * @param string $anonymousCustomerReference
-     *
-     * @return void
-     */
-    public function amUnauthorizedGlueUser(string $anonymousCustomerReference): void
-    {
-        $this->glueRestProvider->haveHttpHeader('X-Anonymous-Customer-Unique-Id', $anonymousCustomerReference);
-    }
-
-    /**
-     * Specification:
-     * - Authorizes customer and returns access token data.
-     * - Returns empty array if authorization failed.
+     * - Authorizes customer and returns OauthResponseTransfer.
+     * - Returns OauthResponseTransfer with error if authorization failed.
      *
      * @part json
      *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param string|null $anonymousCustomerReference
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\OauthResponseTransfer
      */
-    public function haveAuthorizationToGlue(CustomerTransfer $customerTransfer): array
-    {
-        $this->glueRestProvider->sendPOST(AuthRestApiConfig::RESOURCE_ACCESS_TOKENS, [
-            'data' => [
-                'type' => AuthRestApiConfig::RESOURCE_ACCESS_TOKENS,
-                'attributes' => [
-                    'username' => $customerTransfer->getEmail(),
-                    'password' => $customerTransfer->getNewPassword() ?: $this->glueRestProvider::DEFAULT_PASSWORD,
-                ],
-            ],
-        ]);
+    public function haveAuthorizationToGlue(
+        CustomerTransfer $customerTransfer,
+        ?string $anonymousCustomerReference = null
+    ): OauthResponseTransfer {
+        $oauthRequestTransfer = (new OauthRequestTransfer())
+            ->setGrantType(AuthRestApiConfig::CLIENT_GRANT_PASSWORD)
+            ->setUsername($customerTransfer->getEmail())
+            ->setPassword($customerTransfer->getNewPassword());
 
-        return $this->glueRestProvider->grabDataFromResponseByJsonPath('$.data.attributes')[0] ?: [];
-    }
-
-    /**
-     * @throws \Codeception\Exception\ModuleException
-     *
-     * @return \SprykerTest\Glue\Testify\Helper\GlueRest
-     */
-    protected function getGlueRestProvider(): GlueRest
-    {
-        foreach ($this->getModules() as $module) {
-            if ($module instanceof GlueRest) {
-                return $module;
-            }
+        if ($anonymousCustomerReference) {
+            $oauthRequestTransfer->setCustomerReference($anonymousCustomerReference);
         }
 
-        throw new ModuleException('AuthRestApi', 'The module requires GlueRest.');
+        return $this->getLocator()
+            ->authRestApi()
+            ->facade()
+            ->createAccessToken($oauthRequestTransfer);
     }
 }

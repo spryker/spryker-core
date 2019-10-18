@@ -8,9 +8,14 @@
 namespace SprykerTest\Zed\Acl;
 
 use Codeception\Actor;
+use Codeception\Stub;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -28,7 +33,22 @@ class AclCommunicationTester extends Actor
 {
     use _generated\AclCommunicationTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @return \Symfony\Component\HttpKernel\Event\GetResponseEvent
+     */
+    public function getResponseEvent(): GetResponseEvent
+    {
+        return new GetResponseEvent($this->getHttpKernelMock(), Request::createFromGlobals(), HttpKernelInterface::MASTER_REQUEST);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpKernel\HttpKernelInterface
+     */
+    protected function getHttpKernelMock()
+    {
+        /** @var \Symfony\Component\HttpKernel\HttpKernelInterface $httpKernelMock */
+        $httpKernelMock = Stub::makeEmpty(HttpKernelInterface::class);
+
+        return $httpKernelMock;
+    }
 }

@@ -8,9 +8,11 @@
 namespace Spryker\Zed\Wishlist\Business;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
+use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 
 interface WishlistFacadeInterface
@@ -182,6 +184,8 @@ interface WishlistFacadeInterface
      *
      * @api
      *
+     * @deprecated Use WishlistFacade::getWishlistByFilter() instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -217,4 +221,18 @@ interface WishlistFacadeInterface
      * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
      */
     public function getCustomerWishlistCollection(CustomerTransfer $customerTransfer);
+
+    /**
+     * Specification:
+     * - Returns wishlist for a given WishlistFilterTransfer.
+     * - Required value is WishlistFilterTransfer.idCustomer.
+     * - Returns WishlistResponseTransfer.isSuccess true on success and false otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistFilterTransfer $wishlistFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function getWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer;
 }

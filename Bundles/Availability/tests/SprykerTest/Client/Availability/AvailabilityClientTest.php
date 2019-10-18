@@ -16,6 +16,7 @@ use Spryker\Client\Availability\Exception\ProductAvailabilityNotFoundException;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Availability

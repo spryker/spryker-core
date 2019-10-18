@@ -7,7 +7,7 @@
     "php": ">=7.1",
     "spryker/kernel": "^3.30.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^10.0.0",
+    "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^10.0.0 || ^11.0.0",
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {

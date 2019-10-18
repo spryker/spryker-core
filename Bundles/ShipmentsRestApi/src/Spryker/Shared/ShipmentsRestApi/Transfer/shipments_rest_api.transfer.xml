@@ -12,38 +12,47 @@
     </transfer>
 
     <transfer name="Quote">
-        <property name="shipment" type="Shipment"/>
+        <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
         <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="Shipment">
         <property name="method" type="ShipmentMethod"/>
         <property name="shipmentSelection" type="string"/>
+        <property name="shippingAddress" type="Address"/>
     </transfer>
 
     <transfer name="ShipmentMethod">
         <property name="id" type="int"/>
-        <property name="idShipmentMethod" type="int" />
+        <property name="idShipmentMethod" type="int"/>
+        <property name="storeCurrencyPrice" type="int"/>
     </transfer>
 
     <transfer name="Expense">
-        <property name="type" type="string" />
-        <property name="unitNetPrice" type="int" />
-        <property name="unitGrossPrice" type="int" />
-        <property name="quantity" type="int" />
+        <property name="type" type="string"/>
+        <property name="unitNetPrice" type="int"/>
+        <property name="unitGrossPrice" type="int"/>
+        <property name="quantity" type="int"/>
+        <property name="shipment" type="Shipment"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="shipment" type="Shipment"/>
     </transfer>
 
     <transfer name="CheckoutData">
-        <property name="shipment" type="RestShipment" />
+        <property name="shipment" type="RestShipment"/>
     </transfer>
 
     <transfer name="CheckoutResponse">
-        <property name="isSuccess" type="bool" />
-        <property name="errors" type="CheckoutError[]" singular="error" />
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
     </transfer>
 
     <transfer name="CheckoutError">
-        <property name="message" type="string" />
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="RestShipmentMethodsAttributes">

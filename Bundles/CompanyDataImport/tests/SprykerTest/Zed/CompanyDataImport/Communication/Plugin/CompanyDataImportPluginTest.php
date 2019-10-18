@@ -20,6 +20,7 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CompanyDataImport

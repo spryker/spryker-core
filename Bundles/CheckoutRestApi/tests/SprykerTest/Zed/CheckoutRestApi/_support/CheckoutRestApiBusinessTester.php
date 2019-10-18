@@ -16,7 +16,9 @@ use Generated\Shared\DataBuilder\PaymentMethodsBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\QuoteResponseBuilder;
 use Generated\Shared\DataBuilder\RestCheckoutRequestAttributesBuilder;
+use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodsBuilder;
+use Generated\Shared\DataBuilder\ShipmentMethodsCollectionBuilder;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -26,6 +28,7 @@ use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
+use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
@@ -247,6 +250,28 @@ class CheckoutRestApiBusinessTester extends Actor
         ];
 
         return (new ShipmentMethodsBuilder())->withMethod($shipmentMethodData)->build();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer
+     */
+    public function createShipmentMethodsCollectionTransfer(): ShipmentMethodsCollectionTransfer
+    {
+        $shipmentMethodData = [
+            'carrierName' => 'Spryker Dummy Shipment',
+            'idShipmentMethod' => '1',
+            'name' => 'Standard',
+            'storeCurrencyPrice' => '490',
+        ];
+
+        return (new ShipmentMethodsCollectionBuilder())
+            ->withShipmentMethods(
+                (new ShipmentMethodsBuilder())
+                    ->withMethod(
+                        (new ShipmentMethodBuilder($shipmentMethodData))
+                    )
+            )
+            ->build();
     }
 
     /**

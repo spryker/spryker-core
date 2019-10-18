@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="SortConfig">
+        <property name="name" type="string"/>
+        <property name="parameterName" type="string"/>
+        <property name="fieldName" type="string"/>
+        <property name="isDescending" type="bool"/>
+    </transfer>
+
+    <transfer name="FacetConfig">
+        <property name="name" type="string"/>
+        <property name="parameterName" type="string"/>
+        <property name="fieldName" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="CurrentProductPrice">
+        <property name="price" type="int"/>
+        <property name="prices" type="array" singular="price"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
+</transfers>

@@ -4,27 +4,32 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Item">
-        <property name="id" type="int" />
+        <property name="id" type="int"/>
         <property name="sku" type="string"/>
-        <property name="priceProduct" type="PriceProduct" />
-        <property name="unitGrossPrice" type="int" />
-        <property name="forcedUnitGrossPrice" type="bool" deprecated="Will be removed with a next major release" />
-        <property name="sumGrossPrice" type="int" />
+        <property name="priceProduct" type="PriceProduct"/>
+        <property name="unitGrossPrice" type="int"/>
+        <property name="forcedUnitGrossPrice" type="bool" deprecated="Will be removed with a next major release"/>
+        <property name="sumGrossPrice" type="int"/>
 
-        <property name="sourceUnitGrossPrice" type="int" />
-        <property name="sourceUnitNetPrice" type="int" />
+        <property name="sourceUnitGrossPrice" type="int"/>
+        <property name="sourceUnitNetPrice" type="int"/>
 
-        <property name="originUnitGrossPrice" type="int" />
-        <property name="originUnitNetPrice" type="int" />
-        <property name="quantity" type="int" />
+        <property name="originUnitGrossPrice" type="int"/>
+        <property name="originUnitNetPrice" type="int"/>
+        <property name="quantity" type="int"/>
+        <property name="sumNetPrice" type="int"/>
+        <property name="unitNetPrice" type="int"/>
     </transfer>
 
     <transfer name="Quote">
-        <property name="store" type="Store" />
+        <property name="store" type="Store"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="currency" type="Currency"/>
+        <property name="priceMode" type="string"/>
     </transfer>
 
     <transfer name="Store">
-        <property name="name" type="string" />
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="PriceProductFilter">
@@ -34,13 +39,37 @@
         <property name="priceTypeName" type="string"/>
         <property name="sku" type="string"/>
         <property name="quote" type="Quote"/>
-        <property name="quantity" type="int" />
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="CartChange">
         <property name="operation" type="string"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="CartPreCheckResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="skuProduct" type="string"/>
+        <property name="moneyValue" type="MoneyValue"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="grossAmount" type="int"/>
+        <property name="netAmount" type="int"/>
     </transfer>
 
 </transfers>

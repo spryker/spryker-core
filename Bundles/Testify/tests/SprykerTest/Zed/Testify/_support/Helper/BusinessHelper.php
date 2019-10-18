@@ -26,9 +26,14 @@ class BusinessHelper extends Module
     protected $dependencies = [];
 
     /**
-     * @var \Spryker\Zed\Kernel\Business\AbstractBusinessFactory|null
+     * @var array
      */
-    protected $factoryStub;
+    protected $mockedFacadeMethods = [];
+
+    /**
+     * @var \Spryker\Zed\Kernel\Business\AbstractFacade|null
+     */
+    protected $facadeStub;
 
     /**
      * @var array
@@ -36,11 +41,59 @@ class BusinessHelper extends Module
     protected $mockedFactoryMethods = [];
 
     /**
+     * @var \Spryker\Zed\Kernel\Business\AbstractBusinessFactory|null
+     */
+    protected $factoryStub;
+
+    /**
+     * @param string $methodName
+     * @param mixed $return
+     *
+     * @throws \Exception
+     *
+     * @return object|\Spryker\Zed\Kernel\Business\AbstractFacade
+     */
+    public function mockFacadeMethod(string $methodName, $return)
+    {
+        $className = $this->getFacadeClassName();
+
+        if (!method_exists($className, $methodName)) {
+            throw new Exception(sprintf('You tried to mock a not existing method "%s". Available methods are "%s"', $methodName, implode(', ', get_class_methods($className))));
+        }
+
+        $this->mockedFacadeMethods[$methodName] = $return;
+
+        /** @var \Spryker\Zed\Kernel\Business\AbstractFacade $facadeStub */
+        $facadeStub = Stub::make($className, $this->mockedFacadeMethods);
+        $this->facadeStub = $facadeStub;
+
+        return $this->facadeStub;
+    }
+
+    /**
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     public function getFacade()
     {
         $facade = $this->createFacade();
+        $facade->setFactory($this->getFactory());
+
+        if ($this->facadeStub !== null) {
+            return $this->injectFactory($this->facadeStub);
+        }
+
+        $facade = $this->createFacade();
+
+        return $this->injectFactory($facade);
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Business\AbstractFacade $facade
+     *
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
+     */
+    protected function injectFactory($facade)
+    {
         $facade->setFactory($this->getFactory());
 
         return $facade;
@@ -84,7 +137,11 @@ class BusinessHelper extends Module
         }
 
         $this->mockedFactoryMethods[$methodName] = $return;
-        $this->factoryStub = Stub::make($className, $this->mockedFactoryMethods);
+
+        /** @var \Spryker\Zed\Kernel\Business\AbstractBusinessFactory $factoryStub */
+        $factoryStub = Stub::make($className, $this->mockedFactoryMethods);
+
+        $this->factoryStub = $factoryStub;
 
         return $this->factoryStub;
     }
@@ -125,7 +182,7 @@ class BusinessHelper extends Module
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Business\AbstractBusinessFactory|object $businessFactory
+     * @param \Spryker\Zed\Kernel\Business\AbstractBusinessFactory $businessFactory
      *
      * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory
      */
@@ -143,7 +200,10 @@ class BusinessHelper extends Module
      */
     protected function getConfig()
     {
-        return $this->getConfigHelper()->getModuleConfig();
+        /** @var \Spryker\Zed\Kernel\AbstractBundleConfig $config */
+        $config = $this->getConfigHelper()->getModuleConfig();
+
+        return $config;
     }
 
     /**
@@ -151,7 +211,10 @@ class BusinessHelper extends Module
      */
     protected function getConfigHelper(): ConfigHelper
     {
-        return $this->getModule('\\' . ConfigHelper::class);
+        /** @var \SprykerTest\Shared\Testify\Helper\ConfigHelper $configHelper */
+        $configHelper = $this->getModule('\\' . ConfigHelper::class);
+
+        return $configHelper;
     }
 
     /**
@@ -163,5 +226,7 @@ class BusinessHelper extends Module
     {
         $this->factoryStub = null;
         $this->mockedFactoryMethods = [];
+        $this->facadeStub = null;
+        $this->mockedFacadeMethods = [];
     }
 }
