@@ -17,7 +17,7 @@ use Spryker\Client\Kernel\AbstractFactory;
 class CartCodesRestApiFactory extends AbstractFactory
 {
     /**
-     * @return CartCodeAdderInterface
+     * @return \Spryker\Client\CartCodesRestApi\CartCodeAdder\CartCodeAdderInterface
      */
     public function createCartCodeAdder(): CartCodeAdderInterface
     {
@@ -30,7 +30,7 @@ class CartCodesRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return CartCodesRestApiToZedRequestClientInterface
+     * @return \Spryker\Client\CartCodesRestApi\Dependency\Client\CartCodesRestApiToZedRequestClientInterface
      */
     public function getZedRequestClient(): CartCodesRestApiToZedRequestClientInterface
     {

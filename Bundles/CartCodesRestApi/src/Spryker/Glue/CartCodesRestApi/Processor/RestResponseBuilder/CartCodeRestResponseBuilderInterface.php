@@ -14,9 +14,10 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 interface CartCodeRestResponseBuilderInterface
 {
     /**
-     * @param CartCodeOperationResultTransfer $cartCodeOperationResultTransfer
-     * @param RestRequestInterface $restRequest
-     * @return RestResponseInterface
+     * @param \Generated\Shared\Transfer\CartCodeOperationResultTransfer $cartCodeOperationResultTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function buildCartRestResponse(
         CartCodeOperationResultTransfer $cartCodeOperationResultTransfer,

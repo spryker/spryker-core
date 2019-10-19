@@ -10,9 +10,11 @@ namespace Spryker\Glue\CartCodesRestApi;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
+/**
+ * @method \Spryker\Glue\CartCodesRestApi\CartCodesRestApiConfig getConfig()
+ */
 class CartCodesRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    //TODO
     public const CARTS_RESOURCE = 'CARTS_RESOURCE';
 
     /**
@@ -27,11 +29,10 @@ class CartCodesRestApiDependencyProvider extends AbstractBundleDependencyProvide
         return $container;
     }
 
-
     /**
-     * @param Container $container
+     * @param \Spryker\Glue\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Glue\Kernel\Container
      */
     protected function addCartsResource(Container $container): Container
     {

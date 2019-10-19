@@ -3,22 +3,19 @@
 
 namespace Spryker\CartCodesRestApi\src\Spryker\Client\CartCodesRestApi\Zed;
 
-
 use Generated\Shared\Transfer\AddCandidateRequestTransfer;
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Spryker\Client\CartCodesRestApi\Dependency\Client\CartCodesRestApiToZedRequestClientInterface;
-use Spryker\Client\WishlistsRestApi\Dependency\Client\WishlistsRestApiToZedRequestClientInterface;
-use Spryker\Client\ZedRequest\Stub\ZedRequestStub;
 
 class CartCodesRestApiStub implements CartCodesRestApiStubInterface
 {
     /**
-     * @var CartCodesRestApiToZedRequestClientInterface
+     * @var \Spryker\Client\CartCodesRestApi\Dependency\Client\CartCodesRestApiToZedRequestClientInterface
      */
     protected $zedStubClient;
 
     /**
-     * @param CartCodesRestApiToZedRequestClientInterface $zedStubClient
+     * @param \Spryker\Client\CartCodesRestApi\Dependency\Client\CartCodesRestApiToZedRequestClientInterface $zedStubClient
      */
     public function __construct(CartCodesRestApiToZedRequestClientInterface $zedStubClient)
     {
@@ -26,9 +23,9 @@ class CartCodesRestApiStub implements CartCodesRestApiStubInterface
     }
 
     /**
-     * @param AddCandidateRequestTransfer $addCandidateRequestTransfer
+     * @param \Generated\Shared\Transfer\AddCandidateRequestTransfer $addCandidateRequestTransfer
      *
-     * @return CartCodeOperationResultTransfer
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
     public function addCandidate(AddCandidateRequestTransfer $addCandidateRequestTransfer): CartCodeOperationResultTransfer
     {

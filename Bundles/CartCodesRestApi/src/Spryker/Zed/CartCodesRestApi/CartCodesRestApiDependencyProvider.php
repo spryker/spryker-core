@@ -9,7 +9,6 @@ namespace Spryker\Zed\CartCodesRestApi;
 
 use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeBridge;
 use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeBridge;
-use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToQuoteFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -22,11 +21,11 @@ class CartCodesRestApiDependencyProvider extends AbstractBundleDependencyProvide
     public const FACADE_CARTS_REST_API = 'FACADE_CARTS_REST_API';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addCartCodeFacade($container);
         $container = $this->addCartRestApiFacade($container);
@@ -35,9 +34,9 @@ class CartCodesRestApiDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addCartCodeFacade(Container $container): Container
     {
@@ -49,9 +48,9 @@ class CartCodesRestApiDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addCartRestApiFacade(Container $container): Container
     {

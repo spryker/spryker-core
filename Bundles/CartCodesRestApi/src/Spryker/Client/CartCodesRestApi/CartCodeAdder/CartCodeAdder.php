@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Client\CartCodesRestApi\CartCodeAdder;
 
 use Generated\Shared\Transfer\AddCandidateRequestTransfer;
@@ -10,12 +15,12 @@ use Spryker\CartCodesRestApi\src\Spryker\Client\CartCodesRestApi\Zed\CartCodesRe
 class CartCodeAdder implements CartCodeAdderInterface
 {
     /**
-     * @var CartCodesRestApiStubInterface
+     * @var \Spryker\CartCodesRestApi\src\Spryker\Client\CartCodesRestApi\Zed\CartCodesRestApiStubInterface
      */
     protected $cartCodesRestApiStub;
 
     /**
-     * @param CartCodesRestApiStubInterface $cartCodesRestApiStub
+     * @param \Spryker\CartCodesRestApi\src\Spryker\Client\CartCodesRestApi\Zed\CartCodesRestApiStubInterface $cartCodesRestApiStub
      */
     public function __construct(CartCodesRestApiStubInterface $cartCodesRestApiStub)
     {
@@ -23,10 +28,10 @@ class CartCodeAdder implements CartCodeAdderInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $voucherCode
      *
-     * @return CartCodeOperationResultTransfer
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
     public function addCandidate(QuoteTransfer $quoteTransfer, string $voucherCode): CartCodeOperationResultTransfer
     {
@@ -35,10 +40,10 @@ class CartCodeAdder implements CartCodeAdderInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $voucherCode
      *
-     * @return AddCandidateRequestTransfer
+     * @return \Generated\Shared\Transfer\AddCandidateRequestTransfer
      */
     protected function prepareAddCandidateRequestTransfer(QuoteTransfer $quoteTransfer, string $voucherCode): AddCandidateRequestTransfer
     {

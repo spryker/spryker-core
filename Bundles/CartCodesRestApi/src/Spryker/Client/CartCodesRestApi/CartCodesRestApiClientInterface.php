@@ -18,10 +18,10 @@ interface CartCodesRestApiClientInterface
      *
      * @api
      *
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $voucherCode
      *
-     * @return CartCodeOperationResultTransfer
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
     public function addCandidate(QuoteTransfer $quoteTransfer, string $voucherCode): CartCodeOperationResultTransfer;
 }

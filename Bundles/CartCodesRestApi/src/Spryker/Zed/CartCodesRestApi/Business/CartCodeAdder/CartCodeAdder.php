@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace Spryker\Zed\CartCodesRestApi\Business\CartCodeAdder;
 
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
@@ -10,18 +15,18 @@ use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestAp
 class CartCodeAdder implements CartCodeAdderInterface
 {
     /**
-     * @var CartCodesRestApiToCartCodeFacadeInterface
+     * @var \Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeInterface
      */
     protected $cartCodeFacade;
 
     /**
-     * @var CartCodesRestApiToCartsRestApiFacadeInterface
+     * @var \Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeInterface
      */
     protected $cartsRestApi;
 
     /**
-     * @param CartCodesRestApiToCartCodeFacadeInterface $cartCodeFacade
-     * @param CartCodesRestApiToCartsRestApiFacadeInterface $cartsRestApi
+     * @param \Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeInterface $cartCodeFacade
+     * @param \Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeInterface $cartsRestApi
      */
     public function __construct(
         CartCodesRestApiToCartCodeFacadeInterface $cartCodeFacade,
@@ -32,10 +37,10 @@ class CartCodeAdder implements CartCodeAdderInterface
     }
 
     /**
-     * @param QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $voucherCode
      *
-     * @return CartCodeOperationResultTransfer
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
     public function addCandidate(QuoteTransfer $quoteTransfer, string $voucherCode): CartCodeOperationResultTransfer
     {

@@ -10,7 +10,6 @@ namespace Spryker\Glue\CartCodesRestApi\Processor\RestResponseBuilder;
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\CartCodeMapperInterface;
 use Spryker\Glue\CartsRestApi\CartsRestApiResourceInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResource;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -18,24 +17,24 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 class CartCodeRestResponseBuilder implements CartCodeRestResponseBuilderInterface
 {
     /**
-     * @var RestResourceBuilderInterface
+     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
     protected $restResourceBuilder;
 
     /**
-     * @var CartCodeMapperInterface
+     * @var \Spryker\Glue\CartCodesRestApi\Processor\Mapper\CartCodeMapperInterface
      */
     protected $cartCodeMapper;
 
     /**
-     * @var CartsRestApiResourceInterface
+     * @var \Spryker\Glue\CartsRestApi\CartsRestApiResourceInterface
      */
     protected $cartsRestApiResource;
 
     /**
-     * @param RestResourceBuilderInterface $restResourceBuilder
-     * @param CartCodeMapperInterface $cartCodeMapper
-     * @param CartsRestApiResourceInterface $cartsRestApiResource
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param \Spryker\Glue\CartCodesRestApi\Processor\Mapper\CartCodeMapperInterface $cartCodeMapper
+     * @param \Spryker\Glue\CartsRestApi\CartsRestApiResourceInterface $cartsRestApiResource
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
@@ -48,16 +47,15 @@ class CartCodeRestResponseBuilder implements CartCodeRestResponseBuilderInterfac
     }
 
     /**
-     * @param CartCodeOperationResultTransfer $cartCodeOperationResultTransfer
-     * @param RestRequestInterface $restRequest
-     * @return RestResponseInterface
+     * @param \Generated\Shared\Transfer\CartCodeOperationResultTransfer $cartCodeOperationResultTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function buildCartRestResponse(
         CartCodeOperationResultTransfer $cartCodeOperationResultTransfer,
         RestRequestInterface $restRequest
     ): RestResponseInterface {
-        $cartResource = $this->cartsRestApiResource->mapCartsResource($cartCodeOperationResultTransfer->getQuote(), $restRequest);
-
-        return $this->restResourceBuilder->createRestResponse()->addResource($cartResource);
+        return $this->cartsRestApiResource->createCartRestResponse($cartCodeOperationResultTransfer->getQuote(), $restRequest);
     }
 }

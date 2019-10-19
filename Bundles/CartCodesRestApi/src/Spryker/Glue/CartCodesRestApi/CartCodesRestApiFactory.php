@@ -22,7 +22,7 @@ use Spryker\Glue\Kernel\AbstractFactory;
 class CartCodesRestApiFactory extends AbstractFactory
 {
     /**
-     * @return CartCodeAdderInterface
+     * @return \Spryker\CartCodesRestApi\src\Spryker\Glue\CartCodesRestApi\Processor\CartCodeAdder\CartCodeAdderInterface
      */
     public function createCartCodeAdder(): CartCodeAdderInterface
     {
@@ -49,7 +49,9 @@ class CartCodesRestApiFactory extends AbstractFactory
         return new CartCodeMapper();
     }
 
-    //TODO
+    /**
+     * @return \Spryker\Glue\CartsRestApi\CartsRestApiResourceInterface
+     */
     public function getCartsRestApiResource(): CartsRestApiResourceInterface
     {
         return $this->getProvidedDependency(CartCodesRestApiDependencyProvider::CARTS_RESOURCE);

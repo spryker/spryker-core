@@ -18,7 +18,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class DiscountsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Configures available actions for cartcodes resource.
      *
      * @api
@@ -35,7 +35,7 @@ class DiscountsResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,7 +47,7 @@ class DiscountsResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -59,7 +59,7 @@ class DiscountsResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

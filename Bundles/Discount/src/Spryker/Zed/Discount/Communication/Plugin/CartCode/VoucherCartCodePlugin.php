@@ -10,10 +10,13 @@ namespace Spryker\Zed\Discount\Communication\Plugin\CartCode;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface;
-use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Discount\DiscountConfig getConfig()
+ * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface getQueryContainer()
  */
 class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInterface
 {

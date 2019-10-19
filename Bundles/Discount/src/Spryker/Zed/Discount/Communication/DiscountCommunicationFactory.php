@@ -167,7 +167,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return VoucherCartCodeInterface
+     * @return \Spryker\Zed\Discount\Communication\CartCode\VoucherCartCodeInterface
      */
     public function createVoucherCartCode(): VoucherCartCodeInterface
     {

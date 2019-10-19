@@ -18,9 +18,10 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class DiscountsResourceController extends AbstractController
 {
     /**
-     * @param RestRequestInterface $restRequest
-     * @param RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
-     * @return RestResponseInterface
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function postAction(
         RestRequestInterface $restRequest,

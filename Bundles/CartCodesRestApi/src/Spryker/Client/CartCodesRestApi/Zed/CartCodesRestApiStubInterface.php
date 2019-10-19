@@ -8,9 +8,9 @@ use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 interface CartCodesRestApiStubInterface
 {
     /**
-     * @param AddCandidateRequestTransfer $addCandidateRequestTransfer
+     * @param \Generated\Shared\Transfer\AddCandidateRequestTransfer $addCandidateRequestTransfer
      *
-     * @return CartCodeOperationResultTransfer
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
     public function addCandidate(AddCandidateRequestTransfer $addCandidateRequestTransfer): CartCodeOperationResultTransfer;
 }
