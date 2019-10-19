@@ -16,6 +16,9 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
 abstract class AbstractCartRestResponseBuilder implements BaseCartRestResponseBuilderInterface
 {
+    protected const PATTERN_GUEST_CART_ITEM_RESOURCE_SELF_LINK = '%s/%s/%s/%s';
+    protected const KEY_REST_RESOURCE_SELF_LINK = 'self';
+
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
@@ -27,14 +30,14 @@ abstract class AbstractCartRestResponseBuilder implements BaseCartRestResponseBu
     protected $cartsMapper;
 
     /**
-     * @var CartItemsMapperInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsMapperInterface
      */
     protected $cartItemsMapper;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsMapperInterface $cartsMapper
-     * @param CartItemsMapperInterface $cartItemsMapper
+     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsMapperInterface $cartItemsMapper
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,

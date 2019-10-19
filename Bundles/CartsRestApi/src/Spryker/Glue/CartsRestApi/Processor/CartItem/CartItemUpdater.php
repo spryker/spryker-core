@@ -84,12 +84,7 @@ class CartItemUpdater implements CartItemUpdaterInterface
             return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 
-        $restResource = $this->cartsResourceMapper->mapCartsResource(
-            $quoteResponseTransfer->getQuoteTransfer(),
-            $restRequest
-        );
-
-        return $this->cartRestResponseBuilder->createCartRestResponse($restResource);
+        return $this->cartRestResponseBuilder->createCartRestResponse($quoteResponseTransfer->getQuoteTransfer(), $restRequest);
     }
 
     /**

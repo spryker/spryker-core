@@ -7,18 +7,31 @@
 
 namespace Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder;
 
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface CartRestResponseBuilderInterface extends BaseCartRestResponseBuilderInterface
 {
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $cartRestResource
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createCartRestResponse(RestResourceInterface $cartRestResource): RestResponseInterface;
+    public function createCartRestResponse(QuoteTransfer $quoteTransfer, RestRequestInterface $restRequest): RestResponseInterface;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createRestQuoteCollectionResponse(
+        QuoteCollectionTransfer $quoteCollectionTransfer,
+        RestRequestInterface $restRequest
+    ): RestResponseInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
