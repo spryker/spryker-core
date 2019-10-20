@@ -25,4 +25,9 @@ interface CmsSlotBlockGuiToCmsSlotBlockFacadeInterface
      * @return \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer
      */
     public function getCmsSlotBlockCollection(int $idCmsSlotTemplate, int $idCmsSlot): CmsSlotBlockCollectionTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     */
+    public function getCmsBlocksWithSlotRelations(): array;
 }

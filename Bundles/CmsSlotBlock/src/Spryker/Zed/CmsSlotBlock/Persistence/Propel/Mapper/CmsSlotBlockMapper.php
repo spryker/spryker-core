@@ -61,7 +61,7 @@ class CmsSlotBlockMapper implements CmsSlotBlockMapperInterface
         CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer
     ): CmsSlotBlockCollectionTransfer {
         foreach ($cmsSlotBlockEntities as $cmsSlotBlockEntity) {
-            $cmsSlotBlockCollectionTransfer->addCmsSlotBlocks(
+            $cmsSlotBlockCollectionTransfer->addCmsSlotBlock(
                 $this->mapCmsSlotBlockEntityToTransfer($cmsSlotBlockEntity, new CmsSlotBlockTransfer())
             );
         }

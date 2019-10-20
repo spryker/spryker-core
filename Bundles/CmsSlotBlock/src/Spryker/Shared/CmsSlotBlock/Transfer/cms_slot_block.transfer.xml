@@ -18,4 +18,9 @@
     <transfer name="CmsSlotTemplateConfiguration">
         <property name="conditions" type="array" singular="condition"/>
     </transfer>
+
+    <transfer name="CmsBlock">
+        <property name="cmsSlotBlockCollection" type="CmsSlotBlockCollection"/>
+    </transfer>
+
 </transfers>

@@ -5,6 +5,8 @@
     {%- endblock %}
 
     {% block widget_content %}
+        {{ form_widget(cmsBlockChoiceForm) }}
+
         {{ slotBlockTable | raw }}
  
     {{ form_start(slotBlockCollectionForm, {'action': '/cms-slot-block-gui/slot-block'}) }}

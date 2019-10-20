@@ -44,4 +44,12 @@ class CmsSlotBlockGuiToCmsSlotBlockFacadeBridge implements CmsSlotBlockGuiToCmsS
     {
         return $this->cmsSlotBlockFacade->getCmsSlotBlockCollection($idCmsSlotTemplate, $idCmsSlot);
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     */
+    public function getCmsBlocksWithSlotRelations(): array
+    {
+        return $this->cmsSlotBlockFacade->getCmsBlocksWithSlotRelations();
+    }
 }
