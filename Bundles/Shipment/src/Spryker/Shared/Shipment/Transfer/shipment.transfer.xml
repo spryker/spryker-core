@@ -10,9 +10,9 @@
     </transfer>
 
     <transfer name="ShipmentCarrierRequest">
-        <property name="idCarrier" type="int" />
-        <property name="carrierName" type="string" />
-        <property name="excludedCarrierIds" type="array" />
+        <property name="idCarrier" type="int"/>
+        <property name="carrierName" type="string"/>
+        <property name="excludedCarrierIds" type="array" singular="excludedCarrierId"/>
     </transfer>
 
     <transfer name="ShipmentMethods">
@@ -83,7 +83,6 @@
         <property name="shipmentSelection" type="string"/>
         <property name="shippingAddress" type="Address"/>
         <property name="requestedDeliveryDate" type="string"/>
-        <property name="idSalesShipment" type="int"/>
     </transfer>
 
     <transfer name="Quote">
@@ -216,7 +215,7 @@
 
     <transfer name="StoreRelation">
         <property name="idEntity" type="int"/>
-        <property name="idStores" type="int[]"/>
+        <property name="idStores" type="int[]" singular="idStores"/>
         <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
 
