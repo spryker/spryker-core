@@ -5,13 +5,39 @@
 
     <transfer name="ProductRelationStorage">
         <property name="key" type="string"/>
-        <property name="productAbstractIds" type="array"/>
+        <property name="productAbstractIds" type="array" singular="productAbstractIds"/>
         <property name="isActive" type="bool"/>
     </transfer>
 
     <transfer name="ProductAbstractRelationStorage">
         <property name="idProductAbstract" type="int"/>
         <property name="productRelations" singular="productRelations" type="ProductRelationStorage[]"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="relatedBundleItemIdentifier" type="string"/>
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="StorageProductAbstractRelation">
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="ProductView">
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="bundleItems" type="Item[]" singular="bundleItem"/>
+    </transfer>
+
+    <transfer name="StorageProductRelations">
+        <property name="isActive" type="bool"/>
+        <property name="abstractProducts" type="StorageProductAbstractRelation[]" singular="abstractProduct"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
     </transfer>
 
 </transfers>

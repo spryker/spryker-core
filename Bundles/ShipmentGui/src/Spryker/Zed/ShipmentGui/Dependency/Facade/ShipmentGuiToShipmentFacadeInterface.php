@@ -101,4 +101,11 @@ interface ShipmentGuiToShipmentFacadeInterface
      * @return int|null
      */
     public function createMethod(ShipmentMethodTransfer $methodTransfer): ?int;
+
+    /**
+     * @param int $idMethod
+     *
+     * @return bool
+     */
+    public function deleteMethod($idMethod);
 }

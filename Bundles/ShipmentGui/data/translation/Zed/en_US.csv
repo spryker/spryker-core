@@ -27,3 +27,10 @@ Configuration,Configuration
 "Is this delivery method active?","Is this delivery method active?"
 "Store relation","Store relation"
 "Price & Tax","Price & Tax"
+None,None
+"Delivery method not found.","Delivery method not found."
+"Delivery method was deleted successfully.","Delivery method was deleted successfully."
+"Delete Delivery Method","Delete Delivery Method"
+"Delete Delivery Method: %s","Delete Delivery Method: %s"
+"No, I want to keep this delivery method","No, I want to keep this delivery method"
+"Yes, delete this delivery method","Yes, delete this delivery method"

@@ -146,4 +146,14 @@ class ShipmentGuiToShipmentFacadeBridge implements ShipmentGuiToShipmentFacadeIn
     {
         return $this->shipmentFacade->createMethod($methodTransfer);
     }
+
+    /**
+     * @param int $idMethod
+     *
+     * @return bool
+     */
+    public function deleteMethod($idMethod)
+    {
+        return $this->shipmentFacade->deleteMethod($idMethod);
+    }
 }

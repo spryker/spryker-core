@@ -16,6 +16,20 @@
 
     <transfer name="CompanyBusinessUnit">
         <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship"/>
+        <property name="name" type="string"/>
+        <property name="idCompanyBusinessUnit" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitCollection">
+        <property name="companyBusinessUnits" type="CompanyBusinessUnit[]" singular="companyBusinessUnit"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
+        <property name="fkCompanyBusinessUnit" type="int"/>
+    </transfer>
+
+    <transfer name="Merchant">
     </transfer>
 
 </transfers>

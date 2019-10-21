@@ -11,7 +11,7 @@
     <transfer name="QuoteRequestOverviewFilter">
         <property name="quoteRequestReference" type="string"/>
         <property name="pagination" type="Pagination"/>
-        <property name="excludedStatuses" type="array"/>
+        <property name="excludedStatuses" type="array" singular="excludedStatuses"/>
     </transfer>
 
     <transfer name="QuoteRequest">
@@ -24,7 +24,8 @@
 
     <transfer name="QuoteRequestVersion">
         <property name="quote" type="Quote"/>
-        <property name="metadata" type="array"/>
+        <property name="metadata" type="array" singular="metadata"/>
+        <property name="versionReference" type="string"/>
     </transfer>
 
     <transfer name="Quote">
@@ -54,6 +55,8 @@
 
     <transfer name="QuoteResponse">
         <property name="errors" type="QuoteError[]" singular="error"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="quoteTransfer" type="Quote"/>
     </transfer>
 
     <transfer name="QuoteRequestCollection">
@@ -63,7 +66,7 @@
 
     <transfer name="QuoteRequestFilter">
         <property name="quoteRequestReference" type="string"/>
-        <property name="excludedStatuses" type="array"/>
+        <property name="excludedStatuses" type="array" singular="excludedStatuses"/>
         <property name="pagination" type="Pagination"/>
         <property name="withHidden" type="bool"/>
         <property name="idCompanyUser" type="int"/>

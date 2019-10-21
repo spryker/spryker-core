@@ -101,6 +101,7 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
             ->queryCategoryNode($localeTransfer->getIdLocale())
             ->find();
 
+        /** @var array $categoryEntities */
         $categoryEntities = $this->getQueryContainer()->queryAllCategoriesWithAttributesAndOrderByDescendant()->find();
         $formattedCategoriesByLocaleAndNodeIds = $this->formatCategoriesWithLocaleAndNodIds($categoryEntities);
 

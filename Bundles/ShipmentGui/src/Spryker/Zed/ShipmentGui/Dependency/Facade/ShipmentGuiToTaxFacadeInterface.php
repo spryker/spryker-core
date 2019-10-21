@@ -10,8 +10,6 @@ namespace Spryker\Zed\ShipmentGui\Dependency\Facade;
 interface ShipmentGuiToTaxFacadeInterface
 {
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
      * @return \Generated\Shared\Transfer\TaxSetCollectionTransfer
      */
     public function getTaxSets();

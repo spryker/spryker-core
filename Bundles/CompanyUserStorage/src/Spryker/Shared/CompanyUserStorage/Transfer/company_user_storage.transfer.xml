@@ -7,6 +7,20 @@
         <property name="idCompanyUser" type="int"/>
         <property name="idCompany" type="int"/>
         <property name="uuid" type="string"/>
+        <property name="idCompanyBusinessUnit" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="fkCompanyBusinessUnit" type="int"/>
+        <property name="fkCompany" type="int"/>
+        <property name="uuid" type="string"/>
+        <property name="idCompanyUser" type="int"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
     </transfer>
 
 </transfers>
