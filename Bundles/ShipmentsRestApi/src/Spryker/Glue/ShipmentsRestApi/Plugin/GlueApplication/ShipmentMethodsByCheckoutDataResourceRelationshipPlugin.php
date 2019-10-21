@@ -18,7 +18,7 @@ use Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiConfig;
 class ShipmentMethodsByCheckoutDataResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds shipment-methods resource as relationship in case RestCheckoutDataTransfer is provided as payload.
      *
      * @api
@@ -36,7 +36,7 @@ class ShipmentMethodsByCheckoutDataResourceRelationshipPlugin extends AbstractPl
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
