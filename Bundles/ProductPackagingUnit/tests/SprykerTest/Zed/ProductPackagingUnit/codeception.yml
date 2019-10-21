@@ -30,5 +30,6 @@ suites:
                 - \SprykerTest\Zed\ProductPackagingUnit\Helper\PriceChangeHelper
                 - \SprykerTest\Shared\ProductMeasurementUnit\Helper\ProductMeasurementUnitDataHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Zed\Sales\Helper\BusinessHelper
                 - \SprykerTest\Zed\Oms\Helper\OmsHelper

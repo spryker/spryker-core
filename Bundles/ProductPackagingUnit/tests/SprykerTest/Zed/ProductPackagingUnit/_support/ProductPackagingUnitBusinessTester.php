@@ -241,6 +241,10 @@ class ProductPackagingUnitBusinessTester extends Actor
         $stateCollectionTransfer = new OmsStateCollectionTransfer();
         $salesOrderEntity = $this->haveSalesOrderEntity(array_fill(0, $itemsCount, $itemTransfer));
 
+        $salesOrderEntity
+            ->setStore('DE')
+            ->save();
+
         foreach ($salesOrderEntity->getItems() as $orderItemEntity) {
             $orderItemEntity
                 ->setSku($sku)

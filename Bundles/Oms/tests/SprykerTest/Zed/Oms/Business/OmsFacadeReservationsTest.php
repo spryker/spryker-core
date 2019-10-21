@@ -114,6 +114,7 @@ class OmsFacadeReservationsTest extends Unit
      */
     public function testSumReservedItemsShouldSumAllItemsInReservedState(): void
     {
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $testSku = 'oms-sku-test-reservation';
 
         $saveOrderTransfer1 = $this->tester->haveOrder(
@@ -168,7 +169,7 @@ class OmsFacadeReservationsTest extends Unit
 
         $this->assertTrue(
             $this->getOmsFacade()
-                ->sumReservedProductQuantitiesForSku($testSku)
+                ->sumReservedProductQuantitiesForSku($testSku, $storeTransfer)
                 ->equals($expectedQuantity)
         );
     }

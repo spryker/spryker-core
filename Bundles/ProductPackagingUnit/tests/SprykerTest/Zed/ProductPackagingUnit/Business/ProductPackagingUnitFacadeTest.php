@@ -68,6 +68,8 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     protected const ABSTRACT_PRODUCT_SKU = 'ABSTRACT_PRODUCT_SKU';
     protected const CONCRETE_PRODUCT_SKU = 'CONCRETE_PRODUCT_SKU';
 
+    protected const STORE_NAME_DE = 'DE';
+
     /**
      * @var \SprykerTest\Zed\ProductPackagingUnit\ProductPackagingUnitBusinessTester
      */
@@ -416,12 +418,10 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      */
     protected function createTestQuoteTransfer(): QuoteTransfer
     {
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+
         return (new QuoteTransfer())
-            ->setStore(
-                (new StoreTransfer())
-                    ->setIdStore(1)
-                    ->setName('DE')
-            );
+            ->setStore($storeTransfer);
     }
 
     /**
@@ -572,16 +572,20 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
             SpyProductPackagingUnitTypeEntityTransfer::NAME => static::BOX_PACKAGING_TYPE,
         ]);
 
-        $this->tester->haveProductPackagingUnit([
-            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $boxProductConcreteTransfer->getIdProductConcrete(),
-            SpyProductPackagingUnitEntityTransfer::FK_PRODUCT_PACKAGING_UNIT_TYPE => $boxProductPackagingUnitType->getIdProductPackagingUnitType(),
-            SpyProductPackagingUnitEntityTransfer::FK_LEAD_PRODUCT => $itemProductConcreteTransfer->getIdProductConcrete(),
-            SpyProductPackagingUnitEntityTransfer::DEFAULT_AMOUNT => $defaultAmount,
-            SpyProductPackagingUnitEntityTransfer::AMOUNT_MIN => $minRestriction,
-            SpyProductPackagingUnitEntityTransfer::AMOUNT_MAX => $maxRestriction,
-            SpyProductPackagingUnitEntityTransfer::AMOUNT_INTERVAL => $intervalRestriction,
-            SpyProductPackagingUnitEntityTransfer::IS_VARIABLE => $isVariable,
-        ]);
+        $this->tester->haveProductPackagingUnit(
+            [
+                SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $boxProductConcreteTransfer->getIdProductConcrete(),
+                SpyProductPackagingUnitEntityTransfer::FK_PRODUCT_PACKAGING_UNIT_TYPE => $boxProductPackagingUnitType->getIdProductPackagingUnitType(),
+                SpyProductPackagingUnitEntityTransfer::FK_LEAD_PRODUCT => $itemProductConcreteTransfer->getIdProductConcrete(),
+            ],
+            [
+                SpyProductPackagingUnitEntityTransfer::DEFAULT_AMOUNT => $defaultAmount,
+                SpyProductPackagingUnitEntityTransfer::AMOUNT_MIN => $minRestriction,
+                SpyProductPackagingUnitEntityTransfer::AMOUNT_MAX => $maxRestriction,
+                SpyProductPackagingUnitEntityTransfer::AMOUNT_INTERVAL => $intervalRestriction,
+                SpyProductPackagingUnitEntityTransfer::IS_VARIABLE => $isVariable,
+            ]
+        );
 
         $code = 'MYCODE' . random_int(1, 100);
         $productMeasurementUnitTransfer = $this->tester->haveProductMeasurementUnit([
@@ -1028,6 +1032,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     public function testAggregateProductPackagingUnitReservationAmount(): void
     {
         // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $quantity = 2;
         $amount = new Decimal(2.5);
         $itemsCount = 5;
@@ -1039,17 +1044,18 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         // Action
         $salesAggregationTransfers = $this->getFacade()->aggregateProductPackagingUnitReservationAmount(
             $leadProductConcreteTransfer->getSku(),
-            $stateCollectionTransfer
+            $stateCollectionTransfer,
+            $storeTransfer
         );
 
         //Assert
         $this->assertGreaterThan(1, $salesAggregationTransfers);
         $this->assertContainsOnlyInstancesOf(SalesOrderItemStateAggregationTransfer::class, $salesAggregationTransfers);
         $result = $this->sumSalesAggregationTransfers($salesAggregationTransfers);
-        // SUM(quantity) + SUM(amount)
+        // SUM(amount)
         $this->assertSame(
             $result->toString(),
-            $amount->multiply($itemsCount)->add($quantity * $itemsCount)->toString()
+            $amount->multiply($itemsCount)->toString()
         );
     }
 
@@ -1059,6 +1065,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     public function testAggregateProductPackagingUnitReservationAmountWithSelfLeadProduct(): void
     {
         // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $quantity = 3;
         $amount = new Decimal(1.5);
         $itemsCount = 6;
@@ -1070,7 +1077,8 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         // Action
         $salesAggregationTransfers = $this->getFacade()->aggregateProductPackagingUnitReservationAmount(
             $leadProductConcreteTransfer->getSku(),
-            $stateCollectionTransfer
+            $stateCollectionTransfer,
+            $storeTransfer
         );
 
         //Assert
@@ -1090,6 +1098,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     public function testAggregateProductPackagingUnitReservationAmountWithNoPackagingUnit(): void
     {
         // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $quantity = 3;
         $itemsCount = 7;
         $sku = 'NOT_PU_PRODUCT';
@@ -1098,15 +1107,17 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         // Action
         $salesAggregationTransfers = $this->getFacade()->aggregateProductPackagingUnitReservationAmount(
             $sku,
-            $stateCollectionTransfer
+            $stateCollectionTransfer,
+            $storeTransfer
         );
 
         //Assert
         $this->assertCount(1, $salesAggregationTransfers);
         $this->assertContainsOnlyInstancesOf(SalesOrderItemStateAggregationTransfer::class, $salesAggregationTransfers);
         $result = $this->sumSalesAggregationTransfers($salesAggregationTransfers);
-        $this->assertSame(
-            $result->toInt(),
+        // SUM(quantity)
+        $this->assertEquals(
+            $result->toString(),
             $quantity * $itemsCount
         );
     }
@@ -1117,6 +1128,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     public function testAggregateProductPackagingUnitReservationAmountWithNoPackagingUnitButAlsoPackagingUnit(): void
     {
         // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $quantity = 4;
         $itemsCount = 9;
         $quantityInPackagingUnit = 6;
@@ -1131,17 +1143,18 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         // Action
         $salesAggregationTransfers = $this->getFacade()->aggregateProductPackagingUnitReservationAmount(
             $leadProductConcreteTransfer->getSku(),
-            $stateCollectionTransfer
+            $stateCollectionTransfer,
+            $storeTransfer
         );
 
         //Assert
         $this->assertCount(2, $salesAggregationTransfers);
         $this->assertContainsOnlyInstancesOf(SalesOrderItemStateAggregationTransfer::class, $salesAggregationTransfers);
         $result = $this->sumSalesAggregationTransfers($salesAggregationTransfers);
-        // SUM(quantity in PU) + SUM(quantity) + SUM(amount of PU)
-        $this->assertSame(
+        // SUM(amount in PU) + SUM(quantity)
+        $this->assertEquals(
             $result->toString(),
-            $amountForPackagingUnit->multiply($itemsCountInPackagingUnit)->add($quantity * $itemsCount)->add($quantityInPackagingUnit * $itemsCountInPackagingUnit)->toString()
+            $amountForPackagingUnit->multiply($itemsCountInPackagingUnit)->add($quantity * $itemsCount)->toString()
         );
     }
 

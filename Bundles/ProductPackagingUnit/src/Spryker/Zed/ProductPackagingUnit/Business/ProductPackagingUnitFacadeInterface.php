@@ -312,11 +312,11 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\OmsStateCollectionTransfer $reservedStates
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function aggregateProductPackagingUnitReservationAmount(string $sku, OmsStateCollectionTransfer $reservedStates, ?StoreTransfer $storeTransfer = null): array;
+    public function aggregateProductPackagingUnitReservationAmount(string $sku, OmsStateCollectionTransfer $reservedStates, StoreTransfer $storeTransfer): array;
 
     /**
      * Specification:

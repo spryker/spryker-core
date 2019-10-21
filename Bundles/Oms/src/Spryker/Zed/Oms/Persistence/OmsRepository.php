@@ -53,6 +53,9 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
             ->useStateQuery()
                 ->filterByName_In($stateNames)
             ->endUse()
+            ->useOrderQuery()
+                ->filterByStore($storeTransfer->getName())
+            ->endUse()
             ->groupByFkOmsOrderItemState()
             ->innerJoinProcess()
             ->groupByFkOmsOrderProcess()
@@ -63,13 +66,6 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
             ->select([
                 SpySalesOrderItemTableMap::COL_SKU,
             ]);
-
-        if ($storeTransfer !== null) {
-            $salesOrderItemQuery
-                ->useOrderQuery()
-                    ->filterByStore($storeTransfer->getName())
-                ->endUse();
-        }
 
         $salesAggregationTransfers = [];
         foreach ($salesOrderItemQuery->find() as $salesOrderItemAggregation) {
