@@ -210,11 +210,6 @@ class SlotTable extends AbstractTable
      */
     protected function buildLinks(array $slot): string
     {
-        $buttons[] = $this->generateEditButton(
-            '#',
-            'Edit'
-        );
-
         $statusToggleButton = $this->generateButton(
             $this->getUrlActivate($slot[SpyCmsSlotTableMap::COL_ID_CMS_SLOT]),
             'Activate',
