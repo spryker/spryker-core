@@ -25,9 +25,9 @@ use Spryker\Zed\ShipmentGui\Dependency\Service\ShipmentGuiToShipmentServiceBridg
  */
 class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const AVAILABILITY_PLUGINS = 'AVAILABILITY_PLUGINS';
-    public const PRICE_PLUGINS = 'PRICE_PLUGINS';
-    public const DELIVERY_TIME_PLUGINS = 'DELIVERY_TIME_PLUGINS';
+    public const PLUGINS_AVAILABILITY = 'PLUGINS_AVAILABILITY';
+    public const PLUGINS_PRICE = 'PLUGINS_PRICE';
+    public const PLUGINS_DELIVERY_TIME = 'PLUGINS_DELIVERY_TIME';
 
     public const FACADE_SALES = 'FACADE_SALES';
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
@@ -72,7 +72,7 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addAvailabilityPlugins(Container $container): Container
     {
-        $container->set(static::AVAILABILITY_PLUGINS, function (Container $container) {
+        $container->set(static::PLUGINS_AVAILABILITY, function (Container $container) {
             return $this->getAvailabilityPlugins($container);
         });
 
@@ -86,7 +86,7 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPricePlugins(Container $container): Container
     {
-        $container->set(static::PRICE_PLUGINS, function (Container $container) {
+        $container->set(static::PLUGINS_PRICE, function (Container $container) {
             return $this->getPricePlugins($container);
         });
 
@@ -100,7 +100,7 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDeliveryTimePlugins(Container $container): Container
     {
-        $container->set(static::DELIVERY_TIME_PLUGINS, function (Container $container) {
+        $container->set(static::PLUGINS_DELIVERY_TIME, function (Container $container) {
             return $this->getDeliveryTimePlugins($container);
         });
 
@@ -140,7 +140,7 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodAvailabilityPluginInterface[]|\Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface[]
+     * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodAvailabilityPluginInterface[]
      */
     protected function getAvailabilityPlugins(Container $container)
     {
@@ -150,7 +150,7 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodPricePluginInterface[]|\Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodPricePluginInterface[]
+     * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodPricePluginInterface[]
      */
     protected function getPricePlugins(Container $container)
     {
@@ -160,7 +160,7 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodDeliveryTimePluginInterface[]|\Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface[]
+     * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodDeliveryTimePluginInterface[]
      */
     protected function getDeliveryTimePlugins(Container $container)
     {

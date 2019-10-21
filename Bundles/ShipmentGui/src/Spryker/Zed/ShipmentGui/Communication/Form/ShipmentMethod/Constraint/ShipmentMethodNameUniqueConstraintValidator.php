@@ -32,7 +32,7 @@ class ShipmentMethodNameUniqueConstraintValidator extends ConstraintValidator
             return;
         }
 
-        if ($shipmentMethodTransfer->getIdShipmentMethod() === $this->context->getRoot()->getViewData()->getIdShipmentMethod()) {
+        if ($shipmentMethodTransfer->getIdShipmentMethod() === (int)$this->context->getRoot()->getViewData()->getIdShipmentMethod()) {
             return;
         }
 

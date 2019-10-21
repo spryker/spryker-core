@@ -82,18 +82,18 @@ interface ShipmentGuiToShipmentFacadeInterface
     public function createCarrier(ShipmentCarrierTransfer $carrierTransfer);
 
     /**
-     * @param string $name
+     * @param string $shipmentMethodName
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    public function findShipmentMethodByName(string $name): ?ShipmentMethodTransfer;
+    public function findShipmentMethodByName(string $shipmentMethodName): ?ShipmentMethodTransfer;
 
     /**
-     * @param string $key
+     * @param string $shipmentMethodKey
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    public function findShipmentMethodByKey(string $key): ?ShipmentMethodTransfer;
+    public function findShipmentMethodByKey(string $shipmentMethodKey): ?ShipmentMethodTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer

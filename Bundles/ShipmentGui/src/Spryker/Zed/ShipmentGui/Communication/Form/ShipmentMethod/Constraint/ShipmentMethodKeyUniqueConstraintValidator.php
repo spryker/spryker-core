@@ -14,8 +14,8 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class ShipmentMethodKeyUniqueConstraintValidator extends ConstraintValidator
 {
     /**
-     * @param mixed $value The value that should be validated
-     * @param \Symfony\Component\Validator\Constraint $constraint The constraint for the validation
+     * @param mixed $value
+     * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *

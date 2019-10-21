@@ -206,9 +206,9 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getPlugins(): array
     {
         return [
-            static::KEY_AVAILABILITY => $this->getProvidedDependency(ShipmentGuiDependencyProvider::AVAILABILITY_PLUGINS),
-            static::KEY_PRICE => $this->getProvidedDependency(ShipmentGuiDependencyProvider::PRICE_PLUGINS),
-            static::KEY_DELIVERY_TIME => $this->getProvidedDependency(ShipmentGuiDependencyProvider::DELIVERY_TIME_PLUGINS),
+            static::KEY_AVAILABILITY => $this->getProvidedDependency(ShipmentGuiDependencyProvider::PLUGINS_AVAILABILITY),
+            static::KEY_PRICE => $this->getProvidedDependency(ShipmentGuiDependencyProvider::PLUGINS_PRICE),
+            static::KEY_DELIVERY_TIME => $this->getProvidedDependency(ShipmentGuiDependencyProvider::PLUGINS_DELIVERY_TIME),
         ];
     }
 

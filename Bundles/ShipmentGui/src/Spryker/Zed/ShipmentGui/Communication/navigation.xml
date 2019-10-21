@@ -62,7 +62,7 @@
                             </shipment-method-view>
                             <shipment-method-create>
                                 <label>Create</label>
-                                <title>Create</title>
+                                <title>Create Delivery Method</title>
                                 <bundle>shipment-gui</bundle>
                                 <controller>create-shipment-method</controller>
                                 <action>index</action>

@@ -142,7 +142,7 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
      */
     public function removeStoreRelations(array $idStores, int $idShipmentMethod): void
     {
-        if (empty($idStores)) {
+        if ($idStores === []) {
             return;
         }
 

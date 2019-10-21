@@ -21,6 +21,7 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
 class ShipmentMethodMapper implements ShipmentMethodMapperInterface
 {
     protected const DEFAULT_FRACTION_DIGITS_VALUE = 2;
+
     /**
      * @var \Spryker\Zed\Shipment\Persistence\Propel\Mapper\StoreRelationMapperInterface
      */

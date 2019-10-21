@@ -163,5 +163,5 @@ interface ShipmentRepositoryInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
      */
-    public function getReladedStoresByIdShipmentMethod(int $idShipmentMethod): ArrayObject;
+    public function getRelatedStoresByIdShipmentMethod(int $idShipmentMethod): ArrayObject;
 }
