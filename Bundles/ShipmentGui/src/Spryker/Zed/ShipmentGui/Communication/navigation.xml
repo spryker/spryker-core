@@ -70,7 +70,7 @@
                             </shipment-method-create>
                             <shipment-method-update>
                                 <label>Edit</label>
-                                <title>Edit</title>
+                                <title>Edit Delivery Method</title>
                                 <bundle>shipment-gui</bundle>
                                 <controller>update-shipment-method</controller>
                                 <action>index</action>
