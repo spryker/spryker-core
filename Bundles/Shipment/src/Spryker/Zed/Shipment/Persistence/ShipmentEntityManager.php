@@ -131,7 +131,7 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
      *
      * @return void
      */
-    public function deleteShipmentMethodPriceByIdShipmentMethod(int $idShipmentMethod): void
+    public function deleteShipmentMethodPricesByIdShipmentMethod(int $idShipmentMethod): void
     {
         $this->getFactory()
             ->createShipmentMethodPriceQuery()

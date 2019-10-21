@@ -68,7 +68,7 @@ class ShipmentMethodDeleter implements ShipmentMethodDeleterInterface
     protected function executeDeleteShipmentMethodTransaction(int $idShipmentMethod): void
     {
         $this->shipmentEntityManager->deleteShipmentMethodStoreRelationsByIdShipmentMethod($idShipmentMethod);
-        $this->shipmentEntityManager->deleteShipmentMethodPriceByIdShipmentMethod($idShipmentMethod);
+        $this->shipmentEntityManager->deleteShipmentMethodPricesByIdShipmentMethod($idShipmentMethod);
         $this->shipmentEntityManager->deleteMethodByIdMethod($idShipmentMethod);
     }
 }

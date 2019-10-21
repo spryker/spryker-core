@@ -309,7 +309,7 @@ class ShipmentFacadeTest extends Test
     /**
      * @return void
      */
-    public function testDeleteShipmentMethodShouldRemoveShiopmentMethodWithAllRelatedData(): void
+    public function testDeleteShipmentMethodShouldRemoveShipmentMethodWithAllRelatedData(): void
     {
         //Arrange
         $priceList = $this->createDefaultPriceList();
