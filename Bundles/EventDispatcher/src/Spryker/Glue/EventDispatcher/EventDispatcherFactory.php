@@ -18,7 +18,7 @@ class EventDispatcherFactory extends AbstractFactory
      */
     public function getEventDispatcherPlugins(): array
     {
-        return $this->getProvidedDependency(EventDispatcherDependencyProvider::PLUGINS_EVENT_DISPATCHER_PLUGINS);
+        return $this->getProvidedDependency(EventDispatcherDependencyProvider::PLUGINS_EVENT_DISPATCHER);
     }
 
     /**
