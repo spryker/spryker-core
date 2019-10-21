@@ -6,6 +6,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/customer-note": "^1.0.0",
+    "spryker/gui": "^3.26.0",
     "spryker/kernel": "^3.30.0",
     "spryker/symfony": "^3.0.0"
   },
@@ -15,9 +16,6 @@
     "spryker/propel": "*",
     "spryker/testify": "*",
     "spryker/zed-navigation": "*"
-  },
-  "suggest": {
-    "spryker/gui": "If you want to use TwigPlugin"
   },
   "autoload": {
     "psr-4": {
