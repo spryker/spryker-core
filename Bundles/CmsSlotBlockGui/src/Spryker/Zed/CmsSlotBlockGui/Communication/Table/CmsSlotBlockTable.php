@@ -17,6 +17,8 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CmsSlotBlockTable extends AbstractTable
 {
+    public const TABLE_CLASS = 'js-cms-slot-block-table';
+
     protected const COL_ID_CMS_BLOCK = SpyCmsBlockTableMap::COL_ID_CMS_BLOCK;
     protected const COL_NAME = SpyCmsBlockTableMap::COL_NAME;
     protected const COL_VALID_FROM = SpyCmsBlockTableMap::COL_VALID_FROM;
@@ -91,6 +93,8 @@ class CmsSlotBlockTable extends AbstractTable
         $config->setOrdering(false);
 
         $this->setLimit(CmsSlotBlockGuiConfig::MAX_NUMBER_BLOCKS_ASSIGNED_TO_SLOT);
+
+        $this->tableClass = static::TABLE_CLASS;
 
         return $config;
     }
