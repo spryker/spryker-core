@@ -20,11 +20,11 @@ class ShipmentMethodStoreRelationReader implements ShipmentMethodStoreRelationRe
     protected $shipmentRepository;
 
     /**
-     * @param \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface $repository
+     * @param \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface $shipmentRepository
      */
-    public function __construct(ShipmentRepositoryInterface $repository)
+    public function __construct(ShipmentRepositoryInterface $shipmentRepository)
     {
-        $this->shipmentRepository = $repository;
+        $this->shipmentRepository = $shipmentRepository;
     }
 
     /**
