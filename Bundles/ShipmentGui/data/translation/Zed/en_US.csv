@@ -17,10 +17,9 @@ Actions,Actions
 "Add new Carrier Company","Add new Carrier Company"
 "Add new Shipment Method","Add new Shipment Method"
 "Shipment method is not found","Shipment method is not found"
-"View Delivery Method: %s", "View Delivery Method: %s"
+"View Delivery Method: %s","View Delivery Method: %s"
 "List Shipment Methods","List Shipment Methods"
 Configuration,Configuration
-"Delivery Method Key","Delivery Method Key"
 "Availability plugin","Availability plugin"
 "Price plugin","Price plugin"
 "Delivery Time plugin","Delivery Time plugin"
@@ -34,3 +33,8 @@ None,None
 "Delete Delivery Method: %s","Delete Delivery Method: %s"
 "No, I want to keep this delivery method","No, I want to keep this delivery method"
 "Yes, delete this delivery method","Yes, delete this delivery method"
+"Shipment method has been successfully saved","Shipment method has been successfully saved"
+"Create Delivery Method","Create Delivery Method"
+Save,Save
+Carrier,Carrier
+"Select one","Select one"
