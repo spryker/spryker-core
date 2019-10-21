@@ -200,6 +200,142 @@ class CartOperation implements CartOperationInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuantity(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
+    {
+        $persistentCartChangeTransfer->requireCustomer();
+
+        $persistentQuoteResponseTransfer = $this->quoteResolver->resolveCustomerQuote(
+            $persistentCartChangeTransfer->getIdQuote(),
+            $persistentCartChangeTransfer->getCustomer()
+        );
+
+        if (!$persistentQuoteResponseTransfer->getIsSuccessful()) {
+            return $persistentQuoteResponseTransfer;
+        }
+
+        $quoteTransfer = $this->mergeQuotes(
+            (new QuoteTransfer())->fromArray($persistentQuoteResponseTransfer->getQuoteTransfer()->toArray(), true),
+            $persistentCartChangeTransfer->getQuote()
+        );
+
+        $itemsToAdding = $this->prepareItemsForAdding($persistentCartChangeTransfer, $quoteTransfer);
+        $itemsToRemoval = $this->prepareItemsForRemoval($persistentCartChangeTransfer, $quoteTransfer);
+
+        if (!$itemsToAdding && !$itemsToRemoval) {
+            return $persistentQuoteResponseTransfer;
+        }
+
+        $quoteResponseTransfer = $this->executeUpdateQuantity($itemsToAdding, $itemsToRemoval, $quoteTransfer);
+
+        if (!$quoteResponseTransfer->getIsSuccessful() && $itemsToAdding && $itemsToRemoval) {
+            return $this->quoteFacade
+                ->updateQuote($persistentQuoteResponseTransfer->getQuoteTransfer())
+                ->setIsSuccessful(false);
+        }
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemsToAdding
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemsToRemoval
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function executeUpdateQuantity(
+        array $itemsToAdding,
+        array $itemsToRemoval,
+        QuoteTransfer $quoteTransfer
+    ): QuoteResponseTransfer {
+        $quoteResponseTransfer = (new QuoteResponseTransfer())
+            ->setIsSuccessful(true);
+
+        if ($itemsToAdding) {
+            $quoteResponseTransfer = $this->quoteItemOperation->addItems($itemsToAdding, $quoteTransfer);
+        }
+
+        if ($quoteResponseTransfer->getIsSuccessful() && $itemsToRemoval) {
+            return $this->quoteItemOperation->removeItems($itemsToRemoval, $quoteTransfer);
+        }
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function prepareItemsForAdding(PersistentCartChangeTransfer $persistentCartChangeTransfer, QuoteTransfer $quoteTransfer): array
+    {
+        $itemsToAdding = [];
+
+        foreach ($persistentCartChangeTransfer->getItems() as $changeItem) {
+            $quoteItem = $this->findItemInQuote($changeItem, $quoteTransfer);
+
+            if (!$quoteItem || $changeItem->getQuantity() <= 0) {
+                continue;
+            }
+
+            $delta = $changeItem->getQuantity() - $quoteItem->getQuantity();
+
+            if ($delta <= 0) {
+                continue;
+            }
+
+            $changeItemTransfer = clone $quoteItem;
+            $changeItemTransfer->setQuantity($delta);
+
+            $itemsToAdding[] = $changeItemTransfer;
+        }
+
+        return $itemsToAdding;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function prepareItemsForRemoval(PersistentCartChangeTransfer $persistentCartChangeTransfer, QuoteTransfer $quoteTransfer): array
+    {
+        $itemsToRemove = [];
+
+        foreach ($persistentCartChangeTransfer->getItems() as $changeItem) {
+            $quoteItem = $this->findItemInQuote($changeItem, $quoteTransfer);
+
+            if (!$quoteItem) {
+                continue;
+            }
+
+            if ($changeItem->getQuantity() === 0) {
+                $itemsToRemove[] = $quoteItem;
+                continue;
+            }
+
+            $delta = $changeItem->getQuantity() - $quoteItem->getQuantity();
+
+            if ($delta >= 0) {
+                continue;
+            }
+
+            $changeItemTransfer = clone $quoteItem;
+            $changeItemTransfer->setQuantity(abs($delta));
+
+            $itemsToRemove[] = $changeItemTransfer;
+        }
+
+        return $itemsToRemove;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer

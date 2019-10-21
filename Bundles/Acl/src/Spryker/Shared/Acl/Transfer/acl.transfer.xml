@@ -37,4 +37,9 @@
         <property name="rules" type="Rule[]" singular="rule"/>
     </transfer>
 
+    <transfer name="User">
+        <property name="idUser" type="int"/>
+        <property name="username" type="string"/>
+    </transfer>
+
 </transfers>

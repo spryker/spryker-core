@@ -47,6 +47,8 @@
 
     <transfer name="ProductConcrete">
         <property name="prices" type="PriceProduct[]" singular="price"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="fkProductAbstract" type="int"/>
     </transfer>
 
     <transfer name="StorageProduct">
@@ -89,6 +91,24 @@
         <property name="priceMode" type="string"/>
         <property name="quantity" type="int"/>
         <property name="sumPrice" type="int"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="QueryCriteria">
+        <property name="withColumns" type="array" singular="withColumn"/>
+        <property name="joins" type="QueryJoin[]" singular="join"/>
+    </transfer>
+
+    <transfer name="QueryJoin">
+        <property name="condition" type="string"/>
+        <property name="relation" type="string"/>
+        <property name="joinType" type="string"/>
+        <property name="right" type="array" singular="right"/>
+        <property name="left" type="array" singular="left"/>
     </transfer>
 
 </transfers>

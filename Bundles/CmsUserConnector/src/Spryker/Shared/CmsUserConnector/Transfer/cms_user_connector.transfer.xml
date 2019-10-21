@@ -10,4 +10,10 @@
         <property name="lastName" type="string"/>
     </transfer>
 
+    <transfer name="User">
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="idUser" type="int"/>
+    </transfer>
+
 </transfers>
