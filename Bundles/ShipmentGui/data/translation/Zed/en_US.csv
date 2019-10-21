@@ -38,3 +38,6 @@ None,None
 Save,Save
 Carrier,Carrier
 "Select one","Select one"
+"Shipment method has been successfully updated","Shipment method has been successfully updated"
+"Shipment method not found","Shipment method not found"
+"Edit Delivery Method","Edit Delivery Method"
