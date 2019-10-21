@@ -307,6 +307,24 @@ class ShipmentFacadeTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testDeleteShipmentMethodShouldRemoveShipmentMethodWithAllRelatedData(): void
+    {
+        //Arrange
+        $priceList = $this->createDefaultPriceList();
+        $shipmentMethod = $this->tester->haveShipmentMethod([], [], $priceList, [$this->store->getIdStore()]);
+
+        //Act
+        $result = $this->tester->getFacade()->deleteMethod($shipmentMethod->getIdShipmentMethod());
+        $hasMethod = $this->tester->getFacade()->hasMethod($shipmentMethod->getIdShipmentMethod());
+
+        //Assert
+        $this->assertTrue($result);
+        $this->assertFalse($hasMethod);
+    }
+
+    /**
      * @return array
      */
     public function multiCurrencyPricesDataProvider(): array

@@ -60,6 +60,14 @@
                                 <action>index</action>
                                 <visible>0</visible>
                             </shipment-method-view>
+                            <delete-shipment-method>
+                                <label>Delete Delivery Method</label>
+                                <title>Delete Delivery Method</title>
+                                <bundle>shipment-gui</bundle>
+                                <controller>delete-shipment-method</controller>
+                                <action>index</action>
+                                <visible>0</visible>
+                            </delete-shipment-method>
                         </pages>
                     </shipment-method>
                 </pages>

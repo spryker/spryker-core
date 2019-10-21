@@ -80,4 +80,11 @@ interface ShipmentGuiToShipmentFacadeInterface
      * @return int
      */
     public function createCarrier(ShipmentCarrierTransfer $carrierTransfer);
+
+    /**
+     * @param int $idMethod
+     *
+     * @return bool
+     */
+    public function deleteMethod($idMethod);
 }
