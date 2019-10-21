@@ -6,6 +6,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/config": "^3.0.0",
+    "spryker/event-dispatcher-extension": "^1.0.0",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/propel-orm": "^1.0.0",
@@ -16,6 +17,8 @@
   },
   "require-dev": {
     "spryker/application": "*",
+    "spryker/container": "*",
+    "spryker/event-dispatcher": "*",
     "spryker/installer": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
@@ -23,6 +26,8 @@
     "spryker/zed-navigation": "*"
   },
   "suggest": {
+    "spryker/container": "Add this module when you want to use the Container.",
+    "spryker/event-dispatcher": "Add this module when you want to use the EVentDispatcher.",
     "spryker/installer": "If you want to use Installer plugins.",
     "spryker/silex": "If you want to use ServiceProvider."
   },

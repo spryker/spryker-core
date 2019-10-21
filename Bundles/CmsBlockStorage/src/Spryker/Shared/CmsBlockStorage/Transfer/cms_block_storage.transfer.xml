@@ -16,7 +16,13 @@
     <transfer name="CmsBlockRequest">
         <property name="product" type="int"/>
         <property name="category" type="int"/>
-        <property name="position" type="int"/>
+        <property name="position" type="string"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="store" type="string"/>
+        <property name="locale" type="string"/>
+        <property name="reference" type="string"/>
     </transfer>
 
 </transfers>

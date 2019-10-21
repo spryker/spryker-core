@@ -44,7 +44,7 @@ class ProductCustomerPermissionCollectorDependencyProvider extends AbstractBundl
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container $container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addCollectorFacade(Container $container): Container
     {
@@ -58,7 +58,7 @@ class ProductCustomerPermissionCollectorDependencyProvider extends AbstractBundl
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container $container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addDataReaderService(Container $container): Container
     {
@@ -86,7 +86,7 @@ class ProductCustomerPermissionCollectorDependencyProvider extends AbstractBundl
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container $container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addTouchQueryContainer(Container $container): Container
     {

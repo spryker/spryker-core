@@ -79,6 +79,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      */
     protected function getProductConcretePageSearchEntitiesByAbstractProductsAndStores(array $productAbstractStoreMap)
     {
+        /** @var \Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery $productConcretePageSearchQuery */
         $productConcretePageSearchQuery = $this->getFactory()
             ->createProductConcretePageSearchQuery()
             ->addJoin(
@@ -117,23 +118,23 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
         foreach ($productAbstractStoreMap as $abstractId => $stores) {
             foreach ($stores as $store) {
                 $productConcretePageSearchQuery->condition(
-                    $conditionIndex,
+                    (string)$conditionIndex,
                     SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT . ' = ?',
                     $abstractId,
                     PDO::PARAM_INT
                 );
                 $conditionIndex++;
                 $productConcretePageSearchQuery->condition(
-                    $conditionIndex,
+                    (string)$conditionIndex,
                     SpyProductConcretePageSearchTableMap::COL_STORE . ' = ?',
                     $store,
                     PDO::PARAM_STR
                 );
                 $conditionIndex++;
                 $productConcretePageSearchQuery->combine(
-                    [$conditionIndex - 2, $conditionIndex - 1],
+                    [(string)($conditionIndex - 2), (string)($conditionIndex - 1)],
                     Criteria::LOGICAL_AND,
-                    $conditionIndex
+                    (string)$conditionIndex
                 );
                 $storesAndProductsConditions[] = $conditionIndex;
                 $conditionIndex++;

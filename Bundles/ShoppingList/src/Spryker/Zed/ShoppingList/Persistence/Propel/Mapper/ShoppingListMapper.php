@@ -95,7 +95,7 @@ class ShoppingListMapper implements ShoppingListMapperInterface
      * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
      */
     protected function mapShoppingListItemCollectionTransferToShoppingListTransfer(
         ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer,

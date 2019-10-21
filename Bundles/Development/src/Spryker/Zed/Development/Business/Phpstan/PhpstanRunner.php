@@ -114,11 +114,19 @@ class PhpstanRunner implements PhpstanRunnerInterface
                 $output->writeln(sprintf('Finished %s/%s.', $count, $total));
             }
         }
-        if ($this->errorCount) {
+        if ($this->getErrorCount()) {
             $output->writeln('<error>Total errors found: ' . $this->errorCount . '</error>');
         }
 
         return $resultCode;
+    }
+
+    /**
+     * @return int
+     */
+    protected function getErrorCount(): int
+    {
+        return $this->errorCount;
     }
 
     /**

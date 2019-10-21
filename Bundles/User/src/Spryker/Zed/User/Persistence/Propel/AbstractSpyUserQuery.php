@@ -20,4 +20,4 @@ use Orm\Zed\User\Persistence\Base\SpyUserQuery as BaseSpyUserQuery;
  */
 abstract class AbstractSpyUserQuery extends BaseSpyUserQuery
 {
-} // SpyUserQuery
+}

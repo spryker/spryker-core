@@ -113,10 +113,6 @@ class CmsBlockStoreRelationWriter implements CmsBlockStoreRelationWriterInterfac
      */
     protected function findStoreRelationIdStores(StoreRelationTransfer $storeRelationTransfer): array
     {
-        if ($storeRelationTransfer->getIdStores() === null) {
-            return [];
-        }
-
         return $storeRelationTransfer->getIdStores();
     }
 }

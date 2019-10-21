@@ -1,4 +1,4 @@
 parameters:
     ignoreErrors:
     - '#Method .+CmsBlockQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria.#'
-    - '#Call to an undefined method .+Criteria::.+\(\).#'
+    - '#Parameter \#1 \$glossaryKey of method .+KeyTranslationTransfer::setGlossaryKey\(\) expects int|null, string given.#'

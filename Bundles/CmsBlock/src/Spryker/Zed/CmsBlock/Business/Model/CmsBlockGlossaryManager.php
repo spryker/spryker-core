@@ -136,7 +136,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
     /**
      * @param int $idCmsBlock
      *
-     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock|null
      */
     protected function getCmsBlockEntity(int $idCmsBlock): SpyCmsBlock
     {

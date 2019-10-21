@@ -21,6 +21,8 @@
     <transfer name="Order">
         <property name="payments" type="Payment[]" singular="payment"/>
         <property name="currencyIsoCode" type="string"/>
+        <property name="idSalesOrder" type="int"/>
+        <property name="totals" type="Totals"/>
     </transfer>
 
     <transfer name="SalesPayment">
@@ -58,11 +60,22 @@
 
     <transfer name="Totals">
         <property name="priceToPay" type="int"/>
+        <property name="grandTotal" type="int"/>
     </transfer>
 
     <transfer name="CalculableObject">
         <property name="payments" type="Payment[]" singular="payment"/>
         <property name="payment" type="Payment"/>
+        <property name="totals" type="Totals"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+        <property name="saveOrder" type="SaveOrder"/>
+    </transfer>
+
+    <transfer name="SaveOrder">
+        <property name="idSalesOrder" type="int"/>
     </transfer>
 
 </transfers>
