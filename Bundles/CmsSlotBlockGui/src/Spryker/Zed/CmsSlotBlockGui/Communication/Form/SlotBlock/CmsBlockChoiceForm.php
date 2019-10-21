@@ -64,7 +64,6 @@ class CmsBlockChoiceForm extends AbstractType
      */
     protected function addCmsBlocksField(FormBuilderInterface $builder, array $options)
     {
-        dump($options[static::OPTION_CMS_BLOCK_IDS_ASSIGNED_TO_SLOT]);
         $builder->add(static::FIELD_CMS_BLOCKS, ChoiceType::class, [
             'placeholder' => static::PLACEHOLDER_CMS_BLOCKS,
             'choices' => $options[static::OPTION_CMS_BLOCKS],
