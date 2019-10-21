@@ -118,23 +118,23 @@ class ShipmentGuiToShipmentFacadeBridge implements ShipmentGuiToShipmentFacadeIn
     }
 
     /**
-     * @param string $name
+     * @param string $shipmentMethodName
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    public function findShipmentMethodByName(string $name): ?ShipmentMethodTransfer
+    public function findShipmentMethodByName(string $shipmentMethodName): ?ShipmentMethodTransfer
     {
-        return $this->shipmentFacade->findShipmentMethodByName($name);
+        return $this->shipmentFacade->findShipmentMethodByName($shipmentMethodName);
     }
 
     /**
-     * @param string $key
+     * @param string $shipmentMethodKey
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    public function findShipmentMethodByKey(string $key): ?ShipmentMethodTransfer
+    public function findShipmentMethodByKey(string $shipmentMethodKey): ?ShipmentMethodTransfer
     {
-        return $this->shipmentFacade->findShipmentMethodByKey($key);
+        return $this->shipmentFacade->findShipmentMethodByKey($shipmentMethodKey);
     }
 
     /**
@@ -155,5 +155,15 @@ class ShipmentGuiToShipmentFacadeBridge implements ShipmentGuiToShipmentFacadeIn
     public function updateMethod(ShipmentMethodTransfer $methodTransfer)
     {
         return $this->shipmentFacade->updateMethod($methodTransfer);
+    }
+
+    /**
+     * @param int $idMethod
+     *
+     * @return bool
+     */
+    public function deleteMethod($idMethod)
+    {
+        return $this->shipmentFacade->deleteMethod($idMethod);
     }
 }

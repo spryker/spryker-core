@@ -31,7 +31,7 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
     protected $carrierQuery;
 
     /**
-     * @param array $plugins
+     * @param string[] $plugins
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery $carrierQuery
      * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToTaxFacadeInterface $taxFacade
      */
@@ -96,7 +96,7 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
     /**
      * @param string $pluginsType
      *
-     * @return array
+     * @return string[]
      */
     private function getPluginOptions($pluginsType)
     {

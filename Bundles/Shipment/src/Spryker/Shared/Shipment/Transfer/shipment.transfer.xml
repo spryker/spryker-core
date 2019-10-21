@@ -77,6 +77,7 @@
     </transfer>
 
     <transfer name="Shipment">
+        <property name="idSalesShipment" type="int"/>
         <property name="carrier" type="ShipmentCarrier"/>
         <property name="method" type="ShipmentMethod"/>
         <property name="shipmentSelection" type="string"/>
@@ -221,6 +222,10 @@
 
     <transfer name="Store">
         <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="Mail">
+        <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup"/>
     </transfer>
 
 </transfers>

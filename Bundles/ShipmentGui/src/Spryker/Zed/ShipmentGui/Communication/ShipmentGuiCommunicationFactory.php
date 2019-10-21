@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentCarrierFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentGroupFormType;
+use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentMethodDeleteForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentCarrier\ShipmentCarrierFormType;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentMethod\Constraint\ShipmentMethodKeyUniqueConstraint;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentMethod\Constraint\ShipmentMethodNameUniqueConstraint;
@@ -126,6 +127,14 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createShipmentMethodDeleteForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(ShipmentMethodDeleteForm::class);
+    }
+
+    /**
      * @return \Symfony\Component\Form\DataTransformerInterface
      */
     public function createStringToNumberTransformer(): DataTransformerInterface
@@ -206,9 +215,9 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getPlugins(): array
     {
         return [
-            static::KEY_AVAILABILITY => $this->getProvidedDependency(ShipmentGuiDependencyProvider::AVAILABILITY_PLUGINS),
-            static::KEY_PRICE => $this->getProvidedDependency(ShipmentGuiDependencyProvider::PRICE_PLUGINS),
-            static::KEY_DELIVERY_TIME => $this->getProvidedDependency(ShipmentGuiDependencyProvider::DELIVERY_TIME_PLUGINS),
+            static::KEY_AVAILABILITY => $this->getProvidedDependency(ShipmentGuiDependencyProvider::PLUGINS_AVAILABILITY),
+            static::KEY_PRICE => $this->getProvidedDependency(ShipmentGuiDependencyProvider::PLUGINS_PRICE),
+            static::KEY_DELIVERY_TIME => $this->getProvidedDependency(ShipmentGuiDependencyProvider::PLUGINS_DELIVERY_TIME),
         ];
     }
 

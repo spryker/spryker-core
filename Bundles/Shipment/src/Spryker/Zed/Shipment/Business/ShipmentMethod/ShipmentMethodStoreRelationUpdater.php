@@ -43,7 +43,7 @@ class ShipmentMethodStoreRelationUpdater implements ShipmentMethodStoreRelationU
     {
         $storeRelationTransfer->requireIdEntity();
 
-        $currentIdStores = $this->getIdStoresByIdCmsPage($storeRelationTransfer->getIdEntity());
+        $currentIdStores = $this->getIdStoresByIdShipmentMethod($storeRelationTransfer->getIdEntity());
         $requestedIdStores = $storeRelationTransfer->getIdStores() ?? [];
 
         $saveIdStores = array_diff($requestedIdStores, $currentIdStores);
@@ -58,7 +58,7 @@ class ShipmentMethodStoreRelationUpdater implements ShipmentMethodStoreRelationU
      *
      * @return int[]
      */
-    protected function getIdStoresByIdCmsPage(int $idShipmentMethod): array
+    protected function getIdStoresByIdShipmentMethod(int $idShipmentMethod): array
     {
         $storeRelation = $this->storeRelationReader->getStoreRelation(
             (new StoreRelationTransfer())->setIdEntity($idShipmentMethod)

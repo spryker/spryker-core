@@ -1,0 +1,33 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Delete Delivery Method: %s' | format(shipmentMethod.name) | trans %}
+
+{% block head_title %}
+    {{ widget_title }}
+{% endblock %}
+{% block section_title %}
+    {{ widget_title }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+
+            <ul class="list-inline m-b-none">
+                <li>
+                    <a href="{{ app.request.headers.get('referer') }}" class="btn btn-primary">{{ 'No, I want to keep this delivery method' | trans}}</a>
+                </li>
+                <li>
+                    {{ form_start(deleteShipmentMethodForm) }}
+                        {{ form_widget(deleteShipmentMethodForm.submit) }}
+                    {{ form_end(deleteShipmentMethodForm) }}
+                </li>
+            </ul>
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

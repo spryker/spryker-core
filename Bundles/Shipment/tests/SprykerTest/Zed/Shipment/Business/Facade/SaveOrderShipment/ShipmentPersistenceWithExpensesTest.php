@@ -37,6 +37,8 @@ use Spryker\Shared\Shipment\ShipmentConfig;
  */
 class ShipmentPersistenceWithExpensesTest extends Test
 {
+    protected const DEFAULT_UNIT_PRICE = 500;
+
     /**
      * @var \SprykerTest\Zed\Shipment\ShipmentBusinessTester
      */
@@ -144,7 +146,7 @@ class ShipmentPersistenceWithExpensesTest extends Test
         $quoteTransfer = (new QuoteBuilder())
             ->withShipment($shipmentBuilder)
             ->withItem([
-                ItemTransfer::UNIT_PRICE => 500,
+                ItemTransfer::UNIT_PRICE => static::DEFAULT_UNIT_PRICE,
             ])
             ->withExpense($expenseBuilder)
             ->withShippingAddress($addressBuilder)
@@ -174,7 +176,7 @@ class ShipmentPersistenceWithExpensesTest extends Test
         $expenseTransfer->setShipment($shipmentTransfer);
 
         $itemTransfer = (new ItemBuilder())->seed([
-            ItemTransfer::UNIT_PRICE => 500,
+            ItemTransfer::UNIT_PRICE => static::DEFAULT_UNIT_PRICE,
         ])->build();
         $itemTransfer->setShipment($shipmentTransfer);
 
@@ -219,17 +221,17 @@ class ShipmentPersistenceWithExpensesTest extends Test
         $expenseTransfer2->setShipment($shipmentTransfer2);
 
         $itemTransfer1 = (new ItemBuilder())->seed([
-            ItemTransfer::UNIT_PRICE => 500,
+            ItemTransfer::UNIT_PRICE => static::DEFAULT_UNIT_PRICE,
         ])->build();
         $itemTransfer1->setShipment($shipmentTransfer1);
 
         $itemTransfer2 = (new ItemBuilder())->seed([
-            ItemTransfer::UNIT_PRICE => 500,
+            ItemTransfer::UNIT_PRICE => static::DEFAULT_UNIT_PRICE,
         ])->build();
         $itemTransfer2->setShipment($shipmentTransfer1);
 
         $itemTransfer3 = (new ItemBuilder())->seed([
-            ItemTransfer::UNIT_PRICE => 500,
+            ItemTransfer::UNIT_PRICE => static::DEFAULT_UNIT_PRICE,
         ])->build();
         $itemTransfer3->setShipment($shipmentTransfer2);
 

@@ -56,7 +56,7 @@ class ShipmentMethodCreator implements ShipmentMethodCreatorInterface
      */
     public function createShipmentMethod(ShipmentMethodTransfer $shipmentMethodTransfer): ?int
     {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($shipmentMethodTransfer) {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($shipmentMethodTransfer): ?int {
             return $this->executeCreateShipmentMethodTransaction($shipmentMethodTransfer);
         });
     }

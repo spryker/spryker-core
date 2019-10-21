@@ -17,14 +17,14 @@ class ShipmentMethodStoreRelationReader implements ShipmentMethodStoreRelationRe
     /**
      * @var \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface
      */
-    protected $repository;
+    protected $shipmentRepository;
 
     /**
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface $repository
      */
     public function __construct(ShipmentRepositoryInterface $repository)
     {
-        $this->repository = $repository;
+        $this->shipmentRepository = $repository;
     }
 
     /**
@@ -36,15 +36,13 @@ class ShipmentMethodStoreRelationReader implements ShipmentMethodStoreRelationRe
     {
         $storeRelationTransfer->requireIdEntity();
 
-        $relatedStores = $this->repository->getReladedStoresByIdShipmentMethod(
+        $relatedStores = $this->shipmentRepository->getRelatedStoresByIdShipmentMethod(
             $storeRelationTransfer->getIdEntity()
         );
 
-        $idStores = $this->getIdStores($relatedStores);
-
         $storeRelationTransfer
             ->setStores($relatedStores)
-            ->setIdStores($idStores);
+            ->setIdStores($this->getIdStores($relatedStores));
 
         return $storeRelationTransfer;
     }

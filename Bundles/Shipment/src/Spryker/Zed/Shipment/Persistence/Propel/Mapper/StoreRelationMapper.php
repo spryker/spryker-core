@@ -44,11 +44,4 @@ class StoreRelationMapper implements StoreRelationMapperInterface
     ): StoreTransfer {
         return $storeTransfer->fromArray($storeEntity->toArray(), true);
     }
-
-    /**
-     * @return void
-     */
-    public function mapStoreEntitiesToStoreTransfers()
-    {
-    }
 }
