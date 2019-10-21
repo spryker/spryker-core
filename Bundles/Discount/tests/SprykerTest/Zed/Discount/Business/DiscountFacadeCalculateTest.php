@@ -128,7 +128,8 @@ class DiscountFacadeCalculateTest extends Unit
 
         $this->assertCount(1, $cartRuleDiscounts);
 
-        $discountTransfer = current($cartRuleDiscounts);
+        /** @var \Generated\Shared\Transfer\DiscountTransfer $discountTransfer */
+        $discountTransfer = $cartRuleDiscounts->getIterator()->current();
         $this->assertEquals($discountEntity->getAmount(), $discountTransfer->getAmount());
     }
 

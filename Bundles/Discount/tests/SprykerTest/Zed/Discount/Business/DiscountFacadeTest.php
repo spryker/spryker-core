@@ -407,9 +407,9 @@ class DiscountFacadeTest extends Unit
         $result = $this->createDiscountFacade()->validateVoucherDiscountsMaxUsage($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
-        /** @var \Generated\Shared\Transfer\CheckoutErrorTransfer[] $checkoutErrorTransferCollection */
-        $checkoutErrorTransferCollection = $checkoutResponseTransfer->getErrors();
-        $checkoutErrorTransfer = reset($checkoutErrorTransferCollection);
+
+        /** @var \Generated\Shared\Transfer\CheckoutErrorTransfer $checkoutErrorTransfer */
+        $checkoutErrorTransfer = $checkoutResponseTransfer->getErrors()->getIterator()->current();
 
         $this->assertCount(1, $checkoutResponseTransfer->getErrors());
         $this->assertEquals(399, $checkoutErrorTransfer->getErrorCode());
