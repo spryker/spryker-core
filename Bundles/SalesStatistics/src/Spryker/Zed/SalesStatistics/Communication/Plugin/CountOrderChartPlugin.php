@@ -14,6 +14,8 @@ use Spryker\Shared\Dashboard\Dependency\Plugin\DashboardPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Use `Spryker\Zed\SalesStatistics\Communication\Plugin\Chart\CountOrderChartPlugin` instead.
+ *
  * @method \Spryker\Zed\SalesStatistics\Communication\SalesStatisticsCommunicationFactory getFactory()
  * @method \Spryker\Zed\SalesStatistics\Business\SalesStatisticsFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesStatistics\SalesStatisticsConfig getConfig()

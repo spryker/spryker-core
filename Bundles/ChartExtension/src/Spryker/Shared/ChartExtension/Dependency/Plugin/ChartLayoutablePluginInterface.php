@@ -5,13 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Chart\Dependency\Plugin;
+namespace Spryker\Shared\ChartExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ChartLayoutTransfer;
 
-/**
- * @deprecated Use `Spryker\Shared\ChartExtension\Dependency\Plugin\ChartLayoutablePluginInterface` instead.
- */
 interface ChartLayoutablePluginInterface extends ChartPluginInterface
 {
     /**

@@ -19,6 +19,8 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class ChartCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
+     * @deprecated Use `getChartTwigFunctionPlugins()` instead.
+     *
      * @return \Spryker\Shared\Chart\Dependency\Plugin\TwigChartFunctionPluginInterface[]
      */
     public function getTwigChartFunctionPlugins(): array
@@ -42,5 +44,13 @@ class ChartCommunicationFactory extends AbstractCommunicationFactory
     public function getChartPlugins(): array
     {
         return $this->getProvidedDependency(ChartDependencyProvider::PLUGIN_CHARTS);
+    }
+
+    /**
+     * @return \Spryker\Shared\ChartExtension\Dependency\Plugin\ChartTwigFunctionPluginInterface[]
+     */
+    public function getChartTwigFunctionPlugins(): array
+    {
+        return $this->getProvidedDependency(ChartDependencyProvider::PLUGIN_CHART_TWIG_FUNCTIONS);
     }
 }

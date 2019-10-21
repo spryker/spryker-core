@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Chart\Dependency\Plugin;
+namespace Spryker\Shared\ChartExtension\Dependency\Plugin;
 
-/**
- * @deprecated Use `Spryker\Shared\ChartExtension\Dependency\Plugin\TwigChartFunctionPluginInterface` instead.
- */
-interface TwigChartFunctionPluginInterface
+interface ChartTwigFunctionPluginInterface
 {
     /**
+     * Specification:
+     * - Defines the list of chart functions.
+     *
      * @api
      *
      * @return \Twig\TwigFunction[]
      */
-    public function getChartFunctions(): array;
+    public function getChartTwigFunctions(): array;
 }

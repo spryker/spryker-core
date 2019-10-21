@@ -5,29 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesStatistics\Communication\Plugin;
+namespace Spryker\Zed\SalesStatistics\Communication\Plugin\Chart;
 
 use Generated\Shared\Transfer\ChartDataTransfer;
 use Spryker\Shared\Chart\ChartConfig;
-use Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface;
+use Spryker\Shared\ChartExtension\Dependency\Plugin\ChartPluginInterface;
 use Spryker\Shared\Dashboard\Dependency\Plugin\DashboardPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use `Spryker\Zed\SalesStatistics\Communication\Plugin\Chart\TopOrdersChartPlugin` instead.
- *
  * @method \Spryker\Zed\SalesStatistics\Communication\SalesStatisticsCommunicationFactory getFactory()
  * @method \Spryker\Zed\SalesStatistics\Business\SalesStatisticsFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesStatistics\SalesStatisticsConfig getConfig()
  */
-class TopOrdersChartPlugin extends AbstractPlugin implements ChartPluginInterface, DashboardPluginInterface
+class CountOrderChartPlugin extends AbstractPlugin implements ChartPluginInterface, DashboardPluginInterface
 {
-    public const COUNT_PRODUCT = 10;
-    public const NAME = 'top-orders';
-    public const TITLE = 'Top Orders';
-    public const OPTIONS = [
-        'orientation' => 'h',
-    ];
+    public const NAME = 'count-orders';
+    public const TITLE = 'Count orders';
+    public const DAYS = 7;
 
     /**
      * @api
@@ -49,11 +44,9 @@ class TopOrdersChartPlugin extends AbstractPlugin implements ChartPluginInterfac
     public function getChartData($dataIdentifier = null): ChartDataTransfer
     {
         $data = new ChartDataTransfer();
-        $data->addTrace(
-            $this->getFacade()->getTopOrderStatistic(static::COUNT_PRODUCT)
-                ->addOption(static::OPTIONS)
-                ->setType(ChartConfig::CHART_TYPE_BAR)
-        );
+        $chartDataTraceTransfer = $this->getFacade()->getOrderStatisticByCountDay(static::DAYS);
+        $chartDataTraceTransfer->setType(ChartConfig::CHART_TYPE_BAR);
+        $data->addTrace($chartDataTraceTransfer);
         $data->setKey($dataIdentifier);
         $data->setTitle(static::TITLE);
 

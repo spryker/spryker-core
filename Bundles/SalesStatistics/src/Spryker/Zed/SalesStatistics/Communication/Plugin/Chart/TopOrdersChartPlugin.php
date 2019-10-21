@@ -5,17 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesStatistics\Communication\Plugin;
+namespace Spryker\Zed\SalesStatistics\Communication\Plugin\Chart;
 
 use Generated\Shared\Transfer\ChartDataTransfer;
 use Spryker\Shared\Chart\ChartConfig;
-use Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface;
+use Spryker\Shared\ChartExtension\Dependency\Plugin\ChartPluginInterface;
 use Spryker\Shared\Dashboard\Dependency\Plugin\DashboardPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use `Spryker\Zed\SalesStatistics\Communication\Plugin\Chart\TopOrdersChartPlugin` instead.
- *
  * @method \Spryker\Zed\SalesStatistics\Communication\SalesStatisticsCommunicationFactory getFactory()
  * @method \Spryker\Zed\SalesStatistics\Business\SalesStatisticsFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesStatistics\SalesStatisticsConfig getConfig()
