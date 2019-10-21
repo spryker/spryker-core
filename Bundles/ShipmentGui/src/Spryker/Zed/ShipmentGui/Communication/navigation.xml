@@ -68,6 +68,14 @@
                                 <action>index</action>
                                 <visible>0</visible>
                             </shipment-method-create>
+                            <shipment-method-update>
+                                <label>Edit</label>
+                                <title>Edit</title>
+                                <bundle>shipment-gui</bundle>
+                                <controller>update-shipment-method</controller>
+                                <action>index</action>
+                                <visible>0</visible>
+                            </shipment-method-update>
                         </pages>
                     </shipment-method>
                 </pages>

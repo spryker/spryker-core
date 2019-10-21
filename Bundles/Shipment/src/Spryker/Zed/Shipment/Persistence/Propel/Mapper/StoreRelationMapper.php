@@ -25,7 +25,7 @@ class StoreRelationMapper implements StoreRelationMapperInterface
         StoreRelationTransfer $storeRelationTransfer
     ): StoreRelationTransfer {
         foreach ($shipmentMethodStoreEntities as $shipmentMethodStoreEntity) {
-            $storeRelationTransfer->addStore($this->mapStoreEntityToStoreTransfer($shipmentMethodStoreEntity->getStore(), new StoreTransfer()));
+            $storeRelationTransfer->addStores($this->mapStoreEntityToStoreTransfer($shipmentMethodStoreEntity->getStore(), new StoreTransfer()));
             $storeRelationTransfer->addIdStores($shipmentMethodStoreEntity->getFkStore());
         }
 

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ShipmentGui\Communication\Provider;
 
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
 use Spryker\Zed\ShipmentGui\Communication\ShipmentGuiCommunicationFactory;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToTaxFacadeInterface;
@@ -53,7 +52,7 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
      */
     public function getData(ShipmentMethodTransfer $shipmentMethodTransfer): ShipmentMethodTransfer
     {
-        return $shipmentMethodTransfer->setStoreRelation(new StoreRelationTransfer());
+        return $shipmentMethodTransfer;
     }
 
     /**

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 
-use SprykerSdk\Zed\SprykGui\Communication\Controller\AbstractController;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,6 +53,7 @@ class UpdateShipmentMethodController extends AbstractController
                 $dataProvider->getData($shipmentMethodTransfer),
                 $dataProvider->getOptions()
             );
+        $shipmentMethodForm->handleRequest($request);
 
         if ($shipmentMethodForm->isSubmitted() && $shipmentMethodForm->isValid()) {
             return $this->handleShipmentMethodForm($shipmentMethodForm);

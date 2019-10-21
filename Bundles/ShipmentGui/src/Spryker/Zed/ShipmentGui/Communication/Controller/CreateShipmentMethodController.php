@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -33,8 +34,10 @@ class CreateShipmentMethodController extends AbstractController
     {
         $shipmentMethodTabs = $this->getFactory()->createShipmentMethodTabs();
         $dataProvider = $this->getFactory()->createShipmentMethodFormDataProvider();
+        $shipmentMethodTransfer = (new ShipmentMethodTransfer())
+            ->setStoreRelation(new StoreRelationTransfer());
         $shipmentMethodForm = $this->getFactory()->createShipmentMethodForm(
-            $dataProvider->getData(new ShipmentMethodTransfer()),
+            $dataProvider->getData($shipmentMethodTransfer),
             $dataProvider->getOptions()
         );
         $shipmentMethodForm->handleRequest($request);

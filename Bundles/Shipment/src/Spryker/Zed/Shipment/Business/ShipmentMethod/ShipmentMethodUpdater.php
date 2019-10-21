@@ -85,6 +85,9 @@ class ShipmentMethodUpdater implements ShipmentMethodUpdaterInterface
         }
 
         $shipmentMethodTransfer = $this->shipmentEntityManager->updateShipmentMethod($shipmentMethodTransfer);
+        $shipmentMethodTransfer->requireStoreRelation()
+            ->getStoreRelation()
+                ->setIdEntity($idShipmentMethod);
         $this->methodPrice->save($shipmentMethodTransfer);
         $this->storeRelationUpdater->update($shipmentMethodTransfer->getStoreRelation());
 
