@@ -15,7 +15,7 @@ interface ProcessorInterface
     /**
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer
+     * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
     public function preProcess(ApiRequestTransfer $apiRequestTransfer);
 

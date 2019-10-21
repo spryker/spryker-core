@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
+ * @deprecated Use `\Spryker\Zed\ZedRequest\Communication\Plugin\EventDispatcher\GatewayControllerEventDispatcherPlugin` instead.
+ *
  * @method \Spryker\Zed\ZedRequest\Communication\ZedRequestCommunicationFactory getFactory()
  * @method \Spryker\Zed\ZedRequest\Business\ZedRequestFacadeInterface getFacade()
  * @method \Spryker\Zed\ZedRequest\ZedRequestConfig getConfig()

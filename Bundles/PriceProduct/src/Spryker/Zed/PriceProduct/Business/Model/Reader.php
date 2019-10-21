@@ -633,7 +633,7 @@ class Reader implements ReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePricesBySku
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[][] $concretePricesBySku
      *
      * @return string[]
      */
