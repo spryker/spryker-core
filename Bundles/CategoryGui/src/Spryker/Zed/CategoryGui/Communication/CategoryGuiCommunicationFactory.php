@@ -8,8 +8,11 @@
 namespace Spryker\Zed\CategoryGui\Communication;
 
 use Spryker\Zed\CategoryGui\CategoryGuiDependencyProvider;
+use Spryker\Zed\CategoryGui\Communication\DataProvider\CategorySlotBlockDataProvider;
+use Spryker\Zed\CategoryGui\Communication\Form\CategorySlotBlockConditionForm;
 use Spryker\Zed\CategoryGui\Communication\Table\CategoryTable;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface;
+use Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
@@ -23,10 +26,34 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\CategoryGui\Communication\Form\CategorySlotBlockConditionForm
+     */
+    public function createCategorySlotBlockConditionForm(): CategorySlotBlockConditionForm
+    {
+        return new CategorySlotBlockConditionForm();
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryGui\Communication\DataProvider\CategorySlotBlockDataProvider
+     */
+    public function createCategorySlotBlockDataProvider(): CategorySlotBlockDataProvider
+    {
+        return new CategorySlotBlockDataProvider($this->getCategoryQueryContainer(), $this->getLocaleFacade());
+    }
+
+    /**
      * @return \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface
      */
-    protected function getLocaleFacade(): CategoryGuiToLocaleFacadeInterface
+    public function getLocaleFacade(): CategoryGuiToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(CategoryGuiDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface
+     */
+    public function getCategoryQueryContainer(): CategoryGuiToCategoryQueryContainerInterface
+    {
+        return $this->getProvidedDependency(CategoryGuiDependencyProvider::QUERY_CONTAINER_CATEGORY);
     }
 }
