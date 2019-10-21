@@ -127,17 +127,8 @@ class CmsBlockWriter implements CmsBlockWriterInterface
 
         $spyCmsBlock = $this->getCmsBlockById($cmsBlockTransfer->getIdCmsBlock());
 
-        if ($spyCmsBlock->getFkTemplate() != $cmsBlockTransfer->getFkTemplate()) {
+        if ($spyCmsBlock->getFkTemplate() !== $cmsBlockTransfer->getFkTemplate()) {
             $this->checkTemplateFileExists($cmsBlockTransfer->getFkTemplate());
-        }
-
-        if ($spyCmsBlock === null) {
-            throw new CmsBlockNotFoundException(
-                sprintf(
-                    'CMS Block with id "%d" was not found',
-                    $cmsBlockTransfer->getIdCmsBlock()
-                )
-            );
         }
 
         if (!$cmsBlockTransfer->getKey()) {
