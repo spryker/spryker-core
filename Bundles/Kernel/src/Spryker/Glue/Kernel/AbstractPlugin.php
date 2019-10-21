@@ -111,7 +111,7 @@ abstract class AbstractPlugin implements ModuleNameAwareInterface
     /**
      * @return \Spryker\Client\Kernel\AbstractClient
      */
-    private function resolveClient()
+    private function resolveClient(): AbstractClient
     {
         return $this->getClientResolver()->resolve($this);
     }

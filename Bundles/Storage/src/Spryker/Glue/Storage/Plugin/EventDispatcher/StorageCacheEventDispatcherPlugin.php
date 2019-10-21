@@ -45,8 +45,7 @@ class StorageCacheEventDispatcherPlugin extends AbstractPlugin implements EventD
         });
 
         if (!$container->has(StorageConstants::STORAGE_CACHE_STRATEGY)) {
-            $container->set(StorageConstants::STORAGE_CACHE_STRATEGY, self::STORAGE_CACHE_STRATEGY);
-            $container->configure(StorageConstants::STORAGE_CACHE_STRATEGY, ['isGlobal' => true]);
+            $container->set(StorageConstants::STORAGE_CACHE_STRATEGY, static::STORAGE_CACHE_STRATEGY);
         }
 
         return $eventDispatcher;
