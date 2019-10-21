@@ -40,7 +40,7 @@ class ShipmentMethodForm extends ViewShipmentMethodForm
         parent::buildForm($builder, $options);
 
         $this->addCarrierField($builder, $options)
-            ->addKeyField($builder)
+            ->addKeyField($builder, $options)
             ->addNameField($builder)
             ->addAvailabilityPluginField($builder, $options)
             ->addPricePluginField($builder, $options)
@@ -62,6 +62,7 @@ class ShipmentMethodForm extends ViewShipmentMethodForm
             ShipmentMethodFormDataProvider::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST,
             ShipmentMethodFormDataProvider::OPTION_PRICE_PLUGIN_CHOICE_LIST,
             ShipmentMethodFormDataProvider::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST,
+            ShipmentMethodFormDataProvider::OPTION_DELIVERY_KEY_DISABLED,
         ]);
     }
 
@@ -88,13 +89,15 @@ class ShipmentMethodForm extends ViewShipmentMethodForm
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addKeyField(FormBuilderInterface $builder)
+    protected function addKeyField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_KEY, TextType::class, [
             'label' => 'Delivery Method Key',
+            'disabled' => $options[ShipmentMethodFormDataProvider::OPTION_DELIVERY_KEY_DISABLED],
             'constraints' => [
                 new NotBlank(),
                 new Required(),

@@ -51,7 +51,7 @@ class UpdateShipmentMethodController extends AbstractController
         $shipmentMethodForm = $this->getFactory()
             ->createShipmentMethodForm(
                 $dataProvider->getData($shipmentMethodTransfer),
-                $dataProvider->getOptions()
+                $dataProvider->getOptions(true)
             );
         $shipmentMethodForm->handleRequest($request);
 

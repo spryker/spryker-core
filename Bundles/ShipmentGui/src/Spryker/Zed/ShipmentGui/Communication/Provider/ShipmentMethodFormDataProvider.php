@@ -19,6 +19,7 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
     public const OPTION_PRICE_PLUGIN_CHOICE_LIST = 'price_plugin_choice_list';
     public const OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST = 'delivery_time_plugin_choice_list';
     public const OPTION_MONEY_FACADE = 'money facade';
+    public const OPTION_DELIVERY_KEY_DISABLED = 'option_delivery_key_disabled';
 
     /**
      * @var array
@@ -56,9 +57,11 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
     }
 
     /**
+     * @param bool $isDeliveryKeyDisabled
+     *
      * @return array
      */
-    public function getOptions(): array
+    public function getOptions(bool $isDeliveryKeyDisabled = false): array
     {
         $options = [
             static::OPTION_CARRIER_CHOICES => $this->getCarrierOptions(),
@@ -71,6 +74,7 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
         $options[static::OPTION_PRICES_DISABLED] = false;
         $options[static::OPTION_STORE_RELATION_DISABLED] = false;
         $options[static::OPTION_TAX_SET_DISABLED] = false;
+        $options[static::OPTION_DELIVERY_KEY_DISABLED] = $isDeliveryKeyDisabled;
 
         return $options;
     }
