@@ -12,10 +12,8 @@ use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Business\Model\AvailabilityHandlerInterface;
-use Spryker\Zed\Availability\Business\Model\ProductAvailabilityCalculatorInterface;
 use Spryker\Zed\Availability\Business\Model\Sellable;
 use Spryker\Zed\Availability\Business\Model\SellableInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
 
@@ -35,14 +33,17 @@ class SellableTest extends Unit
     public const SKU_PRODUCT = 'sku-123-321';
 
     /**
+     * @dataProvider provideIsProductSellableStores
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
      * @return void
      */
-    public function testIsProductIsSellableWhenNeverOutOfStockShouldReturnIsSellable()
+    public function testIsProductIsSellableWhenNeverOutOfStockShouldReturnIsSellable(StoreTransfer $storeTransfer): void
     {
-        $storeTransfer = $this->createStoreTransfer();
         $availabilityRepositoryMock = $this->createAvailabilityRepositoryMock();
         $availabilityRepositoryMock->method('findProductConcreteAvailabilityBySkuAndStore')
-            ->with(static::SKU_PRODUCT, $storeTransfer)
+            ->with(static::SKU_PRODUCT, $this->createStoreTransfer())
             ->willReturn(
                 (new ProductConcreteAvailabilityTransfer())
                     ->setIsNeverOutOfStock(true)
@@ -55,14 +56,24 @@ class SellableTest extends Unit
     }
 
     /**
+     * @return array
+     */
+    public function provideIsProductSellableStores(): array
+    {
+        return [
+            'store with ID' => [$this->createStoreTransfer()],
+            'store without ID' => [(new StoreTransfer())->setName('DE')],
+        ];
+    }
+
+    /**
      * @dataProvider provideReservedItemsAndExistingStock
      *
-     * @param \Spryker\DecimalObject\Decimal $reservedItems
-     * @param \Spryker\DecimalObject\Decimal $existingStock
+     * @param \Spryker\DecimalObject\Decimal $existingAvailability
      *
      * @return void
      */
-    public function testIsProductSellableWhenProductHaveInStockShouldReturnIsSellable(Decimal $reservedItems, Decimal $existingStock): void
+    public function testIsProductSellableWhenProductHaveInStockShouldReturnIsSellable(Decimal $existingAvailability): void
     {
         $storeTransfer = $this->createStoreTransfer();
         $availabilityRepositoryMock = $this->createAvailabilityRepositoryMock();
@@ -70,7 +81,7 @@ class SellableTest extends Unit
             ->with(static::SKU_PRODUCT, $storeTransfer)
             ->willReturn(
                 (new ProductConcreteAvailabilityTransfer())
-                    ->setAvailability($existingStock)
+                    ->setAvailability($existingAvailability)
                     ->setIsNeverOutOfStock(false)
             );
 
@@ -86,27 +97,22 @@ class SellableTest extends Unit
     public function provideReservedItemsAndExistingStock(): array
     {
         return [
-            'int stock' => [new Decimal(5), new Decimal(10)],
-            'float stock' => [new Decimal(5.5), new Decimal(9.8)],
-            'float stock high precision' => [new Decimal(1.4444444444444), new Decimal(2.5)],
-            'mixed type stock' => [new Decimal(5), new Decimal(9.8)],
+            'int stock' => [new Decimal(10)],
+            'float stock' => [new Decimal(9.8)],
+            'float stock high precision' => [new Decimal(1.4444444444444)],
         ];
     }
 
     /**
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface|null $availabilityRepositoryMock
-     * @param \Spryker\Zed\Availability\Business\Model\ProductAvailabilityCalculatorInterface|null $availabilityCalculatorMock
      * @param \Spryker\Zed\Availability\Business\Model\AvailabilityHandlerInterface|null $availabilityHandlerMock
-     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductInterface|null $proudctFacadeMock
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface|null $storeFacade
      *
      * @return \Spryker\Zed\Availability\Business\Model\SellableInterface
      */
     protected function createSellable(
         ?AvailabilityRepositoryInterface $availabilityRepositoryMock = null,
-        ?ProductAvailabilityCalculatorInterface $availabilityCalculatorMock = null,
         ?AvailabilityHandlerInterface $availabilityHandlerMock = null,
-        ?AvailabilityToProductInterface $proudctFacadeMock = null,
         ?AvailabilityToStoreFacadeInterface $storeFacade = null
     ): SellableInterface {
         if ($availabilityRepositoryMock === null) {
@@ -121,6 +127,9 @@ class SellableTest extends Unit
             $storeFacade = $this->createStoreFacade();
             $storeFacade->method('getCurrentStore')
                 ->willReturn($this->createStoreTransfer());
+
+            $storeFacade->method('getStoreByName')
+                ->willReturn($this->createStoreTransfer());
         }
 
         return new Sellable($availabilityRepositoryMock, $availabilityHandlerMock, $storeFacade);
@@ -129,7 +138,7 @@ class SellableTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    protected function createStoreTransfer()
+    protected function createStoreTransfer(): StoreTransfer
     {
         return (new StoreTransfer())->setName('DE')->setIdStore(1);
     }
