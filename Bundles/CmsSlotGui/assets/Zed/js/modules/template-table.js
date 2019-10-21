@@ -11,7 +11,7 @@
 var TemplateTable = function (options) {
     var _self = this;
     this.templateTableId = '';
-    this.slotTemplateClass = '';
+    this.slotTemplateNameClass = '';
     this.templateTable = {};
     this.slotTable = {};
 
@@ -49,7 +49,7 @@ var TemplateTable = function (options) {
     };
 
     this.setSlotTemplateName = function (templateName) {
-        $(_self.slotTemplateClass).html(`\`${templateName}\``);
+        $(_self.slotTemplateNameClass).text(`"${templateName}"`);
     };
 };
 

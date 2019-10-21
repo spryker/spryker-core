@@ -33,13 +33,13 @@ class SlotBlockController extends AbstractController
         $cmsBlockChoiceForm = $this->getFactory()
             ->createCmsBlockChoiceForm($cmsBlockChoiceFormDataProvider, $idCmsSlotTemplate, $idCmsSlot);
 
-        $slotBlockCollectionDataProvider = $this->getFactory()->createSlotBlockCollectionDataProvider();
-        $slotBlockCollectionForm = $this->getFactory()
-            ->createSlotBlockCollectionForm($slotBlockCollectionDataProvider, $idCmsSlotTemplate, $idCmsSlot)
+        $slotBlockCollectionDataProvider = $this->getFactory()->createCmsSlotBlockCollectionFormDataProvider();
+        $cmsSlotBlockCollectionForm = $this->getFactory()
+            ->createCmsSlotBlockCollectionForm($slotBlockCollectionDataProvider, $idCmsSlotTemplate, $idCmsSlot)
             ->handleRequest($request);
 
-        if ($slotBlockCollectionForm->isSubmitted() && $slotBlockCollectionForm->isValid()) {
-            $cmsSlotBlockCollectionTransfer = $slotBlockCollectionForm->getData();
+        if ($cmsSlotBlockCollectionForm->isSubmitted() && $cmsSlotBlockCollectionForm->isValid()) {
+            $cmsSlotBlockCollectionTransfer = $cmsSlotBlockCollectionForm->getData();
 
             $this->getFactory()
                 ->getCmsSlotBlockFacade()
@@ -50,7 +50,7 @@ class SlotBlockController extends AbstractController
             'slotName' => $this->getFactory()->getCmsSlotFacade()->findCmsSlotById($idCmsSlot)->getName(),
             'slotBlockTable' => $this->getFactory()->createSlotBlockTable($idCmsSlotTemplate, $idCmsSlot)->render(),
             'cmsBlockChoiceForm' => $cmsBlockChoiceForm->createView(),
-            'slotBlockCollectionForm' => $slotBlockCollectionForm->createView(),
+            'cmsSlotBlockCollectionForm' => $cmsSlotBlockCollectionForm->createView(),
         ]);
     }
 

@@ -17,7 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @method \Spryker\Zed\CmsSlotBlockGui\Communication\CmsSlotBlockGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\CmsSlotBlockGui\CmsSlotBlockGuiConfig getConfig()
  */
-class SlotBlockCollectionForm extends AbstractType
+class CmsSlotBlockCollectionForm extends AbstractType
 {
     protected const FIELD_CMS_SLOT_BLOCKS = 'cmsSlotBlocks';
 
@@ -52,7 +52,7 @@ class SlotBlockCollectionForm extends AbstractType
     protected function addCmsSlotBlockField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_CMS_SLOT_BLOCKS, CollectionType::class, [
-            'entry_type' => SlotBlockForm::class,
+            'entry_type' => CmsSlotBlockForm::class,
             'label' => false,
             'prototype' => true,
             'allow_add' => true,

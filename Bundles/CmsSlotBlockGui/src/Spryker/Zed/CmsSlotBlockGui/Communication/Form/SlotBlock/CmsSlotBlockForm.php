@@ -17,7 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @method \Spryker\Zed\CmsSlotBlockGui\Communication\CmsSlotBlockGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\CmsSlotBlockGui\CmsSlotBlockGuiConfig getConfig()
  */
-class SlotBlockForm extends AbstractType
+class CmsSlotBlockForm extends AbstractType
 {
     protected const FIELD_ID_SLOT_TEMPLATE = 'idSlotTemplate';
     protected const FIELD_ID_SLOT = 'idSlot';
