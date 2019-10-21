@@ -220,12 +220,4 @@
         <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
 
-    <transfer name="Store">
-        <property name="idStore" type="int"/>
-    </transfer>
-
-    <transfer name="Mail">
-        <property name="shipmentGroups" type="ShipmentGroup[]" singular="shipmentGroup"/>
-    </transfer>
-
 </transfers>
