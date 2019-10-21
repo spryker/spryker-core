@@ -24,7 +24,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\Oauth\\Helper\\": "tests/SprykerTest/Zed/Oauth/_support/Helper/"
     }
   },
   "autoload-dev": {

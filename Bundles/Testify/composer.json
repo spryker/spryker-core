@@ -23,7 +23,15 @@
     "spryker/console": "*",
     "spryker/json-path": "^1.0.0",
     "spryker/json-schema": "^1.0.0",
-    "spryker/twig": "^3.0.0"
+    "spryker/twig": "^3.0.0",
+    "spryker/alternative-products-rest-api": "*",
+    "spryker/carts-rest-api": "*",
+    "spryker/glue-application": "*",
+    "spryker/product-labels-rest-api": "*",
+    "spryker/products-rest-api": "*",
+    "spryker/related-products-rest-api": "*",
+    "spryker/up-selling-products-rest-api": "*",
+    "spryker/wishlists-rest-api": "*"
   },
   "suggest": {
     "spryker-sdk/codeception-phantoman": "If you want to use WebDriverHelper."
