@@ -20,6 +20,8 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class StorageCacheEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
+    public const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE;
+
     /**
      * {@inheritDoc}
      * - Adds a listener for the `\Symfony\Component\HttpKernel\KernelEvents::TERMINATE` event.
@@ -41,6 +43,11 @@ class StorageCacheEventDispatcherPlugin extends AbstractPlugin implements EventD
                 $this->getClient()->persistCacheForRequest($request, $container->get(StorageConstants::STORAGE_CACHE_STRATEGY));
             }
         });
+
+        if (!$container->has(StorageConstants::STORAGE_CACHE_STRATEGY)) {
+            $container->set(StorageConstants::STORAGE_CACHE_STRATEGY, self::STORAGE_CACHE_STRATEGY);
+            $container->configure(StorageConstants::STORAGE_CACHE_STRATEGY, ['isGlobal' => true]);
+        }
 
         return $eventDispatcher;
     }
