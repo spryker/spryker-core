@@ -34,9 +34,19 @@ class CmsSlotBlockTable extends AbstractTable
     protected const REQUEST_ID_CMS_BLOCK = 'id-cms-block';
 
     /**
+     * @var \Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsBlockFacadeInterface
+     */
+    protected $cmsBlockFacade;
+
+    /**
      * @var \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
     protected $cmsBlockQuery;
+
+    /**
+     * @var \Spryker\Zed\CmsSlotBlockGui\CmsSlotBlockGuiConfig
+     */
+    protected $config;
 
     /**
      * @var int
@@ -49,26 +59,24 @@ class CmsSlotBlockTable extends AbstractTable
     protected $idCmsSlot;
 
     /**
-     * @var \Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsBlockFacadeInterface
-     */
-    protected $cmsBlockFacade;
-
-    /**
+     * @param \Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsBlockFacadeInterface $cmsBlockFacade
      * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery $cmsBlockQuery
+     * @param \Spryker\Zed\CmsSlotBlockGui\CmsSlotBlockGuiConfig $config
      * @param int $idCmsSlotTemplate
      * @param int $idCmsSlot
-     * @param \Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsBlockFacadeInterface $cmsBlockFacade
      */
     public function __construct(
+        CmsSlotBlockGuiToCmsBlockFacadeInterface $cmsBlockFacade,
         SpyCmsBlockQuery $cmsBlockQuery,
+        CmsSlotBlockGuiConfig $config,
         int $idCmsSlotTemplate,
-        int $idCmsSlot,
-        CmsSlotBlockGuiToCmsBlockFacadeInterface $cmsBlockFacade
+        int $idCmsSlot
     ) {
+        $this->cmsBlockFacade = $cmsBlockFacade;
         $this->cmsBlockQuery = $cmsBlockQuery;
+        $this->config = $config;
         $this->idCmsSlotTemplate = $idCmsSlotTemplate;
         $this->idCmsSlot = $idCmsSlot;
-        $this->cmsBlockFacade = $cmsBlockFacade;
     }
 
     /**
@@ -90,7 +98,7 @@ class CmsSlotBlockTable extends AbstractTable
         $config->setPaging(false);
         $config->setOrdering(false);
 
-        $this->setLimit(CmsSlotBlockGuiConfig::MAX_NUMBER_BLOCKS_ASSIGNED_TO_SLOT);
+        $this->setLimit($this->config->getMaxNumberBlocksAssignedToSlot());
 
         return $config;
     }

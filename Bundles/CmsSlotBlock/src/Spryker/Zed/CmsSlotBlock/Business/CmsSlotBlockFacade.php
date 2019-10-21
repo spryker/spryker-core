@@ -46,7 +46,7 @@ class CmsSlotBlockFacade extends AbstractFacade implements CmsSlotBlockFacadeInt
     public function getCmsSlotBlockCollection(int $idCmsSlotTemplate, int $idCmsSlot): CmsSlotBlockCollectionTransfer
     {
         return $this->getFactory()
-            ->createCmsSlotBlockRelationsReader()
+            ->createCmsSlotBlockReader()
             ->getCmsSlotBlockCollection($idCmsSlotTemplate, $idCmsSlot);
     }
 }

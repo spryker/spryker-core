@@ -7,10 +7,9 @@
     {% block widget_content %}
         {{ slotBlockTable | raw }}
  
-    {{ form_start(slotBlockCollectionForm, {'action': '/cms-slot-block-gui/slot-block'}) }}
-        {{ form_widget(slotBlockCollectionForm.cmsSlotBlocks) }}
+    {{ form_start(cmsSlotBlockCollectionForm, {'action': '/cms-slot-block-gui/slot-block'}) }}
 
-        {% for slotBlockItemForm in slotBlockCollectionForm.cmsSlotBlocks %}
+        {% for slotBlockItemForm in cmsSlotBlockCollectionForm.cmsSlotBlocks %}
             {{ form_widget(slotBlockItemForm.idSlotTemplate) }}
             {{ form_widget(slotBlockItemForm.idSlot) }}
             {{ form_widget(slotBlockItemForm.idCmsBlock) }}
@@ -19,7 +18,7 @@
 
         <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
 
-    {{ form_end(slotBlockCollectionForm) }}
+    {{ form_end(cmsSlotBlockCollectionForm) }}
  
     {% endblock %}
 

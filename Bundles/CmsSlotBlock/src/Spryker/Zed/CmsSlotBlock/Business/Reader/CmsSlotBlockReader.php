@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsSlotBlock\Business\Reader;
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockRepositoryInterface;
 
-class CmsSlotBlockRelationsReader implements CmsSlotBlockRelationsReaderInterface
+class CmsSlotBlockReader implements CmsSlotBlockReaderInterface
 {
     /**
      * @var \Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockRepositoryInterface

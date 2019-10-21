@@ -9,9 +9,9 @@ namespace Spryker\Zed\CmsSlotBlockGui\Communication;
 
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
 use Spryker\Zed\CmsSlotBlockGui\CmsSlotBlockGuiDependencyProvider;
-use Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\SlotBlockCollectionDataProvider;
-use Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\SlotBlockCollectionDataProviderInterface;
-use Spryker\Zed\CmsSlotBlockGui\Communication\Form\SlotBlock\SlotBlockCollectionForm;
+use Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\CmsSlotBlockCollectionFormDataProvider;
+use Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\CmsSlotBlockCollectionFormDataProviderInterface;
+use Spryker\Zed\CmsSlotBlockGui\Communication\Form\SlotBlock\CmsSlotBlockCollectionForm;
 use Spryker\Zed\CmsSlotBlockGui\Communication\Table\CmsSlotBlockTable;
 use Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsBlockFacadeInterface;
 use Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotBlockFacadeInterface;
@@ -33,38 +33,38 @@ class CmsSlotBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createSlotBlockTable(int $idCmsSlotTemplate, int $idCmsSlot): CmsSlotBlockTable
     {
         return new CmsSlotBlockTable(
+            $this->getCmsBlockFacade(),
             $this->getCmsBlockPropelQuery(),
+            $this->getConfig(),
             $idCmsSlotTemplate,
-            $idCmsSlot,
-            $this->getCmsBlockFacade()
+            $idCmsSlot
         );
     }
 
     /**
-     * @param \Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\SlotBlockCollectionDataProviderInterface $slotBlockDataProvider
+     * @param \Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\CmsSlotBlockCollectionFormDataProviderInterface $slotBlockDataProvider
      * @param int $idCmsSlotTemplate
      * @param int $idCmsSlot
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createSlotBlockCollectionForm(
-        SlotBlockCollectionDataProviderInterface $slotBlockDataProvider,
+    public function createCmsSlotBlockCollectionForm(
+        CmsSlotBlockCollectionFormDataProviderInterface $slotBlockDataProvider,
         int $idCmsSlotTemplate,
         int $idCmsSlot
     ): FormInterface {
         return $this->getFormFactory()->create(
-            SlotBlockCollectionForm::class,
-            $slotBlockDataProvider->getData($idCmsSlotTemplate, $idCmsSlot),
-            $slotBlockDataProvider->getOptions()
+            CmsSlotBlockCollectionForm::class,
+            $slotBlockDataProvider->getData($idCmsSlotTemplate, $idCmsSlot)
         );
     }
 
     /**
-     * @return \Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\SlotBlockCollectionDataProviderInterface
+     * @return \Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\CmsSlotBlockCollectionFormDataProviderInterface
      */
-    public function createSlotBlockCollectionDataProvider(): SlotBlockCollectionDataProviderInterface
+    public function createCmsSlotBlockCollectionFormDataProvider(): CmsSlotBlockCollectionFormDataProviderInterface
     {
-        return new SlotBlockCollectionDataProvider($this->getCmsSlotBlockFacade());
+        return new CmsSlotBlockCollectionFormDataProvider($this->getCmsSlotBlockFacade());
     }
 
     /**

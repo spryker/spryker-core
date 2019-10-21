@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider;
+namespace Spryker\Zed\CmsSlotBlock\Business\Reader;
 
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 
-interface SlotBlockCollectionDataProviderInterface
+interface CmsSlotBlockReaderInterface
 {
     /**
      * @param int $idCmsSlotTemplate
@@ -17,10 +17,5 @@ interface SlotBlockCollectionDataProviderInterface
      *
      * @return \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer
      */
-    public function getData(int $idCmsSlotTemplate, int $idCmsSlot): CmsSlotBlockCollectionTransfer;
-
-    /**
-     * @return array
-     */
-    public function getOptions(): array;
+    public function getCmsSlotBlockCollection(int $idCmsSlotTemplate, int $idCmsSlot): CmsSlotBlockCollectionTransfer;
 }
