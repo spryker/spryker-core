@@ -22,10 +22,10 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethodStoreQuery;
  * @group Zed
  * @group Shipment
  * @group Business
- * @group UpdateMethodTest
+ * @group UpdateShipmentMethodTest
  * Add your own group annotations below this line
  */
-class UpdateMethodTest extends Unit
+class UpdateShipmentMethodTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\Shipment\ShipmentBusinessTester
