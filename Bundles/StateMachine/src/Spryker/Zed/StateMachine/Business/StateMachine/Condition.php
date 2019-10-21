@@ -165,7 +165,7 @@ class Condition implements ConditionInterface
      * @param string $stateMachineName
      * @param string $processName
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[][] $itemsWithOnEnterEvent
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[][]
      */
     public function getOnEnterEventsForStatesWithoutTransition($stateMachineName, $processName)
     {

@@ -12,8 +12,17 @@
     </transfer>
 
     <transfer name="KeyTranslation">
-        <property name="glossaryKey" type="int"></property>
-        <property name="locales" type="array"></property>
+        <property name="glossaryKey" type="int"/>
+        <property name="locales" type="array" singular="locales"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
     </transfer>
 
 </transfers>

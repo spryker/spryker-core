@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated Use `\Spryker\Zed\Auth\Communication\Plugin\EventDispatcher\AuthorizationEventDispatcherPlugin` instead.
+ *
  * @method \Spryker\Zed\Auth\Communication\AuthCommunicationFactory getFactory()
  * @method \Spryker\Zed\Auth\Business\AuthFacadeInterface getFacade()
  * @method \Spryker\Zed\Auth\AuthConfig getConfig()

@@ -17,11 +17,7 @@ class LoggerConfigLoaderYves implements LoggerConfigLoaderInterface
      */
     public function accept()
     {
-        if (APPLICATION === 'YVES' && Config::hasKey(LogConstants::LOGGER_CONFIG_YVES)) {
-            return true;
-        }
-
-        return false;
+        return $this->isYvesApplication() && Config::hasKey(LogConstants::LOGGER_CONFIG_YVES);
     }
 
     /**
@@ -32,5 +28,13 @@ class LoggerConfigLoaderYves implements LoggerConfigLoaderInterface
         $loggerClassName = Config::get(LogConstants::LOGGER_CONFIG_YVES);
 
         return new $loggerClassName();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isYvesApplication(): bool
+    {
+        return APPLICATION === 'YVES';
     }
 }

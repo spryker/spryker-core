@@ -71,6 +71,7 @@ class CmsBlockPlaceholderTwigPlugin extends AbstractTwigExtensionPlugin
      */
     protected function renderCmsTwigContent(string $translation, string $identifier, array $context): string
     {
+        /** @var \Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPluginInterface|null $twigRenderedPlugin */
         $twigRenderedPlugin = $this->getFactory()->getCmsBlockTwigContentRendererPlugin();
         if (!$twigRenderedPlugin) {
             return $translation;

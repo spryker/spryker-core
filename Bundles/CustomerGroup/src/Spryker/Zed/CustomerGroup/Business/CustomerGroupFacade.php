@@ -41,7 +41,7 @@ class CustomerGroupFacade extends AbstractFacade implements CustomerGroupFacadeI
      *
      * @param \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
+     * @return \Generated\Shared\Transfer\CustomerGroupTransfer
      */
     public function get(CustomerGroupTransfer $customerGroupTransfer)
     {

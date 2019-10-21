@@ -130,6 +130,7 @@ class VersionPageController extends AbstractController
             'cmsTargetGlossary' => $cmsTargetVersionDataTransfer->getCmsGlossary(),
             'versionForm' => $versionForm->createView(),
             'cmsVersion' => $cmsCurrentVersionTransfer,
+            'isPageTemplateWithPlaceholders' => $this->isPageTemplateWithPlaceholders($idCmsPage),
         ];
     }
 
@@ -187,5 +188,21 @@ class VersionPageController extends AbstractController
         }
 
         return $cmsVersionDataHelper->mapToCmsVersionDataTransfer($cmsTargetVersionTransfer);
+    }
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return bool
+     */
+    protected function isPageTemplateWithPlaceholders(int $idCmsPage): bool
+    {
+        $cmsGlossaryTransfer = $this->getFactory()->getCmsFacade()->findPageGlossaryAttributes($idCmsPage);
+
+        if (!$cmsGlossaryTransfer) {
+            return false;
+        }
+
+        return $cmsGlossaryTransfer->getGlossaryAttributes()->count() > 0;
     }
 }

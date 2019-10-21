@@ -16,6 +16,18 @@ Actions,Actions
 "Delivery Methods","Delivery Methods"
 "Add new Carrier Company","Add new Carrier Company"
 "Add new Shipment Method","Add new Shipment Method"
+"Shipment method is not found","Shipment method is not found"
+"View Delivery Method: %s", "View Delivery Method: %s"
+"List Shipment Methods","List Shipment Methods"
+Configuration,Configuration
+"Delivery Method Key","Delivery Method Key"
+"Availability plugin","Availability plugin"
+"Price plugin","Price plugin"
+"Delivery Time plugin","Delivery Time plugin"
+"Is this delivery method active?","Is this delivery method active?"
+"Store relation","Store relation"
+"Price & Tax","Price & Tax"
+None,None
 "Delivery method not found.","Delivery method not found."
 "Delivery method was deleted successfully.","Delivery method was deleted successfully."
 "Delete Delivery Method","Delete Delivery Method"

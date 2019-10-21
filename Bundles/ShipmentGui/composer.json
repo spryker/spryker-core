@@ -12,6 +12,7 @@
     "spryker/shipment": "^7.0.0",
     "spryker/store": "^1.9.1",
     "spryker/symfony": "^3.2.2",
+    "spryker/tax": "^5.0.0",
     "spryker/util-text": "^1.2.3"
   },
   "require-dev": {
