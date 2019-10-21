@@ -92,15 +92,13 @@ class CategoryImageStorageRepository extends AbstractRepository implements Categ
      *
      * @return \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer[]
      */
-    public function getCategoryImageStorageByFilter(FilterTransfer $filterTransfer, array $categoryIds): array
+    public function getCategoryImageStorageCollectionByFilter(FilterTransfer $filterTransfer, array $categoryIds): array
     {
         $categoryImageStorageQuery = $this->getFactory()
             ->createSpyCategoryImageStorageQuery()
-            ->filterByFkCategory_In($categoryIds)
-            ->limit($filterTransfer->getLimit())
-            ->offset($filterTransfer->getOffset());
+            ->filterByFkCategory_In($categoryIds);
 
-        return $this->buildQueryFromCriteria($categoryImageStorageQuery)->find();
+        return $this->buildQueryFromCriteria($categoryImageStorageQuery, $filterTransfer)->find();
     }
 
     /**

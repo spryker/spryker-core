@@ -53,18 +53,6 @@ interface CompanyUserStorageFacadeInterface
 
     /**
      * Specification:
-     * - Returns all CompanyUserStorage collection.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
-     */
-    public function getAllCompanyUserStorageByFilter(FilterTransfer $filterTransfer): array;
-
-    /**
-     * Specification:
      * - Returns CompanyUserStorage collection by ids.
      *
      * @api
@@ -74,5 +62,5 @@ interface CompanyUserStorageFacadeInterface
      *
      * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
      */
-    public function getCompanyUserStorageByFilter(FilterTransfer $filterTransfer, array $ids): array;
+    public function getCompanyUserStorageCollectionByFilter(FilterTransfer $filterTransfer, array $ids): array;
 }

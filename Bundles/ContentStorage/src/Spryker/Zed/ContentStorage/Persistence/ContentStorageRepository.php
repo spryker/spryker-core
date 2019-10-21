@@ -83,7 +83,7 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
     }
 
     /**
-     * @deprecated Use getContentByFilter instead.
+     * @deprecated Use getContentCollectionByFilter instead.
      *
      * @param array $contentIds
      *
@@ -107,13 +107,11 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
      *
      * @return \Generated\Shared\Transfer\SpyContentEntityTransfer[]
      */
-    public function getContentByFilter(FilterTransfer $filterTransfer): array
+    public function getContentCollectionByFilter(FilterTransfer $filterTransfer): array
     {
         $query = $this->getFactory()
-            ->getContentQuery()
-            ->limit($filterTransfer->getLimit())
-            ->offset($filterTransfer->getOffset());
+            ->getContentQuery();
 
-        return $this->buildQueryFromCriteria($query)->find();
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
 }

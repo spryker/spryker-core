@@ -47,5 +47,5 @@ interface CategoryImageStorageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer[]
      */
-    public function getCategoryImageStorageByFilter(FilterTransfer $filterTransfer, array $categoryIds): array;
+    public function getCategoryImageStorageCollectionByFilter(FilterTransfer $filterTransfer, array $categoryIds): array;
 }

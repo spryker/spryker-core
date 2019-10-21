@@ -69,41 +69,13 @@ class ProductAlternativeStorageFacade extends AbstractFacade implements ProductA
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
-     */
-    public function getAllProductAlternativeStorageByFilter(FilterTransfer $filterTransfer): array
-    {
-        return $this->getRepository()->getAllProductAlternativeStorageByFilter($filterTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $ids
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
      */
-    public function getProductAlternativeStorageByFilter(FilterTransfer $filterTransfer, array $ids): array
+    public function getProductAlternativeStorageCollectionByFilter(FilterTransfer $filterTransfer, array $ids): array
     {
-        return $this->getRepository()->getProductAlternativeStorageByFilter($filterTransfer, $ids);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
-     */
-    public function getAllProductReplacementForStorageByFilter(FilterTransfer $filterTransfer): array
-    {
-        return $this->getRepository()->getAllProductReplacementForStorageByFilter($filterTransfer);
+        return $this->getRepository()->getProductAlternativeStorageCollectionByFilter($filterTransfer, $ids);
     }
 
     /**
@@ -116,8 +88,8 @@ class ProductAlternativeStorageFacade extends AbstractFacade implements ProductA
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
      */
-    public function getProductReplacementForStorageByFilter(FilterTransfer $filterTransfer, array $ids): array
+    public function getProductReplacementForStorageCollectionByFilter(FilterTransfer $filterTransfer, array $ids): array
     {
-        return $this->getRepository()->getProductReplacementForStorageByFilter($filterTransfer, $ids);
+        return $this->getRepository()->getProductReplacementForStorageCollectionByFilter($filterTransfer, $ids);
     }
 }

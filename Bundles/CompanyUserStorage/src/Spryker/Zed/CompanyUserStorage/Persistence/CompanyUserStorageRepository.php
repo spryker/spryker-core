@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CompanyUserStorageRepository extends AbstractRepository implements CompanyUserStorageRepositoryInterface
 {
     /**
-     * @deprecated Use getCompanyUserStorageByFilter instead.
+     * @deprecated Use getCompanyUserStorageCollectionByFilter instead.
      *
      * @param array $companyUserIds
      *
@@ -37,7 +37,7 @@ class CompanyUserStorageRepository extends AbstractRepository implements Company
     }
 
     /**
-     * @deprecated Use getAllCompanyUserStorageByFilter instead.
+     * @deprecated Use getCompanyUserStorageCollectionByFilter instead.
      *
      * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
      */
@@ -53,37 +53,20 @@ class CompanyUserStorageRepository extends AbstractRepository implements Company
      * @module CompanyUserStorage
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
-     */
-    public function getAllCompanyUserStorageByFilter(FilterTransfer $filterTransfer): array
-    {
-        return $this->getFactory()
-            ->createCompanyUserStorageQuery()
-            ->limit($filterTransfer->getLimit())
-            ->offset($filterTransfer->getOffset())
-            ->find()
-            ->getArrayCopy();
-    }
-
-    /**
-     * @module CompanyUserStorage
-     *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param array $companyUserIds
      *
      * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
      */
-    public function getCompanyUserStorageByFilter(FilterTransfer $filterTransfer, array $companyUserIds): array
+    public function getCompanyUserStorageCollectionByFilter(FilterTransfer $filterTransfer, array $companyUserIds): array
     {
+        $query = $this->getFactory()
+            ->createCompanyUserStorageQuery();
+
         if (!$companyUserIds) {
-            return [];
+            $query->filterByFkCompanyUser_In($companyUserIds);
         }
 
-        return $this->getFactory()
-            ->createCompanyUserStorageQuery()
-            ->filterByFkCompanyUser_In($companyUserIds)
-            ->limit($filterTransfer->getLimit())
+        return $query->limit($filterTransfer->getLimit())
             ->offset($filterTransfer->getOffset())
             ->find()
             ->getArrayCopy(SpyCompanyUserStorageEntityTransfer::FK_COMPANY_USER); // indexing resulting array with corresponding companyUserIds

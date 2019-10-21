@@ -46,7 +46,7 @@ class ProductAbstractPackagingSynchronizationDataBulkPlugin extends AbstractPlug
     public function getData(int $offset, int $limit, array $ids = []): array
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
-        $productAbstractPackagingStorageEntities = $this->findProductAbstractPackagingStorageEntities($filterTransfer, $ids);
+        $productAbstractPackagingStorageEntities = $this->getFacade()->getProductAbstractPackagingStorageCollectionByFilter($filterTransfer, $ids);
 
         return $this->getFactory()
             ->createProductAbstractPackagingStorageMapper()
@@ -101,21 +101,6 @@ class ProductAbstractPackagingSynchronizationDataBulkPlugin extends AbstractPlug
     public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getConfig()->getProductAbstractPackagingSynchronizationPoolName();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $ids
-     *
-     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
-     */
-    protected function findProductAbstractPackagingStorageEntities(FilterTransfer $filterTransfer, array $ids): array
-    {
-        if ($ids === []) {
-            return $this->getFacade()->getAllProductAbstractPackagingStorageByFilter($filterTransfer);
-        }
-
-        return $this->getFacade()->getProductAbstractPackagingStorageEntitiesByFilter($filterTransfer, $ids);
     }
 
     /**

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface ProductConcretePageSearchReaderInterface
 {
     /**
-     * @deprecated Use getProductConcretePageSearchByFilter instead.
+     * @deprecated Use getProductConcretePageSearchCollectionByFilter instead.
      *
      * @param int[] $productIds
      *
@@ -49,5 +49,5 @@ interface ProductConcretePageSearchReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    public function getProductConcretePageSearchByFilter(FilterTransfer $filterTransfer, array $productIds): array;
+    public function getProductConcretePageSearchCollectionByFilter(FilterTransfer $filterTransfer, array $productIds): array;
 }

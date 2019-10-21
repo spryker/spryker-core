@@ -53,35 +53,11 @@ interface ProductAlternativeStorageFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
-     */
-    public function getAllProductAlternativeStorageByFilter(FilterTransfer $filterTransfer): array;
-
-    /**
-     * Specification:
-     *  - Returns SpyProductAlternativeStorage collection.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $ids
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
      */
-    public function getProductAlternativeStorageByFilter(FilterTransfer $filterTransfer, array $ids): array;
-
-    /**
-     * Specification:
-     * - Returns ProductReplacementForStorage collection.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
-     */
-    public function getAllProductReplacementForStorageByFilter(FilterTransfer $filterTransfer): array;
+    public function getProductAlternativeStorageCollectionByFilter(FilterTransfer $filterTransfer, array $ids): array;
 
     /**
      * Specification:
@@ -94,5 +70,5 @@ interface ProductAlternativeStorageFacadeInterface
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
      */
-    public function getProductReplacementForStorageByFilter(FilterTransfer $filterTransfer, array $ids): array;
+    public function getProductReplacementForStorageCollectionByFilter(FilterTransfer $filterTransfer, array $ids): array;
 }

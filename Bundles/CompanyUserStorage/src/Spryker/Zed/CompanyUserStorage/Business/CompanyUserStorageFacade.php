@@ -71,26 +71,12 @@ class CompanyUserStorageFacade extends AbstractFacade implements CompanyUserStor
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
-     */
-    public function getAllCompanyUserStorageByFilter(FilterTransfer $filterTransfer): array
-    {
-        return $this->getRepository()->getAllCompanyUserStorageByFilter($filterTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $ids
      *
      * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
      */
-    public function getCompanyUserStorageByFilter(FilterTransfer $filterTransfer, array $ids): array
+    public function getCompanyUserStorageCollectionByFilter(FilterTransfer $filterTransfer, array $ids): array
     {
-        return $this->getRepository()->getCompanyUserStorageByFilter($filterTransfer, $ids);
+        return $this->getRepository()->getCompanyUserStorageCollectionByFilter($filterTransfer, $ids);
     }
 }

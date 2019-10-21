@@ -35,5 +35,5 @@ interface ContentStorageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpyContentEntityTransfer[]
      */
-    public function getContentByFilter(FilterTransfer $filterTransfer): array;
+    public function getContentCollectionByFilter(FilterTransfer $filterTransfer): array;
 }

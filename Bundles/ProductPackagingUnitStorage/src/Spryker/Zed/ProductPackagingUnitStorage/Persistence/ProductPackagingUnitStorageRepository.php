@@ -77,7 +77,7 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
     /**
      * @module ProductPackagingUnit
      *
-     * @deprecated Use getProductPackagingLeadProductByFilter instead.
+     * @deprecated Use getProductPackagingLeadProductCollectionByFilter instead.
      *
      * @param int[] $productAbstractIds
      *
@@ -118,29 +118,12 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
      *
      * @return \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer[]
      */
-    public function getProductPackagingLeadProductByFilter(FilterTransfer $filterTransfer): array
+    public function getProductPackagingLeadProductCollectionByFilter(FilterTransfer $filterTransfer): array
     {
         $query = $this->getFactory()
-            ->getProductPackagingLeadProductQuery()
-            ->limit($filterTransfer->getLimit())
-            ->offset($filterTransfer->getOffset());
+            ->getProductPackagingLeadProductQuery();
 
-        return $this->buildQueryFromCriteria($query)->find();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
-     */
-    public function getAllProductAbstractPackagingStorageByFilter(FilterTransfer $filterTransfer): array
-    {
-        $query = $this->getFactory()
-            ->createSpyProductAbstractPackagingStorageQuery()
-            ->limit($filterTransfer->getLimit())
-            ->offset($filterTransfer->getOffset());
-
-        return $this->buildQueryFromCriteria($query)->find();
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
 
     /**
@@ -149,18 +132,15 @@ class ProductPackagingUnitStorageRepository extends AbstractRepository implement
      *
      * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
-    public function getProductAbstractPackagingStorageEntitiesByFilter(FilterTransfer $filterTransfer, array $productAbstractIds): array
+    public function getProductAbstractPackagingStorageCollectionByFilter(FilterTransfer $filterTransfer, array $productAbstractIds): array
     {
-        if (!$productAbstractIds) {
-            return [];
+        $query = $this->getFactory()
+            ->createSpyProductAbstractPackagingStorageQuery();
+
+        if ($productAbstractIds !== []) {
+            $query->filterByFkProductAbstract_In($productAbstractIds);
         }
 
-        $query = $this->getFactory()
-            ->createSpyProductAbstractPackagingStorageQuery()
-            ->filterByFkProductAbstract_In($productAbstractIds)
-            ->limit($filterTransfer->getLimit())
-            ->offset($filterTransfer->getOffset());
-
-        return $this->buildQueryFromCriteria($query)->find();
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
 }

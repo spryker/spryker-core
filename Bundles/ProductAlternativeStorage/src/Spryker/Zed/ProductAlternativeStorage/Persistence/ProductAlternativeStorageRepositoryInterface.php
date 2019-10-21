@@ -99,14 +99,14 @@ interface ProductAlternativeStorageRepositoryInterface
     public function getReplacementsByConcreteProductId(int $idProductConcrete): array;
 
     /**
-     * @deprecated Use getAllProductAlternativeStorageByFilter instead.
+     * @deprecated Use getProductAlternativeStorageCollectionByFilter instead.
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
      */
     public function findAllProductAlternativeStorageEntities(): array;
 
     /**
-     * @deprecated Use getProductAlternativeStorageByFilter instead.
+     * @deprecated Use getProductAlternativeStorageCollectionByFilter instead.
      *
      * @param int[] $productAlternativeStorageIds
      *
@@ -115,14 +115,14 @@ interface ProductAlternativeStorageRepositoryInterface
     public function findProductAlternativeStorageEntitiesByIds(array $productAlternativeStorageIds): array;
 
     /**
-     * @deprecated Use getAllProductReplacementForStorageByFilter instead.
+     * @deprecated Use getProductReplacementForStorageCollectionByFilter instead.
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
      */
     public function findAllProductReplacementForStorageEntities(): array;
 
     /**
-     * @deprecated Use getProductReplacementForStorageByFilter instead.
+     * @deprecated Use getProductReplacementForStorageCollectionByFilter instead.
      *
      * @param int[] $productReplacementForStorageIds
      *
@@ -132,25 +132,11 @@ interface ProductAlternativeStorageRepositoryInterface
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
-     */
-    public function getAllProductAlternativeStorageByFilter(FilterTransfer $filterTransfer): array;
-
-    /**
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productAlternativeStorageIds
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
      */
-    public function getProductAlternativeStorageByFilter(FilterTransfer $filterTransfer, array $productAlternativeStorageIds): array;
-
-    /**
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
-     */
-    public function getAllProductReplacementForStorageByFilter(FilterTransfer $filterTransfer): array;
+    public function getProductAlternativeStorageCollectionByFilter(FilterTransfer $filterTransfer, array $productAlternativeStorageIds): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
@@ -158,5 +144,5 @@ interface ProductAlternativeStorageRepositoryInterface
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
      */
-    public function getProductReplacementForStorageByFilter(FilterTransfer $filterTransfer, array $productReplacementForStorageIds): array;
+    public function getProductReplacementForStorageCollectionByFilter(FilterTransfer $filterTransfer, array $productReplacementForStorageIds): array;
 }

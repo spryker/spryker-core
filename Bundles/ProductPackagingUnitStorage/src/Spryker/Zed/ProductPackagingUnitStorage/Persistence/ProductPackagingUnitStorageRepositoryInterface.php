@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface ProductPackagingUnitStorageRepositoryInterface
 {
     /**
-     * @deprecated Use getProductAbstractPackagingStorageEntitiesByFilter instead.
+     * @deprecated Use getProductAbstractPackagingStorageCollectionByFilter instead.
      *
      * @param int[] $productAbstractIds
      *
@@ -28,14 +28,14 @@ interface ProductPackagingUnitStorageRepositoryInterface
     public function findPackagingProductsByProductAbstractId(int $idProductAbstract): array;
 
     /**
-     * @deprecated Use getAllProductAbstractPackagingStorageByFilter instead.
+     * @deprecated Use getProductAbstractPackagingStorageCollectionByFilter instead.
      *
      * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
     public function findAllProductAbstractPackagingStorageEntities(): array;
 
     /**
-     * @deprecated Use getProductPackagingLeadProductByFilter instead.
+     * @deprecated Use getProductPackagingLeadProductCollectionByFilter instead.
      *
      * @param int[] $productAbstractIds
      *
@@ -56,14 +56,7 @@ interface ProductPackagingUnitStorageRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer[]
      */
-    public function getProductPackagingLeadProductByFilter(FilterTransfer $filterTransfer): array;
-
-    /**
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
-     */
-    public function getAllProductAbstractPackagingStorageByFilter(FilterTransfer $filterTransfer): array;
+    public function getProductPackagingLeadProductCollectionByFilter(FilterTransfer $filterTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
@@ -71,5 +64,5 @@ interface ProductPackagingUnitStorageRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
-    public function getProductAbstractPackagingStorageEntitiesByFilter(FilterTransfer $filterTransfer, array $productAbstractIds): array;
+    public function getProductAbstractPackagingStorageCollectionByFilter(FilterTransfer $filterTransfer, array $productAbstractIds): array;
 }

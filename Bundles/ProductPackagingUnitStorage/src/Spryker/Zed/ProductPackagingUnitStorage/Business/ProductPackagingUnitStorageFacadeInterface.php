@@ -71,19 +71,7 @@ interface ProductPackagingUnitStorageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer[]
      */
-    public function getProductPackagingLeadProductByFilter(FilterTransfer $filterTransfer): array;
-
-    /**
-     * Specification:
-     * - Returns all ProductReplacementForStorage collection by filter.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
-     */
-    public function getAllProductAbstractPackagingStorageByFilter(FilterTransfer $filterTransfer): array;
+    public function getProductPackagingLeadProductCollectionByFilter(FilterTransfer $filterTransfer): array;
 
     /**
      * Specification:
@@ -96,5 +84,5 @@ interface ProductPackagingUnitStorageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductAbstractPackagingStorageEntityTransfer[]
      */
-    public function getProductAbstractPackagingStorageEntitiesByFilter(FilterTransfer $filterTransfer, array $productAbstractIds): array;
+    public function getProductAbstractPackagingStorageCollectionByFilter(FilterTransfer $filterTransfer, array $productAbstractIds): array;
 }

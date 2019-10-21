@@ -61,7 +61,7 @@ class CategoryImageSynchronizationDataBulkPlugin extends AbstractPlugin implemen
     {
         $synchronizationDataTransfers = [];
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
-        $categoryImageStorageEntityTransfers = $this->getFacade()->getCategoryImageStorageByFilter($filterTransfer, $ids);
+        $categoryImageStorageEntityTransfers = $this->getFacade()->getCategoryImageStorageCollectionByFilter($filterTransfer, $ids);
 
         foreach ($categoryImageStorageEntityTransfers as $categoryImageStorageEntityTransfer) {
             $synchronizationDataTransfers[] = $this->createSynchronizationDataTransfer($categoryImageStorageEntityTransfer);

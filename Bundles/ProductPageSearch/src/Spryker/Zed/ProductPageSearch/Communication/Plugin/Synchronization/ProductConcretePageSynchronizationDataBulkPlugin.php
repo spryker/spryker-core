@@ -9,8 +9,6 @@ namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
@@ -63,7 +61,7 @@ class ProductConcretePageSynchronizationDataBulkPlugin extends AbstractPlugin im
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        $productConcretePageSearchTransfers = $this->getProductConcretePageSearch($filterTransfer, $productConcreteIds);
+        $productConcretePageSearchTransfers = $this->getFacade()->getProductConcretePageSearchCollectionByFilter($filterTransfer, $productConcreteIds);
 
         $synchronizationDataTransfers = [];
         /** @var \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer */
@@ -112,32 +110,6 @@ class ProductConcretePageSynchronizationDataBulkPlugin extends AbstractPlugin im
     public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getProductPageSynchronizationPoolName();
-    }
-
-    /**
-     * @return int[]
-     */
-    protected function getAllProductIds(): array
-    {
-        return SpyProductQuery::create()
-            ->select([SpyProductTableMap::COL_ID_PRODUCT])
-            ->find()
-            ->toArray();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productIds
-     *
-     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
-     */
-    protected function getProductConcretePageSearch(FilterTransfer $filterTransfer, array $productIds): array
-    {
-        if (empty($productIds)) {
-            $productIds = $this->getAllProductIds();
-        }
-
-        return $this->getFacade()->getProductConcretePageSearchByFilter($filterTransfer, $productIds);
     }
 
     /**

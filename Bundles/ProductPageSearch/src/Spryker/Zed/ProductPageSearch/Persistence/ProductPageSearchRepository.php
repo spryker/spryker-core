@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductPageSearch\Persistence;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductPageSearch\Persistence\Map\SpyProductConcretePageSearchTableMap;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery;
 use PDO;
@@ -22,7 +23,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ProductPageSearchRepository extends AbstractRepository implements ProductPageSearchRepositoryInterface
 {
     /**
-     * @deprecated Use getProductConcretePageSearchByFilter instead.
+     * @deprecated Use getProductConcretePageSearchCollectionByFilter instead.
      *
      * @param int[] $productIds
      *
@@ -150,7 +151,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     /**
      * @module Product
      *
-     * @deprecated Use getProductByFilter instead.
+     * @deprecated Use getProductCollectionByFilter instead.
      *
      * @param int[] $productIds
      *
@@ -174,14 +175,12 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      *
      * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
      */
-    public function getProductByFilter(FilterTransfer $filterTransfer): array
+    public function getProductCollectionByFilter(FilterTransfer $filterTransfer): array
     {
         $query = $this->getFactory()
-            ->getProductQuery()
-            ->limit($filterTransfer->getLimit())
-            ->offset($filterTransfer->getOffset());
+            ->getProductQuery();
 
-        return $this->buildQueryFromCriteria($query)->find();
+        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
     }
 
     /**
@@ -192,8 +191,12 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    public function getProductConcretePageSearchByFilter(FilterTransfer $filterTransfer, array $productIds): array
+    public function getProductConcretePageSearchCollectionByFilter(FilterTransfer $filterTransfer, array $productIds): array
     {
+        if (!$productIds) {
+            $productIds = $this->getAllProductIds();
+        }
+
         $productConcretePageSearchEntities = $this->getFactory()
             ->createProductConcretePageSearchQuery()
             ->filterByFkProduct_In($productIds)
@@ -204,5 +207,16 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
         return $this->mapProductConcretePageSearchEntities(
             $productConcretePageSearchEntities
         );
+    }
+
+    /**
+     * @return int[]
+     */
+    protected function getAllProductIds(): array
+    {
+        return SpyProductQuery::create()
+            ->select([SpyProductTableMap::COL_ID_PRODUCT])
+            ->find()
+            ->toArray();
     }
 }

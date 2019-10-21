@@ -43,13 +43,13 @@ class ProductConcretePageSearchEventResourceBulkRepositoryPlugin extends Abstrac
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
      */
     public function getData(int $offset, int $limit): array
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        return $this->getFacade()->getProductByFilter($filterTransfer);
+        return $this->getFacade()->getProductCollectionByFilter($filterTransfer);
     }
 
     /**

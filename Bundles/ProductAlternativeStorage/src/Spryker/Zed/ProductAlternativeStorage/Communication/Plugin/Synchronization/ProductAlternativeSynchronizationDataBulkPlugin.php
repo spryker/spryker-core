@@ -96,26 +96,11 @@ class ProductAlternativeSynchronizationDataBulkPlugin extends AbstractPlugin imp
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        $productAlternativeStorageEntities = $this->findProductAlternativeStorageEntities($filterTransfer, $ids);
+        $productAlternativeStorageEntities = $this->getFacade()->getProductAlternativeStorageCollectionByFilter($filterTransfer, $ids);
 
         return $this->getFactory()
             ->createProductAlternativeStorageMapper()
             ->mapProductAlternativeStorageEntitiesToSynchronizationDataTransfers($productAlternativeStorageEntities);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $ids
-     *
-     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
-     */
-    protected function findProductAlternativeStorageEntities(FilterTransfer $filterTransfer, array $ids): array
-    {
-        if ($ids === []) {
-            return $this->getFacade()->getAllProductAlternativeStorageByFilter($filterTransfer);
-        }
-
-        return $this->getFacade()->getProductAlternativeStorageByFilter($filterTransfer, $ids);
     }
 
     /**

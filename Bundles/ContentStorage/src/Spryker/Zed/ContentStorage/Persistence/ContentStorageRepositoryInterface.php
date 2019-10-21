@@ -34,7 +34,7 @@ interface ContentStorageRepositoryInterface
     public function findAllContentStorage(): array;
 
     /**
-     * @deprecated Use getContentByFilter instead.
+     * @deprecated Use getContentCollectionByFilter instead.
      *
      * @param array $contentIds
      *
@@ -47,5 +47,5 @@ interface ContentStorageRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SpyContentEntityTransfer[]
      */
-    public function getContentByFilter(FilterTransfer $filterTransfer): array;
+    public function getContentCollectionByFilter(FilterTransfer $filterTransfer): array;
 }

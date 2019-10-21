@@ -60,7 +60,7 @@ class CompanyUserSynchronizationDataBulkPlugin extends AbstractPlugin implements
     {
         $synchronizationDataTransfers = [];
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
-        $companyUserStorageEntities = $this->findCompanyUserStorageEntities($filterTransfer, $ids);
+        $companyUserStorageEntities = $this->getFacade()->getCompanyUserStorageCollectionByFilter($filterTransfer, $ids);
 
         foreach ($companyUserStorageEntities as $companyUserStorageEntity) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
@@ -110,21 +110,6 @@ class CompanyUserSynchronizationDataBulkPlugin extends AbstractPlugin implements
     {
         return $this->getConfig()
             ->getCompanyUserSynchronizationPoolName();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param array $ids
-     *
-     * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
-     */
-    protected function findCompanyUserStorageEntities(FilterTransfer $filterTransfer, array $ids): array
-    {
-        if ($ids === []) {
-            return $this->getFacade()->getAllCompanyUserStorageByFilter($filterTransfer);
-        }
-
-        return $this->getFacade()->getCompanyUserStorageByFilter($filterTransfer, $ids);
     }
 
     /**

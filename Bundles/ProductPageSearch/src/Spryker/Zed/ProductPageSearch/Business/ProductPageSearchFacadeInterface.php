@@ -99,7 +99,7 @@ interface ProductPageSearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use getProductConcretePageSearchByFilter instead.
+     * @deprecated Use getProductConcretePageSearchCollectionByFilter instead.
      *
      * @param int[] $productIds
      *
@@ -129,7 +129,7 @@ interface ProductPageSearchFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
      */
-    public function getProductByFilter(FilterTransfer $filterTransfer): array;
+    public function getProductCollectionByFilter(FilterTransfer $filterTransfer): array;
 
     /**
      * Specification
@@ -143,5 +143,5 @@ interface ProductPageSearchFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    public function getProductConcretePageSearchByFilter(FilterTransfer $filterTransfer, array $productIds): array;
+    public function getProductConcretePageSearchCollectionByFilter(FilterTransfer $filterTransfer, array $productIds): array;
 }

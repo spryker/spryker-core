@@ -26,7 +26,7 @@ class ProductConcretePageSearchReader implements ProductConcretePageSearchReader
     }
 
     /**
-     * @deprecated Use getProductConcretePageSearchByFilter instead.
+     * @deprecated Use getProductConcretePageSearchCollectionByFilter instead.
      *
      * @param int[] $productIds
      *
@@ -85,8 +85,8 @@ class ProductConcretePageSearchReader implements ProductConcretePageSearchReader
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
      */
-    public function getProductConcretePageSearchByFilter(FilterTransfer $filterTransfer, array $productIds): array
+    public function getProductConcretePageSearchCollectionByFilter(FilterTransfer $filterTransfer, array $productIds): array
     {
-        return $this->repository->getProductConcretePageSearchByFilter($filterTransfer, $productIds);
+        return $this->repository->getProductConcretePageSearchCollectionByFilter($filterTransfer, $productIds);
     }
 }

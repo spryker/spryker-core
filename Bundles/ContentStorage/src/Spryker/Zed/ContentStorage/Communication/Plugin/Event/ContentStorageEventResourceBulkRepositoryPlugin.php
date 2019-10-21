@@ -49,7 +49,7 @@ class ContentStorageEventResourceBulkRepositoryPlugin extends AbstractPlugin imp
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        return $this->getFacade()->getContentByFilter($filterTransfer);
+        return $this->getFacade()->getContentCollectionByFilter($filterTransfer);
     }
 
     /**
