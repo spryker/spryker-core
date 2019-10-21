@@ -26,7 +26,8 @@ abstract class AbstractController
      * @return void
      */
     public function initialize()
-    {}
+    {
+    }
 
     /**
      * @param \Silex\Application|\Spryker\Service\Container\ContainerInterface $application
