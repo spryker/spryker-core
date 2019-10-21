@@ -20,14 +20,7 @@
   "suggest": [],
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Glue\\CompanyUserAuthRestApi\\Helper\\": "tests/SprykerTest/Glue/CompanyUserAuthRestApi/_support/Helper/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
+      "Spryker\\": "src/Spryker/"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
