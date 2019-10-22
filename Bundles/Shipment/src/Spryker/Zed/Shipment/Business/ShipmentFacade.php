@@ -114,7 +114,9 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function findMethodById($idShipmentMethod)
     {
-        return $this->getRepository()->findShipmentMethodByIdWithPricesAndCarrier($idShipmentMethod);
+        return $this->getFactory()
+            ->createShipmentMethodReader()
+            ->findShipmentMethodById($idShipmentMethod);
     }
 
     /**

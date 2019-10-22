@@ -9,29 +9,30 @@ namespace Spryker\Zed\Shipment\Business\ShipmentMethod;
 
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface;
+use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
 
 class ShipmentMethodStoreRelationUpdater implements ShipmentMethodStoreRelationUpdaterInterface
 {
-    /**
-     * @var \Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodStoreRelationReaderInterface
-     */
-    protected $storeRelationReader;
-
     /**
      * @var \Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface
      */
     protected $entityManager;
 
     /**
-     * @param \Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodStoreRelationReaderInterface $storeRelationReader
+     * @var \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface
+     */
+    protected $shipmentRepository;
+
+    /**
+     * @param \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface $shipmentRepository
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface $entityManager
      */
     public function __construct(
-        ShipmentMethodStoreRelationReaderInterface $storeRelationReader,
+        ShipmentRepositoryInterface $shipmentRepository,
         ShipmentEntityManagerInterface $entityManager
     ) {
-        $this->storeRelationReader = $storeRelationReader;
         $this->entityManager = $entityManager;
+        $this->shipmentRepository = $shipmentRepository;
     }
 
     /**
@@ -60,9 +61,7 @@ class ShipmentMethodStoreRelationUpdater implements ShipmentMethodStoreRelationU
      */
     protected function getIdStoresByIdShipmentMethod(int $idShipmentMethod): array
     {
-        $storeRelation = $this->storeRelationReader->getStoreRelation(
-            (new StoreRelationTransfer())->setIdEntity($idShipmentMethod)
-        );
+        $storeRelation = $this->shipmentRepository->getStoreRelationByIdShipmentMethod($idShipmentMethod);
 
         return $storeRelation->getIdStores();
     }

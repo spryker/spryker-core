@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentPriceTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 
 interface ShipmentRepositoryInterface
@@ -161,7 +162,7 @@ interface ShipmentRepositoryInterface
     /**
      * @param int $idShipmentMethod
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function getRelatedStoresByIdShipmentMethod(int $idShipmentMethod): ArrayObject;
+    public function getStoreRelationByIdShipmentMethod(int $idShipmentMethod): StoreRelationTransfer;
 }

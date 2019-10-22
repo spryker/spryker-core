@@ -182,7 +182,8 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     {
         $shipmentMethodEntity = $this->queryMethodsWithMethodPricesAndCarrier()
             ->filterByShipmentMethodKey($shipmentMethodKey)
-            ->findOne();
+            ->find()
+            ->getFirst();
 
         if ($shipmentMethodEntity === null) {
             return null;
@@ -656,9 +657,9 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     /**
      * @param int $idShipmentMethod
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function getRelatedStoresByIdShipmentMethod(int $idShipmentMethod): ArrayObject
+    public function getStoreRelationByIdShipmentMethod(int $idShipmentMethod): StoreRelationTransfer
     {
         $shipmentMethodStoreEntities = $this->getFactory()
             ->createShipmentMethodStoreQuery()
@@ -666,9 +667,10 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
             ->leftJoinWithStore()
             ->find();
 
+        $storeRelationTransfer = (new StoreRelationTransfer())->setIdEntity($idShipmentMethod);
+
         return $this->getFactory()
             ->createStoreRelationMapper()
-            ->mapShipmentMethodStoreEntitiesToStoreRelationTransfer($shipmentMethodStoreEntities, new StoreRelationTransfer())
-            ->getStores();
+            ->mapShipmentMethodStoreEntitiesToStoreRelationTransfer($shipmentMethodStoreEntities, $storeRelationTransfer);
     }
 }
