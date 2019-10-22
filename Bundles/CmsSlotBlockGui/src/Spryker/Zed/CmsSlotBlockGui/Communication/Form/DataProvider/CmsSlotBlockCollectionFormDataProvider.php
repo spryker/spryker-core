@@ -13,6 +13,8 @@ use Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotFacade
 
 class CmsSlotBlockCollectionFormDataProvider implements CmsSlotBlockCollectionFormDataProviderInterface
 {
+    protected const OPTION_CONDITIONS = 'conditions';
+
     /**
      * @var \Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotFacadeInterface
      */
@@ -57,7 +59,7 @@ class CmsSlotBlockCollectionFormDataProvider implements CmsSlotBlockCollectionFo
         $templateConditions = $this->cmsSlotBlockFacade->getTemplateConditionsByPath($cmsSlotTemplateTransfer->getPath());
 
         return [
-            'conditions' => $templateConditions,
+            static::OPTION_CONDITIONS => $templateConditions,
         ];
     }
 }

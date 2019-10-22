@@ -62,7 +62,7 @@ class CmsSlotBlockCollectionForm extends AbstractType
             'allow_delete' => true,
             'entry_options' => [
                 'label' => false,
-                'conditions' => $options['conditions'],
+                static::OPTION_CONDITIONS => $options[static::OPTION_CONDITIONS],
             ],
         ]);
 
