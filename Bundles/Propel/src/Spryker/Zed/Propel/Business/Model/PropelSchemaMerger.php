@@ -221,6 +221,10 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
         foreach ($fromXmlElement->children() as $fromXmlChildTagName => $fromXmlChildElement) {
             $toXmlElementChild = $this->getToXmlElementChild($toXmlElement, $fromXmlChildElement, $fromXmlChildTagName, $source);
 
+            if ($toXmlElementChild === null) {
+                continue;
+            }
+
             $this->mergeAttributes($toXmlElementChild, $fromXmlChildElement);
             $this->mergeSchemasRecursive($toXmlElementChild, $fromXmlChildElement, $source);
         }
@@ -232,21 +236,26 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      * If a child by the given name doesn't exists a new SimpleXmlElement will be returned.
      * If a child by the given name exists this SimpleXmlElement child will be returned.
      * If the child name is `index` and it does already exists (comes from core) then we replace the core SimpleXmlElement with the one from the project.
+     * If the node doesn't contain any columns it will just removed.
      *
      * @param \SimpleXMLElement $toXmlElement
      * @param \SimpleXMLElement $fromXmlChildElement
      * @param string $fromXmlChildTagName
      * @param string $source
      *
-     * @return \SimpleXMLElement
+     * @return \SimpleXMLElement|null
      */
-    protected function getToXmlElementChild(SimpleXMLElement $toXmlElement, SimpleXMLElement $fromXmlChildElement, string $fromXmlChildTagName, string $source): SimpleXMLElement
+    protected function getToXmlElementChild(SimpleXMLElement $toXmlElement, SimpleXMLElement $fromXmlChildElement, string $fromXmlChildTagName, string $source): ?SimpleXMLElement
     {
         $toXmlElements = $this->retrieveToXmlElements($toXmlElement);
         $fromXmlElementName = $this->getElementName($fromXmlChildElement, $fromXmlChildTagName);
 
         if ($this->allowIndexOverriding($toXmlElement, $fromXmlChildTagName, $source) && $this->haveSameAttribute($toXmlElement->$fromXmlChildTagName, $fromXmlChildElement, 'name')) {
             $this->removeChild($toXmlElement, $fromXmlChildTagName);
+
+            if ($fromXmlChildElement->children()->count() === 0) {
+                return null;
+            }
 
             return $toXmlElement->addChild($fromXmlChildTagName, $fromXmlChildElement);
         }
