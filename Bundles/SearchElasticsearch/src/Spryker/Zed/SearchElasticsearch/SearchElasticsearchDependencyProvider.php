@@ -33,7 +33,7 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = $this->addSearchClient($container);
         $container = $this->addUtilEncodingFacade($container);
-        $container = $this->addStore($container);
+        $container = $this->addStoreClient($container);
 
         return $container;
     }
@@ -71,7 +71,7 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addStore(Container $container): Container
+    protected function addStoreClient(Container $container): Container
     {
         $container->set(static::CLIENT_STORE, function (Container $container): SearchElasticsearchToStoreClientInterface {
             return new SearchElasticsearchToStoreClientBridge(
