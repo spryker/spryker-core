@@ -21,7 +21,7 @@
 
         <property name="categoryNode" type="Node"/>
         <property name="nodeCollection" type="NodeCollection"/>
-        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]"/>
+        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" singular="localizedAttributes"/>
 
         <property name="parentCategoryNode" type="Node"/>
         <property name="extraParents" singular="extraParent" type="Node[]"/>
@@ -51,7 +51,7 @@
         <property name="nodeOrder" type="int"/>
         <property name="name" type="string"/>
         <property name="path" type="string"/>
-        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]"/>
+        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" singular="localizedAttributes"/>
     </transfer>
 
     <transfer name="CategoryLocalizedAttributes">
@@ -68,6 +68,36 @@
         <property name="name" type="string"/>
         <property name="absolutePath" type="string"/>
         <property name="relativePath" type="string"/>
+    </transfer>
+
+    <transfer name="Url">
+        <property name="url" type="string"/>
+        <property name="resourceType" type="string" deprecated="Use appropriate fkResourceXYZ attribute instead."/>
+        <property name="resourceId" type="int" deprecated="Use appropriate fkResourceXYZ attribute instead."/>
+        <property name="fkLocale" type="int"/>
+        <property name="idUrl" type="int"/>
+        <property name="fkResourceCategorynode" type="int"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="Touch">
+        <property name="itemId" type="int"/>
+    </transfer>
+
+    <transfer name="TabItem">
+        <property name="name" type="string"/>
+        <property name="title" type="string"/>
+        <property name="template" type="string"/>
+    </transfer>
+
+    <transfer name="TabsView">
+        <property name="tabs" type="TabItem[]" singular="tab"/>
+        <property name="footerTemplate" type="string"/>
+        <property name="isNavigable" type="bool"/>
     </transfer>
 
 </transfers>

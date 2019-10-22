@@ -52,5 +52,9 @@
         <property name="message" type="string"/>
     </transfer>
 
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+    </transfer>
+
 </transfers>
 

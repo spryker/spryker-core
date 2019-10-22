@@ -27,7 +27,6 @@
         <property name="name" type="string"/>
         <property name="sku" type="string"/>
         <property name="sumPrice" type="int"/>
-        <property name="sumPriceToPayAggregation" type="int"/>
         <property name="quantity" type="int"/>
         <property name="metadata" type="RestOrderItemMetadata"/>
         <property name="calculatedDiscounts" type="RestCalculatedDiscount[]" singular="calculatedDiscount"/>
@@ -37,7 +36,6 @@
         <property name="unitNetPrice" type="int"/>
         <property name="sumNetPrice" type="int"/>
         <property name="unitPrice" type="int"/>
-        <property name="sumPrice" type="int"/>
         <property name="unitTaxAmountFullAggregation" type="int"/>
         <property name="sumTaxAmountFullAggregation" type="int"/>
         <property name="refundableAmount" type="int"/>
@@ -161,6 +159,7 @@
         <property name="totals" type="Totals"/>
         <property name="billingAddress" type="Address"/>
         <property name="shippingAddress" type="Address"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="Totals">
@@ -169,6 +168,19 @@
 
     <transfer name="TaxTotal">
         <property name="amount" type="int"/>
+    </transfer>
+
+    <transfer name="OrderList">
+        <property name="idCustomer" type="int"/>
+        <property name="pagination" type="Pagination"/>
+        <property name="orders" type="Order[]" singular="order"/>
+        <property name="filter" type="Filter"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string"/>
+        <property name="status" type="int"/>
+        <property name="detail" type="string"/>
     </transfer>
 
 </transfers>

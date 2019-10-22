@@ -138,4 +138,18 @@ class TransferConfig extends AbstractBundleConfig
     {
         return false;
     }
+
+    /**
+     * This will enable strict validation for case sensitive declaration.
+     * Mainly for property names, and singular definition.
+     *
+     * Defaults to false for BC reasons. Enable on project level if all modules in question
+     * have been upgraded to the version they are fixed in.
+     *
+     * @return bool
+     */
+    public function isCaseValidated(): bool
+    {
+        return false;
+    }
 }
