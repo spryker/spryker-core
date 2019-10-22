@@ -145,11 +145,11 @@ class MerchantForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param int|null $currentId
+     * @param int|null $currentMerchantId
      *
      * @return $this
      */
-    protected function addMerchantReference(FormBuilderInterface $builder, ?int $currentId = null)
+    protected function addMerchantReference(FormBuilderInterface $builder, ?int $currentMerchantId = null)
     {
         $builder
             ->add(static::FIELD_MERCHANT_REFERENCE, TextType::class, [
@@ -160,10 +160,7 @@ class MerchantForm extends AbstractType
                         'max' => 255,
                     ]),
                     new Callback([
-                        'callback' => $this->getExistingMerchantReferenceValidationCallback(
-                            $currentId,
-                            $this->getFactory()->getMerchantFacade()
-                        ),
+                        'callback' => $this->getExistingMerchantReferenceValidationCallback($currentMerchantId),
                     ]),
                 ],
             ]);
@@ -250,19 +247,25 @@ class MerchantForm extends AbstractType
 
     /**
      * @param int|null $currentId
-     * @param \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface $merchantFacade
      *
      * @return callable
      */
-    protected function getExistingMerchantReferenceValidationCallback(?int $currentId, MerchantGuiToMerchantFacadeInterface $merchantFacade): callable
+    protected function getExistingMerchantReferenceValidationCallback(?int $currentId): callable
     {
-        return function ($merchantReference, ExecutionContextInterface $context) use ($merchantFacade, $currentId) {
+        return function (string $merchantReference, ExecutionContextInterface $context) use ($currentId) {
             $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
             $merchantCriteriaFilterTransfer->setMerchantReference($merchantReference);
-            $merchantTransfer = $merchantFacade->findOne($merchantCriteriaFilterTransfer);
-            if ($merchantTransfer !== null && ($currentId === null || $merchantTransfer->getIdMerchant() !== $currentId)) {
-                $context->addViolation('Merchant reference is already used.');
+            $merchantTransfer = $this->getFactory()->getMerchantFacade()->findOne($merchantCriteriaFilterTransfer);
+
+            if ($merchantTransfer === null) {
+                return;
             }
+
+            if ($currentId && $merchantTransfer->getIdMerchant() === $currentId) {
+                return;
+            }
+
+            $context->addViolation('Merchant reference is already used.');
         };
     }
 
