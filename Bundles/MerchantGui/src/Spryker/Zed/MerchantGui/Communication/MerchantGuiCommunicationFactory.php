@@ -10,7 +10,6 @@ namespace Spryker\Zed\MerchantGui\Communication;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueEmail;
 use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantAddressFormDataProvider;
 use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantFormDataProvider;
 use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantUpdateFormDataProvider;
@@ -92,19 +91,6 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
         return new MerchantFormTabs(
             $this->getMerchantFormTabsExpanderPlugins()
         );
-    }
-
-    /**
-     * @param int|null $currentIdMerchant
-     *
-     * @return \Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueEmail
-     */
-    public function createUniqueEmailConstraint(?int $currentIdMerchant)
-    {
-        return new UniqueEmail([
-            UniqueEmail::OPTION_MERCHANT_FACADE => $this->getMerchantFacade(),
-            UniqueEmail::OPTION_CURRENT_ID_MERCHANT => $currentIdMerchant,
-        ]);
     }
 
     /**

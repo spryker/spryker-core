@@ -8,8 +8,12 @@
 namespace Spryker\Zed\MerchantProfileGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\MerchantProfileGui\Communication\ButtonCreator\MerchantProfileChangeStatusButtonCreator;
+use Spryker\Zed\MerchantProfileGui\Communication\ButtonCreator\MerchantProfileChangeStatusButtonCreatorInterface;
 use Spryker\Zed\MerchantProfileGui\Communication\Form\DataProvider\MerchantProfileFormDataProvider;
 use Spryker\Zed\MerchantProfileGui\Communication\Form\MerchantProfileFormType;
+use Spryker\Zed\MerchantProfileGui\Communication\LabelCreator\MerchantProfileActiveLabelCreator;
+use Spryker\Zed\MerchantProfileGui\Communication\LabelCreator\MerchantProfileActiveLabelCreatorInterface;
 use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToGlossaryFacadeInterface;
 use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToLocaleFacadeInterface;
 use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToMerchantProfileFacadeInterface;
@@ -39,6 +43,27 @@ class MerchantProfileGuiCommunicationFactory extends AbstractCommunicationFactor
             $this->getConfig(),
             $this->getGlossaryFacade(),
             $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProfileGui\Communication\ButtonCreator\MerchantProfileChangeStatusButtonCreatorInterface
+     */
+    public function createMerchantProfileChangeStatusButtonCreator(): MerchantProfileChangeStatusButtonCreatorInterface
+    {
+        return new MerchantProfileChangeStatusButtonCreator(
+            $this->getMerchantProfileFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProfileGui\Communication\LabelCreator\MerchantProfileActiveLabelCreatorInterface
+     */
+    public function createMerchantProfileIsActiveLabelCreator(): MerchantProfileActiveLabelCreatorInterface
+    {
+        return new MerchantProfileActiveLabelCreator(
+            $this->getMerchantProfileFacade(),
+            $this->getTwigEnvironment()
         );
     }
 

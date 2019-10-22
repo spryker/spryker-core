@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueEmail;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -191,7 +192,10 @@ class MerchantForm extends AbstractType
             new NotBlank(),
             new Email(),
             new Length(['max' => 255]),
-            $this->getFactory()->createUniqueEmailConstraint($currentId),
+            new UniqueEmail([
+                UniqueEmail::OPTION_MERCHANT_FACADE => $this->getFactory()->getMerchantFacade(),
+                UniqueEmail::OPTION_CURRENT_ID_MERCHANT => $currentId,
+            ]),
         ];
     }
 

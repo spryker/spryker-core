@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\MerchantProfileGui\Communication\Plugin\MerchantGui\Table;
 
-use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
-use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableDataExpanderPluginInterface;
@@ -31,40 +29,10 @@ class MerchantProfileMerchantTableDataExpanderPlugin extends AbstractPlugin impl
      */
     public function expand(array $item): array
     {
-        $merchantProfileCriteriaFilterTransfer = new MerchantProfileCriteriaFilterTransfer();
-        $merchantProfileCriteriaFilterTransfer->setFkMerchant($item[SpyMerchantTableMap::COL_ID_MERCHANT]);
-        $merchantProfileTransfer = $this->getFactory()
-            ->getMerchantProfileFacade()
-            ->findOne($merchantProfileCriteriaFilterTransfer);
+        $label = $this->getFactory()
+            ->createMerchantProfileIsActiveLabelCreator()
+            ->getActiveLabel($item[SpyMerchantTableMap::COL_ID_MERCHANT]);
 
-        return [$this->getConfig()->getIsActiveColumnName() => $this->getIsActiveLabel($merchantProfileTransfer)];
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantProfileTransfer|null $merchantProfileTransfer
-     *
-     * @return string
-     */
-    protected function getIsActiveLabel(?MerchantProfileTransfer $merchantProfileTransfer): string
-    {
-        if ($merchantProfileTransfer && $merchantProfileTransfer->getIsActive()) {
-            return $this->generateLabel('Active', 'label-info');
-        }
-
-        return $this->generateLabel('Inactive', 'label-danger');
-    }
-
-    /**
-     * @param string $title
-     * @param string|null $class
-     *
-     * @return string
-     */
-    protected function generateLabel(string $title, ?string $class): string
-    {
-        return $this->getFactory()->getTwigEnvironment()->render('label.twig', [
-            'title' => $title,
-            'class' => $class,
-        ]);
+        return [$this->getConfig()->getIsActiveColumnName() => $label];
     }
 }

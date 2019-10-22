@@ -19,8 +19,6 @@ class UniqueEmailValidator extends ConstraintValidator
     /**
      * Checks if the passed email is unique.
      *
-     * @api
-     *
      * @param string $email
      * @param \Symfony\Component\Validator\Constraint $uniqueEmailConstraint
      *
