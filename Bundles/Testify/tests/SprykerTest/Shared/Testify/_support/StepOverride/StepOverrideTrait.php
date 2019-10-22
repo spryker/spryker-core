@@ -95,23 +95,25 @@ trait StepOverrideTrait
      *
      * @return static
      */
-    public function amSureResponseDataContainsSingleResourceOfType(string $type): self
+    public function amSureSeeResponseDataContainsSingleResourceOfType(string $type): self
     {
         return $this->amSure(sprintf('The returned resource is of type %s', $type));
     }
 
     /**
+     * @param string $id
+     *
      * @return static
      */
-    public function amSureSingleResourceIdEqualTo(): self
+    public function amSureSeeSingleResourceIdEqualTo(string $id): self
     {
-        return $this->amSure('The returned resource has correct id');
+        return $this->amSure(sprintf('The returned resource has id equal to %s', $id));
     }
 
     /**
      * @return static
      */
-    public function amSureSingleResourceHasSelfLink(): self
+    public function amSureSeeSingleResourceHasSelfLink(): self
     {
         return $this->amSure('The returned resource has correct self-link');
     }
@@ -122,7 +124,7 @@ trait StepOverrideTrait
      *
      * @return static
      */
-    public function amSureSingleResourceHasRelationshipByTypeAndId(string $type, string $id): self
+    public function amSureSeeSingleResourceHasRelationshipByTypeAndId(string $type, string $id): self
     {
         return $this->amSure(
             sprintf('The returned resource has a relation to resource of type %s with id %s', $type, $id)
@@ -135,10 +137,22 @@ trait StepOverrideTrait
      *
      * @return static
      */
-    public function amSureIncludesContainsResourceByTypeAndId(string $type, string $id): self
+    public function amSureSeeIncludesContainsResourceByTypeAndId(string $type, string $id): self
     {
         return $this->amSure(
             sprintf('The returned resource has include of type %s with id %s', $type, $id)
+        );
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return static
+     */
+    public function amSureDontSeeIncludesContainsResourcesOfType(string $type): self
+    {
+        return $this->amSure(
+            sprintf('The returned resource does not have includes of type %s', $type)
         );
     }
 
@@ -148,7 +162,7 @@ trait StepOverrideTrait
      *
      * @return static
      */
-    public function amSureIncludedResourceByTypeAndIdHasSelfLink(string $type, string $id): self
+    public function amSureSeeIncludedResourceByTypeAndIdHasSelfLink(string $type, string $id): self
     {
         return $this->amSure(
             sprintf('The include of type %s with id %s has correct self-link', $type, $id)
@@ -163,7 +177,7 @@ trait StepOverrideTrait
      *
      * @return static
      */
-    public function amSureIncludedResourceByTypeAndIdHasRelationshipByTypeAndId(
+    public function amSureSeeIncludedResourceByTypeAndIdHasRelationshipByTypeAndId(
         string $type,
         string $id,
         string $relationType,
@@ -179,7 +193,7 @@ trait StepOverrideTrait
      *
      * @return static
      */
-    public function amSureResponseDataContainsResourceCollectionOfType(string $type): self
+    public function amSureSeeResponseDataContainsResourceCollectionOfType(string $type): self
     {
         return $this->amSure(sprintf('The response data contains resource collection of type %s', $type));
     }
@@ -189,7 +203,7 @@ trait StepOverrideTrait
      *
      * @return static
      */
-    public function amSureResourceCollectionHasResourceWithId(string $id): self
+    public function amSureSeeResourceCollectionHasResourceWithId(string $id): self
     {
         return $this->amSure(sprintf('The response resource collection has resource with id %s', $id));
     }
@@ -199,7 +213,7 @@ trait StepOverrideTrait
      *
      * @return static
      */
-    public function amSureResourceByIdHasSelfLink(string $id): self
+    public function amSureSeeResourceByIdHasSelfLink(string $id): self
     {
         return $this->amSure(sprintf('The resource with id %s has correct self-link', $id));
     }
@@ -211,7 +225,7 @@ trait StepOverrideTrait
      *
      * @return static
      */
-    public function amSureResourceByIdHasRelationshipByTypeAndId(string $id, string $relationType, string $relationId): self
+    public function amSureSeeResourceByIdHasRelationshipByTypeAndId(string $id, string $relationType, string $relationId): self
     {
         return $this->amSure(
             sprintf('The resource with id %s has a relation to resource of type %s with id %s', $id, $relationType, $relationId)
@@ -223,7 +237,7 @@ trait StepOverrideTrait
      *
      * @return static
      */
-    public function amSureSingleResourceHasAttribute(string $attribute): self
+    public function amSureSeeSingleResourceHasAttribute(string $attribute): self
     {
         return $this->amSure(sprintf('The returned resource contains `%s` attribute', $attribute));
     }

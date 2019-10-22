@@ -25,14 +25,13 @@ class ProductLabelDataHelper extends Module
      */
     public function haveProductLabel(array $seedData = [])
     {
-        $productLabelFacade = $this->getProductLabelFacade();
         /** @var \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer */
         $productLabelTransfer = (new ProductLabelBuilder($seedData + [
                 ProductLabelTransfer::VALID_FROM => null,
                 ProductLabelTransfer::VALID_TO => null,
             ]))->build();
         $productLabelTransfer->setIdProductLabel(null);
-        $productLabelFacade->createLabel($productLabelTransfer);
+        $this->getProductLabelFacade()->createLabel($productLabelTransfer);
 
         $productLabelLocalizedAttributesTransfer = (new ProductLabelLocalizedAttributesBuilder([
             ProductLabelLocalizedAttributesTransfer::FK_LOCALE => $this->getLocator()->locale()->facade()->getCurrentLocale()->getIdLocale(),
@@ -40,7 +39,7 @@ class ProductLabelDataHelper extends Module
         ]))->build();
         $productLabelTransfer->addLocalizedAttributes($productLabelLocalizedAttributesTransfer);
 
-        $productLabelFacade->updateLabel($productLabelTransfer);
+        $this->getProductLabelFacade()->updateLabel($productLabelTransfer);
 
         return $productLabelTransfer;
     }

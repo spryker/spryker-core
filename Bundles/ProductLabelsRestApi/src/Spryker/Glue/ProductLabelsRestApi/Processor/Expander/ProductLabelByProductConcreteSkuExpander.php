@@ -34,12 +34,12 @@ class ProductLabelByProductConcreteSkuExpander implements ProductLabelByProductC
      */
     public function addResourceRelationships(array $restResources, RestRequestInterface $restRequest): array
     {
-        $concreteSkus = array_map(function (RestResourceInterface $restResource) {
+        $productConcreteSkus = array_map(function (RestResourceInterface $restResource) {
             return $restResource->getId();
         }, $restResources);
 
         $productLabelResources = $this->productLabelReader->getByProductConcreteSkus(
-            $concreteSkus,
+            $productConcreteSkus,
             $restRequest->getMetadata()->getLocale()
         );
 
@@ -55,6 +55,10 @@ class ProductLabelByProductConcreteSkuExpander implements ProductLabelByProductC
     protected function addProductLabelsResourceRelationships(array $restResources, array $productLabelResources): array
     {
         return array_map(function (RestResourceInterface $restResource) use ($productLabelResources) {
+            if (empty($productLabelResources[$restResource->getId()])) {
+                return;
+            }
+
             foreach ($productLabelResources[$restResource->getId()] as $productLabelResource) {
                 $restResource->addRelationship($productLabelResource);
             }

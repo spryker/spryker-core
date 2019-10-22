@@ -19,12 +19,6 @@ class OauthHelper extends Module
     use LocatorHelperTrait;
 
     /**
-     * Specification:
-     * - Authorizes customer and returns OauthResponseTransfer.
-     * - Returns OauthResponseTransfer with error if authorization failed.
-     *
-     * @part json
-     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\OauthResponseTransfer

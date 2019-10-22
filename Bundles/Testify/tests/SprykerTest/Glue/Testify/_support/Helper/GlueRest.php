@@ -357,6 +357,20 @@ class GlueRest extends REST implements LastConnectionProviderInterface
      * @part json
      *
      * @param string $type
+     *
+     * @return void
+     */
+    public function dontSeeIncludesContainsResourcesOfType(string $type): void
+    {
+        $this->getJsonPathModule()->dontSeeResponseMatchesJsonPath(
+            sprintf('$.included[?(@.type == %s$s)]', $type)
+        );
+    }
+
+    /**
+     * @part json
+     *
+     * @param string $type
      * @param string $id
      * @param array $attributes
      *

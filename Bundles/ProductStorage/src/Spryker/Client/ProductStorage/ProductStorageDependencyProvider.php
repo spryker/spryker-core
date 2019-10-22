@@ -12,7 +12,7 @@ use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleBridge;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientBridge;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceBridge;
-use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface;
+use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingService;
 use Spryker\Shared\Kernel\Store;
 
 /**
@@ -91,7 +91,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
     protected function addUtilEncodingService(Container $container): Container
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
-            return new ProductStorageToUtilEncodingServiceInterface(
+            return new ProductStorageToUtilEncodingService(
                 $container->getLocator()->utilEncoding()->service()
             );
         });

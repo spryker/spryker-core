@@ -10,6 +10,7 @@ namespace SprykerTest\Shared\ProductAlternative\Helper;
 use Codeception\Module;
 use Generated\Shared\Transfer\ProductAlternativeCreateRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Zed\ProductAlternative\Business\ProductAlternativeFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -33,7 +34,7 @@ class ProductAlternativeDataHelper extends Module
             $skuProductAlternative
         );
         $productConcreteTransfer->addProductAlternativeCreateRequest($productAlternativeCreateRequestTransfer);
-        $this->getLocator()->productAlternative()->facade()
+        $this->getProductAlternativeFacade()
             ->persistProductAlternative($productConcreteTransfer);
     }
 
@@ -50,5 +51,13 @@ class ProductAlternativeDataHelper extends Module
         return (new ProductAlternativeCreateRequestTransfer())
             ->setIdProduct($idProductConcrete)
             ->setAlternativeSku($skuProductAlternative);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAlternative\Business\ProductAlternativeFacadeInterface
+     */
+    protected function getProductAlternativeFacade(): ProductAlternativeFacadeInterface
+    {
+        return $this->getLocator()->productAlternative()->facade();
     }
 }

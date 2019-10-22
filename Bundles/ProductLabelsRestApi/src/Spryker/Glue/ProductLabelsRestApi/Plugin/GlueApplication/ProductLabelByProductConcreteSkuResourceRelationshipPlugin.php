@@ -31,7 +31,7 @@ class ProductLabelByProductConcreteSkuResourceRelationshipPlugin extends Abstrac
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createProductLabelByConcreteProductSkuExpander()
+            ->createProductLabelByProductConcreteSkuExpander()
             ->addResourceRelationships($resources, $restRequest);
     }
 

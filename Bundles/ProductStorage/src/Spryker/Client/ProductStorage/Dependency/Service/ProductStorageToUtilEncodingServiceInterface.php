@@ -7,21 +7,8 @@
 
 namespace Spryker\Client\ProductStorage\Dependency\Service;
 
-class ProductStorageToUtilEncodingServiceInterface implements ProductStorageToUtilEncodingServiceInterfaceInterface
+interface ProductStorageToUtilEncodingServiceInterface
 {
-    /**
-     * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
-     */
-    protected $utilEncodingService;
-
-    /**
-     * @param \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface $utilEncodingService
-     */
-    public function __construct($utilEncodingService)
-    {
-        $this->utilEncodingService = $utilEncodingService;
-    }
-
     /**
      * @param string $jsonValue
      * @param bool $assoc
@@ -30,8 +17,5 @@ class ProductStorageToUtilEncodingServiceInterface implements ProductStorageToUt
      *
      * @return mixed|null
      */
-    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
-    {
-        return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
-    }
+    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
 }

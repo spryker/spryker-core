@@ -69,7 +69,7 @@ class ProductLabelsRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\ProductLabelsRestApi\Processor\Expander\ProductLabelByProductConcreteSkuExpanderInterface
      */
-    public function createProductLabelByConcreteProductSkuExpander(): ProductLabelByProductConcreteSkuExpanderInterface
+    public function createProductLabelByProductConcreteSkuExpander(): ProductLabelByProductConcreteSkuExpanderInterface
     {
         return new ProductLabelByProductConcreteSkuExpander($this->createProductLabelReader());
     }

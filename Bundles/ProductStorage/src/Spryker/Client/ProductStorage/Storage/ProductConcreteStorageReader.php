@@ -13,7 +13,7 @@ use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface;
-use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface;
+use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingService;
 use Spryker\Client\ProductStorage\Exception\ProductConcreteDataCacheNotFoundException;
 use Spryker\Client\ProductStorage\ProductStorageConfig;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
@@ -67,7 +67,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface $localeClient
-     * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingService $utilEncodingService
      * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionPluginInterface[] $productConcreteRestrictionPlugins
      * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionFilterPluginInterface[] $productConcreteRestrictionFilterPlugins
      */
@@ -75,7 +75,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         ProductStorageToStorageClientInterface $storageClient,
         ProductStorageToSynchronizationServiceInterface $synchronizationService,
         ProductStorageToLocaleInterface $localeClient,
-        ProductStorageToUtilEncodingServiceInterface $utilEncodingService,
+        ProductStorageToUtilEncodingService $utilEncodingService,
         array $productConcreteRestrictionPlugins = [],
         array $productConcreteRestrictionFilterPlugins = []
     ) {
@@ -260,15 +260,15 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     public function getProductConcreteStorageDataByMappingAndIdentifiers(string $mappingType, array $identifiers, string $localeName): array
     {
         $mappingKeys = $this->generateMappingKeys($mappingType, $identifiers, $localeName);
-        $concreteProductIds = array_map(function (string $storageData) {
+        $productConcreteIds = array_map(function (string $storageData) {
             return $this->utilEncodingService->decodeJson($storageData, true)[static::KEY_ID];
         }, $this->storageClient->getMulti($mappingKeys));
 
-        if (!$concreteProductIds) {
+        if (!$productConcreteIds) {
             return [];
         }
 
-        return $this->getBulkProductConcreteStorageDataByProductConcreteIdsAndLocaleName($concreteProductIds, $localeName);
+        return $this->getBulkProductConcreteStorageDataByProductConcreteIdsAndLocaleName($productConcreteIds, $localeName);
     }
 
     /**

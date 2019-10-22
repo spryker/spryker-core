@@ -85,26 +85,42 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
      */
     public function getLabelsByProductAbstractIds(array $productAbstractIds, string $localeName): array
     {
-        $productLabelIdsByAbstractProductIds = $this->getProductLabelIdsByAbstractProductIds($productAbstractIds);
+        $productLabelIdsByProductAbstractIds = $this->getProductLabelIdsByProductAbstractIds($productAbstractIds);
 
-        if (!$productLabelIdsByAbstractProductIds) {
+        if (!$productLabelIdsByProductAbstractIds) {
             return [];
         }
 
-        $productLabelIds = array_unique(array_merge(...$productLabelIdsByAbstractProductIds));
-        $productLabelDictionaryItemTransfers = $this->setProductLabelDictionaryItemTransfersProductLabelIdKeys(
-            $this->findSortedProductLabelsInDictionary($productLabelIds, $localeName)
+        return $this->getProductLabelDictionaryItemTransfersGroupedProductAbstractIds(
+            $productLabelIdsByProductAbstractIds,
+            $localeName
         );
-        $productLabelDictionaryItemTransfersByAbstractProductIds = [];
+    }
 
-        foreach ($productLabelIdsByAbstractProductIds as $productAbstractId => $productLabelIds) {
-            $productLabelDictionaryItemTransfersByAbstractProductIds[$productAbstractId] = array_intersect_key(
+    /**
+     * @param int[][] $productLabelIdsByProductAbstractIds
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
+     */
+    protected function getProductLabelDictionaryItemTransfersGroupedProductAbstractIds(
+        array $productLabelIdsByProductAbstractIds,
+        string $localeName
+    ): array {
+        $uniqueProductLabelIds = array_unique(array_merge(...$productLabelIdsByProductAbstractIds));
+        $productLabelDictionaryItemTransfers = $this->getProductLabelDictionaryItemTransfersGroupedById(
+            $this->findSortedProductLabelsInDictionary($uniqueProductLabelIds, $localeName)
+        );
+        $productLabelDictionaryItemTransfersByProductAbstractIds = [];
+
+        foreach ($productLabelIdsByProductAbstractIds as $productAbstractId => $productLabelIds) {
+            $productLabelDictionaryItemTransfersByProductAbstractIds[$productAbstractId] = array_intersect_key(
                 $productLabelDictionaryItemTransfers,
                 array_flip($productLabelIds)
             );
         }
 
-        return $productLabelDictionaryItemTransfersByAbstractProductIds;
+        return $productLabelDictionaryItemTransfersByProductAbstractIds;
     }
 
     /**
@@ -112,7 +128,7 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    protected function setProductLabelDictionaryItemTransfersProductLabelIdKeys(array $productLabelDictionaryItemTransfers): array
+    protected function getProductLabelDictionaryItemTransfersGroupedById(array $productLabelDictionaryItemTransfers): array
     {
         $productLabelIds = array_map(function (ProductLabelDictionaryItemTransfer $productLabelDictionaryItemTransfer) {
             return $productLabelDictionaryItemTransfer->getIdProductLabel();
@@ -156,28 +172,28 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     }
 
     /**
-     * @param int[] $abstractProductIds
+     * @param int[] $productAbstractIds
      *
      * @return int[][]
      */
-    protected function getProductLabelIdsByAbstractProductIds(array $abstractProductIds): array
+    protected function getProductLabelIdsByProductAbstractIds(array $productAbstractIds): array
     {
-        $storageKeys = $this->generateProductLabelStorageKeys($abstractProductIds);
+        $storageKeys = $this->generateProductLabelStorageKeys($productAbstractIds);
         $storageDataItems = $this->getProductLabelStorageDataItemsByProductLabelStorageKeys($storageKeys);
 
         return $this->getProductLabelIdsGroupedByIdProductAbstract($storageDataItems);
     }
 
     /**
-     * @param int[] $abstractProductIds
+     * @param int[] $productAbstractIds
      *
      * @return string[]
      */
-    protected function generateProductLabelStorageKeys(array $abstractProductIds): array
+    protected function generateProductLabelStorageKeys(array $productAbstractIds): array
     {
         $storageKeys = [];
 
-        foreach ($abstractProductIds as $idProductAbstract) {
+        foreach ($productAbstractIds as $idProductAbstract) {
             $storageKeys[$idProductAbstract] = $this->generateProductLabelStorageKey($idProductAbstract);
         }
 

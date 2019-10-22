@@ -28,10 +28,10 @@ interface ProductLabelReaderInterface
     public function findByAbstractSku(string $sku, string $localeName): array;
 
     /**
-     * @param string[] $concreteSkus
+     * @param string[] $productConcreteSkus
      * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
      */
-    public function getByProductConcreteSkus(array $concreteSkus, string $localeName): array;
+    public function getByProductConcreteSkus(array $productConcreteSkus, string $localeName): array;
 }

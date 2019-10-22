@@ -127,24 +127,22 @@ class ProductLabelReader implements ProductLabelReaderInterface
     }
 
     /**
-     * @param string[] $concreteSkus
+     * @param string[] $productConcreteSkus
      * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
      */
-    public function getByProductConcreteSkus(array $concreteSkus, string $localeName): array
+    public function getByProductConcreteSkus(array $productConcreteSkus, string $localeName): array
     {
-        $abstractProductIdsByProductConcreteSku = $this->getAbstractProductIdsByProductConcreteSkus($concreteSkus, $localeName);
+        $productAbstractIdsByProductConcreteSku = $this->getProductAbstractIdsByProductConcreteSkus($productConcreteSkus, $localeName);
         $productLabels = $this->productLabelStorageClient->getLabelsByProductAbstractIds(
-            array_unique($abstractProductIdsByProductConcreteSku),
+            array_unique($productAbstractIdsByProductConcreteSku),
             $localeName
         );
         $restResourceCollectionsByProductConcreteSku = [];
 
-        foreach ($abstractProductIdsByProductConcreteSku as $productConcreteSku => $idProductAbstract) {
+        foreach ($productAbstractIdsByProductConcreteSku as $productConcreteSku => $idProductAbstract) {
             if (empty($productLabels[$idProductAbstract])) {
-                $restResourceCollectionsByProductConcreteSku[$productConcreteSku] = [];
-
                 continue;
             }
 
@@ -155,26 +153,26 @@ class ProductLabelReader implements ProductLabelReaderInterface
     }
 
     /**
-     * @param string[] $concreteSkus
+     * @param string[] $productConcreteSkus
      * @param string $localeName
      *
      * @return int[]
      */
-    protected function getAbstractProductIdsByProductConcreteSkus(array $concreteSkus, string $localeName): array
+    protected function getProductAbstractIdsByProductConcreteSkus(array $productConcreteSkus, string $localeName): array
     {
-        $concreteProductDataCollection = $this->productStorageClient->getProductConcreteStorageDataByMappingAndIdentifiers(
+        $productConcreteDataCollection = $this->productStorageClient->getProductConcreteStorageDataByMappingAndIdentifiers(
             static::PRODUCT_CONCRETE_MAPPING_TYPE,
-            $concreteSkus,
+            $productConcreteSkus,
             $localeName
         );
-        $abstractProductIds = [];
+        $productAbstractIds = [];
 
-        foreach ($concreteProductDataCollection as $concreteProductData) {
-            $abstractProductIds[$concreteProductData[static::PRODUCT_CONCRETE_MAPPING_TYPE]] =
-                $concreteProductData[static::KEY_ID_PRODUCT_ABSTRACT];
+        foreach ($productConcreteDataCollection as $productConcreteData) {
+            $productAbstractIds[$productConcreteData[static::PRODUCT_CONCRETE_MAPPING_TYPE]] =
+                $productConcreteData[static::KEY_ID_PRODUCT_ABSTRACT];
         }
 
-        return $abstractProductIds;
+        return $productAbstractIds;
     }
 
     /**
