@@ -13,24 +13,24 @@ use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOff
 interface ProductConcreteProductOffersStorageMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteProductOffersStorageTransfer $ProductConcreteProductOffersStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteProductOffersStorageTransfer $productConcreteProductOffersStorageTransfer
      * @param \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorage $spyProductConcreteProductOffersStorage
      *
      * @return \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorage
      */
     public function mapProductConcreteProductOffersStorageTransferToProductConcreteProductOffersStorageEntity(
-        ProductConcreteProductOffersStorageTransfer $ProductConcreteProductOffersStorageTransfer,
+        ProductConcreteProductOffersStorageTransfer $productConcreteProductOffersStorageTransfer,
         SpyProductConcreteProductOffersStorage $spyProductConcreteProductOffersStorage
     ): SpyProductConcreteProductOffersStorage;
 
     /**
      * @param \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorage $spyProductConcreteProductOffersStorage
-     * @param \Generated\Shared\Transfer\ProductConcreteProductOffersStorageTransfer $ProductConcreteProductOffersStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteProductOffersStorageTransfer $productConcreteProductOffersStorageTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteProductOffersStorageTransfer
      */
     public function mapProductConcreteProductOffersStorageEntityToProductConcreteProductOffersStorageTransfer(
         SpyProductConcreteProductOffersStorage $spyProductConcreteProductOffersStorage,
-        ProductConcreteProductOffersStorageTransfer $ProductConcreteProductOffersStorageTransfer
+        ProductConcreteProductOffersStorageTransfer $productConcreteProductOffersStorageTransfer
     ): ProductConcreteProductOffersStorageTransfer;
 }

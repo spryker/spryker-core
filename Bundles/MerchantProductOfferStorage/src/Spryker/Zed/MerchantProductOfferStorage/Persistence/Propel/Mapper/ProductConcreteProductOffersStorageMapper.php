@@ -13,17 +13,17 @@ use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOff
 class ProductConcreteProductOffersStorageMapper implements ProductConcreteProductOffersStorageMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteProductOffersStorageTransfer $ProductConcreteProductOffersStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteProductOffersStorageTransfer $productConcreteProductOffersStorageTransfer
      * @param \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorage $spyProductConcreteProductOffersStorage
      *
      * @return \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorage
      */
     public function mapProductConcreteProductOffersStorageTransferToProductConcreteProductOffersStorageEntity(
-        ProductConcreteProductOffersStorageTransfer $ProductConcreteProductOffersStorageTransfer,
+        ProductConcreteProductOffersStorageTransfer $productConcreteProductOffersStorageTransfer,
         SpyProductConcreteProductOffersStorage $spyProductConcreteProductOffersStorage
     ): SpyProductConcreteProductOffersStorage {
         $spyProductConcreteProductOffersStorage->fromArray(
-            $ProductConcreteProductOffersStorageTransfer->modifiedToArray(false)
+            $productConcreteProductOffersStorageTransfer->modifiedToArray(false)
         );
 
         return $spyProductConcreteProductOffersStorage;
@@ -31,19 +31,19 @@ class ProductConcreteProductOffersStorageMapper implements ProductConcreteProduc
 
     /**
      * @param \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorage $spyProductConcreteProductOffersStorage
-     * @param \Generated\Shared\Transfer\ProductConcreteProductOffersStorageTransfer $ProductConcreteProductOffersStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteProductOffersStorageTransfer $productConcreteProductOffersStorageTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteProductOffersStorageTransfer
      */
     public function mapProductConcreteProductOffersStorageEntityToProductConcreteProductOffersStorageTransfer(
         SpyProductConcreteProductOffersStorage $spyProductConcreteProductOffersStorage,
-        ProductConcreteProductOffersStorageTransfer $ProductConcreteProductOffersStorageTransfer
+        ProductConcreteProductOffersStorageTransfer $productConcreteProductOffersStorageTransfer
     ): ProductConcreteProductOffersStorageTransfer {
-        $merchantTransfer = $ProductConcreteProductOffersStorageTransfer->fromArray(
+        $productConcreteProductOffersStorageTransfer = $productConcreteProductOffersStorageTransfer->fromArray(
             $spyProductConcreteProductOffersStorage->toArray(),
             true
         );
 
-        return $merchantTransfer;
+        return $productConcreteProductOffersStorageTransfer;
     }
 }

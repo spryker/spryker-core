@@ -1,19 +1,20 @@
 {
   "name": "spryker/merchant-product-offer-data-import",
+  "type": "library",
   "description": "MerchantProductOfferDataImport module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/data-import": "^1.3.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/merchant":"^2.0.0",
-    "spryker/data-import":"^1.3.0",
-    "spryker/product":"^5.5.0 || ^6.0.0",
-    "spryker/product-offer":"^1.0.0"
+    "spryker/merchant": "^2.0.0",
+    "spryker/product": "^5.5.0 || ^6.0.0",
+    "spryker/product-offer": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
-    "spryker/propel": "*"
+    "spryker/propel": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {

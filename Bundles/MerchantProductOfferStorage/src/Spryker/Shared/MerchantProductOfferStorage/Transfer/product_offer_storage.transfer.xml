@@ -17,6 +17,10 @@
         <property name="key" type="string"/>
     </transfer>
 
+    <transfer name="ProductOfferViewCollection">
+        <property name="ProductOfferViews" type="ProductOfferView[]" singular="ProductOfferView"/>
+    </transfer>
+
     <transfer name="ProductOfferView">
         <property name="idProductOffer" type="int"/>
         <property name="productOfferReference" type="string"/>
