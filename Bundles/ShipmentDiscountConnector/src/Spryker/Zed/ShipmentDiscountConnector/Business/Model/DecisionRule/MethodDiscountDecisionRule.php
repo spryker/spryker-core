@@ -76,7 +76,7 @@ class MethodDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterfac
             $idShipmentMethod = $shipment->getMethod()->getIdShipmentMethod();
         }
 
-        if ($idShipmentMethod && $this->discountFacade->queryStringCompare($clauseTransfer, $idShipmentMethod)) {
+        if ($idShipmentMethod && $this->discountFacade->queryStringCompare($clauseTransfer, (string)$idShipmentMethod)) {
             return true;
         }
 

@@ -17,7 +17,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 class ExceptionStreamHandlerPlugin extends AbstractPlugin implements LogHandlerPluginInterface
 {
     /**
-     * @var \Monolog\Handler\HandlerInterface
+     * @var \Monolog\Handler\HandlerInterface|null
      */
     protected $handler;
 

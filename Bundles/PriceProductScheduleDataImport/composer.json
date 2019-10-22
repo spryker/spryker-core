@@ -14,9 +14,9 @@
     "spryker/store": "^1.9.1"
   },
   "require-dev": {
-    "spryker/code-sniffer": "^0.9.5",
-    "spryker/propel": "^3.8.0",
-    "spryker/testify": "^3.9.0"
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
