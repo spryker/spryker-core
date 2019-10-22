@@ -56,9 +56,9 @@ class MerchantProfileStorageDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addEventBehaviorFacade(Container $container): Container
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new MerchantProfileStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
         return $container;
     }
@@ -70,9 +70,9 @@ class MerchantProfileStorageDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addMerchantProfileFacade(Container $container): Container
     {
-        $container[static::FACADE_MERCHANT_PROFILE] = function (Container $container) {
+        $container->set(static::FACADE_MERCHANT_PROFILE, function (Container $container) {
             return new MerchantProfileStorageToMerchantProfileFacadeBridge($container->getLocator()->merchantProfile()->facade());
-        };
+        });
 
         return $container;
     }
@@ -84,9 +84,9 @@ class MerchantProfileStorageDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new MerchantProfileStorageToLocaleFacadeBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }

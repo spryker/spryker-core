@@ -59,41 +59,54 @@ class MerchantProfileWriterStep extends PublishAwareStep implements DataImportSt
      */
     protected function saveGlossaryKeyAttributes(SpyMerchantProfile $merchantProfileEntity, array $glossaryKeyAttributes): SpyMerchantProfile
     {
-        $idMerchant = $merchantProfileEntity->getFkMerchant();
-
         foreach ($glossaryKeyAttributes as $idLocale => $attributes) {
-            foreach ($attributes as $attributeName => $attributeValue) {
-                if (!$attributeValue) {
-                    continue;
-                }
-                if ($attributeName === MerchantProfileDataSetInterface::URL) {
-                    $this->addMerchantProfileUrl($merchantProfileEntity->getIdMerchantProfile(), $idLocale, $attributeValue);
-                    continue;
-                }
-                $merchantProfileEntity->fromArray([
-                    $attributeName => $this->generateMerchantGlossaryKey($attributeName, $idMerchant),
-                ]);
+            $merchantProfileEntity = $this->saveGlossaryKeyAttributesForLocale($merchantProfileEntity, $attributes, $idLocale);
+        }
 
-                $glossaryFieldKey = $this->generateMerchantGlossaryKey($attributeName, $idMerchant);
-                $glossaryKeyEntity = SpyGlossaryKeyQuery::create()
-                    ->filterByKey($glossaryFieldKey)
-                    ->findOneOrCreate();
+        return $merchantProfileEntity;
+    }
 
-                $glossaryKeyEntity->save();
-
-                $glossaryTranslationEntity = SpyGlossaryTranslationQuery::create()
-                    ->filterByFkGlossaryKey($glossaryKeyEntity->getIdGlossaryKey())
-                    ->filterByFkLocale($idLocale)
-                    ->findOneOrCreate();
-
-                $glossaryTranslationEntity
-                    ->setValue($attributeValue);
-
-                if ($glossaryTranslationEntity->isNew() || $glossaryTranslationEntity->isModified()) {
-                    $glossaryTranslationEntity->save();
-                }
-                $this->addPublishEvents(GlossaryEvents::GLOSSARY_KEY_PUBLISH, $glossaryKeyEntity->getIdGlossaryKey());
+    /**
+     * @param \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfile $merchantProfileEntity
+     * @param array $attributes
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfile
+     */
+    protected function saveGlossaryKeyAttributesForLocale(SpyMerchantProfile $merchantProfileEntity, array $attributes, int $idLocale): SpyMerchantProfile
+    {
+        $idMerchant = $merchantProfileEntity->getFkMerchant();
+        foreach ($attributes as $attributeName => $attributeValue) {
+            if (!$attributeValue) {
+                continue;
             }
+            if ($attributeName === MerchantProfileDataSetInterface::URL) {
+                $this->addMerchantProfileUrl($merchantProfileEntity->getIdMerchantProfile(), $idLocale, $attributeValue);
+                continue;
+            }
+            $merchantProfileEntity->fromArray([
+                $attributeName => $this->generateMerchantGlossaryKey($attributeName, $idMerchant),
+            ]);
+
+            $glossaryFieldKey = $this->generateMerchantGlossaryKey($attributeName, $idMerchant);
+            $glossaryKeyEntity = SpyGlossaryKeyQuery::create()
+                ->filterByKey($glossaryFieldKey)
+                ->findOneOrCreate();
+
+            $glossaryKeyEntity->save();
+
+            $glossaryTranslationEntity = SpyGlossaryTranslationQuery::create()
+                ->filterByFkGlossaryKey($glossaryKeyEntity->getIdGlossaryKey())
+                ->filterByFkLocale($idLocale)
+                ->findOneOrCreate();
+
+            $glossaryTranslationEntity
+                ->setValue($attributeValue);
+
+            if ($glossaryTranslationEntity->isNew() || $glossaryTranslationEntity->isModified()) {
+                $glossaryTranslationEntity->save();
+            }
+            $this->addPublishEvents(GlossaryEvents::GLOSSARY_KEY_PUBLISH, $glossaryKeyEntity->getIdGlossaryKey());
         }
 
         return $merchantProfileEntity;

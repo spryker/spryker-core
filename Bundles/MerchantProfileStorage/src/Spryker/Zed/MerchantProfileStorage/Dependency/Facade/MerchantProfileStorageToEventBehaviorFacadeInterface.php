@@ -14,7 +14,7 @@ interface MerchantProfileStorageToEventBehaviorFacadeInterface
      *
      * @return int[]
      */
-    public function getEventTransferIds(array $eventTransfers): array;
+    public function getEventTransferIds(array $eventTransfers);
 
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
@@ -22,5 +22,5 @@ interface MerchantProfileStorageToEventBehaviorFacadeInterface
      *
      * @return int[]
      */
-    public function getEventTransferForeignKeys(array $eventTransfers, string $foreignKeyColumnName): array;
+    public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName);
 }

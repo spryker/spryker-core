@@ -22,6 +22,7 @@ class MerchantProfileAddressDataImportHelper extends Module
     public function assertMerchantProfileAddressDatabaseTableIsEmpty(): void
     {
         $query = $this->getMerchantProfileAddressQuery();
+
         $this->assertEquals(0, $query->count(), 'Found at least one entry in the database table but database table was expected to be empty.');
     }
 
@@ -31,6 +32,7 @@ class MerchantProfileAddressDataImportHelper extends Module
     public function assertMerchantProfileAddressDatabaseTableContainsData(): void
     {
         $query = $this->getMerchantProfileAddressQuery();
+
         $this->assertTrue($query->count() > 0, 'Expected at least one entry in the database table but database table is empty.');
     }
 

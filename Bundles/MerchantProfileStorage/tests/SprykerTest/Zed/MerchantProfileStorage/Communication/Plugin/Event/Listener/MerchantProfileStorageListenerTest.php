@@ -60,7 +60,7 @@ class MerchantProfileStorageListenerTest extends Unit
         // Arrange
         $merchantProfileTransfer = $this->tester->haveMerchantProfile($this->tester->haveMerchant());
 
-        // Action
+        // Act
         $merchantProfileStorageActivateListener = new MerchantProfileStorageActivateListener();
         $eventTransfers = [
             (new EventEntityTransfer())->setId($merchantProfileTransfer->getIdMerchantProfile()),
@@ -86,7 +86,7 @@ class MerchantProfileStorageListenerTest extends Unit
             ['is_active' => false]
         );
 
-        // Action
+        // Act
         $eventTransfers = [
             (new EventEntityTransfer())->setId($merchantProfileTransfer->getIdMerchantProfile()),
         ];

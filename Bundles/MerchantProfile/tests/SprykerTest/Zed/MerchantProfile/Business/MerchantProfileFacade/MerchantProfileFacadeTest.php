@@ -32,7 +32,7 @@ class MerchantProfileFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFind(): void
+    public function testFindFiltersByIdMerchantProfile(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -51,7 +51,7 @@ class MerchantProfileFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateMerchantProfile(): void
+    public function testCreateMerchantProfilePersistsToDatabase(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -66,7 +66,7 @@ class MerchantProfileFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateMerchantProfile(): void
+    public function testUpdateMerchantProfilePersistsToDatabase(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -88,13 +88,13 @@ class MerchantProfileFacadeTest extends Unit
         $this->assertSame($expectedIdMerchantProfile, $updatedMerchantProfileTransfer->getIdMerchantProfile());
         $this->assertEquals('Role two', $updatedMerchantProfileTransfer->getContactPersonRole());
         $this->assertEquals('First Name Two', $updatedMerchantProfileTransfer->getContactPersonFirstName());
-        $this->assertNotEmpty($updatedMerchantProfileTransfer->getAddressCollection()->getAddresses()->offsetGet(0));
+        $this->assertNotEmpty($updatedMerchantProfileTransfer->getAddressCollection());
     }
 
     /**
      * @return void
      */
-    public function testMerchantProfileGlossaryKey(): void
+    public function testCreateMerchantProfileSavesMerchantProfileGlossaryKey(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -132,7 +132,7 @@ class MerchantProfileFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindOneMerchantProfile(): void
+    public function testFindOneMerchantProfileFiltersByFkMerchant(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();

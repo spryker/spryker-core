@@ -33,7 +33,7 @@ class MerchantProfileToUrlFacadeBridge implements MerchantProfileToUrlFacadeInte
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createUrl($urlTransfer, ?LocaleTransfer $localeTransfer = null, $resourceType = null, $idResource = null): UrlTransfer
+    public function createUrl($urlTransfer, ?LocaleTransfer $localeTransfer = null, $resourceType = null, $idResource = null)
     {
         return $this->urlFacade->createUrl($urlTransfer, $localeTransfer, $resourceType, $idResource);
     }
@@ -43,7 +43,7 @@ class MerchantProfileToUrlFacadeBridge implements MerchantProfileToUrlFacadeInte
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function updateUrl(UrlTransfer $urlTransfer): UrlTransfer
+    public function updateUrl(UrlTransfer $urlTransfer)
     {
         return $this->urlFacade->updateUrl($urlTransfer);
     }

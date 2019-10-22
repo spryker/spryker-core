@@ -9,63 +9,41 @@ namespace Spryker\Zed\MerchantProfile\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileAddressTransfer;
-use Generated\Shared\Transfer\SpyMerchantProfileAddressEntityTransfer;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress;
+use Propel\Runtime\Collection\ObjectCollection;
 
 interface MerchantProfileAddressMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantProfileAddressTransfer $merchantProfileAddressTransfer
-     * @param \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress $spyMerchantProfileAddress
+     * @param \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress $merchantProfileAddressEntity
      *
      * @return \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress
      */
-    public function mapMerchantProfileAddressTransferToSpyMerchantProfileAddressEntity(
+    public function mapMerchantProfileAddressTransferToMerchantProfileAddressEntity(
         MerchantProfileAddressTransfer $merchantProfileAddressTransfer,
-        SpyMerchantProfileAddress $spyMerchantProfileAddress
+        SpyMerchantProfileAddress $merchantProfileAddressEntity
     ): SpyMerchantProfileAddress;
 
     /**
-     * @param \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress[] $spyMerchantProfileAddresses
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress[] $merchantProfileAddressEntities
      * @param \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer $merchantProfileAddressCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer
      */
-    public function mapMerchantProfileAddressEntitiesToMerchantProfileAddressCollectionTransfer(
-        array $spyMerchantProfileAddresses,
+    public function mapMerchantProfileAddressEntityCollectionToMerchantProfileAddressCollectionTransfer(
+        ObjectCollection $merchantProfileAddressEntities,
         MerchantProfileAddressCollectionTransfer $merchantProfileAddressCollectionTransfer
-    ): ?MerchantProfileAddressCollectionTransfer;
+    ): MerchantProfileAddressCollectionTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\SpyMerchantProfileAddressEntityTransfer[] $spyMerchantProfileAddresses
-     * @param \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer $merchantProfileAddressCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer|null
-     */
-    public function mapMerchantProfileAddressEntityTransfersToMerchantProfileAddressCollectionTransfer(
-        array $spyMerchantProfileAddresses,
-        MerchantProfileAddressCollectionTransfer $merchantProfileAddressCollectionTransfer
-    ): ?MerchantProfileAddressCollectionTransfer;
-
-    /**
-     * @param \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress $spyMerchantProfileAddress
+     * @param \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress $merchantProfileAddressEntity
      * @param \Generated\Shared\Transfer\MerchantProfileAddressTransfer $merchantProfileAddressTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProfileAddressTransfer
      */
     public function mapMerchantProfileAddressEntityToMerchantProfileAddressTransfer(
-        SpyMerchantProfileAddress $spyMerchantProfileAddress,
-        MerchantProfileAddressTransfer $merchantProfileAddressTransfer
-    ): MerchantProfileAddressTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\SpyMerchantProfileAddressEntityTransfer $spyMerchantProfileAddress
-     * @param \Generated\Shared\Transfer\MerchantProfileAddressTransfer $merchantProfileAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantProfileAddressTransfer
-     */
-    public function mapMerchantProfileAddressEntityTransferToMerchantProfileAddressTransfer(
-        SpyMerchantProfileAddressEntityTransfer $spyMerchantProfileAddress,
+        SpyMerchantProfileAddress $merchantProfileAddressEntity,
         MerchantProfileAddressTransfer $merchantProfileAddressTransfer
     ): MerchantProfileAddressTransfer;
 }

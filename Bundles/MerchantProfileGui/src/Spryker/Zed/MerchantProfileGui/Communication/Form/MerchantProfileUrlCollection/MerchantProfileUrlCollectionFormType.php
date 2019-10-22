@@ -7,12 +7,10 @@
 
 namespace Spryker\Zed\MerchantProfileGui\Communication\Form\MerchantProfileUrlCollection;
 
-use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -45,14 +43,6 @@ class MerchantProfileUrlCollectionFormType extends AbstractType
     }
 
     /**
-     * @return string
-     */
-    protected function getTemplatePath(): string
-    {
-        return static::TEMPLATE_PATH;
-    }
-
-    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -65,13 +55,11 @@ class MerchantProfileUrlCollectionFormType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormEvent $event
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer|null
+     * @return string
      */
-    protected function getUrlTransfer(FormEvent $event): ?UrlTransfer
+    protected function getTemplatePath(): string
     {
-        return $event->getData();
+        return static::TEMPLATE_PATH;
     }
 
     /**
