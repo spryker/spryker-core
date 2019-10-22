@@ -7,7 +7,12 @@
 
 namespace Spryker\Zed\Chart\Communication\Plugin\Twig;
 
-class TwigChartPlugin extends AbstractTwigChartPlugin
+/**
+ * @method \Spryker\Zed\Chart\Communication\ChartCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Chart\ChartConfig getConfig()
+ * @method \Spryker\Zed\Chart\Business\ChartFacadeInterface getFacade()
+ */
+class TwigChartPlugin extends AbstractChartTwigPlugin
 {
     public const TWIG_FUNCTION_NAME = 'chart';
 

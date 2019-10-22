@@ -54,18 +54,10 @@ class ChartTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     protected function getChartTwigFunctions(): array
     {
         $functions = [];
-        foreach ($this->getChartTwigFunction() as $twigFunctionPlugin) {
-            $functions = array_merge($functions, $twigFunctionPlugin->getChartFunctions());
+        foreach ($this->getFactory()->getChartTwigFunctionPlugins() as $twigFunctionPlugin) {
+            $functions = array_merge($functions, $twigFunctionPlugin->getChartTwigFunctions());
         }
 
         return $functions;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getChartTwigFunction(): array
-    {
-        return array_merge($this->getFactory()->getTwigChartFunctionPlugins(), $this->getFactory()->getChartTwigFunctionPlugins());
     }
 }

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Chart\Communication;
 
-use Spryker\Shared\Chart\ChartPluginCollection\ChartPluginCollection;
-use Spryker\Shared\Chart\ChartPluginCollection\ChartPluginCollectionInterface;
+use Spryker\Shared\Chart\ChartPluginResolver\ChartPluginResolver;
+use Spryker\Shared\Chart\ChartPluginResolver\ChartPluginResolverInterface;
 use Spryker\Zed\Chart\ChartDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -19,31 +19,21 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class ChartCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @deprecated Use `getChartTwigFunctionPlugins()` instead.
-     *
-     * @return \Spryker\Shared\Chart\Dependency\Plugin\TwigChartFunctionPluginInterface[]
+     * @return \Spryker\Shared\Chart\ChartPluginResolver\ChartPluginResolverInterface
      */
-    public function getTwigChartFunctionPlugins(): array
+    public function createChartPluginCollection(): ChartPluginResolverInterface
     {
-        return $this->getProvidedDependency(ChartDependencyProvider::PLUGIN_TWIG_CHART_FUNCTIONS);
-    }
-
-    /**
-     * @return \Spryker\Shared\Chart\ChartPluginCollection\ChartPluginCollectionInterface
-     */
-    public function createChartPluginCollection(): ChartPluginCollectionInterface
-    {
-        return new ChartPluginCollection(
-            $this->getChartPlugins()
+        return new ChartPluginResolver(
+            $this->getChartTwigPlugins()
         );
     }
 
     /**
-     * @return \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface[]
+     * @return \Spryker\Shared\ChartExtension\Dependency\Plugin\ChartPluginInterface[]
      */
-    public function getChartPlugins(): array
+    public function getChartTwigPlugins(): array
     {
-        return $this->getProvidedDependency(ChartDependencyProvider::PLUGIN_CHARTS);
+        return $this->getProvidedDependency(ChartDependencyProvider::PLUGIN_TWIG_CHARTS);
     }
 
     /**

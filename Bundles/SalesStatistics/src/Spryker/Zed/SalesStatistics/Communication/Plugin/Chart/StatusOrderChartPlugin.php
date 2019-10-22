@@ -24,6 +24,8 @@ class StatusOrderChartPlugin extends AbstractPlugin implements ChartPluginInterf
     public const TITLE = 'Status orders';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -34,6 +36,8 @@ class StatusOrderChartPlugin extends AbstractPlugin implements ChartPluginInterf
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string|null $dataIdentifier
@@ -53,6 +57,8 @@ class StatusOrderChartPlugin extends AbstractPlugin implements ChartPluginInterf
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string

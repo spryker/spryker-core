@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Chart\Communication\Plugin\Twig;
 
-use Spryker\Shared\Chart\Dependency\Plugin\ChartLayoutablePluginInterface;
-use Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface;
-use Spryker\Shared\Chart\Dependency\Plugin\TwigChartFunctionPluginInterface;
+use Spryker\Shared\ChartExtension\Dependency\Plugin\ChartLayoutablePluginInterface;
+use Spryker\Shared\ChartExtension\Dependency\Plugin\ChartPluginInterface;
+use Spryker\Shared\ChartExtension\Dependency\Plugin\ChartTwigFunctionPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Twig\Environment;
 use Twig\TwigFunction;
@@ -18,7 +18,7 @@ use Twig\TwigFunction;
  * @method \Spryker\Zed\Chart\Communication\ChartCommunicationFactory getFactory()
  * @method \Spryker\Zed\Chart\ChartConfig getConfig()
  */
-abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigChartFunctionPluginInterface
+abstract class AbstractChartTwigPlugin extends AbstractPlugin implements ChartTwigFunctionPluginInterface
 {
     public const TWIG_FUNCTION_NAME = 'chart';
 
@@ -37,7 +37,7 @@ abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigCha
      *
      * @return \Twig\TwigFunction[]
      */
-    public function getChartFunctions(): array
+    public function getChartTwigFunctions(): array
     {
         return [
             new TwigFunction(
@@ -105,7 +105,7 @@ abstract class AbstractTwigChartPlugin extends AbstractPlugin implements TwigCha
     /**
      * @param string $pluginName
      *
-     * @return \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface
+     * @return \Spryker\Shared\ChartExtension\Dependency\Plugin\ChartPluginInterface
      */
     protected function getChartPluginByName($pluginName): ChartPluginInterface
     {
