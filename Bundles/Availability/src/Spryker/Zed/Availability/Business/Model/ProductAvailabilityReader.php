@@ -10,6 +10,7 @@ namespace Spryker\Zed\Availability\Business\Model;
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
 
 class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
@@ -25,15 +26,23 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
     protected $availabilityHandler;
 
     /**
+     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface $availabilityRepository
      * @param \Spryker\Zed\Availability\Business\Model\AvailabilityHandlerInterface $availabilityHandler
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         AvailabilityRepositoryInterface $availabilityRepository,
-        AvailabilityHandlerInterface $availabilityHandler
+        AvailabilityHandlerInterface $availabilityHandler,
+        AvailabilityToStoreFacadeInterface $storeFacade
     ) {
         $this->availabilityRepository = $availabilityRepository;
         $this->availabilityHandler = $availabilityHandler;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -44,6 +53,7 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
      */
     public function findProductAbstractAvailabilityBySkuForStore(string $abstractSku, StoreTransfer $storeTransfer): ?ProductAbstractAvailabilityTransfer
     {
+        $storeTransfer = $this->assertStoreTransfer($storeTransfer);
         $productAbstractAvailabilityTransfer = $this->availabilityRepository
             ->findProductAbstractAvailabilityBySkuAndStore($abstractSku, $storeTransfer);
 
@@ -63,6 +73,7 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
      */
     public function findProductConcreteAvailabilityBySkuForStore(string $concreteSku, StoreTransfer $storeTransfer): ?ProductConcreteAvailabilityTransfer
     {
+        $storeTransfer = $this->assertStoreTransfer($storeTransfer);
         $productConcreteAvailabilityTransfer = $this->availabilityRepository
             ->findProductConcreteAvailabilityBySkuAndStore($concreteSku, $storeTransfer);
 
@@ -72,5 +83,22 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
         }
 
         return $productConcreteAvailabilityTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function assertStoreTransfer(StoreTransfer $storeTransfer): StoreTransfer
+    {
+        if ($storeTransfer->getIdStore() !== null) {
+            return $storeTransfer;
+        }
+
+        $storeTransfer
+            ->requireName();
+
+        return $this->storeFacade->getStoreByName($storeTransfer->getName());
     }
 }
