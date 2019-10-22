@@ -30,8 +30,12 @@ class SlotBlockController extends AbstractController
         $idCmsSlot = $this->castId($request->query->get(static::PARAM_ID_CMS_SLOT));
 
         $slotBlockCollectionDataProvider = $this->getFactory()->createCmsSlotBlockCollectionFormDataProvider();
+        $t = $slotBlockCollectionDataProvider->getData($idCmsSlotTemplate, $idCmsSlot);
         $cmsSlotBlockCollectionForm = $this->getFactory()
-            ->createCmsSlotBlockCollectionForm($slotBlockCollectionDataProvider, $idCmsSlotTemplate, $idCmsSlot)
+            ->createCmsSlotBlockCollectionForm(
+                $slotBlockCollectionDataProvider->getData($idCmsSlotTemplate, $idCmsSlot),
+                $slotBlockCollectionDataProvider->getOptions($idCmsSlotTemplate)
+            )
             ->handleRequest($request);
 
         if ($cmsSlotBlockCollectionForm->isSubmitted() && $cmsSlotBlockCollectionForm->isValid()) {

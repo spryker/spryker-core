@@ -24,6 +24,7 @@ class CmsSlotBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_CMS_BLOCK = 'FACADE_CMS_BLOCK';
 
     public const PROPEL_QUERY_CMS_BLOCK = 'PROPEL_QUERY_CMS_BLOCK';
+    public const CMS_SLOT_BLOCK_FORM_PLUGINS = 'CMS_SLOT_BLOCK_FORM_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -38,6 +39,7 @@ class CmsSlotBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCmsSlotFacade($container);
         $container = $this->addCmsBlockFacade($container);
         $container = $this->addCmsBlockPropelQuery($container);
+        $container = $this->addCmsSlotBlockFormPlugins($container);
 
         return $container;
     }
@@ -96,5 +98,27 @@ class CmsSlotBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCmsSlotBlockFormPlugins(Container $container): Container
+    {
+        $container->set(static::CMS_SLOT_BLOCK_FORM_PLUGINS, function () {
+            return $this->getCmsSlotBlockFormPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsSlotBlockGuiExtension\Communication\Plugin\CmsSlotBlockGuiConditionFormPluginInterface[]
+     */
+    protected function getCmsSlotBlockFormPlugins(): array
+    {
+        return [];
     }
 }

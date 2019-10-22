@@ -44,4 +44,14 @@ class CmsSlotBlockGuiToCmsSlotBlockFacadeBridge implements CmsSlotBlockGuiToCmsS
     {
         return $this->cmsSlotBlockFacade->getCmsSlotBlockCollection($idCmsSlotTemplate, $idCmsSlot);
     }
+
+    /**
+     * @param string $twigPath
+     *
+     * @return array
+     */
+    public function getTemplateConditionsByPath(string $twigPath): array
+    {
+        return $this->cmsSlotBlockFacade->getTemplateConditionsByPath($twigPath);
+    }
 }

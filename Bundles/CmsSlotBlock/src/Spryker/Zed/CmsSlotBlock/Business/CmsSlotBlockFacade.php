@@ -49,4 +49,20 @@ class CmsSlotBlockFacade extends AbstractFacade implements CmsSlotBlockFacadeInt
             ->createCmsSlotBlockReader()
             ->getCmsSlotBlockCollection($idCmsSlotTemplate, $idCmsSlot);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $twigPath
+     *
+     * @return array
+     */
+    public function getTemplateConditionsByPath(string $twigPath): array
+    {
+        return $this->getFactory()
+            ->createCmsSlotTemplateConditionReader()
+            ->getTemplateConditionsByPath($twigPath);
+    }
 }

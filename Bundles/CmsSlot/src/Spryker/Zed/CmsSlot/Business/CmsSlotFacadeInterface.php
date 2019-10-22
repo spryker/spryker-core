@@ -75,4 +75,17 @@ interface CmsSlotFacadeInterface
      * @return \Generated\Shared\Transfer\CmsSlotTransfer|null
      */
     public function findCmsSlotById(int $idCmsSlot): ?CmsSlotTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves CMS slot according to given CMS slot id.
+     * - Returns NULL if CMS slot does not exist.
+     *
+     * @api
+     *
+     * @param int $idCmsSlotTemplate
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotTemplateTransfer
+     */
+    public function getCmsSlotTemplateById(int $idCmsSlotTemplate): CmsSlotTemplateTransfer;
 }

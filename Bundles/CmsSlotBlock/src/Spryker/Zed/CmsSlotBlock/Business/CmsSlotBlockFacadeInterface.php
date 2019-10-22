@@ -35,4 +35,16 @@ interface CmsSlotBlockFacadeInterface
      * @return \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer
      */
     public function getCmsSlotBlockCollection(int $idCmsSlotTemplate, int $idCmsSlot): CmsSlotBlockCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Returns configuration of conditions for template by provided path.
+     *
+     * @api
+     *
+     * @param string $twigPath
+     *
+     * @return array
+     */
+    public function getTemplateConditionsByPath(string $twigPath): array;
 }

@@ -88,4 +88,20 @@ class CmsSlotFacade extends AbstractFacade implements CmsSlotFacadeInterface
     {
         return $this->getRepository()->findCmsSlotById($idCmsSlot);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idCmsSlotTemplate
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotTemplateTransfer
+     */
+    public function getCmsSlotTemplateById(int $idCmsSlotTemplate): CmsSlotTemplateTransfer
+    {
+        return $this->getFactory()
+            ->createCmsSlotTemplateReader()
+            ->getTemplateById($idCmsSlotTemplate);
+    }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotBlockGui\Communication;
 
+use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
 use Spryker\Zed\CmsSlotBlockGui\CmsSlotBlockGuiDependencyProvider;
 use Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\CmsSlotBlockCollectionFormDataProvider;
@@ -42,20 +43,19 @@ class CmsSlotBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\CmsSlotBlockCollectionFormDataProviderInterface $slotBlockDataProvider
-     * @param int $idCmsSlotTemplate
-     * @param int $idCmsSlot
+     * @param \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer
+     * @param array $formOptions
      *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createCmsSlotBlockCollectionForm(
-        CmsSlotBlockCollectionFormDataProviderInterface $slotBlockDataProvider,
-        int $idCmsSlotTemplate,
-        int $idCmsSlot
+        CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer,
+        array $formOptions
     ): FormInterface {
         return $this->getFormFactory()->create(
             CmsSlotBlockCollectionForm::class,
-            $slotBlockDataProvider->getData($idCmsSlotTemplate, $idCmsSlot)
+            $cmsSlotBlockCollectionTransfer,
+            $formOptions
         );
     }
 
@@ -64,7 +64,10 @@ class CmsSlotBlockGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsSlotBlockCollectionFormDataProvider(): CmsSlotBlockCollectionFormDataProviderInterface
     {
-        return new CmsSlotBlockCollectionFormDataProvider($this->getCmsSlotBlockFacade());
+        return new CmsSlotBlockCollectionFormDataProvider(
+            $this->getCmsSlotFacade(),
+            $this->getCmsSlotBlockFacade()
+        );
     }
 
     /**
@@ -97,5 +100,13 @@ class CmsSlotBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getCmsBlockPropelQuery(): SpyCmsBlockQuery
     {
         return $this->getProvidedDependency(CmsSlotBlockGuiDependencyProvider::PROPEL_QUERY_CMS_BLOCK);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsSlotBlockGuiExtension\Communication\Plugin\CmsSlotBlockGuiConditionFormPluginInterface[]
+     */
+    public function getCmsSlotBlockFormPlugins(): array
+    {
+        return $this->getProvidedDependency(CmsSlotBlockGuiDependencyProvider::CMS_SLOT_BLOCK_FORM_PLUGINS);
     }
 }

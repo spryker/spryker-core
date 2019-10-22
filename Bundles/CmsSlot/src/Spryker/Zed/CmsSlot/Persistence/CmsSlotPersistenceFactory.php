@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsSlot\Persistence;
 
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery;
+use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplateQuery;
 use Spryker\Zed\CmsSlot\Persistence\Mapper\CmsSlotMapper;
 use Spryker\Zed\CmsSlot\Persistence\Mapper\CmsSlotMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -25,6 +26,14 @@ class CmsSlotPersistenceFactory extends AbstractPersistenceFactory
     public function createCmsSlotQuery(): SpyCmsSlotQuery
     {
         return SpyCmsSlotQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplateQuery
+     */
+    public function createCmsSlotTemplateQuery(): SpyCmsSlotTemplateQuery
+    {
+        return SpyCmsSlotTemplateQuery::create();
     }
 
     /**

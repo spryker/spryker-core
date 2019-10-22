@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsSlot\Persistence;
 
+use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -29,5 +30,21 @@ class CmsSlotRepository extends AbstractRepository implements CmsSlotRepositoryI
         }
 
         return $this->getFactory()->createCmsSlotMapper()->mapCmsSlotEntityToTransfer($cmsSlot);
+    }
+
+    /**
+     * @param int $idCmsSlotTemplate
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotTemplateTransfer|null
+     */
+    public function findCmsSlotTemplateById(int $idCmsSlotTemplate): ?CmsSlotTemplateTransfer
+    {
+        $cmsSlotTemplate = $this->getFactory()->createCmsSlotTemplateQuery()->findOneByIdCmsSlotTemplate($idCmsSlotTemplate);
+
+        if (!$cmsSlotTemplate) {
+            return null;
+        }
+
+        return $this->getFactory()->createCmsSlotMapper()->mapCmsSlotTemplateEntityToTransfer($cmsSlotTemplate);
     }
 }
