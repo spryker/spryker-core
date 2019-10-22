@@ -14,8 +14,8 @@ Status,Status
 "Available in Store","Available in Store"
 Actions,Actions
 "Delivery Methods","Delivery Methods"
-"Add new Carrier Company","Add new Carrier Company"
-"Add new Shipment Method","Add new Shipment Method"
+"Create new carrier company","Create new carrier company"
+"Create new delivery method","Create new delivery method"
 "Shipment method is not found","Shipment method is not found"
 "View Delivery Method: %s", "View Delivery Method: %s"
 "List Shipment Methods","List Shipment Methods"
