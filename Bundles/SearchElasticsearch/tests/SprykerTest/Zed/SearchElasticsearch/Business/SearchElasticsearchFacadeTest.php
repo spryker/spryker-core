@@ -8,10 +8,12 @@
 namespace SprykerTest\Zed\SearchElasticsearch\Business;
 
 use Codeception\Test\Unit;
+use Elastica\Index;
 use Generated\Shared\Transfer\StoreTransfer;
 use Psr\Log\NullLogger;
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
 use Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade;
+use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchDependencyProvider;
 
 /**
@@ -90,6 +92,59 @@ class SearchElasticsearchFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testCanCloseIndex(): void
+    {
+        // Arrange
+        $index = $this->tester->haveIndex('dummy_index_name');
+
+        // Act
+        $result = $this->tester->getFacade()->closeIndex(
+            $this->tester->buildSearchContextTransferFromIndexName($index->getName())
+        );
+
+        // Assert
+        $this->assertTrue($result);
+        $this->assertEquals(SearchElasticsearchConfig::INDEX_CLOSE_STATE, $this->getIndexState($index));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCanOpenOneIndex(): void
+    {
+        // Arrange
+        /** @var \Elastica\Index $index */
+        $index = $this->tester->haveIndex('dummy_index_name');
+        $searchContextTransfer = $this->tester->buildSearchContextTransferFromIndexName($index->getName());
+        $this->tester->getFacade()->closeIndex($searchContextTransfer);
+
+        // Act
+        $result = $this->tester->getFacade()->openIndex($searchContextTransfer);
+
+        // Assert
+        $this->assertTrue($result);
+        $this->assertEquals(SearchElasticsearchConfig::INDEX_OPEN_STATE, $this->getIndexState($index));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCanDeleteIndex(): void
+    {
+        // Arrange
+        $index = $this->tester->haveIndex('dummy_index_name');
+        $searchContextTransfer = $this->tester->buildSearchContextTransferFromIndexName($index->getName());
+
+        // Act
+        $this->tester->getFacade()->deleteIndex($searchContextTransfer);
+
+        // Assert
+        $this->assertFalse($index->exists());
+    }
+
+    /**
+     * @return void
+     */
     protected function setupStoreClientDependency(): void
     {
         $this->tester->setDependency(
@@ -110,5 +165,21 @@ class SearchElasticsearchFacadeTest extends Unit
         $storeMock->method('getCurrentStore')->willReturn($mockStoreTransfer);
 
         return $storeMock;
+    }
+
+    /**
+     * @param \Elastica\Index $index
+     *
+     * @return string
+     */
+    protected function getIndexState(Index $index): string
+    {
+        $clusterState = $index->getClient()->getCluster()->getState();
+
+        if (isset($clusterState['metadata']['indices'][$index->getName()]['state'])) {
+            return $clusterState['metadata']['indices'][$index->getName()]['state'];
+        }
+
+        return '';
     }
 }

@@ -144,7 +144,7 @@ class SearchElasticsearchClientTest extends Unit
     {
         $searchContextTransfer = new SearchContextTransfer();
         $elasticsearchContext = new ElasticsearchSearchContextTransfer();
-        $elasticsearchContext->setSourceName(static::INDEX_NAME);
+        $elasticsearchContext->setIndexName(static::INDEX_NAME);
         $searchContextTransfer->setElasticsearchContext($elasticsearchContext);
 
         return $searchContextTransfer;

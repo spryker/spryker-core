@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\SearchElasticsearch;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
+use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchBusinessFactory;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
@@ -24,6 +26,8 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method void pause()
+ * @method \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig getModuleConfig()
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -97,6 +101,22 @@ class SearchElasticsearchZedTester extends Actor
         $classPrefix = $this->normalizeToClassPrefix($sourceIdentifier);
 
         return $classPrefix . 'IndexMap.php';
+    }
+
+    /**
+     * @param string|null $indexName
+     *
+     * @return \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    public function buildSearchContextTransferFromIndexName(?string $indexName): SearchContextTransfer
+    {
+        $elasticsearchSearchContext = new ElasticsearchSearchContextTransfer();
+        $elasticsearchSearchContext->setIndexName($indexName);
+
+        $searchContextTransfer = new SearchContextTransfer();
+        $searchContextTransfer->setElasticsearchContext($elasticsearchSearchContext);
+
+        return $searchContextTransfer;
     }
 
     /**
