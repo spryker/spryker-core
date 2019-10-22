@@ -55,8 +55,7 @@ class StockDataHelper extends Module
      */
     public function haveStock(array $seedData = []): StockTransfer
     {
-        $stockTransfer = (new StockBuilder($seedData))
-            ->build();
+        $stockTransfer = (new StockBuilder($seedData))->build();
         $stockResponseTransfer = $this->getStockFacade()->createStock($stockTransfer);
 
         return $stockResponseTransfer->getStock();
