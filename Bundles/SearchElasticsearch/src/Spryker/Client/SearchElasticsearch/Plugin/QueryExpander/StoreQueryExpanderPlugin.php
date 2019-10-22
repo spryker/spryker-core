@@ -30,7 +30,7 @@ class StoreQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
-    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
+    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface
     {
         $this->addStoreFilterToQuery($searchQuery->getSearchQuery());
 

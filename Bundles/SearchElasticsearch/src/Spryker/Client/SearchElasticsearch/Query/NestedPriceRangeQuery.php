@@ -8,24 +8,24 @@
 namespace Spryker\Client\SearchElasticsearch\Query;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
-use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
+use Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToMoneyClientInterface;
 
 class NestedPriceRangeQuery extends NestedRangeQuery
 {
     /**
-     * @var \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface
+     * @var \Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToMoneyClientInterface
      */
-    protected $moneyPlugin;
+    protected $moneyClient;
 
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      * @param array|string $rangeValues
      * @param \Spryker\Client\SearchElasticsearch\Query\QueryBuilderInterface $queryBuilder
-     * @param \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface $moneyPlugin
+     * @param \Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToMoneyClientInterface $moneyClient
      */
-    public function __construct(FacetConfigTransfer $facetConfigTransfer, $rangeValues, QueryBuilderInterface $queryBuilder, MoneyPluginInterface $moneyPlugin)
+    public function __construct(FacetConfigTransfer $facetConfigTransfer, $rangeValues, QueryBuilderInterface $queryBuilder, SearchElasticsearchToMoneyClientInterface $moneyClient)
     {
-        $this->moneyPlugin = $moneyPlugin;
+        $this->moneyClient = $moneyClient;
 
         parent::__construct($facetConfigTransfer, $rangeValues, $queryBuilder);
     }
@@ -40,11 +40,23 @@ class NestedPriceRangeQuery extends NestedRangeQuery
         parent::setMinMaxValues($rangeValues);
 
         if ($this->minValue !== null) {
-            $this->minValue = (string)$this->moneyPlugin->convertDecimalToInteger((float)$this->minValue);
+            $this->minValue = (string)$this->convertFromFloatToInteger((float)$this->minValue);
         }
 
         if ($this->maxValue !== null) {
-            $this->maxValue = (string)$this->moneyPlugin->convertDecimalToInteger((float)$this->maxValue);
+            $this->maxValue = (string)$this->convertFromFloatToInteger((float)$this->maxValue);
         }
+    }
+
+    /**
+     * @param float $value
+     *
+     * @return int
+     */
+    protected function convertFromFloatToInteger(float $value): int
+    {
+        $moneyTransfer = $this->moneyClient->fromFloat((float)$value);
+
+        return (int)$moneyTransfer->requireAmount()->getAmount();
     }
 }

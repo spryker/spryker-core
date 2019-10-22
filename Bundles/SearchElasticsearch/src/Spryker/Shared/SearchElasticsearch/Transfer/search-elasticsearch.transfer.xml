@@ -31,7 +31,7 @@
     <transfer name="PaginationConfig">
         <property name="parameterName" type="string"/>
         <property name="itemsPerPageParameterName" type="string"/>
-        <property name="defaultItemsPerPage" type="int" />
+        <property name="defaultItemsPerPage" type="int"/>
         <property name="validItemsPerPageOptions" type="array"/>
     </transfer>
 
@@ -95,6 +95,10 @@
         <property name="facetConfigItems" type="FacetConfig[]" singular="facetConfigItem"/>
         <property name="sortConfigItems" type="SortConfig[]" singular="sortConfigItem"/>
         <property name="paginationConfig" type="PaginationConfig"/>
+    </transfer>
+
+    <transfer name="Money">
+        <property name="amount" type="string"/>
     </transfer>
 
 </transfers>

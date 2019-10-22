@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ProductLabel">
+        <property name="idProductLabel" type="int"/>
+        <property name="position" type="int"/>
+        <property name="isActive" type="bool"/>
+        <property name="localizedAttributesCollection" singular="localizedAttributes" type="ProductLabelLocalizedAttributes[]"/>
+        <property name="name" type="string"/>
+        <property name="isDynamic" type="bool"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="ProductLabelLocalizedAttributes">
+        <property name="fkLocale" type="int"/>
+        <property name="locale" type="Locale"/>
+    </transfer>
+
+    <transfer name="TabsView">
+        <property name="isNavigable" type="bool"/>
+        <property name="tabs" type="TabItem[]" singular="tab"/>
+        <property name="footerTemplate" type="string"/>
+    </transfer>
+
+    <transfer name="TabItem">
+        <property name="name" type="string"/>
+        <property name="title" type="string"/>
+        <property name="template" type="string"/>
+    </transfer>
+
+    <transfer name="ProductLabelAggregateForm">
+        <property name="productAbstractRelations" type="ProductLabelProductAbstractRelations"/>
+        <property name="productLabel" type="ProductLabel"/>
+    </transfer>
+
+    <transfer name="ProductLabelProductAbstractRelations">
+        <property name="idsProductAbstractToDeAssign" type="array" singular="idsProductAbstractToDeAssign"/>
+        <property name="idsProductAbstractToAssign" type="array" singular="idsProductAbstractToAssign"/>
+        <property name="idProductLabel" type="int"/>
+    </transfer>
+
+</transfers>

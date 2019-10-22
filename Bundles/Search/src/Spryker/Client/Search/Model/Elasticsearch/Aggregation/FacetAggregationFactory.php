@@ -14,7 +14,7 @@ use Spryker\Shared\Search\IndexMapInterface;
 use Spryker\Shared\Search\SearchConfig;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Aggregation` instead.
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\Aggregation\FacetAggregationFactory` instead.
  */
 class FacetAggregationFactory implements FacetAggregationFactoryInterface
 {

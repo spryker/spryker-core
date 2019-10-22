@@ -8,24 +8,24 @@
 namespace Spryker\Client\SearchElasticsearch\AggregationExtractor;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
-use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
+use Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToMoneyClientInterface;
 
 class PriceRangeExtractor extends RangeExtractor
 {
     /**
-     * @var \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface
+     * @var \Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToMoneyClientInterface
      */
-    protected $moneyPlugin;
+    protected $moneyClient;
 
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
-     * @param \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface $moneyPlugin
+     * @param \Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToMoneyClientInterface $moneyClient
      */
-    public function __construct(FacetConfigTransfer $facetConfigTransfer, MoneyPluginInterface $moneyPlugin)
+    public function __construct(FacetConfigTransfer $facetConfigTransfer, SearchElasticsearchToMoneyClientInterface $moneyClient)
     {
         parent::__construct($facetConfigTransfer);
 
-        $this->moneyPlugin = $moneyPlugin;
+        $this->moneyClient = $moneyClient;
     }
 
     /**
@@ -40,8 +40,8 @@ class PriceRangeExtractor extends RangeExtractor
         [$activeMin, $activeMax] = $this->getActiveRangeParameters($requestParameters);
 
         return [
-            $activeMin !== null ? $this->moneyPlugin->convertDecimalToInteger($activeMin) : $min,
-            $activeMax !== null ? $this->moneyPlugin->convertDecimalToInteger($activeMax) : $max,
+            $activeMin !== null ? $this->convertFromFloatToInteger($activeMin) : $min,
+            $activeMax !== null ? $this->convertFromFloatToInteger($activeMax) : $max,
         ];
     }
 
@@ -65,5 +65,17 @@ class PriceRangeExtractor extends RangeExtractor
         }
 
         return [$activeMin, $activeMax];
+    }
+
+    /**
+     * @param float $value
+     *
+     * @return int
+     */
+    protected function convertFromFloatToInteger(float $value): int
+    {
+        $moneyTransfer = $this->moneyClient->fromFloat((float)$value);
+
+        return (int)$moneyTransfer->requireAmount()->getAmount();
     }
 }

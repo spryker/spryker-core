@@ -25,7 +25,7 @@ class SuggestionByTypeResultFormatterPlugin extends AbstractElasticsearchResultF
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return static::NAME;
     }

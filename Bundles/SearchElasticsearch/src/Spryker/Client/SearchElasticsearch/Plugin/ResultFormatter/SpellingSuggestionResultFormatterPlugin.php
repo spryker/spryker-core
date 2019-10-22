@@ -24,7 +24,7 @@ class SpellingSuggestionResultFormatterPlugin extends AbstractElasticsearchResul
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return static::NAME;
     }

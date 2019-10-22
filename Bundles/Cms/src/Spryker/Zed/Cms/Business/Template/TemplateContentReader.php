@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Cms\Business\Template;
 
+use InvalidArgumentException;
 use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
 use Spryker\Zed\Cms\CmsConfig;
-use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Symfony\Component\Finder\Finder;
 
 class TemplateContentReader implements TemplateContentReaderInterface
@@ -52,7 +52,7 @@ class TemplateContentReader implements TemplateContentReaderInterface
                     ->files()
                     ->name($fileName)
                     ->in(pathinfo($templateFile, PATHINFO_DIRNAME));
-            } catch (DirectoryNotFoundException $exception) {
+            } catch (InvalidArgumentException $exception) {
                 continue;
             }
 

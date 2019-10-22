@@ -12,7 +12,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\Config\PaginationConfigBuilder` instead.
+ * @deprecated Use `\Spryker\Client\SearchElasticsearch\Config\PaginationConfig` instead.
  */
 class PaginationConfigBuilder extends AbstractPlugin implements PaginationConfigBuilderInterface
 {

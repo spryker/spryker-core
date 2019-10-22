@@ -31,9 +31,31 @@
     </transfer>
 
     <transfer name="ProductConcreteCriteriaFilter">
-        <property name="requestParams" type="array"/>
+        <property name="requestParams" type="array" singular="requestParams"/>
         <property name="searchString" type="string"/>
         <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="PaginationConfig">
+        <property name="parameterName" type="string"/>
+        <property name="itemsPerPageParameterName" type="string"/>
+        <property name="defaultItemsPerPage" type="int"/>
+        <property name="validItemsPerPageOptions" type="array" singular="validItemsPerPageOptions"/>
+    </transfer>
+
+    <transfer name="SortConfig">
+        <property name="name" type="string"/>
+        <property name="parameterName" type="string"/>
+        <property name="fieldName" type="string"/>
+        <property name="isDescending" type="bool"/>
+    </transfer>
+
+    <transfer name="FacetConfig">
+        <property name="name" type="string"/>
+        <property name="parameterName" type="string"/>
+        <property name="fieldName" type="string"/>
+        <property name="type" type="string"/>
+        <property name="aggregationParams" type="array" singular="aggregationParams"/>
     </transfer>
 
 </transfers>

@@ -18,5 +18,5 @@ interface QueryFactoryInterface
      *
      * @return \Elastica\Query\AbstractQuery
      */
-    public function create(FacetConfigTransfer $facetConfigTransfer, $filterValue): AbstractQuery;
+    public function createQuery(FacetConfigTransfer $facetConfigTransfer, $filterValue): AbstractQuery;
 }

@@ -9,9 +9,8 @@ namespace Spryker\Client\SearchElasticsearch;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\Money\Plugin\MoneyPlugin;
-use Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface;
-use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
+use Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToMoneyClientBridge;
+use Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToMoneyClientInterface;
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToLocaleClientBridge;
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToLocaleClientInterface;
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientBridge;
@@ -24,10 +23,10 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORE = 'CLIENT_STORE';
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
-    public const PLUGINS_SEARCH_CONFIG_EXPANDER = 'PLUGINS_SEARCH_CONFIG_EXPANDER';
-    public const PLUGIN_SEARCH_CONFIG_BUILDER = 'PLUGIN_SEARCH_SEARCH_CONFIG_BUILDER';
+    public const CLIENT_MONEY = 'CLIENT_MONEY';
 
-    public const PLUGIN_MONEY = 'PLUGIN_MONEY';
+    public const PLUGINS_SEARCH_CONFIG_EXPANDER = 'PLUGINS_SEARCH_CONFIG_EXPANDER';
+    public const PLUGINS_SEARCH_CONFIG_BUILDER = 'PLUGINS_SEARCH_CONFIG_BUILDER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -38,9 +37,9 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
     {
         $container = $this->addStoreClient($container);
         $container = $this->addLocaleClient($container);
-        $container = $this->addSearchConfigBuilderPlugin($container);
+        $container = $this->addSearchConfigBuilderPlugins($container);
         $container = $this->addSearchConfigExpanderPlugins($container);
-        $container = $this->addMoneyPlugin($container);
+        $container = $this->addMoneyClient($container);
 
         return $container;
     }
@@ -50,10 +49,10 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addSearchConfigBuilderPlugin(Container $container): Container
+    protected function addSearchConfigBuilderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGIN_SEARCH_CONFIG_BUILDER, function (Container $container): SearchConfigBuilderPluginInterface {
-            return $this->getSearchConfigBuilderPlugin($container);
+        $container->set(static::PLUGINS_SEARCH_CONFIG_BUILDER, function (Container $container): array {
+            return $this->getSearchConfigBuilderPlugins($container);
         });
 
         return $container;
@@ -62,11 +61,11 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface|null
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface[]
      */
-    protected function getSearchConfigBuilderPlugin(Container $container): ?SearchConfigBuilderPluginInterface
+    protected function getSearchConfigBuilderPlugins(Container $container): array
     {
-        return null;
+        return [];
     }
 
     /**
@@ -130,20 +129,14 @@ class SearchElasticsearchDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addMoneyPlugin(Container $container): Container
+    protected function addMoneyClient(Container $container): Container
     {
-        $container->set(static::PLUGIN_MONEY, function (): MoneyPluginInterface {
-            return $this->getMoneyPlugin();
+        $container->set(static::CLIENT_MONEY, function (Container $container): SearchElasticsearchToMoneyClientInterface {
+            return new SearchElasticsearchToMoneyClientBridge(
+                $container->getLocator()->money()->client()
+            );
         });
 
         return $container;
-    }
-
-    /**
-     * @return \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface
-     */
-    protected function getMoneyPlugin(): MoneyPluginInterface
-    {
-        return new MoneyPlugin();
     }
 }

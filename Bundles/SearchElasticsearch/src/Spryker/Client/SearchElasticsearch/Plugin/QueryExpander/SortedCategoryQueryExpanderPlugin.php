@@ -42,7 +42,7 @@ class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryE
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
-    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
+    public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface
     {
         if ($this->isFullTextSearch($searchQuery)
             || $this->hasActiveSortParam($requestParameters)

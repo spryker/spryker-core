@@ -21,6 +21,7 @@ suites:
             enabled:
             - Asserts
             - \SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchHelper
+            - \SprykerTest\Shared\Session\Helper\SessionHelper
             - \SprykerTest\Shared\Testify\Helper\Environment
             - \SprykerTest\Shared\Testify\Helper\ConfigHelper
             - \SprykerTest\Shared\Testify\Helper\LocatorHelper

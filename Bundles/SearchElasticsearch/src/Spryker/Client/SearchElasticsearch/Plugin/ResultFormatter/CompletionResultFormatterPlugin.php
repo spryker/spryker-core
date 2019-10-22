@@ -36,11 +36,9 @@ class CompletionResultFormatterPlugin extends AbstractElasticsearchResultFormatt
      *
      * @return array
      */
-    protected function formatSearchResult(ResultSet $searchResult, array $requestParameters)
+    protected function formatSearchResult(ResultSet $searchResult, array $requestParameters): array
     {
-        $completions = $this->getCompletionFromSuggests($searchResult);
-
-        return $completions;
+        return $this->getCompletionFromSuggests($searchResult);
     }
 
     /**

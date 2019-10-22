@@ -8,12 +8,24 @@
 namespace Spryker\Client\SearchElasticsearch\AggregationExtractor;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
-use Spryker\Client\Money\Plugin\MoneyPlugin;
-use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
+use Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToMoneyClientInterface;
 use Spryker\Shared\SearchElasticsearch\SearchElasticsearchConfig;
 
 class AggregationExtractorFactory implements AggregationExtractorFactoryInterface
 {
+    /**
+     * @var \Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToMoneyClientInterface
+     */
+    protected $moneyClient;
+
+    /**
+     * @param \Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToMoneyClientInterface $moneyClient
+     */
+    public function __construct(SearchElasticsearchToMoneyClientInterface $moneyClient)
+    {
+        $this->moneyClient = $moneyClient;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      *
@@ -63,7 +75,7 @@ class AggregationExtractorFactory implements AggregationExtractorFactoryInterfac
      */
     protected function createPriceRangeExtractor(FacetConfigTransfer $facetConfigTransfer): AggregationExtractorInterface
     {
-        return new PriceRangeExtractor($facetConfigTransfer, $this->createMoneyPlugin());
+        return new PriceRangeExtractor($facetConfigTransfer, $this->moneyClient);
     }
 
     /**
@@ -84,14 +96,6 @@ class AggregationExtractorFactory implements AggregationExtractorFactoryInterfac
     protected function createCategoryExtractor(FacetConfigTransfer $facetConfigTransfer): AggregationExtractorInterface
     {
         return new CategoryExtractor($facetConfigTransfer);
-    }
-
-    /**
-     * @return \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface
-     */
-    protected function createMoneyPlugin(): MoneyPluginInterface
-    {
-        return new MoneyPlugin();
     }
 
     /**
