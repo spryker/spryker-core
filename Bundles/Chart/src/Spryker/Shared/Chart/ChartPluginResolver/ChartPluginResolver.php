@@ -8,17 +8,17 @@
 namespace Spryker\Shared\Chart\ChartPluginResolver;
 
 use Spryker\Shared\Chart\ChartPluginResolver\Exception\ChartPluginNotFoundException;
-use Spryker\Shared\ChartExtension\Dependency\Plugin\ChartPluginInterface;
+use Spryker\Zed\ChartExtension\Dependency\Plugin\ChartPluginInterface;
 
 class ChartPluginResolver implements ChartPluginResolverInterface
 {
     /**
-     * @var \Spryker\Shared\ChartExtension\Dependency\Plugin\ChartPluginInterface[]
+     * @var \Spryker\Zed\ChartExtension\Dependency\Plugin\ChartPluginInterface[]
      */
     protected $chartPlugins;
 
     /**
-     * @param \Spryker\Shared\ChartExtension\Dependency\Plugin\ChartPluginInterface[] $chartPlugins
+     * @param \Spryker\Zed\ChartExtension\Dependency\Plugin\ChartPluginInterface[] $chartPlugins
      */
     public function __construct(array $chartPlugins)
     {
@@ -30,7 +30,7 @@ class ChartPluginResolver implements ChartPluginResolverInterface
      *
      * @throws \Spryker\Shared\Chart\ChartPluginResolver\Exception\ChartPluginNotFoundException
      *
-     * @return \Spryker\Shared\ChartExtension\Dependency\Plugin\ChartPluginInterface
+     * @return \Spryker\Zed\ChartExtension\Dependency\Plugin\ChartPluginInterface
      */
     public function getChartPluginByName(string $name): ChartPluginInterface
     {

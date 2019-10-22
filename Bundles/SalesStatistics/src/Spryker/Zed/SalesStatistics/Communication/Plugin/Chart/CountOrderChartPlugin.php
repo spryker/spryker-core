@@ -9,8 +9,8 @@ namespace Spryker\Zed\SalesStatistics\Communication\Plugin\Chart;
 
 use Generated\Shared\Transfer\ChartDataTransfer;
 use Spryker\Shared\Chart\ChartConfig;
-use Spryker\Shared\ChartExtension\Dependency\Plugin\ChartPluginInterface;
 use Spryker\Shared\Dashboard\Dependency\Plugin\DashboardPluginInterface;
+use Spryker\Zed\ChartExtension\Dependency\Plugin\ChartPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**

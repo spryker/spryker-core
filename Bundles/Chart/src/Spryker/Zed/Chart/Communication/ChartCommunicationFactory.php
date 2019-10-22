@@ -29,7 +29,7 @@ class ChartCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\ChartExtension\Dependency\Plugin\ChartPluginInterface[]
+     * @return \Spryker\Zed\ChartExtension\Dependency\Plugin\ChartPluginInterface[]
      */
     public function getChartTwigPlugins(): array
     {
@@ -37,7 +37,7 @@ class ChartCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\ChartExtension\Dependency\Plugin\ChartTwigFunctionPluginInterface[]
+     * @return \Spryker\Zed\ChartExtension\Dependency\Plugin\ChartTwigFunctionPluginInterface[]
      */
     public function getChartTwigFunctionPlugins(): array
     {

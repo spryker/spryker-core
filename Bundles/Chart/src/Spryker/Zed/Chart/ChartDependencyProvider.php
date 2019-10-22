@@ -60,7 +60,7 @@ class ChartDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\ChartExtension\Dependency\Plugin\ChartTwigFunctionPluginInterface[]
+     * @return \Spryker\Zed\ChartExtension\Dependency\Plugin\ChartTwigFunctionPluginInterface[]
      */
     protected function geChartTwigFunctionPlugins(): array
     {
@@ -68,7 +68,7 @@ class ChartDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\ChartExtension\Dependency\Plugin\ChartPluginInterface[]
+     * @return \Spryker\Zed\ChartExtension\Dependency\Plugin\ChartPluginInterface[]
      */
     protected function getChartTwigPlugins(): array
     {

@@ -7,7 +7,7 @@
 
 namespace Spryker\Shared\Chart\ChartPluginResolver;
 
-use Spryker\Shared\ChartExtension\Dependency\Plugin\ChartPluginInterface;
+use Spryker\Zed\ChartExtension\Dependency\Plugin\ChartPluginInterface;
 
 interface ChartPluginResolverInterface
 {
@@ -16,7 +16,7 @@ interface ChartPluginResolverInterface
      *
      * @throws \Spryker\Shared\Chart\ChartPluginResolver\Exception\ChartPluginNotFoundException
      *
-     * @return \Spryker\Shared\ChartExtension\Dependency\Plugin\ChartPluginInterface
+     * @return \Spryker\Zed\ChartExtension\Dependency\Plugin\ChartPluginInterface
      */
     public function getChartPluginByName(string $name): ChartPluginInterface;
 }
