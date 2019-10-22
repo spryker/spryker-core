@@ -52,7 +52,7 @@ class CmsSlotKeyToCmsSlotIdStep implements DataImportStepInterface
             ->findOne();
 
         if (!$idCmsSlot) {
-            throw new EntityNotFoundException(sprintf('Could not find id cms slot by key "%s".', $cmsSlotKey));
+            throw new EntityNotFoundException(sprintf('Could not find CMS slot ID by key "%s".', $cmsSlotKey));
         }
 
         $this->idCmsSlotCache[$cmsSlotKey] = $idCmsSlot;

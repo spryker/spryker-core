@@ -52,7 +52,7 @@ class CmsBlockNameToCmsBlockIdStep implements DataImportStepInterface
             ->findOne();
 
         if (!$idCmsBlock) {
-            throw new EntityNotFoundException(sprintf('Could not find id cms block by name "%s".', $cmsBlockName));
+            throw new EntityNotFoundException(sprintf('Could not find CMS Block ID by name "%s".', $cmsBlockName));
         }
 
         $this->idCmsBlockCache[$cmsBlockName] = $idCmsBlock;

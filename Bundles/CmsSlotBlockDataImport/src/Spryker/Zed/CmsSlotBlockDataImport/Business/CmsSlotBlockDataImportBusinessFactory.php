@@ -10,8 +10,12 @@ namespace Spryker\Zed\CmsSlotBlockDataImport\Business;
 use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsBlockNameToCmsBlockIdStep;
 use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsSlotBlockWriterStep;
 use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsSlotKeyToCmsSlotIdStep;
+use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsSlotPositionValidatorStep;
 use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsSlotTemplatePathToCmsSlotTemplateIdStep;
+use Spryker\Zed\CmsSlotBlockDataImport\Business\Hook\CmsSlotBlockDataImportAfterImportHook;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
+use Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 
 /**
  * @method \Spryker\Zed\CmsSlotBlockDataImport\CmsSlotBlockDataImportConfig getConfig()
@@ -31,42 +35,60 @@ class CmsSlotBlockDataImportBusinessFactory extends DataImportBusinessFactory
         $dataSetStepBroker->addStep($this->createCmsSlotTemplatePathToCmsSlotTemplateIdStep());
         $dataSetStepBroker->addStep($this->createCmsSlotKeyToCmsSlotIdStep());
         $dataSetStepBroker->addStep($this->createCmsBlockNameToCmsBlockIdStep());
+        $dataSetStepBroker->addStep($this->createCmsBlockNameToCmsBlockIdStep());
         $dataSetStepBroker->addStep($this->createCmsSlotBlockWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
+        $dataImporter->addAfterImportHook($this->createAfterImportHook());
 
         return $dataImporter;
     }
 
     /**
-     * @return \Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsSlotTemplatePathToCmsSlotTemplateIdStep
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createCmsSlotTemplatePathToCmsSlotTemplateIdStep(): CmsSlotTemplatePathToCmsSlotTemplateIdStep
+    public function createCmsSlotTemplatePathToCmsSlotTemplateIdStep(): DataImportStepInterface
     {
         return new CmsSlotTemplatePathToCmsSlotTemplateIdStep();
     }
 
     /**
-     * @return \Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsSlotKeyToCmsSlotIdStep
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createCmsSlotKeyToCmsSlotIdStep(): CmsSlotKeyToCmsSlotIdStep
+    public function createCmsSlotKeyToCmsSlotIdStep(): DataImportStepInterface
     {
         return new CmsSlotKeyToCmsSlotIdStep();
     }
 
     /**
-     * @return \Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsBlockNameToCmsBlockIdStep
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createCmsBlockNameToCmsBlockIdStep(): CmsBlockNameToCmsBlockIdStep
+    public function createCmsBlockNameToCmsBlockIdStep(): DataImportStepInterface
     {
         return new CmsBlockNameToCmsBlockIdStep();
     }
 
     /**
-     * @return \Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsSlotBlockWriterStep
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createCmsSlotBlockWriterStep(): CmsSlotBlockWriterStep
+    public function createCmsSlotBlockWriterStep(): DataImportStepInterface
     {
         return new CmsSlotBlockWriterStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function createCmsSlotPositionValidatorStep(): DataImportStepInterface
+    {
+        return new CmsSlotPositionValidatorStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface
+     */
+    public function createAfterImportHook(): DataImporterAfterImportInterface
+    {
+        return new CmsSlotBlockDataImportAfterImportHook();
     }
 }

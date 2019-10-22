@@ -59,7 +59,7 @@ class CmsSlotTemplatePathToCmsSlotTemplateIdStep implements DataImportStepInterf
             ->findOne();
 
         if (!$idCmsSlotTemplate) {
-            throw new EntityNotFoundException(sprintf('Could not find id cms slot template by path "%s".', $templatePath));
+            throw new EntityNotFoundException(sprintf('Could not find CMS slot template ID by path "%s".', $templatePath));
         }
 
         $this->idCmsSlotTemplateCache[$templatePath] = $idCmsSlotTemplate;
