@@ -233,10 +233,10 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     }
 
     /**
-     * If a child by the given name doesn't exists a new SimpleXmlElement will be returned.
-     * If a child by the given name exists this SimpleXmlElement child will be returned.
-     * If the child name is `index` and it does already exists (comes from core) then we replace the core SimpleXmlElement with the one from the project.
-     * If the node doesn't contain any columns it will just removed.
+     * If a child by the given name doesn't exists, a new SimpleXmlElement will be returned.
+     * If a child by the given name exists, this SimpleXmlElement child will be returned.
+     * If the child name is `index` and it does already exists (comes from core), then the core SimpleXmlElement definition gets replaced with the one from the project.
+     * If the node doesn't contain any columns, it will just be removed.
      *
      * @param \SimpleXMLElement $toXmlElement
      * @param \SimpleXMLElement $fromXmlChildElement
