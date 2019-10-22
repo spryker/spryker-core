@@ -81,7 +81,8 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAvailabilityReader(
             $this->getRepository(),
-            $this->createAvailabilityHandler()
+            $this->createAvailabilityHandler(),
+            $this->getStoreFacade()
         );
     }
 
