@@ -117,9 +117,9 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStorePropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_STORE, function () {
+        $container->set(static::PROPEL_QUERY_STORE, $container->factory(function () {
             return SpyStoreQuery::create();
-        });
+        }));
 
         return $container;
     }
