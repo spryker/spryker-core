@@ -15,6 +15,9 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/cms-slot-block-gui": "If you want to assign CMS Blocks to CMS Slots"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"

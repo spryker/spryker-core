@@ -20,6 +20,7 @@ $(document).ready(function() {
 
     var templateTable = new TemplateTable({
         templateTableId: '#template-list-table',
+        slotTemplateNameClass: '.js-slot-template-name',
         slotTable: slotTable
     });
 
