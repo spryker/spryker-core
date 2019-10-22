@@ -50,7 +50,7 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
         $merchantProfileQuery = $this->getFactory()
             ->createMerchantProfileQuery()
             ->joinWithSpyMerchant()
-            ->leftJoinSpyMerchantProfileAddress();
+            ->leftJoinWithSpyMerchantProfileAddress();
 
         $merchantProfileQuery = $this->applyFilters($merchantProfileQuery, $merchantProfileCriteriaFilterTransfer);
         $merchantProfileEntityCollection = $merchantProfileQuery->find();

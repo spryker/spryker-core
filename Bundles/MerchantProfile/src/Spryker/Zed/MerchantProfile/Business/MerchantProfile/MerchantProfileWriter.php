@@ -64,10 +64,11 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
     public function create(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
     {
         $merchantProfileAddressCollectionTransfer = $merchantProfileTransfer->getAddressCollection();
+        $merchantProfileUrlTransfers = $merchantProfileTransfer->getUrlCollection();
         $merchantProfileTransfer = $this->merchantProfileGlossaryWriter->saveMerchantProfileGlossaryAttributes($merchantProfileTransfer);
         $merchantProfileTransfer = $this->merchantProfileEntityManager->create($merchantProfileTransfer);
         $merchantProfileTransfer = $this->saveMerchantProfileAddress($merchantProfileTransfer, $merchantProfileAddressCollectionTransfer);
-        $merchantProfileTransfer = $this->saveMerchantProfileUrls($merchantProfileTransfer);
+        $merchantProfileTransfer = $this->saveMerchantProfileUrls($merchantProfileTransfer, $merchantProfileUrlTransfers);
 
         return $merchantProfileTransfer;
     }
@@ -80,10 +81,11 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
     public function update(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
     {
         $merchantProfileAddressCollectionTransfer = $merchantProfileTransfer->getAddressCollection();
+        $merchantProfileUrlTransfers = $merchantProfileTransfer->getUrlCollection();
         $merchantProfileTransfer = $this->merchantProfileGlossaryWriter->saveMerchantProfileGlossaryAttributes($merchantProfileTransfer);
         $merchantProfileTransfer = $this->merchantProfileEntityManager->update($merchantProfileTransfer);
         $merchantProfileTransfer = $this->saveMerchantProfileAddress($merchantProfileTransfer, $merchantProfileAddressCollectionTransfer);
-        $merchantProfileTransfer = $this->saveMerchantProfileUrls($merchantProfileTransfer);
+        $merchantProfileTransfer = $this->saveMerchantProfileUrls($merchantProfileTransfer, $merchantProfileUrlTransfers);
 
         return $merchantProfileTransfer;
     }
@@ -112,12 +114,12 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\UrlTransfer[] $merchantProfileUrlTransfers
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileTransfer[
+     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
-    protected function saveMerchantProfileUrls(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
+    protected function saveMerchantProfileUrls(MerchantProfileTransfer $merchantProfileTransfer, ArrayObject $merchantProfileUrlTransfers): MerchantProfileTransfer
     {
-        $merchantProfileUrlTransfers = $merchantProfileTransfer->getUrlCollection();
         $idMerchantProfile = $merchantProfileTransfer->getIdMerchantProfile();
 
         $urlTransferCollection = new ArrayObject();
