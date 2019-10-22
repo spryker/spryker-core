@@ -33,7 +33,7 @@ class SellableTest extends Unit
     public const SKU_PRODUCT = 'sku-123-321';
 
     /**
-     * @dataProvider provideIsProductSellableStores
+     * @dataProvider isProductSellableStoresDataProvider
      *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
@@ -58,7 +58,7 @@ class SellableTest extends Unit
     /**
      * @return array
      */
-    public function provideIsProductSellableStores(): array
+    public function isProductSellableStoresDataProvider(): array
     {
         return [
             'store with ID' => [$this->createStoreTransfer()],
@@ -67,7 +67,7 @@ class SellableTest extends Unit
     }
 
     /**
-     * @dataProvider provideReservedItemsAndExistingStock
+     * @dataProvider reservedItemsAndExistingStockDataProvider
      *
      * @param \Spryker\DecimalObject\Decimal $existingAvailability
      *
@@ -94,7 +94,7 @@ class SellableTest extends Unit
     /**
      * @return array
      */
-    public function provideReservedItemsAndExistingStock(): array
+    public function reservedItemsAndExistingStockDataProvider(): array
     {
         return [
             'int stock' => [new Decimal(10)],
