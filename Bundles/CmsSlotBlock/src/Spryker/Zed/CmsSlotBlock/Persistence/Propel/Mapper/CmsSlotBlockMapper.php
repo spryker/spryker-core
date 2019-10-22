@@ -38,11 +38,10 @@ class CmsSlotBlockMapper implements CmsSlotBlockMapperInterface
         CmsSlotBlockTransfer $cmsSlotBlockTransfer,
         SpyCmsSlotBlock $cmsSlotBlockEntity
     ): SpyCmsSlotBlock {
-        $cmsSlotBlockEntity->fromArray($cmsSlotBlockTransfer->toArray());
         $cmsSlotBlockEntity->setFkCmsSlot($cmsSlotBlockTransfer->getIdSlot());
         $cmsSlotBlockEntity->setFkCmsBlock($cmsSlotBlockTransfer->getIdCmsBlock());
         $cmsSlotBlockEntity->setFkCmsSlotTemplate($cmsSlotBlockTransfer->getIdSlotTemplate());
-
+        $cmsSlotBlockEntity->setPosition($cmsSlotBlockTransfer->getPosition());
         $cmsSlotBlockEntity->setConditions(
             $this->utilEncodingService->encodeJson($cmsSlotBlockTransfer->getConditions())
         );
