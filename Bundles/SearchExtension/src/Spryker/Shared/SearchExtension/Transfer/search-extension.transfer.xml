@@ -6,4 +6,7 @@
     <transfer name="SearchContext">
     </transfer>
 
+    <transfer name="SearchConfiguration">
+    </transfer>
+
 </transfers>

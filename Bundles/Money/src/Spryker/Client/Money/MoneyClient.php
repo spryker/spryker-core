@@ -48,4 +48,21 @@ class MoneyClient extends AbstractClient implements MoneyClientInterface
             ->createMoneyBuilder()
             ->fromInteger($amount, $isoCode);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $amount
+     * @param string|null $isoCode
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function fromFloat(float $amount, ?string $isoCode = null): MoneyTransfer
+    {
+        return $this->getFactory()
+            ->createMoneyBuilder()
+            ->fromFloat($amount, $isoCode);
+    }
 }

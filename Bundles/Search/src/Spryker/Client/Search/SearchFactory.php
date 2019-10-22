@@ -64,6 +64,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
      */
     public function getSearchConfig()
@@ -76,6 +78,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
      */
     public function createSearchConfig()
@@ -84,6 +88,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigBuilderInterface
      */
     public function getSearchConfigBuilder()
@@ -92,6 +98,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Elastica\Client
      */
     public function getElasticsearchClient()
@@ -135,6 +143,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Model\Elasticsearch\Aggregation\FacetAggregationFactoryInterface
      */
     public function createFacetAggregationFactory()
@@ -147,6 +157,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface
      */
     public function createFacetConfigBuilder()
@@ -155,6 +167,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface
      */
     public function createSortConfigBuilder()
@@ -163,6 +177,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface
      */
     public function createPaginationConfigBuilder()
@@ -171,6 +187,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Model\Elasticsearch\Query\QueryFactoryInterface
      */
     public function createQueryFactory()
@@ -187,6 +205,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\AggregationExtractorFactoryInterface
      */
     public function createAggregationExtractorFactory()
@@ -195,6 +215,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Generated\Shared\Search\PageIndexMap
      */
     protected function createPageIndexMap()
@@ -203,6 +225,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilderInterface
      */
     public function createQueryBuilder()
@@ -211,6 +235,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilderInterface
      */
     public function createAggregationBuilder()
@@ -219,6 +245,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Model\Elasticsearch\Suggest\SuggestBuilderInterface
      */
     public function createSuggestBuilder()
@@ -227,6 +255,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\FacetValueTransformerFactoryInterface
      */
     public function createFacetValueTransformerFactory()
@@ -235,6 +265,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $searchString
      * @param int|null $limit
      * @param int|null $offset
@@ -247,6 +279,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $searchString
      * @param int|null $limit
      * @param int|null $offset
@@ -259,6 +293,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigExpanderPluginInterface[]
      */
     public function getSearchConfigExpanderPlugins()
@@ -267,6 +303,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Shared\Kernel\Store
      */
     public function getStore()

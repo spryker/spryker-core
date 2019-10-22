@@ -10,31 +10,42 @@ namespace Spryker\Client\SearchElasticsearch;
 use Spryker\Client\Kernel\AbstractBundleConfig;
 use Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants;
 
+/**
+ * @method \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConfig getSharedConfig()
+ */
 class SearchElasticsearchConfig extends AbstractBundleConfig
 {
+    public const FACET_NAME_AGGREGATION_SIZE = 10;
+
     /**
      * @return array
      */
     public function getClientConfig(): array
     {
-        if ($this->getConfig()->hasValue(SearchElasticsearchConstants::CLIENT_CONFIGURATION)) {
-            return $this->get(SearchElasticsearchConstants::CLIENT_CONFIGURATION);
-        }
+        return $this->getSharedConfig()->getClientConfig();
+    }
 
-        if ($this->getConfig()->hasValue(SearchElasticsearchConstants::EXTRA)) {
-            $config = $this->get(SearchElasticsearchConstants::EXTRA);
-        }
+    /**
+     * @return array
+     */
+    public function getIndexNameMap(): array
+    {
+        return $this->getSharedConfig()->getIndexNameMap();
+    }
 
-        $config['transport'] = ucfirst($this->get(SearchElasticsearchConstants::TRANSPORT));
-        $config['port'] = $this->get(SearchElasticsearchConstants::PORT);
-        $config['host'] = $this->get(SearchElasticsearchConstants::HOST);
+    /**
+     * @return int
+     */
+    public function getFullTextBoostedBoostingValue(): int
+    {
+        return $this->get(SearchElasticsearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE);
+    }
 
-        if ($this->getConfig()->hasValue(SearchElasticsearchConstants::AUTH_HEADER)) {
-            $config['headers'] = [
-                'Authorization' => 'Basic ' . $this->get(SearchElasticsearchConstants::AUTH_HEADER),
-            ];
-        }
-
-        return $config;
+    /**
+     * @return int
+     */
+    public function getFacetNameAggregationSize(): int
+    {
+        return static::FACET_NAME_AGGREGATION_SIZE;
     }
 }
