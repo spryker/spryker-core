@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 /**
  * @method \Spryker\Client\Storage\StorageClientInterface getClient()
  */
-class StorageCacheEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
+class StorageKeyCacheEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
     public const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE;
 
