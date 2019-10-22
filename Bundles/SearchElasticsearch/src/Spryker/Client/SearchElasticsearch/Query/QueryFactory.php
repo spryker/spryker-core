@@ -21,7 +21,7 @@ class QueryFactory implements QueryFactoryInterface
     protected $queryBuilder;
 
     /**
-     * @var \Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface
+     * @var \Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToMoneyClientInterface
      */
     protected $moneyClient;
 
