@@ -129,7 +129,7 @@ class ConfigurableBundleTemplateSlotWriter implements ConfigurableBundleTemplate
         $configurableBundleTemplateSlotTransfer->requireFkConfigurableBundleTemplate()
             ->requireProductList()
             ->getProductList()
-            ->requireIdProductList();
+                ->requireIdProductList();
 
         $configurableBundleTemplateSlotTransfer = $this->configurableBundleNameGenerator
             ->setConfigurableBundleTemplateSlotName($configurableBundleTemplateSlotTransfer);

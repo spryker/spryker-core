@@ -21,7 +21,10 @@ interface ConfigurableBundleFacadeInterface
     /**
      * Specification:
      * - Persists configurable bundle template.
-     * - Generates translation key and persists configurable bundle template name translations.
+     * - Expects minimum one translation to be provided.
+     * - Expects locale definition for each provided translation.
+     * - Generates translation key using first translation.
+     * - Persists provided configurable bundle template name translations.
      *
      * @api
      *
@@ -36,7 +39,10 @@ interface ConfigurableBundleFacadeInterface
     /**
      * Specification:
      * - Persists configurable bundle template.
-     * - Updates configurable bundle template name translations.
+     * - Expects minimum one translation to be provided.
+     * - Expects locale definition for each provided translation.
+     * - Updates translation key using first translation.
+     * - Updates provided configurable bundle template name translations.
      *
      * @api
      *
@@ -50,7 +56,8 @@ interface ConfigurableBundleFacadeInterface
 
     /**
      * Specification:
-     * - Finds configurable bundle template by criteria from ConfigurableBundleTemplateFilterTransfer.
+     * - Finds configurable bundle template in Persistence.
+     * - Filters by configurable bundle template ID if provided.
      * - Expands found configurable bundle template with translations for current locale.
      * - Returns corresponding transfer object if found, null otherwise.
      *
@@ -148,8 +155,12 @@ interface ConfigurableBundleFacadeInterface
     /**
      * Specification:
      * - Persists configurable bundle template slot.
-     * - Generates translation key and persists configurable bundle template name translations.
+     * - Expects configurable bundle template ID to be provided.
      * - Creates new product list, assigns it to a slot.
+     * - Expects minimum one translation to be provided.
+     * - Expects locale definition for each provided translation.
+     * - Generates translation key using first translation.
+     * - Persists provided configurable bundle template slot name translations.
      *
      * @api
      *
@@ -163,8 +174,12 @@ interface ConfigurableBundleFacadeInterface
 
     /**
      * Specification:
+     * - Expects product list ID to be provided.
      * - Persists configurable bundle template slot.
-     * - Updates configurable bundle template slot name translations.
+     * - Expects minimum one translation to be provided.
+     * - Expects locale definition for each provided translation.
+     * - Updates translation key using first translation.
+     * - Persists provided configurable bundle template slot name translations.
      *
      * @api
      *
