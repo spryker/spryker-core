@@ -22,7 +22,7 @@ class MerchantProfileAddressCollectionTransferToMerchantProfileAddressTransferTr
      *
      * @return \Generated\Shared\Transfer\MerchantProfileAddressTransfer
      */
-    public function transform($value)
+    public function transform(MerchantProfileAddressCollectionTransfer $value): MerchantProfileAddressTransfer
     {
         if ($value instanceof MerchantProfileAddressCollectionTransfer && $value->getAddresses()->offsetExists(0)) {
             return $value->getAddresses()->offsetGet(0);
@@ -36,7 +36,7 @@ class MerchantProfileAddressCollectionTransferToMerchantProfileAddressTransferTr
      *
      * @return \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer
      */
-    public function reverseTransform($value)
+    public function reverseTransform(MerchantProfileAddressTransfer $value): MerchantProfileAddressCollectionTransfer
     {
         if (!$this->isValueSet($value)) {
             return new MerchantProfileAddressCollectionTransfer();
@@ -49,11 +49,11 @@ class MerchantProfileAddressCollectionTransferToMerchantProfileAddressTransferTr
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantProfileAddressTransfer|null $value
+     * @param \Generated\Shared\Transfer\MerchantProfileAddressTransfer $value
      *
      * @return bool
      */
-    protected function isValueSet($value): bool
+    protected function isValueSet(MerchantProfileAddressTransfer $value): bool
     {
         return $value && $value instanceof MerchantProfileAddressTransfer;
     }

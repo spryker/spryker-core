@@ -18,7 +18,7 @@ interface MerchantProfileGuiToGlossaryFacadeInterface
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $locale = null): bool;
+    public function hasTranslation(string $keyName, ?LocaleTransfer $locale = null): bool;
 
     /**
      * @param string $keyName
@@ -26,5 +26,5 @@ interface MerchantProfileGuiToGlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation($keyName, LocaleTransfer $locale): TranslationTransfer;
+    public function getTranslation(string $keyName, LocaleTransfer $locale): TranslationTransfer;
 }

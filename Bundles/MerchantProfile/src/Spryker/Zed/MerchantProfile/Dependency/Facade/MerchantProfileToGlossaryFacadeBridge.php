@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantProfile\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\TranslationTransfer;
 
 class MerchantProfileToGlossaryFacadeBridge implements MerchantProfileToGlossaryFacadeInterface
 {
@@ -29,7 +30,7 @@ class MerchantProfileToGlossaryFacadeBridge implements MerchantProfileToGlossary
      *
      * @return int
      */
-    public function createKey($keyName)
+    public function createKey(string $keyName): int
     {
         return $this->glossaryFacade->createKey($keyName);
     }
@@ -39,7 +40,7 @@ class MerchantProfileToGlossaryFacadeBridge implements MerchantProfileToGlossary
      *
      * @return bool
      */
-    public function hasKey($keyName)
+    public function hasKey(string $keyName): bool
     {
         return $this->glossaryFacade->hasKey($keyName);
     }
@@ -52,7 +53,7 @@ class MerchantProfileToGlossaryFacadeBridge implements MerchantProfileToGlossary
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
+    public function createTranslation(string $keyName, LocaleTransfer $locale, string $value, bool $isActive = true): TranslationTransfer
     {
         return $this->glossaryFacade->createTranslation($keyName, $locale, $value, $isActive);
     }
@@ -63,7 +64,7 @@ class MerchantProfileToGlossaryFacadeBridge implements MerchantProfileToGlossary
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $locale = null)
+    public function hasTranslation(string $keyName, ?LocaleTransfer $locale = null): bool
     {
         return $this->glossaryFacade->hasTranslation($keyName, $locale);
     }
@@ -76,7 +77,7 @@ class MerchantProfileToGlossaryFacadeBridge implements MerchantProfileToGlossary
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function updateTranslation($keyName, $locale, $value, $isActive = true)
+    public function updateTranslation(string $keyName, LocaleTransfer $locale, string $value, bool $isActive = true): TranslationTransfer
     {
         return $this->glossaryFacade->updateTranslation($keyName, $locale, $value, $isActive);
     }
@@ -87,7 +88,7 @@ class MerchantProfileToGlossaryFacadeBridge implements MerchantProfileToGlossary
      *
      * @return bool
      */
-    public function deleteTranslation($keyName, LocaleTransfer $locale)
+    public function deleteTranslation(string $keyName, LocaleTransfer $locale): bool
     {
         return $this->glossaryFacade->deleteTranslation($keyName, $locale);
     }

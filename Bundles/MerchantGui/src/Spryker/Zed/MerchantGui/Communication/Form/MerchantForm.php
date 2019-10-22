@@ -42,7 +42,6 @@ class MerchantForm extends AbstractType
     protected const LABEL_EMAIL = 'Email';
     protected const LABEL_MERCHANT_REFERENCE = 'Merchant reference';
 
-
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -144,7 +143,6 @@ class MerchantForm extends AbstractType
         return $this;
     }
 
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param string|null $merchantReference
@@ -159,7 +157,7 @@ class MerchantForm extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new Length([
-                        'max' => 255
+                        'max' => 255,
                     ]),
                     new Callback([
                         'callback' => $this->getExistingMerchantReferenceValidationCallback(
@@ -252,7 +250,7 @@ class MerchantForm extends AbstractType
 
     /**
      * @param int|null $currentId
-     * @param MerchantGuiToMerchantFacadeInterface $merchantFacade
+     * @param \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface $merchantFacade
      *
      * @return callable
      */

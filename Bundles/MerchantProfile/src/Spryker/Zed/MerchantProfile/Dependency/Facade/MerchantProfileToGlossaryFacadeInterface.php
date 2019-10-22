@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantProfile\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\TranslationTransfer;
 
 interface MerchantProfileToGlossaryFacadeInterface
 {
@@ -16,14 +17,14 @@ interface MerchantProfileToGlossaryFacadeInterface
      *
      * @return int
      */
-    public function createKey($keyName);
+    public function createKey(string $keyName): int;
 
     /**
      * @param string $keyName
      *
      * @return bool
      */
-    public function hasKey($keyName);
+    public function hasKey(string $keyName): bool;
 
     /**
      * @param string $keyName
@@ -33,7 +34,7 @@ interface MerchantProfileToGlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
+    public function createTranslation(string $keyName, LocaleTransfer $locale, string $value, bool $isActive = true): TranslationTransfer;
 
     /**
      * @param string $keyName
@@ -41,7 +42,7 @@ interface MerchantProfileToGlossaryFacadeInterface
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $locale = null);
+    public function hasTranslation(string $keyName, ?LocaleTransfer $locale = null): bool;
 
     /**
      * @param string $keyName
@@ -51,7 +52,7 @@ interface MerchantProfileToGlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function updateTranslation($keyName, $locale, $value, $isActive = true);
+    public function updateTranslation(string $keyName, LocaleTransfer $locale, string $value, bool $isActive = true): TranslationTransfer;
 
     /**
      * @param string $keyName
@@ -59,5 +60,5 @@ interface MerchantProfileToGlossaryFacadeInterface
      *
      * @return bool
      */
-    public function deleteTranslation($keyName, LocaleTransfer $locale);
+    public function deleteTranslation(string $keyName, LocaleTransfer $locale): bool;
 }

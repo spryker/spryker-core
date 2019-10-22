@@ -449,9 +449,8 @@ class MerchantProfileFormType extends AbstractType
         ];
     }
 
-
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
      */
@@ -462,11 +461,11 @@ class MerchantProfileFormType extends AbstractType
             'required' => false,
             'constraints' => [
                 new Length([
-                    'max' => 255
+                    'max' => 255,
                 ]),
                 new Regex([
                     'pattern' => '/^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$/',
-                ])
+                ]),
             ],
         ]);
 
@@ -474,7 +473,7 @@ class MerchantProfileFormType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
      */
@@ -485,10 +484,10 @@ class MerchantProfileFormType extends AbstractType
             'required' => false,
             'constraints' => [
                 new Length([
-                    'max' => 255
+                    'max' => 255,
                 ]),
                 new Regex([
-                    'pattern' => '/^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$/'
+                    'pattern' => '/^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$/',
                 ]),
             ],
         ]);
@@ -497,7 +496,7 @@ class MerchantProfileFormType extends AbstractType
     }
 
     /**
-     * @param FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
      */
@@ -508,7 +507,7 @@ class MerchantProfileFormType extends AbstractType
             'required' => false,
             'constraints' => [
                 new Length([
-                    'max' => 255
+                    'max' => 255,
                 ]),
             ],
         ]);
