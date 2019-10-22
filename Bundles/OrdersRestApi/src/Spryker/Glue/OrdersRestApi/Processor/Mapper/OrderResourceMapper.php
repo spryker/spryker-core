@@ -82,7 +82,7 @@ class OrderResourceMapper implements OrderResourceMapperInterface
             return null;
         }
 
-        $firstItemTransfer = current($orderTransfer->getItems());
+        $firstItemTransfer = $orderTransfer->getItems()[0];
         if ($firstItemTransfer->getShipment() === null
             || $firstItemTransfer->getShipment()->getShippingAddress() === null
         ) {

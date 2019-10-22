@@ -308,7 +308,7 @@ class QuoteShipmentExpander implements QuoteShipmentExpanderInterface
             return $quoteTransfer->setShipment(null);
         }
 
-        $firstShipmentGroup = current($shipmentGroupCollection);
+        $firstShipmentGroup = $shipmentGroupCollection[0];
         $firstShipmentGroup->requireShipment();
 
         return $quoteTransfer->setShipment($firstShipmentGroup->getShipment());

@@ -85,17 +85,17 @@ class ProductAttributeFinder implements ProductAttributeFinderInterface
      */
     public function findExternalProductImage(ProductConcreteTransfer $productConcreteTransfer): ?string
     {
-        $imageSetTransfer = current($productConcreteTransfer->getImageSets());
-
-        if ($imageSetTransfer === false) {
+        if ($productConcreteTransfer->getImageSets()->count() === 0) {
             return null;
         }
 
-        $productImageTransfer = current($imageSetTransfer->getProductImages());
+        $imageSetTransfer = $productConcreteTransfer->getImageSets()[0];
 
-        if ($productImageTransfer === false) {
+        if ($imageSetTransfer->getProductImages()->count() === 0) {
             return null;
         }
+
+        $productImageTransfer = $imageSetTransfer->getProductImages()[0];
 
         return $productImageTransfer->getExternalUrlLarge();
     }
