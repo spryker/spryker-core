@@ -15,12 +15,12 @@ interface ProductReviewCreatorInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestProductReviewsAttributesTransfer $restProductReviewAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestProductReviewsAttributesTransfer $restProductReviewsAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createProductReview(
         RestRequestInterface $restRequest,
-        RestProductReviewsAttributesTransfer $restProductReviewAttributesTransfer
+        RestProductReviewsAttributesTransfer $restProductReviewsAttributesTransfer
     ): RestResponseInterface;
 }

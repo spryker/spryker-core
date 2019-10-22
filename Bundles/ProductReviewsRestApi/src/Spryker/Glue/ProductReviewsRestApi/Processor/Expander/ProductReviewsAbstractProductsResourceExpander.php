@@ -26,13 +26,13 @@ class ProductReviewsAbstractProductsResourceExpander implements ProductReviewsAb
     }
 
     /**
-     * @param string $idProductAbstract
+     * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer
      */
     public function expand(
-        string $idProductAbstract,
+        int $idProductAbstract,
         AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer
     ): AbstractProductsRestAttributesTransfer {
         $productReviewsStorageTransfer = $this->productReviewsStorageClient->findProductAbstractReview($idProductAbstract);

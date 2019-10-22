@@ -125,13 +125,13 @@ class ProductReviewReader implements ProductReviewReaderInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param string $idProductAbstract
+     * @param int $idProductAbstract
      *
      * @return array
      */
     protected function findProductReviewsInSearch(
         RestRequestInterface $restRequest,
-        string $idProductAbstract
+        int $idProductAbstract
     ): array {
         return $this->productReviewClient->findProductReviewsInSearch(
             (new ProductReviewSearchRequestTransfer())

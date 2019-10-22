@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductReviewsRestApi\Processor\RestResponseBuilder;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductReviewTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestProductReviewsAttributesTransfer;
@@ -78,7 +79,7 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
      */
     public function createProductReviewRestResource(ProductReviewTransfer $productReviewTransfer): RestResourceInterface
     {
-        $restProductReviewAttributesTransfer = $this->productReviewMapper
+        $restProductReviewsAttributesTransfer = $this->productReviewMapper
             ->mapProductReviewTransferToRestProductReviewsAttributesTransfer(
                 $productReviewTransfer,
                 new RestProductReviewsAttributesTransfer()
@@ -89,7 +90,7 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
         return $this->restResourceBuilder->createRestResource(
             ProductReviewsRestApiConfig::RESOURCE_PRODUCT_REVIEWS,
             (string)$productReviewTransfer->getIdProductReview(),
-            $restProductReviewAttributesTransfer
+            $restProductReviewsAttributesTransfer
         )->addLink(
             RestLinkInterface::LINK_SELF,
             $this->createSelfLink($resourceId)
@@ -134,11 +135,11 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductReviewErrorTransfer[] $productReviewErrorTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductReviewErrorTransfer[] $productReviewErrorTransfers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createProductReviewsRestResponseWithErrors(array $productReviewErrorTransfers): RestResponseInterface
+    public function createProductReviewsRestResponseWithErrors(ArrayObject $productReviewErrorTransfers): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
         foreach ($productReviewErrorTransfers as $productReviewErrorTransfer) {

@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductReviewsRestApi\Processor\RestResponseBuilder;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductReviewTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -48,9 +49,9 @@ interface ProductReviewRestResponseBuilderInterface
     public function createProductAbstractNotFoundErrorResponse(): RestResponseInterface;
 
     /**
-     * @param \Generated\Shared\Transfer\ProductReviewErrorTransfer[] $productReviewErrorTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductReviewErrorTransfer[] $productReviewErrorTransfers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createProductReviewsRestResponseWithErrors(array $productReviewErrorTransfers): RestResponseInterface;
+    public function createProductReviewsRestResponseWithErrors(ArrayObject $productReviewErrorTransfers): RestResponseInterface;
 }

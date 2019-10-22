@@ -54,13 +54,13 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestProductReviewsAttributesTransfer $restProductReviewAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestProductReviewsAttributesTransfer $restProductReviewsAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createProductReview(
         RestRequestInterface $restRequest,
-        RestProductReviewsAttributesTransfer $restProductReviewAttributesTransfer
+        RestProductReviewsAttributesTransfer $restProductReviewsAttributesTransfer
     ): RestResponseInterface {
         $restResponse = $this->productReviewRestResponseBuilder->createRestResponse();
 
@@ -81,7 +81,7 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
 
         $productReviewResponseTransfer = $this->productReviewClient->submitCustomerReview(
             $this->createProductReviewRequestTransfer(
-                $restProductReviewAttributesTransfer,
+                $restProductReviewsAttributesTransfer,
                 $abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT],
                 $restRequest
             )
@@ -101,18 +101,18 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestProductReviewsAttributesTransfer $restProductReviewAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestProductReviewsAttributesTransfer $restProductReviewsAttributesTransfer
      * @param int $idProductAbstract
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\ProductReviewRequestTransfer
      */
     protected function createProductReviewRequestTransfer(
-        RestProductReviewsAttributesTransfer $restProductReviewAttributesTransfer,
+        RestProductReviewsAttributesTransfer $restProductReviewsAttributesTransfer,
         int $idProductAbstract,
         RestRequestInterface $restRequest
     ): ProductReviewRequestTransfer {
-        return (new ProductReviewRequestTransfer())->fromArray($restProductReviewAttributesTransfer->toArray())
+        return (new ProductReviewRequestTransfer())->fromArray($restProductReviewsAttributesTransfer->toArray())
             ->setIdProductAbstract($idProductAbstract)
             ->setLocaleName($restRequest->getMetadata()->getLocale())
             ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
