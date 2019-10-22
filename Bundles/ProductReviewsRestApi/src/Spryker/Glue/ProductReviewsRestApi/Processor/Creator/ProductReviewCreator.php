@@ -8,25 +8,24 @@
 namespace Spryker\Glue\ProductReviewsRestApi\Processor\Creator;
 
 use Generated\Shared\Transfer\ProductReviewRequestTransfer;
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestProductReviewsAttributesTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewClientInterface;
-use Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig;
+use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface;
+use Spryker\Glue\ProductReviewsRestApi\Processor\RestResponseBuilder\ProductReviewRestResponseBuilderInterface;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProductReviewCreator implements ProductReviewCreatorInterface
 {
-    protected const FORMAT_SELF_LINK_PRODUCT_REVIEWS_RESOURCE = '%s/%s';
+    protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
+    protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
+     * @var \Spryker\Glue\ProductReviewsRestApi\Processor\RestResponseBuilder\ProductReviewRestResponseBuilderInterface
      */
-    protected $restResourceBuilder;
+    protected $productReviewRestResponseBuilder;
 
     /**
      * @var \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewClientInterface
@@ -34,15 +33,23 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
     protected $productReviewClient;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @var \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface
+     */
+    protected $productStorageClient;
+
+    /**
+     * @param \Spryker\Glue\ProductReviewsRestApi\Processor\RestResponseBuilder\ProductReviewRestResponseBuilderInterface $productReviewRestResponseBuilder
      * @param \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewClientInterface $productReviewClient
+     * @param \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface $productStorageClient
      */
     public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder,
-        ProductReviewsRestApiToProductReviewClientInterface $productReviewClient
+        ProductReviewRestResponseBuilderInterface $productReviewRestResponseBuilder,
+        ProductReviewsRestApiToProductReviewClientInterface $productReviewClient,
+        ProductReviewsRestApiToProductStorageClientInterface $productStorageClient
     ) {
-        $this->restResourceBuilder = $restResourceBuilder;
+        $this->productReviewRestResponseBuilder = $productReviewRestResponseBuilder;
         $this->productReviewClient = $productReviewClient;
+        $this->productStorageClient = $productStorageClient;
     }
 
     /**
@@ -55,63 +62,59 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
         RestRequestInterface $restRequest,
         RestProductReviewsAttributesTransfer $restProductReviewAttributesTransfer
     ): RestResponseInterface {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
+        $restResponse = $this->productReviewRestResponseBuilder->createRestResponse();
 
         $parentResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS);
         if (!$parentResource || !$parentResource->getId()) {
-            return $this->createProductAbstractSkuMissingError();
+            return $this->productReviewRestResponseBuilder->createProductAbstractSkuMissingErrorResponse();
+        }
+
+        $abstractProductData = $this->productStorageClient->findProductAbstractStorageDataByMapping(
+            static::PRODUCT_ABSTRACT_MAPPING_TYPE,
+            $parentResource->getId(),
+            $restRequest->getMetadata()->getLocale()
+        );
+
+        if (!$abstractProductData) {
+            return $this->productReviewRestResponseBuilder->createProductAbstractNotFoundErrorResponse();
         }
 
         $productReviewResponseTransfer = $this->productReviewClient->submitCustomerReview(
-            (new ProductReviewRequestTransfer())->fromArray($restProductReviewAttributesTransfer->toArray())
-                ->setIdProductAbstract($parentResource->getId())
-                ->setLocaleName($restRequest->getMetadata()->getLocale())
-                ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
+            $this->createProductReviewRequestTransfer(
+                $restProductReviewAttributesTransfer,
+                $abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT],
+                $restRequest
+            )
         );
 
         if (!$productReviewResponseTransfer->getIsSuccess()) {
-            return $restResponse->addError(
-                (new RestErrorMessageTransfer())
-                    ->setStatus(Response::HTTP_FORBIDDEN)
-            );
+            return $this->productReviewRestResponseBuilder
+                ->createProductReviewsRestResponseWithErrors($productReviewResponseTransfer->getErrors());
         }
 
-        $resourceId = $productReviewResponseTransfer->getProductReview()->getIdProductReview();
-        $restResource = $this->restResourceBuilder->createRestResource(
-            ProductReviewsRestApiConfig::RESOURCE_PRODUCT_REVIEWS,
-            $resourceId,
-            $restProductReviewAttributesTransfer
-        );
+        $restResource = $this->productReviewRestResponseBuilder
+            ->createProductReviewRestResource($productReviewResponseTransfer->getProductReview());
 
         return $restResponse
-            ->addResource($restResource->addLink(RestLinkInterface::LINK_SELF, $this->createSelfLink($resourceId)))
+            ->addResource($restResource)
             ->setStatus(Response::HTTP_ACCEPTED);
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createProductAbstractSkuMissingError(): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(ProductsRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED)
-            ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED);
-
-        return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
-    }
-
-    /**
-     * @param string $resourceId
+     * @param \Generated\Shared\Transfer\RestProductReviewsAttributesTransfer $restProductReviewAttributesTransfer
+     * @param int $idProductAbstract
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\ProductReviewRequestTransfer
      */
-    protected function createSelfLink(string $resourceId): string
-    {
-        return sprintf(
-            static::FORMAT_SELF_LINK_PRODUCT_REVIEWS_RESOURCE,
-            ProductReviewsRestApiConfig::RESOURCE_PRODUCT_REVIEWS,
-            $resourceId
-        );
+    protected function createProductReviewRequestTransfer(
+        RestProductReviewsAttributesTransfer $restProductReviewAttributesTransfer,
+        int $idProductAbstract,
+        RestRequestInterface $restRequest
+    ): ProductReviewRequestTransfer {
+        return (new ProductReviewRequestTransfer())->fromArray($restProductReviewAttributesTransfer->toArray())
+            ->setIdProductAbstract($idProductAbstract)
+            ->setLocaleName($restRequest->getMetadata()->getLocale())
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
     }
 }

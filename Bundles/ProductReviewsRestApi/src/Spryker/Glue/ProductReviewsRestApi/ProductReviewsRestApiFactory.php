@@ -23,6 +23,8 @@ use Spryker\Glue\ProductReviewsRestApi\Processor\Mapper\ProductReviewMapper;
 use Spryker\Glue\ProductReviewsRestApi\Processor\Mapper\ProductReviewMapperInterface;
 use Spryker\Glue\ProductReviewsRestApi\Processor\Reader\ProductReviewReader;
 use Spryker\Glue\ProductReviewsRestApi\Processor\Reader\ProductReviewReaderInterface;
+use Spryker\Glue\ProductReviewsRestApi\Processor\RestResponseBuilder\ProductReviewRestResponseBuilder;
+use Spryker\Glue\ProductReviewsRestApi\Processor\RestResponseBuilder\ProductReviewRestResponseBuilderInterface;
 
 class ProductReviewsRestApiFactory extends AbstractFactory
 {
@@ -56,8 +58,7 @@ class ProductReviewsRestApiFactory extends AbstractFactory
     public function createProductReviewReader(): ProductReviewReaderInterface
     {
         return new ProductReviewReader(
-            $this->createProductReviewMapper(),
-            $this->getResourceBuilder(),
+            $this->createProductReviewRestResponseBuilder(),
             $this->getProductStorageClient(),
             $this->getProductReviewClient()
         );
@@ -69,8 +70,9 @@ class ProductReviewsRestApiFactory extends AbstractFactory
     public function createProductReviewCreator(): ProductReviewCreatorInterface
     {
         return new ProductReviewCreator(
-            $this->getResourceBuilder(),
-            $this->getProductReviewClient()
+            $this->createProductReviewRestResponseBuilder(),
+            $this->getProductReviewClient(),
+            $this->getProductStorageClient()
         );
     }
 
@@ -80,6 +82,17 @@ class ProductReviewsRestApiFactory extends AbstractFactory
     public function createProductReviewMapper(): ProductReviewMapperInterface
     {
         return new ProductReviewMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductReviewsRestApi\Processor\RestResponseBuilder\ProductReviewRestResponseBuilderInterface
+     */
+    public function createProductReviewRestResponseBuilder(): ProductReviewRestResponseBuilderInterface
+    {
+        return new ProductReviewRestResponseBuilder(
+            $this->getResourceBuilder(),
+            $this->createProductReviewMapper()
+        );
     }
 
     /**

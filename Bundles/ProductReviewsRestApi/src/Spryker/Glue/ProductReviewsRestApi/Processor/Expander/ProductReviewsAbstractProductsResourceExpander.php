@@ -35,9 +35,7 @@ class ProductReviewsAbstractProductsResourceExpander implements ProductReviewsAb
         string $idProductAbstract,
         AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer
     ): AbstractProductsRestAttributesTransfer {
-        $productReviewsStorageTransfer = $this->productReviewsStorageClient
-            ->findProductAbstractReview($idProductAbstract);
-
+        $productReviewsStorageTransfer = $this->productReviewsStorageClient->findProductAbstractReview($idProductAbstract);
         if (!$productReviewsStorageTransfer) {
             $abstractProductsRestAttributesTransfer->setReviewCount(0);
 

@@ -8,52 +8,27 @@
 namespace Spryker\Glue\ProductReviewsRestApi\Processor\Reader;
 
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Generated\Shared\Transfer\RestProductReviewsAttributesTransfer;
+use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\PaginatedProductReviewsResultFormatterPlugin;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\ProductReviewsResultFormatterPlugin;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\Page;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewClientInterface;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface;
-use Spryker\Glue\ProductReviewsRestApi\Processor\Mapper\ProductReviewMapperInterface;
-use Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig;
+use Spryker\Glue\ProductReviewsRestApi\Processor\RestResponseBuilder\ProductReviewRestResponseBuilderInterface;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
-use Symfony\Component\HttpFoundation\Response;
 
 class ProductReviewReader implements ProductReviewReaderInterface
 {
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
-    protected const FORMAT_SELF_LINK_PRODUCT_REVIEWS_RESOURCE = '%s/%s';
+    protected const DEFAULT_REVIEWS_PER_PAGE = 3;
 
     /**
-     * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::DEFAULT_ITEMS_PER_PAGE;
+     * @var \Spryker\Glue\ProductReviewsRestApi\Processor\RestResponseBuilder\ProductReviewRestResponseBuilderInterface
      */
-    protected const DEFAULT_ITEMS_PER_PAGE = 3;
-
-    /**
-     * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::PARAMETER_NAME_PAGE;
-     */
-    protected const PARAMETER_NAME_PAGE = 'page';
-
-    /**
-     * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::PARAMETER_NAME_ITEMS_PER_PAGE;
-     */
-    protected const PARAMETER_NAME_ITEMS_PER_PAGE = 'ipp';
-
-    /**
-     * @var \Spryker\Glue\ProductReviewsRestApi\Processor\Mapper\ProductReviewMapperInterface
-     */
-    protected $productReviewMapper;
-
-    /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
-     */
-    protected $restResourceBuilder;
+    protected $productReviewRestResponseBuilder;
 
     /**
      * @var \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface
@@ -66,19 +41,16 @@ class ProductReviewReader implements ProductReviewReaderInterface
     protected $productReviewClient;
 
     /**
-     * @param \Spryker\Glue\ProductReviewsRestApi\Processor\Mapper\ProductReviewMapperInterface $productReviewMapper
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param \Spryker\Glue\ProductReviewsRestApi\Processor\RestResponseBuilder\ProductReviewRestResponseBuilderInterface $productReviewRestResponseBuilder
      * @param \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewClientInterface $productReviewClient
      */
     public function __construct(
-        ProductReviewMapperInterface $productReviewMapper,
-        RestResourceBuilderInterface $restResourceBuilder,
+        ProductReviewRestResponseBuilderInterface $productReviewRestResponseBuilder,
         ProductReviewsRestApiToProductStorageClientInterface $productStorageClient,
         ProductReviewsRestApiToProductReviewClientInterface $productReviewClient
     ) {
-        $this->productReviewMapper = $productReviewMapper;
-        $this->restResourceBuilder = $restResourceBuilder;
+        $this->productReviewRestResponseBuilder = $productReviewRestResponseBuilder;
         $this->productStorageClient = $productStorageClient;
         $this->productReviewClient = $productReviewClient;
     }
@@ -92,7 +64,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
     {
         $parentResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS);
         if (!$parentResource || !$parentResource->getId()) {
-            return $this->createProductAbstractSkuMissingError();
+            return $this->productReviewRestResponseBuilder->createProductAbstractSkuMissingErrorResponse();
         }
 
         $abstractProductData = $this->productStorageClient->findProductAbstractStorageDataByMapping(
@@ -102,7 +74,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
         );
 
         if (!$abstractProductData) {
-            return $this->createProductAbstractNotFoundError();
+            return $this->productReviewRestResponseBuilder->createProductAbstractNotFoundErrorResponse();
         }
 
         $productReviews = $this->findProductReviewsInSearch(
@@ -111,36 +83,14 @@ class ProductReviewReader implements ProductReviewReaderInterface
         );
 
         if (!$restRequest->getPage()) {
-            $restRequest->setPage(new Page(1, static::DEFAULT_ITEMS_PER_PAGE));
+            $restRequest->setPage(new Page(1, static::DEFAULT_REVIEWS_PER_PAGE));
         }
-        $restResponse = $this->restResourceBuilder->createRestResponse(
-            $productReviews['pagination']->getNumFound(),
-            $restRequest->getPage()->getLimit()
+
+        return $this->productReviewRestResponseBuilder->buildProductReviewRestResponse(
+            $productReviews[PaginatedProductReviewsResultFormatterPlugin::NAME]->getNumFound(),
+            $restRequest->getPage()->getLimit(),
+            $productReviews[ProductReviewsResultFormatterPlugin::NAME]
         );
-
-        /** @var \Generated\Shared\Transfer\ProductReviewTransfer[] $productReviewTransfers */
-        $productReviewTransfers = $productReviews[ProductReviewsResultFormatterPlugin::NAME];
-        foreach ($productReviewTransfers as $productReviewTransfer) {
-            $restProductReviewAttributesTransfer = $this->productReviewMapper
-                ->mapProductReviewTransferToRestProductReviewsAttributesTransfer(
-                    $productReviewTransfer,
-                    new RestProductReviewsAttributesTransfer()
-                );
-
-            $resourceId = (string)$productReviewTransfer->getIdProductReview();
-            $restResource = $this->restResourceBuilder->createRestResource(
-                ProductReviewsRestApiConfig::RESOURCE_PRODUCT_REVIEWS,
-                $resourceId,
-                $restProductReviewAttributesTransfer
-            )->addLink(
-                RestLinkInterface::LINK_SELF,
-                $this->createSelfLink($resourceId)
-            );
-
-            $restResponse->addResource($restResource);
-        }
-
-        return $restResponse;
     }
 
     /**
@@ -160,6 +110,10 @@ class ProductReviewReader implements ProductReviewReaderInterface
             $abstractSku,
             $localeName
         );
+
+        if (!$abstractProductData) {
+            return [];
+        }
 
         $productReviewTransfers = $this->findProductReviewsInSearch(
             $restRequest,
@@ -194,65 +148,11 @@ class ProductReviewReader implements ProductReviewReaderInterface
     protected function prepareRestResourceCollection(array $productReviewTransfers): array
     {
         $productReviewResources = [];
-
         foreach ($productReviewTransfers as $productReviewTransfer) {
-            $restProductReviewAttributesTransfer = $this->productReviewMapper
-                ->mapProductReviewTransferToRestProductReviewsAttributesTransfer(
-                    $productReviewTransfer,
-                    new RestProductReviewsAttributesTransfer()
-                );
-
-            $resourceId = (string)$productReviewTransfer->getIdProductReview();
-            $productReviewResources[] = $this->restResourceBuilder->createRestResource(
-                ProductReviewsRestApiConfig::RESOURCE_PRODUCT_REVIEWS,
-                $resourceId,
-                $restProductReviewAttributesTransfer
-            )->addLink(
-                RestLinkInterface::LINK_SELF,
-                $this->createSelfLink($resourceId)
-            );
+            $productReviewResources[] = $this->productReviewRestResponseBuilder
+                ->createProductReviewRestResource($productReviewTransfer);
         }
 
         return $productReviewResources;
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createProductAbstractSkuMissingError(): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(ProductsRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED)
-            ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED);
-
-        return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createProductAbstractNotFoundError(): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CANT_FIND_ABSTRACT_PRODUCT)
-            ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_ABSTRACT_PRODUCT);
-
-        return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
-    }
-
-    /**
-     * @param string $resourceId
-     *
-     * @return string
-     */
-    protected function createSelfLink(string $resourceId): string
-    {
-        return sprintf(
-            static::FORMAT_SELF_LINK_PRODUCT_REVIEWS_RESOURCE,
-            ProductReviewsRestApiConfig::RESOURCE_PRODUCT_REVIEWS,
-            $resourceId
-        );
     }
 }
