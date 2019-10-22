@@ -22,20 +22,20 @@ class ProductRelationDataHelper extends Module
     use LocatorHelperTrait;
 
     /**
-     * @param string $skuAbstractProduct
+     * @param string $productAbstractSku
      * @param int $idProductAbstract
      * @param string $productRelationType
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer
      */
     public function haveProductRelation(
-        string $skuAbstractProduct,
+        string $productAbstractSku,
         int $idProductAbstract,
         string $productRelationType = ProductRelationTypes::TYPE_UP_SELLING
     ): ProductRelationTransfer {
         $productRelationFacade = $this->getProductRelationFacade();
 
-        $productRelationTransfer = $this->createProductRelationTransfer($skuAbstractProduct, $idProductAbstract, $productRelationType);
+        $productRelationTransfer = $this->createProductRelationTransfer($productAbstractSku, $idProductAbstract, $productRelationType);
 
         $idProductRelation = $productRelationFacade->createProductRelation($productRelationTransfer);
 
@@ -71,14 +71,14 @@ class ProductRelationDataHelper extends Module
     }
 
     /**
-     * @param string $skuAbstractProduct
+     * @param string $productAbstractSku
      * @param int $idProductAbstractRelated
      * @param string $productRelationType
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer
      */
     protected function createProductRelationTransfer(
-        string $skuAbstractProduct,
+        string $productAbstractSku,
         int $idProductAbstractRelated,
         string $productRelationType
     ): ProductRelationTransfer {
@@ -87,7 +87,7 @@ class ProductRelationDataHelper extends Module
 
         $ruleQuerySetTransfer = new PropelQueryBuilderRuleSetTransfer();
         $ruleQuerySetTransfer->setCondition('AND');
-        $ruleQuerySetTransfer->addRules($this->createProductAbstractSkuRuleTransfer($skuAbstractProduct));
+        $ruleQuerySetTransfer->addRules($this->createProductAbstractSkuRuleTransfer($productAbstractSku));
 
         $productRelationTransfer->setQuerySet($ruleQuerySetTransfer);
         $productRelationTransfer->setIsActive(true);
