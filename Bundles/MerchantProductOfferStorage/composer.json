@@ -1,0 +1,47 @@
+{
+  "name": "spryker/merchant-product-offer-storage",
+  "description": "MerchantProductOfferStorage module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/kernel": "^3.0.0",
+    "spryker/event-behavior": "^1.1.0",
+    "spryker/propel-orm": "^1.5.0",
+    "spryker/synchronization-behavior": "^1.0.0",
+    "spryker/synchronization-extension": "^1.0.0",
+    "spryker/product-offer": "^1.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*",
+    "spryker/event": "*",
+    "spryker/merchant": "*",
+    "spryker/merchant-product-offer": "*",
+    "spryker/propel": "*",
+    "spryker/queue": "*"
+  },
+  "suggest": {
+    "spryker/merchant-product-offer": "Required for using the Listeners",
+    "spryker/event": "Required for using the Listeners"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

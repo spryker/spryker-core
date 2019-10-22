@@ -279,6 +279,7 @@
     "spryker/merchant-gui": "*",
     "spryker/merchant-product-offer": "*",
     "spryker/merchant-product-offer-data-import": "*",
+    "spryker/merchant-product-offer-storage": "*",
     "spryker/merchant-relationship": "*",
     "spryker/merchant-relationship-data-import": "*",
     "spryker/merchant-relationship-extension": "*",

@@ -7,11 +7,8 @@
 
 namespace Spryker\Zed\ProductOffer;
 
-use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
-/**
- * @method \Spryker\Zed\ProductOffer\ProductOfferConfig getConfig()
- */
-class ProductOfferDependencyProvider extends AbstractBundleDependencyProvider
+class ProductOfferConfig extends AbstractBundleConfig
 {
 }
