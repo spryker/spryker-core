@@ -23,9 +23,11 @@ class CmsSlotPositionValidatorStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet)
     {
-        if (!filter_var($dataSet[CmsSlotBlockDataSetInterface::CMS_SLOT_POSITION], FILTER_VALIDATE_INT)) {
+        $position = $dataSet[CmsSlotBlockDataSetInterface::CMS_SLOT_POSITION];
+
+        if (!filter_var($position, FILTER_VALIDATE_INT)) {
             throw new InvalidDataException(
-                sprintf('Failed to import cms slot with position %s,', $dataSet[CmsSlotBlockDataSetInterface::CMS_SLOT_POSITION])
+                sprintf('Failed to import CMS Slot Block relationship with position %s,', $position)
             );
         }
     }

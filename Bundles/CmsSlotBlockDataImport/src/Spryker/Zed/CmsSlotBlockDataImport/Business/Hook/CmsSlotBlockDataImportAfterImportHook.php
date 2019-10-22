@@ -20,6 +20,6 @@ class CmsSlotBlockDataImportAfterImportHook implements DataImporterAfterImportIn
      */
     public function afterImport(): void
     {
-        DataImporterPublisher::addEvent(CmsSlotBlockEvents::CMS_SLOT_BLOCK_PUBLISH, static::ID_DEFAULT);
+        DataImporterPublisher::addEvent(CmsSlotBlockEvents::CMS_SLOT_BLOCK_RELATIONS_PUBLISH, static::ID_DEFAULT);
     }
 }

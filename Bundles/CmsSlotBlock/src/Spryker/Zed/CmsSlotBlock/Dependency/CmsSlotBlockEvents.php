@@ -9,5 +9,5 @@ namespace Spryker\Zed\CmsSlotBlock\Dependency;
 
 interface CmsSlotBlockEvents
 {
-    public const CMS_SLOT_BLOCK_PUBLISH = 'CmsSlotBlock.publish';
+    public const CMS_SLOT_BLOCK_RELATIONS_PUBLISH = 'CmsSlotBlock.cms_slot_block_relations.publish';
 }
