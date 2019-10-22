@@ -76,7 +76,7 @@ class MerchantForm extends AbstractType
             ->addNameField($builder)
             ->addEmailField($builder, $options[static::OPTION_CURRENT_ID])
             ->addRegistrationNumberField($builder)
-            ->addMerchantReference($builder, $options[static::OPTION_CURRENT_ID]);
+            ->addMerchantReferenceField($builder, $options[static::OPTION_CURRENT_ID]);
 
         $this->executeMerchantProfileFormExpanderPlugins($builder, $options);
     }
@@ -150,7 +150,7 @@ class MerchantForm extends AbstractType
      *
      * @return $this
      */
-    protected function addMerchantReference(FormBuilderInterface $builder, ?int $currentMerchantId = null)
+    protected function addMerchantReferenceField(FormBuilderInterface $builder, ?int $currentMerchantId = null)
     {
         $builder
             ->add(static::FIELD_MERCHANT_REFERENCE, TextType::class, [
