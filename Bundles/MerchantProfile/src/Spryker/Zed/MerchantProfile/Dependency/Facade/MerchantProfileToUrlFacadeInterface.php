@@ -20,7 +20,7 @@ interface MerchantProfileToUrlFacadeInterface
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    public function createUrl($urlTransfer, ?LocaleTransfer $localeTransfer = null, ?string $resourceType = null, ?int $idResource = null): UrlTransfer;
+    public function createUrl($urlTransfer, ?LocaleTransfer $localeTransfer = null, $resourceType = null, $idResource = null): UrlTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer

@@ -145,11 +145,11 @@ class MerchantForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param string|null $merchantReference
+     * @param int|null $currentId
      *
      * @return $this
      */
-    protected function addMerchantReference(FormBuilderInterface $builder, ?string $merchantReference)
+    protected function addMerchantReference(FormBuilderInterface $builder, ?int $currentId = null)
     {
         $builder
             ->add(static::FIELD_MERCHANT_REFERENCE, TextType::class, [
@@ -161,7 +161,7 @@ class MerchantForm extends AbstractType
                     ]),
                     new Callback([
                         'callback' => $this->getExistingMerchantReferenceValidationCallback(
-                            $merchantReference,
+                            $currentId,
                             $this->getFactory()->getMerchantFacade()
                         ),
                     ]),
