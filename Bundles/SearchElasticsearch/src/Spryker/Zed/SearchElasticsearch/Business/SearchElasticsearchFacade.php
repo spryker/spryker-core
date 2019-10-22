@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SearchElasticsearch\Business;
 
+use Generated\Shared\Transfer\SearchContextTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -41,5 +42,62 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
     public function installMapper(LoggerInterface $logger): void
     {
         $this->getFactory()->createIndexMapperInstaller()->install($logger);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchContextTransfer|null $searchContextTransfer
+     *
+     * @return bool
+     */
+    public function openIndex(?SearchContextTransfer $searchContextTransfer): bool
+    {
+        return $this->getFactory()->createIndexHandler()->openIndex($searchContextTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchContextTransfer|null $searchContextTransfer
+     *
+     * @return bool
+     */
+    public function closeIndex(?SearchContextTransfer $searchContextTransfer = null): bool
+    {
+        return $this->getFactory()->createIndexHandler()->closeIndex($searchContextTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchContextTransfer|null $searchContextTransfer
+     *
+     * @return bool
+     */
+    public function deleteIndex(?SearchContextTransfer $searchContextTransfer): bool
+    {
+        return $this->getFactory()->createIndexHandler()->deleteIndex($searchContextTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $sourceSearchContextTransfer
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $targetSearchContextTransfer
+     *
+     * @return bool
+     */
+    public function copyIndex(SearchContextTransfer $sourceSearchContextTransfer, SearchContextTransfer $targetSearchContextTransfer): bool
+    {
+        return $this->getFactory()->createIndexCopier()->copyIndex($sourceSearchContextTransfer, $targetSearchContextTransfer);
     }
 }

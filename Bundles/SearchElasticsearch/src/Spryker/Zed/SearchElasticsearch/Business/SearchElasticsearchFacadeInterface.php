@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SearchElasticsearch\Business;
 
+use Generated\Shared\Transfer\SearchContextTransfer;
 use Psr\Log\LoggerInterface;
 
 interface SearchElasticsearchFacadeInterface
@@ -36,4 +37,59 @@ interface SearchElasticsearchFacadeInterface
      * @return void
      */
     public function installMapper(LoggerInterface $logger): void;
+
+    /**
+     * Specification:
+     * - Opens an Elasticsearch index.
+     * - The name of an index to be open is carried by SearchContextTransfer object.
+     * - If no SearchContextTransfer object is passed, all the existing indices are open.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchContextTransfer|null $searchContextTransfer
+     *
+     * @return bool
+     */
+    public function openIndex(?SearchContextTransfer $searchContextTransfer): bool;
+
+    /**
+     * Specification:
+     * - Closes an Elasticsearch index.
+     * - The name of an index to be closed is carried by SearchContextTransfer object.
+     * - If no SearchContextTransfer object is passed, all the existing indices are closed.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchContextTransfer|null $searchContextTransfer
+     *
+     * @return bool
+     */
+    public function closeIndex(?SearchContextTransfer $searchContextTransfer = null): bool;
+
+    /**
+     * Specification:
+     * - Deletes an Elasticsearch index.
+     * - The name of an index to be deleted is carried by SearchContextTransfer object.
+     * - If no SearchContextTransfer object is passed, all the existing indices are deleted.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchContextTransfer|null $searchContextTransfer
+     *
+     * @return bool
+     */
+    public function deleteIndex(?SearchContextTransfer $searchContextTransfer): bool;
+
+    /**
+     * Specification:
+     * - Copies one index to another index.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $sourceSearchContextTransfer
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $targetSearchContextTransfer
+     *
+     * @return bool
+     */
+    public function copyIndex(SearchContextTransfer $sourceSearchContextTransfer, SearchContextTransfer $targetSearchContextTransfer): bool;
 }

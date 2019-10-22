@@ -10,7 +10,7 @@
     </transfer>
 
     <transfer name="ElasticsearchSearchContext">
-        <property name="sourceName" type="string"/>
+        <property name="indexName" type="string"/>
     </transfer>
 
     <transfer name="SearchContext">

@@ -66,6 +66,8 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::deleteIndex()` instead.
+     *
      * @param string|null $indexName
      *
      * @return \Elastica\Response
@@ -252,6 +254,8 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::closeIndex()` instead.
+     *
      * @return bool
      */
     public function closeIndex();
@@ -261,6 +265,8 @@ interface SearchFacadeInterface
      * - Opens an Index.
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::openIndex()` instead.
      *
      * @return bool
      */
@@ -272,6 +278,8 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::closeIndex()` instead.
+     *
      * @return bool
      */
     public function closeAllIndices();
@@ -281,6 +289,8 @@ interface SearchFacadeInterface
      * - Copies one index to another index.
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::copyIndex()` instead.
      *
      * @param string $source
      * @param string $target
