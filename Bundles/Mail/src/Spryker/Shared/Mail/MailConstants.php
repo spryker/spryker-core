@@ -24,7 +24,7 @@ interface MailConstants
      *
      * @api
      */
-    public const SMTP_ENCRYPTION = 'MAIL_CONSTANTS:SMTP_ENCRYPTION';
+    public const SMTP_ENCRYPTION = 'MAIL:SMTP_ENCRYPTION';
 
     /**
      * Specification:
@@ -33,7 +33,7 @@ interface MailConstants
      *
      * @api
      */
-    public const SMTP_AUTH_MODE = 'MAIL_CONSTANTS:SMTP_AUTH_MODE';
+    public const SMTP_AUTH_MODE = 'MAIL:SMTP_AUTH_MODE';
 
     /**
      * Specification:
@@ -41,7 +41,7 @@ interface MailConstants
      *
      * @api
      */
-    public const SMTP_USERNAME = 'MAIL_CONSTANTS:SMTP_USERNAME';
+    public const SMTP_USERNAME = 'MAIL:SMTP_USERNAME';
 
     /**
      * Specification:
@@ -49,5 +49,5 @@ interface MailConstants
      *
      * @api
      */
-    public const SMTP_PASSWORD = 'MAIL_CONSTANTS:SMTP_PASSWORD';
+    public const SMTP_PASSWORD = 'MAIL:SMTP_PASSWORD';
 }
