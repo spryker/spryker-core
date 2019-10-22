@@ -10,7 +10,7 @@
     </transfer>
 
     <transfer name="CmsBlock">
-        <property name="key" type="string" />
+        <property name="key" type="string"/>
     </transfer>
 
     <transfer name="SynchronizationData">
