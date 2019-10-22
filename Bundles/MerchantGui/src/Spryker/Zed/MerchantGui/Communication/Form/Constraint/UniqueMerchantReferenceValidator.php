@@ -20,33 +20,18 @@ class UniqueMerchantReferenceValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint): void
     {
-        if ($this->assertMerchantReference($value, $constraint)) {
+        $merchantTransfer = $constraint->findMerchantByReference($value);
+
+        if ($merchantTransfer === null) {
+            return;
+        }
+
+        if ($constraint->getCurrentMerchantId() && $merchantTransfer->getIdMerchant() === $constraint->getCurrentMerchantId()) {
             return;
         }
 
         $this->context
             ->buildViolation($constraint->getMessage())
             ->addViolation();
-    }
-
-    /**
-     * @param string $merchantReference
-     * @param \Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueMerchantReference $constraint
-     *
-     * @return bool
-     */
-    protected function assertMerchantReference(string $merchantReference, UniqueMerchantReference $constraint): bool
-    {
-        $merchantTransfer = $constraint->findMerchantTransfer($merchantReference);
-
-        if ($merchantTransfer === null) {
-            return true;
-        }
-
-        if ($constraint->getCurrentMerchantId() && $merchantTransfer->getIdMerchant() === $constraint->getCurrentMerchantId()) {
-            return true;
-        }
-
-        return false;
     }
 }

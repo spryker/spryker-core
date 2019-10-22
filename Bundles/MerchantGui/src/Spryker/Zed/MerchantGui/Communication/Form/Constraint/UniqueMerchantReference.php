@@ -16,6 +16,8 @@ class UniqueMerchantReference extends Constraint
     public const OPTION_MERCHANT_FACADE = 'merchantFacade';
     public const OPTION_CURRENT_MERCHANT_ID = 'currentMerchantId';
 
+    protected const VALIDATION_MESSAGE = 'Merchant reference is already used.';
+
     /**
      * @var \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface
      */
@@ -25,8 +27,6 @@ class UniqueMerchantReference extends Constraint
      * @var int|null
      */
     protected $currentMerchantId;
-
-    protected const VALIDATION_MESSAGE = 'Merchant reference is already used.';
 
     /**
      * @return string
@@ -57,7 +57,7 @@ class UniqueMerchantReference extends Constraint
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function findMerchantTransfer(string $merchantReference): ?MerchantTransfer
+    public function findMerchantByReference(string $merchantReference): ?MerchantTransfer
     {
         $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
         $merchantCriteriaFilterTransfer->setMerchantReference($merchantReference);
