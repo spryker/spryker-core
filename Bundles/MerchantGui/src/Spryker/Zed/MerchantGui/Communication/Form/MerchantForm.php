@@ -35,10 +35,13 @@ class MerchantForm extends AbstractType
     protected const FIELD_NAME = 'name';
     protected const FIELD_REGISTRATION_NUMBER = 'registration_number';
     protected const FIELD_EMAIL = 'email';
+    protected const FIELD_MERCHANT_REFERENCE = 'merchant_reference';
 
     protected const LABEL_NAME = 'Name';
     protected const LABEL_REGISTRATION_NUMBER = 'Registration number';
     protected const LABEL_EMAIL = 'Email';
+    protected const LABEL_MERCHANT_REFERENCE = 'Merchant reference';
+
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -72,7 +75,8 @@ class MerchantForm extends AbstractType
             ->addIdMerchantField($builder)
             ->addNameField($builder)
             ->addEmailField($builder, $options[static::OPTION_CURRENT_ID])
-            ->addRegistrationNumberField($builder);
+            ->addRegistrationNumberField($builder)
+            ->addMerchantReference($builder, $options[static::OPTION_CURRENT_ID]);
 
         $this->executeMerchantProfileFormExpanderPlugins($builder, $options);
     }
@@ -136,6 +140,35 @@ class MerchantForm extends AbstractType
             'required' => false,
             'constraints' => $this->getEmailFieldConstraints($currentId),
         ]);
+
+        return $this;
+    }
+
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param string|null $merchantReference
+     *
+     * @return $this
+     */
+    protected function addMerchantReference(FormBuilderInterface $builder, ?string $merchantReference)
+    {
+        $builder
+            ->add(static::FIELD_MERCHANT_REFERENCE, TextType::class, [
+                'label' => static::LABEL_MERCHANT_REFERENCE,
+                'required' => false,
+                'constraints' => [
+                    new Length([
+                        'max' => 255
+                    ]),
+                    new Callback([
+                        'callback' => $this->getExistingMerchantReferenceValidationCallback(
+                            $merchantReference,
+                            $this->getFactory()->getMerchantFacade()
+                        ),
+                    ]),
+                ],
+            ]);
 
         return $this;
     }
@@ -213,6 +246,24 @@ class MerchantForm extends AbstractType
             $merchantTransfer = $merchantFacade->findOne($merchantCriteriaFilterTransfer);
             if ($merchantTransfer !== null && ($currentId === null || $merchantTransfer->getIdMerchant() !== $currentId)) {
                 $context->addViolation('Email is already used.');
+            }
+        };
+    }
+
+    /**
+     * @param int|null $currentId
+     * @param MerchantGuiToMerchantFacadeInterface $merchantFacade
+     *
+     * @return callable
+     */
+    protected function getExistingMerchantReferenceValidationCallback(?int $currentId, MerchantGuiToMerchantFacadeInterface $merchantFacade): callable
+    {
+        return function ($merchantReference, ExecutionContextInterface $context) use ($merchantFacade, $currentId) {
+            $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
+            $merchantCriteriaFilterTransfer->setMerchantReference($merchantReference);
+            $merchantTransfer = $merchantFacade->findOne($merchantCriteriaFilterTransfer);
+            if ($merchantTransfer !== null && ($currentId === null || $merchantTransfer->getIdMerchant() !== $currentId)) {
+                $context->addViolation('Merchant reference is already used.');
             }
         };
     }

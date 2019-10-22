@@ -33,6 +33,9 @@
         <property name="dataPrivacyGlossaryKey" type="string"/>
         <property name="idMerchantProfile" type="int"/>
         <property name="fkMerchant" type="int"/>
+        <property name="latitude" type="string" />
+        <property name="longitude" type="string" />
+        <property name="faxNumber" type="string" />
     </transfer>
 
     <transfer name="MerchantProfileCollection">

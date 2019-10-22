@@ -13,9 +13,14 @@
         <column name="registration_number" type="VARCHAR" size="255"/>
         <column name="email" required="true" type="VARCHAR" size="255"/>
         <column name="status" required="true" size="64" type="VARCHAR"/>
+        <column name="merchant_reference" size="255" type="VARCHAR"/>
 
         <unique name="spy_merchant-unique-email">
             <unique-column name="email"/>
+        </unique>
+
+        <unique name="spy_merchant-unique-merchant_reference">
+            <unique-column name="merchant_reference"/>
         </unique>
 
         <unique name="spy_merchant-merchant_key">

@@ -4,7 +4,10 @@
     {{ form_row(merchantForm.merchantProfile.delivery_time_glossary_key) }}
     {{ form_row(merchantForm.merchantProfile.public_phone) }}
     {{ form_row(merchantForm.merchantProfile.public_email) }}
+    {{ form_row(merchantForm.merchantProfile.fax_number) }}
     {{ form_row(merchantForm.merchantProfile.logo_url) }}
+    {{ form_row(merchantForm.merchantProfile.longitude) }}
+    {{ form_row(merchantForm.merchantProfile.latitude) }}
 
     {% for localizedAttributes in merchantForm.merchantProfile.merchantProfileLocalizedGlossaryAttributes %}
         {% set localeName = localizedAttributes.vars.value.localeName %}

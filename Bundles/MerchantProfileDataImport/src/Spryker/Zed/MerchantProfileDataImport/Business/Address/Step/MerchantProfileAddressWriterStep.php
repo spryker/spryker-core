@@ -33,11 +33,11 @@ class MerchantProfileAddressWriterStep implements DataImportStepInterface
     {
         $this->validateDataSet($dataSet);
 
-        $merchantEntity = SpyMerchantProfileAddressQuery::create()
+        $merchantProfileAddress = SpyMerchantProfileAddressQuery::create()
             ->filterByKey($dataSet[MerchantProfileAddressDataSetInterface::KEY])
             ->findOneOrCreate();
 
-        $merchantEntity
+        $merchantProfileAddress
             ->setAddress1($dataSet[MerchantProfileAddressDataSetInterface::ADDRESS1])
             ->setAddress2($dataSet[MerchantProfileAddressDataSetInterface::ADDRESS2])
             ->setAddress3($dataSet[MerchantProfileAddressDataSetInterface::ADDRESS3])

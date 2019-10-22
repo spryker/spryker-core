@@ -30,3 +30,7 @@ Country,Land
 Street,Straße
 Number,Nummer
 "Addition to address","Zusatz zur Adresse"
+Fax number,Faxnummer
+Latitude,Längengrad
+Longitude,Breitengrad
+Merchant reference,Händler-Referenznummer

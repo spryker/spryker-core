@@ -31,6 +31,9 @@
         <property name="urlCollection" type="Url[]"/>
         <property name="merchantName" type="string"/>
         <property name="addressCollection" type="MerchantProfileAddressCollection"/>
+        <property name="latitude" type="string" />
+        <property name="longitude" type="string" />
+        <property name="faxNumber" type="string" />
     </transfer>
 
     <transfer name="MerchantProfileCollection">

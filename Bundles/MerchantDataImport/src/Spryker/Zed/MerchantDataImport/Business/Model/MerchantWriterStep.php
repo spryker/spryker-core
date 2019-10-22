@@ -41,6 +41,7 @@ class MerchantWriterStep implements DataImportStepInterface
             ->setRegistrationNumber($dataSet[MerchantDataSetInterface::REGISTRATION_NUMBER])
             ->setStatus($dataSet[MerchantDataSetInterface::STATUS])
             ->setEmail($dataSet[MerchantDataSetInterface::EMAIL])
+            ->setMerchantReference($dataSet[MerchantDataSetInterface::MERCHANT_REFERENCE])
             ->save();
     }
 
