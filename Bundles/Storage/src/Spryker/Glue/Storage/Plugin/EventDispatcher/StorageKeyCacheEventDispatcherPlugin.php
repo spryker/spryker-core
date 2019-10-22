@@ -11,17 +11,15 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
-use Spryker\Shared\Storage\StorageConstants;
 use Symfony\Component\HttpKernel\Event\PostResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * @method \Spryker\Client\Storage\StorageClientInterface getClient()
+ * @method \Spryker\Glue\Storage\StorageConfig getConfig()
  */
 class StorageKeyCacheEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
-    public const STORAGE_CACHE_STRATEGY = StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE;
-
     /**
      * {@inheritDoc}
      * - Adds a listener for the `\Symfony\Component\HttpKernel\KernelEvents::TERMINATE` event.
@@ -37,16 +35,11 @@ class StorageKeyCacheEventDispatcherPlugin extends AbstractPlugin implements Eve
      */
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        $eventDispatcher->addListener(KernelEvents::TERMINATE, function (PostResponseEvent $postResponseEvent) use ($container) {
-            if ($container->has(StorageConstants::STORAGE_CACHE_STRATEGY)) {
-                $request = $postResponseEvent->getRequest();
-                $this->getClient()->persistCacheForRequest($request, $container->get(StorageConstants::STORAGE_CACHE_STRATEGY));
-            }
+        $eventDispatcher->addListener(KernelEvents::TERMINATE, function (PostResponseEvent $postResponseEvent) {
+            $storageKeyCacheStrategy = $this->getConfig()->getStorageKeyCacheStrategy();
+            $request = $postResponseEvent->getRequest();
+            $this->getClient()->persistCacheForRequest($request, $storageKeyCacheStrategy);
         });
-
-        if (!$container->has(StorageConstants::STORAGE_CACHE_STRATEGY)) {
-            $container->set(StorageConstants::STORAGE_CACHE_STRATEGY, static::STORAGE_CACHE_STRATEGY);
-        }
 
         return $eventDispatcher;
     }
