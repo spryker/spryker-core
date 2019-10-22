@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 /**
  * @method \Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockRepositoryInterface getRepository()
+ * @method \Spryker\Zed\CmsSlotBlock\CmsSlotBlockConfig getConfig()
  */
 class CmsSlotBlockPersistenceFactory extends AbstractPersistenceFactory
 {
