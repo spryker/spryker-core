@@ -110,9 +110,9 @@ class MerchantProfileGuiDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addUrlFacade(Container $container): Container
     {
-        $container[static::FACADE_URL] = function (Container $container) {
+        $container->set(static::FACADE_URL, function (Container $container) {
             return new MerchantProfileGuiToUrlFacadeBridge($container->getLocator()->url()->facade());
-        };
+        });
 
         return $container;
     }

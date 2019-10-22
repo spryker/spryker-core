@@ -45,19 +45,16 @@ class MerchantProfileMapper implements MerchantProfileMapperInterface
 
         $merchantProfileTransfer->setMerchantName($merchantProfileEntity->getSpyMerchant()->getName());
 
-        $urlEntities = $merchantProfileEntity->getSpyUrls();
-        if (count($urlEntities)) {
-            $urlTransfers = new ArrayObject();
-            foreach ($urlEntities as $urlEntity) {
-                $urlTransfers->append((new UrlTransfer())->fromArray($urlEntity->toArray(), true));
-            }
-
-            $merchantProfileTransfer->setUrlCollection($urlTransfers);
+        $urlTransfers = new ArrayObject();
+        foreach ($merchantProfileEntity->getSpyUrls() as $urlEntity) {
+            $urlTransfers->append((new UrlTransfer())->fromArray($urlEntity->toArray(), true));
         }
 
+        $merchantProfileTransfer->setUrlCollection($urlTransfers);
+
         $merchantProfileTransfer->setAddressCollection(
-            $this->merchantProfileAddressMapper->mapMerchantProfileAddressEntitiesToMerchantProfileAddressCollectionTransfer(
-                $merchantProfileEntity->getSpyMerchantProfileAddresses()->getArrayCopy(),
+            $this->merchantProfileAddressMapper->mapMerchantProfileAddressEntityCollectionToMerchantProfileAddressCollectionTransfer(
+                $merchantProfileEntity->getSpyMerchantProfileAddresses(),
                 new MerchantProfileAddressCollectionTransfer()
             )
         );

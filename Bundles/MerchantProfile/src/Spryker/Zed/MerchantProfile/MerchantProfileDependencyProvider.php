@@ -73,9 +73,9 @@ class MerchantProfileDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUrlFacade(Container $container): Container
     {
-        $container[static::FACADE_URL] = function (Container $container) {
+        $container->set(static::FACADE_URL, function (Container $container) {
             return new MerchantProfileToUrlFacadeBridge($container->getLocator()->url()->facade());
-        };
+        });
 
         return $container;
     }

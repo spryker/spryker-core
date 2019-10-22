@@ -38,8 +38,8 @@ class MerchantProfileHelper extends Module
         $merchantProfileTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
 
         $merchantProfileTransfer = $this->addMerchantProfileLocalizedGlossaryAttributes($merchantProfileTransfer);
-        $merchantProfileTransfer->setUrlCollection($this->createMerchantUrlCollection());
-        $merchantProfileTransfer->setAddressCollection($this->creatMerchantProfileAddressCollection());
+        $merchantProfileTransfer->setUrlCollection($this->createMerchantUrlTransfers());
+        $merchantProfileTransfer->setAddressCollection($this->creatMerchantProfileAddressCollectionTransfer());
 
         return $this->getLocator()
             ->merchantProfile()
@@ -97,7 +97,7 @@ class MerchantProfileHelper extends Module
     /**
      * @return \ArrayObject|\Generated\Shared\Transfer\UrlTransfer[]
      */
-    public function createMerchantUrlCollection(): ArrayObject
+    public function createMerchantUrlTransfers(): ArrayObject
     {
         $urlTransfer = (new UrlBuilder())->build();
         $urlCollection = new ArrayObject();
@@ -117,7 +117,7 @@ class MerchantProfileHelper extends Module
     /**
      * @return \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer
      */
-    protected function creatMerchantProfileAddressCollection(): MerchantProfileAddressCollectionTransfer
+    protected function creatMerchantProfileAddressCollectionTransfer(): MerchantProfileAddressCollectionTransfer
     {
         $merchantProfileAddressTransfer = (new MerchantProfileAddressBuilder())->build();
         $merchantProfileAddressCollectionTransfer = (new MerchantProfileAddressCollectionBuilder())->build();

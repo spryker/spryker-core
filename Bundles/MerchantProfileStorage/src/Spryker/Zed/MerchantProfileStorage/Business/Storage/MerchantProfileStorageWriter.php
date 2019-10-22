@@ -108,7 +108,7 @@ class MerchantProfileStorageWriter implements MerchantProfileStorageWriterInterf
     }
 
     /**
-     * @param array $merchantProfileIds
+     * @param int[] $merchantProfileIds
      * @param bool $active
      *
      * @return \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer

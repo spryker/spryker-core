@@ -26,11 +26,11 @@ class MerchantProfileStorageToMerchantProfileFacadeBridge implements MerchantPro
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer|null $merchantProfileCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProfileCollectionTransfer
      */
-    public function find(?MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer = null): MerchantProfileCollectionTransfer
+    public function find(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): MerchantProfileCollectionTransfer
     {
         return $this->merchantProfileFacade->find($merchantProfileCriteriaFilterTransfer);
     }

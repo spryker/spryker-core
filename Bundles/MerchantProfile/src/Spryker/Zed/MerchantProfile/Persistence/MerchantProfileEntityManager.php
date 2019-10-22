@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantProfile\Persistence;
 use Generated\Shared\Transfer\MerchantProfileAddressTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfile;
+use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -65,22 +66,45 @@ class MerchantProfileEntityManager extends AbstractEntityManager implements Merc
      *
      * @return \Generated\Shared\Transfer\MerchantProfileAddressTransfer
      */
-    public function saveMerchantProfileAddress(MerchantProfileAddressTransfer $merchantProfileAddressTransfer): MerchantProfileAddressTransfer
+    public function createMerchantProfileAddress(MerchantProfileAddressTransfer $merchantProfileAddressTransfer): MerchantProfileAddressTransfer
     {
-        $spyMerchantProfileAddress = $this->getFactory()
+        return $this->saveMerchantProfileAddress($merchantProfileAddressTransfer, new SpyMerchantProfileAddress());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProfileAddressTransfer $merchantProfileAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileAddressTransfer
+     */
+    public function updateMerchantProfileAddress(MerchantProfileAddressTransfer $merchantProfileAddressTransfer): MerchantProfileAddressTransfer
+    {
+        $merchantProfileAddressEntity = $this->getFactory()
             ->createMerchantProfileAddressQuery()
             ->filterByIdMerchantProfileAddress($merchantProfileAddressTransfer->getIdMerchantProfileAddress())
             ->findOneOrCreate();
 
-        $spyMerchantProfileAddress = $this->getFactory()
-            ->createMerchantProfileAddressMapper()
-            ->mapMerchantProfileAddressTransferToSpyMerchantProfileAddressEntity($merchantProfileAddressTransfer, $spyMerchantProfileAddress);
+        return $this->saveMerchantProfileAddress($merchantProfileAddressTransfer, $merchantProfileAddressEntity);
+    }
 
-        $spyMerchantProfileAddress->save();
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProfileAddressTransfer $merchantProfileAddressTransfer
+     * @param \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress $merchantProfileAddressEntity
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileAddressTransfer
+     */
+    protected function saveMerchantProfileAddress(
+        MerchantProfileAddressTransfer $merchantProfileAddressTransfer,
+        SpyMerchantProfileAddress $merchantProfileAddressEntity
+    ): MerchantProfileAddressTransfer {
+        $merchantProfileAddressEntity = $this->getFactory()
+            ->createMerchantProfileAddressMapper()
+            ->mapMerchantProfileAddressTransferToMerchantProfileAddressEntity($merchantProfileAddressTransfer, $merchantProfileAddressEntity);
+
+        $merchantProfileAddressEntity->save();
 
         $merchantProfileAddressTransfer = $this->getFactory()
             ->createMerchantProfileAddressMapper()
-            ->mapMerchantProfileAddressEntityToMerchantProfileAddressTransfer($spyMerchantProfileAddress, $merchantProfileAddressTransfer);
+            ->mapMerchantProfileAddressEntityToMerchantProfileAddressTransfer($merchantProfileAddressEntity, $merchantProfileAddressTransfer);
 
         return $merchantProfileAddressTransfer;
     }

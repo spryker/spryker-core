@@ -40,21 +40,19 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer|null $merchantProfileCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProfileCollectionTransfer
      */
-    public function find(?MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer = null): MerchantProfileCollectionTransfer
+    public function find(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): MerchantProfileCollectionTransfer
     {
         $merchantProfileCollectionTransfer = new MerchantProfileCollectionTransfer();
         $merchantProfileQuery = $this->getFactory()
             ->createMerchantProfileQuery()
-            ->joinSpyMerchant()
+            ->joinWithSpyMerchant()
             ->leftJoinSpyMerchantProfileAddress();
 
-        if ($merchantProfileCriteriaFilterTransfer) {
-            $merchantProfileQuery = $this->applyFilters($merchantProfileQuery, $merchantProfileCriteriaFilterTransfer);
-        }
+        $merchantProfileQuery = $this->applyFilters($merchantProfileQuery, $merchantProfileCriteriaFilterTransfer);
         $merchantProfileEntityCollection = $merchantProfileQuery->find();
 
         foreach ($merchantProfileEntityCollection as $merchantProfileEntity) {

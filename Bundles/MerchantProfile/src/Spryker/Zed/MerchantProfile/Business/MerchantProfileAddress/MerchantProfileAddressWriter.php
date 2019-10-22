@@ -35,7 +35,7 @@ class MerchantProfileAddressWriter implements MerchantProfileAddressWriterInterf
     {
         $this->assertCreateMerchantProfileAddressTransferRequirements($merchantProfileAddressTransfer);
 
-        return $this->merchantProfileEntityManager->saveMerchantProfileAddress($merchantProfileAddressTransfer);
+        return $this->merchantProfileEntityManager->createMerchantProfileAddress($merchantProfileAddressTransfer);
     }
 
     /**
@@ -47,7 +47,7 @@ class MerchantProfileAddressWriter implements MerchantProfileAddressWriterInterf
     {
         $this->assertUpdateMerchantProfileAddressTransferRequirements($merchantProfileAddressTransfer);
 
-        return $this->merchantProfileEntityManager->saveMerchantProfileAddress($merchantProfileAddressTransfer);
+        return $this->merchantProfileEntityManager->updateMerchantProfileAddress($merchantProfileAddressTransfer);
     }
 
     /**

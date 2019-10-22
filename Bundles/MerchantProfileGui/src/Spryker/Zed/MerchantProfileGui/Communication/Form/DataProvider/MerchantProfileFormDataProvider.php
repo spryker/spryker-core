@@ -127,17 +127,12 @@ class MerchantProfileFormDataProvider
      *
      * @return string
      */
-    public function getLocalizedUrlPrefix(LocaleTransfer $localeTransfer): string
+    protected function getLocalizedUrlPrefix(LocaleTransfer $localeTransfer): string
     {
         $localeNameParts = explode('_', $localeTransfer->getLocaleName());
         $languageCode = $localeNameParts[0];
-        $merchantUrlPrefix = $this->config->getMerchantUrlPrefix();
 
-        if (empty($merchantUrlPrefix)) {
-            return '/' . $languageCode . '/';
-        }
-
-        return '/' . $languageCode . '/' . $merchantUrlPrefix . '/';
+        return '/' . $languageCode . '/' . $this->config->getMerchantUrlPrefix() . '/';
     }
 
     /**

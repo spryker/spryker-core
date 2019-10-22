@@ -9,41 +9,41 @@ namespace Spryker\Zed\MerchantProfile\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileAddressTransfer;
-use Generated\Shared\Transfer\SpyMerchantProfileAddressEntityTransfer;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class MerchantProfileAddressMapper implements MerchantProfileAddressMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantProfileAddressTransfer $merchantProfileAddressTransfer
-     * @param \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress $spyMerchantProfileAddress
+     * @param \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress $merchantProfileAddressEntity
      *
      * @return \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress
      */
-    public function mapMerchantProfileAddressTransferToSpyMerchantProfileAddressEntity(
+    public function mapMerchantProfileAddressTransferToMerchantProfileAddressEntity(
         MerchantProfileAddressTransfer $merchantProfileAddressTransfer,
-        SpyMerchantProfileAddress $spyMerchantProfileAddress
+        SpyMerchantProfileAddress $merchantProfileAddressEntity
     ): SpyMerchantProfileAddress {
-        $spyMerchantProfileAddress->fromArray(
+        $merchantProfileAddressEntity->fromArray(
             $merchantProfileAddressTransfer->modifiedToArray(false)
         );
 
-        return $spyMerchantProfileAddress;
+        return $merchantProfileAddressEntity;
     }
 
     /**
-     * @param \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress[] $spyMerchantProfileAddresses
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress[] $merchantProfileAddressEntities
      * @param \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer $merchantProfileAddressCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer
      */
-    public function mapMerchantProfileAddressEntitiesToMerchantProfileAddressCollectionTransfer(
-        array $spyMerchantProfileAddresses,
+    public function mapMerchantProfileAddressEntityCollectionToMerchantProfileAddressCollectionTransfer(
+        ObjectCollection $merchantProfileAddressEntities,
         MerchantProfileAddressCollectionTransfer $merchantProfileAddressCollectionTransfer
-    ): ?MerchantProfileAddressCollectionTransfer {
-        foreach ($spyMerchantProfileAddresses as $spyMerchantProfileAddress) {
+    ): MerchantProfileAddressCollectionTransfer {
+        foreach ($merchantProfileAddressEntities as $merchantProfileAddressEntity) {
             $merchantProfileAddressCollectionTransfer->addAddress($this->mapMerchantProfileAddressEntityToMerchantProfileAddressTransfer(
-                $spyMerchantProfileAddress,
+                $merchantProfileAddressEntity,
                 new MerchantProfileAddressTransfer()
             ));
         }
@@ -52,53 +52,17 @@ class MerchantProfileAddressMapper implements MerchantProfileAddressMapperInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyMerchantProfileAddressEntityTransfer[] $spyMerchantProfileAddresses
-     * @param \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer $merchantProfileAddressCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer|null
-     */
-    public function mapMerchantProfileAddressEntityTransfersToMerchantProfileAddressCollectionTransfer(
-        array $spyMerchantProfileAddresses,
-        MerchantProfileAddressCollectionTransfer $merchantProfileAddressCollectionTransfer
-    ): ?MerchantProfileAddressCollectionTransfer {
-        foreach ($spyMerchantProfileAddresses as $merchantProfileAddress) {
-            $merchantProfileAddressCollectionTransfer->addAddress($this->mapMerchantProfileAddressEntityTransferToMerchantProfileAddressTransfer(
-                $merchantProfileAddress,
-                new MerchantProfileAddressTransfer()
-            ));
-        }
-
-        return $merchantProfileAddressCollectionTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress $spyMerchantProfileAddress
+     * @param \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress $merchantProfileAddressEntity
      * @param \Generated\Shared\Transfer\MerchantProfileAddressTransfer $merchantProfileAddressTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProfileAddressTransfer
      */
     public function mapMerchantProfileAddressEntityToMerchantProfileAddressTransfer(
-        SpyMerchantProfileAddress $spyMerchantProfileAddress,
+        SpyMerchantProfileAddress $merchantProfileAddressEntity,
         MerchantProfileAddressTransfer $merchantProfileAddressTransfer
     ): MerchantProfileAddressTransfer {
         return $merchantProfileAddressTransfer->fromArray(
-            $spyMerchantProfileAddress->toArray(),
-            true
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SpyMerchantProfileAddressEntityTransfer $spyMerchantProfileAddress
-     * @param \Generated\Shared\Transfer\MerchantProfileAddressTransfer $merchantProfileAddressTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantProfileAddressTransfer
-     */
-    public function mapMerchantProfileAddressEntityTransferToMerchantProfileAddressTransfer(
-        SpyMerchantProfileAddressEntityTransfer $spyMerchantProfileAddress,
-        MerchantProfileAddressTransfer $merchantProfileAddressTransfer
-    ): MerchantProfileAddressTransfer {
-        return $merchantProfileAddressTransfer->fromArray(
-            $spyMerchantProfileAddress->toArray(),
+            $merchantProfileAddressEntity->toArray(),
             true
         );
     }
