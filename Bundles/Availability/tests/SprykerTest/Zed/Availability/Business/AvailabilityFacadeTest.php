@@ -14,6 +14,8 @@ use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StockTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
@@ -370,9 +372,12 @@ class AvailabilityFacadeTest extends Unit
         // Arrange
         $productQuantity = 13;
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $stockTransfer = $this->tester->haveStock([
+            StockTransfer::STORE_RELATION => (new StoreRelationTransfer())->setIdStores([$storeTransfer->getIdStore()]),
+        ]);
         $productTransfer = $this->tester->haveProduct(['sku' => static::CONCRETE_SKU], ['sku' => static::ABSTRACT_SKU]);
         $this->tester->haveProductInStock([
-            StockProductTransfer::FK_STOCK => $storeTransfer->getIdStore(),
+            StockProductTransfer::FK_STOCK => $stockTransfer->getIdStock(),
             StockProductTransfer::SKU => $productTransfer->getSku(),
             StockProductTransfer::QUANTITY => $productQuantity,
         ]);
@@ -386,7 +391,7 @@ class AvailabilityFacadeTest extends Unit
 
         // Assert
         $this->assertNotNull($productConcreteAvailabilityTransfer);
-        $this->assertEquals($productConcreteAvailabilityTransfer->getAvailability()->trim()->toString(), $productQuantity);
+        $this->assertEquals($productQuantity, $productConcreteAvailabilityTransfer->getAvailability()->trim()->toString());
     }
 
     /**

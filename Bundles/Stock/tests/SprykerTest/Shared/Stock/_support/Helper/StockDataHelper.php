@@ -11,6 +11,7 @@ use ArrayObject;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\StockBuilder;
 use Generated\Shared\DataBuilder\StockProductBuilder;
+use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -31,7 +32,12 @@ class StockDataHelper extends Module
     {
         $stockFacade = $this->getStockFacade();
 
-        $stockTransfer = $this->haveStock();
+        $stockSeedData = [];
+        if (isset($seedData[StockProductTransfer::FK_STOCK])) {
+            $stockSeedData[StockTransfer::ID_STOCK] = $seedData[StockProductTransfer::FK_STOCK];
+        }
+
+        $stockTransfer = $this->haveStock($stockSeedData);
         $stockProductTransfer = (new StockProductBuilder($seedData))->build();
         $stockProductTransfer->setStockType($stockTransfer->getName());
 
@@ -49,7 +55,8 @@ class StockDataHelper extends Module
      */
     public function haveStock(array $seedData = []): StockTransfer
     {
-        $stockTransfer = (new StockBuilder($seedData))->build();
+        $stockTransfer = (new StockBuilder($seedData))
+            ->build();
         $stockResponseTransfer = $this->getStockFacade()->createStock($stockTransfer);
 
         return $stockResponseTransfer->getStock();
