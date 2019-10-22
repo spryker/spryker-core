@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantGui\Communication\Form;
 
 use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueMerchantReference;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -159,8 +160,9 @@ class MerchantForm extends AbstractType
                     new Length([
                         'max' => 255,
                     ]),
-                    new Callback([
-                        'callback' => $this->getExistingMerchantReferenceValidationCallback($currentMerchantId),
+                    new UniqueMerchantReference([
+                        UniqueMerchantReference::OPTION_CURRENT_MERCHANT_ID => $currentMerchantId,
+                        UniqueMerchantReference::OPTION_MERCHANT_FACADE => $this->getFactory()->getMerchantFacade(),
                     ]),
                 ],
             ]);
@@ -242,30 +244,6 @@ class MerchantForm extends AbstractType
             if ($merchantTransfer !== null && ($currentId === null || $merchantTransfer->getIdMerchant() !== $currentId)) {
                 $context->addViolation('Email is already used.');
             }
-        };
-    }
-
-    /**
-     * @param int|null $currentId
-     *
-     * @return callable
-     */
-    protected function getExistingMerchantReferenceValidationCallback(?int $currentId): callable
-    {
-        return function (string $merchantReference, ExecutionContextInterface $context) use ($currentId) {
-            $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
-            $merchantCriteriaFilterTransfer->setMerchantReference($merchantReference);
-            $merchantTransfer = $this->getFactory()->getMerchantFacade()->findOne($merchantCriteriaFilterTransfer);
-
-            if ($merchantTransfer === null) {
-                return;
-            }
-
-            if ($currentId && $merchantTransfer->getIdMerchant() === $currentId) {
-                return;
-            }
-
-            $context->addViolation('Merchant reference is already used.');
         };
     }
 
