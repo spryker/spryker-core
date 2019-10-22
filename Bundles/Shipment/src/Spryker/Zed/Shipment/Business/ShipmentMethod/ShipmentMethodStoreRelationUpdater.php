@@ -50,8 +50,8 @@ class ShipmentMethodStoreRelationUpdater implements ShipmentMethodStoreRelationU
         $saveIdStores = array_diff($requestedIdStores, $currentIdStores);
         $deleteIdStores = array_diff($currentIdStores, $requestedIdStores);
 
-        $this->entityManager->addStoreRelations($saveIdStores, $storeRelationTransfer->getIdEntity());
-        $this->entityManager->removeStoreRelations($deleteIdStores, $storeRelationTransfer->getIdEntity());
+        $this->entityManager->addShipmentMethodStoreRelationsForStores($saveIdStores, $storeRelationTransfer->getIdEntity());
+        $this->entityManager->removeShipmentMethodStoreRelationsForStores($deleteIdStores, $storeRelationTransfer->getIdEntity());
     }
 
     /**

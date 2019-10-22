@@ -166,7 +166,7 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
      *
      * @return void
      */
-    public function removeStoreRelations(array $idStores, int $idShipmentMethod): void
+    public function removeShipmentMethodStoreRelationsForStores(array $idStores, int $idShipmentMethod): void
     {
         if ($idStores === []) {
             return;
@@ -185,7 +185,7 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
      *
      * @return void
      */
-    public function addStoreRelations(array $idStores, int $idShipmentMethod): void
+    public function addShipmentMethodStoreRelationsForStores(array $idStores, int $idShipmentMethod): void
     {
         foreach ($idStores as $idStore) {
             $shipmentMethodStoreEntity = new SpyShipmentMethodStore();
