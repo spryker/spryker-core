@@ -20,9 +20,9 @@ class CmsSlotBlockDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container): Container
+    public function providePersistenceLayerDependencies(Container $container): Container
     {
-        $container = parent::provideBusinessLayerDependencies($container);
+        $container = parent::providePersistenceLayerDependencies($container);
 
         $container = $this->addUtilEncodingService($container);
 
