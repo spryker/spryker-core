@@ -35,7 +35,7 @@
 
     <transfer name="Message">
         <property name="value" type="string"/>
-        <property name="parameters" type="array"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateFilter">
@@ -53,7 +53,7 @@
     <transfer name="Button">
         <property name="url" type="string"/>
         <property name="title" type="string"/>
-        <property name="defaultOptions" type="array"/>
+        <property name="defaultOptions" type="array" singular="defaultOptions"/>
     </transfer>
 
     <transfer name="ProductListUsedByTableData">
