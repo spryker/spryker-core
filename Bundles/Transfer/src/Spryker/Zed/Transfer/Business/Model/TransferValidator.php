@@ -138,7 +138,7 @@ class TransferValidator implements TransferValidatorInterface
             foreach ($transfer['property'] as $property) {
                 $type = $property['type'];
 
-                if (!$this->isValidArrayType($type)) {
+                if ($this->isArrayType($type) && !$this->isValidArrayType($type)) {
                     $isValid = false;
                     $this->messenger->warning(sprintf(
                         '%s.%s.%s: %s is an invalid array type',
@@ -227,8 +227,22 @@ class TransferValidator implements TransferValidatorInterface
      *
      * @return bool
      */
+    protected function isArrayType(string $type): bool
+    {
+        return (bool)preg_match('#\[\]$#', $type);
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return bool
+     */
     protected function isValidArrayType(string $type): bool
     {
+        if (!preg_match('#^([a-z][a-z0-9]+)\[\]$#i', $type, $matches)) {
+            return false;
+        }
+
         if (!preg_match('#^([a-z]+)\[\]$#', $type, $matches)) {
             return true;
         }
