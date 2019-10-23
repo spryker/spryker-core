@@ -9,43 +9,27 @@ var dataTable = require('ZedGuiModules/libs/data-table');
 
 var BlocksTable = function (options) {
     var _self = this;
-    this.inited = false;
     this.tableBaseUrl = '';
     this.paramIdCmsSlotTemplate = '';
     this.paramIdCmsSlot = '';
-    this.blocksTableClass = '';
+    this.blocksTableSelector = '';
+    this.cmsSlotBlocksSelector = '';
+    this.viewBlockUrl = '';
+    this.cmsSlotBlocks = {};
     this.blocksTable = {};
+    this.slotBlocksForm = {};
 
     $.extend(this, options);
 
     this.init = function () {
-        _self.blocksTable = $(_self.blocksTableClass);
-        _self.inited = true;
+        _self.blocksTable = $(_self.blocksTableSelector);
+        _self.cmsSlotBlocks = $(_self.cmsSlotBlocksSelector);
     };
 
-    this.loadSlotBlocks = function (idCmsSlotTemplate, idCmsSlot) {
-        var params = _self.paramIdCmsSlotTemplate + '=' + idCmsSlotTemplate + '&' + _self.paramIdCmsSlot + '=' + idCmsSlot;
+    this.loadBlocksTable = function (params, idCmsSlotTemplate, idCmsSlot) {
+        _self.idCmsSlotTemplate = idCmsSlotTemplate;
+        _self.idCmsSlot = idCmsSlot;
 
-        if (_self.inited) {
-            _self.loadBlocksTable(params);
-
-            return;
-        }
-
-        _self.loadSlotBlocksTemplate(params);
-
-    };
-
-    this.loadSlotBlocksTemplate = function (params) {
-        $.get('/cms-slot-block-gui/slot-block/index' + '?' + params).done(function (html) {
-            $(html).insertAfter($('.js-row-list-of-slots'));
-
-            _self.init();
-            _self.loadBlocksTable(params);
-        });
-    };
-
-    this.loadBlocksTable = function (params) {
         var ajaxUrl = _self.tableBaseUrl + '?' + params;
         _self.blocksTable.data('ajax', ajaxUrl);
 
@@ -58,7 +42,76 @@ var BlocksTable = function (options) {
             language: dataTable.defaultConfiguration.language,
             searching: false,
             info: false,
+            drawCallback: function() {
+                _self.initDataTableListeners(idCmsSlotTemplate, idCmsSlot);
+            },
         });
+    };
+
+    this.initDataTableListeners = function (idCmsSlotTemplate, idCmsSlot) {
+        _self.blocksTable.DataTable().on('draw', function () {
+            _self.slotBlocksForm.rebuildForm(idCmsSlotTemplate, idCmsSlot, _self.blocksTable.DataTable().rows().data());
+        });
+    };
+
+    this.buildParams = function (idCmsSlotTemplate, idCmsSlot) {
+        return _self.paramIdCmsSlotTemplate + '=' + idCmsSlotTemplate + '&' + _self.paramIdCmsSlot + '=' + idCmsSlot;
+    };
+
+    this.addRow = function (rowData = {}) {
+        rowData = [
+            rowData.blockId,
+            rowData.blockName,
+            rowData.validFrom,
+            rowData.validTo,
+            _self.getStatusLabel(rowData.isActive),
+            _self.getStoresLabels(rowData.stores),
+            _self.getActionButtons(rowData.blockId),
+        ];
+
+        var tableApi = _self.blocksTable.dataTable().api();
+        var tableData = tableApi.data().toArray();
+        tableData.unshift(rowData);
+        tableApi.rows().remove();
+        tableApi.rows.add(tableData).draw();
+    };
+
+    this.getActionButtons = function(blockId) {
+        var buttons = $(_self.cmsSlotBlocks.data('actions-buttons-template'));
+        var buttonsTemplate = '';
+
+        buttons.each(function() {
+            var button = $(this);
+
+            if (!button.is('a')) {
+                return;
+            }
+
+            if (button.hasClass('btn-view')) {
+                button.attr('href', _self.viewBlockUrl + '?id-cms-block=' + blockId);
+            }
+
+            buttonsTemplate += button[0].outerHTML + ' ';
+        });
+
+        return buttonsTemplate;
+    };
+
+    this.getStatusLabel = function (isActive) {
+        if (isActive) {
+            return _self.cmsSlotBlocks.data('active-label-template');
+        }
+
+        return _self.cmsSlotBlocks.data('inactive-label-template');
+    };
+
+    this.getStoresLabels = function (stores) {
+        var storeTemplate = $(_self.cmsSlotBlocks.data('active-label-template'));
+        var storesArray = stores.split(',');
+
+        return storesArray.reduce(function (storesTemplate, store) {
+            return storesTemplate += storeTemplate.html(store)[0].outerHTML + ' ';
+        }, '');
     };
 };
 

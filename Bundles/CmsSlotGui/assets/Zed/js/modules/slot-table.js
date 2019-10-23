@@ -14,52 +14,59 @@ var SlotTable = function (options) {
     this.ownershipColumnId = '';
     this.slotTableClass = '';
     this.slotTable = {};
+    this.dataTableInit = false;
 
     $.extend(this, options);
 
     this.init = function () {
         _self.slotTable = $(_self.slotTableClass);
+
+        $(_self.slotTableClass).on('click', '.js-slot-activation', _self.activationHandler);
     };
 
     this.loadSlotTableByIdTemplate = function (idTemplate) {
         var ajaxUrl = _self.ajaxBaseUrl + '?' + _self.paramIdCmsSlotTemplate + '=' + idTemplate;
-        _self.slotTable.data('ajax', ajaxUrl);
 
-        _self.slotTable.DataTable({
-            destroy: true,
-            ajax: {
-                cache: false
-            },
-            autoWidth: false,
-            language: dataTable.defaultConfiguration.language,
-            drawCallback: function() {
-                _self.activationHandler();
-            },
-        });
+        if (!_self.dataTableInit) {
+            _self.slotTable.data('ajax', ajaxUrl);
+
+            _self.slotTable.DataTable({
+                ajax: {
+                    cache: false
+                },
+                autoWidth: false,
+                language: dataTable.defaultConfiguration.language,
+                drawCallback: function() {
+                    _self.activationHandler();
+                },
+            });
+
+            _self.dataTableInit = true;
+        }
+
+        _self.slotTable.DataTable().ajax.url(ajaxUrl).load();
     };
 
     this.activationHandler = function () {
-        $('.js-slot-activation').on('click', function(event) {
-            event.preventDefault();
-            var url = $(this).attr('href');
+        event.preventDefault();
+        var url = $(this).attr('href');
 
-            $.get(url, function (response) {
-                if (response.success) {
-                    _self.slotTable.DataTable().ajax.reload(null, false);
+        $.get(url, function (response) {
+            if (response.success) {
+                _self.slotTable.DataTable().ajax.reload(null, false);
 
-                    return;
-                }
+                return;
+            }
 
-                window.sweetAlert({
-                    title: 'Error',
-                    text: response.message,
-                    html: true,
-                    type: 'error'
-                });
+            window.sweetAlert({
+                title: 'Error',
+                text: response.message,
+                html: true,
+                type: 'error'
             });
-
-            return false;
         });
+
+        return false;
     }
 };
 

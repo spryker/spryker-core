@@ -5,23 +5,40 @@
 
 'use strict';
 
-var SlotTable = require('./slot-table');
+var SlotBlocks = require('./slot-blocks');
 var BlocksTable = require('./blocks-table');
+var BlocksChoice = require('./blocks-choice');
+var SlotBlocksForm = require('./slot-blocks-form');
 
 $(document).ready(function() {
+    var slotBlocksForm = new SlotBlocksForm({
+        cmsSlotBlocksSelector: '.js-cms-slot-blocks',
+        paramIdCmsSlotTemplate: 'id-cms-slot-template',
+        paramIdCmsSlot: 'id-cms-slot',
+    });
+
     var blocksTable = new BlocksTable({
         tableBaseUrl: '/cms-slot-block-gui/slot-block/table',
         paramIdCmsSlotTemplate: 'id-cms-slot-template',
         paramIdCmsSlot: 'id-cms-slot',
-        blocksTableClass: '.js-cms-slot-block-table',
+        blocksTableSelector: '.js-cms-slot-block-table',
+        cmsSlotBlocksSelector: '.js-cms-slot-blocks',
+        slotBlocksForm: slotBlocksForm,
+        viewBlockUrl: '/cms-block-gui/view-block',
     });
-    //
-    // blocksTable.init();
 
-    var slotTable = new SlotTable({
-        slotTableClass: '.js-row-list-of-slots table',
+    var blocksChoice = new BlocksChoice({
+        blocksChoiceFormSelector: '[name=block-choice]',
         blocksTable: blocksTable,
     });
 
-    slotTable.init();
+    var slotBlocks = new SlotBlocks({
+        slotTableClass: '.js-row-list-of-slots table',
+        baseUrl: '/cms-slot-block-gui/slot-block/index',
+        blocksTable: blocksTable,
+        blocksChoice: blocksChoice,
+        slotBlocksForm: slotBlocksForm,
+    });
+
+    slotBlocks.init();
 });

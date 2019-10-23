@@ -156,6 +156,7 @@ class CmsSlotBlockTable extends AbstractTable
             ->useSpyCmsSlotBlockQuery()
                 ->filterByFkCmsSlot($this->idCmsSlot)
                 ->filterByFkCmsSlotTemplate($this->idCmsSlotTemplate)
+                ->orderByPosition()
             ->endUse();
     }
 

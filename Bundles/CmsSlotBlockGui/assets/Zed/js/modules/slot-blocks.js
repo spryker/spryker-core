@@ -8,20 +8,22 @@
 /**
  * @param {object} options
  */
-var SlotTable1 = function (options) {
+var SlotBlocks = function (options) {
     var _self = this;
     this.slotTableClass = '';
+    this.baseUrl = '';
     this.slotTable = {};
     this.blocksTable = {};
+    this.blocksChoice = {};
+    this.slotBlocksForm = {};
 
     $.extend(this, options);
 
     this.init = function () {
-
         _self.slotTable = $(_self.slotTableClass).DataTable();
 
         $(_self.slotTableClass).find('tbody').on('click', 'tr', _self.tableRowSelect);
-        _self.slotTable.on('init', _self.selectFirstRow);
+        _self.slotTable.on('draw', _self.selectFirstRow);
         _self.slotTable.on('select', _self.loadBlocksTable);
     };
 
@@ -41,8 +43,17 @@ var SlotTable1 = function (options) {
     this.loadBlocksTable = function (element, api, type, indexes) {
         var idCmsSlotTemplate = $('#template-list-table').dataTable().api().rows( { selected: true } ).data()[0][0];
         var idCmsSlot = api.row(indexes[0]).data()[0];
+        var params = _self.blocksTable.buildParams(idCmsSlotTemplate, idCmsSlot);
 
-        _self.blocksTable.loadSlotBlocks(idCmsSlotTemplate, idCmsSlot);
+        $.get(_self.baseUrl + '?' + params).done(function (html) {
+            $('.js-row-list-of-blocks-container').remove();
+            $(html).insertAfter($('.js-row-list-of-slots'));
+
+            _self.blocksTable.init();
+            _self.blocksChoice.init();
+            _self.slotBlocksForm.init();
+            _self.blocksTable.loadBlocksTable(params, idCmsSlotTemplate, idCmsSlot);
+        });
     };
 
     this.getDataTableApi = function (settings) {
@@ -53,4 +64,4 @@ var SlotTable1 = function (options) {
 /**
  * Open public methods
  */
-module.exports = SlotTable1;
+module.exports = SlotBlocks;

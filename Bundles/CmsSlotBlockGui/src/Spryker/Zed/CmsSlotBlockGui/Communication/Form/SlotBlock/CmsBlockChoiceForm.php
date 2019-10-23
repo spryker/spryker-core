@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,6 +26,7 @@ class CmsBlockChoiceForm extends AbstractType
     public const OPTION_CMS_BLOCK_IDS_ASSIGNED_TO_SLOT = 'cms_block_ids_assigned_to_slot';
 
     protected const FIELD_CMS_BLOCKS = 'cmsBlocks';
+    protected const FIELD_SUBMIT = 'submit';
     protected const PLACEHOLDER_CMS_BLOCKS = 'Select or type a block name to assign';
 
     /**
@@ -53,7 +55,8 @@ class CmsBlockChoiceForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addCmsBlocksField($builder, $options);
+        $this->addCmsBlocksField($builder, $options)
+            ->addSubmitField($builder);
     }
 
     /**
@@ -90,6 +93,24 @@ class CmsBlockChoiceForm extends AbstractType
     }
 
     /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addSubmitField(FormBuilderInterface $builder)
+    {
+        $builder
+            ->add(static::FIELD_SUBMIT, SubmitType::class, [
+                'label' => '+Add',
+                'attr' => [
+                    'class' => 'btn',
+                ],
+            ]);
+
+        return $this;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
      *
      * @return string[]
@@ -99,5 +120,13 @@ class CmsBlockChoiceForm extends AbstractType
         return array_map(function (StoreTransfer $storeTransfer): string {
             return $storeTransfer->getName();
         }, $storeTransfers);
+    }
+
+    /**
+     * @return string
+     */
+    public function getBlockPrefix(): string
+    {
+        return 'block-choice';
     }
 }
