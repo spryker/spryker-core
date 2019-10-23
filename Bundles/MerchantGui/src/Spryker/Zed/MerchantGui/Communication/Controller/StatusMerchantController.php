@@ -24,6 +24,11 @@ class StatusMerchantController extends AbstractController
     protected const MESSAGE_SUCCESS_MERCHANT_STATUS_UPDATE = 'merchant_gui.success_merchant_status_update';
 
     /**
+     * @uses \Spryker\Zed\MerchantGui\Communication\Controller\ListMerchantController::indexAction()
+     */
+    protected const URL_REDIRECT_MERCHANT_LIST = '/merchant-gui/list-merchant';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -53,7 +58,7 @@ class StatusMerchantController extends AbstractController
 
         $this->addSuccessMessage(static::MESSAGE_SUCCESS_MERCHANT_STATUS_UPDATE);
 
-        return $this->redirectResponseExternal($request->headers->get('referer'));
+        return $this->redirectResponseExternal($request->headers->get('referer', static::URL_REDIRECT_MERCHANT_LIST));
     }
 
     /**
@@ -65,6 +70,6 @@ class StatusMerchantController extends AbstractController
     {
         $this->addErrorMessage(static::MESSAGE_ERROR_MERCHANT_WRONG_PARAMETERS);
 
-        return $this->redirectResponseExternal($request->headers->get('referer'));
+        return $this->redirectResponseExternal($request->headers->get('referer', static::URL_REDIRECT_MERCHANT_LIST));
     }
 }
