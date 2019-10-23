@@ -36,6 +36,6 @@ class ProductReviewsConcreteProductsResourceExpanderPlugin extends AbstractPlugi
     ): ConcreteProductsRestAttributesTransfer {
         return $this->getFactory()
             ->createProductReviewsConcreteProductsResourceExpander()
-            ->expand($concreteProductsRestAttributesTransfer);
+            ->expand($concreteProductsRestAttributesTransfer, $idProductConcrete, $restRequest);
     }
 }

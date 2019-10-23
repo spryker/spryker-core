@@ -59,7 +59,7 @@ class ResponsePagination implements ResponsePaginationInterface
         $limit = $this->buildLimitParameter($pageOffsetsTransfer);
 
         $offsetLinks = [
-            RestLinkInterface::LINK_LAST =>  $domain . $pageOffsetsTransfer->getLastOffset() . $limit,
+            RestLinkInterface::LINK_LAST => $domain . $pageOffsetsTransfer->getLastOffset() . $limit,
             RestLinkInterface::LINK_FIRST => $domain . 0 . $limit,
         ];
 

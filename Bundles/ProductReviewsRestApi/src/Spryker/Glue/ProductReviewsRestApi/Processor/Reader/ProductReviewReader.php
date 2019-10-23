@@ -95,29 +95,17 @@ class ProductReviewReader implements ProductReviewReaderInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param string $abstractSku
-     * @param string $localeName
+     * @param int $idProductAbstract
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function findProductReviewsByAbstractSku(
+    public function findProductReviewsByIdProductAbstract(
         RestRequestInterface $restRequest,
-        string $abstractSku,
-        string $localeName
+        int $idProductAbstract
     ): array {
-        $abstractProductData = $this->productStorageClient->findProductAbstractStorageDataByMapping(
-            static::PRODUCT_ABSTRACT_MAPPING_TYPE,
-            $abstractSku,
-            $localeName
-        );
-
-        if (!$abstractProductData) {
-            return [];
-        }
-
         $productReviewTransfers = $this->findProductReviewsInSearch(
             $restRequest,
-            $abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT]
+            $idProductAbstract
         )[ProductReviewsResultFormatterPlugin::NAME];
 
         return $this->prepareRestResourceCollection($productReviewTransfers);

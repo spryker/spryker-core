@@ -7,24 +7,37 @@
 
 namespace Spryker\Glue\ProductReviewsRestApi\Processor\Expander;
 
-use Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductReviewsRestApi\Processor\Reader\ProductReviewReaderInterface;
 
 class ProductReviewResourceRelationshipExpander implements ProductReviewResourceRelationshipExpanderInterface
 {
+    protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
+    protected const PRODUCT_MAPPING_TYPE = 'sku';
+
     /**
      * @var \Spryker\Glue\ProductReviewsRestApi\Processor\Reader\ProductReviewReaderInterface
      */
     protected $productReviewReader;
 
     /**
-     * @param \Spryker\Glue\ProductReviewsRestApi\Processor\Reader\ProductReviewReaderInterface $productReviewReader
+     * @var \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface
      */
-    public function __construct(ProductReviewReaderInterface $productReviewReader)
-    {
+    protected $productStorageClient;
+
+    /**
+     * @param \Spryker\Glue\ProductReviewsRestApi\Processor\Reader\ProductReviewReaderInterface $productReviewReader
+     * @param \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface $productStorageClient
+     */
+    public function __construct(
+        ProductReviewReaderInterface $productReviewReader,
+        ProductReviewsRestApiToProductStorageClientInterface $productStorageClient
+    ) {
         $this->productReviewReader = $productReviewReader;
+        $this->productStorageClient = $productStorageClient;
     }
 
     /**
@@ -36,7 +49,13 @@ class ProductReviewResourceRelationshipExpander implements ProductReviewResource
     public function addRelationshipsByAbstractSku(array $resources, RestRequestInterface $restRequest): array
     {
         foreach ($resources as $resource) {
-            $this->addRelationship($resource->getId(), $restRequest, $resource);
+            $abstractProductData = $this->productStorageClient->findProductAbstractStorageDataByMapping(
+                static::PRODUCT_MAPPING_TYPE,
+                $resource->getId(),
+                $restRequest->getMetadata()->getLocale()
+            );
+
+            $this->addRelationship($abstractProductData, $restRequest, $resource);
         }
 
         return $resources;
@@ -51,33 +70,34 @@ class ProductReviewResourceRelationshipExpander implements ProductReviewResource
     public function addRelationshipsByConcreteSku(array $resources, RestRequestInterface $restRequest): array
     {
         foreach ($resources as $resource) {
-            $this->addRelationship(
-                $resource->getAttributes()->offsetGet(ConcreteProductsRestAttributesTransfer::ID_PRODUCT_ABSTRACT),
-                $restRequest,
-                $resource
+            $concreteProductData = $this->productStorageClient->findProductConcreteStorageDataByMapping(
+                static::PRODUCT_MAPPING_TYPE,
+                $resource->getId(),
+                $restRequest->getMetadata()->getLocale()
             );
+
+            $this->addRelationship($concreteProductData, $restRequest, $resource);
         }
 
         return $resources;
     }
 
     /**
-     * @param string $abstractSku
+     * @param array $productData
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      *
      * @return void
      */
-    protected function addRelationship(
-        string $abstractSku,
-        RestRequestInterface $restRequest,
-        RestResourceInterface $resource
-    ): void {
-        $productReviews = $this->productReviewReader->findProductReviewsByAbstractSku(
-            $restRequest,
-            $abstractSku,
-            $restRequest->getMetadata()->getLocale()
-        );
+    protected function addRelationship(array $productData, RestRequestInterface $restRequest, RestResourceInterface $resource): void
+    {
+        if (!$productData) {
+            return;
+        }
+
+        $productReviews = $this->productReviewReader
+            ->findProductReviewsByIdProductAbstract($restRequest, $productData[static::KEY_ID_PRODUCT_ABSTRACT]);
+
         foreach ($productReviews as $productReview) {
             $resource->addRelationship($productReview);
         }
