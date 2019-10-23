@@ -114,7 +114,9 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function findMethodById($idShipmentMethod)
     {
-        return $this->getRepository()->findShipmentMethodByIdWithPricesAndCarrier($idShipmentMethod);
+        return $this->getFactory()
+            ->createShipmentMethodReader()
+            ->findShipmentMethodById($idShipmentMethod);
     }
 
     /**
@@ -457,5 +459,59 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
     {
         return $this->getRepository()
             ->isShipmentMethodUniqueForCarrier($shipmentMethodTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $shipmentMethodName
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findShipmentMethodByName(string $shipmentMethodName): ?ShipmentMethodTransfer
+    {
+        return $this->getRepository()
+            ->findShipmentMethodByName($shipmentMethodName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $shipmentMethodKey
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findShipmentMethodByKey(string $shipmentMethodKey): ?ShipmentMethodTransfer
+    {
+        return $this->getRepository()
+            ->findShipmentMethodByKey($shipmentMethodKey);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return array[]
+     */
+    public function getShipmentMethodPlugins(): array
+    {
+        return $this->getFactory()->getShipmentMethodPlugins();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     */
+    public function getActiveShipmentCarriers(): array
+    {
+        return $this->getRepository()->getActiveShipmentCarriers();
     }
 }

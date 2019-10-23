@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentPriceTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
@@ -168,6 +169,30 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
             ->createShipmentMethodMapper()
             ->mapShipmentMethodEntityToShipmentMethodTransferWithPrices(
                 $salesShipmentMethodEntity,
+                new ShipmentMethodTransfer()
+            );
+    }
+
+    /**
+     * @param string $shipmentMethodKey
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findShipmentMethodByKey(string $shipmentMethodKey): ?ShipmentMethodTransfer
+    {
+        $shipmentMethodEntity = $this->queryMethodsWithMethodPricesAndCarrier()
+            ->filterByShipmentMethodKey($shipmentMethodKey)
+            ->find()
+            ->getFirst();
+
+        if ($shipmentMethodEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createShipmentMethodMapper()
+            ->mapShipmentMethodEntityToShipmentMethodTransferWithPrices(
+                $shipmentMethodEntity,
                 new ShipmentMethodTransfer()
             );
     }
@@ -627,5 +652,40 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
             ->filterByIdShipmentMethod($shipmentMethodTransfer->getIdShipmentMethod(), Criteria::NOT_EQUAL)
             ->filterByFkShipmentCarrier($shipmentMethodTransfer->getFkShipmentCarrier())
             ->exists();
+    }
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    public function getStoreRelationByIdShipmentMethod(int $idShipmentMethod): StoreRelationTransfer
+    {
+        $shipmentMethodStoreEntities = $this->getFactory()
+            ->createShipmentMethodStoreQuery()
+            ->filterByFkShipmentMethod($idShipmentMethod)
+            ->leftJoinWithStore()
+            ->find();
+
+        $storeRelationTransfer = (new StoreRelationTransfer())->setIdEntity($idShipmentMethod);
+
+        return $this->getFactory()
+            ->createStoreRelationMapper()
+            ->mapShipmentMethodStoreEntitiesToStoreRelationTransfer($shipmentMethodStoreEntities, $storeRelationTransfer);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     */
+    public function getActiveShipmentCarriers(): array
+    {
+        $shipmentCarrierEntityCollection = $this->getFactory()
+            ->createShipmentCarrierQuery()
+            ->filterByIsActive(true)
+            ->find();
+
+        return $this->getFactory()
+            ->createShipmentCarrierMapper()
+            ->mapShipmentCarrierEntityCollectionToShipmentCarrierTransferCollection($shipmentCarrierEntityCollection, []);
     }
 }

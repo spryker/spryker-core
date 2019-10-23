@@ -7,11 +7,8 @@
 
 namespace Spryker\Zed\Shipment\Communication;
 
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Shipment\Communication\Form\DataProvider\MethodFormDataProvider;
-use Spryker\Zed\Shipment\Communication\Form\MethodForm;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
@@ -23,71 +20,6 @@ use Spryker\Zed\Shipment\ShipmentDependencyProvider;
  */
 class ShipmentCommunicationFactory extends AbstractCommunicationFactory
 {
-    /**
-     * @return \Spryker\Zed\Shipment\Communication\Form\DataProvider\MethodFormDataProvider
-     */
-    public function createMethodFormDataProvider()
-    {
-        return new MethodFormDataProvider(
-            $this->getQueryContainer(),
-            $this->getPlugins(),
-            $this->getFacade(),
-            $this->getTaxFacade(),
-            $this->getMoneyFacade()
-        );
-    }
-
-    /**
-     * @return array
-     */
-    protected function getPlugins()
-    {
-        return $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS);
-    }
-
-    /**
-     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToMoneyInterface
-     */
-    protected function getMoneyFacade()
-    {
-        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_MONEY);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $data
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createMethodForm(ShipmentMethodTransfer $data, array $options = [])
-    {
-        return $this->getFormFactory()->create(MethodForm::class, $data, $options);
-    }
-
-    /**
-     * @return \Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface
-     */
-    public function getTaxFacade()
-    {
-        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_TAX);
-    }
-
-    /**
-     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface
-     */
-    public function getCurrencyFacade()
-    {
-        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_CURRENCY);
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
-     */
-    public function getMoneyCollectionFormTypePlugin()
-    {
-        return $this->getProvidedDependency(ShipmentDependencyProvider::MONEY_COLLECTION_FORM_TYPE_PLUGIN);
-    }
-
     /**
      * @return \Spryker\Service\Shipment\ShipmentServiceInterface
      */

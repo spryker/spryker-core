@@ -82,9 +82,40 @@ interface ShipmentGuiToShipmentFacadeInterface
     public function createCarrier(ShipmentCarrierTransfer $carrierTransfer);
 
     /**
+     * @param string $shipmentMethodName
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findShipmentMethodByName(string $shipmentMethodName): ?ShipmentMethodTransfer;
+
+    /**
+     * @param string $shipmentMethodKey
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findShipmentMethodByKey(string $shipmentMethodKey): ?ShipmentMethodTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $methodTransfer
+     *
+     * @return int|null
+     */
+    public function createMethod(ShipmentMethodTransfer $methodTransfer): ?int;
+
+    /**
      * @param int $idMethod
      *
      * @return bool
      */
     public function deleteMethod($idMethod);
+
+    /**
+     * @return array
+     */
+    public function getShipmentMethodPlugins(): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     */
+    public function getActiveShipmentCarriers(): array;
 }

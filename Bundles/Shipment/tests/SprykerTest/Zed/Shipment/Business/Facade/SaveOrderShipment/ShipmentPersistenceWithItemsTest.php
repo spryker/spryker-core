@@ -13,6 +13,7 @@ use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesShipmentTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
@@ -33,6 +34,8 @@ use Propel\Runtime\Formatter\SimpleArrayFormatter;
  */
 class ShipmentPersistenceWithItemsTest extends Test
 {
+    protected const DEFAULT_UNIT_PRICE = 500;
+
     /**
      * @var \SprykerTest\Zed\Shipment\ShipmentBusinessTester
      */
@@ -136,8 +139,12 @@ class ShipmentPersistenceWithItemsTest extends Test
 
         $quoteTransfer = (new QuoteBuilder())
             ->withShipment($shipmentBuilder)
-            ->withItem()
-            ->withAnotherItem()
+            ->withItem([
+                ItemTransfer::UNIT_PRICE => static::DEFAULT_UNIT_PRICE,
+            ])
+            ->withAnotherItem([
+                ItemTransfer::UNIT_PRICE => static::DEFAULT_UNIT_PRICE,
+            ])
             ->withShippingAddress($addressBuilder)
             ->withAnotherBillingAddress()
             ->withTotals()
@@ -159,7 +166,9 @@ class ShipmentPersistenceWithItemsTest extends Test
             ->withShippingAddress($addressBuilder)
             ->withMethod();
 
-        $itemBuilder = (new ItemBuilder())
+        $itemBuilder = (new ItemBuilder())->seed([
+            ItemTransfer::UNIT_PRICE => static::DEFAULT_UNIT_PRICE,
+        ])
             ->withShipment($shipmentBuilder);
 
         $quoteTransfer = (new QuoteBuilder())
@@ -183,10 +192,14 @@ class ShipmentPersistenceWithItemsTest extends Test
             ->withShippingAddress($addressBuilder1)
             ->withMethod()
             ->build();
-        $itemTransfer1 = (new ItemBuilder())->build();
+        $itemTransfer1 = (new ItemBuilder())->seed([
+            ItemTransfer::UNIT_PRICE => static::DEFAULT_UNIT_PRICE,
+        ])->build();
         $itemTransfer1->setShipment($shipmentTransfer1);
 
-        $itemTransfer2 = (new ItemBuilder())->build();
+        $itemTransfer2 = (new ItemBuilder())->seed([
+            ItemTransfer::UNIT_PRICE => static::DEFAULT_UNIT_PRICE,
+        ])->build();
         $itemTransfer2->setShipment($shipmentTransfer1);
 
         $addressBuilder2 = (new AddressBuilder([AddressTransfer::ISO2_CODE => 'DE']));
@@ -194,7 +207,9 @@ class ShipmentPersistenceWithItemsTest extends Test
             ->withShippingAddress($addressBuilder2)
             ->withMethod()
             ->build();
-        $itemTransfer3 = (new ItemBuilder())->build();
+        $itemTransfer3 = (new ItemBuilder())->seed([
+            ItemTransfer::UNIT_PRICE => static::DEFAULT_UNIT_PRICE,
+        ])->build();
         $itemTransfer3->setShipment($shipmentTransfer2);
 
         $quoteTransfer = (new QuoteBuilder())

@@ -55,6 +55,14 @@ class ShipmentPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodStoreQuery
+     */
+    public function createShipmentMethodStoreQuery(): SpyShipmentMethodStoreQuery
+    {
+        return SpyShipmentMethodStoreQuery::create();
+    }
+
+    /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery
      */
     public function createSalesShipmentQuery()
@@ -76,14 +84,6 @@ class ShipmentPersistenceFactory extends AbstractPersistenceFactory
     public function createShipmentMethodPriceQuery()
     {
         return SpyShipmentMethodPriceQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodStoreQuery
-     */
-    public function createShipmentMethodStoreQuery(): SpyShipmentMethodStoreQuery
-    {
-        return SpyShipmentMethodStoreQuery::create();
     }
 
     /**

@@ -74,4 +74,20 @@ interface ShipmentEntityManagerInterface
      * @return \Generated\Shared\Transfer\ExpenseTransfer
      */
     public function saveSalesExpense(ExpenseTransfer $expenseTransfer, OrderTransfer $orderTransfer): ExpenseTransfer;
+
+    /**
+     * @param array $idStores
+     * @param int $idShipmentMethod
+     *
+     * @return void
+     */
+    public function removeShipmentMethodStoreRelationsForStores(array $idStores, int $idShipmentMethod): void;
+
+    /**
+     * @param array $idStores
+     * @param int $idShipmentMethod
+     *
+     * @return void
+     */
+    public function addShipmentMethodStoreRelationsForStores(array $idStores, int $idShipmentMethod): void;
 }

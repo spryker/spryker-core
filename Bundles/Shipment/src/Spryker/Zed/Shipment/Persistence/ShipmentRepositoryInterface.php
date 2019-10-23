@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentPriceTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 
 interface ShipmentRepositoryInterface
@@ -94,6 +95,13 @@ interface ShipmentRepositoryInterface
     public function findShipmentMethodByName(string $shipmentMethodName): ?ShipmentMethodTransfer;
 
     /**
+     * @param string $shipmentMethodKey
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findShipmentMethodByKey(string $shipmentMethodKey): ?ShipmentMethodTransfer;
+
+    /**
      * @param int $idShipmentMethod
      * @param int $idStore
      *
@@ -150,4 +158,16 @@ interface ShipmentRepositoryInterface
      * @return bool
      */
     public function isShipmentMethodUniqueForCarrier(ShipmentMethodTransfer $shipmentMethodTransfer): bool;
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    public function getStoreRelationByIdShipmentMethod(int $idShipmentMethod): StoreRelationTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     */
+    public function getActiveShipmentCarriers(): array;
 }
