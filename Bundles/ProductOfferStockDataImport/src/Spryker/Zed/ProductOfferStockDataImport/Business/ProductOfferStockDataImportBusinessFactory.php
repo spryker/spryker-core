@@ -8,12 +8,19 @@
 namespace Spryker\Zed\ProductOfferStockDataImport\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductOfferStockDataImport\Dependency\Facade\ProductOfferStockDataImportToProductOfferFacadeInterface;
+use Spryker\Zed\ProductOfferStockDataImport\ProductOfferStockDataImportDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductOfferStockDataImport\ProductOfferStockDataImportConfig getConfig()
- * @method \Spryker\Zed\ProductOfferStockDataImport\Persistence\ProductOfferStockDataImportEntityManagerInterface getEntityManager()
- * @method \Spryker\Zed\ProductOfferStockDataImport\Persistence\ProductOfferStockDataImportRepositoryInterface getRepository()
  */
 class ProductOfferStockDataImportBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\ProductOfferStockDataImport\Dependency\Facade\ProductOfferStockDataImportToProductOfferFacadeInterface
+     */
+    protected function getProductOfferFacade(): ProductOfferStockDataImportToProductOfferFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductOfferStockDataImportDependencyProvider::FACADE_PRODUCT_OFFER);
+    }
 }
