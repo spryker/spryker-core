@@ -120,7 +120,11 @@ class CheckoutFacadeTest extends Unit
         // Arrange
         $productTransfer = $this->tester->haveProduct();
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
-        $this->tester->haveProductInStock([StockProductTransfer::SKU => $productTransfer->getSku(), StockProductTransfer::QUANTITY => 3]);
+        $this->tester->haveProductInStock([
+            StockProductTransfer::SKU => $productTransfer->getSku(),
+            StockProductTransfer::QUANTITY => 3,
+            StockProductTransfer::IS_NEVER_OUT_OF_STOCK => false,
+        ]);
         $email = 'frodo.baggins@gmail.com';
         $itemBuilder = (new ItemBuilder([ItemTransfer::SKU => $productTransfer->getSku(), ItemTransfer::UNIT_PRICE => 1]))->withShipment(
             (new ShipmentBuilder())->withShippingAddress([AddressTransfer::EMAIL => $email])
@@ -373,15 +377,10 @@ class CheckoutFacadeTest extends Unit
     {
         // Arrange
         $quoteTransfer = $this->getBaseQuoteTransfer();
-        $productConcrete1 = $this->tester->haveProduct([ProductConcreteTransfer::SKU => 'OSB1339'], [ProductAbstractTransfer::SKU => 'AOSB1339']);
+        $productConcreteTransfer1 = $this->tester->haveProduct([ProductConcreteTransfer::SKU => 'OSB1339'], [ProductAbstractTransfer::SKU => 'AOSB1339']);
 
         $quoteTransfer->addItem(
-            (new ItemTransfer())
-                ->setSku($productConcrete1->getSku())
-                ->setQuantity(2)
-                ->setUnitPrice(3000)
-                ->setUnitGrossPrice(3000)
-                ->setSumGrossPrice(6000)
+            $this->createItemTransfer($productConcreteTransfer1, 2)
         );
 
         // Act
@@ -403,12 +402,7 @@ class CheckoutFacadeTest extends Unit
         $productConcrete = $this->tester->haveProduct();
 
         $quoteTransfer->addItem(
-            (new ItemTransfer())
-                ->setSku($productConcrete->getSku())
-                ->setQuantity(2)
-                ->setUnitPrice(3000)
-                ->setUnitGrossPrice(3000)
-                ->setSumGrossPrice(6000)
+            $this->createItemTransfer($productConcrete, 2)
         );
 
         // Act
@@ -427,20 +421,17 @@ class CheckoutFacadeTest extends Unit
     {
         // Arrange
         $quoteTransfer = $this->getBaseQuoteTransferWithItemLevelShippingAddresses();
-        $productConcrete1 = $this->tester->haveProduct([ProductConcreteTransfer::SKU => 'OSB1339'], [ProductAbstractTransfer::SKU => 'AOSB1339']);
+        $productConcreteTransfer1 = $this->tester->haveProduct();
 
         $this->tester->haveProductInStock([
-            StockProductTransfer::SKU => $productConcrete1->getSku(),
+            StockProductTransfer::SKU => $productConcreteTransfer1->getSku(),
             StockProductTransfer::QUANTITY => 1,
+            StockProductTransfer::IS_NEVER_OUT_OF_STOCK => false,
         ]);
 
         $quoteTransfer->addItem(
-            (new ItemTransfer())
-                ->setSku($productConcrete1->getSku())
-                ->setQuantity(2)
-                ->setUnitPrice(3000)
-                ->setUnitGrossPrice(3000)
-                ->setSumGrossPrice(6000)
+            $this->createItemTransfer($productConcreteTransfer1, 2)
+                ->setShipment($this->createShipmentTransfer())
         );
 
         // Act
@@ -528,39 +519,26 @@ class CheckoutFacadeTest extends Unit
             ->setIso2Code('xi')
             ->save();
 
-        $productConcrete1 = $this->tester->haveProduct([ProductConcreteTransfer::SKU => 'OSB1337'], [ProductAbstractTransfer::SKU => 'AOSB1337']);
-        $productConcrete2 = $this->tester->haveProduct([ProductConcreteTransfer::SKU => 'OSB1338'], [ProductAbstractTransfer::SKU => 'AOSB1338']);
+        $productConcreteTransfer1 = $this->tester->haveProduct([ProductConcreteTransfer::SKU => 'OSB1337'], [ProductAbstractTransfer::SKU => 'AOSB1337']);
+        $productConcreteTransfer2 = $this->tester->haveProduct([ProductConcreteTransfer::SKU => 'OSB1338'], [ProductAbstractTransfer::SKU => 'AOSB1338']);
 
         $this->tester->haveProductInStock([
-            StockProductTransfer::SKU => $productConcrete1->getSku(),
+            StockProductTransfer::SKU => $productConcreteTransfer1->getSku(),
             StockProductTransfer::QUANTITY => 1,
+            StockProductTransfer::IS_NEVER_OUT_OF_STOCK => false,
         ]);
 
         $this->tester->haveProductInStock([
-            StockProductTransfer::SKU => $productConcrete2->getSku(),
+            StockProductTransfer::SKU => $productConcreteTransfer2->getSku(),
             StockProductTransfer::QUANTITY => 1,
+            StockProductTransfer::IS_NEVER_OUT_OF_STOCK => false,
         ]);
 
-        $item1 = new ItemTransfer();
-        $item1
-            ->setUnitPrice(4000)
-            ->setSku('OSB1337')
-            ->setQuantity(1)
-            ->setUnitGrossPrice(3000)
-            ->setSumGrossPrice(3000)
-            ->setName('Product1');
+        $itemTransfer1 = $this->createItemTransfer($productConcreteTransfer1, 1);
+        $itemTransfer2 = $this->createItemTransfer($productConcreteTransfer2, 1);
 
-        $item2 = new ItemTransfer();
-        $item2
-            ->setUnitPrice(4000)
-            ->setSku('OSB1338')
-            ->setQuantity(1)
-            ->setUnitGrossPrice(4000)
-            ->setSumGrossPrice(4000)
-            ->setName('Product2');
-
-        $quoteTransfer->addItem($item1);
-        $quoteTransfer->addItem($item2);
+        $quoteTransfer->addItem($itemTransfer1);
+        $quoteTransfer->addItem($itemTransfer2);
 
         $totals = new TotalsTransfer();
         $totals
@@ -632,51 +610,25 @@ class CheckoutFacadeTest extends Unit
             ->setIso2Code('xi')
             ->save();
 
-        $productConcrete1 = $this->tester->haveProduct([ProductConcreteTransfer::SKU => 'OSB1337'], [ProductAbstractTransfer::SKU => 'AOSB1337']);
-        $productConcrete2 = $this->tester->haveProduct([ProductConcreteTransfer::SKU => 'OSB1338'], [ProductAbstractTransfer::SKU => 'AOSB1338']);
+        $productConcreteTransfer1 = $this->tester->haveProduct([ProductConcreteTransfer::SKU => 'OSB1337'], [ProductAbstractTransfer::SKU => 'AOSB1337']);
+        $productConcreteTransfer2 = $this->tester->haveProduct([ProductConcreteTransfer::SKU => 'OSB1338'], [ProductAbstractTransfer::SKU => 'AOSB1338']);
 
-        $this->tester->haveProductInStock([StockProductTransfer::SKU => $productConcrete1->getSku()]);
+        $this->tester->haveProductInStock([StockProductTransfer::SKU => $productConcreteTransfer1->getSku()]);
         $this->tester->haveProductInStock([
-            StockProductTransfer::SKU => $productConcrete2->getSku(),
+            StockProductTransfer::SKU => $productConcreteTransfer2->getSku(),
             StockProductTransfer::QUANTITY => 3,
+            StockProductTransfer::IS_NEVER_OUT_OF_STOCK => false,
         ]);
 
-        $shippingAddress = (new AddressBuilder([
-            AddressTransfer::ADDRESS2 => '84',
-            AddressTransfer::ZIP_CODE => '12346',
-            AddressTransfer::EMAIL => 'max@mustermann.de',
-            AddressTransfer::CITY => 'Entenhausen2',
-        ]))->build();
+        $shipment = $this->createShipmentTransfer();
 
-        $shipment = (new ShipmentBuilder())
-            ->build();
-        $shipment->setShippingAddress($shippingAddress);
+        $itemTransfer1 = $this->createItemTransfer($productConcreteTransfer1, 1);
+        $itemTransfer1->setShipment($shipment);
+        $itemTransfer2 = $this->createItemTransfer($productConcreteTransfer2, 1);
+        $itemTransfer2->setShipment($shipment);
 
-        $item1 = (new ItemBuilder())
-            ->seed([
-                ItemTransfer::UNIT_PRICE => 4000,
-                ItemTransfer::SKU => 'OSB1337',
-                ItemTransfer::QUANTITY => 1,
-                ItemTransfer::UNIT_GROSS_PRICE => 3000,
-                ItemTransfer::SUM_GROSS_PRICE => 3000,
-                ItemTransfer::NAME => 'Product1',
-            ])
-            ->build();
-        $item1->setShipment($shipment);
-        $item2 = (new ItemBuilder())
-            ->seed([
-                ItemTransfer::UNIT_PRICE => 4000,
-                ItemTransfer::SKU => 'OSB1338',
-                ItemTransfer::QUANTITY => 1,
-                ItemTransfer::UNIT_GROSS_PRICE => 4000,
-                ItemTransfer::SUM_GROSS_PRICE => 4000,
-                ItemTransfer::NAME => 'Product2',
-            ])
-            ->build();
-        $item2->setShipment($shipment);
-
-        $quoteTransfer->addItem($item1);
-        $quoteTransfer->addItem($item2);
+        $quoteTransfer->addItem($itemTransfer1);
+        $quoteTransfer->addItem($itemTransfer2);
 
         $totals = (new TotalsBuilder())->seed([
             TotalsTransfer::GRAND_TOTAL => 1000,
@@ -705,6 +657,45 @@ class CheckoutFacadeTest extends Unit
         $quoteTransfer->addPayment($paymentTransfer);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     */
+    protected function createShipmentTransfer(): ShipmentTransfer
+    {
+        $shippingAddress = (new AddressBuilder([
+            AddressTransfer::ADDRESS2 => '84',
+            AddressTransfer::ZIP_CODE => '12346',
+            AddressTransfer::EMAIL => 'max@mustermann.de',
+            AddressTransfer::CITY => 'Entenhausen',
+        ]))->build();
+
+        $shipment = (new ShipmentBuilder())
+            ->build();
+        $shipment->setShippingAddress($shippingAddress);
+
+        return $shipment;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param int $quantity
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function createItemTransfer(ProductConcreteTransfer $productConcreteTransfer, int $quantity): ItemTransfer
+    {
+        return (new ItemBuilder())
+            ->seed([
+                ItemTransfer::UNIT_PRICE => 4000,
+                ItemTransfer::SKU => $productConcreteTransfer->getSku(),
+                ItemTransfer::QUANTITY => $quantity,
+                ItemTransfer::UNIT_GROSS_PRICE => 3000,
+                ItemTransfer::SUM_GROSS_PRICE => 3000,
+                ItemTransfer::NAME => 'ProductName',
+            ])
+            ->build();
     }
 
     /**
