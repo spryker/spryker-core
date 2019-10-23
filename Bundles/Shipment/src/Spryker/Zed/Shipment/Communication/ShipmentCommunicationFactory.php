@@ -21,38 +21,6 @@ use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 class ShipmentCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return array
-     */
-    protected function getPlugins()
-    {
-        return $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS);
-    }
-
-    /**
-     * @return \Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface
-     */
-    public function getTaxFacade()
-    {
-        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_TAX);
-    }
-
-    /**
-     * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface
-     */
-    public function getCurrencyFacade()
-    {
-        return $this->getProvidedDependency(ShipmentDependencyProvider::FACADE_CURRENCY);
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
-     */
-    public function getMoneyCollectionFormTypePlugin()
-    {
-        return $this->getProvidedDependency(ShipmentDependencyProvider::MONEY_COLLECTION_FORM_TYPE_PLUGIN);
-    }
-
-    /**
      * @return \Spryker\Service\Shipment\ShipmentServiceInterface
      */
     public function getShipmentService(): ShipmentServiceInterface

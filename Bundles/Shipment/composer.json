@@ -24,15 +24,12 @@
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
-    "spryker/application": "*",
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
-    "spryker/money": "*",
     "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/tax-product-connector": "*",
-    "spryker/testify": "*",
-    "spryker/zed-navigation": "*"
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/checkout": "If you want to use Checkout plugins."

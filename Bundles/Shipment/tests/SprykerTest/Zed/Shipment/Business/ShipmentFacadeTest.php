@@ -24,9 +24,6 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
 use Orm\Zed\Store\Persistence\SpyStore;
 use Spryker\Shared\Shipment\ShipmentConfig;
 use Spryker\Shared\Shipment\ShipmentConstants;
-use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface;
-use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface;
-use Spryker\Zed\Shipment\Communication\Plugin\ShipmentMethodPricePluginInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
@@ -363,37 +360,6 @@ class ShipmentFacadeTest extends Test
             );
 
         $this->tester->setDependency(ShipmentDependencyProvider::FACADE_CURRENCY, $currencyFacadeMock);
-    }
-
-    /**
-     * @param string $deliveryTime
-     * @param bool $isAvailable
-     * @param int $price
-     *
-     * @return void
-     */
-    protected function mockShipmentMethodPluginsResult($deliveryTime, $isAvailable, $price)
-    {
-        $deliveryTimePlugin = $this->createMock(ShipmentMethodDeliveryTimePluginInterface::class);
-        $deliveryTimePlugin->expects($this->any())->method('getTime')->willReturn($deliveryTime);
-
-        $availabilityPlugin = $this->createMock(ShipmentMethodAvailabilityPluginInterface::class);
-        $availabilityPlugin->expects($this->any())->method('isAvailable')->willReturn($isAvailable);
-
-        $pricePlugin = $this->createMock(ShipmentMethodPricePluginInterface::class);
-        $pricePlugin->expects($this->any())->method('getPrice')->willReturn($price);
-
-        $this->tester->setDependency(ShipmentDependencyProvider::PLUGINS, [
-            ShipmentDependencyProvider::AVAILABILITY_PLUGINS => [
-                static::AVAILABILITY_PLUGIN => $availabilityPlugin,
-            ],
-            ShipmentDependencyProvider::PRICE_PLUGINS => [
-                static::PRICE_PLUGIN => $pricePlugin,
-            ],
-            ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS => [
-                static::DELIVERY_TIME_PLUGIN => $deliveryTimePlugin,
-            ],
-        ]);
     }
 
     /**
