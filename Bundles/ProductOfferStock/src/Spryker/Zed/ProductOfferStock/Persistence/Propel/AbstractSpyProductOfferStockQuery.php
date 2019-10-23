@@ -20,5 +20,4 @@ use Orm\Zed\ProductOfferStock\Persistence\Base\SpyProductOfferStockQuery as Base
  */
 class AbstractSpyProductOfferStockQuery extends BaseSpyProductOfferStockQueryAlias
 {
-
 }

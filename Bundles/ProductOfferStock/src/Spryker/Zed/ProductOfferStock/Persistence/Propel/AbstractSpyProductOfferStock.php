@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\ProductOfferStock\src\Spryker\Zed\ProductOfferStock\Persistence\Propel;
+namespace Spryker\Zed\ProductOfferStock\Persistence\Propel;
 
 use Orm\Zed\ProductOfferStock\Persistence\Base\SpyProductOfferStock as BaseSpyProductOfferStockAlias;
 
