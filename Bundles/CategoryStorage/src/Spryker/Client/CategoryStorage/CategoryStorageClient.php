@@ -44,6 +44,8 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $categoryNodeIds

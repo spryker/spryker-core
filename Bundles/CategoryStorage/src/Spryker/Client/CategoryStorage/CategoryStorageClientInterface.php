@@ -36,7 +36,7 @@ interface CategoryStorageClientInterface
 
     /**
      * Specification:
-     *  - Return category nodes storage data by array of id category node and locale name.
+     * - Returns category nodes storage data by array of id category node and locale name.
      *
      * @api
      *
