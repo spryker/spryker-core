@@ -85,7 +85,7 @@ class ProductDataHelper extends Module
         $abstractProductId = $productFacade->createProductAbstract($productAbstractTransfer);
 
         $this->debug(sprintf(
-            'Inserted AbstractProduct: %d',
+            'Inserted Abstract Product: %d',
             $abstractProductId
         ));
 
@@ -141,7 +141,7 @@ class ProductDataHelper extends Module
         );
 
         $this->debug(sprintf(
-            'Inserted AbstractProduct: %d, Concrete Product: %d',
+            'Inserted Abstract Product: %d, Concrete Product: %d',
             $idProductAbstract,
             $productConcreteTransfer->getIdProductConcrete()
         ));
