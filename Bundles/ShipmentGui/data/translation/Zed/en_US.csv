@@ -38,3 +38,5 @@ None,None
 Save,Save
 Carrier,Carrier
 "Select one","Select one"
+"This shipment method key is already in use.","This shipment method key is already in use."
+"This name is already in use.","This name is already in use."
