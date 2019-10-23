@@ -43,7 +43,7 @@ class CategoriesResourceRelationshipExpander implements CategoriesResourceRelati
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
-        $locale = $restRequest->getMetadata()->getLocale();
+        $localeName = $restRequest->getMetadata()->getLocale();
 
         $productAbstractSkus = [];
         foreach ($resources as $resource) {
@@ -51,7 +51,7 @@ class CategoriesResourceRelationshipExpander implements CategoriesResourceRelati
         }
 
         $productCategoryNodeIds = $this->abstractProductsCategoriesReader
-            ->findProductCategoryNodeIdsBySkus($productAbstractSkus, $locale);
+            ->findProductCategoryNodeIdsBySkus($productAbstractSkus, $localeName);
 
         if (count($productCategoryNodeIds) === 0) {
             return;
@@ -60,7 +60,7 @@ class CategoriesResourceRelationshipExpander implements CategoriesResourceRelati
         $categoryNodeIds = array_unique(array_merge(...$productCategoryNodeIds));
 
         $categoryNodesRestResources = $this->categoriesRestApiResource
-            ->findCategoryNodeByIds($categoryNodeIds, $locale);
+            ->findCategoryNodeByIds($categoryNodeIds, $localeName);
 
         foreach ($resources as $resource) {
             if (!array_key_exists($resource->getId(), $productCategoryNodeIds)) {

@@ -14,7 +14,6 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
 {
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
-    protected const KEY_SKU = 'sku';
 
     /**
      * @var \Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\ProductsCategoriesResourceRelationshipToProductStorageClientInterface
@@ -40,44 +39,44 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
 
     /**
      * @param string $sku
-     * @param string $locale
+     * @param string $localeName
      *
      * @return int[]|null
      */
-    public function findProductCategoryNodeIds(string $sku, string $locale): ?array
+    public function findProductCategoryNodeIds(string $sku, string $localeName): ?array
     {
         $abstractProductData = $this->productStorageClient
             ->findProductAbstractStorageDataByMapping(
                 static::PRODUCT_ABSTRACT_MAPPING_TYPE,
                 $sku,
-                $locale
+                $localeName
             );
         if (!$abstractProductData) {
             return null;
         }
 
-        return $this->getProductCategoryNodeIds($abstractProductData, $locale);
+        return $this->getProductCategoryNodeIds($abstractProductData, $localeName);
     }
 
     /**
      * @param string[] $productAbstractSkus
-     * @param string $locale
+     * @param string $localeName
      *
      * @return array
      */
-    public function findProductCategoryNodeIdsBySkus(array $productAbstractSkus, string $locale): array
+    public function findProductCategoryNodeIdsBySkus(array $productAbstractSkus, string $localeName): array
     {
         $productAbstractData = $this->productStorageClient
             ->findBulkProductAbstractStorageDataByMapping(
                 static::PRODUCT_ABSTRACT_MAPPING_TYPE,
                 $productAbstractSkus,
-                $locale
+                $localeName
             );
         if (count($productAbstractData) === 0) {
             return [];
         }
 
-        return $this->getBulkProductCategoryNodeIds($productAbstractData, $locale);
+        return $this->getBulkProductCategoryNodeIds($productAbstractData, $localeName);
     }
 
     /**
@@ -104,11 +103,11 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
 
     /**
      * @param array $abstractProductData
-     * @param string $locale
+     * @param string $localeName
      *
      * @return array
      */
-    protected function getBulkProductCategoryNodeIds(array $abstractProductData, string $locale): array
+    protected function getBulkProductCategoryNodeIds(array $abstractProductData, string $localeName): array
     {
         $productAbstractIds = [];
         foreach ($abstractProductData as $item) {
@@ -116,7 +115,7 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
         }
 
         $productAbstractCategoryStorageTransfers = $this->productCategoryStorageClient
-            ->findBulkProductAbstractCategory($productAbstractIds, $locale);
+            ->findBulkProductAbstractCategory($productAbstractIds, $localeName);
 
         $productCategoryNodeIds = [];
         foreach ($productAbstractCategoryStorageTransfers as $productAbstractCategoryStorageTransfer) {

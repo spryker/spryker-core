@@ -11,7 +11,7 @@ interface ProductCategoryStorageClientInterface
 {
     /**
      * Specification:
-     * - return Product Abstract Category by id
+     * - Returns Product Abstract Category by id.
      *
      * @api
      *
@@ -29,9 +29,9 @@ interface ProductCategoryStorageClientInterface
      * @api
      *
      * @param int[] $productAbstractIds
-     * @param string $locale
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[]
      */
-    public function findBulkProductAbstractCategory(array $productAbstractIds, string $locale): array;
+    public function findBulkProductAbstractCategory(array $productAbstractIds, string $localeName): array;
 }

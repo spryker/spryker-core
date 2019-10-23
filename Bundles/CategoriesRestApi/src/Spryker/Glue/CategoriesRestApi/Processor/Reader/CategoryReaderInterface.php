@@ -45,9 +45,9 @@ interface CategoryReaderInterface
 
     /**
      * @param int[] $nodeIds
-     * @param string $locale
+     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function findCategoryNodeByIds(array $nodeIds, string $locale): array;
+    public function findCategoryNodeByIds(array $nodeIds, string $localeName): array;
 }
