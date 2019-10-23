@@ -1,7 +1,7 @@
 # ChartExtension Module
 [![Build Status](https://travis-ci.org/spryker/chart-extension.svg)](https://travis-ci.org/spryker/chart-extension)
 
-{{ADD DESCRIPTION HERE}}
+ChartExtension module provides plugin interfaces used by Chart module.
 
 ## Installation
 
