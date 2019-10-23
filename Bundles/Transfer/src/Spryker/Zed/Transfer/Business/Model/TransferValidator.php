@@ -101,6 +101,11 @@ class TransferValidator implements TransferValidatorInterface
             $definition = $this->normalize($definition);
 
             $module = $this->getModuleFromPathName($file->getFilename());
+
+            if ($options['verbose']) {
+                $this->messenger->info(sprintf('Checking %s module (%s)', $module, $file->getFilename()));
+            }
+
             $result &= $this->validateDefinition($module, $definition, $options);
         }
 
@@ -116,10 +121,6 @@ class TransferValidator implements TransferValidatorInterface
      */
     protected function validateDefinition(string $module, array $definition, array $options): bool
     {
-        if ($options['verbose']) {
-            $this->messenger->info(sprintf('Checking %s module', $module));
-        }
-
         $isValid = true;
         foreach ($definition as $transfer) {
             if ($this->transferConfig->isTransferNameValidated() && !$this->isValidName($transfer['name'])) {
@@ -159,6 +160,18 @@ class TransferValidator implements TransferValidatorInterface
                         $transfer['name'],
                         $property['name'],
                         $type
+                    ));
+
+                    continue;
+                }
+
+                if ($this->isSingularRequired($type) && !$this->hasSingularName($property)) {
+                    $isValid = false;
+                    $this->messenger->warning(sprintf(
+                        '%s.%s.%s is a collection but does not have a singular name defined.',
+                        $module,
+                        $transfer['name'],
+                        $property['name']
                     ));
 
                     continue;
@@ -331,7 +344,31 @@ class TransferValidator implements TransferValidatorInterface
     }
 
     /**
-     * @param array $property
+     * @param string $type
+     *
+     * @return bool
+     */
+    protected function isSingularRequired(string $type): bool
+    {
+        if (!$this->transferConfig->isSingularRequired()) {
+            return false;
+        }
+
+        return ($type === 'array' || $this->isArrayType($type));
+    }
+
+    /**
+     * @param string[] $property
+     *
+     * @return bool
+     */
+    protected function hasSingularName(array $property): bool
+    {
+        return !empty($property['singular']);
+    }
+
+    /**
+     * @param string[] $property
      *
      * @return bool
      */
