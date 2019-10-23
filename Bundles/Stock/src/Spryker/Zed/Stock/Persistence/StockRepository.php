@@ -186,17 +186,13 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
     {
         $query = $this->getFactory()
             ->getStoreQuery()
-            ->leftJoinWithStockStore()
-            ->useStockStoreQuery()
-                ->leftJoinWithStock()
-                ->useStockQuery()
-                    ->leftJoinStockProduct()
-                        ->useStockProductQuery()
-                            ->leftJoinWithSpyProduct()
-                            ->useSpyProductQuery()
-                                ->filterBySku($sku)
-                            ->endUse()
+            ->useStockStoreQuery(null, Criteria::LEFT_JOIN)
+                ->useStockQuery(null, Criteria::LEFT_JOIN)
+                    ->useStockProductQuery(null, Criteria::LEFT_JOIN)
+                        ->useSpyProductQuery(null, Criteria::LEFT_JOIN)
+                            ->filterBySku($sku)
                         ->endUse()
+                    ->endUse()
                 ->endUse()
             ->endUse();
 
