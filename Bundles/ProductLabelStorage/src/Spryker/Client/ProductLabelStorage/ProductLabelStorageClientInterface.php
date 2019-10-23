@@ -26,7 +26,7 @@ interface ProductLabelStorageClientInterface
      * Specification:
      * - Retrieves product labels by abstract product IDs and by locale.
      * - Looks up the key-value storage.
-     * - Uses getMulti to get many records with one storage call.
+     * - Uses StorageClient::getMulti() to get many records with one storage call.
      *
      * @api
      *

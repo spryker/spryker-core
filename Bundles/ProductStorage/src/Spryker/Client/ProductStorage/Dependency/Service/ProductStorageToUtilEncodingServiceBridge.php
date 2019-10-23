@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductStorage\Dependency\Service;
 
-class ProductStorageToUtilEncodingService implements ProductStorageToUtilEncodingServiceInterface
+class ProductStorageToUtilEncodingServiceBridge implements ProductStorageToUtilEncodingServiceInterface
 {
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface

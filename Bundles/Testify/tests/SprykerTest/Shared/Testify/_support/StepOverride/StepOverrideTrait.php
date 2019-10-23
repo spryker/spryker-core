@@ -149,7 +149,7 @@ trait StepOverrideTrait
      *
      * @return static
      */
-    public function amSureDontSeeIncludesContainsResourcesOfType(string $type): self
+    public function amSureDontSeeIncludesContainResourceOfType(string $type): self
     {
         return $this->amSure(
             sprintf('The returned resource does not have includes of type %s', $type)

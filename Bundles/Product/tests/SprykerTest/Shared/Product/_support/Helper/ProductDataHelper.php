@@ -58,7 +58,7 @@ class ProductDataHelper extends Module
         $productFacade->createProductConcrete($productConcreteTransfer);
 
         $this->debug(sprintf(
-            'Inserted AbstractProduct: %d, Concrete Product: %d',
+            'Inserted Abstract Product: %d, Concrete Product: %d',
             $abstractProductId,
             $productConcreteTransfer->getIdProductConcrete()
         ));

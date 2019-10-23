@@ -13,7 +13,7 @@ use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface;
-use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingService;
+use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceBridge;
 use Spryker\Client\ProductStorage\Exception\ProductConcreteDataCacheNotFoundException;
 use Spryker\Client\ProductStorage\ProductStorageConfig;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
@@ -67,7 +67,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface $localeClient
-     * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingService $utilEncodingService
+     * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceBridge $utilEncodingService
      * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionPluginInterface[] $productConcreteRestrictionPlugins
      * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionFilterPluginInterface[] $productConcreteRestrictionFilterPlugins
      */
@@ -75,7 +75,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         ProductStorageToStorageClientInterface $storageClient,
         ProductStorageToSynchronizationServiceInterface $synchronizationService,
         ProductStorageToLocaleInterface $localeClient,
-        ProductStorageToUtilEncodingService $utilEncodingService,
+        ProductStorageToUtilEncodingServiceBridge $utilEncodingService,
         array $productConcreteRestrictionPlugins = [],
         array $productConcreteRestrictionFilterPlugins = []
     ) {
@@ -259,10 +259,10 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      */
     public function getProductConcreteStorageDataByMappingAndIdentifiers(string $mappingType, array $identifiers, string $localeName): array
     {
-        $mappingKeys = $this->generateMappingKeys($mappingType, $identifiers, $localeName);
+        $storageKeys = $this->generateMappingStorageKeys($mappingType, $identifiers, $localeName);
         $productConcreteIds = array_map(function (string $storageData) {
             return $this->utilEncodingService->decodeJson($storageData, true)[static::KEY_ID];
-        }, $this->storageClient->getMulti($mappingKeys));
+        }, $this->storageClient->getMulti($storageKeys));
 
         if (!$productConcreteIds) {
             return [];
@@ -423,7 +423,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      *
      * @return array
      */
-    protected function generateMappingKeys(string $mappingType, array $identifiers, string $localeName)
+    protected function generateMappingStorageKeys(string $mappingType, array $identifiers, string $localeName)
     {
         $mappingKeys = [];
 
@@ -444,7 +444,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     {
         $productConcreteStorageData = [];
         foreach ($productStorageDataCollection as $productStorageData) {
-            $productStorageData = json_decode($productStorageData, true);
+            $productStorageData = $this->utilEncodingService->decodeJson($productStorageData, true);
             $idProductConcrete = $productStorageData[static::KEY_ID_PRODUCT_CONCRETE];
             $productConcreteStorageData[$idProductConcrete] = $productStorageData;
 
