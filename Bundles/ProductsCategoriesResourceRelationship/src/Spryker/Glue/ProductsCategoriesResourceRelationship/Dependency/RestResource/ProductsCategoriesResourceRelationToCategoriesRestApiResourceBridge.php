@@ -35,4 +35,16 @@ class ProductsCategoriesResourceRelationToCategoriesRestApiResourceBridge implem
         return $this->categoriesRestApiResource
             ->findCategoryNodeById($nodeId, $locale);
     }
+
+    /**
+     * @param array $nodeIds
+     * @param string $locale
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]|null
+     */
+    public function findCategoryNodeByIds(array $nodeIds, string $locale): ?array
+    {
+        return $this->categoriesRestApiResource
+            ->findCategoryNodeByIds($nodeIds, $locale);
+    }
 }

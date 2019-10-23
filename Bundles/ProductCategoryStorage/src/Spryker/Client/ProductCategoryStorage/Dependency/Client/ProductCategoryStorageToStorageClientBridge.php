@@ -31,4 +31,14 @@ class ProductCategoryStorageToStorageClientBridge implements ProductCategoryStor
     {
         return $this->storageClient->get($key);
     }
+
+    /**
+     * @param array $keys
+     *
+     * @return array
+     */
+    public function getMulti(array $keys)
+    {
+        return $this->storageClient->getMulti($keys);
+    }
 }

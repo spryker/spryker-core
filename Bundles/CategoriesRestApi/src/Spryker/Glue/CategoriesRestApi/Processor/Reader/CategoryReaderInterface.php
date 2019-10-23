@@ -42,4 +42,12 @@ interface CategoryReaderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
     public function findCategoryNodeById(int $nodeId, string $locale): ?RestResourceInterface;
+
+    /**
+     * @param array $nodeIds
+     * @param string $locale
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]|null
+     */
+    public function findCategoryNodeByIds(array $nodeIds, string $locale): ?array;
 }

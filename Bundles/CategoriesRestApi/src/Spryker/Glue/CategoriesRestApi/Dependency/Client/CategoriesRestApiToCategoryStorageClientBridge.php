@@ -42,4 +42,15 @@ class CategoriesRestApiToCategoryStorageClientBridge implements CategoriesRestAp
     {
         return $this->categoryStorageClient->getCategoryNodeById($idCategoryNode, $localeName);
     }
+
+    /**
+     * @param array $categoryNodeIds
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
+     */
+    public function getCategoryNodeByIds(array $categoryNodeIds, $localeName): array
+    {
+        return $this->categoryStorageClient->getCategoryNodeByIds($categoryNodeIds, $localeName);
+    }
 }

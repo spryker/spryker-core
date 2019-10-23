@@ -34,4 +34,15 @@ class ProductsCategoriesResourceRelationshipToProductCategoryStorageClientBridge
     {
         return $this->productCategoryStorageClient->findProductAbstractCategory($idProductAbstract, $locale);
     }
+
+    /**
+     * @param array $productAbstractIds
+     * @param string $locale
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[]|null
+     */
+    public function findBulkProductAbstractCategory(array $productAbstractIds, $locale): ?array
+    {
+        return $this->productCategoryStorageClient->findBulkProductAbstractCategory($productAbstractIds, $locale);
+    }
 }

@@ -14,6 +14,7 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
 {
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    protected const KEY_SKU = 'sku';
 
     /**
      * @var \Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\ProductsCategoriesResourceRelationshipToProductStorageClientInterface
@@ -59,6 +60,27 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
     }
 
     /**
+     * @param array $skus
+     * @param string $locale
+     *
+     * @return array|null
+     */
+    public function findProductCategoryNodeIdsBySkus(array $skus, string $locale): ?array
+    {
+        $abstractProductData = $this->productStorageClient
+            ->findBulkProductAbstractStorageDataByMapping(
+                static::PRODUCT_ABSTRACT_MAPPING_TYPE,
+                $skus,
+                $locale
+            );
+        if (!$abstractProductData) {
+            return null;
+        }
+
+        return $this->getBulkProductCategoryNodeIds($abstractProductData, $locale);
+    }
+
+    /**
      * @param array $abstractProductData
      * @param string $locale
      *
@@ -74,6 +96,34 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
         if ($productCategories) {
             foreach ($productCategories->getCategories() as $productCategory) {
                 $productCategoryNodeIds[] = $productCategory->getCategoryNodeId();
+            }
+        }
+
+        return $productCategoryNodeIds;
+    }
+
+    /**
+     * @param array $abstractProductData
+     * @param string $locale
+     *
+     * @return array
+     */
+    protected function getBulkProductCategoryNodeIds(array $abstractProductData, string $locale): array
+    {
+        $productCategoryNodeIds = [];
+        $keys = [];
+        foreach ($abstractProductData as $item) {
+            $keys[$item[static::KEY_SKU]] = (int)$item[static::KEY_ID_PRODUCT_ABSTRACT];
+            $productCategoryNodeIds[$item[static::KEY_SKU]] = [];
+        }
+
+        $productCategories = $this->productCategoryStorageClient
+            ->findBulkProductAbstractCategory($keys, $locale);
+
+        /** @var \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer $productCategory */
+        foreach ($productCategories as $sku => $productCategory) {
+            foreach ($productCategory->getCategories() as $category) {
+                $productCategoryNodeIds[$sku][] = $category->getCategoryNodeId();
             }
         }
 

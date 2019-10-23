@@ -16,4 +16,12 @@ interface AbstractProductsCategoriesReaderInterface
      * @return int[]|null
      */
     public function findProductCategoryNodeIds(string $sku, string $locale): ?array;
+
+    /**
+     * @param array $skus
+     * @param string $locale
+     *
+     * @return array|null
+     */
+    public function findProductCategoryNodeIdsBySkus(array $skus, string $locale): ?array;
 }

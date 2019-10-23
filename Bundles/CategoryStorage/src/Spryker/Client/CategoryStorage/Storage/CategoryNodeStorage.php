@@ -56,6 +56,27 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
     }
 
     /**
+     * @param array $categoryNodeIds
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
+     */
+    public function getCategoryNodeByIds(array $categoryNodeIds, $localeName): array
+    {
+        $categoryNodes = $this->getStorageDataByNodeIds($categoryNodeIds, $localeName);
+
+        $response = [];
+        foreach ($categoryNodes as $categoryNode) {
+            $categoryNodeStorageTransfer = new CategoryNodeStorageTransfer();
+            $categoryNodeStorageTransfer->fromArray(json_decode($categoryNode, true), true);
+
+            $response[] = $categoryNodeStorageTransfer;
+        }
+
+        return $response;
+    }
+
+    /**
      * @param int $idCategoryNode
      * @param string $localeName
      *
@@ -71,6 +92,24 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
         $categoryData = $this->storageClient->get($categoryNodeKey);
 
         return $categoryData;
+    }
+
+    /**
+     * @param array $categoryNodeIds
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    protected function getStorageDataByNodeIds(array $categoryNodeIds, string $localeName)
+    {
+        $categoryNodeKeys = [];
+        foreach ($categoryNodeIds as $categoryNodeId) {
+            $categoryNodeKeys[] = $this->generateKey($categoryNodeId, $localeName);
+        }
+
+        $categoryNodes = $this->storageClient->getMulti($categoryNodeKeys);
+
+        return $categoryNodes;
     }
 
     /**
@@ -149,7 +188,7 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
     protected function generateKey($idCategoryNode, $locale)
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
-        $synchronizationDataTransfer->setReference($idCategoryNode);
+        $synchronizationDataTransfer->setReference((string)$idCategoryNode);
         $synchronizationDataTransfer->setLocale($locale);
 
         return $this->synchronizationService->getStorageKeyBuilder(CategoryStorageConstants::CATEGORY_NODE_RESOURCE_NAME)->generateKey($synchronizationDataTransfer);

@@ -57,6 +57,30 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
     }
 
     /**
+     * @param array $productAbstractIds
+     * @param string $locale
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[]|null
+     */
+    public function findBulkProductAbstractCategory(array $productAbstractIds, $locale): ?array
+    {
+        $productAbstractCategoryStorageData = $this->findBulkStorageData($productAbstractIds, $locale);
+
+        if (!$productAbstractCategoryStorageData) {
+            return null;
+        }
+
+        $response = [];
+        foreach ($productAbstractCategoryStorageData as $key => $item) {
+            $spyProductCategoryAbstractTransfer = new ProductAbstractCategoryStorageTransfer();
+            $spyProductCategoryAbstractTransfer->fromArray($item, true);
+            $response[$key] = $spyProductCategoryAbstractTransfer;
+        }
+
+        return $response;
+    }
+
+    /**
      * @param int $idProductAbstract
      * @param string $locale
      *
@@ -92,7 +116,34 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param array $productAbstractIds
+     * @param string $locale
+     *
+     * @return array|null
+     */
+    protected function findBulkStorageData(array $productAbstractIds, string $locale): ?array
+    {
+        $keys = [];
+        $mapKeySku = [];
+        foreach ($productAbstractIds as $sku => $productAbstractId) {
+            $generatedKey = $this->generateKey($productAbstractId, $locale);
+
+            $keys[$sku] = $generatedKey;
+            $mapKeySku['kv:' . $generatedKey] = $sku;
+        }
+
+        $productAbstractCategoryStorageData = $this->storageClient->getMulti($keys);
+
+        $response = [];
+        foreach ($productAbstractCategoryStorageData as $key => $item) {
+            $response[$mapKeySku[$key]] = json_decode($item, true);
+        }
+
+        return $response;
+    }
+
+    /**
+     * @param int|string $idProductAbstract
      * @param string $locale
      *
      * @return string

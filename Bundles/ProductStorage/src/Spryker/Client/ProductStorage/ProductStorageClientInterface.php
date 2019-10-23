@@ -279,4 +279,20 @@ interface ProductStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
     public function getProductConcreteViewTransfers(array $productConcreteIds, string $localeName, array $selectedAttributes = []): array;
+
+    /**
+     * Specification:
+     * - Retrieves a current Store specific ProductAbstract resource from Storage using specified mapping.
+     * - Responds with null if product abstract is restricted.
+     * - Filter the restricted product variants (product concrete) in `attribute_map`.
+     *
+     * @api
+     *
+     * @param string $mappingType
+     * @param array $identifiers
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findBulkProductAbstractStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): ?array;
 }

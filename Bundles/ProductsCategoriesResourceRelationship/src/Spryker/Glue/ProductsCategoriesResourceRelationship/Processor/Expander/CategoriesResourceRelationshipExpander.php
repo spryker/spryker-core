@@ -44,12 +44,32 @@ class CategoriesResourceRelationshipExpander implements CategoriesResourceRelati
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $locale = $restRequest->getMetadata()->getLocale();
-        foreach ($resources as $resource) {
-            $productCategoryNodeIds = $this->abstractProductsCategoriesReader
-                ->findProductCategoryNodeIds($resource->getId(), $locale);
 
-            foreach ($productCategoryNodeIds as $categoriesNodeId) {
-                $resource->addRelationship($this->categoriesRestApiResource->findCategoryNodeById($categoriesNodeId, $locale));
+        $skus = [];
+        foreach ($resources as $resource) {
+            $skus[] = $resource->getId();
+        }
+
+        $productCategoryNodeIds = $this->abstractProductsCategoriesReader
+            ->findProductCategoryNodeIdsBySkus($skus, $locale);
+
+        if ($productCategoryNodeIds === null) {
+            return;
+        }
+
+        $categoryNodeIds = [];
+        foreach ($productCategoryNodeIds as $productCategoryNodeId) {
+            foreach ($productCategoryNodeId as $categoryId) {
+                $categoryNodeIds[$categoryId] = $categoryId;
+            }
+        }
+
+        $categoryNodes = $this->categoriesRestApiResource
+            ->findCategoryNodeByIds($categoryNodeIds, $locale);
+
+        foreach ($resources as $resource) {
+            foreach ($productCategoryNodeIds[$resource->getId()] as $categoryNodeId) {
+                $resource->addRelationship($categoryNodes[$categoryNodeId]);
             }
         }
     }

@@ -219,6 +219,67 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     }
 
     /**
+     * @param string $mappingType
+     * @param array $identifiers
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findBulkProductAbstractStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): ?array
+    {
+        $mappingKeys = [];
+        $mapKeySku = [];
+        foreach ($identifiers as $identifier) {
+            $reference = $mappingType . ':' . $identifier;
+            $mappingKeys[$identifier] = $this->getStorageKey($reference, $localeName);
+            $mapKeySku['kv:' . $this->getStorageKey($reference, $localeName)] = $identifier;
+        }
+
+        $mappingData = $this->storageClient->getMulti($mappingKeys);
+
+        if (!$mappingData) {
+            return null;
+        }
+
+        $ids = [];
+        foreach ($mappingData as $key => $item) {
+            $data = json_decode($item, true);
+            $ids[$mapKeySku[$key]] = $data['id'];
+        }
+
+        return $this->findBulkProductAbstractStorageData($ids, $localeName);
+    }
+
+    /**
+     * @param array $productAbstractIds
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    public function findBulkProductAbstractStorageData(array $productAbstractIds, string $localeName): ?array
+    {
+        $response = [];
+        $productAbstractIdsWithoutCache = [];
+        foreach ($productAbstractIds as $key => $productAbstractId) {
+            if ($this->hasProductAbstractDataCacheByIdProductAbstractAndLocaleName($productAbstractId, $localeName)) {
+                $response[$key] = $this->getProductAbstractDataCacheByIdProductAbstractAndLocaleName($productAbstractId, $localeName);
+                continue;
+            }
+
+            $productAbstractIdsWithoutCache[$key] = $productAbstractId;
+        }
+
+        if (count($productAbstractIdsWithoutCache) === 0) {
+            return $response;
+        }
+
+        $productStorageData = $this->findBulkStorageData($productAbstractIdsWithoutCache, $localeName);
+        $this->cacheBulkProductAbstractDataByIdProductAbstractAndLocaleName($productAbstractIdsWithoutCache, $localeName, $productStorageData);
+
+        return $productStorageData;
+    }
+
+    /**
      * @param string $reference
      * @param string $locale
      *
@@ -429,5 +490,62 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
         }
 
         return $productAbstractIds;
+    }
+
+    /**
+     * @param array $productAbstractIds
+     * @param string $localeName
+     *
+     * @return array|null
+     */
+    protected function findBulkStorageData(array $productAbstractIds, string $localeName): ?array
+    {
+        $keys = [];
+        $mapKeySku = [];
+        foreach ($productAbstractIds as $sku => $productAbstractId) {
+            if ($this->isProductAbstractRestricted($productAbstractId)) {
+                unset($productAbstractIds[$sku]);
+            }
+
+            $keys[] = $this->getStorageKey((string)$productAbstractId, $localeName);
+            $mapKeySku['kv:' . $this->getStorageKey((string)$productAbstractId, $localeName)] = $sku;
+        }
+
+        if (count($productAbstractIds) === 0) {
+            return null;
+        }
+
+        if (count($productAbstractIds) === 0) {
+            return null;
+        }
+
+        $productStorageData = $this->storageClient->getMulti($keys);
+
+        if (!$productStorageData) {
+            return null;
+        }
+
+        $response = [];
+        foreach ($productStorageData as $key => $item) {
+            $abstractProduct = json_decode($item, true);
+            $response[$mapKeySku[$key]] = $this->productAbstractVariantsRestrictionFilter
+                ->filterAbstractProductVariantsData($abstractProduct);
+        }
+
+        return $response;
+    }
+
+    /**
+     * @param array $productAbstractIds
+     * @param string $localeName
+     * @param array|null $productData
+     *
+     * @return void
+     */
+    protected function cacheBulkProductAbstractDataByIdProductAbstractAndLocaleName(array $productAbstractIds, string $localeName, ?array $productData): void
+    {
+        foreach ($productAbstractIds as $key => $productAbstractId) {
+            static::$productsAbstractDataCache[$key][$localeName] = $productData[$key];
+        }
     }
 }
