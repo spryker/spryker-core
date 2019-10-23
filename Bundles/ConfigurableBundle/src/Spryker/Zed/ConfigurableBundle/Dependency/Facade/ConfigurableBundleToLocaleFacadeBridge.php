@@ -29,4 +29,12 @@ class ConfigurableBundleToLocaleFacadeBridge implements ConfigurableBundleToLoca
     {
         return $this->localeFacade->getLocaleCollection();
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getCurrentLocale()
+    {
+        return $this->localeFacade->getCurrentLocale();
+    }
 }

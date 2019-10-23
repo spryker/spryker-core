@@ -7,15 +7,18 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business\Writer;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductListCategoryRelationTransfer;
 use Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\ConfigurableBundle\Business\Exception\ConfigurableBundleTemplateNotFoundException;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface;
+use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToProductListFacadeInterface;
 
 class ProductListWriter implements ProductListWriterInterface
@@ -36,15 +39,23 @@ class ProductListWriter implements ProductListWriterInterface
     protected $productListFacade;
 
     /**
+     * @var \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @param \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface $configurableBundleTemplateReader
      * @param \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToProductListFacadeInterface $productListFacade
+     * @param \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
         ConfigurableBundleTemplateReaderInterface $configurableBundleTemplateReader,
-        ConfigurableBundleToProductListFacadeInterface $productListFacade
+        ConfigurableBundleToProductListFacadeInterface $productListFacade,
+        ConfigurableBundleToLocaleFacadeInterface $localeFacade
     ) {
         $this->configurableBundleTemplateReader = $configurableBundleTemplateReader;
         $this->productListFacade = $productListFacade;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -97,10 +108,11 @@ class ProductListWriter implements ProductListWriterInterface
     protected function getConfigurableBundleTemplateTransfer(ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer): ConfigurableBundleTemplateTransfer
     {
         $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())
-            ->setIdConfigurableBundleTemplate($configurableBundleTemplateSlotTransfer->getFkConfigurableBundleTemplate());
+            ->setIdConfigurableBundleTemplate($configurableBundleTemplateSlotTransfer->getFkConfigurableBundleTemplate())
+            ->setTranslationLocales(new ArrayObject($this->getDefaultLocale()));
 
         $configurableBundleTemplateTransfer = $this->configurableBundleTemplateReader
-            ->findConfigurableBundleTemplateWithDefaultLocaleTranslation($configurableBundleTemplateFilterTransfer);
+            ->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
 
         if (!$configurableBundleTemplateTransfer) {
             throw new ConfigurableBundleTemplateNotFoundException(
@@ -154,5 +166,15 @@ class ProductListWriter implements ProductListWriterInterface
             $configurableBundleTemplateSlotTransfer->getConfigurableBundleTemplate()->getTranslations()[0]->getName(),
             $configurableBundleTemplateSlotTransfer->getTranslations()[0]->getName()
         );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function getDefaultLocale(): LocaleTransfer
+    {
+        $availableLocaleTransfers = $this->localeFacade->getLocaleCollection();
+
+        return reset($availableLocaleTransfers);
     }
 }

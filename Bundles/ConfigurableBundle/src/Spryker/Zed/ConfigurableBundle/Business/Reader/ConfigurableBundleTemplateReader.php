@@ -50,25 +50,28 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
             return null;
         }
 
-        return $this->configurableBundleTranslationExpander
-            ->expandConfigurableBundleTemplateWithTranslationForCurrentLocale($configurableBundleTemplateTransfer);
+        return $this->configurableBundleTranslationExpander->expandConfigurableBundleTemplateWithTranslations(
+            $configurableBundleTemplateTransfer,
+            $configurableBundleTemplateFilterTransfer->getTranslationLocales()
+        );
     }
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer|null
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer[]
      */
-    public function findConfigurableBundleTemplateWithDefaultLocaleTranslation(
-        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
-    ): ?ConfigurableBundleTemplateTransfer {
-        $configurableBundleTemplateTransfer = $this->configurableBundleRepository->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
+    public function getConfigurableBundleTemplateCollection(ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer): array
+    {
+        $configurableBundleTemplateTransfers = [];
 
-        if (!$configurableBundleTemplateTransfer) {
-            return null;
+        foreach ($this->configurableBundleRepository->getConfigurableBundleTemplateCollection($configurableBundleTemplateFilterTransfer) as $configurableBundleTemplateTransfer) {
+            $configurableBundleTemplateTransfers[] = $this->configurableBundleTranslationExpander->expandConfigurableBundleTemplateWithTranslations(
+                $configurableBundleTemplateTransfer,
+                $configurableBundleTemplateFilterTransfer->getTranslationLocales()
+            );
         }
 
-        return $this->configurableBundleTranslationExpander
-            ->expandConfigurableBundleTemplateWithDefaultLocaleTranslation($configurableBundleTemplateTransfer);
+        return $configurableBundleTemplateTransfers;
     }
 }

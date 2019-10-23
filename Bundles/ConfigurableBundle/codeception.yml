@@ -1,7 +1,7 @@
 namespace: SprykerTest
 
 include:
-- tests/SprykerTest/Zed/ConfigurableBundle
+  - tests/SprykerTest/Zed/ConfigurableBundle
 
 paths:
   tests: tests

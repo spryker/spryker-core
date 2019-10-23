@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Communication\Plugin\ProductList;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -34,6 +36,22 @@ class ConfigurableBundleTemplateSlotProductListDeletePreCheckPlugin extends Abst
      */
     public function execute(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
-        return $this->getFacade()->checkProductListUsageAmongSlots($productListTransfer);
+        $configurableBundleTemplateSlotFilterTransfer = $this->createConfigurableBundleTemplateSlotFilterTransfer($productListTransfer);
+
+        return $this->getFacade()->checkProductListUsageAmongSlots($configurableBundleTemplateSlotFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer
+     */
+    protected function createConfigurableBundleTemplateSlotFilterTransfer(ProductListTransfer $productListTransfer): ConfigurableBundleTemplateSlotFilterTransfer
+    {
+        return (new ConfigurableBundleTemplateSlotFilterTransfer())
+            ->setProductList($productListTransfer)
+            ->setTranslationLocales(new ArrayObject([
+                $this->getFactory()->getLocaleFacade()->getCurrentLocale(),
+            ]));
     }
 }

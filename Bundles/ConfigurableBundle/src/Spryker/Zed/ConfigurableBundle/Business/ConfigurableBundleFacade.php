@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
-use Generated\Shared\Transfer\ProductListTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -73,6 +72,22 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
         return $this->getFactory()
             ->createConfigurableBundleTemplateReader()
             ->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer[]
+     */
+    public function getConfigurableBundleTemplateCollection(ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer): array
+    {
+        return $this->getFactory()
+            ->createConfigurableBundleTemplateReader()
+            ->getConfigurableBundleTemplateCollection($configurableBundleTemplateFilterTransfer);
     }
 
     /**
@@ -144,15 +159,15 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function checkProductListUsageAmongSlots(ProductListTransfer $productListTransfer): ProductListResponseTransfer
+    public function checkProductListUsageAmongSlots(ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer): ProductListResponseTransfer
     {
         return $this->getFactory()
             ->createConfigurableBundleTemplateSlotReader()
-            ->checkProductListUsageAmongSlots($productListTransfer);
+            ->checkProductListUsageAmongSlots($configurableBundleTemplateSlotFilterTransfer);
     }
 
     /**

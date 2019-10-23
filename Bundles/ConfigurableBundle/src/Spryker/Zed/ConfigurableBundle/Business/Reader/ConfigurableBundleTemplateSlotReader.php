@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business\Reader;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
@@ -18,7 +19,7 @@ use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInter
 
 class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplateSlotReaderInterface
 {
-    protected const ERROR_MESSAGE_UNBABLE_TO_DELETE_PRODUCT_LIST = 'Unable to delete Product List since it\'s used by Configurable Bundle Template "%template%" ("%slot%" slot).';
+    protected const ERROR_MESSAGE_UNABLE_TO_DELETE_PRODUCT_LIST = 'Unable to delete Product List since it\'s used by Configurable Bundle Template "%template%" ("%slot%" slot).';
 
     protected const ERROR_MESSAGE_PARAM_TEMPLATE = '%template%';
     protected const ERROR_MESSAGE_PARAM_SLOT = '%slot%';
@@ -68,6 +69,9 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
             return null;
         }
 
+        $configurableBundleTemplateSlotTransfer = $this->configurableBundleTranslationExpander
+            ->expandConfigurableBundleTemplateSlotWithTranslations($configurableBundleTemplateSlotTransfer, $configurableBundleTemplateSlotFilterTransfer->getTranslationLocales());
+
         $configurableBundleTemplateSlotTransfer = $this->configurableBundleTemplateSlotProductListExpander
             ->expandConfigurableBundleTemplateSlotWithProductList($configurableBundleTemplateSlotTransfer);
 
@@ -85,22 +89,27 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
             ->getConfigurableBundleTemplateSlotCollection($configurableBundleTemplateSlotFilterTransfer);
 
         return $this->expandConfigurableBundleTemplateSlotTransfersWithTranslations(
-            $configurableBundleTemplateSlotTransfers
+            $configurableBundleTemplateSlotTransfers,
+            $configurableBundleTemplateSlotFilterTransfer->getTranslationLocales()
         );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function checkProductListUsageAmongSlots(ProductListTransfer $productListTransfer): ProductListResponseTransfer
+    public function checkProductListUsageAmongSlots(ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer): ProductListResponseTransfer
     {
-        $productListTransfer->requireIdProductList();
+        $configurableBundleTemplateSlotFilterTransfer->requireProductList()
+            ->getProductList()
+            ->requireIdProductList();
+
+        $productListTransfer = $configurableBundleTemplateSlotFilterTransfer->getProductList();
 
         $configurableBundleTemplateSlotFilterTransfer = (new ConfigurableBundleTemplateSlotFilterTransfer())->setIdProductList(
             $productListTransfer->getIdProductList()
-        );
+        )->setTranslationLocales($configurableBundleTemplateSlotFilterTransfer->getTranslationLocales());
 
         $configurableBundleTemplateSlotTransfers = $this->getConfigurableBundleTemplateSlotCollection($configurableBundleTemplateSlotFilterTransfer);
 
@@ -130,18 +139,20 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[] $configurableBundleTemplateSlotTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[]
      */
-    protected function expandConfigurableBundleTemplateSlotTransfersWithTranslations(array $configurableBundleTemplateSlotTransfers): array
+    protected function expandConfigurableBundleTemplateSlotTransfersWithTranslations(array $configurableBundleTemplateSlotTransfers, ArrayObject $localeTransfers): array
     {
         foreach ($configurableBundleTemplateSlotTransfers as $configurableBundleTemplateSlotTransfer) {
             $configurableBundleTemplateSlotTransfer = $this->configurableBundleTranslationExpander
-                ->expandConfigurableBundleTemplateSlotWithTranslationForCurrentLocale($configurableBundleTemplateSlotTransfer);
+                ->expandConfigurableBundleTemplateSlotWithTranslations($configurableBundleTemplateSlotTransfer, $localeTransfers);
 
             $configurableBundleTemplateSlotTransfer->setConfigurableBundleTemplate(
-                $this->configurableBundleTranslationExpander->expandConfigurableBundleTemplateWithTranslationForCurrentLocale(
-                    $configurableBundleTemplateSlotTransfer->getConfigurableBundleTemplate()
+                $this->configurableBundleTranslationExpander->expandConfigurableBundleTemplateWithTranslations(
+                    $configurableBundleTemplateSlotTransfer->getConfigurableBundleTemplate(),
+                    $localeTransfers
                 )
             );
         }
@@ -186,7 +197,7 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
         $slotName = $configurableBundleTemplateSlotTransfer->getTranslations()[0]->getName();
 
         $productListResponseTransfer->addMessage(
-            (new MessageTransfer())->setValue(static::ERROR_MESSAGE_UNBABLE_TO_DELETE_PRODUCT_LIST)
+            (new MessageTransfer())->setValue(static::ERROR_MESSAGE_UNABLE_TO_DELETE_PRODUCT_LIST)
                 ->setParameters([
                     static::ERROR_MESSAGE_PARAM_TEMPLATE => $templateName,
                     static::ERROR_MESSAGE_PARAM_SLOT => $slotName,

@@ -93,7 +93,8 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductListWriter(
             $this->createConfigurableBundleTemplateReader(),
-            $this->getProductListFacade()
+            $this->getProductListFacade(),
+            $this->getLocaleFacade()
         );
     }
 

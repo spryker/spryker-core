@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
 use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 
 /**
  * Inherited Methods
@@ -221,5 +222,13 @@ class ConfigurableBundleBusinessTester extends Actor
             ->addItem(
                 $this->createItemTransferWithConfigurableBundleTemplateUuid($uuid)
             );
+    }
+
+    /**
+     * @return \Spryker\Zed\Locale\Business\LocaleFacadeInterface
+     */
+    public function getLocaleFacade(): LocaleFacadeInterface
+    {
+        return $this->getLocator()->locale()->facade();
     }
 }

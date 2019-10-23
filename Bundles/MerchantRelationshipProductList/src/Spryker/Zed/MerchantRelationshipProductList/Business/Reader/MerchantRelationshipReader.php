@@ -16,7 +16,7 @@ use Spryker\Zed\MerchantRelationshipProductList\Persistence\MerchantRelationship
 
 class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
 {
-    protected const ERROR_MESSAGE_UNBABLE_TO_DELETE_PRODUCT_LIST = 'Unable to delete Product List since it\'s used by Merchant Relation "%merchant_relation%".';
+    protected const ERROR_MESSAGE_UNABLE_TO_DELETE_PRODUCT_LIST = 'Unable to delete Product List since it\'s used by Merchant Relation "%merchant_relation%".';
     protected const ERROR_MESSAGE_PARAM_MERCHANT_RELATION = '%merchant_relation%';
 
     /**
@@ -112,7 +112,7 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
     ): ProductListResponseTransfer {
         foreach ($merchantRelationshipTransfers as $merchantRelationshipTransfer) {
             $productListResponseTransfer->addMessage(
-                (new MessageTransfer())->setValue(static::ERROR_MESSAGE_UNBABLE_TO_DELETE_PRODUCT_LIST)
+                (new MessageTransfer())->setValue(static::ERROR_MESSAGE_UNABLE_TO_DELETE_PRODUCT_LIST)
                     ->setParameters([
                         static::ERROR_MESSAGE_PARAM_MERCHANT_RELATION => $merchantRelationshipTransfer->getName(),
                     ])

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundleGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
+use ArrayObject;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotEditFormTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
@@ -92,7 +92,9 @@ class SlotController extends AbstractController
         $configurableBundleTemplateSlotTransfer = $this->getFactory()
             ->getConfigurableBundleFacade()
             ->findConfigurableBundleTemplateSlot(
-                (new ConfigurableBundleTemplateSlotFilterTransfer())->setIdConfigurableBundleTemplateSlot($idConfigurableBundleTemplateSlot)
+                (new ConfigurableBundleTemplateSlotFilterTransfer())
+                    ->setIdConfigurableBundleTemplateSlot($idConfigurableBundleTemplateSlot)
+                    ->setTranslationLocales(new ArrayObject([$this->getFactory()->getLocaleFacade()->getCurrentLocale()]))
             );
 
         if (!$configurableBundleTemplateSlotTransfer) {
@@ -184,11 +186,7 @@ class SlotController extends AbstractController
             $this->handleErrors($configurableBundleResponseTransfer->getMessages());
         }
 
-        $configurableBundleTemplateTransfer = $this->getFactory()
-            ->getConfigurableBundleFacade()
-            ->findConfigurableBundleTemplate(
-                (new ConfigurableBundleTemplateFilterTransfer())->setIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
-            );
+        $configurableBundleTemplateTransfer = $this->findConfigurableBundleTemplateById($idConfigurableBundleTemplate);
 
         return [
             'tabs' => $this->getFactory()->createConfigurableBundleTemplateSlotCreateTabs()->createView(),
@@ -252,14 +250,10 @@ class SlotController extends AbstractController
             }
         }
 
-        $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())->setIdConfigurableBundleTemplate(
+        $this->setIdProductListParamToRequest($request);
+        $configurableBundleTemplateTransfer = $this->findConfigurableBundleTemplateById(
             $configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()->getFkConfigurableBundleTemplate()
         );
-
-        $this->setIdProductListParamToRequest($request);
-        $configurableBundleTemplateTransfer = $this->getFactory()
-            ->getConfigurableBundleFacade()
-            ->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
 
         $viewData = [
             'tabs' => $this->getFactory()->createConfigurableBundleTemplateSlotEditTabs()->createView(),

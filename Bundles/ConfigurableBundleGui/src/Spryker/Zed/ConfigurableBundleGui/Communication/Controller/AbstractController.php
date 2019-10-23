@@ -8,8 +8,13 @@
 namespace Spryker\Zed\ConfigurableBundleGui\Communication\Controller;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController as SprykerAbstractController;
 
+/**
+ * @method \Spryker\Zed\ConfigurableBundleGui\Communication\ConfigurableBundleGuiCommunicationFactory getFactory()
+ */
 class AbstractController extends SprykerAbstractController
 {
     /**
@@ -32,5 +37,21 @@ class AbstractController extends SprykerAbstractController
         foreach ($messages as $messageTransfer) {
             $this->addErrorMessage($messageTransfer->getValue(), $messageTransfer->getParameters());
         }
+    }
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer|null
+     */
+    protected function findConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): ?ConfigurableBundleTemplateTransfer
+    {
+        $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())
+            ->setIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
+            ->setTranslationLocales(new ArrayObject([$this->getFactory()->getLocaleFacade()->getCurrentLocale()]));
+
+        return $this->getFactory()
+            ->getConfigurableBundleFacade()
+            ->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
     }
 }

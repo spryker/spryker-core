@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
-use Generated\Shared\Transfer\ProductListTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ConfigurableBundleFacadeInterface
@@ -63,6 +62,19 @@ interface ConfigurableBundleFacadeInterface
     public function findConfigurableBundleTemplate(
         ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
     ): ?ConfigurableBundleTemplateTransfer;
+
+    /**
+     * Specification:
+     * - Finds configurable bundle templates by criteria from ConfigurableBundleTemplateFilterTransfer.
+     * - Returns array of transfers.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer[]
+     */
+    public function getConfigurableBundleTemplateCollection(ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer): array;
 
     /**
      * Specification:
@@ -117,18 +129,18 @@ interface ConfigurableBundleFacadeInterface
 
     /**
      * Specification:
-     * - Finds configurable bundle template slots which use given product list by ProductListTransfer::idProductList.
+     * - Finds configurable bundle template slots which use given product list by ConfigurableBundleTemplateSlotFilterTransfer::productList::idProductList.
      * - Returns ProductListResponseTransfer with check results.
      * - ProductListResponseTransfer::isSuccessful is equal to true when usage cases were not found, false otherwise.
      * - ProductListResponseTransfer::messages contains usage details.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function checkProductListUsageAmongSlots(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
+    public function checkProductListUsageAmongSlots(ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer): ProductListResponseTransfer;
 
     /**
      * Specification:

@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business\Expander;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTranslationTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\TranslationTransfer;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface;
 
@@ -41,73 +43,73 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */
-    public function expandConfigurableBundleTemplateWithTranslationForCurrentLocale(
-        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+    public function expandConfigurableBundleTemplateWithTranslations(
+        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer,
+        ArrayObject $localeTransfers
     ): ConfigurableBundleTemplateTransfer {
         $configurableBundleTemplateTransfer->requireName();
 
-        $translation = $this->getTranslation($configurableBundleTemplateTransfer->getName());
-        $translation = $this->glossaryFacade->translate($configurableBundleTemplateTransfer->getName());
-        $configurableBundleTemplateTransfer->addTranslation(
-            (new ConfigurableBundleTemplateTranslationTransfer())->setName($translation)
-        );
+        if (!$localeTransfers->count()) {
+            $localeTransfers->exchangeArray($this->localeFacade->getLocaleCollection());
+        }
 
-        return $configurableBundleTemplateTransfer;
-    }
+        $translationTransfers = $this->getTranslations($configurableBundleTemplateTransfer->getName(), $localeTransfers);
+        $configurableBundleTemplateTranslationTransfers = $this->getConfigurableBundleTemplateTranslationTransfers($translationTransfers, $localeTransfers);
 
-    /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-     *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
-     */
-    public function expandConfigurableBundleTemplateWithDefaultLocaleTranslation(
-        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): ConfigurableBundleTemplateTransfer {
-        $configurableBundleTemplateTransfer->requireName();
-
-        $translation = $this->glossaryFacade->translate(
-            $configurableBundleTemplateTransfer->getName(),
-            [],
-            $this->getDefaultLocale()
-        );
-
-        $configurableBundleTemplateTransfer->addTranslation(
-            (new ConfigurableBundleTemplateTranslationTransfer())->setName($translation)
-        );
-
-        return $configurableBundleTemplateTransfer;
+        return $configurableBundleTemplateTransfer->setTranslations($configurableBundleTemplateTranslationTransfers);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
      */
-    public function expandConfigurableBundleTemplateSlotWithTranslationForCurrentLocale(
-        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+    public function expandConfigurableBundleTemplateSlotWithTranslations(
+        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer,
+        ArrayObject $localeTransfers
     ): ConfigurableBundleTemplateSlotTransfer {
         $configurableBundleTemplateSlotTransfer->requireName();
 
-        $translation = $this->getTranslation($configurableBundleTemplateSlotTransfer->getName());
-        $configurableBundleTemplateSlotTransfer->addTranslation(
-            (new ConfigurableBundleTemplateSlotTranslationTransfer())->setName($translation)
-        );
+        if (!$localeTransfers->count()) {
+            $localeTransfers->exchangeArray($this->localeFacade->getLocaleCollection());
+        }
 
-        return $configurableBundleTemplateSlotTransfer;
+        $translationTransfers = $this->getTranslations($configurableBundleTemplateSlotTransfer->getName(), $localeTransfers);
+        $configurableBundleTemplateSlotTranslationTransfers = $this->getConfigurableBundleTemplateSlotTranslationTransfers($translationTransfers, $localeTransfers);
+
+        return $configurableBundleTemplateSlotTransfer->setTranslations($configurableBundleTemplateSlotTranslationTransfers);
     }
 
     /**
      * @param string $translationKey
+     * @param \ArrayObject|\Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
      */
-    protected function getTranslation(string $translationKey): string
+    protected function getTranslations(string $translationKey, ArrayObject $localeTransfers): array
     {
-        if ($this->glossaryFacade->hasTranslation($translationKey)) {
-            return $this->glossaryFacade->translate($translationKey);
+        if ($localeTransfers->count() === 1) {
+            return $this->getSingleLocaleTranslation($translationKey, reset($localeTransfers));
+        }
+
+        return $this->glossaryFacade->getTranslationsByGlossaryKeyAndLocales($translationKey, $localeTransfers->getArrayCopy());
+    }
+
+    /**
+     * @param string $translationKey
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     */
+    protected function getSingleLocaleTranslation(string $translationKey, LocaleTransfer $localeTransfer): array
+    {
+        if ($this->glossaryFacade->hasTranslation($translationKey, $localeTransfer)) {
+            return $this->glossaryFacade->getTranslationsByGlossaryKeyAndLocales($translationKey, [$localeTransfer]);
         }
 
         return $this->getFallbackTranslation($translationKey);
@@ -116,9 +118,9 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
     /**
      * @param string $translationKey
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
      */
-    protected function getFallbackTranslation(string $translationKey): string
+    protected function getFallbackTranslation(string $translationKey): array
     {
         $translationTransfers = $this->glossaryFacade->getTranslationsByGlossaryKeyAndLocales(
             $translationKey,
@@ -126,19 +128,73 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
         );
 
         if ($translationTransfers) {
-            return $translationTransfers[0]->getValue();
+            return [reset($translationTransfers)];
         }
 
-        return $translationKey;
+        return [(new TranslationTransfer())->setValue($translationKey)];
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
+     * @param \Generated\Shared\Transfer\TranslationTransfer[] $translationTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer[]
      */
-    protected function getDefaultLocale(): LocaleTransfer
+    protected function getConfigurableBundleTemplateTranslationTransfers(array $translationTransfers, ArrayObject $localeTransfers): ArrayObject
     {
-        $localeTransfers = $this->localeFacade->getLocaleCollection();
+        $configurableBundleTemplateTranslationTransfers = new ArrayObject();
+        $translationTransfers = $this->getTranslationTransfersIndexedByIdLocale($translationTransfers);
 
-        return reset($localeTransfers);
+        foreach ($localeTransfers as $localeTransfer) {
+            $configurableBundleTemplateTranslationTransfer = (new ConfigurableBundleTemplateTranslationTransfer())->setLocale($localeTransfer);
+
+            if (isset($translationTransfers[$localeTransfer->getIdLocale()])) {
+                $configurableBundleTemplateTranslationTransfer->setName($translationTransfers[$localeTransfer->getIdLocale()]->getValue());
+            }
+
+            $configurableBundleTemplateTranslationTransfers->append($configurableBundleTemplateTranslationTransfer);
+        }
+
+        return $configurableBundleTemplateTranslationTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TranslationTransfer[] $translationTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTranslationTransfer[]
+     */
+    protected function getConfigurableBundleTemplateSlotTranslationTransfers(array $translationTransfers, ArrayObject $localeTransfers): ArrayObject
+    {
+        $configurableBundleTemplateSlotTranslationTransfers = new ArrayObject();
+        $translationTransfers = $this->getTranslationTransfersIndexedByIdLocale($translationTransfers);
+
+        foreach ($localeTransfers as $localeTransfer) {
+            $configurableBundleTemplateSlotTranslationTransfer = (new ConfigurableBundleTemplateSlotTranslationTransfer())->setLocale($localeTransfer);
+
+            if (isset($translationTransfers[$localeTransfer->getIdLocale()])) {
+                $configurableBundleTemplateSlotTranslationTransfer->setName($translationTransfers[$localeTransfer->getIdLocale()]->getValue());
+            }
+
+            $configurableBundleTemplateSlotTranslationTransfers->append($configurableBundleTemplateSlotTranslationTransfer);
+        }
+
+        return $configurableBundleTemplateSlotTranslationTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TranslationTransfer[] $translationTransfers
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     */
+    protected function getTranslationTransfersIndexedByIdLocale(array $translationTransfers): array
+    {
+        $indexedTranslationTransfers = [];
+
+        foreach ($translationTransfers as $translationTransfer) {
+            $indexedTranslationTransfers[$translationTransfer->getFkLocale()] = $translationTransfer;
+        }
+
+        return $indexedTranslationTransfers;
     }
 }
