@@ -59,7 +59,7 @@ class MerchantProfileGuiCommunicationFactory extends AbstractCommunicationFactor
     /**
      * @return \Spryker\Zed\MerchantProfileGui\Communication\LabelCreator\MerchantProfileActiveLabelCreatorInterface
      */
-    public function createMerchantProfileIsActiveLabelCreator(): MerchantProfileActiveLabelCreatorInterface
+    public function createMerchantProfileActiveLabelCreator(): MerchantProfileActiveLabelCreatorInterface
     {
         return new MerchantProfileActiveLabelCreator(
             $this->getMerchantProfileFacade(),

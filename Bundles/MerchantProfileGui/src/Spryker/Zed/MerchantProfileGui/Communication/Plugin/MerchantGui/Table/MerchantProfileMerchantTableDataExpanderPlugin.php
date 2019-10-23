@@ -29,10 +29,10 @@ class MerchantProfileMerchantTableDataExpanderPlugin extends AbstractPlugin impl
      */
     public function expand(array $item): array
     {
-        $label = $this->getFactory()
-            ->createMerchantProfileIsActiveLabelCreator()
+        $activeLabel = $this->getFactory()
+            ->createMerchantProfileActiveLabelCreator()
             ->getActiveLabel($item[SpyMerchantTableMap::COL_ID_MERCHANT]);
 
-        return [$this->getConfig()->getIsActiveColumnName() => $label];
+        return [$this->getConfig()->getIsActiveColumnName() => $activeLabel];
     }
 }
