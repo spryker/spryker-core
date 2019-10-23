@@ -41,10 +41,9 @@ class ProductOfferReferenceToIdProductOfferStep implements DataImportStepInterfa
             return;
         }
 
-        /** @var \Generated\Shared\Transfer\ProductOfferTransfer $productOffer */
-        $productOffer = $this->productOfferFacade->find($productOfferReference)->getProductOffers()->offsetGet(0);
+        $productOffer = current($this->productOfferFacade->find($productOfferReference)->getProductOffers());
 
-        if (!$productOffer) {
+        if ($productOffer === false) {
             return;
         }
 
