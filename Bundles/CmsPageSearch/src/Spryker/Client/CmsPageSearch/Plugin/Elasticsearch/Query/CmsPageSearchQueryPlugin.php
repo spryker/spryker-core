@@ -72,8 +72,8 @@ class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
      */
     public function getSearchContext(): SearchContextTransfer
     {
-        if (!$this->searchContextTransfer) {
-            $this->setupSearchContext();
+        if (!$this->hasSearchContext()) {
+            $this->setupDefaultSearchContext();
         }
 
         return $this->searchContextTransfer;
@@ -206,11 +206,19 @@ class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
     /**
      * @return void
      */
-    protected function setupSearchContext(): void
+    protected function setupDefaultSearchContext(): void
     {
         $searchContextTransfer = new SearchContextTransfer();
         $searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
 
         $this->searchContextTransfer = $searchContextTransfer;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function hasSearchContext(): bool
+    {
+        return (bool)$this->searchContextTransfer;
     }
 }

@@ -74,8 +74,8 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
      */
     public function getSearchContext(): SearchContextTransfer
     {
-        if (!$this->searchContextTransfer) {
-            $this->setupSearchContext();
+        if (!$this->hasSearchContext()) {
+            $this->setupDefaultSearchContext();
         }
 
         return $this->searchContextTransfer;
@@ -99,7 +99,7 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
     /**
      * @return void
      */
-    protected function setupSearchContext(): void
+    protected function setupDefaultSearchContext(): void
     {
         $searchContextTransfer = new SearchContextTransfer();
         $searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
@@ -162,5 +162,13 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
         $productReviewTypeFilter->setType(ProductReviewConfig::ELASTICSEARCH_INDEX_TYPE_NAME);
 
         return $productReviewTypeFilter;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function hasSearchContext(): bool
+    {
+        return (bool)$this->searchContextTransfer;
     }
 }

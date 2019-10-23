@@ -64,8 +64,8 @@ class NewProductsQueryPlugin extends AbstractPlugin implements QueryInterface, S
      */
     public function getSearchContext(): SearchContextTransfer
     {
-        if (!$this->searchContextTransfer) {
-            $this->setupSearchContext();
+        if (!$this->hasSearchContext()) {
+            $this->setupDefaultSearchContext();
         }
 
         return $this->searchContextTransfer;
@@ -89,7 +89,7 @@ class NewProductsQueryPlugin extends AbstractPlugin implements QueryInterface, S
     /**
      * @return void
      */
-    protected function setupSearchContext(): void
+    protected function setupDefaultSearchContext(): void
     {
         $searchContextTransfer = new SearchContextTransfer();
         $searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
@@ -193,5 +193,13 @@ class NewProductsQueryPlugin extends AbstractPlugin implements QueryInterface, S
             ->setSource([PageIndexMap::SEARCH_RESULT_DATA]);
 
         return $query;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function hasSearchContext(): bool
+    {
+        return (bool)$this->searchContextTransfer;
     }
 }

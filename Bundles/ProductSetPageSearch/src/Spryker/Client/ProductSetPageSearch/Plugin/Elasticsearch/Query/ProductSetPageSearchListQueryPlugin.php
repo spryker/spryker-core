@@ -77,8 +77,8 @@ class ProductSetPageSearchListQueryPlugin extends AbstractPlugin implements Quer
      */
     public function getSearchContext(): SearchContextTransfer
     {
-        if (!$this->searchContextTransfer) {
-            $this->setupSearchContext();
+        if (!$this->hasSearchContext()) {
+            $this->setupDefaultSearchContext();
         }
 
         return $this->searchContextTransfer;
@@ -206,11 +206,19 @@ class ProductSetPageSearchListQueryPlugin extends AbstractPlugin implements Quer
     /**
      * @return void
      */
-    protected function setupSearchContext(): void
+    protected function setupDefaultSearchContext(): void
     {
         $searchContextTransfer = new SearchContextTransfer();
         $searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
 
         $this->searchContextTransfer = $searchContextTransfer;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function hasSearchContext(): bool
+    {
+        return (bool)$this->searchContextTransfer;
     }
 }
