@@ -9,6 +9,7 @@ namespace Spryker\Zed\Shipment\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentCarrier;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class ShipmentCarrierMapper
 {
@@ -23,5 +24,22 @@ class ShipmentCarrierMapper
         ShipmentCarrierTransfer $shipmentCarrierTransfer
     ): ShipmentCarrierTransfer {
         return $shipmentCarrierTransfer->fromArray($salesShipmentEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Shipment\Persistence\SpyShipmentCarrier[] $shipmentCarrierEntityCollection
+     * @param \Generated\Shared\Transfer\ShipmentCarrierTransfer[] $shipmentCarrierTransferCollection
+     *
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     */
+    public function mapShipmentCarrierEntityCollectionToShipmentCarrierTransferCollection(
+        ObjectCollection $shipmentCarrierEntityCollection,
+        array $shipmentCarrierTransferCollection
+    ): array {
+        foreach ($shipmentCarrierEntityCollection as $shipmentCarrierEntity) {
+            $shipmentCarrierTransferCollection[] = $this->mapShipmentCarrierEntityToShipmentCarrierTransfer($shipmentCarrierEntity, new ShipmentCarrierTransfer());
+        }
+
+        return $shipmentCarrierTransferCollection;
     }
 }

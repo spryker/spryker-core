@@ -9,7 +9,6 @@ namespace Spryker\Zed\ShipmentGui\Communication;
 
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
@@ -169,7 +168,6 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ShipmentMethodFormDataProvider(
             $this->getShipmentFacade(),
-            $this->getShipmentCarrierQuery(),
             $this->getTaxFacade()
         );
     }
@@ -211,14 +209,6 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getShipmentMethodQuery(): SpyShipmentMethodQuery
     {
         return $this->getProvidedDependency(ShipmentGuiDependencyProvider::PROPEL_QUERY_SHIPMENT_METHOD);
-    }
-
-    /**
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
-     */
-    public function getShipmentCarrierQuery(): SpyShipmentCarrierQuery
-    {
-        return $this->getProvidedDependency(ShipmentGuiDependencyProvider::PROPEL_QUERY_SHIPMENT_CARRIER);
     }
 
     /**

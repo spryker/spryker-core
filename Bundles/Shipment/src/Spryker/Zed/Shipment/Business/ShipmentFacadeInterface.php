@@ -432,7 +432,17 @@ interface ShipmentFacadeInterface
      *
      * @api
      *
-     * @return array
+     * @return array[]
      */
     public function getShipmentMethodPlugins(): array;
+
+    /**
+     * Specification:
+     * - Returns active shipment carriers.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     */
+    public function getActiveShipmentCarriers(): array;
 }

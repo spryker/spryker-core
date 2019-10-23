@@ -113,4 +113,9 @@ interface ShipmentGuiToShipmentFacadeInterface
      * @return array
      */
     public function getShipmentMethodPlugins(): array;
+
+    /**
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     */
+    public function getActiveShipmentCarriers(): array;
 }

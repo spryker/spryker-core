@@ -673,4 +673,19 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
             ->createStoreRelationMapper()
             ->mapShipmentMethodStoreEntitiesToStoreRelationTransfer($shipmentMethodStoreEntities, $storeRelationTransfer);
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     */
+    public function getActiveShipmentCarriers(): array
+    {
+        $shipmentCarrierEntityCollection = $this->getFactory()
+            ->createShipmentCarrierQuery()
+            ->filterByIsActive(true)
+            ->find();
+
+        return $this->getFactory()
+            ->createShipmentCarrierMapper()
+            ->mapShipmentCarrierEntityCollectionToShipmentCarrierTransferCollection($shipmentCarrierEntityCollection, []);
+    }
 }

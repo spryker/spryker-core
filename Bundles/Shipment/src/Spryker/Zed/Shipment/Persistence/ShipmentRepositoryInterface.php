@@ -165,4 +165,9 @@ interface ShipmentRepositoryInterface
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
     public function getStoreRelationByIdShipmentMethod(int $idShipmentMethod): StoreRelationTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     */
+    public function getActiveShipmentCarriers(): array;
 }

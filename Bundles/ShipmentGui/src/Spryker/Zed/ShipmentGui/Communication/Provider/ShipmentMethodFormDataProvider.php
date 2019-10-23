@@ -9,7 +9,6 @@ namespace Spryker\Zed\ShipmentGui\Communication\Provider;
 
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
-use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToTaxFacadeInterface;
 
@@ -26,27 +25,19 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
     protected const KEY_DELIVERY_TIME = 'DELIVERY_TIME_PLUGINS';
 
     /**
-     * @var \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
-     */
-    protected $carrierQuery;
-
-    /**
      * @var \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface
      */
     protected $shipmentFacade;
 
     /**
      * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface $shipmentFacade
-     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery $carrierQuery
      * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToTaxFacadeInterface $taxFacade
      */
     public function __construct(
         ShipmentGuiToShipmentFacadeInterface $shipmentFacade,
-        SpyShipmentCarrierQuery $carrierQuery,
         ShipmentGuiToTaxFacadeInterface $taxFacade
     ) {
         parent::__construct($taxFacade);
-        $this->carrierQuery = $carrierQuery;
         $this->shipmentFacade = $shipmentFacade;
     }
 
@@ -85,14 +76,11 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
      */
     protected function getCarrierOptions(): array
     {
-        $carriers = $this->carrierQuery
-            ->filterByIsActive(true)
-            ->find();
-
+        $shipmentCarriers = $this->shipmentFacade->getActiveShipmentCarriers();
         $result = [];
 
-        foreach ($carriers as $carrier) {
-            $result[$carrier->getIdShipmentCarrier()] = $carrier->getName();
+        foreach ($shipmentCarriers as $shipmentCarrierTransfer) {
+            $result[$shipmentCarrierTransfer->getIdShipmentCarrier()] = $shipmentCarrierTransfer->getName();
         }
 
         return $result;
