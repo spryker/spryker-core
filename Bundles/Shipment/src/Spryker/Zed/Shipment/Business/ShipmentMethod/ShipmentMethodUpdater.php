@@ -66,7 +66,7 @@ class ShipmentMethodUpdater implements ShipmentMethodUpdaterInterface
     public function updateShipmentMethod(ShipmentMethodTransfer $shipmentMethodTransfer): bool
     {
         return $this->getTransactionHandler()->handleTransaction(function () use ($shipmentMethodTransfer): bool {
-            return $this->executeUpdateShipmentMethod($shipmentMethodTransfer);
+            return $this->executeUpdateShipmentMethodTransaction($shipmentMethodTransfer);
         });
     }
 
@@ -75,7 +75,7 @@ class ShipmentMethodUpdater implements ShipmentMethodUpdaterInterface
      *
      * @return bool
      */
-    protected function executeUpdateShipmentMethod(ShipmentMethodTransfer $shipmentMethodTransfer): bool
+    protected function executeUpdateShipmentMethodTransaction(ShipmentMethodTransfer $shipmentMethodTransfer): bool
     {
         $idShipmentMethod = $shipmentMethodTransfer->getIdShipmentMethod();
         $hasShipmentMethod = $this->shipmentRepository->hasShipmentMethodByIdShipmentMethod($idShipmentMethod);
