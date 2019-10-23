@@ -50,7 +50,9 @@ interface ConfigurableBundleFacadeInterface
     /**
      * Specification:
      * - Finds configurable bundle template by criteria from ConfigurableBundleTemplateFilterTransfer.
-     * - Expands found configurable bundle template with translations for current locale.
+     * - Expands found configurable bundle template with translations.
+     * - Provides translations for locales specified in ConfigurableBundleTemplateFilterTransfer::translationLocales, or for all available locales otherwise.
+     * - If single locale translation was requested but doesn't exist, fallback translation will be provided, or translation key if nothing found.
      * - Returns corresponding transfer object if found, null otherwise.
      *
      * @api
@@ -66,6 +68,8 @@ interface ConfigurableBundleFacadeInterface
     /**
      * Specification:
      * - Finds configurable bundle templates by criteria from ConfigurableBundleTemplateFilterTransfer.
+     * - Expands found configurable bundle templates with translations.
+     * - Provides translations for locales specified in ConfigurableBundleTemplateFilterTransfer::translationLocales, or for all available locales otherwise.
      * - Returns array of transfers.
      *
      * @api
@@ -145,8 +149,8 @@ interface ConfigurableBundleFacadeInterface
     /**
      * Specification:
      * - Finds configurable bundle template slots by criteria from ConfigurableBundleTemplateSlotFilterTransfer.
-     * - Expands found configurable bundle template slots with translations for current locale.
-     * - If translation for current locale doesn't exist, first available one will be provided, or translation key otherwise.
+     * - Expands found configurable bundle template slots with translations.
+     * - Provides translations for locales specified in ConfigurableBundleTemplateSlotFilterTransfer::translationLocales, or for all available locales otherwise.
      * - Returns array of transfers.
      *
      * @api
@@ -203,6 +207,9 @@ interface ConfigurableBundleFacadeInterface
     /**
      * Specification:
      * - Finds configurable bundle template slot by criteria from ConfigurableBundleTemplateSlotFilterTransfer.
+     * - Expands found configurable bundle template slots with translations.
+     * - Provides translations for locales specified in ConfigurableBundleTemplateSlotFilterTransfer::translationLocales, or for all available locales otherwise.
+     * - If single locale translation was requested but doesn't exist, fallback translation will be provided, or translation key if nothing found.
      * - Returns corresponding transfer object for the first matching record if found, null otherwise.
      *
      * @api
