@@ -123,26 +123,25 @@ class CategoryReader implements CategoryReaderInterface
     }
 
     /**
-     * @param array $nodeIds
+     * @param int[] $nodeIds
      * @param string $locale
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]|null
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function findCategoryNodeByIds(array $nodeIds, string $locale): ?array
+    public function findCategoryNodeByIds(array $nodeIds, string $locale): array
     {
         $categoryNodeStorageTransfers = $this->categoryStorageClient->getCategoryNodeByIds($nodeIds, $locale);
         if (count($categoryNodeStorageTransfers) === 0) {
-            return null;
+            return [];
         }
 
-        $response = [];
+        $restResources = [];
 
-        /** @var \Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $categoryNodeStorageTransfers */
         foreach ($categoryNodeStorageTransfers as $categoryNodeStorageTransfer) {
-            $response[$categoryNodeStorageTransfer->getIdCategory()] = $this->buildProductCategoryResource($categoryNodeStorageTransfer);
+            $restResources[$categoryNodeStorageTransfer->getIdCategory()] = $this->buildProductCategoryResource($categoryNodeStorageTransfer);
         }
 
-        return $response;
+        return $restResources;
     }
 
     /**

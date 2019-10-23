@@ -45,31 +45,34 @@ class CategoriesResourceRelationshipExpander implements CategoriesResourceRelati
     {
         $locale = $restRequest->getMetadata()->getLocale();
 
-        $skus = [];
+        $productAbstractSkus = [];
         foreach ($resources as $resource) {
-            $skus[] = $resource->getId();
+            $productAbstractSkus[] = $resource->getId();
         }
 
         $productCategoryNodeIds = $this->abstractProductsCategoriesReader
-            ->findProductCategoryNodeIdsBySkus($skus, $locale);
+            ->findProductCategoryNodeIdsBySkus($productAbstractSkus, $locale);
 
         if (count($productCategoryNodeIds) === 0) {
             return;
         }
 
-        $categoryNodeIds = [];
-        foreach ($productCategoryNodeIds as $productCategoryNodeId) {
-            foreach ($productCategoryNodeId as $categoryId) {
-                $categoryNodeIds[$categoryId] = $categoryId;
-            }
-        }
+        $categoryNodeIds = array_unique(array_merge(...$productCategoryNodeIds));
 
-        $categoryNodes = $this->categoriesRestApiResource
+        $categoryNodesRestResources = $this->categoriesRestApiResource
             ->findCategoryNodeByIds($categoryNodeIds, $locale);
 
         foreach ($resources as $resource) {
+            if (!array_key_exists($resource->getId(), $productCategoryNodeIds)) {
+                continue;
+            }
+
             foreach ($productCategoryNodeIds[$resource->getId()] as $categoryNodeId) {
-                $resource->addRelationship($categoryNodes[$categoryNodeId]);
+                if (!array_key_exists($categoryNodeId, $categoryNodesRestResources)) {
+                    continue;
+                }
+
+                $resource->addRelationship($categoryNodesRestResources[$categoryNodeId]);
             }
         }
     }

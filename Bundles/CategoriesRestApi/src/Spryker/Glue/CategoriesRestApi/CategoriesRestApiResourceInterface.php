@@ -13,7 +13,7 @@ interface CategoriesRestApiResourceInterface
 {
     /**
      * Specification:
-     *  - Retrieves category node resource by node id.
+     * - Retrieves category node resource by node id.
      *
      * @api
      *
@@ -26,14 +26,14 @@ interface CategoriesRestApiResourceInterface
 
     /**
      * Specification:
-     *  - Retrieves category node resource by array of node ids.
+     * - Retrieves category node resource by array of node ids.
      *
      * @api
      *
-     * @param array $nodeIds
+     * @param int[] $nodeIds
      * @param string $locale
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]|null
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function findCategoryNodeByIds(array $nodeIds, string $locale): ?array;
+    public function findCategoryNodeByIds(array $nodeIds, string $locale): array;
 }

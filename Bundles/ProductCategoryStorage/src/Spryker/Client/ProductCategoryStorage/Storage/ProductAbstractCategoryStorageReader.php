@@ -57,24 +57,23 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      * @param string $locale
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[]|null
+     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[]
      */
-    public function findBulkProductAbstractCategory(array $productAbstractIds, $locale): ?array
+    public function findBulkProductAbstractCategory(array $productAbstractIds, string $locale): array
     {
         $productAbstractCategoryStorageData = $this->findBulkStorageData($productAbstractIds, $locale);
 
         if (!$productAbstractCategoryStorageData) {
-            return null;
+            return [];
         }
 
         $response = [];
-        foreach ($productAbstractCategoryStorageData as $key => $item) {
-            $spyProductCategoryAbstractTransfer = new ProductAbstractCategoryStorageTransfer();
-            $spyProductCategoryAbstractTransfer->fromArray($item, true);
-            $response[$key] = $spyProductCategoryAbstractTransfer;
+        foreach ($productAbstractCategoryStorageData as $item) {
+            $response[] = (new ProductAbstractCategoryStorageTransfer())
+                ->fromArray($item, true);
         }
 
         return $response;
@@ -116,27 +115,23 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      * @param string $locale
      *
-     * @return array|null
+     * @return array
      */
-    protected function findBulkStorageData(array $productAbstractIds, string $locale): ?array
+    protected function findBulkStorageData(array $productAbstractIds, string $locale): array
     {
-        $keys = [];
-        $mapKeySku = [];
-        foreach ($productAbstractIds as $sku => $productAbstractId) {
-            $generatedKey = $this->generateKey($productAbstractId, $locale);
-
-            $keys[$sku] = $generatedKey;
-            $mapKeySku['kv:' . $generatedKey] = $sku;
+        $storageKeys = [];
+        foreach ($productAbstractIds as $idProductAbstract) {
+            $storageKeys[] = $this->generateKey($idProductAbstract, $locale);
         }
 
-        $productAbstractCategoryStorageData = $this->storageClient->getMulti($keys);
+        $productAbstractCategoryStorageData = $this->storageClient->getMulti($storageKeys);
 
         $response = [];
-        foreach ($productAbstractCategoryStorageData as $key => $item) {
-            $response[$mapKeySku[$key]] = json_decode($item, true);
+        foreach ($productAbstractCategoryStorageData as $item) {
+            $response[] = json_decode($item, true);
         }
 
         return $response;

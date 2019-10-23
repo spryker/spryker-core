@@ -45,20 +45,12 @@ interface ProductAbstractStorageReaderInterface
 
     /**
      * @param string $mappingType
-     * @param array $identifiers
+     * @param string[] $identifiers
      * @param string $localeName
      *
      * @return array
      */
     public function findBulkProductAbstractStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): array;
-
-    /**
-     * @param array $productAbstractIds
-     * @param string $localeName
-     *
-     * @return array|null
-     */
-    public function findBulkProductAbstractStorageData(array $productAbstractIds, string $localeName): ?array;
 
     /**
      * @param int[] $productAbstractIds

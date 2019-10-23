@@ -18,10 +18,10 @@ interface ProductAbstractCategoryStorageReaderInterface
     public function findProductAbstractCategory($idProductAbstract, $locale);
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      * @param string $locale
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[]|null
+     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[]
      */
-    public function findBulkProductAbstractCategory(array $productAbstractIds, $locale): ?array;
+    public function findBulkProductAbstractCategory(array $productAbstractIds, string $locale): array;
 }

@@ -336,7 +336,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      * @api
      *
      * @param string $mappingType
-     * @param array $identifiers
+     * @param string[] $identifiers
      * @param string $localeName
      *
      * @return array

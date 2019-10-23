@@ -56,7 +56,7 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
     }
 
     /**
-     * @param array $categoryNodeIds
+     * @param int[] $categoryNodeIds
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
@@ -95,21 +95,19 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
     }
 
     /**
-     * @param array $categoryNodeIds
+     * @param int[] $categoryNodeIds
      * @param string $localeName
      *
-     * @return array|null
+     * @return string[]
      */
-    protected function getStorageDataByNodeIds(array $categoryNodeIds, string $localeName)
+    protected function getStorageDataByNodeIds(array $categoryNodeIds, string $localeName): array
     {
         $categoryNodeKeys = [];
         foreach ($categoryNodeIds as $categoryNodeId) {
             $categoryNodeKeys[] = $this->generateKey($categoryNodeId, $localeName);
         }
 
-        $categoryNodes = $this->storageClient->getMulti($categoryNodeKeys);
-
-        return $categoryNodes;
+        return $this->storageClient->getMulti($categoryNodeKeys);
     }
 
     /**

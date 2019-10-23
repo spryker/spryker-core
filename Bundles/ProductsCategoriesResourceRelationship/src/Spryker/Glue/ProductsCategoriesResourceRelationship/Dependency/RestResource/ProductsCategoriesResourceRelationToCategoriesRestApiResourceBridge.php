@@ -37,14 +37,13 @@ class ProductsCategoriesResourceRelationToCategoriesRestApiResourceBridge implem
     }
 
     /**
-     * @param array $nodeIds
+     * @param int[] $nodeIds
      * @param string $locale
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]|null
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function findCategoryNodeByIds(array $nodeIds, string $locale): ?array
+    public function findCategoryNodeByIds(array $nodeIds, string $locale): array
     {
-        return $this->categoriesRestApiResource
-            ->findCategoryNodeByIds($nodeIds, $locale);
+        return $this->categoriesRestApiResource->findCategoryNodeByIds($nodeIds, $locale);
     }
 }

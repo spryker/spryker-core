@@ -60,24 +60,24 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
     }
 
     /**
-     * @param array $skus
+     * @param string[] $productAbstractSkus
      * @param string $locale
      *
      * @return array
      */
-    public function findProductCategoryNodeIdsBySkus(array $skus, string $locale): array
+    public function findProductCategoryNodeIdsBySkus(array $productAbstractSkus, string $locale): array
     {
-        $abstractProductData = $this->productStorageClient
+        $productAbstractData = $this->productStorageClient
             ->findBulkProductAbstractStorageDataByMapping(
                 static::PRODUCT_ABSTRACT_MAPPING_TYPE,
-                $skus,
+                $productAbstractSkus,
                 $locale
             );
-        if (count($abstractProductData) === 0) {
+        if (count($productAbstractData) === 0) {
             return [];
         }
 
-        return $this->getBulkProductCategoryNodeIds($abstractProductData, $locale);
+        return $this->getBulkProductCategoryNodeIds($productAbstractData, $locale);
     }
 
     /**
@@ -110,20 +110,19 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
      */
     protected function getBulkProductCategoryNodeIds(array $abstractProductData, string $locale): array
     {
-        $productCategoryNodeIds = [];
-        $keys = [];
+        $productAbstractIds = [];
         foreach ($abstractProductData as $item) {
-            $keys[$item[static::KEY_SKU]] = (int)$item[static::KEY_ID_PRODUCT_ABSTRACT];
-            $productCategoryNodeIds[$item[static::KEY_SKU]] = [];
+            $productAbstractIds[] = (int)$item[static::KEY_ID_PRODUCT_ABSTRACT];
         }
 
-        $productCategories = $this->productCategoryStorageClient
-            ->findBulkProductAbstractCategory($keys, $locale);
+        $productAbstractCategoryStorageTransfers = $this->productCategoryStorageClient
+            ->findBulkProductAbstractCategory($productAbstractIds, $locale);
 
-        /** @var \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer $productCategory */
-        foreach ($productCategories as $sku => $productCategory) {
-            foreach ($productCategory->getCategories() as $category) {
-                $productCategoryNodeIds[$sku][] = $category->getCategoryNodeId();
+        $productCategoryNodeIds = [];
+        foreach ($productAbstractCategoryStorageTransfers as $productAbstractCategoryStorageTransfer) {
+            foreach ($productAbstractCategoryStorageTransfer->getCategories() as $productCategoryStorageTransfer) {
+                $productCategoryNodeIds[$productAbstractCategoryStorageTransfer->getIdProductAbstract()][]
+                    = $productCategoryStorageTransfer->getCategoryNodeId();
             }
         }
 

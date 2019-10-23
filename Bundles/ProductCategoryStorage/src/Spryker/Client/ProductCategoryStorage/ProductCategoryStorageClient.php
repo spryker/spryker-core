@@ -32,14 +32,16 @@ class ProductCategoryStorageClient extends AbstractClient implements ProductCate
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      * @param string $locale
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[]|null
+     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[]
      */
-    public function findBulkProductAbstractCategory(array $productAbstractIds, $locale): ?array
+    public function findBulkProductAbstractCategory(array $productAbstractIds, string $locale): array
     {
         return $this->getFactory()
             ->createProductCategoryStorageReader()

@@ -282,14 +282,14 @@ interface ProductStorageClientInterface
 
     /**
      * Specification:
-     * - Retrieves a current Store specific ProductAbstract resource from Storage using specified mapping.
-     * - Responds with null if product abstract is restricted.
+     * - Retrieves a current Store specific ProductAbstract resources from Storage using specified mapping.
+     * - Skips restricted product abstract records.
      * - Filter the restricted product variants (product concrete) in `attribute_map`.
      *
      * @api
      *
      * @param string $mappingType
-     * @param array $identifiers
+     * @param string[] $identifiers
      * @param string $localeName
      *
      * @return array

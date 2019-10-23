@@ -18,7 +18,7 @@ interface CategoryNodeStorageInterface
     public function getCategoryNodeById($idCategoryNode, $localeName);
 
     /**
-     * @param array $categoryNodeIds
+     * @param int[] $categoryNodeIds
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]

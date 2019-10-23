@@ -40,7 +40,7 @@ interface CategoryStorageClientInterface
      *
      * @api
      *
-     * @param int[][] $categoryNodeIds
+     * @param int[] $categoryNodeIds
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
