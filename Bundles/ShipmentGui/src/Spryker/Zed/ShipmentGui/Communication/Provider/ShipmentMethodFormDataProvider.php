@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShipmentGui\Communication\Provider;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
-use Spryker\Zed\ShipmentGui\Communication\ShipmentGuiCommunicationFactory;
+use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToTaxFacadeInterface;
 
 class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
@@ -21,10 +21,9 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
     public const OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST = 'delivery_time_plugin_choice_list';
     public const OPTION_MONEY_FACADE = 'money facade';
 
-    /**
-     * @var array
-     */
-    protected $plugins;
+    protected const KEY_AVAILABILITY = 'AVAILABILITY_PLUGINS';
+    protected const KEY_PRICE = 'PRICE_PLUGINS';
+    protected const KEY_DELIVERY_TIME = 'DELIVERY_TIME_PLUGINS';
 
     /**
      * @var \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
@@ -32,18 +31,23 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
     protected $carrierQuery;
 
     /**
-     * @param \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodAvailabilityPluginInterface[][] $plugins
+     * @var \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface
+     */
+    protected $shipmentFacade;
+
+    /**
+     * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface $shipmentFacade
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery $carrierQuery
      * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToTaxFacadeInterface $taxFacade
      */
     public function __construct(
-        array $plugins,
+        ShipmentGuiToShipmentFacadeInterface $shipmentFacade,
         SpyShipmentCarrierQuery $carrierQuery,
         ShipmentGuiToTaxFacadeInterface $taxFacade
     ) {
         parent::__construct($taxFacade);
-        $this->plugins = $plugins;
         $this->carrierQuery = $carrierQuery;
+        $this->shipmentFacade = $shipmentFacade;
     }
 
     /**
@@ -63,9 +67,9 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
     {
         $options = [
             static::OPTION_CARRIER_CHOICES => $this->getCarrierOptions(),
-            static::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST => $this->getPluginOptions(ShipmentGuiCommunicationFactory::KEY_AVAILABILITY),
-            static::OPTION_PRICE_PLUGIN_CHOICE_LIST => $this->getPluginOptions(ShipmentGuiCommunicationFactory::KEY_PRICE),
-            static::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST => $this->getPluginOptions(ShipmentGuiCommunicationFactory::KEY_DELIVERY_TIME),
+            static::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST => $this->getPluginOptions(static::KEY_AVAILABILITY),
+            static::OPTION_PRICE_PLUGIN_CHOICE_LIST => $this->getPluginOptions(static::KEY_PRICE),
+            static::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST => $this->getPluginOptions(static::KEY_DELIVERY_TIME),
         ];
 
         $options = array_merge(parent::getOptions(), $options);
@@ -77,9 +81,9 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
     }
 
     /**
-     * @return array
+     * @return string[]
      */
-    protected function getCarrierOptions()
+    protected function getCarrierOptions(): array
     {
         $carriers = $this->carrierQuery
             ->filterByIsActive(true)
@@ -99,9 +103,9 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
      *
      * @return string[]
      */
-    private function getPluginOptions($pluginsType)
+    private function getPluginOptions($pluginsType): array
     {
-        $plugins = array_keys($this->plugins[$pluginsType]);
+        $plugins = array_keys($this->shipmentFacade->getShipmentMethodPlugins()[$pluginsType]);
 
         return array_combine($plugins, $plugins);
     }

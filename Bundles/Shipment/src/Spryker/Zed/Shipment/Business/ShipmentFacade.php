@@ -490,4 +490,16 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
         return $this->getRepository()
             ->findShipmentMethodByKey($shipmentMethodKey);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getShipmentMethodPlugins(): array
+    {
+        return $this->getFactory()->getShipmentMethodPlugins();
+    }
 }

@@ -425,4 +425,14 @@ interface ShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
     public function findShipmentMethodByKey(string $shipmentMethodKey): ?ShipmentMethodTransfer;
+
+    /**
+     * Specification:
+     * - Returns the shipment method plugins grouped by the type.
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getShipmentMethodPlugins(): array;
 }

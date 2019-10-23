@@ -108,4 +108,9 @@ interface ShipmentGuiToShipmentFacadeInterface
      * @return bool
      */
     public function deleteMethod($idMethod);
+
+    /**
+     * @return array
+     */
+    public function getShipmentMethodPlugins(): array;
 }

@@ -576,6 +576,18 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return array
+     */
+    public function getShipmentMethodPlugins(): array
+    {
+        return [
+            ShipmentDependencyProvider::AVAILABILITY_PLUGINS => $this->getAvailabilityPlugins(),
+            ShipmentDependencyProvider::PRICE_PLUGINS => $this->getPricePlugins(),
+            ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS => $this->getDeliveryTimePlugins(),
+        ];
+    }
+
+    /**
      * @return \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToPriceFacadeInterface
      */
     public function getPriceFacade(): ShipmentToPriceFacadeInterface

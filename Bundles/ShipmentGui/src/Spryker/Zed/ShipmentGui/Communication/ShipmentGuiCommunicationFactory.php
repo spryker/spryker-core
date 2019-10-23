@@ -41,10 +41,6 @@ use Symfony\Component\Form\FormInterface;
  */
 class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
 {
-    public const KEY_AVAILABILITY = 'availability';
-    public const KEY_PRICE = 'price';
-    public const KEY_DELIVERY_TIME = 'delivery_time';
-
     /**
      * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDataProvider
      */
@@ -172,7 +168,7 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createShipmentMethodFormDataProvider(): ShipmentMethodFormDataProvider
     {
         return new ShipmentMethodFormDataProvider(
-            $this->getPlugins(),
+            $this->getShipmentFacade(),
             $this->getShipmentCarrierQuery(),
             $this->getTaxFacade()
         );
@@ -207,18 +203,6 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
         return new ShipmentMethodKeyUniqueConstraint([
             ShipmentMethodKeyUniqueConstraint::OPTION_SHIPMENT_FACADE => $this->getShipmentFacade(),
         ]);
-    }
-
-    /**
-     * @return array
-     */
-    public function getPlugins(): array
-    {
-        return [
-            static::KEY_AVAILABILITY => $this->getProvidedDependency(ShipmentGuiDependencyProvider::PLUGINS_AVAILABILITY),
-            static::KEY_PRICE => $this->getProvidedDependency(ShipmentGuiDependencyProvider::PLUGINS_PRICE),
-            static::KEY_DELIVERY_TIME => $this->getProvidedDependency(ShipmentGuiDependencyProvider::PLUGINS_DELIVERY_TIME),
-        ];
     }
 
     /**
