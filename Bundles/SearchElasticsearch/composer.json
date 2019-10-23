@@ -19,6 +19,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/session": "*",
     "spryker/testify": "*"
   },
   "autoload": {
