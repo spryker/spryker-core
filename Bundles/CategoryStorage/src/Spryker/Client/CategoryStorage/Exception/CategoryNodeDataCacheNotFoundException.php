@@ -9,6 +9,6 @@ namespace Spryker\Client\CategoryStorage\Exception;
 
 use Exception;
 
-class NotFoundCategoryNodeDataCacheException extends Exception
+class CategoryNodeDataCacheNotFoundException extends Exception
 {
 }

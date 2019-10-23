@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\CategoryStorage\CategoryStorageConfig;
 use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStorageInterface;
 use Spryker\Client\CategoryStorage\Dependency\Service\CategoryStorageToSynchronizationServiceInterface;
-use Spryker\Client\CategoryStorage\Exception\NotFoundCategoryNodeDataCacheException;
+use Spryker\Client\CategoryStorage\Exception\CategoryNodeDataCacheNotFoundException;
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Shared\Kernel\Store;
 
@@ -249,14 +249,14 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
      * @param int $idCategoryNode
      * @param string $localeName
      *
-     * @throws \Spryker\Client\CategoryStorage\Exception\NotFoundCategoryNodeDataCacheException
+     * @throws \Spryker\Client\CategoryStorage\Exception\CategoryNodeDataCacheNotFoundException
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
      */
     protected function getCategoryNodeDataCacheByIdCategoryNodeAndLocaleName(int $idCategoryNode, string $localeName): CategoryNodeStorageTransfer
     {
         if (!$this->hasCategoryNodeDataCacheByIdCategoryNodeAndLocaleName($idCategoryNode, $localeName)) {
-            throw new NotFoundCategoryNodeDataCacheException();
+            throw new CategoryNodeDataCacheNotFoundException();
         }
 
         return static::$categoryNodeDataCache[$idCategoryNode][$localeName];
