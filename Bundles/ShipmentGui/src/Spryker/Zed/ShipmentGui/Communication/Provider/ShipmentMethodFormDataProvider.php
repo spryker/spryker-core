@@ -18,7 +18,6 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
     public const OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST = 'availability_plugin_choice_list';
     public const OPTION_PRICE_PLUGIN_CHOICE_LIST = 'price_plugin_choice_list';
     public const OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST = 'delivery_time_plugin_choice_list';
-    public const OPTION_MONEY_FACADE = 'money facade';
 
     protected const KEY_AVAILABILITY = 'AVAILABILITY_PLUGINS';
     protected const KEY_PRICE = 'PRICE_PLUGINS';
