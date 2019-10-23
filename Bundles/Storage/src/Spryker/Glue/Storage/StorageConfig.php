@@ -14,7 +14,7 @@ class StorageConfig extends AbstractBundleConfig
 {
     /**
      * Specification:
-     * - Strategy for StorageKeyCache
+     * - Returns the name of the strategy to be used for the StorageKeyCache.
      *
      * @return string
      */
