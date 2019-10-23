@@ -268,7 +268,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\SearchElasticsearch\Business\Index\IndexInterface
      */
-    public function createIndexHandler(): IndexInterface
+    public function createIndex(): IndexInterface
     {
         return new Index(
             $this->getElasticsearchClient()
