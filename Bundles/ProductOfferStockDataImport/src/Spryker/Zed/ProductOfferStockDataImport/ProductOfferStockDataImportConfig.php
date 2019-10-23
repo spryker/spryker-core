@@ -7,8 +7,39 @@
 
 namespace Spryker\Zed\ProductOfferStockDataImport;
 
-use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
+use Spryker\Zed\DataImport\DataImportConfig;
 
-class ProductOfferStockDataImportConfig extends AbstractBundleConfig
+class ProductOfferStockDataImportConfig extends DataImportConfig
 {
+    public const IMPORT_TYPE_PRODUCT_OFFER_STOCK = 'product-offer-stock';
+
+    /**
+     * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
+     */
+    public function getProductOfferStockDataImporterConfiguration(): DataImporterConfigurationTransfer
+    {
+        $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
+
+        return $this->buildImporterConfiguration(
+            $moduleDataImportDirectory . 'product_offer_stock.csv',
+            static::IMPORT_TYPE_PRODUCT_OFFER_STOCK
+        );
+    }
+
+    /**
+     * @return string
+     */
+    protected function getModuleRoot(): string
+    {
+        $moduleRoot = realpath(
+            __DIR__
+            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..'
+            . DIRECTORY_SEPARATOR . '..'
+        );
+
+        return $moduleRoot . DIRECTORY_SEPARATOR;
+    }
 }
