@@ -223,9 +223,9 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
      * @param array $identifiers
      * @param string $localeName
      *
-     * @return array|null
+     * @return array
      */
-    public function findBulkProductAbstractStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): ?array
+    public function findBulkProductAbstractStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): array
     {
         $mappingKeys = [];
         $mapKeySku = [];
@@ -237,8 +237,8 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
 
         $mappingData = $this->storageClient->getMulti($mappingKeys);
 
-        if (!$mappingData) {
-            return null;
+        if (count($mappingData) === 0) {
+            return [];
         }
 
         $ids = [];
@@ -254,15 +254,15 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
      * @param array $productAbstractIds
      * @param string $localeName
      *
-     * @return array|null
+     * @return array
      */
-    public function findBulkProductAbstractStorageData(array $productAbstractIds, string $localeName): ?array
+    public function findBulkProductAbstractStorageData(array $productAbstractIds, string $localeName): array
     {
-        $response = [];
+        $cachedProductAbstractData = [];
         $productAbstractIdsWithoutCache = [];
         foreach ($productAbstractIds as $key => $productAbstractId) {
             if ($this->hasProductAbstractDataCacheByIdProductAbstractAndLocaleName($productAbstractId, $localeName)) {
-                $response[$key] = $this->getProductAbstractDataCacheByIdProductAbstractAndLocaleName($productAbstractId, $localeName);
+                $cachedProductAbstractData[$key] = $this->getProductAbstractDataCacheByIdProductAbstractAndLocaleName($productAbstractId, $localeName);
                 continue;
             }
 
@@ -270,13 +270,13 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
         }
 
         if (count($productAbstractIdsWithoutCache) === 0) {
-            return $response;
+            return $cachedProductAbstractData;
         }
 
         $productStorageData = $this->findBulkStorageData($productAbstractIdsWithoutCache, $localeName);
         $this->cacheBulkProductAbstractDataByIdProductAbstractAndLocaleName($productAbstractIdsWithoutCache, $localeName, $productStorageData);
 
-        return $productStorageData;
+        return array_merge($cachedProductAbstractData, $productStorageData);
     }
 
     /**
@@ -496,9 +496,9 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
      * @param array $productAbstractIds
      * @param string $localeName
      *
-     * @return array|null
+     * @return array
      */
-    protected function findBulkStorageData(array $productAbstractIds, string $localeName): ?array
+    protected function findBulkStorageData(array $productAbstractIds, string $localeName): array
     {
         $keys = [];
         $mapKeySku = [];
@@ -512,17 +512,13 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
         }
 
         if (count($productAbstractIds) === 0) {
-            return null;
-        }
-
-        if (count($productAbstractIds) === 0) {
-            return null;
+            return [];
         }
 
         $productStorageData = $this->storageClient->getMulti($keys);
 
-        if (!$productStorageData) {
-            return null;
+        if (count($productStorageData) === 0) {
+            return [];
         }
 
         $response = [];

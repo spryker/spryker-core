@@ -33,7 +33,7 @@ class CategoryStorageToStorageBridge implements CategoryStorageToStorageInterfac
     }
 
     /**
-     * @param array $keys
+     * @param string[] $keys
      *
      * @return array
      */

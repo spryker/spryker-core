@@ -63,9 +63,9 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
      * @param array $skus
      * @param string $locale
      *
-     * @return array|null
+     * @return array
      */
-    public function findProductCategoryNodeIdsBySkus(array $skus, string $locale): ?array
+    public function findProductCategoryNodeIdsBySkus(array $skus, string $locale): array
     {
         $abstractProductData = $this->productStorageClient
             ->findBulkProductAbstractStorageDataByMapping(
@@ -73,8 +73,8 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
                 $skus,
                 $locale
             );
-        if (!$abstractProductData) {
-            return null;
+        if (count($abstractProductData) === 0) {
+            return [];
         }
 
         return $this->getBulkProductCategoryNodeIds($abstractProductData, $locale);

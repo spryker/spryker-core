@@ -53,7 +53,7 @@ class CategoriesResourceRelationshipExpander implements CategoriesResourceRelati
         $productCategoryNodeIds = $this->abstractProductsCategoriesReader
             ->findProductCategoryNodeIdsBySkus($skus, $locale);
 
-        if ($productCategoryNodeIds === null) {
+        if (count($productCategoryNodeIds) === 0) {
             return;
         }
 

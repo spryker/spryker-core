@@ -21,7 +21,7 @@ interface AbstractProductsCategoriesReaderInterface
      * @param array $skus
      * @param string $locale
      *
-     * @return array|null
+     * @return array
      */
-    public function findProductCategoryNodeIdsBySkus(array $skus, string $locale): ?array;
+    public function findProductCategoryNodeIdsBySkus(array $skus, string $locale): array;
 }
