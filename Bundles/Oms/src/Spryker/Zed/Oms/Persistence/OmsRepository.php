@@ -39,11 +39,11 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
     /**
      * @param string[] $stateNames
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function getSalesOrderAggregationBySkuAndStatesNames(array $stateNames, string $sku, ?StoreTransfer $storeTransfer): array
+    public function getSalesOrderAggregationBySkuAndStatesNames(array $stateNames, string $sku, StoreTransfer $storeTransfer): array
     {
         $salesOrderItemQuery = $this->getFactory()
             ->getSalesQueryContainer()
