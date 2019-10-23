@@ -88,7 +88,7 @@ interface ShipmentEntityManagerInterface
      *
      * @return void
      */
-    public function removeStoreRelations(array $idStores, int $idShipmentMethod): void;
+    public function removeShipmentMethodStoreRelationsForStores(array $idStores, int $idShipmentMethod): void;
 
     /**
      * @param array $idStores
@@ -96,5 +96,5 @@ interface ShipmentEntityManagerInterface
      *
      * @return void
      */
-    public function addStoreRelations(array $idStores, int $idShipmentMethod): void;
+    public function addShipmentMethodStoreRelationsForStores(array $idStores, int $idShipmentMethod): void;
 }

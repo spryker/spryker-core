@@ -25,10 +25,6 @@ use Spryker\Zed\ShipmentGui\Dependency\Service\ShipmentGuiToShipmentServiceBridg
  */
 class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PLUGINS_AVAILABILITY = 'PLUGINS_AVAILABILITY';
-    public const PLUGINS_PRICE = 'PLUGINS_PRICE';
-    public const PLUGINS_DELIVERY_TIME = 'PLUGINS_DELIVERY_TIME';
-
     public const FACADE_SALES = 'FACADE_SALES';
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
@@ -58,51 +54,6 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addShipmentCarrierQuery($container);
         $container = $this->addMoneyCollectionFormTypePlugin($container);
         $container = $this->addStoreRelationFormTypePlugin($container);
-        $container = $this->addAvailabilityPlugins($container);
-        $container = $this->addPricePlugins($container);
-        $container = $this->addDeliveryTimePlugins($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addAvailabilityPlugins(Container $container): Container
-    {
-        $container->set(static::PLUGINS_AVAILABILITY, function (Container $container) {
-            return $this->getAvailabilityPlugins($container);
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addPricePlugins(Container $container): Container
-    {
-        $container->set(static::PLUGINS_PRICE, function (Container $container) {
-            return $this->getPricePlugins($container);
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addDeliveryTimePlugins(Container $container): Container
-    {
-        $container->set(static::PLUGINS_DELIVERY_TIME, function (Container $container) {
-            return $this->getDeliveryTimePlugins($container);
-        });
 
         return $container;
     }
@@ -135,36 +86,6 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodAvailabilityPluginInterface[]
-     */
-    protected function getAvailabilityPlugins(Container $container)
-    {
-        return [];
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodPricePluginInterface[]
-     */
-    protected function getPricePlugins(Container $container)
-    {
-        return [];
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodDeliveryTimePluginInterface[]
-     */
-    protected function getDeliveryTimePlugins(Container $container)
-    {
-        return [];
     }
 
     /**

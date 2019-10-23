@@ -26,8 +26,6 @@ class ShipmentMethodForm extends ViewShipmentMethodForm
     public const FIELD_PRICE_PLUGIN_FIELD = 'pricePlugin';
     public const FIELD_DELIVERY_TIME_PLUGIN_FIELD = 'deliveryTimePlugin';
     public const FIELD_CARRIER_FIELD = 'fkShipmentCarrier';
-    
-    protected const MESSAGE_SHIPMENT_METHOD_NAME_ALREADY_EXISTS_FOR_SELECTED_PROVIDER = 'Shipment method with such name already exists for selected shipment provider.';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

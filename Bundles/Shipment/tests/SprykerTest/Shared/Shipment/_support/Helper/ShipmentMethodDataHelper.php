@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
-use Orm\Zed\Shipment\Persistence\SpyShipmentMethodStore;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodStoreQuery;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -91,22 +90,6 @@ class ShipmentMethodDataHelper extends Module
         SpyShipmentMethodPriceQuery::create()->deleteAll();
         SpyShipmentMethodStoreQuery::create()->deleteAll();
         SpyShipmentMethodQuery::create()->deleteAll();
-    }
-
-    /**
-     * @param int $idShipmentMethod
-     * @param int[] $idStoreList
-     *
-     * @return void
-     */
-    protected function setShipmentMethodToStoreList(int $idShipmentMethod, array $idStoreList): void
-    {
-        foreach ($idStoreList as $idStore) {
-            (new SpyShipmentMethodStore())
-                ->setFkStore($idStore)
-                ->setFkShipmentMethod($idShipmentMethod)
-                ->save();
-        }
     }
 
     /**

@@ -114,7 +114,9 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function findMethodById($idShipmentMethod)
     {
-        return $this->getRepository()->findShipmentMethodByIdWithPricesAndCarrier($idShipmentMethod);
+        return $this->getFactory()
+            ->createShipmentMethodReader()
+            ->findShipmentMethodById($idShipmentMethod);
     }
 
     /**
@@ -470,7 +472,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function findShipmentMethodByName(string $shipmentMethodName): ?ShipmentMethodTransfer
     {
-        return $this->getRepository()->findShipmentMethodByName($shipmentMethodName);
+        return $this->getRepository()
+            ->findShipmentMethodByName($shipmentMethodName);
     }
 
     /**
@@ -484,6 +487,19 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      */
     public function findShipmentMethodByKey(string $shipmentMethodKey): ?ShipmentMethodTransfer
     {
-        return $this->getRepository()->findShipmentMethodByKey($shipmentMethodKey);
+        return $this->getRepository()
+            ->findShipmentMethodByKey($shipmentMethodKey);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getShipmentMethodPlugins(): array
+    {
+        return $this->getFactory()->getShipmentMethodPlugins();
     }
 }

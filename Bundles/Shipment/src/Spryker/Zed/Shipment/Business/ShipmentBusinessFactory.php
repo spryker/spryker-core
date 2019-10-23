@@ -65,8 +65,8 @@ use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodCreator;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodCreatorInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodDeleter;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodDeleterInterface;
-use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodStoreRelationReader;
-use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodStoreRelationReaderInterface;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodReader;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodReaderInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodStoreRelationUpdater;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodStoreRelationUpdaterInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodUpdater;
@@ -126,17 +126,9 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createShipmentMethodStoreRelationUpdater(): ShipmentMethodStoreRelationUpdaterInterface
     {
         return new ShipmentMethodStoreRelationUpdater(
-            $this->createShipmentMethodStoreRelationReader(),
+            $this->getRepository(),
             $this->getEntityManager()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodStoreRelationReaderInterface
-     */
-    public function createShipmentMethodStoreRelationReader(): ShipmentMethodStoreRelationReaderInterface
-    {
-        return new ShipmentMethodStoreRelationReader($this->getRepository());
     }
 
     /**
@@ -160,6 +152,17 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new ShipmentMethodDeleter(
             $this->getRepository(),
             $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodReaderInterface
+     */
+    public function createShipmentMethodReader(): ShipmentMethodReaderInterface
+    {
+        return new ShipmentMethodReader(
+            $this->getRepository(),
+            $this->getCurrencyFacade()
         );
     }
 
@@ -571,6 +574,18 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function getDeliveryTimePlugins(): array
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS);
+    }
+
+    /**
+     * @return array
+     */
+    public function getShipmentMethodPlugins(): array
+    {
+        return [
+            ShipmentDependencyProvider::AVAILABILITY_PLUGINS => $this->getAvailabilityPlugins(),
+            ShipmentDependencyProvider::PRICE_PLUGINS => $this->getPricePlugins(),
+            ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS => $this->getDeliveryTimePlugins(),
+        ];
     }
 
     /**
