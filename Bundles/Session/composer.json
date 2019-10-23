@@ -22,6 +22,10 @@
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "spryker/container": "If you want to use application plugins and event dispatcher plugins.",
+    "spryker/event-dispatcher": "If you want to use application plugins and event dispatcher plugins."
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
@@ -42,9 +46,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "suggest": {
-    "spryker/container": "If you want to use application plugins and event dispatcher plugins.",
-    "spryker/event-dispatcher": "If you want to use application plugins and event dispatcher plugins."
   }
 }
