@@ -46,8 +46,8 @@ class CategoriesResourceRelationshipExpander implements CategoriesResourceRelati
         $localeName = $restRequest->getMetadata()->getLocale();
 
         $productAbstractSkus = [];
-        foreach ($resources as $resource) {
-            $productAbstractSkus[] = $resource->getId();
+        foreach ($resources as $restResource) {
+            $productAbstractSkus[] = $restResource->getId();
         }
 
         $productCategoryNodeIds = $this->abstractProductsCategoriesReader
@@ -62,17 +62,17 @@ class CategoriesResourceRelationshipExpander implements CategoriesResourceRelati
         $categoryNodesRestResources = $this->categoriesRestApiResource
             ->findCategoryNodeByIds($categoryNodeIds, $localeName);
 
-        foreach ($resources as $resource) {
-            if (!array_key_exists($resource->getId(), $productCategoryNodeIds)) {
+        foreach ($resources as $restResource) {
+            if (!array_key_exists($restResource->getId(), $productCategoryNodeIds)) {
                 continue;
             }
 
-            foreach ($productCategoryNodeIds[$resource->getId()] as $categoryNodeId) {
+            foreach ($productCategoryNodeIds[$restResource->getId()] as $categoryNodeId) {
                 if (!array_key_exists($categoryNodeId, $categoryNodesRestResources)) {
                     continue;
                 }
 
-                $resource->addRelationship($categoryNodesRestResources[$categoryNodeId]);
+                $restResource->addRelationship($categoryNodesRestResources[$categoryNodeId]);
             }
         }
     }

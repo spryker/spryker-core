@@ -70,13 +70,13 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
             return [];
         }
 
-        $productAbstractCategoryStorageTransfers = [];
+        $response = [];
         foreach ($productAbstractCategoryStorageData as $item) {
-            $productAbstractCategoryStorageTransfers[] = (new ProductAbstractCategoryStorageTransfer())
+            $response[] = (new ProductAbstractCategoryStorageTransfer())
                 ->fromArray($item, true);
         }
 
-        return $productAbstractCategoryStorageTransfers;
+        return $response;
     }
 
     /**
@@ -129,12 +129,12 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
 
         $productAbstractCategoryStorageData = $this->storageClient->getMulti($storageKeys);
 
-        $response = [];
+        $decodedProductAbstractCategoryStorageData = [];
         foreach ($productAbstractCategoryStorageData as $item) {
-            $response[] = json_decode($item, true);
+            $decodedProductAbstractCategoryStorageData[] = json_decode($item, true);
         }
 
-        return $response;
+        return $decodedProductAbstractCategoryStorageData;
     }
 
     /**

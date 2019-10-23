@@ -243,8 +243,8 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
 
         $productAbstractIds = [];
         foreach ($mappingData as $item) {
-            $data = json_decode($item, true);
-            $productAbstractIds[] = $data['id'] ?? null;
+            $productAbstractStorageData = json_decode($item, true);
+            $productAbstractIds[] = $productAbstractStorageData['id'] ?? null;
         }
 
         return $this->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
