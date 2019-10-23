@@ -93,11 +93,11 @@ class Reservation implements ReservationInterface
 
     /**
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function sumReservedProductQuantitiesForSku(string $sku, ?StoreTransfer $storeTransfer = null): Decimal
+    public function sumReservedProductQuantitiesForSku(string $sku, StoreTransfer $storeTransfer): Decimal
     {
         $reservedStates = $this->getOmsReservedStateCollection();
         $salesAggregationTransfers = $this->aggregateSalesOrderItemReservations($reservedStates, $sku, $storeTransfer);
@@ -194,14 +194,14 @@ class Reservation implements ReservationInterface
     /**
      * @param \Generated\Shared\Transfer\OmsStateCollectionTransfer $reservedStates
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
     protected function aggregateSalesOrderItemReservations(
         OmsStateCollectionTransfer $reservedStates,
         string $sku,
-        ?StoreTransfer $storeTransfer = null
+        StoreTransfer $storeTransfer
     ): array {
         foreach ($this->reservationAggregationPlugins as $reservationAggregationPlugin) {
             $salesAggregationTransfers = $reservationAggregationPlugin->aggregateSalesOrderItemReservations(

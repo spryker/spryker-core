@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\ProductPackagingUnit\Helper;
 
 use Codeception\Module;
+use Generated\Shared\DataBuilder\ProductPackagingUnitAmountBuilder;
+use Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer;
 use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
@@ -27,7 +29,11 @@ class ProductPackagingUnitHelper extends Module
         $productPackagingUnitTransfer = (new SpyProductPackagingUnitEntityTransfer());
         $productPackagingUnitTransfer->fromArray($override, true);
 
-        $productPackagingUnitEntity = $this->storeProductPackagingUnit($productPackagingUnitTransfer);
+        $productPackagingUnitAmountTransfer = (new ProductPackagingUnitAmountBuilder())
+            ->seed($amountOverride)
+            ->build();
+
+        $productPackagingUnitEntity = $this->storeProductPackagingUnit($productPackagingUnitTransfer, $productPackagingUnitAmountTransfer);
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($productPackagingUnitEntity) {
             $this->cleanupProductPackagingUnit($productPackagingUnitEntity);
@@ -38,16 +44,20 @@ class ProductPackagingUnitHelper extends Module
 
     /**
      * @param \Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer $productPackagingUnitEntity
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer $packagingUnitAmountTransfer
      *
      * @return \Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer
      */
-    protected function storeProductPackagingUnit(SpyProductPackagingUnitEntityTransfer $productPackagingUnitEntity)
-    {
+    protected function storeProductPackagingUnit(
+        SpyProductPackagingUnitEntityTransfer $productPackagingUnitEntity,
+        ProductPackagingUnitAmountTransfer $packagingUnitAmountTransfer
+    ): SpyProductPackagingUnitEntityTransfer {
         $spyProductPackagingUnitEntity = $this->getProductPackagingUnitQuery()
             ->filterByIdProductPackagingUnit($productPackagingUnitEntity->getIdProductPackagingUnit())
             ->findOneOrCreate();
 
         $spyProductPackagingUnitEntity->fromArray($productPackagingUnitEntity->modifiedToArray());
+        $spyProductPackagingUnitEntity->fromArray($packagingUnitAmountTransfer->toArray());
 
         $spyProductPackagingUnitEntity->save();
 

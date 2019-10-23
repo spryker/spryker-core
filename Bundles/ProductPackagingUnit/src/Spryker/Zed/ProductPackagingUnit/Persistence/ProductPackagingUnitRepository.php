@@ -250,17 +250,20 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
      *
      * @param string $sku
      * @param string[] $reservedStateNames
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function aggregateProductPackagingUnitAmountForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames, ?StoreTransfer $storeTransfer = null): array
+    public function aggregateProductPackagingUnitAmountForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames, StoreTransfer $storeTransfer): array
     {
         $salesOrderItemQuery = $this->getFactory()
             ->getSalesOrderItemQuery()
             ->groupByAmountSku()
             ->useStateQuery()
                 ->filterByName_In($reservedStateNames)
+            ->endUse()
+            ->useOrderQuery()
+                ->filterByStore($storeTransfer->getName())
             ->endUse()
             ->groupByFkOmsOrderItemState()
             ->innerJoinProcess()
@@ -270,14 +273,11 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
             ->withColumn(SpyOmsOrderItemStateTableMap::COL_NAME, SalesOrderItemStateAggregationTransfer::STATE_NAME)
             ->withColumn(
                 sprintf(
-                    'CASE WHEN %s = %s THEN SUM(%s) WHEN %s IS NULL THEN SUM(%s) ELSE SUM(%s) + SUM(%s) END',
-                    SpySalesOrderItemTableMap::COL_SKU,
+                    "CASE WHEN %s = '%s' THEN SUM(%s) ELSE SUM(%s) END",
                     SpySalesOrderItemTableMap::COL_AMOUNT_SKU,
+                    $sku,
                     SpySalesOrderItemTableMap::COL_AMOUNT,
-                    SpySalesOrderItemTableMap::COL_AMOUNT_SKU,
-                    SpySalesOrderItemTableMap::COL_QUANTITY,
-                    SpySalesOrderItemTableMap::COL_QUANTITY,
-                    SpySalesOrderItemTableMap::COL_AMOUNT
+                    SpySalesOrderItemTableMap::COL_QUANTITY
                 ),
                 SalesOrderItemStateAggregationTransfer::SUM_AMOUNT
             )
@@ -285,13 +285,6 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
             ->condition('PU', 'spy_sales_order_item.amount_sku = ?', $sku)
             ->condition('PU_SELF_LEAD', 'sku = ? AND spy_sales_order_item.amount_sku != ?', [$sku, $sku])
             ->having(['NO_PU', 'PU', 'PU_SELF_LEAD'], Criteria::LOGICAL_OR);
-
-        if ($storeTransfer !== null) {
-            $salesOrderItemQuery
-                ->useOrderQuery()
-                ->filterByStore($storeTransfer->getName())
-                ->endUse();
-        }
 
         $salesAggregationTransfers = [];
         foreach ($salesOrderItemQuery->find() as $salesOrderItemAggregation) {

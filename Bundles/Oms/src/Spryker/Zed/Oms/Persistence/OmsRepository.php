@@ -39,11 +39,11 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
     /**
      * @param string[] $stateNames
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function getSalesOrderAggregationBySkuAndStatesNames(array $stateNames, string $sku, ?StoreTransfer $storeTransfer): array
+    public function getSalesOrderAggregationBySkuAndStatesNames(array $stateNames, string $sku, StoreTransfer $storeTransfer): array
     {
         $salesOrderItemQuery = $this->getFactory()
             ->getSalesQueryContainer()
@@ -52,6 +52,9 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
             ->groupBySku()
             ->useStateQuery()
                 ->filterByName_In($stateNames)
+            ->endUse()
+            ->useOrderQuery()
+                ->filterByStore($storeTransfer->getName())
             ->endUse()
             ->groupByFkOmsOrderItemState()
             ->innerJoinProcess()
@@ -63,13 +66,6 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
             ->select([
                 SpySalesOrderItemTableMap::COL_SKU,
             ]);
-
-        if ($storeTransfer !== null) {
-            $salesOrderItemQuery
-                ->useOrderQuery()
-                    ->filterByStore($storeTransfer->getName())
-                ->endUse();
-        }
 
         $salesAggregationTransfers = [];
         foreach ($salesOrderItemQuery->find() as $salesOrderItemAggregation) {
