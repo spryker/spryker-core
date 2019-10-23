@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/product-offer-stock.svg)](https://travis-ci.org/spryker/product-offer-stock)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/product-offer-stock/badge.svg)](https://coveralls.io/github/spryker/product-offer-stock)
 
-{{ADD DESCRIPTION HERE}}
+This module allows connecting offers and stocks so it allows managing merchants stocks.
 
 ## Installation
 
