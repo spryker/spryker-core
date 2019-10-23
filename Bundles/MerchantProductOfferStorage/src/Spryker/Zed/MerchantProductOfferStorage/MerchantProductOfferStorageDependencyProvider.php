@@ -51,11 +51,11 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
      */
     protected function addEventBehaviorFacade(Container $container): Container
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new MerchantProductOfferStorageToEventBehaviorFacadeBridge(
                 $container->getLocator()->eventBehavior()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -67,11 +67,11 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
      */
     protected function addProductOfferFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_OFFER] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_OFFER, function (Container $container) {
             return new MerchantProductOfferStorageToProductOfferFacadeBridge(
                 $container->getLocator()->productOffer()->facade()
             );
-        };
+        });
 
         return $container;
     }
