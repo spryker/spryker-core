@@ -12,8 +12,10 @@ use Elastica\Exception\ResponseException;
 use Elastica\Index;
 use Elastica\ResultSet;
 use Generated\Shared\Transfer\SearchContextTransfer;
+use Spryker\Client\SearchElasticsearch\Exception\InvalidSearchQueryException;
 use Spryker\Client\SearchElasticsearch\Exception\SearchResponseException;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
 
 class Search implements SearchInterface
 {
@@ -31,7 +33,7 @@ class Search implements SearchInterface
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface $searchQuery
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param array $requestParameters
      *
@@ -67,14 +69,25 @@ class Search implements SearchInterface
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface $query
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $query
      *
      * @throws \Spryker\Client\SearchElasticsearch\Exception\SearchResponseException
+     * @throws \Spryker\Client\SearchElasticsearch\Exception\InvalidSearchQueryException
      *
      * @return \Elastica\ResultSet
      */
     protected function executeQuery(QueryInterface $query): ResultSet
     {
+        if (!$query instanceof SearchContextAwareQueryInterface) {
+            throw new InvalidSearchQueryException(
+                sprintf(
+                    'Query class %s doesn\'t implement %s interface.',
+                    get_class($query),
+                    SearchContextAwareQueryInterface::class
+                )
+            );
+        }
+
         try {
             $index = $this->getIndexForQuery($query->getSearchContext());
             $rawSearchResult = $index->search(
