@@ -101,6 +101,31 @@ class ShipmentEntityManager extends AbstractEntityManager implements ShipmentEnt
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
+     */
+    public function updateShipmentMethod(ShipmentMethodTransfer $shipmentMethodTransfer): ShipmentMethodTransfer
+    {
+        $shipmentMethodTransfer->requireIdShipmentMethod();
+
+        $shipmentMethodEntity = $this->getFactory()
+            ->createShipmentMethodQuery()
+            ->filterByIdShipmentMethod($shipmentMethodTransfer->getIdShipmentMethod())
+            ->findOne();
+
+        $shipmentMethodMapper = $this->getFactory()->createShipmentMethodMapper();
+
+        $shipmentMethodEntity = $shipmentMethodMapper
+            ->mapShipmentMethodTransferToShipmentMethodEntity($shipmentMethodTransfer, $shipmentMethodEntity);
+
+        $shipmentMethodEntity->save();
+
+        return $shipmentMethodMapper
+            ->mapShipmentMethodEntityToShipmentMethodTransfer($shipmentMethodEntity, $shipmentMethodTransfer);
+    }
+
+    /**
      * @param int $idShipmentMethod
      *
      * @return void

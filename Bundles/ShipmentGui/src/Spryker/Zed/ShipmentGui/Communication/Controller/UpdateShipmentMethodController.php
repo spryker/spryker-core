@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -17,13 +15,15 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Zed\ShipmentGui\Communication\ShipmentGuiCommunicationFactory getFactory()
  */
-class CreateShipmentMethodController extends AbstractController
+class UpdateShipmentMethodController extends AbstractController
 {
     /**
-     * @uses \Spryker\Zed\ShipmentGui\Communication\Controller\ShipmentMethodController::indexAction()
+     * @uses \Spryker\Zed\StockGui\Communication\Controller\WarehouseController::listAction()
      */
     protected const REDIRECT_URL = '/shipment-gui/shipment-method/index';
-    protected const MESSAGE_SUCCESS = 'Shipment method has been successfully saved';
+    protected const MESSAGE_SUCCESS = 'Shipment method has been successfully updated';
+    protected const MESSAGE_SHIPMENT_METHOD_NOT_FOUND = 'Shipment method not found';
+    protected const PARAMETER_ID_SHIPMENT_METHOD = 'id-shipment-method';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -32,36 +32,50 @@ class CreateShipmentMethodController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $idShipmentMethod = $this->castId(
+            $request->query->getInt(static::PARAMETER_ID_SHIPMENT_METHOD)
+        );
+
+        $shipmentMethodTransfer = $this->getFactory()
+            ->getShipmentFacade()
+            ->findMethodById($idShipmentMethod);
+
+        if ($shipmentMethodTransfer === null) {
+            $this->addErrorMessage(static::MESSAGE_SHIPMENT_METHOD_NOT_FOUND);
+
+            return $this->redirectResponse(static::REDIRECT_URL);
+        }
+
         $shipmentMethodTabs = $this->getFactory()->createShipmentMethodTabs();
         $dataProvider = $this->getFactory()->createShipmentMethodFormDataProvider();
-        $shipmentMethodTransfer = (new ShipmentMethodTransfer())
-            ->setStoreRelation(new StoreRelationTransfer());
-        $shipmentMethodForm = $this->getFactory()->createShipmentMethodForm(
-            $dataProvider->getData($shipmentMethodTransfer),
-            $dataProvider->getOptions()
-        );
+        $shipmentMethodForm = $this->getFactory()
+            ->createShipmentMethodForm(
+                $dataProvider->getData($shipmentMethodTransfer),
+                $dataProvider->getOptions(true)
+            );
         $shipmentMethodForm->handleRequest($request);
-        
+
         if ($shipmentMethodForm->isSubmitted() && $shipmentMethodForm->isValid()) {
             return $this->handleShipmentMethodForm($shipmentMethodForm);
         }
 
         return $this->viewResponse([
-            'shipmentMethodTabs' => $shipmentMethodTabs->createView(),
             'shipmentMethodForm' => $shipmentMethodForm->createView(),
+            'shipmentMethodTabs' => $shipmentMethodTabs->createView(),
         ]);
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $form
+     * @param \Symfony\Component\Form\FormInterface $shipmentMethodForm
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function handleShipmentMethodForm(FormInterface $form): RedirectResponse
+    protected function handleShipmentMethodForm(FormInterface $shipmentMethodForm): RedirectResponse
     {
-        /** @var \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer */
-        $shipmentMethodTransfer = $form->getData();
-        $this->getFactory()->getShipmentFacade()->createMethod($shipmentMethodTransfer);
+        $this->getFactory()
+            ->getShipmentFacade()
+            ->updateMethod($shipmentMethodForm->getData());
+
         $this->addSuccessMessage(static::MESSAGE_SUCCESS);
 
         return $this->redirectResponse(static::REDIRECT_URL);

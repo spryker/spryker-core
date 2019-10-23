@@ -38,6 +38,9 @@ None,None
 Save,Save
 Carrier,Carrier
 "Select one","Select one"
+"Shipment method has been successfully updated","Shipment method has been successfully updated"
+"Shipment method not found","Shipment method not found"
+"Edit Delivery Method","Edit Delivery Method"
 "This shipment method key is already in use.","This shipment method key is already in use."
 "This name is already in use.","This name is already in use."
 "Tax set","Tax set"
