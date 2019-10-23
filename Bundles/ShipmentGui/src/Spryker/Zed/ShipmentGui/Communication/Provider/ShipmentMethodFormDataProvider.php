@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ShipmentGui\Communication\Provider;
 
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToTaxFacadeInterface;
 
@@ -18,17 +17,11 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
     public const OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST = 'availability_plugin_choice_list';
     public const OPTION_PRICE_PLUGIN_CHOICE_LIST = 'price_plugin_choice_list';
     public const OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST = 'delivery_time_plugin_choice_list';
-    public const OPTION_MONEY_FACADE = 'money facade';
     public const OPTION_DELIVERY_KEY_DISABLED = 'option_delivery_key_disabled';
 
     protected const KEY_AVAILABILITY = 'AVAILABILITY_PLUGINS';
     protected const KEY_PRICE = 'PRICE_PLUGINS';
     protected const KEY_DELIVERY_TIME = 'DELIVERY_TIME_PLUGINS';
-
-    /**
-     * @var \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
-     */
-    protected $carrierQuery;
 
     /**
      * @var \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface
@@ -37,16 +30,13 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
 
     /**
      * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface $shipmentFacade
-     * @param \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery $carrierQuery
      * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToTaxFacadeInterface $taxFacade
      */
     public function __construct(
         ShipmentGuiToShipmentFacadeInterface $shipmentFacade,
-        SpyShipmentCarrierQuery $carrierQuery,
         ShipmentGuiToTaxFacadeInterface $taxFacade
     ) {
         parent::__construct($taxFacade);
-        $this->carrierQuery = $carrierQuery;
         $this->shipmentFacade = $shipmentFacade;
     }
 
@@ -88,14 +78,11 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
      */
     protected function getCarrierOptions(): array
     {
-        $carriers = $this->carrierQuery
-            ->filterByIsActive(true)
-            ->find();
-
+        $shipmentCarriers = $this->shipmentFacade->getActiveShipmentCarriers();
         $result = [];
 
-        foreach ($carriers as $carrier) {
-            $result[$carrier->getIdShipmentCarrier()] = $carrier->getName();
+        foreach ($shipmentCarriers as $shipmentCarrierTransfer) {
+            $result[$shipmentCarrierTransfer->getIdShipmentCarrier()] = $shipmentCarrierTransfer->getName();
         }
 
         return $result;

@@ -496,10 +496,22 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @api
      *
-     * @return array
+     * @return array[]
      */
     public function getShipmentMethodPlugins(): array
     {
         return $this->getFactory()->getShipmentMethodPlugins();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     */
+    public function getActiveShipmentCarriers(): array
+    {
+        return $this->getRepository()->getActiveShipmentCarriers();
     }
 }

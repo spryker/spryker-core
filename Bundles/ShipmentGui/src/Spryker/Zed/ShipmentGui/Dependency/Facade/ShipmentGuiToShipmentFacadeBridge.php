@@ -174,4 +174,12 @@ class ShipmentGuiToShipmentFacadeBridge implements ShipmentGuiToShipmentFacadeIn
     {
         return $this->shipmentFacade->getShipmentMethodPlugins();
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     */
+    public function getActiveShipmentCarriers(): array
+    {
+        return $this->shipmentFacade->getActiveShipmentCarriers();
+    }
 }
