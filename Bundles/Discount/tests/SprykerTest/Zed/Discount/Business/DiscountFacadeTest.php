@@ -409,7 +409,7 @@ class DiscountFacadeTest extends Unit
         // Assert
 
         /** @var \Generated\Shared\Transfer\CheckoutErrorTransfer $checkoutErrorTransfer */
-        $checkoutErrorTransfer = $checkoutResponseTransfer->getErrors()->getIterator()->current();
+        $checkoutErrorTransfer = $checkoutResponseTransfer->getErrors()[0];
 
         $this->assertCount(1, $checkoutResponseTransfer->getErrors());
         $this->assertEquals(399, $checkoutErrorTransfer->getErrorCode());

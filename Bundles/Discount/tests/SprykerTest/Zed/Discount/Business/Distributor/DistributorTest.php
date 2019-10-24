@@ -83,8 +83,8 @@ class DistributorTest extends Unit
 
         foreach ($items as $item) {
             /** @var \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer */
-            $calculatedDiscountTransfer = $item->getOriginalItemCalculatedDiscounts()->getIterator()->current();
-            $this->assertEquals($item->getUnitPrice(), $calculatedDiscountTransfer->getUnitAmount());
+            $calculatedDiscountTransfer = $item->getOriginalItemCalculatedDiscounts()[0];
+            $this->assertSame($item->getUnitPrice(), $calculatedDiscountTransfer->getUnitAmount());
         }
     }
 
@@ -112,8 +112,8 @@ class DistributorTest extends Unit
 
         foreach ($items as $item) {
             /** @var \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer */
-            $calculatedDiscountTransfer = $item->getOriginalItemCalculatedDiscounts()->getIterator()->current();
-            $this->assertEquals(static::DISCOUNT_AMOUNT_100, $calculatedDiscountTransfer->getUnitAmount());
+            $calculatedDiscountTransfer = $item->getOriginalItemCalculatedDiscounts()[0];
+            $this->assertSame(static::DISCOUNT_AMOUNT_100, $calculatedDiscountTransfer->getUnitAmount());
         }
     }
 
@@ -150,7 +150,7 @@ class DistributorTest extends Unit
             }
 
             /** @var \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer */
-            $calculatedDiscountTransfer = $item->getOriginalItemCalculatedDiscounts()->getIterator()->current();
+            $calculatedDiscountTransfer = $item->getOriginalItemCalculatedDiscounts()[0];
             $this->assertEquals($discountAmountMap[$key], $calculatedDiscountTransfer->getUnitAmount());
         }
     }
@@ -188,7 +188,7 @@ class DistributorTest extends Unit
             }
 
             /** @var \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer */
-            $calculatedDiscountTransfer = $item->getOriginalItemCalculatedDiscounts()->getIterator()->current();
+            $calculatedDiscountTransfer = $item->getOriginalItemCalculatedDiscounts()[0];
             $this->assertEquals($discountAmountMap[$key], $calculatedDiscountTransfer->getUnitAmount());
         }
     }

@@ -50,7 +50,7 @@ class ProductPackagingUnitTypeKeyGenerator implements ProductPackagingUnitTypeKe
      */
     protected function generateTranslationName(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): string
     {
-        $enTranslation = $productPackagingUnitTypeTransfer->getTranslations()[0];
+        $enTranslation = $productPackagingUnitTypeTransfer->getTranslations()->getIterator()->current();
 
         return sprintf(
             static::PRODUCT_PACKAGING_UNIT_TYPE_KEY,

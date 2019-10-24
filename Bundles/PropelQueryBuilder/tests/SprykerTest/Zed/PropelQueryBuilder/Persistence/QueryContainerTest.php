@@ -198,7 +198,8 @@ class QueryContainerTest extends Unit
 
         $ruleQuerySetTransfer = $this->queryContainer->createPropelQueryBuilderCriteriaFromJson($json);
 
-        $propelQueryBuilderRuleSetTransfer = $ruleQuerySetTransfer->getRules()->getIterator()->current();
+        /** @var \Generated\Shared\Transfer\PropelQueryBuilderRuleSetTransfer $propelQueryBuilderRuleSetTransfer */
+        $propelQueryBuilderRuleSetTransfer = $ruleQuerySetTransfer->getRules()[0];
 
         $this->assertInstanceOf(PropelQueryBuilderRuleSetTransfer::class, $ruleQuerySetTransfer);
         $this->assertInstanceOf(PropelQueryBuilderRuleSetTransfer::class, $propelQueryBuilderRuleSetTransfer);

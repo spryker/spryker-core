@@ -89,13 +89,15 @@ class ProductAttributeFinder implements ProductAttributeFinderInterface
             return null;
         }
 
-        $imageSetTransfer = $productConcreteTransfer->getImageSets()[0];
+        /** @var \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer */
+        $productImageSetTransfer = $productConcreteTransfer->getImageSets()->getIterator()->current();
 
-        if ($imageSetTransfer->getProductImages()->count() === 0) {
+        if ($productImageSetTransfer->getProductImages()->count() === 0) {
             return null;
         }
 
-        $productImageTransfer = $imageSetTransfer->getProductImages()[0];
+        /** @var \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer */
+        $productImageTransfer = $productImageSetTransfer->getProductImages()->getIterator()->current();
 
         return $productImageTransfer->getExternalUrlLarge();
     }
