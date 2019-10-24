@@ -238,7 +238,6 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     {
         $salesShipmentMethodEntity = $this->queryMethodsWithMethodPricesAndCarrier()
             ->filterByIdShipmentMethod($idShipmentMethod)
-            ->filterByIsActive(true)
             ->find()
             ->getFirst();
 

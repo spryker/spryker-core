@@ -43,12 +43,16 @@ class ShipmentMethodReader implements ShipmentMethodReaderInterface
     /**
      * @param int $idShipmentMethod
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    public function findShipmentMethodById(int $idShipmentMethod): ShipmentMethodTransfer
+    public function findShipmentMethodById(int $idShipmentMethod): ?ShipmentMethodTransfer
     {
         $shipmentMethodTransfer = $this->shipmentRepository
             ->findShipmentMethodByIdWithPricesAndCarrier($idShipmentMethod);
+
+        if ($shipmentMethodTransfer === null) {
+            return null;
+        }
 
         foreach ($shipmentMethodTransfer->getPrices() as $moneyValueTransfer) {
             $moneyValueTransfer->requireCurrency();

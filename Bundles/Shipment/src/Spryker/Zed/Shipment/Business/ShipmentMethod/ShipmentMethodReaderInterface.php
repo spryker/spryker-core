@@ -14,7 +14,7 @@ interface ShipmentMethodReaderInterface
     /**
      * @param int $idShipmentMethod
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    public function findShipmentMethodById(int $idShipmentMethod): ShipmentMethodTransfer;
+    public function findShipmentMethodById(int $idShipmentMethod): ?ShipmentMethodTransfer;
 }
