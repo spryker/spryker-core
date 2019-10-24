@@ -29,8 +29,8 @@ class SearchElasticsearchCopyIndexConsole extends AbstractSearchIndexConsole
      */
     protected function configure(): void
     {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription(self::DESCRIPTION);
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::DESCRIPTION);
         $this->setAliases([static::COMMAND_ALIAS]);
 
         $this->addArgument(static::ARGUMENT_SOURCE_INDEX_NAME, InputArgument::REQUIRED, 'Name of the source Elasticsearch index to copy.');

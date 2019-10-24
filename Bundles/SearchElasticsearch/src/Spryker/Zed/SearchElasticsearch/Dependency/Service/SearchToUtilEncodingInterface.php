@@ -18,4 +18,13 @@ interface SearchToUtilEncodingInterface
      * @return array
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
+
+    /**
+     * @param array $value
+     * @param int|null $options
+     * @param int|null $depth
+     *
+     * @return string|null
+     */
+    public function encodeJson($value, $options = null, $depth = null);
 }

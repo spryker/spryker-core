@@ -28,8 +28,8 @@ class SearchElasticsearchCloseIndexConsole extends AbstractSearchIndexConsole
      */
     protected function configure(): void
     {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription(self::DESCRIPTION);
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::DESCRIPTION);
         $this->setAliases([static::COMMAND_ALIAS]);
 
         $this->addArgument(static::ARGUMENT_INDEX_NAME, InputArgument::OPTIONAL, 'Name of an index to be closed.');

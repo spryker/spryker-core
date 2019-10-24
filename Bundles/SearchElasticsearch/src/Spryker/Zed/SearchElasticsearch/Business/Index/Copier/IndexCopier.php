@@ -9,6 +9,7 @@ namespace Spryker\Zed\SearchElasticsearch\Business\Index\Copier;
 
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Zed\SearchElasticsearch\Dependency\Guzzle\SearchElasticsearchToGuzzleClientInterface;
+use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingInterface;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
 
 class IndexCopier implements IndexCopierInterface
@@ -26,13 +27,23 @@ class IndexCopier implements IndexCopierInterface
     protected $config;
 
     /**
+     * @var \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @param \Spryker\Zed\SearchElasticsearch\Dependency\Guzzle\SearchElasticsearchToGuzzleClientInterface $client
      * @param \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig $config
+     * @param \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingInterface $utilEncodingService
      */
-    public function __construct(SearchElasticsearchToGuzzleClientInterface $client, SearchElasticsearchConfig $config)
-    {
+    public function __construct(
+        SearchElasticsearchToGuzzleClientInterface $client,
+        SearchElasticsearchConfig $config,
+        SearchToUtilEncodingInterface $utilEncodingService
+    ) {
         $this->client = $client;
         $this->config = $config;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -43,19 +54,37 @@ class IndexCopier implements IndexCopierInterface
      */
     public function copyIndex(SearchContextTransfer $sourceSearchContextTransfer, SearchContextTransfer $targetSearchContextTransfer): bool
     {
-        $sourceIndexName = $this->getIndexName($sourceSearchContextTransfer);
-        $targetIndexName = $this->getIndexName($targetSearchContextTransfer);
-
-        $body = sprintf('{"source": {"index": "%s"}, "dest": {"index": "%s"}}', $sourceIndexName, $targetIndexName);
-
         $responseStatusCode = $this->client->post($this->config->getReindexUrl(), [
             'headers' => [
                 'Content-Type' => 'application/json',
             ],
-            'body' => $body,
+            'body' => $this->buildCopyCommand($sourceSearchContextTransfer, $targetSearchContextTransfer),
         ]);
 
         return $responseStatusCode === static::RESPONSE_STATUS_SUCCESS;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $sourceSearchContextTransfer
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $targetSearchContextTransfer
+     *
+     * @return string
+     */
+    protected function buildCopyCommand(SearchContextTransfer $sourceSearchContextTransfer, SearchContextTransfer $targetSearchContextTransfer): string
+    {
+        $sourceIndexName = $this->getIndexName($sourceSearchContextTransfer);
+        $targetIndexName = $this->getIndexName($targetSearchContextTransfer);
+
+        $command = [
+            'source' => [
+                'index' => $sourceIndexName,
+            ],
+            'dest' => [
+                'index' => $targetIndexName,
+            ],
+        ];
+
+        return $this->utilEncodingService->encodeJson($command);
     }
 
     /**

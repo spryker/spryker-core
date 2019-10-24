@@ -34,4 +34,16 @@ class SearchToUtilEncodingBridge implements SearchToUtilEncodingInterface
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
+
+    /**
+     * @param array $value
+     * @param int|null $options
+     * @param int|null $depth
+     *
+     * @return string|null
+     */
+    public function encodeJson($value, $options = null, $depth = null)
+    {
+        return $this->utilEncodingService->encodeJson($value, $options, $depth);
+    }
 }
