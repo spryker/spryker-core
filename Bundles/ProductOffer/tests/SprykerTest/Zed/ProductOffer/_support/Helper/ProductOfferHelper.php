@@ -23,7 +23,7 @@ class ProductOfferHelper extends Module
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
-    public function haveProductOffer(array $seedData = []): ProductOfferTransfer
+    public function haveMerchantProductOffer(array $seedData = []): ProductOfferTransfer
     {
         $productOfferTransfer = (new ProductOfferBuilder($seedData))->build();
         $productOfferTransfer->setIdProductOffer(null);
