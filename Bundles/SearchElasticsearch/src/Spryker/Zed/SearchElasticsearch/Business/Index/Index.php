@@ -10,6 +10,7 @@ namespace Spryker\Zed\SearchElasticsearch\Business\Index;
 use Elastica\Client;
 use Elastica\Index as ElasticaIndex;
 use Generated\Shared\Transfer\SearchContextTransfer;
+use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
 
 class Index implements IndexInterface
 {
@@ -18,14 +19,19 @@ class Index implements IndexInterface
      */
     protected $client;
 
-    protected const INDEX_NAME_ALL = '_all';
+    /**
+     * @var \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig
+     */
+    protected $config;
 
     /**
      * @param \Elastica\Client $client
+     * @param \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig $config
      */
-    public function __construct(Client $client)
+    public function __construct(Client $client, SearchElasticsearchConfig $config)
     {
         $this->client = $client;
+        $this->config = $config;
     }
 
     /**
@@ -78,7 +84,7 @@ class Index implements IndexInterface
     protected function resolveIndexNameFromSearchContextTransfer(?SearchContextTransfer $searchContextTransfer): string
     {
         if (!$searchContextTransfer) {
-            return static::INDEX_NAME_ALL;
+            return $this->config->getIndexNameAll();
         }
 
         $this->assertIndexNameIsSet($searchContextTransfer);
@@ -87,11 +93,11 @@ class Index implements IndexInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SearchContextTransfer|null $searchContextTransfer
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      *
      * @return void
      */
-    protected function assertIndexNameIsSet(?SearchContextTransfer $searchContextTransfer): void
+    protected function assertIndexNameIsSet(SearchContextTransfer $searchContextTransfer): void
     {
         $searchContextTransfer->requireElasticsearchContext()->getElasticsearchContext()->requireIndexName();
     }

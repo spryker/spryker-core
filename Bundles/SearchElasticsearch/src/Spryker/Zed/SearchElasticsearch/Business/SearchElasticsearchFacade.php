@@ -49,13 +49,25 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SearchContextTransfer|null $searchContextTransfer
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      *
      * @return bool
      */
-    public function openIndex(?SearchContextTransfer $searchContextTransfer): bool
+    public function openIndex(SearchContextTransfer $searchContextTransfer): bool
     {
         return $this->getFactory()->createIndex()->openIndex($searchContextTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function openIndices(): bool
+    {
+        return $this->getFactory()->createIndex()->openIndex();
     }
 
     /**
@@ -77,13 +89,37 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SearchContextTransfer|null $searchContextTransfer
+     * @return bool
+     */
+    public function closeIndices(): bool
+    {
+        return $this->getFactory()->createIndex()->closeIndex();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      *
      * @return bool
      */
-    public function deleteIndex(?SearchContextTransfer $searchContextTransfer): bool
+    public function deleteIndex(SearchContextTransfer $searchContextTransfer): bool
     {
         return $this->getFactory()->createIndex()->deleteIndex($searchContextTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function deleteIndices(): bool
+    {
+        return $this->getFactory()->createIndex()->deleteIndex();
     }
 
     /**

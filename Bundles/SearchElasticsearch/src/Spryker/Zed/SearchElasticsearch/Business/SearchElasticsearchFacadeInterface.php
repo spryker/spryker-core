@@ -42,21 +42,29 @@ interface SearchElasticsearchFacadeInterface
      * Specification:
      * - Opens an Elasticsearch index.
      * - The name of an index to be open is carried by SearchContextTransfer object.
-     * - If no SearchContextTransfer object is passed, all the existing indices are open.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SearchContextTransfer|null $searchContextTransfer
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      *
      * @return bool
      */
-    public function openIndex(?SearchContextTransfer $searchContextTransfer): bool;
+    public function openIndex(SearchContextTransfer $searchContextTransfer): bool;
+
+    /**
+     * Specification:
+     * - Opens all the existing Elasticsearch indices.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function openIndices(): bool;
 
     /**
      * Specification:
      * - Closes an Elasticsearch index.
      * - The name of an index to be closed is carried by SearchContextTransfer object.
-     * - If no SearchContextTransfer object is passed, all the existing indices are closed.
      *
      * @api
      *
@@ -68,17 +76,37 @@ interface SearchElasticsearchFacadeInterface
 
     /**
      * Specification:
+     * - Closes all the existing Elasticsearch indices.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function closeIndices(): bool;
+
+    /**
+     * Specification:
      * - Deletes an Elasticsearch index.
      * - The name of an index to be deleted is carried by SearchContextTransfer object.
      * - If no SearchContextTransfer object is passed, all the existing indices are deleted.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SearchContextTransfer|null $searchContextTransfer
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      *
      * @return bool
      */
-    public function deleteIndex(?SearchContextTransfer $searchContextTransfer): bool;
+    public function deleteIndex(SearchContextTransfer $searchContextTransfer): bool;
+
+    /**
+     * Specification:
+     * - Deletes all the existing Elasticsearch indices.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function deleteIndices(): bool;
 
     /**
      * Specification:

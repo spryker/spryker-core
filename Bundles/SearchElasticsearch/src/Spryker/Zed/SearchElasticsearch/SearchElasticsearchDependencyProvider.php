@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\SearchElasticsearch\Dependency\Guzzle\SearchElasticsearchToGuzzleClientAdapter;
 use Spryker\Zed\SearchElasticsearch\Dependency\Guzzle\SearchElasticsearchToGuzzleClientInterface;
-use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingBridge;
+use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingServiceBridge;
 
 /**
  * @method \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig getConfig()
@@ -63,7 +63,7 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
     protected function addUtilEncodingFacade(Container $container): Container
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
-            return new SearchToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
+            return new SearchToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
         });
 
         return $container;

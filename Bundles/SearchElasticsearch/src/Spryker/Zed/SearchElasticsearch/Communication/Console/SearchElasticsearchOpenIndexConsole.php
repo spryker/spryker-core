@@ -7,20 +7,18 @@
 
 namespace Spryker\Zed\SearchElasticsearch\Communication\Console;
 
+use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
+use Generated\Shared\Transfer\SearchContextTransfer;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface getFacade()
  * @method \Spryker\Zed\SearchElasticsearch\Communication\SearchElasticsearchCommunicationFactory getFactory()
  */
-class SearchElasticsearchOpenIndexConsole extends AbstractSearchIndexConsole
+class SearchElasticsearchOpenIndexConsole extends AbstractIndexNameAwareSearchIndexConsole
 {
     protected const COMMAND_NAME = 'elasticsearch:index:open';
     protected const DESCRIPTION = 'This command will open an index.';
-
-    protected const ARGUMENT_INDEX_NAME = 'idnex-name';
 
     /**
      * @return void
@@ -35,56 +33,54 @@ class SearchElasticsearchOpenIndexConsole extends AbstractSearchIndexConsole
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param string $indexName
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    protected function executeForSingleIndex(string $indexName): int
     {
-        $indexName = $input->getArgument(static::ARGUMENT_INDEX_NAME);
         $searchContextTransfer = $this->buildSearchContextTransferFromIndexName($indexName);
 
         if ($this->getFacade()->openIndex($searchContextTransfer)) {
-            $this->info($this->buildInfoMessageFromInput($input));
+            $this->info(sprintf('Search index %s successfully opened.', $indexName));
 
             return static::CODE_SUCCESS;
         }
 
-        $this->error($this->buildErrorMessageFromInput($input));
+        $this->error(sprintf('Search index %s could not be opened.', $indexName));
 
         return static::CODE_ERROR;
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     *
-     * @return string
+     * @return int
      */
-    protected function buildInfoMessageFromInput(InputInterface $input): string
+    protected function executeForAllIndices(): int
     {
-        $indexName = $input->getArgument(static::ARGUMENT_INDEX_NAME);
+        if ($this->getFacade()->openIndices()) {
+            $this->info('Search indices are successfully opened');
 
-        if ($indexName) {
-            return sprintf('Search index %s successfully opened.', $indexName);
+            return static::CODE_SUCCESS;
         }
 
-        return 'Search indices are successfully opened';
+        $this->error('Search indices could not be opened');
+
+        return static::CODE_ERROR;
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param string $indexName
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\SearchContextTransfer
      */
-    protected function buildErrorMessageFromInput(InputInterface $input): string
+    protected function buildSearchContextTransferFromIndexName(string $indexName): SearchContextTransfer
     {
-        $indexName = $input->getArgument(static::ARGUMENT_INDEX_NAME);
+        $elasticsearchSearchContext = new ElasticsearchSearchContextTransfer();
+        $elasticsearchSearchContext->setIndexName($indexName);
 
-        if ($indexName) {
-            return sprintf('Search index %s could not be opened.', $indexName);
-        }
+        $searchContextTransfer = new SearchContextTransfer();
+        $searchContextTransfer->setElasticsearchContext($elasticsearchSearchContext);
 
-        return 'Search indices could not be opened';
+        return $searchContextTransfer;
     }
 }

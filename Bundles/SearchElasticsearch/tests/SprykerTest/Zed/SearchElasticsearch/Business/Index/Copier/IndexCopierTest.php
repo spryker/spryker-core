@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\SearchElasticsearch\Business\Index\Copier;
 use Codeception\Test\Unit;
 use Spryker\Zed\SearchElasticsearch\Business\Index\Copier\IndexCopier;
 use Spryker\Zed\SearchElasticsearch\Dependency\Guzzle\SearchElasticsearchToGuzzleClientInterface;
+use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingServiceInterface;
 
 /**
  * Auto-generated group annotations
@@ -40,7 +41,8 @@ class IndexCopierTest extends Unit
 
         $indexCopier = new IndexCopier(
             $clientMock,
-            $config
+            $config,
+            $this->getUtilEncodingService()
         );
         $indexCopier->copyIndex(
             $this->tester->buildSearchContextTransferFromIndexName($sourceIndexName),
@@ -73,11 +75,28 @@ class IndexCopierTest extends Unit
      */
     protected function getPostData(string $sourceIndexName, string $targetIndexName): array
     {
+        $command = [
+            'source' => [
+                'index' => $sourceIndexName,
+            ],
+            'dest' => [
+                'index' => $targetIndexName,
+            ],
+        ];
+
         return [
             'headers' => [
                 'Content-Type' => 'application/json',
             ],
-            'body' => sprintf('{"source": {"index": "%s"}, "dest": {"index": "%s"}}', $sourceIndexName, $targetIndexName),
+            'body' => $this->getUtilEncodingService()->encodeJson($command),
         ];
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingServiceInterface
+     */
+    protected function getUtilEncodingService(): SearchToUtilEncodingServiceInterface
+    {
+        return $this->tester->getFactory()->getUtilEncodingService();
     }
 }

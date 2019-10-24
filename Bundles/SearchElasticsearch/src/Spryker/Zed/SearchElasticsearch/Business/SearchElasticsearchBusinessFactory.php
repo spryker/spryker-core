@@ -43,7 +43,7 @@ use Spryker\Zed\SearchElasticsearch\Business\Installer\IndexMap\Generator\IndexM
 use Spryker\Zed\SearchElasticsearch\Business\Installer\IndexMap\IndexMapInstaller as IndexMapIndexMapInstaller;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\IndexMap\IndexMapInstallerInterface;
 use Spryker\Zed\SearchElasticsearch\Dependency\Guzzle\SearchElasticsearchToGuzzleClientInterface;
-use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingInterface;
+use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingServiceInterface;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchDependencyProvider;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -95,9 +95,9 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingInterface
+     * @return \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingServiceInterface
      */
-    public function getUtilEncodingService(): SearchToUtilEncodingInterface
+    public function getUtilEncodingService(): SearchToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::SERVICE_UTIL_ENCODING);
     }
@@ -271,7 +271,8 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     public function createIndex(): IndexInterface
     {
         return new Index(
-            $this->getElasticsearchClient()
+            $this->getElasticsearchClient(),
+            $this->getConfig()
         );
     }
 
@@ -282,7 +283,8 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     {
         return new IndexCopier(
             $this->getGuzzleClient(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getUtilEncodingService()
         );
     }
 

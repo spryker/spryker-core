@@ -53,8 +53,9 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     ];
 
     public const INDEX_OPEN_STATE = 'open';
-
     public const INDEX_CLOSE_STATE = 'close';
+
+    public const INDEX_NAME_ALL = '_all';
 
     /**
      * @return string
@@ -142,5 +143,13 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     public function getClientConfig(): array
     {
         return $this->getSharedConfig()->getClientConfig();
+    }
+
+    /**
+     * @return string
+     */
+    public function getIndexNameAll(): string
+    {
+        return static::INDEX_NAME_ALL;
     }
 }

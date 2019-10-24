@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\SearchElasticsearch\Communication\Console;
 
+use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
+use Generated\Shared\Transfer\SearchContextTransfer;
+use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -15,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface getFacade()
  * @method \Spryker\Zed\SearchElasticsearch\Communication\SearchElasticsearchCommunicationFactory getFactory()
  */
-class SearchElasticsearchCopyIndexConsole extends AbstractSearchIndexConsole
+class SearchElasticsearchCopyIndexConsole extends Console
 {
     public const COMMAND_NAME = 'elasticsearch:index:copy';
     public const DESCRIPTION = 'This command will copy one index to another.';
@@ -89,5 +92,21 @@ class SearchElasticsearchCopyIndexConsole extends AbstractSearchIndexConsole
             $input->getArgument(static::ARGUMENT_SOURCE_INDEX_NAME),
             $input->getArgument(static::ARGUMENT_TARGET_INDEX_NAME)
         );
+    }
+
+    /**
+     * @param string $indexName
+     *
+     * @return \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    protected function buildSearchContextTransferFromIndexName(string $indexName): SearchContextTransfer
+    {
+        $elasticsearchSearchContext = new ElasticsearchSearchContextTransfer();
+        $elasticsearchSearchContext->setIndexName($indexName);
+
+        $searchContextTransfer = new SearchContextTransfer();
+        $searchContextTransfer->setElasticsearchContext($elasticsearchSearchContext);
+
+        return $searchContextTransfer;
     }
 }

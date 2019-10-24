@@ -9,7 +9,7 @@ namespace Spryker\Zed\SearchElasticsearch\Business\Index\Copier;
 
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Zed\SearchElasticsearch\Dependency\Guzzle\SearchElasticsearchToGuzzleClientInterface;
-use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingInterface;
+use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingServiceInterface;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
 
 class IndexCopier implements IndexCopierInterface
@@ -27,19 +27,19 @@ class IndexCopier implements IndexCopierInterface
     protected $config;
 
     /**
-     * @var \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingInterface
+     * @var \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingServiceInterface
      */
     protected $utilEncodingService;
 
     /**
      * @param \Spryker\Zed\SearchElasticsearch\Dependency\Guzzle\SearchElasticsearchToGuzzleClientInterface $client
      * @param \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig $config
-     * @param \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingInterface $utilEncodingService
+     * @param \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
         SearchElasticsearchToGuzzleClientInterface $client,
         SearchElasticsearchConfig $config,
-        SearchToUtilEncodingInterface $utilEncodingService
+        SearchToUtilEncodingServiceInterface $utilEncodingService
     ) {
         $this->client = $client;
         $this->config = $config;
@@ -100,11 +100,11 @@ class IndexCopier implements IndexCopierInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SearchContextTransfer|null $searchContextTransfer
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      *
      * @return void
      */
-    protected function assertIndexNameIsSet(?SearchContextTransfer $searchContextTransfer): void
+    protected function assertIndexNameIsSet(SearchContextTransfer $searchContextTransfer): void
     {
         $searchContextTransfer->requireElasticsearchContext()->getElasticsearchContext()->requireIndexName();
     }

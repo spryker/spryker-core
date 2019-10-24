@@ -17,6 +17,7 @@ use Spryker\Shared\SearchElasticsearch\SearchElasticsearchConfig;
 
 class ElasticsearchHelper extends Module
 {
+    protected const INDEX_SUFFIX = '_testing';
     /**
      * @var array
      */
@@ -29,6 +30,7 @@ class ElasticsearchHelper extends Module
      */
     public function haveIndex(string $indexName): Index
     {
+        $indexName .= static::INDEX_SUFFIX;
         $client = $this->getClient();
         $index = $client->getIndex($indexName);
 

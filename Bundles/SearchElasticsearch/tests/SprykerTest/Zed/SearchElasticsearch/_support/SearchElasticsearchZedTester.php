@@ -28,6 +28,7 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
  * @method void pause()
  * @method \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface getFacade()
  * @method \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig getModuleConfig()
+ * @method \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchBusinessFactory getFactory()
  *
  * @SuppressWarnings(PHPMD)
  */
