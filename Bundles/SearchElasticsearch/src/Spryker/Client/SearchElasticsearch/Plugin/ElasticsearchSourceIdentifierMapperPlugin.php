@@ -9,12 +9,12 @@ namespace Spryker\Client\SearchElasticsearch\Plugin;
 
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\SearchExtension\Dependency\Plugin\SourceIdentifiertMapperPluginInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SourceIdentifierMapperPluginInterface;
 
 /**
  * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory getFactory()
  */
-class ElasticsearchSourceIdentifiertMapperPlugin extends AbstractPlugin implements SourceIdentifiertMapperPluginInterface
+class ElasticsearchSourceIdentifierMapperPlugin extends AbstractPlugin implements SourceIdentifierMapperPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -28,6 +28,6 @@ class ElasticsearchSourceIdentifiertMapperPlugin extends AbstractPlugin implemen
      */
     public function mapSourceIdentifier(SearchContextTransfer $searchContextTransfer): SearchContextTransfer
     {
-        return $this->getFactory()->createSearchContextMapper()->mapSourceIdentifier($searchContextTransfer);
+        return $this->getFactory()->createSourceIdentifierMapper()->mapSourceIdentifier($searchContextTransfer);
     }
 }

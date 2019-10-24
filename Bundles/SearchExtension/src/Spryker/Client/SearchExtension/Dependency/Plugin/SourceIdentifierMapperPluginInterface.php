@@ -9,7 +9,7 @@ namespace Spryker\Client\SearchExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\SearchContextTransfer;
 
-interface SourceIdentifiertMapperPluginInterface
+interface SourceIdentifierMapperPluginInterface
 {
     /**
      * Specification:

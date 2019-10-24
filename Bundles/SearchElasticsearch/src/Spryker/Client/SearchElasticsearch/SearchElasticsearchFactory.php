@@ -224,7 +224,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\SearchElasticsearch\SearchContext\SourceIdentifierMapperInterface
      */
-    public function createSearchContextMapper(): SourceIdentifierMapperInterface
+    public function createSourceIdentifierMapper(): SourceIdentifierMapperInterface
     {
         return new SourceIdentifierMapper(
             $this->createIndexNameResolver()
