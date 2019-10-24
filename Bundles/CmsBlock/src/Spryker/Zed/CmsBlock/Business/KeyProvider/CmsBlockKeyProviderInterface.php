@@ -10,16 +10,14 @@ namespace Spryker\Zed\CmsBlock\Business\KeyProvider;
 interface CmsBlockKeyProviderInterface
 {
     /**
-     * @param int|null $idCmsBlock
-     *
      * @return string
      */
-    public function generateKey(?int $idCmsBlock = null): string;
+    public function generateKey(): string;
 
     /**
      * @param int $idCmsBlock
      *
      * @return string
      */
-    public function getKeyByIdCmsBlock(int $idCmsBlock): string;
+    public function generateKeyByIdCmsBlock(int $idCmsBlock): string;
 }

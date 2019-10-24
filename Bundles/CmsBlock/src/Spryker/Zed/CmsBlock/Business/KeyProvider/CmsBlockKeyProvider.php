@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\CmsBlock\Business\KeyProvider;
 
+use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockKeyNotCreatedException;
 use Spryker\Zed\CmsBlock\Persistence\CmsBlockRepositoryInterface;
 
 class CmsBlockKeyProvider implements CmsBlockKeyProviderInterface
 {
     protected const KEY_GENERATOR_PREFIX = 'blck';
+    protected const KEY_GENERATOR_ITERATION_LIMIT = 10;
 
     /**
      * @var \Spryker\Zed\CmsBlock\Persistence\CmsBlockRepositoryInterface
@@ -27,23 +29,11 @@ class CmsBlockKeyProvider implements CmsBlockKeyProviderInterface
     }
 
     /**
-     * @param int|null $idCmsBlock
-     *
      * @return string
      */
-    public function generateKey(?int $idCmsBlock = null): string
+    public function generateKey(): string
     {
-        if ($idCmsBlock) {
-            $keyCandidate = $this->suggestCandidate($idCmsBlock);
-
-            if ($this->isCandidateSuitable($keyCandidate)) {
-                return $keyCandidate;
-            }
-        }
-
-        $index = $this->cmsBlockRepository->findMaxIdCmsBlock() + 1;
-
-        return $this->suggestCandidate($index);
+        return $this->getMaxIdBasedKey();
     }
 
     /**
@@ -51,15 +41,38 @@ class CmsBlockKeyProvider implements CmsBlockKeyProviderInterface
      *
      * @return string
      */
-    public function getKeyByIdCmsBlock(int $idCmsBlock): string
+    public function generateKeyByIdCmsBlock(int $idCmsBlock): string
     {
-        $cmsBlockTransfer = $this->cmsBlockRepository->findCmsBlockById($idCmsBlock);
+        $keyCandidate = $this->suggestCandidate($idCmsBlock);
 
-        if (!$cmsBlockTransfer || !$cmsBlockTransfer->getKey()) {
-            return $this->generateKey($idCmsBlock);
+        if ($this->isCandidateSuitable($keyCandidate)) {
+            return $keyCandidate;
         }
 
-        return $cmsBlockTransfer->getKey();
+        return $this->getMaxIdBasedKey();
+    }
+
+    /**
+     * @throws \Spryker\Zed\CmsBlock\Business\Exception\CmsBlockKeyNotCreatedException
+     *
+     * @return string
+     */
+    protected function getMaxIdBasedKey(): string
+    {
+        $index = $this->cmsBlockRepository->findMaxIdCmsBlock() + 1;
+
+        $attempt = 0;
+        do {
+            if ($attempt === static::KEY_GENERATOR_ITERATION_LIMIT) {
+                throw new CmsBlockKeyNotCreatedException('Cannot create key: maximum iterations threshold met.');
+            }
+
+            $candidate = $this->suggestCandidate($index);
+            $index++;
+            $attempt++;
+        } while (!$this->isCandidateSuitable($candidate));
+
+        return $candidate;
     }
 
     /**
