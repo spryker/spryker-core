@@ -26,7 +26,7 @@ class CmsBlockProductAbstractUpdatePlugin extends AbstractPlugin implements CmsB
      *
      * @return void
      */
-    public function handleUpdate(CmsBlockTransfer $cmsBlockTransfer)
+    public function handleUpdate(CmsBlockTransfer $cmsBlockTransfer): void
     {
         $this->getFacade()
             ->updateCmsBlockProductAbstractRelations($cmsBlockTransfer);

@@ -26,7 +26,7 @@ class CmsBlockCategoryConnectorUpdatePlugin extends AbstractPlugin implements Cm
      *
      * @return void
      */
-    public function handleUpdate(CmsBlockTransfer $cmsBlockTransfer)
+    public function handleUpdate(CmsBlockTransfer $cmsBlockTransfer): void
     {
         $this->getFacade()
             ->updateCmsBlockCategoryRelations($cmsBlockTransfer);
