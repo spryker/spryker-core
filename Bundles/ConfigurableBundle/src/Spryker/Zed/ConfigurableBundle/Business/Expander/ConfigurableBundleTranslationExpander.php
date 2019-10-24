@@ -94,7 +94,7 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
     protected function getTranslations(string $translationKey, ArrayObject $localeTransfers): array
     {
         if ($localeTransfers->count() === 1) {
-            return $this->getSingleLocaleTranslation($translationKey, reset($localeTransfers));
+            return [$this->getSingleLocaleTranslation($translationKey, reset($localeTransfers))];
         }
 
         return $this->glossaryFacade->getTranslationsByGlossaryKeyAndLocales($translationKey, $localeTransfers->getArrayCopy());
@@ -104,12 +104,12 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
      * @param string $translationKey
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    protected function getSingleLocaleTranslation(string $translationKey, LocaleTransfer $localeTransfer): array
+    protected function getSingleLocaleTranslation(string $translationKey, LocaleTransfer $localeTransfer): TranslationTransfer
     {
         if ($this->glossaryFacade->hasTranslation($translationKey, $localeTransfer)) {
-            return $this->glossaryFacade->getTranslationsByGlossaryKeyAndLocales($translationKey, [$localeTransfer]);
+            return $this->glossaryFacade->getTranslationsByGlossaryKeyAndLocales($translationKey, [$localeTransfer])[0];
         }
 
         return $this->getFallbackTranslation($translationKey);
@@ -118,9 +118,9 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
     /**
      * @param string $translationKey
      *
-     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    protected function getFallbackTranslation(string $translationKey): array
+    protected function getFallbackTranslation(string $translationKey): TranslationTransfer
     {
         $translationTransfers = $this->glossaryFacade->getTranslationsByGlossaryKeyAndLocales(
             $translationKey,
@@ -128,10 +128,10 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
         );
 
         if ($translationTransfers) {
-            return [reset($translationTransfers)];
+            return reset($translationTransfers);
         }
 
-        return [(new TranslationTransfer())->setValue($translationKey)];
+        return (new TranslationTransfer())->setValue($translationKey);
     }
 
     /**
