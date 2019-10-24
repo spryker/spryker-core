@@ -19,6 +19,7 @@ class ProductOfferStockDataImportPlugin extends AbstractPlugin implements DataIm
 {
     /**
      * [@inheritDoc}
+     * - Imports Product Offer Stock data.
      *
      * @api
      *

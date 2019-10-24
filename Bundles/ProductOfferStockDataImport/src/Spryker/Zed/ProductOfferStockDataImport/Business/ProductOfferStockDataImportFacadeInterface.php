@@ -14,7 +14,7 @@ interface ProductOfferStockDataImportFacadeInterface
 {
     /**
      * Specification:
-     * - TODO:
+     * - Imports Product Offer Stock data.
      *
      * @api
      *
