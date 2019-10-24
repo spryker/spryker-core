@@ -15,4 +15,12 @@
         <property name="idCustomer" type="int"/>
     </transfer>
 
+    <transfer name="CustomerGroupCollection">
+        <property name="groups" type="CustomerGroup[]" singular="group"/>
+    </transfer>
+
+    <transfer name="Clause">
+        <property name="value" type="string"/>
+    </transfer>
+
 </transfers>

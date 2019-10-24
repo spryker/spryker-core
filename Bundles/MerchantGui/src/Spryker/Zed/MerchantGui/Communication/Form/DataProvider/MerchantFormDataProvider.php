@@ -41,7 +41,7 @@ class MerchantFormDataProvider
     {
         return [
             'data_class' => MerchantTransfer::class,
-            MerchantForm::SALUTATION_CHOICES_OPTION => $this->config->getSalutationChoices(),
+            MerchantForm::OPTION_CURRENT_ID => null,
         ];
     }
 }

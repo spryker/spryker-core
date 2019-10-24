@@ -15,6 +15,7 @@ use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Merchant

@@ -26,6 +26,11 @@
 
     <transfer name="ProductConcrete">
         <property name="imageSets" type="ProductImageSet[]" singular="imageSet"/>
+        <property name="idProductConcrete" type="int"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
     </transfer>
 
 </transfers>

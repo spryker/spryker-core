@@ -7,22 +7,18 @@
 
 namespace Spryker\Zed\MerchantGui\Communication\Form;
 
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueEmail;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\MerchantGui\Communication\MerchantGuiCommunicationFactory getFactory()
@@ -30,23 +26,15 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class MerchantForm extends AbstractType
 {
-    public const SALUTATION_CHOICES_OPTION = 'salutation_choices';
+    public const OPTION_CURRENT_ID = 'current_id';
 
     protected const FIELD_ID_MERCHANT = 'id_merchant';
     protected const FIELD_NAME = 'name';
     protected const FIELD_REGISTRATION_NUMBER = 'registration_number';
-    protected const FIELD_CONTACT_PERSON_FIRST_NAME = 'contact_person_first_name';
-    protected const FIELD_CONTACT_PERSON_LAST_NAME = 'contact_person_last_name';
-    protected const FIELD_CONTACT_PERSON_PHONE = 'contact_person_phone';
-    protected const FIELD_CONTACT_PERSON_TITLE = 'contact_person_title';
     protected const FIELD_EMAIL = 'email';
 
     protected const LABEL_NAME = 'Name';
     protected const LABEL_REGISTRATION_NUMBER = 'Registration number';
-    protected const LABEL_CONTACT_PERSON_FIRST_NAME = 'Contact person first name';
-    protected const LABEL_CONTACT_PERSON_LAST_NAME = 'Contact person last name';
-    protected const LABEL_CONTACT_PERSON_PHONE = 'Contact person phone';
-    protected const LABEL_CONTACT_PERSON_TITLE = 'Contact person title';
     protected const LABEL_EMAIL = 'Email';
 
     /**
@@ -58,7 +46,7 @@ class MerchantForm extends AbstractType
     {
         parent::configureOptions($resolver);
 
-        $resolver->setRequired(static::SALUTATION_CHOICES_OPTION);
+        $resolver->setRequired(static::OPTION_CURRENT_ID);
     }
 
     /**
@@ -80,13 +68,11 @@ class MerchantForm extends AbstractType
         $this
             ->addIdMerchantField($builder)
             ->addNameField($builder)
-            ->addEmailField($builder)
+            ->addEmailField($builder, $options[static::OPTION_CURRENT_ID])
             ->addRegistrationNumberField($builder)
-            ->addContactPersonTitleField($builder, $options[static::SALUTATION_CHOICES_OPTION])
-            ->addContactPersonFirstNameField($builder)
-            ->addContactPersonLastNameField($builder)
-            ->addContactPersonPhoneField($builder)
             ->addAddressCollectionSubform($builder);
+
+        $this->executeMerchantProfileFormExpanderPlugins($builder, $options);
     }
 
     /**
@@ -125,7 +111,10 @@ class MerchantForm extends AbstractType
     {
         $builder->add(static::FIELD_REGISTRATION_NUMBER, TextType::class, [
             'label' => static::LABEL_REGISTRATION_NUMBER,
-            'constraints' => $this->getTextFieldConstraints(),
+            'required' => false,
+            'constraints' => [
+                new Length(['max' => 255]),
+            ],
         ]);
 
         return $this;
@@ -142,71 +131,6 @@ class MerchantForm extends AbstractType
         $builder->add(static::FIELD_EMAIL, EmailType::class, [
             'label' => static::LABEL_EMAIL,
             'constraints' => $this->getEmailFieldConstraints($currentId),
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
-     *
-     * @return $this
-     */
-    protected function addContactPersonTitleField(FormBuilderInterface $builder, array $choices = [])
-    {
-        $builder->add(static::FIELD_CONTACT_PERSON_TITLE, ChoiceType::class, [
-            'choices' => array_flip($choices),
-            'choices_as_values' => true,
-            'label' => static::LABEL_CONTACT_PERSON_TITLE,
-            'constraints' => $this->getSalutationFieldConstraints($choices),
-            'placeholder' => 'Select one',
-
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addContactPersonFirstNameField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_CONTACT_PERSON_FIRST_NAME, TextType::class, [
-            'label' => static::LABEL_CONTACT_PERSON_FIRST_NAME,
-            'constraints' => $this->getTextFieldConstraints(),
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addContactPersonLastNameField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_CONTACT_PERSON_LAST_NAME, TextType::class, [
-            'label' => static::LABEL_CONTACT_PERSON_LAST_NAME,
-            'constraints' => $this->getTextFieldConstraints(),
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addContactPersonPhoneField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_CONTACT_PERSON_PHONE, TextType::class, [
-            'label' => static::LABEL_CONTACT_PERSON_PHONE,
-            'constraints' => $this->getPhoneFieldConstraints(),
         ]);
 
         return $this;
@@ -268,8 +192,9 @@ class MerchantForm extends AbstractType
             new NotBlank(),
             new Email(),
             new Length(['max' => 255]),
-            new Callback([
-                'callback' => $this->getExistingEmailValidationCallback($currentId, $merchantFacade),
+            new UniqueEmail([
+                UniqueEmail::OPTION_MERCHANT_FACADE => $this->getFactory()->getMerchantFacade(),
+                UniqueEmail::OPTION_CURRENT_ID_MERCHANT => $currentId,
             ]),
         ];
     }
@@ -290,20 +215,17 @@ class MerchantForm extends AbstractType
     }
 
     /**
-     * @param int|null $currentId
-     * @param \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface $merchantFacade
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
-     * @return callable
+     * @return $this
      */
-    protected function getExistingEmailValidationCallback(?int $currentId, MerchantGuiToMerchantFacadeInterface $merchantFacade): callable
+    protected function executeMerchantProfileFormExpanderPlugins(FormBuilderInterface $builder, array $options)
     {
-        return function ($email, ExecutionContextInterface $context) use ($merchantFacade) {
-            $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
-            $merchantCriteriaFilterTransfer->setEmail($email);
-            $merchantTransfer = $merchantFacade->findOne($merchantCriteriaFilterTransfer);
-            if ($merchantTransfer !== null) {
-                $context->addViolation('Email is already used.');
-            }
-        };
+        foreach ($this->getFactory()->getMerchantProfileFormExpanderPlugins() as $formExpanderPlugin) {
+            $builder = $formExpanderPlugin->expand($builder, $options);
+        }
+
+        return $this;
     }
 }

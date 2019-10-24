@@ -8,4 +8,17 @@
         <property name="sortConfigs" singular="sortConfig" type="SortConfig[]"/>
     </transfer>
 
+    <transfer name="SearchConfigExtension">
+    </transfer>
+
+    <transfer name="FacetConfig">
+        <property name="name" type="string"/>
+        <property name="parameterName" type="string"/>
+    </transfer>
+
+    <transfer name="ProductSearchAttribute">
+        <property name="filterType" type="string"/>
+        <property name="key" type="string"/>
+    </transfer>
+
 </transfers>

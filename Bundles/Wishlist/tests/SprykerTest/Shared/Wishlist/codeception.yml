@@ -1,0 +1,7 @@
+namespace: SprykerTest\Shared\Wishlist
+actor: Tester
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
