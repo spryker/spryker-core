@@ -27,11 +27,11 @@ class ProductPackagingUnitReservationAggregationStrategyPlugin extends AbstractP
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\OmsStateCollectionTransfer $reservedStates
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function aggregateSalesOrderItemReservations(string $sku, OmsStateCollectionTransfer $reservedStates, ?StoreTransfer $storeTransfer = null): array
+    public function aggregateSalesOrderItemReservations(string $sku, OmsStateCollectionTransfer $reservedStates, StoreTransfer $storeTransfer): array
     {
         return $this->getFacade()->aggregateProductPackagingUnitReservationAmount($sku, $reservedStates, $storeTransfer);
     }

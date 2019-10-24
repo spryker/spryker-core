@@ -20,6 +20,7 @@ use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
 /**
@@ -233,6 +234,7 @@ class ProductPackagingUnitBusinessTester extends Actor
      */
     public function haveSalesOrderWithItems(int $itemsCount, int $quantity, string $sku, ?Decimal $amount = null, ?string $amountSku = null): OmsStateCollectionTransfer
     {
+        $this->haveStore([StoreTransfer::NAME => 'DE']);
         $itemTransfer = (new ItemBuilder([
             ItemTransfer::SKU => $sku,
             ItemTransfer::QUANTITY => $quantity,
@@ -240,6 +242,10 @@ class ProductPackagingUnitBusinessTester extends Actor
         ]))->build();
         $stateCollectionTransfer = new OmsStateCollectionTransfer();
         $salesOrderEntity = $this->haveSalesOrderEntity(array_fill(0, $itemsCount, $itemTransfer));
+
+        $salesOrderEntity
+            ->setStore('DE')
+            ->save();
 
         foreach ($salesOrderEntity->getItems() as $orderItemEntity) {
             $orderItemEntity

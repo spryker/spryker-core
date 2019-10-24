@@ -243,7 +243,7 @@ class AvailabilityAbstractTable extends AbstractTable
     protected function calculateReservation(SpyProductAbstract $productAbstractEntity): Decimal
     {
         return $this->availabilityHelper->calculateReservation(
-            $productAbstractEntity->getVirtualColumn(AvailabilityHelperInterface::RESERVATION_QUANTITY),
+            $productAbstractEntity->getVirtualColumn(AvailabilityHelperInterface::RESERVATION_QUANTITY) ?? '',
             $this->storeFacade->getStoreById($this->idStore)
         );
     }

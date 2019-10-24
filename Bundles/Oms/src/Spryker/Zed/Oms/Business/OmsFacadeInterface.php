@@ -271,11 +271,11 @@ interface OmsFacadeInterface
      * @api
      *
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function sumReservedProductQuantitiesForSku(string $sku, ?StoreTransfer $storeTransfer = null): Decimal;
+    public function sumReservedProductQuantitiesForSku(string $sku, StoreTransfer $storeTransfer): Decimal;
 
     /**
      *  - Returns reserved quantity for the given sku which aggregated in OMS.
