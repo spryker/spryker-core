@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\CmsSlotBlock\Persistence;
 
+use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
+use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -40,22 +43,46 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
     }
 
     /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
-    public function getCmsBlocksWithSlotRelations(): array
+    public function getCmsBlocksWithSlotRelations(FilterTransfer $filterTransfer): array
     {
+        $cmsBlockIds = $this->getCmsBlockIds($filterTransfer);
+
+        if (!$cmsBlockIds) {
+            return [];
+        }
+
         $cmsBlockEntities = $this->getFactory()
             ->getCmsBlockQuery()
+            ->filterByIdCmsBlock_In($cmsBlockIds)
+            ->groupByIdCmsBlock()
             ->leftJoinWithSpyCmsSlotBlock()
-            ->leftJoinWithSpyCmsBlockStore()
             ->useSpyCmsBlockStoreQuery(null, Criteria::LEFT_JOIN)
-                ->leftJoinWithSpyStore()
+                ->joinSpyStore('stores')
+                ->withColumn("STRING_AGG(  stores.name, ',')", CmsBlockTransfer::STORE_NAMES)
             ->endUse()
             ->orderBy(SpyCmsBlockTableMap::COL_NAME)
             ->find();
 
         return $this->getFactory()
-            ->createCmsBlockMapper()
+            ->createCmsSlotBlockMapper()
             ->mapCmsBlockEntitiesToTransfers($cmsBlockEntities);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return int[]
+     */
+    protected function getCmsBlockIds(FilterTransfer $filterTransfer): array
+    {
+        return $this->buildQueryFromCriteria($this->getFactory()->getCmsBlockQuery(), $filterTransfer)
+            ->select(SpyCmsBlockTableMap::COL_ID_CMS_BLOCK)
+            ->setFormatter(SimpleArrayFormatter::class)
+            ->find()
+            ->toArray();
     }
 }

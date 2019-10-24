@@ -45,39 +45,37 @@ class CmsSlotBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\CmsSlotBlockCollectionFormDataProviderInterface $slotBlockDataProvider
      * @param int $idCmsSlotTemplate
      * @param int $idCmsSlot
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCmsSlotBlockCollectionForm(
-        CmsSlotBlockCollectionFormDataProviderInterface $slotBlockDataProvider,
-        int $idCmsSlotTemplate,
-        int $idCmsSlot
-    ): FormInterface {
+    public function createCmsSlotBlockCollectionForm(int $idCmsSlotTemplate, int $idCmsSlot): FormInterface
+    {
+        $cmsSlotBlockCollectionDataProvider = $this->createCmsSlotBlockCollectionFormDataProvider();
+
         return $this->getFormFactory()->create(
             CmsSlotBlockCollectionForm::class,
-            $slotBlockDataProvider->getData($idCmsSlotTemplate, $idCmsSlot)
+            $cmsSlotBlockCollectionDataProvider->getData($idCmsSlotTemplate, $idCmsSlot)
         );
     }
 
     /**
-     * @param \Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\CmsBlockChoiceFormDataProviderInterface $choiceFormDataProvider
      * @param int $idCmsSlotTemplate
      * @param int $idCmsSlot
      *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createCmsBlockChoiceForm(
-        CmsBlockChoiceFormDataProviderInterface $choiceFormDataProvider,
         int $idCmsSlotTemplate,
         int $idCmsSlot
     ): FormInterface {
+        $cmsBlockChoiceFormDataProvider = $this->createCmsBlockChoiceFormDataProvider();
+
         return $this->getFormFactory()->create(
             CmsBlockChoiceForm::class,
             null,
-            $choiceFormDataProvider->getOptions($idCmsSlotTemplate, $idCmsSlot)
+            $cmsBlockChoiceFormDataProvider->getOptions($idCmsSlotTemplate, $idCmsSlot)
         );
     }
 
@@ -95,7 +93,8 @@ class CmsSlotBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCmsBlockChoiceFormDataProvider(): CmsBlockChoiceFormDataProviderInterface
     {
         return new CmsBlockChoiceFormDataProvider(
-            $this->getCmsSlotBlockFacade()
+            $this->getCmsSlotBlockFacade(),
+            $this->getConfig()
         );
     }
 

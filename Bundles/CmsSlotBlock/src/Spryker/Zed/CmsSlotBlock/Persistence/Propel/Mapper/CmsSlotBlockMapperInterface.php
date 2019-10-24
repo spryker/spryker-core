@@ -35,4 +35,11 @@ interface CmsSlotBlockMapperInterface
         Collection $cmsSlotBlockEntities,
         CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer
     ): CmsSlotBlockCollectionTransfer;
+
+    /**
+     * @param \Propel\Runtime\Collection\Collection $cmsBlockEntities
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     */
+    public function mapCmsBlockEntitiesToTransfers(Collection $cmsBlockEntities): array;
 }

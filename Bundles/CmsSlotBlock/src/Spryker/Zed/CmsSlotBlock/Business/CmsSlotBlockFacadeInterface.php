@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsSlotBlock\Business;
 
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 
 interface CmsSlotBlockFacadeInterface
 {
@@ -38,11 +39,13 @@ interface CmsSlotBlockFacadeInterface
 
     /**
      * Specification:
-     * - Returns CMS Block transfers with CMS Slot relations for all existing CMS Blocks.
+     * - Returns CMS Block transfers with CMS Slot relations according to given offset and limit.
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
-    public function getCmsBlocksWithSlotRelations(): array;
+    public function getCmsBlocksWithSlotRelations(FilterTransfer $filterTransfer): array;
 }

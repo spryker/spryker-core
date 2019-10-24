@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsSlotBlock\Business;
 
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -55,10 +56,12 @@ class CmsSlotBlockFacade extends AbstractFacade implements CmsSlotBlockFacadeInt
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
-    public function getCmsBlocksWithSlotRelations(): array
+    public function getCmsBlocksWithSlotRelations(FilterTransfer $filterTransfer): array
     {
-        return $this->getRepository()->getCmsBlocksWithSlotRelations();
+        return $this->getRepository()->getCmsBlocksWithSlotRelations($filterTransfer);
     }
 }

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CmsSlotBlockGui\Communication\Form\SlotBlock;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,8 +20,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CmsBlockChoiceForm extends AbstractType
 {
     public const OPTION_CMS_BLOCKS = 'cms_blocks';
-    public const OPTION_CMS_BLOCKS_STORES = 'cms_blocks_stores';
-    public const OPTION_CMS_BLOCK_IDS_ASSIGNED_TO_SLOT = 'cms_block_ids_assigned_to_slot';
 
     protected const FIELD_CMS_BLOCKS = 'cmsBlocks';
     protected const PLACEHOLDER_CMS_BLOCKS = 'Select or type a block name to assign';
@@ -34,15 +31,7 @@ class CmsBlockChoiceForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            static::OPTION_CMS_BLOCKS => false,
-            static::OPTION_CMS_BLOCKS_STORES => false,
-            static::OPTION_CMS_BLOCK_IDS_ASSIGNED_TO_SLOT => false,
-        ]);
-
-        $resolver->setAllowedTypes(static::OPTION_CMS_BLOCKS, 'array');
-        $resolver->setAllowedTypes(static::OPTION_CMS_BLOCKS_STORES, 'array');
-        $resolver->setAllowedTypes(static::OPTION_CMS_BLOCK_IDS_ASSIGNED_TO_SLOT, 'array');
+        $resolver->setRequired([static::OPTION_CMS_BLOCKS]);
     }
 
     /**
@@ -75,29 +64,17 @@ class CmsBlockChoiceForm extends AbstractType
             'choice_label' => function (?CmsBlockTransfer $cmsBlockTransfer = null): string {
                 return $cmsBlockTransfer ? $cmsBlockTransfer->getName() : '';
             },
-            'choice_attr' => function (CmsBlockTransfer $cmsBlockTransfer) use ($options): array {
+            'choice_attr' => function (CmsBlockTransfer $cmsBlockTransfer): array {
                 return [
                     'data-is-active' => $cmsBlockTransfer->getIsActive(),
                     'data-valid-from' => $cmsBlockTransfer->getValidFrom(),
                     'data-valid-to' => $cmsBlockTransfer->getValidTo(),
-                    'data-stores' => $options[static::OPTION_CMS_BLOCKS_STORES][$cmsBlockTransfer->getIdCmsBlock()],
-                    'disabled' => isset($options[static::OPTION_CMS_BLOCK_IDS_ASSIGNED_TO_SLOT][$cmsBlockTransfer->getIdCmsBlock()]),
+                    'data-stores' => $cmsBlockTransfer->getStoreNames(),
+                    'disabled' => $cmsBlockTransfer->getIsAssignedToSlot(),
                 ];
             },
         ]);
 
         return $this;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
-     *
-     * @return string[]
-     */
-    protected function getStoreNames(array $storeTransfers): array
-    {
-        return array_map(function (StoreTransfer $storeTransfer): string {
-            return $storeTransfer->getName();
-        }, $storeTransfers);
     }
 }
