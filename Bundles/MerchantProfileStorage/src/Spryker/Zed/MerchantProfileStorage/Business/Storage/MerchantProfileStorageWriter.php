@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantProfileStorage\Business\Storage;
 
 use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantProfileStorageTransfer;
+use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Generated\Shared\Transfer\MerchantProfileViewTransfer;
 use Spryker\Zed\MerchantProfileStorage\Dependency\Facade\MerchantProfileStorageToLocaleFacadeInterface;
 use Spryker\Zed\MerchantProfileStorage\Dependency\Facade\MerchantProfileStorageToMerchantProfileFacadeInterface;
@@ -72,14 +73,11 @@ class MerchantProfileStorageWriter implements MerchantProfileStorageWriterInterf
     public function publish(array $merchantProfileIds): void
     {
         $merchantProfileCriteriaFilterTransfer = $this->createMerchantProfileCriteriaFilterTransfer($merchantProfileIds);
-
         $merchantProfileCollectionTransfer = $this->merchantProfileFacade->find($merchantProfileCriteriaFilterTransfer);
         $merchantProfileTransfers = $merchantProfileCollectionTransfer->getMerchantProfiles();
 
         foreach ($merchantProfileTransfers as $merchantProfileTransfer) {
-            $merchantProfileViewTransfer = new MerchantProfileViewTransfer();
-            $merchantProfileViewTransfer->fromArray($merchantProfileTransfer->toArray(), true);
-
+            $merchantProfileViewTransfer = $this->getMerchantProfileViewTransfer($merchantProfileTransfer);
             $merchantProfileStorageTransfer = new MerchantProfileStorageTransfer();
             $merchantProfileStorageTransfer->setFkMerchant($merchantProfileTransfer->getFkMerchant());
             $merchantProfileStorageTransfer->setFkMerchantProfile($merchantProfileTransfer->getIdMerchantProfile());
@@ -88,6 +86,19 @@ class MerchantProfileStorageWriter implements MerchantProfileStorageWriterInterf
 
             $this->entityManager->saveMerchantProfileStorageEntity($merchantProfileStorageTransfer);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileViewTransfer
+     */
+    protected function getMerchantProfileViewTransfer(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileViewTransfer
+    {
+        $merchantProfileViewTransfer = new MerchantProfileViewTransfer();
+        $merchantProfileViewTransfer->fromArray($merchantProfileTransfer->toArray(), true);
+
+        return $merchantProfileViewTransfer;
     }
 
     /**

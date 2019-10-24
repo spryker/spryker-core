@@ -61,9 +61,13 @@ class MerchantProfileAddressMapper implements MerchantProfileAddressMapperInterf
         SpyMerchantProfileAddress $merchantProfileAddressEntity,
         MerchantProfileAddressTransfer $merchantProfileAddressTransfer
     ): MerchantProfileAddressTransfer {
-        return $merchantProfileAddressTransfer->fromArray(
+        $merchantProfileAddressTransfer->fromArray(
             $merchantProfileAddressEntity->toArray(),
             true
         );
+
+        $merchantProfileAddressTransfer->setCountryName($merchantProfileAddressEntity->getSpyCountry()->getName());
+
+        return $merchantProfileAddressTransfer;
     }
 }

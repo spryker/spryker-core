@@ -33,6 +33,17 @@
         <property name="dataPrivacyGlossaryKey" type="string"/>
         <property name="idMerchantProfile" type="int"/>
         <property name="fkMerchant" type="int"/>
+        <property name="addressCollection" type="MerchantProfileViewAddress[]" singular="MerchantProfileViewAddress"/>
+    </transfer>
+
+    <transfer name="MerchantProfileViewAddress">
+        <property name="countryName" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="address3" type="string"/>
+        <property name="city" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="email" type="string"/>
     </transfer>
 
     <transfer name="MerchantProfileCollection">
@@ -42,4 +53,15 @@
     <transfer name="UrlStorage">
         <property name="fkResourceMerchantProfile" type="int" />
     </transfer>
+
+    <transfer name="UrlStorageResourceMap">
+        <property name="resourceKey" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+    </transfer>
+
 </transfers>

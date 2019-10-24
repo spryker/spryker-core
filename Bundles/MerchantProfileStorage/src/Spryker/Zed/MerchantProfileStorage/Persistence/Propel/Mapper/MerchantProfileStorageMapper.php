@@ -22,7 +22,7 @@ class MerchantProfileStorageMapper implements MerchantProfileStorageMapperInterf
         MerchantProfileStorageTransfer $merchantProfileStorageTransfer,
         SpyMerchantProfileStorage $merchantProfileStorageEntity
     ): SpyMerchantProfileStorage {
-        $merchantProfileStorageEntity->fromArray($merchantProfileStorageTransfer->toArray());
+        $merchantProfileStorageEntity->fromArray($merchantProfileStorageTransfer->modifiedToArray());
 
         return $merchantProfileStorageEntity;
     }
