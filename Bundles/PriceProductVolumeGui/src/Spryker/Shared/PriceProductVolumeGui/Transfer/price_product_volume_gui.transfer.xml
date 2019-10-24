@@ -4,13 +4,44 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="PriceProductVolumeItem">
-        <property name="quantity" type="int" />
-        <property name="netPrice" type="int" />
-        <property name="grossPrice" type="int" />
+        <property name="quantity" type="int"/>
+        <property name="netPrice" type="int"/>
+        <property name="grossPrice" type="int"/>
     </transfer>
 
     <transfer name="MoneyValue">
-        <property name="priceDataChecksum" type="string" />
+        <property name="priceDataChecksum" type="string"/>
+        <property name="priceData" type="string"/>
+        <property name="fkStore" type="int"/>
+        <property name="fkCurrency" type="int"/>
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="moneyValue" type="MoneyValue"/>
+        <property name="idProduct" type="int"/>
+        <property name="idPriceProduct" type="int"/>
+    </transfer>
+
+    <transfer name="PriceProductCriteria">
+        <property name="idCurrency" type="int"/>
+        <property name="idStore" type="int"/>
+        <property name="priceType" type="string"/>
+        <property name="priceDimension" type="PriceProductDimension"/>
+    </transfer>
+
+    <transfer name="PriceProductDimension">
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="idCurrency" type="int"/>
+        <property name="fractionDigits" type="int"/>
     </transfer>
 
 </transfers>

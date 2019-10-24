@@ -20,7 +20,7 @@ use Spryker\Shared\Quote\QuoteConfig;
 class MultiCartClient extends AbstractClient implements MultiCartClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -50,7 +50,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -64,7 +64,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -78,7 +78,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -94,7 +94,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -110,7 +110,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -126,7 +126,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -142,7 +142,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -162,7 +162,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -178,7 +178,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -194,7 +194,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -208,7 +208,7 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

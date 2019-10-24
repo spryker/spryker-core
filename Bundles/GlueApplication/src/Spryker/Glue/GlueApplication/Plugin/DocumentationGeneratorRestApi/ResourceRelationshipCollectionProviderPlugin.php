@@ -17,7 +17,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class ResourceRelationshipCollectionProviderPlugin extends AbstractPlugin implements ResourceRelationshipCollectionProviderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Returns collection of plugins that are defined for GlueApplication on project level
      *
      * @api

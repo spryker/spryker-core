@@ -25,7 +25,7 @@ use Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile;
 class PriceProductScheduleFacade extends AbstractFacade implements PriceProductScheduleFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -39,9 +39,11 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @param int $daysRetained
      *
      * @return void
      */
@@ -53,7 +55,7 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -70,7 +72,7 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -87,7 +89,7 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -104,7 +106,7 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -121,7 +123,7 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -143,7 +145,7 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -159,7 +161,22 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idPriceProductScheduleList
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     */
+    public function findPriceProductSchedulesByIdPriceProductScheduleList(int $idPriceProductScheduleList): array
+    {
+        return $this->getRepository()
+            ->findPriceProductSchedulesByIdPriceProductScheduleList($idPriceProductScheduleList);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *
@@ -175,7 +192,7 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -191,7 +208,7 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -207,7 +224,7 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -221,7 +238,7 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -232,5 +249,21 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
     public function isPriceProductScheduleUnique(PriceProductScheduleTransfer $priceProductScheduleTransfer): bool
     {
         return $this->getRepository()->isPriceProductScheduleUnique($priceProductScheduleTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idPriceProductScheduleList
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
+     */
+    public function removePriceProductScheduleList(int $idPriceProductScheduleList): PriceProductScheduleListResponseTransfer
+    {
+        return $this->getFactory()
+            ->createPriceProductScheduleListRemover()
+            ->removePriceProductScheduleList($idPriceProductScheduleList);
     }
 }

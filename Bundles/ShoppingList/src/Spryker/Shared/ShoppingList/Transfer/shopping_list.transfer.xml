@@ -4,143 +4,143 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ShoppingList">
-        <property name="idShoppingList" type="int" />
+        <property name="idShoppingList" type="int"/>
         <property name="customerReference" type="string"/>
-        <property name="name" type="string" />
-        <property name="description" type="string" />
-        <property name="updatedAt" type="string" />
-        <property name="createdAt" type="string" />
-        <property name="numberOfItems" type="int" />
-        <property name="owner" type="string" />
-        <property name="idCompanyUser" type="int" />
-        <property name="sharedCompanyUsers" type="ShoppingListCompanyUser[]" />
-        <property name="sharedCompanyBusinessUnits" type="ShoppingListCompanyBusinessUnit[]" />
+        <property name="name" type="string"/>
+        <property name="description" type="string"/>
+        <property name="updatedAt" type="string"/>
+        <property name="createdAt" type="string"/>
+        <property name="numberOfItems" type="int"/>
+        <property name="owner" type="string"/>
+        <property name="idCompanyUser" type="int"/>
+        <property name="sharedCompanyUsers" type="ShoppingListCompanyUser[]" singular="sharedCompanyUsers"/>
+        <property name="sharedCompanyBusinessUnits" type="ShoppingListCompanyBusinessUnit[]" singular="sharedCompanyBusinessUnits"/>
         <property name="items" type="ShoppingListItem[]" singular="item"/>
     </transfer>
 
     <transfer name="ShoppingListCollection">
-        <property name="shoppingLists" type="ShoppingList[]" singular="shoppingList" />
+        <property name="shoppingLists" type="ShoppingList[]" singular="shoppingList"/>
     </transfer>
 
     <transfer name="ShoppingListCompanyUserCollection">
-        <property name="shoppingListCompanyUsers" type="ShoppingListCompanyUser[]" singular="shoppingListCompanyUser" />
+        <property name="shoppingListCompanyUsers" type="ShoppingListCompanyUser[]" singular="shoppingListCompanyUser"/>
     </transfer>
 
     <transfer name="ShoppingListCompanyBusinessUnitCollection">
-        <property name="shoppingListCompanyBusinessUnits" type="ShoppingListCompanyBusinessUnit[]" singular="shoppingListCompanyBusinessUnit" />
+        <property name="shoppingListCompanyBusinessUnits" type="ShoppingListCompanyBusinessUnit[]" singular="shoppingListCompanyBusinessUnit"/>
     </transfer>
 
     <transfer name="ShoppingListPermissionGroupCollection">
-        <property name="permissionGroups" type="ShoppingListPermissionGroup[]" singular="permissionGroup" />
+        <property name="permissionGroups" type="ShoppingListPermissionGroup[]" singular="permissionGroup"/>
     </transfer>
 
     <transfer name="ShoppingListItem">
-        <property name="idShoppingListItem" type="int" />
-        <property name="fkShoppingList" type="int" />
+        <property name="idShoppingListItem" type="int"/>
+        <property name="fkShoppingList" type="int"/>
         <property name="customerReference" type="string"/>
         <property name="quantity" type="int"/>
-        <property name="sku" type="string" />
-        <property name="idProduct" type="int" />
-        <property name="idProductAbstract" type="int" />
-        <property name="shoppingListName" type="string" />
-        <property name="product" type="StorageProduct" />
-        <property name="idCompanyUser" type="int" />
+        <property name="sku" type="string"/>
+        <property name="idProduct" type="int"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="shoppingListName" type="string"/>
+        <property name="product" type="StorageProduct"/>
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
     <transfer name="ShoppingListItemCollection">
-        <property name="items" type="ShoppingListItem[]" singular="item" />
+        <property name="items" type="ShoppingListItem[]" singular="item"/>
     </transfer>
 
     <transfer name="ShoppingListItemResponse">
-        <property name="ShoppingListItem" type="ShoppingListItem" />
-        <property name="isSuccess" type="bool" />
-        <property name="errors" type="array" singular="error" />
+        <property name="shoppingListItem" type="ShoppingListItem"/>
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="array" singular="error"/>
     </transfer>
 
     <transfer name="ShoppingListResponse">
-        <property name="ShoppingList" type="ShoppingList" />
-        <property name="isSuccess" type="bool" />
-        <property name="errors" type="array" singular="error" />
-        <property name="permissions" singular="permission" type="Permission[]" />
+        <property name="shoppingList" type="ShoppingList"/>
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="array" singular="error"/>
+        <property name="permissions" singular="permission" type="Permission[]"/>
     </transfer>
 
     <transfer name="ShoppingListOverviewRequest">
         <property name="shoppingList" type="ShoppingList"/>
-        <property name="orderBy" type="string" />
-        <property name="orderDirection" type="string" />
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
     </transfer>
 
     <transfer name="ShoppingListOverviewResponse">
         <property name="shoppingList" type="ShoppingList"/>
         <property name="itemsCollection" type="ShoppingListItemCollection"/>
-        <property name="shoppingLists" type="ShoppingListCollection" />
-        <property name="isSuccess" type="bool" />
+        <property name="shoppingLists" type="ShoppingListCollection"/>
+        <property name="isSuccess" type="bool"/>
     </transfer>
 
     <transfer name="ShoppingListAddToCartRequest">
-        <property name="sku" type="string" />
-        <property name="quantity" type="int" />
-        <property name="idShoppingListItem" type="int" deprecated="use shoppingListItem->idShoppingListItem instead" />
-        <property name="shoppingListItem" type="ShoppingListItem" />
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+        <property name="idShoppingListItem" type="int" deprecated="use shoppingListItem->idShoppingListItem instead"/>
+        <property name="shoppingListItem" type="ShoppingListItem"/>
     </transfer>
 
     <transfer name="ShoppingListAddToCartRequestCollection">
-        <property name="requests" type="ShoppingListAddToCartRequest[]" singular="request" />
+        <property name="requests" type="ShoppingListAddToCartRequest[]" singular="request"/>
     </transfer>
 
     <transfer name="ShoppingListShareRequest">
-        <property name="idShoppingList" type="int" />
-        <property name="idCompanyUser" type="int" />
-        <property name="idCompanyBusinessUnit" type="int" />
-        <property name="idShoppingListPermissionGroup" type="int" />
-        <property name="shoppingListOwnerId" type="int" />
+        <property name="idShoppingList" type="int"/>
+        <property name="idCompanyUser" type="int"/>
+        <property name="idCompanyBusinessUnit" type="int"/>
+        <property name="idShoppingListPermissionGroup" type="int"/>
+        <property name="shoppingListOwnerId" type="int"/>
     </transfer>
 
     <transfer name="ShoppingListDismissRequest">
-        <property name="idShoppingList" type="int" />
-        <property name="idCompanyUser" type="int" />
+        <property name="idShoppingList" type="int"/>
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
     <transfer name="ShoppingListShareResponse">
-        <property name="isSuccess" type="bool" />
-        <property name="error" type="string" />
+        <property name="isSuccess" type="bool"/>
+        <property name="error" type="string"/>
     </transfer>
 
     <transfer name="ShoppingListCompanyBusinessUnitBlacklist">
-        <property name="idShoppingListCompanyBusinessUnitBlacklist" type="int" />
-        <property name="fkShoppingListCompanyBusinessUnit" type="int" />
-        <property name="fkCompanyUser" type="int" />
+        <property name="idShoppingListCompanyBusinessUnitBlacklist" type="int"/>
+        <property name="fkShoppingListCompanyBusinessUnit" type="int"/>
+        <property name="fkCompanyUser" type="int"/>
     </transfer>
 
     <transfer name="ShoppingListPermissionGroup">
-        <property name="idShoppingListPermissionGroup" type="int" />
-        <property name="name" type="string" />
-        <property name="permissions" singular="permission" type="Permission[]" />
+        <property name="idShoppingListPermissionGroup" type="int"/>
+        <property name="name" type="string"/>
+        <property name="permissions" singular="permission" type="Permission[]"/>
     </transfer>
 
     <transfer name="ShoppingListFromCartRequest">
-        <property name="shoppingListName" type="string" />
-        <property name="idShoppingList" type="int" />
-        <property name="idQuote" type="int" />
-        <property name="customer" type="Customer" />
+        <property name="shoppingListName" type="string"/>
+        <property name="idShoppingList" type="int"/>
+        <property name="idQuote" type="int"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="ShoppingListCompanyBusinessUnit">
-        <property name="idShoppingListCompanyBusinessUnit" type="int" />
-        <property name="idShoppingList" type="int" />
-        <property name="idShoppingListPermissionGroup" type="int" />
-        <property name="idCompanyBusinessUnit" type="int" />
+        <property name="idShoppingListCompanyBusinessUnit" type="int"/>
+        <property name="idShoppingList" type="int"/>
+        <property name="idShoppingListPermissionGroup" type="int"/>
+        <property name="idCompanyBusinessUnit" type="int"/>
     </transfer>
 
     <transfer name="ShoppingListCompanyUser">
-        <property name="idShoppingListCompanyUser" type="int" />
-        <property name="idShoppingList" type="int" />
-        <property name="idShoppingListPermissionGroup" type="int" />
-        <property name="idCompanyUser" type="int" />
+        <property name="idShoppingListCompanyUser" type="int"/>
+        <property name="idShoppingList" type="int"/>
+        <property name="idShoppingListPermissionGroup" type="int"/>
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
     <transfer name="ItemCollection">
-        <property name="Items" type="Item[]" singular="item"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="ShoppingListPreAddItemCheckResponse">
@@ -150,10 +150,80 @@
 
     <transfer name="CurrentProductPrice">
         <property name="sumPrice" type="int"/>
+        <property name="price" type="int"/>
+        <property name="prices" type="array" singular="price"/>
     </transfer>
 
     <transfer name="ProductView">
-        <property name="currentProductPrice" type="CurrentProductPrice" />
+        <property name="currentProductPrice" type="CurrentProductPrice"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="bundleItems" type="Item[]" singular="bundleItem"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="StorageProduct">
+        <property name="idProductConcrete" type="int"/>
+        <property name="prices" type="array" singular="price"/>
+        <property name="price" type="int"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="permissions" type="PermissionCollection"/>
+        <property name="idCustomer" type="int"/>
+        <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="quote" type="Quote"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="Permission">
+        <property name="key" type="string"/>
+        <property name="idPermission" type="int"/>
+        <property name="configuration" type="array" singular="configuration"/>
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="quoteTransfer" type="Quote"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="customer" type="Customer"/>
+        <property name="fkCompanyBusinessUnit" type="int"/>
+        <property name="idCompanyUser" type="int"/>
+    </transfer>
+
+    <transfer name="PermissionCollection">
+        <property name="permissions" type="Permission[]" singular="permission"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="sku" type="string"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="fkProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="idCompanyBusinessUnit" type="int"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
     </transfer>
 
 </transfers>

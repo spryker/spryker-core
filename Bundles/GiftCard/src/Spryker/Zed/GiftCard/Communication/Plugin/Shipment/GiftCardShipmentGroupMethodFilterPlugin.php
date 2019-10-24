@@ -30,7 +30,7 @@ class GiftCardShipmentGroupMethodFilterPlugin extends AbstractPlugin implements 
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
     public function filterShipmentMethods(
         ShipmentGroupTransfer $shipmentGroupTransfer,

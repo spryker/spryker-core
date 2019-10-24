@@ -18,12 +18,14 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class CustomersToAddressesRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return void
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
@@ -39,7 +41,7 @@ class CustomersToAddressesRelationshipPlugin extends AbstractPlugin implements R
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

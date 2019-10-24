@@ -19,7 +19,7 @@ class LocaleExternalDataProviderStrategyPlugin extends AbstractPlugin implements
     protected const DATA_KEY = 'locale';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,14 +33,14 @@ class LocaleExternalDataProviderStrategyPlugin extends AbstractPlugin implements
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Returns the current locale name.
      *
      * @api
      *
      * @return string
      */
-    public function getDataForKey(): string
+    public function getValue(): string
     {
         return $this->getFactory()->getLocaleClient()->getCurrentLocale();
     }

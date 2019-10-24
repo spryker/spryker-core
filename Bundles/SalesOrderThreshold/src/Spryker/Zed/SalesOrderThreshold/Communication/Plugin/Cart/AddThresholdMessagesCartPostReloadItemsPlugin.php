@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class AddThresholdMessagesCartPostReloadItemsPlugin extends AbstractPlugin implements PostReloadItemsPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds the soft threshold messages to the messenger for the applicable thresholds.
      *
      * @api

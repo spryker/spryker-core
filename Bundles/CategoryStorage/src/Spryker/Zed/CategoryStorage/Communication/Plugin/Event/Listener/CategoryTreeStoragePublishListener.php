@@ -22,7 +22,7 @@ class CategoryTreeStoragePublishListener extends AbstractPlugin implements Event
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

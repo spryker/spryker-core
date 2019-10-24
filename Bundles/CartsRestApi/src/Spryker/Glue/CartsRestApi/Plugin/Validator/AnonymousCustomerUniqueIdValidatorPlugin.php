@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 class AnonymousCustomerUniqueIdValidatorPlugin extends AbstractPlugin implements ValidateRestRequestPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

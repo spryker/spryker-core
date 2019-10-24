@@ -5,8 +5,14 @@
 
     <transfer name="Quote">
         <property name="quoteApprovals" type="QuoteApproval[]" singular="quoteApproval"/>
-        <property name="totals" type="Totals" />
-        <property name="currency" type="Currency" />
+        <property name="totals" type="Totals"/>
+        <property name="currency" type="Currency"/>
+        <property name="store" type="Store"/>
+        <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
+        <property name="idQuote" type="int"/>
+        <property name="customerReference" type="string"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="QuoteApproval">
@@ -20,7 +26,8 @@
     </transfer>
 
     <transfer name="QuoteApprovalRequest">
-        <property name="idQuote" type="int"/>
+        <property name="idQuote" type="int" deprecated="Use quote property instead."/>
+        <property name="quote" type="Quote"/>
         <property name="approverCompanyUserId" type="int"/>
         <property name="requesterCompanyUserId" type="int"/>
         <property name="idQuoteApproval" type="int"/>
@@ -33,8 +40,8 @@
     <transfer name="QuoteApprovalResponse">
         <property name="quote" type="Quote"/>
         <property name="quoteApproval" type="QuoteApproval"/>
-        <property name="isSuccessful" type="bool" />
-        <property name="messages" type="Message[]" singular="message" />
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="QuoteApprovalCollection">
@@ -43,16 +50,21 @@
 
     <transfer name="Message">
         <property name="value" type="string"/>
-        <property name="parameters" type="array"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
     <transfer name="Customer">
-        <property name="companyUserTransfer" type="CompanyUser" />
+        <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="customerReference" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
     </transfer>
 
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
         <property name="companyRoleCollection" type="CompanyRoleCollection"/>
+        <property name="customer" type="Customer"/>
+        <property name="fkCompanyBusinessUnit" type="int"/>
     </transfer>
 
     <transfer name="CompanyRoleCollection">
@@ -69,21 +81,21 @@
 
     <transfer name="Permission">
         <property name="key" type="string"/>
-        <property name="configuration" type="array"/>
+        <property name="configuration" type="array" singular="configuration"/>
     </transfer>
 
     <transfer name="Currency">
-        <property name="code" type="string" />
-        <property name="symbol" type="string" />
+        <property name="code" type="string"/>
+        <property name="symbol" type="string"/>
     </transfer>
 
     <transfer name="Totals">
-        <property name="grandTotal" type="int" />
+        <property name="grandTotal" type="int"/>
     </transfer>
 
     <transfer name="QuoteValidationResponse">
-        <property name="isSuccessful" type="bool" />
-        <property name="messages" type="Message[]"  singular="message" />
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]"  singular="message"/>
     </transfer>
 
     <transfer name="Shipment">
@@ -91,11 +103,55 @@
     </transfer>
 
     <transfer name="ShipmentMethod">
-        <property name="storeCurrencyPrice" type="int" />
+        <property name="storeCurrencyPrice" type="int"/>
     </transfer>
 
     <transfer name="Store">
-        <property name="name" type="string" />
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ShareCartRequest">
+        <property name="idQuote" type="int"/>
+        <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
+    </transfer>
+
+    <transfer name="ShareDetail">
+        <property name="idCompanyUser" type="int"/>
+        <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
+    </transfer>
+
+    <transfer name="QuotePermissionGroupCriteriaFilter">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="QuotePermissionGroupResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="quotePermissionGroups" type="QuotePermissionGroup[]" singular="quotePermissionGroup"/>
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="quoteTransfer" type="Quote"/>
+    </transfer>
+
+    <transfer name="CustomerResponse">
+        <property name="customerTransfer" type="Customer"/>
+    </transfer>
+
+    <transfer name="CompanyUserCriteriaFilter">
+        <property name="companyUserIds" type="array" singular="companyUserIds"/>
+    </transfer>
+
+    <transfer name="CompanyUserCollection">
+        <property name="companyUsers" type="CompanyUser[]" singular="companyUser"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string"/>
     </transfer>
 
 </transfers>

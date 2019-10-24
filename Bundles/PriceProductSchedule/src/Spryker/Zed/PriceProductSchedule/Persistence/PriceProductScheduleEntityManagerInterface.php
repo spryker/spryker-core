@@ -66,4 +66,11 @@ interface PriceProductScheduleEntityManagerInterface
      * @return void
      */
     public function deletePriceProductScheduleById(int $idPriceProductSchedule): void;
+
+    /**
+     * @param int $idPriceProductScheduleList
+     *
+     * @return void
+     */
+    public function deletePriceProductScheduleListById(int $idPriceProductScheduleList): void;
 }

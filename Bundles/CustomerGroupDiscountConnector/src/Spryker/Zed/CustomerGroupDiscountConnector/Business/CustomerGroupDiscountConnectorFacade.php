@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CustomerGroupDiscountConnectorFacade extends AbstractFacade implements CustomerGroupDiscountConnectorFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

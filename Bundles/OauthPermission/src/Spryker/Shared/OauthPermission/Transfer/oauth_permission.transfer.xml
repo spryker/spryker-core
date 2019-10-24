@@ -19,7 +19,16 @@
 
     <transfer name="Permission">
         <property name="key" type="string"/>
-        <property name="configuration" type="array"/>
+        <property name="configuration" type="array" singular="configuration"/>
+    </transfer>
+
+    <transfer name="OauthAccessTokenData">
+        <property name="oauthUserId" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
 </transfers>

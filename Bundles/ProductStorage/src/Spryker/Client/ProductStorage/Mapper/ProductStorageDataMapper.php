@@ -52,7 +52,7 @@ class ProductStorageDataMapper implements ProductStorageDataMapperInterface
      */
     public function mapProductStorageData($locale, array $productStorageData, array $selectedAttributes = [])
     {
-        $productStorageData = $this->productAbstractVariantsRestrictionFilter->filterAbstractProductVariantsData($productStorageData);
+        $productStorageData = $this->filterAbstractProductVariantsData($productStorageData);
         $productViewTransfer = $this->createProductViewTransfer($productStorageData);
         $productViewTransfer->setSelectedAttributes($selectedAttributes);
 
@@ -61,6 +61,16 @@ class ProductStorageDataMapper implements ProductStorageDataMapperInterface
         }
 
         return $productViewTransfer;
+    }
+
+    /**
+     * @param array $productStorageData
+     *
+     * @return array
+     */
+    protected function filterAbstractProductVariantsData(array $productStorageData): array
+    {
+        return $this->productAbstractVariantsRestrictionFilter->filterAbstractProductVariantsData($productStorageData);
     }
 
     /**

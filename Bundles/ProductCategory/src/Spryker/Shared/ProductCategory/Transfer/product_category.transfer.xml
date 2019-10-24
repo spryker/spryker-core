@@ -4,10 +4,39 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ProductCategory">
-        <property name="idProductCategory" type="int" />
-        <property name="fkProductAbstract" type="int" />
-        <property name="fkCategory" type="int" />
-        <property name="productOrder" type="int" />
+        <property name="idProductCategory" type="int"/>
+        <property name="fkProductAbstract" type="int"/>
+        <property name="fkCategory" type="int"/>
+        <property name="productOrder" type="int"/>
+    </transfer>
+
+    <transfer name="LocalizedAttributes">
+        <property name="name" type="string"/>
+        <property name="locale" type="Locale"/>
+        <property name="attributes" type="array" singular="attribute"/>
+    </transfer>
+
+    <transfer name="Category">
+        <property name="categoryNode" type="Node"/>
+        <property name="idCategory" type="int"/>
+        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" singular="localizedAttributes"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="CategoryLocalizedAttributes">
+        <property name="locale" type="Locale"/>
+    </transfer>
+
+    <transfer name="CategoryCollection">
+        <property name="categories" type="Category[]" singular="category"/>
+    </transfer>
+
+    <transfer name="Node">
+        <property name="idCategoryNode" type="int"/>
     </transfer>
 
 </transfers>

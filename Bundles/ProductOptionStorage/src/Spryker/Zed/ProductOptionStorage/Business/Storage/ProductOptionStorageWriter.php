@@ -184,7 +184,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     /**
      * @param int $idProductAbstract
      * @param array $productOptions
-     * @param \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[] $productAbstractOptionStorageEntities
+     * @param \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[][] $productAbstractOptionStorageEntities
      *
      * @return void
      */

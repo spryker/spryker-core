@@ -23,7 +23,7 @@
     </table>
 
     <table name="spy_foo" idMethod="native">
-        <column name="core_column" type="BOOLEAN" />
+        <column name="core_column" type="BOOLEAN"/>
     </table>
 
 </database>

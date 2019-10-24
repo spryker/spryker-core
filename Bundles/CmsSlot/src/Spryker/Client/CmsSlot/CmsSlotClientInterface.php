@@ -7,17 +7,21 @@
 
 namespace Spryker\Client\CmsSlot;
 
+use Generated\Shared\Transfer\CmsSlotExternalDataTransfer;
+
 interface CmsSlotClientInterface
 {
     /**
      * Specification:
-     * - Returns an array with keys from $dataKeys and values which are provided by Spryker\Client\CmsSlotExtension\Dependency\Plugin\ExternalDataProviderStrategyPluginInterface plugins.
+     * - Finds the values by the given keys.
+     * - Fills the CmsSlotExternalDataTransfer::values with the keys from $dataKeys and values which are provided by Spryker\Client\CmsSlotExtension\Dependency\Plugin\ExternalDataProviderStrategyPluginInterface plugins.
+     * - Returns the CmsSlotExternalDataTransfer with the obtained values.
      *
      * @api
      *
      * @param string[] $dataKeys
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\CmsSlotExternalDataTransfer
      */
-    public function getCmsSlotExternalDataByKeys(array $dataKeys): array;
+    public function getCmsSlotExternalDataByKeys(array $dataKeys): CmsSlotExternalDataTransfer;
 }

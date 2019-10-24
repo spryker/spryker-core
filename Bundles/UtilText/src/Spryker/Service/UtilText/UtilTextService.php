@@ -15,8 +15,7 @@ use Spryker\Service\Kernel\AbstractService;
 class UtilTextService extends AbstractService implements UtilTextServiceInterface
 {
     /**
-     * Specification:
-     * - Generate slug based on value.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -32,8 +31,7 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * Specification:
-     * - Generates random string for given length value.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,8 +47,7 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * Specification:
-     * - Generates hash from value by specified algorithm.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -81,8 +78,7 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * Specification:
-     * - Converts a string with a given separator into a camel cased string.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -98,7 +94,14 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $rawToken
+     * @param array $options
+     *
+     * @return string
      */
     public function generateToken($rawToken, array $options = [])
     {
@@ -106,7 +109,14 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $rawToken
+     * @param string $hash
+     *
+     * @return bool
      */
     public function checkToken($rawToken, $hash)
     {
