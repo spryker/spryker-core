@@ -18,6 +18,8 @@ class ProductReviewResourceRelationshipExpander implements ProductReviewResource
 
     protected const PRODUCT_MAPPING_TYPE = 'sku';
 
+    protected const PARAMETER_NAME_ITEMS_PER_PAGE = 'ipp';
+
     /**
      * @var \Spryker\Glue\ProductReviewsRestApi\Processor\Reader\ProductReviewReaderInterface
      */
@@ -95,8 +97,14 @@ class ProductReviewResourceRelationshipExpander implements ProductReviewResource
             return;
         }
 
+        $requestParams = [static::PARAMETER_NAME_ITEMS_PER_PAGE => 0];
+
         $productReviews = $this->productReviewReader
-            ->findProductReviewsByIdProductAbstract($restRequest, $productData[static::KEY_ID_PRODUCT_ABSTRACT]);
+            ->findProductReviewsByIdProductAbstract(
+                $restRequest,
+                $productData[static::KEY_ID_PRODUCT_ABSTRACT],
+                $requestParams
+            );
 
         foreach ($productReviews as $productReview) {
             $resource->addRelationship($productReview);

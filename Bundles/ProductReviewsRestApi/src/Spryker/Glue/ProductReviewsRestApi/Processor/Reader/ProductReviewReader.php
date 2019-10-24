@@ -13,6 +13,7 @@ use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\ProductRev
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\Page;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewClientInterface;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductReviewsRestApi\Processor\RestResponseBuilder\ProductReviewRestResponseBuilderInterface;
@@ -21,9 +22,12 @@ use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 class ProductReviewReader implements ProductReviewReaderInterface
 {
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
+
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     protected const DEFAULT_REVIEWS_PER_PAGE = 3;
+
+    protected const PARAMETER_NAME_ITEMS_PER_PAGE = 'ipp';
 
     /**
      * @var \Spryker\Glue\ProductReviewsRestApi\Processor\RestResponseBuilder\ProductReviewRestResponseBuilderInterface
@@ -77,10 +81,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
             return $this->productReviewRestResponseBuilder->createProductAbstractNotFoundErrorResponse();
         }
 
-        $productReviews = $this->findProductReviewsInSearch(
-            $restRequest,
-            $abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT]
-        );
+        $productReviews = $this->findProductReviewsInSearch($restRequest, $abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT]);
 
         if (!$restRequest->getPage()) {
             $restRequest->setPage(new Page(1, static::DEFAULT_REVIEWS_PER_PAGE));
@@ -96,16 +97,19 @@ class ProductReviewReader implements ProductReviewReaderInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param int $idProductAbstract
+     * @param array $requestParams
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
     public function findProductReviewsByIdProductAbstract(
         RestRequestInterface $restRequest,
-        int $idProductAbstract
+        int $idProductAbstract,
+        array $requestParams = []
     ): array {
         $productReviewTransfers = $this->findProductReviewsInSearch(
             $restRequest,
-            $idProductAbstract
+            $idProductAbstract,
+            $requestParams
         )[ProductReviewsResultFormatterPlugin::NAME];
 
         return $this->prepareRestResourceCollection($productReviewTransfers);
@@ -114,18 +118,33 @@ class ProductReviewReader implements ProductReviewReaderInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param int $idProductAbstract
+     * @param array $requestParams
      *
      * @return array
      */
     protected function findProductReviewsInSearch(
         RestRequestInterface $restRequest,
-        int $idProductAbstract
+        int $idProductAbstract,
+        array $requestParams = []
     ): array {
-        return $this->productReviewClient->findProductReviewsInSearch(
+        $restRequestRequestParams = $restRequest->getHttpRequest()->query->all();
+        if (isset($restRequestRequestParams[RequestConstantsInterface::QUERY_PAGE][RequestConstantsInterface::QUERY_OFFSET])) {
+            $requestParams[RequestConstantsInterface::QUERY_OFFSET]
+                = $restRequestRequestParams[RequestConstantsInterface::QUERY_PAGE][RequestConstantsInterface::QUERY_OFFSET];
+        }
+
+        if (isset($restRequestRequestParams[RequestConstantsInterface::QUERY_PAGE][RequestConstantsInterface::QUERY_LIMIT])) {
+            $requestParams[RequestConstantsInterface::QUERY_LIMIT]
+                = $restRequestRequestParams[RequestConstantsInterface::QUERY_PAGE][RequestConstantsInterface::QUERY_LIMIT];
+        }
+
+        $productReviews = $this->productReviewClient->findProductReviewsInSearch(
             (new ProductReviewSearchRequestTransfer())
-                ->setRequestParams($restRequest->getHttpRequest()->query->all())
+                ->setRequestParams($requestParams)
                 ->setIdProductAbstract($idProductAbstract)
         );
+
+        return $productReviews;
     }
 
     /**

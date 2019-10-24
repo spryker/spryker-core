@@ -7,9 +7,7 @@
 
 namespace Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander;
 
-use Elastica\Query;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
@@ -26,37 +24,8 @@ class PaginatedProductReviewsQueryExpanderPlugin extends AbstractPlugin implemen
      */
     public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
     {
-        $paginationConfigBuilder = $this->getFactory()->getPaginationConfigBuilder();
-        $this->addPaginationToQuery($searchQuery->getSearchQuery(), $paginationConfigBuilder, $requestParameters);
+        $this->getFactory()->createPaginationAdder()->addPaginationToQuery($searchQuery, $requestParameters);
 
         return $searchQuery;
-    }
-
-    /**
-     * @param \Elastica\Query $query
-     * @param \Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface $paginationConfigBuilder
-     * @param array $requestParameters
-     *
-     * @return void
-     */
-    protected function addPaginationToQuery(Query $query, PaginationConfigBuilderInterface $paginationConfigBuilder, array $requestParameters)
-    {
-        $currentPage = $paginationConfigBuilder->getCurrentPage($requestParameters);
-        $itemsPerPage = $paginationConfigBuilder->getCurrentItemsPerPage($requestParameters);
-
-        $page = $requestParameters['page'] ?? [];
-
-        $pageOffset = $page['offset'] ?? 0;
-        if ((int)$pageOffset !== 0) {
-            $currentPage = $pageOffset;
-        }
-
-        $pageLimit = $page['limit'] ?? 0;
-        if ((int)$pageLimit !== 0) {
-            $itemsPerPage = $pageLimit;
-        }
-
-        $query->setFrom(($currentPage - 1) * $itemsPerPage);
-        $query->setSize($itemsPerPage);
     }
 }
