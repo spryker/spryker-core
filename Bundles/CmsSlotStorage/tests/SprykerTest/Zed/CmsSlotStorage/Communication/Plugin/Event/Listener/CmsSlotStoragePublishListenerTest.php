@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\CmsSlotStorage\Communication\Plugin\Event\Listener;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CmsSlotStorageTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Spryker\Client\Kernel\Container;
@@ -103,7 +102,7 @@ class CmsSlotStoragePublishListenerTest extends Unit
             CmsSlotTransfer::IS_ACTIVE => false,
         ]);
         $this->cmsSlotStorageEntityManager->saveCmsSlotStorage(
-            (new CmsSlotStorageTransfer())->setKey($cmsSlotTransfer->getKey())
+            (new CmsSlotTransfer())->setKey($cmsSlotTransfer->getKey())
         );
         $beforeCount = count($this->cmsSlotStorageRepository->getCmsSlotStorageEntitiesByCmsSlotKeys([static::CMS_SLOT_KEY]));
 
