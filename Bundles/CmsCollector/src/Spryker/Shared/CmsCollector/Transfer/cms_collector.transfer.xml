@@ -8,11 +8,26 @@
         <property name="validFrom" type="string"/>
         <property name="validTo" type="string"/>
         <property name="isActive" type="bool"/>
+        <property name="idCmsPage" type="int"/>
+        <property name="name" type="string"/>
+        <property name="metaTitle" type="string"/>
+        <property name="metaKeywords" type="string"/>
+        <property name="metaDescription" type="string"/>
+        <property name="placeholders" type="array" singular="placeholders"/>
     </transfer>
 
     <transfer name="Locale">
         <property name="idLocale" type="int"/>
         <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="PageMap">
+        <property name="store" type="string"/>
+        <property name="activeFrom" type="string"/>
+        <property name="activeTo" type="string"/>
+        <property name="locale" type="string"/>
+        <property name="type" type="string"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
 </transfers>

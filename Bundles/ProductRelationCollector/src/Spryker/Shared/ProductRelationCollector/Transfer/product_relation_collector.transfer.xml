@@ -13,11 +13,15 @@
         <property name="idProductAbstract" type="int"/>
         <property name="name" type="string"/>
         <property name="price" type="int"/>
-        <property name="prices" type="array"/>
+        <property name="prices" type="array" singular="prices"/>
         <property name="url" type="string"/>
         <property name="sku" type="string"/>
         <property name="order" type="int"/>
         <property name="imageSets" type="array" singular="imageSet"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
     </transfer>
 
 </transfers>
