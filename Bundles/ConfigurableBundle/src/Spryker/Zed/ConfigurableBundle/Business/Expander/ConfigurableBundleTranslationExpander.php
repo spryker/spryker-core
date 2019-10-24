@@ -109,7 +109,7 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
     protected function getSingleLocaleTranslation(string $translationKey, LocaleTransfer $localeTransfer): TranslationTransfer
     {
         if ($this->glossaryFacade->hasTranslation($translationKey, $localeTransfer)) {
-            return $this->glossaryFacade->getTranslationsByGlossaryKeyAndLocales($translationKey, [$localeTransfer])[0];
+            return $this->glossaryFacade->getTranslation($translationKey, $localeTransfer);
         }
 
         return $this->getFallbackTranslation($translationKey);
