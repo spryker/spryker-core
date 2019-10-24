@@ -7,13 +7,26 @@
 
 namespace Spryker\Zed\ProductOfferStockDataImport\Business;
 
+use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
+use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductOfferStockDataImport\Business\ProductOfferStockDataImportBusinessFactory getFactory()
- * @method \Spryker\Zed\ProductOfferStockDataImport\Persistence\ProductOfferStockDataImportRepositoryInterface getRepository()
- * @method \Spryker\Zed\ProductOfferStockDataImport\Persistence\ProductOfferStockDataImportEntityManagerInterface getEntityManager()
  */
 class ProductOfferStockDataImportFacade extends AbstractFacade implements ProductOfferStockDataImportFacadeInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importProductOfferStock(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
+    {
+        return $this->getFactory()->createProductOfferStockDataImporter()->import($dataImporterConfigurationTransfer);
+    }
 }

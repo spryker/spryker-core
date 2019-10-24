@@ -50,7 +50,9 @@ class ProductOfferReferenceToIdProductOfferStep implements DataImportStepInterfa
             ));
         }
 
-        $productOffer = current($this->productOfferFacade->find($productOfferReference)->getProductOffers());
+        $productOffer = current($this->productOfferFacade
+            ->find($this->createProductOfferCriteriaFilterTransfer($productOfferReference))
+            ->getProductOffers());
 
         if ($productOffer === false) {
             throw new EntityNotFoundException(sprintf('Product offer not found for product offer reference %s', $productOfferReference));

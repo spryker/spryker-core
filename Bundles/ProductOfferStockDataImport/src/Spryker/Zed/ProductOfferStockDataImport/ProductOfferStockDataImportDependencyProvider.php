@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\ProductOfferStockDataImport;
 
-use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\DataImport\DataImportDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductOfferStockDataImport\Dependency\Facade\ProductOfferStockDataImportToProductOfferFacadeBridge;
 
 /**
  * @method \Spryker\Zed\ProductOfferStockDataImport\ProductOfferStockDataImportConfig getConfig()
  */
-class ProductOfferStockDataImportDependencyProvider extends AbstractBundleDependencyProvider
+class ProductOfferStockDataImportDependencyProvider extends DataImportDependencyProvider
 {
     public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
 
@@ -25,6 +25,7 @@ class ProductOfferStockDataImportDependencyProvider extends AbstractBundleDepend
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addProductOfferFacade($container);
 
         return $container;

@@ -24,7 +24,7 @@ class ProductOfferStockDataImportBusinessFactory extends DataImportBusinessFacto
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function createProductOfferStockDataImport(): DataImporterInterface
+    public function createProductOfferStockDataImporter(): DataImporterInterface
     {
         /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporter */
         $dataImporter = $this->getCsvDataImporterFromConfig(
