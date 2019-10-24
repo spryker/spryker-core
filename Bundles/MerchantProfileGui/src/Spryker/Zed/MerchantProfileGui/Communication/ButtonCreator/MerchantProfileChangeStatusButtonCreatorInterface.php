@@ -16,5 +16,5 @@ interface MerchantProfileChangeStatusButtonCreatorInterface
      *
      * @return \Generated\Shared\Transfer\ButtonTransfer|null
      */
-    public function getChangeStatusButton(int $idMerchant): ?ButtonTransfer;
+    public function generateChangeStatusButton(int $idMerchant): ?ButtonTransfer;
 }

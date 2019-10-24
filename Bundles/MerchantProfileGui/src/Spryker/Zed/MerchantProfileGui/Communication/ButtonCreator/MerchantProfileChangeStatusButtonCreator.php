@@ -45,7 +45,7 @@ class MerchantProfileChangeStatusButtonCreator implements MerchantProfileChangeS
      *
      * @return \Generated\Shared\Transfer\ButtonTransfer|null
      */
-    public function getChangeStatusButton(int $idMerchant): ?ButtonTransfer
+    public function generateChangeStatusButton(int $idMerchant): ?ButtonTransfer
     {
         $merchantProfileTransfer = $this->findMerchantProfileByIdMerchant($idMerchant);
 

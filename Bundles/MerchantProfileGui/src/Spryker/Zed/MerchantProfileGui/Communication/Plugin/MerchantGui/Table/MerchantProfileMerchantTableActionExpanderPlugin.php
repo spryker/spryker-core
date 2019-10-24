@@ -33,7 +33,7 @@ class MerchantProfileMerchantTableActionExpanderPlugin extends AbstractPlugin im
 
         $button = $this->getFactory()
             ->createMerchantProfileChangeStatusButtonCreator()
-            ->getChangeStatusButton($item[SpyMerchantTableMap::COL_ID_MERCHANT]);
+            ->generateChangeStatusButton($item[SpyMerchantTableMap::COL_ID_MERCHANT]);
 
         if ($button !== null) {
             $buttons[] = $button;
