@@ -11,12 +11,10 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\StockProductBuilder;
 use Generated\Shared\DataBuilder\TypeBuilder;
 use Generated\Shared\Transfer\TypeTransfer;
-use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class StockDataHelper extends Module
 {
-    use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
     /**
