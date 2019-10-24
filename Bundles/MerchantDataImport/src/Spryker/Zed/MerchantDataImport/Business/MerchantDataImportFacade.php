@@ -31,7 +31,7 @@ class MerchantDataImportFacade extends AbstractFacade implements MerchantDataImp
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
