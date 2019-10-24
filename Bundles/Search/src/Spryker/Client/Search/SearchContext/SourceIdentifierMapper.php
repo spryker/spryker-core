@@ -9,15 +9,15 @@ namespace Spryker\Client\Search\SearchContext;
 
 use Generated\Shared\Transfer\SearchContextTransfer;
 
-class SearchContextMapper implements SearchContextMapperInterface
+class SourceIdentifierMapper implements SourceIdentifierMapperInterface
 {
     /**
-     * @var array|\Spryker\Client\SearchExtension\Dependency\Plugin\SourceIdentifiertMapperPluginInterface[]
+     * @var array|\Spryker\Client\SearchExtension\Dependency\Plugin\SourceIdentifierMapperPluginInterface[]
      */
     protected $sourceIdentifierPlugins;
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SourceIdentifiertMapperPluginInterface[] $sourceIdentifierPlugins
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SourceIdentifierMapperPluginInterface[] $sourceIdentifierPlugins
      */
     public function __construct(array $sourceIdentifierPlugins)
     {

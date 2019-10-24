@@ -11,7 +11,7 @@ use Exception;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Exception\SearchDelegatorException;
-use Spryker\Client\Search\SearchContext\SearchContextMapperInterface;
+use Spryker\Client\Search\SearchContext\SourceIdentifierMapperInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface;
 
 class SearchDelegator implements SearchDelegatorInterface
@@ -22,15 +22,15 @@ class SearchDelegator implements SearchDelegatorInterface
     protected $searchAdapterPlugins;
 
     /**
-     * @var \Spryker\Client\Search\SearchContext\SearchContextMapperInterface
+     * @var \Spryker\Client\Search\SearchContext\SourceIdentifierMapperInterface
      */
     protected $sourceIdentifierMapper;
 
     /**
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface[] $searchAdapter
-     * @param \Spryker\Client\Search\SearchContext\SearchContextMapperInterface $sourceIdentifierMapper
+     * @param \Spryker\Client\Search\SearchContext\SourceIdentifierMapperInterface $sourceIdentifierMapper
      */
-    public function __construct(array $searchAdapter, SearchContextMapperInterface $sourceIdentifierMapper)
+    public function __construct(array $searchAdapter, SourceIdentifierMapperInterface $sourceIdentifierMapper)
     {
         $this->searchAdapterPlugins = $searchAdapter;
         $this->sourceIdentifierMapper = $sourceIdentifierMapper;
