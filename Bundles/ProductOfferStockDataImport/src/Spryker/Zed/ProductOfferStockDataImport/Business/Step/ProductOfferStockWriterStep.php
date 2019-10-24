@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\ProductOfferStockDataImport\Business\Step;
 
+use Orm\Zed\ProductOfferStock\Persistence\Base\SpyProductOfferStockQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\ProductOfferStock\Persistence\Propel\AbstractSpyProductOfferStockQuery;
 use Spryker\Zed\ProductOfferStockDataImport\Business\DataSet\ProductOfferStockDataSetInterface;
 
 class ProductOfferStockWriterStep implements DataImportStepInterface
@@ -21,7 +21,7 @@ class ProductOfferStockWriterStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $productOfferStockEntity = AbstractSpyProductOfferStockQuery::create()
+        $productOfferStockEntity = SpyProductOfferStockQuery::create()
             ->filterByFkProductOffer($dataSet[ProductOfferStockDataSetInterface::FK_PRODUCT_OFFER])
             ->filterByFkStock($dataSet[ProductOfferStockDataSetInterface::FK_STOCK])
             ->findOneOrCreate();
