@@ -74,10 +74,6 @@ class ShipmentMethodTable extends AbstractTable
     protected function prepareQuery(): SpyShipmentMethodQuery
     {
         return $this->shipmentMethodQuery
-            ->leftJoinShipmentMethodStore()
-            ->useShipmentMethodStoreQuery()
-                ->leftJoinStore()
-            ->endUse()
             ->leftJoinWithShipmentCarrier();
     }
 
@@ -229,7 +225,6 @@ class ShipmentMethodTable extends AbstractTable
             SpyShipmentCarrierTableMap::COL_NAME,
             SpyShipmentMethodTableMap::COL_NAME,
             SpyShipmentMethodTableMap::COL_IS_ACTIVE,
-            SpyStoreTableMap::COL_NAME,
         ]);
 
         return $tableConfiguration;
