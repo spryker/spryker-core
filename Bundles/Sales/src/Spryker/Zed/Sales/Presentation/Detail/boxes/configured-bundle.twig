@@ -2,7 +2,7 @@
 {% for bundle in order.salesOrderConfiguredBundles %}
     <tr>
         <td colspan="5">
-            {{ bundle.translations[0].Name | trans }}
+            {{ (bundle.translations[0].name ?? bundle.name) | trans }}
             ({{ 'ID:' | trans }} {{ bundle.configurableBundleTemplateUuid }})
         </td>
         <td>
