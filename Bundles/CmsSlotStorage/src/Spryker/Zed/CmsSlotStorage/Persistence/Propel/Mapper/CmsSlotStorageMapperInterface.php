@@ -7,19 +7,19 @@
 
 namespace Spryker\Zed\CmsSlotStorage\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\CmsSlotStorageTransfer;
+use Generated\Shared\Transfer\CmsSlotTransfer;
 use Orm\Zed\CmsSlotStorage\Persistence\SpyCmsSlotStorage;
 
 interface CmsSlotStorageMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotStorageTransfer $cmsSlotStorageTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotTransfer $cmsSlotTransfer
      * @param \Orm\Zed\CmsSlotStorage\Persistence\SpyCmsSlotStorage $cmsSlotStorageEntity
      *
      * @return \Orm\Zed\CmsSlotStorage\Persistence\SpyCmsSlotStorage
      */
-    public function mapCmsSlotStorageTransferToEntity(
-        CmsSlotStorageTransfer $cmsSlotStorageTransfer,
+    public function mapCmsSlotTransferToStorageEntity(
+        CmsSlotTransfer $cmsSlotTransfer,
         SpyCmsSlotStorage $cmsSlotStorageEntity
     ): SpyCmsSlotStorage;
 }

@@ -7,20 +7,20 @@
 
 namespace Spryker\Client\CmsSlotStorage;
 
-use Generated\Shared\Transfer\CmsSlotStorageTransfer;
+use Generated\Shared\Transfer\CmsSlotTransfer;
 
 interface CmsSlotStorageClientInterface
 {
     /**
      * Specification:
-     * - Retrieves CmsSlotStorageTransfer by the given key.
+     * - Retrieves CmsSlotTransfer by the given key.
      * - Returns null if CMS slot is not present in the storage.
      *
      * @api
      *
      * @param string $cmsSlotKey
      *
-     * @return \Generated\Shared\Transfer\CmsSlotStorageTransfer|null
+     * @return \Generated\Shared\Transfer\CmsSlotTransfer|null
      */
-    public function findCmsSlotByKey(string $cmsSlotKey): ?CmsSlotStorageTransfer;
+    public function findCmsSlotByKey(string $cmsSlotKey): ?CmsSlotTransfer;
 }

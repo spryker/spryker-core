@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotStorage\Persistence;
 
-use Generated\Shared\Transfer\CmsSlotStorageTransfer;
+use Generated\Shared\Transfer\CmsSlotTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -16,22 +16,22 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class CmsSlotStorageEntityManager extends AbstractEntityManager implements CmsSlotStorageEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotStorageTransfer $cmsSlotStorageTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotTransfer $cmsSlotTransfer
      *
      * @return void
      */
-    public function saveCmsSlotStorage(CmsSlotStorageTransfer $cmsSlotStorageTransfer): void
+    public function saveCmsSlotStorage(CmsSlotTransfer $cmsSlotTransfer): void
     {
-        $cmsSlotStorageTransfer->requireKey();
+        $cmsSlotTransfer->requireKey();
 
         $cmsSlotStorageEntity = $this->getFactory()
             ->getCmsSlotStorageQuery()
-            ->filterByCmsSlotKey($cmsSlotStorageTransfer->getKey())
+            ->filterByCmsSlotKey($cmsSlotTransfer->getKey())
             ->findOneOrCreate();
 
         $cmsSlotStorageEntity = $this->getFactory()
             ->createCmsSlotStorageMapper()
-            ->mapCmsSlotStorageTransferToEntity($cmsSlotStorageTransfer, $cmsSlotStorageEntity);
+            ->mapCmsSlotTransferToStorageEntity($cmsSlotTransfer, $cmsSlotStorageEntity);
 
         $cmsSlotStorageEntity->save();
     }
