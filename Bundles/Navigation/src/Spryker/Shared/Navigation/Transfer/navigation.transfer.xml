@@ -44,4 +44,12 @@
         <property name="children" type="NavigationTreeNode[]" singular="child"/>
     </transfer>
 
+    <transfer name="Url">
+        <property name="idUrl" type="int"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+    </transfer>
+
 </transfers>
