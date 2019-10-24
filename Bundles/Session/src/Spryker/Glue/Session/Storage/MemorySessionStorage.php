@@ -16,10 +16,12 @@ use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
 
 /**
  * This class is used as workaround for Clients which depend on session, this will provide in memory storage that means after request complected it's discarded.
- * When using SessionClient within GLUE application context, it will use this storage.
+ * When using SessionClient within Glue application context, it will use this storage.
  */
 class MemorySessionStorage implements SessionStorageInterface
 {
+    protected const SESSION_ID = 'MOCKSESSID';
+
     /**
      * @var string
      */
@@ -59,7 +61,7 @@ class MemorySessionStorage implements SessionStorageInterface
      * @param string $name
      * @param \Symfony\Component\HttpFoundation\Session\Storage\MetadataBag|null $metaBag MetadataBag instance
      */
-    public function __construct(string $name = 'MOCKSESSID', ?MetadataBag $metaBag = null)
+    public function __construct(string $name = self::SESSION_ID, ?MetadataBag $metaBag = null)
     {
         $this->name = $name;
         $this->setMetadataBag($metaBag);
