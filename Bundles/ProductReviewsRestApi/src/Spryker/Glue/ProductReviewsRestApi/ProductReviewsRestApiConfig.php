@@ -14,4 +14,6 @@ class ProductReviewsRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_PRODUCT_REVIEWS = 'product-reviews';
 
     public const CONTROLLER_PRODUCT_REVIEWS = 'product-reviews-resource';
+
+    public const RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED = 'Resource is not implemented.';
 }

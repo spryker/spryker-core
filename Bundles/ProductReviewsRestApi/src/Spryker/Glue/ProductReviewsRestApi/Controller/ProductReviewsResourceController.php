@@ -29,7 +29,8 @@ class ProductReviewsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "400": "Abstract product id is not specified.",
-     *              "404": "Abstract product not found."
+     *              "404": "Abstract product not found.",
+     *              "501": "Not implemented."
      *          }
      *     }
      * })
@@ -54,7 +55,7 @@ class ProductReviewsResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "403": "Unauthorized request.",
+     *              "422": "Unprocessable entity."
      *          }
      *     }
      * })

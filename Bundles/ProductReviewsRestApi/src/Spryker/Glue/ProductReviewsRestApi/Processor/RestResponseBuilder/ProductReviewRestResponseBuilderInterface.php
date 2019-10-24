@@ -49,6 +49,11 @@ interface ProductReviewRestResponseBuilderInterface
     public function createProductAbstractNotFoundErrorResponse(): RestResponseInterface;
 
     /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createNotImplementedErrorResponse(): RestResponseInterface;
+
+    /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ProductReviewErrorTransfer[] $productReviewErrorTransfers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

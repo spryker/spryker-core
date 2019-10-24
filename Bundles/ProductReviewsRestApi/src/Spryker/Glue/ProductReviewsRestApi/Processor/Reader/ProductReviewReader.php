@@ -10,6 +10,7 @@ namespace Spryker\Glue\ProductReviewsRestApi\Processor\Reader;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\PaginatedProductReviewsResultFormatterPlugin;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\ProductReviewsResultFormatterPlugin;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\Page;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -25,7 +26,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
 
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
-    protected const DEFAULT_REVIEWS_PER_PAGE = 3;
+    protected const DEFAULT_REVIEWS_PER_PAGE = 10;
 
     protected const PARAMETER_NAME_ITEMS_PER_PAGE = 'ipp';
 
@@ -66,8 +67,12 @@ class ProductReviewReader implements ProductReviewReaderInterface
      */
     public function findProductReviews(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $parentResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS);
-        if (!$parentResource || !$parentResource->getId()) {
+        if ($restRequest->getResource()->getId()) {
+            return $this->productReviewRestResponseBuilder->createNotImplementedErrorResponse();
+        }
+
+        $parentResource = $this->findAbstractProductsParentResource($restRequest);
+        if (!$parentResource) {
             return $this->productReviewRestResponseBuilder->createProductAbstractSkuMissingErrorResponse();
         }
 
@@ -92,6 +97,21 @@ class ProductReviewReader implements ProductReviewReaderInterface
             $restRequest->getPage()->getLimit(),
             $productReviews[ProductReviewsResultFormatterPlugin::NAME]
         );
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
+     */
+    protected function findAbstractProductsParentResource(RestRequestInterface $restRequest): ?RestResourceInterface
+    {
+        $parentResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS);
+        if (!$parentResource || !$parentResource->getId()) {
+            return null;
+        }
+
+        return $parentResource;
     }
 
     /**
@@ -127,16 +147,13 @@ class ProductReviewReader implements ProductReviewReaderInterface
         int $idProductAbstract,
         array $requestParams = []
     ): array {
-        $restRequestRequestParams = $restRequest->getHttpRequest()->query->all();
-        if (isset($restRequestRequestParams[RequestConstantsInterface::QUERY_PAGE][RequestConstantsInterface::QUERY_OFFSET])) {
+        $restRequestParams = $restRequest->getHttpRequest()->query->all();
+        if (isset($restRequestParams[RequestConstantsInterface::QUERY_PAGE][RequestConstantsInterface::QUERY_OFFSET])) {
             $requestParams[RequestConstantsInterface::QUERY_OFFSET]
-                = $restRequestRequestParams[RequestConstantsInterface::QUERY_PAGE][RequestConstantsInterface::QUERY_OFFSET];
+                = $restRequestParams[RequestConstantsInterface::QUERY_PAGE][RequestConstantsInterface::QUERY_OFFSET];
         }
 
-        if (isset($restRequestRequestParams[RequestConstantsInterface::QUERY_PAGE][RequestConstantsInterface::QUERY_LIMIT])) {
-            $requestParams[RequestConstantsInterface::QUERY_LIMIT]
-                = $restRequestRequestParams[RequestConstantsInterface::QUERY_PAGE][RequestConstantsInterface::QUERY_LIMIT];
-        }
+        $requestParams[RequestConstantsInterface::QUERY_LIMIT] = $this->getLimitParameter($restRequestParams);
 
         $productReviews = $this->productReviewClient->findProductReviewsInSearch(
             (new ProductReviewSearchRequestTransfer())
@@ -145,6 +162,20 @@ class ProductReviewReader implements ProductReviewReaderInterface
         );
 
         return $productReviews;
+    }
+
+    /**
+     * @param array $restRequestParams
+     *
+     * @return int
+     */
+    protected function getLimitParameter(array $restRequestParams): int
+    {
+        if (!isset($restRequestParams[RequestConstantsInterface::QUERY_PAGE][RequestConstantsInterface::QUERY_LIMIT])) {
+            return static::DEFAULT_REVIEWS_PER_PAGE;
+        }
+
+        return (int)$restRequestParams[RequestConstantsInterface::QUERY_PAGE][RequestConstantsInterface::QUERY_LIMIT];
     }
 
     /**
