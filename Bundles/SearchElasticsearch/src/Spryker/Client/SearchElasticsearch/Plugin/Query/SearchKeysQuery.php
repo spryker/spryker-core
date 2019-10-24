@@ -12,7 +12,6 @@ use Elastica\Query\BoolQuery;
 use Elastica\Query\MatchAll;
 use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
-use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
@@ -20,7 +19,7 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInte
 
 class SearchKeysQuery implements QueryInterface, SearchContextAwareQueryInterface
 {
-    protected const SOURCE_NAME = 'page';
+    protected const SOURCE_IDENTIFIER = 'page';
 
     /**
      * @var string
@@ -41,6 +40,11 @@ class SearchKeysQuery implements QueryInterface, SearchContextAwareQueryInterfac
      * @var \Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig
      */
     protected $config;
+
+    /**
+     * @var \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    protected $searchContextTransfer;
 
     /**
      * @param string $searchString
@@ -93,10 +97,26 @@ class SearchKeysQuery implements QueryInterface, SearchContextAwareQueryInterfac
      */
     public function getSearchContext(): SearchContextTransfer
     {
-        $searchContextTransfer = new SearchContextTransfer();
-        $searchContextTransfer = $this->expandWithVendorContext($searchContextTransfer);
+        if (!$this->hasSearchContext()) {
+            $this->setupDefaultSearchContext();
+        }
 
-        return $searchContextTransfer;
+        return $this->searchContextTransfer;
+    }
+
+    /**
+     * {@inheritDoc}
+     * - Sets a context for keys search.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     *
+     * @return void
+     */
+    public function setSearchContext(SearchContextTransfer $searchContextTransfer): void
+    {
+        $this->searchContextTransfer = $searchContextTransfer;
     }
 
     /**
@@ -147,16 +167,21 @@ class SearchKeysQuery implements QueryInterface, SearchContextAwareQueryInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
-     *
-     * @return \Generated\Shared\Transfer\SearchContextTransfer
+     * @return void
      */
-    protected function expandWithVendorContext(SearchContextTransfer $searchContextTransfer): SearchContextTransfer
+    protected function setupDefaultSearchContext(): void
     {
-        $elasticsearchSearchContextTransfer = new ElasticsearchSearchContextTransfer();
-        $elasticsearchSearchContextTransfer->setSourceName(static::SOURCE_NAME);
-        $searchContextTransfer->setElasticsearchContext($elasticsearchSearchContextTransfer);
+        $searchContextTransfer = new SearchContextTransfer();
+        $searchContextTransfer->setSourceIdentifier(static::SOURCE_IDENTIFIER);
 
-        return $searchContextTransfer;
+        $this->searchContextTransfer = $searchContextTransfer;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function hasSearchContext(): bool
+    {
+        return (bool)$this->searchContextTransfer;
     }
 }

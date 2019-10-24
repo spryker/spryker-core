@@ -11,6 +11,7 @@ use Exception;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Exception\SearchDelegatorException;
+use Spryker\Client\Search\SearchContext\SourceIdentifierMapperInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface;
 
 class SearchDelegator implements SearchDelegatorInterface
@@ -21,15 +22,22 @@ class SearchDelegator implements SearchDelegatorInterface
     protected $searchAdapterPlugins;
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface[] $searchAdapter
+     * @var \Spryker\Client\Search\SearchContext\SourceIdentifierMapperInterface
      */
-    public function __construct(array $searchAdapter)
+    protected $sourceIdentifierMapper;
+
+    /**
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface[] $searchAdapter
+     * @param \Spryker\Client\Search\SearchContext\SourceIdentifierMapperInterface $sourceIdentifierMapper
+     */
+    public function __construct(array $searchAdapter, SourceIdentifierMapperInterface $sourceIdentifierMapper)
     {
         $this->searchAdapterPlugins = $searchAdapter;
+        $this->sourceIdentifierMapper = $sourceIdentifierMapper;
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface $searchQuery
      * @param array $resultFormatters
      * @param array $requestParameters
      *
@@ -43,7 +51,10 @@ class SearchDelegator implements SearchDelegatorInterface
             throw new Exception(sprintf('Your query class "%s" must implement a "getSearchContext()" method.', get_class($searchQuery)));
         }
 
-        return $this->getSearchAdapterByIndexName($searchQuery->getSearchContext())->search($searchQuery, $resultFormatters, $requestParameters);
+        $searchQuery = $this->mapSearchContextTransferForQuery($searchQuery);
+
+        return $this->getSearchAdapterByIndexName($searchQuery->getSearchContext())
+            ->search($searchQuery, $resultFormatters, $requestParameters);
     }
 
     /**
@@ -141,5 +152,19 @@ class SearchDelegator implements SearchDelegatorInterface
             'None of the applied "%s"s is applicable for the specified context.',
             SearchAdapterPluginInterface::class
         ));
+    }
+
+    /**
+     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface $searchQuery
+     *
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface
+     */
+    protected function mapSearchContextTransferForQuery(QueryInterface $searchQuery): QueryInterface
+    {
+        $mappedSearchContextTransfer = $this->sourceIdentifierMapper
+            ->mapSourceIdentifier($searchQuery->getSearchContext());
+        $searchQuery->setSearchContext($mappedSearchContextTransfer);
+
+        return $searchQuery;
     }
 }

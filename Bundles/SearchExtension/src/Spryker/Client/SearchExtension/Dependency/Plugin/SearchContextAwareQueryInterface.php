@@ -22,4 +22,18 @@ interface SearchContextAwareQueryInterface
      * @return \Generated\Shared\Transfer\SearchContextTransfer
      */
     public function getSearchContext(): SearchContextTransfer;
+
+    /**
+     * Specification:
+     * - Sets SearchContextTransfer which contains context information to be used for a query.
+     *
+     * @api
+     *
+     * @deprecated This method will be moved to `\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface`.
+     *
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     *
+     * @return void
+     */
+    public function setSearchContext(SearchContextTransfer $searchContextTransfer): void;
 }

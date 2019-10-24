@@ -20,7 +20,6 @@ use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\SearchElasticsearch\SearchElasticsearchClient;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
-use Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants;
 
 /**
  * Auto-generated group annotations
@@ -39,18 +38,6 @@ class SearchElasticsearchClientTest extends Unit
      * @var \SprykerTest\Client\SearchElasticsearch\SearchElasticsearchClientTester
      */
     protected $tester;
-
-    /**
-     * @return void
-     */
-    protected function _setUp()
-    {
-        parent::_setUp();
-
-        $this->tester->setConfig(SearchElasticsearchConstants::INDEX_NAME_MAP, [
-            static::INDEX_NAME => static::INDEX_NAME,
-        ]);
-    }
 
     /**
      * @return void

@@ -10,6 +10,9 @@ namespace Spryker\Zed\Search\Business\Definition\Finder;
 use Spryker\Zed\Search\SearchConfig;
 use Symfony\Component\Finder\Finder;
 
+/**
+ * @deprecated Use `Spryker\Zed\SearchElasticsearch\Business\Definition\Finder\SchemaDefinitionFinder` instead.
+ */
 class IndexDefinitionFinder implements IndexDefinitionFinderInterface
 {
     /**

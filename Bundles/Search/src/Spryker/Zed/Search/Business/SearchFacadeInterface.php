@@ -143,11 +143,28 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\Search\Business\SearchFacadeInterface::generateSourceMap()` instead.
+     *
      * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return void
      */
     public function generatePageIndexMap(LoggerInterface $messenger);
+
+    /**
+     * Specification:
+     * - Loads schema definition json files.
+     * - Creates or updates map classes by found schema definition files.
+     * - The generated map classes are not store specific.
+     * - Previously generated files will be removed.
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
+     * @return void
+     */
+    public function generateSourceMap(LoggerInterface $messenger): void;
 
     /**
      * Specification:

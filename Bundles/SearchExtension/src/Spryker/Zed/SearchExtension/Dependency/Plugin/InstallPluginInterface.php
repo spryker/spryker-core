@@ -13,8 +13,7 @@ interface InstallPluginInterface
 {
     /**
      * Specification:
-     * - Finds index definition files in modules.
-     * - Installs or update indices by found index definition files.
+     * - Performs various installation activities required for search.
      *
      * @api
      *
@@ -22,18 +21,5 @@ interface InstallPluginInterface
      *
      * @return void
      */
-    public function installIndices(LoggerInterface $logger): void;
-
-    /**
-     * Specification:
-     * - Finds index definition files in modules.
-     * - Creates or update IndexMapper classes by found index definition files.
-     *
-     * @api
-     *
-     * @param \Psr\Log\LoggerInterface $logger
-     *
-     * @return void
-     */
-    public function installMapper(LoggerInterface $logger): void;
+    public function install(LoggerInterface $logger): void;
 }

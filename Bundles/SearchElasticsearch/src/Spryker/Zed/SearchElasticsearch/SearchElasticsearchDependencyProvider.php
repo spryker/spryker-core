@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SearchElasticsearch;
 
+use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientBridge;
+use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingBridge;
@@ -16,6 +18,7 @@ use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingBridg
  */
 class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const CLIENT_STORE = 'CLIENT_STORE';
     public const CLIENT_SEARCH = 'search client';
     public const SERVICE_UTIL_ENCODING = 'util encoding service';
     public const PLUGIN_SEARCH_PAGE_MAPS = 'PLUGIN_SEARCH_PAGE_MAPS';
@@ -30,6 +33,7 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = $this->addSearchClient($container);
         $container = $this->addUtilEncodingFacade($container);
+        $container = $this->addStoreClient($container);
 
         return $container;
     }
@@ -57,6 +61,22 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new SearchToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORE, function (Container $container): SearchElasticsearchToStoreClientInterface {
+            return new SearchElasticsearchToStoreClientBridge(
+                $container->getLocator()->store()->client()
+            );
         });
 
         return $container;

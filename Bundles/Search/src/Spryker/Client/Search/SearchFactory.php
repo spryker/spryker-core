@@ -29,6 +29,8 @@ use Spryker\Client\Search\Plugin\Elasticsearch\Query\SearchKeysQuery;
 use Spryker\Client\Search\Plugin\Elasticsearch\Query\SearchStringQuery;
 use Spryker\Client\Search\Provider\IndexClientProvider;
 use Spryker\Client\Search\Provider\SearchClientProvider;
+use Spryker\Client\Search\SearchContext\SourceIdentifierMapper;
+use Spryker\Client\Search\SearchContext\SourceIdentifierMapperInterface;
 
 /**
  * @method \Spryker\Client\Search\SearchConfig getConfig()
@@ -51,7 +53,18 @@ class SearchFactory extends AbstractFactory
     public function createSearchDelegator(): SearchDelegatorInterface
     {
         return new SearchDelegator(
-            $this->getClientAdapterPlugins()
+            $this->getClientAdapterPlugins(),
+            $this->createSourceIdentifierMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Search\SearchContext\SourceIdentifierMapperInterface
+     */
+    public function createSourceIdentifierMapper(): SourceIdentifierMapperInterface
+    {
+        return new SourceIdentifierMapper(
+            $this->getSourceIdentifierMapperPlugins()
         );
     }
 
@@ -61,6 +74,14 @@ class SearchFactory extends AbstractFactory
     public function getClientAdapterPlugins(): array
     {
         return $this->getProvidedDependency(SearchDependencyProvider::CLIENT_ADAPTER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SourceIdentifierMapperPluginInterface[]
+     */
+    public function getSourceIdentifierMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::PLUGINS_SOURCE_IDENTIFIER_MAPPER);
     }
 
     /**

@@ -7,36 +7,46 @@
 
 namespace Spryker\Shared\SearchElasticsearch\Index;
 
-use Spryker\Shared\SearchElasticsearch\Exception\IndexNameException;
+use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
 
 class IndexNameResolver implements IndexNameResolverInterface
 {
     /**
-     * @var array
+     * @var \Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface
      */
-    protected $indexNameMap;
+    protected $storeClient;
 
     /**
-     * @param array $indexNameMap
+     * @param \Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface $storeClient
      */
-    public function __construct(array $indexNameMap)
+    public function __construct(SearchElasticsearchToStoreClientInterface $storeClient)
     {
-        $this->indexNameMap = $indexNameMap;
+        $this->storeClient = $storeClient;
     }
 
     /**
-     * @param string $indexName
-     *
-     * @throws \Spryker\Shared\SearchElasticsearch\Exception\IndexNameException
+     * @param string $sourceIdentifier
      *
      * @return string
      */
-    public function resolve(string $indexName): string
+    public function resolve(string $sourceIdentifier): string
     {
-        if (isset($this->indexNameMap[$indexName])) {
-            return $this->indexNameMap[$indexName];
-        }
+        $indexName = sprintf(
+            '%s_%s',
+            $this->getStoreName(),
+            $sourceIdentifier
+        );
 
-        throw new IndexNameException(sprintf('Could not map index name "%s". Please make sure that you configured your index name map correctly in the config_* files.', $indexName));
+        return mb_strtolower($indexName);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getStoreName(): string
+    {
+        $storeTransfer = $this->storeClient->getCurrentStore();
+
+        return $storeTransfer->requireName()->getName();
     }
 }

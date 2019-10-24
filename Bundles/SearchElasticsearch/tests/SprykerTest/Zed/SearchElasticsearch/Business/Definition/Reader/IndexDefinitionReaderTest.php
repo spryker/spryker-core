@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Search\Business\Definition\Reader;
+namespace SprykerTest\Zed\SearchElasticsearch\Business\Definition\Reader;
 
 use Codeception\Test\Unit;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
-use Spryker\Zed\Search\Business\Definition\Reader\IndexDefinitionReader;
-use Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingBridge;
+use Spryker\Zed\SearchElasticsearch\Business\Definition\Reader\IndexDefinitionReader;
+use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingBridge;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**
@@ -18,7 +18,7 @@ use Symfony\Component\Finder\SplFileInfo;
  *
  * @group SprykerTest
  * @group Zed
- * @group Search
+ * @group SearchElasticsearch
  * @group Business
  * @group Definition
  * @group Reader

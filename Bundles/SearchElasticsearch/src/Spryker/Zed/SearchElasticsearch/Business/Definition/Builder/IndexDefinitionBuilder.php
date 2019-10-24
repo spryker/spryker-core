@@ -98,8 +98,8 @@ class IndexDefinitionBuilder implements IndexDefinitionBuilderInterface
      */
     protected function buildIndexDefinitionTransfer(string $indexName, array $indexDefinition): IndexDefinitionTransfer
     {
-        $settings = isset($indexDefinition['settings']) ? $indexDefinition['settings'] : [];
-        $mappings = isset($indexDefinition['mappings']) ? $indexDefinition['mappings'] : [];
+        $settings = $indexDefinition['settings'] ?? [];
+        $mappings = $indexDefinition['mappings'] ?? [];
 
         $indexDefinitionTransfer = new IndexDefinitionTransfer();
         $indexDefinitionTransfer

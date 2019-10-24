@@ -10,11 +10,9 @@ namespace Spryker\Shared\SearchElasticsearch\Index;
 interface IndexNameResolverInterface
 {
     /**
-     * @param string $indexName
-     *
-     * @throws \Spryker\Shared\SearchElasticsearch\Exception\IndexNameException
+     * @param string $sourceIdentifier
      *
      * @return string
      */
-    public function resolve(string $indexName): string;
+    public function resolve(string $sourceIdentifier): string;
 }

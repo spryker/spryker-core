@@ -14,6 +14,7 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterfac
 
 /**
  * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchClientInterface getClient()
+ * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory getFactory()()
  */
 class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchAdapterPluginInterface
 {
@@ -24,7 +25,7 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
      * @api
      *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
-     * @param array $resultFormatters
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param array $requestParameters
      *
      * @return array|\Elastica\ResultSet
@@ -118,6 +119,6 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
      */
     public function isApplicable(SearchContextTransfer $searchContextTransfer): bool
     {
-        return true;
+        return $this->getFactory()->createSourceIdentifierChecker()->isSupported($searchContextTransfer);
     }
 }

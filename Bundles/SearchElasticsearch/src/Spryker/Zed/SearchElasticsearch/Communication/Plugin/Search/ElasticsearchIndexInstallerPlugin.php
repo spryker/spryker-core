@@ -20,6 +20,8 @@ class ElasticsearchIndexInstallerPlugin extends AbstractPlugin implements Instal
 {
     /**
      * {@inheritDoc}
+     * - Finds schema definition files in modules.
+     * - Installs or updates Elasticsearch indices by found schema definition files.
      *
      * @api
      *
@@ -27,22 +29,8 @@ class ElasticsearchIndexInstallerPlugin extends AbstractPlugin implements Instal
      *
      * @return void
      */
-    public function installIndices(LoggerInterface $logger): void
+    public function install(LoggerInterface $logger): void
     {
-        $this->getFacade()->installIndices($logger);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Psr\Log\LoggerInterface $logger
-     *
-     * @return void
-     */
-    public function installMapper(LoggerInterface $logger): void
-    {
-        $this->getFacade()->installMapper($logger);
+        $this->getFacade()->install($logger);
     }
 }

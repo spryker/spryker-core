@@ -185,6 +185,22 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
+     * @return void
+     */
+    public function generateSourceMap(LoggerInterface $messenger): void
+    {
+        $this->getFactory()
+            ->createSourceMapInstaller($messenger)
+            ->install();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param string $repositoryName
      * @param string $snapshotName
      * @param array $options

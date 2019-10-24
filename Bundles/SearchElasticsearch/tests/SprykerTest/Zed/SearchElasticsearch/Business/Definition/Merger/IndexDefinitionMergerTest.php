@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Search\Business\Definition\Merger;
+namespace SprykerTest\Zed\SearchElasticsearch\Business\Definition\Merger;
 
 use Codeception\Test\Unit;
-use Spryker\Zed\Search\Business\Definition\Merger\IndexDefinitionMerger;
+use Spryker\Zed\SearchElasticsearch\Business\Definition\Merger\IndexDefinitionMerger;
 
 /**
  * Auto-generated group annotations
  *
  * @group SprykerTest
  * @group Zed
- * @group Search
+ * @group SearchElasticsearch
  * @group Business
  * @group Definition
  * @group Merger

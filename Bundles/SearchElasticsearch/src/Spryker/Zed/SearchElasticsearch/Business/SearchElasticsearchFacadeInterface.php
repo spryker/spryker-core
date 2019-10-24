@@ -22,7 +22,7 @@ interface SearchElasticsearchFacadeInterface
      *
      * @return void
      */
-    public function installIndices(LoggerInterface $logger): void;
+    public function install(LoggerInterface $logger): void;
 
     /**
      * Specification:

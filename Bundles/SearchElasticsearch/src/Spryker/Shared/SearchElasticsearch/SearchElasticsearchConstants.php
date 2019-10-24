@@ -73,12 +73,4 @@ interface SearchElasticsearchConstants
      * @api
      */
     public const DIRECTORY_PERMISSION = 'SEARCH_ELASTICSEARCH:DIRECTORY_PERMISSION';
-
-    /**
-     * Specification:
-     * - A map to map a filename e.g. `search.json` to an index name `de_search`.
-     *
-     * @api
-     */
-    public const INDEX_NAME_MAP = 'SEARCH_ELASTICSEARCH:INDEX_NAME_MAP';
 }

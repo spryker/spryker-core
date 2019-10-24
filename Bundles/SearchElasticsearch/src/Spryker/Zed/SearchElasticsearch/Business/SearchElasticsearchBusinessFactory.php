@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SearchElasticsearch\Business;
 
 use Elastica\Client;
+use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
 use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactory;
 use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactoryInterface;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolver;
@@ -15,8 +16,8 @@ use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Builder\IndexDefinitionBuilder;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Builder\IndexDefinitionBuilderInterface;
-use Spryker\Zed\SearchElasticsearch\Business\Definition\Finder\IndexDefinitionFinder;
-use Spryker\Zed\SearchElasticsearch\Business\Definition\Finder\IndexDefinitionFinderInterface;
+use Spryker\Zed\SearchElasticsearch\Business\Definition\Finder\SchemaDefinitionFinder;
+use Spryker\Zed\SearchElasticsearch\Business\Definition\Finder\SchemaDefinitionFinderInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Loader\IndexDefinitionLoader;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Loader\IndexDefinitionLoaderInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Merger\IndexDefinitionMerger;
@@ -64,17 +65,16 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     {
         return new IndexDefinitionLoader(
             $this->createIndexDefinitionFinder(),
-            $this->createIndexDefinitionReader(),
-            $this->createIndexNameResolver()
+            $this->createIndexDefinitionReader()
         );
     }
 
     /**
-     * @return \Spryker\Zed\SearchElasticsearch\Business\Definition\Finder\IndexDefinitionFinderInterface
+     * @return \Spryker\Zed\SearchElasticsearch\Business\Definition\Finder\SchemaDefinitionFinderInterface
      */
-    public function createIndexDefinitionFinder(): IndexDefinitionFinderInterface
+    public function createIndexDefinitionFinder(): SchemaDefinitionFinderInterface
     {
-        return new IndexDefinitionFinder(
+        return new SchemaDefinitionFinder(
             $this->getConfig()
         );
     }
@@ -111,7 +111,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     public function createIndexNameResolver(): IndexNameResolverInterface
     {
         return new IndexNameResolver(
-            $this->getConfig()->getIndexNameMap()
+            $this->getStoreClient()
         );
     }
 
@@ -250,5 +250,13 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     public function createElasticsearchClientFactory(): ElasticaClientFactoryInterface
     {
         return new ElasticaClientFactory();
+    }
+
+    /**
+     * @return \Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface
+     */
+    public function getStoreClient(): SearchElasticsearchToStoreClientInterface
+    {
+        return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::CLIENT_STORE);
     }
 }
