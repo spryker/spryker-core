@@ -378,6 +378,7 @@
     "spryker/product-category-filter-collector": "*",
     "spryker/product-category-filter-gui": "*",
     "spryker/product-category-filter-storage": "*",
+    "spryker/product-category-gui": "*",
     "spryker/product-category-storage": "*",
     "spryker/product-customer-permission": "*",
     "spryker/product-customer-permission-collector": "*",
