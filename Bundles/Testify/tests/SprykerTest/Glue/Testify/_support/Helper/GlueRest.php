@@ -212,15 +212,27 @@ class GlueRest extends REST implements LastConnectionProviderInterface
      * @part json
      *
      * @param string $type
+     *
+     * @return void
+     */
+    public function seeResponseDataContainsResourceCollectionOfType(string $type): void
+    {
+        $this->getJsonPathModule()->seeResponseJsonPathContains([
+            'type' => $type,
+        ], '$.data[*]');
+    }
+
+    /**
+     * @part json
+     *
+     * @param string $type
      * @param int $size
      *
      * @return void
      */
     public function seeResponseDataContainsResourceCollectionOfTypeWithSizeOf(string $type, int $size): void
     {
-        $this->getJsonPathModule()->seeResponseJsonPathContains([
-            'type' => $type,
-        ], '$.data[*]');
+        $this->seeResponseDataContainsResourceCollectionOfType($type);
         $this->assertCount($size, $this->grabDataFromResponseByJsonPath('$.data')[0]);
     }
 
@@ -338,6 +350,20 @@ class GlueRest extends REST implements LastConnectionProviderInterface
                 json_encode($id),
                 json_encode($type)
             )
+        );
+    }
+
+    /**
+     * @part json
+     *
+     * @param string $type
+     *
+     * @return void
+     */
+    public function dontSeeIncludesContainResourceOfType(string $type): void
+    {
+        $this->getJsonPathModule()->dontSeeResponseMatchesJsonPath(
+            sprintf('$.included[?(@.type == %s$s)]', $type)
         );
     }
 
@@ -523,5 +549,24 @@ class GlueRest extends REST implements LastConnectionProviderInterface
         }
 
         return $this->jsonPathModule;
+    }
+
+    /**
+     * @part json
+     * @part openApi3
+     *
+     * @param int $responseCode
+     *
+     * @return void
+     */
+    public function assertResponse(int $responseCode): void
+    {
+        $this->seeResponseCodeIs($responseCode);
+        $this->seeResponseIsJson();
+        $openApi3Module = $this->findModule(OpenApi3::class);
+
+        if ($openApi3Module) {
+            $openApi3Module->seeResponseMatchesOpenApiSchema();
+        }
     }
 }

@@ -17,17 +17,23 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
+use SprykerTest\Shared\Stock\Helper\StockDataHelper;
+use SprykerTest\Shared\Tax\Helper\TaxSetDataHelper;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
+use SprykerTest\Shared\Testify\Helper\ModuleLocatorTrait;
+use SprykerTest\Zed\ProductAttribute\Helper\ProductAttributeDataHelper;
 
 class ProductDataHelper extends Module
 {
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
+    use ModuleLocatorTrait;
 
     /**
      * @param array $productConcreteOverride
@@ -35,13 +41,15 @@ class ProductDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function haveProduct(array $productConcreteOverride = [], array $productAbstractOverride = [])
+    public function haveProduct(array $productConcreteOverride = [], array $productAbstractOverride = []): ProductConcreteTransfer
     {
+        /** @var \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer */
         $productAbstractTransfer = (new ProductAbstractBuilder($productAbstractOverride))->build();
 
         $productFacade = $this->getProductFacade();
         $abstractProductId = $productFacade->createProductAbstract($productAbstractTransfer);
 
+        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
         $productConcreteTransfer = (new ProductConcreteBuilder(['fkProductAbstract' => $abstractProductId]))
             ->seed($productConcreteOverride)
             ->build();
@@ -50,7 +58,7 @@ class ProductDataHelper extends Module
         $productFacade->createProductConcrete($productConcreteTransfer);
 
         $this->debug(sprintf(
-            'Inserted AbstractProduct: %d, Concrete Product: %d',
+            'Inserted Abstract Product: %d, Concrete Product: %d',
             $abstractProductId,
             $productConcreteTransfer->getIdProductConcrete()
         ));
@@ -68,15 +76,16 @@ class ProductDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function haveProductAbstract(array $productAbstractOverride = [])
+    public function haveProductAbstract(array $productAbstractOverride = []): ProductAbstractTransfer
     {
+        /** @var \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer */
         $productAbstractTransfer = (new ProductAbstractBuilder($productAbstractOverride))->build();
 
         $productFacade = $this->getProductFacade();
         $abstractProductId = $productFacade->createProductAbstract($productAbstractTransfer);
 
         $this->debug(sprintf(
-            'Inserted AbstractProduct: %d',
+            'Inserted Abstract Product: %d',
             $abstractProductId
         ));
 
@@ -111,9 +120,13 @@ class ProductDataHelper extends Module
 
         $productFacade = $this->getProductFacade();
 
-        $abstractProductId = $productFacade->createProductAbstract($productAbstractTransfer);
-        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productAbstractTransfer */
-        $productConcreteTransfer = (new ProductConcreteBuilder(array_merge(['fkProductAbstract' => $abstractProductId], $productConcreteOverride)))
+        $idProductAbstract = $productFacade->createProductAbstract($productAbstractTransfer);
+        $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+        $productAbstractTransfer = $this->assignTaxSetToProductAbstract($productAbstractTransfer);
+        $productAbstractTransfer = $this->assignLocalizedAttributesToProductAbstract($productAbstractTransfer);
+
+        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
+        $productConcreteTransfer = (new ProductConcreteBuilder(array_merge(['fkProductAbstract' => $idProductAbstract], $productConcreteOverride)))
             ->withLocalizedAttributes($localizedAttributes)
             ->withStores($allStoresRelation)
             ->build();
@@ -121,13 +134,15 @@ class ProductDataHelper extends Module
 
         $productFacade->createProductConcrete($productConcreteTransfer);
 
+        $this->assignProductConcreteToStock($productConcreteTransfer);
+
         $productFacade->createProductUrl(
             $productAbstractTransfer->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
         );
 
         $this->debug(sprintf(
-            'Inserted AbstractProduct: %d, Concrete Product: %d',
-            $abstractProductId,
+            'Inserted Abstract Product: %d, Concrete Product: %d',
+            $idProductAbstract,
             $productConcreteTransfer->getIdProductConcrete()
         ));
 
@@ -137,6 +152,64 @@ class ProductDataHelper extends Module
         });
 
         return $productConcreteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function assignTaxSetToProductAbstract(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
+    {
+        $taxSetDataHelper = $this->findModule(TaxSetDataHelper::class);
+
+        if (!$taxSetDataHelper) {
+            return $productAbstractTransfer;
+        }
+
+        $taxSetTransfer = $taxSetDataHelper->haveTaxSet();
+        $productAbstractTransfer->setIdTaxSet($taxSetTransfer->getIdTaxSet());
+        $this->getLocator()
+            ->taxProductConnector()
+            ->facade()
+            ->saveTaxSetToProductAbstract($productAbstractTransfer);
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function assignLocalizedAttributesToProductAbstract(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
+    {
+        $productAttributeDataHelper = $this->findModule(ProductAttributeDataHelper::class);
+
+        if (!$productAttributeDataHelper) {
+            return $productAbstractTransfer;
+        }
+
+        $localizedAttributes = $productAttributeDataHelper->generateLocalizedAttributes();
+        $this->addLocalizedAttributesToProductAbstract($productAbstractTransfer, $localizedAttributes);
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    protected function assignProductConcreteToStock(ProductConcreteTransfer $productConcreteTransfer): void
+    {
+        $stockDataHelper = $this->findModule(StockDataHelper::class);
+
+        if (!$stockDataHelper) {
+            return;
+        }
+
+        $stockDataHelper->haveProductInStock([StockProductTransfer::SKU => $productConcreteTransfer->getSku()]);
     }
 
     /**
