@@ -38,4 +38,3 @@ suites:
                       - Spryker\Zed\Gui\Communication\Plugin\ServiceProvider\GuiTwigExtensionServiceProvider
                       - Spryker\Zed\Twig\Communication\Plugin\ServiceProvider\TwigServiceProvider
                       - Spryker\Zed\ZedNavigation\Communication\Plugin\ServiceProvider\ZedNavigationServiceProvider
-                      - Spryker\Zed\Chart\Communication\Plugin\ServiceProvider\TwigChartFunctionServiceProvider
