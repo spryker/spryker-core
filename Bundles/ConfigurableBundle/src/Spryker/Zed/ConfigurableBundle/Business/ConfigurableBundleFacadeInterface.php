@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
-use Generated\Shared\Transfer\ProductListTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ConfigurableBundleFacadeInterface
@@ -58,7 +57,9 @@ interface ConfigurableBundleFacadeInterface
      * Specification:
      * - Finds configurable bundle template in Persistence.
      * - Filters by configurable bundle template ID if provided.
-     * - Expands found configurable bundle template with translations for current locale.
+     * - Expands found configurable bundle template with translations.
+     * - Provides translations for locales specified in ConfigurableBundleTemplateFilterTransfer::translationLocales, or for all available locales otherwise.
+     * - If single locale translation was requested but doesn't exist, fallback translation will be provided, or translation key if nothing found.
      * - Returns corresponding transfer object if found, null otherwise.
      *
      * @api
@@ -70,6 +71,21 @@ interface ConfigurableBundleFacadeInterface
     public function findConfigurableBundleTemplate(
         ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
     ): ?ConfigurableBundleTemplateTransfer;
+
+    /**
+     * Specification:
+     * - Finds configurable bundle templates by criteria from ConfigurableBundleTemplateFilterTransfer.
+     * - Expands found configurable bundle templates with translations.
+     * - Provides translations for locales specified in ConfigurableBundleTemplateFilterTransfer::translationLocales, or for all available locales otherwise.
+     * - Returns array of transfers.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer[]
+     */
+    public function getConfigurableBundleTemplateCollection(ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer): array;
 
     /**
      * Specification:
@@ -124,24 +140,24 @@ interface ConfigurableBundleFacadeInterface
 
     /**
      * Specification:
-     * - Finds configurable bundle template slots which use given product list by ProductListTransfer::idProductList.
+     * - Finds configurable bundle template slots which use given product list by ConfigurableBundleTemplateSlotFilterTransfer::productList::idProductList.
      * - Returns ProductListResponseTransfer with check results.
      * - ProductListResponseTransfer::isSuccessful is equal to true when usage cases were not found, false otherwise.
      * - ProductListResponseTransfer::messages contains usage details.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function checkProductListUsageAmongSlots(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
+    public function checkProductListUsageAmongSlots(ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer): ProductListResponseTransfer;
 
     /**
      * Specification:
      * - Finds configurable bundle template slots by criteria from ConfigurableBundleTemplateSlotFilterTransfer.
-     * - Expands found configurable bundle template slots with translations for current locale.
-     * - If translation for current locale doesn't exist, first available one will be provided, or translation key otherwise.
+     * - Expands found configurable bundle template slots with translations.
+     * - Provides translations for locales specified in ConfigurableBundleTemplateSlotFilterTransfer::translationLocales, or for all available locales otherwise.
      * - Returns array of transfers.
      *
      * @api
@@ -206,6 +222,9 @@ interface ConfigurableBundleFacadeInterface
     /**
      * Specification:
      * - Finds configurable bundle template slot by criteria from ConfigurableBundleTemplateSlotFilterTransfer.
+     * - Expands found configurable bundle template slots with translations.
+     * - Provides translations for locales specified in ConfigurableBundleTemplateSlotFilterTransfer::translationLocales, or for all available locales otherwise.
+     * - If single locale translation was requested but doesn't exist, fallback translation will be provided, or translation key if nothing found.
      * - Returns corresponding transfer object for the first matching record if found, null otherwise.
      *
      * @api

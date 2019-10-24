@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider;
 
-use ArrayObject;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
@@ -65,11 +64,11 @@ class ConfigurableBundleTemplateFormDataProvider
         $configurableBundleTemplateTransfer = $this->configurableBundleFacade
             ->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
 
-        if (!$configurableBundleTemplateTransfer) {
-            return $this->createEmptyConfigurableBundleTemplateTransfer();
+        if ($configurableBundleTemplateTransfer) {
+            return $configurableBundleTemplateTransfer;
         }
 
-        return $this->expandConfigurableBundleTemplateTransferWithExistingTranslations($configurableBundleTemplateTransfer);
+        return $this->createEmptyConfigurableBundleTemplateTransfer();
     }
 
     /**
@@ -97,55 +96,5 @@ class ConfigurableBundleTemplateFormDataProvider
         }
 
         return $configurableBundleTemplateTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-     *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
-     */
-    protected function expandConfigurableBundleTemplateTransferWithExistingTranslations(
-        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): ConfigurableBundleTemplateTransfer {
-        $availableLocaleTransfers = $this->localeFacade->getLocaleCollection();
-
-        $translationsByLocales = $this->getTranslationsByLocales(
-            $configurableBundleTemplateTransfer->getName(),
-            $availableLocaleTransfers
-        );
-
-        $configurableBundleTemplateTransfer->setTranslations(new ArrayObject());
-
-        foreach ($availableLocaleTransfers as $localeTransfer) {
-            $configurableBundleTemplateTranslationTransfer = (new ConfigurableBundleTemplateTranslationTransfer())
-                ->setName($translationsByLocales[$localeTransfer->getIdLocale()] ?? null)
-                ->setLocale($localeTransfer);
-
-            $configurableBundleTemplateTransfer->addTranslation($configurableBundleTemplateTranslationTransfer);
-        }
-
-        return $configurableBundleTemplateTransfer;
-    }
-
-    /**
-     * @param string $translationKey
-     * @param array $localeTransfers
-     *
-     * @return string[]
-     */
-    protected function getTranslationsByLocales(string $translationKey, array $localeTransfers): array
-    {
-        $translationsByLocales = [];
-
-        $translationTransfers = $this->glossaryFacade->getTranslationsByGlossaryKeyAndLocales(
-            $translationKey,
-            $localeTransfers
-        );
-
-        foreach ($translationTransfers as $translationTransfer) {
-            $translationsByLocales[$translationTransfer->getFkLocale()] = $translationTransfer->getValue();
-        }
-
-        return $translationsByLocales;
     }
 }

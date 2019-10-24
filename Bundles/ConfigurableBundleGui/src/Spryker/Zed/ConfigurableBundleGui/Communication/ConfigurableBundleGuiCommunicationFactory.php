@@ -49,8 +49,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
 /**
- * @method \Spryker\Zed\ConfigurableBundleGui\Persistence\ConfigurableBundleGuiRepositoryInterface getRepository()
- * @method \Spryker\Zed\ConfigurableBundleGui\Persistence\ConfigurableBundleGuiEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\ConfigurableBundleGui\Business\ConfigurableBundleGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\ConfigurableBundleGui\ConfigurableBundleGuiConfig getConfig()
  */
@@ -221,6 +219,7 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
     {
         return new ProductListUsedByTableDataExpander(
             $this->getConfigurableBundleFacade(),
+            $this->getLocaleFacade(),
             $this->createProductListUsedByTableDataMapper()
         );
     }

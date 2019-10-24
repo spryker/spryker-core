@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\ConfigurableBundleGui\Communication\Expander;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ProductListUsedByTableDataTransfer;
 use Generated\Shared\Transfer\ProductListUsedByTableRowTransfer;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Mapper\ProductListUsedByTableDataMapperInterface;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToConfigurableBundleFacadeInterface;
+use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface;
 
 class ProductListUsedByTableDataExpander implements ProductListUsedByTableDataExpanderInterface
 {
@@ -21,20 +23,28 @@ class ProductListUsedByTableDataExpander implements ProductListUsedByTableDataEx
     protected $configurableBundleFacade;
 
     /**
+     * @var \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @var \Spryker\Zed\ConfigurableBundleGui\Communication\Mapper\ProductListUsedByTableDataMapperInterface
      */
     protected $productListUsedByTableDataMapper;
 
     /**
      * @param \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToConfigurableBundleFacadeInterface $configurableBundleFacade
+     * @param \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ConfigurableBundleGui\Communication\Mapper\ProductListUsedByTableDataMapperInterface $productListUsedByTableDataMapper
      */
     public function __construct(
         ConfigurableBundleGuiToConfigurableBundleFacadeInterface $configurableBundleFacade,
+        ConfigurableBundleGuiToLocaleFacadeInterface $localeFacade,
         ProductListUsedByTableDataMapperInterface $productListUsedByTableDataMapper
     ) {
         $this->configurableBundleFacade = $configurableBundleFacade;
         $this->productListUsedByTableDataMapper = $productListUsedByTableDataMapper;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -48,7 +58,7 @@ class ProductListUsedByTableDataExpander implements ProductListUsedByTableDataEx
 
         $configurableBundleTemplateSlotFilterTransfer = (new ConfigurableBundleTemplateSlotFilterTransfer())->setIdProductList(
             $productListUsedByTableDataTransfer->getProductList()->getIdProductList()
-        );
+        )->setTranslationLocales(new ArrayObject([$this->localeFacade->getCurrentLocale()]));
 
         $configurableBundleTemplateSlotTransfers = $this->configurableBundleFacade
             ->getConfigurableBundleTemplateSlotCollection($configurableBundleTemplateSlotFilterTransfer);

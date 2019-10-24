@@ -24,6 +24,13 @@ interface ConfigurableBundleRepositoryInterface
     ): ?ConfigurableBundleTemplateTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer[]
+     */
+    public function getConfigurableBundleTemplateCollection(ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer): array;
+
+    /**
      * @param string[] $allowedTemplateUuid
      *
      * @return string[]

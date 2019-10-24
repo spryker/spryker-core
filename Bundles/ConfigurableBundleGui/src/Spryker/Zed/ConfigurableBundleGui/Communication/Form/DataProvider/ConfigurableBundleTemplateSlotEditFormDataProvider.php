@@ -9,8 +9,6 @@ namespace Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotEditFormTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
-use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
-use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTranslationTransfer;
 use Generated\Shared\Transfer\ProductListAggregateFormTransfer;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ConfigurableBundleTemplateForm;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToConfigurableBundleFacadeInterface;
@@ -73,7 +71,7 @@ class ConfigurableBundleTemplateSlotEditFormDataProvider
             ->findConfigurableBundleTemplateSlot($configurableBundleTemplateFilterTransfer);
 
         if (!$configurableBundleTemplateSlotTransfer) {
-            $configurableBundleTemplateSlotEditFormTransfer;
+            return $configurableBundleTemplateSlotEditFormTransfer;
         }
 
         $productListAggregateFormTransfer = (new ProductListAggregateFormTransfer())->setProductList(
@@ -84,10 +82,6 @@ class ConfigurableBundleTemplateSlotEditFormDataProvider
             ->setConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer);
 
         $configurableBundleTemplateSlotEditFormTransfer = $this->expandDataWithDataProviderExpanderPlugins($configurableBundleTemplateSlotEditFormTransfer);
-
-        $configurableBundleTemplateSlotTransfer = $this->expandConfigurableBundleTemplateSlotTransferWithExistingTranslations(
-            $configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()
-        );
 
         return $configurableBundleTemplateSlotEditFormTransfer->setConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer);
     }
@@ -102,54 +96,6 @@ class ConfigurableBundleTemplateSlotEditFormDataProvider
         ];
 
         return $this->expandOptionsWithDataProviderExpanderPlugins($options);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
-     *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
-     */
-    protected function expandConfigurableBundleTemplateSlotTransferWithExistingTranslations(
-        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
-    ): ConfigurableBundleTemplateSlotTransfer {
-        $availableLocaleTransfers = $this->localeFacade->getLocaleCollection();
-
-        $translationsByLocales = $this->getTranslationsByLocales(
-            $configurableBundleTemplateSlotTransfer->getName(),
-            $availableLocaleTransfers
-        );
-
-        foreach ($availableLocaleTransfers as $localeTransfer) {
-            $configurableBundleTemplateSlotTranslationTransfer = (new ConfigurableBundleTemplateSlotTranslationTransfer())
-                ->setName($translationsByLocales[$localeTransfer->getIdLocale()] ?? null)
-                ->setLocale($localeTransfer);
-
-            $configurableBundleTemplateSlotTransfer->addTranslation($configurableBundleTemplateSlotTranslationTransfer);
-        }
-
-        return $configurableBundleTemplateSlotTransfer;
-    }
-
-    /**
-     * @param string $translationKey
-     * @param array $localeTransfers
-     *
-     * @return string[]
-     */
-    protected function getTranslationsByLocales(string $translationKey, array $localeTransfers): array
-    {
-        $translationsByLocales = [];
-
-        $translationTransfers = $this->glossaryFacade->getTranslationsByGlossaryKeyAndLocales(
-            $translationKey,
-            $localeTransfers
-        );
-
-        foreach ($translationTransfers as $translationTransfer) {
-            $translationsByLocales[$translationTransfer->getFkLocale()] = $translationTransfer->getValue();
-        }
-
-        return $translationsByLocales;
     }
 
     /**

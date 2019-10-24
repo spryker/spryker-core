@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ConfigurableBundleGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -120,12 +119,7 @@ class TemplateController extends AbstractController
             $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
         );
 
-        $configurableBundleTemplateTransfer = $this->getFactory()
-            ->getConfigurableBundleFacade()
-            ->findConfigurableBundleTemplate(
-                (new ConfigurableBundleTemplateFilterTransfer())
-                    ->setIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
-            );
+        $configurableBundleTemplateTransfer = $this->findConfigurableBundleTemplateById($idConfigurableBundleTemplate);
 
         if (!$configurableBundleTemplateTransfer) {
             $this->addErrorMessage(static::ERROR_MESSAGE_TEMPLATE_NOT_FOUND, [
@@ -153,12 +147,7 @@ class TemplateController extends AbstractController
             $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
         );
 
-        $configurableBundleTemplateTransfer = $this->getFactory()
-            ->getConfigurableBundleFacade()
-            ->findConfigurableBundleTemplate(
-                (new ConfigurableBundleTemplateFilterTransfer())
-                    ->setIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
-            );
+        $configurableBundleTemplateTransfer = $this->findConfigurableBundleTemplateById($idConfigurableBundleTemplate);
 
         if (!$configurableBundleTemplateTransfer) {
             $this->addErrorMessage(static::ERROR_MESSAGE_TEMPLATE_NOT_FOUND, [
@@ -192,12 +181,7 @@ class TemplateController extends AbstractController
             $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
         );
 
-        $configurableBundleTemplateTransfer = $this->getFactory()
-            ->getConfigurableBundleFacade()
-            ->findConfigurableBundleTemplate(
-                (new ConfigurableBundleTemplateFilterTransfer())
-                    ->setIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
-            );
+        $configurableBundleTemplateTransfer = $this->findConfigurableBundleTemplateById($idConfigurableBundleTemplate);
 
         if (!$configurableBundleTemplateTransfer) {
             $this->addErrorMessage(static::ERROR_MESSAGE_TEMPLATE_NOT_FOUND, [
@@ -231,12 +215,7 @@ class TemplateController extends AbstractController
             $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
         );
 
-        $configurableBundleTemplateTransfer = $this->getFactory()
-            ->getConfigurableBundleFacade()
-            ->findConfigurableBundleTemplate(
-                (new ConfigurableBundleTemplateFilterTransfer())
-                    ->setIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
-            );
+        $configurableBundleTemplateTransfer = $this->findConfigurableBundleTemplateById($idConfigurableBundleTemplate);
 
         if (!$configurableBundleTemplateTransfer) {
             $this->addErrorMessage(static::ERROR_MESSAGE_TEMPLATE_NOT_FOUND, [

@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\ConfigurableBundle\Business;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
@@ -58,9 +59,10 @@ class ConfigurableBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindConfigurableBundleTemplateWillReturnTransfer(): void
+    public function testFindConfigurableBundleTemplateWillReturnTransferWithAllAvailableLocalesTranslations(): void
     {
         // Arrange
+        $availableLocaleTransfers = $this->tester->getLocaleFacade()->getAvailableLocales();
         $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
         $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())
             ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
@@ -80,6 +82,37 @@ class ConfigurableBundleFacadeTest extends Unit
             $configurableBundleTemplateTransfer->getName(),
             $foundConfigurableBundleTemplateTransfer->getName()
         );
+        $this->assertSame(count($availableLocaleTransfers), $foundConfigurableBundleTemplateTransfer->getTranslations()->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindConfigurableBundleTemplateWillReturnTransferWithCertainLocaleTranslation(): void
+    {
+        // Arrange
+        $currentLocaleTransfer = $this->tester->getLocaleFacade()->getCurrentLocale();
+        $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
+        $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())
+            ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+            ->setTranslationLocales(new ArrayObject([$currentLocaleTransfer]));
+
+        // Act
+        $foundConfigurableBundleTemplateTransfer = $this->tester
+            ->getFacade()
+            ->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
+
+        // Assert
+        $this->assertNotNull($foundConfigurableBundleTemplateTransfer);
+        $this->assertSame(
+            $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
+            $foundConfigurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()
+        );
+        $this->assertSame(
+            $configurableBundleTemplateTransfer->getName(),
+            $foundConfigurableBundleTemplateTransfer->getName()
+        );
+        $this->assertCount(1, $foundConfigurableBundleTemplateTransfer->getTranslations());
     }
 
     /**
@@ -267,6 +300,7 @@ class ConfigurableBundleFacadeTest extends Unit
     public function testCheckProductListUsageAmongSlotsWillReturnNotSuccessfullResponseWhenProductListIsUsed(): void
     {
         // Arrange
+        $currentLocaleTransfer = $this->tester->getLocaleFacade()->getCurrentLocale();
         $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
         $configurableBundleTemplateSlotTransfer = $this->tester->createConfigurableBundleTemplateSlot([
             ConfigurableBundleTemplateSlotTransfer::FK_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
@@ -274,7 +308,9 @@ class ConfigurableBundleFacadeTest extends Unit
 
         // Act
         $productListResponseTransfer = $this->tester->getFacade()->checkProductListUsageAmongSlots(
-            $configurableBundleTemplateSlotTransfer->getProductList()
+            (new ConfigurableBundleTemplateSlotFilterTransfer())->setProductList(
+                $configurableBundleTemplateSlotTransfer->getProductList()
+            )->setTranslationLocales(new ArrayObject([$currentLocaleTransfer]))
         );
 
         // Assert
@@ -288,14 +324,19 @@ class ConfigurableBundleFacadeTest extends Unit
     public function testCheckProductListUsageAmongSlotsWillReturnSuccessfullResponseWhenProductListIsNotUsed(): void
     {
         // Arrange
+        $currentLocaleTransfer = $this->tester->getLocaleFacade()->getCurrentLocale();
         $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
-        $configurableBundleTemplateSlotTransfer = $this->tester->createConfigurableBundleTemplateSlot([
+        $this->tester->createConfigurableBundleTemplateSlot([
             ConfigurableBundleTemplateSlotTransfer::FK_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
         ]);
         $productListTransfer = (new ProductListTransfer())->setIdProductList(-1);
 
         // Act
-        $productListResponseTransfer = $this->tester->getFacade()->checkProductListUsageAmongSlots($productListTransfer);
+        $productListResponseTransfer = $this->tester->getFacade()->checkProductListUsageAmongSlots(
+            (new ConfigurableBundleTemplateSlotFilterTransfer())->setProductList(
+                $productListTransfer
+            )->setTranslationLocales(new ArrayObject([$currentLocaleTransfer]))
+        );
 
         // Assert
         $this->assertTrue($productListResponseTransfer->getIsSuccessful());

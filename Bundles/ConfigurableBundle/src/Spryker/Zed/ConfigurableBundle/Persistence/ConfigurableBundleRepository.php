@@ -36,7 +36,7 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
             $configurableBundleTemplateFilterTransfer
         );
 
-        $configurableBundleTemplateEntity = $configurableBundleTemplateQuery->find()->getFirst();
+        $configurableBundleTemplateEntity = $configurableBundleTemplateQuery->findOne();
 
         if (!$configurableBundleTemplateEntity) {
             return null;
@@ -45,6 +45,36 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
         return $this->getFactory()
             ->createConfigurableBundleMapper()
             ->mapConfigurableBundleTemplateEntityToTransfer($configurableBundleTemplateEntity, new ConfigurableBundleTemplateTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer[]
+     */
+    public function getConfigurableBundleTemplateCollection(ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer): array
+    {
+        $configurableBundleTemplateQuery = $this->getFactory()->createConfigurableBundleTemplateQuery();
+        $configurableBundleTemplateQuery = $this->setConfigurableBundleTemplateFilters(
+            $configurableBundleTemplateQuery,
+            $configurableBundleTemplateFilterTransfer
+        );
+
+        $configurableBundleTemplateEntities = $configurableBundleTemplateQuery->find();
+
+        if (!$configurableBundleTemplateEntities->count()) {
+            return [];
+        }
+
+        $configurableBundleTemplateTransfers = [];
+
+        foreach ($configurableBundleTemplateEntities as $configurableBundleTemplateEntity) {
+            $configurableBundleTemplateTransfers[] = $this->getFactory()
+                ->createConfigurableBundleMapper()
+                ->mapConfigurableBundleTemplateEntityToTransfer($configurableBundleTemplateEntity, new ConfigurableBundleTemplateTransfer());
+        }
+
+        return $configurableBundleTemplateTransfers;
     }
 
     /**
@@ -157,7 +187,11 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
             );
         }
 
-        $configurableBundleTemplateQuery->limit(1);
+        if ($configurableBundleTemplateFilterTransfer->getConfigurableBundleTemplateIds()) {
+            $configurableBundleTemplateQuery->filterByIdConfigurableBundleTemplate_In(
+                $configurableBundleTemplateFilterTransfer->getConfigurableBundleTemplateIds()
+            );
+        }
 
         return $configurableBundleTemplateQuery;
     }

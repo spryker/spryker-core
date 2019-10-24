@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business\Expander;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 
@@ -14,28 +15,23 @@ interface ConfigurableBundleTranslationExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */
-    public function expandConfigurableBundleTemplateWithTranslationForCurrentLocale(
-        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): ConfigurableBundleTemplateTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-     *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
-     */
-    public function expandConfigurableBundleTemplateWithDefaultLocaleTranslation(
-        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+    public function expandConfigurableBundleTemplateWithTranslations(
+        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer,
+        ArrayObject $localeTransfers
     ): ConfigurableBundleTemplateTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
      */
-    public function expandConfigurableBundleTemplateSlotWithTranslationForCurrentLocale(
-        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+    public function expandConfigurableBundleTemplateSlotWithTranslations(
+        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer,
+        ArrayObject $localeTransfers
     ): ConfigurableBundleTemplateSlotTransfer;
 }
