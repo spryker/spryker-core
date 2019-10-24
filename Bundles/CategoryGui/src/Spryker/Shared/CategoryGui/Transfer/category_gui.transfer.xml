@@ -7,4 +7,7 @@
         <property name="idLocale" type="int"/>
     </transfer>
 
+    <transfer name="CmsSlotTemplateConfiguration">
+        <property name="conditions" type="array" singular="condition"/>
+    </transfer>
 </transfers>

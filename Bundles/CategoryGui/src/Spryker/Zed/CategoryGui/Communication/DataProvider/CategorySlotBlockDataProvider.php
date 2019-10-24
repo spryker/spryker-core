@@ -12,7 +12,7 @@ use Spryker\Zed\CategoryGui\Communication\Form\CategorySlotBlockConditionForm;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface;
 use Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface;
 
-class CategorySlotBlockDataProvider
+class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInterface
 {
     /**
      * @var \Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface

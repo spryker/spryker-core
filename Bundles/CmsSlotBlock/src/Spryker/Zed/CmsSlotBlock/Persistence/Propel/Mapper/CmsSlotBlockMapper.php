@@ -15,6 +15,10 @@ use Spryker\Zed\CmsSlotBlock\Dependency\Service\CmsSlotBlockToUtilEncodingServic
 
 class CmsSlotBlockMapper implements CmsSlotBlockMapperInterface
 {
+    protected const CONDITION_KEY_CATEGORY = 'category';
+    protected const CONDITION_KEY_CATEGORY_IDS = 'categoryIds';
+    protected const CONDITION_KEY_PRODUCT = 'product';
+
     /**
      * @var \Spryker\Zed\CmsSlotBlock\Dependency\Service\CmsSlotBlockToUtilEncodingServiceInterface
      */
@@ -84,7 +88,7 @@ class CmsSlotBlockMapper implements CmsSlotBlockMapperInterface
             ->setIdCmsBlock($cmsSlotBlockEntity->getFkCmsBlock());
 
         $cmsSlotBlockTransfer->setConditions(
-            $this->utilEncodingService->decodeJson($cmsSlotBlockEntity->getConditions())
+            $this->utilEncodingService->decodeJson($cmsSlotBlockEntity->getConditions(), true)
         );
 
         return $cmsSlotBlockTransfer;

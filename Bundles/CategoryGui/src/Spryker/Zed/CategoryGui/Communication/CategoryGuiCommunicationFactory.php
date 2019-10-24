@@ -9,7 +9,9 @@ namespace Spryker\Zed\CategoryGui\Communication;
 
 use Spryker\Zed\CategoryGui\CategoryGuiDependencyProvider;
 use Spryker\Zed\CategoryGui\Communication\DataProvider\CategorySlotBlockDataProvider;
+use Spryker\Zed\CategoryGui\Communication\DataProvider\CategorySlotBlockDataProviderInterface;
 use Spryker\Zed\CategoryGui\Communication\Form\CategorySlotBlockConditionForm;
+use Spryker\Zed\CategoryGui\Communication\Form\Validator\Constraints\CategoryConditionsConstraint;
 use Spryker\Zed\CategoryGui\Communication\Table\CategoryTable;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface;
 use Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface;
@@ -34,11 +36,19 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CategoryGui\Communication\DataProvider\CategorySlotBlockDataProvider
+     * @return \Spryker\Zed\CategoryGui\Communication\DataProvider\CategorySlotBlockDataProviderInterface
      */
-    public function createCategorySlotBlockDataProvider(): CategorySlotBlockDataProvider
+    public function createCategorySlotBlockDataProvider(): CategorySlotBlockDataProviderInterface
     {
         return new CategorySlotBlockDataProvider($this->getCategoryQueryContainer(), $this->getLocaleFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryGui\Communication\Form\Validator\Constraints\CategoryConditionsConstraint
+     */
+    public function createCategoryConditionsConstraint(): CategoryConditionsConstraint
+    {
+        return new CategoryConditionsConstraint();
     }
 
     /**
