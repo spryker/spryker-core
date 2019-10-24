@@ -13,13 +13,11 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*",
     "spryker/twig": "*"
   },
   "suggest": {
     "spryker/container": "If you want to use Twig Plugins",
-    "spryker/silex": "*",
     "spryker/twig": "*"
   },
   "autoload": {
