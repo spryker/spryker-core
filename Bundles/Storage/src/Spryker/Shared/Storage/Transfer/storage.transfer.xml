@@ -5,7 +5,11 @@
 
     <transfer name="StorageScanResult">
         <property name="cursor" type="int"/>
-        <property name="keys" type="array"/>
+        <property name="keys" type="array" singular="keys"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>
