@@ -11,7 +11,7 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Are you sure about deleting this delivery method?' | trans } %}
 
         {% block widget_content %}
 
