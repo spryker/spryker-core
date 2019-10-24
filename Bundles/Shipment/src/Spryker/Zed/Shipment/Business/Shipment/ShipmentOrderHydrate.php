@@ -85,8 +85,9 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
         iterable $shipmentTransfers,
         OrderTransfer $orderTransfer
     ): OrderTransfer {
+        $shipmentTransfers = (array)$shipmentTransfers;
         /** @var \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer */
-        $shipmentTransfer = $shipmentTransfers[0];
+        $shipmentTransfer = current($shipmentTransfers);
         $orderTransfer = $this->addShipmentToOrderItems($orderTransfer, $shipmentTransfer);
         $orderTransfer = $this->setOrderLevelShipmentMethod($orderTransfer);
 
