@@ -11,10 +11,12 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\StockProductBuilder;
 use Generated\Shared\DataBuilder\TypeBuilder;
 use Generated\Shared\Transfer\TypeTransfer;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class StockDataHelper extends Module
 {
+    use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
     /**
@@ -28,6 +30,19 @@ class StockDataHelper extends Module
         $stockTypeTransfer = (new TypeBuilder([TypeTransfer::NAME => 'Warehouse1']))->build();
         $stockFacade->createStockType($stockTypeTransfer);
         $stockFacade->createStockProduct((new StockProductBuilder($override))->build()->setStockType($stockTypeTransfer->getName()));
+    }
+
+    /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\TypeTransfer
+     */
+    public function haveStock(array $seed = []): TypeTransfer
+    {
+        $typeTransfer = (new TypeBuilder($seed))->build();
+        $typeTransfer->setIdStock($this->getStockFacade()->createStockType($typeTransfer));
+
+        return $typeTransfer;
     }
 
     /**

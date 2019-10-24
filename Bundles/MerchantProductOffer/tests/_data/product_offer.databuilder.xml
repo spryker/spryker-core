@@ -6,7 +6,7 @@
 >
 
     <transfer name="ProductOffer">
-        <property name="fkMerchant" dataBuilderRule="="/>
+        <property name="fkMerchant" dataBuilderRule="=1"/>
     </transfer>
 
 </transfers>
