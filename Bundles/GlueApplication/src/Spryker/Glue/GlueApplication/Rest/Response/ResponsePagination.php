@@ -15,10 +15,6 @@ class ResponsePagination implements ResponsePaginationInterface
 {
     protected const KEY_PAGE = 'page';
 
-    protected const DOMAIN_LINK_TEMPLATE = '%s/%s?%spage[offset]=';
-
-    protected const DOMAIN_LINK_WITH_PARENT_RESOURCE_TEMPLATE = '%s/%s/%s/%s?%spage[offset]=';
-
     protected const LINK_PATTERN = '%s%s%s';
 
     /**
@@ -55,26 +51,21 @@ class ResponsePagination implements ResponsePaginationInterface
             return [];
         }
 
-        $httpRequest = $restRequest->getHttpRequest();
-        $baseUrl = $httpRequest->getRequestUri() . '?page[offset]=';
-        if (count($httpRequest->query->all())) {
-            $baseUrl = $httpRequest->getRequestUri() . '&page[offset]=';
-        }
-
+        $domain = $this->buildDomainLink($restRequest);
         $limit = $this->buildLimitParameter($pageOffsetsTransfer);
 
         $offsetLinks = [
-            RestLinkInterface::LINK_LAST => $baseUrl . $pageOffsetsTransfer->getLastOffset() . $limit,
-            RestLinkInterface::LINK_FIRST => $baseUrl . 0 . $limit,
+            RestLinkInterface::LINK_LAST => sprintf(static::LINK_PATTERN, $domain, $pageOffsetsTransfer->getLastOffset(), $limit),
+            RestLinkInterface::LINK_FIRST => sprintf(static::LINK_PATTERN, $domain, 0, $limit),
         ];
 
-        if ($restRequest->getPage()->getOffset() > 1) {
+        if ($restRequest->getPage()->getOffset() > 0) {
             $offsetLinks[RestLinkInterface::LINK_PREV]
-                = $baseUrl . $pageOffsetsTransfer->getPrevOffset() . $limit;
+                = sprintf(static::LINK_PATTERN, $domain, $pageOffsetsTransfer->getPrevOffset(), $limit);
         }
         if ($pageOffsetsTransfer->getNextOffset() < $restResponse->getTotals()) {
             $offsetLinks[RestLinkInterface::LINK_NEXT]
-                = $baseUrl . $pageOffsetsTransfer->getNextOffset() . $limit;
+                = sprintf(static::LINK_PATTERN, $domain, $pageOffsetsTransfer->getNextOffset(), $limit);
         }
 
         return array_merge(
@@ -191,12 +182,23 @@ class ResponsePagination implements ResponsePaginationInterface
     protected function buildDomainLink(RestRequestInterface $restRequest): string
     {
         $queryString = $restRequest->getQueryString([static::KEY_PAGE]);
-        if (strlen($queryString)) {
-            $queryString .= '&';
-        }
-        $domain = sprintf(static::DOMAIN_LINK_TEMPLATE, $this->domainName, $restRequest->getResource()->getType(), $queryString);
 
-        return $domain;
+        $pageOffsetParameter = '?page[offset]=';
+        if (strlen($queryString)) {
+            $queryString = '?' . $queryString;
+            $pageOffsetParameter = '&page[offset]=';
+        }
+
+        $domainLink = $this->domainName . '/';
+
+        $parentResources = $restRequest->getParentResources();
+        foreach ($parentResources as $parentResource) {
+            $domainLink .= $parentResource->getType() . '/' . $parentResource->getId() . '/';
+        }
+
+        $domainLink = $domainLink . $restRequest->getResource()->getType() . $queryString . $pageOffsetParameter;
+
+        return $domainLink;
     }
 
     /**
