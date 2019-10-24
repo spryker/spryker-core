@@ -40,7 +40,7 @@ class TriggerController extends AbstractController
     {
         $redirect = $request->query->get(static::URL_PARAM_REDIRECT, static::DEFAULT_REDIRECT_URL);
 
-        if (!$request->isMethod(Request::METHOD_POST)) {
+        if (!$this->isValidTriggerEventItemPostRequest($request)) {
             $this->addErrorMessage(static::ERROR_INVALID_FORM);
 
             return $this->redirectResponse($redirect);
@@ -66,7 +66,7 @@ class TriggerController extends AbstractController
     {
         $redirect = $request->query->get(static::URL_PARAM_REDIRECT, static::DEFAULT_REDIRECT_URL);
 
-        if (!$request->isMethod(Request::METHOD_POST)) {
+        if (!$this->isValidTriggerEventPostRequest($request)) {
             $this->addErrorMessage(static::ERROR_INVALID_FORM);
 
             return $this->redirectResponse($redirect);
@@ -81,6 +81,44 @@ class TriggerController extends AbstractController
         $this->getFacade()->triggerEvent($eventName, $stateMachineItemTransfer);
 
         return $this->redirectResponse(htmlentities($redirect));
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return bool
+     */
+    protected function isValidTriggerEventPostRequest(Request $request): bool
+    {
+        if (!$request->isMethod(Request::METHOD_POST)) {
+            return false;
+        }
+
+        $form = $this->getFactory()
+            ->createStateMachineTriggerFormFactory()
+            ->createEventTriggerForm()
+            ->handleRequest($request);
+
+        return $form->isSubmitted() && $form->isValid();
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return bool
+     */
+    protected function isValidTriggerEventItemPostRequest(Request $request): bool
+    {
+        if (!$request->isMethod(Request::METHOD_POST)) {
+            return false;
+        }
+
+        $form = $this->getFactory()
+            ->createStateMachineTriggerFormFactory()
+            ->createEventItemTriggerForm()
+            ->handleRequest($request);
+
+        return $form->isSubmitted() && $form->isValid();
     }
 
     /**

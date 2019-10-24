@@ -42,7 +42,7 @@ class TriggerController extends AbstractController
     {
         $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, static::ROUTE_REDIRECT_DEFAULT);
 
-        if (!$request->isMethod(Request::METHOD_POST)) {
+        if (!$this->isValidPostRequest($request)) {
             $this->addErrorMessage(static::ERROR_INVALID_FORM);
 
             return $this->redirectResponse($redirect);
@@ -61,7 +61,7 @@ class TriggerController extends AbstractController
     }
 
     /**
-     * @deprecated use triggerEventForOrderItemsAction instead
+     * @deprecated Use triggerEventForOrderItemsAction instead
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -69,23 +69,7 @@ class TriggerController extends AbstractController
      */
     public function submitTriggerEventForOrderItemsAction(Request $request)
     {
-        $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, static::ROUTE_REDIRECT_DEFAULT);
-        if (!$this->isValidPostRequest($request)) {
-            $this->addErrorMessage(static::ERROR_INVALID_FORM);
-
-            return $this->redirectResponse($redirect);
-        }
-
-        $idOrderItems = $this->getRequestIdSalesOrderItems($request);
-        if ($idOrderItems === []) {
-            return $this->redirectResponse($redirect);
-        }
-
-        $event = $request->query->get(static::REQUEST_PARAMETER_EVENT);
-        $this->getFacade()->triggerEventForOrderItems($event, $idOrderItems);
-        $this->addInfoMessage(static::MESSAGE_STATUS_CHANGED_SUCCESSFULLY);
-
-        return $this->redirectResponse($redirect);
+        return $this->triggerEventForOrderItemsAction($request);
     }
 
     /**
@@ -97,7 +81,7 @@ class TriggerController extends AbstractController
     {
         $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, static::ROUTE_REDIRECT_DEFAULT);
 
-        if (!$request->isMethod(Request::METHOD_POST)) {
+        if (!$this->isValidPostRequest($request)) {
             $this->addErrorMessage(static::ERROR_INVALID_FORM);
 
             return $this->redirectResponse($redirect);
@@ -116,7 +100,7 @@ class TriggerController extends AbstractController
     }
 
     /**
-     * @deprecated use triggerEventForOrderAction instead
+     * @deprecated Use triggerEventForOrderAction instead
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -124,24 +108,7 @@ class TriggerController extends AbstractController
      */
     public function submitTriggerEventForOrderAction(Request $request)
     {
-        $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, static::ROUTE_REDIRECT_DEFAULT);
-
-        if (!$this->isValidPostRequest($request)) {
-            $this->addErrorMessage(static::ERROR_INVALID_FORM);
-
-            return $this->redirectResponse($redirect);
-        }
-
-        $idOrder = $this->castId($request->query->getInt(static::REQUEST_PARAMETER_ID_SALES_ORDER));
-        $event = $request->query->get(static::REQUEST_PARAMETER_EVENT);
-        $itemsList = $request->query->get(static::REQUEST_PARAMETER_ITEMS);
-
-        $orderItems = $this->getOrderItemsToTriggerAction($idOrder, $itemsList);
-
-        $this->getFacade()->triggerEvent($event, $orderItems, []);
-        $this->addInfoMessage(static::MESSAGE_STATUS_CHANGED_SUCCESSFULLY);
-
-        return $this->redirectResponse($redirect);
+        return $this->triggerEventForOrderAction($request);
     }
 
     /**
