@@ -55,21 +55,26 @@ class ResponsePagination implements ResponsePaginationInterface
             return [];
         }
 
-        $domain = $this->domainName . $restRequest->getHttpRequest()->getPathInfo() . '?page[offset]=';
+        $httpRequest = $restRequest->getHttpRequest();
+        $baseUrl = $httpRequest->getRequestUri() . '?page[offset]=';
+        if (count($httpRequest->query->all())) {
+            $baseUrl = $httpRequest->getRequestUri() . '&page[offset]=';
+        }
+
         $limit = $this->buildLimitParameter($pageOffsetsTransfer);
 
         $offsetLinks = [
-            RestLinkInterface::LINK_LAST => $domain . $pageOffsetsTransfer->getLastOffset() . $limit,
-            RestLinkInterface::LINK_FIRST => $domain . 0 . $limit,
+            RestLinkInterface::LINK_LAST => $baseUrl . $pageOffsetsTransfer->getLastOffset() . $limit,
+            RestLinkInterface::LINK_FIRST => $baseUrl . 0 . $limit,
         ];
 
         if ($restRequest->getPage()->getOffset() > 1) {
             $offsetLinks[RestLinkInterface::LINK_PREV]
-                = $domain . $pageOffsetsTransfer->getPrevOffset() . $limit;
+                = $baseUrl . $pageOffsetsTransfer->getPrevOffset() . $limit;
         }
         if ($pageOffsetsTransfer->getNextOffset() < $restResponse->getTotals()) {
             $offsetLinks[RestLinkInterface::LINK_NEXT]
-                = $domain . $pageOffsetsTransfer->getNextOffset() . $limit;
+                = $baseUrl . $pageOffsetsTransfer->getNextOffset() . $limit;
         }
 
         return array_merge(
