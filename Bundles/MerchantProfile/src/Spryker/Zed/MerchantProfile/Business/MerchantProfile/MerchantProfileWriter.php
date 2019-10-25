@@ -10,8 +10,8 @@ namespace Spryker\Zed\MerchantProfile\Business\MerchantProfile;
 use ArrayObject;
 use Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Generated\Shared\Transfer\UrlTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfileAddress\MerchantProfileAddressWriterInterface;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary\MerchantProfileGlossaryWriterInterface;
 use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToUrlFacadeInterface;
@@ -96,6 +96,8 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
     {
         $merchantProfileTransfer = $this->merchantProfileGlossaryWriter->saveMerchantProfileGlossaryAttributes($merchantProfileTransfer);
         $merchantProfileTransfer = $this->merchantProfileEntityManager->create($merchantProfileTransfer);
+        $merchantProfileTransfer = $this->saveMerchantProfileAddress($merchantProfileTransfer, $merchantProfileTransfer->getAddressCollection());
+        $merchantProfileTransfer = $this->saveMerchantProfileUrls($merchantProfileTransfer, $merchantProfileTransfer->getUrlCollection());
 
         return $merchantProfileTransfer;
     }
@@ -109,8 +111,8 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
     {
         $merchantProfileTransfer = $this->merchantProfileGlossaryWriter->saveMerchantProfileGlossaryAttributes($merchantProfileTransfer);
         $merchantProfileTransfer = $this->merchantProfileEntityManager->update($merchantProfileTransfer);
-        $merchantProfileTransfer = $this->saveMerchantProfileAddress($merchantProfileTransfer, $merchantProfileAddressCollectionTransfer);
-        $merchantProfileTransfer = $this->saveMerchantProfileUrls($merchantProfileTransfer, $merchantProfileUrlTransfers);
+        $merchantProfileTransfer = $this->saveMerchantProfileAddress($merchantProfileTransfer, $merchantProfileTransfer->getAddressCollection());
+        $merchantProfileTransfer = $this->saveMerchantProfileUrls($merchantProfileTransfer, $merchantProfileTransfer->getUrlCollection());
 
         return $merchantProfileTransfer;
     }

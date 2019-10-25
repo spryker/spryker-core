@@ -75,35 +75,6 @@ class MerchantUpdater implements MerchantUpdaterInterface
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function create(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
-    {
-        $this->assertDefaultMerchantRequirements($merchantTransfer);
-
-        if (empty($merchantTransfer->getMerchantKey())) {
-            $merchantTransfer->setMerchantKey(
-                $this->merchantKeyGenerator->generateMerchantKey($merchantTransfer->getName())
-            );
-        }
-
-        $merchantTransfer->setStatus($this->merchantConfig->getDefaultMerchantStatus());
-
-        $merchantTransfer = $this->getTransactionHandler()->handleTransaction(function () use ($merchantTransfer) {
-            return $this->executeMerchantSaveTransaction($merchantTransfer);
-        });
-
-        $merchantResponseTransfer = $this->createMerchantResponseTransfer();
-        $merchantResponseTransfer = $merchantResponseTransfer
-            ->setIsSuccess(true)
-            ->setMerchant($merchantTransfer);
-
-        return $merchantResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
-     */
     public function update(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
         $this->assertDefaultMerchantRequirements($merchantTransfer);
@@ -151,11 +122,6 @@ class MerchantUpdater implements MerchantUpdaterInterface
      */
     protected function executeUpdateTransaction(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        $merchantAddressCollectionTransfer = $this->merchantAddressWriter->saveMerchantAddressCollection(
-            $merchantTransfer->getAddressCollection(),
-            $merchantTransfer->getIdMerchant()
-        );
-        $merchantTransfer->setAddressCollection($merchantAddressCollectionTransfer);
         $merchantTransfer = $this->merchantEntityManager->saveMerchant($merchantTransfer);
         $merchantTransfer = $this->executeMerchantPostSavePlugins($merchantTransfer);
 
