@@ -3,14 +3,19 @@
 
     <table name="spy_cms_slot_template" idMethod="native" allowPkInsert="true" phpName="SpyCmsSlotTemplate" identifierQuoting="true">
         <column name="id_cms_slot_template" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="path" required="true" type="VARCHAR" size="1024" description="Identifier for existing entities. It should never be changed."/>
+        <column name="path" required="true" type="LONGVARCHAR"/>
+        <column name="path_hash" required="true" type="VARCHAR" size="255" description="Identifier for existing entities. It should never be changed."/>
         <column name="name" required="true" type="VARCHAR" size="255"/>
         <column name="description" required="true" type="LONGVARCHAR"/>
 
         <id-method-parameter value="spy_cms_slot_template_pk_seq"/>
 
-        <unique name="spy_cms_slot_template-path">
-            <unique-column name="path"/>
+        <index name="spy_cms_slot_template-path">
+            <index-column name="path"/>
+        </index>
+
+        <unique name="spy_cms_slot_template-path_hash">
+            <unique-column name="path_hash"/>
         </unique>
     </table>
 
