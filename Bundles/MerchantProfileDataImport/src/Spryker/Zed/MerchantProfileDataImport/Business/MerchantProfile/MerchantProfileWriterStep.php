@@ -12,7 +12,6 @@ use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfile;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
-use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\LocalizedAttributesExtractorStep;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
@@ -132,21 +131,6 @@ class MerchantProfileWriterStep extends PublishAwareStep implements DataImportSt
         }
 
         $this->addPublishEvents(UrlEvents::URL_PUBLISH, $urlEntity->getIdUrl());
-    }
-
-    /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
-     * @param string $requiredDataSetKey
-     *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
-     *
-     * @return void
-     */
-    protected function validateRequireDataSetByKey(DataSetInterface $dataSet, string $requiredDataSetKey): void
-    {
-        if (!$dataSet[$requiredDataSetKey]) {
-            throw new InvalidDataException(sprintf('"%s" is required.', $requiredDataSetKey));
-        }
     }
 
     /**
