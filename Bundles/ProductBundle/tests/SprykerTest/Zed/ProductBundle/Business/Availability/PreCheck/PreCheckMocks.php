@@ -15,9 +15,8 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use PHPUnit\Framework\MockObject\MockObject;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
-use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
 
 class PreCheckMocks extends Unit
 {
@@ -35,11 +34,11 @@ class PreCheckMocks extends Unit
     ];
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface
      */
     protected function createAvailabilityFacadeMock()
     {
-        return $this->getMockBuilder(ProductBundleToAvailabilityInterface::class)->getMock();
+        return $this->getMockBuilder(ProductBundleToAvailabilityFacadeInterface::class)->getMock();
     }
 
     /**
@@ -63,14 +62,6 @@ class PreCheckMocks extends Unit
         $quoteTransfer->addBundleItem($itemTransfer);
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface
-     */
-    protected function createAvailabilityQueryContainerMock()
-    {
-        return $this->getMockBuilder(ProductBundleToAvailabilityQueryContainerInterface::class)->getMock();
     }
 
     /**

@@ -11,7 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 use Spryker\Zed\ProductBundle\ProductBundleConfig;
@@ -23,7 +23,7 @@ class BasePreCheck
     protected const ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_PRODUCT_SKU = '%productSku%';
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface
+     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface
      */
     protected $availabilityFacade;
 
@@ -43,13 +43,13 @@ class BasePreCheck
     protected $productBundleConfig;
 
     /**
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface $availabilityFacade
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface $availabilityFacade
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\ProductBundle\ProductBundleConfig $productBundleConfig
      */
     public function __construct(
-        ProductBundleToAvailabilityInterface $availabilityFacade,
+        ProductBundleToAvailabilityFacadeInterface $availabilityFacade,
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
         ProductBundleToStoreFacadeInterface $storeFacade,
         ProductBundleConfig $productBundleConfig
@@ -107,7 +107,7 @@ class BasePreCheck
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemsTransfers
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Spryker\DecimalObject\Decimal|null $itemQuantity
@@ -115,7 +115,7 @@ class BasePreCheck
      * @return bool
      */
     protected function checkIfItemIsSellable(
-        iterable $itemsTransfers,
+        iterable $itemTransfers,
         string $sku,
         StoreTransfer $storeTransfer,
         ?Decimal $itemQuantity = null
@@ -124,7 +124,7 @@ class BasePreCheck
             $itemQuantity = new Decimal(0);
         }
 
-        $currentItemQuantity = $this->getAccumulatedItemQuantityForGivenSku($itemsTransfers, $sku);
+        $currentItemQuantity = $this->getAccumulatedItemQuantityForGivenSku($itemTransfers, $sku);
         $currentItemQuantity = $currentItemQuantity->add($itemQuantity);
 
         return $this->availabilityFacade->isProductSellableForStore($sku, $currentItemQuantity, $storeTransfer);
