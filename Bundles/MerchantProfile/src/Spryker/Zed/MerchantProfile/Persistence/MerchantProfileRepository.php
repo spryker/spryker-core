@@ -51,7 +51,6 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
         $merchantProfileQuery = $this->getFactory()
             ->createMerchantProfileQuery()
             ->joinWithSpyMerchant()
-            ->leftJoinWithSpyMerchantProfileAddress()
             ->useSpyMerchantProfileAddressQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinWithSpyCountry()
             ->endUse();

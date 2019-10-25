@@ -120,13 +120,11 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
      */
     protected function saveMerchantProfileUrls(MerchantProfileTransfer $merchantProfileTransfer, ArrayObject $merchantProfileUrlTransfers): MerchantProfileTransfer
     {
-        $idMerchantProfile = $merchantProfileTransfer->getIdMerchantProfile();
-
         $urlTransferCollection = new ArrayObject();
         foreach ($merchantProfileUrlTransfers as $merchantProfileUrlTransfer) {
             $urlTransfer = new UrlTransfer();
             $urlTransfer->fromArray($merchantProfileUrlTransfer->toArray(), false);
-            $urlTransfer->setFkResourceMerchantProfile($idMerchantProfile);
+            $urlTransfer->setFkResourceMerchantProfile($merchantProfileTransfer->getIdMerchantProfile());
 
             $urlTransfer = $this->saveMerchantProfileUrl($urlTransfer);
             $urlTransferCollection->append($urlTransfer);
