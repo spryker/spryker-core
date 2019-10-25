@@ -262,4 +262,19 @@ interface SearchFacadeInterface
      * @return bool
      */
     public function copyIndex($source, $target);
+
+    /**
+     * Specification:
+     * - Installs Elasticsearch indexes and mapping types based on the loaded index definitions if they not exists already.
+     * - For each configured store a separated index name is generated.
+     * - The index is created for only the current store.
+     * - The name of the index is automatically prefixed with the store name + underscore.
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
+     * @return void
+     */
+    public function createIndexes(LoggerInterface $messenger): void;
 }
