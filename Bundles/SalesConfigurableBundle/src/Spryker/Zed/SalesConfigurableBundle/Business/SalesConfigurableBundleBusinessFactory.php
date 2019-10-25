@@ -10,6 +10,8 @@ namespace Spryker\Zed\SalesConfigurableBundle\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesConfigurableBundle\Business\Expander\SalesOrderConfiguredBundleExpander;
 use Spryker\Zed\SalesConfigurableBundle\Business\Expander\SalesOrderConfiguredBundleExpanderInterface;
+use Spryker\Zed\SalesConfigurableBundle\Business\OrderItem\ConfigurableBundleItemQuantityValidator;
+use Spryker\Zed\SalesConfigurableBundle\Business\OrderItem\ConfigurableBundleItemQuantityValidatorInterface;
 use Spryker\Zed\SalesConfigurableBundle\Business\Writer\SalesOrderConfiguredBundleWriter;
 use Spryker\Zed\SalesConfigurableBundle\Business\Writer\SalesOrderConfiguredBundleWriterInterface;
 
@@ -38,5 +40,13 @@ class SalesConfigurableBundleBusinessFactory extends AbstractBusinessFactory
         return new SalesOrderConfiguredBundleExpander(
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesConfigurableBundle\Business\OrderItem\ConfigurableBundleItemQuantityValidatorInterface
+     */
+    public function createConfigurableBundleItemQuantityValidator(): ConfigurableBundleItemQuantityValidatorInterface
+    {
+        return new ConfigurableBundleItemQuantityValidator();
     }
 }
