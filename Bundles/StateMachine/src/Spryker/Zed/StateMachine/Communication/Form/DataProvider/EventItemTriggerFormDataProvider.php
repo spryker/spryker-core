@@ -12,13 +12,13 @@ use Spryker\Zed\StateMachine\Communication\Form\EventTriggerForm;
 
 class EventItemTriggerFormDataProvider
 {
-    public const SUBMIT_BUTTON_CLASS = 'btn btn-primary btn-sm trigger-order-single-event';
+    protected const SUBMIT_BUTTON_CLASS = 'btn btn-primary btn-sm trigger-order-single-event';
 
-    public const URL_PARAM_IDENTIFIER = 'identifier';
-    public const URL_PARAM_STATE_MACHINE_NAME = 'state-machine-name';
-    public const URL_PARAM_PROCESS_NAME = 'process-name';
-    public const URL_PARAM_REDIRECT = 'redirect';
-    public const URL_PARAM_EVENTS = 'events';
+    protected const URL_PARAM_IDENTIFIER = 'identifier';
+    protected const URL_PARAM_STATE_MACHINE_NAME = 'state-machine-name';
+    protected const URL_PARAM_PROCESS_NAME = 'process-name';
+    protected const URL_PARAM_REDIRECT = 'redirect';
+    protected const URL_PARAM_EVENTS = 'events';
 
     /**
      * @param int $identifier
