@@ -33,7 +33,7 @@
         <property name="dataPrivacyGlossaryKey" type="string"/>
         <property name="idMerchantProfile" type="int"/>
         <property name="fkMerchant" type="int"/>
-        <property name="addressCollection" type="MerchantProfileViewAddress[]" singular="MerchantProfileViewAddress"/>
+        <property name="addressCollection" type="MerchantProfileViewAddress[]" singular="merchantProfileViewAddress"/>
     </transfer>
 
     <transfer name="MerchantProfileViewAddress">
