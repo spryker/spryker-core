@@ -19,7 +19,7 @@
     "psr-4": {
       "Spryker\\": "src/Spryker/",
       "SprykerTest\\Zed\\CmsSlotDataImport\\Helper\\": "tests/SprykerTest/Zed/CmsSlotDataImport/_support/Helper/"
-    },Business/DataImportStep/CmsSlotTemplateWriterStep.php
+    }
   },
   "autoload-dev": {
     "psr-4": {
