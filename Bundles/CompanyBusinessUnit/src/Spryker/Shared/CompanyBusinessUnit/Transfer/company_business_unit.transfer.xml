@@ -9,6 +9,7 @@
         <property name="fkCustomer" type="int"/>
         <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
         <property name="customer" type="Customer"/>
+        <property name="fkCompany" type="int"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnit">
@@ -43,7 +44,7 @@
         <property name="idCompanyUser" type="int"/>
         <property name="filter" type="Filter"/>
         <property name="pagination" type="Pagination"/>
-        <property name="companyBusinessUnitIds" type="array"/>
+        <property name="companyBusinessUnitIds" type="array" singular="companyBusinessUnitIds"/>
     </transfer>
 
     <transfer name="Filter">
@@ -66,13 +67,13 @@
     </transfer>
 
     <transfer name="CompanyBusinessUnitTreeNode">
-        <property name="children" type="CompanyBusinessUnitTreeNode[]"/>
+        <property name="children" type="CompanyBusinessUnitTreeNode[]" singular="children"/>
         <property name="level" type="int"/>
         <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnitTreeNodeCollection">
-        <property name="companyBusinessUnitTreeNodes" type="CompanyBusinessUnitTreeNode[]"/>
+        <property name="companyBusinessUnitTreeNodes" type="CompanyBusinessUnitTreeNode[]" singular="companyBusinessUnitTreeNodes"/>
     </transfer>
 
     <transfer name="ResponseMessage">
@@ -82,9 +83,20 @@
     <transfer name="CompanyUserResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="messages" type="ResponseMessage[]" singular="message"/>
+        <property name="companyUser" type="CompanyUser"/>
     </transfer>
 
     <transfer name="Customer">
         <property name="idCustomer" type="int"/>
+        <property name="companyUserTransfer" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="CompanyResponse">
+        <property name="companyTransfer" type="Company"/>
+        <property name="messages" type="ResponseMessage[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Company">
+        <property name="idCompany" type="int"/>
     </transfer>
 </transfers>

@@ -15,8 +15,8 @@
         <property name="isActive" type="bool"/>
         <property name="image" type="string"/>
         <property name="templatePath" type="string"/>
-        <property name="parents" type="CategoryNodeStorage[]"/>
-        <property name="children" type="CategoryNodeStorage[]"/>
+        <property name="parents" type="CategoryNodeStorage[]" singular="parents"/>
+        <property name="children" type="CategoryNodeStorage[]" singular="children"/>
         <property name="order" type="int"/>
         <property name="metaTitle" type="string"/>
         <property name="metaDescription" type="string"/>
@@ -30,6 +30,11 @@
     <transfer name="UrlStorageResourceMap">
         <property name="resourceKey" type="string"/>
         <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="locale" type="string"/>
+        <property name="reference" type="string"/>
     </transfer>
 
 </transfers>

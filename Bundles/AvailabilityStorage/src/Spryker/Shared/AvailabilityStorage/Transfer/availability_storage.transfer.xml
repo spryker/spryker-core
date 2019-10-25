@@ -10,4 +10,14 @@
         <property name="sku" type="string"/>
     </transfer>
 
+    <transfer name="StorageAvailability">
+        <property name="concreteProductAvailableItems" type="array" singular="concreteProductAvailableItem"/>
+        <property name="isAbstractProductAvailable" type="bool"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="store" type="string"/>
+        <property name="reference" type="string"/>
+    </transfer>
+
 </transfers>

@@ -45,4 +45,12 @@
         <property name="detail" type="string"/>
     </transfer>
 
+    <transfer name="CompanyBusinessUnitCriteriaFilter">
+        <property name="idCompanyUser" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitCollection">
+        <property name="companyBusinessUnits" type="CompanyBusinessUnit[]" singular="companyBusinessUnit"/>
+    </transfer>
+
 </transfers>
