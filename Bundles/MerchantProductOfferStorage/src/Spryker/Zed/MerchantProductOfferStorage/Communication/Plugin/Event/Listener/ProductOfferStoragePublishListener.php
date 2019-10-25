@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Event\Listener;
 
+use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -31,12 +32,12 @@ class ProductOfferStoragePublishListener extends AbstractPlugin implements Event
         $this->getTransactionHandler()->handleTransaction(function () use ($transfers): void {
             $productOfferReferences = $this->getFactory()
                 ->getEventBehaviorFacade()
-                ->getEventTransferIds($transfers);
+                ->getEventTransfersAdditionalValues($transfers, SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE);
 
             if (!$productOfferReferences) {
                 return;
             }
-            $this->getFacade()->publishProductOfferStorage(['M9121U0KN-O41', 'B07XRR7N5Q']);
+            $this->getFacade()->publishProductOfferStorage($productOfferReferences);
         });
     }
 }

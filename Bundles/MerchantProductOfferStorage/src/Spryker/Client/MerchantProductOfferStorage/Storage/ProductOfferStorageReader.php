@@ -50,7 +50,10 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
 
         $concreteProductOffers = $this->storageClient->get($concreteProductOffersKey);
 
-        foreach ($concreteProductOffers as $concreteProductOffer) {
+        foreach ($concreteProductOffers as $key => $concreteProductOffer) {
+            if ($key === '_timestamp') {
+                continue;
+            }
             $merchantProductOfferKey = $this->generateKey($concreteProductOffer, MerchantProductOfferStorageConfig::RESOURCE_MERCHANT_PRODUCT_OFFER_NAME);
             $concreteProductOffer = $this->storageClient->get($merchantProductOfferKey);
             $productOfferViewCollectionTransfer[] = $this->mapConcreteProductOffer($concreteProductOffer, (new ProductOfferViewTransfer()));
@@ -67,7 +70,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
      */
     protected function mapConcreteProductOffer(array $concreteProductOffer, ProductOfferViewTransfer $productOfferViewTransfer): ProductOfferViewTransfer
     {
-        return $productOfferViewTransfer->fromArray($concreteProductOffer);
+        return $productOfferViewTransfer->fromArray($concreteProductOffer, true);
     }
 
     /**

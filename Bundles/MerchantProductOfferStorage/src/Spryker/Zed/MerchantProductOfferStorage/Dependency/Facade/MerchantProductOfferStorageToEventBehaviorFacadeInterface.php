@@ -11,8 +11,9 @@ interface MerchantProductOfferStorageToEventBehaviorFacadeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param string $columnName
      *
      * @return array
      */
-    public function getEventTransferIds(array $eventTransfers): array;
+    public function getEventTransfersAdditionalValues(array $eventTransfers, string $columnName): array;
 }

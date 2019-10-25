@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Event\Listener;
 
+use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -31,7 +32,7 @@ class ProductConcreteOffersStorageUnpublishListener extends AbstractPlugin imple
         $this->getTransactionHandler()->handleTransaction(function () use ($transfers): void {
             $concreteSkus = $this->getFactory()
                 ->getEventBehaviorFacade()
-                ->getEventTransferIds($transfers);
+                ->getEventTransfersAdditionalValues($transfers, SpyProductOfferTableMap::COL_CONCRETE_SKU);
 
             if (!$concreteSkus) {
                 return;
