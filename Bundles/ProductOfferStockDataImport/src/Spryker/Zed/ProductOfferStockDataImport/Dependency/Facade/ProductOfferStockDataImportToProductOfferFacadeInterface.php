@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\ProductOfferStockDataImport\Dependency\Facade;
 
-use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 
 interface ProductOfferStockDataImportToProductOfferFacadeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer|null $productOfferCriteriaFilter
      *
-     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
-    public function find(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer;
+    public function findOne(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer;
 }

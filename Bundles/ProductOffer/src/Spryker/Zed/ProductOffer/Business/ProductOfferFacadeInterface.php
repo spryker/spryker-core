@@ -23,6 +23,18 @@ interface ProductOfferFacadeInterface
     public function find(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer;
 
     /**
+     * Specification:
+     * - Finds ProductOfferTransfer by provided ProductOfferCriteriaFilterTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer|null $productOfferCriteriaFilter
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
+     */
+    public function findOne(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer;
+
+    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferCriteriaFilter

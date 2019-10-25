@@ -32,6 +32,20 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer|null $productOfferCriteriaFilter
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
+     */
+    public function findOne(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer
+    {
+        return $this->getFactory()->createProductOfferReader()->findOne($productOfferCriteriaFilter);
+    }
+
+    /**
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer

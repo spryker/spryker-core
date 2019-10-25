@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductOfferStockDataImport\Dependency\Facade;
 
-use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 
 class ProductOfferStockDataImportToProductOfferFacadeBridge implements ProductOfferStockDataImportToProductOfferFacadeInterface
 {
@@ -28,10 +28,10 @@ class ProductOfferStockDataImportToProductOfferFacadeBridge implements ProductOf
     /**
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer|null $productOfferCriteriaFilter
      *
-     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
-    public function find(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
+    public function findOne(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer
     {
-        return $this->productOfferFacade->find($productOfferCriteriaFilter);
+        return $this->productOfferFacade->findOne($productOfferCriteriaFilter);
     }
 }

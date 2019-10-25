@@ -50,26 +50,15 @@ class ProductOfferReferenceToIdProductOfferStep implements DataImportStepInterfa
             ));
         }
 
-        $productOfferTransfers = $this->productOfferFacade
-            ->find($this->createProductOfferCriteriaFilterTransfer($productOfferReference));
-        /** @var \Generated\Shared\Transfer\ProductOfferTransfer|false $productOfferTransfer */
-        $productOfferTransfer = current($productOfferTransfers->getProductOffers());
+        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+            ->setProductOfferReference($productOfferReference);
 
-        if ($productOfferTransfer === false) {
+        $productOfferTransfer = $this->productOfferFacade->findOne($productOfferCriteriaFilterTransfer);
+
+        if ($productOfferTransfer === null) {
             throw new EntityNotFoundException(sprintf('Product offer not found for product offer reference %s', $productOfferReference));
         }
 
         $dataSet[ProductOfferStockDataSetInterface::FK_PRODUCT_OFFER] = $productOfferTransfer->getIdProductOffer();
-    }
-
-    /**
-     * @param string $productOfferReference
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer
-     */
-    protected function createProductOfferCriteriaFilterTransfer(string $productOfferReference): ProductOfferCriteriaFilterTransfer
-    {
-        return (new ProductOfferCriteriaFilterTransfer())
-            ->setProductOfferReference($productOfferReference);
     }
 }
