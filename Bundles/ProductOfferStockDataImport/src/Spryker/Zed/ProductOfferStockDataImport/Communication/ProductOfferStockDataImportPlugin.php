@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOfferStockDataImport\Communication;
 
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
+use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductOfferStockDataImport\ProductOfferStockDataImportConfig;
@@ -27,7 +28,7 @@ class ProductOfferStockDataImportPlugin extends AbstractPlugin implements DataIm
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null)
+    public function import(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
     {
         return $this->getFacade()->importProductOfferStock($dataImporterConfigurationTransfer);
     }
@@ -39,7 +40,7 @@ class ProductOfferStockDataImportPlugin extends AbstractPlugin implements DataIm
      *
      * @return string
      */
-    public function getImportType()
+    public function getImportType(): string
     {
         return ProductOfferStockDataImportConfig::IMPORT_TYPE_PRODUCT_OFFER_STOCK;
     }
