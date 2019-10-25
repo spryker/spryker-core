@@ -39,10 +39,37 @@ class AmountSalesUnitItemExpander implements AmountSalesUnitItemExpanderInterfac
                 continue;
             }
 
+            $itemTransfer->requireAmountLeadProduct();
+
+            if ($itemTransfer->getAmountLeadProduct()->getSku() === $itemTransfer->getSku()) {
+                $this->resetAmountAndQuantitySalesUnits($itemTransfer);
+            }
+
             $this->expandItemWithAmountSalesUnit($itemTransfer);
         }
 
         return $cartChangeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function resetAmountAndQuantitySalesUnits(ItemTransfer $itemTransfer): ItemTransfer
+    {
+        if (!$itemTransfer->getAmountSalesUnit() || !$itemTransfer->getAmountSalesUnit()->getIdProductMeasurementSalesUnit()) {
+            $itemTransfer
+                ->requireQuantitySalesUnit()
+                ->getQuantitySalesUnit()
+                    ->requireIdProductMeasurementSalesUnit();
+
+            $itemTransfer->setAmountSalesUnit($itemTransfer->getQuantitySalesUnit());
+        }
+
+        $itemTransfer->setQuantitySalesUnit(null);
+
+        return $itemTransfer;
     }
 
     /**
