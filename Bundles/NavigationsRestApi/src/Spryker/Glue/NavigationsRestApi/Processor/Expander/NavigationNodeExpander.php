@@ -52,7 +52,7 @@ class NavigationNodeExpander implements NavigationNodeExpanderInterface
      */
     protected function expandNavigationNodeTransfers(ArrayObject $restNavigationNodeTransfers): ArrayObject
     {
-        $urlCollection = array_filter($this->getUrlsCollection($restNavigationNodeTransfers));
+        $urlCollection = array_filter($this->getUrlCollection($restNavigationNodeTransfers));
         $urlStorageTransfers = $this->urlStorageClient->findUrlStorageTransferByUrls($urlCollection);
 
         return $this->mapUrlStorageTransfersToRestNavigationNodeTransfers(
@@ -67,13 +67,13 @@ class NavigationNodeExpander implements NavigationNodeExpanderInterface
      *
      * @return string[]
      */
-    protected function getUrlsCollection(ArrayObject $restNavigationNodeTransfers, array $urlCollection = []): array
+    protected function getUrlCollection(ArrayObject $restNavigationNodeTransfers, array $urlCollection = []): array
     {
         foreach ($restNavigationNodeTransfers as $restNavigationNodeTransfer) {
             $urlCollection[] = $restNavigationNodeTransfer->getUrl();
 
             if ($restNavigationNodeTransfer->getChildren()->count() > 0) {
-                $urlCollection += $this->getUrlsCollection($restNavigationNodeTransfer->getChildren(), $urlCollection);
+                $urlCollection += $this->getUrlCollection($restNavigationNodeTransfer->getChildren(), $urlCollection);
             }
         }
 
