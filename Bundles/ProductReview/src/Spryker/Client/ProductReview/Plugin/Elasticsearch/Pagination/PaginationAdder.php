@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductReview\Plugin\Elasticsearch\Pagination;
 
+use Elastica\Query;
 use Spryker\Client\ProductReview\ProductReviewConfig;
 use Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
@@ -40,6 +41,8 @@ class PaginationAdder implements PaginationAdderInterface
     {
         $currentPage = $this->paginationConfigBuilder->getCurrentPage($requestParameters);
         $itemsPerPage = $this->paginationConfigBuilder->getCurrentItemsPerPage($requestParameters);
+
+        /** @var \Elastica\Query $query */
         $query = $searchQuery->getSearchQuery();
 
         if (isset($requestParameters[static::PARAMETER_NAME_ITEMS_PER_PAGE])
@@ -58,7 +61,7 @@ class PaginationAdder implements PaginationAdderInterface
             $itemsPerPage = $requestParameters[static::PARAMETER_NAME_LIMIT];
         }
 
-        $query->setFrom(($currentPage - 1) * $itemsPerPage);
+        $this->setFrom($query, $currentPage, $itemsPerPage, $requestParameters);
         $query->setSize($itemsPerPage);
 
         return $searchQuery;
@@ -73,5 +76,24 @@ class PaginationAdder implements PaginationAdderInterface
     protected function validateParameter(array $requestParameters, string $parameter): bool
     {
         return (isset($requestParameters[$parameter]) && (int)$requestParameters[$parameter] !== 0);
+    }
+
+    /**
+     * @param \Elastica\Query $query
+     * @param int $currentPage
+     * @param int $itemsPerPage
+     * @param array $requestParameters
+     *
+     * @return \Elastica\Query
+     */
+    protected function setFrom(Query $query, int $currentPage, int $itemsPerPage, array $requestParameters): Query
+    {
+        if ($this->validateParameter($requestParameters, static::PARAMETER_NAME_LIMIT)
+            && $this->validateParameter($requestParameters, static::PARAMETER_NAME_OFFSET)
+        ) {
+            return $query->setFrom(($currentPage / $itemsPerPage) + 1);
+        }
+
+        return $query->setFrom(($currentPage - 1) * $itemsPerPage);
     }
 }

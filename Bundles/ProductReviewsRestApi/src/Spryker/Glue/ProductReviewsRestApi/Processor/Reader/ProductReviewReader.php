@@ -89,7 +89,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
         $productReviews = $this->findProductReviewsInSearch($restRequest, $abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT]);
 
         if (!$restRequest->getPage()) {
-            $restRequest->setPage(new Page(1, static::DEFAULT_REVIEWS_PER_PAGE));
+            $restRequest->setPage(new Page(0, static::DEFAULT_REVIEWS_PER_PAGE));
         }
 
         return $this->productReviewRestResponseBuilder->buildProductReviewRestResponse(

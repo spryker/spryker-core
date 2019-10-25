@@ -30,7 +30,7 @@ class ProductReviewsResourceController extends AbstractController
      *          "responses": {
      *              "400": "Abstract product id is not specified.",
      *              "404": "Abstract product not found.",
-     *              "501": "Not implemented."
+     *              "501": "Resource is not available."
      *          }
      *     }
      * })
