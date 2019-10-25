@@ -27,7 +27,7 @@
         <property name="dataPrivacyGlossaryKey" type="string"/>
         <property name="fkMerchant" type="int"/>
         <property name="isActive" type="bool"/>
-        <property name="urlCollection" type="Url[]"/>
+        <property name="urlCollection" type="Url[]" singular="url"/>
         <property name="merchantName" type="string"/>
         <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" singular="merchantProfileLocalizedGlossaryAttributes"/>
         <property name="addressCollection" type="MerchantProfileAddressCollection"/>
@@ -70,10 +70,6 @@
         <property name="idUrl" type="int" />
         <property name="fkResourceMerchantProfile" type="int" />
         <property name="urlPrefix" type="string" />
-    </transfer>
-
-    <transfer name="Locale">
-        <property name="idLocale" type="int" />
     </transfer>
 
     <transfer name="MerchantProfileAddressCollection">
