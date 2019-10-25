@@ -12,9 +12,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CmsBlockConfig extends AbstractBundleConfig
 {
-    public const CMS_TWIG_TEMPLATE_PREFIX = '@CmsBlock';
-    public const CMS_BLOCK_PLACEHOLDER_PATTERN = '/<!-- CMS_BLOCK_PLACEHOLDER : "[a-zA-Z0-9._-]*" -->/';
-    public const CMS_BLOCK_PLACEHOLDER_VALUE_PATTERN = '/"([^"]+)"/';
+    protected const CMS_TWIG_TEMPLATE_PREFIX = '@CmsBlock';
+    protected const CMS_BLOCK_PLACEHOLDER_PATTERN = '/<!-- CMS_BLOCK_PLACEHOLDER : "[a-zA-Z0-9._-]*" -->/';
+    protected const CMS_BLOCK_PLACEHOLDER_VALUE_PATTERN = '/"([^"]+)"/';
     protected const THEME_NAME_DEFAULT = 'default';
 
     /**

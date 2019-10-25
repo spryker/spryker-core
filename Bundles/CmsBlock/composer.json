@@ -18,12 +18,11 @@
     "spryker/cms-block-product-connector": "*",
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
-    "spryker/testify": "*",
-    "spryker/twig": "*"
+    "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/silex": "*",
-    "spryker/twig": "*"
+    "spryker/cms-block-category-connector": "*",
+    "spryker/cms-block-product-connector": "*"
   },
   "autoload": {
     "psr-4": {
