@@ -55,6 +55,8 @@ class ProductReviewsResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
+     *              "401": "Invalid access token."
+     *              "403": "Missing access token."
      *              "422": "Unprocessable entity."
      *          }
      *     }
