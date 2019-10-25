@@ -46,7 +46,7 @@ class CustomerAddressKeyGenerator implements CustomerAddressKeyGeneratorInterfac
         $addressData = $addressTransfer->toArray(true, true);
 
         foreach ($this->customerConfig->getAddressKeyGenerationWhiteListedFields() as $addressWhiteListedField) {
-            if (!isset($addressData[$addressWhiteListedField])) {
+            if (!isset($addressData[$addressWhiteListedField]) || $addressData[$addressWhiteListedField] === '') {
                 continue;
             }
 
