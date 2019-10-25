@@ -7,21 +7,18 @@
 
 namespace Spryker\Zed\MerchantGui\Communication\Form;
 
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
+use Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueEmail;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\MerchantGui\Communication\MerchantGuiCommunicationFactory getFactory()
@@ -178,8 +175,9 @@ class MerchantForm extends AbstractType
             new NotBlank(),
             new Email(),
             new Length(['max' => 255]),
-            new Callback([
-                'callback' => $this->getExistingEmailValidationCallback($currentId, $merchantFacade),
+            new UniqueEmail([
+                UniqueEmail::OPTION_MERCHANT_FACADE => $this->getFactory()->getMerchantFacade(),
+                UniqueEmail::OPTION_CURRENT_ID_MERCHANT => $currentId,
             ]),
         ];
     }
@@ -197,24 +195,6 @@ class MerchantForm extends AbstractType
             new Length(['max' => 64]),
             new Choice(['choices' => array_keys($choices)]),
         ];
-    }
-
-    /**
-     * @param int|null $currentId
-     * @param \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface $merchantFacade
-     *
-     * @return callable
-     */
-    protected function getExistingEmailValidationCallback(?int $currentId, MerchantGuiToMerchantFacadeInterface $merchantFacade): callable
-    {
-        return function ($email, ExecutionContextInterface $context) use ($merchantFacade, $currentId) {
-            $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
-            $merchantCriteriaFilterTransfer->setEmail($email);
-            $merchantTransfer = $merchantFacade->findOne($merchantCriteriaFilterTransfer);
-            if ($merchantTransfer !== null && ($currentId === null || $merchantTransfer->getIdMerchant() !== $currentId)) {
-                $context->addViolation('Email is already used.');
-            }
-        };
     }
 
     /**

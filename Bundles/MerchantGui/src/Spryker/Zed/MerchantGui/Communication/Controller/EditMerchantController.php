@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\MerchantGui\Communication\Table\MerchantTableConstants;
+use Spryker\Zed\MerchantGui\MerchantGuiConfig;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class EditMerchantController extends AbstractController
 {
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
+    public const REQUEST_ID_MERCHANT = 'id-merchant';
 
     protected const MESSAGE_MERCHANT_UPDATE_SUCCESS = 'Merchant updated successfully.';
 
@@ -28,7 +29,7 @@ class EditMerchantController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idMerchant = $this->castId($request->get(MerchantTableConstants::REQUEST_ID_MERCHANT));
+        $idMerchant = $this->castId($request->get(static::REQUEST_ID_MERCHANT));
 
         $dataProvider = $this->getFactory()->createMerchantUpdateFormDataProvider();
         $merchantTransfer = $dataProvider->getData($idMerchant);
@@ -36,7 +37,7 @@ class EditMerchantController extends AbstractController
         if ($merchantTransfer === null) {
             $this->addErrorMessage("Merchant with id %s doesn't exists.", ['%s' => $idMerchant]);
 
-            return $this->redirectResponse(MerchantTableConstants::URL_MERCHANT_LIST);
+            return $this->redirectResponse(MerchantGuiConfig::URL_MERCHANT_LIST);
         }
 
         $merchantForm = $this->getFactory()
@@ -68,7 +69,7 @@ class EditMerchantController extends AbstractController
      */
     protected function updateMerchant(Request $request, FormInterface $merchantForm)
     {
-        $redirectUrl = $request->get(static::URL_PARAM_REDIRECT_URL, MerchantTableConstants::URL_MERCHANT_LIST);
+        $redirectUrl = $request->get(static::URL_PARAM_REDIRECT_URL, MerchantGuiConfig::URL_MERCHANT_LIST);
         $merchantTransfer = $merchantForm->getData();
 
         $merchantResponseTransfer = $this->getFactory()

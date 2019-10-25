@@ -19,5 +19,5 @@ interface MerchantTableDataExpanderPluginInterface
      *
      * @return array
      */
-    public function expandData(array $item): array;
+    public function expand(array $item): array;
 }

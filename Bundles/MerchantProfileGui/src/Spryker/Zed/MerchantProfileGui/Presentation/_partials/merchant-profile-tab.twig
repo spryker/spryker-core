@@ -6,23 +6,23 @@
     {{ form_row(merchantForm.merchantProfile.public_email) }}
     {{ form_row(merchantForm.merchantProfile.logo_url) }}
 
-    {% for localizedAttributes in merchantForm.merchantProfile.merchantProfileLocalizedGlossaryAttributes %}
-        {% set localeName = localizedAttributes.vars.value.localeName %}
+{% for localizedAttributes in merchantForm.merchantProfile.merchantProfileLocalizedGlossaryAttributes %}
+    {% set localeName = localizedAttributes.locale.vars.value.localeName %}
 
-        {% embed '@Gui/Partials/localized-ibox.twig' with {
-            localeName: localeName,
-            collapsed: (loop.index == 1 ? false : true),
-            id: 'localizedAttributes-ibox-' ~ localeName
-        } %}
-            {% block content %}
-                {{ form_row(localizedAttributes.merchantProfileGlossaryAttributeValues.descriptionGlossaryKey) }}
-                {{ form_row(localizedAttributes.merchantProfileGlossaryAttributeValues.deliveryTimeGlossaryKey) }}
-                {{ form_row(localizedAttributes.merchantProfileGlossaryAttributeValues.bannerUrlGlossaryKey) }}
-                {{ form_row(localizedAttributes.fkLocale) }}
-                {{ form_row(localizedAttributes.localeName) }}
-            {% endblock %}
-        {% endembed %}
-    {% endfor %}
+    {% embed '@Gui/Partials/localized-ibox.twig' with {
+        localeName: localeName,
+        collapsed: (loop.index == 1 ? false : true),
+        id: 'localizedAttributes-ibox-' ~ localeName
+    } %}
+        {% block content %}
+            {{ form_row(localizedAttributes.merchantProfileGlossaryAttributeValues.descriptionGlossaryKey) }}
+            {{ form_row(localizedAttributes.merchantProfileGlossaryAttributeValues.deliveryTimeGlossaryKey) }}
+            {{ form_row(localizedAttributes.merchantProfileGlossaryAttributeValues.bannerUrlGlossaryKey) }}
+            {{ form_row(localizedAttributes.locale.idLocale) }}
+            {{ form_row(localizedAttributes.locale.localeName) }}
+        {% endblock %}
+    {% endembed %}
+{% endfor %}
 </div>
 <div class="col-md-6">
     {{ form_widget(merchantForm.merchantProfile.addressCollection) }}

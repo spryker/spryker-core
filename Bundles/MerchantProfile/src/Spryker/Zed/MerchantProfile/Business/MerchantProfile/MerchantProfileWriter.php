@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfileAddress\MerchantProfileAddressWriterInterface;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary\MerchantProfileGlossaryWriterInterface;
 use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToUrlFacadeInterface;
@@ -18,6 +19,8 @@ use Spryker\Zed\MerchantProfile\Persistence\MerchantProfileEntityManagerInterfac
 
 class MerchantProfileWriter implements MerchantProfileWriterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\MerchantProfile\Persistence\MerchantProfileEntityManagerInterface
      */
@@ -63,12 +66,9 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
      */
     public function create(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
     {
-        $merchantProfileAddressCollectionTransfer = $merchantProfileTransfer->getAddressCollection();
-        $merchantProfileUrlTransfers = $merchantProfileTransfer->getUrlCollection();
-        $merchantProfileTransfer = $this->merchantProfileGlossaryWriter->saveMerchantProfileGlossaryAttributes($merchantProfileTransfer);
-        $merchantProfileTransfer = $this->merchantProfileEntityManager->create($merchantProfileTransfer);
-        $merchantProfileTransfer = $this->saveMerchantProfileAddress($merchantProfileTransfer, $merchantProfileAddressCollectionTransfer);
-        $merchantProfileTransfer = $this->saveMerchantProfileUrls($merchantProfileTransfer, $merchantProfileUrlTransfers);
+        $merchantProfileTransfer = $this->getTransactionHandler()->handleTransaction(function () use ($merchantProfileTransfer) {
+            return $this->executeCreateTransaction($merchantProfileTransfer);
+        });
 
         return $merchantProfileTransfer;
     }
@@ -80,12 +80,39 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
      */
     public function update(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
     {
-        $merchantProfileAddressCollectionTransfer = $merchantProfileTransfer->getAddressCollection();
-        $merchantProfileUrlTransfers = $merchantProfileTransfer->getUrlCollection();
+        $merchantProfileTransfer = $this->getTransactionHandler()->handleTransaction(function () use ($merchantProfileTransfer) {
+            return $this->executeUpdateTransaction($merchantProfileTransfer);
+        });
+
+        return $merchantProfileTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
+     */
+    protected function executeCreateTransaction(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
+    {
+        $merchantProfileTransfer = $this->merchantProfileGlossaryWriter->saveMerchantProfileGlossaryAttributes($merchantProfileTransfer);
+        $merchantProfileTransfer = $this->merchantProfileEntityManager->create($merchantProfileTransfer);
+        $merchantProfileTransfer = $this->saveMerchantProfileAddress($merchantProfileTransfer, $merchantProfileTransfer->getAddressCollection());
+        $merchantProfileTransfer = $this->saveMerchantProfileUrls($merchantProfileTransfer, $merchantProfileTransfer->getUrlCollection());
+
+        return $merchantProfileTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
+     */
+    protected function executeUpdateTransaction(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
+    {
         $merchantProfileTransfer = $this->merchantProfileGlossaryWriter->saveMerchantProfileGlossaryAttributes($merchantProfileTransfer);
         $merchantProfileTransfer = $this->merchantProfileEntityManager->update($merchantProfileTransfer);
-        $merchantProfileTransfer = $this->saveMerchantProfileAddress($merchantProfileTransfer, $merchantProfileAddressCollectionTransfer);
-        $merchantProfileTransfer = $this->saveMerchantProfileUrls($merchantProfileTransfer, $merchantProfileUrlTransfers);
+        $merchantProfileTransfer = $this->saveMerchantProfileAddress($merchantProfileTransfer, $merchantProfileTransfer->getAddressCollection());
+        $merchantProfileTransfer = $this->saveMerchantProfileUrls($merchantProfileTransfer, $merchantProfileTransfer->getUrlCollection());
 
         return $merchantProfileTransfer;
     }

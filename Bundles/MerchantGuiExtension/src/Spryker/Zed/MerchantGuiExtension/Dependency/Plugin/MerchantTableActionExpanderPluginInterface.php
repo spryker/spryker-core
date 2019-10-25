@@ -19,5 +19,5 @@ interface MerchantTableActionExpanderPluginInterface
      *
      * @return \Generated\Shared\Transfer\ButtonTransfer[]
      */
-    public function getActionButtonDefinitions(array $item): array;
+    public function expand(array $item): array;
 }

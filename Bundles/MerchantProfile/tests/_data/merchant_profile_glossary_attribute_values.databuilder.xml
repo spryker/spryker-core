@@ -6,8 +6,7 @@
 >
 
     <transfer name="MerchantProfileLocalizedGlossaryAttributes">
-        <property name="fkLocale" dataBuilderRule="=" />
-        <property name="localeName" dataBuilderRule="locale" />
+        <property name="locale" type="Locale" />
         <property name="merchantProfileGlossaryAttributeValues" type="MerchantProfileGlossaryAttributeValues" />
     </transfer>
 </transfers>

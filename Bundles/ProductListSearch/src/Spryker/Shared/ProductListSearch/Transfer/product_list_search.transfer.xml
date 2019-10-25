@@ -8,8 +8,8 @@
     </transfer>
 
     <transfer name="ProductListMap">
-        <property name="whitelists" type="array"/>
-        <property name="blacklists" type="array"/>
+        <property name="whitelists" type="array" singular="whitelists"/>
+        <property name="blacklists" type="array" singular="blacklists"/>
     </transfer>
 
     <transfer name="ProductPageSearch">
@@ -22,7 +22,17 @@
     </transfer>
 
     <transfer name="ProductPayload">
-        <property name="productLists" type="array"/>
+        <property name="productLists" type="array" singular="productLists"/>
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="ProductPageLoad">
+        <property name="productAbstractIds" type="array" singular="productAbstractIds"/>
+        <property name="payloadTransfers" type="array" singular="payloadTransfers"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="idProductConcrete" type="int"/>
     </transfer>
 
 </transfers>
