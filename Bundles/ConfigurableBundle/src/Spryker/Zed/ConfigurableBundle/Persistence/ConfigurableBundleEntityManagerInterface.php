@@ -42,7 +42,7 @@ interface ConfigurableBundleEntityManagerInterface
      *
      * @return void
      */
-    public function deleteConfigurableBundleTemplateSlotsByIdConfigurableBundleTemplate(int $idConfigurableBundleTemplate): void;
+    public function deleteConfigurableBundleTemplateSlotsByIdTemplate(int $idConfigurableBundleTemplate): void;
 
     /**
      * @param int $idConfigurableBundleTemplate

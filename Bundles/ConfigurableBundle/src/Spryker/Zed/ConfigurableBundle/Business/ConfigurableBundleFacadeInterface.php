@@ -248,5 +248,5 @@ interface ConfigurableBundleFacadeInterface
      *
      * @return int
      */
-    public function getProductListIdByIdConfigurableBundleTemplate(int $idConfigurableBundleTemplate): int;
+    public function getProductListIdByIdConfigurableBundleTemplateSlot(int $idConfigurableBundleTemplate): int;
 }

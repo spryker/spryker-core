@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ConfigurableBundle\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\TranslationTransfer;
 
 class ConfigurableBundleToGlossaryFacadeBridge implements ConfigurableBundleToGlossaryFacadeInterface
 {
@@ -32,7 +33,7 @@ class ConfigurableBundleToGlossaryFacadeBridge implements ConfigurableBundleToGl
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
+    public function createTranslation(string $keyName, LocaleTransfer $locale, string $value, bool $isActive = true): TranslationTransfer
     {
         return $this->glossaryFacade->createTranslation($keyName, $locale, $value, $isActive);
     }
@@ -45,7 +46,7 @@ class ConfigurableBundleToGlossaryFacadeBridge implements ConfigurableBundleToGl
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function updateTranslation($keyName, $locale, $value, $isActive = true)
+    public function updateTranslation(string $keyName, LocaleTransfer $locale, string $value, bool $isActive = true): TranslationTransfer
     {
         return $this->glossaryFacade->updateTranslation($keyName, $locale, $value, $isActive);
     }
@@ -55,7 +56,7 @@ class ConfigurableBundleToGlossaryFacadeBridge implements ConfigurableBundleToGl
      *
      * @return int
      */
-    public function createKey($keyName)
+    public function createKey(string $keyName): int
     {
         return $this->glossaryFacade->createKey($keyName);
     }
@@ -65,7 +66,7 @@ class ConfigurableBundleToGlossaryFacadeBridge implements ConfigurableBundleToGl
      *
      * @return bool
      */
-    public function hasKey($keyName)
+    public function hasKey(string $keyName): bool
     {
         return $this->glossaryFacade->hasKey($keyName);
     }
@@ -76,7 +77,7 @@ class ConfigurableBundleToGlossaryFacadeBridge implements ConfigurableBundleToGl
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $locale = null)
+    public function hasTranslation(string $keyName, ?LocaleTransfer $locale = null): bool
     {
         return $this->glossaryFacade->hasTranslation($keyName, $locale);
     }
@@ -88,7 +89,7 @@ class ConfigurableBundleToGlossaryFacadeBridge implements ConfigurableBundleToGl
      *
      * @return string
      */
-    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null)
+    public function translate(string $keyName, array $data = [], ?LocaleTransfer $localeTransfer = null): string
     {
         return $this->glossaryFacade->translate($keyName, $data, $localeTransfer);
     }
@@ -110,7 +111,7 @@ class ConfigurableBundleToGlossaryFacadeBridge implements ConfigurableBundleToGl
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation($keyName, LocaleTransfer $locale)
+    public function getTranslation(string $keyName, LocaleTransfer $locale): TranslationTransfer
     {
         return $this->glossaryFacade->getTranslation($keyName, $locale);
     }

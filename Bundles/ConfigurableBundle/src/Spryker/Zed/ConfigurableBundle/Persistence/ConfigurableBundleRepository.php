@@ -91,7 +91,7 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
             $configurableBundleTemplateSlotFilterTransfer
         );
 
-        $configurableBundleTemplateSlotEntity = $configurableBundleTemplateSlotQuery->find()->getFirst();
+        $configurableBundleTemplateSlotEntity = $configurableBundleTemplateSlotQuery->findOne();
 
         if (!$configurableBundleTemplateSlotEntity) {
             return null;
@@ -162,7 +162,7 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
      *
      * @return int
      */
-    public function getProductListIdByIdConfigurableBundleTemplate(int $idConfigurableBundleTemplate): int
+    public function getProductListIdByIdConfigurableBundleTemplateSlot(int $idConfigurableBundleTemplate): int
     {
         return $this->getFactory()
             ->createConfigurableBundleTemplateSlotQuery()

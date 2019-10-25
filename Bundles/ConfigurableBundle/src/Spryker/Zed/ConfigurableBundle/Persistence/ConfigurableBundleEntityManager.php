@@ -72,7 +72,8 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
     {
         $configurableBundleTemplateEntity = $this->getFactory()
             ->createConfigurableBundleTemplateQuery()
-            ->findOneByIdConfigurableBundleTemplate($idConfigurableBundleTemplate);
+            ->filterByIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
+            ->findOne();
 
         if (!$configurableBundleTemplateEntity) {
             return;
@@ -86,12 +87,16 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
      *
      * @return void
      */
-    public function deleteConfigurableBundleTemplateSlotsByIdConfigurableBundleTemplate(int $idConfigurableBundleTemplate): void
+    public function deleteConfigurableBundleTemplateSlotsByIdTemplate(int $idConfigurableBundleTemplate): void
     {
-        $this->getFactory()
+        $configurableBundleTemplateSlotEntities = $this->getFactory()
             ->createConfigurableBundleTemplateSlotQuery()
             ->filterByFkConfigurableBundleTemplate($idConfigurableBundleTemplate)
-            ->delete();
+            ->find();
+
+        foreach ($configurableBundleTemplateSlotEntities as $configurableBundleTemplateSlotEntity) {
+            $configurableBundleTemplateSlotEntity->delete();
+        }
     }
 
     /**
@@ -103,13 +108,15 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
     {
         $configurableBundleTemplateEntity = $this->getFactory()
             ->createConfigurableBundleTemplateQuery()
-            ->findOneByIdConfigurableBundleTemplate($idConfigurableBundleTemplate);
+            ->filterByIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
+            ->findOne();
 
         if (!$configurableBundleTemplateEntity) {
             return;
         }
 
-        $configurableBundleTemplateEntity->setIsActive(true)
+        $configurableBundleTemplateEntity
+            ->setIsActive(true)
             ->save();
     }
 
@@ -184,9 +191,15 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
      */
     public function deleteConfigurableBundleTemplateSlotById(int $idConfigurableBundleTemplateSlot): void
     {
-        $this->getFactory()
+        $configurableBundleTemplateSlotEntity = $this->getFactory()
             ->createConfigurableBundleTemplateSlotQuery()
             ->filterByIdConfigurableBundleTemplateSlot($idConfigurableBundleTemplateSlot)
-            ->delete();
+            ->findOne();
+
+        if (!$configurableBundleTemplateSlotEntity) {
+            return;
+        }
+
+        $configurableBundleTemplateSlotEntity->delete();
     }
 }

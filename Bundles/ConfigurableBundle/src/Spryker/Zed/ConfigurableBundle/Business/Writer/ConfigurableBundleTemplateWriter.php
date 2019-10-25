@@ -120,7 +120,7 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
     ): ConfigurableBundleResponseTransfer {
         $configurableBundleTemplateTransfer = $this->configurableBundleNameGenerator->setConfigurableBundleTemplateName($configurableBundleTemplateTransfer);
 
-        $this->configurableBundleEntityManager->createConfigurableBundleTemplate($configurableBundleTemplateTransfer);
+        $configurableBundleTemplateTransfer = $this->configurableBundleEntityManager->createConfigurableBundleTemplate($configurableBundleTemplateTransfer);
         $this->configurableBundleTemplateTranslationWriter->saveTranslations($configurableBundleTemplateTransfer);
 
         return $this->createConfigurableBundleResponseTransfer($configurableBundleTemplateTransfer);
@@ -180,7 +180,7 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
      */
     protected function executeDeleteConfigurableBundleTemplateByIdTransaction(int $idConfigurableBundleTemplate): void
     {
-        $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateSlotsByIdConfigurableBundleTemplate($idConfigurableBundleTemplate);
+        $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateSlotsByIdTemplate($idConfigurableBundleTemplate);
         $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateById($idConfigurableBundleTemplate);
     }
 }

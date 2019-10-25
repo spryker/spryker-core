@@ -147,8 +147,8 @@ class ConfigurableBundleGuiToConfigurableBundleFacadeBridge implements Configura
      *
      * @return int
      */
-    public function getProductListIdByIdConfigurableBundleTemplate(int $idConfigurableBundleTemplate): int
+    public function getProductListIdByIdConfigurableBundleTemplateSlot(int $idConfigurableBundleTemplate): int
     {
-        return $this->configurableBundleFacade->getProductListIdByIdConfigurableBundleTemplate($idConfigurableBundleTemplate);
+        return $this->configurableBundleFacade->getProductListIdByIdConfigurableBundleTemplateSlot($idConfigurableBundleTemplate);
     }
 }

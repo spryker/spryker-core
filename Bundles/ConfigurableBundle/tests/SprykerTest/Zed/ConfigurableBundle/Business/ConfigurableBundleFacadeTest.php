@@ -491,7 +491,7 @@ class ConfigurableBundleFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductListIdByIdConfigurableBundleTemplateWillReturnId(): void
+    public function testGetProductListIdByIdConfigurableBundleTemplateSlotWillReturnId(): void
     {
         // Arrange
         $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
@@ -500,7 +500,7 @@ class ConfigurableBundleFacadeTest extends Unit
         ]);
 
         // Act
-        $idProductList = $this->tester->getFacade()->getProductListIdByIdConfigurableBundleTemplate(
+        $idProductList = $this->tester->getFacade()->getProductListIdByIdConfigurableBundleTemplateSlot(
             $configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot()
         );
 

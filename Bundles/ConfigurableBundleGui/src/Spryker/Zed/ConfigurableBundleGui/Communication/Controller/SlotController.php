@@ -300,7 +300,7 @@ class SlotController extends AbstractController
     {
         $idProductList = $this->getFactory()
             ->getConfigurableBundleFacade()
-            ->getProductListIdByIdConfigurableBundleTemplate(
+            ->getProductListIdByIdConfigurableBundleTemplateSlot(
                 $this->castId($request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT))
             );
 

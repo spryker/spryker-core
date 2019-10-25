@@ -260,8 +260,8 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
      *
      * @return int
      */
-    public function getProductListIdByIdConfigurableBundleTemplate(int $idConfigurableBundleTemplate): int
+    public function getProductListIdByIdConfigurableBundleTemplateSlot(int $idConfigurableBundleTemplate): int
     {
-        return $this->getRepository()->getProductListIdByIdConfigurableBundleTemplate($idConfigurableBundleTemplate);
+        return $this->getRepository()->getProductListIdByIdConfigurableBundleTemplateSlot($idConfigurableBundleTemplate);
     }
 }

@@ -50,7 +50,7 @@ class InactiveConfiguredBundleItemFilter implements InactiveConfiguredBundleItem
                 continue;
             }
 
-            if (!in_array($configurableBundleTemplateUuid, $activeConfigurableBundleTemplateUuids)) {
+            if (!in_array($configurableBundleTemplateUuid, $activeConfigurableBundleTemplateUuids, true)) {
                 continue;
             }
 
