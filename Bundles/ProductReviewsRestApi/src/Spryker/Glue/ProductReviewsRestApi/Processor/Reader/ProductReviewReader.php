@@ -28,8 +28,6 @@ class ProductReviewReader implements ProductReviewReaderInterface
 
     protected const DEFAULT_REVIEWS_PER_PAGE = 10;
 
-    protected const PARAMETER_NAME_ITEMS_PER_PAGE = 'ipp';
-
     /**
      * @var \Spryker\Glue\ProductReviewsRestApi\Processor\RestResponseBuilder\ProductReviewRestResponseBuilderInterface
      */

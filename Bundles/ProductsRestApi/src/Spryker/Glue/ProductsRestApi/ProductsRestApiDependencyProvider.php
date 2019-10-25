@@ -89,9 +89,9 @@ class ProductsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addAbstractProductsResourceExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_ABSTRACT_PRODUCTS_RESOURCE_EXPANDER] = function () {
+        $container->set(static::PLUGINS_ABSTRACT_PRODUCTS_RESOURCE_EXPANDER, function () {
             return $this->getAbstractProductsResourceExpanderPlugins();
-        };
+        });
 
         return $container;
     }
