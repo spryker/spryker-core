@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\MerchantProductOfferStorage\Communication\Plugin\Event
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\MerchantProductOffer\Dependency\MerchantProductOfferEvents;
@@ -78,7 +79,7 @@ class ProductConcreteOffersStorageUnpublishListenerTest extends Unit
         //Arrange
         $expectedCount = 0;
         $eventTransfers = [
-            (new EventEntityTransfer())->setId($this->merchantProductOfferTransfer->getIdProductOffer()),
+            (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_CONCRETE_SKU => $this->merchantProductOfferTransfer->getConcreteSku()]),
         ];
 
         //Act
