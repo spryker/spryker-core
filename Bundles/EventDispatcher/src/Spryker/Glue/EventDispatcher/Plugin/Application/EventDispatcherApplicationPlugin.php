@@ -17,7 +17,7 @@ use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
  */
 class EventDispatcherApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
-    public const SERVICE_DISPATCHER = 'dispatcher';
+    protected const SERVICE_DISPATCHER = 'dispatcher';
 
     /**
      * {@inheritDoc}
