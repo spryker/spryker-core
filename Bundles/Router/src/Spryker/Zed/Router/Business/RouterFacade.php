@@ -51,4 +51,16 @@ class RouterFacade extends AbstractFacade implements RouterFacadeInterface
     {
         return $this->getFactory()->createZedDevelopmentRouter();
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function cacheWarmUp(): void
+    {
+        $this->getFactory()->createCache()->warmUp();
+    }
 }

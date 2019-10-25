@@ -21,5 +21,5 @@ interface MerchantPostSavePluginInterface
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    public function postSave(MerchantTransfer $merchantTransfer): MerchantTransfer;
+    public function execute(MerchantTransfer $merchantTransfer): MerchantTransfer;
 }

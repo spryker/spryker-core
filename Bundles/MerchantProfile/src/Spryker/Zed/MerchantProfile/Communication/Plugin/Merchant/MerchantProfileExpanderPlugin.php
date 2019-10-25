@@ -30,8 +30,6 @@ class MerchantProfileExpanderPlugin extends AbstractPlugin implements MerchantEx
      */
     public function expand(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        return $this->getFactory()
-            ->createMerchantProfileExpander()
-            ->expand($merchantTransfer);
+        return $this->getFacade()->expandMerchantWithMerchantProfile($merchantTransfer);
     }
 }

@@ -15,10 +15,4 @@ interface MerchantTableConstants
     public const COL_NAME = SpyMerchantTableMap::COL_NAME;
     public const COL_STATUS = SpyMerchantTableMap::COL_STATUS;
     public const COL_ACTIONS = 'actions';
-
-    public const REQUEST_ID_MERCHANT = 'id-merchant';
-
-    public const URL_MERCHANT_LIST = '/merchant-gui/list-merchant';
-    public const URL_MERCHANT_EDIT = '/merchant-gui/edit-merchant';
-    public const URL_MERCHANT_STATUS = '/merchant-gui/status-merchant';
 }

@@ -17,5 +17,5 @@ interface MerchantTableHeaderExpanderPluginInterface
      *
      * @return array
      */
-    public function expandHeader(): array;
+    public function expand(): array;
 }

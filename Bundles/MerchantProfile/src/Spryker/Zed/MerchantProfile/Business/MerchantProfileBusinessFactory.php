@@ -66,6 +66,16 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\MerchantProfile\Business\MerchantProfile\Expander\MerchantProfileExpanderInterface
+     */
+    public function createMerchantProfileExpander(): MerchantProfileExpanderInterface
+    {
+        return new MerchantProfileExpander(
+            $this->getRepository()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantProfile\Business\MerchantProfileAddress\MerchantProfileAddressWriterInterface
      */
     public function createMerchantProfileAddressWriter(): MerchantProfileAddressWriterInterface

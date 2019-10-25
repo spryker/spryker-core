@@ -13,8 +13,8 @@
         <property name="numberOfItems" type="int"/>
         <property name="owner" type="string"/>
         <property name="idCompanyUser" type="int"/>
-        <property name="sharedCompanyUsers" type="ShoppingListCompanyUser[]"/>
-        <property name="sharedCompanyBusinessUnits" type="ShoppingListCompanyBusinessUnit[]"/>
+        <property name="sharedCompanyUsers" type="ShoppingListCompanyUser[]" singular="sharedCompanyUsers"/>
+        <property name="sharedCompanyBusinessUnits" type="ShoppingListCompanyBusinessUnit[]" singular="sharedCompanyBusinessUnits"/>
         <property name="items" type="ShoppingListItem[]" singular="item"/>
     </transfer>
 
@@ -52,13 +52,13 @@
     </transfer>
 
     <transfer name="ShoppingListItemResponse">
-        <property name="ShoppingListItem" type="ShoppingListItem"/>
+        <property name="shoppingListItem" type="ShoppingListItem"/>
         <property name="isSuccess" type="bool"/>
         <property name="errors" type="array" singular="error"/>
     </transfer>
 
     <transfer name="ShoppingListResponse">
-        <property name="ShoppingList" type="ShoppingList"/>
+        <property name="shoppingList" type="ShoppingList"/>
         <property name="isSuccess" type="bool"/>
         <property name="errors" type="array" singular="error"/>
         <property name="permissions" singular="permission" type="Permission[]"/>
@@ -140,7 +140,7 @@
     </transfer>
 
     <transfer name="ItemCollection">
-        <property name="Items" type="Item[]" singular="item"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="ShoppingListPreAddItemCheckResponse">
@@ -150,10 +150,80 @@
 
     <transfer name="CurrentProductPrice">
         <property name="sumPrice" type="int"/>
+        <property name="price" type="int"/>
+        <property name="prices" type="array" singular="price"/>
     </transfer>
 
     <transfer name="ProductView">
         <property name="currentProductPrice" type="CurrentProductPrice"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="bundleItems" type="Item[]" singular="bundleItem"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="StorageProduct">
+        <property name="idProductConcrete" type="int"/>
+        <property name="prices" type="array" singular="price"/>
+        <property name="price" type="int"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="permissions" type="PermissionCollection"/>
+        <property name="idCustomer" type="int"/>
+        <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="quote" type="Quote"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="Permission">
+        <property name="key" type="string"/>
+        <property name="idPermission" type="int"/>
+        <property name="configuration" type="array" singular="configuration"/>
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="quoteTransfer" type="Quote"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="customer" type="Customer"/>
+        <property name="fkCompanyBusinessUnit" type="int"/>
+        <property name="idCompanyUser" type="int"/>
+    </transfer>
+
+    <transfer name="PermissionCollection">
+        <property name="permissions" type="Permission[]" singular="permission"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="sku" type="string"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="fkProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="idCompanyBusinessUnit" type="int"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
     </transfer>
 
 </transfers>

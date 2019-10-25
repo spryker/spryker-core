@@ -60,7 +60,7 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
 
         $localeTransfers = $this->localeFacade->getLocaleCollection();
         foreach ($localeTransfers as $localeTransfer) {
-            $this->saveMerchantProfileGlossaryLocalizedAttributesByProvidedLocale(
+            $this->saveMerchantProfileGlossaryLocalizedAttributes(
                 $localeTransfer,
                 $merchantProfileTransfer
             );
@@ -75,12 +75,12 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
      *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
-    protected function saveMerchantProfileGlossaryLocalizedAttributesByProvidedLocale(
+    protected function saveMerchantProfileGlossaryLocalizedAttributes(
         LocaleTransfer $localeTransfer,
         MerchantProfileTransfer $merchantProfileTransfer
     ): MerchantProfileTransfer {
         foreach ($merchantProfileTransfer->getMerchantProfileLocalizedGlossaryAttributes() as $merchantProfileLocalizedGlossaryAttributesTransfer) {
-            if ($merchantProfileLocalizedGlossaryAttributesTransfer->getFkLocale() === $localeTransfer->getIdLocale()) {
+            if ($merchantProfileLocalizedGlossaryAttributesTransfer->getLocale()->getIdLocale() === $localeTransfer->getIdLocale()) {
                 $merchantProfileTransfer = $this->saveMerchantProfileGlossaryAttributesByProvidedLocale(
                     $localeTransfer,
                     $merchantProfileLocalizedGlossaryAttributesTransfer->getMerchantProfileGlossaryAttributeValues(),
@@ -155,9 +155,7 @@ class MerchantProfileGlossaryWriter implements MerchantProfileGlossaryWriterInte
      */
     protected function deleteGlossaryTranslation(LocaleTransfer $localeTransfer, string $merchantProfileGlossaryAttributeKey): void
     {
-        if ($this->glossaryFacade->hasTranslation($merchantProfileGlossaryAttributeKey, $localeTransfer)) {
-            $this->glossaryFacade->deleteTranslation($merchantProfileGlossaryAttributeKey, $localeTransfer);
-        }
+        $this->glossaryFacade->deleteTranslation($merchantProfileGlossaryAttributeKey, $localeTransfer);
     }
 
     /**

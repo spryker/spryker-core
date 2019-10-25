@@ -79,8 +79,8 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
         SpyMerchantProfileQuery $merchantProfileQuery,
         MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer
     ): SpyMerchantProfileQuery {
-        if ($merchantProfileCriteriaFilterTransfer->getIdMerchant() !== null) {
-            $merchantProfileQuery->filterByFkMerchant($merchantProfileCriteriaFilterTransfer->getIdMerchant());
+        if ($merchantProfileCriteriaFilterTransfer->getFkMerchant() !== null) {
+            $merchantProfileQuery->filterByFkMerchant($merchantProfileCriteriaFilterTransfer->getFkMerchant());
         }
 
         if ($merchantProfileCriteriaFilterTransfer->getMerchantIds()) {
