@@ -9,4 +9,8 @@
     <transfer name="DataImporterReport">
     </transfer>
 
+    <transfer name="CompanyRole">
+        <property name="key" type="string"/>
+    </transfer>
+
 </transfers>
