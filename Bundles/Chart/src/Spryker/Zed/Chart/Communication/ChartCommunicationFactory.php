@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Chart\Communication;
 
-use Spryker\Shared\Chart\ChartPluginResolver\ChartPluginResolver;
-use Spryker\Shared\Chart\ChartPluginResolver\ChartPluginResolverInterface;
 use Spryker\Zed\Chart\ChartDependencyProvider;
+use Spryker\Zed\Chart\Communication\ChartPluginResolver\ChartPluginResolver;
+use Spryker\Zed\Chart\Communication\ChartPluginResolver\ChartPluginResolverInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class ChartCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Shared\Chart\ChartPluginResolver\ChartPluginResolverInterface
+     * @return \Spryker\Zed\Chart\Communication\ChartPluginResolver\ChartPluginResolverInterface
      */
     public function createChartPluginCollection(): ChartPluginResolverInterface
     {

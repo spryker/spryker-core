@@ -53,7 +53,7 @@ class ChartDependencyProvider extends AbstractBundleDependencyProvider
     protected function addChartTwigFunctionPlugins(Container $container): Container
     {
         $container[static::PLUGIN_CHART_TWIG_FUNCTIONS] = function () {
-            return $this->geChartTwigFunctionPlugins();
+            return $this->getChartTwigFunctionPlugins();
         };
 
         return $container;
@@ -62,7 +62,7 @@ class ChartDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\ChartExtension\Dependency\Plugin\ChartTwigFunctionPluginInterface[]
      */
-    protected function geChartTwigFunctionPlugins(): array
+    protected function getChartTwigFunctionPlugins(): array
     {
         return [];
     }

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Chart\ChartPluginResolver;
+namespace Spryker\Zed\Chart\Communication\ChartPluginResolver;
 
 use Spryker\Zed\ChartExtension\Dependency\Plugin\ChartPluginInterface;
 
@@ -14,7 +14,7 @@ interface ChartPluginResolverInterface
     /**
      * @param string $name
      *
-     * @throws \Spryker\Shared\Chart\ChartPluginResolver\Exception\ChartPluginNotFoundException
+     * @throws \Spryker\Zed\Chart\Communication\ChartPluginResolver\Exception\ChartPluginNotFoundException
      *
      * @return \Spryker\Zed\ChartExtension\Dependency\Plugin\ChartPluginInterface
      */

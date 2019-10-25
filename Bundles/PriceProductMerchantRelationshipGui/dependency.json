@@ -1,5 +1,0 @@
-{
-  "include": {
-    "spryker/gui": "Gui provides basic usage of TwigPlugin functions."
-  }
-}

@@ -14,11 +14,11 @@ interface GuiConstants
 {
     /**
      * Specification:
-     * - Returns the base url path to be used to build Zed assets.
+     * - Returns the base URL path to be used for generating of Zed assets URLs.
      *
      * @example '/assets/'
      *
      * @api
      */
-    public const ZED_ASSETS_PATH = 'GUI:ZED_ASSETS_PATH';
+    public const ZED_ASSETS_BASE_URL = 'GUI:ZED_ASSETS_BASE_URL';
 }
