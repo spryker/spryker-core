@@ -5,21 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOffer\Persistence;
+namespace Spryker\Zed\ProductOfferStockDataImport\Dependency\Facade;
 
-use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 
-interface ProductOfferRepositoryInterface
+interface ProductOfferStockDataImportToProductOfferFacadeInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer|null $productOfferCriteriaFilter
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
-     */
-    public function find(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer;
-
     /**
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer|null $productOfferCriteriaFilter
      *

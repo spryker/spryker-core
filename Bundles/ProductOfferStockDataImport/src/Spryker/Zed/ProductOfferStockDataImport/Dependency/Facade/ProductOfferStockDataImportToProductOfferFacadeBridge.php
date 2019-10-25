@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade;
+namespace Spryker\Zed\ProductOfferStockDataImport\Dependency\Facade;
 
-use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 
-class MerchantProductOfferStorageToProductOfferFacadeBridge implements MerchantProductOfferStorageToProductOfferFacadeInterface
+class ProductOfferStockDataImportToProductOfferFacadeBridge implements ProductOfferStockDataImportToProductOfferFacadeInterface
 {
     /**
      * @var \Spryker\Zed\ProductOffer\Business\ProductOfferFacadeInterface
@@ -28,10 +28,10 @@ class MerchantProductOfferStorageToProductOfferFacadeBridge implements MerchantP
     /**
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer|null $productOfferCriteriaFilter
      *
-     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
-    public function find(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
+    public function findOne(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer
     {
-        return $this->productOfferFacade->find($productOfferCriteriaFilter);
+        return $this->productOfferFacade->findOne($productOfferCriteriaFilter);
     }
 }

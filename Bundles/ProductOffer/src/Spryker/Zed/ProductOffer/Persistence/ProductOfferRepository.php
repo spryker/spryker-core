@@ -46,6 +46,27 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer|null $productOfferCriteriaFilter
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
+     */
+    public function findOne(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer
+    {
+        $productOfferQuery = $this->getFactory()->createProductOfferQuery();
+
+        if ($productOfferCriteriaFilter) {
+            $productOfferQuery = $this->applyFilters($productOfferQuery, $productOfferCriteriaFilter);
+        }
+
+        $productOfferEntity = $productOfferQuery->findOne();
+        if (!$productOfferEntity) {
+            return null;
+        }
+
+        return $this->getFactory()->createPropelProductOfferMapper()->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, new ProductOfferTransfer());
+    }
+
+    /**
      * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter
      *

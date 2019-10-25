@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOffer\Business\Reader;
 
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface;
 
 class ProductOfferReader implements ProductOfferReaderInterface
@@ -34,5 +35,15 @@ class ProductOfferReader implements ProductOfferReaderInterface
     public function find(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
     {
         return $this->productOfferRepository->find($productOfferCriteriaFilter);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer|null $productOfferCriteriaFilter
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
+     */
+    public function findOne(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer
+    {
+        return $this->productOfferRepository->findOne($productOfferCriteriaFilter);
     }
 }
