@@ -23,6 +23,7 @@ use Spryker\Zed\ProductRelation\Business\ProductRelationFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductRelation

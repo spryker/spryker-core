@@ -23,7 +23,7 @@
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Attributes' } %}
         {% block widget_content %}
             {% include '@ProductAttributeGui/View/_partials/attribute-table.twig' with {
-                formActionUrl: '/product-attribute-gui/save/productAbstract',
+                formActionUrl: '/product-attribute-gui/save/product-abstract',
                 locales: locales,
                 productAttributes: productAttributes,
                 metaAttributes: metaAttributes,

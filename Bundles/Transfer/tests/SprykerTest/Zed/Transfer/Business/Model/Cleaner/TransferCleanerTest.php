@@ -12,6 +12,7 @@ use Spryker\Zed\Transfer\Business\Model\TransferCleaner;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Transfer

@@ -224,4 +224,4 @@ abstract class AbstractSpySalesOrderQuery extends BaseSpySalesOrderQuery
 
         return $this;
     }
-} // SpySalesOrderQuery
+}

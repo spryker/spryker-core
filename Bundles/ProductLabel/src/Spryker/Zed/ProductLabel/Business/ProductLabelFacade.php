@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,7 +36,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -53,7 +53,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -68,7 +68,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -85,7 +85,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -102,7 +102,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -119,7 +119,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -136,7 +136,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -155,7 +155,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -172,7 +172,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -190,7 +190,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -208,7 +208,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -223,7 +223,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

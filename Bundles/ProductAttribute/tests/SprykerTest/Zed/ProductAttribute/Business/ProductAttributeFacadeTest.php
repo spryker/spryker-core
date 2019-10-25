@@ -26,6 +26,7 @@ use SprykerTest\Zed\ProductAttribute\ProductAttributeBusinessTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductAttribute

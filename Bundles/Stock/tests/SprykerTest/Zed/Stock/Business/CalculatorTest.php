@@ -16,6 +16,7 @@ use Spryker\Zed\Stock\Business\StockFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Stock

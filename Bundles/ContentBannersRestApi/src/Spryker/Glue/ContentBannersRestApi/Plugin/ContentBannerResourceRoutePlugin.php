@@ -19,7 +19,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class ContentBannerResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class ContentBannerResourceRoutePlugin extends AbstractPlugin implements Resourc
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -45,7 +45,7 @@ class ContentBannerResourceRoutePlugin extends AbstractPlugin implements Resourc
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -57,7 +57,7 @@ class ContentBannerResourceRoutePlugin extends AbstractPlugin implements Resourc
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

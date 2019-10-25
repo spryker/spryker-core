@@ -12,6 +12,7 @@ use SprykerTest\Client\Kernel\Fixtures\KernelClient;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Kernel

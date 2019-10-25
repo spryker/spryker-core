@@ -4,27 +4,41 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Item">
-        <property name="id" type="int" />
-        <property name="idProductAbstract" type="int" />
-        <property name="abstractSku" type="string" />
-        <property name="name" type="string" />
-        <property name="taxRate" type="float" />
-        <property name="sku" type="string" />
-        <property name="productConcrete" type="ProductConcrete" />
-        <property name="concreteAttributes" type="array" singular="concreteAttribute" />
+        <property name="id" type="int"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="abstractSku" type="string"/>
+        <property name="name" type="string"/>
+        <property name="taxRate" type="float"/>
+        <property name="sku" type="string"/>
+        <property name="productConcrete" type="ProductConcrete"/>
+        <property name="concreteAttributes" type="array" singular="concreteAttribute"/>
     </transfer>
 
     <transfer name="ProductConcrete">
-        <property name="idProductConcrete" type="int" />
-        <property name="sku" type="string" />
-        <property name="abstractSku" type="string" />
-        <property name="fkProductAbstract" type="int" />
-        <property name="taxRate" type="float" />
-        <property name="attributes" type="array" singular="attribute" />
+        <property name="idProductConcrete" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="abstractSku" type="string"/>
+        <property name="fkProductAbstract" type="int"/>
+        <property name="taxRate" type="float"/>
+        <property name="attributes" type="array" singular="attribute"/>
     </transfer>
 
     <transfer name="CartChange">
-        <property name="items" type="Item[]" singular="item" />
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="CartPreCheckResponse">
+        <property name="messages" type="Message[]" singular="message"/>
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
 </transfers>

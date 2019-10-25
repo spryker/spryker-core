@@ -11,6 +11,7 @@ build:
 filter:
     excluded_paths:
         - Bundles/Propel/src/Spryker/Zed/Propel/Business/Builder/*
+        - Bundles/*/src/Spryker/Zed/*/*Factory.php
 
 build_failure_conditions:
     - 'project.metric("scrutinizer.quality", < 9.80)'

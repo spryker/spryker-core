@@ -13,6 +13,7 @@ use Spryker\Client\Currency\Plugin\CurrencyPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Currency

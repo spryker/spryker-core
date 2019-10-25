@@ -4,28 +4,40 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Quote">
-        <property name="idOffer" type="int" description="Indicates an offer id, when it's a source of an order" />
-        <property name="offerFee" type="int" />
+        <property name="idOffer" type="int" description="Indicates an offer id, when it's a source of an order"/>
+        <property name="offerFee" type="int"/>
+        <property name="incomingItems" type="Item[]" singular="incomingItem"/>
+        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
+        <property name="priceMode" type="string"/>
+        <property name="checkoutConfirmed" type="bool"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="unitGrossPrice" type="int" />
-        <property name="unitNetPrice" type="int" />
+        <property name="unitGrossPrice" type="int"/>
+        <property name="unitNetPrice" type="int"/>
 
-        <property name="sourceUnitGrossPrice" type="int" />
-        <property name="sourceUnitNetPrice" type="int" />
+        <property name="sourceUnitGrossPrice" type="int"/>
+        <property name="sourceUnitNetPrice" type="int"/>
 
-        <property name="offerDiscount" type="int" />
-        <property name="offerFee" type="int" />
-        <property name="stock" type="int" />
-        <property name="savingAmount" type="int" />
+        <property name="offerDiscount" type="int"/>
+        <property name="offerFee" type="int"/>
+        <property name="stock" type="int"/>
+        <property name="savingAmount" type="int"/>
+        <property name="originUnitGrossPrice" type="int"/>
+        <property name="originUnitNetPrice" type="int"/>
+        <property name="unitSubtotalAggregation" type="int"/>
+        <property name="sumSubtotalAggregation" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="OfferList">
-        <property name="customerReference" type="string" />
-        <property name="filter" type="Filter" />
-        <property name="offers" type="Offer[]" singular="offer" />
-        <property name="pagination" type="Pagination" />
+        <property name="customerReference" type="string"/>
+        <property name="filter" type="Filter"/>
+        <property name="offers" type="Offer[]" singular="offer"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="Offer">
@@ -33,12 +45,12 @@
         <property name="quote" type="Quote"/>
         <property name="status" type="string"/>
         <property name="user" type="User"/>
-        <property name="customerReference"  type="string" />
-        <property name="customer" type="Customer" />
-        <property name="createdAt" type="string" />
-        <property name="contactPerson" type="string" />
-        <property name="contactDate" type="string" />
-        <property name="note" type="string" />
+        <property name="customerReference"  type="string"/>
+        <property name="customer" type="Customer"/>
+        <property name="createdAt" type="string"/>
+        <property name="contactPerson" type="string"/>
+        <property name="contactDate" type="string"/>
+        <property name="note" type="string"/>
     </transfer>
 
     <transfer name="ResponseMessage">
@@ -47,7 +59,38 @@
 
     <transfer name="OfferResponse">
         <property name="isSuccessful" type="bool"/>
-        <property name="messages" type="ResponseMessage[]" singular="message" />
+        <property name="messages" type="ResponseMessage[]" singular="message"/>
         <property name="offer" type="Offer"/>
+    </transfer>
+
+    <transfer name="CalculableObject">
+        <property name="totals" type="Totals"/>
+        <property name="originalQuote" type="Quote"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Discount">
+        <property name="voucherCode" type="string"/>
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="grandTotal" type="int"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="quote" type="Quote"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="previousPage" type="int"/>
     </transfer>
 </transfers>

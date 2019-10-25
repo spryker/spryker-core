@@ -16,6 +16,7 @@ use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInt
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CompanyBusinessUnit

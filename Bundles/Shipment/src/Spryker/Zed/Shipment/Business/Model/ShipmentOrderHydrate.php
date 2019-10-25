@@ -13,6 +13,9 @@ use Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 
+/**
+ * @deprecated Use \Spryker\Zed\Shipment\Business\Shipment\ShipmentOrderHydrate instead.
+ */
 class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
 {
     /**

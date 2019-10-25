@@ -38,7 +38,7 @@ Shipment,Shipment
 "Show more","Show more"
 Sku,SKU
 State,State
-"Sub total","Sub Total"
+Subtotal,Subtotal
 Totals,Totals
 "Trigger all matching states","Trigger all matching states"
 "Trigger event","Trigger event"

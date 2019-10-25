@@ -21,7 +21,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class BusinessOnBehalfFacade extends AbstractFacade implements BusinessOnBehalfFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class BusinessOnBehalfFacade extends AbstractFacade implements BusinessOnBehalfF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -51,7 +51,7 @@ class BusinessOnBehalfFacade extends AbstractFacade implements BusinessOnBehalfF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -67,7 +67,7 @@ class BusinessOnBehalfFacade extends AbstractFacade implements BusinessOnBehalfF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -83,7 +83,7 @@ class BusinessOnBehalfFacade extends AbstractFacade implements BusinessOnBehalfF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

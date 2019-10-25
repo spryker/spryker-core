@@ -104,7 +104,7 @@ class ProductOptionValidator implements ProductOptionValidatorInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     protected function validateProductOptions(
         ItemTransfer $itemTransfer,

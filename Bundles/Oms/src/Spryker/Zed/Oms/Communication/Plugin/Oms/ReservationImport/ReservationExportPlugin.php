@@ -20,13 +20,12 @@ use Spryker\Zed\Oms\Dependency\Plugin\ReservationExportPluginInterface;
 class ReservationExportPlugin extends AbstractPlugin implements ReservationExportPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * Example plugin! Synchronous implementation. Change it according to implementation requirements.
      *
      * This is example plugin, here should be export to external storage, for example put message to queue, export to file. (serialize $reservationRequestTransfer)
      * The import would be done in other store which would read/consume exported message/file. Using importReservation facade method.
-     *
      *
      * @api
      *

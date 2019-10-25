@@ -112,7 +112,7 @@ interface CmsGuiToCmsInterface
     /**
      * @param int $idCmsPage
      *
-     * @return \Generated\Shared\Transfer\CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
      */
     public function findLatestCmsVersionByIdCmsPage($idCmsPage);
 
@@ -127,7 +127,7 @@ interface CmsGuiToCmsInterface
      * @param int $idCmsPage
      * @param int $version
      *
-     * @return \Generated\Shared\Transfer\CmsVersionTransfer
+     * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
      */
     public function findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
 

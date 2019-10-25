@@ -27,7 +27,7 @@ class UrlTable extends AbstractTable
     public function __construct(SpyUrlQuery $urlQuery)
     {
         $this->urlQuery = $urlQuery;
-        $this->defaultUrl = 'urlTable';
+        $this->defaultUrl = 'url-table';
         $this->setTableIdentifier(self::TABLE_IDENTIFIER);
     }
 

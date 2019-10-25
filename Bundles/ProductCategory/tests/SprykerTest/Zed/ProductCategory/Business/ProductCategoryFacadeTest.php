@@ -12,6 +12,7 @@ use Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductCategory

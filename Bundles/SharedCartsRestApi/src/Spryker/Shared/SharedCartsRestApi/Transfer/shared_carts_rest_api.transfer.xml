@@ -4,15 +4,16 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestSharedCartsAttributes">
-        <property name="idCompanyUser" type="string" />
-        <property name="idCartPermissionGroup" type="int" />
+        <property name="idCompanyUser" type="string"/>
+        <property name="idCartPermissionGroup" type="int"/>
     </transfer>
 
     <transfer name="ShareDetail">
         <property name="uuid" type="string"/>
-        <property name="idCompanyUser" type="int" />
+        <property name="idCompanyUser" type="int"/>
         <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
-        <property name="companyUser" type="CompanyUser" />
+        <property name="companyUser" type="CompanyUser"/>
+        <property name="idQuoteCompanyUser" type="int"/>
     </transfer>
 
     <transfer name="ShareDetailCollection">
@@ -21,6 +22,10 @@
 
     <transfer name="Quote">
         <property name="uuid" type="string"/>
+        <property name="customer" type="Customer"/>
+        <property name="quotePermissionGroup" type="QuotePermissionGroup"/>
+        <property name="customerReference" type="string"/>
+        <property name="idQuote" type="int"/>
     </transfer>
 
     <transfer name="QuoteResponse">
@@ -51,6 +56,7 @@
         <property name="shareDetails" type="ShareDetail[]" singular="shareDetail"/>
         <property name="quoteUuid" type="string"/>
         <property name="customerReference" type="string"/>
+        <property name="idQuote" type="int"/>
     </transfer>
 
     <transfer name="ShareCartResponse">
@@ -65,9 +71,9 @@
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="status" type="int" />
-        <property name="code" type="string" />
-        <property name="detail" type="string" />
+        <property name="status" type="int"/>
+        <property name="code" type="string"/>
+        <property name="detail" type="string"/>
     </transfer>
 
     <transfer name="CompanyUserStorage">
@@ -77,7 +83,19 @@
     </transfer>
 
     <transfer name="CompanyUser">
-        <property name="uuid" type="string" />
+        <property name="uuid" type="string"/>
+        <property name="fkCompany" type="int"/>
+        <property name="idCompanyUser" type="int"/>
+    </transfer>
+
+    <transfer name="RestUser">
+        <property name="idCompany" type="int"/>
+        <property name="naturalIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
 </transfers>

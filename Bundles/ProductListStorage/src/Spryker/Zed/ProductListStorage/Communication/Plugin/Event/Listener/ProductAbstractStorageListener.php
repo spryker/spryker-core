@@ -23,7 +23,7 @@ class ProductAbstractStorageListener extends AbstractPlugin implements EventBulk
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

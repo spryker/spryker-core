@@ -13,6 +13,7 @@ use Spryker\Shared\ErrorHandler\ErrorRenderer\CliErrorRenderer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group ErrorHandler

@@ -8,7 +8,9 @@
 namespace Spryker\Zed\ProductOption\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductOption\Business\Calculator\CalculatorInterface;
 use Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateCalculator;
+use Spryker\Zed\ProductOption\Business\Calculator\ProductOptionTaxRateWithItemShipmentTaxRateCalculator;
 use Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupIdHydrator;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionGroupReader;
@@ -23,6 +25,8 @@ use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueReader;
 use Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaver;
 use Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaver;
 use Spryker\Zed\ProductOption\Business\PlaceOrder\ProductOptionOrderSaver;
+use Spryker\Zed\ProductOption\Business\StrategyResolver\TaxRateCalculatorStrategyResolver;
+use Spryker\Zed\ProductOption\Business\StrategyResolver\TaxRateCalculatorStrategyResolverInterface;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
@@ -126,11 +130,24 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use createProductOptionTaxRateWithItemShipmentTaxRateCalculator() instead.
+     *
      * @return \Spryker\Zed\ProductOption\Business\Calculator\CalculatorInterface
      */
     public function createProductOptionTaxRateCalculator()
     {
         return new ProductOptionTaxRateCalculator($this->getQueryContainer(), $this->getTaxFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Business\Calculator\CalculatorInterface
+     */
+    public function createProductOptionTaxRateWithItemShipmentTaxRateCalculator(): CalculatorInterface
+    {
+        return new ProductOptionTaxRateWithItemShipmentTaxRateCalculator(
+            $this->getQueryContainer(),
+            $this->getTaxFacade()
+        );
     }
 
     /**
@@ -206,6 +223,8 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Not used anymore.
+     *
      * @return \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionItemSorterInterface
      */
     public function createProductOptionItemSorter()
@@ -255,5 +274,25 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     protected function getProductOptionValuesPreRemovePlugins(): array
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::PLUGINS_PRODUCT_OPTION_VALUES_PRE_REMOVE);
+    }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only. Use $this->createProductOptionTaxRateWithItemShipmentTaxRateCalculator() instead.
+     *
+     * @return \Spryker\Zed\ProductOption\Business\StrategyResolver\TaxRateCalculatorStrategyResolverInterface
+     */
+    public function createProductItemTaxRateCalculatorStrategyResolver(): TaxRateCalculatorStrategyResolverInterface
+    {
+        $strategyContainer = [];
+
+        $strategyContainer[TaxRateCalculatorStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {
+            return $this->createProductOptionTaxRateCalculator();
+        };
+
+        $strategyContainer[TaxRateCalculatorStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {
+            return $this->createProductOptionTaxRateWithItemShipmentTaxRateCalculator();
+        };
+
+        return new TaxRateCalculatorStrategyResolver($strategyContainer);
     }
 }

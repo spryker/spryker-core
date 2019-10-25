@@ -13,6 +13,7 @@ use SprykerTest\Shared\KeyBuilder\Fixtures\KeyBuilder;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group KeyBuilder

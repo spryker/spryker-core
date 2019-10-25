@@ -11,6 +11,7 @@ use Spryker\Zed\ContentGui\ContentGuiConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ContentGui

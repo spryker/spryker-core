@@ -20,4 +20,4 @@ use Orm\Zed\ShoppingList\Persistence\Base\SpyShoppingListPermissionGroupQuery;
  */
 abstract class AbstractSpyShoppingListPermissionGroupQuery extends SpyShoppingListPermissionGroupQuery
 {
-} // SpyShoppingListPermissionGroupQuery
+}

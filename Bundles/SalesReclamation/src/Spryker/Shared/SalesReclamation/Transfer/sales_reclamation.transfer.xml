@@ -9,19 +9,33 @@
         <property name="customerReference" type="string"/>
         <property name="customerEmail" type="string"/>
         <property name="isOpen" type="bool"/>
-        <property name="order" type="Order" />
-        <property name="reclamationItems" type="ReclamationItem[]" singular="ReclamationItem" />
-        <property name="createdOrders" type="Order[]" singular="Order" />
+        <property name="order" type="Order"/>
+        <property name="reclamationItems" type="ReclamationItem[]" singular="reclamationItem"/>
+        <property name="createdOrders" type="Order[]" singular="order"/>
     </transfer>
 
     <transfer name="ReclamationItem">
-        <property name="idSalesReclamationItem" type="int" />
+        <property name="idSalesReclamationItem" type="int"/>
         <property name="orderItem" type="Item"/>
         <property name="fkSalesReclamation" type="int"/>
     </transfer>
 
     <transfer name="ReclamationCreateRequest">
         <property name="order" type="Order"/>
-        <property name="orderItems" type="Item[]" singular="Item"/>
+        <property name="orderItems" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="customerReference" type="string"/>
+        <property name="email" type="string"/>
+        <property name="salutation" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="idSalesOrder" type="int"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="idSalesOrderItem" type="int"/>
     </transfer>
 </transfers>

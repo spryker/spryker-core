@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\QueryContainerResolverAwareTrait;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Kernel

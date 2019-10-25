@@ -12,6 +12,7 @@ use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Transfer

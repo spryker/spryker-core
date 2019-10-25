@@ -5,6 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/event-dispatcher-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/session": "^3.0.0 || ^4.0.0",
     "spryker/symfony": "^3.0.0",
@@ -14,12 +15,17 @@
   "require-dev": {
     "spryker/application": "*",
     "spryker/config": "*",
+    "spryker/container": "*",
     "spryker/discount": "*",
+    "spryker/event-dispatcher": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/config": "Add this module when you want to use the EventDispatcherPlugins.",
+    "spryker/container": "Add this module when you want to use the EventDispatcherPlugins.",
+    "spryker/event-dispatcher": "Add this module when you want to use the EventDispatcherPlugins.",
     "spryker/silex": "If you want to use ServiceProvider."
   },
   "autoload": {
