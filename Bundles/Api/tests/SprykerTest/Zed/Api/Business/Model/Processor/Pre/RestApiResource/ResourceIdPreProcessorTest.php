@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Api\Business\Model\Processor\Pre\Resource;
+namespace SprykerTest\Zed\Api\Business\Model\Processor\Pre\RestApiResource;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceIdPreProcessor;
+use Spryker\Zed\Api\Business\Model\Processor\Pre\RestApiResource\ResourceIdPreProcessor;
 
 /**
  * Auto-generated group annotations
@@ -21,7 +21,7 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\Resource\ResourceIdPreProcessor
  * @group Model
  * @group Processor
  * @group Pre
- * @group Resource
+ * @group RestApiResource
  * @group ResourceIdPreProcessorTest
  * Add your own group annotations below this line
  */
