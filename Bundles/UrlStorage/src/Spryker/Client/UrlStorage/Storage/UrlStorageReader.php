@@ -119,6 +119,21 @@ class UrlStorageReader implements UrlStorageReaderInterface
     }
 
     /**
+     * @param string[] $urlCollection
+     *
+     * @return \Generated\Shared\Transfer\UrlStorageTransfer[]
+     */
+    public function findUrlStorageTransferByUrls(array $urlCollection): array
+    {
+        $urlStorageData = $this->getUrlsFromStorage($urlCollection);
+        if (!$urlStorageData) {
+            return [];
+        }
+
+        return $this->mapUrlStorageDataToUrlStorageTransfers($urlStorageData);
+    }
+
+    /**
      * @param string $url
      *
      * @return array
@@ -205,5 +220,38 @@ class UrlStorageReader implements UrlStorageReaderInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param string[] $urlCollection
+     *
+     * @return array
+     */
+    protected function getUrlsFromStorage(array $urlCollection): array
+    {
+        $storageKeys = [];
+        foreach ($urlCollection as $url) {
+            $storageKeys[] = $this->getUrlKey($url);
+        }
+
+        return array_filter($this->storageClient->getMulti($storageKeys));
+    }
+
+    /**
+     * @param array $urlStorageData
+     *
+     * @return \Generated\Shared\Transfer\UrlStorageTransfer[]
+     */
+    protected function mapUrlStorageDataToUrlStorageTransfers(array $urlStorageData): array
+    {
+        $urlStorageTransfers = [];
+        foreach ($urlStorageData as $urlStorageDataItem) {
+            $decodedUrlStorageDataItem = json_decode($urlStorageDataItem, true);
+
+            $urlStorageTransfers[$decodedUrlStorageDataItem['url']] = (new UrlStorageTransfer())
+                ->fromArray($decodedUrlStorageDataItem, true);
+        }
+
+        return $urlStorageTransfers;
     }
 }

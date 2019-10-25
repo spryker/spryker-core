@@ -23,12 +23,12 @@ class NavigationsRestApiToUrlStorageClientBridge implements NavigationsRestApiTo
     }
 
     /**
-     * @param string $url
+     * @param string[] $urlCollection
      *
-     * @return \Generated\Shared\Transfer\UrlStorageTransfer|null
+     * @return \Generated\Shared\Transfer\UrlStorageTransfer[]
      */
-    public function findUrlStorageTransferByUrl($url)
+    public function findUrlStorageTransferByUrls(array $urlCollection): array
     {
-        return $this->urlStorageClient->findUrlStorageTransferByUrl($url);
+        return $this->urlStorageClient->findUrlStorageTransferByUrls($urlCollection);
     }
 }
