@@ -11,15 +11,19 @@ use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Spryker\Zed\CmsGui\CmsGuiDependencyProvider;
 use Spryker\Zed\CmsGui\Communication\Autocomplete\AutocompleteDataProvider;
+use Spryker\Zed\CmsGui\Communication\Form\Constraint\CmsPageConditionsConstraint;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\TwigContent;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueGlossaryForSearchType;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueName;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl;
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsGlossaryFormTypeDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvider;
+use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsSlotBlock\CmsPageSlotBlockFormDataProvider;
+use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsSlotBlock\CmsPageSlotBlockFormDataProviderInterface;
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsVersionDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType;
+use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageSlotBlockConditionForm;
 use Spryker\Zed\CmsGui\Communication\Form\Version\CmsVersionFormType;
 use Spryker\Zed\CmsGui\Communication\Mapper\CmsVersionMapper;
 use Spryker\Zed\CmsGui\Communication\Table\CmsPageTable;
@@ -248,6 +252,30 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCmsGlossaryUpdater(): CmsGlossaryUpdaterInterface
     {
         return new CmsGlossaryUpdater($this->getCmsGlossaryAfterFindPlugins(), $this->getCmsGlossaryBeforeSavePlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageSlotBlockConditionForm
+     */
+    public function createCmsPageSlotBlockConditionForm(): CmsPageSlotBlockConditionForm
+    {
+        return new CmsPageSlotBlockConditionForm();
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsSlotBlock\CmsPageSlotBlockFormDataProviderInterface
+     */
+    public function createCmsPageSlotBlockFormDataProvider(): CmsPageSlotBlockFormDataProviderInterface
+    {
+        return new CmsPageSlotBlockFormDataProvider($this->getCmsQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsGui\Communication\Form\Constraint\CmsPageConditionsConstraint
+     */
+    public function createCmsPageConditionsConstraint(): CmsPageConditionsConstraint
+    {
+        return new CmsPageConditionsConstraint();
     }
 
     /**

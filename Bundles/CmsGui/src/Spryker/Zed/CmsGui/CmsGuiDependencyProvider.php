@@ -30,7 +30,7 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_GLOSSARY = 'glossary facade';
     public const FACADE_CMS_CONTENT_WIDGET = 'content widget facade';
 
-    public const QUERY_CONTAINER_CMS = 'cms query container';
+    public const QUERY_CONTAINER_CMS = 'QUERY_CONTAINER_CMS';
 
     public const SERVICE_UTIL_ENCODING = 'util encoding service';
 
@@ -61,10 +61,6 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
             return new CmsGuiToCmsGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
         };
 
-        $container[static::QUERY_CONTAINER_CMS] = function (Container $container) {
-            return new CmsGuiToCmsQueryContainerBridge($container->getLocator()->cms()->queryContainer());
-        };
-
         $container[static::FACADE_URL] = function (Container $container) {
             return new CmsGuiToUrlBridge($container->getLocator()->url()->facade());
         };
@@ -82,6 +78,7 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStoreRelationFormTypePlugin($container);
         $container = $this->addCmsGlossaryBeforeSavePlugins($container);
         $container = $this->addCmsGlossaryAfterFindPlugins($container);
+        $container = $this->addCmsQueryContainer($container);
 
         return $container;
     }
@@ -213,5 +210,19 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function getCmsGlossaryBeforeSavePlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCmsQueryContainer(Container $container): Container
+    {
+        $container->set(static::QUERY_CONTAINER_CMS, function (Container $container) {
+            return new CmsGuiToCmsQueryContainerBridge($container->getLocator()->cms()->queryContainer());
+        });
+
+        return $container;
     }
 }

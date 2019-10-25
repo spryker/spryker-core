@@ -7,7 +7,11 @@
 
 namespace Spryker\Zed\CmsGui\Dependency\QueryContainer;
 
+use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
+use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
+use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 class CmsGuiToCmsQueryContainerBridge implements CmsGuiToCmsQueryContainerInterface
 {
@@ -37,7 +41,7 @@ class CmsGuiToCmsQueryContainerBridge implements CmsGuiToCmsQueryContainerInterf
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
-    public function queryTranslationWithKeyByValue($value)
+    public function queryTranslationWithKeyByValue(string $value): SpyGlossaryTranslationQuery
     {
         return $this->cmsQueryContainer->queryTranslationWithKeyByValue($value);
     }
@@ -47,7 +51,7 @@ class CmsGuiToCmsQueryContainerBridge implements CmsGuiToCmsQueryContainerInterf
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
      */
-    public function queryKeyWithTranslationByKey($key)
+    public function queryKeyWithTranslationByKey(string $key)
     {
         return $this->cmsQueryContainer->queryKeyWithTranslationByKey($key);
     }
@@ -57,7 +61,7 @@ class CmsGuiToCmsQueryContainerBridge implements CmsGuiToCmsQueryContainerInterf
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function queryPagesWithTemplatesForSelectedLocale($idLocale)
+    public function queryPagesWithTemplatesForSelectedLocale(int $idLocale): ModelCriteria
     {
         return $this->cmsQueryContainer->queryPagesWithTemplatesForSelectedLocale($idLocale);
     }
@@ -68,7 +72,7 @@ class CmsGuiToCmsQueryContainerBridge implements CmsGuiToCmsQueryContainerInterf
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
-    public function queryPageWithUrlByIdCmsPageAndLocaleName($idCmsPage, $localName)
+    public function queryPageWithUrlByIdCmsPageAndLocaleName(int $idCmsPage, string $localName): SpyCmsPageQuery
     {
         return $this->cmsQueryContainer->queryPageWithUrlByIdCmsPageAndLocaleName($idCmsPage, $localName);
     }
@@ -78,7 +82,7 @@ class CmsGuiToCmsQueryContainerBridge implements CmsGuiToCmsQueryContainerInterf
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery
      */
-    public function queryCmsPageLocalizedAttributesByFkPage($idPage)
+    public function queryCmsPageLocalizedAttributesByFkPage(int $idPage): SpyCmsPageLocalizedAttributesQuery
     {
         return $this->cmsQueryContainer->queryCmsPageLocalizedAttributesByFkPage($idPage);
     }
@@ -88,7 +92,7 @@ class CmsGuiToCmsQueryContainerBridge implements CmsGuiToCmsQueryContainerInterf
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function queryPagesWithTemplatesForSelectedLocaleAndVersion($idLocale)
+    public function queryPagesWithTemplatesForSelectedLocaleAndVersion(int $idLocale): ModelCriteria
     {
         return $this->cmsQueryContainer->queryPagesWithTemplatesForSelectedLocaleAndVersion($idLocale);
     }
@@ -99,7 +103,7 @@ class CmsGuiToCmsQueryContainerBridge implements CmsGuiToCmsQueryContainerInterf
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
-    public function queryGlossaryKeyMappingByPlaceholdersAndIdPage(array $placeholders, $idCmsPage)
+    public function queryGlossaryKeyMappingByPlaceholdersAndIdPage(array $placeholders, int $idCmsPage): SpyCmsGlossaryKeyMappingQuery
     {
         return $this->cmsQueryContainer->queryGlossaryKeyMappingByPlaceholdersAndIdPage($placeholders, $idCmsPage);
     }
