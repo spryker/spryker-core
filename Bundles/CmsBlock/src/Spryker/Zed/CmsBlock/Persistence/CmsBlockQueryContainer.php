@@ -13,7 +13,6 @@ use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\CmsBlock\CmsBlockDependencyProvider;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -86,13 +85,16 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
     /**
      * @api
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
-    public function queryCmsBlockWithTemplate(): ModelCriteria
+    public function queryCmsBlockWithTemplate(): SpyCmsBlockQuery
     {
-        return $this->queryCmsBlock()
+        /** @var \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery $query */
+        $query = $this->queryCmsBlock()
             ->leftJoinCmsBlockTemplate()
-                ->withColumn(SpyCmsBlockTemplateTableMap::COL_TEMPLATE_NAME, static::COLUMN_TEMPLATE_NAME);
+            ->withColumn(SpyCmsBlockTemplateTableMap::COL_TEMPLATE_NAME, static::COLUMN_TEMPLATE_NAME);
+
+        return $query;
     }
 
     /**

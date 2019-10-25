@@ -39,8 +39,8 @@ class CmsBlockRepository extends AbstractRepository implements CmsBlockRepositor
     public function findMaxIdCmsBlock(): int
     {
         $maxIdCmsBlock = $this->getFactory()->createCmsBlockQuery()
-            ->select(SpyCmsBlockTableMap::COL_ID_CMS_BLOCK)
             ->orderByIdCmsBlock(Criteria::DESC)
+            ->select(SpyCmsBlockTableMap::COL_ID_CMS_BLOCK)
             ->findOne();
 
         return $maxIdCmsBlock ?: 0;

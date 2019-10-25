@@ -138,7 +138,7 @@ class CmsBlockGlossaryManager implements CmsBlockGlossaryManagerInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock|null
      */
-    protected function getCmsBlockEntity(int $idCmsBlock): SpyCmsBlock
+    protected function getCmsBlockEntity(int $idCmsBlock): ?SpyCmsBlock
     {
         return $this->cmsBlockQueryContainer
             ->queryCmsBlockByIdWithTemplateWithGlossary($idCmsBlock)

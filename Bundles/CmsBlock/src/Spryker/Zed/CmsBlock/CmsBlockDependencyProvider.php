@@ -132,7 +132,7 @@ class CmsBlockDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return array
+     * @return \Spryker\Zed\CmsBlock\Communication\Plugin\CmsBlockUpdatePluginInterface[]
      */
     protected function getCmsBlockUpdatePlugins(): array
     {

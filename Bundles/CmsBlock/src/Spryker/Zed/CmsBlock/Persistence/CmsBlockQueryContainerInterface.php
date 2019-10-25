@@ -11,7 +11,6 @@ use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMappingQuery;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 interface CmsBlockQueryContainerInterface
 {
@@ -54,9 +53,9 @@ interface CmsBlockQueryContainerInterface
     /**
      * @api
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
-    public function queryCmsBlockWithTemplate(): ModelCriteria;
+    public function queryCmsBlockWithTemplate(): SpyCmsBlockQuery;
 
     /**
      * @api
