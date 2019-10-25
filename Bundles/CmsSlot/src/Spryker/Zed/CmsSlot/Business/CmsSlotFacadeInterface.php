@@ -78,8 +78,8 @@ interface CmsSlotFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves CMS slot according to given CMS slot id.
-     * - Returns NULL if CMS slot does not exist.
+     * - Retrieves CMS slot according to given CMS slot template id.
+     * - Returns `MissingCmsSlotTemplateException` if CMS slot template not found.
      *
      * @api
      *

@@ -60,12 +60,12 @@ class CategorySlotBlockConditionFormPlugin extends AbstractPlugin implements Cms
             ],
         ]);
 
-        $dataProvider = $this->getFactory()
+        $categorySlotBlockDataProvider = $this->getFactory()
             ->createCategorySlotBlockDataProvider();
 
         $categorySlotBlockConditionForm->buildForm(
             $builder->get(static::CONDITION_KEY),
-            $dataProvider->getOptions()
+            $categorySlotBlockDataProvider->getOptions()
         );
     }
 }

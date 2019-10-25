@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CategoryGui\Communication\DataProvider;
 
 use Generated\Shared\Transfer\CmsSlotBlockTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\CategoryGui\Communication\Form\CategorySlotBlockConditionForm;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface;
 use Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface;
@@ -43,24 +44,35 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
     {
         return [
             'data_class' => CmsSlotBlockTransfer::class,
-            CategorySlotBlockConditionForm::OPTION_CATEGORY_ARRAY => $this->getCategories(),
+            CategorySlotBlockConditionForm::OPTION_CATEGORIES => $this->getCategories(),
         ];
     }
 
     /**
-     * @return array
+     * @return int[]
      */
     protected function getCategories(): array
     {
         $idLocale = $this->localeFacade->getCurrentLocale()->getIdLocale();
-        /** @var \Orm\Zed\Category\Persistence\SpyCategory[] $categoryCollection */
-        $categoryCollection = $this->categoryQueryContainer
+
+        $categoryEntityCollection = $this->categoryQueryContainer
             ->queryCategory($idLocale)
             ->find();
 
+        return $this->mapCategoryEntityCollectionToArray($categoryEntityCollection, $idLocale);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Category\Persistence\SpyCategory[] $categoryEntityCollection
+     * @param int $idLocale
+     *
+     * @return int[]
+     */
+    protected function mapCategoryEntityCollectionToArray(ObjectCollection $categoryEntityCollection, int $idLocale): array
+    {
         $categories = [];
 
-        foreach ($categoryCollection as $categoryEntity) {
+        foreach ($categoryEntityCollection as $categoryEntity) {
             $categoryName = $categoryEntity->getLocalisedAttributes($idLocale)->getFirst()->getName();
             $categories[$categoryName] = $categoryEntity->getIdCategory();
         }
