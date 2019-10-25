@@ -50,15 +50,16 @@ class ProductOfferReferenceToIdProductOfferStep implements DataImportStepInterfa
             ));
         }
 
-        $productOffer = current($this->productOfferFacade
-            ->find($this->createProductOfferCriteriaFilterTransfer($productOfferReference))
-            ->getProductOffers());
+        $productOfferTransfers = $this->productOfferFacade
+            ->find($this->createProductOfferCriteriaFilterTransfer($productOfferReference));
+        /** @var \Generated\Shared\Transfer\ProductOfferTransfer|false $productOfferTransfer */
+        $productOfferTransfer = current($productOfferTransfers->getProductOffers());
 
-        if ($productOffer === false) {
+        if ($productOfferTransfer === false) {
             throw new EntityNotFoundException(sprintf('Product offer not found for product offer reference %s', $productOfferReference));
         }
 
-        $dataSet[ProductOfferStockDataSetInterface::FK_PRODUCT_OFFER] = $productOffer->getIdProductOffer();
+        $dataSet[ProductOfferStockDataSetInterface::FK_PRODUCT_OFFER] = $productOfferTransfer->getIdProductOffer();
     }
 
     /**

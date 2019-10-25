@@ -62,7 +62,7 @@ class ProductOfferStockDataImportBusinessFactory extends DataImportBusinessFacto
     /**
      * @return \Spryker\Zed\ProductOfferStockDataImport\Dependency\Facade\ProductOfferStockDataImportToProductOfferFacadeInterface
      */
-    protected function getProductOfferFacade(): ProductOfferStockDataImportToProductOfferFacadeInterface
+    public function getProductOfferFacade(): ProductOfferStockDataImportToProductOfferFacadeInterface
     {
         return $this->getProvidedDependency(ProductOfferStockDataImportDependencyProvider::FACADE_PRODUCT_OFFER);
     }

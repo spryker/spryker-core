@@ -18,7 +18,7 @@ use Spryker\Zed\ProductOfferStockDataImport\ProductOfferStockDataImportConfig;
 class ProductOfferStockDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
-     * [@inheritDoc}
+     * {@inheritDoc}
      * - Imports Product Offer Stock data.
      *
      * @api

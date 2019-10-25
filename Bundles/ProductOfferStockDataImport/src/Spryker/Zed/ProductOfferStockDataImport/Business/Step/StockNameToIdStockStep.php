@@ -36,14 +36,14 @@ class StockNameToIdStockStep implements DataImportStepInterface
             ));
         }
 
-        $stock = SpyStockQuery::create()
+        $stockEntity = SpyStockQuery::create()
             ->filterByName($stockName)
             ->findOne();
 
-        if (!$stock) {
+        if (!$stockEntity) {
             throw new EntityNotFoundException(sprintf('Stock not found for name %s', $stockName));
         }
 
-        $dataSet[ProductOfferStockDataSetInterface::FK_STOCK] = $stock->getIdStock();
+        $dataSet[ProductOfferStockDataSetInterface::FK_STOCK] = $stockEntity->getIdStock();
     }
 }
