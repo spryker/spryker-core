@@ -8,11 +8,12 @@
 namespace Spryker\Zed\StateMachine\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\StateMachine\Communication\Builder\StateMachineTriggerFormCollectionBuilder;
-use Spryker\Zed\StateMachine\Communication\Builder\StateMachineTriggerFormCollectionBuilderInterface;
-use Spryker\Zed\StateMachine\Communication\Factory\StateMachineTriggerFormFactory;
-use Spryker\Zed\StateMachine\Communication\Factory\StateMachineTriggerFormFactoryInterface;
+use Spryker\Zed\StateMachine\Communication\Form\DataProvider\EventItemTriggerFormDataProvider;
+use Spryker\Zed\StateMachine\Communication\Form\DataProvider\EventTriggerFormDataProvider;
+use Spryker\Zed\StateMachine\Communication\Form\EventItemTriggerForm;
+use Spryker\Zed\StateMachine\Communication\Form\EventTriggerForm;
 use Spryker\Zed\StateMachine\StateMachineDependencyProvider;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\StateMachine\StateMachineConfig getConfig()
@@ -38,18 +39,38 @@ class StateMachineCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Communication\Factory\StateMachineTriggerFormFactoryInterface
+     * @return \Spryker\Zed\StateMachine\Communication\Form\DataProvider\EventTriggerFormDataProvider
      */
-    public function createStateMachineTriggerFormFactory(): StateMachineTriggerFormFactoryInterface
+    public function createEventTriggerFormDataProvider(): EventTriggerFormDataProvider
     {
-        return new StateMachineTriggerFormFactory($this->getFormFactory());
+        return new EventTriggerFormDataProvider();
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Communication\Builder\StateMachineTriggerFormCollectionBuilderInterface
+     * @return \Spryker\Zed\StateMachine\Communication\Form\DataProvider\EventItemTriggerFormDataProvider
      */
-    public function createStateMachineTriggerFormCollectionBuilder(): StateMachineTriggerFormCollectionBuilderInterface
+    public function createEventItemTriggerFormDataProvider(): EventItemTriggerFormDataProvider
     {
-        return new StateMachineTriggerFormCollectionBuilder($this->createStateMachineTriggerFormFactory());
+        return new EventItemTriggerFormDataProvider();
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createEventTriggerForm(array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(EventTriggerForm::class, null, $options);
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createEventItemTriggerForm(array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(EventItemTriggerForm::class, null, $options);
     }
 }

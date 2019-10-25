@@ -40,12 +40,17 @@ class RenderFormController extends AbstractController
         $redirect = $request->attributes->get(static::URL_PARAM_REDIRECT, static::DEFAULT_REDIRECT_URL);
         $events = $request->attributes->get(static::URL_PARAM_EVENTS);
 
-        $eventItemTriggerFormCollection = $this->getFactory()
-            ->createStateMachineTriggerFormCollectionBuilder()
-            ->buildEventTriggerFormCollection($identifier, $redirect, $idState, $events);
+        $eventTriggerFormDataProvider = $this->getFactory()->createEventTriggerFormDataProvider();
+
+        $eventTriggerFormCollection = [];
+        foreach ($events as $event) {
+            $eventTriggerFormCollection[$event] = $this->getFactory()
+                ->createEventTriggerForm($eventTriggerFormDataProvider->getOptions($identifier, $redirect, $idState, $event))
+                ->createView();
+        }
 
         return $this->viewResponse([
-            'formCollection' => $eventItemTriggerFormCollection,
+            'formCollection' => $eventTriggerFormCollection,
         ]);
     }
 
@@ -62,9 +67,11 @@ class RenderFormController extends AbstractController
         $processName = $request->attributes->get(static::URL_PARAM_PROCESS_NAME);
         $eventName = $request->attributes->get(static::URL_PARAM_EVENT_NAME);
 
+        $eventItemTriggerDataProvider = $this->getFactory()->createEventItemTriggerFormDataProvider();
         $form = $this->getFactory()
-            ->createStateMachineTriggerFormFactory()
-            ->createFullFilledEventItemTriggerForm($identifier, $redirect, $stateMachineName, $processName, $eventName);
+            ->createEventItemTriggerForm(
+                $eventItemTriggerDataProvider->getOptions($identifier, $redirect, $eventName, $stateMachineName, $processName)
+            );
 
         return $this->viewResponse([
             'form' => $form->createView(),

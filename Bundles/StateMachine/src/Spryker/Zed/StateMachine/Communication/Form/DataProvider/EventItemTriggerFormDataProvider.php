@@ -21,18 +21,18 @@ class EventItemTriggerFormDataProvider
     public const URL_PARAM_EVENTS = 'events';
 
     /**
-     * @param string $eventName
      * @param int $identifier
      * @param string $redirect
+     * @param string $eventName
      * @param string $stateMachineName
      * @param string $processName
      *
      * @return array
      */
     public function getOptions(
-        string $eventName,
         int $identifier,
         string $redirect,
+        string $eventName,
         string $stateMachineName,
         string $processName
     ): array {

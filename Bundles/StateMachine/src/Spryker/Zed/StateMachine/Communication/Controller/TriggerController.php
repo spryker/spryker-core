@@ -95,7 +95,6 @@ class TriggerController extends AbstractController
         }
 
         $form = $this->getFactory()
-            ->createStateMachineTriggerFormFactory()
             ->createEventTriggerForm()
             ->handleRequest($request);
 
@@ -114,7 +113,6 @@ class TriggerController extends AbstractController
         }
 
         $form = $this->getFactory()
-            ->createStateMachineTriggerFormFactory()
             ->createEventItemTriggerForm()
             ->handleRequest($request);
 
