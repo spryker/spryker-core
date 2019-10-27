@@ -10,10 +10,6 @@
 
         <id-method-parameter value="spy_cms_slot_template_pk_seq"/>
 
-        <index name="spy_cms_slot_template-path">
-            <index-column name="path"/>
-        </index>
-
         <unique name="spy_cms_slot_template-path_hash">
             <unique-column name="path_hash"/>
         </unique>
