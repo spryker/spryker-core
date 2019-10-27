@@ -127,6 +127,7 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         $abstractSku = $this->availabilityRepository->getAbstractSkuFromProductConcrete($concreteSku);
         $productConcreteAvailabilityTransfer = (new ProductConcreteAvailabilityTransfer())
             ->setSku($concreteSku)
+            ->setIsNeverOutOfStock($this->availabilityCalculator->isNeverOutOfStockForStore($concreteSku, $storeTransfer))
             ->setAvailability($quantity);
 
         $this->updateProductAbstractAvailabilityBySku($abstractSku, $storeTransfer);

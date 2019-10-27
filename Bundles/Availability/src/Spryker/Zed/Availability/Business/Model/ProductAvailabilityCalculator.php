@@ -62,6 +62,17 @@ class ProductAvailabilityCalculator implements ProductAvailabilityCalculatorInte
     }
 
     /**
+     * @param string $concreteSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    public function isNeverOutOfStockForStore(string $concreteSku, StoreTransfer $storeTransfer): bool
+    {
+        return $this->stockFacade->isNeverOutOfStockForStore($concreteSku, $storeTransfer);
+    }
+
+    /**
      * @param \Spryker\DecimalObject\Decimal $quantity
      *
      * @return \Spryker\DecimalObject\Decimal
@@ -82,7 +93,7 @@ class ProductAvailabilityCalculator implements ProductAvailabilityCalculatorInte
         return (new ProductConcreteAvailabilityTransfer())
             ->setSku($concreteSku)
             ->setAvailability($this->calculateAvailabilityForProductConcrete($concreteSku, $storeTransfer))
-            ->setIsNeverOutOfStock($this->stockFacade->isNeverOutOfStockForStore($concreteSku, $storeTransfer));
+            ->setIsNeverOutOfStock($this->isNeverOutOfStockForStore($concreteSku, $storeTransfer));
     }
 
     /**
