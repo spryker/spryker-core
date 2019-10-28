@@ -10,8 +10,6 @@
 "Merchant with id %s doesn't exists.","Händler mit der ID %s existiert nicht."
 "Overview of Merchants","Übersicht der Händler"
 Save,Speichern
-approved,Genehmigt
-denied,Verweigert
 approved_button,"Zugang gewähren"
 denied_button,"Zugang verweigern"
 E-Mail,E-Mail

@@ -5,6 +5,28 @@
     {{ form_row(merchantForm.merchantProfile.public_phone) }}
     {{ form_row(merchantForm.merchantProfile.public_email) }}
     {{ form_row(merchantForm.merchantProfile.logo_url) }}
+    {% set isLabelRendered = false %}
+    {% for localizedUrl in merchantForm.merchantProfile.urlCollection %}
+        <div class="form-group {% if localizedUrl.url.vars.errors|length > 0 %}has-error{% endif %}" >
+            {% if not isLabelRendered %}
+                {{ form_label(localizedUrl.url) }}
+                {% set isLabelRendered = true %}
+            {% endif %}
+            {% if localizedUrl.vars.data.urlPrefix %}
+                <div class="input-group m-b">
+                    <span class="input-group-addon">
+                        {{ localizedUrl.vars.data.urlPrefix }}
+                    </span>
+                    {{ form_widget(localizedUrl.url) }}
+                </div>
+            {% else %}
+                {{ form_widget(localizedUrl.url) }}
+            {% endif %}
+            {{ form_errors(localizedUrl.url) }}
+        </div>
+        {{ form_row(localizedUrl.url) }}
+        {{ form_row(localizedUrl.fkLocale) }}
+    {% endfor %}
 
 {% for localizedAttributes in merchantForm.merchantProfile.merchantProfileLocalizedGlossaryAttributes %}
     {% set localeName = localizedAttributes.locale.vars.value.localeName %}
