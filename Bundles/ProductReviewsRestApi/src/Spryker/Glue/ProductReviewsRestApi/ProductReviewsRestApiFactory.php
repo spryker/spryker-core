@@ -26,6 +26,9 @@ use Spryker\Glue\ProductReviewsRestApi\Processor\Reader\ProductReviewReaderInter
 use Spryker\Glue\ProductReviewsRestApi\Processor\RestResponseBuilder\ProductReviewRestResponseBuilder;
 use Spryker\Glue\ProductReviewsRestApi\Processor\RestResponseBuilder\ProductReviewRestResponseBuilderInterface;
 
+/**
+ * @method \Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig getConfig()
+ */
 class ProductReviewsRestApiFactory extends AbstractFactory
 {
     /**
@@ -36,7 +39,8 @@ class ProductReviewsRestApiFactory extends AbstractFactory
         return new ProductReviewReader(
             $this->createProductReviewRestResponseBuilder(),
             $this->getProductStorageClient(),
-            $this->getProductReviewClient()
+            $this->getProductReviewClient(),
+            $this->getConfig()
         );
     }
 
@@ -86,7 +90,8 @@ class ProductReviewsRestApiFactory extends AbstractFactory
     {
         return new ProductReviewResourceRelationshipExpander(
             $this->createProductReviewReader(),
-            $this->getProductStorageClient()
+            $this->getProductStorageClient(),
+            $this->getConfig()
         );
     }
 

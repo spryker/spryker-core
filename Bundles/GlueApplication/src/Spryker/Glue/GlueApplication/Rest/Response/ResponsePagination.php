@@ -183,22 +183,20 @@ class ResponsePagination implements ResponsePaginationInterface
     {
         $queryString = $restRequest->getQueryString([static::KEY_PAGE]);
 
-        $pageOffsetParameter = '?page[offset]=';
-        if (strlen($queryString)) {
-            $queryString = '?' . $queryString;
-            $pageOffsetParameter = '&page[offset]=';
-        }
-
-        $domainLink = $this->domainName . '/';
-
+        $resourceLinks = [];
         $parentResources = $restRequest->getParentResources();
         foreach ($parentResources as $parentResource) {
-            $domainLink .= $parentResource->getType() . '/' . $parentResource->getId() . '/';
+            $resourceLinks[] = sprintf('%s/%s', $parentResource->getType(), $parentResource->getId());
         }
 
-        $domainLink = $domainLink . $restRequest->getResource()->getType() . $queryString . $pageOffsetParameter;
+        $resourceLinks[] = $restRequest->getResource()->getType();
 
-        return $domainLink;
+        return sprintf(
+            '%s/%s?%spage[offset]=',
+            $this->domainName,
+            implode('/', $resourceLinks),
+            ($queryString ? $queryString . '&' : '')
+        );
     }
 
     /**

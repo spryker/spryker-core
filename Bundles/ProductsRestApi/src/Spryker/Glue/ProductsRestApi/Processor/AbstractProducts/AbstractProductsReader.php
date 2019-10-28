@@ -122,18 +122,18 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
      */
     public function findProductAbstractBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
-        $abstractProductData = $this->productStorageClient
+        $productAbstractData = $this->productStorageClient
             ->findProductAbstractStorageDataByMapping(
                 static::PRODUCT_ABSTRACT_MAPPING_TYPE,
                 $sku,
                 $restRequest->getMetadata()->getLocale()
             );
 
-        if (!$abstractProductData) {
+        if (!$productAbstractData) {
             return null;
         }
 
-        return $this->createRestResourceFromAbstractProductStorageData($abstractProductData, $restRequest);
+        return $this->createRestResourceFromAbstractProductStorageData($productAbstractData, $restRequest);
     }
 
     /**
@@ -144,30 +144,30 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
      */
     public function findProductAbstractById(int $idProductAbstract, RestRequestInterface $restRequest): ?RestResourceInterface
     {
-        $abstractProductData = $this->productStorageClient
+        $productAbstractData = $this->productStorageClient
             ->findProductAbstractStorageData($idProductAbstract, $restRequest->getMetadata()->getLocale());
 
-        if (!$abstractProductData) {
+        if (!$productAbstractData) {
             return null;
         }
 
-        return $this->createRestResourceFromAbstractProductStorageData($abstractProductData, $restRequest);
+        return $this->createRestResourceFromAbstractProductStorageData($productAbstractData, $restRequest);
     }
 
     /**
-     * @param array $abstractProductData
+     * @param array $productAbstractData
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    protected function createRestResourceFromAbstractProductStorageData(array $abstractProductData, RestRequestInterface $restRequest): RestResourceInterface
+    protected function createRestResourceFromAbstractProductStorageData(array $productAbstractData, RestRequestInterface $restRequest): RestResourceInterface
     {
         $restAbstractProductsAttributesTransfer = $this->abstractProductsResourceMapper
-            ->mapAbstractProductsDataToAbstractProductsRestAttributes($abstractProductData);
+            ->mapAbstractProductsDataToAbstractProductsRestAttributes($productAbstractData);
         $restAbstractProductsAttributesTransfer = $this->expandRestAbstractProductsAttributesTransfer(
             $restAbstractProductsAttributesTransfer,
-            $abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT],
-            $restRequest
+            $productAbstractData[static::KEY_ID_PRODUCT_ABSTRACT],
+            $restRequest->getMetadata()->getLocale()
         );
         $restAbstractProductsAttributesTransfer = $this->abstractProductAttributeTranslationExpander
             ->addProductAttributeTranslation($restAbstractProductsAttributesTransfer, $restRequest->getMetadata()->getLocale());
@@ -182,26 +182,24 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
     /**
      * @param \Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer
      * @param int $idProductAbstract
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer
      */
     protected function expandRestAbstractProductsAttributesTransfer(
         AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer,
         int $idProductAbstract,
-        RestRequestInterface $restRequest
+        string $localeName
     ): AbstractProductsRestAttributesTransfer {
-        $concreteProductsRestAttributesTransfer = $this->abstractProductAttributeTranslationExpander
-            ->addProductAttributeTranslation($abstractProductsRestAttributesTransfer, $restRequest->getMetadata()->getLocale());
-
         foreach ($this->abstractProductsResourceExpanderPlugins as $abstractProductsResourceExpanderPlugin) {
-            $concreteProductsRestAttributesTransfer = $abstractProductsResourceExpanderPlugin->expand(
+            $abstractProductsRestAttributesTransfer = $abstractProductsResourceExpanderPlugin->expand(
                 $idProductAbstract,
-                $abstractProductsRestAttributesTransfer
+                $abstractProductsRestAttributesTransfer,
+                $localeName
             );
         }
 
-        return $concreteProductsRestAttributesTransfer;
+        return $abstractProductsRestAttributesTransfer;
     }
 
     /**

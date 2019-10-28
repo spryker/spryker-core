@@ -17,7 +17,7 @@ interface ProductReviewReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function findProductReviews(RestRequestInterface $restRequest): RestResponseInterface;
+    public function getProductReviews(RestRequestInterface $restRequest): RestResponseInterface;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
@@ -26,7 +26,7 @@ interface ProductReviewReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function findProductReviewsByIdProductAbstract(
+    public function getProductReviewsByIdProductAbstract(
         RestRequestInterface $restRequest,
         int $idProductAbstract,
         array $requestParams = []

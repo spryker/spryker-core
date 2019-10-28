@@ -13,7 +13,6 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginI
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig;
-use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 
 class ProductReviewsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
@@ -79,6 +78,6 @@ class ProductReviewsResourceRoutePlugin extends AbstractPlugin implements Resour
      */
     public function getParentResourceType(): string
     {
-        return ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS;
+        return ProductReviewsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS;
     }
 }

@@ -17,13 +17,10 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\ProductReviewsRestApi\Processor\Mapper\ProductReviewMapperInterface;
 use Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig;
-use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuilderInterface
 {
-    protected const FORMAT_SELF_LINK_PRODUCT_REVIEWS_RESOURCE = '%s/%s';
-
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
@@ -47,19 +44,19 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
     }
 
     /**
-     * @param int $itemsPerPage
+     * @param int $totalItems
      * @param int $pageLimit
      * @param \Generated\Shared\Transfer\ProductReviewTransfer[] $productReviewTransfers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function buildProductReviewRestResponse(
-        int $itemsPerPage,
+    public function createProductReviewRestResponse(
+        int $totalItems,
         int $pageLimit,
         array $productReviewTransfers
     ): RestResponseInterface {
         $restResponse = $this->createRestResponse(
-            $itemsPerPage,
+            $totalItems,
             $pageLimit
         );
 
@@ -89,12 +86,27 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
 
         return $this->restResourceBuilder->createRestResource(
             ProductReviewsRestApiConfig::RESOURCE_PRODUCT_REVIEWS,
-            (string)$productReviewTransfer->getIdProductReview(),
+            $resourceId,
             $restProductReviewsAttributesTransfer
         )->addLink(
             RestLinkInterface::LINK_SELF,
             $this->createSelfLink($resourceId)
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductReviewTransfer[] $productReviewTransfers
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function prepareRestResourceCollection(array $productReviewTransfers): array
+    {
+        $productReviewResources = [];
+        foreach ($productReviewTransfers as $productReviewTransfer) {
+            $productReviewResources[] = $this->createProductReviewRestResource($productReviewTransfer);
+        }
+
+        return $productReviewResources;
     }
 
     /**
@@ -111,12 +123,23 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
+    public function createRestUserMissingErrorResponse(): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setStatus(Response::HTTP_BAD_REQUEST);
+
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
     public function createProductAbstractSkuMissingErrorResponse(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(ProductsRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED)
+            ->setCode(ProductReviewsRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED)
             ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED);
+            ->setDetail(ProductReviewsRestApiConfig::RESPONSE_DETAIL_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
     }
@@ -127,9 +150,9 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
     public function createProductAbstractNotFoundErrorResponse(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(ProductsRestApiConfig::RESPONSE_CODE_CANT_FIND_ABSTRACT_PRODUCT)
+            ->setCode(ProductReviewsRestApiConfig::RESPONSE_CODE_CANT_FIND_ABSTRACT_PRODUCT)
             ->setStatus(Response::HTTP_NOT_FOUND)
-            ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_ABSTRACT_PRODUCT);
+            ->setDetail(ProductReviewsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_ABSTRACT_PRODUCT);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
     }
@@ -171,7 +194,7 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
     protected function createSelfLink(string $resourceId): string
     {
         return sprintf(
-            static::FORMAT_SELF_LINK_PRODUCT_REVIEWS_RESOURCE,
+            '%s/%s',
             ProductReviewsRestApiConfig::RESOURCE_PRODUCT_REVIEWS,
             $resourceId
         );

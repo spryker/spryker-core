@@ -9,8 +9,8 @@ namespace Spryker\Client\ProductReview;
 
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ProductReview\Plugin\Elasticsearch\Pagination\PaginationAdder;
-use Spryker\Client\ProductReview\Plugin\Elasticsearch\Pagination\PaginationAdderInterface;
+use Spryker\Client\ProductReview\Pagination\PaginationExpander;
+use Spryker\Client\ProductReview\Pagination\PaginationExpanderInterface;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\Query\ProductReviewsQueryPlugin;
 use Spryker\Client\ProductReview\Storage\ProductAbstractReviewStorageReader;
 use Spryker\Client\ProductReview\Zed\ProductReviewStub;
@@ -43,11 +43,11 @@ class ProductReviewFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductReview\Plugin\Elasticsearch\Pagination\PaginationAdderInterface
+     * @return \Spryker\Client\ProductReview\Pagination\PaginationExpanderInterface
      */
-    public function createPaginationAdder(): PaginationAdderInterface
+    public function createPaginationExpander(): PaginationExpanderInterface
     {
-        return new PaginationAdder($this->getPaginationConfigBuilder());
+        return new PaginationExpander($this->getPaginationConfigBuilder());
     }
 
     /**

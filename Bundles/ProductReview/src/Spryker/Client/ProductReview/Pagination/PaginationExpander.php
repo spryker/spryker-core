@@ -5,15 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductReview\Plugin\Elasticsearch\Pagination;
+namespace Spryker\Client\ProductReview\Pagination;
 
 use Elastica\Query;
-use Spryker\Client\ProductReview\ProductReviewConfig;
 use Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
-class PaginationAdder implements PaginationAdderInterface
+class PaginationExpander implements PaginationExpanderInterface
 {
+    /**
+     * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::PARAMETER_NAME_ITEMS_PER_PAGE;
+     */
     protected const PARAMETER_NAME_ITEMS_PER_PAGE = 'ipp';
     protected const PARAMETER_NAME_OFFSET = 'offset';
     protected const PARAMETER_NAME_LIMIT = 'limit';
@@ -45,24 +47,23 @@ class PaginationAdder implements PaginationAdderInterface
         /** @var \Elastica\Query $query */
         $query = $searchQuery->getSearchQuery();
 
-        if (isset($requestParameters[static::PARAMETER_NAME_ITEMS_PER_PAGE])
-            && $requestParameters[static::PARAMETER_NAME_ITEMS_PER_PAGE] === 0
-        ) {
-            $query->setSize(ProductReviewConfig::MAXIMUM_NUMBER_OF_RESULTS);
+        if (!empty($requestParameters[static::PARAMETER_NAME_ITEMS_PER_PAGE])) {
+            $query->setSize($requestParameters[static::PARAMETER_NAME_ITEMS_PER_PAGE]);
 
             return $searchQuery;
         }
 
-        if ($this->validateParameter($requestParameters, static::PARAMETER_NAME_OFFSET)) {
-            $currentPage = $requestParameters[static::PARAMETER_NAME_OFFSET];
+        if (!empty($requestParameters[static::PARAMETER_NAME_OFFSET])
+            && !empty($requestParameters[static::PARAMETER_NAME_LIMIT])
+        ) {
+            $query->setSize($requestParameters[static::PARAMETER_NAME_LIMIT]);
+            $query->setFrom(($requestParameters[static::PARAMETER_NAME_OFFSET] / $requestParameters[static::PARAMETER_NAME_LIMIT]) + 1);
+
+            return $searchQuery;
         }
 
-        if ($this->validateParameter($requestParameters, static::PARAMETER_NAME_LIMIT)) {
-            $itemsPerPage = $requestParameters[static::PARAMETER_NAME_LIMIT];
-        }
-
-        $this->setFrom($query, $currentPage, $itemsPerPage, $requestParameters);
         $query->setSize($itemsPerPage);
+        $query->setFrom(($currentPage - 1) * $itemsPerPage);
 
         return $searchQuery;
     }
@@ -75,7 +76,7 @@ class PaginationAdder implements PaginationAdderInterface
      */
     protected function validateParameter(array $requestParameters, string $parameter): bool
     {
-        return (isset($requestParameters[$parameter]) && (int)$requestParameters[$parameter] !== 0);
+        return (!empty($requestParameters[$parameter]));
     }
 
     /**

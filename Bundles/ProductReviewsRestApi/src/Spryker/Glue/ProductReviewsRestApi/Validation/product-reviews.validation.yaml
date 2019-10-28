@@ -10,7 +10,13 @@ product-reviews:
           value: 5
     description:
           - NotBlank
+          - Length:
+              max: 255
     summary:
           - NotBlank
+          - Length:
+              max: 255
     nickname:
           - NotBlank
+          - Length:
+              max: 255

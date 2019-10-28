@@ -14,7 +14,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewClientInterface;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductReviewsRestApi\Processor\RestResponseBuilder\ProductReviewRestResponseBuilderInterface;
-use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
+use Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProductReviewCreator implements ProductReviewCreatorInterface
@@ -62,27 +62,29 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
         RestRequestInterface $restRequest,
         RestProductReviewsAttributesTransfer $restProductReviewsAttributesTransfer
     ): RestResponseInterface {
-        $restResponse = $this->productReviewRestResponseBuilder->createRestResponse();
+        if (!$this->validateRestUser($restRequest)) {
+            return $this->productReviewRestResponseBuilder->createRestUserMissingErrorResponse();
+        }
 
-        $parentResource = $restRequest->findParentResourceByType(ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS);
+        $parentResource = $restRequest->findParentResourceByType(ProductReviewsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS);
         if (!$parentResource || !$parentResource->getId()) {
             return $this->productReviewRestResponseBuilder->createProductAbstractSkuMissingErrorResponse();
         }
 
-        $abstractProductData = $this->productStorageClient->findProductAbstractStorageDataByMapping(
+        $productAbstractData = $this->productStorageClient->findProductAbstractStorageDataByMapping(
             static::PRODUCT_ABSTRACT_MAPPING_TYPE,
             $parentResource->getId(),
             $restRequest->getMetadata()->getLocale()
         );
 
-        if (!$abstractProductData) {
+        if (!$productAbstractData) {
             return $this->productReviewRestResponseBuilder->createProductAbstractNotFoundErrorResponse();
         }
 
         $productReviewResponseTransfer = $this->productReviewClient->submitCustomerReview(
             $this->createProductReviewRequestTransfer(
                 $restProductReviewsAttributesTransfer,
-                $abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT],
+                $productAbstractData[static::KEY_ID_PRODUCT_ABSTRACT],
                 $restRequest
             )
         );
@@ -92,12 +94,25 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
                 ->createProductReviewsRestResponseWithErrors($productReviewResponseTransfer->getErrors());
         }
 
-        $restResource = $this->productReviewRestResponseBuilder
-            ->createProductReviewRestResource($productReviewResponseTransfer->getProductReview());
+        return $this->productReviewRestResponseBuilder->createProductReviewRestResponse(
+            0,
+            0,
+            [$productReviewResponseTransfer->getProductReview()]
+        )->setStatus(Response::HTTP_ACCEPTED);
+    }
 
-        return $restResponse
-            ->addResource($restResource)
-            ->setStatus(Response::HTTP_ACCEPTED);
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return bool
+     */
+    protected function validateRestUser(RestRequestInterface $restRequest): bool
+    {
+        if (!$restRequest->getRestUser() || !$restRequest->getRestUser()->getNaturalIdentifier()) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

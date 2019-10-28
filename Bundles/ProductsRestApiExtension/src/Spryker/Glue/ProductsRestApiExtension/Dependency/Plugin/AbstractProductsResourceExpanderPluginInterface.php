@@ -19,11 +19,13 @@ interface AbstractProductsResourceExpanderPluginInterface
      *
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer
      */
     public function expand(
         int $idProductAbstract,
-        AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer
+        AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer,
+        string $localeName
     ): AbstractProductsRestAttributesTransfer;
 }

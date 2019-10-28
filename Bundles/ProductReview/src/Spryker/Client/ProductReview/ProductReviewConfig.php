@@ -18,8 +18,6 @@ class ProductReviewConfig extends AbstractBundleConfig
         10,
     ];
 
-    public const MAXIMUM_NUMBER_OF_RESULTS = 10000;
-
     /**
      * @return \Generated\Shared\Transfer\ProductReviewSearchConfigTransfer
      */

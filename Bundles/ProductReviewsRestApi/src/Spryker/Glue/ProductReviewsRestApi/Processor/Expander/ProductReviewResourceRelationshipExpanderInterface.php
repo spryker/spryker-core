@@ -15,15 +15,15 @@ interface ProductReviewResourceRelationshipExpanderInterface
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return void
      */
-    public function addRelationshipsByAbstractSku(array $resources, RestRequestInterface $restRequest): array;
+    public function addRelationshipsByAbstractSku(array $resources, RestRequestInterface $restRequest): void;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return void
      */
-    public function addRelationshipsByConcreteSku(array $resources, RestRequestInterface $restRequest): array;
+    public function addRelationshipsByConcreteSku(array $resources, RestRequestInterface $restRequest): void;
 }

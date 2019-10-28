@@ -24,7 +24,7 @@ class PaginatedProductReviewsQueryExpanderPlugin extends AbstractPlugin implemen
      */
     public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
     {
-        $this->getFactory()->createPaginationAdder()->addPaginationToQuery($searchQuery, $requestParameters);
+        $this->getFactory()->createPaginationExpander()->addPaginationToQuery($searchQuery, $requestParameters);
 
         return $searchQuery;
     }

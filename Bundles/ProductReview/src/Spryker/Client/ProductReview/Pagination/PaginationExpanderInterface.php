@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductReview\Plugin\Elasticsearch\Pagination;
+namespace Spryker\Client\ProductReview\Pagination;
 
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
-interface PaginationAdderInterface
+interface PaginationExpanderInterface
 {
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery

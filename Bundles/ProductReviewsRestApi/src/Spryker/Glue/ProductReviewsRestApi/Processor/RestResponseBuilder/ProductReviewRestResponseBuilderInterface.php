@@ -21,7 +21,7 @@ interface ProductReviewRestResponseBuilderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function buildProductReviewRestResponse(int $itemsPerPage, int $pageLimit, array $productReviewTransfers): RestResponseInterface;
+    public function createProductReviewRestResponse(int $itemsPerPage, int $pageLimit, array $productReviewTransfers): RestResponseInterface;
 
     /**
      * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
@@ -31,12 +31,24 @@ interface ProductReviewRestResponseBuilderInterface
     public function createProductReviewRestResource(ProductReviewTransfer $productReviewTransfer): RestResourceInterface;
 
     /**
+     * @param \Generated\Shared\Transfer\ProductReviewTransfer[] $productReviewTransfers
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function prepareRestResourceCollection(array $productReviewTransfers): array;
+
+    /**
      * @param int $totalItems
      * @param int $limit
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createRestResponse(int $totalItems = 0, int $limit = 0): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createRestUserMissingErrorResponse(): RestResponseInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

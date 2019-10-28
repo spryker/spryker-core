@@ -21,7 +21,7 @@ class ProductReviewsResourceController extends AbstractController
      * @Glue({
      *     "getResourceById": {
      *          "summary": [
-     *              "Retrieves abstract product reviews by id."
+     *              "Retrieves abstract product reviews by sku."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
@@ -41,7 +41,7 @@ class ProductReviewsResourceController extends AbstractController
      */
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->getFactory()->createProductReviewReader()->findProductReviews($restRequest);
+        return $this->getFactory()->createProductReviewReader()->getProductReviews($restRequest);
     }
 
     /**
@@ -55,8 +55,10 @@ class ProductReviewsResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "401": "Invalid access token."
-     *              "403": "Missing access token."
+     *              "400": "Abstract product id is not specified.",
+     *              "401": "Invalid access token.",
+     *              "403": "Missing access token.",
+     *              "404": "Abstract product not found.",
      *              "422": "Unprocessable entity."
      *          }
      *     }

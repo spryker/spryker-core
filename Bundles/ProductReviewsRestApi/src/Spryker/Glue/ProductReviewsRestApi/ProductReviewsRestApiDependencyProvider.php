@@ -32,7 +32,7 @@ class ProductReviewsRestApiDependencyProvider extends AbstractBundleDependencyPr
         $container = parent::provideDependencies($container);
 
         $container = $this->addProductReviewStorageClient($container);
-        $container = $this->addProductStorageClientDependency($container);
+        $container = $this->addProductStorageClient($container);
         $container = $this->addProductReviewClient($container);
 
         return $container;
@@ -59,7 +59,7 @@ class ProductReviewsRestApiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addProductStorageClientDependency(Container $container): Container
+    protected function addProductStorageClient(Container $container): Container
     {
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductReviewsRestApiToProductStorageClientBridge(
