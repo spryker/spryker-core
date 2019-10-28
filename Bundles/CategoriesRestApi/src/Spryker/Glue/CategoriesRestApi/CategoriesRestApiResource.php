@@ -21,14 +21,31 @@ class CategoriesRestApiResource extends AbstractRestResource implements Categori
      * @api
      *
      * @param int $nodeId
-     * @param string $locale
+     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
-    public function findCategoryNodeById(int $nodeId, string $locale): ?RestResourceInterface
+    public function findCategoryNodeById(int $nodeId, string $localeName): ?RestResourceInterface
     {
         return $this->getFactory()
             ->createCategoryReader()
-            ->findCategoryNodeById($nodeId, $locale);
+            ->findCategoryNodeById($nodeId, $localeName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $nodeIds
+     * @param string $localeName
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function findCategoryNodeByIds(array $nodeIds, string $localeName): array
+    {
+        return $this->getFactory()
+            ->createCategoryReader()
+            ->findCategoryNodeByIds($nodeIds, $localeName);
     }
 }
