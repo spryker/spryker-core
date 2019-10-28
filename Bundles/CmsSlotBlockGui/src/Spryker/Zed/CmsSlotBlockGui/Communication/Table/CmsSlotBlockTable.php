@@ -46,7 +46,7 @@ class CmsSlotBlockTable extends AbstractTable
     /**
      * @var \Spryker\Zed\CmsSlotBlockGui\CmsSlotBlockGuiConfig
      */
-    protected $config;
+    protected $cmsSlotBlockGuiConfig;
 
     /**
      * @var int
@@ -61,20 +61,20 @@ class CmsSlotBlockTable extends AbstractTable
     /**
      * @param \Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsBlockFacadeInterface $cmsBlockFacade
      * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery $cmsBlockQuery
-     * @param \Spryker\Zed\CmsSlotBlockGui\CmsSlotBlockGuiConfig $config
+     * @param \Spryker\Zed\CmsSlotBlockGui\CmsSlotBlockGuiConfig $cmsSlotBlockGuiConfig
      * @param int $idCmsSlotTemplate
      * @param int $idCmsSlot
      */
     public function __construct(
         CmsSlotBlockGuiToCmsBlockFacadeInterface $cmsBlockFacade,
         SpyCmsBlockQuery $cmsBlockQuery,
-        CmsSlotBlockGuiConfig $config,
+        CmsSlotBlockGuiConfig $cmsSlotBlockGuiConfig,
         int $idCmsSlotTemplate,
         int $idCmsSlot
     ) {
         $this->cmsBlockFacade = $cmsBlockFacade;
         $this->cmsBlockQuery = $cmsBlockQuery;
-        $this->config = $config;
+        $this->cmsSlotBlockGuiConfig = $cmsSlotBlockGuiConfig;
         $this->idCmsSlotTemplate = $idCmsSlotTemplate;
         $this->idCmsSlot = $idCmsSlot;
     }
@@ -98,7 +98,7 @@ class CmsSlotBlockTable extends AbstractTable
         $config->setPaging(false);
         $config->setOrdering(false);
 
-        $this->setLimit($this->config->getMaxNumberBlocksAssignedToSlot());
+        $this->setLimit($this->cmsSlotBlockGuiConfig->getMaxNumberBlocksAssignedToSlot());
 
         return $config;
     }

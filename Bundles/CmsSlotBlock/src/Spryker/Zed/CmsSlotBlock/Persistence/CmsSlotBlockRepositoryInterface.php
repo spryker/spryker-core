@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsSlotBlock\Persistence;
 
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 
 interface CmsSlotBlockRepositoryInterface
 {
@@ -18,4 +19,11 @@ interface CmsSlotBlockRepositoryInterface
      * @return \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer
      */
     public function getCmsSlotBlocks(int $idCmsSlotTemplate, int $idCmsSlot): CmsSlotBlockCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     */
+    public function getCmsBlocksWithSlotRelations(FilterTransfer $filterTransfer): array;
 }
