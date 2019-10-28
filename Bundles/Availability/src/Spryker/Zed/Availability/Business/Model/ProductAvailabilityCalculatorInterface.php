@@ -26,6 +26,14 @@ interface ProductAvailabilityCalculatorInterface
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
+     * @return bool
+     */
+    public function isNeverOutOfStockForStore(string $concreteSku, StoreTransfer $storeTransfer): bool;
+
+    /**
+     * @param string $concreteSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer
      */
     public function getCalculatedProductConcreteAvailabilityTransfer(string $concreteSku, StoreTransfer $storeTransfer): ProductConcreteAvailabilityTransfer;

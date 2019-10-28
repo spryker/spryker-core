@@ -195,7 +195,6 @@ interface AvailabilityFacadeInterface
     /**
      * Specification:
      *  - Updates availability for given concrete sku, by quantity.
-     *  - Doesn't update the flag `isNeverOutOfStock`.
      *  - Touches availability collector if data changed
      *  - Returns id of availability abstract
      *
