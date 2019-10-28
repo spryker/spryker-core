@@ -24,8 +24,6 @@
             {% endif %}
             {{ form_errors(localizedUrl.url) }}
         </div>
-        {{ form_row(localizedUrl.url) }}
-        {{ form_row(localizedUrl.fkLocale) }}
     {% endfor %}
 
 {% for localizedAttributes in merchantForm.merchantProfile.merchantProfileLocalizedGlossaryAttributes %}
