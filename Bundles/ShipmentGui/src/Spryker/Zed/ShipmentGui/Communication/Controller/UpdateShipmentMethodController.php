@@ -62,6 +62,7 @@ class UpdateShipmentMethodController extends AbstractController
         return $this->viewResponse([
             'shipmentMethodForm' => $shipmentMethodForm->createView(),
             'shipmentMethodTabs' => $shipmentMethodTabs->createView(),
+            'shipmentMethod' => $shipmentMethodTransfer,
         ]);
     }
 
