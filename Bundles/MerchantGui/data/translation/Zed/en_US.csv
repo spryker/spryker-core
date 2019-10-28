@@ -10,6 +10,8 @@
 "Merchant with id %s doesn't exists.","Merchant with id %s doesn't exists."
 "Overview of Merchants","Overview of Merchants"
 Save,Save
+approved,Approved
+denied,Denied
 approved_button,"Approve Access"
 denied_button,"Deny Access"
 E-Mail,E-Mail
