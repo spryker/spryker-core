@@ -12,5 +12,9 @@ namespace Spryker\Shared\CategoryGui;
  */
 interface CategoryGuiConstants
 {
+    /**
+     * Specification:
+     * - Defines the key of condition form plugin.
+     */
     public const CONDITION_KEY = 'category';
 }
