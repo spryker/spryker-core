@@ -13,8 +13,6 @@ var SlotBlocksForm = function (options) {
     this.formItemsCount = 0;
     this.prototype = '';
     this.cmsSlotBlocksSelector = '';
-    this.paramIdCmsSlotTemplate = '';
-    this.paramIdCmsSlot = '';
 
     $.extend(this, options);
 
@@ -29,9 +27,6 @@ var SlotBlocksForm = function (options) {
     };
 
     this.rebuildForm = function (idCmsSlotTemplate, idCmsSlot, tablaData) {
-        _self.idCmsSlotTemplate = idCmsSlotTemplate;
-        _self.idCmsSlot = idCmsSlot;
-
         _self.form.find('[id*=slot_blocks_cmsSlotBlocks]').remove();
 
         var inputs = '';
@@ -57,7 +52,7 @@ var SlotBlocksForm = function (options) {
     this.save = function (event) {
         event.preventDefault();
 
-        var url = $(this).attr('action') + '?' + _self.paramIdCmsSlotTemplate + '=' + _self.idCmsSlotTemplate + '&' + _self.paramIdCmsSlot + '=' + _self.idCmsSlot;
+        var url = $(this).attr('action');
         var formSerialize = $(this).serialize();
 
         $.post(url, formSerialize).done(function() {

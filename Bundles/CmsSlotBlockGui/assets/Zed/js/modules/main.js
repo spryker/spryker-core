@@ -13,8 +13,6 @@ var SlotBlocksForm = require('./slot-blocks-form');
 $(document).ready(function() {
     var slotBlocksForm = new SlotBlocksForm({
         cmsSlotBlocksSelector: '.js-cms-slot-blocks',
-        paramIdCmsSlotTemplate: 'id-cms-slot-template',
-        paramIdCmsSlot: 'id-cms-slot',
     });
 
     var blocksTable = new BlocksTable({
@@ -30,6 +28,7 @@ $(document).ready(function() {
     var blocksChoice = new BlocksChoice({
         blocksChoiceFormSelector: '[name=block-choice]',
         blocksTable: blocksTable,
+        blocksChoiceAddSelector: '#block-choice_add',
     });
 
     var slotBlocks = new SlotBlocks({

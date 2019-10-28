@@ -10,13 +10,14 @@ var BlocksChoice = function (options) {
     this.blocksChoiceFormSelector = {};
     this.blocksChoiceForm = {};
     this.blocksTable = {};
+    this.blocksChoiceAddSelector = '[type=button]';
 
     $.extend(this, options);
 
     this.init = function () {
         _self.blocksChoiceForm = $(_self.blocksChoiceFormSelector);
 
-        _self.blocksChoiceForm.on('submit', _self.addBlock);
+        _self.blocksChoiceForm.on('click', _self.blocksChoiceAddSelector, _self.addBlock);
     };
 
     this.addBlock = function (event) {

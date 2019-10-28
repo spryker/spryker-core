@@ -9,8 +9,8 @@ namespace Spryker\Zed\CmsSlotBlockGui\Communication\Form\Block;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,8 +23,9 @@ class CmsBlockChoiceForm extends AbstractType
     public const OPTION_CMS_BLOCKS = 'cms_blocks';
 
     protected const FIELD_CMS_BLOCKS = 'cmsBlocks';
-    protected const FIELD_SUBMIT = 'submit';
+    protected const FIELD_ADD = 'add';
     protected const PLACEHOLDER_CMS_BLOCKS = 'Select or type a block name to assign';
+    protected const LABEL_FIELD_ADD = '+Add';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -45,7 +46,7 @@ class CmsBlockChoiceForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addCmsBlocksField($builder, $options)
-            ->addSubmitField($builder);
+            ->addAddField($builder);
     }
 
     /**
@@ -86,11 +87,11 @@ class CmsBlockChoiceForm extends AbstractType
      *
      * @return $this
      */
-    protected function addSubmitField(FormBuilderInterface $builder)
+    protected function addAddField(FormBuilderInterface $builder)
     {
         $builder
-            ->add(static::FIELD_SUBMIT, SubmitType::class, [
-                'label' => '+Add',
+            ->add(static::FIELD_ADD, ButtonType::class, [
+                'label' => static::LABEL_FIELD_ADD,
                 'attr' => [
                     'class' => 'btn',
                 ],

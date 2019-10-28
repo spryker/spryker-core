@@ -47,6 +47,8 @@ class SlotBlockController extends AbstractController
             'slotBlockTable' => $this->getFactory()->createSlotBlockTable($idCmsSlotTemplate, $idCmsSlot)->render(),
             'cmsBlockChoiceForm' => $cmsBlockChoiceForm->createView(),
             'cmsSlotBlockCollectionForm' => $cmsSlotBlockCollectionForm->createView(),
+            'idCmsSlotTemplate' => $idCmsSlotTemplate,
+            'idCmsSlot' => $idCmsSlot,
         ]);
     }
 
