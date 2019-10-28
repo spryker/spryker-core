@@ -9,6 +9,9 @@ namespace Spryker\Zed\CmsSlotBlockGui\Communication;
 
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
 use Spryker\Zed\CmsSlotBlockGui\CmsSlotBlockGuiDependencyProvider;
+use Spryker\Zed\CmsSlotBlockGui\Communication\Form\Block\CmsBlockChoiceForm;
+use Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\CmsBlockChoiceFormDataProvider;
+use Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\CmsBlockChoiceFormDataProviderInterface;
 use Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\CmsSlotBlockCollectionFormDataProvider;
 use Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\CmsSlotBlockCollectionFormDataProviderInterface;
 use Spryker\Zed\CmsSlotBlockGui\Communication\Form\SlotBlock\CmsSlotBlockCollectionForm;
@@ -42,20 +45,37 @@ class CmsSlotBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param \Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\CmsSlotBlockCollectionFormDataProviderInterface $slotBlockDataProvider
      * @param int $idCmsSlotTemplate
      * @param int $idCmsSlot
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createCmsSlotBlockCollectionForm(
-        CmsSlotBlockCollectionFormDataProviderInterface $slotBlockDataProvider,
+    public function createCmsSlotBlockCollectionForm(int $idCmsSlotTemplate, int $idCmsSlot): FormInterface
+    {
+        $cmsSlotBlockCollectionDataProvider = $this->createCmsSlotBlockCollectionFormDataProvider();
+
+        return $this->getFormFactory()->create(
+            CmsSlotBlockCollectionForm::class,
+            $cmsSlotBlockCollectionDataProvider->getData($idCmsSlotTemplate, $idCmsSlot)
+        );
+    }
+
+    /**
+     * @param int $idCmsSlotTemplate
+     * @param int $idCmsSlot
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCmsBlockChoiceForm(
         int $idCmsSlotTemplate,
         int $idCmsSlot
     ): FormInterface {
+        $cmsBlockChoiceFormDataProvider = $this->createCmsBlockChoiceFormDataProvider();
+
         return $this->getFormFactory()->create(
-            CmsSlotBlockCollectionForm::class,
-            $slotBlockDataProvider->getData($idCmsSlotTemplate, $idCmsSlot)
+            CmsBlockChoiceForm::class,
+            null,
+            $cmsBlockChoiceFormDataProvider->getOptions($idCmsSlotTemplate, $idCmsSlot)
         );
     }
 
@@ -65,6 +85,17 @@ class CmsSlotBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCmsSlotBlockCollectionFormDataProvider(): CmsSlotBlockCollectionFormDataProviderInterface
     {
         return new CmsSlotBlockCollectionFormDataProvider($this->getCmsSlotBlockFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\CmsBlockChoiceFormDataProviderInterface
+     */
+    public function createCmsBlockChoiceFormDataProvider(): CmsBlockChoiceFormDataProviderInterface
+    {
+        return new CmsBlockChoiceFormDataProvider(
+            $this->getCmsSlotBlockFacade(),
+            $this->getConfig()
+        );
     }
 
     /**
