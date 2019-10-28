@@ -9,6 +9,7 @@ namespace Spryker\Client\CmsBlockStorage;
 
 use Spryker\Client\CmsBlockStorage\Dependency\Client\CmsBlockStorageToStorageBridge;
 use Spryker\Client\CmsBlockStorage\Dependency\Service\CmsBlockStorageToSynchronizationServiceBridge;
+use Spryker\Client\CmsBlockStorage\Dependency\Service\CmsBlockStorageToUtilEncodingServiceBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
@@ -16,6 +17,7 @@ class CmsBlockStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const PLUGINS_CMS_BLOCK_STORAGE_BLOCKS_FINDER = 'PLUGINS_CMS_BLOCK_STORAGE_BLOCKS_FINDER';
 
     /**
@@ -23,10 +25,11 @@ class CmsBlockStorageDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container)
+    public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
+        $container = $this->addUtilEncodingService($container);
         $container = $this->addCmsBlockStorageBlocksFinderPlugins($container);
 
         return $container;
@@ -56,6 +59,22 @@ class CmsBlockStorageDependencyProvider extends AbstractDependencyProvider
         $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new CmsBlockStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
         });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+            return new CmsBlockStorageToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service()
+            );
+        };
 
         return $container;
     }

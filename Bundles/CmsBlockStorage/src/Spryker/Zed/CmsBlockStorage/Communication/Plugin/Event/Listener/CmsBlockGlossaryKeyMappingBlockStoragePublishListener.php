@@ -10,7 +10,6 @@ namespace Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener;
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockGlossaryKeyMappingTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\CmsBlockStorage\Communication\CmsBlockStorageCommunicationFactory getFactory()
@@ -20,8 +19,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class CmsBlockGlossaryKeyMappingBlockStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * {@inheritDoc}
      *
@@ -32,11 +29,9 @@ class CmsBlockGlossaryKeyMappingBlockStoragePublishListener extends AbstractPlug
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $this->preventTransaction();
         $cmsBlockIds = $this->findCmsBlockIds($eventTransfers);
-
         $this->getFacade()->publish($cmsBlockIds);
     }
 
