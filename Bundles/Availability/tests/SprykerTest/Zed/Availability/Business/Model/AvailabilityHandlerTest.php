@@ -100,7 +100,7 @@ class AvailabilityHandlerTest extends Unit
             $touchFacadeMock
         );
 
-        $availabilityHandler->updateAvailability(self::PRODUCT_SKU);
+        $availabilityHandler->updateAvailability(static::PRODUCT_SKU);
     }
 
     /**
