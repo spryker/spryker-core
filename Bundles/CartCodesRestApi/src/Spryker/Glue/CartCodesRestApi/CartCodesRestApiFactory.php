@@ -9,8 +9,12 @@ namespace Spryker\Glue\CartCodesRestApi;
 
 use Spryker\CartCodesRestApi\src\Spryker\Glue\CartCodesRestApi\Processor\CartCodeAdder\CartCodeAdder;
 use Spryker\CartCodesRestApi\src\Spryker\Glue\CartCodesRestApi\Processor\CartCodeAdder\CartCodeAdderInterface;
+use Spryker\CartCodesRestApi\src\Spryker\Glue\CartCodesRestApi\Processor\Expander\DiscountByCartResourceRelationshipExpander;
+use Spryker\CartCodesRestApi\src\Spryker\Glue\CartCodesRestApi\Processor\Expander\DiscountByCartResourceRelationshipExpanderInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\CartCodeMapper;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\CartCodeMapperInterface;
+use Spryker\Glue\CartCodesRestApi\Processor\Mapper\DiscountMapper;
+use Spryker\Glue\CartCodesRestApi\Processor\Mapper\DiscountMapperInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\RestResponseBuilder\CartCodeRestResponseBuilder;
 use Spryker\Glue\CartCodesRestApi\Processor\RestResponseBuilder\CartCodeRestResponseBuilderInterface;
 use Spryker\Glue\CartsRestApi\CartsRestApiResourceInterface;
@@ -32,6 +36,9 @@ class CartCodesRestApiFactory extends AbstractFactory
         );
     }
 
+    /**
+     * @return \Spryker\Glue\CartCodesRestApi\Processor\RestResponseBuilder\CartCodeRestResponseBuilderInterface
+     */
     public function createCartCodeRestResponseBuilder(): CartCodeRestResponseBuilderInterface
     {
         return new CartCodeRestResponseBuilder(
@@ -42,11 +49,30 @@ class CartCodesRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return CartcodeMapperInterface
+     * @return \Spryker\Glue\CartCodesRestApi\Processor\Mapper\CartCodeMapperInterface
      */
     public function createCartCodeMapper(): CartCodeMapperInterface
     {
         return new CartCodeMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\CartCodesRestApi\Processor\Mapper\DiscountMapperInterface
+     */
+    public function createDiscountMapper(): DiscountMapperInterface
+    {
+        return new DiscountMapper();
+    }
+
+    /**
+     * @return \Spryker\CartCodesRestApi\src\Spryker\Glue\CartCodesRestApi\Processor\Expander\DiscountByCartResourceRelationshipExpanderInterface
+     */
+    public function createDiscountByCartResourceRelationshipExpander(): DiscountByCartResourceRelationshipExpanderInterface
+    {
+        return new DiscountByCartResourceRelationshipExpander(
+            $this->getResourceBuilder(),
+            $this->createDiscountMapper()
+        );
     }
 
     /**
