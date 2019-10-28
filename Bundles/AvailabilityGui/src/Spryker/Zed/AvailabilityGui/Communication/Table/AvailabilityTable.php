@@ -141,7 +141,7 @@ class AvailabilityTable extends AbstractTable
         foreach ($queryResult as $productItem) {
             $isBundleProduct = $this->availabilityHelper->isBundleProduct($productItem[AvailabilityQueryContainer::ID_PRODUCT]);
 
-            $isNeverOutOfStock = $this->availabilityHelper->isNeverOutOfStock($productItem[AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET]);
+            $isNeverOutOfStock = $this->availabilityHelper->isNeverOutOfStock($productItem[AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET] ?? '');
 
             $result[] = [
                 AvailabilityHelperInterface::CONCRETE_SKU => $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
