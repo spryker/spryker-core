@@ -29,5 +29,5 @@ interface UrlStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\UrlStorageTransfer[]
      */
-    public function findUrlStorageTransferByUrls(array $urlCollection): array;
+    public function getUrlStorageTransferByUrls(array $urlCollection): array;
 }

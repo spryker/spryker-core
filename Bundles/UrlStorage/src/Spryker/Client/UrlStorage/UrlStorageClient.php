@@ -75,8 +75,8 @@ class UrlStorageClient extends AbstractClient implements UrlStorageClientInterfa
      *
      * @return \Generated\Shared\Transfer\UrlStorageTransfer[]
      */
-    public function findUrlStorageTransferByUrls(array $urlCollection): array
+    public function getUrlStorageTransferByUrls(array $urlCollection): array
     {
-        return $this->getFactory()->createUrlStorageReader()->findUrlStorageTransferByUrls($urlCollection);
+        return $this->getFactory()->createUrlStorageReader()->getUrlStorageTransferByUrls($urlCollection);
     }
 }

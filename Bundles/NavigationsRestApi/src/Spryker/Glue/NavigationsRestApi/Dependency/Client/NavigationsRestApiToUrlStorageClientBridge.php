@@ -27,8 +27,8 @@ class NavigationsRestApiToUrlStorageClientBridge implements NavigationsRestApiTo
      *
      * @return \Generated\Shared\Transfer\UrlStorageTransfer[]
      */
-    public function findUrlStorageTransferByUrls(array $urlCollection): array
+    public function getUrlStorageTransferByUrls(array $urlCollection): array
     {
-        return $this->urlStorageClient->findUrlStorageTransferByUrls($urlCollection);
+        return $this->urlStorageClient->getUrlStorageTransferByUrls($urlCollection);
     }
 }

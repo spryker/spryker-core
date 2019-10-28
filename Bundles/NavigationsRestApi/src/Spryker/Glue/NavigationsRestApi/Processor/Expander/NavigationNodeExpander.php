@@ -53,7 +53,7 @@ class NavigationNodeExpander implements NavigationNodeExpanderInterface
     protected function expandNavigationNodeTransfers(ArrayObject $restNavigationNodeTransfers): ArrayObject
     {
         $urlCollection = array_filter($this->getUrlCollection($restNavigationNodeTransfers));
-        $urlStorageTransfers = $this->urlStorageClient->findUrlStorageTransferByUrls($urlCollection);
+        $urlStorageTransfers = $this->urlStorageClient->getUrlStorageTransferByUrls($urlCollection);
 
         return $this->mapUrlStorageTransfersToRestNavigationNodeTransfers(
             $urlStorageTransfers,
