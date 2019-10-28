@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotBlock\Persistence;
 
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
 use Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlockQuery;
 use Spryker\Zed\CmsSlotBlock\CmsSlotBlockDependencyProvider;
 use Spryker\Zed\CmsSlotBlock\Dependency\Service\CmsSlotBlockToUtilEncodingServiceInterface;
@@ -27,6 +28,14 @@ class CmsSlotBlockPersistenceFactory extends AbstractPersistenceFactory
     public function getCmsSlotBlockQuery(): SpyCmsSlotBlockQuery
     {
         return SpyCmsSlotBlockQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
+     */
+    public function getCmsBlockQuery(): SpyCmsBlockQuery
+    {
+        return SpyCmsBlockQuery::create();
     }
 
     /**

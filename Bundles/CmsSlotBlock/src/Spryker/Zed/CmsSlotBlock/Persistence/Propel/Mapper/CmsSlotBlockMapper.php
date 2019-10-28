@@ -7,14 +7,20 @@
 
 namespace Spryker\Zed\CmsSlotBlock\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockTransfer;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
 use Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlock;
 use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\CmsSlotBlock\Dependency\Service\CmsSlotBlockToUtilEncodingServiceInterface;
 
 class CmsSlotBlockMapper implements CmsSlotBlockMapperInterface
 {
+    protected const CONDITION_KEY_CATEGORY = 'category';
+    protected const CONDITION_KEY_CATEGORY_IDS = 'categoryIds';
+    protected const CONDITION_KEY_PRODUCT = 'product';
+
     /**
      * @var \Spryker\Zed\CmsSlotBlock\Dependency\Service\CmsSlotBlockToUtilEncodingServiceInterface
      */
@@ -69,6 +75,42 @@ class CmsSlotBlockMapper implements CmsSlotBlockMapperInterface
     }
 
     /**
+     * @param \Propel\Runtime\Collection\Collection $cmsBlockEntities
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     */
+    public function mapCmsBlockEntitiesToTransfers(Collection $cmsBlockEntities): array
+    {
+        $cmsBlockTransfers = [];
+        foreach ($cmsBlockEntities as $cmsBlockEntity) {
+            $cmsBlockTransfers[] = $this->mapCmsBlockEntityToTransfer($cmsBlockEntity, new CmsBlockTransfer());
+        }
+
+        return $cmsBlockTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $cmsBlockEntity
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
+     */
+    protected function mapCmsBlockEntityToTransfer(
+        SpyCmsBlock $cmsBlockEntity,
+        CmsBlockTransfer $cmsBlockTransfer
+    ): CmsBlockTransfer {
+        $cmsBlockTransfer->fromArray($cmsBlockEntity->toArray(), true);
+        $cmsBlockTransfer->setCmsSlotBlockCollection(
+            $this->mapCmsSlotBlockEntityCollectionToTransferCollection(
+                $cmsBlockEntity->getSpyCmsSlotBlocks(),
+                new CmsSlotBlockCollectionTransfer()
+            )
+        );
+
+        return $cmsBlockTransfer;
+    }
+
+    /**
      * @param \Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlock $cmsSlotBlockEntity
      * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer $cmsSlotBlockTransfer
      *
@@ -84,7 +126,7 @@ class CmsSlotBlockMapper implements CmsSlotBlockMapperInterface
             ->setIdCmsBlock($cmsSlotBlockEntity->getFkCmsBlock());
 
         $cmsSlotBlockTransfer->setConditions(
-            $this->utilEncodingService->decodeJson($cmsSlotBlockEntity->getConditions())
+            $this->utilEncodingService->decodeJson($cmsSlotBlockEntity->getConditions(), true)
         );
 
         return $cmsSlotBlockTransfer;

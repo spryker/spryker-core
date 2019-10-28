@@ -30,9 +30,9 @@ interface CmsSlotMapperInterface
     public function mapCmsSlotTransferToEntity(SpyCmsSlot $cmsSlot, CmsSlotTransfer $cmsSlotTransfer): SpyCmsSlot;
 
     /**
-     * @param \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplate $cmsSlotTemplate
+     * @param \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplate $cmsSlotTemplateEntity
      *
      * @return \Generated\Shared\Transfer\CmsSlotTemplateTransfer
      */
-    public function mapCmsSlotTemplateEntityToTransfer(SpyCmsSlotTemplate $cmsSlotTemplate): CmsSlotTemplateTransfer;
+    public function mapCmsSlotTemplateEntityToTransfer(SpyCmsSlotTemplate $cmsSlotTemplateEntity): CmsSlotTemplateTransfer;
 }

@@ -16,10 +16,12 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class CategorySlotBlockConditionForm extends AbstractType
 {
-    public const OPTION_CATEGORY_ARRAY = 'option-category-array';
+    public const OPTION_CATEGORY_IDS = 'option-category-ids';
 
+    public const FIELD_CATEGORY_IDS = 'categoryIds';
     protected const FIELD_ALL = 'all';
-    protected const FIELD_CATEGORY_IDS = 'ids';
+
+    protected const LABEL_CATEGORY_IDS = 'Categories Pages';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -29,42 +31,47 @@ class CategorySlotBlockConditionForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addAllField($builder);
-        $this->addCategoryIdsField($builder, $options);
+        $this->addAllField($builder)
+            ->addCategoryIdsField($builder, $options);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return void
+     * @return $this
      */
-    protected function addAllField(FormBuilderInterface $builder): void
+    protected function addAllField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ALL, ChoiceType::class, [
             'required' => false,
             'choices' => [
-                'All' => true,
-                'Not all' => false,
+                'All Product Pages' => true,
+                'Specific Product Pages' => false,
             ],
             'expanded' => true,
             'multiple' => false,
             'placeholder' => false,
+            'label' => false,
         ]);
+
+        return $this;
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return void
+     * @return $this
      */
-    protected function addCategoryIdsField(FormBuilderInterface $builder, array $options): void
+    protected function addCategoryIdsField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_CATEGORY_IDS, ChoiceType::class, [
-            'choices' => $options[static::OPTION_CATEGORY_ARRAY],
+            'choices' => $options[static::OPTION_CATEGORY_IDS],
             'required' => false,
             'multiple' => true,
-            'label' => false,
+            'label' => static::LABEL_CATEGORY_IDS,
         ]);
+
+        return $this;
     }
 }
