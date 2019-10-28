@@ -16,6 +16,7 @@ use Spryker\Zed\CategoryGui\Communication\Table\CategoryTable;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface;
 use Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -28,11 +29,15 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CategoryGui\Communication\Form\CategorySlotBlockConditionForm
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return void
      */
-    public function createCategorySlotBlockConditionForm(): CategorySlotBlockConditionForm
+    public function createCategorySlotBlockConditionForm(FormBuilderInterface $builder): void
     {
-        return new CategorySlotBlockConditionForm();
+        $categorySlotBlockDataProvider = $this->createCategorySlotBlockDataProvider();
+        $categorySlotBlockConditionForm = new CategorySlotBlockConditionForm();
+        $categorySlotBlockConditionForm->buildForm($builder, $categorySlotBlockDataProvider->getOptions());
     }
 
     /**
