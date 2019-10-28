@@ -276,5 +276,5 @@ interface SearchFacadeInterface
      *
      * @return void
      */
-    public function createIndexes(LoggerInterface $messenger): void;
+    public function installIndices(LoggerInterface $messenger): void;
 }
