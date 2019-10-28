@@ -8,12 +8,17 @@
 namespace Spryker\Zed\ConfigurableBundle\Business\Reader;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateCollectionTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpanderInterface;
 use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface;
 
 class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateReaderInterface
 {
+    protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_EXISTS = 'configurable-bundle.template.validation.error.not_exists';
+
     /**
      * @var \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface
      */
@@ -39,39 +44,84 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer|null
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
      */
-    public function findConfigurableBundleTemplate(
+    public function getConfigurableBundleTemplate(
         ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
-    ): ?ConfigurableBundleTemplateTransfer {
-        $configurableBundleTemplateTransfer = $this->configurableBundleRepository->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
+    ): ConfigurableBundleTemplateResponseTransfer {
+        $configurableBundleTemplateTransfer = $this->configurableBundleRepository
+            ->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
 
         if (!$configurableBundleTemplateTransfer) {
-            return null;
+            return $this->getErrorResponse(static::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_EXISTS);
         }
 
-        return $this->configurableBundleTranslationExpander->expandConfigurableBundleTemplateWithTranslations(
+        $configurableBundleTemplateTransfer = $this->expandConfigurableBundleTemplate(
             $configurableBundleTemplateTransfer,
-            $configurableBundleTemplateFilterTransfer->getTranslationLocales()
+            $configurableBundleTemplateFilterTransfer
         );
+
+        return (new ConfigurableBundleTemplateResponseTransfer())
+            ->setConfigurableBundleTemplate($configurableBundleTemplateTransfer)
+            ->setIsSuccessful(true);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer[]
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateCollectionTransfer
      */
-    public function getConfigurableBundleTemplateCollection(ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer): array
-    {
-        $configurableBundleTemplateTransfers = [];
+    public function getConfigurableBundleTemplateCollection(
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): ConfigurableBundleTemplateCollectionTransfer {
+        $configurableBundleTemplateCollectionTransfer = new ConfigurableBundleTemplateCollectionTransfer();
 
-        foreach ($this->configurableBundleRepository->getConfigurableBundleTemplateCollection($configurableBundleTemplateFilterTransfer) as $configurableBundleTemplateTransfer) {
-            $configurableBundleTemplateTransfers[] = $this->configurableBundleTranslationExpander->expandConfigurableBundleTemplateWithTranslations(
+        $configurableBundleTemplateTransfers = $this->configurableBundleRepository
+            ->getConfigurableBundleTemplateCollection($configurableBundleTemplateFilterTransfer);
+
+        foreach ($configurableBundleTemplateTransfers as $configurableBundleTemplateTransfer) {
+            $expandedConfigurableBundleTemplateTransfer = $this->expandConfigurableBundleTemplate(
+                $configurableBundleTemplateTransfer,
+                $configurableBundleTemplateFilterTransfer
+            );
+
+            $configurableBundleTemplateCollectionTransfer->addConfigurableBundleTemplate($expandedConfigurableBundleTemplateTransfer);
+        }
+
+        return $configurableBundleTemplateCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
+     */
+    protected function expandConfigurableBundleTemplate(
+        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer,
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): ConfigurableBundleTemplateTransfer {
+        $configurableBundleTemplateTransfer = $this->configurableBundleTranslationExpander
+            ->expandConfigurableBundleTemplateWithTranslations(
                 $configurableBundleTemplateTransfer,
                 $configurableBundleTemplateFilterTransfer->getTranslationLocales()
             );
-        }
 
-        return $configurableBundleTemplateTransfers;
+        return $configurableBundleTemplateTransfer;
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
+     */
+    protected function getErrorResponse(string $message): ConfigurableBundleTemplateResponseTransfer
+    {
+        $messageTransfer = (new MessageTransfer())
+            ->setValue($message);
+
+        return (new ConfigurableBundleTemplateResponseTransfer())
+            ->setIsSuccessful(false)
+            ->addMessage($messageTransfer);
     }
 }

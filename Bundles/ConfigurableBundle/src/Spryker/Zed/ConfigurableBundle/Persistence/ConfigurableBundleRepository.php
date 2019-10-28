@@ -9,6 +9,8 @@ namespace Spryker\Zed\ConfigurableBundle\Persistence;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateCollectionTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotCollectionTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Orm\Zed\ConfigurableBundle\Persistence\Map\SpyConfigurableBundleTemplateSlotTableMap;
@@ -44,37 +46,27 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
 
         return $this->getFactory()
             ->createConfigurableBundleMapper()
-            ->mapConfigurableBundleTemplateEntityToTransfer($configurableBundleTemplateEntity, new ConfigurableBundleTemplateTransfer());
+            ->mapTemplateEntityToTemplateTransfer($configurableBundleTemplateEntity, new ConfigurableBundleTemplateTransfer());
     }
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer[]
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateCollectionTransfer
      */
-    public function getConfigurableBundleTemplateCollection(ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer): array
-    {
+    public function getConfigurableBundleTemplateCollection(
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): ConfigurableBundleTemplateCollectionTransfer {
         $configurableBundleTemplateQuery = $this->getFactory()->createConfigurableBundleTemplateQuery();
+
         $configurableBundleTemplateQuery = $this->setConfigurableBundleTemplateFilters(
             $configurableBundleTemplateQuery,
             $configurableBundleTemplateFilterTransfer
         );
 
-        $configurableBundleTemplateEntities = $configurableBundleTemplateQuery->find();
-
-        if (!$configurableBundleTemplateEntities->count()) {
-            return [];
-        }
-
-        $configurableBundleTemplateTransfers = [];
-
-        foreach ($configurableBundleTemplateEntities as $configurableBundleTemplateEntity) {
-            $configurableBundleTemplateTransfers[] = $this->getFactory()
-                ->createConfigurableBundleMapper()
-                ->mapConfigurableBundleTemplateEntityToTransfer($configurableBundleTemplateEntity, new ConfigurableBundleTemplateTransfer());
-        }
-
-        return $configurableBundleTemplateTransfers;
+        return $this->getFactory()
+            ->createConfigurableBundleMapper()
+            ->mapTemplateEntityCollectionToTemplateTransferCollection($configurableBundleTemplateQuery->find());
     }
 
     /**
@@ -125,10 +117,11 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[]
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotCollectionTransfer
      */
-    public function getConfigurableBundleTemplateSlotCollection(ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer): array
-    {
+    public function getConfigurableBundleTemplateSlotCollection(
+        ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
+    ): ConfigurableBundleTemplateSlotCollectionTransfer {
         $configurableBundleTemplateSlotQuery = $this->getFactory()
             ->createConfigurableBundleTemplateSlotQuery()
             ->joinWithSpyConfigurableBundleTemplate();

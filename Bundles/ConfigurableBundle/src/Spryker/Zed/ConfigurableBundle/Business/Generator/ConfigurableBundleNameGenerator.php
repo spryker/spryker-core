@@ -13,11 +13,10 @@ use Spryker\Zed\ConfigurableBundle\Dependency\Service\ConfigurableBundleToUtilTe
 
 class ConfigurableBundleNameGenerator implements ConfigurableBundleNameGeneratorInterface
 {
-    protected const TEMPLATE_NAME_PREFIX = 'configurable_bundle.templates';
-    protected const SLOT_NAME_PREFIX = 'configurable_bundle.template_slots';
-    protected const NAME_POSTFIX = 'name';
-    protected const SPACE_REPLACEMENT = '_';
-    protected const PARTS_CONCATENATOR = '.';
+    protected const PREFIX_TEMPLATE_NAME = 'configurable_bundle.templates';
+    protected const PREFIX_TEMPLATE_SLOT_NAME = 'configurable_bundle.template_slots';
+    protected const POSTFIX_NAME = 'name';
+    protected const CONCATENATOR = '.';
 
     /**
      * @var \Spryker\Zed\ConfigurableBundle\Dependency\Service\ConfigurableBundleToUtilTextServiceInterface
@@ -35,35 +34,33 @@ class ConfigurableBundleNameGenerator implements ConfigurableBundleNameGenerator
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
+     * @return string
      */
-    public function setConfigurableBundleTemplateName(
+    public function generateConfigurableBundleTemplateName(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): ConfigurableBundleTemplateTransfer {
+    ): string {
         $configurableBundleTemplateTransfer->requireTranslations();
 
-        $configurableBundleTemplateTransfer->setName(
-            $this->generateName($configurableBundleTemplateTransfer->getTranslations()[0]->getName(), static::TEMPLATE_NAME_PREFIX)
+        return $this->generateName(
+            $configurableBundleTemplateTransfer->getTranslations()[0]->getName(),
+            static::PREFIX_TEMPLATE_NAME
         );
-
-        return $configurableBundleTemplateTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
+     * @return string
      */
-    public function setConfigurableBundleTemplateSlotName(
+    public function generateConfigurableBundleTemplateSlotName(
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
-    ): ConfigurableBundleTemplateSlotTransfer {
+    ): string {
         $configurableBundleTemplateSlotTransfer->requireTranslations();
 
-        $configurableBundleTemplateSlotTransfer->setName(
-            $this->generateName($configurableBundleTemplateSlotTransfer->getTranslations()[0]->getName(), static::SLOT_NAME_PREFIX)
+        return $this->generateName(
+            $configurableBundleTemplateSlotTransfer->getTranslations()[0]->getName(),
+            static::PREFIX_TEMPLATE_SLOT_NAME
         );
-
-        return $configurableBundleTemplateSlotTransfer;
     }
 
     /**
@@ -79,9 +76,9 @@ class ConfigurableBundleNameGenerator implements ConfigurableBundleNameGenerator
         $nameParts = [
             $prefix,
             $slugifiedName,
-            static::NAME_POSTFIX,
+            static::POSTFIX_NAME,
         ];
 
-        return implode(static::PARTS_CONCATENATOR, $nameParts);
+        return implode(static::CONCATENATOR, $nameParts);
     }
 }

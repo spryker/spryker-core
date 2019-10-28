@@ -210,7 +210,7 @@ class SlotController extends AbstractController
         $formDataProvider = $this->getFactory()->createConfigurableBundleTemplateSlotEditFormDataProvider();
         $configurableBundleTemplateSlotEditFormTransfer = $formDataProvider->getData($idConfigurableBundleTemplateSlot);
 
-        if (!$configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()->getIdConfigurableBundleTemplateSlot()) {
+        if (!$configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()) {
             $this->addErrorMessage(static::ERROR_MESSAGE_SLOT_NOT_FOUND, [
                 static::ERROR_MESSAGE_PARAM_ID => $idConfigurableBundleTemplateSlot,
             ]);
@@ -250,7 +250,10 @@ class SlotController extends AbstractController
             }
         }
 
-        $this->setIdProductListParamToRequest($request);
+        $request->query->set(
+            static::URL_PARAM_ID_PRODUCT_LIST,
+            $configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()->getProductList()->getIdProductList()
+        );
         $configurableBundleTemplateTransfer = $this->findConfigurableBundleTemplateById(
             $configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()->getFkConfigurableBundleTemplate()
         );
@@ -287,24 +290,6 @@ class SlotController extends AbstractController
             $keyAvailableProductConcreteRelationTable => $productConcreteRelationTables[$keyAvailableProductConcreteRelationTable]->render(),
             $keyAssignedProductConcreteRelationTable => $productConcreteRelationTables[$keyAssignedProductConcreteRelationTable]->render(),
         ];
-    }
-
-    /**
-     * @see \Spryker\Zed\ProductListGui\Communication\Table\AbstractProductConcreteTable::getIdProductList()
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return void
-     */
-    protected function setIdProductListParamToRequest(Request $request): void
-    {
-        $idProductList = $this->getFactory()
-            ->getConfigurableBundleFacade()
-            ->getProductListIdByIdConfigurableBundleTemplateSlot(
-                $this->castId($request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT))
-            );
-
-        $request->query->set(static::URL_PARAM_ID_PRODUCT_LIST, $idProductList);
     }
 
     /**

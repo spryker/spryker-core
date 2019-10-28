@@ -41,18 +41,14 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */
     public function updateConfigurableBundleTemplate(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): bool {
+    ): ConfigurableBundleTemplateTransfer {
         $configurableBundleTemplateEntity = $this->getFactory()
             ->createConfigurableBundleTemplateQuery()
             ->findOneByIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
-
-        if (!$configurableBundleTemplateEntity) {
-            return false;
-        }
 
         $configurableBundleTemplateEntity = $this->getFactory()
             ->createConfigurableBundleMapper()
@@ -60,7 +56,7 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
 
         $configurableBundleTemplateEntity->save();
 
-        return true;
+        return $configurableBundleTemplateTransfer;
     }
 
     /**

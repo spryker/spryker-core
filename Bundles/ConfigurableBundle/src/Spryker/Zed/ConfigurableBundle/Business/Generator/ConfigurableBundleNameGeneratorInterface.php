@@ -15,18 +15,18 @@ interface ConfigurableBundleNameGeneratorInterface
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
+     * @return string
      */
-    public function setConfigurableBundleTemplateName(
+    public function generateConfigurableBundleTemplateName(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): ConfigurableBundleTemplateTransfer;
+    ): string;
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
+     * @return string
      */
-    public function setConfigurableBundleTemplateSlotName(
+    public function generateConfigurableBundleTemplateSlotName(
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
-    ): ConfigurableBundleTemplateSlotTransfer;
+    ): string;
 }

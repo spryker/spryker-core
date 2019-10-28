@@ -8,9 +8,12 @@
 namespace Spryker\Zed\ConfigurableBundle\Business\Writer;
 
 use Generated\Shared\Transfer\ConfigurableBundleResponseTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGeneratorInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface;
 use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
@@ -38,18 +41,26 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
     protected $configurableBundleNameGenerator;
 
     /**
+     * @var \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface
+     */
+    protected $configurableBundleTemplateReader;
+
+    /**
      * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager
      * @param \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateTranslationWriterInterface $configurableBundleTemplateTranslationWriter
      * @param \Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGeneratorInterface $configurableBundleNameGenerator
+     * @param \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface $configurableBundleTemplateReader
      */
     public function __construct(
         ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager,
         ConfigurableBundleTemplateTranslationWriterInterface $configurableBundleTemplateTranslationWriter,
-        ConfigurableBundleNameGeneratorInterface $configurableBundleNameGenerator
+        ConfigurableBundleNameGeneratorInterface $configurableBundleNameGenerator,
+        ConfigurableBundleTemplateReaderInterface $configurableBundleTemplateReader
     ) {
         $this->configurableBundleEntityManager = $configurableBundleEntityManager;
         $this->configurableBundleTemplateTranslationWriter = $configurableBundleTemplateTranslationWriter;
         $this->configurableBundleNameGenerator = $configurableBundleNameGenerator;
+        $this->configurableBundleTemplateReader = $configurableBundleTemplateReader;
     }
 
     /**
@@ -79,13 +90,30 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
     }
 
     /**
-     * @param int $idConfigurableBundleTemplate
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
      */
-    public function activateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
-    {
-        $this->configurableBundleEntityManager->activateConfigurableBundleTemplateById($idConfigurableBundleTemplate);
+    public function activateConfigurableBundleTemplate(
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): ConfigurableBundleTemplateResponseTransfer {
+        $configurableBundleTemplateTransfer = $this->configurableBundleTemplateReader
+            ->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
+
+        if (!$configurableBundleTemplateTransfer) {
+            return $this->getErrorResponse();
+        }
+
+        if ($configurableBundleTemplateTransfer->getIsActive()) {
+            return $this->getErrorResponse();
+        }
+
+        $configurableBundleTemplateTransfer->setIsActive(true);
+        $configurableBundleTemplateTransfer = $this->configurableBundleEntityManager->updateConfigurableBundleTemplate($configurableBundleTemplateTransfer);
+
+        return (new ConfigurableBundleTemplateResponseTransfer())
+            ->setConfigurableBundleTemplate($configurableBundleTemplateTransfer)
+            ->setIsSuccessful(true);
     }
 
     /**
@@ -134,7 +162,20 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
     protected function executeUpdateConfigurableBundleTemplateTransaction(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
     ): ConfigurableBundleResponseTransfer {
-        $configurableBundleTemplateTransfer = $this->configurableBundleNameGenerator->setConfigurableBundleTemplateName($configurableBundleTemplateTransfer);
+        $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())
+            ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+
+        $configurableBundleTemplateTransfer = $this->configurableBundleTemplateReader
+            ->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
+
+        if (!$configurableBundleTemplateTransfer) {
+            return $this->getErrorResponse();
+        }
+
+        $configurableBundleTemplateTransfer = $this->configurableBundleNameGenerator
+            ->setConfigurableBundleTemplateName($configurableBundleTemplateTransfer);
+
+        $configurableBundleTemplateTransfer = $this->configurableBundleEntityManager->updateConfigurableBundleTemplate($configurableBundleTemplateTransfer)
 
         if (!$this->configurableBundleEntityManager->updateConfigurableBundleTemplate($configurableBundleTemplateTransfer)) {
             $messageTransfer = (new MessageTransfer())
@@ -182,5 +223,20 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
     {
         $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateSlotsByIdTemplate($idConfigurableBundleTemplate);
         $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateById($idConfigurableBundleTemplate);
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
+     */
+    protected function getErrorResponse(string $message): ConfigurableBundleTemplateResponseTransfer
+    {
+        $messageTransfer = (new MessageTransfer())
+            ->setValue($message);
+
+        return (new ConfigurableBundleTemplateResponseTransfer())
+            ->setIsSuccessful(false)
+            ->addMessage($messageTransfer);
     }
 }

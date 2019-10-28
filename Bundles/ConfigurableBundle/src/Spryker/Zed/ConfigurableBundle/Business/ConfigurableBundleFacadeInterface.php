@@ -9,6 +9,7 @@ namespace Spryker\Zed\ConfigurableBundle\Business;
 
 use Generated\Shared\Transfer\ConfigurableBundleResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
@@ -116,15 +117,17 @@ interface ConfigurableBundleFacadeInterface
 
     /**
      * Specification:
-     * - Updates isActive configurable bundle template property property to true in Persistence.
+     * - Updates isActive configurable bundle template property to true in Persistence.
      *
      * @api
      *
-     * @param int $idConfigurableBundleTemplate
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
      */
-    public function activateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void;
+    public function activateConfigurableBundleTemplate(
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): ConfigurableBundleTemplateResponseTransfer;
 
     /**
      * Specification:
@@ -222,7 +225,10 @@ interface ConfigurableBundleFacadeInterface
     /**
      * Specification:
      * - Finds configurable bundle template slot by criteria from ConfigurableBundleTemplateSlotFilterTransfer.
+     * - Filters configurable bundle template slot records by idProductList if provided.
+     * - Filters configurable bundle template slot records by ID if provided.
      * - Expands found configurable bundle template slots with translations.
+     * - Expands found configurable bundle template slots with product lists.
      * - Provides translations for locales specified in ConfigurableBundleTemplateSlotFilterTransfer::translationLocales, or for all available locales otherwise.
      * - If single locale translation was requested but doesn't exist, fallback translation will be provided, or translation key if nothing found.
      * - Returns corresponding transfer object for the first matching record if found, null otherwise.

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ConfigurableBundle\Business\Writer;
 
 use Generated\Shared\Transfer\ConfigurableBundleResponseTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 
 interface ConfigurableBundleTemplateWriterInterface
@@ -38,11 +40,13 @@ interface ConfigurableBundleTemplateWriterInterface
     public function deleteConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void;
 
     /**
-     * @param int $idConfigurableBundleTemplate
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
      */
-    public function activateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void;
+    public function activateConfigurableBundleTemplate(
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): ConfigurableBundleTemplateResponseTransfer;
 
     /**
      * @param int $idConfigurableBundleTemplate

@@ -82,11 +82,12 @@ class ProductListWriter implements ProductListWriterInterface
     public function updateProductListForConfigurableBundleTemplateSlot(
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
     ): ProductListResponseTransfer {
-        $configurableBundleTemplateSlotTransfer->requireFkConfigurableBundleTemplate()
+        $configurableBundleTemplateSlotTransfer
+            ->requireFkConfigurableBundleTemplate()
             ->requireTranslations()
             ->requireProductList()
             ->getProductList()
-            ->requireIdProductList();
+                ->requireIdProductList();
 
         $configurableBundleTemplateTransfer = $this->getConfigurableBundleTemplateTransfer($configurableBundleTemplateSlotTransfer);
         $configurableBundleTemplateSlotTransfer->setConfigurableBundleTemplate($configurableBundleTemplateTransfer);

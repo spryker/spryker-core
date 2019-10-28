@@ -126,7 +126,8 @@ class ConfigurableBundleTemplateSlotWriter implements ConfigurableBundleTemplate
     protected function executeUpdateConfigurableBundleTemplateSlotTransaction(
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
     ): ConfigurableBundleResponseTransfer {
-        $configurableBundleTemplateSlotTransfer->requireFkConfigurableBundleTemplate()
+        $configurableBundleTemplateSlotTransfer
+            ->requireFkConfigurableBundleTemplate()
             ->requireProductList()
             ->getProductList()
                 ->requireIdProductList();

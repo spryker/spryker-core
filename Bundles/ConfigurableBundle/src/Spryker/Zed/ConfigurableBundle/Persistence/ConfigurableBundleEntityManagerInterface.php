@@ -24,11 +24,11 @@ interface ConfigurableBundleEntityManagerInterface
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */
     public function updateConfigurableBundleTemplate(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): bool;
+    ): ConfigurableBundleTemplateTransfer;
 
     /**
      * @param int $idConfigurableBundleTemplate
