@@ -10,7 +10,7 @@
     <transfer name="CmsBlock">
         <property name="storeRelation" type="StoreRelation"/>
         <property name="storeNames" type="string"/>
-        <property name="isAssignedToSlot" type="bool"/>
+        <property name="isAssignedToSlotAndTemplate" type="bool"/>
     </transfer>
 
     <transfer name="StoreRelation">
@@ -23,6 +23,7 @@
 
     <transfer name="Filter">
         <property name="limit" type="int"/>
+        <property name="orderBy" type="string"/>
     </transfer>
 
 </transfers>

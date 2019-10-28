@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsSlotBlockGui\Communication\Form\SlotBlock;
+namespace Spryker\Zed\CmsSlotBlockGui\Communication\Form\Block;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
@@ -70,7 +70,7 @@ class CmsBlockChoiceForm extends AbstractType
                     'data-valid-from' => $cmsBlockTransfer->getValidFrom(),
                     'data-valid-to' => $cmsBlockTransfer->getValidTo(),
                     'data-stores' => $cmsBlockTransfer->getStoreNames(),
-                    'disabled' => $cmsBlockTransfer->getIsAssignedToSlot(),
+                    'disabled' => $cmsBlockTransfer->getIsAssignedToSlotAndTemplate(),
                 ];
             },
         ]);

@@ -9,8 +9,9 @@ namespace Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
+use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
 use Spryker\Zed\CmsSlotBlockGui\CmsSlotBlockGuiConfig;
-use Spryker\Zed\CmsSlotBlockGui\Communication\Form\SlotBlock\CmsBlockChoiceForm;
+use Spryker\Zed\CmsSlotBlockGui\Communication\Form\Block\CmsBlockChoiceForm;
 use Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotBlockFacadeInterface;
 
 class CmsBlockChoiceFormDataProvider implements CmsBlockChoiceFormDataProviderInterface
@@ -23,18 +24,18 @@ class CmsBlockChoiceFormDataProvider implements CmsBlockChoiceFormDataProviderIn
     /**
      * @var \Spryker\Zed\CmsSlotBlockGui\CmsSlotBlockGuiConfig
      */
-    protected $config;
+    protected $cmsSlotBlockGuiConfig;
 
     /**
      * @param \Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotBlockFacadeInterface $cmsSlotBlockFacade
-     * @param \Spryker\Zed\CmsSlotBlockGui\CmsSlotBlockGuiConfig $config
+     * @param \Spryker\Zed\CmsSlotBlockGui\CmsSlotBlockGuiConfig $cmsSlotBlockGuiConfig
      */
     public function __construct(
         CmsSlotBlockGuiToCmsSlotBlockFacadeInterface $cmsSlotBlockFacade,
-        CmsSlotBlockGuiConfig $config
+        CmsSlotBlockGuiConfig $cmsSlotBlockGuiConfig
     ) {
         $this->cmsSlotBlockFacade = $cmsSlotBlockFacade;
-        $this->config = $config;
+        $this->cmsSlotBlockGuiConfig = $cmsSlotBlockGuiConfig;
     }
 
     /**
@@ -46,7 +47,9 @@ class CmsBlockChoiceFormDataProvider implements CmsBlockChoiceFormDataProviderIn
     public function getOptions(int $idCmsSlotTemplate, int $idCmsSlot): array
     {
         $cmsBlockTransfers = $this->cmsSlotBlockFacade->getCmsBlocksWithSlotRelations(
-            (new FilterTransfer())->setLimit($this->config->getMaxNumberBlocksToAssign())
+            (new FilterTransfer())
+                ->setLimit($this->cmsSlotBlockGuiConfig->getMaxCmsBlocksInBlockSelector())
+                ->setOrderBy(SpyCmsBlockTableMap::COL_NAME)
         );
         $cmsBlockTransfers = $this->setCmsBlocksAssignedToSlot($cmsBlockTransfers, $idCmsSlotTemplate, $idCmsSlot);
 
@@ -68,8 +71,8 @@ class CmsBlockChoiceFormDataProvider implements CmsBlockChoiceFormDataProviderIn
         int $idCmsSlot
     ): array {
         foreach ($cmsBlockTransfers as $cmsBlockTransfer) {
-            $cmsBlockTransfer->setIsAssignedToSlot(
-                $this->isCmsBlockAssignedToSlot($cmsBlockTransfer, $idCmsSlotTemplate, $idCmsSlot)
+            $cmsBlockTransfer->setIsAssignedToSlotAndTemplate(
+                $this->isCmsBlockAssignedToSlotAndTemplate($cmsBlockTransfer, $idCmsSlotTemplate, $idCmsSlot)
             );
         }
 
@@ -83,7 +86,7 @@ class CmsBlockChoiceFormDataProvider implements CmsBlockChoiceFormDataProviderIn
      *
      * @return bool
      */
-    protected function isCmsBlockAssignedToSlot(
+    protected function isCmsBlockAssignedToSlotAndTemplate(
         CmsBlockTransfer $cmsBlockTransfer,
         int $idCmsSlotTemplate,
         int $idCmsSlot
