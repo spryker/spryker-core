@@ -15,9 +15,9 @@ class EventDispatcherDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_EVENT_DISPATCHER = 'PLUGINS_EVENT_DISPATCHER_PLUGINS';
 
     /**
-     * @param \Spryker\Yves\Kernel\Container $container
+     * @param \Spryker\Glue\Kernel\Container $container
      *
-     * @return \Spryker\Yves\Kernel\Container
+     * @return \Spryker\Glue\Kernel\Container
      */
     public function provideDependencies(Container $container): Container
     {
