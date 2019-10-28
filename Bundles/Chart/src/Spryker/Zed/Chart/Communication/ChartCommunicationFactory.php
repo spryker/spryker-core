@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Chart\Communication;
 
-use Spryker\Shared\Chart\ChartPluginResolver\ChartPluginResolver;
-use Spryker\Shared\Chart\ChartPluginResolver\ChartPluginResolverInterface;
+use Spryker\Shared\Chart\ChartPluginCollection\ChartPluginCollection;
+use Spryker\Shared\Chart\ChartPluginCollection\ChartPluginCollectionInterface;
 use Spryker\Zed\Chart\ChartDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -19,28 +19,28 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class ChartCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Shared\Chart\ChartPluginResolver\ChartPluginResolverInterface
+     * @return \Spryker\Shared\Chart\Dependency\Plugin\TwigChartFunctionPluginInterface[]
      */
-    public function createChartPluginCollection(): ChartPluginResolverInterface
+    public function getTwigChartFunctionPlugins(): array
     {
-        return new ChartPluginResolver(
-            $this->getChartTwigPlugins()
+        return $this->getProvidedDependency(ChartDependencyProvider::PLUGIN_TWIG_CHART_FUNCTIONS);
+    }
+
+    /**
+     * @return \Spryker\Shared\Chart\ChartPluginCollection\ChartPluginCollectionInterface
+     */
+    public function createChartPluginCollection(): ChartPluginCollectionInterface
+    {
+        return new ChartPluginCollection(
+            $this->getChartPlugins()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ChartExtension\Dependency\Plugin\ChartPluginInterface[]
+     * @return \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface[]
      */
-    public function getChartTwigPlugins(): array
+    public function getChartPlugins(): array
     {
-        return $this->getProvidedDependency(ChartDependencyProvider::PLUGIN_TWIG_CHARTS);
-    }
-
-    /**
-     * @return \Spryker\Zed\ChartExtension\Dependency\Plugin\ChartTwigFunctionPluginInterface[]
-     */
-    public function getChartTwigFunctionPlugins(): array
-    {
-        return $this->getProvidedDependency(ChartDependencyProvider::PLUGIN_CHART_TWIG_FUNCTIONS);
+        return $this->getProvidedDependency(ChartDependencyProvider::PLUGIN_CHARTS);
     }
 }
