@@ -8,8 +8,10 @@
 namespace SprykerTest\Zed\Sales\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\OrderBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
@@ -146,6 +148,29 @@ class SalesFacadeTest extends Unit
         );
 
         $this->assertNull($order->getIdSalesOrder());
+    }
+
+    /**
+     * @return void
+     */
+    public function testTransformSplittableItem(): void
+    {
+        //Arrange
+        $salesFacade = $this->createSalesFacade();
+        $itemTransfer = (new ItemBuilder())
+            ->build()
+            ->setQuantity(10);
+
+        //Act
+        $itemCollection = $salesFacade->transformSplittableItem($itemTransfer);
+
+        //Assert
+        $this->assertInstanceOf(ItemCollectionTransfer::class, $itemCollection);
+        $this->assertEquals($itemTransfer->getQuantity(), $itemCollection->getItems()->count());
+
+        foreach ($itemCollection->getItems() as $item) {
+            $this->assertEquals(1, $item->getQuantity());
+        }
     }
 
     /**
