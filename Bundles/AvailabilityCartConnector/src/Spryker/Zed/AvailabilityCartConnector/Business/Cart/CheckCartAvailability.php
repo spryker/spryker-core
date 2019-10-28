@@ -60,7 +60,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
             $isSellable = $this->isProductSellableForStore($itemTransfer, new Decimal($currentItemQuantity), $storeTransfer);
 
             if (!$isSellable) {
-                $availability = $this->calculateAvailabilityForProductWithStore($itemTransfer, $storeTransfer);
+                $availability = $this->findProductConcreteAvailability($itemTransfer, $storeTransfer);
                 $cartPreCheckResponseTransfer->setIsSuccess(false);
                 $messages[] = $this->createItemIsNotAvailableMessageTransfer($availability, $itemTransfer->getSku());
             }
@@ -166,8 +166,15 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    protected function calculateAvailabilityForProductWithStore(ItemTransfer $itemTransfer, StoreTransfer $storeTransfer): Decimal
+    protected function findProductConcreteAvailability(ItemTransfer $itemTransfer, StoreTransfer $storeTransfer): Decimal
     {
-        return $this->availabilityFacade->calculateAvailabilityForProductWithStore($itemTransfer->getSku(), $storeTransfer);
+        $productConcreteAvailabilityTransfer = $this->availabilityFacade
+            ->findProductConcreteAvailabilityBySkuForStore($itemTransfer->getSku(), $storeTransfer);
+
+        if ($productConcreteAvailabilityTransfer !== null) {
+            return $productConcreteAvailabilityTransfer->getAvailability();
+        }
+
+        return new Decimal(0);
     }
 }

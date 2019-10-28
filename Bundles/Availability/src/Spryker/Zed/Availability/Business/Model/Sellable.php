@@ -54,6 +54,7 @@ class Sellable implements SellableInterface
      */
     public function isProductSellableForStore(string $concreteSku, Decimal $quantity, StoreTransfer $storeTransfer): bool
     {
+        $storeTransfer = $this->assertStoreTransfer($storeTransfer);
         $productConcreteAvailabilityTransfer = $this->availabilityRepository
             ->findProductConcreteAvailabilityBySkuAndStore($concreteSku, $storeTransfer);
 
@@ -107,5 +108,22 @@ class Sellable implements SellableInterface
         }
 
         return $productConcreteAvailabilityTransfer->getAvailability()->greatherThanOrEquals($quantity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function assertStoreTransfer(StoreTransfer $storeTransfer): StoreTransfer
+    {
+        if ($storeTransfer->getIdStore() !== null) {
+            return $storeTransfer;
+        }
+
+        $storeTransfer
+            ->requireName();
+
+        return $this->storeFacade->getStoreByName($storeTransfer->getName());
     }
 }

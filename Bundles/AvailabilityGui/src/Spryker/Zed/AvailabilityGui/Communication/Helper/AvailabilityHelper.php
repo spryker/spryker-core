@@ -91,7 +91,10 @@ class AvailabilityHelper implements AvailabilityHelperInterface
             ->setIsNeverOutOfStock(stripos($productAbstractAvailabilityEntity->getVirtualColumn(static::CONCRETE_NEVER_OUT_OF_STOCK_SET), 'true') !== false)
             ->setStockQuantity((new Decimal($productAbstractAvailabilityEntity->getVirtualColumn(static::STOCK_QUANTITY) ?? 0))->trim())
             ->setReservationQuantity(
-                $this->calculateReservation($productAbstractAvailabilityEntity->getVirtualColumn(static::RESERVATION_QUANTITY) ?? '', $storeTransfer)->trim()
+                $this->calculateReservation(
+                    $productAbstractAvailabilityEntity->getVirtualColumn(static::RESERVATION_QUANTITY) ?? '',
+                    $storeTransfer
+                )->trim()
             );
     }
 
