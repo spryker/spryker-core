@@ -41,7 +41,7 @@
             data-active-label-template="{{ activeLabelTemplate | e }}"
             data-inactive-label-template="{{ inactiveLabelTemplate | e }}"
             data-store-template="{{ storeTemplate | e }}"
-            data-slot-block-item-form-prototype="{{ form_widget(slotBlockCollectionForm.cmsSlotBlocks.vars.prototype) | e }}"
+            data-slot-block-item-form-prototype="{{ form_widget(cmsSlotBlockCollectionForm.cmsSlotBlocks.vars.prototype) | e }}"
         >
             {{ form_start(cmsBlockChoiceForm) }}
                 {{ form_widget(cmsBlockChoiceForm) }}
@@ -49,9 +49,9 @@
 
             {{ slotBlockTable | raw }}
 
-            {{ form_start(slotBlockCollectionForm, {'action': '/cms-slot-block-gui/slot-block'}) }}
+            {{ form_start(cmsSlotBlockCollectionForm, {'action': '/cms-slot-block-gui/slot-block'}) }}
 
-            {% for slotBlockItemForm in slotBlockCollectionForm.cmsSlotBlocks %}
+            {% for slotBlockItemForm in cmsSlotBlockCollectionForm.cmsSlotBlocks %}
                 {{ form_widget(slotBlockItemForm.idSlotTemplate) }}
                 {{ form_widget(slotBlockItemForm.idSlot) }}
                 {{ form_widget(slotBlockItemForm.idCmsBlock) }}
@@ -60,9 +60,8 @@
 
             <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
 
-            {{ form_end(slotBlockCollectionForm) }}
+            {{ form_end(cmsSlotBlockCollectionForm) }}
         </div>
-
     {% endblock %}
 
 {% endembed %}

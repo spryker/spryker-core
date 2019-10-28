@@ -8,8 +8,10 @@
 namespace Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Zed\CmsSlotBlockGui\Communication\Form\SlotBlock\CmsBlockChoiceForm;
+use Generated\Shared\Transfer\FilterTransfer;
+use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
+use Spryker\Zed\CmsSlotBlockGui\CmsSlotBlockGuiConfig;
+use Spryker\Zed\CmsSlotBlockGui\Communication\Form\Block\CmsBlockChoiceForm;
 use Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotBlockFacadeInterface;
 
 class CmsBlockChoiceFormDataProvider implements CmsBlockChoiceFormDataProviderInterface
@@ -20,11 +22,20 @@ class CmsBlockChoiceFormDataProvider implements CmsBlockChoiceFormDataProviderIn
     protected $cmsSlotBlockFacade;
 
     /**
-     * @param \Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotBlockFacadeInterface $cmsSlotBlockFacade
+     * @var \Spryker\Zed\CmsSlotBlockGui\CmsSlotBlockGuiConfig
      */
-    public function __construct(CmsSlotBlockGuiToCmsSlotBlockFacadeInterface $cmsSlotBlockFacade)
-    {
+    protected $cmsSlotBlockGuiConfig;
+
+    /**
+     * @param \Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotBlockFacadeInterface $cmsSlotBlockFacade
+     * @param \Spryker\Zed\CmsSlotBlockGui\CmsSlotBlockGuiConfig $cmsSlotBlockGuiConfig
+     */
+    public function __construct(
+        CmsSlotBlockGuiToCmsSlotBlockFacadeInterface $cmsSlotBlockFacade,
+        CmsSlotBlockGuiConfig $cmsSlotBlockGuiConfig
+    ) {
         $this->cmsSlotBlockFacade = $cmsSlotBlockFacade;
+        $this->cmsSlotBlockGuiConfig = $cmsSlotBlockGuiConfig;
     }
 
     /**
@@ -35,17 +46,15 @@ class CmsBlockChoiceFormDataProvider implements CmsBlockChoiceFormDataProviderIn
      */
     public function getOptions(int $idCmsSlotTemplate, int $idCmsSlot): array
     {
-        $cmsBlockTransfers = $this->cmsSlotBlockFacade->getCmsBlocksWithSlotRelations();
+        $cmsBlockTransfers = $this->cmsSlotBlockFacade->getCmsBlocksWithSlotRelations(
+            (new FilterTransfer())
+                ->setLimit($this->cmsSlotBlockGuiConfig->getMaxCmsBlocksInBlockSelector())
+                ->setOrderBy(SpyCmsBlockTableMap::COL_NAME)
+        );
+        $cmsBlockTransfers = $this->setCmsBlocksAssignedToSlot($cmsBlockTransfers, $idCmsSlotTemplate, $idCmsSlot);
 
         return [
             CmsBlockChoiceForm::OPTION_CMS_BLOCKS => $cmsBlockTransfers,
-            CmsBlockChoiceForm::OPTION_CMS_BLOCKS_STORES => $this->getStoreNames($cmsBlockTransfers),
-            CmsBlockChoiceForm::OPTION_CMS_BLOCK_IDS_ASSIGNED_TO_SLOT => $this->getCmsBlockIdsAssignedToSlot(
-                $cmsBlockTransfers,
-                $idCmsSlotTemplate,
-                $idCmsSlot
-            ),
-
         ];
     }
 
@@ -54,21 +63,20 @@ class CmsBlockChoiceFormDataProvider implements CmsBlockChoiceFormDataProviderIn
      * @param int $idCmsSlotTemplate
      * @param int $idCmsSlot
      *
-     * @return int[]
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
-    protected function getCmsBlockIdsAssignedToSlot(
+    protected function setCmsBlocksAssignedToSlot(
         array $cmsBlockTransfers,
         int $idCmsSlotTemplate,
         int $idCmsSlot
     ): array {
-        $cmsBlockIds = [];
         foreach ($cmsBlockTransfers as $cmsBlockTransfer) {
-            if ($this->isCmsBlockAssignedToSlot($cmsBlockTransfer, $idCmsSlotTemplate, $idCmsSlot)) {
-                $cmsBlockIds[$cmsBlockTransfer->getIdCmsBlock()] = $cmsBlockTransfer->getIdCmsBlock();
-            }
+            $cmsBlockTransfer->setIsAssignedToSlotAndTemplate(
+                $this->isCmsBlockAssignedToSlotAndTemplate($cmsBlockTransfer, $idCmsSlotTemplate, $idCmsSlot)
+            );
         }
 
-        return $cmsBlockIds;
+        return $cmsBlockTransfers;
     }
 
     /**
@@ -78,7 +86,7 @@ class CmsBlockChoiceFormDataProvider implements CmsBlockChoiceFormDataProviderIn
      *
      * @return bool
      */
-    protected function isCmsBlockAssignedToSlot(
+    protected function isCmsBlockAssignedToSlotAndTemplate(
         CmsBlockTransfer $cmsBlockTransfer,
         int $idCmsSlotTemplate,
         int $idCmsSlot
@@ -91,34 +99,5 @@ class CmsBlockChoiceFormDataProvider implements CmsBlockChoiceFormDataProviderIn
         }
 
         return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer[] $cmsBlockTransfers
-     *
-     * @return string[]
-     */
-    protected function getStoreNames(array $cmsBlockTransfers): array
-    {
-        $storeNames = [];
-        foreach ($cmsBlockTransfers as $cmsBlockTransfer) {
-            $storeNames[$cmsBlockTransfer->getIdCmsBlock()] = $this->getCmsBlockStoreNames($cmsBlockTransfer);
-        }
-
-        return $storeNames;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     *
-     * @return string
-     */
-    protected function getCmsBlockStoreNames(CmsBlockTransfer $cmsBlockTransfer): string
-    {
-        $storeTransfers = $cmsBlockTransfer->getStoreRelation()->getStores()->getArrayCopy();
-
-        return implode(',', array_map(function (StoreTransfer $storeTransfer): string {
-            return $storeTransfer->getName();
-        }, $storeTransfers));
     }
 }
