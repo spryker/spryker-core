@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class CategorySlotBlockConditionForm extends AbstractType
 {
-    public const OPTION_CATEGORIES = 'option-categories';
+    public const OPTION_CATEGORY_IDS = 'option-category-ids';
 
     public const FIELD_CATEGORY_IDS = 'categoryIds';
     protected const FIELD_ALL = 'all';
@@ -63,7 +63,7 @@ class CategorySlotBlockConditionForm extends AbstractType
     protected function addCategoryIdsField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_CATEGORY_IDS, ChoiceType::class, [
-            'choices' => $options[static::OPTION_CATEGORIES],
+            'choices' => $options[static::OPTION_CATEGORY_IDS],
             'required' => false,
             'multiple' => true,
             'label' => 'Categories Pages',

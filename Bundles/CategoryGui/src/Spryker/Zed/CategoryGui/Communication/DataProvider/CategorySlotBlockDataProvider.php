@@ -44,14 +44,14 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
     {
         return [
             'data_class' => CmsSlotBlockTransfer::class,
-            CategorySlotBlockConditionForm::OPTION_CATEGORIES => $this->getCategories(),
+            CategorySlotBlockConditionForm::OPTION_CATEGORY_IDS => $this->getCategoryIds(),
         ];
     }
 
     /**
      * @return int[]
      */
-    protected function getCategories(): array
+    protected function getCategoryIds(): array
     {
         $idLocale = $this->localeFacade->getCurrentLocale()->getIdLocale();
 
@@ -59,7 +59,7 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
             ->queryCategory($idLocale)
             ->find();
 
-        return $this->mapCategoryEntityCollectionToArray($categoryEntityCollection, $idLocale);
+        return $this->getCategoryIdsFromCollection($categoryEntityCollection, $idLocale);
     }
 
     /**
@@ -68,15 +68,15 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
      *
      * @return int[]
      */
-    protected function mapCategoryEntityCollectionToArray(ObjectCollection $categoryEntityCollection, int $idLocale): array
+    protected function getCategoryIdsFromCollection(ObjectCollection $categoryEntityCollection, int $idLocale): array
     {
-        $categories = [];
+        $categoryIds = [];
 
         foreach ($categoryEntityCollection as $categoryEntity) {
             $categoryName = $categoryEntity->getLocalisedAttributes($idLocale)->getFirst()->getName();
-            $categories[$categoryName] = $categoryEntity->getIdCategory();
+            $categoryIds[$categoryName] = $categoryEntity->getIdCategory();
         }
 
-        return $categories;
+        return $categoryIds;
     }
 }
