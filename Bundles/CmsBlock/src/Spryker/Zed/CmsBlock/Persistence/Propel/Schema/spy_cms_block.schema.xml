@@ -31,6 +31,13 @@
             <unique-column name="placeholder"/>
         </unique>
 
+        <index name="index-spy_cms_block_glossary_key_mapping-placeholder">
+            <index-column name="placeholder"/>
+        </index>
+        <index name="index-spy_cms_block_glossary_key_mapping-fk_glossary_key">
+            <index-column name="fk_glossary_key"/>
+        </index>
+
         <id-method-parameter value="spy_cms_block_glossary_key_mapping_pk_seq"/>
     </table>
 
@@ -55,6 +62,10 @@
             <unique-column name="key"/>
         </unique>
 
+        <index name="index-spy_cms_block-fk_template">
+            <index-column name="fk_template"/>
+        </index>
+
         <id-method-parameter value="spy_cms_block_pk_seq"/>
     </table>
 
@@ -75,6 +86,10 @@
         <foreign-key name="spy_cms_block_store-fk_store" foreignTable="spy_store">
             <reference local="fk_store" foreign="id_store"/>
         </foreign-key>
+
+        <index name="index-spy_cms_block_store-fk_store">
+            <index-column name="fk_store"/>
+        </index>
 
         <id-method-parameter value="id_cms_block_store_pk_seq"/>
     </table>
