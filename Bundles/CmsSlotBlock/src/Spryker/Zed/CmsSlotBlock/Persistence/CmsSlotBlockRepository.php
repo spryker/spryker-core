@@ -49,6 +49,8 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
      */
     public function getCmsBlocksWithSlotRelations(FilterTransfer $filterTransfer): array
     {
+        $filterTransfer = $this->setFilterTransferDefaultValues($filterTransfer);
+
         $cmsBlockIds = $this->getCmsBlockIds($filterTransfer);
 
         if (!$cmsBlockIds) {
@@ -64,10 +66,7 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
                 ->joinSpyStore('stores')
                 ->withColumn("STRING_AGG(stores.name, ',')", CmsBlockTransfer::STORE_NAMES)
             ->endUse()
-            ->orderBy(
-                $filterTransfer->getOrderBy() ?? SpyCmsBlockTableMap::COL_NAME,
-                $filterTransfer->getOrderDirection() ?? Criteria::ASC
-            )
+            ->orderBy($filterTransfer->getOrderBy(), $filterTransfer->getOrderDirection())
             ->find();
 
         return $this->getFactory()
@@ -87,5 +86,23 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
             ->setFormatter(SimpleArrayFormatter::class)
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\FilterTransfer
+     */
+    protected function setFilterTransferDefaultValues(FilterTransfer $filterTransfer): FilterTransfer
+    {
+        if (!$filterTransfer->getOrderBy()) {
+            $filterTransfer->setOrderBy(SpyCmsBlockTableMap::COL_NAME);
+        }
+
+        if (!$filterTransfer->getOrderDirection()) {
+            $filterTransfer->setOrderDirection(Criteria::ASC);
+        }
+
+        return $filterTransfer;
     }
 }
