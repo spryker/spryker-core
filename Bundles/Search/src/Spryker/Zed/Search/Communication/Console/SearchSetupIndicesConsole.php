@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\Search\Business\SearchFacadeInterface getFacade()
  * @method \Spryker\Zed\Search\Communication\SearchCommunicationFactory getFactory()
  */
-class GenerateIndicesConsole extends Console
+class SearchSetupIndicesConsole extends Console
 {
     public const COMMAND_NAME = 'search:setup:indices';
     public const DESCRIPTION = 'This command will create the search indices.';
@@ -27,6 +27,7 @@ class GenerateIndicesConsole extends Console
     {
         $this->setName(self::COMMAND_NAME);
         $this->setDescription(self::DESCRIPTION);
+        $this->setAliases(['setup:search:indices']);
 
         parent::configure();
     }
