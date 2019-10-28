@@ -21,6 +21,8 @@ class CategorySlotBlockConditionForm extends AbstractType
     public const FIELD_CATEGORY_IDS = 'categoryIds';
     protected const FIELD_ALL = 'all';
 
+    protected const LABEL_CATEGORY_IDS = 'Categories Pages';
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -49,6 +51,7 @@ class CategorySlotBlockConditionForm extends AbstractType
             'expanded' => true,
             'multiple' => false,
             'placeholder' => false,
+            'label' => false,
         ]);
 
         return $this;
@@ -66,7 +69,7 @@ class CategorySlotBlockConditionForm extends AbstractType
             'choices' => $options[static::OPTION_CATEGORY_IDS],
             'required' => false,
             'multiple' => true,
-            'label' => 'Categories Pages',
+            'label' => static::LABEL_CATEGORY_IDS,
         ]);
 
         return $this;
