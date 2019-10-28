@@ -7,35 +7,23 @@
 
 namespace Spryker\Zed\CmsSlotStorage\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\CmsSlotTransfer;
+use Generated\Shared\Transfer\CmsSlotStorageTransfer;
 use Orm\Zed\CmsSlotStorage\Persistence\SpyCmsSlotStorage;
 
 class CmsSlotStorageMapper implements CmsSlotStorageMapperInterface
 {
-    protected const KEY_STORAGE_DATA_KEY = 'key';
-    protected const KEY_STORAGE_DATA_CONTENT_PROVIDER_TYPE = 'content_provider_type';
-    protected const KEY_STORAGE_DATA_NAME = 'name';
-    protected const KEY_STORAGE_DATA_DESCRIPTION = 'description';
-
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotTransfer $cmsSlotTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotStorageTransfer $cmsSlotStorageTransfer
      * @param \Orm\Zed\CmsSlotStorage\Persistence\SpyCmsSlotStorage $cmsSlotStorageEntity
      *
      * @return \Orm\Zed\CmsSlotStorage\Persistence\SpyCmsSlotStorage
      */
-    public function mapCmsSlotTransferToStorageEntity(
-        CmsSlotTransfer $cmsSlotTransfer,
+    public function mapCmsSlotStorageTransferToEntity(
+        CmsSlotStorageTransfer $cmsSlotStorageTransfer,
         SpyCmsSlotStorage $cmsSlotStorageEntity
     ): SpyCmsSlotStorage {
-        $cmsSlotStorageData = $cmsSlotTransfer->toArray();
-
-        $cmsSlotStorageEntity->setKey($cmsSlotTransfer->getKey());
-        $cmsSlotStorageEntity->setData([
-            static::KEY_STORAGE_DATA_KEY => $cmsSlotStorageData[static::KEY_STORAGE_DATA_KEY],
-            static::KEY_STORAGE_DATA_CONTENT_PROVIDER_TYPE => $cmsSlotStorageData[static::KEY_STORAGE_DATA_CONTENT_PROVIDER_TYPE],
-            static::KEY_STORAGE_DATA_NAME => $cmsSlotStorageData[static::KEY_STORAGE_DATA_NAME],
-            static::KEY_STORAGE_DATA_DESCRIPTION => $cmsSlotStorageData[static::KEY_STORAGE_DATA_DESCRIPTION],
-        ]);
+        $cmsSlotStorageEntity->setKey($cmsSlotStorageTransfer->getKey());
+        $cmsSlotStorageEntity->setData($cmsSlotStorageTransfer->toArray());
 
         return $cmsSlotStorageEntity;
     }

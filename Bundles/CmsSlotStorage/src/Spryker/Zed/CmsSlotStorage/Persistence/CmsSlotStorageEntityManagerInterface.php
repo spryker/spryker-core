@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\CmsSlotStorage\Persistence;
 
-use Generated\Shared\Transfer\CmsSlotTransfer;
+use Generated\Shared\Transfer\CmsSlotStorageTransfer;
 
 interface CmsSlotStorageEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotTransfer $cmsSlotTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotStorageTransfer $cmsSlotStorageTransfer
      *
      * @return void
      */
-    public function saveCmsSlotStorage(CmsSlotTransfer $cmsSlotTransfer): void;
+    public function saveCmsSlotStorage(CmsSlotStorageTransfer $cmsSlotStorageTransfer): void;
 
     /**
      * @param int $idCmsSlotStorage

@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\CmsSlotStorage\Reader;
 
-use Generated\Shared\Transfer\CmsSlotTransfer;
+use Generated\Shared\Transfer\CmsSlotStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\CmsSlotStorage\Dependency\Client\CmsSlotStorageToStorageClientInterface;
 use Spryker\Client\CmsSlotStorage\Dependency\Service\CmsSlotStorageToSynchronizationServiceInterface;
@@ -40,9 +40,9 @@ class CmsSlotStorageReader implements CmsSlotStorageReaderInterface
     /**
      * @param string $cmsSlotKey
      *
-     * @return \Generated\Shared\Transfer\CmsSlotTransfer|null
+     * @return \Generated\Shared\Transfer\CmsSlotStorageTransfer|null
      */
-    public function findCmsSlotByKey(string $cmsSlotKey): ?CmsSlotTransfer
+    public function findCmsSlotByKey(string $cmsSlotKey): ?CmsSlotStorageTransfer
     {
         $cmsSlotStorageData = $this->storageClient->get(
             $this->generateKey($cmsSlotKey)
@@ -52,17 +52,17 @@ class CmsSlotStorageReader implements CmsSlotStorageReaderInterface
             return null;
         }
 
-        return $this->mapToCmsSlotTransfer($cmsSlotStorageData);
+        return $this->mapToCmsSlotStorageTransfer($cmsSlotStorageData);
     }
 
     /**
      * @param array $cmsSlotStorageData
      *
-     * @return \Generated\Shared\Transfer\CmsSlotTransfer
+     * @return \Generated\Shared\Transfer\CmsSlotStorageTransfer
      */
-    protected function mapToCmsSlotTransfer(array $cmsSlotStorageData): CmsSlotTransfer
+    protected function mapToCmsSlotStorageTransfer(array $cmsSlotStorageData): CmsSlotStorageTransfer
     {
-        return (new CmsSlotTransfer())
+        return (new CmsSlotStorageTransfer())
             ->fromArray($cmsSlotStorageData, true);
     }
 

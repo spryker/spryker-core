@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\CmsSlotStorage\Business\Publisher;
 
+use Generated\Shared\Transfer\CmsSlotStorageTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
+use Spryker\Zed\CmsSlotStorage\Business\Mapper\CmsSlotStorageMapperInterface;
 use Spryker\Zed\CmsSlotStorage\Dependency\Facade\CmsSlotStorageToCmsSlotFacadeInterface;
 use Spryker\Zed\CmsSlotStorage\Persistence\CmsSlotStorageEntityManagerInterface;
 use Spryker\Zed\CmsSlotStorage\Persistence\CmsSlotStorageRepositoryInterface;
@@ -30,18 +32,26 @@ class CmsSlotStoragePublisher implements CmsSlotStoragePublisherInterface
     protected $cmsSlotStorageEntityManager;
 
     /**
+     * @var \Spryker\Zed\CmsSlotStorage\Business\Mapper\CmsSlotStorageMapperInterface
+     */
+    protected $cmsSlotStorageMapper;
+
+    /**
      * @param \Spryker\Zed\CmsSlotStorage\Dependency\Facade\CmsSlotStorageToCmsSlotFacadeInterface $cmsSlotFacade
      * @param \Spryker\Zed\CmsSlotStorage\Persistence\CmsSlotStorageRepositoryInterface $cmsSlotStorageRepository
      * @param \Spryker\Zed\CmsSlotStorage\Persistence\CmsSlotStorageEntityManagerInterface $cmsSlotStorageEntityManager
+     * @param \Spryker\Zed\CmsSlotStorage\Business\Mapper\CmsSlotStorageMapperInterface $cmsSlotStorageMapper
      */
     public function __construct(
         CmsSlotStorageToCmsSlotFacadeInterface $cmsSlotFacade,
         CmsSlotStorageRepositoryInterface $cmsSlotStorageRepository,
-        CmsSlotStorageEntityManagerInterface $cmsSlotStorageEntityManager
+        CmsSlotStorageEntityManagerInterface $cmsSlotStorageEntityManager,
+        CmsSlotStorageMapperInterface $cmsSlotStorageMapper
     ) {
         $this->cmsSlotFacade = $cmsSlotFacade;
         $this->cmsSlotStorageRepository = $cmsSlotStorageRepository;
         $this->cmsSlotStorageEntityManager = $cmsSlotStorageEntityManager;
+        $this->cmsSlotStorageMapper = $cmsSlotStorageMapper;
     }
 
     /**
@@ -59,7 +69,12 @@ class CmsSlotStoragePublisher implements CmsSlotStoragePublisherInterface
 
         foreach ($cmsSlotTransfers as $cmsSlotTransfer) {
             if ($cmsSlotTransfer->getIsActive()) {
-                $this->cmsSlotStorageEntityManager->saveCmsSlotStorage($cmsSlotTransfer);
+                $this->cmsSlotStorageEntityManager->saveCmsSlotStorage(
+                    $this->cmsSlotStorageMapper->mapCmsSlotTransferToCmsSlotStorageTransfer(
+                        new CmsSlotStorageTransfer(),
+                        $cmsSlotTransfer
+                    )
+                );
 
                 continue;
             }
