@@ -116,7 +116,7 @@ class AvailabilityHandlerTest extends Unit
             $stockFacadeMock
         );
 
-        $availabilityHandler->updateAvailability(self::PRODUCT_SKU);
+        $availabilityHandler->updateAvailability(static::PRODUCT_SKU);
     }
 
     /**

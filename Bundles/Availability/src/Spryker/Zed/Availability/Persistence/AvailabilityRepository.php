@@ -182,7 +182,7 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
             ->withColumn('GROUP_CONCAT(' . SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK . ')', ProductAbstractAvailabilityTransfer::IS_NEVER_OUT_OF_STOCK)
             ->withColumn('COALESCE(SUM(' . SpyStockProductTableMap::COL_QUANTITY . '), 0)', ProductAbstractAvailabilityTransfer::STOCK_QUANTITY)
             ->withColumn(
-                "COALESCE(SUM(" . SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY . "), 0)",
+                'COALESCE(SUM(' . SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY . '), 0)',
                 ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY
             )->addJoin(
                 SpyProductTableMap::COL_SKU,
