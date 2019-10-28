@@ -5,12 +5,12 @@
 
     <transfer name="CmsBlockCategories">
         <property name="idCategory" type="int"/>
-        <property name="cmsBlockCategories" singular="CmsBlockCategory" type="CmsBlockCategory[]"/>
+        <property name="cmsBlockCategories" singular="cmsBlockCategory" type="CmsBlockCategory[]"/>
     </transfer>
 
     <transfer name="CmsBlockCategory">
         <property name="position" type="string"/>
-        <property name="blockNames" type="array"/>
+        <property name="blockNames" type="array" singular="blockNames"/>
     </transfer>
 
 </transfers>

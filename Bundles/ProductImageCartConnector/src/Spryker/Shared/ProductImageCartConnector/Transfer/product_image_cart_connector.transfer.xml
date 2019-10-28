@@ -5,6 +5,11 @@
 
     <transfer name="Item">
         <property name="images" type="ProductImage[]" singular="image"/>
+        <property name="id" type="int"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
 </transfers>

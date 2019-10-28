@@ -20,7 +20,8 @@
     ]
   },
   "bin": [
-    "Bundles/Console/bin/console"
+    "Bundles/Console/bin/console",
+    "Bundles/Console/bin/yves"
   ],
   "scripts": {
     "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p --ignore=/node_modules/ Bundles/"
@@ -174,6 +175,7 @@
     "spryker/config": "*",
     "spryker/configurable-bundle": "*",
     "spryker/configurable-bundle-data-import": "*",
+    "spryker/configurable-bundle-cart": "*",
     "spryker/configurable-bundle-storage": "*",
     "spryker/console": "*",
     "spryker/container": "*",
@@ -258,6 +260,8 @@
     "spryker/gui": "*",
     "spryker/guzzle": "*",
     "spryker/heartbeat": "*",
+    "spryker/http": "*",
+    "spryker/http-extension": "*",
     "spryker/index-generator": "*",
     "spryker/installer": "*",
     "spryker/invoice": "*",
@@ -458,6 +462,7 @@
     "spryker/quote": "*",
     "spryker/quote-approval": "*",
     "spryker/quote-approval-extension": "*",
+    "spryker/quote-approval-shipment-connector": "*",
     "spryker/quote-extension": "*",
     "spryker/quote-request": "*",
     "spryker/quote-request-agent": "*",

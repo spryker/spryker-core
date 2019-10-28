@@ -8,7 +8,7 @@
     </transfer>
 
     <transfer name="ContentProductAbstractListType">
-        <property name="idProductAbstracts" type="int[]"/>
+        <property name="idProductAbstracts" type="int[]" singular="idProductAbstracts"/>
     </transfer>
 
     <transfer name="RestErrorMessage">

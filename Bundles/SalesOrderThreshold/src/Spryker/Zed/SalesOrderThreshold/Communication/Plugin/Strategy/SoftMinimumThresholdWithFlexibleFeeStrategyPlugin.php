@@ -47,7 +47,7 @@ class SoftMinimumThresholdWithFlexibleFeeStrategyPlugin extends AbstractSalesOrd
      */
     public function isValid(SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer): bool
     {
-        return !(($salesOrderThresholdValueTransfer->getSalesOrderThresholdValue() < 1 || $salesOrderThresholdValueTransfer->getFee() < 1));
+        return !(($salesOrderThresholdValueTransfer->getValue() < 1 || $salesOrderThresholdValueTransfer->getFee() < 1));
     }
 
     /**

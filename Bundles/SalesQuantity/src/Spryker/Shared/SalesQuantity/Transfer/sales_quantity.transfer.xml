@@ -9,6 +9,43 @@
 
     <transfer name="Item">
         <property name="isQuantitySplittable" type="bool"/>
+        <property name="relatedBundleItemIdentifier" type="string"/>
+        <property name="quantity" type="int"/>
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="DiscountableItemTransformer">
+        <property name="roundingError" type="float"/>
+        <property name="discountableItem" type="DiscountableItem"/>
+        <property name="discount" type="Discount"/>
+        <property name="totalDiscountAmount" type="int"/>
+        <property name="totalAmount" type="int"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="CalculatedDiscount">
+        <property name="idDiscount" type="int"/>
+        <property name="sumAmount" type="int"/>
+        <property name="unitAmount" type="int"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="Discount">
+        <property name="idDiscount" type="int"/>
+    </transfer>
+
+    <transfer name="ItemCollection">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="DiscountableItem">
+        <property name="originalItem" type="Item"/>
+        <property name="unitPrice" type="int"/>
+        <property name="originalItemCalculatedDiscounts" type="CalculatedDiscount[]" singular="originalItemCalculatedDiscounts"/>
     </transfer>
 
 </transfers>

@@ -53,6 +53,8 @@ interface ApplicationConstants
     public const YVES_SSL_EXCLUDED = 'YVES_SSL_EXCLUDED';
 
     /**
+     * @deprecated Use `Spryker\Shared\Http\HttpConstants::YVES_TRUSTED_PROXIES` instead.
+     *
      * Specification:
      * - IP address (or range) of your proxy.
      * - Example: `['192.0.0.1', '10.0.0.0/8']`.
@@ -62,6 +64,8 @@ interface ApplicationConstants
     public const YVES_TRUSTED_PROXIES = 'YVES_TRUSTED_PROXIES';
 
     /**
+     * @deprecated Use `Spryker\Shared\Http\HttpConstants::YVES_TRUSTED_HEADER` instead.
+     *
      * Specification:
      * - A bit field of trusted Request::HEADER_*, to set which headers to trust from your proxies.
      *
@@ -70,6 +74,8 @@ interface ApplicationConstants
     public const YVES_TRUSTED_HEADER = 'YVES_TRUSTED_HEADER';
 
     /**
+     * @deprecated Use `Spryker\Shared\Http\HttpConstants::YVES_TRUSTED_HOSTS` instead.
+     *
      * Specification:
      * - List of trusted hosts managed by regexp.
      *
@@ -77,7 +83,14 @@ interface ApplicationConstants
      */
     public const YVES_TRUSTED_HOSTS = 'YVES_TRUSTED_HOSTS';
 
+    /**
+     * @deprecated Use `Spryker\Shared\Http\HttpConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED` instead.
+     */
     public const YVES_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED = 'YVES_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED';
+
+    /**
+     * @deprecated Use `Spryker\Shared\Http\HttpConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG` instead.
+     */
     public const YVES_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG = 'YVES_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG';
 
     /**
@@ -171,6 +184,8 @@ interface ApplicationConstants
     public const ZED_SSL_EXCLUDED = 'ZED_SSL_EXCLUDED';
 
     /**
+     * @deprecated Use `Spryker\Shared\Http\HttpConstants::ZED_TRUSTED_PROXIES` instead.
+     *
      * Specification:
      * - IP address (or range) of your proxy.
      * - Example: `['192.0.0.1', '10.0.0.0/8']`.
@@ -180,6 +195,8 @@ interface ApplicationConstants
     public const ZED_TRUSTED_PROXIES = 'ZED_TRUSTED_PROXIES';
 
     /**
+     * @deprecated Use `Spryker\Shared\Http\HttpConstants::ZED_TRUSTED_HOSTS` instead.
+     *
      * Specification:
      * - List of trusted hosts managed by regexp.
      *
@@ -187,7 +204,14 @@ interface ApplicationConstants
      */
     public const ZED_TRUSTED_HOSTS = 'ZED_TRUSTED_HOSTS';
 
+    /**
+     * @deprecated Use `Spryker\Shared\Http\HttpConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED` instead.
+     */
     public const ZED_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED = 'ZED_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED';
+
+    /**
+     * @deprecated Use `Spryker\Shared\Http\HttpConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG` instead.
+     */
     public const ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG = 'ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG';
 
     /**
@@ -199,18 +223,22 @@ interface ApplicationConstants
      * @deprecated Use queue-adapter specific configuration constants
      */
     public const ZED_RABBITMQ_USERNAME = 'ZED_RABBITMQ_USERNAME';
+
     /**
      * @deprecated Use queue-adapter specific configuration constants
      */
     public const ZED_RABBITMQ_PASSWORD = 'ZED_RABBITMQ_PASSWORD';
+
     /**
      * @deprecated Use queue-adapter specific configuration constants
      */
     public const ZED_RABBITMQ_HOST = 'ZED_RABBITMQ_HOST';
+
     /**
      * @deprecated Use queue-adapter specific configuration constants
      */
     public const ZED_RABBITMQ_PORT = 'ZED_RABBITMQ_PORT';
+
     /**
      * @deprecated Use queue-adapter specific configuration constants
      */
@@ -233,26 +261,32 @@ interface ApplicationConstants
      * @deprecated Unused, will be removed with next major release.
      */
     public const CLOUD_ENABLED = 'CLOUD_ENABLED';
+
     /**
      * @deprecated Unused, will be removed with next major release.
      */
     public const CLOUD_OBJECT_STORAGE_ENABLED = 'CLOUD_OBJECT_STORAGE_ENABLED';
+
     /**
      * @deprecated Unused, will be removed with next major release
      */
     public const CLOUD_CDN_ENABLED = 'CLOUD_CDN_ENABLED';
+
     /**
      * @deprecated Unused, will be removed with next major release.
      */
     public const CLOUD_CDN_STATIC_MEDIA_PREFIX = 'CLOUD_CDN_STATIC_MEDIA_PREFIX';
+
     /**
      * @deprecated Unused, will be removed with next major release.
      */
     public const CLOUD_CDN_STATIC_MEDIA_HTTP = 'CLOUD_CDN_STATIC_MEDIA_HTTP';
+
     /**
      * @deprecated Unused, will be removed with next major release.
      */
     public const CLOUD_CDN_STATIC_MEDIA_HTTPS = 'CLOUD_CDN_STATIC_MEDIA_HTTPS';
+
     /**
      * @deprecated Unused, will be removed with next major release.
      */
@@ -360,14 +394,17 @@ interface ApplicationConstants
      * @deprecated Please use ApplicationConstants::HOST_ZED or ApplicationConstants::BASE_URL_ZED instead.
      */
     public const HOST_ZED_GUI = 'HOST_ZED_GUI';
+
     /**
      * @deprecated Please use ApplicationConstants::HOST_ZED or ApplicationConstants::BASE_URL_ZED instead.
      */
     public const HOST_ZED_API = 'HOST_ZED_API';
+
     /**
      * @deprecated Please use ApplicationConstants::BASE_URL_STATIC_ASSETS instead.
      */
     public const HOST_STATIC_ASSETS = 'HOST_STATIC_ASSETS';
+
     /**
      * @deprecated Please use ApplicationConstants::BASE_URL_STATIC_MEDIA instead.
      */
@@ -377,18 +414,22 @@ interface ApplicationConstants
      * @deprecated Please use ApplicationConstants::BASE_URL_SSL_YVES instead.
      */
     public const HOST_SSL_YVES = 'HOST_SSL_YVES';
+
     /**
      * @deprecated Unused, will be removed with next major release.
      */
     public const HOST_SSL_ZED_GUI = 'HOST_SSL_ZED_GUI';
+
     /**
      * @deprecated Unused, will be removed with next major release.
      */
     public const HOST_SSL_ZED_API = 'HOST_SSL_ZED_API';
+
     /**
      * @deprecated Please use ApplicationConstants::BASE_URL_SSL_STATIC_ASSETS instead.
      */
     public const HOST_SSL_STATIC_ASSETS = 'HOST_SSL_STATIC_ASSETS';
+
     /**
      * @deprecated Please use ApplicationConstants::BASE_URL_SSL_STATIC_MEDIA instead.
      */
