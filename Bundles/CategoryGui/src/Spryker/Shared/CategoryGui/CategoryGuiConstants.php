@@ -15,6 +15,8 @@ interface CategoryGuiConstants
     /**
      * Specification:
      * - Defines the key of condition form plugin.
+     *
+     * @api
      */
     public const CONDITION_KEY = 'category';
 }
