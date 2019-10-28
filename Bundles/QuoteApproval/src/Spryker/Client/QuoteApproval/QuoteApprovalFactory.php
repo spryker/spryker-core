@@ -8,6 +8,9 @@
 namespace Spryker\Client\QuoteApproval;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\QuoteApproval\Checker\QuoteChecker;
+use Spryker\Client\QuoteApproval\Checker\QuoteCheckerInterface;
+use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToQuoteClientInterface;
 use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClientInterface;
 use Spryker\Client\QuoteApproval\Permission\ContextProvider\PermissionContextProvider;
 use Spryker\Client\QuoteApproval\Permission\ContextProvider\PermissionContextProviderInterface;
@@ -24,6 +27,9 @@ use Spryker\Client\QuoteApproval\QuoteApproval\QuoteApprovalReaderInterface;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStub;
 use Spryker\Client\QuoteApproval\Zed\QuoteApprovalStubInterface;
 
+/**
+ * @method \Spryker\Client\QuoteApproval\QuoteApprovalConfig getConfig()
+ */
 class QuoteApprovalFactory extends AbstractFactory
 {
     /**
@@ -46,11 +52,22 @@ class QuoteApprovalFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\QuoteApproval\Checker\QuoteCheckerInterface
+     */
+    public function createQuoteChecker(): QuoteCheckerInterface
+    {
+        return new QuoteChecker(
+            $this->getConfig(),
+            $this->getQuoteApplicableForApprovalCheckPlugins()
+        );
+    }
+
+    /**
      * @return \Spryker\Client\QuoteApproval\Permission\ContextProvider\PermissionContextProviderInterface
      */
     public function createPermissionContextProvider(): PermissionContextProviderInterface
     {
-        return new PermissionContextProvider();
+        return new PermissionContextProvider($this->getConfig());
     }
 
     /**
@@ -85,7 +102,8 @@ class QuoteApprovalFactory extends AbstractFactory
     public function createQuoteApprovalCreator(): QuoteApprovalCreatorInterface
     {
         return new QuoteApprovalCreator(
-            $this->createQuoteApprovalStub()
+            $this->createQuoteApprovalStub(),
+            $this->createQuoteChecker()
         );
     }
 
@@ -95,5 +113,21 @@ class QuoteApprovalFactory extends AbstractFactory
     public function getZedRequestClient(): QuoteApprovalToZedRequestClientInterface
     {
         return $this->getProvidedDependency(QuoteApprovalDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
+    /**
+     * @return \Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToQuoteClientInterface
+     */
+    public function getQuoteClient(): QuoteApprovalToQuoteClientInterface
+    {
+        return $this->getProvidedDependency(QuoteApprovalDependencyProvider::CLIENT_QUOTE);
+    }
+
+    /**
+     * @return \Spryker\Client\QuoteApprovalExtension\Dependency\Plugin\QuoteApplicableForApprovalCheckPluginInterface[]
+     */
+    public function getQuoteApplicableForApprovalCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteApprovalDependencyProvider::PLUGINS_QUOTE_APPLICABLE_FOR_APPROVAL_CHECK);
     }
 }

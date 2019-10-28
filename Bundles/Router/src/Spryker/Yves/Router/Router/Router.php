@@ -11,6 +11,7 @@ use Spryker\Yves\RouterExtension\Dependency\Plugin\RouterEnhancerAwareInterface;
 use Symfony\Component\Config\ConfigCacheFactory;
 use Symfony\Component\Config\ConfigCacheInterface;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\HttpKernel\CacheWarmer\WarmableInterface;
 use Symfony\Component\Routing\Generator\CompiledUrlGenerator;
 use Symfony\Component\Routing\Generator\ConfigurableRequirementsInterface;
 use Symfony\Component\Routing\Generator\Dumper\CompiledUrlGeneratorDumper;
@@ -20,7 +21,7 @@ use Symfony\Component\Routing\Matcher\Dumper\CompiledUrlMatcherDumper;
 use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
 use Symfony\Component\Routing\Router as SymfonyRouter;
 
-class Router extends SymfonyRouter implements RouterInterface
+class Router extends SymfonyRouter implements RouterInterface, WarmableInterface
 {
     /**
      * @var \Spryker\Yves\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[]
@@ -192,5 +193,16 @@ class Router extends SymfonyRouter implements RouterInterface
         }
 
         return $this->configCacheFactory;
+    }
+
+    /**
+     * @param string $cacheDir
+     *
+     * @return void
+     */
+    public function warmUp($cacheDir): void
+    {
+        $this->getGenerator();
+        $this->getMatcher();
     }
 }

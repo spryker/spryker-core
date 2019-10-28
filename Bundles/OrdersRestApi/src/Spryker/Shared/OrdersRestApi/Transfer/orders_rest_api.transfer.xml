@@ -27,7 +27,6 @@
         <property name="name" type="string"/>
         <property name="sku" type="string"/>
         <property name="sumPrice" type="int"/>
-        <property name="sumPriceToPayAggregation" type="int"/>
         <property name="quantity" type="int"/>
         <property name="metadata" type="RestOrderItemMetadata"/>
         <property name="calculatedDiscounts" type="RestCalculatedDiscount[]" singular="calculatedDiscount"/>
@@ -37,7 +36,6 @@
         <property name="unitNetPrice" type="int"/>
         <property name="sumNetPrice" type="int"/>
         <property name="unitPrice" type="int"/>
-        <property name="sumPrice" type="int"/>
         <property name="unitTaxAmountFullAggregation" type="int"/>
         <property name="sumTaxAmountFullAggregation" type="int"/>
         <property name="refundableAmount" type="int"/>
