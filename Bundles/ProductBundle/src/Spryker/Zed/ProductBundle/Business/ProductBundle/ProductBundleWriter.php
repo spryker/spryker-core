@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle;
 
 use ArrayObject;
-use Exception;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriterInterface;
@@ -78,9 +77,6 @@ class ProductBundleWriter implements ProductBundleWriterInterface
             $this->removeBundledProducts($productBundleTransfer->getBundlesToRemove(), $productConcreteTransfer->getIdProductConcrete());
 
             $this->productBundleQueryContainer->getConnection()->commit();
-        } catch (Exception $exception) {
-            $this->productBundleQueryContainer->getConnection()->rollBack();
-            throw $exception;
         } catch (Throwable $exception) {
             $this->productBundleQueryContainer->getConnection()->rollBack();
             throw $exception;
