@@ -42,6 +42,21 @@ class CartStub extends ZedRequestStub implements CartStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\Cart\Communication\Controller\GatewayController::addToCartAction()
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addToCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/cart/gateway/add-to-cart', $cartChangeTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $changeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -52,6 +67,21 @@ class CartStub extends ZedRequestStub implements CartStubInterface
         $quoteTransfer = $this->zedStub->call('/cart/gateway/remove-item', $changeTransfer);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @uses \Spryker\Zed\Cart\Communication\Controller\GatewayController::removeFromCartAction()
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function removeFromCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/cart/gateway/remove-from-cart', $cartChangeTransfer);
+
+        return $quoteResponseTransfer;
     }
 
     /**

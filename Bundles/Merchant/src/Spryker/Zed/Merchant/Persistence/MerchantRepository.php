@@ -35,8 +35,7 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
             $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
         }
         $merchantQuery = $this->getFactory()
-            ->createMerchantQuery()
-            ->leftJoinSpyMerchantAddress();
+            ->createMerchantQuery();
 
         $filterTransfer = $merchantCriteriaFilterTransfer->getFilter();
         if ($filterTransfer === null || empty($filterTransfer->getOrderBy())) {

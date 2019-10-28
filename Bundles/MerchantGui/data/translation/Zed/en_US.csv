@@ -10,17 +10,12 @@
 "Merchant with id %s doesn't exists.","Merchant with id %s doesn't exists."
 "Overview of Merchants","Overview of Merchants"
 Save,Save
-waiting-for-approval,"waiting for approval"
-approved,approved
-active,active
-inactive,inactive
+waiting-for-approval,"Waiting for Approval"
+approved,Approved
+denied,Denied
+approved_button,"Approve Access"
+denied_button,"Deny Access"
 E-Mail,E-Mail
-City,City
-"Zip Code","Zip Code"
-Country,Country
-Street,Street
-Number,Number
-"Addition to address","Addition to address"
 Name,Name
 "Registration number","Registration number"
 "Contact person first name","Contact person first name"
@@ -28,3 +23,6 @@ Name,Name
 "Contact person phone","Contact person phone"
 "Contact person title","Contact person title"
 Email,Email
+General,General
+merchant_gui.error_wrong_params,"Status can't be updated."
+merchant_gui.success_merchant_status_update,"Status has been updated."

@@ -32,7 +32,7 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
     public function createMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
         return $this->getFactory()
-            ->createMerchantWriter()
+            ->createMerchantCreator()
             ->create($merchantTransfer);
     }
 
@@ -48,7 +48,7 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
     public function updateMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
         return $this->getFactory()
-            ->createMerchantWriter()
+            ->createMerchantUpdater()
             ->update($merchantTransfer);
     }
 

@@ -9,5 +9,9 @@
         <property name="reviewCount" type="int"/>
     </transfer>
 
+    <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+    </transfer>
+
 </transfers>
 

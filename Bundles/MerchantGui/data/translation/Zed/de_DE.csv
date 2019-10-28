@@ -10,17 +10,12 @@
 "Merchant with id %s doesn't exists.","Händler mit der ID %s existiert nicht."
 "Overview of Merchants","Übersicht der Händler"
 Save,Speichern
-waiting-for-approval,"warten auf die bestätigung"
-approved,genehmigt
-active,aktiv
-inactive,inaktiv
+waiting-for-approval,"Warten auf die Bestätigung"
+approved,Genehmigt
+denied,Verweigert
+approved_button,"Zugang gewähren"
+denied_button,"Zugang verweigern"
 E-Mail,E-Mail
-City,Stadt
-"Zip Code",Postleitzahl
-Country,Land
-Street,Straße
-Number,Nummer
-"Addition to address","Zusatz zur Adresse"
 Name,Name
 "Registration number",Registrierungsnummer
 "Contact person first name","Vorname des Ansprechpartners"
@@ -28,3 +23,6 @@ Name,Name
 "Contact person phone","Ansprechpartner Telefon"
 "Contact person title","Titel der Kontaktperson"
 Email,Email
+General,Allgemein
+merchant_gui.error_wrong_params,"Status kann nicht aktualisiert werden."
+merchant_gui.success_merchant_status_update,"Status wurde aktualisiert."

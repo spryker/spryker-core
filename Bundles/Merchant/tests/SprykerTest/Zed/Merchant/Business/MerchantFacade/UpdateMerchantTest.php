@@ -15,6 +15,7 @@ use Spryker\Zed\Merchant\MerchantConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Merchant
@@ -54,7 +55,6 @@ class UpdateMerchantTest extends Unit
         $this->assertSame($expectedIdMerchant, $updatedMerchant->getIdMerchant());
         $this->assertEquals('second-key', $updatedMerchant->getMerchantKey());
         $this->assertEquals('Second Company', $updatedMerchant->getName());
-        $this->assertNotEmpty($updatedMerchant->getAddressCollection()->getAddresses()->offsetGet(0));
     }
 
     /**
@@ -103,20 +103,10 @@ class UpdateMerchantTest extends Unit
     public function testUpdateMerchantWithEmptyRequiredFieldsThrowsException(): void
     {
         // Arrange
-        $merchantTransfer = $this->tester->createMerchantTransferWithAddressTransfer();
+        $merchantTransfer = $this->tester->createMerchantTransfer();
         $merchantWithEmptyNameTransfer = clone $merchantTransfer;
         $merchantWithEmptyNameTransfer->setName(null);
 
-        $merchantWithEmptyRegistrationNumberTransfer = clone $merchantTransfer;
-        $merchantWithEmptyRegistrationNumberTransfer->setRegistrationNumber(null);
-        $merchantWithEmptyContactPersonTitleTransfer = clone $merchantTransfer;
-        $merchantWithEmptyContactPersonTitleTransfer->setContactPersonTitle(null);
-        $merchantWithEmptyContactPersonFirstNameTransfer = clone $merchantTransfer;
-        $merchantWithEmptyContactPersonFirstNameTransfer->setContactPersonFirstName(null);
-        $merchantWithEmptyContactPersonLastNameTransfer = clone $merchantTransfer;
-        $merchantWithEmptyContactPersonLastNameTransfer->setContactPersonLastName(null);
-        $merchantWithEmptyContactPersonPhoneTransfer = clone $merchantTransfer;
-        $merchantWithEmptyContactPersonPhoneTransfer->setContactPersonPhone(null);
         $merchantWithEmptyEmailTransfer = clone $merchantTransfer;
         $merchantWithEmptyEmailTransfer->setEmail(null);
         $merchantTransfer->setIdMerchant(null);
@@ -126,11 +116,6 @@ class UpdateMerchantTest extends Unit
 
         // Act
         $this->tester->getFacade()->updateMerchant($merchantWithEmptyNameTransfer);
-        $this->tester->getFacade()->updateMerchant($merchantWithEmptyRegistrationNumberTransfer);
-        $this->tester->getFacade()->updateMerchant($merchantWithEmptyContactPersonTitleTransfer);
-        $this->tester->getFacade()->updateMerchant($merchantWithEmptyContactPersonFirstNameTransfer);
-        $this->tester->getFacade()->updateMerchant($merchantWithEmptyContactPersonLastNameTransfer);
-        $this->tester->getFacade()->updateMerchant($merchantWithEmptyContactPersonPhoneTransfer);
         $this->tester->getFacade()->updateMerchant($merchantWithEmptyEmailTransfer);
         $this->tester->getFacade()->updateMerchant($merchantTransfer);
     }
@@ -159,10 +144,8 @@ class UpdateMerchantTest extends Unit
     {
         return [
             [[MerchantConfig::STATUS_APPROVED]],
-            [[MerchantConfig::STATUS_APPROVED, MerchantConfig::STATUS_ACTIVE]],
-            [[MerchantConfig::STATUS_APPROVED, MerchantConfig::STATUS_INACTIVE]],
-            [[MerchantConfig::STATUS_APPROVED, MerchantConfig::STATUS_ACTIVE, MerchantConfig::STATUS_INACTIVE]],
-            [[MerchantConfig::STATUS_APPROVED, MerchantConfig::STATUS_INACTIVE, MerchantConfig::STATUS_ACTIVE]],
+            [[MerchantConfig::STATUS_APPROVED, MerchantConfig::STATUS_DENIED]],
+            [[MerchantConfig::STATUS_APPROVED, MerchantConfig::STATUS_DENIED, MerchantConfig::STATUS_APPROVED]],
         ];
     }
 
@@ -172,11 +155,8 @@ class UpdateMerchantTest extends Unit
     public function getWrongStatusTransitions(): array
     {
         return [
-            [[MerchantConfig::STATUS_ACTIVE]],
-            [[MerchantConfig::STATUS_INACTIVE]],
             [[MerchantConfig::STATUS_APPROVED, MerchantConfig::STATUS_WAITING_FOR_APPROVAL]],
-            [[MerchantConfig::STATUS_APPROVED, MerchantConfig::STATUS_ACTIVE, MerchantConfig::STATUS_WAITING_FOR_APPROVAL]],
-            [[MerchantConfig::STATUS_APPROVED, MerchantConfig::STATUS_INACTIVE, MerchantConfig::STATUS_WAITING_FOR_APPROVAL]],
+            [[MerchantConfig::STATUS_DENIED, MerchantConfig::STATUS_WAITING_FOR_APPROVAL]],
         ];
     }
 

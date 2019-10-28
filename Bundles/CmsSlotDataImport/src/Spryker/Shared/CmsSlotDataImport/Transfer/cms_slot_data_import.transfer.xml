@@ -21,7 +21,7 @@
 
     <transfer name="ValidationResponse">
         <property name="isSuccess" type="bool"/>
-        <property name="constraintViolations" type="ConstraintViolation[]"/>
+        <property name="constraintViolations" type="ConstraintViolation[]" singular="constraintViolations"/>
     </transfer>
 
     <transfer name="ConstraintViolation">

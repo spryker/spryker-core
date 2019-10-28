@@ -12,6 +12,7 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Merchant
@@ -33,7 +34,7 @@ class CreateMerchantTest extends Unit
     public function testCreateMerchantStatus(): void
     {
         // Arrange
-        $merchantTransfer = $this->tester->createMerchantTransferWithAddressTransfer();
+        $merchantTransfer = $this->tester->createMerchantTransfer();
 
         // Act
         $merchantResponseTransfer = $this->tester->getFacade()->createMerchant($merchantTransfer);
@@ -50,7 +51,7 @@ class CreateMerchantTest extends Unit
     public function testCreateMerchantWithEmptyMerchantKeyStatus(): void
     {
         // Arrange
-        $merchantTransfer = $this->tester->createMerchantTransferWithAddressTransfer();
+        $merchantTransfer = $this->tester->createMerchantTransfer();
         $merchantTransfer->setMerchantKey(null);
 
         // Act
@@ -67,20 +68,10 @@ class CreateMerchantTest extends Unit
     public function testCreateMerchantWithEmptyRequiredFieldsThrowsException(): void
     {
         // Arrange
-        $merchantTransfer = $this->tester->createMerchantTransferWithAddressTransfer();
+        $merchantTransfer = $this->tester->createMerchantTransfer();
         $merchantWithEmptyNameTransfer = clone $merchantTransfer;
         $merchantWithEmptyNameTransfer->setName(null);
 
-        $merchantWithEmptyRegistrationNumberTransfer = clone $merchantTransfer;
-        $merchantWithEmptyRegistrationNumberTransfer->setRegistrationNumber(null);
-        $merchantWithEmptyContactPersonTitleTransfer = clone $merchantTransfer;
-        $merchantWithEmptyContactPersonTitleTransfer->setContactPersonTitle(null);
-        $merchantWithEmptyContactPersonFirstNameTransfer = clone $merchantTransfer;
-        $merchantWithEmptyContactPersonFirstNameTransfer->setContactPersonFirstName(null);
-        $merchantWithEmptyContactPersonLastNameTransfer = clone $merchantTransfer;
-        $merchantWithEmptyContactPersonLastNameTransfer->setContactPersonLastName(null);
-        $merchantWithEmptyContactPersonPhoneTransfer = clone $merchantTransfer;
-        $merchantWithEmptyContactPersonPhoneTransfer->setContactPersonPhone(null);
         $merchantWithEmptyEmailTransfer = clone $merchantTransfer;
         $merchantWithEmptyEmailTransfer->setEmail(null);
 
@@ -89,11 +80,6 @@ class CreateMerchantTest extends Unit
 
         // Act
         $this->tester->getFacade()->createMerchant($merchantWithEmptyNameTransfer);
-        $this->tester->getFacade()->createMerchant($merchantWithEmptyRegistrationNumberTransfer);
-        $this->tester->getFacade()->createMerchant($merchantWithEmptyContactPersonTitleTransfer);
-        $this->tester->getFacade()->createMerchant($merchantWithEmptyContactPersonFirstNameTransfer);
-        $this->tester->getFacade()->createMerchant($merchantWithEmptyContactPersonLastNameTransfer);
-        $this->tester->getFacade()->createMerchant($merchantWithEmptyContactPersonPhoneTransfer);
         $this->tester->getFacade()->createMerchant($merchantWithEmptyEmailTransfer);
     }
 }
