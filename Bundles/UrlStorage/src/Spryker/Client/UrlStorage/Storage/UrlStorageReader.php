@@ -248,7 +248,7 @@ class UrlStorageReader implements UrlStorageReaderInterface
         foreach ($urlStorageData as $urlStorageDataItem) {
             $decodedUrlStorageDataItem = json_decode($urlStorageDataItem, true);
 
-            $urlStorageTransfers[$decodedUrlStorageDataItem['url']] = (new UrlStorageTransfer())
+            $urlStorageTransfers[$decodedUrlStorageDataItem[static::URL]] = (new UrlStorageTransfer())
                 ->fromArray($decodedUrlStorageDataItem, true);
         }
 
