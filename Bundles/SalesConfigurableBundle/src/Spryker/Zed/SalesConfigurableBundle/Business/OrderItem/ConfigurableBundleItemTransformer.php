@@ -10,32 +10,30 @@ namespace Spryker\Zed\SalesConfigurableBundle\Business\OrderItem;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToSalesFacadeInterface;
-use Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToSalesQuantityFacadeInterface;
+use Spryker\Zed\SalesConfigurableBundle\SalesConfigurableBundleConfig;
 
 class ConfigurableBundleItemTransformer implements ConfigurableBundleItemTransformerInterface
 {
-    protected const SPLIT_CONFIGURABLE_BUNDLE_GROUP_KEY_PATTERN = '%s-%s';
-
     /**
      * @var \Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToSalesFacadeInterface
      */
     protected $salesFacade;
 
     /**
-     * @var \Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToSalesQuantityFacadeInterface
+     * @var \Spryker\Zed\SalesConfigurableBundle\SalesConfigurableBundleConfig
      */
-    protected $salesQuantityFacade;
+    protected $config;
 
     /**
      * @param \Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToSalesFacadeInterface $salesFacade
-     * @param \Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToSalesQuantityFacadeInterface $salesQuantityFacade
+     * @param \Spryker\Zed\SalesConfigurableBundle\SalesConfigurableBundleConfig $config
      */
     public function __construct(
         SalesConfigurableBundleToSalesFacadeInterface $salesFacade,
-        SalesConfigurableBundleToSalesQuantityFacadeInterface $salesQuantityFacade
+        SalesConfigurableBundleConfig $config
     ) {
         $this->salesFacade = $salesFacade;
-        $this->salesQuantityFacade = $salesQuantityFacade;
+        $this->config = $config;
     }
 
     /**
@@ -76,7 +74,7 @@ class ConfigurableBundleItemTransformer implements ConfigurableBundleItemTransfo
         $transformedItemTransfer->fromArray($itemTransfer->toArray(), true);
 
         $groupKey = sprintf(
-            static::SPLIT_CONFIGURABLE_BUNDLE_GROUP_KEY_PATTERN,
+            '%s-%s',
             $itemTransfer->getConfiguredBundle()->getGroupKey(),
             $groupKeyIndex
         );
@@ -97,10 +95,29 @@ class ConfigurableBundleItemTransformer implements ConfigurableBundleItemTransfo
      */
     protected function createItemCollection(ItemTransfer $itemTransfer): ItemCollectionTransfer
     {
-        if (!$this->salesQuantityFacade->isItemQuantitySplittable($itemTransfer)) {
+        if ($this->isNonSplittableQuantityThresholdExceeded($itemTransfer)) {
             return (new ItemCollectionTransfer())->addItem($itemTransfer);
         }
 
         return $this->salesFacade->transformSplittableItem($itemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function isNonSplittableQuantityThresholdExceeded(ItemTransfer $itemTransfer): bool
+    {
+        $threshold = $this->config->findConfigurableBundleItemQuantityThreshold();
+        if ($threshold === null) {
+            return false;
+        }
+
+        if ($itemTransfer->getQuantity() >= $threshold) {
+            return true;
+        }
+
+        return false;
     }
 }

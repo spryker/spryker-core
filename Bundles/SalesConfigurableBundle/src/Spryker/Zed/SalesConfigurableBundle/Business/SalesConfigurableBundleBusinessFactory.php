@@ -17,7 +17,6 @@ use Spryker\Zed\SalesConfigurableBundle\Business\OrderItem\ConfigurableBundleIte
 use Spryker\Zed\SalesConfigurableBundle\Business\Writer\SalesOrderConfiguredBundleWriter;
 use Spryker\Zed\SalesConfigurableBundle\Business\Writer\SalesOrderConfiguredBundleWriterInterface;
 use Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToSalesFacadeInterface;
-use Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToSalesQuantityFacadeInterface;
 use Spryker\Zed\SalesConfigurableBundle\SalesConfigurableBundleDependencyProvider;
 
 /**
@@ -62,7 +61,7 @@ class SalesConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ConfigurableBundleItemTransformer(
             $this->getSalesFacade(),
-            $this->getSalesQuantityFacade()
+            $this->getConfig()
         );
     }
 
@@ -72,13 +71,5 @@ class SalesConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     public function getSalesFacade(): SalesConfigurableBundleToSalesFacadeInterface
     {
         return $this->getProvidedDependency(SalesConfigurableBundleDependencyProvider::FACADE_SALES);
-    }
-
-    /**
-     * @return \Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToSalesQuantityFacadeInterface
-     */
-    public function getSalesQuantityFacade(): SalesConfigurableBundleToSalesQuantityFacadeInterface
-    {
-        return $this->getProvidedDependency(SalesConfigurableBundleDependencyProvider::FACADE_SALES_QUANTITY);
     }
 }
