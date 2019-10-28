@@ -8,7 +8,7 @@
 namespace Spryker\Client\ProductStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface;
+use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceBridge;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilter;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
 use Spryker\Client\ProductStorage\Finder\ProductAbstractViewTransferFinder;
@@ -41,9 +41,9 @@ class ProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface
+     * @return \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceBridge
      */
-    public function getUtilEncodingService(): ProductStorageToUtilEncodingServiceInterface
+    public function getUtilEncodingService(): ProductStorageToUtilEncodingServiceBridge
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::SERVICE_UTIL_ENCODING);
     }
