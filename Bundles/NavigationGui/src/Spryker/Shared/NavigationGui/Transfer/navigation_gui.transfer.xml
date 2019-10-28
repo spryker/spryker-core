@@ -30,6 +30,8 @@
     <transfer name="NavigationNodeLocalizedAttributes">
         <property name="fkLocale" type="int"/>
         <property name="fkUrl" type="int"/>
+        <property name="cmsPageUrl" type="string"/>
+        <property name="categoryUrl" type="string"/>
     </transfer>
 
     <transfer name="Locale">
