@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesConfigurableBundle\Business;
 
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -64,7 +65,6 @@ interface SalesConfigurableBundleFacadeInterface
     /**
      * Specification:
      * - Checks if given item is part of configurable bundle.
-     * - Returns true if configurable bundle quantity more than 1, returns false otherwise.
      *
      * @api
      *
@@ -73,4 +73,17 @@ interface SalesConfigurableBundleFacadeInterface
      * @return bool
      */
     public function isConfigurableBundleItemQuantitySplittable(ItemTransfer $itemTransfer): bool;
+
+    /**
+     * Specification:
+     * - Splits configurable bundle items.
+     * - Transforms items inside configurable bundle according to current splittable or non-splittable strategy.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     */
+    public function transformConfigurableBundleItem(ItemTransfer $itemTransfer): ItemCollectionTransfer;
 }

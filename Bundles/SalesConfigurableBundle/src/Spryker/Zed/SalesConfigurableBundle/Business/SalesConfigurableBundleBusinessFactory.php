@@ -12,8 +12,13 @@ use Spryker\Zed\SalesConfigurableBundle\Business\Expander\SalesOrderConfiguredBu
 use Spryker\Zed\SalesConfigurableBundle\Business\Expander\SalesOrderConfiguredBundleExpanderInterface;
 use Spryker\Zed\SalesConfigurableBundle\Business\OrderItem\ConfigurableBundleItemQuantityValidator;
 use Spryker\Zed\SalesConfigurableBundle\Business\OrderItem\ConfigurableBundleItemQuantityValidatorInterface;
+use Spryker\Zed\SalesConfigurableBundle\Business\OrderItem\ConfigurableBundleItemTransformer;
+use Spryker\Zed\SalesConfigurableBundle\Business\OrderItem\ConfigurableBundleItemTransformerInterface;
 use Spryker\Zed\SalesConfigurableBundle\Business\Writer\SalesOrderConfiguredBundleWriter;
 use Spryker\Zed\SalesConfigurableBundle\Business\Writer\SalesOrderConfiguredBundleWriterInterface;
+use Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToSalesFacadeInterface;
+use Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToSalesQuantityFacadeInterface;
+use Spryker\Zed\SalesConfigurableBundle\SalesConfigurableBundleDependencyProvider;
 
 /**
  * @method \Spryker\Zed\SalesConfigurableBundle\Persistence\SalesConfigurableBundleEntityManagerInterface getEntityManager()
@@ -48,5 +53,32 @@ class SalesConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     public function createConfigurableBundleItemQuantityValidator(): ConfigurableBundleItemQuantityValidatorInterface
     {
         return new ConfigurableBundleItemQuantityValidator();
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesConfigurableBundle\Business\OrderItem\ConfigurableBundleItemTransformerInterface
+     */
+    public function createConfigurableBundleItemTransformer(): ConfigurableBundleItemTransformerInterface
+    {
+        return new ConfigurableBundleItemTransformer(
+            $this->getSalesFacade(),
+            $this->getSalesQuantityFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToSalesFacadeInterface
+     */
+    public function getSalesFacade(): SalesConfigurableBundleToSalesFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesConfigurableBundleDependencyProvider::FACADE_SALES);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToSalesQuantityFacadeInterface
+     */
+    public function getSalesQuantityFacade(): SalesConfigurableBundleToSalesQuantityFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesConfigurableBundleDependencyProvider::FACADE_SALES_QUANTITY);
     }
 }

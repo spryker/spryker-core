@@ -17,25 +17,25 @@ class ConfigurableBundleItemTransformer implements ConfigurableBundleItemTransfo
     protected const SPLIT_CONFIGURABLE_BUNDLE_GROUP_KEY_PATTERN = '%s-%s';
 
     /**
-     * @var \Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToSalesQuantityFacadeInterface
-     */
-    protected $salesQuantityFacade;
-
-    /**
      * @var \Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToSalesFacadeInterface
      */
     protected $salesFacade;
 
     /**
-     * @param \Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToSalesQuantityFacadeInterface $salesQuantityFacade
+     * @var \Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToSalesQuantityFacadeInterface
+     */
+    protected $salesQuantityFacade;
+
+    /**
      * @param \Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToSalesFacadeInterface $salesFacade
+     * @param \Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToSalesQuantityFacadeInterface $salesQuantityFacade
      */
     public function __construct(
-        SalesConfigurableBundleToSalesQuantityFacadeInterface $salesQuantityFacade,
-        SalesConfigurableBundleToSalesFacadeInterface $salesFacade
+        SalesConfigurableBundleToSalesFacadeInterface $salesFacade,
+        SalesConfigurableBundleToSalesQuantityFacadeInterface $salesQuantityFacade
     ) {
-        $this->salesQuantityFacade = $salesQuantityFacade;
         $this->salesFacade = $salesFacade;
+        $this->salesQuantityFacade = $salesQuantityFacade;
     }
 
     /**
@@ -45,49 +45,62 @@ class ConfigurableBundleItemTransformer implements ConfigurableBundleItemTransfo
      */
     public function transformConfigurableBundleItem(ItemTransfer $itemTransfer): ItemCollectionTransfer
     {
-        $itemCollection = new ItemCollectionTransfer();
-
         $configuredBundleQuantity = $itemTransfer->getConfiguredBundle()->getQuantity();
+        if ($configuredBundleQuantity === 1) {
+            return $this->createItemCollection($itemTransfer);
+        }
 
-        if ($configuredBundleQuantity > 1) {
-            for ($index = 1; $index <= $configuredBundleQuantity; $index++) {
-                $transformedItemTransfer = new ItemTransfer();
-                $transformedItemTransfer->fromArray($itemTransfer->toArray(), true);
+        $configurableBundleItemCollection = new ItemCollectionTransfer();
 
-                $groupKey = sprintf(
-                    static::SPLIT_CONFIGURABLE_BUNDLE_GROUP_KEY_PATTERN,
-                    $itemTransfer->getConfiguredBundle()->getGroupKey(),
-                    $index
-                );
+        for ($index = 1; $index <= $configuredBundleQuantity; $index++) {
+            $transformedItemTransfer = $this->transformItem($itemTransfer, $index);
+            $itemCollection = $this->createItemCollection($transformedItemTransfer);
 
-                $transformedItemTransfer->getConfiguredBundle()->setGroupKey($groupKey);
-                $transformedItemTransfer->getConfiguredBundle()->setQuantity(1);
-                $transformedItemTransfer->setQuantity(
-                    $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot()
-                );
-
-                if (!$this->salesQuantityFacade->isItemQuantitySplittable($transformedItemTransfer)) {
-                    $itemCollection->addItem($itemTransfer);
-
-                    continue;
-                }
-
-                $splitItemCollection = $this->salesFacade->transformSplittableItem($transformedItemTransfer);
-
-                foreach ($splitItemCollection->getItems() as $splitItem) {
-                    $itemCollection->addItem($splitItem);
-                }
-            }
-        } else {
-            if ($this->salesQuantityFacade->isItemQuantitySplittable($itemTransfer)) {
-                $splitItemCollection = $this->salesFacade->transformSplittableItem($itemTransfer);
-
-                foreach ($splitItemCollection->getItems() as $splitItem) {
-                    $itemCollection->addItem($splitItem);
-                }
+            foreach ($itemCollection->getItems() as $item) {
+                $configurableBundleItemCollection->addItem($item);
             }
         }
 
-        return $itemCollection;
+        return $configurableBundleItemCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param int $groupKeyIndex
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function transformItem(ItemTransfer $itemTransfer, int $groupKeyIndex): ItemTransfer
+    {
+        $transformedItemTransfer = new ItemTransfer();
+        $transformedItemTransfer->fromArray($itemTransfer->toArray(), true);
+
+        $groupKey = sprintf(
+            static::SPLIT_CONFIGURABLE_BUNDLE_GROUP_KEY_PATTERN,
+            $itemTransfer->getConfiguredBundle()->getGroupKey(),
+            $groupKeyIndex
+        );
+
+        $transformedItemTransfer->getConfiguredBundle()->setGroupKey($groupKey);
+        $transformedItemTransfer->getConfiguredBundle()->setQuantity(1);
+        $transformedItemTransfer->setQuantity(
+            $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot()
+        );
+
+        return $transformedItemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     */
+    protected function createItemCollection(ItemTransfer $itemTransfer): ItemCollectionTransfer
+    {
+        if (!$this->salesQuantityFacade->isItemQuantitySplittable($itemTransfer)) {
+            return (new ItemCollectionTransfer())->addItem($itemTransfer);
+        }
+
+        return $this->salesFacade->transformSplittableItem($itemTransfer);
     }
 }

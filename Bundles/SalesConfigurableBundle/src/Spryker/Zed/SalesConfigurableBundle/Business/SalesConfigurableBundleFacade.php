@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesConfigurableBundle\Business;
 
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -83,5 +84,21 @@ class SalesConfigurableBundleFacade extends AbstractFacade implements SalesConfi
         return $this->getFactory()
             ->createConfigurableBundleItemQuantityValidator()
             ->isConfigurableBundleItemQuantitySplittable($itemTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     */
+    public function transformConfigurableBundleItem(ItemTransfer $itemTransfer): ItemCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createConfigurableBundleItemTransformer()
+            ->transformConfigurableBundleItem($itemTransfer);
     }
 }

@@ -44,6 +44,6 @@ class ConfigurableBundleItemTransformerStrategyPlugin extends AbstractPlugin imp
      */
     public function transformItem(ItemTransfer $itemTransfer): ItemCollectionTransfer
     {
-        return new ItemCollectionTransfer(); // transform itmes to collection depends on configurable bundle quantity.
+        return $this->getFacade()->transformConfigurableBundleItem($itemTransfer);
     }
 }
