@@ -76,8 +76,8 @@ interface SalesConfigurableBundleFacadeInterface
 
     /**
      * Specification:
-     * - Splits configurable bundle items.
-     * - Transforms items inside configurable bundle according to current splittable or non-splittable strategy.
+     * - Splits configurable bundles.
+     * - Transforms items in configurable bundle depending on configurable bundle item threshold.
      *
      * @api
      *

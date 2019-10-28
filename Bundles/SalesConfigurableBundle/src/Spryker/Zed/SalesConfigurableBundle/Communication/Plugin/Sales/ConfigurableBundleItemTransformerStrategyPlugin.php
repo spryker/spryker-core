@@ -21,6 +21,7 @@ class ConfigurableBundleItemTransformerStrategyPlugin extends AbstractPlugin imp
 {
     /**
      * {@inheritDoc}
+     * - Checks if given item is part of configurable bundle.
      *
      * @api
      *
@@ -35,6 +36,8 @@ class ConfigurableBundleItemTransformerStrategyPlugin extends AbstractPlugin imp
 
     /**
      * {@inheritDoc}
+     * - Splits configurable bundles.
+     * - Transforms items in configurable bundle depending on configurable bundle item threshold.
      *
      * @api
      *
