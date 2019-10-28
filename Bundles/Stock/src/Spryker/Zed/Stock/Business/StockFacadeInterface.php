@@ -20,6 +20,7 @@ interface StockFacadeInterface
     /**
      * Specification:
      * - Checks if the concrete product with the provided SKU has any stock type that is set as "never out of stock".
+     * - Filters out stocks that are inactive.
      *
      * @api
      *

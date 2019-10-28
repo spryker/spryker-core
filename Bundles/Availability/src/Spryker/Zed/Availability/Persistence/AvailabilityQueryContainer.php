@@ -287,7 +287,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
     public function queryAvailabilityWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale, $idStore, array $stockNames = [])
     {
         return $this->queryAvailabilityWithStockByIdLocale($idLocale, $stockNames)
-            ->withColumn('GROUP_CONCAT(' . SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK . ')', static::CONCRETE_NEVER_OUT_OF_STOCK_SET)
+            ->withColumn(SpyAvailabilityTableMap::COL_IS_NEVER_OUT_OF_STOCK, static::CONCRETE_NEVER_OUT_OF_STOCK_SET)
             ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, static::ID_PRODUCT)
             ->withColumn(SpyProductTableMap::COL_SKU, static::CONCRETE_SKU)
             ->withColumn(SpyAvailabilityTableMap::COL_QUANTITY, static::CONCRETE_AVAILABILITY)
