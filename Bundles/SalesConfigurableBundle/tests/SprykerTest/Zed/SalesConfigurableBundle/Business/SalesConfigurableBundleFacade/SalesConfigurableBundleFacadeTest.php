@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfiguredBundleItemTransfer;
 use Generated\Shared\Transfer\ConfiguredBundleTransfer;
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -540,6 +541,7 @@ class SalesConfigurableBundleFacadeTest extends Unit
         $itemCollection = $facade->transformConfigurableBundleItem($itemTransfer);
 
         //Assert
+        $this->assertInstanceOf(ItemCollectionTransfer::class, $itemCollection);
         $this->assertCount($itemsCount, $itemCollection->getItems());
         foreach ($itemCollection->getItems() as $item) {
             $this->assertEquals($itemQuantity, $item->getQuantity());
