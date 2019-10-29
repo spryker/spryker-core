@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Chart\Communication\Plugin\Twig;
+namespace Spryker\Zed\ChartGui\Communication\Plugin\Twig\Chart;
 
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
@@ -13,13 +13,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Twig\Environment;
 
 /**
- * @deprecated Use `\Spryker\Zed\ChartGui\Communication\Plugin\Twig\Chart\ChartGuiTwigPlugin` instead.
- *
- * @method \Spryker\Zed\Chart\Communication\ChartCommunicationFactory getFactory()
- * @method \Spryker\Zed\Chart\ChartConfig getConfig()
- * @method \Spryker\Zed\Chart\Business\ChartFacadeInterface getFacade()
+ * @method \Spryker\Zed\ChartGui\Communication\ChartGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ChartGui\ChartGuiConfig getConfig()
+ * @method \Spryker\Zed\ChartGui\Business\ChartGuiFacadeInterface getFacade()
  */
-class ChartTwigPlugin extends AbstractPlugin implements TwigPluginInterface
+class ChartGuiTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
     /**
      * {@inheritDoc}
