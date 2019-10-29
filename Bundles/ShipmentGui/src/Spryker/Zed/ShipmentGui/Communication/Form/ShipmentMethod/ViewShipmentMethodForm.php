@@ -13,6 +13,7 @@ use Spryker\Zed\ShipmentGui\Communication\Provider\ViewShipmentMethodFormDataPro
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\ShipmentGui\Communication\ShipmentGuiCommunicationFactory getFactory()
@@ -121,8 +122,10 @@ class ViewShipmentMethodForm extends AbstractType
                 'label' => 'Tax set',
                 'placeholder' => 'Select one',
                 'choices' => array_flip($options[ViewShipmentMethodFormDataProvider::OPTION_TAX_SET_CHOICES]),
-                'required' => false,
                 'disabled' => $options[ViewShipmentMethodFormDataProvider::OPTION_TAX_SET_DISABLED],
+                'constraints' => [
+                    new NotBlank(),
+                ],
             ]
         );
 
