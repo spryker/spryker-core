@@ -205,10 +205,6 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
                 $stockNames,
                 Criteria::IN
             );
-            $stockTypeCriterion->addAnd((new Criteria())->getNewCriterion(
-                SpyStockTableMap::COL_IS_ACTIVE,
-                true
-            ));
 
             $joinStockProduct->setJoinCondition($stockTypeCriterion);
 

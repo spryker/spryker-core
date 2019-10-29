@@ -99,16 +99,12 @@ class AvailabilityHelper implements AvailabilityHelperInterface
     }
 
     /**
-     * @param string|null $neverOutOfStockSet
+     * @param string $neverOutOfStockSet
      *
      * @return bool
      */
-    public function isNeverOutOfStock(?string $neverOutOfStockSet): bool
+    public function isNeverOutOfStock(string $neverOutOfStockSet): bool
     {
-        if ($neverOutOfStockSet === null) {
-            return false;
-        }
-
         return stripos($neverOutOfStockSet, 'true') !== false;
     }
 
