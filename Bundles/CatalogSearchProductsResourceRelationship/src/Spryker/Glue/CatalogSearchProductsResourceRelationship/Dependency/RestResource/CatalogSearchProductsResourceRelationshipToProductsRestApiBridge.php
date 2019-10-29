@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CatalogSearchProductsResourceRelationship\Dependency\RestResource;
 
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CatalogSearchProductsResourceRelationshipToProductsRestApiBridge implements CatalogSearchProductsResourceRelationshipToProductsRestApiInterface
@@ -25,13 +26,24 @@ class CatalogSearchProductsResourceRelationshipToProductsRestApiBridge implement
     }
 
     /**
+     * @param string $sku
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
+     */
+    public function findProductAbstractBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
+    {
+        return $this->productsResource->findProductAbstractBySku($sku, $restRequest);
+    }
+
+    /**
      * @param string[] $skus
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getBulkProductAbstractBySkus(array $skus, RestRequestInterface $restRequest): array
+    public function getProductAbstractBySkus(array $skus, RestRequestInterface $restRequest): array
     {
-        return $this->productsResource->getBulkProductAbstractBySkus($skus, $restRequest);
+        return $this->productsResource->getProductAbstractBySkus($skus, $restRequest);
     }
 }

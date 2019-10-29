@@ -111,20 +111,20 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getBulkProductAbstractBySkus(array $skus, RestRequestInterface $restRequest): array
+    public function getProductAbstractBySkus(array $skus, RestRequestInterface $restRequest): array
     {
-        $abstractProductData = $this->productStorageClient
+        $abstractProductCollection = $this->productStorageClient
             ->findBulkProductAbstractStorageDataByMapping(
                 static::PRODUCT_ABSTRACT_MAPPING_TYPE,
                 $skus,
                 $restRequest->getMetadata()->getLocale()
             );
 
-        if (!$abstractProductData) {
+        if (!$abstractProductCollection) {
             return [];
         }
 
-        return $this->createRestResourcesFromBulkAbstractProductStorageData($abstractProductData, $restRequest);
+        return $this->createRestResourcesFromAbstractProductStorageData($abstractProductCollection, $restRequest);
     }
 
     /**
@@ -193,7 +193,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    protected function createRestResourcesFromBulkAbstractProductStorageData(array $abstractProductData, RestRequestInterface $restRequest): array
+    protected function createRestResourcesFromAbstractProductStorageData(array $abstractProductData, RestRequestInterface $restRequest): array
     {
         $restResources = [];
 

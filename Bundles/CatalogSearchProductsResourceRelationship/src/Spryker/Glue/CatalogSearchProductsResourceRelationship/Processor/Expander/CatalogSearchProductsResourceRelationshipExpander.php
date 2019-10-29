@@ -44,7 +44,7 @@ class CatalogSearchProductsResourceRelationshipExpander implements CatalogSearch
         $allProductAbstractSkus = $this->getProductAbstractSkus($resources);
 
         $productAbstractRestResources = $this->productsResource
-            ->getBulkProductAbstractBySkus(array_merge(...array_values($allProductAbstractSkus)), $restRequest);
+            ->getProductAbstractBySkus(array_merge(...array_values($allProductAbstractSkus)), $restRequest);
 
         foreach ($resources as $restResource) {
             if (!array_key_exists($this->getRestResourceIdentifier($restResource), $allProductAbstractSkus)) {
