@@ -47,8 +47,10 @@ class ShipmentMethodStoreDataImportPluginTest extends Unit
             StoreTransfer::NAME => 'AT',
         ]);
 
+        $shipmentCarrierTransfer = $this->tester->haveShipmentCarrier();
         $this->tester->haveShipmentMethod([
             ShipmentMethodTransfer::SHIPMENT_METHOD_KEY => 'method-1',
+            ShipmentMethodTransfer::FK_SHIPMENT_CARRIER => $shipmentCarrierTransfer->getIdShipmentCarrier(),
         ]);
 
         $this->tester->ensureShipmentMethodStoreTableIsEmpty();

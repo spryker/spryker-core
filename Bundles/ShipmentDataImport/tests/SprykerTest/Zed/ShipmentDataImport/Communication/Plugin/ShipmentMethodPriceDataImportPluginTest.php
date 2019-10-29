@@ -48,11 +48,14 @@ class ShipmentMethodPriceDataImportPluginTest extends Unit
         $this->tester->haveCurrency([
             CurrencyTransfer::CODE => 'EUR',
         ]);
+        $shipmentCarrierTransfer = $this->tester->haveShipmentCarrier();
         $this->tester->haveShipmentMethod([
             ShipmentMethodTransfer::SHIPMENT_METHOD_KEY => 'spryker_dummy_shipment-standard',
+            ShipmentMethodTransfer::FK_SHIPMENT_CARRIER => $shipmentCarrierTransfer->getIdShipmentCarrier(),
         ]);
         $this->tester->haveShipmentMethod([
             ShipmentMethodTransfer::SHIPMENT_METHOD_KEY => 'spryker_dummy_shipment-express',
+            ShipmentMethodTransfer::FK_SHIPMENT_CARRIER => $shipmentCarrierTransfer->getIdShipmentCarrier(),
         ]);
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/shipment_price.csv');
