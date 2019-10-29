@@ -17,6 +17,15 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
 {
     protected const KEYS = 'keys';
     protected const NAMES = 'names';
+    /**
+     * @uses \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainer::NAME
+     */
+    protected const COLUMN_BLOCK_NAME = 'name';
+
+    /**
+     * @uses \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainer::KEY
+     */
+    protected const COLUMN_BLOCK_KEY = 'key';
 
     /**
      * @var \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainerInterface
@@ -50,7 +59,7 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
      *
      * @return void
      */
-    public function publish(array $categoryIds)
+    public function publish(array $categoryIds): void
     {
         $cmsBlockCategoriesTransfer = $this->getCmsBlockCategoriesTransfer($categoryIds);
         $spyCmsBlockCategoryStorageEntities = $this->findCmsBlockCategoryStorageEntitiesByCategoryIds($categoryIds);
@@ -62,7 +71,7 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
      *
      * @return void
      */
-    public function refreshOrUnpublish(array $categoryIds)
+    public function refreshOrUnpublish(array $categoryIds): void
     {
         $cmsBlockCategoriesTransfer = $this->getCmsBlockCategoriesTransfer($categoryIds);
         $spyCmsBlockCategoryStorageEntities = $this->findCmsBlockCategoryStorageEntitiesByCategoryIds($categoryIds);
@@ -84,7 +93,7 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
      *
      * @return void
      */
-    protected function storeData(array $cmsBlockCategoriesTransfer, array $spyCmsBlockCategoryStorageEntities)
+    protected function storeData(array $cmsBlockCategoriesTransfer, array $spyCmsBlockCategoryStorageEntities): void
     {
         foreach ($cmsBlockCategoriesTransfer as $cmsBlockCategoryTransfer) {
             if (isset($spyCmsBlockCategoryStorageEntities[$cmsBlockCategoryTransfer->getIdCategory()])) {
@@ -103,7 +112,7 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
      *
      * @return void
      */
-    protected function storeDataSet(CmsBlockCategoriesTransfer $cmsBlockCategoriesTransfer, ?SpyCmsBlockCategoryStorage $spyCmsBlockCategoryStorage = null)
+    protected function storeDataSet(CmsBlockCategoriesTransfer $cmsBlockCategoriesTransfer, ?SpyCmsBlockCategoryStorage $spyCmsBlockCategoryStorage = null): void
     {
         if ($spyCmsBlockCategoryStorage === null) {
             $spyCmsBlockCategoryStorage = new SpyCmsBlockCategoryStorage();
@@ -121,7 +130,7 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
      *
      * @return array
      */
-    protected function getCmsBlockCategoriesTransfer(array $categoryIds)
+    protected function getCmsBlockCategoriesTransfer(array $categoryIds): array
     {
         $mappedCmsBlockCategories = $this->getCmsBlockCategories($categoryIds);
 
@@ -152,18 +161,20 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
      *
      * @return array
      */
-    protected function getCmsBlockCategories(array $categoryIds)
+    protected function getCmsBlockCategories(array $categoryIds): void
     {
         $cmsBlockCategoryEntities = $this->queryContainer->queryCmsBlockCategories($categoryIds)->find();
         $mappedCmsBlockCategories = [];
         foreach ($cmsBlockCategoryEntities as $cmsBlockCategoryEntity) {
-            $mappedCmsBlockCategories[$cmsBlockCategoryEntity->getFkCategory()][$cmsBlockCategoryEntity->getPosition()][static::NAMES][] = $cmsBlockCategoryEntity->getName();
+            $mappedCmsBlockCategories[$cmsBlockCategoryEntity->getFkCategory()][$cmsBlockCategoryEntity->getPosition()][static::NAMES][] =
+                $cmsBlockCategoryEntity->getVirtualColumn(static::COLUMN_BLOCK_NAME);
 
             if (!$this->isCmsBlockKeyPropertyExists()) {
                 continue;
             }
 
-            $mappedCmsBlockCategories[$cmsBlockCategoryEntity->getFkCategory()][$cmsBlockCategoryEntity->getPosition()][static::KEYS][] = $cmsBlockCategoryEntity->getKey();
+            $mappedCmsBlockCategories[$cmsBlockCategoryEntity->getFkCategory()][$cmsBlockCategoryEntity->getPosition()][static::KEYS][] =
+                $cmsBlockCategoryEntity->getVirtualColumn(static::COLUMN_BLOCK_KEY);
         }
 
         return $mappedCmsBlockCategories;
@@ -174,7 +185,7 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
      *
      * @return array
      */
-    protected function findCmsBlockCategoryStorageEntitiesByCategoryIds(array $categoryIds)
+    protected function findCmsBlockCategoryStorageEntitiesByCategoryIds(array $categoryIds): array
     {
         $cmsBlockCategoryStorageEntities = $this->queryContainer->queryCmsBlockCategoryStorageByIds($categoryIds)->find();
         $cmsBlockCategoryStorageEntitiesById = [];

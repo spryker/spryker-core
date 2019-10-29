@@ -16,6 +16,15 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
 {
     protected const KEYS = 'keys';
     protected const NAMES = 'names';
+    /**
+     * @uses \Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainer::NAME
+     */
+    protected const COLUMN_BLOCK_NAME = 'name';
+
+    /**
+     * @uses \Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainer::KEY
+     */
+    protected const COLUMN_BLOCK_KEY = 'key';
 
     /**
      * @var \Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainerInterface
@@ -49,7 +58,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
      *
      * @return void
      */
-    public function publish(array $productAbstractIds)
+    public function publish(array $productAbstractIds): void
     {
         $cmsBlockProductsTransfer = $this->getCmsBlockProductsTransfer($productAbstractIds);
         $spyCmsBlockProductStorageEntities = $this->findCmsBlockProductStorageEntitiesByProductIds($productAbstractIds);
@@ -61,7 +70,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
      *
      * @return void
      */
-    public function refreshOrUnpublish(array $productAbstractIds)
+    public function refreshOrUnpublish(array $productAbstractIds): void
     {
         $cmsBlockProductsTransfer = $this->getCmsBlockProductsTransfer($productAbstractIds);
         $spyCmsBlockProductStorageEntities = $this->findCmsBlockProductStorageEntitiesByProductIds($productAbstractIds);
@@ -83,7 +92,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
      *
      * @return void
      */
-    protected function storeData(array $cmsBlockProductsTransfer, array $spyCmsBlockProductStorageEntities)
+    protected function storeData(array $cmsBlockProductsTransfer, array $spyCmsBlockProductStorageEntities): void
     {
         foreach ($cmsBlockProductsTransfer as $cmsBlockProductTransfer) {
             if (isset($spyCmsBlockProductStorageEntities[$cmsBlockProductTransfer->getIdProductAbstract()])) {
@@ -102,7 +111,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
      *
      * @return void
      */
-    protected function storeDataSet(CmsBlockProductTransfer $cmsBlockProductsTransfer, ?SpyCmsBlockProductStorage $spyCmsBlockProductStorage = null)
+    protected function storeDataSet(CmsBlockProductTransfer $cmsBlockProductsTransfer, ?SpyCmsBlockProductStorage $spyCmsBlockProductStorage = null): void
     {
         if ($spyCmsBlockProductStorage === null) {
             $spyCmsBlockProductStorage = new SpyCmsBlockProductStorage();
@@ -120,7 +129,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
      *
      * @return array
      */
-    protected function getCmsBlockProductsTransfer(array $productAbstractIds)
+    protected function getCmsBlockProductsTransfer(array $productAbstractIds): array
     {
         $mappedCmsBlockProducts = $this->getCmsBlockProducts($productAbstractIds);
 
@@ -145,18 +154,20 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
      *
      * @return array
      */
-    protected function getCmsBlockProducts(array $productAbstractIds)
+    protected function getCmsBlockProducts(array $productAbstractIds): array
     {
         $cmsBlockProductEntities = $this->queryContainer->queryCmsBlockProducts($productAbstractIds)->find();
         $mappedCmsBlockProducts = [];
         foreach ($cmsBlockProductEntities as $cmsBlockProductEntity) {
-            $mappedCmsBlockProducts[$cmsBlockProductEntity->getFkProductAbstract()][static::NAMES][] = $cmsBlockProductEntity->getName();
+            $mappedCmsBlockProducts[$cmsBlockProductEntity->getFkProductAbstract()][static::NAMES][] =
+                $cmsBlockProductEntity->getVirtualColumn(static::COLUMN_BLOCK_NAME);
 
             if (!$this->isCmsBlockKeyPropertyExists()) {
                 continue;
             }
 
-            $mappedCmsBlockProducts[$cmsBlockProductEntity->getFkProductAbstract()][static::KEYS][] = $cmsBlockProductEntity->getKey();
+            $mappedCmsBlockProducts[$cmsBlockProductEntity->getFkProductAbstract()][static::KEYS][] =
+                $cmsBlockProductEntity->getVirtualColumn(static::COLUMN_BLOCK_KEY);
         }
 
         return $mappedCmsBlockProducts;
@@ -167,7 +178,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
      *
      * @return array
      */
-    protected function findCmsBlockProductStorageEntitiesByProductIds(array $productAbstractIds)
+    protected function findCmsBlockProductStorageEntitiesByProductIds(array $productAbstractIds): array
     {
         $cmsBlockProductStorageEntities = $this->queryContainer->queryCmsBlockProductStorageByIds($productAbstractIds)->find();
         $cmsBlockProductStorageEntitiesById = [];
@@ -179,8 +190,6 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
     }
 
     /**
-     * This is added for BC reason to support previous versions of CmsBlock module.
-     *
      * @return bool
      */
     protected function isCmsBlockKeyPropertyExists(): bool

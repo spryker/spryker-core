@@ -8,7 +8,9 @@
 namespace Spryker\Zed\CmsBlockProductStorage\Business;
 
 use Spryker\Zed\CmsBlockProductStorage\Business\Storage\CmsBlockProductStorageWriter;
+use Spryker\Zed\CmsBlockProductStorage\Business\Storage\CmsBlockProductStorageWriterInterface;
 use Spryker\Zed\CmsBlockProductStorage\CmsBlockProductStorageDependencyProvider;
+use Spryker\Zed\CmsBlockProductStorage\Dependency\Service\CmsBlockProductStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -20,7 +22,7 @@ class CmsBlockProductStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CmsBlockProductStorage\Business\Storage\CmsBlockProductStorageWriterInterface
      */
-    public function createCmsBlockProductStorageWriter()
+    public function createCmsBlockProductStorageWriter(): CmsBlockProductStorageWriterInterface
     {
         return new CmsBlockProductStorageWriter(
             $this->getQueryContainer(),
@@ -32,7 +34,7 @@ class CmsBlockProductStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CmsBlockProductStorage\Dependency\Service\CmsBlockProductStorageToUtilSanitizeServiceInterface
      */
-    protected function getUtilSanitizeService()
+    public function getUtilSanitizeService(): CmsBlockProductStorageToUtilSanitizeServiceInterface
     {
         return $this->getProvidedDependency(CmsBlockProductStorageDependencyProvider::SERVICE_UTIL_SANITIZE);
     }
