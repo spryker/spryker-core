@@ -364,4 +364,20 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     {
         return $this->getRepository()->getStoresWhereProductStockIsDefined($sku);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer[]
+     */
+    public function getAvailableWarehousesForStore(StoreTransfer $storeTransfer): array
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->getAvailableWarehousesForStore($storeTransfer);
+    }
 }

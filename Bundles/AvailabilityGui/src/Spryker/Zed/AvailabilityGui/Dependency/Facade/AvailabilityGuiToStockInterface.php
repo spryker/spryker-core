@@ -50,4 +50,11 @@ interface AvailabilityGuiToStockInterface
      * @return string[]
      */
     public function getStockTypesForStore(StoreTransfer $storeTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer[]
+     */
+    public function getAvailableWarehousesForStore(StoreTransfer $storeTransfer): array;
 }

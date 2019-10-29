@@ -81,4 +81,14 @@ class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
     {
         return $this->stockFacade->getStockTypesForStore($storeTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer[]
+     */
+    public function getAvailableWarehousesForStore(StoreTransfer $storeTransfer): array
+    {
+        return $this->stockFacade->getAvailableWarehousesForStore($storeTransfer);
+    }
 }

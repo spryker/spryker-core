@@ -160,7 +160,7 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     * - Processes all provided stocks of the concrete product transfer
+     * - Processes all provided stocks of the concrete product transfer.
      * - If a stock entry from the collection doesn't exists for the product, then it will be newly created.
      * - If a stock entry from the collection exists for the product, then it will be updated with the provided data.
      *
@@ -187,7 +187,7 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     *  - Returns all available stock types
+     *  - Returns all available stock types.
      *
      * @api
      *
@@ -210,7 +210,7 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     *  - Returns stock product by given id product
+     *  - Returns stock product by given id product.
      *
      * @api
      *
@@ -223,7 +223,7 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     *  - Gets stocks for store
+     *  - Gets stocks for store.
      *
      * @api
      *
@@ -235,7 +235,7 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     *  - Returns stock mapping per store/warehouse pair
+     *  - Returns stock mapping per store/warehouse pair:
      *
      *  [
      *    'Warehouse1' => ['DE', 'US'],
@@ -328,4 +328,18 @@ interface StockFacadeInterface
      * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
     public function getStoresWhereProductStockIsDefined(string $sku): array;
+
+    /**
+     * Specification:
+     *  - Returns all available stock types for given store.
+     *  - Filters out stocks that are inactive.
+     *  - StoreTransfer.name is required.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer[]
+     */
+    public function getAvailableWarehousesForStore(StoreTransfer $storeTransfer): array;
 }

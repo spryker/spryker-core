@@ -111,6 +111,22 @@ class Reader implements ReaderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer[]
+     */
+    public function getAvailableWarehousesForStore(StoreTransfer $storeTransfer): array
+    {
+        $storeTransfer->requireName();
+
+        $stockCriteriaFilterTransfer = (new StockCriteriaFilterTransfer())
+            ->setIsActive(true)
+            ->setStoreNames([$storeTransfer->getName()]);
+
+        return $this->stockRepository->getStocksWithRelatedStoresByCriteriaFilter($stockCriteriaFilterTransfer);
+    }
+
+    /**
      * @return array
      */
     public function getWarehouseToStoreMapping(): array
