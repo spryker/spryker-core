@@ -34,7 +34,7 @@
         <property name="idMerchantProfile" type="int"/>
         <property name="fkMerchant" type="int"/>
         <property name="addressCollection" type="MerchantProfileViewAddress[]" singular="merchantProfileViewAddress"/>
-        <property name="urlCollection" type="MerchantProfileViewUrl[]" singular="MerchantProfileViewUrl"/>
+        <property name="urlCollection" type="MerchantProfileViewUrl[]" singular="merchantProfileViewUrl"/>
     </transfer>
 
     <transfer name="MerchantProfileViewUrl">
