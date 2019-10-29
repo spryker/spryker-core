@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Search\Communication\Console;
+namespace Spryker\Zed\SearchElasticsearch\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputArgument;
@@ -13,15 +13,14 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Communication\Console\ElasticsearchSnapshotDeleteConsole` instead.
- *
- * @method \Spryker\Zed\Search\Business\SearchFacadeInterface getFacade()
- * @method \Spryker\Zed\Search\Communication\SearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\SearchElasticsearch\Communication\SearchElasticsearchCommunicationFactory getFactory()
  */
-class SearchDeleteSnapshotConsole extends Console
+class ElasticsearchSnapshotDeleteConsole extends Console
 {
-    public const COMMAND_NAME = 'search:snapshot:delete';
-    public const DESCRIPTION = 'This command will delete a snapshot if it exists.';
+    public const COMMAND_NAME = 'elasticsearch:snapshot:delete';
+    public const COMMAND_ALIAS = 'search:snapshot:delete';
+    public const DESCRIPTION = 'This command will delete an Elasticsearch snapshot if it exists.';
 
     public const ARGUMENT_SNAPSHOT_REPOSITORY = 'snapshot-repository';
     public const ARGUMENT_SNAPSHOT_NAME = 'snapshot-name';
@@ -29,10 +28,10 @@ class SearchDeleteSnapshotConsole extends Console
     /**
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
-        $this->setName(self::COMMAND_NAME);
-        $this->setDescription(self::DESCRIPTION);
+        $this->setName(static::COMMAND_NAME);
+        $this->setDescription(static::DESCRIPTION);
 
         $this->addArgument(static::ARGUMENT_SNAPSHOT_REPOSITORY, InputArgument::REQUIRED, 'Name of the snapshot repository.');
         $this->addArgument(static::ARGUMENT_SNAPSHOT_NAME, InputArgument::REQUIRED, 'Name of the snapshot.');
@@ -46,7 +45,7 @@ class SearchDeleteSnapshotConsole extends Console
      *
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $snapshotRepository = $input->getArgument(static::ARGUMENT_SNAPSHOT_REPOSITORY);
         $snapshotName = $input->getArgument(static::ARGUMENT_SNAPSHOT_NAME);

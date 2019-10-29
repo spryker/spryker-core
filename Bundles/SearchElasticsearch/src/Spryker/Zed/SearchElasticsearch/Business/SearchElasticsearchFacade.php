@@ -136,4 +136,96 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
     {
         return $this->getFactory()->createIndexCopier()->copyIndex($sourceSearchContextTransfer, $targetSearchContextTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     * @param string $snapshotName
+     * @param array $options
+     *
+     * @return bool
+     */
+    public function createSnapshot($repositoryName, $snapshotName, $options = []): bool
+    {
+        return $this->getFactory()->createSnapshot()->createSnapshot($repositoryName, $snapshotName, $options);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     * @param string $snapshotName
+     *
+     * @return bool
+     */
+    public function existsSnapshot($repositoryName, $snapshotName): bool
+    {
+        return $this->getFactory()->createSnapshot()->existsSnapshot($repositoryName, $snapshotName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     * @param string $snapshotName
+     *
+     * @return bool
+     */
+    public function deleteSnapshot($repositoryName, $snapshotName): bool
+    {
+        return $this->getFactory()->createSnapshot()->deleteSnapshot($repositoryName, $snapshotName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     *
+     * @return bool
+     */
+    public function existsSnapshotRepository($repositoryName): bool
+    {
+        return $this->getFactory()->createRepository()->existsSnapshotRepository($repositoryName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     * @param string $type
+     * @param array $settings
+     *
+     * @return bool
+     */
+    public function registerSnapshotRepository($repositoryName, $type = 'fs', $settings = []): bool
+    {
+        return $this->getFactory()->createRepository()->registerSnapshotRepository($repositoryName, $type, $settings);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     * @param string $snapshotName
+     * @param array $options
+     *
+     * @return bool
+     */
+    public function restoreSnapshot($repositoryName, $snapshotName, $options = []): bool
+    {
+        return $this->getFactory()->createSnapshot()->restoreSnapshot($repositoryName, $snapshotName, $options);
+    }
 }

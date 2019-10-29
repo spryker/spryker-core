@@ -63,7 +63,7 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     public function getReindexUrl(): string
     {
         return sprintf(
-            '%s:%s/_reindex?pretty',
+            '%s:%s/_reindex?pretty=true',
             $this->get(SearchElasticsearchConstants::HOST),
             $this->get(SearchElasticsearchConstants::PORT)
         );

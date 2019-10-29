@@ -174,6 +174,8 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::createSnapshot()` instead.
+     *
      * @param string $repositoryName
      * @param string $snapshotName
      * @param array $options
@@ -188,6 +190,8 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::existsSnapshot()` instead.
+     *
      * @param string $repositoryName
      * @param string $snapshotName
      *
@@ -200,6 +204,8 @@ interface SearchFacadeInterface
      * - Deletes a Snapshot.
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::deleteSnapshot()` instead.
      *
      * @param string $repositoryName
      * @param string $snapshotName
@@ -214,6 +220,8 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::existsSnapshotRepository()` instead.
+     *
      * @param string $repositoryName
      *
      * @return bool
@@ -225,6 +233,8 @@ interface SearchFacadeInterface
      * - Creates a Snapshot repository.
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::createSnapshotRepository()` instead.
      *
      * @param string $repositoryName
      * @param string $type
@@ -239,6 +249,8 @@ interface SearchFacadeInterface
      * - Restores a Snapshot.
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::restoreSnapshot()` instead.
      *
      * @param string $repositoryName
      * @param string $snapshotName

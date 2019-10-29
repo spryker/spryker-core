@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SearchElasticsearch\Business;
 
 use Elastica\Client;
+use Elastica\Snapshot as ElasticaSnapshot;
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
 use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactory;
 use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactoryInterface;
@@ -42,6 +43,10 @@ use Spryker\Zed\SearchElasticsearch\Business\Installer\IndexMap\Generator\IndexM
 use Spryker\Zed\SearchElasticsearch\Business\Installer\IndexMap\Generator\IndexMapGeneratorInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\IndexMap\IndexMapInstaller as IndexMapIndexMapInstaller;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\IndexMap\IndexMapInstallerInterface;
+use Spryker\Zed\SearchElasticsearch\Business\Snapshot\Repository;
+use Spryker\Zed\SearchElasticsearch\Business\Snapshot\RepositoryInterface;
+use Spryker\Zed\SearchElasticsearch\Business\Snapshot\Snapshot;
+use Spryker\Zed\SearchElasticsearch\Business\Snapshot\SnapshotInterface;
 use Spryker\Zed\SearchElasticsearch\Dependency\Guzzle\SearchElasticsearchToGuzzleClientInterface;
 use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingServiceInterface;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchDependencyProvider;
@@ -294,5 +299,33 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     public function getGuzzleClient(): SearchElasticsearchToGuzzleClientInterface
     {
         return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::CLIENT_GUZZLE);
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchElasticsearch\Business\Snapshot\SnapshotInterface
+     */
+    public function createSnapshot(): SnapshotInterface
+    {
+        return new Snapshot(
+            $this->createElasticaSnapshot()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchElasticsearch\Business\Snapshot\RepositoryInterface
+     */
+    public function createRepository(): RepositoryInterface
+    {
+        return new Repository(
+            $this->createElasticaSnapshot()
+        );
+    }
+
+    /**
+     * @return \Elastica\Snapshot
+     */
+    public function createElasticaSnapshot(): ElasticaSnapshot
+    {
+        return new ElasticaSnapshot($this->getElasticsearchClient());
     }
 }

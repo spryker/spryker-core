@@ -120,4 +120,84 @@ interface SearchElasticsearchFacadeInterface
      * @return bool
      */
     public function copyIndex(SearchContextTransfer $sourceSearchContextTransfer, SearchContextTransfer $targetSearchContextTransfer): bool;
+
+    /**
+     * Specification:
+     * - Creates a snapshot.
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     * @param string $snapshotName
+     * @param array $options
+     *
+     * @return bool
+     */
+    public function createSnapshot($repositoryName, $snapshotName, $options = []): bool;
+
+    /**
+     * Specification:
+     * - Checks if a snapshot exists.
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     * @param string $snapshotName
+     *
+     * @return bool
+     */
+    public function existsSnapshot($repositoryName, $snapshotName): bool;
+
+    /**
+     * Specification:
+     * - Deletes a snapshot.
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     * @param string $snapshotName
+     *
+     * @return bool
+     */
+    public function deleteSnapshot($repositoryName, $snapshotName): bool;
+
+    /**
+     * Specification:
+     * - Checks if a snapshot repository exists.
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     *
+     * @return bool
+     */
+    public function existsSnapshotRepository($repositoryName): bool;
+
+    /**
+     * Specification:
+     * - Creates a Snapshot repository.
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     * @param string $type
+     * @param array $settings
+     *
+     * @return bool
+     */
+    public function registerSnapshotRepository($repositoryName, $type = 'fs', $settings = []): bool;
+
+    /**
+     * Specification:
+     * - Restores a snapshot repository.
+     *
+     * @api
+     *
+     * @param string $repositoryName
+     * @param string $snapshotName
+     * @param array $options
+     *
+     * @return bool
+     */
+    public function restoreSnapshot($repositoryName, $snapshotName, $options = []): bool;
 }
