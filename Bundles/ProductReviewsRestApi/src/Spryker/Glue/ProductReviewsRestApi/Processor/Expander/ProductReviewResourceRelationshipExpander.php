@@ -58,14 +58,19 @@ class ProductReviewResourceRelationshipExpander implements ProductReviewResource
      */
     public function addRelationshipsByAbstractSku(array $resources, RestRequestInterface $restRequest): void
     {
+        $productAbstractIds = [];
         foreach ($resources as $resource) {
-            $productAbstractData = $this->productStorageClient->findProductAbstractStorageDataByMapping(
-                static::PRODUCT_MAPPING_TYPE,
-                $resource->getId(),
-                $restRequest->getMetadata()->getLocale()
-            );
+            $productAbstractIds[] = $resource->getId();
+        }
 
-            $this->addRelationship($productAbstractData, $restRequest, $resource);
+        $productAbstractResources = $this->productStorageClient->findBulkProductAbstractStorageDataByMapping(
+            static::PRODUCT_MAPPING_TYPE,
+            $productAbstractIds,
+            $restRequest->getMetadata()->getLocale()
+        );
+
+        foreach ($resources as $resource) {
+            $this->addRelationship($productAbstractResources[$resource->getId()], $restRequest, $resource);
         }
     }
 
@@ -77,14 +82,21 @@ class ProductReviewResourceRelationshipExpander implements ProductReviewResource
      */
     public function addRelationshipsByConcreteSku(array $resources, RestRequestInterface $restRequest): void
     {
+        $productConcreteIds = [];
         foreach ($resources as $resource) {
-            $productConcreteData = $this->productStorageClient->findProductConcreteStorageDataByMapping(
-                static::PRODUCT_MAPPING_TYPE,
-                $resource->getId(),
-                $restRequest->getMetadata()->getLocale()
-            );
+            $productConcreteIds[] = $resource->getId();
+        }
 
-            $this->addRelationship($productConcreteData, $restRequest, $resource);
+        $productConcreteResources = $this->productStorageClient->findBulkProductConcreteStorageDataByMapping(
+            static::PRODUCT_MAPPING_TYPE,
+            $productConcreteIds,
+            $restRequest->getMetadata()->getLocale()
+        );
+
+        foreach ($resources as $resource) {
+            foreach ($productConcreteResources as $productConcreteResource) {
+                $this->addRelationship($productConcreteResource, $restRequest, $resource);
+            }
         }
     }
 

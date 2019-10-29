@@ -56,4 +56,28 @@ class ProductReviewsRestApiToProductStorageClientBridge implements ProductReview
     {
         return $this->productStorageClient->findProductConcreteStorageDataByMapping($mappingType, $identifier, $localeName);
     }
+
+    /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function findBulkProductAbstractStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): array
+    {
+        return $this->productStorageClient->findBulkProductAbstractStorageDataByMapping($mappingType, $identifiers, $localeName);
+    }
+
+    /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function findBulkProductConcreteStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): array
+    {
+        return $this->productStorageClient->findBulkProductConcreteStorageDataByMapping($mappingType, $identifiers, $localeName);
+    }
 }

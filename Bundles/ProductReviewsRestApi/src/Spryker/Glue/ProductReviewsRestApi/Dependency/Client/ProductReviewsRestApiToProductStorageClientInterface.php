@@ -34,4 +34,22 @@ interface ProductReviewsRestApiToProductStorageClientInterface
      * @return array|null
      */
     public function findProductConcreteStorageDataByMapping(string $mappingType, string $identifier, string $localeName): ?array;
+
+    /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function findBulkProductAbstractStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): array;
+
+    /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function findBulkProductConcreteStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): array;
 }

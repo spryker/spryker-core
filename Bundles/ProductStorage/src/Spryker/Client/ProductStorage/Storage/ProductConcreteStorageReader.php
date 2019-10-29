@@ -113,6 +113,38 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     }
 
     /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function findBulkProductConcreteStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): array
+    {
+        $storageKeys = [];
+        foreach ($identifiers as $identifier) {
+            $storageKeys[] = $this->getStorageKey(
+                sprintf('%s:%s', $mappingType, $identifier),
+                $localeName
+            );
+        }
+
+        $mappingData = $this->storageClient->getMulti($storageKeys);
+
+        if (count($mappingData) === 0) {
+            return [];
+        }
+
+        $productConcreteIds = [];
+        foreach ($mappingData as $item) {
+            $productConcreteStorageData = json_decode($item, true);
+            $productConcreteIds[] = $productConcreteStorageData['id'] ?? null;
+        }
+
+        return $this->getBulkProductConcreteStorageDataByProductConcreteIdsAndLocaleName($productConcreteIds, $localeName);
+    }
+
+    /**
      * @param int $idProductConcrete
      * @param string $localeName
      *
