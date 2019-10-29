@@ -8,6 +8,7 @@
         <property name="contentProviderType" type="string"/>
         <property name="name" type="string"/>
         <property name="description" type="string"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
     <transfer name="Filter">

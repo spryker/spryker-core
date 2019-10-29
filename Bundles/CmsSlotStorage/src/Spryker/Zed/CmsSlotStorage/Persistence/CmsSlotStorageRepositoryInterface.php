@@ -12,13 +12,6 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface CmsSlotStorageRepositoryInterface
 {
     /**
-     * @param string[] $cmsSlotKeys
-     *
-     * @return \Generated\Shared\Transfer\SpyCmsSlotStorageEntityTransfer[]
-     */
-    public function getCmsSlotStorageEntitiesByCmsSlotKeys(array $cmsSlotKeys): array;
-
-    /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $cmsSlotIds
      *

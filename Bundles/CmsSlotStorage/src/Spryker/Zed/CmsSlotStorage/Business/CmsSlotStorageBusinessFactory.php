@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\CmsSlotStorage\Business;
 
-use Spryker\Zed\CmsSlotStorage\Business\Mapper\CmsSlotStorageMapper;
-use Spryker\Zed\CmsSlotStorage\Business\Mapper\CmsSlotStorageMapperInterface;
 use Spryker\Zed\CmsSlotStorage\Business\Publisher\CmsSlotStoragePublisher;
 use Spryker\Zed\CmsSlotStorage\Business\Publisher\CmsSlotStoragePublisherInterface;
 use Spryker\Zed\CmsSlotStorage\CmsSlotStorageDependencyProvider;
@@ -29,18 +27,8 @@ class CmsSlotStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsSlotStoragePublisher(
             $this->getCmsSlotFacade(),
-            $this->getRepository(),
-            $this->getEntityManager(),
-            $this->createCmsSlotStorageMapper()
+            $this->getEntityManager()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\CmsSlotStorage\Business\Mapper\CmsSlotStorageMapperInterface
-     */
-    public function createCmsSlotStorageMapper(): CmsSlotStorageMapperInterface
-    {
-        return new CmsSlotStorageMapper();
     }
 
     /**

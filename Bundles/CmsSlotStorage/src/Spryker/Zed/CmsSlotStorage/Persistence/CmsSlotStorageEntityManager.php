@@ -35,23 +35,4 @@ class CmsSlotStorageEntityManager extends AbstractEntityManager implements CmsSl
 
         $cmsSlotStorageEntity->save();
     }
-
-    /**
-     * @param int $idCmsSlotStorage
-     *
-     * @return void
-     */
-    public function deleteCmsSlotStorageById(int $idCmsSlotStorage): void
-    {
-        $cmsSlotStorageEntity = $this->getFactory()
-            ->getCmsSlotStorageQuery()
-            ->filterByIdCmsSlotStorage($idCmsSlotStorage)
-            ->findOne();
-
-        if (!$cmsSlotStorageEntity) {
-            return;
-        }
-
-        $cmsSlotStorageEntity->delete();
-    }
 }

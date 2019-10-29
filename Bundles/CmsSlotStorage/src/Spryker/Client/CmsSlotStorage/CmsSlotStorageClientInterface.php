@@ -14,13 +14,15 @@ interface CmsSlotStorageClientInterface
     /**
      * Specification:
      * - Retrieves CmsSlotStorageTransfer by the given key.
-     * - Returns null if CMS slot is not present in the storage.
+     * - Throws an exception if CMS slot is not present in the storage.
      *
      * @api
      *
      * @param string $cmsSlotKey
      *
-     * @return \Generated\Shared\Transfer\CmsSlotStorageTransfer|null
+     * @throws \Spryker\Client\CmsSlotStorage\Exception\CmsSLotNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotStorageTransfer
      */
-    public function findCmsSlotByKey(string $cmsSlotKey): ?CmsSlotStorageTransfer;
+    public function getCmsSlotByKey(string $cmsSlotKey): CmsSlotStorageTransfer;
 }

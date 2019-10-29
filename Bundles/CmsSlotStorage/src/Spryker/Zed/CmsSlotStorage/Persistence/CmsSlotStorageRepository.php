@@ -16,24 +16,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CmsSlotStorageRepository extends AbstractRepository implements CmsSlotStorageRepositoryInterface
 {
     /**
-     * @param string[] $cmsSlotKeys
-     *
-     * @return \Generated\Shared\Transfer\SpyCmsSlotStorageEntityTransfer[]
-     */
-    public function getCmsSlotStorageEntitiesByCmsSlotKeys(array $cmsSlotKeys): array
-    {
-        if (!$cmsSlotKeys) {
-            return [];
-        }
-
-        $cmsSlotStorageQuery = $this->getFactory()
-            ->getCmsSlotStorageQuery()
-            ->filterByCmsSlotKey_In($cmsSlotKeys);
-
-        return $this->buildQueryFromCriteria($cmsSlotStorageQuery)->find();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $cmsSlotIds
      *
