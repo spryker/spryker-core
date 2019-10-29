@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
 use Generated\Shared\Transfer\EventEntityTransfer;
-use Generated\Shared\Transfer\ProductLabelTransfer;
 use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelProductAbstractTableMap;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorageQuery;
@@ -26,6 +25,7 @@ use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductL
 use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelPublishStorageListener;
 use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Event\Listener\ProductLabelStorageListener;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
+use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 use SprykerTest\Zed\ProductLabelStorage\ProductLabelStorageConfigMock;
 
 /**
@@ -43,6 +43,8 @@ use SprykerTest\Zed\ProductLabelStorage\ProductLabelStorageConfigMock;
  */
 class ProductLabelStorageListenerTest extends Unit
 {
+    use LocatorHelperTrait;
+
     /**
      * @var \SprykerTest\Zed\ProductLabelStorage\ProductLabelStorageCommunicationTester
      */
@@ -68,9 +70,10 @@ class ProductLabelStorageListenerTest extends Unit
         $this->productAbstractTransfer = $this->tester->haveProductAbstract();
         $this->productLabelTransfer = $this->tester->haveProductLabel();
 
-        $localizedAttributes = $this->tester->generateLocalizedAttributes();
+        $localizedAttributes = $this->tester->generateLocalizedAttributes(
+            $this->getLocator()->locale()->facade()->getCurrentLocale()->getIdLocale()
+        );
         $this->tester->addLocalizedAttributesToProductAbstract($this->productAbstractTransfer, $localizedAttributes);
-        $this->addLocalizedAttributesToProductLabel($this->productLabelTransfer);
 
         $this->tester->haveProductLabelToAbstractProductRelation(
             $this->productLabelTransfer->getIdProductLabel(),
@@ -144,18 +147,14 @@ class ProductLabelStorageListenerTest extends Unit
         $productLabelDictionaryStorageListener->handleBulk($eventTransfers, ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_CREATE);
 
         // Assert
-        $nowDate = (new DateTime())->format('Y-m-d H:i:s');
-        $labelsCount = SpyProductLabelQuery::create()
-            ->filterByValidTo(null)
-            ->_or()
-            ->filterByValidTo($nowDate, Criteria::GREATER_EQUAL)
-            ->count();
+        $localeName = $this->getLocator()->locale()->facade()->getCurrentLocale()->getLocaleName();
         $this->getProductLabelFacade()->checkLabelValidityDateRangeAndTouch();
-        $labelDictionaryStorageCount = SpyProductLabelDictionaryStorageQuery::create()->count();
-        $this->assertSame(2, $labelDictionaryStorageCount);
-        $spyProductLabelDictionaryStorage = SpyProductLabelDictionaryStorageQuery::create()->findOne();
+        $spyProductLabelDictionaryStorage = SpyProductLabelDictionaryStorageQuery::create()
+            ->filterByLocale($localeName)
+            ->findOne();
         $this->assertNotNull($spyProductLabelDictionaryStorage);
         $data = $spyProductLabelDictionaryStorage->getData();
+        $labelsCount = $this->getProductLabelsCountByLocaleName($localeName);
         $this->assertSame($labelsCount, count($data['items']));
     }
 
@@ -177,18 +176,14 @@ class ProductLabelStorageListenerTest extends Unit
         $productLabelDictionaryStoragePublishListener->handleBulk($eventTransfers, ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_CREATE);
 
         // Assert
-        $nowDate = (new DateTime())->format('Y-m-d H:i:s');
-        $labelsCount = SpyProductLabelQuery::create()
-            ->filterByValidTo(null)
-            ->_or()
-            ->filterByValidTo($nowDate, Criteria::GREATER_EQUAL)
-            ->count();
+        $localeName = $this->getLocator()->locale()->facade()->getCurrentLocale()->getLocaleName();
         $this->getProductLabelFacade()->checkLabelValidityDateRangeAndTouch();
-        $labelDictionaryStorageCount = SpyProductLabelDictionaryStorageQuery::create()->count();
-        $this->assertSame(2, $labelDictionaryStorageCount);
-        $spyProductLabelDictionaryStorage = SpyProductLabelDictionaryStorageQuery::create()->findOne();
+        $spyProductLabelDictionaryStorage = SpyProductLabelDictionaryStorageQuery::create()
+            ->filterByLocale($localeName)
+            ->findOne();
         $this->assertNotNull($spyProductLabelDictionaryStorage);
         $data = $spyProductLabelDictionaryStorage->getData();
+        $labelsCount = $this->getProductLabelsCountByLocaleName($localeName);
         $this->assertSame($labelsCount, count($data['items']));
     }
 
@@ -209,19 +204,15 @@ class ProductLabelStorageListenerTest extends Unit
         $productLabelDictionaryStorageUnpublishListener->handleBulk($eventTransfers, ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE);
 
         // Assert
-        $nowDate = (new DateTime())->format('Y-m-d H:i:s');
-        $labelsCount = SpyProductLabelQuery::create()
-            ->filterByValidTo(null)
-            ->_or()
-            ->filterByValidTo($nowDate, Criteria::GREATER_EQUAL)
-            ->count();
+        $localeName = $this->getLocator()->locale()->facade()->getCurrentLocale()->getLocaleName();
         $this->getProductLabelFacade()->checkLabelValidityDateRangeAndTouch();
-        $labelDictionaryStorageCount = SpyProductLabelDictionaryStorageQuery::create()->count();
-        $this->assertSame(2, $labelDictionaryStorageCount);
-        $spyProductLabelDictionaryStorage = SpyProductLabelDictionaryStorageQuery::create()->findOne();
+        $spyProductLabelDictionaryStorage = SpyProductLabelDictionaryStorageQuery::create()
+            ->filterByLocale($localeName)
+            ->findOne();
         $this->assertNotNull($spyProductLabelDictionaryStorage);
         $data = $spyProductLabelDictionaryStorage->getData();
-        $this->assertSame($labelsCount, count($data['items']));
+        $labelsCount = $this->getProductLabelsCountByLocaleName($localeName);
+        $this->assertSame($labelsCount - 1, count($data['items']));
     }
 
     /**
@@ -281,27 +272,29 @@ class ProductLabelStorageListenerTest extends Unit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     *
-     * @return void
-     */
-    protected function addLocalizedAttributesToProductLabel(ProductLabelTransfer $productLabelTransfer): void
-    {
-        $localizedAttributes = $this->generateLocalizedAttributesTransfer(
-            $this->tester->haveLocale()->getIdLocale(),
-            $productLabelTransfer->getIdProductLabel()
-        );
-
-        $productLabelTransfer->addLocalizedAttributes($localizedAttributes);
-
-        $this->getProductLabelFacade()->updateLabel($productLabelTransfer);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
      */
     protected function getProductLabelFacade(): ProductLabelFacadeInterface
     {
         return $this->tester->getLocator()->productLabel()->facade();
+    }
+
+    /**
+     * @param string $localeName
+     *
+     * @return int
+     */
+    protected function getProductLabelsCountByLocaleName(string $localeName): int
+    {
+        return SpyProductLabelQuery::create()
+            ->filterByValidTo(null)
+            ->_or()
+            ->filterByValidTo((new DateTime())->format('Y-m-d H:i:s'), Criteria::GREATER_EQUAL)
+            ->useSpyProductLabelLocalizedAttributesQuery()
+                ->useSpyLocaleQuery()
+                    ->filterByLocaleName($localeName)
+                ->endUse()
+            ->endUse()
+            ->count();
     }
 }
