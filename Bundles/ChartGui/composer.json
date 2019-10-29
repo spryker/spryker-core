@@ -19,7 +19,7 @@
   },
   "suggest": {
     "spryker/chart": "If you want to use Chart Plugins. Minimum required version: 1.0.1.",
-    "spryker/gui": "If you want to use Gui twig functions. Minimum required version: 3.26.0."
+    "spryker/gui": "If you want to use Gui twig functions. Minimum required version: 3.26.0.",
     "spryker/twig": "If you want to use Twig Plugins."
   },
   "autoload": {
