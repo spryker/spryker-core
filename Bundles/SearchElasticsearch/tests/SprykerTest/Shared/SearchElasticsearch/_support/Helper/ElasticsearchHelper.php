@@ -13,11 +13,15 @@ use Elastica\Client;
 use Elastica\Document;
 use Elastica\Index;
 use Elastica\Request;
+use Elastica\Snapshot;
 use Spryker\Shared\SearchElasticsearch\SearchElasticsearchConfig;
+use SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper;
 
 class ElasticsearchHelper extends Module
 {
     protected const INDEX_SUFFIX = '_testing';
+    protected const REPOSITORY_LOCATION_FILE_NAME = 'search_test_file';
+
     /**
      * @var array
      */
@@ -137,5 +141,35 @@ class ElasticsearchHelper extends Module
     protected function getClient(): Client
     {
         return new Client($this->getConfig()->getClientConfig());
+    }
+
+    /**
+     * @param string $repositoryName
+     * @param string $type
+     * @param array $settings
+     *
+     * @return void
+     */
+    public function haveRepository(string $repositoryName, $type = 'fs', array $settings = []): void
+    {
+        $settings['location'] = $this->getVirtualRepositoryLocation();
+        $snapshot = $this->createElasticaSnapshot();
+        $snapshot->registerRepository($repositoryName, $type, $settings);
+    }
+
+    /**
+     * @return \Elastica\Snapshot
+     */
+    protected function createElasticaSnapshot(): Snapshot
+    {
+        return new Snapshot($this->getClient());
+    }
+
+    /**
+     * @return string
+     */
+    public function getVirtualRepositoryLocation(): string
+    {
+        return $this->getModule('\\' . VirtualFilesystemHelper::class)->getVirtualDirectory() . static::REPOSITORY_LOCATION_FILE_NAME;
     }
 }

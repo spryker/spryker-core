@@ -12,6 +12,8 @@ use Elastica\Index;
 use Generated\Shared\Transfer\StoreTransfer;
 use Psr\Log\NullLogger;
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
+use Spryker\Zed\SearchElasticsearch\Business\Snapshot\Repository;
+use Spryker\Zed\SearchElasticsearch\Business\Snapshot\RepositoryInterface;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchDependencyProvider;
 
@@ -33,6 +35,8 @@ class SearchElasticsearchFacadeTest extends Unit
     protected const CURRENT_STORE = 'DE';
     protected const SOURCE_IDENTIFIER = 'index-name';
     protected const INDEX_NAME_ALL = '*_testing';
+    protected const REPOSITORY_LOCATION_FILE_NAME = 'search_test_file';
+    protected const REPOSITORY_NAME = 'search_test_repository';
 
     /**
      * @return void
@@ -266,5 +270,91 @@ class SearchElasticsearchFacadeTest extends Unit
         }
 
         return '';
+    }
+
+    /**
+     * @return void
+     */
+    public function testCanCreateSnapshotRepository(): void
+    {
+        //Act
+        $result = $this->tester->getFacade()->registerSnapshotRepository(static::REPOSITORY_NAME);
+
+        //Assert
+        $this->assertTrue($result);
+        $this->assertRepositoryExists(static::REPOSITORY_NAME);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCanCheckForRepositoryExistence(): void
+    {
+        // Arrange
+        $repositoryName = 'repository-name';
+        $this->tester->haveRepository($repositoryName);
+
+        // Act
+        $result = $this->tester->getFacade()->existsSnapshotRepository($repositoryName);
+
+        // Assert
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SearchElasticsearch\Business\Snapshot\RepositoryInterface
+     */
+    protected function createRepositoryMock(): RepositoryInterface
+    {
+        $repositoryMock = $this->getMockBuilder(Repository::class)
+            ->setConstructorArgs([$this->tester->getFactory()->createElasticaSnapshot()])
+            ->setMethods(['buildRepositorySettings'])
+            ->getMock();
+
+        $repositoryMock->method('buildRepositorySettings')->willReturn(['location' => $this->tester->getVirtualRepositoryLocation()]);
+
+        return $repositoryMock;
+    }
+
+    /**
+     * @param string $repositoryName
+     *
+     * @return void
+     */
+    protected function assertRepositoryExists(string $repositoryName): void
+    {
+        $this->assertTrue(
+            $this->createRepositoryMock()->existsSnapshotRepository($repositoryName)
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCanCreateSnapshot(): void
+    {
+        $repositoryName = 'repository-name';
+        $snapshotName = 'snapshot-name';
+
+        $this->tester->haveRepository($repositoryName);
+        $this->tester->getFacade()->createSnapshot($repositoryName, $snapshotName);
+
+        $result = $this->tester->getFactory()->createElasticaSnapshot()->getSnapshot($repositoryName, $snapshotName);
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCanCheckForSnapshotExistence(): void
+    {
+        $repositoryName = 'repository-name';
+        $snapshotName = 'snapshot-name';
+
+        $this->tester->haveRepository($repositoryName);
+        $this->tester->getFacade()->existsSnapshot($repositoryName, $snapshotName);
+
+        $result = $this->tester->getFactory()->createElasticaSnapshot()->getSnapshot($repositoryName, $snapshotName);
+        $this->assertTrue($result);
     }
 }
