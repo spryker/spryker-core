@@ -56,7 +56,8 @@ class CmsSlotBlockGuiCommunicationFactory extends AbstractCommunicationFactory
 
         return $this->getFormFactory()->create(
             CmsSlotBlockCollectionForm::class,
-            $cmsSlotBlockCollectionDataProvider->getData($idCmsSlotTemplate, $idCmsSlot)
+            $cmsSlotBlockCollectionDataProvider->getData($idCmsSlotTemplate, $idCmsSlot),
+            $cmsSlotBlockCollectionDataProvider->getOptions($idCmsSlotTemplate)
         );
     }
 
