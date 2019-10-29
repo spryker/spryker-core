@@ -65,7 +65,7 @@ class CmsSlotStoragePublishListenerTest extends Unit
      */
     public function testCmsSlotStoragePublishListenerStoreDataIfCmsSlotIsActive(): void
     {
-        // Assign
+        // Arrange
         $cmsSlotTransfer = $this->tester->haveCmsSlotInDb([
             CmsSlotTransfer::KEY => static::CMS_SLOT_KEY,
             CmsSlotTransfer::IS_ACTIVE => true,

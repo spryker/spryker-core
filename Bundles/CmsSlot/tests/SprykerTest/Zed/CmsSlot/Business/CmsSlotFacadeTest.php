@@ -36,7 +36,7 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testValidateCmsSlotSuccess(): void
     {
-        // Assign
+        // Arrange
         $cmsSlotTransfer = $this->tester->haveCmsSlot();
 
         // Act
@@ -51,7 +51,7 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testValidateCmsSlotFailsOnInvalidName(): void
     {
-        // Assign
+        // Arrange
         $cmsSlotTransfer = $this->tester->haveCmsSlot([
             CmsSlotTransfer::NAME => str_repeat('t', 300),
         ]);
@@ -68,7 +68,7 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testValidateCmsSlotFailsOnInvalidDescription(): void
     {
-        // Assign
+        // Arrange
         $cmsSlotTransfer = $this->tester->haveCmsSlot([
             CmsSlotTransfer::DESCRIPTION => str_repeat('t', 1500),
         ]);
@@ -85,7 +85,7 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testValidateCmsSlotFailsOnInvalidKey(): void
     {
-        // Assign
+        // Arrange
         $cmsSlotTransfer = $this->tester->haveCmsSlot([
             CmsSlotTransfer::KEY => 'invalid key',
         ]);
@@ -102,7 +102,7 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testValidateCmsSlotFailsOnInvalidContentProviderType(): void
     {
-        // Assign
+        // Arrange
         $cmsSlotTransfer = $this->tester->haveCmsSlot([
             CmsSlotTransfer::CONTENT_PROVIDER_TYPE => '',
         ]);
@@ -119,7 +119,7 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testValidateCmsSlotFailsOnInvalidIsActive(): void
     {
-        // Assign
+        // Arrange
         $cmsSlotTransfer = $this->tester->haveCmsSlot([
             CmsSlotTransfer::IS_ACTIVE => 2,
         ]);
@@ -136,7 +136,7 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testValidateCmsSlotTemplateSuccess(): void
     {
-        // Assign
+        // Arrange
         $cmsSlotTemplateTransfer = $this->tester->haveCmsSlotTemplate();
 
         // Act
@@ -151,7 +151,7 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testValidateCmsSlotTemplateFailsOnInvalidName(): void
     {
-        // Assign
+        // Arrange
         $cmsSlotTemplateTransfer = $this->tester->haveCmsSlotTemplate([
             CmsSlotTemplateTransfer::NAME => str_repeat('t', 300),
         ]);
@@ -168,7 +168,7 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testValidateCmsSlotTemplateFailsOnInvalidDescription(): void
     {
-        // Assign
+        // Arrange
         $cmsSlotTemplateTransfer = $this->tester->haveCmsSlotTemplate([
             CmsSlotTemplateTransfer::DESCRIPTION => str_repeat('t', 1500),
         ]);
@@ -185,7 +185,7 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testValidateCmsSlotTemplateFailsOnInvalidPath(): void
     {
-        // Assign
+        // Arrange
         $cmsSlotTemplateTransfer = $this->tester->haveCmsSlotTemplate([
             CmsSlotTemplateTransfer::PATH => 'invalid path',
         ]);
@@ -202,7 +202,7 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testActivateByIdCmsSlotSuccess(): void
     {
-        // Assign
+        // Arrange
         $cmsSlotTransfer = $this->tester->haveCmsSlotInDb([
             CmsSlotTransfer::IS_ACTIVE => false,
         ]);
@@ -219,7 +219,7 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testDeactivateByIdCmsSlotSuccess(): void
     {
-        // Assign
+        // Arrange
         $cmsSlotTransfer = $this->tester->haveCmsSlotInDb([
             CmsSlotTransfer::IS_ACTIVE => true,
         ]);
@@ -236,7 +236,7 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testGetFilteredCmsSlotsReturnsCmsSlotTransfers(): void
     {
-        // Assign
+        // Arrange
         $this->tester->haveCmsSlotInDb();
 
         // Act
@@ -257,7 +257,7 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testGetCmsSlotsByCmsSlotIdsReturnsCmsSlotTransfersWithCorrectData(): void
     {
-        // Assign
+        // Arrange
         $cmsSlotTransfer = $this->tester->haveCmsSlotInDb([CmsSlotTransfer::IS_ACTIVE => true]);
 
         // Act
