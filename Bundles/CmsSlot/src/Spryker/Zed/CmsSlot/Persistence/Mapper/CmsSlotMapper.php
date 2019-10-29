@@ -38,12 +38,12 @@ class CmsSlotMapper implements CmsSlotMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplate $cmsSlotTemplate
+     * @param \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplate $cmsSlotTemplateEntity
      *
      * @return \Generated\Shared\Transfer\CmsSlotTemplateTransfer
      */
-    public function mapCmsSlotTemplateEntityToTransfer(SpyCmsSlotTemplate $cmsSlotTemplate): CmsSlotTemplateTransfer
+    public function mapCmsSlotTemplateEntityToTransfer(SpyCmsSlotTemplate $cmsSlotTemplateEntity): CmsSlotTemplateTransfer
     {
-        return (new CmsSlotTemplateTransfer())->fromArray($cmsSlotTemplate->toArray(), true);
+        return (new CmsSlotTemplateTransfer())->fromArray($cmsSlotTemplateEntity->toArray(), true);
     }
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsSlotBlock\Business;
 
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 
 interface CmsSlotBlockFacadeInterface
 {
@@ -38,13 +39,25 @@ interface CmsSlotBlockFacadeInterface
 
     /**
      * Specification:
+     * - Returns CMS Block transfers with CMS Slot relations according to given offset and limit.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     */
+    public function getCmsBlocksWithSlotRelations(FilterTransfer $filterTransfer): array;
+
+    /**
+     * Specification:
      * - Returns configuration of conditions for template by provided path.
      *
      * @api
      *
      * @param string $twigPath
      *
-     * @return array
+     * @return string[]
      */
     public function getTemplateConditionsByPath(string $twigPath): array;
 }

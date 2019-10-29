@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CategoryGui\Communication\DataProvider;
 
 use Generated\Shared\Transfer\CmsSlotBlockTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\CategoryGui\Communication\Form\CategorySlotBlockConditionForm;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface;
 use Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface;
@@ -43,28 +44,39 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
     {
         return [
             'data_class' => CmsSlotBlockTransfer::class,
-            CategorySlotBlockConditionForm::OPTION_CATEGORY_ARRAY => $this->getCategories(),
+            CategorySlotBlockConditionForm::OPTION_CATEGORY_IDS => $this->getCategoryIds(),
         ];
     }
 
     /**
-     * @return array
+     * @return int[]
      */
-    protected function getCategories(): array
+    protected function getCategoryIds(): array
     {
         $idLocale = $this->localeFacade->getCurrentLocale()->getIdLocale();
-        /** @var \Orm\Zed\Category\Persistence\SpyCategory[] $categoryCollection */
-        $categoryCollection = $this->categoryQueryContainer
+
+        $categoryEntityCollection = $this->categoryQueryContainer
             ->queryCategory($idLocale)
             ->find();
 
-        $categories = [];
+        return $this->getCategoryIdsFromCollection($categoryEntityCollection, $idLocale);
+    }
 
-        foreach ($categoryCollection as $categoryEntity) {
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Category\Persistence\SpyCategory[] $categoryEntityCollection
+     * @param int $idLocale
+     *
+     * @return int[]
+     */
+    protected function getCategoryIdsFromCollection(ObjectCollection $categoryEntityCollection, int $idLocale): array
+    {
+        $categoryIds = [];
+
+        foreach ($categoryEntityCollection as $categoryEntity) {
             $categoryName = $categoryEntity->getLocalisedAttributes($idLocale)->getFirst()->getName();
-            $categories[$categoryName] = $categoryEntity->getIdCategory();
+            $categoryIds[$categoryName] = $categoryEntity->getIdCategory();
         }
 
-        return $categories;
+        return $categoryIds;
     }
 }

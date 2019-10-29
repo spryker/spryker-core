@@ -52,7 +52,6 @@
         <property name="availableAttributes" type="array" singular="availableAttribute"/>
         <property name="selectedAttributes" type="array" singular="selectedAttribute"/>
         <property name="superAttributesDefinition" type="array" singular="superAttributesDefinition"/>
-        <property name="attributeMap" type="AttributeMapStorage"/>
     </transfer>
 
     <transfer name="UrlStorage">

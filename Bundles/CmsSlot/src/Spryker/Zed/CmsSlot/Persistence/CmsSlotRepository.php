@@ -39,12 +39,12 @@ class CmsSlotRepository extends AbstractRepository implements CmsSlotRepositoryI
      */
     public function findCmsSlotTemplateById(int $idCmsSlotTemplate): ?CmsSlotTemplateTransfer
     {
-        $cmsSlotTemplate = $this->getFactory()->createCmsSlotTemplateQuery()->findOneByIdCmsSlotTemplate($idCmsSlotTemplate);
+        $cmsSlotTemplateEntity = $this->getFactory()->createCmsSlotTemplateQuery()->findOneByIdCmsSlotTemplate($idCmsSlotTemplate);
 
-        if (!$cmsSlotTemplate) {
+        if (!$cmsSlotTemplateEntity) {
             return null;
         }
 
-        return $this->getFactory()->createCmsSlotMapper()->mapCmsSlotTemplateEntityToTransfer($cmsSlotTemplate);
+        return $this->getFactory()->createCmsSlotMapper()->mapCmsSlotTemplateEntityToTransfer($cmsSlotTemplateEntity);
     }
 }

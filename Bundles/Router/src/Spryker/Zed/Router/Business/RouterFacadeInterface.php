@@ -45,4 +45,14 @@ interface RouterFacadeInterface
      * @return \Spryker\Zed\Router\Business\Router\RouterInterface
      */
     public function getZedFallbackRouter(): RouterInterface;
+
+    /**
+     * Specification:
+     * - Builds the cache for the Router.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function cacheWarmUp(): void;
 }
