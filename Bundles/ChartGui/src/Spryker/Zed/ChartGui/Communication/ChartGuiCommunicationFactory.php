@@ -23,4 +23,12 @@ class ChartGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(ChartGuiDependencyProvider::PLUGIN_TWIG_CHART_GUI_FUNCTIONS);
     }
+
+    /**
+     * @return \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface[]
+     */
+    public function getChartPlugins(): array
+    {
+        return $this->getProvidedDependency(ChartGuiDependencyProvider::PLUGIN_CHART);
+    }
 }

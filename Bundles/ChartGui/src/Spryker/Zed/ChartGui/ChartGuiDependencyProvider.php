@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Container;
 class ChartGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGIN_TWIG_CHART_GUI_FUNCTIONS = 'PLUGIN_TWIG_CHART_GUI_FUNCTIONS';
+    public const PLUGIN_CHART = 'PLUGIN_CHART';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -25,6 +26,7 @@ class ChartGuiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addTwigChartFunctionPlugins($container);
+        $container = $this->addChartPlugins($container);
 
         return $container;
     }
@@ -44,9 +46,31 @@ class ChartGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addChartPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_CHART] = function () {
+            return $this->getChartPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Shared\Chart\Dependency\Plugin\TwigChartFunctionPluginInterface[]
      */
     protected function getTwigChartFunctionPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface[]
+     */
+    protected function getChartPlugins(): array
     {
         return [];
     }

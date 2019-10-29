@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\ChartGui\Communication\Plugin\Twig\Chart;
 
-use Spryker\Zed\Chart\Communication\Plugin\Twig\AbstractTwigChartPlugin;
+namespace Spryker\Zed\ChartGui\Communication\Plugin\Twig\Chart;
 
 /**
  * @method \Spryker\Zed\ChartGui\ChartGuiConfig getConfig()
  * @method \Spryker\Zed\ChartGui\Business\ChartGuiFacadeInterface getFacade()
  */
-class PieChartTwigPlugin extends AbstractTwigChartPlugin
+class PieChartTwigPlugin extends AbstractChartTwigPlugin
 {
     public const TWIG_FUNCTION_NAME = 'pieChart';
 
