@@ -55,15 +55,4 @@ class PaginationExpander implements PaginationExpanderInterface
 
         return $searchQuery;
     }
-
-    /**
-     * @param array $requestParameters
-     * @param string $parameter
-     *
-     * @return bool
-     */
-    protected function validateParameter(array $requestParameters, string $parameter): bool
-    {
-        return (!empty($requestParameters[$parameter]));
-    }
 }
