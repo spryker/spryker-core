@@ -8,15 +8,14 @@
 namespace SprykerTest\Zed\CmsSlotStorage\Communication\Plugin\Event\Listener;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CmsSlotStorageTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Orm\Zed\CmsSlotStorage\Persistence\SpyCmsSlotStorageQuery;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\CmsSlot\Dependency\CmsSlotEvents;
 use Spryker\Zed\CmsSlotStorage\Communication\Plugin\Event\Listener\CmsSlotStoragePublishListener;
 use Spryker\Zed\CmsSlotStorage\Persistence\CmsSlotStorageEntityManager;
-use Spryker\Zed\CmsSlotStorage\Persistence\CmsSlotStorageRepository;
 
 /**
  * Auto-generated group annotations
@@ -41,11 +40,6 @@ class CmsSlotStoragePublishListenerTest extends Unit
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\CmsSlotStorage\Persistence\CmsSlotStorageRepositoryInterface
-     */
-    protected $cmsSlotStorageRepository;
-
-    /**
      * @var \Spryker\Zed\CmsSlotStorage\Persistence\CmsSlotStorageEntityManagerInterface
      */
     protected $cmsSlotStorageEntityManager;
@@ -63,7 +57,6 @@ class CmsSlotStoragePublishListenerTest extends Unit
             ];
         });
 
-        $this->cmsSlotStorageRepository = new CmsSlotStorageRepository();
         $this->cmsSlotStorageEntityManager = new CmsSlotStorageEntityManager();
     }
 
@@ -77,7 +70,7 @@ class CmsSlotStoragePublishListenerTest extends Unit
             CmsSlotTransfer::KEY => static::CMS_SLOT_KEY,
             CmsSlotTransfer::IS_ACTIVE => true,
         ]);
-        $beforeCount = count($this->cmsSlotStorageRepository->getCmsSlotStorageEntitiesByCmsSlotKeys([static::CMS_SLOT_KEY]));
+        $beforeCount = count(SpyCmsSlotStorageQuery::create()->filterByCmsSlotKey_In([static::CMS_SLOT_KEY])->find());
         $cmsSlotStoragePublishListener = new CmsSlotStoragePublishListener();
         $cmsSlotStoragePublishListener->setFacade($this->tester->getFacade());
 
@@ -93,36 +86,6 @@ class CmsSlotStoragePublishListenerTest extends Unit
     }
 
     /**
-     * @return void
-     */
-    public function testCmsSlotStoragePublishListenerRemovesDataIfCmsSlotIsNotActive(): void
-    {
-        // Assign
-        $cmsSlotTransfer = $this->tester->haveCmsSlotInDb([
-            CmsSlotTransfer::KEY => static::CMS_SLOT_KEY,
-            CmsSlotTransfer::IS_ACTIVE => false,
-        ]);
-        $this->cmsSlotStorageEntityManager->saveCmsSlotStorage(
-            (new CmsSlotStorageTransfer())->setKey($cmsSlotTransfer->getKey())
-        );
-        $beforeCount = count($this->cmsSlotStorageRepository->getCmsSlotStorageEntitiesByCmsSlotKeys([static::CMS_SLOT_KEY]));
-
-        $cmsSlotStoragePublishListener = new CmsSlotStoragePublishListener();
-        $cmsSlotStoragePublishListener->setFacade($this->tester->getFacade());
-
-        $eventTransfers = [
-            (new EventEntityTransfer())->setId($cmsSlotTransfer->getIdCmsSlot()),
-        ];
-
-        // Act
-        $cmsSlotStoragePublishListener->handleBulk($eventTransfers, CmsSlotEvents::CMS_SLOT_PUBLISH);
-        $cmsSlotStorageEntities = $this->cmsSlotStorageRepository->getCmsSlotStorageEntitiesByCmsSlotKeys([$cmsSlotTransfer->getKey()]);
-
-        // Assert
-        $this->assertLessThan($beforeCount, count($cmsSlotStorageEntities));
-    }
-
-    /**
      * @param int $beforeCount
      * @param \Generated\Shared\Transfer\CmsSlotTransfer $cmsSlotTransfer
      *
@@ -130,7 +93,8 @@ class CmsSlotStoragePublishListenerTest extends Unit
      */
     protected function assertCmsSlotStorage(int $beforeCount, CmsSlotTransfer $cmsSlotTransfer): void
     {
-        $cmsSlotStorageEntities = $this->cmsSlotStorageRepository->getCmsSlotStorageEntitiesByCmsSlotKeys([$cmsSlotTransfer->getKey()]);
+        $cmsSlotStorageEntities = SpyCmsSlotStorageQuery::create()->filterByCmsSlotKey_In([$cmsSlotTransfer->getKey()])->find();
+
         /** @var array $cmsSlotStorageData */
         $cmsSlotStorageData = $cmsSlotStorageEntities[0]->getData();
 
