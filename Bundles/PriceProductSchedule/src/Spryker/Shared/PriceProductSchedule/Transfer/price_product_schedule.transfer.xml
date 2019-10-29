@@ -157,4 +157,7 @@
         <property name="idUser" type="int"/>
     </transfer>
 
+    <transfer name="PriceProductCriteria">
+    </transfer>
+
 </transfers>
