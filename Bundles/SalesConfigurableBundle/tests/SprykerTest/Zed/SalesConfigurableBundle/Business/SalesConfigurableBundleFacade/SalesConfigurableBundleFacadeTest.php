@@ -65,7 +65,6 @@ class SalesConfigurableBundleFacadeTest extends Unit
         parent::setUp();
 
         $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
-        $this->tester->mockConfigMethod('findConfigurableBundleItemQuantityThreshold', 10);
     }
 
     /**
