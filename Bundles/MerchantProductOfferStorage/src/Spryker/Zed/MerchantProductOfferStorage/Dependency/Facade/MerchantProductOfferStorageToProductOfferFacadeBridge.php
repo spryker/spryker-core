@@ -26,9 +26,9 @@ class MerchantProductOfferStorageToProductOfferFacadeBridge implements MerchantP
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer|null $productOfferCriteriaFilter
      *
-     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer|null
+     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
     public function find(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
     {

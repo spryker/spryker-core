@@ -13,9 +13,9 @@ use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 interface MerchantProductOfferStorageToProductOfferFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer|null $productOfferCriteriaFilter
      *
-     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer|null
+     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
     public function find(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer;
 }
