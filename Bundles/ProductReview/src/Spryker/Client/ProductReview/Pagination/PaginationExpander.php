@@ -7,16 +7,11 @@
 
 namespace Spryker\Client\ProductReview\Pagination;
 
-use Elastica\Query;
 use Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 class PaginationExpander implements PaginationExpanderInterface
 {
-    /**
-     * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::PARAMETER_NAME_ITEMS_PER_PAGE;
-     */
-    protected const PARAMETER_NAME_ITEMS_PER_PAGE = 'ipp';
     protected const PARAMETER_NAME_OFFSET = 'offset';
     protected const PARAMETER_NAME_LIMIT = 'limit';
 
@@ -46,18 +41,11 @@ class PaginationExpander implements PaginationExpanderInterface
 
         /** @var \Elastica\Query $query */
         $query = $searchQuery->getSearchQuery();
-
-        if (!empty($requestParameters[static::PARAMETER_NAME_ITEMS_PER_PAGE])) {
-            $query->setSize($requestParameters[static::PARAMETER_NAME_ITEMS_PER_PAGE]);
-
-            return $searchQuery;
-        }
-
-        if (!empty($requestParameters[static::PARAMETER_NAME_OFFSET])
-            && !empty($requestParameters[static::PARAMETER_NAME_LIMIT])
+        if (isset($requestParameters[static::PARAMETER_NAME_OFFSET])
+            && isset($requestParameters[static::PARAMETER_NAME_LIMIT])
         ) {
             $query->setSize($requestParameters[static::PARAMETER_NAME_LIMIT]);
-            $query->setFrom(($requestParameters[static::PARAMETER_NAME_OFFSET] / $requestParameters[static::PARAMETER_NAME_LIMIT]) + 1);
+            $query->setFrom($requestParameters[static::PARAMETER_NAME_OFFSET]);
 
             return $searchQuery;
         }
@@ -77,24 +65,5 @@ class PaginationExpander implements PaginationExpanderInterface
     protected function validateParameter(array $requestParameters, string $parameter): bool
     {
         return (!empty($requestParameters[$parameter]));
-    }
-
-    /**
-     * @param \Elastica\Query $query
-     * @param int $currentPage
-     * @param int $itemsPerPage
-     * @param array $requestParameters
-     *
-     * @return \Elastica\Query
-     */
-    protected function setFrom(Query $query, int $currentPage, int $itemsPerPage, array $requestParameters): Query
-    {
-        if ($this->validateParameter($requestParameters, static::PARAMETER_NAME_LIMIT)
-            && $this->validateParameter($requestParameters, static::PARAMETER_NAME_OFFSET)
-        ) {
-            return $query->setFrom(($currentPage / $itemsPerPage) + 1);
-        }
-
-        return $query->setFrom(($currentPage - 1) * $itemsPerPage);
     }
 }

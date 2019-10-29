@@ -8,6 +8,7 @@
 namespace Spryker\Glue\ProductReviewsRestApi\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\Page;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductReviewsRestApi\Processor\Reader\ProductReviewReaderInterface;
@@ -18,11 +19,6 @@ class ProductReviewResourceRelationshipExpander implements ProductReviewResource
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     protected const PRODUCT_MAPPING_TYPE = 'sku';
-
-    /**
-     * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::PARAMETER_NAME_ITEMS_PER_PAGE;
-     */
-    protected const PARAMETER_NAME_ITEMS_PER_PAGE = 'ipp';
 
     /**
      * @var \Spryker\Glue\ProductReviewsRestApi\Processor\Reader\ProductReviewReaderInterface
@@ -105,15 +101,13 @@ class ProductReviewResourceRelationshipExpander implements ProductReviewResource
             return;
         }
 
-        $requestParams = [
-            static::PARAMETER_NAME_ITEMS_PER_PAGE => $this->productReviewsRestApiConfig->getMaximumNumberOfResults(),
-        ];
+        $restRequest->setPage(new Page(0, $this->productReviewsRestApiConfig->getMaximumNumberOfResults()));
 
         $productReviewsRestResources = $this->productReviewReader
             ->getProductReviewsByIdProductAbstract(
                 $restRequest,
                 $productData[static::KEY_ID_PRODUCT_ABSTRACT],
-                $requestParams
+                []
             );
 
         foreach ($productReviewsRestResources as $productReviewsRestResource) {

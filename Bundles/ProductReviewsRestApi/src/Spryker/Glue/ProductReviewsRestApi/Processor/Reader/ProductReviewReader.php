@@ -12,6 +12,7 @@ use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\PaginatedP
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\ProductReviewsResultFormatterPlugin;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\Page;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewClientInterface;
@@ -91,10 +92,6 @@ class ProductReviewReader implements ProductReviewReaderInterface
 
         $productReviews = $this->getProductReviewsInSearch($restRequest, $productAbstractData[static::KEY_ID_PRODUCT_ABSTRACT]);
 
-        if (!$restRequest->getPage()) {
-            $restRequest->setPage(new Page(0, $this->productReviewsRestApiConfig->getDefaultReviewsPerPage()));
-        }
-
         return $this->productReviewRestResponseBuilder->createProductReviewRestResponse(
             $productReviews[PaginatedProductReviewsResultFormatterPlugin::NAME]->getNumFound(),
             $restRequest->getPage()->getLimit(),
@@ -135,13 +132,14 @@ class ProductReviewReader implements ProductReviewReaderInterface
         int $idProductAbstract,
         array $requestParams = []
     ): array {
-        $restRequestParams = $restRequest->getHttpRequest()->query->all();
-        if (isset($restRequestParams[RequestConstantsInterface::QUERY_PAGE][RequestConstantsInterface::QUERY_OFFSET])) {
-            $requestParams[RequestConstantsInterface::QUERY_OFFSET]
-                = $restRequestParams[RequestConstantsInterface::QUERY_PAGE][RequestConstantsInterface::QUERY_OFFSET];
+        if (!$restRequest->getPage()) {
+            $restRequest->setPage(new Page(0, $this->productReviewsRestApiConfig->getDefaultReviewsPerPage()));
         }
 
-        $requestParams[RequestConstantsInterface::QUERY_LIMIT] = $this->getLimitParameter($restRequestParams);
+        $page = $restRequest->getPage();
+
+        $requestParams[RequestConstantsInterface::QUERY_OFFSET] = $this->getOffsetParameter($page);
+        $requestParams[RequestConstantsInterface::QUERY_LIMIT] = $this->getLimitParameter($page);
 
         $productReviews = $this->productReviewClient->findProductReviewsInSearch(
             (new ProductReviewSearchRequestTransfer())
@@ -153,16 +151,30 @@ class ProductReviewReader implements ProductReviewReaderInterface
     }
 
     /**
-     * @param array $restRequestParams
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface $page
      *
      * @return int
      */
-    protected function getLimitParameter(array $restRequestParams): int
+    protected function getLimitParameter(PageInterface $page): int
     {
-        if (!isset($restRequestParams[RequestConstantsInterface::QUERY_PAGE][RequestConstantsInterface::QUERY_LIMIT])) {
+        if (!$page->getLimit()) {
             return $this->productReviewsRestApiConfig->getDefaultReviewsPerPage();
         }
 
-        return (int)$restRequestParams[RequestConstantsInterface::QUERY_PAGE][RequestConstantsInterface::QUERY_LIMIT];
+        return $page->getLimit();
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface $page
+     *
+     * @return int
+     */
+    protected function getOffsetParameter(PageInterface $page): int
+    {
+        if (!$page->getOffset()) {
+            return 0;
+        }
+
+        return $page->getOffset();
     }
 }
