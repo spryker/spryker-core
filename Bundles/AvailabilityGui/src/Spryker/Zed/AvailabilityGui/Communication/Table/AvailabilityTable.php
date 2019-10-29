@@ -31,7 +31,7 @@ class AvailabilityTable extends AbstractTable
 
     protected const NEVER_OUT_OF_STOCK_DEFAULT_VALUE = 'false';
 
-    protected const NOT_AVAILABLE = 'N/A';
+    protected const NOT_APPLICABLE = 'N/A';
 
     /**
      * @var int
@@ -149,9 +149,9 @@ class AvailabilityTable extends AbstractTable
             $result[] = [
                 AvailabilityQueryContainer::CONCRETE_SKU => $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
                 AvailabilityQueryContainer::CONCRETE_NAME => $productItem[AvailabilityQueryContainer::CONCRETE_NAME],
-                AvailabilityQueryContainer::CONCRETE_AVAILABILITY => $isNeverOutOfStock ? static::NOT_AVAILABLE : $productItem[AvailabilityQueryContainer::CONCRETE_AVAILABILITY],
+                AvailabilityQueryContainer::CONCRETE_AVAILABILITY => $isNeverOutOfStock ? static::NOT_APPLICABLE : $productItem[AvailabilityQueryContainer::CONCRETE_AVAILABILITY],
                 AvailabilityQueryContainer::STOCK_QUANTITY => $productItem[AvailabilityQueryContainer::STOCK_QUANTITY],
-                AvailabilityQueryContainer::RESERVATION_QUANTITY => $isBundleProduct ? static::NOT_AVAILABLE : $this->calculateReservation($productItem),
+                AvailabilityQueryContainer::RESERVATION_QUANTITY => $isBundleProduct ? static::NOT_APPLICABLE : $this->calculateReservation($productItem),
                 static::IS_BUNDLE_PRODUCT => ($isBundleProduct) ? 'Yes' : 'No',
                 AvailabilityQueryContainer::CONCRETE_NEVER_OUT_OF_STOCK_SET => $isNeverOutOfStock ? 'Yes' : 'No',
                 static::TABLE_COL_ACTION => $this->createButtons($productItem, $isBundleProduct),
