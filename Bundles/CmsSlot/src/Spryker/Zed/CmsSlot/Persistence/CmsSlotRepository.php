@@ -39,14 +39,14 @@ class CmsSlotRepository extends AbstractRepository implements CmsSlotRepositoryI
      */
     public function getFilteredCmsSlots(FilterTransfer $filterTransfer): array
     {
-        $cmsSlotEntities = $this->buildQueryFromCriteria(
+        $cmsSlotEntityTransfers = $this->buildQueryFromCriteria(
             $this->getFactory()->createCmsSlotQuery(),
             $filterTransfer
         )->find();
 
         return $this->getFactory()
             ->createCmsSlotMapper()
-            ->mapCmsSlotEntityCollectionToTransferCollection($cmsSlotEntities);
+            ->mapCmsSlotEntityCollectionToTransferCollection($cmsSlotEntityTransfers);
     }
 
     /**

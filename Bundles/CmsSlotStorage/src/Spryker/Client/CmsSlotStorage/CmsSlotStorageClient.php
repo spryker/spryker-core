@@ -29,7 +29,7 @@ class CmsSlotStorageClient extends AbstractClient implements CmsSlotStorageClien
     public function getCmsSlotByKey(string $cmsSlotKey): CmsSlotStorageTransfer
     {
         return $this->getFactory()
-            ->createCmsSlotStorageStorageReader()
+            ->createCmsSlotStorageReader()
             ->getCmsSlotByKey($cmsSlotKey);
     }
 }

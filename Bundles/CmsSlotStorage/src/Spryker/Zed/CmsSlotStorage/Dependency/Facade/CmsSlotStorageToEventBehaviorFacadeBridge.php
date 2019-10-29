@@ -27,7 +27,7 @@ class CmsSlotStorageToEventBehaviorFacadeBridge implements CmsSlotStorageToEvent
      *
      * @return array
      */
-    public function getEventTransferIds(array $eventTransfers): array
+    public function getEventTransferIds(array $eventTransfers)
     {
         return $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
     }

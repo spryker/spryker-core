@@ -40,10 +40,20 @@ class CmsSlotStoragePublisher implements CmsSlotStoragePublisherInterface
      *
      * @return void
      */
-    public function publish(array $cmsSlotIds): void
+    public function publishByCmsSlotIds(array $cmsSlotIds): void
     {
         $cmsSlotTransfers = $this->cmsSlotFacade->getCmsSlotsByCmsSlotIds($cmsSlotIds);
 
+        $this->saveCmsSlots($cmsSlotTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsSlotTransfer[] $cmsSlotTransfers
+     *
+     * @return void
+     */
+    protected function saveCmsSlots(array $cmsSlotTransfers): void
+    {
         foreach ($cmsSlotTransfers as $cmsSlotTransfer) {
             $this->cmsSlotStorageEntityManager->saveCmsSlotStorage(
                 (new CmsSlotStorageTransfer())->fromArray($cmsSlotTransfer->toArray(), true)

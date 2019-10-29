@@ -18,7 +18,7 @@ class CmsSlotStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\CmsSlotStorage\Reader\CmsSlotStorageReaderInterface
      */
-    public function createCmsSlotStorageStorageReader(): CmsSlotStorageReaderInterface
+    public function createCmsSlotStorageReader(): CmsSlotStorageReaderInterface
     {
         return new CmsSlotStorageReader(
             $this->getStorageClient(),

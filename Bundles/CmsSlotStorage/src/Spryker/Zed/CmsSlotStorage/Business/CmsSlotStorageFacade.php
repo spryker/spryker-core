@@ -27,6 +27,6 @@ class CmsSlotStorageFacade extends AbstractFacade implements CmsSlotStorageFacad
      */
     public function publishCmsSlots(array $cmsSlotIds): void
     {
-        $this->getFactory()->createCmsSlotStoragePublisher()->publish($cmsSlotIds);
+        $this->getFactory()->createCmsSlotStoragePublisher()->publishByCmsSlotIds($cmsSlotIds);
     }
 }

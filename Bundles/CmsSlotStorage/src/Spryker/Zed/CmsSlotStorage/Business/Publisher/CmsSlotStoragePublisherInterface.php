@@ -14,5 +14,5 @@ interface CmsSlotStoragePublisherInterface
      *
      * @return void
      */
-    public function publish(array $cmsSlotIds): void;
+    public function publishByCmsSlotIds(array $cmsSlotIds): void;
 }
