@@ -68,11 +68,11 @@ interface AvailabilityHelperInterface
     public function findProductAbstractAvailabilityTransfer(int $idProductAbstract, int $idLocale, int $idStore): ?ProductAbstractAvailabilityTransfer;
 
     /**
-     * @param string $neverOutOfStockSet
+     * @param string|null $neverOutOfStockSet
      *
      * @return bool
      */
-    public function isNeverOutOfStock(string $neverOutOfStockSet): bool;
+    public function isNeverOutOfStock(?string $neverOutOfStockSet): bool;
 
     /**
      * @param string $reservationAggregationSet
