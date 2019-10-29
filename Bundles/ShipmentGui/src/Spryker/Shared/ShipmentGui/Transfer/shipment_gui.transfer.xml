@@ -19,6 +19,19 @@
         <property name="idSalesOrderItem" type="int"/>
     </transfer>
 
+    <transfer name="TaxSetCollection">
+        <property name="taxSets" type="TaxSet[]" singular="taxSet"/>
+    </transfer>
+
+    <transfer name="TaxSet">
+        <property name="idTaxSet" type="int"/>
+        <property name="name" type="string"/>
+        <property name="amount" type="int"/>
+        <property name="taxRates" type="TaxRate[]" singular="taxRate"/>
+        <property name="createdAt" type="string"/>
+        <property name="updatedAt" type="string"/>
+    </transfer>
+
     <transfer name="Shipment">
         <property name="idSalesShipment" type="int"/>
         <property name="shippingAddress" type="Address"/>
@@ -81,5 +94,35 @@
         <property name="currencyIsoCode" type="string"/>
         <property name="storeRelation" type="StoreRelation"/>
         <property name="shipmentMethodKey" type="string"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="idCustomer" type="int"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="email" type="string"/>
+    </transfer>
+
+    <transfer name="TabItem">
+        <property name="name" type="string"/>
+        <property name="template" type="string"/>
+        <property name="title" type="string"/>
+        <property name="hasError" type="bool"/>
+    </transfer>
+
+    <transfer name="TabsView">
+        <property name="tabs" type="TabItem[]" singular="tab"/>
+        <property name="footerTemplate" type="string"/>
+        <property name="isNavigable" type="bool"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idEntity" type="int"/>
+        <property name="idStores" type="int[]" singular="idStores"/>
+        <property name="stores" type="Store[]" singular="stores"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
     </transfer>
 </transfers>

@@ -145,6 +145,7 @@
         <property name="currency" type="Currency"/>
         <property name="netAmount" type="int"/>
         <property name="grossAmount" type="int"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="Money">
