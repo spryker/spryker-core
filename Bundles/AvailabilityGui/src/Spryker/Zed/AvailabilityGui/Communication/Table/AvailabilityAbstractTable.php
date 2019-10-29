@@ -155,7 +155,7 @@ class AvailabilityAbstractTable extends AbstractTable
     protected function isNeverOutOfStock(SpyProductAbstract $productAbstractEntity): bool
     {
         return $this->availabilityHelper->isNeverOutOfStock(
-            $productAbstractEntity->getVirtualColumn(AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET)
+            $productAbstractEntity->getVirtualColumn(AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET) ?? ''
         );
     }
 
