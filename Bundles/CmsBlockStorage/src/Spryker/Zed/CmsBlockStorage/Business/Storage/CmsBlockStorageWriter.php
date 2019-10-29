@@ -11,12 +11,9 @@ use Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CmsBlockStorage\Dependency\Service\CmsBlockStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\CmsBlockStorage\Persistence\CmsBlockStorageQueryContainerInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     protected const RELATION_CMS_BLOCK_STORES = 'SpyCmsBlockStores';
     protected const RELATION_STORE = 'SpyStore';
     protected const COLUMN_ID_CMS_BLOCK = 'id_cms_block';
