@@ -9,9 +9,24 @@ namespace Spryker\Zed\ConfigurableBundle\Business\Writer;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTranslationTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface;
 
-class ConfigurableBundleTemplateSlotTranslationWriter extends AbstractConfigurableBundleTranslationWriter implements ConfigurableBundleTemplateSlotTranslationWriterInterface
+class ConfigurableBundleTemplateSlotTranslationWriter implements ConfigurableBundleTemplateSlotTranslationWriterInterface
 {
+    /**
+     * @var \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface
+     */
+    protected $glossaryFacade;
+
+    /**
+     * @param \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface $glossaryFacade
+     */
+    public function __construct(ConfigurableBundleToGlossaryFacadeInterface $glossaryFacade)
+    {
+        $this->glossaryFacade = $glossaryFacade;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
      *
@@ -22,7 +37,9 @@ class ConfigurableBundleTemplateSlotTranslationWriter extends AbstractConfigurab
         $configurableBundleTemplateSlotTransfer->requireName();
         $translationKey = $configurableBundleTemplateSlotTransfer->getName();
 
-        $this->createTranaslationKeyIfNotExists($translationKey);
+        if (!$this->glossaryFacade->hasKey($translationKey)) {
+            $this->glossaryFacade->createKey($translationKey);
+        }
 
         foreach ($configurableBundleTemplateSlotTransfer->getTranslations() as $configurableBundleTemplateSlotTranslationTransfer) {
             $this->persistNameTranslation($configurableBundleTemplateSlotTranslationTransfer, $translationKey);
@@ -48,5 +65,23 @@ class ConfigurableBundleTemplateSlotTranslationWriter extends AbstractConfigurab
             $configurableBundleTemplateSlotTranslationTransfer->getName(),
             $configurableBundleTemplateSlotTranslationTransfer->getLocale()
         );
+    }
+
+    /**
+     * @param string $translationKey
+     * @param string $translationValue
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return void
+     */
+    protected function persistTranslation(string $translationKey, string $translationValue, LocaleTransfer $localeTransfer): void
+    {
+        if (!$this->glossaryFacade->hasTranslation($translationKey, $localeTransfer)) {
+            $this->glossaryFacade->createTranslation($translationKey, $localeTransfer, $translationValue);
+
+            return;
+        }
+
+        $this->glossaryFacade->updateTranslation($translationKey, $localeTransfer, $translationValue);
     }
 }

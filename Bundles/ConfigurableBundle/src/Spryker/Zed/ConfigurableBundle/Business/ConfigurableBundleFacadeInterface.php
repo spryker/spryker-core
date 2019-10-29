@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ConfigurableBundleResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
@@ -216,11 +217,13 @@ interface ConfigurableBundleFacadeInterface
      *
      * @api
      *
-     * @param int $idConfigurableBundleTemplateSlot
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotResponseTransfer
      */
-    public function deleteConfigurableBundleTemplateSlotById(int $idConfigurableBundleTemplateSlot): void;
+    public function deleteConfigurableBundleTemplateSlot(
+        ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
+    ): ConfigurableBundleTemplateSlotResponseTransfer;
 
     /**
      * Specification:

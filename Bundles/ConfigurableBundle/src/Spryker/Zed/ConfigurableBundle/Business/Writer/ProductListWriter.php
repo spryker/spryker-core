@@ -7,18 +7,11 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business\Writer;
 
-use ArrayObject;
-use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
-use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductListCategoryRelationTransfer;
 use Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
-use Spryker\Zed\ConfigurableBundle\Business\Exception\ConfigurableBundleTemplateNotFoundException;
-use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface;
-use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToProductListFacadeInterface;
 
 class ProductListWriter implements ProductListWriterInterface
@@ -29,33 +22,16 @@ class ProductListWriter implements ProductListWriterInterface
     protected const PRODUCT_LIST_DEFAULT_TYPE = 'whitelist';
 
     /**
-     * @var \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface
-     */
-    protected $configurableBundleTemplateReader;
-
-    /**
      * @var \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToProductListFacadeInterface
      */
     protected $productListFacade;
 
     /**
-     * @var \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface
-     */
-    protected $localeFacade;
-
-    /**
-     * @param \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface $configurableBundleTemplateReader
      * @param \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToProductListFacadeInterface $productListFacade
-     * @param \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface $localeFacade
      */
-    public function __construct(
-        ConfigurableBundleTemplateReaderInterface $configurableBundleTemplateReader,
-        ConfigurableBundleToProductListFacadeInterface $productListFacade,
-        ConfigurableBundleToLocaleFacadeInterface $localeFacade
-    ) {
-        $this->configurableBundleTemplateReader = $configurableBundleTemplateReader;
+    public function __construct(ConfigurableBundleToProductListFacadeInterface $productListFacade)
+    {
         $this->productListFacade = $productListFacade;
-        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -63,75 +39,13 @@ class ProductListWriter implements ProductListWriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function createProductListForConfigurableBundleTemplateSlot(
-        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
-    ): ProductListResponseTransfer {
-        $configurableBundleTemplateSlotTransfer->requireFkConfigurableBundleTemplate();
-
-        $configurableBundleTemplateTransfer = $this->getConfigurableBundleTemplateTransfer($configurableBundleTemplateSlotTransfer);
-        $configurableBundleTemplateSlotTransfer->setConfigurableBundleTemplate($configurableBundleTemplateTransfer);
-
-        return $this->createProductList($configurableBundleTemplateSlotTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
-     */
-    public function updateProductListForConfigurableBundleTemplateSlot(
-        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
-    ): ProductListResponseTransfer {
-        $configurableBundleTemplateSlotTransfer
-            ->requireFkConfigurableBundleTemplate()
-            ->requireTranslations()
-            ->requireProductList()
-            ->getProductList()
-                ->requireIdProductList();
-
-        $configurableBundleTemplateTransfer = $this->getConfigurableBundleTemplateTransfer($configurableBundleTemplateSlotTransfer);
-        $configurableBundleTemplateSlotTransfer->setConfigurableBundleTemplate($configurableBundleTemplateTransfer);
-
-        $configurableBundleTemplateSlotTransfer->getProductList()->setTitle(
-            $this->generateProductListTitle($configurableBundleTemplateSlotTransfer)
-        );
-
-        return $this->productListFacade->updateProductList($configurableBundleTemplateSlotTransfer->getProductList());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
-     *
-     * @throws \Spryker\Zed\ConfigurableBundle\Business\Exception\ConfigurableBundleTemplateNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
-     */
-    protected function getConfigurableBundleTemplateTransfer(ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer): ConfigurableBundleTemplateTransfer
+    public function createProductList(ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer): ProductListResponseTransfer
     {
-        $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())
-            ->setIdConfigurableBundleTemplate($configurableBundleTemplateSlotTransfer->getFkConfigurableBundleTemplate())
-            ->setTranslationLocales(new ArrayObject($this->getDefaultLocale()));
-
-        $configurableBundleTemplateTransfer = $this->configurableBundleTemplateReader
-            ->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
-
-        if (!$configurableBundleTemplateTransfer) {
-            throw new ConfigurableBundleTemplateNotFoundException(
-                sprintf('Configurable Bundle Template with id %s does not exist.', $configurableBundleTemplateSlotTransfer->getFkConfigurableBundleTemplate())
-            );
-        }
-
-        return $configurableBundleTemplateTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
-     */
-    protected function createProductList(ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer): ProductListResponseTransfer
-    {
-        $productListTransfer = $this->createProductListTransfer($configurableBundleTemplateSlotTransfer);
+        $productListTransfer = (new ProductListTransfer())
+            ->setTitle($this->generateProductListTitle($configurableBundleTemplateSlotTransfer))
+            ->setType(static::PRODUCT_LIST_DEFAULT_TYPE)
+            ->setProductListProductConcreteRelation(new ProductListProductConcreteRelationTransfer())
+            ->setProductListCategoryRelation(new ProductListCategoryRelationTransfer());
 
         return $this->productListFacade->createProductList($productListTransfer);
     }
@@ -139,15 +53,19 @@ class ProductListWriter implements ProductListWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductListTransfer
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    protected function createProductListTransfer(ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer): ProductListTransfer
+    public function updateProductList(ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer): ProductListResponseTransfer
     {
-        return (new ProductListTransfer())
-            ->setTitle($this->generateProductListTitle($configurableBundleTemplateSlotTransfer))
-            ->setType(static::PRODUCT_LIST_DEFAULT_TYPE)
-            ->setProductListProductConcreteRelation(new ProductListProductConcreteRelationTransfer())
-            ->setProductListCategoryRelation(new ProductListCategoryRelationTransfer());
+        $configurableBundleTemplateSlotTransfer
+            ->requireProductList()
+            ->getProductList()
+                ->requireIdProductList();
+
+        $productListTransfer = $configurableBundleTemplateSlotTransfer->getProductList();
+        $productListTransfer->setTitle($this->generateProductListTitle($configurableBundleTemplateSlotTransfer));
+
+        return $this->productListFacade->updateProductList($productListTransfer);
     }
 
     /**
@@ -157,25 +75,16 @@ class ProductListWriter implements ProductListWriterInterface
      */
     protected function generateProductListTitle(ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer): string
     {
-        $configurableBundleTemplateSlotTransfer->requireTranslations()
+        $configurableBundleTemplateSlotTransfer
+            ->requireTranslations()
             ->requireConfigurableBundleTemplate()
             ->getConfigurableBundleTemplate()
-            ->requireTranslations();
+                ->requireTranslations();
 
         return sprintf(
             '%s - %s',
             $configurableBundleTemplateSlotTransfer->getConfigurableBundleTemplate()->getTranslations()[0]->getName(),
             $configurableBundleTemplateSlotTransfer->getTranslations()[0]->getName()
         );
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    protected function getDefaultLocale(): LocaleTransfer
-    {
-        $availableLocaleTransfers = $this->localeFacade->getLocaleCollection();
-
-        return reset($availableLocaleTransfers);
     }
 }

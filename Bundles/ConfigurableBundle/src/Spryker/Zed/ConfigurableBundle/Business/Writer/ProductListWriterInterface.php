@@ -17,16 +17,12 @@ interface ProductListWriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function createProductListForConfigurableBundleTemplateSlot(
-        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
-    ): ProductListResponseTransfer;
+    public function createProductList(ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer): ProductListResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function updateProductListForConfigurableBundleTemplateSlot(
-        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
-    ): ProductListResponseTransfer;
+    public function updateProductList(ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer): ProductListResponseTransfer;
 }

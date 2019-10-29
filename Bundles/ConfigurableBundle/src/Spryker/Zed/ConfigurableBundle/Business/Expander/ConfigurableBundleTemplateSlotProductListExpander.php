@@ -33,9 +33,10 @@ class ConfigurableBundleTemplateSlotProductListExpander implements ConfigurableB
     public function expandConfigurableBundleTemplateSlotWithProductList(
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
     ): ConfigurableBundleTemplateSlotTransfer {
-        $configurableBundleTemplateSlotTransfer->requireProductList()
+        $configurableBundleTemplateSlotTransfer
+            ->requireProductList()
             ->getProductList()
-            ->requireIdProductList();
+                ->requireIdProductList();
 
         $productListTransfer = $this->productListFacade->getProductListById($configurableBundleTemplateSlotTransfer->getProductList());
 

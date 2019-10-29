@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTemplateSlotProductListExpanderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpanderInterface;
+use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface;
 
 class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplateSlotReaderInterface
@@ -37,18 +38,26 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
     protected $configurableBundleTemplateSlotProductListExpander;
 
     /**
+     * @var \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface $configurableBundleRepository
      * @param \Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpanderInterface $configurableBundleTranslationExpander
      * @param \Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTemplateSlotProductListExpanderInterface $configurableBundleTemplateSlotProductListExpander
+     * @param \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
         ConfigurableBundleRepositoryInterface $configurableBundleRepository,
         ConfigurableBundleTranslationExpanderInterface $configurableBundleTranslationExpander,
-        ConfigurableBundleTemplateSlotProductListExpanderInterface $configurableBundleTemplateSlotProductListExpander
+        ConfigurableBundleTemplateSlotProductListExpanderInterface $configurableBundleTemplateSlotProductListExpander,
+        ConfigurableBundleToLocaleFacadeInterface $localeFacade
     ) {
         $this->configurableBundleRepository = $configurableBundleRepository;
         $this->configurableBundleTranslationExpander = $configurableBundleTranslationExpander;
         $this->configurableBundleTemplateSlotProductListExpander = $configurableBundleTemplateSlotProductListExpander;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -87,12 +96,25 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
         $configurableBundleTemplateSlotCollectionTransfer = $this->configurableBundleRepository
             ->getConfigurableBundleTemplateSlotCollection($configurableBundleTemplateSlotFilterTransfer);
 
-        foreach ($configurableBundleTemplateSlotTransfers as $configurableBundleTemplateSlotTransfer) {
+        foreach ($configurableBundleTemplateSlotCollectionTransfer->getConfigurableBundleTemplateSlots() as $configurableBundleTemplateSlotTransfer) {
             $this->expandConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer, $configurableBundleTemplateSlotFilterTransfer);
         }
 
-        return (new ConfigurableBundleTemplateSlotCollectionTransfer())
-            ->setConfigurableBundleTemplateSlots($configurableBundleTemplateSlotTransfers);
+        return $configurableBundleTemplateSlotCollectionTransfer;
+    }
+
+    /**
+     * @param int $idConfigurableBundleTemplateSlot
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotResponseTransfer
+     */
+    public function getConfigurableBundleTemplateSlotById(int $idConfigurableBundleTemplateSlot): ConfigurableBundleTemplateSlotResponseTransfer
+    {
+        $configurableBundleTemplateSlotFilterTransfer = (new ConfigurableBundleTemplateSlotFilterTransfer())
+            ->setIdConfigurableBundleTemplateSlot($idConfigurableBundleTemplateSlot)
+            ->setTranslationLocales(new ArrayObject(reset($this->localeFacade->getLocaleCollection())));
+
+        return $this->getConfigurableBundleTemplateSlot($configurableBundleTemplateSlotFilterTransfer);
     }
 
     /**
@@ -123,23 +145,6 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
         $configurableBundleTemplateSlotTransfer->setConfigurableBundleTemplate($configurableBundleTemplateTransfer);
 
         return $configurableBundleTemplateSlotTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[] $configurableBundleTemplateSlotTransfers
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[]
-     */
-    protected function expandConfigurableBundleTemplateSlotTransfersWithTranslations(
-        array $configurableBundleTemplateSlotTransfers,
-        ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
-    ): array {
-        foreach ($configurableBundleTemplateSlotTransfers as $configurableBundleTemplateSlotTransfer) {
-            $this->expandConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer, $configurableBundleTemplateSlotFilterTransfer);
-        }
-
-        return $configurableBundleTemplateSlotTransfers;
     }
 
     /**

@@ -96,46 +96,6 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
     }
 
     /**
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return void
-     */
-    public function activateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
-    {
-        $configurableBundleTemplateEntity = $this->getFactory()
-            ->createConfigurableBundleTemplateQuery()
-            ->filterByIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
-            ->findOne();
-
-        if (!$configurableBundleTemplateEntity) {
-            return;
-        }
-
-        $configurableBundleTemplateEntity
-            ->setIsActive(true)
-            ->save();
-    }
-
-    /**
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return void
-     */
-    public function deactivateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
-    {
-        $configurableBundleTemplateEntity = $this->getFactory()
-            ->createConfigurableBundleTemplateQuery()
-            ->findOneByIdConfigurableBundleTemplate($idConfigurableBundleTemplate);
-
-        if (!$configurableBundleTemplateEntity) {
-            return;
-        }
-
-        $configurableBundleTemplateEntity->setIsActive(false)
-            ->save();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
@@ -158,11 +118,11 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
      */
     public function updateConfigurableBundleTemplateSlot(
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
-    ): bool {
+    ): ConfigurableBundleTemplateSlotTransfer {
         $configurableBundleTemplateSlotEntity = $this->getFactory()
             ->createConfigurableBundleTemplateSlotQuery()
             ->findOneByIdConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot());

@@ -36,9 +36,8 @@ class ConfigurableBundleNameGenerator implements ConfigurableBundleNameGenerator
      *
      * @return string
      */
-    public function generateConfigurableBundleTemplateName(
-        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): string {
+    public function generateTemplateName(ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer): string
+    {
         $configurableBundleTemplateTransfer->requireTranslations();
 
         return $this->generateName(
@@ -52,9 +51,8 @@ class ConfigurableBundleNameGenerator implements ConfigurableBundleNameGenerator
      *
      * @return string
      */
-    public function generateConfigurableBundleTemplateSlotName(
-        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
-    ): string {
+    public function generateSlotName(ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer): string
+    {
         $configurableBundleTemplateSlotTransfer->requireTranslations();
 
         return $this->generateName(

@@ -23,6 +23,13 @@ interface ConfigurableBundleTemplateReaderInterface
     ): ConfigurableBundleTemplateResponseTransfer;
 
     /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
+     */
+    public function getConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): ConfigurableBundleTemplateResponseTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateCollectionTransfer

@@ -5,39 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ConfigurableBundle\Business\Writer;
+namespace Spryker\Zed\ConfigurableBundle\Business\Updater;
 
-use Generated\Shared\Transfer\ConfigurableBundleResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 
-interface ConfigurableBundleTemplateWriterInterface
+interface ConfigurableBundleTemplateUpdaterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleResponseTransfer
-     */
-    public function createConfigurableBundleTemplate(
-        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): ConfigurableBundleResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-     *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleResponseTransfer
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
      */
     public function updateConfigurableBundleTemplate(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): ConfigurableBundleResponseTransfer;
-
-    /**
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return void
-     */
-    public function deleteConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void;
+    ): ConfigurableBundleTemplateResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
@@ -49,9 +32,11 @@ interface ConfigurableBundleTemplateWriterInterface
     ): ConfigurableBundleTemplateResponseTransfer;
 
     /**
-     * @param int $idConfigurableBundleTemplate
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
      */
-    public function deactivateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void;
+    public function deactivateConfigurableBundleTemplate(
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): ConfigurableBundleTemplateResponseTransfer;
 }

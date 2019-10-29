@@ -23,6 +23,13 @@ interface ConfigurableBundleTemplateSlotReaderInterface
     ): ConfigurableBundleTemplateSlotResponseTransfer;
 
     /**
+     * @param int $idConfigurableBundleTemplateSlot
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotResponseTransfer
+     */
+    public function getConfigurableBundleTemplateSlotById(int $idConfigurableBundleTemplateSlot): ConfigurableBundleTemplateSlotResponseTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotCollectionTransfer

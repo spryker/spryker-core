@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business\Reader;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateCollectionTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpanderInterface;
+use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface;
 
 class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateReaderInterface
@@ -30,15 +32,23 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
     protected $configurableBundleTranslationExpander;
 
     /**
+     * @var \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface $configurableBundleRepository
      * @param \Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpanderInterface $configurableBundleTranslationExpander
+     * @param \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
         ConfigurableBundleRepositoryInterface $configurableBundleRepository,
-        ConfigurableBundleTranslationExpanderInterface $configurableBundleTranslationExpander
+        ConfigurableBundleTranslationExpanderInterface $configurableBundleTranslationExpander,
+        ConfigurableBundleToLocaleFacadeInterface $localeFacade
     ) {
         $this->configurableBundleRepository = $configurableBundleRepository;
         $this->configurableBundleTranslationExpander = $configurableBundleTranslationExpander;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -64,6 +74,20 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
         return (new ConfigurableBundleTemplateResponseTransfer())
             ->setConfigurableBundleTemplate($configurableBundleTemplateTransfer)
             ->setIsSuccessful(true);
+    }
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
+     */
+    public function getConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): ConfigurableBundleTemplateResponseTransfer
+    {
+        $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())
+            ->setIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
+            ->setTranslationLocales(new ArrayObject(reset($this->localeFacade->getLocaleCollection())));
+
+        return $this->getConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
     }
 
     /**

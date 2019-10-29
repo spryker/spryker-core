@@ -22,9 +22,8 @@ class InactiveConfiguredBundleItemFilter implements InactiveConfiguredBundleItem
     /**
      * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface $configurableBundleRepository
      */
-    public function __construct(
-        ConfigurableBundleRepositoryInterface $configurableBundleRepository
-    ) {
+    public function __construct(ConfigurableBundleRepositoryInterface $configurableBundleRepository)
+    {
         $this->configurableBundleRepository = $configurableBundleRepository;
     }
 
@@ -35,14 +34,12 @@ class InactiveConfiguredBundleItemFilter implements InactiveConfiguredBundleItem
      */
     public function filterInactiveItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $activeConfigurableBundleTemplateUuids = $this->configurableBundleRepository->getActiveConfigurableBundleTemplateUuids(
-            $this->extractConfigurableBundleItemTemplateUuids($quoteTransfer)
-        );
-
         $filteredItemTransfers = new ArrayObject();
+        $activeConfigurableBundleTemplateUuids = $this->configurableBundleRepository
+            ->getActiveConfigurableBundleTemplateUuids($this->extractConfigurableBundleTemplateUuids($quoteTransfer));
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $configurableBundleTemplateUuid = $this->extractConfigurableBundleItemTemplateUuid($itemTransfer);
+            $configurableBundleTemplateUuid = $this->extractConfigurableBundleTemplateUuid($itemTransfer);
 
             if (!$configurableBundleTemplateUuid) {
                 $filteredItemTransfers[] = $itemTransfer;
@@ -65,12 +62,12 @@ class InactiveConfiguredBundleItemFilter implements InactiveConfiguredBundleItem
      *
      * @return string[]
      */
-    protected function extractConfigurableBundleItemTemplateUuids(QuoteTransfer $quoteTransfer): array
+    protected function extractConfigurableBundleTemplateUuids(QuoteTransfer $quoteTransfer): array
     {
         $configurableBundleTemplateUuids = [];
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $configurableBundleTemplateUuids[] = $this->extractConfigurableBundleItemTemplateUuid($itemTransfer);
+            $configurableBundleTemplateUuids[] = $this->extractConfigurableBundleTemplateUuid($itemTransfer);
         }
 
         return array_filter($configurableBundleTemplateUuids);
@@ -81,9 +78,9 @@ class InactiveConfiguredBundleItemFilter implements InactiveConfiguredBundleItem
      *
      * @return string|null
      */
-    protected function extractConfigurableBundleItemTemplateUuid(ItemTransfer $itemTransfer): ?string
+    protected function extractConfigurableBundleTemplateUuid(ItemTransfer $itemTransfer): ?string
     {
-        if (!$itemTransfer->getConfiguredBundle()) {
+        if (!$itemTransfer->getConfiguredBundle() || !$itemTransfer->getConfiguredBundle()->getTemplate()) {
             return null;
         }
 

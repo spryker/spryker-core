@@ -57,8 +57,10 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
             $localeTransfers->exchangeArray($this->localeFacade->getLocaleCollection());
         }
 
-        $translationTransfers = $this->getTranslations($configurableBundleTemplateTransfer->getName(), $localeTransfers);
-        $configurableBundleTemplateTranslationTransfers = $this->getConfigurableBundleTemplateTranslationTransfers($translationTransfers, $localeTransfers);
+        $configurableBundleTemplateTranslationTransfers = $this->getConfigurableBundleTemplateTranslations(
+            $this->getTranslations($configurableBundleTemplateTransfer->getName(), $localeTransfers),
+            $localeTransfers
+        );
 
         return $configurableBundleTemplateTransfer->setTranslations($configurableBundleTemplateTranslationTransfers);
     }
@@ -79,8 +81,10 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
             $localeTransfers->exchangeArray($this->localeFacade->getLocaleCollection());
         }
 
-        $translationTransfers = $this->getTranslations($configurableBundleTemplateSlotTransfer->getName(), $localeTransfers);
-        $configurableBundleTemplateSlotTranslationTransfers = $this->getConfigurableBundleTemplateSlotTranslationTransfers($translationTransfers, $localeTransfers);
+        $configurableBundleTemplateSlotTranslationTransfers = $this->getConfigurableBundleTemplateSlotTranslations(
+            $this->getTranslations($configurableBundleTemplateSlotTransfer->getName(), $localeTransfers),
+            $localeTransfers
+        );
 
         return $configurableBundleTemplateSlotTransfer->setTranslations($configurableBundleTemplateSlotTranslationTransfers);
     }
@@ -131,7 +135,8 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
             return reset($translationTransfers);
         }
 
-        return (new TranslationTransfer())->setValue($translationKey);
+        return (new TranslationTransfer())
+            ->setValue($translationKey);
     }
 
     /**
@@ -140,13 +145,14 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer[]
      */
-    protected function getConfigurableBundleTemplateTranslationTransfers(array $translationTransfers, ArrayObject $localeTransfers): ArrayObject
+    protected function getConfigurableBundleTemplateTranslations(array $translationTransfers, ArrayObject $localeTransfers): ArrayObject
     {
         $configurableBundleTemplateTranslationTransfers = new ArrayObject();
         $translationTransfers = $this->getTranslationTransfersIndexedByIdLocale($translationTransfers);
 
         foreach ($localeTransfers as $localeTransfer) {
-            $configurableBundleTemplateTranslationTransfer = (new ConfigurableBundleTemplateTranslationTransfer())->setLocale($localeTransfer);
+            $configurableBundleTemplateTranslationTransfer = (new ConfigurableBundleTemplateTranslationTransfer())
+                ->setLocale($localeTransfer);
 
             if (isset($translationTransfers[$localeTransfer->getIdLocale()])) {
                 $configurableBundleTemplateTranslationTransfer->setName($translationTransfers[$localeTransfer->getIdLocale()]->getValue());
@@ -164,13 +170,14 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTranslationTransfer[]
      */
-    protected function getConfigurableBundleTemplateSlotTranslationTransfers(array $translationTransfers, ArrayObject $localeTransfers): ArrayObject
+    protected function getConfigurableBundleTemplateSlotTranslations(array $translationTransfers, ArrayObject $localeTransfers): ArrayObject
     {
         $configurableBundleTemplateSlotTranslationTransfers = new ArrayObject();
         $translationTransfers = $this->getTranslationTransfersIndexedByIdLocale($translationTransfers);
 
         foreach ($localeTransfers as $localeTransfer) {
-            $configurableBundleTemplateSlotTranslationTransfer = (new ConfigurableBundleTemplateSlotTranslationTransfer())->setLocale($localeTransfer);
+            $configurableBundleTemplateSlotTranslationTransfer = (new ConfigurableBundleTemplateSlotTranslationTransfer())
+                ->setLocale($localeTransfer);
 
             if (isset($translationTransfers[$localeTransfer->getIdLocale()])) {
                 $configurableBundleTemplateSlotTranslationTransfer->setName($translationTransfers[$localeTransfer->getIdLocale()]->getValue());

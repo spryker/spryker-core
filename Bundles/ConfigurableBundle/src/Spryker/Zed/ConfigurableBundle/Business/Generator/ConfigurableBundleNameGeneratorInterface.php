@@ -17,16 +17,12 @@ interface ConfigurableBundleNameGeneratorInterface
      *
      * @return string
      */
-    public function generateConfigurableBundleTemplateName(
-        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): string;
+    public function generateTemplateName(ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer): string;
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
      *
      * @return string
      */
-    public function generateConfigurableBundleTemplateSlotName(
-        ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
-    ): string;
+    public function generateSlotName(ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer): string;
 }
