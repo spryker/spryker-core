@@ -14,7 +14,7 @@ interface CmsSlotStorageReaderInterface
     /**
      * @param string $cmsSlotKey
      *
-     * @throws \Spryker\Client\CmsSlotStorage\Exception\CmsSLotNotFoundException
+     * @throws \Spryker\Client\CmsSlotStorage\Exception\CmsSlotNotFoundException
      *
      * @return \Generated\Shared\Transfer\CmsSlotStorageTransfer
      */

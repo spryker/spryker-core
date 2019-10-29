@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CmsSlotStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\CmsSlotStorage\Dependency\Client\CmsSlotStorageToStorageClientInterface;
 use Spryker\Client\CmsSlotStorage\Dependency\Service\CmsSlotStorageToSynchronizationServiceInterface;
-use Spryker\Client\CmsSlotStorage\Exception\CmsSLotNotFoundException;
+use Spryker\Client\CmsSlotStorage\Exception\CmsSlotNotFoundException;
 use Spryker\Shared\CmsSlotStorage\CmsSlotStorageConstants;
 
 class CmsSlotStorageReader implements CmsSlotStorageReaderInterface
@@ -41,7 +41,7 @@ class CmsSlotStorageReader implements CmsSlotStorageReaderInterface
     /**
      * @param string $cmsSlotKey
      *
-     * @throws \Spryker\Client\CmsSlotStorage\Exception\CmsSLotNotFoundException
+     * @throws \Spryker\Client\CmsSlotStorage\Exception\CmsSlotNotFoundException
      *
      * @return \Generated\Shared\Transfer\CmsSlotStorageTransfer
      */
@@ -52,7 +52,7 @@ class CmsSlotStorageReader implements CmsSlotStorageReaderInterface
         );
 
         if (!$cmsSlotStorageData) {
-            throw new CmsSLotNotFoundException(sprintf(
+            throw new CmsSlotNotFoundException(sprintf(
                 'CMS Slot key "%s" not found.',
                 $cmsSlotKey
             ));

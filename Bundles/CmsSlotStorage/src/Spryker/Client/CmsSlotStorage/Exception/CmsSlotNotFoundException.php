@@ -9,6 +9,6 @@ namespace Spryker\Client\CmsSlotStorage\Exception;
 
 use Exception;
 
-class CmsSLotNotFoundException extends Exception
+class CmsSlotNotFoundException extends Exception
 {
 }
