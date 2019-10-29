@@ -8,10 +8,8 @@
 namespace Spryker\Zed\CmsGui\Communication\Plugin;
 
 use Generated\Shared\Transfer\CmsSlotTemplateConfigurationTransfer;
-use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageSlotBlockConditionForm;
 use Spryker\Zed\CmsSlotBlockGuiExtension\Communication\Plugin\CmsSlotBlockGuiConditionFormPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -51,22 +49,7 @@ class CmsPageSlotBlockConditionFormPlugin extends AbstractPlugin implements CmsS
     public function addConditionForm(FormBuilderInterface $builder): void
     {
         $cmsPageSlotBlockConditionForm = $this->getFactory()->createCmsPageSlotBlockConditionForm();
-        $builder->add(static::CONDITION_KEY, FormType::class, [
-            'label' => false,
-            'error_mapping' => [
-                '.' => CmsPageSlotBlockConditionForm::FIELD_PAGE_IDS,
-            ],
-            'constraints' => [
-                $this->getFactory()->createCmsPageConditionsConstraint(),
-            ],
-        ]);
-
-        $cmsPageSlotBlockFormDataProvider = $this->getFactory()
-            ->createCmsPageSlotBlockFormDataProvider();
-
-        $cmsPageSlotBlockConditionForm->buildForm(
-            $builder->get(static::CONDITION_KEY),
-            $cmsPageSlotBlockFormDataProvider->getOptions()
-        );
+        $cmsPageSlotBlockFormDataProvider = $this->getFactory()->createCmsPageSlotBlockFormDataProvider();
+        $cmsPageSlotBlockConditionForm->buildForm($builder, $cmsPageSlotBlockFormDataProvider->getOptions());
     }
 }

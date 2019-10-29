@@ -34,34 +34,34 @@ class CmsPageSlotBlockFormDataProvider implements CmsPageSlotBlockFormDataProvid
     {
         return [
             'data_class' => CmsSlotBlockTransfer::class,
-            CmsPageSlotBlockConditionForm::OPTION_PAGES => $this->getPages(),
+            CmsPageSlotBlockConditionForm::OPTION_PAGE_IDS => $this->getPageIds(),
         ];
     }
 
     /**
      * @return int[]
      */
-    protected function getPages(): array
+    protected function getPageIds(): array
     {
-        $cmsPageEntities = $this->cmsQueryContainer->queryLocalizedPagesWithTemplates()->find();
+        $cmsPageEntityCollection = $this->cmsQueryContainer->queryLocalizedPagesWithTemplates()->find();
 
-        return $this->mapCmsPageEntitiesToArray($cmsPageEntities);
+        return $this->getCmsPageIdsFromCollection($cmsPageEntityCollection);
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Cms\Persistence\SpyCmsPage[] $cmsPageEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Cms\Persistence\SpyCmsPage[] $cmsPageEntityCollection
      *
      * @return int[]
      */
-    protected function mapCmsPageEntitiesToArray(ObjectCollection $cmsPageEntities): array
+    protected function getCmsPageIdsFromCollection(ObjectCollection $cmsPageEntityCollection): array
     {
-        $pages = [];
+        $pageIds = [];
 
-        foreach ($cmsPageEntities as $cmsPageEntity) {
+        foreach ($cmsPageEntityCollection as $cmsPageEntity) {
             $cmsPageName = explode(',', $cmsPageEntity->getName());
-            $pages[$cmsPageName[0]] = $cmsPageEntity->getIdCmsPage();
+            $pageIds[$cmsPageName[0]] = $cmsPageEntity->getIdCmsPage();
         }
 
-        return $pages;
+        return $pageIds;
     }
 }
