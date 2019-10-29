@@ -12,9 +12,23 @@ use Spryker\Zed\CmsSlotBlockDataImport\Business\DataSet\CmsSlotBlockDataSetInter
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\DataImport\Dependency\Service\DataImportToUtilEncodingServiceInterface;
 
 class CmsSlotBlockWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @var \Spryker\Zed\DataImport\Dependency\Service\DataImportToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
+     * @param \Spryker\Zed\DataImport\Dependency\Service\DataImportToUtilEncodingServiceInterface $utilEncodingService
+     */
+    public function __construct(DataImportToUtilEncodingServiceInterface $utilEncodingService)
+    {
+        $this->utilEncodingService = $utilEncodingService;
+    }
+
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -29,6 +43,8 @@ class CmsSlotBlockWriterStep extends PublishAwareStep implements DataImportStepI
             ->findOneOrCreate();
 
         $cmsSlotBlockEntity->setPosition($dataSet[CmsSlotBlockDataSetInterface::CMS_SLOT_POSITION]);
+        $conditions = $this->utilEncodingService->encodeJson($dataSet[CmsSlotBlockDataSetInterface::CMS_SLOT_BLOCK_ALL_CONDITIONS]);
+        $cmsSlotBlockEntity->setConditions($conditions);
 
         $cmsSlotBlockEntity->save();
     }
