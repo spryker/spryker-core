@@ -10,6 +10,7 @@ namespace Spryker\Zed\CmsBlockCategoryStorage\Business\Storage;
 use Generated\Shared\Transfer\CmsBlockCategoriesTransfer;
 use Generated\Shared\Transfer\CmsBlockCategoryTransfer;
 use Orm\Zed\CmsBlockCategoryStorage\Persistence\SpyCmsBlockCategoryStorage;
+use Spryker\Zed\CmsBlockCategoryStorage\Business\CmsBlock\CmsBlockFeatureDetectorInterface;
 use Spryker\Zed\CmsBlockCategoryStorage\Dependency\Service\CmsBlockCategoryStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainerInterface;
 
@@ -43,15 +44,26 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
     protected $isSendingToQueue = true;
 
     /**
+     * @var \Spryker\Zed\CmsBlockCategoryStorage\Business\CmsBlock\CmsBlockFeatureDetectorInterface
+     */
+    protected $cmsBlockFeatureDetector;
+
+    /**
      * @param \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\CmsBlockCategoryStorage\Dependency\Service\CmsBlockCategoryStorageToUtilSanitizeServiceInterface $utilSanitizeService
      * @param bool $isSendingToQueue
+     * @param \Spryker\Zed\CmsBlockCategoryStorage\Business\CmsBlock\CmsBlockFeatureDetectorInterface $cmsBlockFeatureDetector
      */
-    public function __construct(CmsBlockCategoryStorageQueryContainerInterface $queryContainer, CmsBlockCategoryStorageToUtilSanitizeServiceInterface $utilSanitizeService, $isSendingToQueue)
-    {
+    public function __construct(
+        CmsBlockCategoryStorageQueryContainerInterface $queryContainer,
+        CmsBlockCategoryStorageToUtilSanitizeServiceInterface $utilSanitizeService,
+        $isSendingToQueue,
+        CmsBlockFeatureDetectorInterface $cmsBlockFeatureDetector
+    ) {
         $this->queryContainer = $queryContainer;
         $this->utilSanitizeService = $utilSanitizeService;
         $this->isSendingToQueue = $isSendingToQueue;
+        $this->cmsBlockFeatureDetector = $cmsBlockFeatureDetector;
     }
 
     /**
@@ -161,7 +173,7 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
      *
      * @return array
      */
-    protected function getCmsBlockCategories(array $categoryIds): void
+    protected function getCmsBlockCategories(array $categoryIds): array
     {
         $cmsBlockCategoryEntities = $this->queryContainer->queryCmsBlockCategories($categoryIds)->find();
         $mappedCmsBlockCategories = [];
@@ -169,7 +181,7 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
             $mappedCmsBlockCategories[$cmsBlockCategoryEntity->getFkCategory()][$cmsBlockCategoryEntity->getPosition()][static::NAMES][] =
                 $cmsBlockCategoryEntity->getVirtualColumn(static::COLUMN_BLOCK_NAME);
 
-            if (!$this->isCmsBlockKeyPropertyExists()) {
+            if (!$this->cmsBlockFeatureDetector->isCmsBlockKeyPresent()) {
                 continue;
             }
 
@@ -194,15 +206,5 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
         }
 
         return $cmsBlockCategoryStorageEntitiesById;
-    }
-
-    /**
-     * This is added for BC reason to support previous versions of CmsBlock module.
-     *
-     * @return bool
-     */
-    protected function isCmsBlockKeyPropertyExists(): bool
-    {
-        return defined('\Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap::COL_KEY');
     }
 }

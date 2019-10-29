@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsBlockProductStorage\Business\Storage;
 
 use Generated\Shared\Transfer\CmsBlockProductTransfer;
 use Orm\Zed\CmsBlockProductStorage\Persistence\SpyCmsBlockProductStorage;
+use Spryker\Zed\CmsBlockProductStorage\Business\CmsBlock\CmsBlockFeatureDetectorInterface;
 use Spryker\Zed\CmsBlockProductStorage\Dependency\Service\CmsBlockProductStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainerInterface;
 
@@ -42,15 +43,26 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
     protected $isSendingToQueue = true;
 
     /**
+     * @var \Spryker\Zed\CmsBlockProductStorage\Business\CmsBlock\CmsBlockFeatureDetectorInterface
+     */
+    protected $cmsBlockFeatureDetector;
+
+    /**
      * @param \Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\CmsBlockProductStorage\Dependency\Service\CmsBlockProductStorageToUtilSanitizeServiceInterface $utilSanitizeService
      * @param bool $isSendingToQueue
+     * @param \Spryker\Zed\CmsBlockProductStorage\Business\CmsBlock\CmsBlockFeatureDetectorInterface $cmsBlockFeatureDetector
      */
-    public function __construct(CmsBlockProductStorageQueryContainerInterface $queryContainer, CmsBlockProductStorageToUtilSanitizeServiceInterface $utilSanitizeService, $isSendingToQueue)
-    {
+    public function __construct(
+        CmsBlockProductStorageQueryContainerInterface $queryContainer,
+        CmsBlockProductStorageToUtilSanitizeServiceInterface $utilSanitizeService,
+        $isSendingToQueue,
+        CmsBlockFeatureDetectorInterface $cmsBlockFeatureDetector
+    ) {
         $this->queryContainer = $queryContainer;
         $this->utilSanitizeService = $utilSanitizeService;
         $this->isSendingToQueue = $isSendingToQueue;
+        $this->cmsBlockFeatureDetector = $cmsBlockFeatureDetector;
     }
 
     /**
@@ -162,7 +174,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
             $mappedCmsBlockProducts[$cmsBlockProductEntity->getFkProductAbstract()][static::NAMES][] =
                 $cmsBlockProductEntity->getVirtualColumn(static::COLUMN_BLOCK_NAME);
 
-            if (!$this->isCmsBlockKeyPropertyExists()) {
+            if (!$this->cmsBlockFeatureDetector->isCmsBlockKeyPresent()) {
                 continue;
             }
 
@@ -187,13 +199,5 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
         }
 
         return $cmsBlockProductStorageEntitiesById;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isCmsBlockKeyPropertyExists(): bool
-    {
-        return defined('\Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap::COL_KEY');
     }
 }

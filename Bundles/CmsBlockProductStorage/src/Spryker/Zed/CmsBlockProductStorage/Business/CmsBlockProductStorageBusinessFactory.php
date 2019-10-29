@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CmsBlockProductStorage\Business;
 
+use Spryker\Zed\CmsBlockProductStorage\Business\CmsBlock\CmsBlockFeatureDetector;
+use Spryker\Zed\CmsBlockProductStorage\Business\CmsBlock\CmsBlockFeatureDetectorInterface;
 use Spryker\Zed\CmsBlockProductStorage\Business\Storage\CmsBlockProductStorageWriter;
 use Spryker\Zed\CmsBlockProductStorage\Business\Storage\CmsBlockProductStorageWriterInterface;
 use Spryker\Zed\CmsBlockProductStorage\CmsBlockProductStorageDependencyProvider;
@@ -27,7 +29,8 @@ class CmsBlockProductStorageBusinessFactory extends AbstractBusinessFactory
         return new CmsBlockProductStorageWriter(
             $this->getQueryContainer(),
             $this->getUtilSanitizeService(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()->isSendingToQueue(),
+            $this->createCmsBlockFeatureDetector()
         );
     }
 
@@ -37,5 +40,13 @@ class CmsBlockProductStorageBusinessFactory extends AbstractBusinessFactory
     public function getUtilSanitizeService(): CmsBlockProductStorageToUtilSanitizeServiceInterface
     {
         return $this->getProvidedDependency(CmsBlockProductStorageDependencyProvider::SERVICE_UTIL_SANITIZE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockProductStorage\Business\CmsBlock\CmsBlockFeatureDetectorInterface
+     */
+    public function createCmsBlockFeatureDetector(): CmsBlockFeatureDetectorInterface
+    {
+        return new CmsBlockFeatureDetector();
     }
 }
