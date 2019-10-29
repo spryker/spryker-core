@@ -5,7 +5,6 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/chart-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/oms": "^8.0.0 || ^10.0.0",
     "spryker/propel-orm": "^1.0.0",

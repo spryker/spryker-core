@@ -8,11 +8,9 @@
 namespace Spryker\Zed\Chart\Communication\Plugin\Twig;
 
 /**
- * @method \Spryker\Zed\Chart\Communication\ChartCommunicationFactory getFactory()
- * @method \Spryker\Zed\Chart\ChartConfig getConfig()
- * @method \Spryker\Zed\Chart\Business\ChartFacadeInterface getFacade()
+ * @deprecated `Spryker\Zed\ChartGui\Communication\Plugin\Twig\Chart\PieChartTwigPlugin` instead.
  */
-class TwigPieChartPlugin extends AbstractChartTwigPlugin
+class TwigPieChartPlugin extends AbstractTwigChartPlugin
 {
     public const TWIG_FUNCTION_NAME = 'pieChart';
 

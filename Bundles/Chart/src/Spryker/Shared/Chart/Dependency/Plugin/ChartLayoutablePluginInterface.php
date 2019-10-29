@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ChartExtension\Dependency\Plugin;
+namespace Spryker\Shared\Chart\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ChartLayoutTransfer;
 

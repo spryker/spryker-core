@@ -5,35 +5,43 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Chart\Communication\Plugin\Twig;
+namespace Spryker\Zed\Chart\Communication\Plugin\ServiceProvider;
 
-use Spryker\Service\Container\ContainerInterface;
-use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
+use Silex\Application;
+use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Twig\Environment;
 
 /**
- * @deprecated Use `\Spryker\Zed\ChartGui\Communication\Plugin\Twig\Chart\ChartGuiTwigPlugin` instead.
+ * @deprecated Use `\Spryker\Zed\Chart\Communication\Plugin\Twig\ChartTwigPlugin` instead.
  *
  * @method \Spryker\Zed\Chart\Communication\ChartCommunicationFactory getFactory()
- * @method \Spryker\Zed\Chart\ChartConfig getConfig()
  * @method \Spryker\Zed\Chart\Business\ChartFacadeInterface getFacade()
+ * @method \Spryker\Zed\Chart\ChartConfig getConfig()
  */
-class ChartTwigPlugin extends AbstractPlugin implements TwigPluginInterface
+class TwigChartFunctionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
     /**
-     * {@inheritDoc}
+     * @param \Silex\Application $app
      *
-     * @api
-     *
-     * @param \Twig\Environment $twig
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     *
-     * @return \Twig\Environment
+     * @return void
      */
-    public function extend(Environment $twig, ContainerInterface $container): Environment
+    public function register(Application $app): void
     {
-        return $this->registerChartTwigFunctions($twig);
+        $app['twig'] = $app->share(
+            $app->extend('twig', function (Environment $twig) {
+                return $this->registerChartTwigFunctions($twig);
+            })
+        );
+    }
+
+    /**
+     * @param \Silex\Application $app
+     *
+     * @return void
+     */
+    public function boot(Application $app): void
+    {
     }
 
     /**
@@ -51,7 +59,7 @@ class ChartTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     }
 
     /**
-     * @return \Twig\TwigFunction[]
+     * @return array
      */
     protected function getChartTwigFunctions(): array
     {

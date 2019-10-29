@@ -5,17 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ChartExtension\Dependency\Plugin;
+namespace Spryker\Shared\Chart\Dependency\Plugin;
 
-interface ChartTwigFunctionPluginInterface
+interface TwigChartFunctionPluginInterface
 {
     /**
-     * Specification:
-     * - Defines the list of chart functions.
-     *
      * @api
      *
      * @return \Twig\TwigFunction[]
      */
-    public function getChartTwigFunctions(): array;
+    public function getChartFunctions(): array;
 }

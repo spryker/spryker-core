@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesStatistics\Communication\Plugin\Chart;
+namespace Spryker\Zed\SalesStatistics\Communication\Plugin;
 
 use Generated\Shared\Transfer\ChartDataTransfer;
 use Spryker\Shared\Chart\ChartConfig;
+use Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface;
 use Spryker\Shared\Dashboard\Dependency\Plugin\DashboardPluginInterface;
-use Spryker\Zed\ChartExtension\Dependency\Plugin\ChartPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -18,18 +18,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\SalesStatistics\Business\SalesStatisticsFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesStatistics\SalesStatisticsConfig getConfig()
  */
-class TopOrdersChartPlugin extends AbstractPlugin implements ChartPluginInterface, DashboardPluginInterface
+class CountOrderChartPlugin extends AbstractPlugin implements ChartPluginInterface, DashboardPluginInterface
 {
-    public const COUNT_PRODUCT = 10;
-    public const NAME = 'top-orders';
-    public const TITLE = 'Top Orders';
-    public const OPTIONS = [
-        'orientation' => 'h',
-    ];
+    public const NAME = 'count-orders';
+    public const TITLE = 'Count orders';
+    public const DAYS = 7;
 
     /**
-     * {@inheritDoc}
-     *
      * @api
      *
      * @return string
@@ -40,8 +35,6 @@ class TopOrdersChartPlugin extends AbstractPlugin implements ChartPluginInterfac
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @api
      *
      * @param string|null $dataIdentifier
@@ -51,11 +44,9 @@ class TopOrdersChartPlugin extends AbstractPlugin implements ChartPluginInterfac
     public function getChartData($dataIdentifier = null): ChartDataTransfer
     {
         $data = new ChartDataTransfer();
-        $data->addTrace(
-            $this->getFacade()->getTopOrderStatistic(static::COUNT_PRODUCT)
-                ->addOption(static::OPTIONS)
-                ->setType(ChartConfig::CHART_TYPE_BAR)
-        );
+        $chartDataTraceTransfer = $this->getFacade()->getOrderStatisticByCountDay(static::DAYS);
+        $chartDataTraceTransfer->setType(ChartConfig::CHART_TYPE_BAR);
+        $data->addTrace($chartDataTraceTransfer);
         $data->setKey($dataIdentifier);
         $data->setTitle(static::TITLE);
 
@@ -63,8 +54,6 @@ class TopOrdersChartPlugin extends AbstractPlugin implements ChartPluginInterfac
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @api
      *
      * @return string

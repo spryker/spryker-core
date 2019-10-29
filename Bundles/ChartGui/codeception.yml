@@ -1,4 +1,4 @@
-namespace: ChartExtension
+namespace: ChartGui
 actor: Tester
 paths:
     tests: tests
