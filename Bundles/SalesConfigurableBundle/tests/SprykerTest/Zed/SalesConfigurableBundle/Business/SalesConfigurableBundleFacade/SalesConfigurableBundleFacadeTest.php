@@ -10,6 +10,8 @@ namespace SprykerTest\Zed\SalesConfigurableBundle\Business\SalesConfigurableBund
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ConfigurableBundleTemplateBuilder;
 use Generated\Shared\DataBuilder\ConfiguredBundleBuilder;
+use Generated\Shared\DataBuilder\ConfiguredBundleItemBuilder;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\ProductConcreteBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
@@ -22,6 +24,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleFilterTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
+use Spryker\Zed\SalesConfigurableBundle\Business\SalesConfigurableBundleBusinessFactory;
+use Spryker\Zed\SalesConfigurableBundle\Business\SalesConfigurableBundleFacadeInterface;
+use Spryker\Zed\SalesConfigurableBundle\SalesConfigurableBundleConfig;
 use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 
 /**
@@ -60,6 +65,7 @@ class SalesConfigurableBundleFacadeTest extends Unit
         parent::setUp();
 
         $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
+        $this->tester->mockConfigMethod('findConfigurableBundleItemQuantityThreshold', 10);
     }
 
     /**
@@ -485,6 +491,119 @@ class SalesConfigurableBundleFacadeTest extends Unit
         // Assert
         $this->assertCount(0, $orderTransfer->getSalesOrderConfiguredBundles());
         $this->assertNull($orderTransfer->getItems()->offsetGet(0)->getSalesOrderConfiguredBundleItem());
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsConfigurableBundleItemQuantitySplittableWillReturnTrueInCaseOfConfigurableBundleItem(): void
+    {
+        //Arrange
+        $itemTransfer = $this->createConfigurableBundleItem();
+
+        //Act
+        $result = $this->tester->getFacade()->isConfigurableBundleItemQuantitySplittable($itemTransfer);
+
+        //Assert
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsConfigurableBundleItemQuantitySplittableWillReturnFalseInCaseOfNotConfigurableBundleItem(): void
+    {
+        //Arrange
+        $itemTransfer = (new ItemBuilder())->build();
+
+        //Act
+        $result = $this->tester->getFacade()->isConfigurableBundleItemQuantitySplittable($itemTransfer);
+
+        //Assert
+        $this->assertFalse($result);
+    }
+
+    /**
+     * @dataProvider transformConfigurableBundleItemDataProvider
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param int $itemsCount
+     * @param int $itemQuantity
+     *
+     * @return void
+     */
+    public function testTransformConfigurableBundleItem(ItemTransfer $itemTransfer, int $itemsCount, int $itemQuantity): void
+    {
+        //Arrange
+        $facade = $this->getSalesConfigurableBundleFacadeWithMockedConfig();
+
+        //Act
+        $itemCollection = $facade->transformConfigurableBundleItem($itemTransfer);
+
+        //Assert
+        $this->assertCount($itemsCount, $itemCollection->getItems());
+        foreach ($itemCollection->getItems() as $item) {
+            $this->assertEquals($itemQuantity, $item->getQuantity());
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function transformConfigurableBundleItemDataProvider(): array
+    {
+        return [
+            [$this->createConfigurableBundleItem(10, 1, 10), 1, 10],
+            [$this->createConfigurableBundleItem(8, 1, 8), 8, 1],
+            [$this->createConfigurableBundleItem(20, 2, 10), 2, 10],
+            [$this->createConfigurableBundleItem(20, 4, 5), 20, 1],
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesConfigurableBundle\Business\SalesConfigurableBundleFacadeInterface
+     */
+    protected function getSalesConfigurableBundleFacadeWithMockedConfig(): SalesConfigurableBundleFacadeInterface
+    {
+        $salesConfigurableBundleFacade = $this->tester->getFacade();
+        $salesConfigurableBundleBusinessFactory = new SalesConfigurableBundleBusinessFactory();
+
+        $mockedSalesConfigurableBundleConfig = $this->getMockBuilder(SalesConfigurableBundleConfig::class)->disableOriginalConstructor()->getMock();
+        $mockedSalesConfigurableBundleConfig->method('findConfigurableBundleItemQuantityThreshold')->willReturn(10);
+
+        $salesConfigurableBundleBusinessFactory->setConfig($mockedSalesConfigurableBundleConfig);
+        $salesConfigurableBundleFacade->setFactory($salesConfigurableBundleBusinessFactory);
+
+        return $salesConfigurableBundleFacade;
+    }
+
+    /**
+     * @param int $quantity
+     * @param int $configurableBundleQuantity
+     * @param int $quantityPerSlot
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function createConfigurableBundleItem(
+        int $quantity = 1,
+        int $configurableBundleQuantity = 1,
+        int $quantityPerSlot = 1
+    ): ItemTransfer {
+        $configuredBundle = (new ConfiguredBundleBuilder())
+            ->build()
+            ->setQuantity($configurableBundleQuantity);
+
+        $configuredBundleItem = (new ConfiguredBundleItemBuilder())
+            ->build()
+            ->setQuantityPerSlot($quantityPerSlot);
+
+        $itemTransfer = (new ItemBuilder())
+            ->build()
+            ->setConfiguredBundle($configuredBundle)
+            ->setConfiguredBundleItem($configuredBundleItem)
+            ->setQuantity($quantity);
+
+        return $itemTransfer;
     }
 
     /**
