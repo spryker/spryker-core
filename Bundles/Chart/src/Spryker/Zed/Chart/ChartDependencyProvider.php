@@ -64,8 +64,6 @@ class ChartDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * @return \Spryker\Shared\Chart\Dependency\Plugin\TwigChartFunctionPluginInterface[]
      */
     protected function getTwigChartFunctionPlugins(): array
