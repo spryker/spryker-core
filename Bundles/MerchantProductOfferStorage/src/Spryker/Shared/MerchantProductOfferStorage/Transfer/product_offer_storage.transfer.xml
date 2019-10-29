@@ -6,7 +6,7 @@
     <transfer name="ProductConcreteProductOffersStorage">
         <property name="idProductConcreteProductOffersStorage" type="int"/>
         <property name="concreteSku" type="string"/>
-        <property name="data" type="string[]"/>
+        <property name="data" type="string[]" singular="data"/>
         <property name="key" type="string"/>
     </transfer>
 
@@ -18,7 +18,7 @@
     </transfer>
 
     <transfer name="ProductOfferViewCollection">
-        <property name="ProductOfferViews" type="ProductOfferView[]" singular="productOfferView"/>
+        <property name="productOfferViews" type="ProductOfferView[]" singular="productOfferView"/>
     </transfer>
 
     <transfer name="ProductOfferView">
