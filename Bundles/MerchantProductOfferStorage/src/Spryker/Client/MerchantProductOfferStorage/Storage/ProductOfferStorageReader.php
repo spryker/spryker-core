@@ -55,8 +55,9 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
                 continue;
             }
             $merchantProductOfferKey = $this->generateKey($concreteProductOffer, MerchantProductOfferStorageConfig::RESOURCE_MERCHANT_PRODUCT_OFFER_NAME);
-            $concreteProductOffer = $this->storageClient->get($merchantProductOfferKey);
-            $productOfferViewCollectionTransfer[] = $this->mapConcreteProductOffer($concreteProductOffer, (new ProductOfferViewTransfer()));
+            $concreteProductOfferData = $this->storageClient->get($merchantProductOfferKey);
+            $productOfferViewTransfer = $this->mapConcreteProductOffer($concreteProductOfferData, (new ProductOfferViewTransfer()));
+            $productOfferViewCollectionTransfer->addProductOfferView($productOfferViewTransfer);
         }
         
         return $productOfferViewCollectionTransfer;

@@ -52,7 +52,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
             $productOfferStorageTransfer = new ProductOfferStorageTransfer();
             $productOfferStorageTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
-            $productOfferStorageTransfer->setData($this->getMerchantViewTransfer($productOfferTransfer)->toArray());
+            $productOfferStorageTransfer->setData($this->getMerchantViewTransfer($productOfferTransfer)->modifiedToArray());
 
             $this->productOfferStorageEntityManager->saveProductOfferStorage($productOfferStorageTransfer);
         }

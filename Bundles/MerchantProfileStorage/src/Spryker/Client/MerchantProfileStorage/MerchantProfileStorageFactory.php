@@ -12,9 +12,23 @@ use Spryker\Client\MerchantProfileStorage\Dependency\Client\MerchantProfileStora
 use Spryker\Client\MerchantProfileStorage\Dependency\Service\MerchantProfileStorageConnectorToSynchronizationServiceInterface;
 use Spryker\Client\MerchantProfileStorage\Mapper\MerchantProfileStorageMapper;
 use Spryker\Client\MerchantProfileStorage\Mapper\MerchantProfileStorageMapperInterface;
+use Spryker\Client\MerchantProfileStorage\Storage\MerchantProfileStorageReader;
+use Spryker\Client\MerchantProfileStorage\Storage\MerchantProfileStorageReaderInterface;
 
 class MerchantProfileStorageFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Client\MerchantProfileStorage\Storage\MerchantProfileStorageReaderInterface
+     */
+    public function createMerchantProfileStorageReader(): MerchantProfileStorageReaderInterface
+    {
+        return new MerchantProfileStorageReader(
+            $this->createMerchantProfileStorageMapper(),
+            $this->getSynchronizationService(),
+            $this->getStorageClient()
+        );
+    }
+
     /**
      * @return \Spryker\Client\MerchantProfileStorage\Mapper\MerchantProfileStorageMapperInterface
      */

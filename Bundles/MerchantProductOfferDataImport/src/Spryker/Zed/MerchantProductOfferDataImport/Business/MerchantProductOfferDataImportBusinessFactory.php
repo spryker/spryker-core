@@ -59,6 +59,6 @@ class MerchantProductOfferDataImportBusinessFactory extends DataImportBusinessFa
      */
     public function createMerchantProductOfferStep(): DataImportStepInterface
     {
-        return new MerchantProductOfferStep();
+        return new MerchantProductOfferStep($this->getEventFacade());
     }
 }

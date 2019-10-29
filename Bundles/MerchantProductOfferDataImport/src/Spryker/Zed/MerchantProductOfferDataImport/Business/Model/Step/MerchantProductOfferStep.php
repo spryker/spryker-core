@@ -7,14 +7,37 @@
 
 namespace Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step;
 
-use Orm\Zed\ProductOffer\Persistence\SpyProductOffer;
+use Generated\Shared\Transfer\EventEntityTransfer;
+use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepAfterExecuteInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface;
+use Spryker\Zed\MerchantProductOffer\Dependency\MerchantProductOfferEvents;
 use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\DataSet\MerchantProductOfferDataSetInterface;
 
-class MerchantProductOfferStep implements DataImportStepInterface
+class MerchantProductOfferStep implements DataImportStepInterface, DataImportStepAfterExecuteInterface
 {
+    /**
+     * @var \Generated\Shared\Transfer\EventEntityTransfer[]
+     */
+    protected $entityEventTransfers = [];
+
+    /**
+     * @var \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface
+     */
+    protected $eventFacade;
+
+    /**
+     * @param \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface $eventFacade
+     */
+    public function __construct(DataImportToEventFacadeInterface $eventFacade)
+    {
+        $this->eventFacade = $eventFacade;
+    }
+
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -28,10 +51,43 @@ class MerchantProductOfferStep implements DataImportStepInterface
             throw new EntityNotFoundException('Product offer reference is a required field');
         }
 
-        $spyProductOffer = new SpyProductOffer();
+        $spyProductOffer = SpyProductOfferQuery::create()
+            ->filterByProductOfferReference($dataSet[MerchantProductOfferDataSetInterface::PRODUCT_OFFER_REFERENCE])
+            ->findOneOrCreate();
         $spyProductOffer->setFkMerchant($dataSet[MerchantProductOfferDataSetInterface::FK_MERCHANT]);
         $spyProductOffer->setConcreteSku($dataSet[MerchantProductOfferDataSetInterface::CONCRETE_SKU]);
-        $spyProductOffer->setProductOfferReference($dataSet[MerchantProductOfferDataSetInterface::PRODUCT_OFFER_REFERENCE]);
         $spyProductOffer->save();
+
+        $eventEntityTransfer = new EventEntityTransfer();
+        $eventEntityTransfer->setId($spyProductOffer->getIdProductOffer());
+        $eventEntityTransfer->setAdditionalValues([
+            SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => $spyProductOffer->getProductOfferReference(),
+            SpyProductOfferTableMap::COL_CONCRETE_SKU => $spyProductOffer->getConcreteSku(),
+        ]);
+
+        $this->addPublishEvents(MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_KEY_PUBLISH, $eventEntityTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function afterExecute()
+    {
+        foreach ($this->entityEventTransfers as $entityEventTransfer) {
+            $this->eventFacade->trigger(MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_KEY_PUBLISH, $entityEventTransfer);
+        }
+
+        $this->entityEventTransfers = [];
+    }
+
+    /**
+     * @param string $eventName
+     * @param \Generated\Shared\Transfer\EventEntityTransfer $entityEventTransfer
+     *
+     * @return void
+     */
+    public function addPublishEvents($eventName, $entityEventTransfer)
+    {
+        $this->entityEventTransfers[] = $entityEventTransfer;
     }
 }
