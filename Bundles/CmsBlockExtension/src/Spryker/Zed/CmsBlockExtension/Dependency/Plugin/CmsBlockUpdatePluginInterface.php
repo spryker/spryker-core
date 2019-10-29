@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsBlock\Communication\Plugin;
+namespace Spryker\Zed\CmsBlockExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 

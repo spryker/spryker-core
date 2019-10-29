@@ -97,6 +97,7 @@
     "spryker/cms-block-category-connector": "*",
     "spryker/cms-block-category-storage": "*",
     "spryker/cms-block-collector": "*",
+    "spryker/cms-block-extension": "*",
     "spryker/cms-block-gui": "*",
     "spryker/cms-block-gui-extension": "*",
     "spryker/cms-block-product-connector": "*",
