@@ -8,10 +8,8 @@
 namespace Spryker\Zed\CategoryGui\Communication\Plugin;
 
 use Generated\Shared\Transfer\CmsSlotTemplateConfigurationTransfer;
-use Spryker\Zed\CategoryGui\Communication\Form\CategorySlotBlockConditionForm;
 use Spryker\Zed\CmsSlotBlockGuiExtension\Communication\Plugin\CmsSlotBlockGuiConditionFormPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -49,21 +47,8 @@ class CategorySlotBlockConditionFormPlugin extends AbstractPlugin implements Cms
      */
     public function addConditionForm(FormBuilderInterface $builder): void
     {
-        $builder->add(static::CONDITION_KEY, FormType::class, [
-            'label' => false,
-            'error_mapping' => [
-                '.' => CategorySlotBlockConditionForm::FIELD_CATEGORY_IDS,
-            ],
-            'constraints' => [
-                $this->getFactory()->createCategoryConditionsConstraint(),
-            ],
-        ]);
-
         $categorySlotBlockDataProvider = $this->getFactory()->createCategorySlotBlockDataProvider();
         $categorySlotBlockConditionForm = $this->getFactory()->createCategorySlotBlockConditionForm();
-        $categorySlotBlockConditionForm->buildForm(
-            $builder->get(static::CONDITION_KEY),
-            $categorySlotBlockDataProvider->getOptions()
-        );
+        $categorySlotBlockConditionForm->buildForm($builder, $categorySlotBlockDataProvider->getOptions());
     }
 }
