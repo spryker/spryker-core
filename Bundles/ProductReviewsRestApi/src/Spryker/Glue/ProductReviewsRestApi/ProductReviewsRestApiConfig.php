@@ -23,14 +23,24 @@ class ProductReviewsRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_ABSTRACT_PRODUCTS = 'abstract-products';
 
     /**
-     * @uses \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED
+     * @uses \Spryker\Glue\AuthRestApi\AuthRestApiConfig::RESPONSE_CODE_INVALID_OR_MISSING_ACCESS_TOKEN
      */
-    public const RESPONSE_CODE_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED = '311';
+    public const RESPONSE_CODE_INVALID_OR_MISSING_ACCESS_TOKEN = '005';
 
     /**
      * @uses \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig::RESPONSE_CODE_CANT_FIND_ABSTRACT_PRODUCT
      */
     public const RESPONSE_CODE_CANT_FIND_ABSTRACT_PRODUCT = '301';
+
+    /**
+     * @uses \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig::RESPONSE_CODE_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED
+     */
+    public const RESPONSE_CODE_ABSTRACT_PRODUCT_SKU_IS_NOT_SPECIFIED = '311';
+
+    /**
+     * @uses \Spryker\Glue\AuthRestApi\AuthRestApiConfig::RESPONSE_DETAIL_INVALID_OR_MISSING_ACCESS_TOKEN
+     */
+    public const RESPONSE_DETAIL_INVALID_OR_MISSING_ACCESS_TOKEN = 'Access token is missing or invalid.';
 
     /**
      * @uses \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_ABSTRACT_PRODUCT

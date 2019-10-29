@@ -126,7 +126,9 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
     public function createRestUserMissingErrorResponse(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setStatus(Response::HTTP_BAD_REQUEST);
+            ->setCode(ProductReviewsRestApiConfig::RESPONSE_CODE_INVALID_OR_MISSING_ACCESS_TOKEN)
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setDetail(ProductReviewsRestApiConfig::RESPONSE_DETAIL_INVALID_OR_MISSING_ACCESS_TOKEN);
 
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
     }
