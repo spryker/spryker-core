@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/product-category-gui.svg)](https://travis-ci.org/spryker/product-category-gui)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/product-category-gui/badge.svg)](https://coveralls.io/github/spryker/product-category-gui)
 
-{{ADD DESCRIPTION HERE}}
+ProductCategoryGui is a user interface module to manage products and categories in the plugins for Zed Administration Interface.
 
 ## Installation
 

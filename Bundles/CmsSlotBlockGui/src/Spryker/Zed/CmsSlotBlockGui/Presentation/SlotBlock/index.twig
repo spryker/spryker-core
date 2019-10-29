@@ -1,3 +1,6 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block content %}
 {% embed '@Gui/Partials/widget.twig' %}
 
     {% block widget_title -%}
@@ -9,7 +12,7 @@
 
         {{ slotBlockTable | raw }}
 
-    {{ form_start(cmsSlotBlockCollectionForm, {'action': '/cms-slot-block-gui/slot-block'}) }}
+    {{ form_start(cmsSlotBlockCollectionForm) }}
 
         {% for slotBlockItemForm in cmsSlotBlockCollectionForm.cmsSlotBlocks %}
             {{ form_widget(slotBlockItemForm.idSlotTemplate) }}
@@ -26,3 +29,4 @@
     {% endblock %}
 
 {% endembed %}
+{% endblock %}

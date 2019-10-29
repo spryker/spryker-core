@@ -17,8 +17,9 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ProductCategorySlotBlockConditionForm extends AbstractType
 {
-    public const OPTION_PRODUCT_ARRAY = 'option-product-array';
-    public const OPTION_CATEGORY_ARRAY = 'option-category-array';
+    public const OPTION_PRODUCT_IDS = 'option-product-ids';
+    public const OPTION_CATEGORY_IDS = 'option-category-ids';
+    protected const OPTION_URL_AUTOCOMPLETE = '/product-category-gui/product-autocomplete';
 
     public const FIELD_ALL = 'all';
     protected const FIELD_PRODUCT_IDS = 'productIds';
@@ -32,17 +33,17 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addAllField($builder);
-        $this->addProductIdsField($builder, $options);
-        $this->addCategoryIdsField($builder, $options);
+        $this->addAllField($builder)
+            ->addProductIdsField($builder, $options)
+            ->addCategoryIdsField($builder, $options);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
-     * @return void
+     * @return $this
      */
-    protected function addAllField(FormBuilderInterface $builder): void
+    protected function addAllField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_ALL, ChoiceType::class, [
             'required' => false,
@@ -55,40 +56,46 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
             'placeholder' => false,
             'label' => false,
         ]);
+
+        return $this;
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return void
+     * @return $this
      */
-    protected function addProductIdsField(FormBuilderInterface $builder, array $options): void
+    protected function addProductIdsField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_PRODUCT_IDS, Select2ComboBoxType::class, [
             'label' => 'Products Pages',
             'multiple' => true,
             'required' => false,
-            'choices' => $options[static::OPTION_PRODUCT_ARRAY],
+            'choices' => $options[static::OPTION_PRODUCT_IDS],
             'attr' => [
-                'data-autocomplete-url' => '',
+                'data-autocomplete-url' => static::OPTION_URL_AUTOCOMPLETE,
             ],
         ]);
+
+        return $this;
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return void
+     * @return $this
      */
-    protected function addCategoryIdsField(FormBuilderInterface $builder, array $options): void
+    protected function addCategoryIdsField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_CATEGORY_IDS, Select2ComboBoxType::class, [
             'label' => 'Product pages per Category',
-            'choices' => $options[static::OPTION_CATEGORY_ARRAY],
+            'choices' => $options[static::OPTION_CATEGORY_IDS],
             'required' => false,
             'multiple' => true,
         ]);
+
+        return $this;
     }
 }

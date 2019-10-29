@@ -50,7 +50,7 @@ class CmsSlotBlockForm extends AbstractType
             ->addIdSlotField($builder)
             ->addIdBlockField($builder)
             ->addPositionField($builder)
-            ->addPluginForms($builder, $options);
+            ->addConditionPluginForms($builder, $options);
     }
 
     /**
@@ -107,7 +107,7 @@ class CmsSlotBlockForm extends AbstractType
      *
      * @return $this
      */
-    protected function addPluginForms(FormBuilderInterface $builder, array $options)
+    protected function addConditionPluginForms(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::OPTION_CONDITIONS, FormType::class, ['label' => false]);
 

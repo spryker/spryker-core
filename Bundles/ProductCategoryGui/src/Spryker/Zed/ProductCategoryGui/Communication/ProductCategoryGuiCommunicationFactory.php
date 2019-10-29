@@ -14,6 +14,7 @@ use Spryker\Zed\ProductCategoryGui\Communication\Form\Validator\Constraints\Prod
 use Spryker\Zed\ProductCategoryGui\Communication\Formatter\ProductLabelFormatter;
 use Spryker\Zed\ProductCategoryGui\Communication\Formatter\ProductLabelFormatterInterface;
 use Spryker\Zed\ProductCategoryGui\Dependency\Facade\ProductCategoryGuiToLocaleFacadeInterface;
+use Spryker\Zed\ProductCategoryGui\Dependency\Facade\ProductCategoryGuiToProductFacadeInterface;
 use Spryker\Zed\ProductCategoryGui\Dependency\QueryContainer\ProductCategoryGuiToCategoryQueryContainerInterface;
 use Spryker\Zed\ProductCategoryGui\Dependency\QueryContainer\ProductCategoryGuiToProductQueryContainerInterface;
 use Spryker\Zed\ProductCategoryGui\ProductCategoryGuiDependencyProvider;
@@ -71,6 +72,14 @@ class ProductCategoryGuiCommunicationFactory extends AbstractCommunicationFactor
     public function getCategoryQueryContainer(): ProductCategoryGuiToCategoryQueryContainerInterface
     {
         return $this->getProvidedDependency(ProductCategoryGuiDependencyProvider::QUERY_CONTAINER_CATEGORY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryGui\Dependency\Facade\ProductCategoryGuiToProductFacadeInterface
+     */
+    public function getProductFacade(): ProductCategoryGuiToProductFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductCategoryGuiDependencyProvider::FACADE_PRODUCT);
     }
 
     /**

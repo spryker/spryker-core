@@ -59,13 +59,12 @@ class ProductCategorySlotBlockConditionFormPlugin extends AbstractPlugin impleme
             ],
         ]);
 
-        $categorySlotBlockConditionForm = $this->getFactory()->createProductCategorySlotBlockConditionForm();
-        $dataProvider = $this->getFactory()
-            ->createProductCategorySlotBlockDataProvider();
+        $productCategorySlotBlockConditionForm = $this->getFactory()->createProductCategorySlotBlockConditionForm();
+        $productCategorySlotBlockDataProvider = $this->getFactory()->createProductCategorySlotBlockDataProvider();
 
-        $categorySlotBlockConditionForm->buildForm(
+        $productCategorySlotBlockConditionForm->buildForm(
             $builder->get(static::CONDITION_KEY),
-            $dataProvider->getOptions()
+            $productCategorySlotBlockDataProvider->getOptions()
         );
     }
 }

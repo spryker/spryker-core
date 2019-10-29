@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductCategoryGui\Communication\DataProvider;
 
 use Generated\Shared\Transfer\CmsSlotBlockTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ProductCategoryGui\Communication\Form\ProductCategorySlotBlockConditionForm;
 use Spryker\Zed\ProductCategoryGui\Communication\Formatter\ProductLabelFormatterInterface;
 use Spryker\Zed\ProductCategoryGui\Dependency\Facade\ProductCategoryGuiToLocaleFacadeInterface;
@@ -61,56 +62,75 @@ class ProductCategorySlotBlockDataProvider implements ProductCategorySlotBlockDa
     {
         return [
             'data_class' => CmsSlotBlockTransfer::class,
-            ProductCategorySlotBlockConditionForm::OPTION_PRODUCT_ARRAY => $this->getProducts(),
-            ProductCategorySlotBlockConditionForm::OPTION_CATEGORY_ARRAY => $this->getCategories(),
+            ProductCategorySlotBlockConditionForm::OPTION_PRODUCT_IDS => $this->getProductAbstractIds(),
+            ProductCategorySlotBlockConditionForm::OPTION_CATEGORY_IDS => $this->getCategoryIds(),
         ];
     }
 
     /**
-     * @return array
+     * @return int[]
      */
-    protected function getProducts(): array
+    protected function getProductAbstractIds(): array
     {
         $idLocale = $this->getIdLocale();
 
-        /** @var \Orm\Zed\Category\Persistence\SpyProductAbstract[] $productAbstractTransfers */
-        $productAbstracts = $this->productQueryContainer
+        $productAbstractEntityCollection = $this->productQueryContainer
             ->queryProductAbstractWithName($idLocale)
             ->find();
 
-        $products = [];
+        return $this->getProductAbstractIdsFromCollection($productAbstractEntityCollection);
+    }
 
-        foreach ($productAbstracts as $productAbstract) {
+    /**
+     * @return int[]
+     */
+    protected function getCategoryIds(): array
+    {
+        $idLocale = $this->getIdLocale();
+
+        $categoryEntityCollection = $this->categoryQueryContainer
+            ->queryCategory($idLocale)
+            ->find();
+
+        return $this->getCategoryIdsFromCollection($categoryEntityCollection, $idLocale);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[] $productAbstractEntityCollection
+     *
+     * @return array
+     */
+    protected function getProductAbstractIdsFromCollection(ObjectCollection $productAbstractEntityCollection): array
+    {
+        $productIds = [];
+
+        foreach ($productAbstractEntityCollection as $productAbstract) {
             $label = $this->productLabelFormatter->format(
                 $productAbstract->getName(),
                 $productAbstract->getSku()
             );
-            $products[$label] = $productAbstract->getIdProductAbstract();
+            $productIds[$label] = $productAbstract->getIdProductAbstract();
         }
 
-        return $products;
+        return $productIds;
     }
 
     /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Category\Persistence\SpyCategory[] $categoryEntityCollection
+     * @param int $idLocale
+     *
      * @return array
      */
-    protected function getCategories(): array
+    protected function getCategoryIdsFromCollection(ObjectCollection $categoryEntityCollection, int $idLocale): array
     {
-        $idLocale = $this->getIdLocale();
+        $categoryIds = [];
 
-        /** @var \Orm\Zed\Category\Persistence\SpyCategory[] $categoryCollection */
-        $categoryCollection = $this->categoryQueryContainer
-            ->queryCategory($idLocale)
-            ->find();
-
-        $categories = [];
-
-        foreach ($categoryCollection as $categoryEntity) {
+        foreach ($categoryEntityCollection as $categoryEntity) {
             $categoryName = $categoryEntity->getLocalisedAttributes($idLocale)->getFirst()->getName();
-            $categories[$categoryName] = $categoryEntity->getIdCategory();
+            $categoryIds[$categoryName] = $categoryEntity->getIdCategory();
         }
 
-        return $categories;
+        return $categoryIds;
     }
 
     /**

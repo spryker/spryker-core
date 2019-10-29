@@ -28,7 +28,7 @@ class ProductCategoryConditionsConstraintValidator extends ConstraintValidator
             return;
         }
 
-        if (!$value[static::CONDITION_KEY_PRODUCT_IDS] || !$value[static::CONDITION_KEY_CATEGORY_IDS]) {
+        if (!$value[static::CONDITION_KEY_PRODUCT_IDS] && !$value[static::CONDITION_KEY_CATEGORY_IDS]) {
             $this->context->buildViolation($constraint->getMessage())
                 ->addViolation();
         }
