@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductReviewsRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 
@@ -33,6 +34,16 @@ class ProductReviewsRestApiToProductReviewClientBridge implements ProductReviews
     public function findProductReviewsInSearch(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer)
     {
         return $this->productReviewClient->findProductReviewsInSearch($productReviewSearchRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer
+     *
+     * @return array
+     */
+    public function findBulkProductReviewsInSearch(BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer): array
+    {
+        return $this->productReviewClient->findBulkProductReviewsInSearch($bulkProductReviewSearchRequestTransfer);
     }
 
     /**

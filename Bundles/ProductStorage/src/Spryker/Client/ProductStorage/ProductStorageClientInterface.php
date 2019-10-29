@@ -299,7 +299,6 @@ interface ProductStorageClientInterface
     /**
      * Specification:
      * - Retrieves a current Store specific ProductConcrete resources from Storage using specified mapping.
-     * - Skips restricted product concrete records.
      *
      * @api
      *
@@ -309,5 +308,9 @@ interface ProductStorageClientInterface
      *
      * @return array
      */
-    public function findBulkProductConcreteStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): array;
+    public function getProductConcreteStorageDataByMappingAndIdentifiers(
+        string $mappingType,
+        array $identifiers,
+        string $localeName
+    ): array;
 }

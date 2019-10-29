@@ -10,6 +10,7 @@ namespace Spryker\Glue\ProductReviewsRestApi\Processor\Expander;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\Page;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewClientInterface;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductReviewsRestApi\Processor\Reader\ProductReviewReaderInterface;
 use Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig;
@@ -31,6 +32,11 @@ class ProductReviewResourceRelationshipExpander implements ProductReviewResource
     protected $productStorageClient;
 
     /**
+     * @var \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewClientInterface
+     */
+    protected $productReviewClient;
+
+    /**
      * @var \Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig
      */
     protected $productReviewsRestApiConfig;
@@ -38,15 +44,18 @@ class ProductReviewResourceRelationshipExpander implements ProductReviewResource
     /**
      * @param \Spryker\Glue\ProductReviewsRestApi\Processor\Reader\ProductReviewReaderInterface $productReviewReader
      * @param \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface $productStorageClient
+     * @param \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewClientInterface $productReviewClient
      * @param \Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig $productReviewsRestApiConfig
      */
     public function __construct(
         ProductReviewReaderInterface $productReviewReader,
         ProductReviewsRestApiToProductStorageClientInterface $productStorageClient,
+        ProductReviewsRestApiToProductReviewClientInterface $productReviewClient,
         ProductReviewsRestApiConfig $productReviewsRestApiConfig
     ) {
         $this->productReviewReader = $productReviewReader;
         $this->productStorageClient = $productStorageClient;
+        $this->productReviewClient = $productReviewClient;
         $this->productReviewsRestApiConfig = $productReviewsRestApiConfig;
     }
 
@@ -70,7 +79,7 @@ class ProductReviewResourceRelationshipExpander implements ProductReviewResource
         );
 
         foreach ($resources as $resource) {
-            $this->addRelationship($productAbstractResources[$resource->getId()], $restRequest, $resource);
+            $this->addRelationship($productAbstractResources, $restRequest, $resource);
         }
     }
 
@@ -87,38 +96,44 @@ class ProductReviewResourceRelationshipExpander implements ProductReviewResource
             $productConcreteIds[] = $resource->getId();
         }
 
-        $productConcreteResources = $this->productStorageClient->findBulkProductConcreteStorageDataByMapping(
+        $productConcreteResources = $this->productStorageClient->getProductConcreteStorageDataByMappingAndIdentifiers(
             static::PRODUCT_MAPPING_TYPE,
             $productConcreteIds,
             $restRequest->getMetadata()->getLocale()
         );
 
         foreach ($resources as $resource) {
-            foreach ($productConcreteResources as $productConcreteResource) {
-                $this->addRelationship($productConcreteResource, $restRequest, $resource);
-            }
+            $this->addRelationship($productConcreteResources, $restRequest, $resource);
         }
     }
 
     /**
-     * @param array $productData
+     * @param array $productsData
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      *
      * @return void
      */
-    protected function addRelationship(array $productData, RestRequestInterface $restRequest, RestResourceInterface $resource): void
-    {
-        if (!$productData) {
+    protected function addRelationship(
+        array $productsData,
+        RestRequestInterface $restRequest,
+        RestResourceInterface $resource
+    ): void {
+        if (!$productsData) {
             return;
+        }
+
+        $productAbstractIds = [];
+        foreach ($productsData as $productData) {
+            $productAbstractIds[] = $productData[static::KEY_ID_PRODUCT_ABSTRACT];
         }
 
         $restRequest->setPage(new Page(0, $this->productReviewsRestApiConfig->getMaximumNumberOfResults()));
 
         $productReviewsRestResources = $this->productReviewReader
-            ->getProductReviewsByIdProductAbstract(
+            ->getProductReviewsByProductAbstractIds(
                 $restRequest,
-                $productData[static::KEY_ID_PRODUCT_ABSTRACT],
+                $productAbstractIds,
                 []
             );
 

@@ -91,6 +91,7 @@ class ProductReviewsRestApiFactory extends AbstractFactory
         return new ProductReviewResourceRelationshipExpander(
             $this->createProductReviewReader(),
             $this->getProductStorageClient(),
+            $this->getProductReviewClient(),
             $this->getConfig()
         );
     }

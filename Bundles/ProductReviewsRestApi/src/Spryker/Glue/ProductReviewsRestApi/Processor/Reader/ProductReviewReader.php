@@ -7,10 +7,10 @@
 
 namespace Spryker\Glue\ProductReviewsRestApi\Processor\Reader;
 
+use Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\Page;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewClientInterface;
@@ -108,20 +108,22 @@ class ProductReviewReader implements ProductReviewReaderInterface
     }
 
     /**
+     * /**
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param int $idProductAbstract
+     * @param int[] $productAbstractIds
      * @param array $requestParams
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getProductReviewsByIdProductAbstract(
+    public function getProductReviewsByProductAbstractIds(
         RestRequestInterface $restRequest,
-        int $idProductAbstract,
+        array $productAbstractIds,
         array $requestParams = []
     ): array {
-        $productReviewTransfers = $this->getProductReviewsInSearch(
+        $productReviewTransfers = $this->getBulkProductReviewsInSearch(
             $restRequest,
-            $idProductAbstract,
+            $productAbstractIds,
             $requestParams
         )[static::PRODUCT_REVIEWS];
 
@@ -140,16 +142,35 @@ class ProductReviewReader implements ProductReviewReaderInterface
         int $idProductAbstract,
         array $requestParams = []
     ): array {
-        if (!$restRequest->getPage()) {
-            $restRequest->setPage(new Page(0, $this->productReviewsRestApiConfig->getDefaultReviewsPerPage()));
-        }
-
         $requestParams = $this->expandRequestParamsWithPaginationParameters($requestParams, $restRequest);
 
         $productReviews = $this->productReviewClient->findProductReviewsInSearch(
             (new ProductReviewSearchRequestTransfer())
                 ->setRequestParams($requestParams)
                 ->setIdProductAbstract($idProductAbstract)
+        );
+
+        return $productReviews;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param int[] $productAbstractIds
+     * @param array $requestParams
+     *
+     * @return array
+     */
+    protected function getBulkProductReviewsInSearch(
+        RestRequestInterface $restRequest,
+        array $productAbstractIds,
+        array $requestParams = []
+    ): array {
+        $requestParams = $this->expandRequestParamsWithPaginationParameters($requestParams, $restRequest);
+
+        $productReviews = $this->productReviewClient->findBulkProductReviewsInSearch(
+            (new BulkProductReviewSearchRequestTransfer())
+                ->setRequestParams($requestParams)
+                ->setProductAbstractIds($productAbstractIds)
         );
 
         return $productReviews;
@@ -163,42 +184,15 @@ class ProductReviewReader implements ProductReviewReaderInterface
      */
     protected function expandRequestParamsWithPaginationParameters(array $requestParams, RestRequestInterface $restRequest): array
     {
-        $page = $restRequest->getPage();
-        if (!$page) {
-            return $requestParams;
+        if (!$restRequest->getPage()) {
+            $restRequest->setPage(new Page(0, $this->productReviewsRestApiConfig->getDefaultReviewsPerPage()));
         }
 
-        $requestParams[RequestConstantsInterface::QUERY_OFFSET] = $this->getOffsetParameter($page);
-        $requestParams[RequestConstantsInterface::QUERY_LIMIT] = $this->getLimitParameter($page);
+        $page = $restRequest->getPage();
+
+        $requestParams[RequestConstantsInterface::QUERY_OFFSET] = $page->getOffset() ?: 0;
+        $requestParams[RequestConstantsInterface::QUERY_LIMIT] = $page->getLimit() ?: $this->productReviewsRestApiConfig->getDefaultReviewsPerPage();
 
         return $requestParams;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface $page
-     *
-     * @return int
-     */
-    protected function getLimitParameter(PageInterface $page): int
-    {
-        if (!$page->getLimit()) {
-            return $this->productReviewsRestApiConfig->getDefaultReviewsPerPage();
-        }
-
-        return $page->getLimit();
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface $page
-     *
-     * @return int
-     */
-    protected function getOffsetParameter(PageInterface $page): int
-    {
-        if (!$page->getOffset()) {
-            return 0;
-        }
-
-        return $page->getOffset();
     }
 }

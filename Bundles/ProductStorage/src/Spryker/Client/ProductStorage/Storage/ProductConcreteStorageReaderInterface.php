@@ -34,7 +34,7 @@ interface ProductConcreteStorageReaderInterface
      *
      * @return array
      */
-    public function findBulkProductConcreteStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): array;
+    public function getProductConcreteStorageDataByMappingAndIdentifiers(string $mappingType, array $identifiers, string $localeName): array;
 
     /**
      * @param int[] $productIds
