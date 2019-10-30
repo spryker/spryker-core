@@ -56,4 +56,7 @@
         <property name="carrierName" type="string"/>
         <property name="name" type="string"/>
     </transfer>
+
+    <transfer name="Customer">
+    </transfer>
 </transfers>

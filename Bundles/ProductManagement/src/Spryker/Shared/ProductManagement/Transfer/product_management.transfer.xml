@@ -164,4 +164,10 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="Money">
+    </transfer>
+
+    <transfer name="ProductAttributeKey">
+    </transfer>
+
 </transfers>
