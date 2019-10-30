@@ -14,7 +14,7 @@ use Spryker\Client\ConfigurableBundleCartNote\Dependency\Client\ConfigurableBund
 
 class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
 {
-    protected const STORAGE_STRATEGY_SESSION = 'session';
+    protected const STORAGE_STRATEGY = 'session';
 
     /**
      * @var \Spryker\Client\ConfigurableBundleCartNote\Dependency\Client\ConfigurableBundleCartNoteToQuoteClientInterface
@@ -34,16 +34,16 @@ class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
      */
     public function getStorageStrategy(): string
     {
-        return static::STORAGE_STRATEGY_SESSION;
+        return static::STORAGE_STRATEGY;
     }
 
     /**
-     * @param string $note
+     * @param string $cartNote
      * @param string $configurableBundleGroupKey
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setCartNoteToConfigurableBundle(string $note, string $configurableBundleGroupKey): QuoteResponseTransfer
+    public function setCartNoteToConfigurableBundle(string $cartNote, string $configurableBundleGroupKey): QuoteResponseTransfer
     {
         $quoteNoteResponseTransfer = new QuoteResponseTransfer();
         $quoteTransfer = $this->quoteClient->getQuote();
@@ -56,7 +56,7 @@ class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
         }
 
         foreach ($itemCollection->getItems() as $itemTransfer) {
-            $itemTransfer->getConfiguredBundle()->setCartNote($note);
+            $itemTransfer->getConfiguredBundle()->setCartNote($cartNote);
         }
 
         $this->quoteClient->setQuote($quoteTransfer);

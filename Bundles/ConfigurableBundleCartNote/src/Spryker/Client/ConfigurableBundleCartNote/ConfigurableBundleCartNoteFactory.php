@@ -9,10 +9,13 @@ namespace Spryker\Client\ConfigurableBundleCartNote;
 
 use Spryker\Client\ConfigurableBundleCartNote\Dependency\Client\ConfigurableBundleCartNoteToQuoteClientInterface;
 use Spryker\Client\ConfigurableBundleCartNote\Dependency\Client\ConfigurableBundleCartNoteToZedRequestClientInterface;
+use Spryker\Client\ConfigurableBundleCartNote\QuoteStorageStrategy\DatabaseQuoteStorageStrategy;
 use Spryker\Client\ConfigurableBundleCartNote\QuoteStorageStrategy\QuoteStorageStrategyInterface;
 use Spryker\Client\ConfigurableBundleCartNote\QuoteStorageStrategy\QuoteStorageStrategyProvider;
 use Spryker\Client\ConfigurableBundleCartNote\QuoteStorageStrategy\QuoteStorageStrategyProviderInterface;
 use Spryker\Client\ConfigurableBundleCartNote\QuoteStorageStrategy\SessionQuoteStorageStrategy;
+use Spryker\Client\ConfigurableBundleCartNote\Zed\ConfigurableBundleCartNoteZedStub;
+use Spryker\Client\ConfigurableBundleCartNote\Zed\ConfigurableBundleCartNoteZedStubInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class ConfigurableBundleCartNoteFactory extends AbstractFactory
@@ -43,6 +46,7 @@ class ConfigurableBundleCartNoteFactory extends AbstractFactory
     {
         return [
             $this->createSessionQuoteStorageStrategy(),
+            $this->createDatabaseQuoteStorageStrategy(),
         ];
     }
 
@@ -52,6 +56,25 @@ class ConfigurableBundleCartNoteFactory extends AbstractFactory
     public function createSessionQuoteStorageStrategy(): QuoteStorageStrategyInterface
     {
         return new SessionQuoteStorageStrategy($this->getQuoteClient());
+    }
+
+    /**
+     * @return \Spryker\Client\ConfigurableBundleCartNote\QuoteStorageStrategy\QuoteStorageStrategyInterface
+     */
+    public function createDatabaseQuoteStorageStrategy(): QuoteStorageStrategyInterface
+    {
+        return new DatabaseQuoteStorageStrategy(
+            $this->getQuoteClient(),
+            $this->createConfigurableBundleCartNoteZedStub()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ConfigurableBundleCartNote\Zed\ConfigurableBundleCartNoteZedStubInterface
+     */
+    public function createConfigurableBundleCartNoteZedStub(): ConfigurableBundleCartNoteZedStubInterface
+    {
+        return new ConfigurableBundleCartNoteZedStub($this->getZedRequestClient());
     }
 
     /**

@@ -20,15 +20,15 @@ class ConfigurableBundleCartNoteClient extends AbstractClient implements Configu
      *
      * @api
      *
-     * @param string $note
+     * @param string $cartNote
      * @param string $configurableBundleGroupKey
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setCartNoteToConfigurableBundle(string $note, string $configurableBundleGroupKey): QuoteResponseTransfer
+    public function setCartNoteToConfigurableBundle(string $cartNote, string $configurableBundleGroupKey): QuoteResponseTransfer
     {
         return $this->getFactory()
             ->getQuoteStorageStrategy()
-            ->setCartNoteToConfigurableBundle($note, $configurableBundleGroupKey);
+            ->setCartNoteToConfigurableBundle($cartNote, $configurableBundleGroupKey);
     }
 }
