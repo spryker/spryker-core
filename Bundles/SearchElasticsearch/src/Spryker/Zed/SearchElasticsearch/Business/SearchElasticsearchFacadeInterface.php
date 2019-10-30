@@ -133,7 +133,7 @@ interface SearchElasticsearchFacadeInterface
      *
      * @return bool
      */
-    public function createSnapshot($repositoryName, $snapshotName, $options = []): bool;
+    public function createSnapshot(string $repositoryName, string $snapshotName, array $options = []): bool;
 
     /**
      * Specification:
@@ -146,7 +146,7 @@ interface SearchElasticsearchFacadeInterface
      *
      * @return bool
      */
-    public function existsSnapshot($repositoryName, $snapshotName): bool;
+    public function existsSnapshot(string $repositoryName, string $snapshotName): bool;
 
     /**
      * Specification:
@@ -159,7 +159,7 @@ interface SearchElasticsearchFacadeInterface
      *
      * @return bool
      */
-    public function deleteSnapshot($repositoryName, $snapshotName): bool;
+    public function deleteSnapshot(string $repositoryName, string $snapshotName): bool;
 
     /**
      * Specification:
@@ -171,7 +171,7 @@ interface SearchElasticsearchFacadeInterface
      *
      * @return bool
      */
-    public function existsSnapshotRepository($repositoryName): bool;
+    public function existsSnapshotRepository(string $repositoryName): bool;
 
     /**
      * Specification:
@@ -185,7 +185,7 @@ interface SearchElasticsearchFacadeInterface
      *
      * @return bool
      */
-    public function registerSnapshotRepository($repositoryName, $type = 'fs', $settings = []): bool;
+    public function registerSnapshotRepository(string $repositoryName, string $type = 'fs', array $settings = []): bool;
 
     /**
      * Specification:
@@ -199,5 +199,5 @@ interface SearchElasticsearchFacadeInterface
      *
      * @return bool
      */
-    public function restoreSnapshot($repositoryName, $snapshotName, $options = []): bool;
+    public function restoreSnapshot(string $repositoryName, string $snapshotName, array $options = []): bool;
 }

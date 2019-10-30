@@ -148,7 +148,7 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
      *
      * @return bool
      */
-    public function createSnapshot($repositoryName, $snapshotName, $options = []): bool
+    public function createSnapshot(string $repositoryName, string $snapshotName, array $options = []): bool
     {
         return $this->getFactory()->createSnapshot()->createSnapshot($repositoryName, $snapshotName, $options);
     }
@@ -163,7 +163,7 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
      *
      * @return bool
      */
-    public function existsSnapshot($repositoryName, $snapshotName): bool
+    public function existsSnapshot(string $repositoryName, string $snapshotName): bool
     {
         return $this->getFactory()->createSnapshot()->existsSnapshot($repositoryName, $snapshotName);
     }
@@ -178,7 +178,7 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
      *
      * @return bool
      */
-    public function deleteSnapshot($repositoryName, $snapshotName): bool
+    public function deleteSnapshot(string $repositoryName, string $snapshotName): bool
     {
         return $this->getFactory()->createSnapshot()->deleteSnapshot($repositoryName, $snapshotName);
     }
@@ -192,7 +192,7 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
      *
      * @return bool
      */
-    public function existsSnapshotRepository($repositoryName): bool
+    public function existsSnapshotRepository(string $repositoryName): bool
     {
         return $this->getFactory()->createRepository()->existsSnapshotRepository($repositoryName);
     }
@@ -208,7 +208,7 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
      *
      * @return bool
      */
-    public function registerSnapshotRepository($repositoryName, $type = 'fs', $settings = []): bool
+    public function registerSnapshotRepository(string $repositoryName, string $type = 'fs', array $settings = []): bool
     {
         return $this->getFactory()->createRepository()->registerSnapshotRepository($repositoryName, $type, $settings);
     }
@@ -224,7 +224,7 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
      *
      * @return bool
      */
-    public function restoreSnapshot($repositoryName, $snapshotName, $options = []): bool
+    public function restoreSnapshot(string $repositoryName, string $snapshotName, array $options = []): bool
     {
         return $this->getFactory()->createSnapshot()->restoreSnapshot($repositoryName, $snapshotName, $options);
     }
