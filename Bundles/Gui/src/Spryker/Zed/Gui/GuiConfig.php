@@ -61,7 +61,7 @@ class GuiConfig extends AbstractBundleConfig
      */
     public function getZedAssetsPath(): string
     {
-        return $this->get(GuiConstants::ZED_ASSETS_PATH, '/assets/');
+        return $this->get(GuiConstants::ZED_ASSETS_BASE_URL, '/assets/');
     }
 
     /**
