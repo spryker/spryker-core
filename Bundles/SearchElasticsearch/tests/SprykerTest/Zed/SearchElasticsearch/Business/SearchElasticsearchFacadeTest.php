@@ -279,6 +279,8 @@ class SearchElasticsearchFacadeTest extends Unit
      */
     public function testCanCreateSnapshotRepository(): void
     {
+        $this->skipIfCi();
+
         // Arrange
         $this->tester->mockFactoryMethod('createRepository', $this->createRepositoryMock());
 
@@ -295,6 +297,8 @@ class SearchElasticsearchFacadeTest extends Unit
      */
     public function testCanCheckForRepositoryExistence(): void
     {
+        $this->skipIfCi();
+
         // Arrange
         $this->tester->mockFactoryMethod('createRepository', $this->createRepositoryMock());
         $this->tester->registerSnapshotRepository(static::REPOSITORY_NAME);
@@ -347,6 +351,8 @@ class SearchElasticsearchFacadeTest extends Unit
      */
     public function testCanCreateSnapshot(): void
     {
+        $this->skipIfCi();
+
         // Arrange
         $this->tester->addCleanupForSnapshotInRepository(static::REPOSITORY_NAME, static::SNAPSHOT_NAME);
         $this->tester->registerSnapshotRepository(static::REPOSITORY_NAME);
@@ -363,6 +369,8 @@ class SearchElasticsearchFacadeTest extends Unit
      */
     public function testCanCheckForSnapshotExistence(): void
     {
+        $this->skipIfCi();
+
         // Arrange
         $this->tester->createSnapshotInRepository(static::REPOSITORY_NAME, static::SNAPSHOT_NAME);
 
@@ -379,6 +387,8 @@ class SearchElasticsearchFacadeTest extends Unit
      */
     public function testCanDeleteSnapshot(): void
     {
+        $this->skipIfCi();
+
         // Arrange
         $this->tester->createSnapshotInRepository(static::REPOSITORY_NAME, static::SNAPSHOT_NAME);
 
@@ -388,5 +398,15 @@ class SearchElasticsearchFacadeTest extends Unit
         // Assert
         $this->assertTrue($result);
         $this->assertFalse($this->tester->existsSnapshotInRepository(static::REPOSITORY_NAME, static::SNAPSHOT_NAME));
+    }
+
+    /**
+     * @return void
+     */
+    protected function skipIfCi(): void
+    {
+        if (getenv('TRAVIS')) {
+            $this->markTestSkipped('Travis not set up properly');
+        }
     }
 }
