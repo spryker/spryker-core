@@ -111,7 +111,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getProductAbstractBySkus(array $skus, RestRequestInterface $restRequest): array
+    public function getProductAbstractsBySkus(array $skus, RestRequestInterface $restRequest): array
     {
         $abstractProductCollection = $this->productStorageClient
             ->findBulkProductAbstractStorageDataByMapping(

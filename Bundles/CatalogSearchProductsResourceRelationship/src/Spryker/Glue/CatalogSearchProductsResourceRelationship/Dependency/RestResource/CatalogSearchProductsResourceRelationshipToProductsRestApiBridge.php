@@ -42,8 +42,8 @@ class CatalogSearchProductsResourceRelationshipToProductsRestApiBridge implement
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getProductAbstractBySkus(array $skus, RestRequestInterface $restRequest): array
+    public function getProductAbstractsBySkus(array $skus, RestRequestInterface $restRequest): array
     {
-        return $this->productsResource->getProductAbstractBySkus($skus, $restRequest);
+        return $this->productsResource->getProductAbstractsBySkus($skus, $restRequest);
     }
 }

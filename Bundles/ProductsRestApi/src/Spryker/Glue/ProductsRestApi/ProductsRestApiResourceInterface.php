@@ -27,7 +27,8 @@ interface ProductsRestApiResourceInterface
 
     /**
      * Specification:
-     *  - Retrieves multiple abstract product resource by sku.
+     * - Retrieves multiple abstract product resource by sku.
+     * - Returned collection of rest resources is indexed by product abstract sku.
      *
      * @api
      *
@@ -36,7 +37,7 @@ interface ProductsRestApiResourceInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getProductAbstractBySkus(array $skus, RestRequestInterface $restRequest): array;
+    public function getProductAbstractsBySkus(array $skus, RestRequestInterface $restRequest): array;
 
     /**
      * Specification:
