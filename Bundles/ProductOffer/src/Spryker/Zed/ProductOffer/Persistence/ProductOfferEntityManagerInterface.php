@@ -16,5 +16,5 @@ interface ProductOfferEntityManagerInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
-    public function saveProductOffer(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer;
+    public function createProductOffer(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer;
 }

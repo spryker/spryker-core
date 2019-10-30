@@ -32,6 +32,6 @@ class ProductOfferWriter implements ProductOfferWriterInterface
      */
     public function create(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
-        return $this->productOfferEntityManager->saveProductOffer($productOfferTransfer);
+        return $this->productOfferEntityManager->createProductOffer($productOfferTransfer);
     }
 }

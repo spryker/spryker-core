@@ -20,7 +20,7 @@ class ProductOfferEntityManager extends AbstractEntityManager implements Product
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
-    public function saveProductOffer(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
+    public function createProductOffer(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
         $productOfferEntity = $this->getFactory()
             ->createProductOfferPropelQuery()
