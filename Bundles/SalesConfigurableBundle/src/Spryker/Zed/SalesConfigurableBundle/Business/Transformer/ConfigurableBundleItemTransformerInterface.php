@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesConfigurableBundle\Business\OrderItem;
+namespace Spryker\Zed\SalesConfigurableBundle\Business\Transformer;
 
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;

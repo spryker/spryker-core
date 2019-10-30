@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesConfigurableBundle\Business\OrderItem;
+namespace Spryker\Zed\SalesConfigurableBundle\Business\Validator;
 
 use Generated\Shared\Transfer\ItemTransfer;
 
@@ -18,10 +18,6 @@ class ConfigurableBundleItemQuantityValidator implements ConfigurableBundleItemQ
      */
     public function isConfigurableBundleItemQuantitySplittable(ItemTransfer $itemTransfer): bool
     {
-        if (!method_exists($itemTransfer, 'getConfiguredBundle')) {
-            return false;
-        }
-
         if ($itemTransfer->getConfiguredBundle()) {
             return true;
         }

@@ -10,10 +10,10 @@ namespace Spryker\Zed\SalesConfigurableBundle\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesConfigurableBundle\Business\Expander\SalesOrderConfiguredBundleExpander;
 use Spryker\Zed\SalesConfigurableBundle\Business\Expander\SalesOrderConfiguredBundleExpanderInterface;
-use Spryker\Zed\SalesConfigurableBundle\Business\OrderItem\ConfigurableBundleItemQuantityValidator;
-use Spryker\Zed\SalesConfigurableBundle\Business\OrderItem\ConfigurableBundleItemQuantityValidatorInterface;
-use Spryker\Zed\SalesConfigurableBundle\Business\OrderItem\ConfigurableBundleItemTransformer;
-use Spryker\Zed\SalesConfigurableBundle\Business\OrderItem\ConfigurableBundleItemTransformerInterface;
+use Spryker\Zed\SalesConfigurableBundle\Business\Transformer\ConfigurableBundleItemTransformer;
+use Spryker\Zed\SalesConfigurableBundle\Business\Transformer\ConfigurableBundleItemTransformerInterface;
+use Spryker\Zed\SalesConfigurableBundle\Business\Validator\ConfigurableBundleItemQuantityValidator;
+use Spryker\Zed\SalesConfigurableBundle\Business\Validator\ConfigurableBundleItemQuantityValidatorInterface;
 use Spryker\Zed\SalesConfigurableBundle\Business\Writer\SalesOrderConfiguredBundleWriter;
 use Spryker\Zed\SalesConfigurableBundle\Business\Writer\SalesOrderConfiguredBundleWriterInterface;
 use Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToSalesFacadeInterface;
@@ -47,7 +47,7 @@ class SalesConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesConfigurableBundle\Business\OrderItem\ConfigurableBundleItemQuantityValidatorInterface
+     * @return \Spryker\Zed\SalesConfigurableBundle\Business\Validator\ConfigurableBundleItemQuantityValidatorInterface
      */
     public function createConfigurableBundleItemQuantityValidator(): ConfigurableBundleItemQuantityValidatorInterface
     {
@@ -55,7 +55,7 @@ class SalesConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesConfigurableBundle\Business\OrderItem\ConfigurableBundleItemTransformerInterface
+     * @return \Spryker\Zed\SalesConfigurableBundle\Business\Transformer\ConfigurableBundleItemTransformerInterface
      */
     public function createConfigurableBundleItemTransformer(): ConfigurableBundleItemTransformerInterface
     {

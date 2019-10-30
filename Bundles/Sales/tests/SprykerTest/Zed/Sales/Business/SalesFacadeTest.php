@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\OrderBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
@@ -162,14 +161,13 @@ class SalesFacadeTest extends Unit
             ->setQuantity(10);
 
         //Act
-        $itemCollection = $salesFacade->transformSplittableItem($itemTransfer);
+        $itemCollectionTransfer = $salesFacade->transformSplittableItem($itemTransfer);
 
         //Assert
-        $this->assertInstanceOf(ItemCollectionTransfer::class, $itemCollection);
-        $this->assertCount($itemTransfer->getQuantity(), $itemCollection->getItems());
+        $this->assertCount($itemTransfer->getQuantity(), $itemCollectionTransfer->getItems());
 
-        foreach ($itemCollection->getItems() as $item) {
-            $this->assertEquals(1, $item->getQuantity());
+        foreach ($itemCollectionTransfer->getItems() as $item) {
+            $this->assertSame(1, $item->getQuantity());
         }
     }
 

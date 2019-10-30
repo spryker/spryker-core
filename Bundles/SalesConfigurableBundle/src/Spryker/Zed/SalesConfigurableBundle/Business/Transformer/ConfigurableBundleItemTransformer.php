@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesConfigurableBundle\Business\OrderItem;
+namespace Spryker\Zed\SalesConfigurableBundle\Business\Transformer;
 
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -22,18 +22,18 @@ class ConfigurableBundleItemTransformer implements ConfigurableBundleItemTransfo
     /**
      * @var \Spryker\Zed\SalesConfigurableBundle\SalesConfigurableBundleConfig
      */
-    protected $config;
+    protected $salesConfigurableBundleConfig;
 
     /**
      * @param \Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToSalesFacadeInterface $salesFacade
-     * @param \Spryker\Zed\SalesConfigurableBundle\SalesConfigurableBundleConfig $config
+     * @param \Spryker\Zed\SalesConfigurableBundle\SalesConfigurableBundleConfig $salesConfigurableBundleConfig
      */
     public function __construct(
         SalesConfigurableBundleToSalesFacadeInterface $salesFacade,
-        SalesConfigurableBundleConfig $config
+        SalesConfigurableBundleConfig $salesConfigurableBundleConfig
     ) {
         $this->salesFacade = $salesFacade;
-        $this->config = $config;
+        $this->salesConfigurableBundleConfig = $salesConfigurableBundleConfig;
     }
 
     /**
@@ -48,18 +48,18 @@ class ConfigurableBundleItemTransformer implements ConfigurableBundleItemTransfo
             return $this->createItemCollection($itemTransfer);
         }
 
-        $configurableBundleItemCollection = new ItemCollectionTransfer();
+        $configurableBundleItemCollectionTransfer = new ItemCollectionTransfer();
 
         for ($index = 1; $index <= $configuredBundleQuantity; $index++) {
             $transformedItemTransfer = $this->transformItem($itemTransfer, $index);
             $itemCollection = $this->createItemCollection($transformedItemTransfer);
 
             foreach ($itemCollection->getItems() as $item) {
-                $configurableBundleItemCollection->addItem($item);
+                $configurableBundleItemCollectionTransfer->addItem($item);
             }
         }
 
-        return $configurableBundleItemCollection;
+        return $configurableBundleItemCollectionTransfer;
     }
 
     /**
@@ -109,7 +109,7 @@ class ConfigurableBundleItemTransformer implements ConfigurableBundleItemTransfo
      */
     protected function isNonSplittableQuantityThresholdExceeded(ItemTransfer $itemTransfer): bool
     {
-        $threshold = $this->config->findConfigurableBundleItemQuantityThreshold();
+        $threshold = $this->salesConfigurableBundleConfig->findConfigurableBundleItemQuantityThreshold();
         if ($threshold === null) {
             return false;
         }
