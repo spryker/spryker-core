@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/search-extension.svg)](https://travis-ci.org/spryker/search-extension)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/search-extension/badge.svg)](https://coveralls.io/github/spryker/search-extension)
 
-{{ADD DESCRIPTION HERE}}
+Extension module for the Search module.
 
 ## Installation
 

@@ -5,8 +5,8 @@
 
     <transfer name="IndexDefinition">
         <property name="indexName" type="string"/>
-        <property name="settings" type="array"/>
-        <property name="mappings" type="array"/>
+        <property name="settings" type="array" singular="setting"/>
+        <property name="mappings" type="array" singular="mapping"/>
     </transfer>
 
     <transfer name="ElasticsearchSearchContext">
@@ -25,14 +25,14 @@
         <property name="type" type="string"/>
         <property name="isMultiValued" type="bool"/>
         <property name="valueTransformer" type="string"/>
-        <property name="aggregationParams" type="array"/>
+        <property name="aggregationParams" type="array" singular="aggregationParams"/>
     </transfer>
 
     <transfer name="PaginationConfig">
         <property name="parameterName" type="string"/>
         <property name="itemsPerPageParameterName" type="string"/>
         <property name="defaultItemsPerPage" type="int"/>
-        <property name="validItemsPerPageOptions" type="array"/>
+        <property name="validItemsPerPageOptions" type="array" singular="validItemsPerPageOptions"/>
     </transfer>
 
     <transfer name="SortConfig">
@@ -74,7 +74,7 @@
     </transfer>
 
     <transfer name="SortSearchResult">
-        <property name="sortParamNames" type="array"/>
+        <property name="sortParamNames" type="array" singular="sortParamNames"/>
         <property name="currentSortParam" type="string"/>
         <property name="currentSortOrder" type="string"/>
     </transfer>
@@ -86,7 +86,7 @@
 
     <transfer name="SearchDocument">
         <property name="id" type="string"/>
-        <property name="data" type="array"/>
+        <property name="data" type="array" singular="data"/>
         <property name="type" type="string"/>
         <property name="index" type="string"/>
     </transfer>
