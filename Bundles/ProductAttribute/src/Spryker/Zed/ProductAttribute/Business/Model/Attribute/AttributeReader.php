@@ -151,9 +151,10 @@ class AttributeReader implements AttributeReaderInterface
      */
     public function getProductAttributeCollection()
     {
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute[] $collection */
         $collection = $this->productAttributeQueryContainer
             ->queryProductAttributeCollection()
-            ->leftJoinWithSpyProductManagementAttributeValue()
+            ->joinWithSpyProductManagementAttributeValue()
             ->useSpyProductManagementAttributeValueQuery()
                 ->joinWithSpyProductManagementAttributeValueTranslation()
             ->endUse()

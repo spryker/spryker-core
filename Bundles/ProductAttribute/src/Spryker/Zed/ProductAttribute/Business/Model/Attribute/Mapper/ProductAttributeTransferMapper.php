@@ -51,11 +51,11 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
 
     /**
      * @param \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute $productAttributeEntity
-     * @param string[][] $translationsByLocaleNameAndGlossarykey
+     * @param string[][] $translationsByLocaleNameAndGlossaryKey
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
-    public function convertProductAttribute(SpyProductManagementAttribute $productAttributeEntity, array $translationsByLocaleNameAndGlossarykey = [])
+    public function convertProductAttribute(SpyProductManagementAttribute $productAttributeEntity, array $translationsByLocaleNameAndGlossaryKey = [])
     {
         $attributeTransfer = (new ProductManagementAttributeTransfer())
             ->fromArray($productAttributeEntity->toArray(), true);
@@ -66,14 +66,14 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
             ->setKey($productAttributeKeyEntity->getKey())
             ->setIsSuper($productAttributeKeyEntity->getIsSuper());
 
-        $attributeTransfer = $this->setLocalizedAttributeKeys($attributeTransfer, $translationsByLocaleNameAndGlossarykey);
+        $attributeTransfer = $this->setLocalizedAttributeKeys($attributeTransfer, $translationsByLocaleNameAndGlossaryKey);
         $attributeTransfer = $this->setAttributeValues($attributeTransfer, $productAttributeEntity);
 
         return $attributeTransfer;
     }
 
     /**
-     * @param \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute[]|\Propel\Runtime\Collection\ObjectCollection $productAttributeEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute[] $productAttributeEntityCollection
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
      */
@@ -229,16 +229,16 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
 
     /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $attributeTransfer
-     * @param string[][] $translationsByLocaleNameAndGlossarykey
+     * @param string[][] $translationsByLocaleNameAndGlossaryKey
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
-    protected function setLocalizedAttributeKeys(ProductManagementAttributeTransfer $attributeTransfer, array $translationsByLocaleNameAndGlossarykey = [])
+    protected function setLocalizedAttributeKeys(ProductManagementAttributeTransfer $attributeTransfer, array $translationsByLocaleNameAndGlossaryKey = [])
     {
         $availableLocales = $this->localeFacade->getLocaleCollection();
 
         foreach ($availableLocales as $localeTransfer) {
-            $keyTranslation = $translationsByLocaleNameAndGlossarykey[$attributeTransfer->getKey()][$localeTransfer->getLocaleName()] ?? $this->getAttributeKeyTranslation($attributeTransfer->getKey(), $localeTransfer);
+            $keyTranslation = $translationsByLocaleNameAndGlossaryKey[$attributeTransfer->getKey()][$localeTransfer->getLocaleName()] ?? $this->getAttributeKeyTranslation($attributeTransfer->getKey(), $localeTransfer);
 
             $localizedAttributeKeyTransfer = new LocalizedProductManagementAttributeKeyTransfer();
             $localizedAttributeKeyTransfer
