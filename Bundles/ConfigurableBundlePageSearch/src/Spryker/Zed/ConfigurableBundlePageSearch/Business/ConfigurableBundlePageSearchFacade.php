@@ -40,6 +40,22 @@ class ConfigurableBundlePageSearchFacade extends AbstractFacade implements Confi
      * {@inheritDoc}
      *
      * @api
+     *
+     * @param int[] $configurableBundleTemplateIds
+     *
+     * @return void
+     */
+    public function unpublishConfigurableBundleTemplates(array $configurableBundleTemplateIds): void
+    {
+        $this->getFactory()
+            ->createConfigurableBundleTemplateUnpublisher()
+            ->unpublish($configurableBundleTemplateIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
 
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchFilterTransfer $configurableBundleTemplatePageSearchFilterTransfer
      *

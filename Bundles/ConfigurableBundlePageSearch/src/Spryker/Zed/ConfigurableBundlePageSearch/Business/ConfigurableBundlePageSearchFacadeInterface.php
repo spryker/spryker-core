@@ -28,6 +28,18 @@ interface ConfigurableBundlePageSearchFacadeInterface
 
     /**
      * Specification:
+     * - Unpublishes Configurable Bundle Templates from Search.
+     *
+     * @api
+     *
+     * @param int[] $configurableBundleTemplateIds
+     *
+     * @return void
+     */
+    public function unpublishConfigurableBundleTemplates(array $configurableBundleTemplateIds): void;
+
+    /**
+     * Specification:
      * - Finds ConfigurableBundleTemplatePageSearch records by criteria from ConfigurableBundleTemplatePageSearchFilterTransfer.
      * - Returns ConfigurableBundleTemplatePageSearchCollectionTransfer with found records.
      *

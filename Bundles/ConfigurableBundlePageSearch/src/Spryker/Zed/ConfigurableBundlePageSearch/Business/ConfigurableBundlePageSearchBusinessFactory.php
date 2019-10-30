@@ -11,6 +11,8 @@ use Spryker\Zed\ConfigurableBundlePageSearch\Business\Mapper\ConfigurableBundleT
 use Spryker\Zed\ConfigurableBundlePageSearch\Business\Mapper\ConfigurableBundleTemplatePageSearchMapperInterface;
 use Spryker\Zed\ConfigurableBundlePageSearch\Business\Publisher\ConfigurableBundleTemplatePublisher;
 use Spryker\Zed\ConfigurableBundlePageSearch\Business\Publisher\ConfigurableBundleTemplatePublisherInterface;
+use Spryker\Zed\ConfigurableBundlePageSearch\Business\Unpublisher\ConfigurableBundleTemplateUnpublisher;
+use Spryker\Zed\ConfigurableBundlePageSearch\Business\Unpublisher\ConfigurableBundleTemplateUnpublisherInterface;
 use Spryker\Zed\ConfigurableBundlePageSearch\ConfigurableBundlePageSearchDependencyProvider;
 use Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToConfigurableBundleFacadeInterface;
 use Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToSearchFacadeInterface;
@@ -34,6 +36,17 @@ class ConfigurableBundlePageSearchBusinessFactory extends AbstractBusinessFactor
             $this->getRepository(),
             $this->getEntityManager(),
             $this->createConfigurableBundlePageSearchMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundlePageSearch\Business\Unpublisher\ConfigurableBundleTemplateUnpublisherInterface
+     */
+    public function createConfigurableBundleTemplateUnpublisher(): ConfigurableBundleTemplateUnpublisherInterface
+    {
+        return new ConfigurableBundleTemplateUnpublisher(
+            $this->getRepository(),
+            $this->getEntityManager()
         );
     }
 

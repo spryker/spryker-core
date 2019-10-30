@@ -9,6 +9,7 @@ namespace Spryker\Zed\ConfigurableBundlePageSearch\Communication\Plugin\Event\Su
 
 use Spryker\Zed\ConfigurableBundle\Dependency\ConfigurableBundleEvents;
 use Spryker\Zed\ConfigurableBundlePageSearch\Communication\Plugin\Event\Listener\ConfigurableBundleTemplatePageSearchConfigurableBundleTemplatePublishListener;
+use Spryker\Zed\ConfigurableBundlePageSearch\Communication\Plugin\Event\Listener\ConfigurableBundleTemplatePageSearchConfigurableBundleTemplateUnpublishListener;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -29,7 +30,8 @@ class ConfigurableBundleTemplatePageSearchEventSubscriber extends AbstractPlugin
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $this->addConfigurableBundleTemplateCreateListener($eventCollection);
+        $this->addConfigurableBundleTemplatePublishListener($eventCollection)
+            ->addConfigurableBundleTemplateDeleteListener($eventCollection);
 
         return $eventCollection;
     }
@@ -39,9 +41,21 @@ class ConfigurableBundleTemplatePageSearchEventSubscriber extends AbstractPlugin
      *
      * @return $this
      */
-    protected function addConfigurableBundleTemplateCreateListener(EventCollectionInterface $eventCollection)
+    protected function addConfigurableBundleTemplatePublishListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_PUBLISH, new ConfigurableBundleTemplatePageSearchConfigurableBundleTemplatePublishListener());
+
+        return $this;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return $this
+     */
+    protected function addConfigurableBundleTemplateDeleteListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_DELETE, new ConfigurableBundleTemplatePageSearchConfigurableBundleTemplateUnpublishListener());
 
         return $this;
     }
