@@ -8,9 +8,11 @@
 namespace Spryker\Zed\ConfigurableBundleGui\Communication\Controller;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotEditFormTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\ProductListGui\Communication\Plugin\ConfigurableBundleGui\ProductConcreteRelationConfigurableBundleTemplateSlotEditSubTabsProviderPlugin;
 use Spryker\Zed\ProductListGui\Communication\Plugin\ConfigurableBundleGui\ProductConcreteRelationConfigurableBundleTemplateSlotEditTablesProviderPlugin;
@@ -19,7 +21,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\ConfigurableBundleGui\Business\ConfigurableBundleGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\ConfigurableBundleGui\Communication\ConfigurableBundleGuiCommunicationFactory getFactory()
  */
 class SlotController extends AbstractController
@@ -40,6 +41,10 @@ class SlotController extends AbstractController
     protected const ROUTE_EDIT_TEMPLATE = '/configurable-bundle-gui/template/edit';
 
     protected const ERROR_MESSAGE_SLOT_NOT_FOUND = 'Configurable bundle template slot with id "%id%" was not found.';
+    protected const ERROR_MESSAGE_SLOT_CREATE_FAIL = 'Configurable bundle template slot has not been created.';
+    protected const ERROR_MESSAGE_SLOT_UPDATE_FAIL = 'Configurable bundle template slot has not been updated.';
+    protected const ERROR_MESSAGE_SLOT_DELETE_FAIL = 'Configurable bundle template slot has not been deleted.';
+
     protected const SUCCESS_MESSAGE_SLOT_CREATED = 'Configurable bundle template slot was successfully created.';
     protected const SUCCESS_MESSAGE_SLOT_UPDATED = 'Configurable bundle template slot was successfully updated.';
     protected const SUCCESS_MESSAGE_SLOT_DELETED = 'Configurable bundle template slot was successfully deleted.';
@@ -85,37 +90,9 @@ class SlotController extends AbstractController
      */
     public function deleteAction(Request $request): RedirectResponse
     {
-        $idConfigurableBundleTemplateSlot = $this->castId(
-            $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT)
-        );
+        $response = $this->executeDeleteAction($request);
 
-        $configurableBundleTemplateSlotTransfer = $this->getFactory()
-            ->getConfigurableBundleFacade()
-            ->findConfigurableBundleTemplateSlot(
-                (new ConfigurableBundleTemplateSlotFilterTransfer())
-                    ->setIdConfigurableBundleTemplateSlot($idConfigurableBundleTemplateSlot)
-                    ->setTranslationLocales(new ArrayObject([$this->getFactory()->getLocaleFacade()->getCurrentLocale()]))
-            );
-
-        if (!$configurableBundleTemplateSlotTransfer) {
-            $this->addErrorMessage(static::ERROR_MESSAGE_SLOT_NOT_FOUND, [
-                static::ERROR_MESSAGE_PARAM_ID => $idConfigurableBundleTemplateSlot,
-            ]);
-
-            return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
-        }
-
-        $this->getFactory()
-            ->getConfigurableBundleFacade()
-            ->deleteConfigurableBundleTemplateSlotById($idConfigurableBundleTemplateSlot);
-
-        $redirectUrl = Url::generate(static::ROUTE_EDIT_TEMPLATE, [
-            static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateSlotTransfer->getFkConfigurableBundleTemplate(),
-        ]);
-
-        $this->addSuccessMessage(static::SUCCESS_MESSAGE_SLOT_DELETED);
-
-        return $this->redirectResponse($redirectUrl . static::SLOTS_TAB_ANCHOR);
+        return $response;
     }
 
     /**
@@ -156,6 +133,7 @@ class SlotController extends AbstractController
         $idConfigurableBundleTemplate = $this->castId(
             $request->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
         );
+
         $formDataProvider = $this->getFactory()->createConfigurableBundleTemplateSlotCreateFormDataProvider();
 
         $form = $this->getFactory()
@@ -165,12 +143,12 @@ class SlotController extends AbstractController
             )->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $configurableBundleResponseTransfer = $this->getFactory()
+            $configurableBundleTemplateSlotResponseTransfer = $this->getFactory()
                 ->getConfigurableBundleFacade()
                 ->createConfigurableBundleTemplateSlot($form->getData());
 
-            if ($configurableBundleResponseTransfer->getIsSuccessful()) {
-                $idConfigurableBundleTemplateSlot = $configurableBundleResponseTransfer
+            if ($configurableBundleTemplateSlotResponseTransfer->getIsSuccessful()) {
+                $idConfigurableBundleTemplateSlot = $configurableBundleTemplateSlotResponseTransfer
                     ->getConfigurableBundleTemplateSlot()
                     ->getIdConfigurableBundleTemplateSlot();
 
@@ -183,16 +161,14 @@ class SlotController extends AbstractController
                 return $this->redirectResponse($redirectUrl);
             }
 
-            $this->handleErrors($configurableBundleResponseTransfer->getMessages());
+            $this->addErrorMessage(static::ERROR_MESSAGE_SLOT_CREATE_FAIL);
         }
-
-        $configurableBundleTemplateTransfer = $this->findConfigurableBundleTemplateById($idConfigurableBundleTemplate);
 
         return [
             'tabs' => $this->getFactory()->createConfigurableBundleTemplateSlotCreateTabs()->createView(),
             'form' => $form->createView(),
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale(),
-            'configurableBundleTemplate' => $configurableBundleTemplateTransfer,
+            'configurableBundleTemplate' => $this->findConfigurableBundleTemplateById($idConfigurableBundleTemplate),
         ];
     }
 
@@ -225,21 +201,17 @@ class SlotController extends AbstractController
             )->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /**
-             * @var \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotEditFormTransfer $configurableBundleTemplateSlotEditFormTransfer
-             */
-            $configurableBundleTemplateSlotEditFormTransfer = $form->getData();
-            $configurableBundleTemplateSlotEditFormTransfer = $form = $this->getFactory()
+            $configurableBundleTemplateSlotEditFormTransfer = $this->getFactory()
                 ->createConfigurableBundleTemplateSlotEditFormFileUploadHandler()
-                ->handleFileUploads($form, $configurableBundleTemplateSlotEditFormTransfer);
+                ->handleFileUploads($form, $form->getData());
 
             $configurableBundleTemplateSlotTransfer = $this->mapFormTransferToRegularTransfer($configurableBundleTemplateSlotEditFormTransfer);
 
-            $configurableBundleResponseTransfer = $this->getFactory()
+            $configurableBundleTemplateSlotResponseTransfer = $this->getFactory()
                 ->getConfigurableBundleFacade()
-                ->updateConfigurableBundleTemplateSlot($configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot());
+                ->updateConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer);
 
-            if ($configurableBundleResponseTransfer->getIsSuccessful()) {
+            if ($configurableBundleTemplateSlotResponseTransfer->getIsSuccessful()) {
                 $redirectUrl = Url::generate(static::ROUTE_EDIT_TEMPLATE_SLOT, [
                     static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT => $idConfigurableBundleTemplateSlot,
                 ]);
@@ -248,12 +220,15 @@ class SlotController extends AbstractController
 
                 return $this->redirectResponse($redirectUrl);
             }
+
+            $this->addErrorMessage(static::ERROR_MESSAGE_SLOT_UPDATE_FAIL);
         }
 
         $request->query->set(
             static::URL_PARAM_ID_PRODUCT_LIST,
             $configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()->getProductList()->getIdProductList()
         );
+
         $configurableBundleTemplateTransfer = $this->findConfigurableBundleTemplateById(
             $configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()->getFkConfigurableBundleTemplate()
         );
@@ -268,6 +243,51 @@ class SlotController extends AbstractController
         $viewData = array_merge($viewData, $this->getProductListManagementTabsAndTables());
 
         return $viewData;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeDeleteAction(Request $request): RedirectResponse
+    {
+        $idConfigurableBundleTemplateSlot = $this->castId(
+            $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT)
+        );
+
+        $configurableBundleTemplateSlotFilterTransfer = $this->createConfigurableBundleTemplateSlotFilter($idConfigurableBundleTemplateSlot);
+
+        $configurableBundleTemplateSlotTransfer = $this->getFactory()
+            ->getConfigurableBundleFacade()
+            ->getConfigurableBundleTemplateSlot($configurableBundleTemplateSlotFilterTransfer)
+            ->getConfigurableBundleTemplateSlot();
+
+        if (!$configurableBundleTemplateSlotTransfer) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_SLOT_NOT_FOUND, [
+                static::ERROR_MESSAGE_PARAM_ID => $idConfigurableBundleTemplateSlot,
+            ]);
+
+            return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
+        }
+
+        $configurableBundleTemplateSlotResponseTransfer = $this->getFactory()
+            ->getConfigurableBundleFacade()
+            ->deleteConfigurableBundleTemplateSlot($configurableBundleTemplateSlotFilterTransfer);
+
+        $redirectUrl = Url::generate(static::ROUTE_EDIT_TEMPLATE, [
+            static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateSlotTransfer->getFkConfigurableBundleTemplate(),
+        ]) . static::SLOTS_TAB_ANCHOR;
+
+        if ($configurableBundleTemplateSlotResponseTransfer->getIsSuccessful()) {
+            $this->addSuccessMessage(static::SUCCESS_MESSAGE_SLOT_DELETED);
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
+        $this->addErrorMessage(static::ERROR_MESSAGE_SLOT_DELETE_FAIL);
+
+        return $this->redirectResponse($redirectUrl);
     }
 
     /**
@@ -303,9 +323,42 @@ class SlotController extends AbstractController
         $productListAggregateFormTransfer = $configurableBundleTemplateSlotEditFormTransfer->getProductListAggregateForm();
 
         $productListTransfer = $configurableBundleTemplateSlotTransfer->getProductList();
-        $productListTransfer->setProductListCategoryRelation($productListAggregateFormTransfer->getProductListCategoryRelation());
-        $productListTransfer->setProductListProductConcreteRelation($productListAggregateFormTransfer->getProductListProductConcreteRelation());
 
-        return $configurableBundleTemplateSlotTransfer->setProductList($productListTransfer);
+        $productListTransfer
+            ->setProductListCategoryRelation($productListAggregateFormTransfer->getProductListCategoryRelation())
+            ->setProductListProductConcreteRelation($productListAggregateFormTransfer->getProductListProductConcreteRelation());
+
+        $configurableBundleTemplateSlotTransfer->setProductList($productListTransfer);
+
+        return $configurableBundleTemplateSlotTransfer;
+    }
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer|null
+     */
+    protected function findConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): ?ConfigurableBundleTemplateTransfer
+    {
+        $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())
+            ->setIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
+            ->setTranslationLocales(new ArrayObject([$this->getFactory()->getLocaleFacade()->getCurrentLocale()]));
+
+        return $this->getFactory()
+            ->getConfigurableBundleFacade()
+            ->getConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer)
+            ->getConfigurableBundleTemplate();
+    }
+
+    /**
+     * @param int $idConfigurableBundleTemplateSlot
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer
+     */
+    protected function createConfigurableBundleTemplateSlotFilter(int $idConfigurableBundleTemplateSlot): ConfigurableBundleTemplateSlotFilterTransfer
+    {
+        return (new ConfigurableBundleTemplateSlotFilterTransfer())
+            ->setIdConfigurableBundleTemplateSlot($idConfigurableBundleTemplateSlot)
+            ->setTranslationLocales(new ArrayObject([$this->getFactory()->getLocaleFacade()->getCurrentLocale()]));
     }
 }

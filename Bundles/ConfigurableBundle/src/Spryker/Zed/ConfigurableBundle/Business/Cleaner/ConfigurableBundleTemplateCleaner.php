@@ -74,6 +74,8 @@ class ConfigurableBundleTemplateCleaner implements ConfigurableBundleTemplateCle
         $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateSlotsByIdTemplate($idConfigurableBundleTemplate);
         $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateById($idConfigurableBundleTemplate);
 
+        // TODO: remove translates
+
         return (new ConfigurableBundleTemplateResponseTransfer())
             ->setIsSuccessful(true);
     }

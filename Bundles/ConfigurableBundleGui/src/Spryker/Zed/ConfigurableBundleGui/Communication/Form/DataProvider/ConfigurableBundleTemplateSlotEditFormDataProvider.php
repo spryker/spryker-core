@@ -68,7 +68,8 @@ class ConfigurableBundleTemplateSlotEditFormDataProvider
             ->setIdConfigurableBundleTemplateSlot($idConfigurableBundleTemplateSlot);
 
         $configurableBundleTemplateSlotTransfer = $this->configurableBundleFacade
-            ->findConfigurableBundleTemplateSlot($configurableBundleTemplateFilterTransfer);
+            ->getConfigurableBundleTemplateSlot($configurableBundleTemplateFilterTransfer)
+            ->getConfigurableBundleTemplateSlot();
 
         if (!$configurableBundleTemplateSlotTransfer) {
             return $configurableBundleTemplateSlotEditFormTransfer;

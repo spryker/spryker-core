@@ -61,7 +61,8 @@ class ProductListUsedByTableDataExpander implements ProductListUsedByTableDataEx
         )->setTranslationLocales(new ArrayObject([$this->localeFacade->getCurrentLocale()]));
 
         $configurableBundleTemplateSlotTransfers = $this->configurableBundleFacade
-            ->getConfigurableBundleTemplateSlotCollection($configurableBundleTemplateSlotFilterTransfer);
+            ->getConfigurableBundleTemplateSlotCollection($configurableBundleTemplateSlotFilterTransfer)
+            ->getConfigurableBundleTemplateSlots();
 
         $productListUsedByTableDataTransfer = $this->expandProductListUsedByTableDataTransfer(
             $productListUsedByTableDataTransfer,
@@ -73,13 +74,13 @@ class ProductListUsedByTableDataExpander implements ProductListUsedByTableDataEx
 
     /**
      * @param \Generated\Shared\Transfer\ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[] $configurableBundleTemplateSlotTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[] $configurableBundleTemplateSlotTransfers
      *
      * @return \Generated\Shared\Transfer\ProductListUsedByTableDataTransfer
      */
     protected function expandProductListUsedByTableDataTransfer(
         ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer,
-        array $configurableBundleTemplateSlotTransfers
+        ArrayObject $configurableBundleTemplateSlotTransfers
     ): ProductListUsedByTableDataTransfer {
         foreach ($configurableBundleTemplateSlotTransfers as $configurableBundleTemplateSlotTransfer) {
             $productListUsedByTableDataTransfer->addRow(
