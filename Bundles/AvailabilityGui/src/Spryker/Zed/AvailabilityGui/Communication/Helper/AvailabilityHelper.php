@@ -8,6 +8,7 @@
 namespace Spryker\Zed\AvailabilityGui\Communication\Helper;
 
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
+use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface;
@@ -196,7 +197,10 @@ class AvailabilityHelper implements AvailabilityHelperInterface
     protected function getStockWarehousesForStore(int $idStore): array
     {
         $storeTransfer = $this->storeFacade->getStoreById($idStore);
+        $stockTransfers = $this->stockFacade->getAvailableWarehousesForStore($storeTransfer);
 
-        return $this->stockFacade->getStoreToWarehouseMapping()[$storeTransfer->getName()] ?? [];
+        return array_map(function (StockTransfer $stockTransfer): string {
+            return $stockTransfer->getName();
+        }, $stockTransfers);
     }
 }
