@@ -37,6 +37,8 @@ class SearchElasticsearchFacadeTest extends Unit
     protected const INDEX_NAME_ALL = '*_testing';
     protected const REPOSITORY_LOCATION_FILE_NAME = 'search_test_file';
     protected const REPOSITORY_NAME = 'search_test_repository';
+    protected const REPOSITORY_TYPE_FILESYSTEM = 'fs';
+    protected const SNAPSHOT_NAME = 'search_test_snapshot';
 
     /**
      * @return void
@@ -277,6 +279,9 @@ class SearchElasticsearchFacadeTest extends Unit
      */
     public function testCanCreateSnapshotRepository(): void
     {
+        // Arrange
+        $this->tester->mockFactoryMethod('createRepository', $this->createRepositoryMock());
+
         //Act
         $result = $this->tester->getFacade()->registerSnapshotRepository(static::REPOSITORY_NAME);
 
@@ -291,11 +296,11 @@ class SearchElasticsearchFacadeTest extends Unit
     public function testCanCheckForRepositoryExistence(): void
     {
         // Arrange
-        $repositoryName = 'repository-name';
-        $this->tester->haveRepository($repositoryName);
+        $this->tester->mockFactoryMethod('createRepository', $this->createRepositoryMock());
+        $this->tester->registerSnapshotRepository(static::REPOSITORY_NAME);
 
         // Act
-        $result = $this->tester->getFacade()->existsSnapshotRepository($repositoryName);
+        $result = $this->tester->getFacade()->existsSnapshotRepository(static::REPOSITORY_NAME);
 
         // Assert
         $this->assertTrue($result);
@@ -307,11 +312,18 @@ class SearchElasticsearchFacadeTest extends Unit
     protected function createRepositoryMock(): RepositoryInterface
     {
         $repositoryMock = $this->getMockBuilder(Repository::class)
-            ->setConstructorArgs([$this->tester->getFactory()->createElasticaSnapshot()])
+            ->setConstructorArgs([$this->tester->getSnapshot()])
             ->setMethods(['buildRepositorySettings'])
             ->getMock();
 
-        $repositoryMock->method('buildRepositorySettings')->willReturn(['location' => $this->tester->getVirtualRepositoryLocation()]);
+        $repositoryMock->method('buildRepositorySettings')->willReturnCallback(function (): array {
+            $settings = func_get_arg(2) ?? [];
+
+            return array_merge(
+                $settings,
+                ['location' => $this->tester->getVirtualRepositoryLocation()]
+            );
+        });
 
         return $repositoryMock;
     }
@@ -329,17 +341,20 @@ class SearchElasticsearchFacadeTest extends Unit
     }
 
     /**
+     * @group somefoo
+     *
      * @return void
      */
     public function testCanCreateSnapshot(): void
     {
-        $repositoryName = 'repository-name';
-        $snapshotName = 'snapshot-name';
+        // Arrange
+        $this->tester->addCleanupForSnapshotInRepository(static::REPOSITORY_NAME, static::SNAPSHOT_NAME);
+        $this->tester->registerSnapshotRepository(static::REPOSITORY_NAME);
 
-        $this->tester->haveRepository($repositoryName);
-        $this->tester->getFacade()->createSnapshot($repositoryName, $snapshotName);
+        // Act
+        $result = $this->tester->getFacade()->createSnapshot(static::REPOSITORY_NAME, static::SNAPSHOT_NAME);
 
-        $result = $this->tester->getFactory()->createElasticaSnapshot()->getSnapshot($repositoryName, $snapshotName);
+        // Assert
         $this->assertTrue($result);
     }
 
@@ -348,13 +363,30 @@ class SearchElasticsearchFacadeTest extends Unit
      */
     public function testCanCheckForSnapshotExistence(): void
     {
-        $repositoryName = 'repository-name';
-        $snapshotName = 'snapshot-name';
+        // Arrange
+        $this->tester->createSnapshotInRepository(static::REPOSITORY_NAME, static::SNAPSHOT_NAME);
 
-        $this->tester->haveRepository($repositoryName);
-        $this->tester->getFacade()->existsSnapshot($repositoryName, $snapshotName);
+        // Act
+        $result = $this->tester->getFacade()->existsSnapshot(static::REPOSITORY_NAME, static::SNAPSHOT_NAME);
 
-        $result = $this->tester->getFactory()->createElasticaSnapshot()->getSnapshot($repositoryName, $snapshotName);
+        // Assert
         $this->assertTrue($result);
+        $this->assertTrue($this->tester->existsSnapshotInRepository(static::REPOSITORY_NAME, static::SNAPSHOT_NAME));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCanDeleteSnapshot(): void
+    {
+        // Arrange
+        $this->tester->createSnapshotInRepository(static::REPOSITORY_NAME, static::SNAPSHOT_NAME);
+
+        // Act
+        $result = $this->tester->getFacade()->deleteSnapshot(static::REPOSITORY_NAME, static::SNAPSHOT_NAME);
+
+        // Assert
+        $this->assertTrue($result);
+        $this->assertFalse($this->tester->existsSnapshotInRepository(static::REPOSITORY_NAME, static::SNAPSHOT_NAME));
     }
 }

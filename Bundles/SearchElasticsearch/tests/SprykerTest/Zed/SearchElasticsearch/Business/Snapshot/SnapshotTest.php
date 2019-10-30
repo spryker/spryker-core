@@ -66,7 +66,7 @@ class SnapshotTest extends Unit
                 static::REPOSITORY_NAME,
                 static::SNAPSHOT_NAME,
                 static::OPTIONS,
-                true
+                'true'
             )
             ->willReturnSelf();
 

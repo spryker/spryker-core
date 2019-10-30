@@ -11,9 +11,12 @@ use Codeception\Module;
 use Codeception\TestInterface;
 use Elastica\Client;
 use Elastica\Document;
+use Elastica\Exception\NotFoundException;
+use Elastica\Exception\ResponseException;
 use Elastica\Index;
 use Elastica\Request;
 use Elastica\Snapshot;
+use RuntimeException;
 use Spryker\Shared\SearchElasticsearch\SearchElasticsearchConfig;
 use SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper;
 
@@ -21,11 +24,17 @@ class ElasticsearchHelper extends Module
 {
     protected const INDEX_SUFFIX = '_testing';
     protected const REPOSITORY_LOCATION_FILE_NAME = 'search_test_file';
+    protected const REPOSITORY_TYPE_FILESYSTEM = 'fs';
 
     /**
      * @var array
      */
     protected $cleanup = [];
+
+    /**
+     * @var \Elastica\Client
+     */
+    protected static $client;
 
     /**
      * @param string $indexName
@@ -140,7 +149,11 @@ class ElasticsearchHelper extends Module
      */
     protected function getClient(): Client
     {
-        return new Client($this->getConfig()->getClientConfig());
+        if (!static::$client) {
+            static::$client = new Client($this->getConfig()->getClientConfig());
+        }
+
+        return static::$client;
     }
 
     /**
@@ -150,17 +163,73 @@ class ElasticsearchHelper extends Module
      *
      * @return void
      */
-    public function haveRepository(string $repositoryName, $type = 'fs', array $settings = []): void
+    public function registerSnapshotRepository(string $repositoryName, string $type = self::REPOSITORY_TYPE_FILESYSTEM, array $settings = []): void
     {
-        $settings['location'] = $this->getVirtualRepositoryLocation();
-        $snapshot = $this->createElasticaSnapshot();
+        $snapshot = new Snapshot($this->getClient());
+        $settings = array_merge(
+            $settings,
+            ['location' => $this->getVirtualRepositoryLocation()]
+        );
         $snapshot->registerRepository($repositoryName, $type, $settings);
+    }
+
+    /**
+     * @param string $repositoryName
+     * @param string $snapshotName
+     * @param array $options
+     *
+     * @return void
+     */
+    public function createSnapshotInRepository(string $repositoryName, string $snapshotName, array $options = []): void
+    {
+        $snapshot = $this->getSnapshot();
+
+        try {
+            $snapshot->getRepository($repositoryName);
+        } catch (ResponseException | NotFoundException $exception) {
+            $this->registerSnapshotRepository($repositoryName);
+        }
+
+        $snapshot->createSnapshot($repositoryName, $snapshotName, $options, true);
+        $this->addCleanupForSnapshotInRepository($repositoryName, $snapshotName);
+    }
+
+    /**
+     * @param string $repositoryName
+     * @param string $snapshotName
+     *
+     * @return void
+     */
+    public function addCleanupForSnapshotInRepository(string $repositoryName, string $snapshotName): void
+    {
+        $this->cleanup[] = (function () use ($repositoryName, $snapshotName) {
+            if ($this->existsSnapshotInRepository($repositoryName, $snapshotName)) {
+                $this->getSnapshot()->deleteSnapshot($repositoryName, $snapshotName);
+            }
+        });
+    }
+
+    /**
+     * @param string $repositoryName
+     * @param string $snapshotName
+     *
+     * @return bool
+     */
+    public function existsSnapshotInRepository(string $repositoryName, string $snapshotName): bool
+    {
+        try {
+            $this->getSnapshot()->getSnapshot($repositoryName, $snapshotName);
+
+            return true;
+        } catch (RuntimeException $exception) {
+            return false;
+        }
     }
 
     /**
      * @return \Elastica\Snapshot
      */
-    protected function createElasticaSnapshot(): Snapshot
+    public function getSnapshot(): Snapshot
     {
         return new Snapshot($this->getClient());
     }
