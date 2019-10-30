@@ -29,15 +29,13 @@ class ProductOfferStorageUnpublishListener extends AbstractPlugin implements Eve
      */
     public function handleBulk(array $transfers, $eventName): void
     {
-        $this->getTransactionHandler()->handleTransaction(function () use ($transfers): void {
-            $productOfferReferences = $this->getFactory()
-                ->getEventBehaviorFacade()
-                ->getEventTransfersAdditionalValues($transfers, SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE);
+        $productOfferReferences = $this->getFactory()
+            ->getEventBehaviorFacade()
+            ->getEventTransfersAdditionalValues($transfers, SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE);
 
-            if (!$productOfferReferences) {
-                return;
-            }
-            $this->getFacade()->unpublishProductOfferStorage($productOfferReferences);
-        });
+        if (!$productOfferReferences) {
+            return;
+        }
+        $this->getFacade()->unpublishProductOfferStorage($productOfferReferences);
     }
 }

@@ -19,8 +19,6 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
  */
 class ProductConcreteOffersStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use TransactionTrait;
-
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
      * @param string $eventName
@@ -29,15 +27,13 @@ class ProductConcreteOffersStorageUnpublishListener extends AbstractPlugin imple
      */
     public function handleBulk(array $transfers, $eventName): void
     {
-        $this->getTransactionHandler()->handleTransaction(function () use ($transfers): void {
-            $concreteSkus = $this->getFactory()
-                ->getEventBehaviorFacade()
-                ->getEventTransfersAdditionalValues($transfers, SpyProductOfferTableMap::COL_CONCRETE_SKU);
+        $concreteSkus = $this->getFactory()
+            ->getEventBehaviorFacade()
+            ->getEventTransfersAdditionalValues($transfers, SpyProductOfferTableMap::COL_CONCRETE_SKU);
 
-            if (!$concreteSkus) {
-                return;
-            }
-            $this->getFacade()->unpublishProductConcreteProductOffersStorage($concreteSkus);
-        });
+        if (!$concreteSkus) {
+            return;
+        }
+        $this->getFacade()->unpublishProductConcreteProductOffersStorage($concreteSkus);
     }
 }
