@@ -45,24 +45,24 @@ class ItemTransferExpander implements ItemTransferExpanderInterface
     {
         $this->assertItemTransfer($itemTransfer);
 
-        $productConcretePackagingStorageTransfer = $this->productPackagingUnitStorageReader->findProductConcretePackagingById(
+        $productPackagingUnitStorageTransfer = $this->productPackagingUnitStorageReader->findProductPackagingUnitById(
             (int)$itemTransfer->getProductConcrete()->getIdProductConcrete()
         );
 
-        if ($productConcretePackagingStorageTransfer === null) {
+        if ($productPackagingUnitStorageTransfer === null) {
             return $itemTransfer;
         }
 
-        if ($productConcretePackagingStorageTransfer->getIdLeadProduct() !== $productConcretePackagingStorageTransfer->getIdProduct()) {
+        if ($productPackagingUnitStorageTransfer->getIdLeadProduct() !== $productPackagingUnitStorageTransfer->getIdProduct()) {
             $quantityProductMeasurementSalesUnitTransfer = $this->findDefaultProductMeasurementSalesUnitTransfer(
-                (int)$productConcretePackagingStorageTransfer->getIdProduct()
+                (int)$productPackagingUnitStorageTransfer->getIdProduct()
             );
 
             $itemTransfer->setQuantitySalesUnit($quantityProductMeasurementSalesUnitTransfer);
         }
 
         $amountProductMeasurementSalesUnitTransfer = $this->findDefaultProductMeasurementSalesUnitTransfer(
-            (int)$productConcretePackagingStorageTransfer->getIdLeadProduct()
+            (int)$productPackagingUnitStorageTransfer->getIdLeadProduct()
         );
 
         if ($amountProductMeasurementSalesUnitTransfer !== null) {
@@ -70,7 +70,7 @@ class ItemTransferExpander implements ItemTransferExpanderInterface
         }
 
         $itemTransfer->setAmount(
-            $productConcretePackagingStorageTransfer->getDefaultAmount()->multiply($itemTransfer->getQuantity())
+            $productPackagingUnitStorageTransfer->getDefaultAmount()->multiply($itemTransfer->getQuantity())
         );
 
         return $itemTransfer;

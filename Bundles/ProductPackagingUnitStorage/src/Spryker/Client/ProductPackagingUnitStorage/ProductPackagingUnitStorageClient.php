@@ -8,7 +8,7 @@
 namespace Spryker\Client\ProductPackagingUnitStorage;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -23,13 +23,13 @@ class ProductPackagingUnitStorageClient extends AbstractClient implements Produc
      *
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer|null
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer|null
      */
-    public function findProductConcretePackagingById(int $idProductConcrete): ?ProductConcretePackagingStorageTransfer
+    public function findProductPackagingUnitById(int $idProductConcrete): ?ProductPackagingUnitStorageTransfer
     {
         return $this->getFactory()
             ->createProductPackagingUnitStorageReader()
-            ->findProductConcretePackagingById($idProductConcrete);
+            ->findProductPackagingUnitById($idProductConcrete);
     }
 
     /**

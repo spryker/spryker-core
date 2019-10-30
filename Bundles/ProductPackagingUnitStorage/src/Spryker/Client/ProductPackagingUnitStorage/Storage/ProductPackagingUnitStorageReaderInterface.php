@@ -7,14 +7,14 @@
 
 namespace Spryker\Client\ProductPackagingUnitStorage\Storage;
 
-use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer;
 
 interface ProductPackagingUnitStorageReaderInterface
 {
     /**
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer|null
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer|null
      */
-    public function findProductConcretePackagingById(int $idProductConcrete): ?ProductConcretePackagingStorageTransfer;
+    public function findProductPackagingUnitById(int $idProductConcrete): ?ProductPackagingUnitStorageTransfer;
 }
