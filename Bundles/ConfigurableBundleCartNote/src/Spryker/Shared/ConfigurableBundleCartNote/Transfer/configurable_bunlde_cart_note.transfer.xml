@@ -5,6 +5,7 @@
 
     <transfer name="ConfiguredBundle">
         <property name="cartNote" type="string"/>
+        <property name="groupKey" type="string"/>
     </transfer>
 
     <transfer name="SalesOrderConfiguredBundle">
@@ -16,6 +17,25 @@
         <property name="customer" type="Customer"/>
         <property name="configurableBundleGroupKey" type="string"/>
         <property name="cartNote" type="string"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="customer" type="Customer"/>
+        <property name="idQuote" type="int"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="configuredBundle" type="ConfiguredBundle"/>
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="quoteTransfer" type="Quote"/>
+    </transfer>
+
+    <transfer name="ItemCollection">
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
 </transfers>
