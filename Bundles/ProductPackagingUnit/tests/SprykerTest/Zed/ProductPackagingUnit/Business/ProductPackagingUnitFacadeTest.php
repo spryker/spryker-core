@@ -265,7 +265,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         );
 
         $productMeasurementSalesUnitTransfer = (new ProductMeasurementSalesUnitTransfer())
-            ->fromArray($productMeasurementSalesUnitEntityTransfer->toArray(), true);
+            ->setIdProductMeasurementSalesUnit($productMeasurementSalesUnitEntityTransfer->getIdProductMeasurementSalesUnit());
 
         $cartChange = (new CartChangeTransfer())
             ->addItem(
@@ -274,6 +274,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
                     ->setSku($boxProductConcreteTransfer->getSku())
                     ->setQuantity(static::ITEM_QUANTITY)
                     ->setAmount(static::PACKAGE_AMOUNT)
+                    ->setAmountLeadProduct($itemProductConcreteTransfer)
                     ->setAmountSalesUnit($productMeasurementSalesUnitTransfer)
             );
 
@@ -1042,7 +1043,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         ] = $this->tester->haveProductPackagingUnitWithSalesOrderItems($quantity, $amount, $itemsCount);
 
         // Action
-        $salesAggregationTransfers = $this->getFacade()->aggregateProductPackagingUnitReservationAmount(
+        $salesAggregationTransfers = $this->getFacade()->aggregateProductPackagingUnitReservation(
             $leadProductConcreteTransfer->getSku(),
             $stateCollectionTransfer,
             $storeTransfer
@@ -1075,7 +1076,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         ] = $this->tester->haveProductPackagingUnitWithSalesOrderItems($quantity, $amount, $itemsCount, true);
 
         // Action
-        $salesAggregationTransfers = $this->getFacade()->aggregateProductPackagingUnitReservationAmount(
+        $salesAggregationTransfers = $this->getFacade()->aggregateProductPackagingUnitReservation(
             $leadProductConcreteTransfer->getSku(),
             $stateCollectionTransfer,
             $storeTransfer
@@ -1105,7 +1106,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $stateCollectionTransfer = $this->tester->haveSalesOrderWithItems($itemsCount, $quantity, $sku);
 
         // Action
-        $salesAggregationTransfers = $this->getFacade()->aggregateProductPackagingUnitReservationAmount(
+        $salesAggregationTransfers = $this->getFacade()->aggregateProductPackagingUnitReservation(
             $sku,
             $stateCollectionTransfer,
             $storeTransfer
@@ -1141,7 +1142,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $this->tester->haveSalesOrderWithItems($itemsCount, $quantity, $leadProductConcreteTransfer->getSku());
 
         // Action
-        $salesAggregationTransfers = $this->getFacade()->aggregateProductPackagingUnitReservationAmount(
+        $salesAggregationTransfers = $this->getFacade()->aggregateProductPackagingUnitReservation(
             $leadProductConcreteTransfer->getSku(),
             $stateCollectionTransfer,
             $storeTransfer

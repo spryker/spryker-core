@@ -53,24 +53,22 @@ class ItemTransferExpander implements ItemTransferExpanderInterface
             return $itemTransfer;
         }
 
-        if ($productConcretePackagingStorageTransfer->getIdLeadProduct() === null) {
-            return $itemTransfer;
-        }
+        if ($productConcretePackagingStorageTransfer->getIdLeadProduct() !== $productConcretePackagingStorageTransfer->getIdProduct()) {
+            $quantityProductMeasurementSalesUnitTransfer = $this->findDefaultProductMeasurementSalesUnitTransfer(
+                (int)$productConcretePackagingStorageTransfer->getIdProduct()
+            );
 
-        $quantityProductMeasurementSalesUnitTransfer = $this->findDefaultProductMeasurementSalesUnitTransfer(
-            (int)$productConcretePackagingStorageTransfer->getIdProduct()
-        );
+            $itemTransfer->setQuantitySalesUnit($quantityProductMeasurementSalesUnitTransfer);
+        }
 
         $amountProductMeasurementSalesUnitTransfer = $this->findDefaultProductMeasurementSalesUnitTransfer(
             (int)$productConcretePackagingStorageTransfer->getIdLeadProduct()
         );
 
-        if ($quantityProductMeasurementSalesUnitTransfer === null || $amountProductMeasurementSalesUnitTransfer === null) {
-            return $itemTransfer;
+        if ($amountProductMeasurementSalesUnitTransfer !== null) {
+            $itemTransfer->setAmountSalesUnit($amountProductMeasurementSalesUnitTransfer);
         }
 
-        $itemTransfer->setQuantitySalesUnit($quantityProductMeasurementSalesUnitTransfer);
-        $itemTransfer->setAmountSalesUnit($amountProductMeasurementSalesUnitTransfer);
         $itemTransfer->setAmount(
             $productConcretePackagingStorageTransfer->getDefaultAmount()->multiply($itemTransfer->getQuantity())
         );

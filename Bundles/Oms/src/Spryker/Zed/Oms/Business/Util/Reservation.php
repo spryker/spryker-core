@@ -156,19 +156,6 @@ class Reservation implements ReservationInterface
     }
 
     /**
-     * @return string[]
-     */
-    public function getReservedStateNames(): array
-    {
-        $stateNames = [];
-        foreach ($this->activeProcessFetcher->getReservedStatesFromAllActiveProcesses() as $reservedState) {
-            $stateNames[] = $reservedState->getName();
-        }
-
-        return $stateNames;
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
      */
     public function getOmsReservedStateCollection(): OmsStateCollectionTransfer
@@ -204,7 +191,7 @@ class Reservation implements ReservationInterface
         StoreTransfer $storeTransfer
     ): array {
         foreach ($this->reservationAggregationPlugins as $reservationAggregationPlugin) {
-            $salesAggregationTransfers = $reservationAggregationPlugin->aggregateSalesOrderItemReservations(
+            $salesAggregationTransfers = $reservationAggregationPlugin->aggregateReservations(
                 $sku,
                 $reservedStates,
                 $storeTransfer

@@ -350,19 +350,11 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function aggregateProductPackagingUnitReservationAmount(string $sku, OmsStateCollectionTransfer $reservedStates, StoreTransfer $storeTransfer): array
+    public function aggregateProductPackagingUnitReservation(string $sku, OmsStateCollectionTransfer $reservedStates, StoreTransfer $storeTransfer): array
     {
-        $storeTransfer
-            ->requireName();
-
-        $reservedStates
-            ->requireStates();
-
-        return $this->getRepository()->aggregateProductPackagingUnitAmountForAllSalesOrderItemsBySku(
-            $sku,
-            array_keys($reservedStates->getStates()->getArrayCopy()),
-            $storeTransfer
-        );
+        return $this->getFactory()
+            ->createProductPackagingUnitReservationHandler()
+            ->aggregateProductPackagingUnitReservation($sku, $reservedStates, $storeTransfer);
     }
 
     /**

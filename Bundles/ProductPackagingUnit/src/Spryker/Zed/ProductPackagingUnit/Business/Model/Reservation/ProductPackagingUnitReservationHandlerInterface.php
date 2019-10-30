@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation;
 
+use Generated\Shared\Transfer\OmsStateCollectionTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface ProductPackagingUnitReservationHandlerInterface
 {
     /**
@@ -15,4 +18,13 @@ interface ProductPackagingUnitReservationHandlerInterface
      * @return void
      */
     public function updateLeadProductReservation(string $sku): void;
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\OmsStateCollectionTransfer $reservedStates
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
+     */
+    public function aggregateProductPackagingUnitReservation(string $sku, OmsStateCollectionTransfer $reservedStates, StoreTransfer $storeTransfer): array;
 }

@@ -282,7 +282,8 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Updates the lead product availability of the provided product pacakaging unit sku.
+     * - Updates the lead product availability of the provided product packaging unit sku.
+     * - Skips updating if the product packaging unit has self as lead product.
      *
      * @api
      *
@@ -295,6 +296,7 @@ interface ProductPackagingUnitFacadeInterface
     /**
      * Specification:
      * - Updates the lead product reservations of the provided product pacakaging unit sku.
+     * - Skips updating if the product packaging unit has self as lead product.
      *
      * @api
      *
@@ -306,7 +308,7 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Aggregates sales order items reservation amounts for a given sku, in the given states, and - optionaly - store too.
+     * - Aggregates reservations for provided SKU both with or without packaging unit.
      *
      * @api
      *
@@ -316,7 +318,7 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function aggregateProductPackagingUnitReservationAmount(string $sku, OmsStateCollectionTransfer $reservedStates, StoreTransfer $storeTransfer): array;
+    public function aggregateProductPackagingUnitReservation(string $sku, OmsStateCollectionTransfer $reservedStates, StoreTransfer $storeTransfer): array;
 
     /**
      * Specification:

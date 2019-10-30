@@ -270,6 +270,8 @@ interface OmsFacadeInterface
      *
      * @api
      *
+     * @deprecated Not used anymore. Will be removed with next major release.
+     *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
@@ -589,19 +591,6 @@ interface OmsFacadeInterface
      * @return void
      */
     public function updateReservationQuantity(string $sku): void;
-
-    /**
-     * Specification:
-     *  - Reads states from XML definition
-     *  - Returns a list of reserved state names
-     *
-     * @api
-     *
-     * @deprecated Use `Spryker\Zed\Oms\Business\OmsFacadeInterface::getOmsReservedStateCollection()` instead.
-     *
-     * @return string[]
-     */
-    public function getReservedStateNames(): array;
 
     /**
      * Specification:

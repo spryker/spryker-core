@@ -21,7 +21,7 @@ class LeadProductReservationHandlerPlugin extends AbstractPlugin implements Rese
      * {@inheritDoc}
      * - Updates the lead product's reservation for the provided product packaging unit SKU.
      * - Skips updating if the product packaging unit has self as lead product.
-     * - Oms Reservation plugins is expexted to update availability.
+     * - Oms Reservation plugins is expected to update availability.
      *
      * @api
      *

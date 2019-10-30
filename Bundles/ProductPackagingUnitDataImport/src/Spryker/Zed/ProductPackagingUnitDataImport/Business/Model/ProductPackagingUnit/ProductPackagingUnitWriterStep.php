@@ -114,7 +114,6 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     protected function normalizeAmount(DataSetInterface $dataSet): DataSetInterface
     {
         $isVariable = $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE];
-        $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE] = $isVariable;
 
         if ($isVariable && (new Decimal($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL]))->isZero()) {
             $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL] = static::AMOUNT_INTERVAL_DEFAULT;
@@ -146,7 +145,15 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
             return static::$idProductPackagingUnitTypeHeap[$name];
         }
 
-        throw new EntityNotFoundException(sprintf("Product packaging unit type '%s' was not found", $name));
+        $productPackagingUnitType = $this->getProductPackagingUnitTypeQuery()->findOneByName($name);
+
+        if ($productPackagingUnitType === null) {
+            throw new EntityNotFoundException(sprintf("Product packaging unit type '%s' was not found", $name));
+        }
+
+        static::$idProductPackagingUnitTypeHeap[$name] = $productPackagingUnitType->getIdProductPackagingUnitType();
+
+        return $productPackagingUnitType->getIdProductPackagingUnitType();
     }
 
     /**

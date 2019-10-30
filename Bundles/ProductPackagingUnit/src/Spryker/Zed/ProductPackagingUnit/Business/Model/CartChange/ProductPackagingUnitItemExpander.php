@@ -65,7 +65,7 @@ class ProductPackagingUnitItemExpander implements ProductPackagingUnitItemExpand
     protected function expandItemWithLeadProduct(ItemTransfer $itemTransfer)
     {
         $productPackagingLeadProductTransfer = $this->productPackagingUnitRepository
-            ->findProductPackagingLeadProductBySiblingProductSku($itemTransfer->getSku());
+            ->findProductPackagingUnitLeadProductForPackagingUnit($itemTransfer->getSku());
 
         if ($productPackagingLeadProductTransfer) {
             $itemTransfer->setAmountLeadProduct($productPackagingLeadProductTransfer);

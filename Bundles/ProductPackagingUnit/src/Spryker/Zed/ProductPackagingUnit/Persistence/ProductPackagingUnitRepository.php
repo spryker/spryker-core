@@ -97,7 +97,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function findProductPackagingLeadProductBySiblingProductSku(
+    public function findProductPackagingUnitLeadProductForPackagingUnit(
         string $siblingProductSku
     ): ?ProductConcreteTransfer {
         $productPackagingUnitEntity = $this->getFactory()
@@ -107,7 +107,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
             ->where('Product.sku = ?', $siblingProductSku)
             ->findOne();
 
-        if ($productPackagingUnitEntity === null || $productPackagingUnitEntity->getLeadProduct() === null) {
+        if ($productPackagingUnitEntity === null) {
             return null;
         }
 
@@ -254,7 +254,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function aggregateProductPackagingUnitAmountForAllSalesOrderItemsBySku(string $sku, array $reservedStateNames, StoreTransfer $storeTransfer): array
+    public function aggregateProductPackagingUnitReservation(string $sku, array $reservedStateNames, StoreTransfer $storeTransfer): array
     {
         $salesOrderItemQuery = $this->getFactory()
             ->getSalesOrderItemQuery()
@@ -281,10 +281,9 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
                 ),
                 SalesOrderItemStateAggregationTransfer::SUM_AMOUNT
             )
-            ->condition('NO_PU', 'spy_sales_order_item.sku = ?', $sku)
-            ->condition('PU', 'spy_sales_order_item.amount_sku = ?', $sku)
-            ->condition('PU_SELF_LEAD', 'sku = ? AND spy_sales_order_item.amount_sku != ?', [$sku, $sku])
-            ->having(['NO_PU', 'PU', 'PU_SELF_LEAD'], Criteria::LOGICAL_OR);
+            ->condition('sku', 'spy_sales_order_item.sku = ?', $sku)
+            ->condition('amount_sku', 'spy_sales_order_item.amount_sku = ?', $sku)
+            ->where(['sku', 'amount_sku'], Criteria::LOGICAL_OR);
 
         $salesAggregationTransfers = [];
         foreach ($salesOrderItemQuery->find() as $salesOrderItemAggregation) {

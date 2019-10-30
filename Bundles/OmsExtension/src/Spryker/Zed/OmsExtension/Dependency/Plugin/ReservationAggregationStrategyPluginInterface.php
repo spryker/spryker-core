@@ -14,7 +14,7 @@ interface ReservationAggregationStrategyPluginInterface
 {
     /**
      * Specification:
-     * - Aggregates sales order items reservations for a given sku, in the given states, and store.
+     * - Aggregates reservations for a given sku, in the given states, and store.
      *
      * @api
      *
@@ -24,5 +24,5 @@ interface ReservationAggregationStrategyPluginInterface
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function aggregateSalesOrderItemReservations(string $sku, OmsStateCollectionTransfer $reservedStates, StoreTransfer $storeTransfer): array;
+    public function aggregateReservations(string $sku, OmsStateCollectionTransfer $reservedStates, StoreTransfer $storeTransfer): array;
 }
