@@ -91,7 +91,7 @@ class ProductConcreteOffersStorageUnpublishListenerTest extends Unit
             $eventTransfers,
             MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_KEY_UNPUBLISH
         );
-        $productConcreteProductOffersEntities = $this->tester->findProductConcreteProductOffersEntities($this->merchantProductOfferTransfer->getConcreteSku());
+        $productConcreteProductOffersEntities = $this->tester->getProductConcreteProductOffersEntities($this->merchantProductOfferTransfer->getConcreteSku());
 
         //Assert
         $this->assertCount($expectedCount, $productConcreteProductOffersEntities);

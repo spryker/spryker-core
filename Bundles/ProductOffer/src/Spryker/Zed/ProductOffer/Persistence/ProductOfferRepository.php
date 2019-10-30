@@ -36,10 +36,10 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
         $productOfferEntities = $productOfferQuery->find();
 
         foreach ($productOfferEntities as $productOfferEntity) {
-            $productOfferTransfer = new ProductOfferTransfer();
-            $productOfferCollectionTransfer->addProductOffer(
-                $this->getFactory()->createPropelProductOfferMapper()->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, $productOfferTransfer)
-            );
+            $productOfferTransfer = $this->getFactory()
+                ->createPropelProductOfferMapper()
+                ->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, (new ProductOfferTransfer()));
+            $productOfferCollectionTransfer->addProductOffer($productOfferTransfer);
         }
 
         return $productOfferCollectionTransfer;

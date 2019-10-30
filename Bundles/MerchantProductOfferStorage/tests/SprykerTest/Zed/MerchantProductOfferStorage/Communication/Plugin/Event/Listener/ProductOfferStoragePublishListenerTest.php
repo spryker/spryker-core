@@ -81,7 +81,7 @@ class ProductOfferStoragePublishListenerTest extends Unit
             $eventTransfers,
             MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_KEY_PUBLISH
         );
-        $merchantProductOfferStorageEntities = $this->tester->findProductOfferEntities($this->merchantProductOfferTransfer->getProductOfferReference());
+        $merchantProductOfferStorageEntities = $this->tester->getProductOfferEntities($this->merchantProductOfferTransfer->getProductOfferReference());
 
         //Assert
         $this->assertCount($expectedCount, $merchantProductOfferStorageEntities);
@@ -102,7 +102,7 @@ class ProductOfferStoragePublishListenerTest extends Unit
      */
     protected function cleanUpProductOfferStorage(): void
     {
-        $merchantProductOfferStorageEntities = $this->tester->findProductOfferEntities($this->merchantProductOfferTransfer->getProductOfferReference());
+        $merchantProductOfferStorageEntities = $this->tester->getProductOfferEntities($this->merchantProductOfferTransfer->getProductOfferReference());
 
         foreach ($merchantProductOfferStorageEntities as $merchantProductOfferStorageEntity) {
             $merchantProductOfferStorageEntity->delete();

@@ -22,7 +22,7 @@ class ProductConcreteOffersStorageUnpublishListener extends AbstractPlugin imple
     use TransactionTrait;
 
     /**
-     * @param array $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
      * @param string $eventName
      *
      * @return void

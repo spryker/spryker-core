@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\MerchantProductOfferStorage;
 use Codeception\Actor;
 use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorageQuery;
 use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorageQuery;
+use Propel\Runtime\Collection\ObjectCollection;
 
 /**
  * Inherited Methods
@@ -36,10 +37,9 @@ class MerchantProductOfferStorageTester extends Actor
      *
      * @return \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorage[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    public function findProductOfferEntities(string $productOfferReference)
+    public function getProductOfferEntities(string $productOfferReference): ObjectCollection
     {
-        return SpyProductOfferStorageQuery::create()
-            ->findByProductOfferReference($productOfferReference);
+        return SpyProductOfferStorageQuery::create()->findByProductOfferReference($productOfferReference);
     }
 
     /**
@@ -47,9 +47,8 @@ class MerchantProductOfferStorageTester extends Actor
      *
      * @return \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorage[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    public function findProductConcreteProductOffersEntities(string $concreteSku)
+    public function getProductConcreteProductOffersEntities(string $concreteSku): ObjectCollection
     {
-        return SpyProductConcreteProductOffersStorageQuery::create()
-            ->findByConcreteSku($concreteSku);
+        return SpyProductConcreteProductOffersStorageQuery::create()->findByConcreteSku($concreteSku);
     }
 }

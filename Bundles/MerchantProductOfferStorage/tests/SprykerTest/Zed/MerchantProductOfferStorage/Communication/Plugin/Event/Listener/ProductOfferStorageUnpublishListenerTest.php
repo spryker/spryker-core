@@ -91,7 +91,7 @@ class ProductOfferStorageUnpublishListenerTest extends Unit
             $eventTransfers,
             MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_KEY_UNPUBLISH
         );
-        $merchantProductOfferStorageEntities = $this->tester->findProductOfferEntities($this->merchantProductOfferTransfer->getProductOfferReference());
+        $merchantProductOfferStorageEntities = $this->tester->getProductOfferEntities($this->merchantProductOfferTransfer->getProductOfferReference());
 
         //Assert
         $this->assertCount($expectedCount, $merchantProductOfferStorageEntities);

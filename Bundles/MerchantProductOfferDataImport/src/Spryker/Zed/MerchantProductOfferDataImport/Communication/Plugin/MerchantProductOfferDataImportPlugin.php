@@ -21,9 +21,10 @@ class MerchantProductOfferDataImportPlugin extends AbstractPlugin implements Dat
 {
     /**
      * {@inheritDoc}
+     *
      * - Validates Merchant key.
      * - Validates concrete product sku.
-     * - Inserts product offer into DB.
+     * - Inserts merchant product offer into DB.
      *
      * @api
      *

@@ -17,12 +17,12 @@ interface MerchantProductOfferStorageRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteProductOffersStorageTransfer[]
      */
-    public function findProductConcreteProductOffersStorage(ProductConcreteProductOffersStorageCriteriaFilterTransfer $productConcreteProductOffersStorageCriteriaFilterTransfer): array;
+    public function getProductConcreteProductOffersStorage(ProductConcreteProductOffersStorageCriteriaFilterTransfer $productConcreteProductOffersStorageCriteriaFilterTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaFilterTransfer $productOfferStorageCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
      */
-    public function findProductOfferStorage(ProductOfferStorageCriteriaFilterTransfer $productOfferStorageCriteriaFilterTransfer): array;
+    public function getProductOfferStorage(ProductOfferStorageCriteriaFilterTransfer $productOfferStorageCriteriaFilterTransfer): array;
 }

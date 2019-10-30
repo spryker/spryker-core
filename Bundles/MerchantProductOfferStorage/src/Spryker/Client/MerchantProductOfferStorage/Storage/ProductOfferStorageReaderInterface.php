@@ -16,5 +16,5 @@ interface ProductOfferStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferViewCollectionTransfer
      */
-    public function findProductOffersByConcreteSku(string $concreteSku): ProductOfferViewCollectionTransfer;
+    public function getProductOfferViewCollection(string $concreteSku): ProductOfferViewCollectionTransfer;
 }

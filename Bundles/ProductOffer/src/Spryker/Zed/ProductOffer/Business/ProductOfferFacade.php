@@ -20,6 +20,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer|null $productOfferCriteriaFilter
@@ -32,6 +34,8 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer

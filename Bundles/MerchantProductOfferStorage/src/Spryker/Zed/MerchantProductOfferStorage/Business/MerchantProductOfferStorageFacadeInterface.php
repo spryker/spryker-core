@@ -11,10 +11,10 @@ interface MerchantProductOfferStorageFacadeInterface
 {
     /**
      * Specification:
-     * - Queries all product offer with the given concreteSkus
-     * - Lists of product references for concrete sku
-     * - Stores data as json encoded to storage table
-     * - Sends a copy of data to queue based on module config
+     * - Queries all product offer with the given concreteSkus.
+     * - Lists of product references for concrete sku.
+     * - Stores data as json encoded to storage table.
+     * - Sends a copy of data to queue based on module config.
      *
      * @api
      *
@@ -26,8 +26,8 @@ interface MerchantProductOfferStorageFacadeInterface
 
     /**
      * Specification:
-     * - Finds and deletes product concrete offer storage entities with the given concreteSkus
-     * - Sends delete message to queue based on module config
+     * - Finds and deletes product concrete offer storage entities with the given concreteSkus.
+     * - Sends delete message to queue based on module config.
      *
      * @api
      *
@@ -39,9 +39,9 @@ interface MerchantProductOfferStorageFacadeInterface
 
     /**
      * Specification:
-     * - Queries all product offer with the given productOfferReferences
-     * - Stores data as json encoded to storage table
-     * - Sends a copy of data to queue based on module config
+     * - Queries all product offer with the given productOfferReferences.
+     * - Stores data as json encoded to storage table.
+     * - Sends a copy of data to queue based on module config.
      *
      * @api
      *
@@ -53,8 +53,8 @@ interface MerchantProductOfferStorageFacadeInterface
 
     /**
      * Specification:
-     * - Finds and deletes product offer storage entities with the given productOfferReferences
-     * - Sends delete message to queue based on module config
+     * - Finds and deletes product offer storage entities with the given productOfferReferences.
+     * - Sends delete message to queue based on module config.
      *
      * @api
      *

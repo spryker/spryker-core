@@ -22,7 +22,7 @@ class ProductOfferStorageUnpublishListener extends AbstractPlugin implements Eve
     use TransactionTrait;
 
     /**
-     * @param array $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
      * @param string $eventName
      *
      * @return void

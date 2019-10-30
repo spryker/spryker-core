@@ -20,7 +20,7 @@ interface MerchantProductOfferStorageClientInterface
      *
      * @param string $concreteSku
      *
-     * @return \Generated\Shared\Transfer\ProductOfferViewCollectionTransfer|null
+     * @return \Generated\Shared\Transfer\ProductOfferViewCollectionTransfer
      */
-    public function findProductOffersByConcreteSku(string $concreteSku): ?ProductOfferViewCollectionTransfer;
+    public function getProductOfferViewCollection(string $concreteSku): ProductOfferViewCollectionTransfer;
 }

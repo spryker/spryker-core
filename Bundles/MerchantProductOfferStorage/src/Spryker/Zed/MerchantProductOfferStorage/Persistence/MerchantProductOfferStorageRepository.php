@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\ProductConcreteProductOffersStorageCriteriaFilterT
 use Generated\Shared\Transfer\ProductConcreteProductOffersStorageTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
+use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorageQuery;
+use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorageQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -25,18 +27,15 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
      *
      * @return \Generated\Shared\Transfer\ProductConcreteProductOffersStorageTransfer[]
      */
-    public function findProductConcreteProductOffersStorage(ProductConcreteProductOffersStorageCriteriaFilterTransfer $productConcreteProductOffersStorageCriteriaFilterTransfer): array
+    public function getProductConcreteProductOffersStorage(ProductConcreteProductOffersStorageCriteriaFilterTransfer $productConcreteProductOffersStorageCriteriaFilterTransfer): array
     {
         $productConcreteProductOffersStorageTransfers = [];
-        $productConcreteProductOffersStorageQuery = $this->getFactory()->createProductConcreteProductOffersStorageQuery();
-        $productConcreteProductOffersStorageIds = $productConcreteProductOffersStorageCriteriaFilterTransfer->getProductConcreteProductOffersStorageIds();
-        if ($productConcreteProductOffersStorageIds) {
-            $productConcreteProductOffersStorageQuery->filterByIdProductConcreteProductOffersStorage_In($productConcreteProductOffersStorageIds);
-        }
 
-        if ($productConcreteProductOffersStorageCriteriaFilterTransfer->getFilter()) {
-            $productConcreteProductOffersStorageQuery = $this->applyFilter($productConcreteProductOffersStorageQuery, $productConcreteProductOffersStorageCriteriaFilterTransfer->getFilter());
-        }
+        $productConcreteProductOffersStorageQuery = $this->getFactory()->createProductConcreteProductOffersStorageQuery();
+        $productConcreteProductOffersStorageQuery = $this->applyProductConcreteProductOffersStorageCriteriaFilter(
+            $productConcreteProductOffersStorageQuery,
+            $productConcreteProductOffersStorageCriteriaFilterTransfer
+        );
         $productConcreteProductOffersStorageEntityCollection = $productConcreteProductOffersStorageQuery->find();
 
         foreach ($productConcreteProductOffersStorageEntityCollection as $productConcreteProductOffersStorageEntity) {
@@ -56,17 +55,12 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
      */
-    public function findProductOfferStorage(ProductOfferStorageCriteriaFilterTransfer $productOfferStorageCriteriaFilterTransfer): array
+    public function getProductOfferStorage(ProductOfferStorageCriteriaFilterTransfer $productOfferStorageCriteriaFilterTransfer): array
     {
         $productOfferStorageTransfers = [];
+
         $productOfferStorageQuery = $this->getFactory()->createProductOfferStorageQuery();
-        $productOfferStorageIds = $productOfferStorageCriteriaFilterTransfer->getProductOfferStorageIds();
-        if ($productOfferStorageIds) {
-            $productOfferStorageQuery->filterByIdProductOfferStorage_In($productOfferStorageIds);
-        }
-        if ($productOfferStorageCriteriaFilterTransfer->getFilter()) {
-            $productOfferStorageQuery = $this->applyFilter($productOfferStorageQuery, $productOfferStorageCriteriaFilterTransfer->getFilter());
-        }
+        $productOfferStorageQuery = $this->applyProductOfferStorageCriteriaFilter($productOfferStorageQuery, $productOfferStorageCriteriaFilterTransfer);
         $productOfferStorageEntityCollection = $productOfferStorageQuery->find();
 
         foreach ($productOfferStorageEntityCollection as $productOfferStorageEntity) {
@@ -79,6 +73,48 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
         }
 
         return $productOfferStorageTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorageQuery $productConcreteProductOffersStorageQuery
+     * @param \Generated\Shared\Transfer\ProductConcreteProductOffersStorageCriteriaFilterTransfer $productConcreteProductOffersStorageCriteriaFilterTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function applyProductConcreteProductOffersStorageCriteriaFilter(
+        SpyProductConcreteProductOffersStorageQuery $productConcreteProductOffersStorageQuery,
+        ProductConcreteProductOffersStorageCriteriaFilterTransfer $productConcreteProductOffersStorageCriteriaFilterTransfer
+    ): ModelCriteria {
+        $productConcreteProductOffersStorageIds = $productConcreteProductOffersStorageCriteriaFilterTransfer->getProductConcreteProductOffersStorageIds();
+        if ($productConcreteProductOffersStorageIds) {
+            $productConcreteProductOffersStorageQuery->filterByIdProductConcreteProductOffersStorage_In($productConcreteProductOffersStorageIds);
+        }
+        if ($productConcreteProductOffersStorageCriteriaFilterTransfer->getFilter()) {
+            $productConcreteProductOffersStorageQuery = $this->applyFilter($productConcreteProductOffersStorageQuery, $productConcreteProductOffersStorageCriteriaFilterTransfer->getFilter());
+        }
+
+        return $productConcreteProductOffersStorageQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorageQuery $productOfferStorageQuery
+     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaFilterTransfer $productOfferStorageCriteriaFilterTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function applyProductOfferStorageCriteriaFilter(
+        SpyProductOfferStorageQuery $productOfferStorageQuery,
+        ProductOfferStorageCriteriaFilterTransfer $productOfferStorageCriteriaFilterTransfer
+    ): ModelCriteria {
+        $productOfferStorageIds = $productOfferStorageCriteriaFilterTransfer->getProductOfferStorageIds();
+        if ($productOfferStorageIds) {
+            $productOfferStorageQuery->filterByIdProductOfferStorage_In($productOfferStorageIds);
+        }
+        if ($productOfferStorageCriteriaFilterTransfer->getFilter()) {
+            $productOfferStorageQuery = $this->applyFilter($productOfferStorageQuery, $productOfferStorageCriteriaFilterTransfer->getFilter());
+        }
+
+        return $productOfferStorageQuery;
     }
 
     /**

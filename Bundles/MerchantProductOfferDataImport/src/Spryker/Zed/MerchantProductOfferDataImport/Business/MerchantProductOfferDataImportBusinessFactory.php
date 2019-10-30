@@ -11,7 +11,7 @@ use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step\ConcreteSkuValidationStep;
 use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step\MerchantKeyToIdMerchantStep;
-use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step\MerchantProductOfferStep;
+use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step\MerchantProductOfferWriterStep;
 
 /**
  * @method \Spryker\Zed\MerchantProductOfferDataImport\MerchantProductOfferDataImportConfig getConfig()
@@ -31,7 +31,7 @@ class MerchantProductOfferDataImportBusinessFactory extends DataImportBusinessFa
 
         $dataSetStepBroker->addStep($this->createMerchantKeyToIdMerchantStep());
         $dataSetStepBroker->addStep($this->createConcreteSkuValidationStep());
-        $dataSetStepBroker->addStep($this->createMerchantProductOfferStep());
+        $dataSetStepBroker->addStep($this->createMerchantProductOfferWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
@@ -57,8 +57,8 @@ class MerchantProductOfferDataImportBusinessFactory extends DataImportBusinessFa
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createMerchantProductOfferStep(): DataImportStepInterface
+    public function createMerchantProductOfferWriterStep(): DataImportStepInterface
     {
-        return new MerchantProductOfferStep($this->getEventFacade());
+        return new MerchantProductOfferWriterStep($this->getEventFacade());
     }
 }

@@ -14,33 +14,33 @@ class ProductConcreteProductOffersStorageMapper implements ProductConcreteProduc
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteProductOffersStorageTransfer $productConcreteProductOffersStorageTransfer
-     * @param \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorage $spyProductConcreteProductOffersStorage
+     * @param \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorage $productConcreteProductOffersStorageEntity
      *
      * @return \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorage
      */
     public function mapProductConcreteProductOffersStorageTransferToProductConcreteProductOffersStorageEntity(
         ProductConcreteProductOffersStorageTransfer $productConcreteProductOffersStorageTransfer,
-        SpyProductConcreteProductOffersStorage $spyProductConcreteProductOffersStorage
+        SpyProductConcreteProductOffersStorage $productConcreteProductOffersStorageEntity
     ): SpyProductConcreteProductOffersStorage {
-        $spyProductConcreteProductOffersStorage->fromArray(
+        $productConcreteProductOffersStorageEntity->fromArray(
             $productConcreteProductOffersStorageTransfer->modifiedToArray(false)
         );
 
-        return $spyProductConcreteProductOffersStorage;
+        return $productConcreteProductOffersStorageEntity;
     }
 
     /**
-     * @param \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorage $spyProductConcreteProductOffersStorage
+     * @param \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorage $productConcreteProductOffersStorageEntity
      * @param \Generated\Shared\Transfer\ProductConcreteProductOffersStorageTransfer $productConcreteProductOffersStorageTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteProductOffersStorageTransfer
      */
     public function mapProductConcreteProductOffersStorageEntityToProductConcreteProductOffersStorageTransfer(
-        SpyProductConcreteProductOffersStorage $spyProductConcreteProductOffersStorage,
+        SpyProductConcreteProductOffersStorage $productConcreteProductOffersStorageEntity,
         ProductConcreteProductOffersStorageTransfer $productConcreteProductOffersStorageTransfer
     ): ProductConcreteProductOffersStorageTransfer {
         $productConcreteProductOffersStorageTransfer = $productConcreteProductOffersStorageTransfer->fromArray(
-            $spyProductConcreteProductOffersStorage->toArray(),
+            $productConcreteProductOffersStorageEntity->toArray(),
             true
         );
 

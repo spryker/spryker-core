@@ -14,33 +14,33 @@ class ProductOfferStorageMapper implements ProductOfferStorageMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer $productOfferStorageTransfer
-     * @param \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorage $spyProductOfferStorage
+     * @param \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorage $productOfferStorageEntity
      *
      * @return \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorage
      */
     public function mapProductOfferStorageTransferToProductOfferStorageEntity(
         ProductOfferStorageTransfer $productOfferStorageTransfer,
-        SpyProductOfferStorage $spyProductOfferStorage
+        SpyProductOfferStorage $productOfferStorageEntity
     ): SpyProductOfferStorage {
-        $spyProductOfferStorage->fromArray(
+        $productOfferStorageEntity->fromArray(
             $productOfferStorageTransfer->modifiedToArray(false)
         );
 
-        return $spyProductOfferStorage;
+        return $productOfferStorageEntity;
     }
 
     /**
-     * @param \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorage $spyProductOfferStorage
+     * @param \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorage $productOfferStorageEntity
      * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer $productOfferStorageTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer
      */
     public function mapProductOfferStorageEntityToProductOfferStorageTransfer(
-        SpyProductOfferStorage $spyProductOfferStorage,
+        SpyProductOfferStorage $productOfferStorageEntity,
         ProductOfferStorageTransfer $productOfferStorageTransfer
     ): ProductOfferStorageTransfer {
         $merchantTransfer = $productOfferStorageTransfer->fromArray(
-            $spyProductOfferStorage->toArray(),
+            $productOfferStorageEntity->toArray(),
             true
         );
 

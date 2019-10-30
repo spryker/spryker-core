@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Synchroni
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductConcreteProductOffersStorageCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductConcreteProductOffersStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Orm\Zed\MerchantProductOfferStorage\Persistence\Map\SpyProductConcreteProductOffersStorageTableMap;
 use Spryker\Shared\MerchantProductOfferStorage\MerchantProductOfferStorageConfig;
@@ -49,6 +50,7 @@ class ProductConcreteProductOffersSynchronizationDataPlugin extends AbstractPlug
 
     /**
      * {@inheritDoc}
+     *  - Returns SynchronizationDataTransfer[] for ProductConcreteProductOffersStorage entity.
      *
      * @api
      *
@@ -61,22 +63,15 @@ class ProductConcreteProductOffersSynchronizationDataPlugin extends AbstractPlug
     public function getData(int $offset, int $limit, array $ids = []): array
     {
         $synchronizationDataTransfers = [];
-        $productConcreteProductOffersStorageCriteriaFilterTransfer = new ProductConcreteProductOffersStorageCriteriaFilterTransfer();
 
+        $productConcreteProductOffersStorageCriteriaFilterTransfer = new ProductConcreteProductOffersStorageCriteriaFilterTransfer();
         $productConcreteProductOffersStorageCriteriaFilterTransfer->setProductConcreteProductOffersStorageIds($ids);
         $productConcreteProductOffersStorageCriteriaFilterTransfer->setFilter($this->createFilterTransfer($offset, $limit));
 
-        $productConcreteProductOffersStorageTransfers = $this->getRepository()
-            ->findProductConcreteProductOffersStorage($productConcreteProductOffersStorageCriteriaFilterTransfer);
+        $productConcreteProductOffersStorageTransfers = $this->getRepository()->getProductConcreteProductOffersStorage($productConcreteProductOffersStorageCriteriaFilterTransfer);
 
         foreach ($productConcreteProductOffersStorageTransfers as $productConcreteProductOffersStorageTransfer) {
-            $synchronizationDataTransfer = new SynchronizationDataTransfer();
-
-            /** @var string $data */
-            $data = $productConcreteProductOffersStorageTransfer->getData();
-            $synchronizationDataTransfer->setData($data);
-            $synchronizationDataTransfer->setKey($productConcreteProductOffersStorageTransfer->getKey());
-            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
+            $synchronizationDataTransfers[] = $this->createSynchronizationDataTransfer($productConcreteProductOffersStorageTransfer);
         }
 
         return $synchronizationDataTransfers;
@@ -117,6 +112,23 @@ class ProductConcreteProductOffersSynchronizationDataPlugin extends AbstractPlug
     {
         return $this->getConfig()
             ->getMerchantProductOfferSynchronizationPoolName();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteProductOffersStorageTransfer $productConcreteProductOffersStorageTransfer
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer
+     */
+    protected function createSynchronizationDataTransfer(ProductConcreteProductOffersStorageTransfer $productConcreteProductOffersStorageTransfer): SynchronizationDataTransfer
+    {
+        $synchronizationDataTransfer = new SynchronizationDataTransfer();
+
+        /** @var string $data */
+        $data = $productConcreteProductOffersStorageTransfer->getData();
+        $synchronizationDataTransfer->setData($data);
+        $synchronizationDataTransfer->setKey($productConcreteProductOffersStorageTransfer->getKey());
+
+        return $synchronizationDataTransfer;
     }
 
     /**

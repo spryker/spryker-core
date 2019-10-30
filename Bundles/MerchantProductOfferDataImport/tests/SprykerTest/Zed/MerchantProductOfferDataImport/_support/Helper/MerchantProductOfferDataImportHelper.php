@@ -18,6 +18,7 @@ class MerchantProductOfferDataImportHelper extends Module
     public function assertDatabaseTableIsEmpty(): void
     {
         $query = $this->getProductOfferQuery();
+
         $this->assertEquals(0, $query->count(), 'Found at least one entry in the database table but database table was expected to be empty.');
     }
 
@@ -27,6 +28,7 @@ class MerchantProductOfferDataImportHelper extends Module
     public function assertDatabaseTableContainsData(): void
     {
         $query = $this->getProductOfferQuery();
+
         $this->assertTrue($query->count() > 0, 'Expected at least one entry in the database table but database table is empty.');
     }
 

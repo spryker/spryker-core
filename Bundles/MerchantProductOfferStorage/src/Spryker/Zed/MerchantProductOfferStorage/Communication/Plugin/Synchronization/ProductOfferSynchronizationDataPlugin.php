@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Synchroni
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Orm\Zed\MerchantProductOfferStorage\Persistence\Map\SpyProductOfferStorageTableMap;
 use Spryker\Shared\MerchantProductOfferStorage\MerchantProductOfferStorageConfig;
@@ -49,6 +50,7 @@ class ProductOfferSynchronizationDataPlugin extends AbstractPlugin implements Sy
 
     /**
      * {@inheritDoc}
+     * - Returns SynchronizationDataTransfer[] for ProductOfferStorage entity.
      *
      * @api
      *
@@ -66,16 +68,10 @@ class ProductOfferSynchronizationDataPlugin extends AbstractPlugin implements Sy
         $productOfferStorageCriteriaFilterTransfer->setProductOfferStorageIds($ids);
         $productOfferStorageCriteriaFilterTransfer->setFilter($this->createFilterTransfer($offset, $limit));
 
-        $productOfferTransfers = $this->getRepository()->findProductOfferStorage($productOfferStorageCriteriaFilterTransfer);
+        $productOfferTransfers = $this->getRepository()->getProductOfferStorage($productOfferStorageCriteriaFilterTransfer);
 
         foreach ($productOfferTransfers as $productOfferTransfer) {
-            $synchronizationDataTransfer = new SynchronizationDataTransfer();
-
-            /** @var string $data */
-            $data = $productOfferTransfer->getData();
-            $synchronizationDataTransfer->setData($data);
-            $synchronizationDataTransfer->setKey($productOfferTransfer->getKey());
-            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
+            $synchronizationDataTransfers[] = $this->createSynchronizationDataTransfer($productOfferTransfer);
         }
 
         return $synchronizationDataTransfers;
@@ -116,6 +112,23 @@ class ProductOfferSynchronizationDataPlugin extends AbstractPlugin implements Sy
     {
         return $this->getConfig()
             ->getMerchantProductOfferSynchronizationPoolName();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer $productOfferTransfer
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer
+     */
+    protected function createSynchronizationDataTransfer(ProductOfferStorageTransfer $productOfferTransfer): SynchronizationDataTransfer
+    {
+        $synchronizationDataTransfer = new SynchronizationDataTransfer();
+
+        /** @var string $data */
+        $data = $productOfferTransfer->getData();
+        $synchronizationDataTransfer->setData($data);
+        $synchronizationDataTransfer->setKey($productOfferTransfer->getKey());
+
+        return $synchronizationDataTransfer;
     }
 
     /**

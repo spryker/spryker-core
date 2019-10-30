@@ -39,7 +39,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     }
 
     /**
-     * @param array $productOfferReferences
+     * @param string[] $productOfferReferences
      *
      * @return void
      */
@@ -52,14 +52,14 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
             $productOfferStorageTransfer = new ProductOfferStorageTransfer();
             $productOfferStorageTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
-            $productOfferStorageTransfer->setData($this->getMerchantViewTransfer($productOfferTransfer)->modifiedToArray());
+            $productOfferStorageTransfer->setData($this->createProductOfferViewTransfer($productOfferTransfer)->modifiedToArray());
 
             $this->productOfferStorageEntityManager->saveProductOfferStorage($productOfferStorageTransfer);
         }
     }
 
     /**
-     * @param array $productOfferReferences
+     * @param string[] $productOfferReferences
      *
      * @return void
      */
@@ -73,7 +73,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferViewTransfer
      */
-    protected function getMerchantViewTransfer(ProductOfferTransfer $productOfferTransfer): ProductOfferViewTransfer
+    protected function createProductOfferViewTransfer(ProductOfferTransfer $productOfferTransfer): ProductOfferViewTransfer
     {
         $productOfferViewTransfer = new ProductOfferViewTransfer();
 
