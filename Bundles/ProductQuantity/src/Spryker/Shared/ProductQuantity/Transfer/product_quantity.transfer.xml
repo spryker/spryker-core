@@ -44,4 +44,7 @@
         <property name="sku" type="string"/>
     </transfer>
 
+    <transfer name="Filter">
+    </transfer>
+
 </transfers>

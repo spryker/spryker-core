@@ -34,5 +34,11 @@
         <property name="payloadTransfers" type="array" singular="payloadTransfers"/>
     </transfer>
 
+    <transfer name="Locale">
+    </transfer>
+
+    <transfer name="PageMap">
+    </transfer>
+
 </transfers>
 
