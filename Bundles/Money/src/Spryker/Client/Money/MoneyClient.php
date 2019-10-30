@@ -54,7 +54,7 @@ class MoneyClient extends AbstractClient implements MoneyClientInterface
      *
      * @api
      *
-     * @param int $amount
+     * @param float $amount
      * @param string|null $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
