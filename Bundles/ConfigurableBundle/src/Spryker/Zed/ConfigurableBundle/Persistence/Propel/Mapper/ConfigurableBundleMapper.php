@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ConfigurableBundle\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateCollectionTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotCollectionTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
@@ -37,6 +38,28 @@ class ConfigurableBundleMapper
         }
 
         return $configurableBundleTemplateCollectionTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\Collection $configurableBundleTemplateSlotEntities
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotCollectionTransfer
+     */
+    public function mapTemplateSlotEntityCollectionToTemplateSlotTransferCollection(
+        Collection $configurableBundleTemplateSlotEntities
+    ): ConfigurableBundleTemplateSlotCollectionTransfer {
+        $configurableBundleTemplateSlotCollectionTransfer = new ConfigurableBundleTemplateSlotCollectionTransfer();
+
+        foreach ($configurableBundleTemplateSlotEntities as $configurableBundleTemplateSlotEntity) {
+            $configurableBundleTemplateSlotTransfer = $this->mapTemplateSlotEntityToTemplateSlotTransfer(
+                $configurableBundleTemplateSlotEntity,
+                new ConfigurableBundleTemplateSlotTransfer()
+            );
+
+            $configurableBundleTemplateSlotCollectionTransfer->addConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer);
+        }
+
+        return $configurableBundleTemplateSlotCollectionTransfer;
     }
 
     /**
@@ -77,7 +100,7 @@ class ConfigurableBundleMapper
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer,
         SpyConfigurableBundleTemplateSlot $configurableBundleTemplateSlotEntity
     ): SpyConfigurableBundleTemplateSlot {
-        $configurableBundleTemplateSlotEntity->fromArray($configurableBundleTemplateSlotTransfer->modifiedToArray(), true);
+        $configurableBundleTemplateSlotEntity->fromArray($configurableBundleTemplateSlotTransfer->modifiedToArray());
 
         $configurableBundleTemplateSlotEntity
             ->setFkProductList($configurableBundleTemplateSlotTransfer->getProductList()->getIdProductList());

@@ -8,10 +8,11 @@
 namespace Spryker\Zed\ConfigurableBundle\Business\Reader;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateCollectionTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpanderInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface;
@@ -85,7 +86,7 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
     {
         $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())
             ->setIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
-            ->setTranslationLocales(new ArrayObject(reset($this->localeFacade->getLocaleCollection())));
+            ->setTranslationLocales(new ArrayObject([$this->getDefaultLocale()]));
 
         return $this->getConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
     }
@@ -101,7 +102,8 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
         $configurableBundleTemplateCollectionTransfer = new ConfigurableBundleTemplateCollectionTransfer();
 
         $configurableBundleTemplateTransfers = $this->configurableBundleRepository
-            ->getConfigurableBundleTemplateCollection($configurableBundleTemplateFilterTransfer);
+            ->getConfigurableBundleTemplateCollection($configurableBundleTemplateFilterTransfer)
+            ->getConfigurableBundleTemplates();
 
         foreach ($configurableBundleTemplateTransfers as $configurableBundleTemplateTransfer) {
             $expandedConfigurableBundleTemplateTransfer = $this->expandConfigurableBundleTemplate(
@@ -132,6 +134,20 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
             );
 
         return $configurableBundleTemplateTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer|null
+     */
+    protected function getDefaultLocale(): ?LocaleTransfer
+    {
+        $localeTransfers = $this->localeFacade->getLocaleCollection();
+
+        if (!$localeTransfers) {
+            return null;
+        }
+
+        return array_shift($localeTransfers);
     }
 
     /**

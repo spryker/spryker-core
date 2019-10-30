@@ -8,12 +8,12 @@
 namespace Spryker\Zed\ConfigurableBundle\Business\Updater;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
-use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGeneratorInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface;
-use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateTranslationWriterInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTranslationWriterInterface;
 use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
@@ -30,9 +30,9 @@ class ConfigurableBundleTemplateUpdater implements ConfigurableBundleTemplateUpd
     protected $configurableBundleEntityManager;
 
     /**
-     * @var \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateTranslationWriterInterface
+     * @var \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTranslationWriterInterface
      */
-    protected $configurableBundleTemplateTranslationWriter;
+    protected $configurableBundleTranslationWriter;
 
     /**
      * @var \Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGeneratorInterface
@@ -46,18 +46,18 @@ class ConfigurableBundleTemplateUpdater implements ConfigurableBundleTemplateUpd
 
     /**
      * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager
-     * @param \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateTranslationWriterInterface $configurableBundleTemplateTranslationWriter
+     * @param \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTranslationWriterInterface $configurableBundleTranslationWriter
      * @param \Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGeneratorInterface $configurableBundleNameGenerator
      * @param \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface $configurableBundleTemplateReader
      */
     public function __construct(
         ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager,
-        ConfigurableBundleTemplateTranslationWriterInterface $configurableBundleTemplateTranslationWriter,
+        ConfigurableBundleTranslationWriterInterface $configurableBundleTranslationWriter,
         ConfigurableBundleNameGeneratorInterface $configurableBundleNameGenerator,
         ConfigurableBundleTemplateReaderInterface $configurableBundleTemplateReader
     ) {
         $this->configurableBundleEntityManager = $configurableBundleEntityManager;
-        $this->configurableBundleTemplateTranslationWriter = $configurableBundleTemplateTranslationWriter;
+        $this->configurableBundleTranslationWriter = $configurableBundleTranslationWriter;
         $this->configurableBundleNameGenerator = $configurableBundleNameGenerator;
         $this->configurableBundleTemplateReader = $configurableBundleTemplateReader;
     }
@@ -153,7 +153,7 @@ class ConfigurableBundleTemplateUpdater implements ConfigurableBundleTemplateUpd
         $configurableBundleTemplateTransfer = $this->configurableBundleEntityManager
             ->updateConfigurableBundleTemplate($configurableBundleTemplateTransfer);
 
-        $this->configurableBundleTemplateTranslationWriter->saveTranslations($configurableBundleTemplateTransfer);
+        $this->configurableBundleTranslationWriter->saveTemplateTranslations($configurableBundleTemplateTransfer);
 
         return (new ConfigurableBundleTemplateResponseTransfer())
             ->setConfigurableBundleTemplate($configurableBundleTemplateTransfer)

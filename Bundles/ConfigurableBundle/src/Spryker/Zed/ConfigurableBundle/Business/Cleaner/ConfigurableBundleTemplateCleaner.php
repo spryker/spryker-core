@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business\Cleaner;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
+use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface;
 use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
@@ -20,33 +23,58 @@ class ConfigurableBundleTemplateCleaner implements ConfigurableBundleTemplateCle
     protected $configurableBundleEntityManager;
 
     /**
-     * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager
+     * @var \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface
      */
-    public function __construct(ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager)
-    {
+    protected $configurableBundleTemplateReader;
+
+    /**
+     * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager
+     * @param \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface $configurableBundleTemplateReader
+     */
+    public function __construct(
+        ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager,
+        ConfigurableBundleTemplateReaderInterface $configurableBundleTemplateReader
+    ) {
         $this->configurableBundleEntityManager = $configurableBundleEntityManager;
+        $this->configurableBundleTemplateReader = $configurableBundleTemplateReader;
     }
 
     /**
-     * @param int $idConfigurableBundleTemplate
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
      */
-    public function deleteConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
-    {
-        $this->getTransactionHandler()->handleTransaction(function () use ($idConfigurableBundleTemplate) {
-            $this->executeDeleteConfigurableBundleTemplateByIdTransaction($idConfigurableBundleTemplate);
+    public function deleteConfigurableBundleTemplate(
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): ConfigurableBundleTemplateResponseTransfer {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($configurableBundleTemplateFilterTransfer) {
+            return $this->executeDeleteConfigurableBundleTemplateByIdTransaction($configurableBundleTemplateFilterTransfer);
         });
     }
 
     /**
-     * @param int $idConfigurableBundleTemplate
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
      */
-    protected function executeDeleteConfigurableBundleTemplateByIdTransaction(int $idConfigurableBundleTemplate): void
-    {
+    protected function executeDeleteConfigurableBundleTemplateByIdTransaction(
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): ConfigurableBundleTemplateResponseTransfer {
+        $configurableBundleTemplateResponseTransfer = $this->configurableBundleTemplateReader
+            ->getConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
+
+        if (!$configurableBundleTemplateResponseTransfer->getIsSuccessful()) {
+            return $configurableBundleTemplateResponseTransfer;
+        }
+
+        $idConfigurableBundleTemplate = $configurableBundleTemplateResponseTransfer
+            ->getConfigurableBundleTemplate()
+            ->getIdConfigurableBundleTemplate();
+
         $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateSlotsByIdTemplate($idConfigurableBundleTemplate);
         $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateById($idConfigurableBundleTemplate);
+
+        return (new ConfigurableBundleTemplateResponseTransfer())
+            ->setIsSuccessful(true);
     }
 }

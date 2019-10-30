@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business;
 
-use Generated\Shared\Transfer\ConfigurableBundleResponseTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateCollectionTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotCollectionTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
@@ -19,6 +20,41 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ConfigurableBundleFacadeInterface
 {
+    /**
+     * Specification:
+     * - Retrieves configurable bundle template in Persistence.
+     * - Filters by criteria from ConfigurableBundleTemplateFilterTransfer.
+     * - Expands found configurable bundle template with translations.
+     * - Provides translations for locales specified in ConfigurableBundleTemplateFilterTransfer::translationLocales, or for all available locales otherwise.
+     * - If single locale translation was requested but doesn't exist, fallback translation will be provided, or translation key if nothing found.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
+     */
+    public function getConfigurableBundleTemplate(
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): ConfigurableBundleTemplateResponseTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves configurable bundle templates in Persistence.
+     * - Filters by criteria from ConfigurableBundleTemplateFilterTransfer.
+     * - Expands found configurable bundle templates with translations.
+     * - Provides translations for locales specified in ConfigurableBundleTemplateFilterTransfer::translationLocales, or for all available locales otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateCollectionTransfer
+     */
+    public function getConfigurableBundleTemplateCollection(
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): ConfigurableBundleTemplateCollectionTransfer;
+
     /**
      * Specification:
      * - Persists configurable bundle template.
@@ -31,14 +67,15 @@ interface ConfigurableBundleFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleResponseTransfer
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
      */
     public function createConfigurableBundleTemplate(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): ConfigurableBundleResponseTransfer;
+    ): ConfigurableBundleTemplateResponseTransfer;
 
     /**
      * Specification:
+     * - Expects configurable bundle template ID to be provided.
      * - Persists configurable bundle template.
      * - Expects minimum one translation to be provided.
      * - Expects locale definition for each provided translation.
@@ -49,75 +86,15 @@ interface ConfigurableBundleFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleResponseTransfer
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
      */
     public function updateConfigurableBundleTemplate(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): ConfigurableBundleResponseTransfer;
+    ): ConfigurableBundleTemplateResponseTransfer;
 
     /**
      * Specification:
-     * - Finds configurable bundle template in Persistence.
-     * - Filters by configurable bundle template ID if provided.
-     * - Expands found configurable bundle template with translations.
-     * - Provides translations for locales specified in ConfigurableBundleTemplateFilterTransfer::translationLocales, or for all available locales otherwise.
-     * - If single locale translation was requested but doesn't exist, fallback translation will be provided, or translation key if nothing found.
-     * - Returns corresponding transfer object if found, null otherwise.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer|null
-     */
-    public function findConfigurableBundleTemplate(
-        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
-    ): ?ConfigurableBundleTemplateTransfer;
-
-    /**
-     * Specification:
-     * - Finds configurable bundle templates by criteria from ConfigurableBundleTemplateFilterTransfer.
-     * - Expands found configurable bundle templates with translations.
-     * - Provides translations for locales specified in ConfigurableBundleTemplateFilterTransfer::translationLocales, or for all available locales otherwise.
-     * - Returns array of transfers.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer[]
-     */
-    public function getConfigurableBundleTemplateCollection(ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer): array;
-
-    /**
-     * Specification:
-     * - Retrieves configurable bundle template by id.
-     * - Removes configurable bundle template from Persistence.
-     * - Removes configurable bundle template slots from Persistence.
-     *
-     * @api
-     *
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return void
-     */
-    public function deleteConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void;
-
-    /**
-     * Specification:
-     * - Removes item from QuoteTransfer if its configurable bundle template is removed.
-     * - Removes item from QuoteTransfer if its configurable bundle template is inactive.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function filterInactiveItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
-
-    /**
-     * Specification:
+     * - Expects configurable bundle template ID to be provided.
      * - Updates isActive configurable bundle template property to true in Persistence.
      *
      * @api
@@ -132,45 +109,71 @@ interface ConfigurableBundleFacadeInterface
 
     /**
      * Specification:
+     * - Expects configurable bundle template ID to be provided.
      * - Updates isActive configurable bundle template property to false in Persistence.
      *
      * @api
      *
-     * @param int $idConfigurableBundleTemplate
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
      */
-    public function deactivateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void;
+    public function deactivateConfigurableBundleTemplate(
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): ConfigurableBundleTemplateResponseTransfer;
 
     /**
      * Specification:
-     * - Finds configurable bundle template slots which use given product list by ConfigurableBundleTemplateSlotFilterTransfer::productList::idProductList.
-     * - Returns ProductListResponseTransfer with check results.
-     * - ProductListResponseTransfer::isSuccessful is equal to true when usage cases were not found, false otherwise.
-     * - ProductListResponseTransfer::messages contains usage details.
+     * - Expects configurable bundle template ID to be provided.
+     * - Retrieves configurable bundle template by id.
+     * - Removes configurable bundle template from Persistence.
+     * - Removes configurable bundle template slots from Persistence.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
+     */
+    public function deleteConfigurableBundleTemplate(
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): ConfigurableBundleTemplateResponseTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves configurable bundle template slot in Persistence.
+     * - Filters by criteria from ConfigurableBundleTemplateSlotFilterTransfer.
+     * - Expands found configurable bundle template slots with translations.
+     * - Expands found configurable bundle template slots with product lists.
+     * - Provides translations for locales specified in ConfigurableBundleTemplateSlotFilterTransfer::translationLocales, or for all available locales otherwise.
+     * - If single locale translation was requested but doesn't exist, fallback translation will be provided, or translation key if nothing found.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotResponseTransfer
      */
-    public function checkProductListUsageAmongSlots(ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer): ProductListResponseTransfer;
+    public function getConfigurableBundleTemplateSlot(
+        ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
+    ): ConfigurableBundleTemplateSlotResponseTransfer;
 
     /**
      * Specification:
-     * - Finds configurable bundle template slots by criteria from ConfigurableBundleTemplateSlotFilterTransfer.
+     * - Retrieves configurable bundle template slots in Persistence.
+     * - Filters by criteria from ConfigurableBundleTemplateSlotFilterTransfer.
      * - Expands found configurable bundle template slots with translations.
      * - Provides translations for locales specified in ConfigurableBundleTemplateSlotFilterTransfer::translationLocales, or for all available locales otherwise.
-     * - Returns array of transfers.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[]
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotCollectionTransfer
      */
-    public function getConfigurableBundleTemplateSlotCollection(ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer): array;
+    public function getConfigurableBundleTemplateSlotCollection(
+        ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
+    ): ConfigurableBundleTemplateSlotCollectionTransfer;
 
     /**
      * Specification:
@@ -186,14 +189,15 @@ interface ConfigurableBundleFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleResponseTransfer
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotResponseTransfer
      */
     public function createConfigurableBundleTemplateSlot(
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
-    ): ConfigurableBundleResponseTransfer;
+    ): ConfigurableBundleTemplateSlotResponseTransfer;
 
     /**
      * Specification:
+     * - Expects configurable bundle template slot ID to be provided.
      * - Expects product list ID to be provided.
      * - Persists configurable bundle template slot.
      * - Expects minimum one translation to be provided.
@@ -205,14 +209,15 @@ interface ConfigurableBundleFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleResponseTransfer
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotResponseTransfer
      */
     public function updateConfigurableBundleTemplateSlot(
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
-    ): ConfigurableBundleResponseTransfer;
+    ): ConfigurableBundleTemplateSlotResponseTransfer;
 
     /**
      * Specification:
+     * - Expects configurable bundle template slot ID to be provided.
      * - Removes configurable bundle template slot with given ID from Persistence.
      *
      * @api
@@ -227,35 +232,32 @@ interface ConfigurableBundleFacadeInterface
 
     /**
      * Specification:
-     * - Finds configurable bundle template slot by criteria from ConfigurableBundleTemplateSlotFilterTransfer.
-     * - Filters configurable bundle template slot records by idProductList if provided.
-     * - Filters configurable bundle template slot records by ID if provided.
-     * - Expands found configurable bundle template slots with translations.
-     * - Expands found configurable bundle template slots with product lists.
-     * - Provides translations for locales specified in ConfigurableBundleTemplateSlotFilterTransfer::translationLocales, or for all available locales otherwise.
-     * - If single locale translation was requested but doesn't exist, fallback translation will be provided, or translation key if nothing found.
-     * - Returns corresponding transfer object for the first matching record if found, null otherwise.
+     * - Retrieves active configurable bundle template UUIDs related to this quote.
+     * - Removes item from QuoteTransfer if its configurable bundle template is removed.
+     * - Removes item from QuoteTransfer if its configurable bundle template is inactive.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function removeInactiveConfiguredBundleItemsFromQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves configurable bundle template slots which use given product list by ConfigurableBundleTemplateSlotFilterTransfer::productList::idProductList.
+     * - Returns ProductListResponseTransfer with check results.
+     * - ProductListResponseTransfer::isSuccessful is equal to true when usage cases were not found, false otherwise.
+     * - ProductListResponseTransfer::messages contains usage details.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer|null
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function findConfigurableBundleTemplateSlot(
+    public function checkProductListUsageAmongSlots(
         ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
-    ): ?ConfigurableBundleTemplateSlotTransfer;
-
-    /**
-     * Specification:
-     * - Filters configurable bundle template slot records by ID.
-     * - Returns ID of a product list assigned to a slot.
-     *
-     * @api
-     *
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return int
-     */
-    public function getProductListIdByIdConfigurableBundleTemplateSlot(int $idConfigurableBundleTemplate): int;
+    ): ProductListResponseTransfer;
 }

@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business\Cleaner;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotResponseTransfer;
+use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReaderInterface;
 use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
@@ -20,43 +23,44 @@ class ConfigurableBundleTemplateSlotCleaner implements ConfigurableBundleTemplat
     protected $configurableBundleEntityManager;
 
     /**
+     * @var \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReaderInterface
+     */
+    protected $configurableBundleTemplateSlotReader;
+
+    /**
      * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager
+     * @param \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReaderInterface $configurableBundleTemplateSlotReader
      */
-    public function __construct(ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager)
-    {
+    public function __construct(
+        ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager,
+        ConfigurableBundleTemplateSlotReaderInterface $configurableBundleTemplateSlotReader
+    ) {
         $this->configurableBundleEntityManager = $configurableBundleEntityManager;
+        $this->configurableBundleTemplateSlotReader = $configurableBundleTemplateSlotReader;
     }
 
     /**
-     * @param int $idConfigurableBundleTemplate
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotResponseTransfer
      */
-    public function deleteConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
-    {
-        $this->getTransactionHandler()->handleTransaction(function () use ($idConfigurableBundleTemplate) {
-            $this->executeDeleteConfigurableBundleTemplateByIdTransaction($idConfigurableBundleTemplate);
-        });
-    }
+    public function deleteConfigurableBundleTemplateSlot(
+        ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
+    ): ConfigurableBundleTemplateSlotResponseTransfer {
+        $configurableBundleTemplateSlotResponseTransfer = $this->configurableBundleTemplateSlotReader
+            ->getConfigurableBundleTemplateSlot($configurableBundleTemplateSlotFilterTransfer);
 
-    /**
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return void
-     */
-    protected function executeDeleteConfigurableBundleTemplateByIdTransaction(int $idConfigurableBundleTemplate): void
-    {
-        $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateSlotsByIdTemplate($idConfigurableBundleTemplate);
-        $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateById($idConfigurableBundleTemplate);
-    }
+        if (!$configurableBundleTemplateSlotResponseTransfer->getIsSuccessful()) {
+            return $configurableBundleTemplateSlotResponseTransfer;
+        }
 
-    /**
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return void
-     */
-    public function deleteConfigurableBundleTemplateSlot(int $idConfigurableBundleTemplate): void
-    {
-        // TODO: Implement deleteConfigurableBundleTemplateSlot() method.
+        $idConfigurableBundleTemplateSlot = $configurableBundleTemplateSlotResponseTransfer
+            ->getConfigurableBundleTemplateSlot()
+            ->getIdConfigurableBundleTemplateSlot();
+
+        $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateSlotById($idConfigurableBundleTemplateSlot);
+
+        return (new ConfigurableBundleTemplateSlotResponseTransfer())
+            ->setIsSuccessful(true);
     }
 }

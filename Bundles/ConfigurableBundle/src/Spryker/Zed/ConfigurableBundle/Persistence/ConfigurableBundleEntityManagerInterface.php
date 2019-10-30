@@ -31,20 +31,6 @@ interface ConfigurableBundleEntityManagerInterface
     ): ConfigurableBundleTemplateTransfer;
 
     /**
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return void
-     */
-    public function deleteConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void;
-
-    /**
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return void
-     */
-    public function deleteConfigurableBundleTemplateSlotsByIdTemplate(int $idConfigurableBundleTemplate): void;
-
-    /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
@@ -63,9 +49,23 @@ interface ConfigurableBundleEntityManagerInterface
     ): ConfigurableBundleTemplateSlotTransfer;
 
     /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function deleteConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void;
+
+    /**
      * @param int $idConfigurableBundleTemplateSlot
      *
      * @return void
      */
     public function deleteConfigurableBundleTemplateSlotById(int $idConfigurableBundleTemplateSlot): void;
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function deleteConfigurableBundleTemplateSlotsByIdTemplate(int $idConfigurableBundleTemplate): void;
 }

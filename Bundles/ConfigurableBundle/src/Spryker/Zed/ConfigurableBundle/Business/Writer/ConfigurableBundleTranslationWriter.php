@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business\Writer;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTranslationTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface;
 
-class ConfigurableBundleTemplateTranslationWriter implements ConfigurableBundleTemplateTranslationWriterInterface
+class ConfigurableBundleTranslationWriter implements ConfigurableBundleTranslationWriterInterface
 {
     /**
      * @var \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface
@@ -32,7 +34,7 @@ class ConfigurableBundleTemplateTranslationWriter implements ConfigurableBundleT
      *
      * @return void
      */
-    public function saveTranslations(ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer): void
+    public function saveTemplateTranslations(ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer): void
     {
         $configurableBundleTemplateTransfer->requireName();
         $translationKey = $configurableBundleTemplateTransfer->getName();
@@ -42,7 +44,26 @@ class ConfigurableBundleTemplateTranslationWriter implements ConfigurableBundleT
         }
 
         foreach ($configurableBundleTemplateTransfer->getTranslations() as $configurableBundleTemplateTranslationTransfer) {
-            $this->persistNameTranslation($configurableBundleTemplateTranslationTransfer, $translationKey);
+            $this->persistTemplateNameTranslation($configurableBundleTemplateTranslationTransfer, $translationKey);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
+     *
+     * @return void
+     */
+    public function saveTemplateSlotTranslations(ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer): void
+    {
+        $configurableBundleTemplateSlotTransfer->requireName();
+        $translationKey = $configurableBundleTemplateSlotTransfer->getName();
+
+        if (!$this->glossaryFacade->hasKey($translationKey)) {
+            $this->glossaryFacade->createKey($translationKey);
+        }
+
+        foreach ($configurableBundleTemplateSlotTransfer->getTranslations() as $configurableBundleTemplateSlotTranslationTransfer) {
+            $this->persistTemplateSlotNameTranslation($configurableBundleTemplateSlotTranslationTransfer, $translationKey);
         }
     }
 
@@ -52,7 +73,7 @@ class ConfigurableBundleTemplateTranslationWriter implements ConfigurableBundleT
      *
      * @return void
      */
-    protected function persistNameTranslation(
+    protected function persistTemplateNameTranslation(
         ConfigurableBundleTemplateTranslationTransfer $configurableBundleTemplateTranslationTransfer,
         string $translationKey
     ): void {
@@ -64,6 +85,27 @@ class ConfigurableBundleTemplateTranslationWriter implements ConfigurableBundleT
             $translationKey,
             $configurableBundleTemplateTranslationTransfer->getName(),
             $configurableBundleTemplateTranslationTransfer->getLocale()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTranslationTransfer $configurableBundleTemplateSlotTranslationTransfer
+     * @param string $translationKey
+     *
+     * @return void
+     */
+    protected function persistTemplateSlotNameTranslation(
+        ConfigurableBundleTemplateSlotTranslationTransfer $configurableBundleTemplateSlotTranslationTransfer,
+        string $translationKey
+    ): void {
+        $configurableBundleTemplateSlotTranslationTransfer
+            ->requireName()
+            ->requireLocale();
+
+        $this->persistTranslation(
+            $translationKey,
+            $configurableBundleTemplateSlotTranslationTransfer->getName(),
+            $configurableBundleTemplateSlotTranslationTransfer->getLocale()
         );
     }
 

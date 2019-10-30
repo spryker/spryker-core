@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGeneratorInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface;
-use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateSlotTranslationWriterInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTranslationWriterInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Writer\ProductListWriterInterface;
 use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -28,9 +28,9 @@ class ConfigurableBundleTemplateSlotCreator implements ConfigurableBundleTemplat
     protected $configurableBundleEntityManager;
 
     /**
-     * @var \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateSlotTranslationWriterInterface
+     * @var \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTranslationWriterInterface
      */
-    protected $configurableBundleTemplateSlotTranslationWriter;
+    protected $configurableBundleSlotTranslationWriter;
 
     /**
      * @var \Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGeneratorInterface
@@ -49,20 +49,20 @@ class ConfigurableBundleTemplateSlotCreator implements ConfigurableBundleTemplat
 
     /**
      * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager
-     * @param \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateSlotTranslationWriterInterface $configurableBundleTemplateSlotTranslationWriter
+     * @param \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTranslationWriterInterface $configurableBundleSlotTranslationWriter
      * @param \Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGeneratorInterface $configurableBundleNameGenerator
      * @param \Spryker\Zed\ConfigurableBundle\Business\Writer\ProductListWriterInterface $productListWriter
      * @param \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface $configurableBundleTemplateReader
      */
     public function __construct(
         ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager,
-        ConfigurableBundleTemplateSlotTranslationWriterInterface $configurableBundleTemplateSlotTranslationWriter,
+        ConfigurableBundleTranslationWriterInterface $configurableBundleSlotTranslationWriter,
         ConfigurableBundleNameGeneratorInterface $configurableBundleNameGenerator,
         ProductListWriterInterface $productListWriter,
         ConfigurableBundleTemplateReaderInterface $configurableBundleTemplateReader
     ) {
         $this->configurableBundleEntityManager = $configurableBundleEntityManager;
-        $this->configurableBundleTemplateSlotTranslationWriter = $configurableBundleTemplateSlotTranslationWriter;
+        $this->configurableBundleSlotTranslationWriter = $configurableBundleSlotTranslationWriter;
         $this->configurableBundleNameGenerator = $configurableBundleNameGenerator;
         $this->productListWriter = $productListWriter;
         $this->configurableBundleTemplateReader = $configurableBundleTemplateReader;
@@ -112,7 +112,7 @@ class ConfigurableBundleTemplateSlotCreator implements ConfigurableBundleTemplat
         $configurableBundleTemplateSlotTransfer = $this->configurableBundleEntityManager
             ->createConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer);
 
-        $this->configurableBundleTemplateSlotTranslationWriter->saveTranslations($configurableBundleTemplateSlotTransfer);
+        $this->configurableBundleSlotTranslationWriter->saveTemplateSlotTranslations($configurableBundleTemplateSlotTransfer);
 
         return (new ConfigurableBundleTemplateSlotResponseTransfer())
             ->setConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer)

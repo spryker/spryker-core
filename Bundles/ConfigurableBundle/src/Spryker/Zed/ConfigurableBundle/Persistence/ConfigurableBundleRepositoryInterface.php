@@ -35,11 +35,13 @@ interface ConfigurableBundleRepositoryInterface
     ): ConfigurableBundleTemplateCollectionTransfer;
 
     /**
-     * @param string[] $allowedTemplateUuid
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
      *
-     * @return string[]
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer|null
      */
-    public function getActiveConfigurableBundleTemplateUuids(array $allowedTemplateUuid): array;
+    public function findConfigurableBundleTemplateSlot(
+        ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
+    ): ?ConfigurableBundleTemplateSlotTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
@@ -51,18 +53,9 @@ interface ConfigurableBundleRepositoryInterface
     ): ConfigurableBundleTemplateSlotCollectionTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
+     * @param string[] $allowedTemplateUuid
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer|null
+     * @return string[]
      */
-    public function findConfigurableBundleTemplateSlot(
-        ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
-    ): ?ConfigurableBundleTemplateSlotTransfer;
-
-    /**
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return int
-     */
-    public function getProductListIdByIdConfigurableBundleTemplateSlot(int $idConfigurableBundleTemplate): int;
+    public function getActiveConfigurableBundleTemplateUuids(array $allowedTemplateUuid): array;
 }

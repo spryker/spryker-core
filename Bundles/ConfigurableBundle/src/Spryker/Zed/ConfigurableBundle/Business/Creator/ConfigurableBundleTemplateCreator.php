@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business\Creator;
 
-use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGeneratorInterface;
-use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateTranslationWriterInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTranslationWriterInterface;
 use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
@@ -24,9 +24,9 @@ class ConfigurableBundleTemplateCreator implements ConfigurableBundleTemplateCre
     protected $configurableBundleEntityManager;
 
     /**
-     * @var \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateTranslationWriterInterface
+     * @var \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTranslationWriterInterface
      */
-    protected $configurableBundleTemplateTranslationWriter;
+    protected $configurableBundleTranslationWriter;
 
     /**
      * @var \Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGeneratorInterface
@@ -35,16 +35,16 @@ class ConfigurableBundleTemplateCreator implements ConfigurableBundleTemplateCre
 
     /**
      * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager
-     * @param \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateTranslationWriterInterface $configurableBundleTemplateTranslationWriter
+     * @param \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTranslationWriterInterface $configurableBundleTranslationWriter
      * @param \Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGeneratorInterface $configurableBundleNameGenerator
      */
     public function __construct(
         ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager,
-        ConfigurableBundleTemplateTranslationWriterInterface $configurableBundleTemplateTranslationWriter,
+        ConfigurableBundleTranslationWriterInterface $configurableBundleTranslationWriter,
         ConfigurableBundleNameGeneratorInterface $configurableBundleNameGenerator
     ) {
         $this->configurableBundleEntityManager = $configurableBundleEntityManager;
-        $this->configurableBundleTemplateTranslationWriter = $configurableBundleTemplateTranslationWriter;
+        $this->configurableBundleTranslationWriter = $configurableBundleTranslationWriter;
         $this->configurableBundleNameGenerator = $configurableBundleNameGenerator;
     }
 
@@ -74,7 +74,7 @@ class ConfigurableBundleTemplateCreator implements ConfigurableBundleTemplateCre
         );
 
         $configurableBundleTemplateTransfer = $this->configurableBundleEntityManager->createConfigurableBundleTemplate($configurableBundleTemplateTransfer);
-        $this->configurableBundleTemplateTranslationWriter->saveTranslations($configurableBundleTemplateTransfer);
+        $this->configurableBundleTranslationWriter->saveTemplateTranslations($configurableBundleTemplateTransfer);
 
         return (new ConfigurableBundleTemplateResponseTransfer())
             ->setConfigurableBundleTemplate($configurableBundleTemplateTransfer)

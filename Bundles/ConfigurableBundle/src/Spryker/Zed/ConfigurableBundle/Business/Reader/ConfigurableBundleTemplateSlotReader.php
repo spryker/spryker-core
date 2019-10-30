@@ -8,10 +8,11 @@
 namespace Spryker\Zed\ConfigurableBundle\Business\Reader;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
-use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotCollectionTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotResponseTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTemplateSlotProductListExpanderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpanderInterface;
@@ -112,7 +113,7 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
     {
         $configurableBundleTemplateSlotFilterTransfer = (new ConfigurableBundleTemplateSlotFilterTransfer())
             ->setIdConfigurableBundleTemplateSlot($idConfigurableBundleTemplateSlot)
-            ->setTranslationLocales(new ArrayObject(reset($this->localeFacade->getLocaleCollection())));
+            ->setTranslationLocales(new ArrayObject([$this->getDefaultLocale()]));
 
         return $this->getConfigurableBundleTemplateSlot($configurableBundleTemplateSlotFilterTransfer);
     }
@@ -145,6 +146,20 @@ class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplate
         $configurableBundleTemplateSlotTransfer->setConfigurableBundleTemplate($configurableBundleTemplateTransfer);
 
         return $configurableBundleTemplateSlotTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer|null
+     */
+    protected function getDefaultLocale(): ?LocaleTransfer
+    {
+        $localeTransfers = $this->localeFacade->getLocaleCollection();
+
+        if (!$localeTransfers) {
+            return null;
+        }
+
+        return array_shift($localeTransfers);
     }
 
     /**

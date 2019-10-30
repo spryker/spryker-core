@@ -7,12 +7,17 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business\Cleaner;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
+
 interface ConfigurableBundleTemplateCleanerInterface
 {
     /**
-     * @param int $idConfigurableBundleTemplate
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
      */
-    public function deleteConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void;
+    public function deleteConfigurableBundleTemplate(
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): ConfigurableBundleTemplateResponseTransfer;
 }
