@@ -42,6 +42,7 @@ class ConfigurableBundleTemplatePageMapPlugin extends AbstractPlugin implements 
             ->addSearchResultData($pageMapTransfer, ConfigurableBundleTemplateTransfer::ID_CONFIGURABLE_BUNDLE_TEMPLATE, $data[ConfigurableBundleTemplatePageSearchTransfer::FK_CONFIGURABLE_BUNDLE_TEMPLATE])
             ->addSearchResultData($pageMapTransfer, ConfigurableBundleTemplatePageSearchTransfer::NAME, $data[ConfigurableBundleTemplatePageSearchTransfer::NAME])
             ->addSearchResultData($pageMapTransfer, ConfigurableBundleTemplatePageSearchTransfer::UUID, $data[ConfigurableBundleTemplatePageSearchTransfer::UUID])
+            ->addSearchResultData($pageMapTransfer, ConfigurableBundleTemplatePageSearchTransfer::IS_ACTIVE, $data[ConfigurableBundleTemplatePageSearchTransfer::IS_ACTIVE])
             ->addSearchResultData($pageMapTransfer, ConfigurableBundleTemplatePageSearchTransfer::TRANSLATIONS, $data[ConfigurableBundleTemplatePageSearchTransfer::TRANSLATIONS])
             ->addFullText($pageMapTransfer, $data[ConfigurableBundleTemplatePageSearchTransfer::NAME]);
 

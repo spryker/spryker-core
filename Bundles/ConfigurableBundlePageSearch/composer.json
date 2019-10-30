@@ -17,10 +17,12 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/elastica": "*",
     "spryker/event": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/elastica": "If you want to use search functionality from ConfigurableBundlePageSearchClient.",
     "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"
   },
   "autoload": {

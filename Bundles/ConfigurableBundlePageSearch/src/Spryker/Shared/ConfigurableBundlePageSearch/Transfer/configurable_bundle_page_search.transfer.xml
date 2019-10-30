@@ -8,7 +8,8 @@
         <property name="fkConfigurableBundleTemplate" type="int"/>
         <property name="name" type="string"/>
         <property name="uuid" type="string"/>
-        <property name="translations" type="string[]"/>
+        <property name="isActive" type="bool"/>
+        <property name="translations" type="string[]" singular="translation"/>
         <property name="locale" type="string"/>
         <property name="type" type="string"/>
         <property name="key" type="string"/>
@@ -21,8 +22,8 @@
     </transfer>
 
     <transfer name="ConfigurableBundleTemplatePageSearchFilter">
-        <property name="configurableBundleTemplateIds" type="int[]"/>
-        <property name="configurableBundleTemplatePageSearchIds" type="int[]"/>
+        <property name="configurableBundleTemplateIds" type="int[]" singular="configurableBundleTemplateId"/>
+        <property name="configurableBundleTemplatePageSearchIds" type="int[]" singular="configurableBundleTemplatePageSearchId"/>
         <property name="offset" type="int"/>
         <property name="limit" type="int"/>
     </transfer>
@@ -33,6 +34,16 @@
 
     <transfer name="ConfigurableBundleTemplate">
         <property name="idConfigurableBundleTemplate" type="int"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplatePageSearchRequest">
+        <property name="requestParameters" type="array" singular="requestParameter"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="key" type="string"/>
+        <property name="data" type="string"/>
+        <property name="locale" type="string"/>
     </transfer>
 
 </transfers>

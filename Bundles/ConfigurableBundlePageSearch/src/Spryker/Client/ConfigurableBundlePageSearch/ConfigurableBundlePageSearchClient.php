@@ -7,6 +7,38 @@
 
 namespace Spryker\Client\ConfigurableBundlePageSearch;
 
-class ConfigurableBundlePageSearchClient implements ConfigurableBundlePageSearchClientInterface
+use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchRequestTransfer;
+use Spryker\Client\Kernel\AbstractClient;
+
+/**
+ * @method \Spryker\Client\ConfigurableBundlePageSearch\ConfigurableBundlePageSearchFactory getFactory()
+ */
+class ConfigurableBundlePageSearchClient extends AbstractClient implements ConfigurableBundlePageSearchClientInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchRequestTransfer $configurableBundleTemplatePageSearchRequestTransfer
+     *
+     * @return array
+     */
+    public function searchConfigurableBundleTemplates(ConfigurableBundleTemplatePageSearchRequestTransfer $configurableBundleTemplatePageSearchRequestTransfer): array
+    {
+        $searchQuery = $this->getFactory()->createConfigurableBundleTemplateSearchQuery($configurableBundleTemplatePageSearchRequestTransfer);
+        $searchQuery = $this->getFactory()
+            ->getSearchClient()
+            ->expandQuery(
+                $searchQuery,
+                $this->getFactory()->getConfigurableBundleTemplatePageSearchQueryExpanderPlugins(),
+                $configurableBundleTemplatePageSearchRequestTransfer->getRequestParameters()
+            );
+
+        $resultFormatters = $this->getFactory()->getConfigurableBundleTemplateResultFormatterPlugins();
+
+        return $this->getFactory()
+            ->getSearchClient()
+            ->search($searchQuery, $resultFormatters);
+    }
 }
