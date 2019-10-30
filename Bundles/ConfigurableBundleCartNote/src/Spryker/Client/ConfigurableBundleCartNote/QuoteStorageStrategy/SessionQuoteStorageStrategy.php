@@ -47,15 +47,15 @@ class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
     {
         $quoteNoteResponseTransfer = new QuoteResponseTransfer();
         $quoteTransfer = $this->quoteClient->getQuote();
-        $itemCollection = $this->findItemsByConfigurableBundleGroupKey($quoteTransfer, $configurableBundleGroupKey);
+        $itemCollectionTransfer = $this->findItemsByConfigurableBundleGroupKey($quoteTransfer, $configurableBundleGroupKey);
 
-        if ($itemCollection->getItems()->count() === 0) {
+        if ($itemCollectionTransfer->getItems()->count() === 0) {
             $quoteNoteResponseTransfer->setIsSuccessful(false);
 
             return $quoteNoteResponseTransfer;
         }
 
-        foreach ($itemCollection->getItems() as $itemTransfer) {
+        foreach ($itemCollectionTransfer->getItems() as $itemTransfer) {
             $itemTransfer->getConfiguredBundle()->setCartNote($cartNote);
         }
 
@@ -75,14 +75,14 @@ class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
         QuoteTransfer $quoteTransfer,
         string $configurableBundleGroupKey
     ): ItemCollectionTransfer {
-        $itemCollection = new ItemCollectionTransfer();
+        $itemCollectionTransfer = new ItemCollectionTransfer();
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getConfiguredBundle()->getGroupKey() === $configurableBundleGroupKey) {
-                $itemCollection->addItem($itemTransfer);
+                $itemCollectionTransfer->addItem($itemTransfer);
             }
         }
 
-        return $itemCollection;
+        return $itemCollectionTransfer;
     }
 }

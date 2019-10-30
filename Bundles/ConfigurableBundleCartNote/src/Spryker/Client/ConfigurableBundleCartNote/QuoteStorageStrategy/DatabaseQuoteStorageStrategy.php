@@ -24,18 +24,18 @@ class DatabaseQuoteStorageStrategy implements QuoteStorageStrategyInterface
     /**
      * @var \Spryker\Client\ConfigurableBundleCartNote\Zed\ConfigurableBundleCartNoteZedStubInterface
      */
-    protected $zedStub;
+    protected $configurableBundleCartNoteZedStub;
 
     /**
      * @param \Spryker\Client\ConfigurableBundleCartNote\Dependency\Client\ConfigurableBundleCartNoteToQuoteClientInterface $quoteClient
-     * @param \Spryker\Client\ConfigurableBundleCartNote\Zed\ConfigurableBundleCartNoteZedStubInterface $zedStub
+     * @param \Spryker\Client\ConfigurableBundleCartNote\Zed\ConfigurableBundleCartNoteZedStubInterface $configurableBundleCartNoteZedStub
      */
     public function __construct(
         ConfigurableBundleCartNoteToQuoteClientInterface $quoteClient,
-        ConfigurableBundleCartNoteZedStubInterface $zedStub
+        ConfigurableBundleCartNoteZedStubInterface $configurableBundleCartNoteZedStub
     ) {
         $this->quoteClient = $quoteClient;
-        $this->zedStub = $zedStub;
+        $this->configurableBundleCartNoteZedStub = $configurableBundleCartNoteZedStub;
     }
 
     /**
@@ -55,7 +55,7 @@ class DatabaseQuoteStorageStrategy implements QuoteStorageStrategyInterface
     public function setCartNoteToConfigurableBundle(string $cartNote, string $configurableBundleGroupKey): QuoteResponseTransfer
     {
         $configurableBundleCartNoteRequestTransfer = $this->createConfigurableBundleCartNoteRequest($cartNote, $configurableBundleGroupKey);
-        $quoteResponseTransfer = $this->zedStub->setCartNoteToConfigurableBundle($configurableBundleCartNoteRequestTransfer);
+        $quoteResponseTransfer = $this->configurableBundleCartNoteZedStub->setCartNoteToConfigurableBundle($configurableBundleCartNoteRequestTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
