@@ -41,9 +41,9 @@ class ProductReviewsRestApiToProductReviewClientBridge implements ProductReviews
      *
      * @return array
      */
-    public function findBulkProductReviewsInSearch(BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer): array
+    public function getBulkProductReviewsFromSearch(BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer): array
     {
-        return $this->productReviewClient->findBulkProductReviewsInSearch($bulkProductReviewSearchRequestTransfer);
+        return $this->productReviewClient->getBulkProductReviewsFromSearch($bulkProductReviewSearchRequestTransfer);
     }
 
     /**

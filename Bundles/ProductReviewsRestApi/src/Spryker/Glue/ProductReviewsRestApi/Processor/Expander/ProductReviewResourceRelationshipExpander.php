@@ -133,8 +133,7 @@ class ProductReviewResourceRelationshipExpander implements ProductReviewResource
         $productReviewsRestResources = $this->productReviewReader
             ->getProductReviewsByProductAbstractIds(
                 $restRequest,
-                $productAbstractIds,
-                []
+                $productAbstractIds
             );
 
         foreach ($productReviewsRestResources as $productReviewsRestResource) {

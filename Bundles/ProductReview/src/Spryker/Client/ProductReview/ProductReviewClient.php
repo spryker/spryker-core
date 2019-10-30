@@ -61,7 +61,7 @@ class ProductReviewClient extends AbstractClient implements ProductReviewClientI
      *
      * @return array
      */
-    public function findBulkProductReviewsInSearch(BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer): array
+    public function getBulkProductReviewsFromSearch(BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer): array
     {
         $searchQuery = $this->getFactory()->createBulkProductReviewsQueryPlugin($bulkProductReviewSearchRequestTransfer);
         $resultFormatters = $this->getFactory()->getProductReviewsSearchResultFormatterPlugins();

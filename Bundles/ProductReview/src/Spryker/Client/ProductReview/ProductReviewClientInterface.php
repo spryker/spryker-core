@@ -48,7 +48,7 @@ interface ProductReviewClientInterface
      *
      * @return array
      */
-    public function findBulkProductReviewsInSearch(BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer): array;
+    public function getBulkProductReviewsFromSearch(BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer): array;
 
     /**
      * Specification:

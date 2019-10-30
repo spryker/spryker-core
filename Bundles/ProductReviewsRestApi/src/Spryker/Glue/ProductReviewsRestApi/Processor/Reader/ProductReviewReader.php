@@ -112,19 +112,16 @@ class ProductReviewReader implements ProductReviewReaderInterface
      *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param int[] $productAbstractIds
-     * @param array $requestParams
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
     public function getProductReviewsByProductAbstractIds(
         RestRequestInterface $restRequest,
-        array $productAbstractIds,
-        array $requestParams = []
+        array $productAbstractIds
     ): array {
         $productReviewTransfers = $this->getBulkProductReviewsInSearch(
             $restRequest,
-            $productAbstractIds,
-            $requestParams
+            $productAbstractIds
         )[static::PRODUCT_REVIEWS];
 
         return $this->productReviewRestResponseBuilder->prepareRestResourceCollection($productReviewTransfers);
@@ -133,16 +130,14 @@ class ProductReviewReader implements ProductReviewReaderInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param int $idProductAbstract
-     * @param array $requestParams
      *
      * @return array
      */
     protected function getProductReviewsInSearch(
         RestRequestInterface $restRequest,
-        int $idProductAbstract,
-        array $requestParams = []
+        int $idProductAbstract
     ): array {
-        $requestParams = $this->expandRequestParamsWithPaginationParameters($requestParams, $restRequest);
+        $requestParams = $this->createRequestParamsWithPaginationParameters($restRequest);
 
         $productReviews = $this->productReviewClient->findProductReviewsInSearch(
             (new ProductReviewSearchRequestTransfer())
@@ -156,18 +151,16 @@ class ProductReviewReader implements ProductReviewReaderInterface
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param int[] $productAbstractIds
-     * @param array $requestParams
      *
      * @return array
      */
     protected function getBulkProductReviewsInSearch(
         RestRequestInterface $restRequest,
-        array $productAbstractIds,
-        array $requestParams = []
+        array $productAbstractIds
     ): array {
-        $requestParams = $this->expandRequestParamsWithPaginationParameters($requestParams, $restRequest);
+        $requestParams = $this->createRequestParamsWithPaginationParameters($restRequest);
 
-        $productReviews = $this->productReviewClient->findBulkProductReviewsInSearch(
+        $productReviews = $this->productReviewClient->getBulkProductReviewsFromSearch(
             (new BulkProductReviewSearchRequestTransfer())
                 ->setRequestParams($requestParams)
                 ->setProductAbstractIds($productAbstractIds)
@@ -177,13 +170,13 @@ class ProductReviewReader implements ProductReviewReaderInterface
     }
 
     /**
-     * @param array $requestParams
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return array
      */
-    protected function expandRequestParamsWithPaginationParameters(array $requestParams, RestRequestInterface $restRequest): array
+    protected function createRequestParamsWithPaginationParameters(RestRequestInterface $restRequest): array
     {
+        $requestParams = [];
         if (!$restRequest->getPage()) {
             $restRequest->setPage(new Page(0, $this->productReviewsRestApiConfig->getDefaultReviewsPerPage()));
         }
