@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Glossary\Persistence;
 
+use Generated\Shared\Transfer\GlossaryKeyTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -53,11 +54,9 @@ class GlossaryRepository extends AbstractRepository implements GlossaryRepositor
         $glossaryTranslationEntities = $this->getFactory()->createGlossaryTranslationQuery()
             ->useGlossaryKeyQuery()
                 ->filterByKey_In($glossaryKeys)
-                ->withColumn('key', 'glossaryKey')
             ->endUse()
             ->useLocaleQuery()
                 ->filterByLocaleName_In($localeIsoCodes)
-                ->withColumn('locale_name', 'localeName')
             ->endUse()
             ->find();
 
@@ -88,5 +87,44 @@ class GlossaryRepository extends AbstractRepository implements GlossaryRepositor
         }
 
         return $translationTransfers;
+    }
+
+    /**
+     * @param string[] $glossaryKeys
+     *
+     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
+     */
+    public function getGlossaryKeyTransfersByGlossaryKeys(array $glossaryKeys): array
+    {
+        $glossaryKeyEntities = $this->getFactory()->createGlossaryKeyQuery()
+            ->filterByKey_In($glossaryKeys)
+            ->find();
+
+        if ($glossaryKeyEntities->count() === 0) {
+            return [];
+        }
+
+        return $this->mapGlossaryKeyEntitiesToGlossaryKeyTransfers($glossaryKeyEntities);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Glossary\Persistence\SpyGlossaryKey[] $glossaryKeyEntities
+     *
+     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
+     */
+    protected function mapGlossaryKeyEntitiesToGlossaryKeyTransfers(ObjectCollection $glossaryKeyEntities): array
+    {
+        $glossaryKeyTransfers = [];
+        $glossaryMapper = $this->getFactory()->createGlossaryMapper();
+
+        foreach ($glossaryKeyEntities as $glossaryKeyEntity) {
+            $glossaryKeyTransfer = new GlossaryKeyTransfer();
+            $glossaryKeyTransfer = $glossaryMapper
+                ->mapGlossaryKeyEntityToGlossaryKeyTransfer($glossaryKeyEntity, $glossaryKeyTransfer);
+
+            $glossaryKeyTransfers[] = $glossaryKeyTransfer;
+        }
+
+        return $glossaryKeyTransfers;
     }
 }

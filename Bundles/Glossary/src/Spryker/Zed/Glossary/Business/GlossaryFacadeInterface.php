@@ -313,7 +313,7 @@ interface GlossaryFacadeInterface
 
     /**
      * Specifications:
-     * - Finds all translations for specified keys and locales.
+     * - Finds all translations for specified keys and locale transfers.
      *
      * @api
      *
@@ -322,5 +322,17 @@ interface GlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer[]
      */
-    public function getTranslationsByGlossaryKeysAndLocales(array $glossaryKeys, array $localeTransfers): array;
+    public function getTranslationsByGlossaryKeysAndLocaleTransfers(array $glossaryKeys, array $localeTransfers): array;
+
+    /**
+     * Specifications:
+     * - Returns glossary key transfers by array of glossary keys.
+     *
+     * @api
+     *
+     * @param string[] $glossaryKeys
+     *
+     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
+     */
+    public function getGlossaryKeyTransfersByGlossaryKeys(array $glossaryKeys): array;
 }

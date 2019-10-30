@@ -57,7 +57,7 @@ interface ProductAttributeToGlossaryInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer[]
      */
-    public function getTranslationsByGlossaryKeysAndLocales(array $keyNames, array $localeTransfers): array;
+    public function getTranslationsByGlossaryKeysAndLocaleTransfers(array $keyNames, array $localeTransfers): array;
 
     /**
      * @param string $keyName
@@ -84,4 +84,11 @@ interface ProductAttributeToGlossaryInterface
      * @return int
      */
     public function createKey($keyName);
+
+    /**
+     * @param string[] $glossaryKeys
+     *
+     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
+     */
+    public function getGlossaryKeyTransfersByGlossaryKeys(array $glossaryKeys): array;
 }

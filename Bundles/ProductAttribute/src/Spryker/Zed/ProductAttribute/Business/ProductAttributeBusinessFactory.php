@@ -17,8 +17,6 @@ use Spryker\Zed\ProductAttribute\Business\Model\Attribute\AttributeWriter;
 use Spryker\Zed\ProductAttribute\Business\Model\Attribute\Mapper\ProductAttributeTransferMapper;
 use Spryker\Zed\ProductAttribute\Business\Model\Attribute\SuperAttributeReader;
 use Spryker\Zed\ProductAttribute\Business\Model\Attribute\SuperAttributeReaderInterface;
-use Spryker\Zed\ProductAttribute\Business\Model\Glossary\GlossaryRepository;
-use Spryker\Zed\ProductAttribute\Business\Model\Glossary\GlossaryRepositoryInterface;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\Mapper\ProductAttributeMapper;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttribute;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReader;
@@ -168,8 +166,7 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
         return new ProductAttributeTransferMapper(
             $this->getLocaleFacade(),
             $this->getGlossaryFacade(),
-            $this->createAttributeGlossaryKeyBuilder(),
-            $this->createGlossaryRepository()
+            $this->createAttributeGlossaryKeyBuilder()
         );
     }
 
@@ -179,14 +176,6 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     protected function createAttributeGlossaryKeyBuilder()
     {
         return new AttributeGlossaryKeyBuilder();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductAttribute\Business\Model\Glossary\GlossaryRepositoryInterface
-     */
-    protected function createGlossaryRepository(): GlossaryRepositoryInterface
-    {
-        return new GlossaryRepository($this->getGlossaryFacade());
     }
 
     /**

@@ -47,7 +47,7 @@ class TranslationReader implements TranslationReaderInterface
      */
     public function getTranslationsByGlossaryKeysAndLocaleTransfers(array $glossaryKeys, array $localeTransfers): array
     {
-        if (!$localeTransfers) {
+        if (!$localeTransfers || !$glossaryKeys) {
             return [];
         }
 
