@@ -4,6 +4,9 @@
   "description": "ConfigurableBundleCartNote module",
   "license": "proprietary",
   "require": {
+    "spryker/kernel": "^3.30.0",
+    "spryker/quote": "^2.0.0",
+    "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
