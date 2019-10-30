@@ -66,4 +66,7 @@
         <property name="offset" type="int"/>
     </transfer>
 
+    <transfer name="ProductAbstract">
+    </transfer>
+
 </transfers>

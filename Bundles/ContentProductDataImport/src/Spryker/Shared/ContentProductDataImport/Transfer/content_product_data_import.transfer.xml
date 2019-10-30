@@ -28,4 +28,10 @@
         <property name="parameter" type="string"/>
     </transfer>
 
+    <transfer name="DataImporterConfiguration">
+    </transfer>
+
+    <transfer name="DataImporterReport">
+    </transfer>
+
 </transfers>

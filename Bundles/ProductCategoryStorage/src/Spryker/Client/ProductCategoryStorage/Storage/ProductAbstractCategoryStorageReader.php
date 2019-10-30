@@ -57,6 +57,29 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
     }
 
     /**
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[]
+     */
+    public function findBulkProductAbstractCategory(array $productAbstractIds, string $localeName): array
+    {
+        $productAbstractCategoryStorageData = $this->findBulkStorageData($productAbstractIds, $localeName);
+
+        if (!$productAbstractCategoryStorageData) {
+            return [];
+        }
+
+        $response = [];
+        foreach ($productAbstractCategoryStorageData as $item) {
+            $response[] = (new ProductAbstractCategoryStorageTransfer())
+                ->fromArray($item, true);
+        }
+
+        return $response;
+    }
+
+    /**
      * @param int $idProductAbstract
      * @param string $locale
      *
@@ -92,16 +115,39 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
     }
 
     /**
-     * @param int $idProductAbstract
-     * @param string $locale
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    protected function findBulkStorageData(array $productAbstractIds, string $localeName): array
+    {
+        $storageKeys = [];
+        foreach ($productAbstractIds as $idProductAbstract) {
+            $storageKeys[] = $this->generateKey($idProductAbstract, $localeName);
+        }
+
+        $productAbstractCategoryStorageData = $this->storageClient->getMulti($storageKeys);
+
+        $decodedProductAbstractCategoryStorageData = [];
+        foreach ($productAbstractCategoryStorageData as $item) {
+            $decodedProductAbstractCategoryStorageData[] = json_decode($item, true);
+        }
+
+        return $decodedProductAbstractCategoryStorageData;
+    }
+
+    /**
+     * @param int|string $idProductAbstract
+     * @param string $localeName
      *
      * @return string
      */
-    protected function generateKey($idProductAbstract, $locale)
+    protected function generateKey($idProductAbstract, string $localeName): string
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
-            ->setLocale($locale)
+            ->setLocale($localeName)
             ->setReference($idProductAbstract);
 
         return $this->synchronizationService
