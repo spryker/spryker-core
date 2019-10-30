@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\ConfigurableBundlePageSearch\Persistence\Propel;
 
-use Orm\Zed\ConfigurableBundlePageSearch\Persistence\Base\SpyConfigurableBundlePageSearchQuery as BaseSpyConfigurableBundlePageSearchQuery;
+use Orm\Zed\ConfigurableBundlePageSearch\Persistence\Base\SpyConfigurableBundleTemplatePageSearch as BaseSpyConfigurableBundleTemplatePageSearch;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'spy_configurable_bundle_page_search' table.
+ * Skeleton subclass for representing a row from the 'spy_configurable_bundle_page_search' table.
  *
  *
  *
@@ -18,6 +18,6 @@ use Orm\Zed\ConfigurableBundlePageSearch\Persistence\Base\SpyConfigurableBundleP
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpyConfigurableBundlePageSearchQuery extends BaseSpyConfigurableBundlePageSearchQuery
+abstract class AbstractSpyConfigurableBundleTemplatePageSearchSearch extends BaseSpyConfigurableBundleTemplatePageSearch
 {
 }

@@ -16,7 +16,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\ConfigurableBundlePageSearch\ConfigurableBundlePageSearchConfig getConfig()
  * @method \Spryker\Zed\ConfigurableBundlePageSearch\Communication\ConfigurableBundlePageSearchCommunicationFactory getFactory()
  */
-class ConfigurableBundlePageSearchConfigurableBundleTemplatePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ConfigurableBundleTemplatePageSearchConfigurableBundleTemplatePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 

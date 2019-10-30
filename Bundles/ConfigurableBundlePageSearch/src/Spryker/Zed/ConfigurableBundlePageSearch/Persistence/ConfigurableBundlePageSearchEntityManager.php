@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ConfigurableBundlePageSearch\Persistence;
 
-use Generated\Shared\Transfer\ConfigurableBundlePageSearchTransfer;
-use Orm\Zed\ConfigurableBundlePageSearch\Persistence\SpyConfigurableBundlePageSearch;
+use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer;
+use Orm\Zed\ConfigurableBundlePageSearch\Persistence\SpyConfigurableBundleTemplatePageSearch;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -17,52 +17,52 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class ConfigurableBundlePageSearchEntityManager extends AbstractEntityManager implements ConfigurableBundlePageSearchEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundlePageSearchTransfer $configurableBundlePageSearchTransfer
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer
      *
      * @return void
      */
-    public function createConfigurableBundlePageSearch(ConfigurableBundlePageSearchTransfer $configurableBundlePageSearchTransfer): void
+    public function createConfigurableBundlePageSearch(ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer): void
     {
-        $configurableBundlePageSearchEntity = new SpyConfigurableBundlePageSearch();
-        $configurableBundlePageSearchEntity->fromArray($configurableBundlePageSearchTransfer->toArray());
+        $configurableBundleTemplatePageSearchEntity = new SpyConfigurableBundleTemplatePageSearch();
+        $configurableBundleTemplatePageSearchEntity->fromArray($configurableBundleTemplatePageSearchTransfer->toArray());
 
-        $configurableBundlePageSearchEntity->save();
+        $configurableBundleTemplatePageSearchEntity->save();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundlePageSearchTransfer $configurableBundlePageSearchTransfer
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer
      *
      * @return void
      */
-    public function updateConfigurableBundlePageSearch(ConfigurableBundlePageSearchTransfer $configurableBundlePageSearchTransfer): void
+    public function updateConfigurableBundlePageSearch(ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer): void
     {
-        $configurableBundlePageSearchEntity = $this->getFactory()
-            ->createConfigurableBundlePageSearchQuery()
-            ->findOneByIdProductSetPageSearch($configurableBundlePageSearchTransfer->getIdConfigurableBundlePageSearch());
+        $configurableBundleTemplatePageSearchEntity = $this->getFactory()
+            ->getConfigurableBundlePageSearchQuery()
+            ->findOneByIdConfigurableBundleTemplatePageSearch($configurableBundleTemplatePageSearchTransfer->getIdConfigurableBundleTemplatePageSearch());
 
-        if (!$configurableBundlePageSearchEntity) {
+        if (!$configurableBundleTemplatePageSearchEntity) {
             return;
         }
 
-        $configurableBundlePageSearchEntity->fromArray($configurableBundlePageSearchTransfer->toArray());
-        $configurableBundlePageSearchEntity->save();
+        $configurableBundleTemplatePageSearchEntity->fromArray($configurableBundleTemplatePageSearchTransfer->toArray());
+        $configurableBundleTemplatePageSearchEntity->save();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundlePageSearchTransfer $configurableBundlePageSearchTransfer
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer
      *
      * @return void
      */
-    public function deleteConfigurableBundlePageSearch(ConfigurableBundlePageSearchTransfer $configurableBundlePageSearchTransfer): void
+    public function deleteConfigurableBundlePageSearch(ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer): void
     {
-        $configurableBundlePageSearchEntity = $this->getFactory()
-            ->createConfigurableBundlePageSearchQuery()
-            ->findOneByIdProductSetPageSearch($configurableBundlePageSearchTransfer->getIdConfigurableBundlePageSearch());
+        $configurableBundleTemplatePageSearchEntity = $this->getFactory()
+            ->getConfigurableBundlePageSearchQuery()
+            ->findOneByIdConfigurableBundleTemplatePageSearch($configurableBundleTemplatePageSearchTransfer->getIdConfigurableBundleTemplatePageSearch());
 
-        if (!$configurableBundlePageSearchEntity) {
+        if (!$configurableBundleTemplatePageSearchEntity) {
             return;
         }
 
-        $configurableBundlePageSearchEntity->delete();
+        $configurableBundleTemplatePageSearchEntity->delete();
     }
 }

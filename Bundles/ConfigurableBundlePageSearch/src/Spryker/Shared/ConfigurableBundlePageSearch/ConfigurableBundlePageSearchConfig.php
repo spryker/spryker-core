@@ -7,10 +7,12 @@
 
 namespace Spryker\Shared\ConfigurableBundlePageSearch;
 
+use Spryker\Shared\Kernel\AbstractBundleConfig;
+
 /**
  * Declares global environment configuration keys. Do not use it for other class constants.
  */
-class ConfigurableBundlePageSearchConstants
+class ConfigurableBundlePageSearchConfig extends AbstractBundleConfig
 {
     /**
      * Specification:
@@ -22,17 +24,17 @@ class ConfigurableBundlePageSearchConstants
 
     /**
      * Specification:
-     * - Queue name as used for processing Configurable Bundle Template messages
+     * - Queue name as used for processing Configurable Bundle messages
      *
      * @api
      */
-    public const CONFIGURABLE_BUNDLE_TEMPLATE_SEARCH_QUEUE = 'sync.search.configurable_bundle_template';
+    public const CONFIGURABLE_BUNDLE_SEARCH_QUEUE = 'sync.search.configurable_bundle';
 
     /**
      * Specification:
-     * - Queue name, used for processing Configurable Bundle Template messages
+     * - Queue name, used for processing Configurable Bundle messages
      *
      * @api
      */
-    public const CONFIGURABLE_BUNDLE_TEMPLATE_SEARCH_ERROR_QUEUE = 'sync.search.configurable_bundle_template.error';
+    public const CONFIGURABLE_BUNDLE_SEARCH_ERROR_QUEUE = 'sync.search.configurable_bundle.error';
 }

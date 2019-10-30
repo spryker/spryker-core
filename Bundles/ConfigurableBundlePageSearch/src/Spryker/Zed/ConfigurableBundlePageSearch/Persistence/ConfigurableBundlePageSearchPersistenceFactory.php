@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ConfigurableBundlePageSearch\Persistence;
 
-use Orm\Zed\ConfigurableBundlePageSearch\Persistence\SpyConfigurableBundlePageSearchQuery;
+use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
+use Orm\Zed\ConfigurableBundlePageSearch\Persistence\SpyConfigurableBundleTemplatePageSearchQuery;
+use Spryker\Zed\ConfigurableBundlePageSearch\ConfigurableBundlePageSearchDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -18,10 +20,18 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 class ConfigurableBundlePageSearchPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @return \Orm\Zed\ConfigurableBundlePageSearch\Persistence\SpyConfigurableBundlePageSearchQuery
+     * @return \Orm\Zed\ConfigurableBundlePageSearch\Persistence\SpyConfigurableBundleTemplatePageSearchQuery
      */
-    public function createConfigurableBundlePageSearchQuery(): SpyConfigurableBundlePageSearchQuery
+    public function getConfigurableBundlePageSearchQuery(): SpyConfigurableBundleTemplatePageSearchQuery
     {
-        return SpyConfigurableBundlePageSearchQuery::create();
+        return SpyConfigurableBundleTemplatePageSearchQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery
+     */
+    public function getConfigurableBundleTemplatePropelQuery(): SpyConfigurableBundleTemplateQuery
+    {
+        return $this->getProvidedDependency(ConfigurableBundlePageSearchDependencyProvider::PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE);
     }
 }

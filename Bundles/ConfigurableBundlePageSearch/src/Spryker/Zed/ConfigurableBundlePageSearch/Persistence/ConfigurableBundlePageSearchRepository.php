@@ -7,9 +7,16 @@
 
 namespace Spryker\Zed\ConfigurableBundlePageSearch\Persistence;
 
-use Generated\Shared\Transfer\ConfigurableBundlePageSearchFilterTransfer;
-use Generated\Shared\Transfer\ConfigurableBundlePageSearchTransfer;
-use Orm\Zed\ConfigurableBundlePageSearch\Persistence\SpyConfigurableBundlePageSearchQuery;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateCollectionTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchCollectionTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchFilterTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
+use Orm\Zed\ConfigurableBundle\Persistence\Map\SpyConfigurableBundleTemplateTableMap;
+use Orm\Zed\ConfigurableBundlePageSearch\Persistence\SpyConfigurableBundleTemplatePageSearchQuery;
+use Propel\Runtime\Formatter\SimpleArrayFormatter;
+use Spryker\Shared\ConfigurableBundlePageSearch\ConfigurableBundlePageSearchConfig;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -18,50 +25,87 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ConfigurableBundlePageSearchRepository extends AbstractRepository implements ConfigurableBundlePageSearchRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundlePageSearchFilterTransfer $configurableBundlePageSearchFilterTransfer
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchFilterTransfer $configurableBundleTemplatePageSearchFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundlePageSearchTransfer[]
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchCollectionTransfer
      */
-    public function getConfigurableBundlePageSearchCollection(ConfigurableBundlePageSearchFilterTransfer $configurableBundlePageSearchFilterTransfer): array
+    public function getConfigurableTemplateBundlePageSearchCollection(ConfigurableBundleTemplatePageSearchFilterTransfer $configurableBundleTemplatePageSearchFilterTransfer): ConfigurableBundleTemplatePageSearchCollectionTransfer
     {
-        $configurableBundlePageSearchQuery = $this->getFactory()->createConfigurableBundlePageSearchQuery();
-        $configurableBundlePageSearchQuery = $this->setConfigurableBundlePageSearchFilters(
-            $configurableBundlePageSearchQuery,
-            $configurableBundlePageSearchFilterTransfer
+        $configurableBundleTemplatePageSearchQuery = $this->getFactory()->getConfigurableBundlePageSearchQuery();
+        $configurableBundleTemplatePageSearchQuery = $this->setConfigurableBundlePageSearchFilters(
+            $configurableBundleTemplatePageSearchQuery,
+            $configurableBundleTemplatePageSearchFilterTransfer
         );
 
-        $configurableBundlePageSearchEntities = $configurableBundlePageSearchQuery->find();
+        $configurableBundleTemplatePageSearchEntities = $configurableBundleTemplatePageSearchQuery->find();
 
-        if (!$configurableBundlePageSearchEntities->count()) {
-            return [];
+        $configurableBundleTemplatePageSearchCollectionTransfer = new ConfigurableBundleTemplatePageSearchCollectionTransfer();
+
+        if (!$configurableBundleTemplatePageSearchEntities->count()) {
+            return $configurableBundleTemplatePageSearchCollectionTransfer;
         }
 
-        $configurableBundlePageSearchTransfers = [];
-
-        foreach ($configurableBundlePageSearchEntities as $configurableBundlePageSearchEntity) {
-            $configurableBundlePageSearchTransfers[] = (new ConfigurableBundlePageSearchTransfer())
-                ->fromArray($configurableBundlePageSearchEntity->toArray());
-        }
-
-        return $configurableBundlePageSearchTransfers;
-    }
-
-    /**
-     * @param \Orm\Zed\ConfigurableBundlePageSearch\Persistence\SpyConfigurableBundlePageSearchQuery $configurableBundlePageSearchQuery
-     * @param \Generated\Shared\Transfer\ConfigurableBundlePageSearchFilterTransfer $configurableBundlePageSearchFilterTransfer
-     *
-     * @return \Orm\Zed\ConfigurableBundlePageSearch\Persistence\SpyConfigurableBundlePageSearchQuery
-     */
-    protected function setConfigurableBundlePageSearchFilters(
-        SpyConfigurableBundlePageSearchQuery $configurableBundlePageSearchQuery,
-        ConfigurableBundlePageSearchFilterTransfer $configurableBundlePageSearchFilterTransfer
-    ): SpyConfigurableBundlePageSearchQuery {
-        if ($configurableBundlePageSearchFilterTransfer->getConfigurableBundleTemplateIds()) {
-            $configurableBundlePageSearchQuery->filterByFkConfigurableBundleTemplate_In(
-                $configurableBundlePageSearchFilterTransfer->getConfigurableBundleTemplateIds()
+        foreach ($configurableBundleTemplatePageSearchEntities as $configurableBundleTemplatePageSearchEntity) {
+            $configurableBundleTemplatePageSearchCollectionTransfer->addConfigurableBundleTemplatePageSearch(
+                (new ConfigurableBundleTemplatePageSearchTransfer())->fromArray($configurableBundleTemplatePageSearchEntity->toArray(), true)
+                    ->setType(ConfigurableBundlePageSearchConfig::CONFIGURABLE_BUNDLE_TEMPLATE_RESOURCE_NAME)
             );
         }
 
-        return $configurableBundlePageSearchQuery;
+        return $configurableBundleTemplatePageSearchCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateCollectionTransfer
+     */
+    public function getConfigurableBundleTemplateCollection(FilterTransfer $filterTransfer): ConfigurableBundleTemplateCollectionTransfer
+    {
+        $configurableBundleTemplatePropelQuery = $this->getFactory()
+            ->getConfigurableBundleTemplatePropelQuery()
+            ->select([SpyConfigurableBundleTemplateTableMap::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE]);
+
+        $configurableBundleTemplateIds = $this->buildQueryFromCriteria($configurableBundleTemplatePropelQuery, $filterTransfer)
+            ->setFormatter(SimpleArrayFormatter::class)
+            ->find()
+            ->toArray();
+
+        $configurableBundleTemplateCollectionTransfer = new ConfigurableBundleTemplateCollectionTransfer();
+
+        foreach ($configurableBundleTemplateIds as $configurableBundleTemplateId) {
+            $configurableBundleTemplateCollectionTransfer->addConfigurableBundleTemplate(
+                (new ConfigurableBundleTemplateTransfer())->setIdConfigurableBundleTemplate($configurableBundleTemplateId)
+            );
+        }
+
+        return $configurableBundleTemplateCollectionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\ConfigurableBundlePageSearch\Persistence\SpyConfigurableBundleTemplatePageSearchQuery $configurableBundleTemplatePageSearchQuery
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchFilterTransfer $configurableBundleTemplatePageSearchFilterTransfer
+     *
+     * @return \Orm\Zed\ConfigurableBundlePageSearch\Persistence\SpyConfigurableBundleTemplatePageSearchQuery
+     */
+    protected function setConfigurableBundlePageSearchFilters(
+        SpyConfigurableBundleTemplatePageSearchQuery $configurableBundleTemplatePageSearchQuery,
+        ConfigurableBundleTemplatePageSearchFilterTransfer $configurableBundleTemplatePageSearchFilterTransfer
+    ): SpyConfigurableBundleTemplatePageSearchQuery {
+        if ($configurableBundleTemplatePageSearchFilterTransfer->getConfigurableBundleTemplateIds()) {
+            $configurableBundleTemplatePageSearchQuery->filterByFkConfigurableBundleTemplate_In(
+                $configurableBundleTemplatePageSearchFilterTransfer->getConfigurableBundleTemplateIds()
+            );
+        }
+
+        if ($configurableBundleTemplatePageSearchFilterTransfer->getOffset() !== null) {
+            $configurableBundleTemplatePageSearchQuery->setOffset($configurableBundleTemplatePageSearchFilterTransfer->getOffset());
+        }
+
+        if ($configurableBundleTemplatePageSearchFilterTransfer->getLimit()) {
+            $configurableBundleTemplatePageSearchQuery->setLimit($configurableBundleTemplatePageSearchFilterTransfer->getLimit());
+        }
+
+        return $configurableBundleTemplatePageSearchQuery;
     }
 }

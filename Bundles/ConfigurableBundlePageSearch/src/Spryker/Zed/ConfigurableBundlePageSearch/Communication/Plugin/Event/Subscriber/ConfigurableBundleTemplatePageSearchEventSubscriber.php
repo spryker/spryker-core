@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ConfigurableBundlePageSearch\Communication\Plugin\Event\Subscriber;
 
 use Spryker\Zed\ConfigurableBundle\Dependency\ConfigurableBundleEvents;
-use Spryker\Zed\ConfigurableBundlePageSearch\Communication\Plugin\Event\Listener\ConfigurableBundlePageSearchConfigurableBundleTemplatePublishListener;
+use Spryker\Zed\ConfigurableBundlePageSearch\Communication\Plugin\Event\Listener\ConfigurableBundleTemplatePageSearchConfigurableBundleTemplatePublishListener;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ConfigurableBundlePageSearch\ConfigurableBundlePageSearchConfig getConfig()
  * @method \Spryker\Zed\ConfigurableBundlePageSearch\Communication\ConfigurableBundlePageSearchCommunicationFactory getFactory()
  */
-class ConfigurableBundlePageSearchEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
+class ConfigurableBundleTemplatePageSearchEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
     /**
      * @api
@@ -29,7 +29,8 @@ class ConfigurableBundlePageSearchEventSubscriber extends AbstractPlugin impleme
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $this->addConfigurableBundleTemplatePublishListener($eventCollection);
+        $this->addConfigurableBundleTemplateCreateListener($eventCollection)
+            ->addConfigurableBundleTemplateUpdateListener($eventCollection);
 
         return $eventCollection;
     }
@@ -37,10 +38,24 @@ class ConfigurableBundlePageSearchEventSubscriber extends AbstractPlugin impleme
     /**
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
-     * @return void
+     * @return $this
      */
-    protected function addConfigurableBundleTemplatePublishListener(EventCollectionInterface $eventCollection): void
+    protected function addConfigurableBundleTemplateCreateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_UPDATE, new ConfigurableBundlePageSearchConfigurableBundleTemplatePublishListener());
+        $eventCollection->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_CREATE, new ConfigurableBundleTemplatePageSearchConfigurableBundleTemplatePublishListener());
+
+        return $this;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return $this
+     */
+    protected function addConfigurableBundleTemplateUpdateListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_UPDATE, new ConfigurableBundleTemplatePageSearchConfigurableBundleTemplatePublishListener());
+
+        return $this;
     }
 }
