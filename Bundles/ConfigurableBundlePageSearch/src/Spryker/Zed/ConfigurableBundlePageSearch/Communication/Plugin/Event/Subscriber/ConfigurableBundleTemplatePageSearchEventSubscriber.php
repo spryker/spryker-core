@@ -29,8 +29,7 @@ class ConfigurableBundleTemplatePageSearchEventSubscriber extends AbstractPlugin
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $this->addConfigurableBundleTemplateCreateListener($eventCollection)
-            ->addConfigurableBundleTemplateUpdateListener($eventCollection);
+        $this->addConfigurableBundleTemplateCreateListener($eventCollection);
 
         return $eventCollection;
     }
@@ -42,19 +41,7 @@ class ConfigurableBundleTemplatePageSearchEventSubscriber extends AbstractPlugin
      */
     protected function addConfigurableBundleTemplateCreateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_CREATE, new ConfigurableBundleTemplatePageSearchConfigurableBundleTemplatePublishListener());
-
-        return $this;
-    }
-
-    /**
-     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
-     *
-     * @return $this
-     */
-    protected function addConfigurableBundleTemplateUpdateListener(EventCollectionInterface $eventCollection)
-    {
-        $eventCollection->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_UPDATE, new ConfigurableBundleTemplatePageSearchConfigurableBundleTemplatePublishListener());
+        $eventCollection->addListenerQueued(ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_PUBLISH, new ConfigurableBundleTemplatePageSearchConfigurableBundleTemplatePublishListener());
 
         return $this;
     }

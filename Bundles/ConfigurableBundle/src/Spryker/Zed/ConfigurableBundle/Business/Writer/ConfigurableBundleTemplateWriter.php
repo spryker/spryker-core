@@ -9,8 +9,11 @@ namespace Spryker\Zed\ConfigurableBundle\Business\Writer;
 
 use Generated\Shared\Transfer\ConfigurableBundleResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGeneratorInterface;
+use Spryker\Zed\ConfigurableBundle\Dependency\ConfigurableBundleEvents;
+use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToEventFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
@@ -38,18 +41,26 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
     protected $configurableBundleNameGenerator;
 
     /**
+     * @var \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToEventFacadeInterface $eventFacade
+     */
+    protected $eventFacade;
+
+    /**
      * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager
      * @param \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateTranslationWriterInterface $configurableBundleTemplateTranslationWriter
      * @param \Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGeneratorInterface $configurableBundleNameGenerator
+     * @param \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToEventFacadeInterface $eventFacade
      */
     public function __construct(
         ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager,
         ConfigurableBundleTemplateTranslationWriterInterface $configurableBundleTemplateTranslationWriter,
-        ConfigurableBundleNameGeneratorInterface $configurableBundleNameGenerator
+        ConfigurableBundleNameGeneratorInterface $configurableBundleNameGenerator,
+        ConfigurableBundleToEventFacadeInterface $eventFacade
     ) {
         $this->configurableBundleEntityManager = $configurableBundleEntityManager;
         $this->configurableBundleTemplateTranslationWriter = $configurableBundleTemplateTranslationWriter;
         $this->configurableBundleNameGenerator = $configurableBundleNameGenerator;
+        $this->eventFacade = $eventFacade;
     }
 
     /**
@@ -120,8 +131,10 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
     ): ConfigurableBundleResponseTransfer {
         $configurableBundleTemplateTransfer = $this->configurableBundleNameGenerator->setConfigurableBundleTemplateName($configurableBundleTemplateTransfer);
 
-        $this->configurableBundleEntityManager->createConfigurableBundleTemplate($configurableBundleTemplateTransfer);
+        $configurableBundleTemplateTransfer = $this->configurableBundleEntityManager->createConfigurableBundleTemplate($configurableBundleTemplateTransfer);
         $this->configurableBundleTemplateTranslationWriter->saveTranslations($configurableBundleTemplateTransfer);
+
+        $this->triggerPublishEvent($configurableBundleTemplateTransfer);
 
         return $this->createConfigurableBundleResponseTransfer($configurableBundleTemplateTransfer);
     }
@@ -148,6 +161,8 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
         }
 
         $this->configurableBundleTemplateTranslationWriter->saveTranslations($configurableBundleTemplateTransfer);
+
+        $this->triggerPublishEvent($configurableBundleTemplateTransfer);
 
         return $this->createConfigurableBundleResponseTransfer($configurableBundleTemplateTransfer);
     }
@@ -182,5 +197,18 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
     {
         $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateSlotsByIdConfigurableBundleTemplate($idConfigurableBundleTemplate);
         $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateById($idConfigurableBundleTemplate);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+     *
+     * @return void
+     */
+    protected function triggerPublishEvent(ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer): void
+    {
+        $this->eventFacade->trigger(
+            ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_PUBLISH,
+            (new EventEntityTransfer())->setId($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+        );
     }
 }

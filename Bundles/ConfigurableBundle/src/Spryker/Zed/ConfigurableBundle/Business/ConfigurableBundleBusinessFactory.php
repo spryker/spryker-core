@@ -30,6 +30,7 @@ use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateWri
 use Spryker\Zed\ConfigurableBundle\Business\Writer\ProductListWriter;
 use Spryker\Zed\ConfigurableBundle\Business\Writer\ProductListWriterInterface;
 use Spryker\Zed\ConfigurableBundle\ConfigurableBundleDependencyProvider;
+use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToEventFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToProductListFacadeInterface;
@@ -51,7 +52,8 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
         return new ConfigurableBundleTemplateWriter(
             $this->getEntityManager(),
             $this->createConfigurableBundleTemplateTranslationWriter(),
-            $this->createConfigurableBundleNameGenerator()
+            $this->createConfigurableBundleNameGenerator(),
+            $this->getEventFacade()
         );
     }
 
@@ -180,6 +182,14 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     public function getProductListFacade(): ConfigurableBundleToProductListFacadeInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleDependencyProvider::FACADE_PRODUCT_LIST);
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToEventFacadeInterface
+     */
+    public function getEventFacade(): ConfigurableBundleToEventFacadeInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleDependencyProvider::FACADE_EVENT);
     }
 
     /**
