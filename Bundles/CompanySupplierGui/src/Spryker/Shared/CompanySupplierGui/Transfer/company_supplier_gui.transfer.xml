@@ -32,4 +32,7 @@
         <property name="symbol" type="string"/>
     </transfer>
 
+    <transfer name="Company">
+    </transfer>
+
 </transfers>

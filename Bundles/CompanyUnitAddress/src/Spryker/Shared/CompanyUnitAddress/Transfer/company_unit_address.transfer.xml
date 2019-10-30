@@ -80,4 +80,7 @@
     <transfer name="CompanyBusinessUnitCollection">
         <property name="companyBusinessUnits" type="CompanyBusinessUnit[]" singular="companyBusinessUnit"/>
     </transfer>
+
+    <transfer name="CompanyBusinessUnitResponse">
+    </transfer>
 </transfers>

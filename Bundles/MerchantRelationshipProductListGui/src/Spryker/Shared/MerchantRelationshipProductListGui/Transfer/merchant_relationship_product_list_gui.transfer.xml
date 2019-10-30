@@ -30,4 +30,7 @@
         <property name="ownerCompanyBusinessUnit" type="CompanyBusinessUnit"/>
         <property name="idMerchantRelationship" type="int"/>
     </transfer>
+
+    <transfer name="ProductList">
+    </transfer>
 </transfers>

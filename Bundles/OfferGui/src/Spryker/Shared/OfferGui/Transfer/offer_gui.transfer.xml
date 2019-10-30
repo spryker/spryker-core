@@ -88,4 +88,13 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="Address">
+    </transfer>
+
+    <transfer name="Discount">
+    </transfer>
+
+    <transfer name="Money">
+    </transfer>
+
 </transfers>
