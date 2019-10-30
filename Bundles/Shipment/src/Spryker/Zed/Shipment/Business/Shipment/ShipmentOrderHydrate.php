@@ -60,7 +60,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
             $orderTransfer = $this->hydrateShipmentMethodToOrderTransfer($shipmentTransfers, $orderTransfer);
         }
 
-        $orderTransfer = $this->setShipmentToOrderExpenses($orderTransfer);
+        $orderTransfer = $this->setShipmentToOrderExpenses($orderTransfer, $shipmentTransfers);
 
         return $orderTransfer;
     }
@@ -166,17 +166,18 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    protected function setShipmentToOrderExpenses(OrderTransfer $orderTransfer): OrderTransfer
+    protected function setShipmentToOrderExpenses(OrderTransfer $orderTransfer, array $shipmentTransfers): OrderTransfer
     {
         foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
             if ($expenseTransfer->getType() !== ShipmentConfig::SHIPMENT_EXPENSE_TYPE) {
                 continue;
             }
 
-            $shipmentTransfer = $this->findShipmentByOrderExpense($orderTransfer, $expenseTransfer);
+            $shipmentTransfer = $this->findShipmentByOrderExpense($expenseTransfer, $shipmentTransfers);
             $expenseTransfer->setShipment($shipmentTransfer);
         }
 
@@ -184,22 +185,17 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer|null
      */
-    protected function findShipmentByOrderExpense(OrderTransfer $orderTransfer, ExpenseTransfer $expenseTransfer): ?ShipmentTransfer
+    protected function findShipmentByOrderExpense(ExpenseTransfer $expenseTransfer, array $shipmentTransfers): ?ShipmentTransfer
     {
-        foreach ($orderTransfer->getItems() as $itemTransfer) {
-            $itemShipmentTransfer = $itemTransfer->getShipment();
-            if ($itemShipmentTransfer === null) {
-                continue;
-            }
-
-            $itemShipmentTransfer->requireMethod();
-            if ($itemShipmentTransfer->getMethod()->getFkSalesExpense() === $expenseTransfer->getIdSalesExpense()) {
-                return $itemTransfer->getShipment();
+        foreach ($shipmentTransfers as $shipmentTransfer) {
+            $shipmentTransfer->requireMethod();
+            if ($shipmentTransfer->getMethod()->getFkSalesExpense() === $expenseTransfer->getIdSalesExpense()) {
+                return $shipmentTransfer;
             }
         }
 
