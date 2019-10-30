@@ -97,7 +97,7 @@ class MerchantRelationshipProductListFacade extends AbstractFacade implements Me
     public function checkProductListUsageAmongMerchantRelationships(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
         return $this->getFactory()
-            ->createMerchantRelationshipReader()
+            ->createProductListChecker()
             ->checkProductListUsageAmongMerchantRelationships($productListTransfer);
     }
 

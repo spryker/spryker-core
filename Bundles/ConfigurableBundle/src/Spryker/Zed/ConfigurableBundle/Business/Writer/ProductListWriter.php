@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductListCategoryRelationTransfer;
 use Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
+use Spryker\Zed\ConfigurableBundle\Business\Generator\ProductListTitleGeneratorInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToProductListFacadeInterface;
 
 class ProductListWriter implements ProductListWriterInterface
@@ -27,11 +28,20 @@ class ProductListWriter implements ProductListWriterInterface
     protected $productListFacade;
 
     /**
-     * @param \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToProductListFacadeInterface $productListFacade
+     * @var \Spryker\Zed\ConfigurableBundle\Business\Generator\ProductListTitleGeneratorInterface
      */
-    public function __construct(ConfigurableBundleToProductListFacadeInterface $productListFacade)
-    {
+    protected $productListTitleGenerator;
+
+    /**
+     * @param \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToProductListFacadeInterface $productListFacade
+     * @param \Spryker\Zed\ConfigurableBundle\Business\Generator\ProductListTitleGeneratorInterface $productListTitleGenerator
+     */
+    public function __construct(
+        ConfigurableBundleToProductListFacadeInterface $productListFacade,
+        ProductListTitleGeneratorInterface $productListTitleGenerator
+    ) {
         $this->productListFacade = $productListFacade;
+        $this->productListTitleGenerator = $productListTitleGenerator;
     }
 
     /**
@@ -42,7 +52,7 @@ class ProductListWriter implements ProductListWriterInterface
     public function createProductList(ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer): ProductListResponseTransfer
     {
         $productListTransfer = (new ProductListTransfer())
-            ->setTitle($this->generateProductListTitle($configurableBundleTemplateSlotTransfer))
+            ->setTitle($this->productListTitleGenerator->generateProductListTitle($configurableBundleTemplateSlotTransfer))
             ->setType(static::PRODUCT_LIST_DEFAULT_TYPE)
             ->setProductListProductConcreteRelation(new ProductListProductConcreteRelationTransfer())
             ->setProductListCategoryRelation(new ProductListCategoryRelationTransfer());
@@ -63,28 +73,8 @@ class ProductListWriter implements ProductListWriterInterface
                 ->requireIdProductList();
 
         $productListTransfer = $configurableBundleTemplateSlotTransfer->getProductList();
-        $productListTransfer->setTitle($this->generateProductListTitle($configurableBundleTemplateSlotTransfer));
+        $productListTransfer->setTitle($this->productListTitleGenerator->generateProductListTitle($configurableBundleTemplateSlotTransfer));
 
         return $this->productListFacade->updateProductList($productListTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
-     *
-     * @return string
-     */
-    protected function generateProductListTitle(ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer): string
-    {
-        $configurableBundleTemplateSlotTransfer
-            ->requireTranslations()
-            ->requireConfigurableBundleTemplate()
-            ->getConfigurableBundleTemplate()
-                ->requireTranslations();
-
-        return sprintf(
-            '%s - %s',
-            $configurableBundleTemplateSlotTransfer->getConfigurableBundleTemplate()->getTranslations()[0]->getName(),
-            $configurableBundleTemplateSlotTransfer->getTranslations()[0]->getName()
-        );
     }
 }

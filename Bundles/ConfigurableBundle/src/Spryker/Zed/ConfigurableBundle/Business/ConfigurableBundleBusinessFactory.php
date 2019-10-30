@@ -25,6 +25,8 @@ use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslati
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpanderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGenerator;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGeneratorInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Generator\ProductListTitleGenerator;
+use Spryker\Zed\ConfigurableBundle\Business\Generator\ProductListTitleGeneratorInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReader;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReader;
@@ -59,6 +61,14 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
         return new ConfigurableBundleNameGenerator(
             $this->getUtilTextService()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Generator\ProductListTitleGeneratorInterface
+     */
+    public function createProductListTitleGenerator(): ProductListTitleGeneratorInterface
+    {
+        return new ProductListTitleGenerator();
     }
 
     /**
@@ -193,7 +203,8 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     public function createProductListWriter(): ProductListWriterInterface
     {
         return new ProductListWriter(
-            $this->getProductListFacade()
+            $this->getProductListFacade(),
+            $this->createProductListTitleGenerator()
         );
     }
 
