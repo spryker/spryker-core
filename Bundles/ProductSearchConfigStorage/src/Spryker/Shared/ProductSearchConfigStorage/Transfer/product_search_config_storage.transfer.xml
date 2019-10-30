@@ -21,4 +21,7 @@
         <property name="key" type="string"/>
     </transfer>
 
+    <transfer name="SynchronizationData">
+    </transfer>
+
 </transfers>

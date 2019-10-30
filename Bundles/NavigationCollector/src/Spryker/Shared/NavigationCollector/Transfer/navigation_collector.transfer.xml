@@ -10,4 +10,7 @@
     <transfer name="NavigationTree">
     </transfer>
 
+    <transfer name="Locale">
+    </transfer>
+
 </transfers>

@@ -219,4 +219,7 @@
         <property name="message" type="string"/>
     </transfer>
 
+    <transfer name="Shipment">
+    </transfer>
+
 </transfers>

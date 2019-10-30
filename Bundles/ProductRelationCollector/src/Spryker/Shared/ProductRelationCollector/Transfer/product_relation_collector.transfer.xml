@@ -24,4 +24,7 @@
         <property name="idLocale" type="int"/>
     </transfer>
 
+    <transfer name="StorageProductImage">
+    </transfer>
+
 </transfers>
