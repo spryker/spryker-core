@@ -48,7 +48,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
     protected $translator;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     protected $translationDomain;
 

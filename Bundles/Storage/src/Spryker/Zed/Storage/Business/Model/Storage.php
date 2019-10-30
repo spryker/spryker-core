@@ -47,18 +47,14 @@ class Storage implements StorageInterface
      */
     public function getTimestamps()
     {
-        $metaData = [];
-
-        $allKeys = $this->storageClient->getAllKeys();
-        foreach ($allKeys as $key) {
-            $key = str_replace('kv:', '', $key);
-
-            if (strpos($key, '.timestamp') !== false) {
-                $metaData[$key] = $this->storageClient->get($key);
-            }
+        $timestampData = [];
+        $timestampKeys = $this->storageClient->getKeys('kv:*.timestamp');
+        foreach ($timestampKeys as $timestampKey) {
+            $timestampKey = str_replace('kv:', '', $timestampKey);
+            $timestampData[$timestampKey] = $this->storageClient->get($timestampKey);
         }
 
-        return $metaData;
+        return $timestampData;
     }
 
     /**

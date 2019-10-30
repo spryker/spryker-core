@@ -12,6 +12,7 @@ use Spryker\Zed\Tax\Business\Model\PriceCalculationHelper;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Tax

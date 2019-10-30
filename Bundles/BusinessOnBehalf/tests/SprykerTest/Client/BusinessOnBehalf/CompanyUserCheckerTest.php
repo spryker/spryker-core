@@ -15,6 +15,7 @@ use Spryker\Client\BusinessOnBehalfExtension\Dependency\Plugin\CompanyUserChange
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group BusinessOnBehalf

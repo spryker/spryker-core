@@ -6,6 +6,7 @@
  */
 namespace Spryker\Zed\Checkout\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
@@ -31,4 +32,17 @@ interface CheckoutFacadeInterface
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
     public function placeOrder(QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     * - Runs checkout pre-condition CheckoutPreConditionPluginInterface plugins.
+     * - Returns response with boolean isSuccess and an array of errors.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function isPlaceableOrder(QuoteTransfer $quoteTransfer): CheckoutResponseTransfer;
 }

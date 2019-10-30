@@ -18,6 +18,7 @@ use Spryker\Zed\Discount\Business\Distributor\Distributor;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Discount

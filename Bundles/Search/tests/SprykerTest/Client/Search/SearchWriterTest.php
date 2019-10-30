@@ -17,6 +17,7 @@ use Spryker\Client\Search\Model\Elasticsearch\Writer\Writer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Search

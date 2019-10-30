@@ -16,6 +16,7 @@ use Spryker\Client\Redis\Adapter\RedisAdapterProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Redis

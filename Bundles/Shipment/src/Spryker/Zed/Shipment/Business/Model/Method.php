@@ -16,9 +16,13 @@ use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformerInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface;
+use Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
+/**
+ * @deprecated Use classes from \Spryker\Zed\Shipment\Business\ShipmentMethod namespace instead.
+ */
 class Method implements MethodInterface
 {
     /**
@@ -68,7 +72,7 @@ class Method implements MethodInterface
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface $currencyFacade
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface $storeFacade
      * @param array $plugins
-     * @param \Spryker\Zed\Shipment\Dependency\Plugin\ShipmentMethodFilterPluginInterface[] $shipmentMethodFilters
+     * @param \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodFilterPluginInterface[] $shipmentMethodFilters
      */
     public function __construct(
         ShipmentQueryContainerInterface $queryContainer,
@@ -156,8 +160,14 @@ class Method implements MethodInterface
     protected function applyFilters(ShipmentMethodsTransfer $shipmentMethodsTransfer, QuoteTransfer $quoteTransfer)
     {
         $shipmentMethods = $shipmentMethodsTransfer->getMethods();
-
         foreach ($this->shipmentMethodFilters as $shipmentMethodFilter) {
+            if (!$shipmentMethodFilter instanceof ShipmentMethodFilterPluginInterface) {
+                continue;
+            }
+
+            $shipmentMethodCollection = $shipmentMethodFilter->filterShipmentMethods($shipmentMethods, $quoteTransfer);
+            $shipmentMethodsTransfer->setMethods($shipmentMethodCollection);
+
             $shipmentMethods = $shipmentMethodFilter->filterShipmentMethods($shipmentMethods, $quoteTransfer);
         }
 

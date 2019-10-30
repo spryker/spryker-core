@@ -67,7 +67,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getBlockPrefix()
     {
@@ -89,8 +89,10 @@ class ProductMoneyCollectionType extends AbstractCollectionType
             return;
         }
 
+        /** @var \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $data */
+        $data = $event->getData();
         $event->setData(
-            $moneyCollectionInitialDataProvider->mergeMissingMoneyValues($event->getData())
+            $moneyCollectionInitialDataProvider->mergeMissingMoneyValues($data)
         );
     }
 

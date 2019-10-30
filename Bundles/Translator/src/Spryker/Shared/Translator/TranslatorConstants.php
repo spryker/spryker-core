@@ -31,4 +31,12 @@ interface TranslatorConstants
      * @api
      */
     public const TRANSLATION_ZED_FALLBACK_LOCALES = 'TRANSLATOR:TRANSLATION_ZED_FALLBACK_LOCALES';
+
+    /**
+     * Specification:
+     * - Enables default symfony translator debug.
+     *
+     * @api
+     */
+    public const TRANSLATION_ZED_DEBUG_ENABLED = 'TRANSLATOR:TRANSLATION_ZED_DEBUG_ENABLED';
 }

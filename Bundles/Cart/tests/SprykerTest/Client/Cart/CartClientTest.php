@@ -22,6 +22,7 @@ use Spryker\Client\Kernel\AbstractFactory;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Cart
@@ -311,6 +312,8 @@ class CartClientTest extends Unit
             'addFlashMessagesFromLastZedRequest',
             'addResponseMessagesToMessenger',
             'resetQuoteLock',
+            'addToCart',
+            'removeFromCart',
         ])->getMock();
     }
 }

@@ -15,6 +15,7 @@ use Spryker\Shared\Twig\Cache\CacheWriter\FilesystemCacheWriter;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Twig

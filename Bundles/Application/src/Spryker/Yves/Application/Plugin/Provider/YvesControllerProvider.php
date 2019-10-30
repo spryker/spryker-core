@@ -18,6 +18,9 @@ use Spryker\Yves\Kernel\Controller\BundleControllerActionRouteNameResolver;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated Use `\Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin` instead.
+ */
 abstract class YvesControllerProvider implements ControllerProviderInterface
 {
     /**
@@ -108,13 +111,11 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
     ) {
         $service = $this->getService($bundle, $controllerName, $actionName);
         $controller = $this->getController($path, $name, $service);
-
         if ($this->sslEnabled === true && !$this->isSslExcluded($name)) {
             $controller->requireHttps();
         } elseif ($this->sslEnabled === false) {
             $controller->requireHttp();
         }
-
         if ($parseJsonBody) {
             $this->addJsonParsing($controller);
         }

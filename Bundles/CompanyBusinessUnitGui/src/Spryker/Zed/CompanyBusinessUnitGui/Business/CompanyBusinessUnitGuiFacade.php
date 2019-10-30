@@ -15,13 +15,13 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CompanyBusinessUnitGuiFacade extends AbstractFacade implements CompanyBusinessUnitGuiFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param int $idCompanyUser
      *
-     * @return null|string
+     * @return string|null
      */
     public function findCompanyBusinessUnitName(int $idCompanyUser): ?string
     {

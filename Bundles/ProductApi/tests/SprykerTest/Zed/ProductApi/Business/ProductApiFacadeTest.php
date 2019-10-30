@@ -17,6 +17,7 @@ use Spryker\Zed\ProductApi\Business\ProductApiFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductApi

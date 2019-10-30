@@ -7,29 +7,19 @@
 
 namespace Spryker\Zed\Translator\Business\TranslationCache;
 
-use Spryker\Shared\Kernel\Store;
-use Symfony\Component\Translation\TranslatorBagInterface as SymfonyTranslatorBagInterface;
-
 class CacheGenerator implements CacheGeneratorInterface
 {
     /**
-     * @var \Symfony\Component\Translation\TranslatorBagInterface
+     * @var \Spryker\Zed\Translator\Business\Translator\TranslatorInterface[]
      */
-    protected $translator;
+    protected $translatorCollection;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @param \Spryker\Zed\Translator\Business\Translator\TranslatorInterface[] $translatorCollection
      */
-    protected $store;
-
-    /**
-     * @param \Symfony\Component\Translation\TranslatorBagInterface $translator
-     * @param \Spryker\Shared\Kernel\Store $store
-     */
-    public function __construct(SymfonyTranslatorBagInterface $translator, Store $store)
+    public function __construct(array $translatorCollection)
     {
-        $this->translator = $translator;
-        $this->store = $store;
+        $this->translatorCollection = $translatorCollection;
     }
 
     /**
@@ -37,8 +27,8 @@ class CacheGenerator implements CacheGeneratorInterface
      */
     public function generateTranslationCache(): void
     {
-        foreach ($this->store->getLocales() as $localeName) {
-            $this->translator->getCatalogue($localeName);
+        foreach ($this->translatorCollection as $translator) {
+            $translator->getCatalogue();
         }
     }
 }

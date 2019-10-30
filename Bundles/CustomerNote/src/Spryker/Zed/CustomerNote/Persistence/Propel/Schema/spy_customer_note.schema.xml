@@ -7,8 +7,8 @@
         <column name="fk_user" type="INTEGER" required="true"/>
         <column name="username" type="VARCHAR" required="false" default="NULL"/>
         <column name="message" type="LONGVARCHAR" required="true"/>
-        <column name="created_at" type="TIMESTAMP" />
-        <column name="updated_at" type="TIMESTAMP" />
+        <column name="created_at" type="TIMESTAMP"/>
+        <column name="updated_at" type="TIMESTAMP"/>
         <behavior name="timestampable"/>
         <foreign-key name="spy_customer_note-fk_customer" foreignTable="spy_customer" phpName="Customer" refPhpName="CustomerNote">
             <reference local="fk_customer" foreign="id_customer"/>

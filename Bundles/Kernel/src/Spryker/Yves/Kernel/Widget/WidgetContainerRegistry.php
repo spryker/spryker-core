@@ -9,6 +9,9 @@ namespace Spryker\Yves\Kernel\Widget;
 
 class WidgetContainerRegistry implements WidgetContainerRegistryInterface
 {
+    /**
+     * @var \Spryker\Yves\Kernel\Widget\WidgetContainerInterface[]
+     */
     protected static $widgetContainerStack = [];
 
     /**

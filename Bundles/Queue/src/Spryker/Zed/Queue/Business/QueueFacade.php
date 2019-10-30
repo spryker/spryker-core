@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class QueueFacade extends AbstractFacade implements QueueFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,24 +35,25 @@ class QueueFacade extends AbstractFacade implements QueueFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param string $command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param array $options
      *
      * @return void
      */
-    public function startWorker($command, OutputInterface $output)
+    public function startWorker($command, OutputInterface $output, array $options = [])
     {
         $this->getFactory()
             ->createWorker($output)
-            ->start($command);
+            ->start($command, $options);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

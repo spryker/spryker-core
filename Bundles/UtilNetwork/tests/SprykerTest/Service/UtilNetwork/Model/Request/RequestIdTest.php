@@ -13,6 +13,7 @@ use Spryker\Service\UtilNetwork\Model\Request\RequestId;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group UtilNetwork

@@ -20,11 +20,12 @@ use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelation
 class MerchantRelationshipPriceProductFilterPlugin extends AbstractPlugin implements PriceProductFilterPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
@@ -73,7 +74,7 @@ class MerchantRelationshipPriceProductFilterPlugin extends AbstractPlugin implem
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

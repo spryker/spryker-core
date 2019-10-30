@@ -70,7 +70,6 @@ class StoresResourceMapper implements StoresResourceMapperInterface
         StoresRestAttributesTransfer $storesRestAttributes,
         array $locales
     ): StoresRestAttributesTransfer {
-
         foreach ($locales as $identifier => $name) {
             $storesLocaleAttributes = (new StoreLocaleRestAttributesTransfer())
                 ->setName($name)

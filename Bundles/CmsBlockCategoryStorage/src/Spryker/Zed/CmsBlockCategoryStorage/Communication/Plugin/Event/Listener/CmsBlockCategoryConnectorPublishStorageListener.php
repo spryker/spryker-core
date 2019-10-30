@@ -25,7 +25,7 @@ class CmsBlockCategoryConnectorPublishStorageListener extends AbstractPlugin imp
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

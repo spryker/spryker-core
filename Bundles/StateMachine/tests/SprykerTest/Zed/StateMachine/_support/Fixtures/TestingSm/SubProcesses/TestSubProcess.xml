@@ -8,7 +8,7 @@
         <states>
             <state name="sub process state"/>
             <state name="sub process state 2"/>
-            <state name="done" />
+            <state name="done"/>
         </states>
 
         <transitions>

@@ -11,10 +11,10 @@ use Codeception\Test\Unit;
 use Exception;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
-use Spryker\Zed\Merchant\Business\MerchantFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Merchant
@@ -39,7 +39,7 @@ class MerchantFacadeTest extends Unit
             ->setMerchantKey('spryker-test-1')
             ->setName('Spryker Merchant');
 
-        (new MerchantFacade())->createMerchant($merchantTransfer);
+        $this->getMerchantFacade()->createMerchant($merchantTransfer);
 
         $this->assertNotNull($merchantTransfer->getIdMerchant());
     }
@@ -52,7 +52,7 @@ class MerchantFacadeTest extends Unit
         $merchantTransfer = (new MerchantTransfer())
             ->setName('Spryker Merchant');
 
-        (new MerchantFacade())->createMerchant($merchantTransfer);
+        $this->getMerchantFacade()->createMerchant($merchantTransfer);
 
         $this->assertNotNull($merchantTransfer->getMerchantKey());
     }
@@ -67,7 +67,7 @@ class MerchantFacadeTest extends Unit
 
         $this->expectException(RequiredTransferPropertyException::class);
 
-        (new MerchantFacade())->createMerchant($merchantTransfer);
+        $this->getMerchantFacade()->createMerchant($merchantTransfer);
     }
 
     /**
@@ -80,7 +80,7 @@ class MerchantFacadeTest extends Unit
             ->setMerchantKey($merchantTransfer->getMerchantKey() . '-1')
             ->setName($merchantTransfer->getName());
 
-        (new MerchantFacade())->createMerchant($newMerchantTransfer);
+        $this->getMerchantFacade()->createMerchant($newMerchantTransfer);
         $this->assertNotNull($newMerchantTransfer->getIdMerchant());
     }
 
@@ -97,7 +97,7 @@ class MerchantFacadeTest extends Unit
 
         $this->expectException(Exception::class);
 
-        (new MerchantFacade())->createMerchant($newMerchantTransfer);
+        $this->getMerchantFacade()->createMerchant($newMerchantTransfer);
     }
 
     /**
@@ -115,7 +115,7 @@ class MerchantFacadeTest extends Unit
             ->setMerchantKey('second-key')
             ->setName('Second Company');
 
-        $updatedMerchant = (new MerchantFacade())->updateMerchant($merchantTransfer);
+        $updatedMerchant = $this->getMerchantFacade()->updateMerchant($merchantTransfer);
 
         $this->assertSame($expectedIdMerchant, $updatedMerchant->getIdMerchant());
         $this->assertEquals('second-key', $updatedMerchant->getMerchantKey());
@@ -134,7 +134,7 @@ class MerchantFacadeTest extends Unit
 
         $this->expectException(RequiredTransferPropertyException::class);
 
-        (new MerchantFacade())->updateMerchant($merchantTransfer);
+        $this->getMerchantFacade()->updateMerchant($merchantTransfer);
     }
 
     /**
@@ -148,7 +148,7 @@ class MerchantFacadeTest extends Unit
 
         $this->expectException(Exception::class);
 
-        (new MerchantFacade())->updateMerchant($merchantTransfer);
+        $this->getMerchantFacade()->updateMerchant($merchantTransfer);
     }
 
     /**
@@ -161,7 +161,7 @@ class MerchantFacadeTest extends Unit
         $merchantTransfer = (new MerchantTransfer())
             ->setIdMerchant($expectedMerchant->getIdMerchant());
 
-        $actualMerchant = (new MerchantFacade())->getMerchantById($merchantTransfer);
+        $actualMerchant = $this->getMerchantFacade()->getMerchantById($merchantTransfer);
 
         $this->assertEquals($expectedMerchant, $actualMerchant);
     }
@@ -173,7 +173,7 @@ class MerchantFacadeTest extends Unit
     {
         $merchantTransfer = $this->tester->haveMerchant();
 
-        (new MerchantFacade())->deleteMerchant($merchantTransfer);
+        $this->getMerchantFacade()->deleteMerchant($merchantTransfer);
 
         $this->tester->assertMerchantNotExists($merchantTransfer->getIdMerchant());
     }
@@ -187,7 +187,7 @@ class MerchantFacadeTest extends Unit
 
         $this->expectException(RequiredTransferPropertyException::class);
 
-        (new MerchantFacade())->deleteMerchant($merchantTransfer);
+        $this->getMerchantFacade()->deleteMerchant($merchantTransfer);
     }
 
     /**
@@ -200,7 +200,15 @@ class MerchantFacadeTest extends Unit
         $this->tester->haveMerchant();
         $this->tester->haveMerchant();
 
-        $merchantTransferCollection = (new MerchantFacade())->getMerchants();
+        $merchantTransferCollection = $this->getMerchantFacade()->getMerchants();
         $this->assertCount(2, $merchantTransferCollection->getMerchants());
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\Merchant\Business\MerchantFacadeInterface
+     */
+    protected function getMerchantFacade()
+    {
+        return $this->tester->getFacade();
     }
 }

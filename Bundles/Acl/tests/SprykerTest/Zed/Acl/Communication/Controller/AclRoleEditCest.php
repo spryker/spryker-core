@@ -12,6 +12,7 @@ use SprykerTest\Zed\Acl\PageObject\AclRoleListPage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Acl

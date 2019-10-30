@@ -1,0 +1,5 @@
+template_path,name,description
+@ShopUI/templates/page-layout-main/page-layout-main.twig,"Main Layout","Defines the main layout of the Store of areas that are repeatable sections across the Store."
+@HomePage/views/home/home.twig,"Home Page","Defines the main layout of the Home Page everything below Header and above Footer."
+@CatalogPage/views/catalog/catalog.twig,Category,"Defines the main layout of the Categories Page, everything below Header and above Footer. Same template is used for all the Categories."
+@ProductDetailPage/views/pdp/pdp.twig,"Product","Defines the main layout of the Product Page, everything below Header and above Footer. Same template is used for all the Products."

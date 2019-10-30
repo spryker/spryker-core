@@ -14,6 +14,7 @@ use Spryker\Shared\Twig\TwigFilter;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group UtilDateTime

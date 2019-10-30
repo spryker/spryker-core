@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Business

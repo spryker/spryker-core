@@ -8,8 +8,10 @@
 namespace Spryker\Client\StorageRedis\Redis;
 
 use Generated\Shared\Transfer\RedisConfigurationTransfer;
+use Generated\Shared\Transfer\StorageScanResultTransfer;
 use Spryker\Client\StorageRedis\Dependency\Client\StorageRedisToRedisClientInterface;
 use Spryker\Client\StorageRedis\Exception\StorageRedisException;
+use Spryker\Client\StorageRedis\StorageRedisConfig;
 
 class StorageRedisWrapper implements StorageRedisWrapperInterface
 {
@@ -19,6 +21,11 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
      * @var \Spryker\Client\StorageRedis\Dependency\Client\StorageRedisToRedisClientInterface
      */
     protected $redisClient;
+
+    /**
+     * @var \Spryker\Client\StorageRedis\StorageRedisConfig
+     */
+    protected $storageRedisConfig;
 
     /**
      * @var bool
@@ -37,22 +44,19 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
 
     /**
      * @param \Spryker\Client\StorageRedis\Dependency\Client\StorageRedisToRedisClientInterface $redisClient
-     * @param string $connectionKey
-     * @param \Generated\Shared\Transfer\RedisConfigurationTransfer $redisConfigurationTransfer
-     * @param bool $debug
+     * @param \Spryker\Client\StorageRedis\StorageRedisConfig $storageRedisConfig
      */
     public function __construct(
         StorageRedisToRedisClientInterface $redisClient,
-        string $connectionKey,
-        RedisConfigurationTransfer $redisConfigurationTransfer,
-        bool $debug = false
+        StorageRedisConfig $storageRedisConfig
     ) {
         $this->redisClient = $redisClient;
-        $this->connectionKey = $connectionKey;
-        $this->debug = $debug;
+        $this->storageRedisConfig = $storageRedisConfig;
+        $this->debug = $this->storageRedisConfig->getDebugMode();
+        $this->connectionKey = $this->storageRedisConfig->getRedisConnectionKey();
 
         $this->resetAccessStats();
-        $this->setupConnection($redisConfigurationTransfer);
+        $this->setupConnection($this->storageRedisConfig->getRedisConnectionConfiguration());
     }
 
     /**
@@ -165,11 +169,58 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
     }
 
     /**
+     * @param string $pattern
+     * @param int $limit
+     * @param int $cursor
+     *
+     * @return \Generated\Shared\Transfer\StorageScanResultTransfer
+     */
+    public function scanKeys(string $pattern, int $limit, int $cursor): StorageScanResultTransfer
+    {
+        $result = [];
+        $nextCursor = null;
+        do {
+            [$nextCursor, $keys] = $this->redisScan($this->getSearchPattern($pattern), $nextCursor ?? $cursor);
+            $result = array_merge($result, $keys);
+        } while ($nextCursor > 0 && count($result) < $limit);
+
+        return (new StorageScanResultTransfer())
+            ->setCursor((int)$nextCursor)
+            ->setKeys(array_unique($result));
+    }
+
+    /**
+     * @param string $match
+     * @param int $cursor
+     *
+     * @return array [string, string[]]
+     */
+    protected function redisScan(string $match, int $cursor): array
+    {
+        return $this->redisClient->scan(
+            $this->connectionKey,
+            $cursor,
+            [
+                'COUNT' => $this->storageRedisConfig->getRedisScanChunkSize(),
+                'MATCH' => $match,
+            ]
+        );
+    }
+
+    /**
      * @return int
      */
     public function getCountItems(): int
     {
         return count($this->redisClient->keys($this->connectionKey, $this->getSearchPattern()));
+    }
+
+    /**
+     * @return int
+     */
+    public function getDbSize(): int
+    {
+        return $this->redisClient->dbSize($this->connectionKey);
     }
 
     /**
@@ -281,9 +332,11 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
      */
     public function deleteAll(): int
     {
-        $keys = $this->getAllKeys();
+        $dbSizeBefore = $this->getDbSize();
+        $this->redisClient->flushDb($this->connectionKey);
+        $dbSizeAfter = $this->getDbSize();
 
-        return $this->redisClient->del($this->connectionKey, $keys);
+        return $dbSizeBefore - $dbSizeAfter;
     }
 
     /**

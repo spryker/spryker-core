@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ZedRequest\Client;
 
+use RuntimeException;
 use Spryker\Service\UtilNetwork\UtilNetworkServiceInterface;
 use Spryker\Service\UtilText\UtilTextServiceInterface;
 use Spryker\Shared\ZedRequest\Client\AbstractHttpClient;
@@ -24,11 +25,6 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
     protected $tokenGenerationOptions;
 
     /**
-     * @var bool
-     */
-    protected $isAuthenticationEnabled;
-
-    /**
      * @var \Spryker\Service\UtilText\UtilTextServiceInterface
      */
     protected $utilTextService;
@@ -36,11 +32,13 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
     /**
      * @param string $baseUrl
      * @param string $rawToken
-     * @param bool $isAuthenticationEnabled
+     * @param bool $isAuthenticationEnabled Deprecated: Will be removed in the next major.
      * @param \Spryker\Service\UtilText\UtilTextServiceInterface $utilTextService
      * @param \Spryker\Service\UtilNetwork\UtilNetworkServiceInterface $utilNetworkService
      * @param array $tokenGenerationOptions
      * @param array $clientConfiguration
+     *
+     * @throws \RuntimeException
      */
     public function __construct(
         $baseUrl,
@@ -54,9 +52,12 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
         parent::__construct($baseUrl, $utilNetworkService, $clientConfiguration);
 
         $this->rawToken = $rawToken;
-        $this->isAuthenticationEnabled = $isAuthenticationEnabled;
         $this->utilTextService = $utilTextService;
         $this->tokenGenerationOptions = $tokenGenerationOptions;
+
+        if ($isAuthenticationEnabled === false) {
+            throw new RuntimeException('Setting $isAuthenticationEnabled to false is not allowed for security reasons.');
+        }
     }
 
     /**
@@ -64,13 +65,9 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
      */
     public function getHeaders()
     {
-        $headers = [];
-
-        if ($this->isAuthenticationEnabled) {
-            $headers = [
-                'Auth-Token' => $this->utilTextService->generateToken($this->rawToken, $this->tokenGenerationOptions),
-            ];
-        }
+        $headers = [
+            'Auth-Token' => $this->utilTextService->generateToken($this->rawToken, $this->tokenGenerationOptions),
+        ];
 
         return $headers;
     }

@@ -9,6 +9,8 @@ namespace Spryker\Zed\Development\Business;
 
 use Nette\DI\Config\Loader;
 use Spryker\Zed\Development\Business\ArchitectureSniffer\AllBundleFinder;
+use Spryker\Zed\Development\Business\ArchitectureSniffer\AllModuleFinder;
+use Spryker\Zed\Development\Business\ArchitectureSniffer\AllModuleFinderInterface;
 use Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSniffer;
 use Spryker\Zed\Development\Business\ArchitectureSniffer\ArchitectureSnifferInterface;
 use Spryker\Zed\Development\Business\CodeBuilder\Bridge\BridgeBuilder;
@@ -27,6 +29,8 @@ use Spryker\Zed\Development\Business\Composer\ComposerJsonFinderInterface;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonInterface;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonUpdater;
 use Spryker\Zed\Development\Business\Composer\ComposerJsonUpdaterInterface;
+use Spryker\Zed\Development\Business\Composer\ComposerNameFinder;
+use Spryker\Zed\Development\Business\Composer\ComposerNameFinderInterface;
 use Spryker\Zed\Development\Business\Composer\Updater\AutoloadUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\BranchAliasUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\ComposerUpdaterComposite;
@@ -42,7 +46,7 @@ use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyCo
 use Spryker\Zed\Development\Business\Dependency\DependencyContainer\DependencyContainerInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\BehaviorDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\CodeceptionDependencyFinder;
-use Spryker\Zed\Development\Business\Dependency\DependencyFinder\ComposerScriptDependencyFinder;
+use Spryker\Zed\Development\Business\Dependency\DependencyFinder\ComposerDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderComposite;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\ExtensionDependencyFinder;
@@ -71,6 +75,7 @@ use Spryker\Zed\Development\Business\Dependency\TwigFileFinder\TwigFileFinder;
 use Spryker\Zed\Development\Business\Dependency\TwigFileFinder\TwigFileFinderInterface;
 use Spryker\Zed\Development\Business\Dependency\Validator\DependencyValidator;
 use Spryker\Zed\Development\Business\Dependency\Validator\DependencyValidatorInterface;
+use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleAmbiguousModuleName;
 use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleComposite;
 use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleDevelopmentOnlyDependency;
 use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInRequireAndRequireDev;
@@ -393,8 +398,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createPersistenceDependencyFinder(),
             $this->createBehaviorDependencyFinder(),
             $this->createTwigDependencyFinder(),
+            $this->createComposerDependencyFinder(),
             $this->createTravisDependencyFinder(),
-            $this->createComposerScriptDependencyFinder(),
             $this->createCodeceptionDependencyFinder(),
             $this->createModuleAnnotationDependencyFinder(),
         ]);
@@ -502,17 +507,17 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface
      */
-    public function createTravisDependencyFinder(): DependencyFinderInterface
+    public function createComposerDependencyFinder(): DependencyFinderInterface
     {
-        return new TravisDependencyFinder();
+        return new ComposerDependencyFinder();
     }
 
     /**
      * @return \Spryker\Zed\Development\Business\Dependency\DependencyFinder\DependencyFinderInterface
      */
-    public function createComposerScriptDependencyFinder(): DependencyFinderInterface
+    public function createTravisDependencyFinder(): DependencyFinderInterface
     {
-        return new ComposerScriptDependencyFinder();
+        return new TravisDependencyFinder();
     }
 
     /**
@@ -693,7 +698,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return new DependencyValidator(
             $this->createModuleDependencyParser(),
             $this->createComposerDependencyParser(),
-            $this->createDependencyValidationRules()
+            $this->createDependencyValidationRules(),
+            $this->createComposerNameFinder()
         );
     }
 
@@ -703,6 +709,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createDependencyValidationRules(): ValidationRuleInterface
     {
         return new ValidationRuleComposite([
+            $this->createValidationRuleAmbiguousModuleName(),
             $this->createValidationRuleDevelopmentOnlyDependency(),
             $this->createValidationRuleInSourceNotInRequire(),
             $this->createValidationRuleNotInSourceButInRequire(),
@@ -714,6 +721,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createValidationRuleInSourceAndInSuggested(),
             $this->createValidationRuleInRequireAndRequireDev(),
         ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInterface
+     */
+    public function createValidationRuleAmbiguousModuleName(): ValidationRuleInterface
+    {
+        return new ValidationRuleAmbiguousModuleName();
     }
 
     /**
@@ -1530,7 +1545,9 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
      */
     public function createComposerDependencyParser()
     {
-        return new ComposerDependencyParser();
+        return new ComposerDependencyParser(
+            $this->createComposerNameFinder()
+        );
     }
 
     /**
@@ -1863,6 +1880,8 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated use `createAllModuleFinder` instead.
+     *
      * @return \Spryker\Zed\Development\Business\ArchitectureSniffer\AllBundleFinderInterface
      */
     public function createArchitectureBundleFinder()
@@ -1872,6 +1891,18 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createCamelCaseToDashFilter(),
             $this->getConfig()->getProjectNamespaces(),
             $this->getConfig()->getCoreNamespaces()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\ArchitectureSniffer\AllModuleFinderInterface
+     */
+    public function createAllModuleFinder(): AllModuleFinderInterface
+    {
+        return new AllModuleFinder(
+            $this->createFinder(),
+            $this->getConfig(),
+            $this->createCamelCaseToDashFilter()
         );
     }
 
@@ -1980,5 +2011,13 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
         return new CodeceptionArgumentsBuilder(
             $this->getConfig()->getDefaultInclusiveGroups()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Composer\ComposerNameFinderInterface
+     */
+    public function createComposerNameFinder(): ComposerNameFinderInterface
+    {
+        return new ComposerNameFinder($this->getModuleFinderFacade());
     }
 }

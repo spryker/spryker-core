@@ -1,26 +1,32 @@
 <div class="row">
     <div class="col-sm-12">
         {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Refunds' } %}
+
             {% block widget_content %}
-                <table class="footable table table-striped toggle-arrow-tiny" data-qa="refund-list">
-                    <thead>
-                    <tr class="text-left">
-                        <th>{{ "Amount" | trans }}</th>
-                        <th>{{ "Comment" | trans }}</th>
-                        <th>{{ "Time" | trans }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for refund in refunds %}
-                        <tr data-qa="refund-row">
-                            <td data-qa="refund-amount-raw" data-qa-raw="{{ refund.amount }}">{{ refund.amount | money(true, order.currencyIsoCode) }}</td>
-                            <td>{{ refund.comment }}</td>
-                            <td>{{ refund.createdAt | date }}</td>
+                {% if refunds is not empty %}
+                    <table class="footable table table-striped toggle-arrow-tiny" data-qa="refund-list">
+                        <thead>
+                        <tr class="text-left">
+                            <th>{{ 'Amount' | trans }}</th>
+                            <th>{{ 'Comment' | trans }}</th>
+                            <th>{{ 'Time' | trans }}</th>
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {% for refund in refunds %}
+                            <tr data-qa="refund-row">
+                                <td data-qa="refund-amount-raw" data-qa-raw="{{ refund.amount }}">{{ refund.amount | money(true, order.currencyIsoCode) }}</td>
+                                <td>{{ refund.comment }}</td>
+                                <td>{{ refund.createdAt | date }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <span class="text-left">{{ 'No returns for this order' | trans }}</span>
+                {% endif %}
             {% endblock %}
+
         {% endembed %}
     </div>
 </div>

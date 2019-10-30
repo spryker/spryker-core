@@ -14,6 +14,7 @@ use Spryker\Zed\Oms\OmsDependencyProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DummyPayment

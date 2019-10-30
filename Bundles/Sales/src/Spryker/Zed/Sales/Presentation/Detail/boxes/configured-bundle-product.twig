@@ -1,0 +1,86 @@
+{% set numberOfItemAdditions = orderItem.productOptions | length + 1  %}
+{% set image = image %}
+
+<td class="item-checker">
+    <input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check">
+</td>
+{% if displayImage %}
+    <td>
+        <div class="image-wrap">
+            <img class="product-image product-image--small product-image--borderless" src="{{ image }}">
+        </div>
+    </td>
+{% endif %}
+<td>
+    <div>
+        <a target="_blank" href="{{ url('/product-management/view/variant', {'id-product-abstract': orderItem.idProductAbstract, 'id-product': orderItem.id, 'type': 'regular'}) }}">
+            {{ orderItem.name }}
+        </a>
+    </div>
+    <div class="sku">
+        {{ 'Sku' | trans }}: {{ orderItem.Sku }}
+    </div>
+
+    {% if orderItem.metadata.superAttributes is not null and orderItem.metadata.superAttributes | length > 0 %}
+        <div class="variant-details">
+            <h3>{{ 'Variant Details' | trans }}</h3>
+            {% for attributeName, attributeValue in orderItem.metadata.superAttributes | slice(0,2) %}
+                <div>{{ attributeName }}: {{ attributeValue }}</div>
+            {% endfor %}
+
+            {% if orderItem.metadata.superAttributes | length > 2 %}
+                <div id="attribute_details_{{ orderItem.IdSalesOrderItem }}" class="hidden">
+                    {% for attributeName, attributeValue in orderItem.metadata.superAttributes | slice(2) %}
+                        <div>{{ attributeName }}: {{ attributeValue }}</div>
+                    {% endfor %}
+                </div>
+
+                <button id="attribute-details-btn-{{ orderItem.IdSalesOrderItem }}" class="btn btn-sm more-attributes is-hidden" type="button" data-id="{{ orderItem.IdSalesOrderItem }}">
+                    <span class="show-more">{{ 'Show more' | trans }}</span>
+                    <span class="show-less">{{ 'Show less' | trans }}</span>
+                </button>
+            {% endif %}
+        </div>
+    {% endif %}
+    {% include '@Sales/Detail/boxes/item-packaging-unit.twig' with {orderItem: orderItem} %}
+</td>
+<td>
+    {{ orderItem.quantity }}
+    {% include '@Sales/Detail/boxes/item-measurement-unit.twig' with {orderItem: orderItem} %}
+</td>
+<td>
+    <div>
+        {% include '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.unitSubtotalAggregation, priceToPay: orderItem.unitPriceToPayAggregation | default(0)} %}
+    </div>
+    <div class="tax-info">{{ "incl. %tax_amount% % tax" | trans({'%tax_amount%': orderItem.taxRate|default(0)}) }}</div>
+</td>
+
+<td data-qa="item-total-amount" data-qa-raw="{{ orderItem.sumPriceToPayAggregation }}">
+    {% include '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.sumSubtotalAggregation, priceToPay: orderItem.sumPriceToPayAggregation} %}
+</td>
+
+<td rowspan="{{ numberOfItemAdditions }}" class="state-history">
+    <div>
+        <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}" target="_blank">{{ (orderItem.stateHistory | first).name }}</a> ({{ orderItem.process }})
+    </div>
+    {% if orderItem.stateHistory | length > 1 %}
+        <div id="history_details_{{ orderItem.idSalesOrderItem }}" class="hidden">
+            {% for stateHistory in orderItem.stateHistory | slice(1) %}
+                <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }})</div>
+            {% endfor %}
+        </div>
+
+        <button id="history-btn-{{ orderItem.idSalesOrderItem }}" class="btn btn-sm more-history is-hidden" type="button" data-id="{{ orderItem.IdSalesOrderItem }}">
+            <span class="show-more">{{ 'Show history' | trans }}</span>
+            <span class="show-less">{{ 'Hide history' | trans }}</span>
+        </button>
+    {% endif %}
+</td>
+
+<td rowspan="{{ numberOfItemAdditions }}">
+    {% include '@Oms/RenderForm/_partial/order-item-actions.twig' with {
+        redirectUrl: changeStatusRedirectUrl,
+        idSalesOrderItem: orderItem.idSalesOrderItem,
+        eventsGroupedByItem: eventsGroupedByItem[orderItem.IdSalesOrderItem],
+    } only %}
+</td>

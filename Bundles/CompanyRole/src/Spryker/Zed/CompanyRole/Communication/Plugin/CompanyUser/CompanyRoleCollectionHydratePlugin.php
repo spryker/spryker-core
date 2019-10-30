@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CompanyRoleCollectionHydratePlugin extends AbstractPlugin implements CompanyUserHydrationPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Hydrates company user transfer with its assigned company roles.
      *
      * @api

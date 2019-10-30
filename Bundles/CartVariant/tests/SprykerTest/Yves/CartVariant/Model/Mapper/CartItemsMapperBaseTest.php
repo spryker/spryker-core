@@ -18,6 +18,7 @@ use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToProductClientBridge;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group CartVariant

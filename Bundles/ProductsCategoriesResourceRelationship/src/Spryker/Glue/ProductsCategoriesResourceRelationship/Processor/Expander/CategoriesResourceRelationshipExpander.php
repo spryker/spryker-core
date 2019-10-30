@@ -43,13 +43,36 @@ class CategoriesResourceRelationshipExpander implements CategoriesResourceRelati
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
-        $locale = $restRequest->getMetadata()->getLocale();
-        foreach ($resources as $resource) {
-            $productCategoryNodeIds = $this->abstractProductsCategoriesReader
-                ->findProductCategoryNodeIds($resource->getId(), $locale);
+        $localeName = $restRequest->getMetadata()->getLocale();
 
-            foreach ($productCategoryNodeIds as $categoriesNodeId) {
-                $resource->addRelationship($this->categoriesRestApiResource->findCategoryNodeById($categoriesNodeId, $locale));
+        $productAbstractSkus = [];
+        foreach ($resources as $restResource) {
+            $productAbstractSkus[] = $restResource->getId();
+        }
+
+        $productCategoryNodeIds = $this->abstractProductsCategoriesReader
+            ->findProductCategoryNodeIdsBySkus($productAbstractSkus, $localeName);
+
+        if (count($productCategoryNodeIds) === 0) {
+            return;
+        }
+
+        $categoryNodeIds = array_unique(array_merge(...array_values($productCategoryNodeIds)));
+
+        $categoryNodesRestResources = $this->categoriesRestApiResource
+            ->findCategoryNodeByIds($categoryNodeIds, $localeName);
+
+        foreach ($resources as $restResource) {
+            if (!array_key_exists($restResource->getId(), $productCategoryNodeIds)) {
+                continue;
+            }
+
+            foreach ($productCategoryNodeIds[$restResource->getId()] as $categoryNodeId) {
+                if (!array_key_exists($categoryNodeId, $categoryNodesRestResources)) {
+                    continue;
+                }
+
+                $restResource->addRelationship($categoryNodesRestResources[$categoryNodeId]);
             }
         }
     }

@@ -12,6 +12,7 @@ use Spryker\Shared\Config\Profiler;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Config

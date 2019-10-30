@@ -16,7 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class OauthCompanyUserClient extends AbstractClient implements OauthCompanyUserClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -32,7 +32,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     protected $lastConnection;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function _initialize(): void
     {
@@ -40,7 +40,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getLastConnection(): ?Connection
     {
@@ -227,6 +227,26 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     /**
      * @part json
      *
+     * @return void
+     */
+    public function seeResponseDataContainsEmptyCollection(): void
+    {
+        $this->getJsonPathModule()->dontSeeResponseMatchesJsonPath('$.data[*]');
+    }
+
+    /**
+     * @part json
+     *
+     * @return void
+     */
+    public function seeResponseDataContainsNonEmptyCollection(): void
+    {
+        $this->getJsonPathModule()->seeResponseMatchesJsonPath('$.data[*]');
+    }
+
+    /**
+     * @part json
+     *
      * @param string $id
      *
      * @return void
@@ -395,7 +415,41 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * @part json
+     *
+     * @param string $attribute
+     *
+     * @return void
+     */
+    public function seeSingleResourceHasAttribute(string $attribute): void
+    {
+        $this->getJsonPathModule()->seeResponseMatchesJsonPath(
+            sprintf(
+                '$.data.attributes.%s',
+                $attribute
+            )
+        );
+    }
+
+    /**
+     * @part json
+     *
+     * @param string $attribute
+     *
+     * @return void
+     */
+    public function seeResourceCollectionHasAttribute(string $attribute): void
+    {
+        $this->getJsonPathModule()->seeResponseMatchesJsonPath(
+            sprintf(
+                '$.data[*].attributes.%s',
+                $attribute
+            )
+        );
+    }
+
+    /**
+     * @inheritDoc
      */
     protected function resetVariables(): void
     {
@@ -403,7 +457,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected function execute($method, $url, $parameters = [], $files = [])
     {

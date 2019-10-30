@@ -22,6 +22,7 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Oms

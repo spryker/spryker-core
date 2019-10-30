@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\StorageRedis\Redis;
 
+use Generated\Shared\Transfer\StorageScanResultTransfer;
+
 interface StorageRedisWrapperInterface
 {
     /**
@@ -80,6 +82,15 @@ interface StorageRedisWrapperInterface
     public function getKeys(string $pattern): array;
 
     /**
+     * @param string $pattern
+     * @param int $limit
+     * @param int $cursor
+     *
+     * @return \Generated\Shared\Transfer\StorageScanResultTransfer
+     */
+    public function scanKeys(string $pattern, int $limit, int $cursor): StorageScanResultTransfer;
+
+    /**
      * @return void
      */
     public function resetAccessStats(): void;
@@ -93,6 +104,11 @@ interface StorageRedisWrapperInterface
      * @return int
      */
     public function getCountItems(): int;
+
+    /**
+     * @return int
+     */
+    public function getDbSize(): int;
 
     /**
      * @param bool $debug

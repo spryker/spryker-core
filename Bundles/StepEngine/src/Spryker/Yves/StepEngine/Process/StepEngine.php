@@ -100,7 +100,7 @@ class StepEngine implements StepEngineInterface
         if ($formCollection->hasSubmittedForm($request, $dataTransfer)) {
             $form = $formCollection->handleRequest($request, $dataTransfer);
             if ($form->isSubmitted() && $form->isValid()) {
-                $this->executeWithFormInput($currentStep, $request, $dataTransfer, $form->getData());
+                $dataTransfer = $this->executeWithFormInput($currentStep, $request, $dataTransfer, $form->getData());
 
                 return $this->createRedirectResponse($this->stepCollection->getNextUrl($currentStep, $dataTransfer));
             }
@@ -142,7 +142,7 @@ class StepEngine implements StepEngineInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $formTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     protected function executeWithFormInput(
         StepInterface $currentStep,
@@ -154,6 +154,8 @@ class StepEngine implements StepEngineInterface
         $dataTransfer = $currentStep->execute($request, $formTransfer);
 
         $this->dataContainer->set($dataTransfer);
+
+        return $dataTransfer;
     }
 
     /**

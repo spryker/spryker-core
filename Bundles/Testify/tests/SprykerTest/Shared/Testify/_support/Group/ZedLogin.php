@@ -13,6 +13,9 @@ use Codeception\GroupObject;
 
 class ZedLogin extends GroupObject
 {
+    /**
+     * @var string
+     */
     public static $group = 'ZedLogin';
 
     /**

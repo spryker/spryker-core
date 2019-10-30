@@ -19,8 +19,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class AddressQuoteMapperPlugin extends AbstractPlugin implements QuoteMapperPluginInterface
 {
     /**
-     * {@inheritdoc}
-     * - Maps rest request billing and shipping addresses to quote.
+     * {@inheritDoc}
+     * - Maps rest request billing address information to quote.
+     * - Maps rest request shipping address information to quote level (BC) and item level shipping addresses.
      *
      * @api
      *

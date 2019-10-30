@@ -11,6 +11,7 @@ use Codeception\Module;
 use Orm\Zed\ProductList\Persistence\SpyProductListCategoryQuery;
 use Orm\Zed\ProductList\Persistence\SpyProductListProductConcreteQuery;
 use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
+use SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper;
 
 class ProductListDataImportHelper extends Module
 {
@@ -51,7 +52,7 @@ class ProductListDataImportHelper extends Module
      */
     public function ensureProductListTableIsEmpty(): void
     {
-        $this->createProductListQuery()->deleteAll();
+        $this->getTableRelationCleanupHelper()->ensureDatabaseTableIsEmpty($this->createProductListQuery());
     }
 
     /**
@@ -59,7 +60,7 @@ class ProductListDataImportHelper extends Module
      */
     public function ensureProductListCategoryTableIsEmpty(): void
     {
-        $this->createProductListCategoryQuery()->deleteAll();
+        $this->getTableRelationCleanupHelper()->ensureDatabaseTableIsEmpty($this->createProductListCategoryQuery());
     }
 
     /**
@@ -67,7 +68,7 @@ class ProductListDataImportHelper extends Module
      */
     public function ensureProductListProductConcreteTableIsEmpty(): void
     {
-        $this->createProductListProductConcreteQuery()->deleteAll();
+        $this->getTableRelationCleanupHelper()->ensureDatabaseTableIsEmpty($this->createProductListProductConcreteQuery());
     }
 
     /**
@@ -119,5 +120,13 @@ class ProductListDataImportHelper extends Module
     protected function createProductListProductConcreteQuery(): SpyProductListProductConcreteQuery
     {
         return SpyProductListProductConcreteQuery::create();
+    }
+
+    /**
+     * @return \Codeception\Module|\SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
+     */
+    protected function getTableRelationCleanupHelper()
+    {
+        return $this->getModule('\\' . TableRelationsCleanupHelper::class);
     }
 }
