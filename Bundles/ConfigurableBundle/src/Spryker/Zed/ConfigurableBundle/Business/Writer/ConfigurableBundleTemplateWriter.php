@@ -97,6 +97,10 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
     public function activateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
     {
         $this->configurableBundleEntityManager->activateConfigurableBundleTemplateById($idConfigurableBundleTemplate);
+
+        $this->triggerPublishEvent(
+            (new ConfigurableBundleTemplateTransfer())->setIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
+        );
     }
 
     /**
@@ -107,6 +111,10 @@ class ConfigurableBundleTemplateWriter implements ConfigurableBundleTemplateWrit
     public function deactivateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
     {
         $this->configurableBundleEntityManager->deactivateConfigurableBundleTemplateById($idConfigurableBundleTemplate);
+
+        $this->triggerPublishEvent(
+            (new ConfigurableBundleTemplateTransfer())->setIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
+        );
     }
 
     /**

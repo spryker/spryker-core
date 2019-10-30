@@ -26,4 +26,12 @@ class ConfigurableBundlePageSearchCommunicationFactory extends AbstractCommunica
     {
         return $this->getProvidedDependency(ConfigurableBundlePageSearchDependencyProvider::FACADE_EVENT_BEHAVIOR);
     }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplatePageMapExpanderPluginInterface[]
+     */
+    public function getConfigurableBundleTemplatePageMapExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ConfigurableBundlePageSearchDependencyProvider::PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_MAP_EXPANDER);
+    }
 }

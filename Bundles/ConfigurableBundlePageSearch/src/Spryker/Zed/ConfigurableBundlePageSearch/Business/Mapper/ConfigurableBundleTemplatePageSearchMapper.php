@@ -28,15 +28,23 @@ class ConfigurableBundleTemplatePageSearchMapper implements ConfigurableBundleTe
     protected $searchFacade;
 
     /**
+     * @var \Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplatePageDataExpanderPluginInterface[]
+     */
+    protected $configurableBundleTemplatePageDataExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Service\ConfigurableBundlePageSearchToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToSearchFacadeInterface $searchFacade
+     * @param \Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplatePageDataExpanderPluginInterface[] $configurableBundleTemplatePageDataExpanderPlugins
      */
     public function __construct(
         ConfigurableBundlePageSearchToUtilEncodingServiceInterface $utilEncodingService,
-        ConfigurableBundlePageSearchToSearchFacadeInterface $searchFacade
+        ConfigurableBundlePageSearchToSearchFacadeInterface $searchFacade,
+        array $configurableBundleTemplatePageDataExpanderPlugins
     ) {
         $this->utilEncodingService = $utilEncodingService;
         $this->searchFacade = $searchFacade;
+        $this->configurableBundleTemplatePageDataExpanderPlugins = $configurableBundleTemplatePageDataExpanderPlugins;
     }
 
     /**
@@ -59,6 +67,12 @@ class ConfigurableBundleTemplatePageSearchMapper implements ConfigurableBundleTe
             $configurableBundleTemplateTranslationTransfer,
             $configurableBundleTemplatePageSearchTransfer
         );
+
+        $configurableBundleTemplatePageSearchTransfer = $this->expandConfigurableBundlePageSearchWithPlugins(
+            $configurableBundleTemplateTransfer,
+            $configurableBundleTemplatePageSearchTransfer
+        );
+
         $configurableBundleTemplatePageSearchTransfer = $this->mapConfigurableBundleTemplatePageSearchTransferData(
             $configurableBundleTemplatePageSearchTransfer,
             $configurableBundleTemplateTranslationTransfer->getLocale()
@@ -143,5 +157,25 @@ class ConfigurableBundleTemplatePageSearchMapper implements ConfigurableBundleTe
         return $configurableBundleTemplatePageSearchTransfer->setStructuredData(
             $this->utilEncodingService->encodeJson($data)
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer
+     */
+    protected function expandConfigurableBundlePageSearchWithPlugins(
+        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer,
+        ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer
+    ): ConfigurableBundleTemplatePageSearchTransfer {
+        foreach ($this->configurableBundleTemplatePageDataExpanderPlugins as $configurableBundleTemplatePageDataExpanderPlugin) {
+            $configurableBundleTemplatePageSearchTransfer = $configurableBundleTemplatePageDataExpanderPlugin->expand(
+                $configurableBundleTemplateTransfer,
+                $configurableBundleTemplatePageSearchTransfer
+            );
+        }
+
+        return $configurableBundleTemplatePageSearchTransfer;
     }
 }

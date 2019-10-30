@@ -28,6 +28,9 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
 
     public const PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE = 'PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE';
 
+    public const PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_MAP_EXPANDER = 'PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_MAP_EXPANDER';
+    public const PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_DATA_EXPANDER = 'PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_DATA_EXPANDER';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -40,6 +43,7 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
         $container = $this->addConfigurableBundleFacade($container);
         $container = $this->addSearchFacade($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addConfigurableBundleTemplatePageDataExpanderPlugins($container);
 
         return $container;
     }
@@ -66,6 +70,7 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addEventBehaviorFacade($container);
+        $container = $this->addConfigurableBundleTemplatePageMapExpanderPlugins($container);
 
         return $container;
     }
@@ -146,5 +151,49 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
         }));
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addConfigurableBundleTemplatePageMapExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_MAP_EXPANDER, function () {
+            return $this->getConfigurableBundleTemplatePageMapExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addConfigurableBundleTemplatePageDataExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_DATA_EXPANDER, function () {
+            return $this->getConfigurableBundleTemplatePageDataExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplatePageDataExpanderPluginInterface[]
+     */
+    protected function getConfigurableBundleTemplatePageMapExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplatePageMapExpanderPluginInterface[]
+     */
+    protected function getConfigurableBundleTemplatePageDataExpanderPlugins(): array
+    {
+        return [];
     }
 }

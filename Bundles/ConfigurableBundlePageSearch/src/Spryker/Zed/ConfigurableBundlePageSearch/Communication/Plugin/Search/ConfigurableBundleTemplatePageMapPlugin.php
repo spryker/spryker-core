@@ -45,7 +45,7 @@ class ConfigurableBundleTemplatePageMapPlugin extends AbstractPlugin implements 
             ->addSearchResultData($pageMapTransfer, ConfigurableBundleTemplatePageSearchTransfer::TRANSLATIONS, $data[ConfigurableBundleTemplatePageSearchTransfer::TRANSLATIONS])
             ->addFullText($pageMapTransfer, $data[ConfigurableBundleTemplatePageSearchTransfer::NAME]);
 
-        return $pageMapTransfer;
+        return $this->expandPageMapWithPlugins($pageMapTransfer, $pageMapBuilder, $data, $locale);
     }
 
     /**
@@ -56,5 +56,22 @@ class ConfigurableBundleTemplatePageMapPlugin extends AbstractPlugin implements 
     public function getName(): string
     {
         return ConfigurableBundlePageSearchConfig::CONFIGURABLE_BUNDLE_TEMPLATE_RESOURCE_NAME;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
+     * @param array $data
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\PageMapTransfer
+     */
+    protected function expandPageMapWithPlugins(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $data, LocaleTransfer $localeTransfer): PageMapTransfer
+    {
+        foreach ($this->getFactory()->getConfigurableBundleTemplatePageMapExpanderPlugins() as $configurableBundleTemplatePageMapExpanderPlugin) {
+            $configurableBundleTemplatePageMapExpanderPlugin->expand($pageMapTransfer, $pageMapBuilder, $data, $localeTransfer);
+        }
+
+        return $pageMapTransfer;
     }
 }

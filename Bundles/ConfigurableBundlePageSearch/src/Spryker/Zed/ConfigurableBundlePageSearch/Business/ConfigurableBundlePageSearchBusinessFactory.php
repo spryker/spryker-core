@@ -57,7 +57,8 @@ class ConfigurableBundlePageSearchBusinessFactory extends AbstractBusinessFactor
     {
         return new ConfigurableBundleTemplatePageSearchMapper(
             $this->getUtilEncodingService(),
-            $this->getSearchFacade()
+            $this->getSearchFacade(),
+            $this->getConfigurableBundleTemplatePageDataExpanderPlugins()
         );
     }
 
@@ -83,5 +84,13 @@ class ConfigurableBundlePageSearchBusinessFactory extends AbstractBusinessFactor
     public function getUtilEncodingService(): ConfigurableBundlePageSearchToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(ConfigurableBundlePageSearchDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplatePageDataExpanderPluginInterface[]
+     */
+    protected function getConfigurableBundleTemplatePageDataExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ConfigurableBundlePageSearchDependencyProvider::PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_DATA_EXPANDER);
     }
 }
