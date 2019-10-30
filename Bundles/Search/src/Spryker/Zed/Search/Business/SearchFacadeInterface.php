@@ -265,9 +265,9 @@ interface SearchFacadeInterface
 
     /**
      * Specification:
-     * - Installs Elasticsearch indices and mapping types based on the loaded index definitions if they not exists already.
+     * - Installs Elasticsearch indices and mapping types based on the loaded index definitions if they don't exist.
      * - For each configured store a separated index name is generated.
-     * - The index is created for only the current store.
+     * - Only the index for the current store is created.
      * - The name of the index is automatically prefixed with the store name + underscore.
      *
      * @api
