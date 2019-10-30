@@ -567,4 +567,302 @@ class CatFaceTransfer extends AbstractTransfer
 
         return $this;
     }
+
+    /**
+     * @param array $data
+     * @param bool $ignoreMissingProperty
+     * @return CatFaceTransfer
+     */
+    public function fromArray(array $data, $ignoreMissingProperty = false)
+    {
+        foreach ($data as $property => $value) {
+            $property = $this->transferPropertyNameMap[$property] ?? null;
+
+            switch ($property) {
+                case 'name':
+                case 'typedArray':
+                case 'typedAssociativeStringArray':
+                case 'typedNotAssociativeStringArray':
+                case 'typedNotAssociativeArray':
+                    $this->$property = $value;
+                    $this->modifiedProperties[$property] = true;
+                    break;
+                case 'item':
+                    if (is_array($value)) {
+                        $type = $this->transferMetadata[$property]['type'];
+                        /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject */
+                        $value = (new $type())->fromArray($value, $ignoreMissingProperty);
+                    }
+                    $this->$property = $value;
+                    $this->modifiedProperties[$property] = true;
+
+                    break;
+                case 'items':
+                case 'typedAssociativeCollection':
+                    $elementType = $this->transferMetadata[$property]['type'];
+                    $this->$property = $this->processArrayObject($elementType, $value, $ignoreMissingProperty);
+                    $this->modifiedProperties[$property] = true;
+                    break;
+                default:
+                    if (!$ignoreMissingProperty) {
+                        throw new \InvalidArgumentException(sprintf('Missing property `%s` in `%s`', $property, static::class));
+                    }
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+    * @param bool $isRecursive
+    * @param bool $camelCasedKeys
+    * @return array
+    */
+    public function modifiedToArray($isRecursive = true, $camelCasedKeys = false)
+    {
+        if ($isRecursive && !$camelCasedKeys) {
+            return $this->modifiedToArrayRecursiveNotCamelCased();
+        }
+        if ($isRecursive && $camelCasedKeys) {
+            return $this->modifiedToArrayRecursiveCamelCased();
+        }
+        if (!$isRecursive && $camelCasedKeys) {
+            return $this->modifiedToArrayNotRecursiveCamelCased();
+        }
+        if (!$isRecursive && !$camelCasedKeys) {
+            return $this->modifiedToArrayNotRecursiveNotCamelCased();
+        }
+    }
+
+    /**
+    * @param bool $isRecursive
+    * @param bool $camelCasedKeys
+    * @return array
+    */
+    public function toArray($isRecursive = true, $camelCasedKeys = false)
+    {
+        if ($isRecursive && !$camelCasedKeys) {
+            return $this->toArrayRecursiveNotCamelCased();
+        }
+        if ($isRecursive && $camelCasedKeys) {
+            return $this->toArrayRecursiveCamelCased();
+        }
+        if (!$isRecursive && !$camelCasedKeys) {
+            return $this->toArrayNotRecursiveNotCamelCased();
+        }
+        if (!$isRecursive && $camelCasedKeys) {
+            return $this->toArrayNotRecursiveCamelCased();
+        }
+    }
+
+    /**
+    * @param mixed $value
+    * @param bool $isRecursive
+    * @param bool $camelCasedKeys
+    * @return array
+    */
+    protected function addValuesToCollectionModified($value, $isRecursive, $camelCasedKeys)
+    {
+        $result = [];
+        foreach ($value as $elementKey => $arrayElement) {
+            if ($arrayElement instanceof AbstractTransfer) {
+                $result[$elementKey] = $arrayElement->modifiedToArray($isRecursive, $camelCasedKeys);
+                continue;
+            }
+            $result[$elementKey] = $arrayElement;
+        }
+
+        return $result;
+    }
+
+    /**
+    * @param mixed $value
+    * @param bool $isRecursive
+    * @param bool $camelCasedKeys
+    * @return array
+    */
+    protected function addValuesToCollection($value, $isRecursive, $camelCasedKeys)
+    {
+        $result = [];
+        foreach ($value as $elementKey => $arrayElement) {
+            if ($arrayElement instanceof AbstractTransfer) {
+                $result[$elementKey] = $arrayElement->toArray($isRecursive, $camelCasedKeys);
+                continue;
+            }
+            $result[$elementKey] = $arrayElement;
+        }
+
+        return $result;
+    }
+
+    /**
+    * @return array
+    */
+    public function modifiedToArrayRecursiveCamelCased()
+    {
+        $values = [];
+        foreach ($this->modifiedProperties as $property => $_) {
+            $value = $this->$property;
+
+            $arrayKey = $property;
+            switch ($property) {
+                case 'name':
+                case 'typedArray':
+                case 'typedAssociativeStringArray':
+                case 'typedNotAssociativeStringArray':
+                case 'typedNotAssociativeArray':
+                    $values[$arrayKey] = $value;
+                    break;
+                case 'item':
+                    $values[$arrayKey] = $value ? $value->modifiedToArray(true, true) : $value;
+                    break;
+                case 'items':
+                case 'typedAssociativeCollection':
+                    $values[$arrayKey] = $value ? $this->addValuesToCollectionModified($value, true, true) : $value;
+                    break;
+            }
+        }
+
+        return $values;
+    }
+
+    /**
+    * @return array
+    */
+    public function modifiedToArrayRecursiveNotCamelCased()
+    {
+        $values = [];
+        foreach ($this->modifiedProperties as $property => $_) {
+            $value = $this->$property;
+
+            $arrayKey = $this->transferMetadata[$property]['name_underscore'];
+            switch ($property) {
+                case 'name':
+                case 'typedArray':
+                case 'typedAssociativeStringArray':
+                case 'typedNotAssociativeStringArray':
+                case 'typedNotAssociativeArray':
+                    $values[$arrayKey] = $value;
+                    break;
+                case 'item':
+                    $values[$arrayKey] = $value ? $value->modifiedToArray(true, false) : $value;
+                    break;
+                case 'items':
+                case 'typedAssociativeCollection':
+                    $values[$arrayKey] = $value ? $this->addValuesToCollectionModified($value, true, false) : $value;
+                    break;
+            }
+        }
+
+        return $values;
+    }
+
+    /**
+    * @return array
+    */
+    public function modifiedToArrayNotRecursiveNotCamelCased()
+    {
+        $values = [];
+        foreach ($this->modifiedProperties as $property => $_) {
+            $value = $this->$property;
+
+            $arrayKey = $this->transferMetadata[$property]['name_underscore'];
+            $values[$arrayKey] = $value;
+        }
+
+        return $values;
+    }
+
+    /**
+    * @return array
+    */
+    public function modifiedToArrayNotRecursiveCamelCased()
+    {
+        $values = [];
+        foreach ($this->modifiedProperties as $property => $_) {
+            $value = $this->$property;
+
+            $arrayKey = $property;
+            $values[$arrayKey] = $value;
+        }
+
+        return $values;
+    }
+
+    /**
+    * @return void
+    */
+    protected function initCollectionProperties()
+    {
+        $this->items = $this->items ?: new ArrayObject();
+        $this->typedAssociativeCollection = $this->typedAssociativeCollection ?: new ArrayObject();
+    }
+
+    /**
+    * @return array
+    */
+    public function toArrayNotRecursiveCamelCased()
+    {
+        return [
+            'name' => $this->name,
+            'typedArray' => $this->typedArray,
+            'typedAssociativeStringArray' => $this->typedAssociativeStringArray,
+            'typedNotAssociativeStringArray' => $this->typedNotAssociativeStringArray,
+            'typedNotAssociativeArray' => $this->typedNotAssociativeArray,
+            'item' => $this->item,
+            'items' => $this->items,
+            'typedAssociativeCollection' => $this->typedAssociativeCollection,
+        ];
+    }
+
+    /**
+    * @return array
+    */
+    public function toArrayNotRecursiveNotCamelCased()
+    {
+        return [
+            'name' => $this->name,
+            'typed_array' => $this->typedArray,
+            'typed_associative_string_array' => $this->typedAssociativeStringArray,
+            'typed_not_associative_string_array' => $this->typedNotAssociativeStringArray,
+            'typed_not_associative_array' => $this->typedNotAssociativeArray,
+            'item' => $this->item,
+            'items' => $this->items,
+            'typed_associative_collection' => $this->typedAssociativeCollection,
+        ];
+    }
+
+    /**
+    * @return array
+    */
+    public function toArrayRecursiveNotCamelCased()
+    {
+        return [
+            'name' => $this->name,
+            'typed_array' => $this->typedArray,
+            'typed_associative_string_array' => $this->typedAssociativeStringArray,
+            'typed_not_associative_string_array' => $this->typedNotAssociativeStringArray,
+            'typed_not_associative_array' => $this->typedNotAssociativeArray,
+            'item' => $this->item ? $this->item->toArray(true, false) : $this->item,
+            'items' => $this->addValuesToCollection($this->items, true, false),
+            'typed_associative_collection' => $this->addValuesToCollection($this->typedAssociativeCollection, true, false),
+        ];
+    }
+
+    /**
+    * @return array
+    */
+    public function toArrayRecursiveCamelCased()
+    {
+        return [
+            'name' => $this->name,
+            'typedArray' => $this->typedArray,
+            'typedAssociativeStringArray' => $this->typedAssociativeStringArray,
+            'typedNotAssociativeStringArray' => $this->typedNotAssociativeStringArray,
+            'typedNotAssociativeArray' => $this->typedNotAssociativeArray,
+            'item' => $this->item ? $this->item->toArray(true, true) : $this->item,
+            'items' => $this->addValuesToCollection($this->items, true, true),
+            'typedAssociativeCollection' => $this->addValuesToCollection($this->typedAssociativeCollection, true, true),
+        ];
+    }
 }
