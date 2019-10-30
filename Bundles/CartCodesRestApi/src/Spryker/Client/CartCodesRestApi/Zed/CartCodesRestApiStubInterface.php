@@ -1,6 +1,11 @@
 <?php
 
-namespace Spryker\CartCodesRestApi\src\Spryker\Client\CartCodesRestApi\Zed;
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Client\CartCodesRestApi\Zed;
 
 use Generated\Shared\Transfer\AddCandidateRequestTransfer;
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;

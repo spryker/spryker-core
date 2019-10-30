@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CartCode\Business\Operation;
 
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CodeAdderInterface

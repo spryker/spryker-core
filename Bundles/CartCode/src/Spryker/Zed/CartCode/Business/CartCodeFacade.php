@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CartCode\Business;
 
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
-use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -45,6 +44,7 @@ class CartCodeFacade extends AbstractFacade implements CartCodeFacadeInterface
     public function removeCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
     {
         // TODO: Implement removeCode() method.
+        return new CartCodeOperationResultTransfer();
     }
 
     /**
@@ -59,5 +59,6 @@ class CartCodeFacade extends AbstractFacade implements CartCodeFacadeInterface
     public function clearAllCodes(QuoteTransfer $quoteTransfer): CartCodeOperationResultTransfer
     {
         // TODO: Implement clearAllCodes() method.
+        return new CartCodeOperationResultTransfer();
     }
 }

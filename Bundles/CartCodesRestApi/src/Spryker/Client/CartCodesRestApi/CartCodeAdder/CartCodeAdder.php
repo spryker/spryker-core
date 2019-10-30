@@ -10,17 +10,17 @@ namespace Spryker\Client\CartCodesRestApi\CartCodeAdder;
 use Generated\Shared\Transfer\AddCandidateRequestTransfer;
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\CartCodesRestApi\src\Spryker\Client\CartCodesRestApi\Zed\CartCodesRestApiStubInterface;
+use Spryker\Client\CartCodesRestApi\Zed\CartCodesRestApiStubInterface;
 
 class CartCodeAdder implements CartCodeAdderInterface
 {
     /**
-     * @var \Spryker\CartCodesRestApi\src\Spryker\Client\CartCodesRestApi\Zed\CartCodesRestApiStubInterface
+     * @var \Spryker\Client\CartCodesRestApi\Zed\CartCodesRestApiStubInterface
      */
     protected $cartCodesRestApiStub;
 
     /**
-     * @param \Spryker\CartCodesRestApi\src\Spryker\Client\CartCodesRestApi\Zed\CartCodesRestApiStubInterface $cartCodesRestApiStub
+     * @param \Spryker\Client\CartCodesRestApi\Zed\CartCodesRestApiStubInterface $cartCodesRestApiStub
      */
     public function __construct(CartCodesRestApiStubInterface $cartCodesRestApiStub)
     {

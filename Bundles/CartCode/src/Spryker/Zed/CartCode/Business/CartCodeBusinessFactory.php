@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CartCode\Business;
 
-use Spryker\Shared\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface;
 use Spryker\Zed\CartCode\Business\Operation\CodeAdder;
 use Spryker\Zed\CartCode\Business\Operation\CodeAdderInterface;
 use Spryker\Zed\CartCode\Business\Operation\QuoteOperationChecker;
@@ -23,7 +22,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class CartCodeBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return CodeAdderInterface
+     * @return \Spryker\Zed\CartCode\Business\Operation\CodeAdderInterface
      */
     public function createCodeAdder(): CodeAdderInterface
     {
@@ -35,7 +34,7 @@ class CartCodeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return QuoteOperationCheckerInterface
+     * @return \Spryker\Zed\CartCode\Business\Operation\QuoteOperationCheckerInterface
      */
     public function createQuoteOperationChecker(): QuoteOperationCheckerInterface
     {
@@ -43,7 +42,7 @@ class CartCodeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CartCodeToCalculationFacadeInterface
+     * @return \Spryker\Zed\CartCode\Dependency\Facade\CartCodeToCalculationFacadeInterface
      */
     public function getCalculationFacade(): CartCodeToCalculationFacadeInterface
     {
@@ -51,7 +50,7 @@ class CartCodeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CartCodeToQuoteFacadeInterface
+     * @return \Spryker\Zed\CartCode\Dependency\Facade\CartCodeToQuoteFacadeInterface
      */
     public function getQuoteFacade(): CartCodeToQuoteFacadeInterface
     {
@@ -59,7 +58,7 @@ class CartCodeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return CartCodePluginInterface[]
+     * @return \Spryker\Shared\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[]
      */
     public function getCartCodePlugins(): array
     {

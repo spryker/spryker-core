@@ -17,14 +17,14 @@ class QuoteOperationChecker implements QuoteOperationCheckerInterface
     protected const MESSAGE_TYPE_ERROR = 'error';
 
     /**
-     * @var CartCodeToQuoteFacadeInterface
+     * @var \Spryker\Zed\CartCode\Dependency\Facade\CartCodeToQuoteFacadeInterface
      */
     protected $quoteFacade;
 
     protected const GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED = 'cart.locked.change_denied';
 
     /**
-     * @param CartCodeToQuoteFacadeInterface $quoteFacade
+     * @param \Spryker\Zed\CartCode\Dependency\Facade\CartCodeToQuoteFacadeInterface $quoteFacade
      */
     public function __construct(CartCodeToQuoteFacadeInterface $quoteFacade)
     {

@@ -7,10 +7,10 @@
 
 namespace Spryker\Glue\CartCodesRestApi;
 
-use Spryker\CartCodesRestApi\src\Spryker\Glue\CartCodesRestApi\Processor\CartCodeAdder\CartCodeAdder;
-use Spryker\CartCodesRestApi\src\Spryker\Glue\CartCodesRestApi\Processor\CartCodeAdder\CartCodeAdderInterface;
-use Spryker\CartCodesRestApi\src\Spryker\Glue\CartCodesRestApi\Processor\Expander\DiscountByCartResourceRelationshipExpander;
-use Spryker\CartCodesRestApi\src\Spryker\Glue\CartCodesRestApi\Processor\Expander\DiscountByCartResourceRelationshipExpanderInterface;
+use Spryker\Glue\CartCodesRestApi\Processor\CartCodeAdder\CartCodeAdder;
+use Spryker\Glue\CartCodesRestApi\Processor\CartCodeAdder\CartCodeAdderInterface;
+use Spryker\Glue\CartCodesRestApi\Processor\Expander\DiscountByCartResourceRelationshipExpander;
+use Spryker\Glue\CartCodesRestApi\Processor\Expander\DiscountByCartResourceRelationshipExpanderInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\CartCodeMapper;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\CartCodeMapperInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\DiscountMapper;
@@ -26,7 +26,7 @@ use Spryker\Glue\Kernel\AbstractFactory;
 class CartCodesRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\CartCodesRestApi\src\Spryker\Glue\CartCodesRestApi\Processor\CartCodeAdder\CartCodeAdderInterface
+     * @return \Spryker\Glue\CartCodesRestApi\Processor\CartCodeAdder\CartCodeAdderInterface
      */
     public function createCartCodeAdder(): CartCodeAdderInterface
     {
@@ -65,7 +65,7 @@ class CartCodesRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\CartCodesRestApi\src\Spryker\Glue\CartCodesRestApi\Processor\Expander\DiscountByCartResourceRelationshipExpanderInterface
+     * @return \Spryker\Glue\CartCodesRestApi\Processor\Expander\DiscountByCartResourceRelationshipExpanderInterface
      */
     public function createDiscountByCartResourceRelationshipExpander(): DiscountByCartResourceRelationshipExpanderInterface
     {

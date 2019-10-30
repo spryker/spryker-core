@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\CartCode;
 
-use Spryker\Shared\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface;
 use Spryker\Zed\CartCode\Dependency\Facade\CartCodeToCalculationFacadeBridge;
 use Spryker\Zed\CartCode\Dependency\Facade\CartCodeToQuoteFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\CartCode\CartCodeConfig getConfig()
+ */
 class CartCodeDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
@@ -21,9 +23,9 @@ class CartCodeDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_CART_CODE_COLLECTION = 'PLUGIN_CART_CODE_COLLECTION';
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
@@ -35,9 +37,9 @@ class CartCodeDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addFacadeCalculation(Container $container): Container
     {
@@ -49,9 +51,9 @@ class CartCodeDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addQuoteFacade(Container $container): Container
     {
@@ -63,9 +65,9 @@ class CartCodeDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addCartCodePluginCollection(Container $container): Container
     {
@@ -77,7 +79,7 @@ class CartCodeDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return CartCodePluginInterface[]
+     * @return \Spryker\Shared\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[]
      */
     protected function getCartCodePluginCollection(): array
     {

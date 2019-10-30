@@ -56,6 +56,11 @@ class CartCodeRestResponseBuilder implements CartCodeRestResponseBuilderInterfac
         CartCodeOperationResultTransfer $cartCodeOperationResultTransfer,
         RestRequestInterface $restRequest
     ): RestResponseInterface {
-        return $this->cartsRestApiResource->createCartRestResponse($cartCodeOperationResultTransfer->getQuote(), $restRequest);
+        $quoteTransfer = $cartCodeOperationResultTransfer->getQuote();
+        if (!$quoteTransfer) {
+            return $this->cartsRestApiResource->createCartRestResponseWithErrors($cartCodeOperationResultTransfer->getMessages());
+        }
+
+        return $this->cartsRestApiResource->createCartRestResponse($quoteTransfer, $restRequest);
     }
 }
