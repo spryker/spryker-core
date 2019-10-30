@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Router\Business\Router\Resource;
+namespace Spryker\Zed\Router\Business\Router\RouterResource;
 
 use Exception;
 use ReflectionClass;
 use ReflectionMethod;
 use Spryker\Zed\Kernel\ClassResolver\Controller\ControllerResolver;
 use Spryker\Zed\Kernel\Communication\BundleControllerAction;
-use Spryker\Zed\Router\Business\Resource\ResourceInterface;
 use Spryker\Zed\Router\Business\Route\Route;
 use Spryker\Zed\Router\Business\Route\RouteCollection;
+use Spryker\Zed\Router\Business\RouterResource\ResourceInterface;
 use Spryker\Zed\Router\RouterConfig;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;

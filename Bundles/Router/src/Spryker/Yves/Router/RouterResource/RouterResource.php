@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Router\Resource;
+namespace Spryker\Yves\Router\RouterResource;
 
 use Spryker\Yves\Router\Route\RouteCollection;
 

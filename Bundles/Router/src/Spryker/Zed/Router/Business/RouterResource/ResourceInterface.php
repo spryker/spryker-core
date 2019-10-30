@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Router\Business\Resource;
+namespace Spryker\Zed\Router\Business\RouterResource;
 
 use Spryker\Zed\Router\Business\Route\RouteCollection;
 
