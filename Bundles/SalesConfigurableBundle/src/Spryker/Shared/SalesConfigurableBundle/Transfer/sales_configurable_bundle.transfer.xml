@@ -6,6 +6,7 @@
     <transfer name="Item">
         <property name="configuredBundleItem" type="ConfiguredBundleItem"/>
         <property name="configuredBundle" type="ConfiguredBundle"/>
+        <property name="salesOrderConfiguredBundle" type="SalesOrderConfiguredBundle"/>
         <property name="salesOrderConfiguredBundleItem" type="SalesOrderConfiguredBundleItem"/>
         <property name="idSalesOrderItem" type="int"/>
     </transfer>
