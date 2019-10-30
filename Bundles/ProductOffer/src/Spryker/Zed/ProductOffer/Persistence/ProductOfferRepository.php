@@ -28,7 +28,7 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
     public function find(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
     {
         $productOfferCollectionTransfer = new ProductOfferCollectionTransfer();
-        $productOfferQuery = $this->getFactory()->createProductOfferQuery();
+        $productOfferQuery = $this->getFactory()->createProductOfferPropelQuery();
 
         if ($productOfferCriteriaFilter) {
             $productOfferQuery = $this->applyFilters($productOfferQuery, $productOfferCriteriaFilter);

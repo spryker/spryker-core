@@ -24,7 +24,7 @@ class MerchantProductOfferStorageEntityManager extends AbstractEntityManager imp
     public function saveProductConcreteProductOffersStorage(ProductConcreteProductOffersStorageTransfer $productConcreteProductOffersStorageTransfer): void
     {
         $productConcreteProductOffersStorageEntity = $this->getFactory()
-            ->createProductConcreteProductOffersStorageQuery()
+            ->createProductConcreteProductOffersStoragePropelQuery()
             ->filterByConcreteSku($productConcreteProductOffersStorageTransfer->getConcreteSku())
             ->findOneOrCreate();
 
@@ -46,7 +46,7 @@ class MerchantProductOfferStorageEntityManager extends AbstractEntityManager imp
     public function saveProductOfferStorage(ProductOfferStorageTransfer $productOfferStorageTransfer): void
     {
         $productOfferStorageEntity = $this->getFactory()
-            ->createProductOfferStorageQuery()
+            ->createProductOfferStoragePropelQuery()
             ->filterByProductOfferReference($productOfferStorageTransfer->getProductOfferReference())
             ->findOneOrCreate();
 
@@ -68,7 +68,7 @@ class MerchantProductOfferStorageEntityManager extends AbstractEntityManager imp
     public function deleteProductConcreteProductOffersStorage(array $concreteSkus): void
     {
         $productConcreteProductOffersStorageEntities = $this->getFactory()
-            ->createProductConcreteProductOffersStorageQuery()
+            ->createProductConcreteProductOffersStoragePropelQuery()
             ->filterByConcreteSku_In($concreteSkus)
             ->find();
 
@@ -85,7 +85,7 @@ class MerchantProductOfferStorageEntityManager extends AbstractEntityManager imp
     public function deleteProductOfferStorage(array $productOfferReferences): void
     {
         $productOfferStorageEntities = $this->getFactory()
-            ->createProductOfferStorageQuery()
+            ->createProductOfferStoragePropelQuery()
             ->filterByProductOfferReference_In($productOfferReferences)
             ->find();
 

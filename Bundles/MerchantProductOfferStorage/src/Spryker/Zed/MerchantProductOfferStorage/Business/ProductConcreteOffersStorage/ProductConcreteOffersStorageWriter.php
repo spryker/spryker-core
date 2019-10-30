@@ -49,7 +49,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
         $productOfferCriteriaFilterTransfer->setConcreteSkus($concreteSkus);
         $productOfferCollectionTransfer = $this->productOfferFacade->find($productOfferCriteriaFilterTransfer);
 
-        $productOffersGroupedBySku = $this->getGroupedProductOfferByConcreteSku($productOfferCollectionTransfer);
+        $productOffersGroupedBySku = $this->groupProductOfferByConcreteSku($productOfferCollectionTransfer);
 
         foreach ($productOffersGroupedBySku as $sku => $productOfferReferenceList) {
             $productConcreteProductOffersStorageTransfer = new ProductConcreteProductOffersStorageTransfer();
@@ -75,7 +75,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
      *
      * @return array
      */
-    protected function getGroupedProductOfferByConcreteSku(ProductOfferCollectionTransfer $productOfferCollectionTransfer): array
+    protected function groupProductOfferByConcreteSku(ProductOfferCollectionTransfer $productOfferCollectionTransfer): array
     {
         $productOffersGroupedBySku = [];
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {

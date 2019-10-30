@@ -25,7 +25,7 @@ class MerchantProductOfferStoragePersistenceFactory extends AbstractPersistenceF
     /**
      * @return \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorageQuery
      */
-    public function createProductOfferStorageQuery(): SpyProductOfferStorageQuery
+    public function createProductOfferStoragePropelQuery(): SpyProductOfferStorageQuery
     {
         return SpyProductOfferStorageQuery::create();
     }
@@ -33,7 +33,7 @@ class MerchantProductOfferStoragePersistenceFactory extends AbstractPersistenceF
     /**
      * @return \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorageQuery
      */
-    public function createProductConcreteProductOffersStorageQuery(): SpyProductConcreteProductOffersStorageQuery
+    public function createProductConcreteProductOffersStoragePropelQuery(): SpyProductConcreteProductOffersStorageQuery
     {
         return SpyProductConcreteProductOffersStorageQuery::create();
     }

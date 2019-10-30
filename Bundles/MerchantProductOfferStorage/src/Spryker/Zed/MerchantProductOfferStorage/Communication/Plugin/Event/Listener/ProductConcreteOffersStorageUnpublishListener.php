@@ -10,7 +10,6 @@ namespace Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Event\Lis
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 /**
  * @method \Spryker\Zed\MerchantProductOfferStorage\MerchantProductOfferStorageConfig getConfig()

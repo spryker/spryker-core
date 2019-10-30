@@ -27,6 +27,8 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
+        parent::provideCommunicationLayerDependencies($container);
+
         $container = $this->addEventBehaviorFacade($container);
 
         return $container;
@@ -39,6 +41,8 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
+        parent::provideBusinessLayerDependencies($container);
+
         $container = $this->addProductOfferFacade($container);
 
         return $container;

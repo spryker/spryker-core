@@ -31,7 +31,7 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
     {
         $productConcreteProductOffersStorageTransfers = [];
 
-        $productConcreteProductOffersStorageQuery = $this->getFactory()->createProductConcreteProductOffersStorageQuery();
+        $productConcreteProductOffersStorageQuery = $this->getFactory()->createProductConcreteProductOffersStoragePropelQuery();
         $productConcreteProductOffersStorageQuery = $this->applyProductConcreteProductOffersStorageCriteriaFilter(
             $productConcreteProductOffersStorageQuery,
             $productConcreteProductOffersStorageCriteriaFilterTransfer
@@ -59,7 +59,7 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
     {
         $productOfferStorageTransfers = [];
 
-        $productOfferStorageQuery = $this->getFactory()->createProductOfferStorageQuery();
+        $productOfferStorageQuery = $this->getFactory()->createProductOfferStoragePropelQuery();
         $productOfferStorageQuery = $this->applyProductOfferStorageCriteriaFilter($productOfferStorageQuery, $productOfferStorageCriteriaFilterTransfer);
         $productOfferStorageEntityCollection = $productOfferStorageQuery->find();
 
@@ -119,11 +119,11 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function applyFilter(ModelCriteria $query, ?FilterTransfer $filterTransfer): ModelCriteria
+    protected function applyFilter(ModelCriteria $query, FilterTransfer $filterTransfer): ModelCriteria
     {
         $query->setOffset($filterTransfer->getOffset());
         $query->setLimit($filterTransfer->getLimit());
