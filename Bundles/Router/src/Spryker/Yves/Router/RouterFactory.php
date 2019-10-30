@@ -7,7 +7,9 @@
 
 namespace Spryker\Yves\Router;
 
+use Spryker\Shared\Router\Cache\CacheInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\Router\Cache\Cache;
 use Spryker\Yves\Router\Loader\ClosureLoader;
 use Spryker\Yves\Router\Loader\LoaderInterface;
 use Spryker\Yves\Router\Resolver\RequestRequestValueResolver;
@@ -208,5 +210,13 @@ class RouterFactory extends AbstractFactory
     public function createVariadicValueResolver(): ArgumentValueResolverInterface
     {
         return new VariadicValueResolver();
+    }
+
+    /**
+     * @return \Spryker\Shared\Router\Cache\CacheInterface
+     */
+    public function createCache(): CacheInterface
+    {
+        return new Cache($this->createRouter(), $this->getConfig());
     }
 }

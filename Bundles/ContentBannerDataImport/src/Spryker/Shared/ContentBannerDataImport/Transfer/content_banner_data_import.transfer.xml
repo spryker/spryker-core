@@ -26,4 +26,10 @@
         <property name="value" type="string"/>
     </transfer>
 
+    <transfer name="DataImporterConfiguration">
+    </transfer>
+
+    <transfer name="DataImporterReport">
+    </transfer>
+
 </transfers>
