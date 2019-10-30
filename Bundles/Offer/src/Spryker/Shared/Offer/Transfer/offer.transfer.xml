@@ -95,4 +95,19 @@
         <property name="nextPage" type="int"/>
         <property name="previousPage" type="int"/>
     </transfer>
+
+    <transfer name="Customer">
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+    </transfer>
+
+    <transfer name="Filter">
+    </transfer>
+
+    <transfer name="OrderList">
+    </transfer>
+
+    <transfer name="Order">
+    </transfer>
 </transfers>

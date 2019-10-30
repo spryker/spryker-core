@@ -43,4 +43,7 @@
     <transfer name="ProductImage">
     </transfer>
 
+    <transfer name="ProductSetDataStorage">
+    </transfer>
+
 </transfers>
