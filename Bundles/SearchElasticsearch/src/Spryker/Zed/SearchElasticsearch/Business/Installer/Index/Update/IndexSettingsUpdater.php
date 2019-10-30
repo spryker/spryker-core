@@ -81,6 +81,7 @@ class IndexSettingsUpdater implements InstallerInterface
 
         $settings = $this->filterSettingsByIndexState($indexState, $settings, $logger);
         $settings = $this->removeBlacklistedSettings($settings);
+        $settings = $this->filterEmptySettings($settings);
 
         return $settings;
     }
@@ -199,5 +200,27 @@ class IndexSettingsUpdater implements InstallerInterface
         });
 
         return !empty($settings);
+    }
+
+    /**
+     * @param array $settings
+     *
+     * @return array
+     */
+    protected function filterEmptySettings(array &$settings): array
+    {
+        foreach ($settings as $settingKey => &$settingValue) {
+            if (is_array($settingValue)) {
+                if ($settingValue) {
+                    $this->filterEmptySettings($settingValue);
+
+                    continue;
+                }
+
+                unset($settings[$settingKey]);
+            }
+        }
+
+        return $settings;
     }
 }
