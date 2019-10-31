@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Cms\Business\Page;
 
+use Generated\Shared\Transfer\CmsPageTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface;
@@ -26,13 +27,23 @@ class PageRemover implements PageRemoverInterface
     protected $touchFacade;
 
     /**
+     * @var \Spryker\Zed\CmsExtension\Dependency\Plugin\PreCmsPageRelationDeletePluginInterface[]
+     */
+    protected $preCmsPageRelationDeletePlugins;
+
+    /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface $touchFacade
+     * @param \Spryker\Zed\CmsExtension\Dependency\Plugin\PreCmsPageRelationDeletePluginInterface[] $preCmsPageRelationDeletePlugins
      */
-    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, CmsToTouchFacadeInterface $touchFacade)
-    {
+    public function __construct(
+        CmsQueryContainerInterface $cmsQueryContainer,
+        CmsToTouchFacadeInterface $touchFacade,
+        array $preCmsPageRelationDeletePlugins
+    ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->touchFacade = $touchFacade;
+        $this->preCmsPageRelationDeletePlugins = $preCmsPageRelationDeletePlugins;
     }
 
     /**
@@ -50,6 +61,7 @@ class PageRemover implements PageRemoverInterface
             $cmsPageEntity = $this->findCmsPageEntity($idCmsPage);
 
             if ($cmsPageEntity) {
+                $this->runPreCmsPageRelationDeletePlugins($cmsPageEntity);
                 $this->deletePageWithRelations($cmsPageEntity);
                 $this->touchDeletedPage($idCmsPage);
             }
@@ -81,11 +93,40 @@ class PageRemover implements PageRemoverInterface
      *
      * @return void
      */
+    protected function runPreCmsPageRelationDeletePlugins(SpyCmsPage $cmsPageEntity): void
+    {
+        $cmsPageTransfer = $this->mapCmsPageEntityToTransfer($cmsPageEntity);
+
+        foreach ($this->preCmsPageRelationDeletePlugins as $preCmsPageRelationDeletePlugin) {
+            $preCmsPageRelationDeletePlugin->execute($cmsPageTransfer);
+        }
+    }
+
+    /**
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
+     *
+     * @return \Generated\Shared\Transfer\CmsPageTransfer
+     */
+    protected function mapCmsPageEntityToTransfer(SpyCmsPage $cmsPageEntity): CmsPageTransfer
+    {
+        $cmsPageTransfer = new CmsPageTransfer();
+        $cmsPageTransfer->fromArray($cmsPageEntity->toArray(), true);
+
+        return $cmsPageTransfer->setFkPage($cmsPageEntity->getIdCmsPage());
+    }
+
+    /**
+     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
+     *
+     * @return void
+     */
     protected function deletePageWithRelations(SpyCmsPage $cmsPageEntity): void
     {
         $cmsPageEntity->getSpyUrls()->delete();
 
         $cmsPageEntity->getSpyCmsGlossaryKeyMappings()->delete();
+
+        $cmsPageEntity->getSpyCmsPageStores()->delete();
 
         $cmsPageEntity->delete();
     }
