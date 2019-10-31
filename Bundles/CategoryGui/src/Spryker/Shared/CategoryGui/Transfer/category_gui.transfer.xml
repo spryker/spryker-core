@@ -6,4 +6,5 @@
     <transfer name="Locale">
         <property name="idLocale" type="int"/>
     </transfer>
+
 </transfers>

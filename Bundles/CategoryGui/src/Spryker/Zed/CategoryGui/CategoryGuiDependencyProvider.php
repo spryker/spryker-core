@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CategoryGui;
 
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeBridge;
-use Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -35,11 +34,11 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container->set(static::FACADE_LOCALE, function (Container $container) {
+        $container[static::FACADE_LOCALE] = function (Container $container) {
             return new CategoryGuiToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade()
             );
-        });
+        };
 
         return $container;
     }

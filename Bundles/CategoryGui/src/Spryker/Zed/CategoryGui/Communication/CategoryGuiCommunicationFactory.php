@@ -8,13 +8,8 @@
 namespace Spryker\Zed\CategoryGui\Communication;
 
 use Spryker\Zed\CategoryGui\CategoryGuiDependencyProvider;
-use Spryker\Zed\CategoryGui\Communication\DataProvider\CategorySlotBlockDataProvider;
-use Spryker\Zed\CategoryGui\Communication\DataProvider\CategorySlotBlockDataProviderInterface;
-use Spryker\Zed\CategoryGui\Communication\Form\CategorySlotBlockConditionForm;
-use Spryker\Zed\CategoryGui\Communication\Form\Validator\Constraints\CategoryConditionsConstraint;
 use Spryker\Zed\CategoryGui\Communication\Table\CategoryTable;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface;
-use Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
@@ -33,13 +28,5 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getLocaleFacade(): CategoryGuiToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(CategoryGuiDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @return \Spryker\Zed\CategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface
-     */
-    public function getCategoryQueryContainer(): CategoryGuiToCategoryQueryContainerInterface
-    {
-        return $this->getProvidedDependency(CategoryGuiDependencyProvider::QUERY_CONTAINER_CATEGORY);
     }
 }
