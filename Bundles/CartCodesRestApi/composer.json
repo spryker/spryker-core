@@ -4,10 +4,19 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/kernel": "^3.0.0"
+    "spryker/cart-code": "^1.1.0",
+    "spryker/carts-rest-api": "^5.5.0",
+    "spryker/glue-application": "^1.9.0",
+    "spryker/glue-application-extension": "^1.0.0",
+    "spryker/kernel": "^3.0.0",
+    "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/customer": "*",
+    "spryker/discount": "*",
+    "spryker/propel": "*",
+    "spryker/quote": "*",
     "spryker/testify": "*"
   },
   "autoload": {
