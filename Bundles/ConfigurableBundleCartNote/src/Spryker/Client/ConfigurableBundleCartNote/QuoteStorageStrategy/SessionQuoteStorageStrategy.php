@@ -45,14 +45,14 @@ class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
      */
     public function setCartNoteToConfigurableBundle(string $cartNote, string $configurableBundleGroupKey): QuoteResponseTransfer
     {
-        $quoteNoteResponseTransfer = new QuoteResponseTransfer();
+        $quoteResponseTransfer = new QuoteResponseTransfer();
         $quoteTransfer = $this->quoteClient->getQuote();
         $itemCollectionTransfer = $this->getItemCollectionByConfigurableBundleGroupKey($quoteTransfer, $configurableBundleGroupKey);
 
         if ($itemCollectionTransfer->getItems()->count() === 0) {
-            $quoteNoteResponseTransfer->setIsSuccessful(false);
+            $quoteResponseTransfer->setIsSuccessful(false);
 
-            return $quoteNoteResponseTransfer;
+            return $quoteResponseTransfer;
         }
 
         foreach ($itemCollectionTransfer->getItems() as $itemTransfer) {
@@ -60,9 +60,9 @@ class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
         }
 
         $this->quoteClient->setQuote($quoteTransfer);
-        $quoteNoteResponseTransfer->setIsSuccessful(true);
+        $quoteResponseTransfer->setIsSuccessful(true);
 
-        return $quoteNoteResponseTransfer;
+        return $quoteResponseTransfer;
     }
 
     /**
