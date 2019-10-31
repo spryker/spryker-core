@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantProfileStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Shared\MerchantProfileStorage\MerchantProfileStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -63,11 +64,14 @@ class MerchantProfileSynchronizationDataPlugin extends AbstractPlugin implements
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
-        $filterTransfer = $this->createFilterTransfer($offset, $limit);
-        $merchantProfileStorageTransfers = $this->getRepository()
-            ->getFilteredMerchantProfileStorageTransfers($filterTransfer, $ids);
+        $merchantProfileStorageEntities = $this->getRepository()
+            ->getFilteredMerchantProfileStorageEntityTransfers(
+                (new MerchantProfileCriteriaFilterTransfer())
+                    ->setFilter($this->createFilterTransfer($offset, $limit))
+                    ->setMerchantIds($ids)
+            );
 
-        return $this->mapMerchantProfileStorageTransfersToSynchronizationDataTransfers($merchantProfileStorageTransfers);
+        return $this->mapMerchantProfileStorageEntitiesToSynchronizationDataTransfers($merchantProfileStorageEntities);
     }
 
     /**
@@ -120,19 +124,17 @@ class MerchantProfileSynchronizationDataPlugin extends AbstractPlugin implements
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantProfileStorageTransfer[] $merchantProfileStorageTransfers
+     * @param \Generated\Shared\Transfer\SpyMerchantProfileStorageEntityTransfer[] $merchantProfileStorageEntityTransfers
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    protected function mapMerchantProfileStorageTransfersToSynchronizationDataTransfers(array $merchantProfileStorageTransfers): array
+    protected function mapMerchantProfileStorageEntitiesToSynchronizationDataTransfers(array $merchantProfileStorageEntityTransfers): array
     {
         $synchronizationDataTransfers = [];
-        foreach ($merchantProfileStorageTransfers as $merchantProfileStorageTransfer) {
+        foreach ($merchantProfileStorageEntityTransfers as $merchantProfileStorageEntityTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            /** @var string $data */
-            $data = $merchantProfileStorageTransfer->getData();
-            $synchronizationDataTransfer->setData($data);
-            $synchronizationDataTransfer->setKey($merchantProfileStorageTransfer->getKey());
+            $synchronizationDataTransfer->setData($merchantProfileStorageEntityTransfer->getData());
+            $synchronizationDataTransfer->setKey($merchantProfileStorageEntityTransfer->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
 

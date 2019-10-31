@@ -9,8 +9,6 @@ namespace Spryker\Zed\MerchantProfileStorage\Persistence;
 
 use Orm\Zed\MerchantProfileStorage\Persistence\SpyMerchantProfileStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\MerchantProfileStorage\Persistence\Propel\Mapper\MerchantProfileStorageMapper;
-use Spryker\Zed\MerchantProfileStorage\Persistence\Propel\Mapper\MerchantProfileStorageMapperInterface;
 
 /**
  * @method \Spryker\Zed\MerchantProfileStorage\MerchantProfileStorageConfig getConfig()
@@ -25,13 +23,5 @@ class MerchantProfileStoragePersistenceFactory extends AbstractPersistenceFactor
     public function createMerchantProfileStorageQuery(): SpyMerchantProfileStorageQuery
     {
         return SpyMerchantProfileStorageQuery::create();
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantProfileStorage\Persistence\Propel\Mapper\MerchantProfileStorageMapperInterface
-     */
-    public function createMerchantProfileStorageMapper(): MerchantProfileStorageMapperInterface
-    {
-        return new MerchantProfileStorageMapper();
     }
 }

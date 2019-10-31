@@ -16,13 +16,13 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
  * @method \Spryker\Zed\MerchantProfileStorage\Business\MerchantProfileStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProfileStorage\MerchantProfileStorageConfig getConfig()
  */
-class MerchantProfileStorageDeactivateListener extends AbstractPlugin implements EventBulkHandlerInterface
+class MerchantProfileStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use TransactionTrait;
 
     /**
      * {@inheritDoc}
-     * - Handles merchant update and delete events.
+     * - Handles merchant profile delete events.
      *
      * @api
      *

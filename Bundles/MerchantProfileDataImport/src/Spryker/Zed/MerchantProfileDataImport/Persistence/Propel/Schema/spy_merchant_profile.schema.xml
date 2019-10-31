@@ -3,6 +3,15 @@
           namespace="Orm\Zed\MerchantProfile\Persistence"
           package="src.Orm.Zed.MerchantProfile.Persistence">
 
+    <table name="spy_merchant">
+        <column name="merchant_key" type="VARCHAR" size="255"  description="Identifier for existing entities. It should never be changed."/>
+
+        <unique name="spy_merchant-merchant_key">
+            <unique-column name="merchant_key"/>
+        </unique>
+    </table>
+
+
     <table name="spy_merchant_profile_address">
         <column name="key" type="VARCHAR" size="255" description="Identifier for existing entities. It should never be changed."/>
 

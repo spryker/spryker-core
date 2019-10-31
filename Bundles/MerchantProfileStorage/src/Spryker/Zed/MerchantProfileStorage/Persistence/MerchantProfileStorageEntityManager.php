@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantProfileStorage\Persistence;
 
 use Generated\Shared\Transfer\MerchantProfileStorageTransfer;
+use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -16,38 +17,38 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class MerchantProfileStorageEntityManager extends AbstractEntityManager implements MerchantProfileStorageEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantProfileStorageTransfer $merchantProfileStorageTransfer
+     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
      *
      * @return void
      */
-    public function saveMerchantProfileStorageEntity(MerchantProfileStorageTransfer $merchantProfileStorageTransfer): void
+    public function saveMerchantProfileStorage(MerchantProfileTransfer $merchantProfileTransfer): void
     {
-        $merchantProfileStorageTransfer->requireFkMerchant();
+        $merchantProfileTransfer->requireIdMerchantProfile();
 
         $merchantProfileStorageEntity = $this->getFactory()
             ->createMerchantProfileStorageQuery()
-            ->filterByFkMerchantProfile($merchantProfileStorageTransfer->getFkMerchantProfile())
+            ->filterByFkMerchant($merchantProfileTransfer->getFkMerchant())
             ->findOneOrCreate();
-        $merchantProfileStorageEntity = $this->getFactory()
-            ->createMerchantProfileStorageMapper()
-            ->mapMerchantProfileStorageTransferToMerchantProfileStorageEntity(
-                $merchantProfileStorageTransfer,
-                $merchantProfileStorageEntity
-            );
+
+        $merchantProfileStorageTransfer = new MerchantProfileStorageTransfer();
+        $merchantProfileStorageTransfer->fromArray($merchantProfileStorageEntity->toArray(), true);
+
+        $merchantProfileStorageEntity->setData($merchantProfileStorageTransfer->toArray());
+        $merchantProfileStorageEntity->setIsSendingToQueue($this->getFactory()->getConfig()->isSendingToQueue());
 
         $merchantProfileStorageEntity->save();
     }
 
     /**
-     * @param int[] $merchantProfileIds
+     * @param int[] $merchantIds
      *
      * @return void
      */
-    public function deleteMerchantProfileStorageEntitiesByMerchantProfileIds(array $merchantProfileIds): void
+    public function deleteMerchantProfileStorageEntitiesByMerchantIds(array $merchantIds): void
     {
         $merchantProfileEntities = $this->getFactory()
             ->createMerchantProfileStorageQuery()
-            ->filterByFkMerchantProfile_In($merchantProfileIds)
+            ->filterByFkMerchant_In($merchantIds)
             ->find();
 
         foreach ($merchantProfileEntities as $merchantProfileEntity) {

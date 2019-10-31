@@ -9,7 +9,6 @@ namespace Spryker\Zed\MerchantProfile\Business\MerchantProfile;
 
 use ArrayObject;
 use Generated\Shared\Transfer\EventEntityTransfer;
-use Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -111,7 +110,7 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
     {
         $merchantProfileTransfer = $this->merchantProfileGlossaryWriter->saveMerchantProfileGlossaryAttributes($merchantProfileTransfer);
         $merchantProfileTransfer = $this->merchantProfileEntityManager->create($merchantProfileTransfer);
-        $merchantProfileTransfer = $this->saveMerchantProfileAddress($merchantProfileTransfer, $merchantProfileTransfer->getAddressCollection());
+        $merchantProfileTransfer = $this->saveMerchantProfileAddress($merchantProfileTransfer);
         $merchantProfileTransfer = $this->saveMerchantProfileUrls($merchantProfileTransfer, $merchantProfileTransfer->getUrlCollection());
 
         return $merchantProfileTransfer;
@@ -126,7 +125,7 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
     {
         $merchantProfileTransfer = $this->merchantProfileGlossaryWriter->saveMerchantProfileGlossaryAttributes($merchantProfileTransfer);
         $merchantProfileTransfer = $this->merchantProfileEntityManager->update($merchantProfileTransfer);
-        $merchantProfileTransfer = $this->saveMerchantProfileAddress($merchantProfileTransfer, $merchantProfileTransfer->getAddressCollection());
+        $merchantProfileTransfer = $this->saveMerchantProfileAddress($merchantProfileTransfer);
         $merchantProfileTransfer = $this->saveMerchantProfileUrls($merchantProfileTransfer, $merchantProfileTransfer->getUrlCollection());
 
         return $merchantProfileTransfer;
@@ -134,19 +133,14 @@ class MerchantProfileWriter implements MerchantProfileWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
-     * @param \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer|null $merchantProfileAddressCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
     protected function saveMerchantProfileAddress(
-        MerchantProfileTransfer $merchantProfileTransfer,
-        ?MerchantProfileAddressCollectionTransfer $merchantProfileAddressCollectionTransfer
+        MerchantProfileTransfer $merchantProfileTransfer
     ): MerchantProfileTransfer {
-        if ($merchantProfileAddressCollectionTransfer === null) {
-            return $merchantProfileTransfer;
-        }
         $merchantProfileAddressCollectionTransfer = $this->merchantProfileAddressWriter->saveMerchantProfileAddressCollection(
-            $merchantProfileAddressCollectionTransfer,
+            $merchantProfileTransfer->getAddressCollection(),
             $merchantProfileTransfer->getIdMerchantProfile()
         );
         $merchantProfileTransfer->setAddressCollection($merchantProfileAddressCollectionTransfer);

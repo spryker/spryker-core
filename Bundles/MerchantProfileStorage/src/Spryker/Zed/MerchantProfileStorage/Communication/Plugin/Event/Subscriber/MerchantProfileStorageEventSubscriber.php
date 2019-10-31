@@ -11,8 +11,8 @@ use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantProfile\Dependency\MerchantProfileEvents;
-use Spryker\Zed\MerchantProfileStorage\Communication\Plugin\Event\Listener\MerchantProfileStorageActivateListener;
-use Spryker\Zed\MerchantProfileStorage\Communication\Plugin\Event\Listener\MerchantProfileStorageDeactivateListener;
+use Spryker\Zed\MerchantProfileStorage\Communication\Plugin\Event\Listener\MerchantProfileStoragePublishListener;
+use Spryker\Zed\MerchantProfileStorage\Communication\Plugin\Event\Listener\MerchantProfileStorageUnpublishListener;
 
 /**
  * @method \Spryker\Zed\MerchantProfileStorage\MerchantProfileStorageConfig getConfig()
@@ -32,8 +32,10 @@ class MerchantProfileStorageEventSubscriber extends AbstractPlugin implements Ev
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $eventCollection = $this->addMerchantActivateStorageListener($eventCollection);
-        $eventCollection = $this->addMerchantDeactivateStorageListener($eventCollection);
+        $eventCollection = $this->addMerchantProfileCreateListeners($eventCollection);
+        $eventCollection = $this->addMerchantProfileUpdateListeners($eventCollection);
+        $eventCollection = $this->addMerchantProfilePublishListeners($eventCollection);
+        $eventCollection = $this->addMerchantProfileDeleteListeners($eventCollection);
 
         return $eventCollection;
     }
@@ -43,11 +45,9 @@ class MerchantProfileStorageEventSubscriber extends AbstractPlugin implements Ev
      *
      * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
      */
-    protected function addMerchantActivateStorageListener(EventCollectionInterface $eventCollection): EventCollectionInterface
+    protected function addMerchantProfileCreateListeners(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_CREATE, new MerchantProfileStorageActivateListener());
-        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_UPDATE, new MerchantProfileStorageActivateListener());
-        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_PUBLISH, new MerchantProfileStorageActivateListener());
+        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_CREATE, new MerchantProfileStoragePublishListener());
 
         return $eventCollection;
     }
@@ -57,10 +57,33 @@ class MerchantProfileStorageEventSubscriber extends AbstractPlugin implements Ev
      *
      * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
      */
-    protected function addMerchantDeactivateStorageListener(EventCollectionInterface $eventCollection): EventCollectionInterface
+    protected function addMerchantProfileUpdateListeners(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_UPDATE, new MerchantProfileStorageDeactivateListener());
-        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_UNPUBLISH, new MerchantProfileStorageDeactivateListener());
+        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_UPDATE, new MerchantProfileStoragePublishListener());
+
+        return $eventCollection;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
+     */
+    protected function addMerchantProfilePublishListeners(EventCollectionInterface $eventCollection): EventCollectionInterface
+    {
+        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_PUBLISH, new MerchantProfileStoragePublishListener());
+
+        return $eventCollection;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
+     */
+    protected function addMerchantProfileDeleteListeners(EventCollectionInterface $eventCollection): EventCollectionInterface
+    {
+        $eventCollection->addListenerQueued(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_DELETE, new MerchantProfileStorageUnpublishListener());
 
         return $eventCollection;
     }

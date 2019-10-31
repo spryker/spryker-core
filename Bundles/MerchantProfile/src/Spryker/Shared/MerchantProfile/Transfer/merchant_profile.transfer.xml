@@ -30,7 +30,7 @@
         <property name="urlCollection" type="Url[]" singular="url"/>
         <property name="merchantName" type="string"/>
         <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" singular="merchantProfileLocalizedGlossaryAttribute"/>
-        <property name="addressCollection" type="MerchantProfileAddressCollection"/>
+        <property name="addressCollection" type="MerchantProfileAddressCollection" singular="address"/>
     </transfer>
 
     <transfer name="MerchantProfileCollection">

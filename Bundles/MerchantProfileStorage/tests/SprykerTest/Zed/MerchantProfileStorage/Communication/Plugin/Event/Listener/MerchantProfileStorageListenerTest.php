@@ -14,8 +14,8 @@ use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\MerchantProfile\Dependency\MerchantProfileEvents;
 use Spryker\Zed\MerchantProfileStorage\Business\MerchantProfileStorageBusinessFactory;
 use Spryker\Zed\MerchantProfileStorage\Business\MerchantProfileStorageFacade;
-use Spryker\Zed\MerchantProfileStorage\Communication\Plugin\Event\Listener\MerchantProfileStorageActivateListener;
-use Spryker\Zed\MerchantProfileStorage\Communication\Plugin\Event\Listener\MerchantProfileStorageDeactivateListener;
+use Spryker\Zed\MerchantProfileStorage\Communication\Plugin\Event\Listener\MerchantProfileStoragePublishListener;
+use Spryker\Zed\MerchantProfileStorage\Communication\Plugin\Event\Listener\MerchantProfileStorageUnpublishListener;
 use SprykerTest\Zed\MerchantProfileStorage\MerchantProfileStorageConfigMock;
 
 /**
@@ -61,7 +61,7 @@ class MerchantProfileStorageListenerTest extends Unit
         $merchantProfileTransfer = $this->tester->haveMerchantProfile($this->tester->haveMerchant());
 
         // Act
-        $merchantProfileStorageActivateListener = new MerchantProfileStorageActivateListener();
+        $merchantProfileStorageActivateListener = new MerchantProfileStoragePublishListener();
         $eventTransfers = [
             (new EventEntityTransfer())->setId($merchantProfileTransfer->getIdMerchantProfile()),
         ];
@@ -90,8 +90,8 @@ class MerchantProfileStorageListenerTest extends Unit
         $eventTransfers = [
             (new EventEntityTransfer())->setId($merchantProfileTransfer->getIdMerchantProfile()),
         ];
-        $merchantProfileStorageActivateListener = new MerchantProfileStorageActivateListener();
-        $merchantProfileStorageDeactivateListener = new MerchantProfileStorageDeactivateListener();
+        $merchantProfileStorageActivateListener = new MerchantProfileStoragePublishListener();
+        $merchantProfileStorageDeactivateListener = new MerchantProfileStorageUnpublishListener();
 
         $merchantProfileStorageActivateListener->handleBulk($eventTransfers, MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_PUBLISH);
         $merchantProfileStorageDeactivateListener->handleBulk($eventTransfers, MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_UNPUBLISH);

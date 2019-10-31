@@ -32,4 +32,22 @@ class MerchantProfileStorageCommunicationTester extends Actor
    /**
     * Define custom actions here
     */
+
+    /**
+     * @param int $idMerchantProfile
+     *
+     * @return \Orm\Zed\MerchantProfileStorage\Persistence\Base\SpyMerchantProfileStorage|null
+     */
+    public function findMerchantProfileStorageByIdMerchantProfile(int $idMerchantProfile): ?SpyMerchantProfileStorage
+    {
+        return $this->getMerchantProfileStorageQuery()->findOneByFkMerchantProfile($idMerchantProfile);
+    }
+
+    /**
+     * @return \Orm\Zed\MerchantProfileStorage\Persistence\SpyMerchantProfileStorageQuery
+     */
+    protected function getMerchantProfileStorageQuery(): SpyMerchantProfileStorageQuery
+    {
+        return SpyMerchantProfileStorageQuery::create();
+    }
 }

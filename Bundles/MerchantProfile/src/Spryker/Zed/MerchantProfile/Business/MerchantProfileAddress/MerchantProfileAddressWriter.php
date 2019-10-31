@@ -62,7 +62,8 @@ class MerchantProfileAddressWriter implements MerchantProfileAddressWriterInterf
 
         foreach ($merchantProfileAddressCollectionTransfer->getAddresses() as $merchantProfileAddressTransfer) {
             $merchantProfileAddressTransfer->setFkMerchantProfile($idMerchantProfile);
-            $savedMerchantProfileAddressCollectionTransfer->addAddress($this->saveMerchantProfileAddress($merchantProfileAddressTransfer));
+            $merchantProfileAddressTransfer = $this->saveMerchantProfileAddress($merchantProfileAddressTransfer);
+            $savedMerchantProfileAddressCollectionTransfer->addAddress($merchantProfileAddressTransfer);
         }
 
         return $savedMerchantProfileAddressCollectionTransfer;
