@@ -6,9 +6,8 @@
 
 namespace Generated\Shared\Transfer;
 
-use Spryker\Shared\Kernel\Transfer\TransferInterface;
-use ArrayObject;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use ArrayObject;
 
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
@@ -715,7 +714,7 @@ class CatFaceTransfer extends AbstractTransfer
                     $values[$arrayKey] = $value;
                     break;
                 case 'item':
-                    $values[$arrayKey] = $value instanceof TransferInterface ? $value->modifiedToArray(true, true) : $value;
+                    $values[$arrayKey] = $value instanceof AbstractTransfer ? $value->modifiedToArray(true, true) : $value;
                     break;
                 case 'items':
                 case 'typedAssociativeCollection':
@@ -746,7 +745,7 @@ class CatFaceTransfer extends AbstractTransfer
                     $values[$arrayKey] = $value;
                     break;
                 case 'item':
-                    $values[$arrayKey] = $value instanceof TransferInterface ? $value->modifiedToArray(true, false) : $value;
+                    $values[$arrayKey] = $value instanceof AbstractTransfer ? $value->modifiedToArray(true, false) : $value;
                     break;
                 case 'items':
                 case 'typedAssociativeCollection':
@@ -844,7 +843,7 @@ class CatFaceTransfer extends AbstractTransfer
             'typed_associative_string_array' => $this->typedAssociativeStringArray,
             'typed_not_associative_string_array' => $this->typedNotAssociativeStringArray,
             'typed_not_associative_array' => $this->typedNotAssociativeArray,
-            'item' => $this->item instanceof TransferInterface ? $this->item->toArray(true, false) : $this->item,
+            'item' => $this->item instanceof AbstractTransfer ? $this->item->toArray(true, false) : $this->item,
             'items' => $this->addValuesToCollection($this->items, true, false),
             'typed_associative_collection' => $this->addValuesToCollection($this->typedAssociativeCollection, true, false),
         ];
@@ -861,7 +860,7 @@ class CatFaceTransfer extends AbstractTransfer
             'typedAssociativeStringArray' => $this->typedAssociativeStringArray,
             'typedNotAssociativeStringArray' => $this->typedNotAssociativeStringArray,
             'typedNotAssociativeArray' => $this->typedNotAssociativeArray,
-            'item' => $this->item instanceof TransferInterface ? $this->item->toArray(true, true) : $this->item,
+            'item' => $this->item instanceof AbstractTransfer ? $this->item->toArray(true, true) : $this->item,
             'items' => $this->addValuesToCollection($this->items, true, true),
             'typedAssociativeCollection' => $this->addValuesToCollection($this->typedAssociativeCollection, true, true),
         ];

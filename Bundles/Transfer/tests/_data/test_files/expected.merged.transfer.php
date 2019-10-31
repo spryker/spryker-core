@@ -6,8 +6,8 @@
 
 namespace Generated\Shared\Transfer;
 
-use ArrayObject;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use ArrayObject;
 
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
