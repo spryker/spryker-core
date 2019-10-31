@@ -31,4 +31,7 @@
         <property name="idGiftCard" type="int"/>
     </transfer>
 
+    <transfer name="CheckoutResponse">
+    </transfer>
+
 </transfers>

@@ -30,4 +30,7 @@
         <property name="isActive" type="bool"/>
     </transfer>
 
+    <transfer name="CmsVersionData">
+    </transfer>
+
 </transfers>
