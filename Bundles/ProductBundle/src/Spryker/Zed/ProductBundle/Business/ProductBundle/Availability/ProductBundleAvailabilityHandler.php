@@ -181,7 +181,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer
      */
-    protected function findBundledItemAvailabilityEntityBySku(
+    protected function findBundledItemAvailabilityBySku(
         string $bundledItemSku,
         StoreTransfer $storeTransfer
     ): ProductConcreteAvailabilityTransfer {
@@ -201,7 +201,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
         foreach ($bundleItems as $bundleItemEntity) {
             $bundledItemSku = $bundleItemEntity->getSpyProductRelatedByFkBundledProduct()->getSku();
 
-            $bundledProductAvailabilityTransfer = $this->findBundledItemAvailabilityEntityBySku(
+            $bundledProductAvailabilityTransfer = $this->findBundledItemAvailabilityBySku(
                 $bundledItemSku,
                 $storeTransfer
             );
