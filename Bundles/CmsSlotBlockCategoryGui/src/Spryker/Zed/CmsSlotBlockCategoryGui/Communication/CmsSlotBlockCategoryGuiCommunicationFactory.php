@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\CmsSlotBlockCategoryGui\Communication;
 
-use Spryker\Zed\CmsSlotBlock\Dependency\Facade\CmsSlotBlockCategoryGuiToLocaleFacadeInterface;
 use Spryker\Zed\CmsSlotBlockCategoryGui\CmsSlotBlockCategoryGuiDependencyProvider;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Communication\DataProvider\CategorySlotBlockDataProvider;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Communication\DataProvider\CategorySlotBlockDataProviderInterface;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\CategorySlotBlockConditionForm;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\Validator\Constraints\CategoryConditionsConstraint;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToCategoryFacadeInterface;
+use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToLocaleFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
-class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
+class CmsSlotBlockCategoryGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
      * @return \Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\CategorySlotBlockConditionForm
@@ -45,11 +45,17 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
         return new CategoryConditionsConstraint();
     }
 
+    /**
+     * @return \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToCategoryFacadeInterface
+     */
     public function getCategoryFacade(): CmsSlotBlockCategoryGuiToCategoryFacadeInterface
     {
         return $this->getProvidedDependency(CmsSlotBlockCategoryGuiDependencyProvider::FACADE_CATEGORY);
     }
 
+    /**
+     * @return \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToLocaleFacadeInterface
+     */
     public function getLocaleFacade(): CmsSlotBlockCategoryGuiToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(CmsSlotBlockCategoryGuiDependencyProvider::FACADE_LOCALE);

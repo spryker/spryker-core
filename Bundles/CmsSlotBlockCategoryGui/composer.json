@@ -4,7 +4,11 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/kernel": "^3.0.0"
+    "spryker/category": "*",
+    "spryker/cms-slot-block-gui-extension": "*",
+    "spryker/kernel": "^3.0.0",
+    "spryker/locale": "*",
+    "spryker/symfony": "*"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

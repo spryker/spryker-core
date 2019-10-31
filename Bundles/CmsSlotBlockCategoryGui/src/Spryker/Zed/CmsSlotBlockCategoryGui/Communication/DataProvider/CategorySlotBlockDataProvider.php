@@ -9,16 +9,14 @@ namespace Spryker\Zed\CmsSlotBlockCategoryGui\Communication\DataProvider;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockTransfer;
-use Spryker\Zed\CmsSlotBlock\Dependency\Facade\CmsSlotBlockCategoryGuiToLocaleFacadeInterface;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\CategorySlotBlockConditionForm;
-use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToCategoryFacadeInterface;
-use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\QueryContainer\CategoryGuiToCategoryQueryContainerInterface;
+use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToLocaleFacadeInterface;
 
 class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInterface
 {
     /**
-     * @var \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToCategoryFacadeInterfac
+     * @var \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToCategoryFacadeInterface
      */
     protected $categoryFacade;
 
@@ -62,7 +60,7 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryCollectionTransfer $categoryEntityCollection
+     * @param \Generated\Shared\Transfer\CategoryCollectionTransfer $categoryCollectionTransfer
      *
      * @return int[]
      */

@@ -17,6 +17,11 @@ class CmsSlotBlockCategoryGuiDependencyProvider extends AbstractBundleDependency
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
 
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addCategoryFacade($container);
@@ -25,6 +30,11 @@ class CmsSlotBlockCategoryGuiDependencyProvider extends AbstractBundleDependency
         return $container;
     }
 
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addCategoryFacade(Container $container): Container
     {
         $container->set(static::FACADE_CATEGORY, function (Container $container) {
@@ -32,8 +42,15 @@ class CmsSlotBlockCategoryGuiDependencyProvider extends AbstractBundleDependency
                 $container->getLocator()->category()->facade()
             );
         });
+
+        return $container;
     }
 
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addLocaleFacade(Container $container): Container
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
@@ -41,5 +58,7 @@ class CmsSlotBlockCategoryGuiDependencyProvider extends AbstractBundleDependency
                 $container->getLocator()->locale()->facade()
             );
         });
+
+        return $container;
     }
 }

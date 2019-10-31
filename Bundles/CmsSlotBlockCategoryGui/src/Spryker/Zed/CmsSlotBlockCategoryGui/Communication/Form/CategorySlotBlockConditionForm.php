@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * @method \Spryker\Zed\CmsSlotBlockCategoryGui\Communication\CategoryGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsSlotBlockCategoryGui\Communication\CmsSlotBlockCategoryGuiCommunicationFactory getFactory()
  */
 class CategorySlotBlockConditionForm extends AbstractType
 {
