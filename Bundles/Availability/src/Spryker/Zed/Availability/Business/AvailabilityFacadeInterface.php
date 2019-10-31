@@ -113,7 +113,7 @@ interface AvailabilityFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `AvailabilityFacadeInterface::findProductAbstractAvailabilityBySkuForStore() instead`.
+     * @deprecated Use `AvailabilityFacadeInterface::findOrCreateProductAbstractAvailabilityBySkuForStore() instead`.
      *
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -129,7 +129,7 @@ interface AvailabilityFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `AvailabilityFacadeInterface::findProductAbstractAvailabilityBySkuForStore() instead`.
+     * @deprecated Use `AvailabilityFacadeInterface::findOrCreateProductAbstractAvailabilityBySkuForStore() instead`.
      *
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -145,7 +145,7 @@ interface AvailabilityFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `AvailabilityFacadeInterface::findProductConcreteAvailabilityBySkuForStore() instead`.
+     * @deprecated Use `AvailabilityFacadeInterface::findOrCreateProductConcreteAvailabilityBySkuForStore() instead`.
      *
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *
@@ -156,7 +156,7 @@ interface AvailabilityFacadeInterface
     /**
      * Specification:
      *  - Finds product abstract availability as is stored in persistence.
-     *  - If nothing was stored in persistence, abstract availability gets calculated and stored.
+     *  - If nothing was stored in persistence, abstract availability will be calculated and stored.
      *
      * @api
      *
@@ -165,11 +165,12 @@ interface AvailabilityFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
      */
-    public function findProductAbstractAvailabilityBySkuForStore(string $sku, StoreTransfer $storeTransfer): ?ProductAbstractAvailabilityTransfer;
+    public function findOrCreateProductAbstractAvailabilityBySkuForStore(string $sku, StoreTransfer $storeTransfer): ?ProductAbstractAvailabilityTransfer;
 
     /**
      * Specification:
      *  - Finds product concrete availability as is stored in persistence.
+     *  - If nothing was stored in persistence, concrete availability will be calculated and stored.
      *
      * @api
      *
@@ -178,7 +179,7 @@ interface AvailabilityFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
-    public function findProductConcreteAvailabilityBySkuForStore(string $sku, StoreTransfer $storeTransfer): ?ProductConcreteAvailabilityTransfer;
+    public function findOrCreateProductConcreteAvailabilityBySkuForStore(string $sku, StoreTransfer $storeTransfer): ?ProductConcreteAvailabilityTransfer;
 
     /**
      * Specification:

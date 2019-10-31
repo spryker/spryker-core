@@ -32,9 +32,9 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
-    public function findProductConcreteAvailabilityBySkuForStore(string $sku, StoreTransfer $storeTransfer): ?ProductConcreteAvailabilityTransfer
+    public function findOrCreateProductConcreteAvailabilityBySkuForStore(string $sku, StoreTransfer $storeTransfer): ?ProductConcreteAvailabilityTransfer
     {
-        return $this->availabilityFacade->findProductConcreteAvailabilityBySkuForStore($sku, $storeTransfer);
+        return $this->availabilityFacade->findOrCreateProductConcreteAvailabilityBySkuForStore($sku, $storeTransfer);
     }
 
     /**

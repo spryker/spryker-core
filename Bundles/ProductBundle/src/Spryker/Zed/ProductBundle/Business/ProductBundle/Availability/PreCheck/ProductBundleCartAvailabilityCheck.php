@@ -131,7 +131,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     protected function findAvailabilityBySku(string $sku, StoreTransfer $storeTransfer): ?ProductConcreteAvailabilityTransfer
     {
         return $this->availabilityFacade
-            ->findProductConcreteAvailabilityBySkuForStore($sku, $storeTransfer);
+            ->findOrCreateProductConcreteAvailabilityBySkuForStore($sku, $storeTransfer);
     }
 
     /**
@@ -159,7 +159,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         StoreTransfer $storeTransfer
     ): Decimal {
         $productConcreteAvailabilityTransfer = $this->availabilityFacade
-            ->findProductConcreteAvailabilityBySkuForStore(
+            ->findOrCreateProductConcreteAvailabilityBySkuForStore(
                 $itemTransfer->getSku(),
                 $storeTransfer
             );

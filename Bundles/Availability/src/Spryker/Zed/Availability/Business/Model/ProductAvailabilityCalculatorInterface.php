@@ -42,6 +42,8 @@ interface ProductAvailabilityCalculatorInterface
      * @param string $abstractSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
+     * @throws \Spryker\Zed\Availability\Business\Exception\ProductNotFoundException
+     *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
     public function getCalculatedProductAbstractAvailabilityTransfer(string $abstractSku, StoreTransfer $storeTransfer): ProductAbstractAvailabilityTransfer;

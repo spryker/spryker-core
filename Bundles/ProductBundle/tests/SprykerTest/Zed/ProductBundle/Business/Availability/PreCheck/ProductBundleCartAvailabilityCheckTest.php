@@ -52,7 +52,7 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
         $availabilityTransfer = new ProductConcreteAvailabilityTransfer();
         $availabilityTransfer->setAvailability(0);
 
-        $availabilityFacadeMock->method('findProductConcreteAvailabilityBySkuForStore')
+        $availabilityFacadeMock->method('findOrCreateProductConcreteAvailabilityBySkuForStore')
             ->willReturn($availabilityTransfer);
 
         $productBundleAvailabilityCheckMock = $this->createProductBundleCartAvailabilityCheckMock($availabilityFacadeMock);
@@ -92,7 +92,7 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
         $availabilityTransfer = new ProductConcreteAvailabilityTransfer();
         $availabilityTransfer->setAvailability(0);
 
-        $availabilityFacadeMock->method('findProductConcreteAvailabilityBySkuForStore')
+        $availabilityFacadeMock->method('findOrCreateProductConcreteAvailabilityBySkuForStore')
             ->willReturn($availabilityTransfer);
 
         $this->setupFindBundledProducts($this->fixtures, $productBundleAvailabilityCheckMock);

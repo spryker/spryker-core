@@ -179,14 +179,14 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      * @param string $bundledItemSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
     protected function findBundledItemAvailabilityBySku(
         string $bundledItemSku,
         StoreTransfer $storeTransfer
-    ): ProductConcreteAvailabilityTransfer {
+    ): ?ProductConcreteAvailabilityTransfer {
         return $this->availabilityFacade
-            ->findProductConcreteAvailabilityBySkuForStore($bundledItemSku, $storeTransfer);
+            ->findOrCreateProductConcreteAvailabilityBySkuForStore($bundledItemSku, $storeTransfer);
     }
 
     /**

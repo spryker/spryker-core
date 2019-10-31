@@ -23,6 +23,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartItemGroupKeyExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundleFacade;
 use Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface;
@@ -345,16 +346,27 @@ class ProductBundleFacadeTest extends Unit
      */
     public function testUpdateAffectedBundleAvailabilityWhenOneOfBundledItemsUnavailable(): void
     {
-        $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2);
+        $productConcreteTransferToAssign1 = $this->createProduct(static::BUNDLED_PRODUCT_PRICE_1, static::SKU_BUNDLED_1);
+        $productConcreteTransferToAssign2 = $this->createProduct(static::BUNDLED_PRODUCT_PRICE_2, static::SKU_BUNDLED_2);
+
+        $this->createProductBundle(
+            static::BUNDLED_PRODUCT_PRICE_2,
+            false,
+            [
+                $productConcreteTransferToAssign1,
+                $productConcreteTransferToAssign2,
+            ]
+        );
+
         $storeTransfer = (new StoreTransfer())->setIdStore(static::ID_STORE);
 
-        $this->tester->haveAvailabilityConcrete(static::SKU_BUNDLED_2, $storeTransfer, 0);
+        $this->tester->haveAvailabilityAbstract($productConcreteTransferToAssign1, new Decimal(0));
 
         $this->createProductBundleFacade()
-            ->updateAffectedBundlesAvailability(static::SKU_BUNDLED_2);
+            ->updateAffectedBundlesAvailability($productConcreteTransferToAssign2->getSku());
 
         $bundledProductAvailability = $this->createAvailabilityFacade()
-            ->findProductConcreteAvailabilityBySkuForStore(
+            ->findOrCreateProductConcreteAvailabilityBySkuForStore(
                 static::BUNDLE_SKU_3,
                 $storeTransfer
             );
@@ -527,28 +539,30 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @param int $bundlePrice
      * @param bool $isAlwaysAvailable
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productsToAssign
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function createProductBundle($bundlePrice, $isAlwaysAvailable = false): ProductConcreteTransfer
+    protected function createProductBundle($bundlePrice, $isAlwaysAvailable = false, array $productsToAssign = []): ProductConcreteTransfer
     {
-        $productConcreteTransferToAssign1 = $this->createProduct(static::BUNDLED_PRODUCT_PRICE_1, static::SKU_BUNDLED_1, $isAlwaysAvailable);
-        $productConcreteTransferToAssign2 = $this->createProduct(static::BUNDLED_PRODUCT_PRICE_2, static::SKU_BUNDLED_2, $isAlwaysAvailable);
+        if ($productsToAssign === []) {
+            $productsToAssign = [
+                $this->createProduct(static::BUNDLED_PRODUCT_PRICE_1, static::SKU_BUNDLED_1, $isAlwaysAvailable),
+                $this->createProduct(static::BUNDLED_PRODUCT_PRICE_2, static::SKU_BUNDLED_2, $isAlwaysAvailable),
+            ];
+        }
 
         $productBundleTransfer = new ProductBundleTransfer();
         if ($isAlwaysAvailable) {
             $productBundleTransfer->setIsNeverOutOfStock(true);
         }
 
-        $bundledProductTransfer = new ProductForBundleTransfer();
-        $bundledProductTransfer->setQuantity(1);
-        $bundledProductTransfer->setIdProductConcrete($productConcreteTransferToAssign1->getIdProductConcrete());
-        $productBundleTransfer->addBundledProduct($bundledProductTransfer);
-
-        $bundledProductTransfer = new ProductForBundleTransfer();
-        $bundledProductTransfer->setQuantity(2);
-        $bundledProductTransfer->setIdProductConcrete($productConcreteTransferToAssign2->getIdProductConcrete());
-        $productBundleTransfer->addBundledProduct($bundledProductTransfer);
+        foreach ($productsToAssign as $productConcreteTransferToAssign) {
+            $bundledProductTransfer = new ProductForBundleTransfer();
+            $bundledProductTransfer->setQuantity(1);
+            $bundledProductTransfer->setIdProductConcrete($productConcreteTransferToAssign->getIdProductConcrete());
+            $productBundleTransfer->addBundledProduct($bundledProductTransfer);
+        }
 
         $productConcreteTransfer = $this->createProduct($bundlePrice, static::BUNDLE_SKU_3, $isAlwaysAvailable);
         $productConcreteTransfer->setProductBundle($productBundleTransfer);

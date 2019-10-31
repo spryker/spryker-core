@@ -57,10 +57,6 @@ class AvailabilityEditStockCest
         $i->click('Save');
         $i->seeResponseCodeIs($example['expectedResponseCode']);
 
-        $i->fillField('//*[@id="AvailabilityGui_stock_stocks_0_quantity"]', 'string');
-        $i->click('input[type=submit]');
-        $i->see('This value is not valid.');
-
         $i->click('//*[@id="page-wrapper"]/div[2]/div[2]/div/a');
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_VIEW_HEADER);
     }

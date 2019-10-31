@@ -49,6 +49,13 @@ class ProductBundleAvailabilityHandlerTest extends Unit
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $productBundleAvailabilityHandlerMock = $this->createProductBundleAvailabilityHandler($availabilityFacadeMock);
 
+        $availabilityFacadeMock->method('findOrCreateProductConcreteAvailabilityBySkuForStore')
+            ->willReturn(
+                (new ProductConcreteAvailabilityTransfer())
+                    ->setSku($bundledItemSku)
+                    ->setAvailability($bundledItemAvailability)
+            );
+
         $bundledProducts = [];
         $productBundleEntity = new SpyProductBundle();
         $productEntity = new SpyProduct();
@@ -83,6 +90,13 @@ class ProductBundleAvailabilityHandlerTest extends Unit
 
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $productBundleAvailabilityHandlerMock = $this->createProductBundleAvailabilityHandler($availabilityFacadeMock);
+
+        $availabilityFacadeMock->method('findOrCreateProductConcreteAvailabilityBySkuForStore')
+            ->willReturn(
+                (new ProductConcreteAvailabilityTransfer())
+                    ->setSku($bundledItemSku)
+                    ->setAvailability($bundledItemAvailability)
+            );
 
         $bundleProductEntity = new SpyProductBundle();
 

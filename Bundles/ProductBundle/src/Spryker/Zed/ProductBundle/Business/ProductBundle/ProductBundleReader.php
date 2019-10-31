@@ -118,13 +118,13 @@ class ProductBundleReader implements ProductBundleReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
-    protected function findProductConcreteAvailabilityBySkuForStore(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteAvailabilityTransfer
+    protected function findProductConcreteAvailabilityBySkuForStore(ProductConcreteTransfer $productConcreteTransfer): ?ProductConcreteAvailabilityTransfer
     {
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
         return $this->availabilityFacade
-            ->findProductConcreteAvailabilityBySkuForStore($productConcreteTransfer->getSku(), $storeTransfer);
+            ->findOrCreateProductConcreteAvailabilityBySkuForStore($productConcreteTransfer->getSku(), $storeTransfer);
     }
 }

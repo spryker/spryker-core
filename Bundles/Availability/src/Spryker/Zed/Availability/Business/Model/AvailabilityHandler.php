@@ -186,14 +186,14 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         string $concreteSku,
         StoreTransfer $storeTransfer
     ): ProductConcreteAvailabilityTransfer {
+        $abstractSku = $this->getAbstractSkuFromProductConcrete($concreteSku);
+
         $wasProductConcreteAvailable = $this->isProductConcreteAvailable(
             $this->availabilityRepository->findProductConcreteAvailabilityBySkuAndStore($concreteSku, $storeTransfer)
         );
 
         $productConcreteAvailabilityTransfer = $this->availabilityCalculator
             ->getCalculatedProductConcreteAvailabilityTransfer($concreteSku, $storeTransfer);
-
-        $abstractSku = $this->getAbstractSkuFromProductConcrete($concreteSku);
 
         $this->updateProductAbstractAvailabilityBySku($abstractSku, $storeTransfer);
 
