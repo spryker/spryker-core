@@ -25,7 +25,7 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface
      */
-    public function getLocaleFacade(): CategoryGuiToLocaleFacadeInterface
+    protected function getLocaleFacade(): CategoryGuiToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(CategoryGuiDependencyProvider::FACADE_LOCALE);
     }
