@@ -6,6 +6,7 @@
 
 namespace Generated\Shared\Transfer;
 
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use ArrayObject;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
@@ -533,7 +534,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
                     $values[$arrayKey] = $value;
                     break;
                 case 'transferField':
-                    $values[$arrayKey] = $value ? $value->modifiedToArray(true, true) : $value;
+                    $values[$arrayKey] = $value instanceof TransferInterface ? $value->modifiedToArray(true, true) : $value;
                     break;
                 case 'transferCollectionField':
                     $values[$arrayKey] = $value ? $this->addValuesToCollectionModified($value, true, true) : $value;
@@ -561,7 +562,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
                     $values[$arrayKey] = $value;
                     break;
                 case 'transferField':
-                    $values[$arrayKey] = $value ? $value->modifiedToArray(true, false) : $value;
+                    $values[$arrayKey] = $value instanceof TransferInterface ? $value->modifiedToArray(true, false) : $value;
                     break;
                 case 'transferCollectionField':
                     $values[$arrayKey] = $value ? $this->addValuesToCollectionModified($value, true, false) : $value;
@@ -649,7 +650,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
             'scalar_field' => $this->scalarField,
             'array_field' => $this->arrayField,
             'project_level_deprecated_field' => $this->projectLevelDeprecatedField,
-            'transfer_field' => $this->transferField ? $this->transferField->toArray(true, false) : $this->transferField,
+            'transfer_field' => $this->transferField instanceof TransferInterface ? $this->transferField->toArray(true, false) : $this->transferField,
             'transfer_collection_field' => $this->addValuesToCollection($this->transferCollectionField, true, false),
         ];
     }
@@ -663,7 +664,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
             'scalarField' => $this->scalarField,
             'arrayField' => $this->arrayField,
             'projectLevelDeprecatedField' => $this->projectLevelDeprecatedField,
-            'transferField' => $this->transferField ? $this->transferField->toArray(true, true) : $this->transferField,
+            'transferField' => $this->transferField instanceof TransferInterface ? $this->transferField->toArray(true, true) : $this->transferField,
             'transferCollectionField' => $this->addValuesToCollection($this->transferCollectionField, true, true),
         ];
     }

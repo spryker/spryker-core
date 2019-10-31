@@ -225,7 +225,7 @@
 {% for value in transfers %}
                 case '{{ value.name }}':
 {% endfor %}
-                    $values[$arrayKey] = $value ? $value->modifiedToArray({{ isRecursive ?  'true' : 'false' }}, {{ camelCase ?  'true' : 'false' }}) : $value;
+                    $values[$arrayKey] = $value instanceof TransferInterface ? $value->modifiedToArray({{ isRecursive ?  'true' : 'false' }}, {{ camelCase ?  'true' : 'false' }}) : $value;
                     break;
 {% endif %}
 {% if collections is not empty %}
