@@ -9,7 +9,7 @@ namespace Spryker\Client\CmsSlotBlockExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 
-interface CmsSlotBlockConditionResolverPluginInterface
+interface CmsSlotBlockVisibilityResolverPluginInterface
 {
     /**
      * Specification:
