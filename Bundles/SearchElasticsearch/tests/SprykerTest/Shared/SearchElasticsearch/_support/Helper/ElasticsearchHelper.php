@@ -17,7 +17,10 @@ use Spryker\Shared\SearchElasticsearch\SearchElasticsearchConfig;
 
 class ElasticsearchHelper extends Module
 {
+    public const DEFAULT_MAPPING_TYPE = '_doc';
+
     protected const INDEX_SUFFIX = '_testing';
+
     /**
      * @var array
      */
@@ -89,7 +92,7 @@ class ElasticsearchHelper extends Module
         $index = $this->haveIndex($indexName);
 
         $documents = [
-            new Document($documentId, $documentData, '_doc'),
+            new Document($documentId, $documentData, static::DEFAULT_MAPPING_TYPE),
         ];
 
         $index->addDocuments($documents);
