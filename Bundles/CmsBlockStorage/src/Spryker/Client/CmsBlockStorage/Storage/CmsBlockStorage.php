@@ -77,14 +77,26 @@ class CmsBlockStorage implements CmsBlockStorageInterface
         $cmsBlockName = $options[static::OPTION_NAME] ?? null;
 
         if ($cmsBlockName) {
-            $cmsBlockData = $this->findBlockByName($cmsBlockName, $localeName, $storeName);
-
-            return $cmsBlockData ? [$cmsBlockData] : [];
+            return $this->getBlocksByNames([$cmsBlockName], $localeName, $storeName);
         }
 
         $availableBlockKeys = $this->getBlockKeysByOptions($options);
 
         return $this->getBlocksByKeys($availableBlockKeys, $localeName, $storeName);
+    }
+
+    /**
+     * @param string[] $blockNames
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function getBlocksByNames(array $blockNames, $localeName, $storeName): array
+    {
+        $blockKeys = $this->getBlockKeysByNames($blockNames, $localeName, $storeName);
+
+        return $this->getBlocksByKeys($blockKeys, $localeName, $storeName);
     }
 
     /**
@@ -107,40 +119,46 @@ class CmsBlockStorage implements CmsBlockStorageInterface
             );
         }
 
-        $resultArray = $this->storageClient->getMulti($storageKeys) ?: [];
-        $resultArray = array_filter($resultArray);
+        $results = $this->storageClient->getMulti($storageKeys) ?: [];
+        $results = array_values(array_filter($results));
 
-        $blocks = [];
-
-        foreach ($resultArray as $key => $result) {
-            $blocks[] = $this->utilEncodingService->decodeJson($result, true);
-        }
+        $blocks = array_map(function ($result) {
+            return $this->utilEncodingService->decodeJson($result, true);
+        }, $results);
 
         return $blocks;
     }
 
     /**
-     * @param string $blockName
+     * @param string[] $blockNames
      * @param string $localeName
      * @param string $storeName
      *
-     * @return array|null
+     * @return string[]|null
      */
-    protected function findBlockByName(string $blockName, $localeName, $storeName): ?array
+    protected function getBlockKeysByNames(array $blockNames, $localeName, $storeName): ?array
     {
-        $blockKey = $this->findBlockKeyByBlockName($blockName, $localeName, $storeName);
-
-        if (!$blockKey) {
-            return null;
+        $blockNameStorageKeys = [];
+        foreach ($blockNames as $blockName) {
+            $blockNameKey = static::PREFIX_MAPPING_CMS_BLOCK_KEY . $blockName;
+            $blockNameStorageKeys[] = $this->generateKey(
+                $blockNameKey,
+                CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME,
+                $localeName,
+                $storeName
+            );
         }
 
-        $storageKey = $this->generateKey($blockKey, CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME, $localeName, $storeName);
-        $cmsBlockStorageData = $this->storageClient->get($storageKey);
-        if (!$cmsBlockStorageData) {
-            return null;
-        }
+        $results = $this->storageClient->getMulti($blockNameStorageKeys);
+        $results = array_values(array_filter($results));
 
-        return $cmsBlockStorageData;
+        $blockKeys = array_map(function ($result) {
+            $mappingData = $this->utilEncodingService->decodeJson($result, true);
+
+            return $mappingData['id'] ?? null;
+        }, $results);
+
+        return $blockKeys;
     }
 
     /**
@@ -165,26 +183,6 @@ class CmsBlockStorage implements CmsBlockStorageInterface
         }
 
         return $blockKeys;
-    }
-
-    /**
-     * @param string $blockName
-     * @param string $localeName
-     * @param string $storeName
-     *
-     * @return string|null
-     */
-    protected function findBlockKeyByBlockName(string $blockName, string $localeName, string $storeName): ?string
-    {
-        $blockNameKey = static::PREFIX_MAPPING_CMS_BLOCK_KEY . $blockName;
-        $searchKey = $this->generateKey($blockNameKey, CmsBlockStorageConstants::CMS_BLOCK_RESOURCE_NAME, $localeName, $storeName);
-
-        $mappingData = $this->storageClient->get($searchKey);
-        if (!$mappingData) {
-            return null;
-        }
-
-        return $mappingData['id'];
     }
 
     /**

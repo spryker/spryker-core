@@ -32,6 +32,6 @@ class CmsBlockStorageToUtilEncodingServiceBridge implements CmsBlockStorageToUti
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
     {
-        $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
+        return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
     }
 }

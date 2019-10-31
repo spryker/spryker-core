@@ -11,6 +11,20 @@ interface CmsBlockStorageClientInterface
 {
     /**
      * Specification:
+     * - Find blocks by provided array of names with a single multi request to a storage
+     *
+     * @api
+     *
+     * @param string[] $blockNames
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function findBlocksByNames($blockNames, $localeName, $storeName): array;
+
+    /**
+     * Specification:
      * - Finds blocks by the provided array of options with a single multi request to a storage.
      *
      * @api
