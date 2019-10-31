@@ -11,6 +11,7 @@ use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToSt
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilSanitizeServiceBridge;
 use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingBridge;
 
 /**
@@ -21,6 +22,7 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
     public const CLIENT_STORE = 'CLIENT_STORE';
     public const CLIENT_SEARCH = 'search client';
     public const SERVICE_UTIL_ENCODING = 'util encoding service';
+    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const PLUGIN_SEARCH_PAGE_MAPS = 'PLUGIN_SEARCH_PAGE_MAPS';
     public const SEARCH_INSTALLER_PLUGINS = 'SEARCH_INSTALLER_PLUGINS';
 
@@ -34,6 +36,7 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addSearchClient($container);
         $container = $this->addUtilEncodingFacade($container);
         $container = $this->addStoreClient($container);
+        $container = $this->addUtilSanitizeService($container);
 
         return $container;
     }
@@ -77,6 +80,20 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
             return new SearchElasticsearchToStoreClientBridge(
                 $container->getLocator()->store()->client()
             );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilSanitizeService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
+            return new SearchElasticsearchToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
         });
 
         return $container;

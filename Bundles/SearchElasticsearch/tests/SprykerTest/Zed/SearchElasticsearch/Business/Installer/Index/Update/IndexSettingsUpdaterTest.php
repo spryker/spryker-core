@@ -36,6 +36,27 @@ use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
 class IndexSettingsUpdaterTest extends Unit
 {
     /**
+     * @var \Elastica\Client|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected $clientMock;
+
+    /**
+     * @var \Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Update\IndexSettingsUpdater|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected $indexSettingsUpdater;
+
+    /**
+     * @return void
+     */
+    protected function _setUp(): void
+    {
+        parent::_setUp();
+
+        $this->clientMock = $this->createClientMock();
+        $this->indexSettingsUpdater = $this->createIndexSettingsUpdater();
+    }
+
+    /**
      * @dataProvider canAcceptIndexDefinitionProvider
      *
      * @param bool $expectedResult
@@ -46,16 +67,16 @@ class IndexSettingsUpdaterTest extends Unit
      */
     public function testCanAcceptIndexDefinition(bool $expectedResult, bool $indexExists, array $settings): void
     {
-        $client = $this->createClientMock();
+        // Arrange
         /** @var \Elastica\Index\|\PHPUnit\Framework\MockObject\MockObject $index */
-        $index = $client->getIndex('index');
+        $index = $this->clientMock->getIndex('index');
         $index->method('exists')->willReturn($indexExists);
-        $indexDefinitionTransfer = new IndexDefinitionTransfer();
-        $indexDefinitionTransfer->setSettings($settings);
-        $indexSettingsUpdater = $this->createIndexSettingsUpdated($client);
+        $indexDefinitionTransfer = $this->createIndexDefinitionTransfer($settings);
 
-        $result = $indexSettingsUpdater->accept($indexDefinitionTransfer);
+        // Act
+        $result = $this->indexSettingsUpdater->accept($indexDefinitionTransfer);
 
+        // Assert
         $this->assertEquals($expectedResult, $result);
     }
 
@@ -99,16 +120,13 @@ class IndexSettingsUpdaterTest extends Unit
      */
     public function testSetsCorrectSettings(array $expectedSettings, string $indexState, array $settings): void
     {
-        $clientMock = $this->createClientMock();
-        /** @var \Elastica\Index\|\PHPUnit\Framework\MockObject\MockObject $index */
-        $index = $clientMock->getIndex('index');
-        $index->expects($this->once())->method('setSettings')->with($expectedSettings);
-        $indexDefinitionTransfer = new IndexDefinitionTransfer();
-        $indexDefinitionTransfer->setSettings($settings);
-        $indexSettingsUpdater = $this->createIndexSettingsUpdated($clientMock);
-        $indexSettingsUpdater->method('getIndexState')->willReturn($indexState);
+        /** @var \Elastica\Index\|\PHPUnit\Framework\MockObject\MockObject $indexMock */
+        $indexMock = $this->clientMock->getIndex('index');
+        $indexMock->expects($this->once())->method('setSettings')->with($expectedSettings);
+        $indexDefinitionTransfer = $this->createIndexDefinitionTransfer($settings);
+        $this->indexSettingsUpdater->method('getIndexState')->willReturn($indexState);
 
-        $indexSettingsUpdater->run($indexDefinitionTransfer, new NullLogger());
+        $this->indexSettingsUpdater->run($indexDefinitionTransfer, new NullLogger());
     }
 
     /**
@@ -193,15 +211,31 @@ class IndexSettingsUpdaterTest extends Unit
     }
 
     /**
-     * @param \Elastica\Client $client
-     *
      * @return \Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Update\IndexSettingsUpdater|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createIndexSettingsUpdated(Client $client): IndexSettingsUpdater
+    protected function createIndexSettingsUpdater(): IndexSettingsUpdater
     {
         return $this->getMockBuilder(IndexSettingsUpdater::class)
-            ->setConstructorArgs([$client, $this->tester->getModuleConfig()])
+            ->setConstructorArgs([
+                $this->clientMock,
+                $this->tester->getFactory()->getUtilSanitizeService(),
+                $this->tester->getModuleConfig(),
+            ])
             ->setMethods(['getIndexState'])
             ->getMock();
+    }
+
+    /**
+     * @param array $settings
+     * @param array $mappings
+     * @param string $indexName
+     *
+     * @return \Generated\Shared\Transfer\IndexDefinitionTransfer
+     */
+    protected function createIndexDefinitionTransfer(array $settings, array $mappings = [], string $indexName = ''): IndexDefinitionTransfer
+    {
+        return (new IndexDefinitionTransfer())->setSettings($settings)
+            ->setMappings($mappings)
+            ->setIndexName($indexName);
     }
 }
