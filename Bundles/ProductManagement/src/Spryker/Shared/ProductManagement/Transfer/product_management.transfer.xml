@@ -155,6 +155,7 @@
     </transfer>
 
     <transfer name="ProductBundle">
+        <property name="availability" type="decimal"/>
         <property name="bundledProducts" type="ProductForBundle[]" singular="bundledProduct"/>
         <property name="bundlesToRemove" type="array" singular="bundleToRemove"/>
     </transfer>
