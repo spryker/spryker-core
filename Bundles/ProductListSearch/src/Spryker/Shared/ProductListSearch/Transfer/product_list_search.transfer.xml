@@ -35,4 +35,7 @@
         <property name="idProductConcrete" type="int"/>
     </transfer>
 
+    <transfer name="Locale">
+    </transfer>
+
 </transfers>
