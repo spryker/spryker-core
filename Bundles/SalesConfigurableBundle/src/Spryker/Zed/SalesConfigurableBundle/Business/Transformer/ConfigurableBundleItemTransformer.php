@@ -114,10 +114,6 @@ class ConfigurableBundleItemTransformer implements ConfigurableBundleItemTransfo
             return false;
         }
 
-        if ($itemTransfer->getQuantity() >= $threshold) {
-            return true;
-        }
-
-        return false;
+        return $itemTransfer->getQuantity() >= $threshold;
     }
 }

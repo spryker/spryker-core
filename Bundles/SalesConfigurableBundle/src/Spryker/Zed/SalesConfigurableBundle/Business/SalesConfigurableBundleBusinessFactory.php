@@ -12,8 +12,6 @@ use Spryker\Zed\SalesConfigurableBundle\Business\Expander\SalesOrderConfiguredBu
 use Spryker\Zed\SalesConfigurableBundle\Business\Expander\SalesOrderConfiguredBundleExpanderInterface;
 use Spryker\Zed\SalesConfigurableBundle\Business\Transformer\ConfigurableBundleItemTransformer;
 use Spryker\Zed\SalesConfigurableBundle\Business\Transformer\ConfigurableBundleItemTransformerInterface;
-use Spryker\Zed\SalesConfigurableBundle\Business\Validator\ConfigurableBundleItemQuantityValidator;
-use Spryker\Zed\SalesConfigurableBundle\Business\Validator\ConfigurableBundleItemQuantityValidatorInterface;
 use Spryker\Zed\SalesConfigurableBundle\Business\Writer\SalesOrderConfiguredBundleWriter;
 use Spryker\Zed\SalesConfigurableBundle\Business\Writer\SalesOrderConfiguredBundleWriterInterface;
 use Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToSalesFacadeInterface;
@@ -44,14 +42,6 @@ class SalesConfigurableBundleBusinessFactory extends AbstractBusinessFactory
         return new SalesOrderConfiguredBundleExpander(
             $this->getRepository()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\SalesConfigurableBundle\Business\Validator\ConfigurableBundleItemQuantityValidatorInterface
-     */
-    public function createConfigurableBundleItemQuantityValidator(): ConfigurableBundleItemQuantityValidatorInterface
-    {
-        return new ConfigurableBundleItemQuantityValidator();
     }
 
     /**

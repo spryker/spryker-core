@@ -64,18 +64,6 @@ interface SalesConfigurableBundleFacadeInterface
 
     /**
      * Specification:
-     * - Checks if given item is part of configurable bundle.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return bool
-     */
-    public function isConfigurableBundleItemQuantitySplittable(ItemTransfer $itemTransfer): bool;
-
-    /**
-     * Specification:
      * - Splits configurable bundles.
      * - Transforms items in configurable bundle depending on configurable bundle item threshold.
      *

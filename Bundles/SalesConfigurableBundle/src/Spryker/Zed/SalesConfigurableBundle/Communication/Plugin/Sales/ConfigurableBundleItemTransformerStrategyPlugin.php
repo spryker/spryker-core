@@ -31,7 +31,7 @@ class ConfigurableBundleItemTransformerStrategyPlugin extends AbstractPlugin imp
      */
     public function isApplicable(ItemTransfer $itemTransfer): bool
     {
-        return $this->getFacade()->isConfigurableBundleItemQuantitySplittable($itemTransfer);
+        return $itemTransfer->getConfiguredBundle() !== null;
     }
 
     /**

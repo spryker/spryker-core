@@ -18,7 +18,6 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfiguredBundleItemTransfer;
 use Generated\Shared\Transfer\ConfiguredBundleTransfer;
-use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -494,36 +493,6 @@ class SalesConfigurableBundleFacadeTest extends Unit
     }
 
     /**
-     * @return void
-     */
-    public function testIsConfigurableBundleItemQuantitySplittableWillReturnTrueInCaseOfConfigurableBundleItem(): void
-    {
-        //Arrange
-        $itemTransfer = $this->createConfigurableBundleItem();
-
-        //Act
-        $result = $this->tester->getFacade()->isConfigurableBundleItemQuantitySplittable($itemTransfer);
-
-        //Assert
-        $this->assertTrue($result);
-    }
-
-    /**
-     * @return void
-     */
-    public function testIsConfigurableBundleItemQuantitySplittableWillReturnFalseInCaseOfNotConfigurableBundleItem(): void
-    {
-        //Arrange
-        $itemTransfer = (new ItemBuilder())->build();
-
-        //Act
-        $result = $this->tester->getFacade()->isConfigurableBundleItemQuantitySplittable($itemTransfer);
-
-        //Assert
-        $this->assertFalse($result);
-    }
-
-    /**
      * @dataProvider transformConfigurableBundleItemDataProvider
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -541,10 +510,9 @@ class SalesConfigurableBundleFacadeTest extends Unit
         $itemCollection = $facade->transformConfigurableBundleItem($itemTransfer);
 
         //Assert
-        $this->assertInstanceOf(ItemCollectionTransfer::class, $itemCollection);
         $this->assertCount($itemsCount, $itemCollection->getItems());
         foreach ($itemCollection->getItems() as $item) {
-            $this->assertEquals($itemQuantity, $item->getQuantity());
+            $this->assertSame($itemQuantity, $item->getQuantity());
         }
     }
 

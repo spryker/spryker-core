@@ -64,11 +64,7 @@ class ItemQuantityValidator implements ItemQuantityValidatorInterface
             return false;
         }
 
-        if ($itemTransfer->getConfiguredBundle()) {
-            return true;
-        }
-
-        return false;
+        return $itemTransfer->getConfiguredBundle() !== null;
     }
 
     /**

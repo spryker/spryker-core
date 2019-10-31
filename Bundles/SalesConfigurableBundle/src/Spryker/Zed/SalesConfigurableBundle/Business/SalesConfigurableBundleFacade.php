@@ -77,22 +77,6 @@ class SalesConfigurableBundleFacade extends AbstractFacade implements SalesConfi
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return bool
-     */
-    public function isConfigurableBundleItemQuantitySplittable(ItemTransfer $itemTransfer): bool
-    {
-        return $this->getFactory()
-            ->createConfigurableBundleItemQuantityValidator()
-            ->isConfigurableBundleItemQuantitySplittable($itemTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
     public function transformConfigurableBundleItem(ItemTransfer $itemTransfer): ItemCollectionTransfer
