@@ -168,6 +168,10 @@
         <property name="stockType" type="string"/>
     </transfer>
 
+    <transfer name="ProductConcreteAvailability">
+        <property name="availability" type="decimal"/>
+    </transfer>
+
     <transfer name="Currency">
         <property name="code" type="string"/>
     </transfer>
