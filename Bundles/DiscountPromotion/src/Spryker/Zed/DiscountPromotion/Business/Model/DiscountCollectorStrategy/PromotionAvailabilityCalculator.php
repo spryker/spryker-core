@@ -36,7 +36,7 @@ class PromotionAvailabilityCalculator implements PromotionAvailabilityCalculator
     public function getMaximumQuantityBasedOnAvailability(string $sku, int $maxQuantity, StoreTransfer $storeTransfer): int
     {
         $productAbstractAvailabilityTransfer = $this->availabilityFacade
-            ->findProductAbstractAvailabilityBySkuForStore($sku, $storeTransfer);
+            ->findOrCreateProductAbstractAvailabilityBySkuForStore($sku, $storeTransfer);
 
         if ($productAbstractAvailabilityTransfer === null) {
             return 0;
