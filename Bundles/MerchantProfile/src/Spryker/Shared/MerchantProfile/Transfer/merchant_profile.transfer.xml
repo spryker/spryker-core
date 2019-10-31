@@ -29,7 +29,7 @@
         <property name="isActive" type="bool"/>
         <property name="urlCollection" type="Url[]" singular="url"/>
         <property name="merchantName" type="string"/>
-        <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" singular="merchantProfileLocalizedGlossaryAttributes"/>
+        <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" singular="merchantProfileLocalizedGlossaryAttribute"/>
         <property name="addressCollection" type="MerchantProfileAddressCollection"/>
     </transfer>
 
