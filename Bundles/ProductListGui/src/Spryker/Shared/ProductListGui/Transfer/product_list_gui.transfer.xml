@@ -78,4 +78,10 @@
         <property name="value" type="string"/>
     </transfer>
 
+    <transfer name="ProductListCategoryRelation">
+    </transfer>
+
+    <transfer name="CategoryCollection">
+    </transfer>
+
 </transfers>
