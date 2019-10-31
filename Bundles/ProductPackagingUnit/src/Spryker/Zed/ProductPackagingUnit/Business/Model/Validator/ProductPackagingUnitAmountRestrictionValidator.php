@@ -247,16 +247,17 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
         ProductPackagingUnitAmountTransfer $productPackagingUnitAmountTransfer
     ): ?MessageTransfer {
         $min = $productPackagingUnitAmountTransfer->getAmountMin();
+        if ($min === null) {
+            return null;
+        }
+
+        if ($amount->lessThan($min)) {
+            return $this->createMessageTransfer(static::ERROR_AMOUNT_MIN_NOT_FULFILLED, $sku, $min, $amount);
+        }
+
         $interval = $productPackagingUnitAmountTransfer->getAmountInterval();
-
-        if ($min !== null) {
-            if ($amount->lessThan($min)) {
-                return $this->createMessageTransfer(static::ERROR_AMOUNT_MIN_NOT_FULFILLED, $sku, $min, $amount);
-            }
-
-            if ($interval !== null && !$amount->subtract($min)->mod($interval)->isZero()) {
-                return $this->createMessageTransfer(static::ERROR_AMOUNT_INTERVAL_NOT_FULFILLED, $sku, $interval, $amount);
-            }
+        if ($interval !== null && !$amount->subtract($min)->mod($interval)->isZero()) {
+            return $this->createMessageTransfer(static::ERROR_AMOUNT_INTERVAL_NOT_FULFILLED, $sku, $interval, $amount);
         }
 
         return null;
