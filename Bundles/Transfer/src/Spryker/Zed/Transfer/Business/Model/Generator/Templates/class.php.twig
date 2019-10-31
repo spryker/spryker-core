@@ -7,6 +7,9 @@
 
 namespace Generated\Shared\Transfer;
 
+{% if transfers is not empty %}
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
+{% endif %}
 {% if hasArrayObject %}
 use ArrayObject;
 {% endif %}

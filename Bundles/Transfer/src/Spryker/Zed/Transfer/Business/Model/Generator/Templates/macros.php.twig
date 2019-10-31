@@ -259,7 +259,7 @@
 {% endfor %}
 {% for prop in transfers %}
             '{{ prop[nameKey] }}' => {% if isRecursive -%}
-                $this->{{ prop.name }} ? $this->{{ prop.name }}->toArray({{ isRecursive ? 'true' : 'false' }}, {{ isCamelCamed ? 'true' : 'false' }}) : $this->{{ prop.name }}
+                $this->{{ prop.name }} instanceof TransferInterface ? $this->{{ prop.name }}->toArray({{ isRecursive ? 'true' : 'false' }}, {{ isCamelCamed ? 'true' : 'false' }}) : $this->{{ prop.name }}
             {%- else -%}
                 $this->{{ prop.name }}
             {%- endif -%},
