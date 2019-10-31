@@ -19,7 +19,10 @@ interface ProductAvailabilityReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
      */
-    public function findProductAbstractAvailabilityBySkuForStore(string $abstractSku, StoreTransfer $storeTransfer): ?ProductAbstractAvailabilityTransfer;
+    public function findOrCreateProductAbstractAvailabilityBySkuForStore(
+        string $abstractSku,
+        StoreTransfer $storeTransfer
+    ): ?ProductAbstractAvailabilityTransfer;
 
     /**
      * @param string $concreteSku
@@ -27,5 +30,8 @@ interface ProductAvailabilityReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
-    public function findProductConcreteAvailabilityBySkuForStore(string $concreteSku, StoreTransfer $storeTransfer): ?ProductConcreteAvailabilityTransfer;
+    public function findOrCreateProductConcreteAvailabilityBySkuForStore(
+        string $concreteSku,
+        StoreTransfer $storeTransfer
+    ): ?ProductConcreteAvailabilityTransfer;
 }

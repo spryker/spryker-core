@@ -73,7 +73,7 @@ class AvailabilityDataHelper extends Module
             $storeTransfer
         );
 
-        return $this->getAvailabilityFacade()->findProductConcreteAvailabilityBySkuForStore(
+        return $this->getAvailabilityFacade()->findOrCreateProductConcreteAvailabilityBySkuForStore(
             $sku,
             $storeTransfer
         );

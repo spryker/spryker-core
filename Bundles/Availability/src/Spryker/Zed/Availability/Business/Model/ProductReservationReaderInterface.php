@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 interface ProductReservationReaderInterface
 {
     /**
-     * @deprecated Use `ProductAvailabilityReaderInterface::findProductAbstractAvailabilityBySkuForStore() instead`.
+     * @deprecated Use `ProductAvailabilityReaderInterface::findOrCreateProductAbstractAvailabilityBySkuForStore() instead`.
      *
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -27,7 +27,7 @@ interface ProductReservationReaderInterface
     public function getProductAbstractAvailability(int $idProductAbstract, int $idLocale): ProductAbstractAvailabilityTransfer;
 
     /**
-     * @deprecated Use `ProductAvailabilityReaderInterface::findProductConcreteAvailabilityBySkuForStore() instead`.
+     * @deprecated Use `ProductAvailabilityReaderInterface::findOrCreateProductConcreteAvailabilityBySkuForStore() instead`.
      *
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *
@@ -38,7 +38,7 @@ interface ProductReservationReaderInterface
     ): ?ProductConcreteAvailabilityTransfer;
 
     /**
-     * @deprecated Use `ProductAvailabilityReaderInterface::findProductAbstractAvailabilityBySkuForStore() instead`.
+     * @deprecated Use `ProductAvailabilityReaderInterface::findOrCreateProductAbstractAvailabilityBySkuForStore() instead`.
      *
      * @param int $idProductAbstract
      * @param int $idLocale
