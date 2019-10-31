@@ -58,7 +58,7 @@ class IndexCopier implements IndexCopierInterface
             'headers' => [
                 'Content-Type' => 'application/json',
             ],
-            'body' => $this->buildCopyCommand($sourceSearchContextTransfer, $targetSearchContextTransfer),
+            'body' => $this->buildCopyCommandRequestBody($sourceSearchContextTransfer, $targetSearchContextTransfer),
         ]);
 
         return $responseStatusCode === static::RESPONSE_STATUS_SUCCESS;
@@ -70,7 +70,7 @@ class IndexCopier implements IndexCopierInterface
      *
      * @return string
      */
-    protected function buildCopyCommand(SearchContextTransfer $sourceSearchContextTransfer, SearchContextTransfer $targetSearchContextTransfer): string
+    protected function buildCopyCommandRequestBody(SearchContextTransfer $sourceSearchContextTransfer, SearchContextTransfer $targetSearchContextTransfer): string
     {
         $sourceIndexName = $this->getIndexName($sourceSearchContextTransfer);
         $targetIndexName = $this->getIndexName($targetSearchContextTransfer);

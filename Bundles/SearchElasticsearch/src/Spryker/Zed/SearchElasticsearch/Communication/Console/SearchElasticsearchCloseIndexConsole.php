@@ -45,12 +45,12 @@ class SearchElasticsearchCloseIndexConsole extends AbstractIndexNameAwareSearchI
         $searchContextTransfer = $this->buildSearchContextTransferFromIndexName($indexName);
 
         if ($this->getFacade()->closeIndex($searchContextTransfer)) {
-            $this->info(sprintf('Search index %s is closed.', $indexName));
+            $this->info(sprintf('Search index "%s" is closed.', $indexName));
 
             return static::CODE_SUCCESS;
         }
 
-        $this->error(sprintf('Search index %s could not be closed.', $indexName));
+        $this->error(sprintf('Search index "%s" could not be closed.', $indexName));
 
         return static::CODE_ERROR;
     }

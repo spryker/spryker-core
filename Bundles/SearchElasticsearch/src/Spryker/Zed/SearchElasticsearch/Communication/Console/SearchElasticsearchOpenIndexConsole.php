@@ -42,12 +42,12 @@ class SearchElasticsearchOpenIndexConsole extends AbstractIndexNameAwareSearchIn
         $searchContextTransfer = $this->buildSearchContextTransferFromIndexName($indexName);
 
         if ($this->getFacade()->openIndex($searchContextTransfer)) {
-            $this->info(sprintf('Search index %s successfully opened.', $indexName));
+            $this->info(sprintf('Search index "%s" successfully opened.', $indexName));
 
             return static::CODE_SUCCESS;
         }
 
-        $this->error(sprintf('Search index %s could not be opened.', $indexName));
+        $this->error(sprintf('Search index "%s" could not be opened.', $indexName));
 
         return static::CODE_ERROR;
     }
