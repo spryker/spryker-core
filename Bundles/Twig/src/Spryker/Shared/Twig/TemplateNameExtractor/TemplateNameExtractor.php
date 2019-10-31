@@ -77,6 +77,12 @@ class TemplateNameExtractor implements TemplateNameExtractorInterface
         array_push($templatePathParts, $templateName);
         $templatePath = implode('/', $templatePathParts);
 
+        $firstSeparatorPosition = $this->getFirstSeparatorPosition($templatePath);
+
+        if ($firstSeparatorPosition === false) {
+            return $templatePath;
+        }
+
         return ucfirst($templatePath);
     }
 
@@ -93,7 +99,7 @@ class TemplateNameExtractor implements TemplateNameExtractorInterface
     /**
      * @param string $nameWithoutPrefix
      *
-     * @return int
+     * @return int|false
      */
     protected function getFirstSeparatorPosition($nameWithoutPrefix)
     {
