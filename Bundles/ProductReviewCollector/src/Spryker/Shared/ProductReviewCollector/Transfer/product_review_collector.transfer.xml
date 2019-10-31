@@ -28,5 +28,9 @@
         <property name="idLocale" type="int"/>
     </transfer>
 
+    <transfer name="SearchCollectorConfiguration">
+        <property name="typeName" type="string"/>
+    </transfer>
+
 </transfers>
 

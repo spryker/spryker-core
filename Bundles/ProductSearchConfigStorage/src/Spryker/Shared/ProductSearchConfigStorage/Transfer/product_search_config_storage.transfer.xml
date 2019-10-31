@@ -16,4 +16,12 @@
         <property name="parameterName" type="string"/>
     </transfer>
 
+    <transfer name="ProductSearchAttribute">
+        <property name="filterType" type="string"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+    </transfer>
+
 </transfers>

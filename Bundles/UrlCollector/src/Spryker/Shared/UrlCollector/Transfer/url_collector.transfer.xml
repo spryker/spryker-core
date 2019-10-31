@@ -7,4 +7,14 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="Url">
+    </transfer>
+
+    <transfer name="UrlCollectorStorage">
+    </transfer>
+
 </transfers>

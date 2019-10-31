@@ -24,6 +24,8 @@
 
     <transfer name="QuoteResponse">
         <property name="errors" type="QuoteError[]" singular="error"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="quoteTransfer" type="Quote"/>
     </transfer>
 
     <transfer name="QuoteError">
@@ -48,13 +50,13 @@
         <property name="version" type="int"/>
         <property name="versionReference" type="string"/>
         <property name="quote" type="Quote"/>
-        <property name="metadata" type="array"/>
+        <property name="metadata" type="array" singular="metadata"/>
     </transfer>
 
     <transfer name="QuoteRequestFilter">
         <property name="companyUser" type="CompanyUser"/>
         <property name="quoteRequestReference" type="string"/>
-        <property name="excludedStatuses" type="array"/>
+        <property name="excludedStatuses" type="array" singular="excludedStatuses"/>
         <property name="pagination" type="Pagination"/>
         <property name="withHidden" type="bool"/>
         <property name="idQuoteRequest" type="int"/>
@@ -71,6 +73,9 @@
         <property name="quoteRequestReference" type="string"/>
         <property name="name" type="string"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="customer" type="Customer"/>
+        <property name="customerReference" type="string"/>
+        <property name="idQuote" type="int"/>
     </transfer>
 
     <transfer name="Item">
@@ -81,6 +86,8 @@
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
         <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
+        <property name="customer" type="Customer"/>
+        <property name="company" type="Company"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnit">
@@ -109,11 +116,19 @@
     </transfer>
 
     <transfer name="CompanyUserCriteriaFilter">
-        <property name="companyUserIds" type="array"/>
+        <property name="companyUserIds" type="array" singular="companyUserIds"/>
     </transfer>
 
     <transfer name="CompanyUserCollection">
         <property name="companyUsers" type="CompanyUser[]" singular="companyUser"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="Company">
     </transfer>
 
 </transfers>

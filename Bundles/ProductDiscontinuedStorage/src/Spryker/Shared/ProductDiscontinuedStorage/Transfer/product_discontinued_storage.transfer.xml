@@ -34,8 +34,45 @@
     </transfer>
 
     <transfer name="AttributeMapStorage">
-        <property name="superAttributes" type="array"/>
-        <property name="attributeVariants" type="array"/>
-        <property name="productConcreteIds" type="array"/>
+        <property name="superAttributes" type="array" singular="superAttributes"/>
+        <property name="attributeVariants" type="array" singular="attributeVariants"/>
+        <property name="productConcreteIds" type="array" singular="productConcreteIds"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="locale" type="string"/>
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
+        <property name="reference" type="string"/>
+    </transfer>
+
+    <transfer name="ProductDiscontinuedCollection">
+        <property name="discontinuedProducts" type="ProductDiscontinued[]" singular="discontinuedProduct"/>
+    </transfer>
+
+    <transfer name="ProductDiscontinued">
+        <property name="idProductDiscontinued" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="productDiscontinuedNotes" type="ProductDiscontinuedNote[]" singular="productDiscontinuedNote"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="ProductDiscontinuedCriteriaFilter">
+        <property name="ids" type="array" singular="ids"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="orderBy" type="string"/>
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="ProductDiscontinuedNote">
+        <property name="fkLocale" type="int"/>
+        <property name="note" type="string"/>
     </transfer>
 </transfers>
