@@ -74,7 +74,8 @@ class TemplateNameExtractorTest extends Unit
     public function nameDataProviderForTemplatePath()
     {
         return [
-            ['@Bundle/directory/template.twig', 'Directory/template.twig'],
+            ['@Bundle/template.twig', 'template.twig'],
+            ['@Bundle/directory/template.twig', 'Directory/template.twig'], // This is our rule: folder of templates should start from capital letter.
             ['@Bundle/Directory/template.twig', 'Directory/template.twig'],
             ['@Bundle/Directory/templateCamelCased.twig', 'Directory/template-camel-cased.twig'],
         ];
