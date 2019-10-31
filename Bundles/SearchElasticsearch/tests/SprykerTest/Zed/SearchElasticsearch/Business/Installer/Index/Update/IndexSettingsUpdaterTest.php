@@ -65,7 +65,7 @@ class IndexSettingsUpdaterTest extends Unit
      *
      * @return void
      */
-    public function testCanAcceptIndexDefinition(bool $expectedResult, bool $indexExists, array $settings): void
+    public function testCanByAppliedForIndex(bool $expectedResult, bool $indexExists, array $settings): void
     {
         // Arrange
         /** @var \Elastica\Index\|\PHPUnit\Framework\MockObject\MockObject $index */
@@ -77,7 +77,7 @@ class IndexSettingsUpdaterTest extends Unit
         $result = $this->indexSettingsUpdater->accept($indexDefinitionTransfer);
 
         // Assert
-        $this->assertEquals($expectedResult, $result);
+        $this->assertSame($expectedResult, $result);
     }
 
     /**
