@@ -6,7 +6,7 @@
 >
 
     <transfer name="Merchant">
-        <property name="merchantKey" dataBuilderRule="word"/>
+        <property name="merchantKey" dataBuilderRule="unique()->sentence"/>
         <property name="name" dataBuilderRule="word"/>
         <property name="registrationNumber"  dataBuilderRule="word" />
         <property name="status" dataBuilderRule="=waiting_for_approval" />
@@ -37,7 +37,7 @@
     </transfer>
 
     <transfer name="MerchantProfileAddress">
-        <property name="key" dataBuilderRule="word" />
+        <property name="key" dataBuilderRule="unique()->sentence" />
         <property name="fkCountry" dataBuilderRule="=60" />
         <property name="address1" dataBuilderRule="word" />
         <property name="address2" dataBuilderRule="word" />

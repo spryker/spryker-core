@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\MerchantProfileStorage\Communication\Plugin\Event\List
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\MerchantProfile\Dependency\MerchantProfileEvents;
@@ -58,18 +59,18 @@ class MerchantProfileStorageListenerTest extends Unit
     public function testMerchantProfilePublishStorageListenerStoreData(): void
     {
         // Arrange
-        $merchantProfileTransfer = $this->tester->haveMerchantProfile($this->tester->haveMerchant());
+        $merchantProfileTransfer = $this->tester->haveMerchantProfile($this->tester->haveMerchant(), [MerchantProfileTransfer::IS_ACTIVE => true]);
 
         // Act
-        $merchantProfileStorageActivateListener = new MerchantProfileStoragePublishListener();
+        $merchantProfileStoragePublishListener = new MerchantProfileStoragePublishListener();
         $eventTransfers = [
             (new EventEntityTransfer())->setId($merchantProfileTransfer->getIdMerchantProfile()),
         ];
 
-        $merchantProfileStorageActivateListener->handleBulk($eventTransfers, MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_PUBLISH);
+        $merchantProfileStoragePublishListener->handleBulk($eventTransfers, MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_PUBLISH);
 
         // Assert
-        $merchantProfileStorageTransfer = $this->tester->findMerchantProfileStorageByIdMerchantProfile($merchantProfileTransfer->getIdMerchantProfile());
+        $merchantProfileStorageTransfer = $this->tester->findMerchantProfileStorageByIdMerchant($merchantProfileTransfer->getFkMerchant());
 
         $this->assertNotNull($merchantProfileStorageTransfer);
         $this->assertArrayHasKey('id_merchant_profile', $merchantProfileStorageTransfer->getData());
@@ -90,14 +91,12 @@ class MerchantProfileStorageListenerTest extends Unit
         $eventTransfers = [
             (new EventEntityTransfer())->setId($merchantProfileTransfer->getIdMerchantProfile()),
         ];
-        $merchantProfileStorageActivateListener = new MerchantProfileStoragePublishListener();
-        $merchantProfileStorageDeactivateListener = new MerchantProfileStorageUnpublishListener();
+        $merchantProfileStorageUnpublishListener = new MerchantProfileStorageUnpublishListener();
 
-        $merchantProfileStorageActivateListener->handleBulk($eventTransfers, MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_PUBLISH);
-        $merchantProfileStorageDeactivateListener->handleBulk($eventTransfers, MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_UNPUBLISH);
+        $merchantProfileStorageUnpublishListener->handleBulk($eventTransfers, MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_UNPUBLISH);
 
         // Assert
-        $merchantProfileStorageTransfer = $this->tester->findMerchantProfileStorageByIdMerchantProfile($merchantProfileTransfer->getIdMerchantProfile());
+        $merchantProfileStorageTransfer = $this->tester->findMerchantProfileStorageByIdMerchant($merchantProfileTransfer->getFkMerchant());
         $this->assertNull($merchantProfileStorageTransfer);
     }
 

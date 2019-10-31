@@ -8,7 +8,7 @@
         <property name="merchantKey" type="string"/>
         <property name="name" type="string"/>
         <property name="registrationNumber" type="string"/>
-        <property name="email" type="string"/>
+        <property name="email" type="email"/>
         <property name="status" type="string"/>
     </transfer>
 

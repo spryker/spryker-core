@@ -63,7 +63,7 @@ class MerchantProfileStorageWriter implements MerchantProfileStorageWriterInterf
     {
         $merchantProfileCollectionTransfer = $this->merchantProfileFacade->find(
             (new MerchantProfileCriteriaFilterTransfer())
-                ->setMerchantIds($merchantProfileIds)
+                ->setMerchantProfileIds($merchantProfileIds)
         );
 
         $merchantProfileTransfers = $merchantProfileCollectionTransfer->getMerchantProfiles();
