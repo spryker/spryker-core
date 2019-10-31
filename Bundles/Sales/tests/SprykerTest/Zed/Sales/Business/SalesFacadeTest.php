@@ -167,7 +167,7 @@ class SalesFacadeTest extends Unit
         $this->assertCount($itemTransfer->getQuantity(), $itemCollectionTransfer->getItems());
 
         foreach ($itemCollectionTransfer->getItems() as $itemTransfer) {
-            $this->assertSame(1, $item->getQuantity());
+            $this->assertSame(1, $itemTransfer->getQuantity());
         }
     }
 
