@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryGui\Communication\Form;
+namespace Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * @method \Spryker\Zed\CategoryGui\Communication\CategoryGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsSlotBlockCategoryGui\Communication\CategoryGuiCommunicationFactory getFactory()
  */
 class CategorySlotBlockConditionForm extends AbstractType
 {

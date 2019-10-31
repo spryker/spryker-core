@@ -28,30 +28,6 @@ class CategoryGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\CategoryGui\Communication\Form\CategorySlotBlockConditionForm
-     */
-    public function createCategorySlotBlockConditionForm(): CategorySlotBlockConditionForm
-    {
-        return new CategorySlotBlockConditionForm();
-    }
-
-    /**
-     * @return \Spryker\Zed\CategoryGui\Communication\DataProvider\CategorySlotBlockDataProviderInterface
-     */
-    public function createCategorySlotBlockDataProvider(): CategorySlotBlockDataProviderInterface
-    {
-        return new CategorySlotBlockDataProvider($this->getCategoryQueryContainer(), $this->getLocaleFacade());
-    }
-
-    /**
-     * @return \Spryker\Zed\CategoryGui\Communication\Form\Validator\Constraints\CategoryConditionsConstraint
-     */
-    public function createCategoryConditionsConstraint(): CategoryConditionsConstraint
-    {
-        return new CategoryConditionsConstraint();
-    }
-
-    /**
      * @return \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface
      */
     public function getLocaleFacade(): CategoryGuiToLocaleFacadeInterface

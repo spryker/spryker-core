@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Container;
 class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';
-    public const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -25,7 +24,6 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addLocaleFacade($container);
-        $container = $this->addCategoryQueryContainer($container);
 
         return $container;
     }
@@ -40,22 +38,6 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new CategoryGuiToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade()
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCategoryQueryContainer(Container $container): Container
-    {
-        $container->set(static::QUERY_CONTAINER_CATEGORY, function (Container $container) {
-            return new CategoryGuiToCategoryQueryContainerBridge(
-                $container->getLocator()->category()->queryContainer()
             );
         });
 

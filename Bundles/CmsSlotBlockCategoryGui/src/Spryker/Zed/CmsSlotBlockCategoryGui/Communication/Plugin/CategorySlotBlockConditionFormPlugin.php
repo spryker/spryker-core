@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryGui\Communication\Plugin;
+namespace Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Plugin;
 
 use Generated\Shared\Transfer\CmsSlotTemplateConfigurationTransfer;
 use Spryker\Zed\CmsSlotBlockGuiExtension\Communication\Plugin\CmsSlotBlockGuiConditionFormPluginInterface;
@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * @method \Spryker\Zed\CategoryGui\Communication\CategoryGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsSlotBlockCategoryGui\Communication\CategoryGuiCommunicationFactory getFactory()
  */
 class CategorySlotBlockConditionFormPlugin extends AbstractPlugin implements CmsSlotBlockGuiConditionFormPluginInterface
 {

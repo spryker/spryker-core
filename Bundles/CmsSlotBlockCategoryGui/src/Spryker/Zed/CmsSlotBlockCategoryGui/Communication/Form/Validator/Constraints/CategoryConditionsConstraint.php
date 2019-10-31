@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryGui\Communication\Form\Validator\Constraints;
+namespace Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 

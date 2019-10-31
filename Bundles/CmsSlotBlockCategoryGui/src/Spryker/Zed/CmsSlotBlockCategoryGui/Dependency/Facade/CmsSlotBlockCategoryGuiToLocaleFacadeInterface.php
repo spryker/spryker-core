@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CategoryGui\Communication\DataProvider;
+namespace Spryker\Zed\CmsSlotBlock\Dependency\Facade;
 
-interface CategorySlotBlockDataProviderInterface
+interface CmsSlotBlockCategoryGuiToLocaleFacadeInterface
 {
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getOptions(): array;
+    public function getCurrentLocale();
 }
