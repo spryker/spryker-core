@@ -13,8 +13,10 @@ use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiTo
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductReviewsRestApi\Processor\Creator\ProductReviewCreator;
 use Spryker\Glue\ProductReviewsRestApi\Processor\Creator\ProductReviewCreatorInterface;
-use Spryker\Glue\ProductReviewsRestApi\Processor\Expander\ProductReviewResourceRelationshipExpander;
-use Spryker\Glue\ProductReviewsRestApi\Processor\Expander\ProductReviewResourceRelationshipExpanderInterface;
+use Spryker\Glue\ProductReviewsRestApi\Processor\Expander\ProductAbstractReviewResourceRelationshipExpander;
+use Spryker\Glue\ProductReviewsRestApi\Processor\Expander\ProductAbstractReviewResourceRelationshipExpanderInterface;
+use Spryker\Glue\ProductReviewsRestApi\Processor\Expander\ProductConcreteReviewResourceRelationshipExpander;
+use Spryker\Glue\ProductReviewsRestApi\Processor\Expander\ProductConcreteReviewResourceRelationshipExpanderInterface;
 use Spryker\Glue\ProductReviewsRestApi\Processor\Expander\ProductReviewsAbstractProductsResourceExpander;
 use Spryker\Glue\ProductReviewsRestApi\Processor\Expander\ProductReviewsAbstractProductsResourceExpanderInterface;
 use Spryker\Glue\ProductReviewsRestApi\Processor\Expander\ProductReviewsConcreteProductsResourceExpander;
@@ -84,11 +86,24 @@ class ProductReviewsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ProductReviewsRestApi\Processor\Expander\ProductReviewResourceRelationshipExpanderInterface
+     * @return \Spryker\Glue\ProductReviewsRestApi\Processor\Expander\ProductAbstractReviewResourceRelationshipExpanderInterface
      */
-    public function createProductReviewResourceRelationshipExpander(): ProductReviewResourceRelationshipExpanderInterface
+    public function createProductAbstractReviewResourceRelationshipExpander(): ProductAbstractReviewResourceRelationshipExpanderInterface
     {
-        return new ProductReviewResourceRelationshipExpander(
+        return new ProductAbstractReviewResourceRelationshipExpander(
+            $this->createProductReviewReader(),
+            $this->getProductStorageClient(),
+            $this->getProductReviewClient(),
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductReviewsRestApi\Processor\Expander\ProductConcreteReviewResourceRelationshipExpanderInterface
+     */
+    public function createProductConcreteReviewResourceRelationshipExpander(): ProductConcreteReviewResourceRelationshipExpanderInterface
+    {
+        return new ProductConcreteReviewResourceRelationshipExpander(
             $this->createProductReviewReader(),
             $this->getProductStorageClient(),
             $this->getProductReviewClient(),

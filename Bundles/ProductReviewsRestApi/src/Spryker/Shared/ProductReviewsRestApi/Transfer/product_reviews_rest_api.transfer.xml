@@ -20,4 +20,14 @@
         <property name="description" type="string"/>
     </transfer>
 
+    <transfer name="ProductReviewSearchRequest">
+        <property name="idProductAbstract" type="int"/>
+        <property name="requestParams" type="array" singular="requestParams"/>
+    </transfer>
+
+    <transfer name="BulkProductReviewSearchRequest">
+        <property name="productAbstractIds" type="array" singular="productAbstractIds"/>
+        <property name="requestParams" type="array" singular="requestParams"/>
+    </transfer>
+
 </transfers>

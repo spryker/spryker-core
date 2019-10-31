@@ -108,23 +108,30 @@ class ProductReviewReader implements ProductReviewReaderInterface
     }
 
     /**
-     * /**
-     *
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param array $requestParams
      * @param int[] $productAbstractIds
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array
      */
-    public function getProductReviewsByProductAbstractIds(
-        RestRequestInterface $restRequest,
+    public function getProductReviewsDataByProductAbstractIds(
+        array $requestParams,
         array $productAbstractIds
     ): array {
+        /** @var \Generated\Shared\Transfer\ProductReviewTransfer[] $productReviewTransfers */
         $productReviewTransfers = $this->getBulkProductReviewsInSearch(
-            $restRequest,
+            $requestParams,
             $productAbstractIds
         )[static::PRODUCT_REVIEWS];
 
-        return $this->productReviewRestResponseBuilder->prepareRestResourceCollection($productReviewTransfers);
+        $indexedProductReviewsData = [];
+        foreach ($productReviewTransfers as $productReviewTransfer) {
+            $indexedProductReviewsData[$productReviewTransfer->getFkProductAbstract()][] = $productReviewTransfer;
+        }
+
+        return $this->productReviewRestResponseBuilder->prepareRestResourceCollection(
+            $indexedProductReviewsData,
+            $productAbstractIds
+        );
     }
 
     /**
@@ -149,17 +156,15 @@ class ProductReviewReader implements ProductReviewReaderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param array $requestParams
      * @param int[] $productAbstractIds
      *
      * @return array
      */
     protected function getBulkProductReviewsInSearch(
-        RestRequestInterface $restRequest,
+        array $requestParams,
         array $productAbstractIds
     ): array {
-        $requestParams = $this->createRequestParamsWithPaginationParameters($restRequest);
-
         $productReviews = $this->productReviewClient->getBulkProductReviewsFromSearch(
             (new BulkProductReviewSearchRequestTransfer())
                 ->setRequestParams($requestParams)

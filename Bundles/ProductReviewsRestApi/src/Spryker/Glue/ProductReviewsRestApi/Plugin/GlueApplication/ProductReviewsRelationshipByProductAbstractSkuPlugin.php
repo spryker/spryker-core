@@ -31,7 +31,7 @@ class ProductReviewsRelationshipByProductAbstractSkuPlugin extends AbstractPlugi
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createProductReviewResourceRelationshipExpander()
+            ->createProductAbstractReviewResourceRelationshipExpander()
             ->addRelationshipsByAbstractSku($resources, $restRequest);
     }
 

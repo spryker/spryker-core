@@ -8,16 +8,16 @@
 namespace Spryker\Glue\ProductReviewsRestApi\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\Page;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewClientInterface;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductReviewsRestApi\Processor\Reader\ProductReviewReaderInterface;
 use Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig;
 
-class ProductReviewResourceRelationshipExpander implements ProductReviewResourceRelationshipExpanderInterface
+abstract class AbstractProductReviewResourceRelationshipExpander
 {
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
+    protected const KEY_SKU = 'sku';
 
     protected const PRODUCT_MAPPING_TYPE = 'sku';
 
@@ -61,81 +61,41 @@ class ProductReviewResourceRelationshipExpander implements ProductReviewResource
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return void
+     * @return string[]
      */
-    public function addRelationshipsByAbstractSku(array $resources, RestRequestInterface $restRequest): void
+    protected function getAllSkus(array $resources): array
     {
-        $productAbstractIds = [];
+        $skus = [];
         foreach ($resources as $resource) {
-            $productAbstractIds[] = $resource->getId();
+            $skus[] = $resource->getId();
         }
 
-        $productAbstractResources = $this->productStorageClient->findBulkProductAbstractStorageDataByMapping(
-            static::PRODUCT_MAPPING_TYPE,
-            $productAbstractIds,
-            $restRequest->getMetadata()->getLocale()
-        );
-
-        foreach ($resources as $resource) {
-            $this->addRelationship($productAbstractResources, $restRequest, $resource);
-        }
+        return $skus;
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * (
      *
-     * @return void
+     * @return array
      */
-    public function addRelationshipsByConcreteSku(array $resources, RestRequestInterface $restRequest): void
+    protected function createRequestParams(): array
     {
-        $productConcreteIds = [];
-        foreach ($resources as $resource) {
-            $productConcreteIds[] = $resource->getId();
-        }
+        $requestParams = [];
+        $requestParams['offset'] = 0;
+        $requestParams['limit'] = $this->productReviewsRestApiConfig->getMaximumNumberOfResults();
 
-        $productConcreteResources = $this->productStorageClient->getProductConcreteStorageDataByMappingAndIdentifiers(
-            static::PRODUCT_MAPPING_TYPE,
-            $productConcreteIds,
-            $restRequest->getMetadata()->getLocale()
-        );
-
-        foreach ($resources as $resource) {
-            $this->addRelationship($productConcreteResources, $restRequest, $resource);
-        }
+        return $requestParams;
     }
 
     /**
-     * @param array $productsData
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $productReviewsRestResources
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      *
      * @return void
      */
-    protected function addRelationship(
-        array $productsData,
-        RestRequestInterface $restRequest,
-        RestResourceInterface $resource
-    ): void {
-        if (!$productsData) {
-            return;
-        }
-
-        $productAbstractIds = [];
-        foreach ($productsData as $productData) {
-            $productAbstractIds[] = $productData[static::KEY_ID_PRODUCT_ABSTRACT];
-        }
-
-        $restRequest->setPage(new Page(0, $this->productReviewsRestApiConfig->getMaximumNumberOfResults()));
-
-        $productReviewsRestResources = $this->productReviewReader
-            ->getProductReviewsByProductAbstractIds(
-                $restRequest,
-                $productAbstractIds
-            );
-
+    protected function addResourceRelationship(array $productReviewsRestResources, RestResourceInterface $resource): void
+    {
         foreach ($productReviewsRestResources as $productReviewsRestResource) {
             $resource->addRelationship($productReviewsRestResource);
         }

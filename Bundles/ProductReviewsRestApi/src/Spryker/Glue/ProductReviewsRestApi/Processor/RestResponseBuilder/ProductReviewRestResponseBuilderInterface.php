@@ -31,11 +31,12 @@ interface ProductReviewRestResponseBuilderInterface
     public function createProductReviewRestResource(ProductReviewTransfer $productReviewTransfer): RestResourceInterface;
 
     /**
-     * @param \Generated\Shared\Transfer\ProductReviewTransfer[] $productReviewTransfers
+     * @param array $productReviewsData
+     * @param int[] $productAbstractIds
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function prepareRestResourceCollection(array $productReviewTransfers): array;
+    public function prepareRestResourceCollection(array $productReviewsData, array $productAbstractIds): array;
 
     /**
      * @param int $totalItems

@@ -95,15 +95,18 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductReviewTransfer[] $productReviewTransfers
+     * @param array $productReviewsData
+     * @param int[] $productAbstractIds
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function prepareRestResourceCollection(array $productReviewTransfers): array
+    public function prepareRestResourceCollection(array $productReviewsData, array $productAbstractIds): array
     {
         $productReviewResources = [];
-        foreach ($productReviewTransfers as $productReviewTransfer) {
-            $productReviewResources[] = $this->createProductReviewRestResource($productReviewTransfer);
+        foreach ($productReviewsData as $productAbstractSku => $productReviewTransfers) {
+            foreach ($productReviewTransfers as $productReviewTransfer) {
+                $productReviewResources[$productAbstractSku][] = $this->createProductReviewRestResource($productReviewTransfer);
+            }
         }
 
         return $productReviewResources;
