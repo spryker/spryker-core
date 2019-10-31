@@ -82,12 +82,16 @@ class AvailabilityMapper implements AvailabilityMapperInterface
         $reservation = new Decimal(0);
         $reservationItems = array_unique(explode(',', $reservationAggregationSet));
         foreach ($reservationItems as $item) {
-            $itemParts = array_filter(explode(':', $item));
-            if (!isset($itemParts[0])) {
+            if ((int)strpos($item, ':') === 0) {
                 continue;
             }
 
-            $reservation = $reservation->add(new Decimal($itemParts[1] ?? 0));
+            [$sku, $quantity] = explode(':', $item);
+            if ($sku === '' || !is_numeric($quantity)) {
+                continue;
+            }
+
+            $reservation = $reservation->add(new Decimal($quantity));
         }
 
         return $reservation;
