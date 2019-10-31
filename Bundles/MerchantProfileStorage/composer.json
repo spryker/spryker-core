@@ -8,7 +8,6 @@
     "spryker/event-behavior": "^1.0.0",
     "spryker/kernel": "^3.33.0",
     "spryker/merchant-profile": "^1.0.0",
-    "spryker/propel-orm": "^1.0.0",
     "spryker/storage": "^3.4.0",
     "spryker/synchronization": "^1.0.0",
     "spryker/synchronization-behavior": "^1.0.0",
