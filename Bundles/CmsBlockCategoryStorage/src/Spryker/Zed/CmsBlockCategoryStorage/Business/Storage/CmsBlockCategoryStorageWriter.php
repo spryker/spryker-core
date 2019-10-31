@@ -73,9 +73,9 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
      */
     public function publish(array $categoryIds): void
     {
-        $cmsBlockCategoriesTransfer = $this->getCmsBlockCategoriesTransfer($categoryIds);
+        $cmsBlockCategoriesTransferCollection = $this->getCmsBlockCategoriesTransferCollection($categoryIds);
         $spyCmsBlockCategoryStorageEntities = $this->findCmsBlockCategoryStorageEntitiesByCategoryIds($categoryIds);
-        $this->storeData($cmsBlockCategoriesTransfer, $spyCmsBlockCategoryStorageEntities);
+        $this->storeData($cmsBlockCategoriesTransferCollection, $spyCmsBlockCategoryStorageEntities);
     }
 
     /**
@@ -85,12 +85,12 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
      */
     public function refreshOrUnpublish(array $categoryIds): void
     {
-        $cmsBlockCategoriesTransfer = $this->getCmsBlockCategoriesTransfer($categoryIds);
+        $cmsBlockCategoriesTransferCollection = $this->getCmsBlockCategoriesTransferCollection($categoryIds);
         $spyCmsBlockCategoryStorageEntities = $this->findCmsBlockCategoryStorageEntitiesByCategoryIds($categoryIds);
 
         foreach ($spyCmsBlockCategoryStorageEntities as $spyCmsBlockCategoryStorageEntity) {
-            if (isset($cmsBlockCategoriesTransfer[$spyCmsBlockCategoryStorageEntity->getFkCategory()])) {
-                $this->storeData($cmsBlockCategoriesTransfer, $spyCmsBlockCategoryStorageEntities);
+            if (isset($cmsBlockCategoriesTransferCollection[$spyCmsBlockCategoryStorageEntity->getFkCategory()])) {
+                $this->storeData($cmsBlockCategoriesTransferCollection, $spyCmsBlockCategoryStorageEntities);
 
                 continue;
             }
@@ -100,21 +100,21 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsBlockCategoriesTransfer[] $cmsBlockCategoriesTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockCategoriesTransfer[] $cmsBlockCategoriesTransferCollection
      * @param array $spyCmsBlockCategoryStorageEntities
      *
      * @return void
      */
-    protected function storeData(array $cmsBlockCategoriesTransfer, array $spyCmsBlockCategoryStorageEntities): void
+    protected function storeData(array $cmsBlockCategoriesTransferCollection, array $spyCmsBlockCategoryStorageEntities): void
     {
-        foreach ($cmsBlockCategoriesTransfer as $cmsBlockCategoryTransfer) {
-            if (isset($spyCmsBlockCategoryStorageEntities[$cmsBlockCategoryTransfer->getIdCategory()])) {
-                $this->storeDataSet($cmsBlockCategoryTransfer, $spyCmsBlockCategoryStorageEntities[$cmsBlockCategoryTransfer->getIdCategory()]);
+        foreach ($cmsBlockCategoriesTransferCollection as $cmsBlockCategoriesTransfer) {
+            if (isset($spyCmsBlockCategoryStorageEntities[$cmsBlockCategoriesTransfer->getIdCategory()])) {
+                $this->storeDataSet($cmsBlockCategoriesTransfer, $spyCmsBlockCategoryStorageEntities[$cmsBlockCategoriesTransfer->getIdCategory()]);
 
                 continue;
             }
 
-            $this->storeDataSet($cmsBlockCategoryTransfer);
+            $this->storeDataSet($cmsBlockCategoriesTransfer);
         }
     }
 
@@ -142,11 +142,11 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
      *
      * @return array
      */
-    protected function getCmsBlockCategoriesTransfer(array $categoryIds): array
+    protected function getCmsBlockCategoriesTransferCollection(array $categoryIds): array
     {
         $cmsBlocksGroupedByCategoryPosition = $this->getCmsBlocksGroupedByCategoryPosition($categoryIds);
 
-        $cmsBlockCategoriesTransfer = [];
+        $cmsBlockCategoriesTransferCollection = [];
         foreach ($cmsBlocksGroupedByCategoryPosition as $idCategory => $cmsBlockPositions) {
             $cmsBlockCategoriesTransfer = new CmsBlockCategoriesTransfer();
             $cmsBlockCategoriesTransfer->setIdCategory($idCategory);
@@ -159,10 +159,10 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
                 $cmsBlockCategoriesTransfer->addCmsBlockCategory($cmsBlockCategoryTransfer);
             }
 
-            $cmsBlockCategoriesTransfer[$idCategory] = $cmsBlockCategoriesTransfer;
+            $cmsBlockCategoriesTransferCollection[$idCategory] = $cmsBlockCategoriesTransfer;
         }
 
-        return $cmsBlockCategoriesTransfer;
+        return $cmsBlockCategoriesTransferCollection;
     }
 
     /**
