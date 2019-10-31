@@ -205,6 +205,7 @@
     "spryker/customer-access": "*",
     "spryker/customer-access-gui": "*",
     "spryker/customer-access-permission": "*",
+    "spryker/customer-access-rest-api": "*",
     "spryker/customer-access-storage": "*",
     "spryker/customer-api": "*",
     "spryker/customer-catalog": "*",
