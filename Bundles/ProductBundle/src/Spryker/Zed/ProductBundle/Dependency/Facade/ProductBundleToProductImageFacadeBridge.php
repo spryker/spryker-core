@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
-class ProductBundleToProductImageBridge implements ProductBundleToProductImageInterface
+class ProductBundleToProductImageFacadeBridge implements ProductBundleToProductImageFacadeInterface
 {
     /**
      * @var \Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface

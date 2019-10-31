@@ -16,7 +16,7 @@ use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriter;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriterInterface;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 /**
@@ -142,11 +142,11 @@ class ProductBundleWriterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface
      */
     protected function createProductFacadeMock()
     {
-        return $this->getMockBuilder(ProductBundleToProductInterface::class)->getMock();
+        return $this->getMockBuilder(ProductBundleToProductFacadeInterface::class)->getMock();
     }
 
     /**

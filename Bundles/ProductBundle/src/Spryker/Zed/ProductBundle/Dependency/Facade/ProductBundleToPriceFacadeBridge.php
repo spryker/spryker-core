@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
-class ProductBundleToPriceBridge implements ProductBundleToPriceInterface
+class ProductBundleToPriceFacadeBridge implements ProductBundleToPriceFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Price\Business\PriceFacadeInterface

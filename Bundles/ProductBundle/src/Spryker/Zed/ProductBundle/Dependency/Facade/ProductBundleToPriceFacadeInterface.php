@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
-interface ProductBundleToPriceInterface
+interface ProductBundleToPriceFacadeInterface
 {
     /**
      * @return string
