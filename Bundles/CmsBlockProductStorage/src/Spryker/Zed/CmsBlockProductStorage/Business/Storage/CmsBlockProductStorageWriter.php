@@ -56,7 +56,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
     public function __construct(
         CmsBlockProductStorageQueryContainerInterface $queryContainer,
         CmsBlockProductStorageToUtilSanitizeServiceInterface $utilSanitizeService,
-        $isSendingToQueue,
+        bool $isSendingToQueue,
         CmsBlockFeatureDetectorInterface $cmsBlockFeatureDetector
     ) {
         $this->queryContainer = $queryContainer;
