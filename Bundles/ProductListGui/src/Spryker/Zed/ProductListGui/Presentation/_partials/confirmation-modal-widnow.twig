@@ -11,10 +11,10 @@
                 <p>{{ modalMessage | trans }}</p>
             </div>
             <div class="modal-footer">
-                <button id="btn-confirm" type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-primary js-btn-confirm">
                     {{ confirmButtonText | default('Сonfirm') | trans }}
                 </button>
-                <button id="btn-cancel" type="button" class="btn btn-danger" data-dismiss="modal">
+                <button type="button" class="btn btn-danger js-btn-cancel" data-dismiss="modal">
                     {{ cancelButtonText | default('Cancel') | trans }}
                 </button>
             </div>

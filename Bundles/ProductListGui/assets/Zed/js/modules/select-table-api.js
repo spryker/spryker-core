@@ -35,17 +35,19 @@ var SelectTableAPI = function() {
     };
 
     this.selectProductsOnLoad = function(initialSelectedProductsData) {
-        if (!this.initialDataLoaded) {
-            var data = initialSelectedProductsData.replace(/&quot;/g, '"').replace(/,/g, '');
-            var parsedData = JSON.parse(data);
-
-            for (var i = 0; i < parsedData.length; i++) {
-                parsedData[i].push('');
-                this.addRow(parsedData[i]);
-            }
-
-            this.initialDataLoaded = true;
+        if (this.initialDataLoaded) {
+            return;
         }
+
+        var data = initialSelectedProductsData.replace(/&quot;/g, '"').replace(/,/g, '');
+        var parsedData = JSON.parse(data);
+
+        for (var i = 0; i < parsedData.length; i++) {
+            parsedData[i].push('');
+            this.addRow(parsedData[i]);
+        }
+
+        this.initialDataLoaded = true;
     };
 
     /**
@@ -59,13 +61,11 @@ var SelectTableAPI = function() {
             self.updateCheckboxes();
             self.mapEventsToCheckboxes(productTableData, $(self.checkboxSelector));
 
-            if (self.$inputWithSelectedProducts) {
+            if (self.$inputWithSelectedProducts && initialSelectedProductsData) {
                 var initialSelectedProductsData = self.$inputWithSelectedProducts.val();
 
-                if (initialSelectedProductsData) {
-                    self.selectProductsOnLoad(initialSelectedProductsData);
-                    self.$inputWithSelectedProducts.val('');
-                }
+                self.selectProductsOnLoad(initialSelectedProductsData);
+                self.$inputWithSelectedProducts.val('');
             }
         });
     };
@@ -116,13 +116,12 @@ var SelectTableAPI = function() {
      * @param {number} productItemId - Id if product row.
      */
     this.findSelectedProductsInTable = function(checkBox,productItemId) {
-        for(var j = 0; j < this.selectedProductsData.length; j++) {
-            var selectedProductId = this.selectedProductsData[j][0];
+        var itemEqualId = function equal(item) {
+            return item[0] === productItemId;
+        };
 
-            if(productItemId == selectedProductId) {
-                checkBox.prop('checked', true);
-                break;
-            }
+        if (this.selectedProductsData.some(itemEqualId)) {
+            checkBox.prop('checked', true);
         }
     };
 
