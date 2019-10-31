@@ -63,7 +63,7 @@ class CmsBlockKeyProvider implements CmsBlockKeyProviderInterface
 
         $attempt = 0;
         do {
-            if ($attempt === static::KEY_GENERATOR_ITERATION_LIMIT) {
+            if ($attempt >= static::KEY_GENERATOR_ITERATION_LIMIT) {
                 throw new CmsBlockKeyNotCreatedException('Cannot create key: maximum iterations threshold met.');
             }
 
