@@ -71,7 +71,7 @@ interface MerchantRelationshipProductListFacadeInterface
      * - Finds merchant relationships which use given product list by ProductListTransfer::idProductList.
      * - Returns ProductListResponseTransfer with check results.
      * - ProductListResponseTransfer::isSuccessful is equal to true when usage cases were not found, false otherwise.
-     * - ProductListResponseTransfer::messages contains usage details.
+     * - ProductListResponseTransfer::messages contains error messages.
      *
      * @api
      *
@@ -79,7 +79,7 @@ interface MerchantRelationshipProductListFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function checkProductListUsageAmongMerchantRelationships(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
+    public function isProductListDeletable(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
 
     /**
      * Specification:
@@ -89,9 +89,9 @@ interface MerchantRelationshipProductListFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     * @param int $idProductList
      *
      * @return int[]
      */
-    public function getMerchantRelationshipIdsByProductList(ProductListTransfer $productListTransfer): array;
+    public function getMerchantRelationshipIdsByProductListId(int $idProductList): array;
 }

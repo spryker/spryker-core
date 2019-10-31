@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,6 +25,11 @@ class TemplateController extends AbstractController
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::indexAction()
      */
     protected const ROUTE_EDIT_TEMPLATE = '/configurable-bundle-gui/template/edit';
+
+    /**
+     * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::indexAction()
+     */
+    protected const ROUTE_TEMPLATES_LIST = '/configurable-bundle-gui/template';
 
     protected const ERROR_MESSAGE_TEMPLATE_NOT_FOUND = 'Configurable bundle template with id "%id%" was not found.';
     protected const ERROR_MESSAGE_TEMPLATE_CREATE_FAIL = 'Configurable bundle template has not been created.';
@@ -39,6 +45,11 @@ class TemplateController extends AbstractController
     protected const SUCCESS_MESSAGE_TEMPLATE_DEACTIVATED = 'Template "%template_name%" was deactivated.';
 
     protected const MESSAGE_PARAM_TEMPLATE_NAME = '%template_name%';
+
+    protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id-configurable-bundle-template';
+    protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = 'id-configurable-bundle-template-slot';
+
+    protected const ERROR_MESSAGE_PARAM_ID = '%id%';
 
     /**
      * @return array

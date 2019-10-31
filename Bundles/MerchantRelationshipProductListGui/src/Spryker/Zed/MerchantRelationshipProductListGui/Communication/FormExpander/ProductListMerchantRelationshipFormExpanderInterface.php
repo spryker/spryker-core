@@ -9,7 +9,7 @@ namespace Spryker\Zed\MerchantRelationshipProductListGui\Communication\FormExpan
 
 use Symfony\Component\Form\FormBuilderInterface;
 
-interface ProductListMerchantRelationshipEditFormExpanderInterface
+interface ProductListMerchantRelationshipFormExpanderInterface
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

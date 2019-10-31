@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantRelationshipGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
 interface MerchantRelationshipGuiToMerchantRelationshipFacadeInterface
@@ -46,11 +45,4 @@ interface MerchantRelationshipGuiToMerchantRelationshipFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer|null
      */
     public function findMerchantRelationshipById(MerchantRelationshipTransfer $merchantRelationshipTransfer): ?MerchantRelationshipTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer|null $merchantRelationshipFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
-     */
-    public function getMerchantRelationshipCollection(?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer): array;
 }

@@ -74,13 +74,14 @@ class ProductListUsedByTableDataExpander implements ProductListUsedByTableDataEx
     protected function getMerchantRelationshipTransfers(ProductListTransfer $productListTransfer): array
     {
         $merchantRelationshipIds = $this->merchantRelationshipProductListFacade
-            ->getMerchantRelationshipIdsByProductList($productListTransfer);
+            ->getMerchantRelationshipIdsByProductListId($productListTransfer->getIdProductList());
 
         if (!$merchantRelationshipIds) {
             return [];
         }
 
-        $merchantRelationshipFilterTransfer = (new MerchantRelationshipFilterTransfer())->setMerchantRelationshipIds($merchantRelationshipIds);
+        $merchantRelationshipFilterTransfer = (new MerchantRelationshipFilterTransfer())
+            ->setMerchantRelationshipIds($merchantRelationshipIds);
 
         return $this->merchantRelationshipFacade->getMerchantRelationshipCollection($merchantRelationshipFilterTransfer);
     }

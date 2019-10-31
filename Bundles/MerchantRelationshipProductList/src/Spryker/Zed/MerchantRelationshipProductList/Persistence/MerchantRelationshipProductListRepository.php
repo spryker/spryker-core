@@ -10,7 +10,7 @@ namespace Spryker\Zed\MerchantRelationshipProductList\Persistence;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\ProductListCollectionTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
-use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipTableMap;
+use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -74,14 +74,9 @@ class MerchantRelationshipProductListRepository extends AbstractRepository imple
                 ->endUse();
         }
 
-        $productListEntities = $productListQuery->find();
-
         return $this->getFactory()
             ->createMerchantRelationshipProductListMapper()
-            ->mapProductListCollection(
-                $productListEntities,
-                new ProductListCollectionTransfer()
-            );
+            ->mapProductListCollection($productListQuery->find(), new ProductListCollectionTransfer());
     }
 
     /**
@@ -117,9 +112,8 @@ class MerchantRelationshipProductListRepository extends AbstractRepository imple
     {
         return $this->getFactory()
             ->getProductListQuery()
-            ->joinWithSpyMerchantRelationship()
             ->filterByIdProductList($idProductList)
-            ->select(SpyMerchantRelationshipTableMap::COL_ID_MERCHANT_RELATIONSHIP)
+            ->select(SpyProductListTableMap::COL_FK_MERCHANT_RELATIONSHIP)
             ->find()
             ->toArray();
     }

@@ -39,20 +39,6 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
-     * @return int[]
-     */
-    public function getMerchantRelationshipIdsByProductList(ProductListTransfer $productListTransfer): array
-    {
-        $merchantRelationshipTransfers = $this->getMerchantRelationshipsByProductList($productListTransfer);
-
-        return array_map(function ($merchantRelationshipTransfer) {
-            return $merchantRelationshipTransfer->getIdMerchantRelationship();
-        }, $merchantRelationshipTransfers);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
-     *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
     public function getMerchantRelationshipsByProductList(ProductListTransfer $productListTransfer): array

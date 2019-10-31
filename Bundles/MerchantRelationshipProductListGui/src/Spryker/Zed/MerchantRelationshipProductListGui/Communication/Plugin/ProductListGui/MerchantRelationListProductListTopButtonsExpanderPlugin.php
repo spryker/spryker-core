@@ -19,7 +19,7 @@ class MerchantRelationListProductListTopButtonsExpanderPlugin extends AbstractPl
 {
     /**
      * {@inheritDoc}
-     * - Expands buttons list with button leads to a Merchant Relations list page.
+     * - Expands buttons list with Merchant Relations list page button.
      *
      * @api
      *

@@ -154,7 +154,7 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
-    public function getMerchantRelationshipCollection(?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer): array
+    public function getMerchantRelationshipCollection(?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer = null): array
     {
         $merchantRelationshipQuery = $this->getFactory()
             ->createMerchantRelationshipQuery()
