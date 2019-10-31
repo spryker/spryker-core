@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/cms-block-extension.svg)](https://travis-ci.org/spryker/cms-block-extension)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/cms-block-extension/badge.svg)](https://coveralls.io/github/spryker/cms-block-extension)
 
-{{ADD DESCRIPTION HERE}}
+CmsBlockExtension module provides plugin interfaces used by CmsBlock module.
 
 ## Installation
 
