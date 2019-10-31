@@ -43,7 +43,7 @@ class ConfigurableBundleCartNoteSetter implements ConfigurableBundleCartNoteSett
 
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $quoteTransfer->setCustomer($configurableBundleCartNoteRequestTransfer->getCustomer());
-        $itemCollectionTransfer = $this->findItemsByConfigurableBundleGroupKey(
+        $itemCollectionTransfer = $this->getItemCollectionByConfigurableBundleGroupKey(
             $quoteTransfer,
             $configurableBundleCartNoteRequestTransfer->getConfigurableBundleGroupKey()
         );
@@ -68,7 +68,7 @@ class ConfigurableBundleCartNoteSetter implements ConfigurableBundleCartNoteSett
      *
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    protected function findItemsByConfigurableBundleGroupKey(
+    protected function getItemCollectionByConfigurableBundleGroupKey(
         QuoteTransfer $quoteTransfer,
         string $configurableBundleGroupKey
     ): ItemCollectionTransfer {
