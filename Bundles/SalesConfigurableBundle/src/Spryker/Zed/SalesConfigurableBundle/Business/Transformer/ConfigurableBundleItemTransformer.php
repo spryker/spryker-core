@@ -45,17 +45,17 @@ class ConfigurableBundleItemTransformer implements ConfigurableBundleItemTransfo
     {
         $configuredBundleQuantity = $itemTransfer->getConfiguredBundle()->getQuantity();
         if ($configuredBundleQuantity === 1) {
-            return $this->createItemCollection($itemTransfer);
+            return $this->convertItemTransferToItemCollectionTransfer($itemTransfer);
         }
 
         $configurableBundleItemCollectionTransfer = new ItemCollectionTransfer();
 
         for ($index = 1; $index <= $configuredBundleQuantity; $index++) {
             $transformedItemTransfer = $this->transformItem($itemTransfer, $index);
-            $itemCollection = $this->createItemCollection($transformedItemTransfer);
+            $itemCollectionTransfer = $this->convertItemTransferToItemCollectionTransfer($transformedItemTransfer);
 
-            foreach ($itemCollection->getItems() as $item) {
-                $configurableBundleItemCollectionTransfer->addItem($item);
+            foreach ($itemCollectionTransfer->getItems() as $itemTransfer) {
+                $configurableBundleItemCollectionTransfer->addItem($itemTransfer);
             }
         }
 
@@ -93,7 +93,7 @@ class ConfigurableBundleItemTransformer implements ConfigurableBundleItemTransfo
      *
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
-    protected function createItemCollection(ItemTransfer $itemTransfer): ItemCollectionTransfer
+    protected function convertItemTransferToItemCollectionTransfer(ItemTransfer $itemTransfer): ItemCollectionTransfer
     {
         if ($this->isNonSplittableQuantityThresholdExceeded($itemTransfer)) {
             return (new ItemCollectionTransfer())->addItem($itemTransfer);

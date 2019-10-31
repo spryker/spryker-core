@@ -507,12 +507,12 @@ class SalesConfigurableBundleFacadeTest extends Unit
         $facade = $this->getSalesConfigurableBundleFacadeWithMockedConfig();
 
         //Act
-        $itemCollection = $facade->transformConfigurableBundleItem($itemTransfer);
+        $itemCollectionTransfer = $facade->transformConfigurableBundleItem($itemTransfer);
 
         //Assert
-        $this->assertCount($itemsCount, $itemCollection->getItems());
-        foreach ($itemCollection->getItems() as $item) {
-            $this->assertSame($itemQuantity, $item->getQuantity());
+        $this->assertCount($itemsCount, $itemCollectionTransfer->getItems());
+        foreach ($itemCollectionTransfer->getItems() as $itemTransfer) {
+            $this->assertSame($itemQuantity, $itemTransfer->getQuantity());
         }
     }
 
