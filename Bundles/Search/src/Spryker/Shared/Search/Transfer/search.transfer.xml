@@ -133,4 +133,7 @@
         <property name="index" type="string"/>
     </transfer>
 
+    <transfer name="Locale">
+    </transfer>
+
 </transfers>

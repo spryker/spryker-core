@@ -48,4 +48,7 @@
         <property name="originalItemCalculatedDiscounts" type="CalculatedDiscount[]" singular="originalItemCalculatedDiscounts"/>
     </transfer>
 
+    <transfer name="Quote">
+    </transfer>
+
 </transfers>
