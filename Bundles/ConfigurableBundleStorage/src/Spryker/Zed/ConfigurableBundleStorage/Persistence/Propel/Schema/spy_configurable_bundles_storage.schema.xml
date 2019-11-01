@@ -21,6 +21,7 @@
             <parameter name="resource" value="configurable_bundle_template"/>
             <parameter name="key_suffix_column" value="fk_configurable_bundle_template"/>
             <parameter name="queue_group" value="sync.storage.configurable_bundle"/>
+            <parameter name="mappings" value="uuid:id_configurable_bundle_template"/>
         </behavior>
 
         <behavior name="timestampable"/>
