@@ -27,12 +27,13 @@ var BlocksTable = function (options) {
     this.init = function () {
         _self.blocksTable = $(_self.blocksTableSelector);
         _self.cmsSlotBlocks = $(_self.cmsSlotBlocksSelector);
-        if (_self.isFirstInit) {
-            document.addEventListener('savedBlocksForm', function () {
-                _self.getInitTableState(_self.blocksTable.data('ajax'));
-            }, false);
-            _self.isFirstInit = false;
+        if (!_self.isFirstInit) {
+            return
         }
+        document.addEventListener('savedBlocksForm', function () {
+            _self.getInitTableState(_self.blocksTable.data('ajax'));
+        }, false);
+        _self.isFirstInit = false;
     };
 
     this.loadBlocksTable = function (params, idCmsSlotTemplate, idCmsSlot) {
@@ -129,7 +130,7 @@ var BlocksTable = function (options) {
         var storesArray = stores.split(',');
 
         return storesArray.reduce(function (storesTemplate, store) {
-            return storesTemplate += storeTemplate.html(store)[0].outerHTML + ' ';
+            return storesTemplate + storeTemplate.html(store)[0].outerHTML + ' ';
         }, '');
     };
 

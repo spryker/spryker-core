@@ -10,9 +10,9 @@
  */
 var SlotBlocks = function (options) {
     var _self = this;
-    this.slotClass = '';
-    this.slotTableClass = '';
-    this.blockContainerClass = '',
+    this.slotSelector = '';
+    this.slotTableSelector = '';
+    this.blockContainerSelector = '',
     this.baseUrl = '';
     this.slotTable = {};
     this.blocksTable = {};
@@ -24,9 +24,9 @@ var SlotBlocks = function (options) {
     $.extend(this, options);
 
     this.init = function () {
-        _self.slotTable = $(_self.slotTableClass).DataTable();
+        _self.slotTable = $(_self.slotTableSelector).DataTable();
 
-        $(_self.slotTableClass).find('tbody').on('click', 'tr', _self.tableRowSelect);
+        $(_self.slotTableSelector).find('tbody').on('click', 'tr', _self.tableRowSelect);
         _self.slotTable.on('draw', _self.selectFirstRow);
         _self.slotTable.on('select', _self.loadBlocksTable);
     };
@@ -37,20 +37,21 @@ var SlotBlocks = function (options) {
         }
 
         var cellIndex = $(this).index();
-        if (_self.blocksTable.isUnsaved()) {
-            var cmsSlotBlock = _self.blocksTable.cmsSlotBlocks;
-            window.sweetAlert({
-                title: cmsSlotBlock.data('alert-title'),
-                text: cmsSlotBlock.data('alert-text'),
-                type: 'warning',
-                showCancelButton: true,
-                html: false,
-            }, function () {
-                _self.updateRow(cellIndex);
-            });
+        if (!_self.blocksTable.isUnsaved()) {
+            _self.updateRow(cellIndex);
             return;
         }
-        _self.updateRow(cellIndex);
+
+        var cmsSlotBlock = _self.blocksTable.cmsSlotBlocks;
+        window.sweetAlert({
+            title: cmsSlotBlock.data('alert-title'),
+            text: cmsSlotBlock.data('alert-text'),
+            type: 'warning',
+            showCancelButton: true,
+            html: false,
+        }, function () {
+            _self.updateRow(cellIndex);
+        });
     };
 
     this.updateRow = function (index) {
@@ -70,8 +71,8 @@ var SlotBlocks = function (options) {
         paramsCollection[_self.paramIdCmsSlot] = idCmsSlot;
         var params = $.param(paramsCollection);
         $.get(_self.baseUrl + '?' + params).done(function (html) {
-            $(_self.blockContainerClass).remove();
-            $(html).insertAfter($(_self.slotClass));
+            $(_self.blockContainerSelector).remove();
+            $(html).insertAfter($(_self.slotSelector));
 
             _self.blocksTable.init();
             _self.blocksTable.overlayToggler(false);

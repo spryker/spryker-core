@@ -3,14 +3,14 @@
         <i class="fa fa-arrow-up"></i>
         {{ 'Move Up' | trans }}
     </a>
-    <a href="#" class="btn btn-xs btn-outline  btn-create" data-direction="down" onclick="return false;">
+    <a href="#" class="btn btn-xs btn-outline btn-create" data-direction="down" onclick="return false;">
         <i class="fa fa-arrow-down"></i>
         {{ 'Move Down' | trans }}
     </a>
-    <a href="" class="btn btn-xs btn-outline  btn-view">
+    <a href="" class="btn btn-xs btn-outline btn-view">
         {{ 'View Block' | trans }}
     </a>
-    <a href="#" class="btn btn-xs btn-outline  btn-danger" onclick="return false;">
+    <a href="#" class="btn btn-xs btn-outline btn-danger" onclick="return false;">
         <i class="fa fa-trash"></i>
         {{ 'Delete' | trans }}
     </a>
@@ -68,7 +68,7 @@
                 {{ form_widget(slotBlockItemForm.position) }}
             {% endfor %}
 
-            <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
+            <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}">
 
             {{ form_end(cmsSlotBlockCollectionForm) }}
             <div class="cms-slot-blocks__overlay js-cms-slot-blocks__overlay"></div>

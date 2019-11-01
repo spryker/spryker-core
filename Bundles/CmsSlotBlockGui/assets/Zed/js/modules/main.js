@@ -36,9 +36,9 @@ $(document).ready(function() {
     });
 
     var slotBlocks = new SlotBlocks({
-        slotClass: '.js-row-list-of-slots',
-        slotTableClass: '.js-row-list-of-slots table',
-        blockContainerClass: '.js-row-list-of-blocks-container',
+        slotSelector: '.js-row-list-of-slots',
+        slotTableSelector: '.js-row-list-of-slots table',
+        blockContainerSelector: '.js-row-list-of-blocks-container',
         baseUrl: '/cms-slot-block-gui/slot-block/index',
         paramIdCmsSlotTemplate: 'id-cms-slot-template',
         paramIdCmsSlot: 'id-cms-slot',
