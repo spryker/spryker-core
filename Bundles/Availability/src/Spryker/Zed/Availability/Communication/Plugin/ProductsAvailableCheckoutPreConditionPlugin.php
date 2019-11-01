@@ -22,6 +22,7 @@ class ProductsAvailableCheckoutPreConditionPlugin extends AbstractPlugin impleme
 {
     /**
      * {@inheritDoc}
+     *  - In case `ItemTransfer.amount` was defined, item availability check will be ignored.
      *
      * @api
      *

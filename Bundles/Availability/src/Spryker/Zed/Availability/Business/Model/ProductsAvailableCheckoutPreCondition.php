@@ -77,15 +77,19 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Spryker\DecimalObject\Decimal[] [string, \Spryker\DecimalObject\Decimal]
      */
-    protected function groupItemsBySku(iterable $items): array
+    protected function groupItemsBySku(iterable $itemTransfers): array
     {
         /** @var \Spryker\DecimalObject\Decimal[] $result */
         $result = [];
-        foreach ($items as $itemTransfer) {
+        foreach ($itemTransfers as $itemTransfer) {
+            if ($itemTransfer->getAmount() !== null) {
+                continue;
+            }
+
             $sku = $itemTransfer->getSku();
 
             if (!isset($result[$sku])) {

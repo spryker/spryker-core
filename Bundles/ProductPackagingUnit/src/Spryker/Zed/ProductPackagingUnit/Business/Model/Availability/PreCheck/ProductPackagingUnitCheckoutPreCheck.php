@@ -51,8 +51,21 @@ class ProductPackagingUnitCheckoutPreCheck extends ProductPackagingUnitAvailabil
 
         $storeTransfer = $quoteTransfer->getStore();
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getAmountLeadProduct() || !$itemTransfer->getAmount()) {
+            if (!$itemTransfer->getAmountLeadProduct() || !$itemTransfer->getAmount() || $itemTransfer->getAmount()->lessThan(0)) {
                 continue;
+            }
+
+            if (!$itemTransfer->getAmountLeadProduct()->getSku() !== $itemTransfer->getSku()) {
+                $isPackagingUnitSellable = $this->isPackagingUnitSellable(
+                    $itemTransfer,
+                    $storeTransfer
+                );
+
+                if (!$isPackagingUnitSellable) {
+                    $cartErrorMessages[] = $this->createCheckoutResponseTransfer(
+                        static::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY
+                    );
+                }
             }
 
             $isPackagingUnitLeadProductSellable = $this->isPackagingUnitLeadProductSellable(
@@ -61,7 +74,7 @@ class ProductPackagingUnitCheckoutPreCheck extends ProductPackagingUnitAvailabil
                 $storeTransfer
             );
 
-            if ($itemTransfer->getAmount()->greaterThan(0) && !$isPackagingUnitLeadProductSellable) {
+            if (!$isPackagingUnitLeadProductSellable) {
                 $checkoutErrorMessages[] = $this->createCheckoutResponseTransfer(
                     static::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY
                 );

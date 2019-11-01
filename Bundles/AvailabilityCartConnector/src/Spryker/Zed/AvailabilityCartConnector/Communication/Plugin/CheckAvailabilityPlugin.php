@@ -19,6 +19,7 @@ class CheckAvailabilityPlugin extends AbstractPlugin implements CartPreCheckPlug
 {
     /**
      * {@inheritDoc}
+     *  - In case `ItemTransfer.amount` was defined, item availability check will be ignored.
      *
      * @api
      *

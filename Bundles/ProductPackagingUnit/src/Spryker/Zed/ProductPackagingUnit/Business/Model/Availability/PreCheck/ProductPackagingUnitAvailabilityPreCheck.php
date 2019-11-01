@@ -22,22 +22,59 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
     /**
      * @param \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade
      */
-    public function __construct(
-        ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade
-    ) {
+    public function __construct(ProductPackagingUnitToAvailabilityFacadeInterface $availabilityFacade)
+    {
         $this->availabilityFacade = $availabilityFacade;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $item
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    protected function isPackagingUnitSellable(ItemTransfer $itemTransfer, StoreTransfer $storeTransfer): bool
+    {
+        if ($itemTransfer->getAmountLeadProduct()->getSku() === $itemTransfer->getSku()) {
+            // self-lead PU
+            return true;
+        }
+
+        return $this->isProductSellableForStore(
+            $itemTransfer->getSku(),
+            new Decimal($itemTransfer->getQuantity()),
+            $storeTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    protected function findProductConcreteAvailability(ItemTransfer $itemTransfer, StoreTransfer $storeTransfer): Decimal
+    {
+        $productConcreteAvailabilityTransfer = $this->availabilityFacade
+            ->findOrCreateProductConcreteAvailabilityBySkuForStore($itemTransfer->getSku(), $storeTransfer);
+
+        if ($productConcreteAvailabilityTransfer !== null) {
+            return $productConcreteAvailabilityTransfer->getAvailability();
+        }
+
+        return new Decimal(0);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer[] $items
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    protected function isPackagingUnitLeadProductSellable(ItemTransfer $item, iterable $items, StoreTransfer $storeTransfer): bool
+    protected function isPackagingUnitLeadProductSellable(ItemTransfer $itemTransfer, iterable $items, StoreTransfer $storeTransfer): bool
     {
-        $itemLeadProductSku = $item->getAmountLeadProduct()->getSku();
+        $itemLeadProductSku = $itemTransfer->getAmountLeadProduct()->getSku();
         $accumulatedItemLeadProductQuantity = $this->getAccumulatedQuantityForLeadProduct($items, $itemLeadProductSku);
 
         return $this->isProductSellableForStore(
@@ -48,26 +85,29 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      * @param string $leadProductSku
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    protected function getAccumulatedQuantityForLeadProduct(iterable $items, string $leadProductSku): Decimal
+    protected function getAccumulatedQuantityForLeadProduct(iterable $itemTransfers, string $leadProductSku): Decimal
     {
         $quantity = new Decimal(0);
-        foreach ($items as $item) {
-            if ($leadProductSku === $item->getSku()) { // Lead product is in cart as an individual item
-                $quantity = $quantity->add($item->getQuantity());
+        foreach ($itemTransfers as $itemTransfer) {
+            if ($leadProductSku === $itemTransfer->getSku() && $leadProductSku !== $itemTransfer->getAmountLeadProduct()->getSku()) {
+                // Lead product is in cart as an individual item (but not self-lead)
+                $quantity = $quantity->add($itemTransfer->getQuantity());
                 continue;
             }
 
-            if (!$item->getAmountLeadProduct()) { // Skip remaining items without lead product
+            if (!$itemTransfer->getAmountLeadProduct()) {
+                // Skip remaining items without lead product
                 continue;
             }
 
-            if ($item->getAmountLeadProduct()->getSku() === $leadProductSku) { // Item in cart has the searched lead product
-                $quantity = $quantity->add($item->getAmount());
+            if ($itemTransfer->getAmountLeadProduct()->getSku() === $leadProductSku) {
+                // Item in cart has the matched lead product
+                $quantity = $quantity->add($itemTransfer->getAmount());
             }
         }
 

@@ -18,6 +18,9 @@ use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryI
 class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityPreCheck implements ProductPackagingUnitCartPreCheckInterface
 {
     public const CART_PRE_CHECK_ITEM_AVAILABILITY_LEAD_PRODUCT_FAILED = 'cart.pre.check.availability.failed.lead.product';
+    public const CART_PRE_CHECK_AVAILABILITY_FAILED = 'cart.pre.check.availability.failed';
+    public const STOCK_TRANSLATION_PARAMETER = '%stock%';
+    public const SKU_TRANSLATION_PARAMETER = '%sku%';
 
     /**
      * @var \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface
@@ -48,11 +51,27 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
         $storeTransfer = $cartChangeTransfer->getQuote()->getStore();
         $cartItems = clone $cartChangeTransfer->getItems();
         foreach ($cartItems as $itemTransfer) {
-            if (!$itemTransfer->getAmount()) {
+            if ($itemTransfer->getAmount() === null || $itemTransfer->getAmount()->lessThan(0)) {
                 continue;
             }
 
             $this->expandItemWithLeadProduct($itemTransfer);
+
+            $isPackagingUnitSellable = $this->isPackagingUnitSellable(
+                $itemTransfer,
+                $storeTransfer
+            );
+
+            if (!$isPackagingUnitSellable) {
+                $productAvailability = $this->findProductConcreteAvailability($itemTransfer, $storeTransfer);
+                $cartErrorMessages[] = $this->createMessageTransfer(
+                    static::CART_PRE_CHECK_AVAILABILITY_FAILED,
+                    [
+                        static::SKU_TRANSLATION_PARAMETER => $itemTransfer->getSku(),
+                        static::STOCK_TRANSLATION_PARAMETER => $productAvailability->trim()->toString(),
+                    ]
+                );
+            }
 
             $isPackagingUnitLeadProductSellable = $this->isPackagingUnitLeadProductSellable(
                 $itemTransfer,
@@ -60,7 +79,7 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
                 $storeTransfer
             );
 
-            if ($itemTransfer->getAmount()->greaterThan(0) && !$isPackagingUnitLeadProductSellable) {
+            if (!$isPackagingUnitLeadProductSellable) {
                 $cartErrorMessages[] = $this->createMessageTransfer(
                     static::CART_PRE_CHECK_ITEM_AVAILABILITY_LEAD_PRODUCT_FAILED,
                     ['sku' => $itemTransfer->getSku()]
