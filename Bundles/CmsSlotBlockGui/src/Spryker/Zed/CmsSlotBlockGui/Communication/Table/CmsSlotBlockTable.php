@@ -244,7 +244,7 @@ class CmsSlotBlockTable extends AbstractTable
             '#',
             static::BUTTON_DELETE,
             [
-                'class' => 'btn-danger',
+                'class' => 'btn-danger js-slot-block-remove-button',
                 'icon' => 'fa-trash',
                 'onclick' => 'return false;',
             ]

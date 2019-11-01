@@ -11,29 +11,37 @@ var BlocksChoice = require('./blocks-choice');
 var SlotBlocksForm = require('./slot-blocks-form');
 
 $(document).ready(function() {
+    var blocksChoiceFormSelector = '[name=block-choice]';
+    var cmsSlotBlocksSelector = '.js-cms-slot-blocks';
+
     var slotBlocksForm = new SlotBlocksForm({
-        cmsSlotBlocksSelector: '.js-cms-slot-blocks',
+        cmsSlotBlocksSelector: cmsSlotBlocksSelector,
     });
 
     var blocksTable = new BlocksTable({
         tableBaseUrl: '/cms-slot-block-gui/slot-block/table',
-        paramIdCmsSlotTemplate: 'id-cms-slot-template',
-        paramIdCmsSlot: 'id-cms-slot',
         blocksTableSelector: '.js-cms-slot-block-table',
-        cmsSlotBlocksSelector: '.js-cms-slot-blocks',
+        cmsSlotBlocksSelector: cmsSlotBlocksSelector,
+        cmsSlotBlocksOverlaySelector: '.js-cms-slot-blocks__overlay',
+        cmsSlotBlocksOverlayTogglerClass: 'cms-slot-blocks__overlay--hidden',
         slotBlocksForm: slotBlocksForm,
         viewBlockUrl: '/cms-block-gui/view-block',
+        blocksChoiceFormSelector: blocksChoiceFormSelector,
     });
 
     var blocksChoice = new BlocksChoice({
-        blocksChoiceFormSelector: '[name=block-choice]',
+        blocksChoiceFormSelector: blocksChoiceFormSelector,
         blocksTable: blocksTable,
         blocksChoiceAddSelector: '#block-choice_add',
     });
 
     var slotBlocks = new SlotBlocks({
+        slotClass: '.js-row-list-of-slots',
         slotTableClass: '.js-row-list-of-slots table',
+        blockContainerClass: '.js-row-list-of-blocks-container',
         baseUrl: '/cms-slot-block-gui/slot-block/index',
+        paramIdCmsSlotTemplate: 'id-cms-slot-template',
+        paramIdCmsSlot: 'id-cms-slot',
         blocksTable: blocksTable,
         blocksChoice: blocksChoice,
         slotBlocksForm: slotBlocksForm,

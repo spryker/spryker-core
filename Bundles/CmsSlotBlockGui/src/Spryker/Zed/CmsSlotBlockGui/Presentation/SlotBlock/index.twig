@@ -36,16 +36,26 @@
     {% block widget_content %}
 
         <div
-            class="js-cms-slot-blocks"
+            class="cms-slot-blocks js-cms-slot-blocks"
             data-actions-buttons-template="{{ actionsButtonsTemplate | e }}"
             data-active-label-template="{{ activeLabelTemplate | e }}"
             data-inactive-label-template="{{ inactiveLabelTemplate | e }}"
             data-store-template="{{ storeTemplate | e }}"
-            data-slot-block-item-form-prototype="{{ form_widget(cmsSlotBlockCollectionForm.cmsSlotBlocks.vars.prototype) | e }}"
+            data-slot-block-item-form-template="{{ form_widget(cmsSlotBlockCollectionForm.cmsSlotBlocks.vars.prototype) | e }}"
+            data-alert-title="{{ 'Unsaved changes' | trans }}"
+            data-alert-text="{{ 'You have unsaved changes! Do you want to continue and lose the changes?' | trans }}"
         >
             {{ form_start(cmsBlockChoiceForm) }}
-                {{ form_widget(cmsBlockChoiceForm) }}
+                <div class="row">
+                    <div class="col-sm-5 col-md-4">
+                        {{ form_widget(cmsBlockChoiceForm.cmsBlocks) }}
+                    </div>
+                    <div class="col-sm-2 col-md-1 cms-slot-blocks__button-wrap">
+                        {{ form_widget(cmsBlockChoiceForm.add) }}
+                    </div>
+                </div>
             {{ form_end(cmsBlockChoiceForm) }}
+
 
             {{ slotBlockTable | raw }}
 
@@ -61,6 +71,7 @@
             <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
 
             {{ form_end(cmsSlotBlockCollectionForm) }}
+            <div class="cms-slot-blocks__overlay js-cms-slot-blocks__overlay"></div>
         </div>
     {% endblock %}
 

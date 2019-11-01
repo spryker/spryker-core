@@ -93,7 +93,7 @@ class CmsBlockChoiceForm extends AbstractType
             ->add(static::FIELD_ADD, ButtonType::class, [
                 'label' => static::LABEL_FIELD_ADD,
                 'attr' => [
-                    'class' => 'btn',
+                    'class' => 'btn-back',
                 ],
             ]);
 

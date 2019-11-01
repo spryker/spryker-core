@@ -1,0 +1,54 @@
+/**
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+.cms-slot-blocks {
+    position: relative;
+    &__button-wrap {
+        padding-left: 0;
+    }
+
+    &__overlay {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 10;
+
+        &--hidden {
+            display: none;
+        }
+    }
+
+    .select2-container {
+        .select2-selection--single {
+            &,
+            .select2-selection {
+                &,
+                &__arrow {
+                    height: 33px;
+                }
+
+                &__rendered {
+                    line-height: 33px;
+                }
+            }
+        }
+    }
+
+    tr {
+        &:first-child {
+            .btn[data-direction="up"] {
+                display: none;
+            }
+        }
+
+        &:last-child {
+            .btn[data-direction="down"] {
+                display: none;
+            }
+        }
+    }
+}
