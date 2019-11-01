@@ -46,4 +46,7 @@
         <property name="limit" type="int"/>
     </transfer>
 
+    <transfer name="ProductPackagingLeadProduct">
+    </transfer>
+
 </transfers>

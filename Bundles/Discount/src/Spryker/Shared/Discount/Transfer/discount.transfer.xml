@@ -243,5 +243,11 @@
         <property name="template" type="string"/>
     </transfer>
 
+    <transfer name="DataTables">
+    </transfer>
+
+    <transfer name="Money">
+    </transfer>
+
 </transfers>
 

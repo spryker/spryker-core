@@ -54,7 +54,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
     }
 
     /**
-     * @deprecated Use `ProductAvailabilityReader::findProductAbstractAvailabilityBySkuForStore() instead`.
+     * @deprecated Use `ProductAvailabilityReader::findOrCreateProductAbstractAvailabilityBySkuForStore() instead`.
      *
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -80,7 +80,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
     }
 
     /**
-     * @deprecated Use `ProductAvailabilityReader::findProductAbstractAvailabilityBySkuForStore() instead`.
+     * @deprecated Use `ProductAvailabilityReader::findOrCreateProductAbstractAvailabilityBySkuForStore() instead`.
      *
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -111,7 +111,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
     }
 
     /**
-     * @deprecated Use `ProductAvailabilityReader::findProductConcreteAvailabilityBySkuForStore() instead`.
+     * @deprecated Use `ProductAvailabilityReader::findOrCreateProductConcreteAvailabilityBySkuForStore() instead`.
      *
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *
@@ -157,12 +157,16 @@ class ProductReservationReader implements ProductReservationReaderInterface
     {
         $reservation = new Decimal(0);
         foreach ($reservationItems as $item) {
-            $itemParts = array_filter(explode(':', $item));
-            if (count($itemParts) !== 2) {
+            if ((int)strpos($item, ':') === 0) {
                 continue;
             }
 
-            $reservation = $reservation->add($itemParts[1]);
+            [$sku, $quantity] = explode(':', $item);
+            if ($sku === '' || !is_numeric($quantity)) {
+                continue;
+            }
+
+            $reservation = $reservation->add(new Decimal($quantity));
         }
 
         return $reservation;

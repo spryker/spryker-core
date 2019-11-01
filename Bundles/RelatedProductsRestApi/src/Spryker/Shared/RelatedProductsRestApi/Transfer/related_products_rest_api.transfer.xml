@@ -9,4 +9,7 @@
         <property name="detail" type="string"/>
     </transfer>
 
+    <transfer name="AbstractProductsRestAttributes">
+    </transfer>
+
 </transfers>

@@ -157,12 +157,12 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
      * @param string $abstractSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
      */
     public function getCalculatedProductAbstractAvailabilityBySkuAndStore(
         string $abstractSku,
         StoreTransfer $storeTransfer
-    ): ProductAbstractAvailabilityTransfer {
+    ): ?ProductAbstractAvailabilityTransfer {
         $availabilityAbstractEntityArray = $this->getFactory()
             ->getProductQueryContainer()
             ->queryProductAbstract()
@@ -177,7 +177,7 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
             ->withColumn('GROUP_CONCAT(' . SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK . ')', ProductAbstractAvailabilityTransfer::IS_NEVER_OUT_OF_STOCK)
             ->withColumn('COALESCE(SUM(' . SpyStockProductTableMap::COL_QUANTITY . '), 0)', ProductAbstractAvailabilityTransfer::STOCK_QUANTITY)
             ->withColumn(
-                'COALESCE(SUM(' . SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY . '), 0)',
+                sprintf("GROUP_CONCAT(CONCAT(%s, ':',%s))", SpyProductTableMap::COL_SKU, SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY),
                 ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY
             )->addJoin(
                 SpyProductTableMap::COL_SKU,
@@ -186,6 +186,10 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
             )->where(sprintf('(%s = %d OR %s IS NULL)', SpyOmsProductReservationTableMap::COL_FK_STORE, $storeTransfer->getIdStore(), SpyOmsProductReservationTableMap::COL_FK_STORE))
             ->select([SpyProductAbstractTableMap::COL_SKU])
             ->findOne();
+
+        if ($availabilityAbstractEntityArray === null) {
+            return null;
+        }
 
         return $this->getFactory()
             ->createAvailabilityMapper()

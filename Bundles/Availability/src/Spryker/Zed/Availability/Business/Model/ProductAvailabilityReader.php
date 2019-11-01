@@ -10,6 +10,7 @@ namespace Spryker\Zed\Availability\Business\Model;
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\Availability\Business\Exception\ProductNotFoundException;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
 
@@ -51,18 +52,37 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
      */
-    public function findProductAbstractAvailabilityBySkuForStore(string $abstractSku, StoreTransfer $storeTransfer): ?ProductAbstractAvailabilityTransfer
-    {
+    public function findOrCreateProductAbstractAvailabilityBySkuForStore(
+        string $abstractSku,
+        StoreTransfer $storeTransfer
+    ): ?ProductAbstractAvailabilityTransfer {
         $storeTransfer = $this->assertStoreTransfer($storeTransfer);
         $productAbstractAvailabilityTransfer = $this->availabilityRepository
             ->findProductAbstractAvailabilityBySkuAndStore($abstractSku, $storeTransfer);
 
         if ($productAbstractAvailabilityTransfer === null) {
-            $productAbstractAvailabilityTransfer = $this->availabilityHandler
-                ->updateProductAbstractAvailabilityBySku($abstractSku, $storeTransfer);
+            return $this->updateProductAbstractAvailabilityBySku($abstractSku, $storeTransfer);
         }
 
         return $productAbstractAvailabilityTransfer;
+    }
+
+    /**
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
+     */
+    protected function updateProductAbstractAvailabilityBySku(
+        string $abstractSku,
+        StoreTransfer $storeTransfer
+    ): ?ProductAbstractAvailabilityTransfer {
+        try {
+            return $this->availabilityHandler
+                ->updateProductAbstractAvailabilityBySku($abstractSku, $storeTransfer);
+        } catch (ProductNotFoundException $exception) {
+            return null;
+        }
     }
 
     /**
@@ -71,18 +91,37 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
-    public function findProductConcreteAvailabilityBySkuForStore(string $concreteSku, StoreTransfer $storeTransfer): ?ProductConcreteAvailabilityTransfer
-    {
+    public function findOrCreateProductConcreteAvailabilityBySkuForStore(
+        string $concreteSku,
+        StoreTransfer $storeTransfer
+    ): ?ProductConcreteAvailabilityTransfer {
         $storeTransfer = $this->assertStoreTransfer($storeTransfer);
         $productConcreteAvailabilityTransfer = $this->availabilityRepository
             ->findProductConcreteAvailabilityBySkuAndStore($concreteSku, $storeTransfer);
 
         if ($productConcreteAvailabilityTransfer === null) {
-            $productConcreteAvailabilityTransfer = $this->availabilityHandler
-                ->updateProductConcreteAvailabilityBySku($concreteSku, $storeTransfer);
+            return $this->updateProductConcreteAvailabilityBySku($concreteSku, $storeTransfer);
         }
 
         return $productConcreteAvailabilityTransfer;
+    }
+
+    /**
+     * @param string $concreteSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
+     */
+    protected function updateProductConcreteAvailabilityBySku(
+        string $concreteSku,
+        StoreTransfer $storeTransfer
+    ): ?ProductConcreteAvailabilityTransfer {
+        try {
+            return $this->availabilityHandler
+                ->updateProductConcreteAvailabilityBySku($concreteSku, $storeTransfer);
+        } catch (ProductNotFoundException $exception) {
+            return null;
+        }
     }
 
     /**

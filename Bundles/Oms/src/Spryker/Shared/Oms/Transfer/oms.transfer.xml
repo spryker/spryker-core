@@ -114,5 +114,8 @@
         <property name="orderItems" type="Item[]" singular="orderItem"/>
     </transfer>
 
+    <transfer name="Quote">
+    </transfer>
+
 </transfers>
 

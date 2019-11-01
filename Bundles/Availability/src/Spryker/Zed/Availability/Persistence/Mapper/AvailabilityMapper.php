@@ -54,7 +54,9 @@ class AvailabilityMapper implements AvailabilityMapperInterface
     protected function processAvailabilityAbstractEntityArray(array $availabilityAbstractData): array
     {
         if (isset($availabilityAbstractData[ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY])) {
-            $availabilityAbstractData[ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY] = new Decimal($availabilityAbstractData[ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY]);
+            $availabilityAbstractData[ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY] = $this->calculateReservation(
+                $availabilityAbstractData[ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY]
+            );
         }
 
         if (isset($availabilityAbstractData[ProductAbstractAvailabilityTransfer::IS_NEVER_OUT_OF_STOCK])) {
@@ -68,6 +70,31 @@ class AvailabilityMapper implements AvailabilityMapperInterface
         }
 
         return $availabilityAbstractData;
+    }
+
+    /**
+     * @param string $reservationAggregationSet
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    protected function calculateReservation(string $reservationAggregationSet): Decimal
+    {
+        $reservation = new Decimal(0);
+        $reservationItems = array_unique(explode(',', $reservationAggregationSet));
+        foreach ($reservationItems as $item) {
+            if ((int)strpos($item, ':') === 0) {
+                continue;
+            }
+
+            [$sku, $quantity] = explode(':', $item);
+            if ($sku === '' || !is_numeric($quantity)) {
+                continue;
+            }
+
+            $reservation = $reservation->add(new Decimal($quantity));
+        }
+
+        return $reservation;
     }
 
     /**

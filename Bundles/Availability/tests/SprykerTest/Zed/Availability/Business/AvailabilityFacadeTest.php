@@ -288,7 +288,7 @@ class AvailabilityFacadeTest extends Unit
 
         // Act
         $productAbstractAvailabilityTransfer = $this->getAvailabilityFacade()
-            ->findProductAbstractAvailabilityBySkuForStore(
+            ->findOrCreateProductAbstractAvailabilityBySkuForStore(
                 $productTransfer->getAbstractSku(),
                 $storeTransfer
             );
@@ -296,6 +296,25 @@ class AvailabilityFacadeTest extends Unit
         // Assert
         $this->assertNotNull($productAbstractAvailabilityTransfer);
         $this->assertEquals($productAbstractAvailabilityTransfer->getAvailability()->trim()->toString(), 2);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindProductAbstractAvailabilityForStoreWithInvalidSku(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+
+        // Act
+        $productAbstractAvailabilityTransfer = $this->getAvailabilityFacade()
+            ->findOrCreateProductAbstractAvailabilityBySkuForStore(
+                'xyz' . rand(100, 1000),
+                $storeTransfer
+            );
+
+        // Assert
+        $this->assertNull($productAbstractAvailabilityTransfer);
     }
 
     /**
@@ -326,7 +345,7 @@ class AvailabilityFacadeTest extends Unit
 
         // Act
         $productAbstractAvailabilityTransfer = $this->getAvailabilityFacade()
-            ->findProductAbstractAvailabilityBySkuForStore(
+            ->findOrCreateProductAbstractAvailabilityBySkuForStore(
                 $abstractSku,
                 $storeTransfer
             );
@@ -352,7 +371,7 @@ class AvailabilityFacadeTest extends Unit
 
         // Act
         $productConcreteAvailabilityTransfer = $this->getAvailabilityFacade()
-            ->findProductConcreteAvailabilityBySkuForStore(
+            ->findOrCreateProductConcreteAvailabilityBySkuForStore(
                 $productTransfer->getSku(),
                 $storeTransfer
             );
@@ -379,7 +398,7 @@ class AvailabilityFacadeTest extends Unit
 
         // Act
         $productConcreteAvailabilityTransfer = $this->getAvailabilityFacade()
-            ->findProductConcreteAvailabilityBySkuForStore(
+            ->findOrCreateProductConcreteAvailabilityBySkuForStore(
                 $productTransfer->getSku(),
                 $storeTransfer
             );
@@ -387,6 +406,25 @@ class AvailabilityFacadeTest extends Unit
         // Assert
         $this->assertNotNull($productConcreteAvailabilityTransfer);
         $this->assertEquals($productConcreteAvailabilityTransfer->getAvailability()->trim()->toString(), $productQuantity);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindProductConcreteAvailabilityBySkuForStoreWithInvalidSku(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+
+        // Act
+        $productConcreteAvailabilityTransfer = $this->getAvailabilityFacade()
+            ->findOrCreateProductConcreteAvailabilityBySkuForStore(
+                'xyz' . rand(100, 1000),
+                $storeTransfer
+            );
+
+        // Assert
+        $this->assertNull($productConcreteAvailabilityTransfer);
     }
 
     /**

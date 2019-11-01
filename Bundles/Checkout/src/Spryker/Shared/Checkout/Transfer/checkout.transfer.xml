@@ -92,5 +92,8 @@
         <property name="orderItems" type="Item[]" singular="orderItem"/>
     </transfer>
 
+    <transfer name="Payment">
+    </transfer>
+
 </transfers>
 
