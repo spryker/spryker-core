@@ -169,7 +169,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     protected function findProductConcreteAvailability(ItemTransfer $itemTransfer, StoreTransfer $storeTransfer): Decimal
     {
         $productConcreteAvailabilityTransfer = $this->availabilityFacade
-            ->findProductConcreteAvailabilityBySkuForStore($itemTransfer->getSku(), $storeTransfer);
+            ->findOrCreateProductConcreteAvailabilityBySkuForStore($itemTransfer->getSku(), $storeTransfer);
 
         if ($productConcreteAvailabilityTransfer !== null) {
             return $productConcreteAvailabilityTransfer->getAvailability();

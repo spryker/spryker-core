@@ -61,12 +61,12 @@ interface AvailabilityRepositoryInterface
      * @param string $abstractSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
      */
     public function getCalculatedProductAbstractAvailabilityBySkuAndStore(
         string $abstractSku,
         StoreTransfer $storeTransfer
-    ): ProductAbstractAvailabilityTransfer;
+    ): ?ProductAbstractAvailabilityTransfer;
 
     /**
      * @param string $concreteSku

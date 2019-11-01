@@ -13,6 +13,7 @@
         <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
         <property name="usedNotAppliedVoucherCodes" type="array" singular="usedNotAppliedVoucherCode"/>
         <property name="items" type="Item[]" singular="item"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="PromotionItem">
@@ -93,6 +94,9 @@
 
     <transfer name="DiscountGeneral">
         <property name="idDiscount" type="int"/>
+    </transfer>
+
+    <transfer name="Store">
     </transfer>
 
 </transfers>
