@@ -38,12 +38,12 @@ class MerchantProfileStorageClient extends AbstractClient implements MerchantPro
      *
      * @param int $idMerchant
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileViewTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantProfileStorageTransfer|null
      */
-    public function findMerchantProfileStorageViewData(int $idMerchant): ?MerchantProfileViewTransfer
+    public function findMerchantProfileStorageData(int $idMerchant): ?MerchantProfileStorageTransfer
     {
         return $this->getFactory()
             ->createMerchantProfileStorageReader()
-            ->findMerchantProfileStorageViewData($idMerchant);
+            ->findMerchantProfileStorageData($idMerchant);
     }
 }

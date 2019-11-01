@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\MerchantProfileStorage\Storage;
 
-use Generated\Shared\Transfer\MerchantProfileViewTransfer;
+use Generated\Shared\Transfer\MerchantProfileStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\MerchantProfileStorage\Dependency\Client\MerchantProfileStorageToStorageClientInterface;
 use Spryker\Client\MerchantProfileStorage\Dependency\Service\MerchantProfileStorageConnectorToSynchronizationServiceInterface;
@@ -49,9 +49,9 @@ class MerchantProfileStorageReader implements MerchantProfileStorageReaderInterf
     /**
      * @param int $idMerchant
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileViewTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantProfileStorageTransfer|null
      */
-    public function findMerchantProfileStorageViewData(int $idMerchant): ?MerchantProfileViewTransfer
+    public function findMerchantProfileStorageData(int $idMerchant): ?MerchantProfileStorageTransfer
     {
         $merchantProfileKey = $this->generateKey($idMerchant);
         $merchantProfileData = $this->storageClient->get($merchantProfileKey);
@@ -59,7 +59,7 @@ class MerchantProfileStorageReader implements MerchantProfileStorageReaderInterf
             return null;
         }
 
-        return $this->merchantProfileStorageMapper->mapMerchantProfileStorageDataToMerchantProfileViewTransfer($merchantProfileData);
+        return $this->merchantProfileStorageMapper->mapMerchantProfileStorageDataToMerchantProfileStorageTransfer($merchantProfileData);
     }
 
     /**

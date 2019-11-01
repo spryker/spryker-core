@@ -8,10 +8,6 @@
 namespace Spryker\Zed\ProductOffer\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductOffer\Business\Reader\ProductOfferReader;
-use Spryker\Zed\ProductOffer\Business\Reader\ProductOfferReaderInterface;
-use Spryker\Zed\ProductOffer\Business\Writer\ProductOfferWriter;
-use Spryker\Zed\ProductOffer\Business\Writer\ProductOfferWriterInterface;
 
 /**
  * @method \Spryker\Zed\ProductOffer\ProductOfferConfig getConfig()

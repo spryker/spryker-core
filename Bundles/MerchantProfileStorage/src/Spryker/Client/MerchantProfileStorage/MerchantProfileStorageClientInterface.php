@@ -33,5 +33,5 @@ interface MerchantProfileStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\MerchantProfileStorageTransfer|null
      */
-    public function findMerchantProfileStorageViewData(int $idMerchant): ?MerchantProfileStorageTransfer;
+    public function findMerchantProfileStorageData(int $idMerchant): ?MerchantProfileStorageTransfer;
 }

@@ -9,21 +9,15 @@ namespace SprykerTest\Zed\ProductNew\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductOfferBuilder;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductLabelTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
-use Spryker\Zed\ProductNew\Business\ProductNewBusinessFactory;
-use Spryker\Zed\ProductNew\ProductNewConfig;
 
 /**
  * Auto-generated group annotations
  *
  * @group SprykerTest
  * @group Zed
- * @group ProductOffer
+ * @group ProductNew
  * @group Business
  * @group Facade
  * @group ProductOfferFacadeTest
@@ -39,7 +33,7 @@ class ProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->cleanProductOffer();
@@ -51,7 +45,7 @@ class ProductOfferFacadeTest extends Unit
     public function testFind(): void
     {
         // Arrange
-        $productOfferTransfer = $this->tester->haveMerchantProductOffer(['fkMerchant' => $this->tester->haveMerchant()->getIdMerchant()]);
+        $productOfferTransfer = $this->tester->haveProductOffer();
         $productOfferCriteriaFilterTransfer = new ProductOfferCriteriaFilterTransfer();
         $productOfferCriteriaFilterTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
 
@@ -67,8 +61,7 @@ class ProductOfferFacadeTest extends Unit
     public function testCreate(): void
     {
         // Arrange
-        $merchantTransfer = $this->tester->haveMerchant();
-        $productOfferTransfer = (new ProductOfferBuilder(['fkMerchant' => $merchantTransfer->getIdMerchant()]))->build();
+        $productOfferTransfer = (new ProductOfferBuilder())->build();
         $productOfferTransfer->setIdProductOffer(null);
 
         // Act
@@ -81,7 +74,7 @@ class ProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function cleanProductOffer()
+    protected function cleanProductOffer(): void
     {
         SpyProductOfferQuery::create()->deleteAll();
     }
