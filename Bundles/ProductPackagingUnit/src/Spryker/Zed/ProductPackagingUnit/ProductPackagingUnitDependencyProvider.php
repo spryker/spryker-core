@@ -11,7 +11,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeBridge;
-use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeBridge;
+use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeAdapter;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeBridge;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductFacadeBridge;
@@ -99,7 +99,7 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
     protected function addGlossaryFacade(Container $container): Container
     {
         $container[static::FACADE_GLOSSARY] = function (Container $container) {
-            return new ProductPackagingUnitToGlossaryFacadeBridge(
+            return new ProductPackagingUnitToGlossaryFacadeAdapter(
                 $container->getLocator()->glossary()->facade()
             );
         };
