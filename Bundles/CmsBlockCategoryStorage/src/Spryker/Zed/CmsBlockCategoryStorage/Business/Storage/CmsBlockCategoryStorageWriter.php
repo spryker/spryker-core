@@ -24,9 +24,9 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
     protected const COLUMN_BLOCK_NAME = 'name';
 
     /**
-     * @uses \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainer::KEY
+     * @uses \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainer::BLOCK_KEY
      */
-    protected const COLUMN_BLOCK_KEY = 'key';
+    protected const COLUMN_BLOCK_KEY = 'block_key';
 
     /**
      * @var \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainerInterface

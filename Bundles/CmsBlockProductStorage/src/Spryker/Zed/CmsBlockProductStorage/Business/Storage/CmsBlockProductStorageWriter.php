@@ -23,9 +23,9 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
     protected const COLUMN_BLOCK_NAME = 'name';
 
     /**
-     * @uses \Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainer::KEY
+     * @uses \Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainer::BLOCK_KEY
      */
-    protected const COLUMN_BLOCK_KEY = 'key';
+    protected const COLUMN_BLOCK_KEY = 'block_key';
 
     /**
      * @var \Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainerInterface
