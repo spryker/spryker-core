@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\MerchantProfileStorage;
 
 use Codeception\Actor;
+use Orm\Zed\MerchantProfileStorage\Persistence\SpyMerchantProfileStorage;
+use Orm\Zed\MerchantProfileStorage\Persistence\SpyMerchantProfileStorageQuery;
 
 /**
  * Inherited Methods
@@ -32,4 +34,22 @@ class MerchantProfileStorageCommunicationTester extends Actor
    /**
     * Define custom actions here
     */
+
+    /**
+     * @param int $idMerchant
+     *
+     * @return \Orm\Zed\MerchantProfileStorage\Persistence\Base\SpyMerchantProfileStorage|null
+     */
+    public function findMerchantProfileStorageByIdMerchant(int $idMerchant): ?SpyMerchantProfileStorage
+    {
+        return $this->getMerchantProfileStorageQuery()->findOneByFkMerchant($idMerchant);
+    }
+
+    /**
+     * @return \Orm\Zed\MerchantProfileStorage\Persistence\SpyMerchantProfileStorageQuery
+     */
+    protected function getMerchantProfileStorageQuery(): SpyMerchantProfileStorageQuery
+    {
+        return SpyMerchantProfileStorageQuery::create();
+    }
 }

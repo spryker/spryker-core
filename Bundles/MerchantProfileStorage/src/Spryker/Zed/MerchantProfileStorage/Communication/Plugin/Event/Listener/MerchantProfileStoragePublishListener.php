@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
  * @method \Spryker\Zed\MerchantProfileStorage\Business\MerchantProfileStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProfileStorage\MerchantProfileStorageConfig getConfig()
  */
-class MerchantProfileStorageActivateListener extends AbstractPlugin implements EventBulkHandlerInterface
+class MerchantProfileStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use TransactionTrait;
 

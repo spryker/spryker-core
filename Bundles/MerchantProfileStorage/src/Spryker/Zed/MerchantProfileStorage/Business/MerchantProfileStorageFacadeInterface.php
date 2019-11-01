@@ -11,8 +11,8 @@ interface MerchantProfileStorageFacadeInterface
 {
     /**
      * Specification:
-     * - Queries all merchants with status `active`.
-     * - Stores data as json encoded to storage table.
+     * - Publishes active merchant profiles data to storage.
+     * - Unpublishes inactive merchant profiles data to storage.
      * - Sends a copy of data to queue based on module config.
      *
      * @api

@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\MerchantProfileStorage;
 
-use Generated\Shared\Transfer\MerchantProfileViewTransfer;
+use Generated\Shared\Transfer\MerchantProfileStorageTransfer;
 
 interface MerchantProfileStorageClientInterface
 {
@@ -19,9 +19,9 @@ interface MerchantProfileStorageClientInterface
      *
      * @param array $data
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileViewTransfer
+     * @return \Generated\Shared\Transfer\MerchantProfileStorageTransfer
      */
-    public function mapMerchantProfileStorageViewData(array $data): MerchantProfileViewTransfer;
+    public function mapMerchantProfileStorageData(array $data): MerchantProfileStorageTransfer;
 
     /**
      * Specification:
@@ -31,7 +31,7 @@ interface MerchantProfileStorageClientInterface
      *
      * @param int $idMerchant
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileViewTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantProfileStorageTransfer|null
      */
-    public function findMerchantProfileStorageViewData(int $idMerchant): ?MerchantProfileViewTransfer;
+    public function findMerchantProfileStorageViewData(int $idMerchant): ?MerchantProfileStorageTransfer;
 }

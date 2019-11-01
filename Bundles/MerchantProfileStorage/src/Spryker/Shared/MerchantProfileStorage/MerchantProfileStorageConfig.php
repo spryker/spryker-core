@@ -9,8 +9,6 @@ namespace Spryker\Shared\MerchantProfileStorage;
 
 class MerchantProfileStorageConfig
 {
-    public const RESOURCE_TYPE_MERCHANT_PROFILE = 'merchant_profile';
-
     /**
      * Specification:
      * - Queue name as used for processing merchant messages.
