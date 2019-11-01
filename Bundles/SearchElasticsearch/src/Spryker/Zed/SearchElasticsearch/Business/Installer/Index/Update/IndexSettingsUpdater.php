@@ -37,14 +37,14 @@ class IndexSettingsUpdater implements InstallerInterface
 
     /**
      * @param \Elastica\Client $client
-     * @param \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilSanitizeServiceInterface $utilSanitizeService
      * @param \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig $config
+     * @param \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilSanitizeServiceInterface $utilSanitizeService
      */
-    public function __construct(Client $client, SearchElasticsearchToUtilSanitizeServiceInterface $utilSanitizeService, SearchElasticsearchConfig $config)
+    public function __construct(Client $client, SearchElasticsearchConfig $config, SearchElasticsearchToUtilSanitizeServiceInterface $utilSanitizeService)
     {
         $this->client = $client;
-        $this->utilSanitizeService = $utilSanitizeService;
         $this->config = $config;
+        $this->utilSanitizeService = $utilSanitizeService;
     }
 
     /**
