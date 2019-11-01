@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\MerchantRelationshipProductList\Business\Reader\MerchantRelationshipReaderInterface;
 
-class ProductListChecker implements ProductListCheckerInterface
+class ProductListDeleteChecker implements ProductListDeleteCheckerInterface
 {
     protected const ERROR_MESSAGE_UNABLE_TO_DELETE_PRODUCT_LIST = 'Unable to delete Product List since it\'s used by Merchant Relation "%merchant_relation%".';
     protected const ERROR_MESSAGE_PARAM_MERCHANT_RELATION = '%merchant_relation%';
@@ -35,7 +35,7 @@ class ProductListChecker implements ProductListCheckerInterface
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function checkProductListUsageAmongMerchantRelationships(ProductListTransfer $productListTransfer): ProductListResponseTransfer
+    public function isProductListDeletable(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
         $productListResponseTransfer = (new ProductListResponseTransfer())
             ->setProductList($productListTransfer)

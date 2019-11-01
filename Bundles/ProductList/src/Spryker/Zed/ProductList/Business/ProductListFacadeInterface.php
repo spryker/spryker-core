@@ -90,13 +90,12 @@ interface ProductListFacadeInterface
 
     /**
      * Specification:
-     * - Finds a Product List by ProductListTransfer::idProductList in the transfer.
-     * - Deletes Product List.
+     * - Finds a Product List by ProductListTransfer::idProductList.
+     * - Executes ProductListDeletePreCheckPluginInterface plugin stack before delete.
      * - Deletes relations to categories.
      * - Deletes relations to concrete products.
-     * - Executes ProductListDeletePreCheckPluginInterface plugin stack before delete.
-     * - Returns ProductListResponseTransfer.
-     * - ProductListResponseTransfer::isSuccessful indicates operation success.
+     * - Deletes Product List.
+     * - ProductListResponseTransfer::isSuccessful is true if product list was deleted.
      * - ProductListResponseTransfer::messages contains error messages if deletion was not performed.
      *
      * @api

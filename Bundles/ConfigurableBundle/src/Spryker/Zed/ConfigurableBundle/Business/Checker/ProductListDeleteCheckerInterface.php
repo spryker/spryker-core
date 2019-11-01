@@ -10,14 +10,14 @@ namespace Spryker\Zed\ConfigurableBundle\Business\Checker;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 
-interface ProductListCheckerInterface
+interface ProductListDeleteCheckerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function checkProductListUsageAmongSlots(
+    public function isProductListDeletable(
         ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
     ): ProductListResponseTransfer;
 }

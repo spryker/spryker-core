@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business;
 
-use Spryker\Zed\ConfigurableBundle\Business\Checker\ProductListChecker;
-use Spryker\Zed\ConfigurableBundle\Business\Checker\ProductListCheckerInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Checker\ProductListDeleteChecker;
+use Spryker\Zed\ConfigurableBundle\Business\Checker\ProductListDeleteCheckerInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Cleaner\ConfigurableBundleTemplateCleaner;
 use Spryker\Zed\ConfigurableBundle\Business\Cleaner\ConfigurableBundleTemplateCleanerInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Cleaner\ConfigurableBundleTemplateSlotCleaner;
@@ -72,11 +72,11 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ConfigurableBundle\Business\Checker\ProductListCheckerInterface
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Checker\ProductListDeleteCheckerInterface
      */
-    public function createProductListChecker(): ProductListCheckerInterface
+    public function createProductListDeleteChecker(): ProductListDeleteCheckerInterface
     {
-        return new ProductListChecker(
+        return new ProductListDeleteChecker(
             $this->createConfigurableBundleTemplateSlotReader()
         );
     }

@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ButtonTransfer;
 class TopButtonsProvider implements TopButtonsProviderInterface
 {
     /**
-     * @uses \Spryker\Zed\ProductListGui\Communication\Controller\CreateController::indexAction
+     * @uses \Spryker\Zed\ProductListGui\Communication\Controller\CreateController::indexAction()
      */
     protected const CREATE_PRODUCT_LIST_BUTTON_URL = '/product-list-gui/create';
     protected const CREATE_PRODUCT_LIST_BUTTON_TITLE = 'Create a Product List';

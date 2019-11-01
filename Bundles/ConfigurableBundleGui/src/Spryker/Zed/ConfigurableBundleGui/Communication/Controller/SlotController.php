@@ -14,8 +14,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\ProductListGui\Communication\Plugin\ConfigurableBundleGui\ProductConcreteRelationConfigurableBundleTemplateSlotEditSubTabsProviderPlugin;
-use Spryker\Zed\ProductListGui\Communication\Plugin\ConfigurableBundleGui\ProductConcreteRelationConfigurableBundleTemplateSlotEditTablesProviderPlugin;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,6 +25,26 @@ use Symfony\Component\HttpFoundation\Request;
 class SlotController extends AbstractController
 {
     /**
+     * @uses \Spryker\Zed\ProductListGui\Communication\Plugin\ConfigurableBundleGui\ProductConcreteRelationConfigurableBundleTemplateSlotEditSubTabsProviderPlugin::AVAILABLE_PRODUCT_CONCRETE_RELATION_TABS_NAME
+     */
+    protected const AVAILABLE_PRODUCT_CONCRETE_RELATION_TABS_NAME = 'availableProductConcreteRelationTabs';
+
+    /**
+     * @uses \Spryker\Zed\ProductListGui\Communication\Plugin\ConfigurableBundleGui\ProductConcreteRelationConfigurableBundleTemplateSlotEditSubTabsProviderPlugin::ASSIGNED_PRODUCT_CONCRETE_RELATION_TABS_NAME
+     */
+    protected const ASSIGNED_PRODUCT_CONCRETE_RELATION_TABS_NAME = 'assignedProductConcreteRelationTabs';
+
+    /**
+     * @uses \Spryker\Zed\ProductListGui\Communication\Plugin\ConfigurableBundleGui\ProductConcreteRelationConfigurableBundleTemplateSlotEditTablesProviderPlugin::AVAILABLE_PRODUCT_CONCRETE_TABLE_NAME
+     */
+    protected const AVAILABLE_PRODUCT_CONCRETE_TABLE_NAME = 'availableProductConcreteTable';
+
+    /**
+     * @uses \Spryker\Zed\ProductListGui\Communication\Plugin\ConfigurableBundleGui\ProductConcreteRelationConfigurableBundleTemplateSlotEditTablesProviderPlugin::ASSIGNED_PRODUCT_CONCRETE_TABLE_NAME
+     */
+    protected const ASSIGNED_PRODUCT_CONCRETE_TABLE_NAME = 'assignedProductConcreteTable';
+
+    /**
      * @uses \Spryker\Zed\ProductListGui\Communication\Controller\ProductListAbstractController::URL_PARAM_ID_PRODUCT_LIST
      */
     protected const URL_PARAM_ID_PRODUCT_LIST = 'id-product-list';
@@ -34,6 +53,11 @@ class SlotController extends AbstractController
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\SlotController::editAction()
      */
     protected const ROUTE_EDIT_TEMPLATE_SLOT = '/configurable-bundle-gui/slot/edit';
+
+    /**
+     * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::indexAction()
+     */
+    protected const ROUTE_TEMPLATES_LIST = '/configurable-bundle-gui/template';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::editAction()
@@ -50,6 +74,11 @@ class SlotController extends AbstractController
     protected const SUCCESS_MESSAGE_SLOT_DELETED = 'Configurable bundle template slot was successfully deleted.';
 
     protected const SLOTS_TAB_ANCHOR = '#tab-content-slots';
+
+    protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id-configurable-bundle-template';
+    protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = 'id-configurable-bundle-template-slot';
+
+    protected const ERROR_MESSAGE_PARAM_ID = '%id%';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -298,11 +327,11 @@ class SlotController extends AbstractController
         $productConcreteRelationSubTabs = $this->getFactory()->createProductConcreteRelationSubTabsProvider()->getSubTabs();
         $productConcreteRelationTables = $this->getFactory()->createProductConcreteRelationTablesProvider()->getTables();
 
-        $keyAvailableProductConcreteRelationTabs = ProductConcreteRelationConfigurableBundleTemplateSlotEditSubTabsProviderPlugin::AVAILABLE_PRODUCT_CONCRETE_RELATION_TABS_NAME;
-        $keyAssignedProductConcreteRelationTabs = ProductConcreteRelationConfigurableBundleTemplateSlotEditSubTabsProviderPlugin::ASSIGNED_PRODUCT_CONCRETE_RELATION_TABS_NAME;
+        $keyAvailableProductConcreteRelationTabs = static::AVAILABLE_PRODUCT_CONCRETE_RELATION_TABS_NAME;
+        $keyAssignedProductConcreteRelationTabs = static::ASSIGNED_PRODUCT_CONCRETE_RELATION_TABS_NAME;
 
-        $keyAvailableProductConcreteRelationTable = ProductConcreteRelationConfigurableBundleTemplateSlotEditTablesProviderPlugin::AVAILABLE_PRODUCT_CONCRETE_TABLE_NAME;
-        $keyAssignedProductConcreteRelationTable = ProductConcreteRelationConfigurableBundleTemplateSlotEditTablesProviderPlugin::ASSIGNED_PRODUCT_CONCRETE_TABLE_NAME;
+        $keyAvailableProductConcreteRelationTable = static::AVAILABLE_PRODUCT_CONCRETE_TABLE_NAME;
+        $keyAssignedProductConcreteRelationTable = static::ASSIGNED_PRODUCT_CONCRETE_TABLE_NAME;
 
         return [
             $keyAvailableProductConcreteRelationTabs => $productConcreteRelationSubTabs[$keyAvailableProductConcreteRelationTabs]->createView(),

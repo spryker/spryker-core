@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\ProductListUsedByTableRowTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 
-class ProductListUsedByTableDataMapper implements ProductListUsedByTableDataMapperInterface
+class ProductListUsedByTableMapper implements ProductListUsedByTableMapperInterface
 {
     protected const ENTITY_TITLE = 'Merchant Relationship';
 

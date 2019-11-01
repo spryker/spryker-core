@@ -31,7 +31,7 @@ class ProductListMerchantRelationshipEditFormExpanderPlugin extends AbstractPlug
     public function expand(FormBuilderInterface $builder, array $options): void
     {
         $this->getFactory()
-            ->createProductListMerchantRelationshipEditFormExpander()
+            ->createProductListMerchantRelationshipFormExpander()
             ->expand($builder, $options);
     }
 }

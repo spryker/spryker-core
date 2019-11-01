@@ -255,11 +255,11 @@ class ConfigurableBundleFacade extends AbstractFacade implements ConfigurableBun
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function checkProductListUsageAmongSlots(
+    public function isProductListDeletable(
         ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
     ): ProductListResponseTransfer {
         return $this->getFactory()
-            ->createProductListChecker()
-            ->checkProductListUsageAmongSlots($configurableBundleTemplateSlotFilterTransfer);
+            ->createProductListDeleteChecker()
+            ->isProductListDeletable($configurableBundleTemplateSlotFilterTransfer);
     }
 }

@@ -82,7 +82,7 @@
         <property name="value" type="string"/>
     </transfer>
 
-    <transfer name="ProductListUsedByTableData">
+    <transfer name="ProductListUsedByTable">
         <property name="productList" type="ProductList"/>
         <property name="rows" type="ProductListUsedByTableRow[]" singular="row"/>
     </transfer>

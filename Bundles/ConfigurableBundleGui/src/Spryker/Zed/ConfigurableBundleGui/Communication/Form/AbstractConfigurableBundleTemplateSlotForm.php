@@ -9,7 +9,6 @@ namespace Spryker\Zed\ConfigurableBundleGui\Communication\Form;
 
 /**
  * @method \Spryker\Zed\ConfigurableBundleGui\ConfigurableBundleGuiConfig getConfig()
- * @method \Spryker\Zed\ConfigurableBundleGui\Business\ConfigurableBundleGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\ConfigurableBundleGui\Communication\ConfigurableBundleGuiCommunicationFactory getFactory()
  */
 abstract class AbstractConfigurableBundleTemplateSlotForm extends AbstractConfigurableBundleForm

@@ -16,8 +16,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ProductConcreteRelationConfigurableBundleTemplateSlotEditSubTabsProviderPlugin extends AbstractPlugin implements ConfigurableBundleTemplateSlotEditSubTabsProviderPluginInterface
 {
-    public const AVAILABLE_PRODUCT_CONCRETE_RELATION_TABS_NAME = 'availableProductConcreteRelationTabs';
-    public const ASSIGNED_PRODUCT_CONCRETE_RELATION_TABS_NAME = 'assignedProductConcreteRelationTabs';
+    protected const AVAILABLE_PRODUCT_CONCRETE_RELATION_TABS_NAME = 'availableProductConcreteRelationTabs';
+    protected const ASSIGNED_PRODUCT_CONCRETE_RELATION_TABS_NAME = 'assignedProductConcreteRelationTabs';
 
     /**
      * {@inheritDoc}

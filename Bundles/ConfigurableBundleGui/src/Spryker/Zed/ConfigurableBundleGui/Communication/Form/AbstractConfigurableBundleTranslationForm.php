@@ -17,7 +17,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\ConfigurableBundleGui\ConfigurableBundleGuiConfig getConfig()
- * @method \Spryker\Zed\ConfigurableBundleGui\Business\ConfigurableBundleGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\ConfigurableBundleGui\Communication\ConfigurableBundleGuiCommunicationFactory getFactory()
  */
 abstract class AbstractConfigurableBundleTranslationForm extends AbstractType

@@ -64,9 +64,7 @@ class MerchantRelationshipProductListFacade extends AbstractFacade implements Me
      */
     public function getAvailableProductListsForMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): ProductListCollectionTransfer
     {
-        return $this->getFactory()
-            ->createProductListReader()
-            ->getAvailableProductListsForMerchantRelationship($merchantRelationshipTransfer);
+        return $this->getRepository()->getAvailableProductListsForMerchantRelationship($merchantRelationshipTransfer);
     }
 
     /**
@@ -94,11 +92,11 @@ class MerchantRelationshipProductListFacade extends AbstractFacade implements Me
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function checkProductListUsageAmongMerchantRelationships(ProductListTransfer $productListTransfer): ProductListResponseTransfer
+    public function isProductListDeletable(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
         return $this->getFactory()
-            ->createProductListChecker()
-            ->checkProductListUsageAmongMerchantRelationships($productListTransfer);
+            ->createProductListDeleteChecker()
+            ->isProductListDeletable($productListTransfer);
     }
 
     /**
@@ -106,14 +104,12 @@ class MerchantRelationshipProductListFacade extends AbstractFacade implements Me
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     * @param int $idProductList
      *
      * @return int[]
      */
-    public function getMerchantRelationshipIdsByProductList(ProductListTransfer $productListTransfer): array
+    public function getMerchantRelationshipIdsByProductListId(int $idProductList): array
     {
-        return $this->getFactory()
-            ->createMerchantRelationshipReader()
-            ->getMerchantRelationshipIdsByProductList($productListTransfer);
+        return $this->getRepository()->getMerchantRelationshipIdsByProductListId($idProductList);
     }
 }

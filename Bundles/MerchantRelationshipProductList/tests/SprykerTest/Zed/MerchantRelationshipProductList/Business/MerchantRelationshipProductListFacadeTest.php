@@ -55,7 +55,7 @@ class MerchantRelationshipProductListFacadeTest extends Unit
         $this->tester->truncateProductListTableRelations();
         $this->tester->clearProductListTable();
 
-        $this->tester->createProductList();
+        $this->haveProductList();
         $merchantRelationshipTransfer = $this->tester->createMerchantRelationship();
 
         // Act
@@ -141,7 +141,7 @@ class MerchantRelationshipProductListFacadeTest extends Unit
         $this->tester->clearProductListTable();
 
         $merchantRelationshipTransfer = $this->tester->createMerchantRelationship();
-        $productListTransfer = $this->tester->createProductList();
+        $productListTransfer = $this->haveProductList();
 
         $merchantRelationshipTransfer->setProductListIds([
             $productListTransfer->getIdProductList(),
@@ -163,7 +163,7 @@ class MerchantRelationshipProductListFacadeTest extends Unit
     public function testCheckProductListUsageAmongMerchantRelationshipsWillReturnEmptySuccessfulResponse(): void
     {
         // Arrange
-        $productListTransfer = $this->tester->createProductList();
+        $productListTransfer = $this->haveProductList();
 
         // Act
         $productListResponseTransfer = $this->tester->getFacade()->checkProductListUsageAmongMerchantRelationships($productListTransfer);
@@ -180,7 +180,7 @@ class MerchantRelationshipProductListFacadeTest extends Unit
     {
         // Arrange
         $merchantRelationshipTransfer = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
-        $productListTransfer = $this->tester->createProductList([
+        $productListTransfer = $this->haveProductList([
             ProductListTransfer::FK_MERCHANT_RELATIONSHIP => $merchantRelationshipTransfer->getIdMerchantRelationship(),
         ]);
 

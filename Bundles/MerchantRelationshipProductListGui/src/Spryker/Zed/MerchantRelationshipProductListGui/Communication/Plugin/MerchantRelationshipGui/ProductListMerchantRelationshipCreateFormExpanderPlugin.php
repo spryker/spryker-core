@@ -18,6 +18,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 class ProductListMerchantRelationshipCreateFormExpanderPlugin extends AbstractPlugin implements MerchantRelationshipCreateFormExpanderPluginInterface
 {
     /**
+     * @uses \Spryker\Zed\MerchantRelationshipGui\Communication\Form\MerchantRelationshipCreateForm::OPTION_SELECTED_COMPANY
+     */
+    protected const OPTION_SELECTED_COMPANY = 'id_company';
+
+    /**
      * {@inheritDoc}
      * - Adds Product List multi-select field to merchant relationship create form.
      *
@@ -30,8 +35,12 @@ class ProductListMerchantRelationshipCreateFormExpanderPlugin extends AbstractPl
      */
     public function expand(FormBuilderInterface $builder, array $options): void
     {
+        if (!$options[static::OPTION_SELECTED_COMPANY]) {
+            return;
+        }
+
         $this->getFactory()
-            ->createProductListMerchantRelationshipCreateFormExpander()
+            ->createProductListMerchantRelationshipFormExpander()
             ->expand($builder, $options);
     }
 }

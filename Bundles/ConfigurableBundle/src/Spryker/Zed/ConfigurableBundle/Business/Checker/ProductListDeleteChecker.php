@@ -15,7 +15,7 @@ use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReaderInterface;
 
-class ProductListChecker implements ProductListCheckerInterface
+class ProductListDeleteChecker implements ProductListDeleteCheckerInterface
 {
     protected const ERROR_MESSAGE_UNABLE_TO_DELETE_PRODUCT_LIST = 'Unable to delete Product List since it\'s used by Configurable Bundle Template "%template%" ("%slot%" slot).';
 
@@ -40,7 +40,7 @@ class ProductListChecker implements ProductListCheckerInterface
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function checkProductListUsageAmongSlots(ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer): ProductListResponseTransfer
+    public function isProductListDeletable(ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer): ProductListResponseTransfer
     {
         $configurableBundleTemplateSlotFilterTransfer
             ->requireProductList()

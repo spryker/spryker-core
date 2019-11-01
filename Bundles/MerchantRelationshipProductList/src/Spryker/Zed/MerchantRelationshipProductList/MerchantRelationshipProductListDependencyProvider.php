@@ -11,7 +11,6 @@ use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantRelationshipProductList\Dependency\Facade\MerchantRelationshipProductListToMerchantRelationshipFacadeBridge;
-use Spryker\Zed\MerchantRelationshipProductList\Dependency\Facade\MerchantRelationshipProductListToMerchantRelationshipFacadeInterface;
 use Spryker\Zed\MerchantRelationshipProductList\Dependency\Facade\MerchantRelationshipProductListToProductListFacadeBridge;
 
 /**
@@ -88,11 +87,11 @@ class MerchantRelationshipProductListDependencyProvider extends AbstractBundleDe
      */
     protected function addMerchantRelationshipFacade(Container $container): Container
     {
-        $container[static::FACADE_MERCHANT_RELATIONSHIP] = function (Container $container): MerchantRelationshipProductListToMerchantRelationshipFacadeInterface {
+        $container->set(static::FACADE_MERCHANT_RELATIONSHIP, function (Container $container) {
             return new MerchantRelationshipProductListToMerchantRelationshipFacadeBridge(
                 $container->getLocator()->merchantRelationship()->facade()
             );
-        };
+        });
 
         return $container;
     }

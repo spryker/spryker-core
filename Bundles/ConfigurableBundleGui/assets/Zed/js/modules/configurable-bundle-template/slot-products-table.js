@@ -36,13 +36,14 @@ function addSlotTableRowClickHandler() {
         var rowData = $slotTable.row(this).data();
         var idSlot = rowData[config.slotTableColumnsMapping.idSlot];
 
-        if (idSlot !== selectedIdSlot) {
-            selectedIdSlot = idSlot;
-
-            loadSlotProductsTable();
-            markSelectedRow($(this));
-            $slotProductsTableName.text(rowData[config.slotTableColumnsMapping.slotName]);
+        if (idSlot === selectedIdSlot) {
+            return;
         }
+
+        selectedIdSlot = idSlot;
+        loadSlotProductsTable();
+        markSelectedRow($(this));
+        $slotProductsTableName.text(rowData[config.slotTableColumnsMapping.slotName]);
     });
 }
 
@@ -82,7 +83,7 @@ function loadSlotProductsTable() {
  * @return {void}
  */
 function markSelectedRow($row) {
-    $row.siblings('tr').removeClass('selected');
+    $row.siblings().removeClass('selected');
     $row.addClass('selected');
 }
 
@@ -92,11 +93,7 @@ function markSelectedRow($row) {
 function getInitialSelectedIdSlot() {
     var selectedIdSlot = $('#selected-id-configurable-bundle-template-slot').val();
 
-    if (selectedIdSlot.length) {
-        return parseInt(selectedIdSlot);
-    }
-
-    return 0;
+    return selectedIdSlot.length ? parseInt(selectedIdSlot) : 0;
 }
 
 /**
@@ -112,7 +109,7 @@ function performInitialDraw($slotTable, $rows) {
 
     var initialSelectedIdSlot = getInitialSelectedIdSlot();
 
-    if (initialSelectedIdSlot === 0) {
+    if (!initialSelectedIdSlot) {
         $rows.first().click();
 
         return;

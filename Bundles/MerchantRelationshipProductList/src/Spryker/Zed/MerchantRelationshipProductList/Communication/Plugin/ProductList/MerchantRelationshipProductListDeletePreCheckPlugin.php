@@ -23,7 +23,7 @@ class MerchantRelationshipProductListDeletePreCheckPlugin extends AbstractPlugin
      * - Finds merchant relationships which use given product list by ProductListTransfer::idProductList.
      * - Returns ProductListResponseTransfer with check results.
      * - ProductListResponseTransfer::isSuccessful is equal to true when usage cases were not found, false otherwise.
-     * - ProductListResponseTransfer::messages contains usage details.
+     * - ProductListResponseTransfer::messages contains error messages.
      *
      * @api
      *
@@ -33,6 +33,6 @@ class MerchantRelationshipProductListDeletePreCheckPlugin extends AbstractPlugin
      */
     public function execute(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
-        return $this->getFacade()->checkProductListUsageAmongMerchantRelationships($productListTransfer);
+        return $this->getFacade()->isProductListDeletable($productListTransfer);
     }
 }

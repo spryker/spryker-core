@@ -12,15 +12,13 @@ use Spryker\Zed\MerchantRelationshipProductListGui\Communication\DataProvider\Me
 use Spryker\Zed\MerchantRelationshipProductListGui\Communication\DataProvider\ProductListMerchantRelationshipFormDataProvider;
 use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Expander\ProductListButtonsExpander;
 use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Expander\ProductListButtonsExpanderInterface;
-use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Expander\ProductListUsedByTableDataExpander;
-use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Expander\ProductListUsedByTableDataExpanderInterface;
+use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Expander\ProductListUsedByTableExpander;
+use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Expander\ProductListUsedByTableExpanderInterface;
 use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Form\MerchantRelationshipChoiceFormType;
-use Spryker\Zed\MerchantRelationshipProductListGui\Communication\FormExpander\ProductListMerchantRelationshipCreateFormExpander;
-use Spryker\Zed\MerchantRelationshipProductListGui\Communication\FormExpander\ProductListMerchantRelationshipCreateFormExpanderInterface;
-use Spryker\Zed\MerchantRelationshipProductListGui\Communication\FormExpander\ProductListMerchantRelationshipEditFormExpander;
-use Spryker\Zed\MerchantRelationshipProductListGui\Communication\FormExpander\ProductListMerchantRelationshipEditFormExpanderInterface;
-use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Mapper\ProductListUsedByTableDataMapper;
-use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Mapper\ProductListUsedByTableDataMapperInterface;
+use Spryker\Zed\MerchantRelationshipProductListGui\Communication\FormExpander\ProductListMerchantRelationshipFormExpander;
+use Spryker\Zed\MerchantRelationshipProductListGui\Communication\FormExpander\ProductListMerchantRelationshipFormExpanderInterface;
+use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Mapper\ProductListUsedByTableMapper;
+use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Mapper\ProductListUsedByTableMapperInterface;
 use Spryker\Zed\MerchantRelationshipProductListGui\Communication\ProductListQueryExpander\ProductListQueryExpander;
 use Spryker\Zed\MerchantRelationshipProductListGui\Communication\ProductListQueryExpander\ProductListQueryExpanderInterface;
 use Spryker\Zed\MerchantRelationshipProductListGui\Dependency\Facade\MerchantRelationshipProductListGuiToMerchantRelationshipFacadeInterface;
@@ -58,23 +56,23 @@ class MerchantRelationshipProductListGuiCommunicationFactory extends AbstractCom
     }
 
     /**
-     * @return \Spryker\Zed\MerchantRelationshipProductListGui\Communication\Expander\ProductListUsedByTableDataExpanderInterface
+     * @return \Spryker\Zed\MerchantRelationshipProductListGui\Communication\Expander\ProductListUsedByTableExpanderInterface
      */
-    public function createProductListUsedByTableDataExpander(): ProductListUsedByTableDataExpanderInterface
+    public function createProductListUsedByTableExpander(): ProductListUsedByTableExpanderInterface
     {
-        return new ProductListUsedByTableDataExpander(
+        return new ProductListUsedByTableExpander(
             $this->getMerchantRelationshipFacade(),
             $this->getMerchantRelationshipProductListFacade(),
-            $this->createProductListUsedByTableDataMapper()
+            $this->createProductListUsedByTableMapper()
         );
     }
 
     /**
-     * @return \Spryker\Zed\MerchantRelationshipProductListGui\Communication\Mapper\ProductListUsedByTableDataMapperInterface
+     * @return \Spryker\Zed\MerchantRelationshipProductListGui\Communication\Mapper\ProductListUsedByTableMapperInterface
      */
-    public function createProductListUsedByTableDataMapper(): ProductListUsedByTableDataMapperInterface
+    public function createProductListUsedByTableMapper(): ProductListUsedByTableMapperInterface
     {
-        return new ProductListUsedByTableDataMapper();
+        return new ProductListUsedByTableMapper();
     }
 
     /**
@@ -102,32 +100,22 @@ class MerchantRelationshipProductListGuiCommunicationFactory extends AbstractCom
     }
 
     /**
+     * @return \Spryker\Zed\MerchantRelationshipProductListGui\Communication\FormExpander\ProductListMerchantRelationshipFormExpanderInterface
+     */
+    public function createProductListMerchantRelationshipFormExpander(): ProductListMerchantRelationshipFormExpanderInterface
+    {
+        return new ProductListMerchantRelationshipFormExpander(
+            $this->createProductListMerchantRelationshipFormDataProvider()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantRelationshipProductListGui\Communication\DataProvider\ProductListMerchantRelationshipFormDataProvider
      */
     public function createProductListMerchantRelationshipFormDataProvider(): ProductListMerchantRelationshipFormDataProvider
     {
         return new ProductListMerchantRelationshipFormDataProvider(
             $this->getMerchantRelationshipProductListFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantRelationshipProductListGui\Communication\FormExpander\ProductListMerchantRelationshipEditFormExpanderInterface
-     */
-    public function createProductListMerchantRelationshipEditFormExpander(): ProductListMerchantRelationshipEditFormExpanderInterface
-    {
-        return new ProductListMerchantRelationshipEditFormExpander(
-            $this->createProductListMerchantRelationshipFormDataProvider()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantRelationshipProductListGui\Communication\FormExpander\ProductListMerchantRelationshipCreateFormExpanderInterface
-     */
-    public function createProductListMerchantRelationshipCreateFormExpander(): ProductListMerchantRelationshipCreateFormExpanderInterface
-    {
-        return new ProductListMerchantRelationshipCreateFormExpander(
-            $this->createProductListMerchantRelationshipFormDataProvider()
         );
     }
 }

@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\MerchantRelationshipProductListGui\Communication\Plugin\ProductListGui;
 
-use Generated\Shared\Transfer\ProductListUsedByTableDataTransfer;
+use Generated\Shared\Transfer\ProductListUsedByTableTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListUsedByTableDataExpanderPluginInterface;
+use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListUsedByTableExpanderPluginInterface;
 
 /**
  * @method \Spryker\Zed\MerchantRelationshipProductListGui\MerchantRelationshipProductListGuiConfig getConfig()
  * @method \Spryker\Zed\MerchantRelationshipProductListGui\Communication\MerchantRelationshipProductListGuiCommunicationFactory getFactory()
  */
-class MerchantRelationshipProductListUsedByTableDataExpanderPlugin extends AbstractPlugin implements ProductListUsedByTableDataExpanderPluginInterface
+class MerchantRelationshipProductListUsedByTableExpanderPlugin extends AbstractPlugin implements ProductListUsedByTableExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -23,14 +23,14 @@ class MerchantRelationshipProductListUsedByTableDataExpanderPlugin extends Abstr
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer
+     * @param \Generated\Shared\Transfer\ProductListUsedByTableTransfer $productListUsedByTableTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductListUsedByTableDataTransfer
+     * @return \Generated\Shared\Transfer\ProductListUsedByTableTransfer
      */
-    public function expand(ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer): ProductListUsedByTableDataTransfer
+    public function expand(ProductListUsedByTableTransfer $productListUsedByTableTransfer): ProductListUsedByTableTransfer
     {
         return $this->getFactory()
-            ->createProductListUsedByTableDataExpander()
-            ->expandTableData($productListUsedByTableDataTransfer);
+            ->createProductListUsedByTableExpander()
+            ->expandTableData($productListUsedByTableTransfer);
     }
 }

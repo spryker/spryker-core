@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 
 /**
  * @method \Spryker\Zed\ConfigurableBundleGui\ConfigurableBundleGuiConfig getConfig()
- * @method \Spryker\Zed\ConfigurableBundleGui\Business\ConfigurableBundleGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\ConfigurableBundleGui\Communication\ConfigurableBundleGuiCommunicationFactory getFactory()
  */
 class ConfigurableBundleTemplateForm extends AbstractConfigurableBundleForm

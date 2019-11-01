@@ -34,8 +34,8 @@ use Spryker\Zed\ProductListGui\Communication\Table\AvailableProductConcreteTable
 use Spryker\Zed\ProductListGui\Communication\Table\PluginExecutor\ProductListTablePluginExecutor;
 use Spryker\Zed\ProductListGui\Communication\Table\PluginExecutor\ProductListTablePluginExecutorInterface;
 use Spryker\Zed\ProductListGui\Communication\Table\ProductListTable;
-use Spryker\Zed\ProductListGui\Communication\TableDataProvider\ProductListUsedByTableDataProvider;
-use Spryker\Zed\ProductListGui\Communication\TableDataProvider\ProductListUsedByTableDataProviderInterface;
+use Spryker\Zed\ProductListGui\Communication\TableDataProvider\ProductListUsedByTableProvider;
+use Spryker\Zed\ProductListGui\Communication\TableDataProvider\ProductListUsedByTableProviderInterface;
 use Spryker\Zed\ProductListGui\Communication\Tabs\AssignedProductConcreteRelationTabs;
 use Spryker\Zed\ProductListGui\Communication\Tabs\AvailableProductConcreteRelationTabs;
 use Spryker\Zed\ProductListGui\Communication\Tabs\ProductListCreateAggregationTabs;
@@ -209,11 +209,11 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductListGui\Communication\TableDataProvider\ProductListUsedByTableDataProviderInterface
+     * @return \Spryker\Zed\ProductListGui\Communication\TableDataProvider\ProductListUsedByTableProviderInterface
      */
-    public function createProductListUsedByTableDataProvider(): ProductListUsedByTableDataProviderInterface
+    public function createProductListUsedByTableProvider(): ProductListUsedByTableProviderInterface
     {
-        return new ProductListUsedByTableDataProvider($this->getProductListUsedByTableDataExpanderPlugins());
+        return new ProductListUsedByTableProvider($this->getProductListUsedByTableExpanderPlugins());
     }
 
     /**
@@ -335,11 +335,11 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListUsedByTableDataExpanderPluginInterface[]
+     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListUsedByTableExpanderPluginInterface[]
      */
-    public function getProductListUsedByTableDataExpanderPlugins(): array
+    public function getProductListUsedByTableExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(ProductListGuiDependencyProvider::PLUGINS_PRODUCT_LIST_USED_BY_TABLE_DATA_EXPANDER);
+        return $this->getProvidedDependency(ProductListGuiDependencyProvider::PLUGINS_PRODUCT_LIST_USED_BY_TABLE_EXPANDER);
     }
 
     /**

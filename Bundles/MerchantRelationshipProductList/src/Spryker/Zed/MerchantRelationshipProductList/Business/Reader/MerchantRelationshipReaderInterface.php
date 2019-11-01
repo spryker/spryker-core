@@ -14,13 +14,6 @@ interface MerchantRelationshipReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
-     * @return int[]
-     */
-    public function getMerchantRelationshipIdsByProductList(ProductListTransfer $productListTransfer): array;
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
-     *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
     public function getMerchantRelationshipsByProductList(ProductListTransfer $productListTransfer): array;

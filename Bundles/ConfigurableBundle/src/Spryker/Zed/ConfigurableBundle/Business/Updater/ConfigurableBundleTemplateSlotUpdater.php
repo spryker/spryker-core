@@ -124,10 +124,10 @@ class ConfigurableBundleTemplateSlotUpdater implements ConfigurableBundleTemplat
     protected function getConfigurableBundleTemplateSlot(
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
     ): ConfigurableBundleTemplateSlotResponseTransfer {
-        $configurableBundleTemplateSlotTransfer->requireFkConfigurableBundleTemplate();
+        $configurableBundleTemplateSlotTransfer->requireIdConfigurableBundleTemplateSlot();
 
         $configurableBundleTemplateSlotResponseTransfer = $this->configurableBundleTemplateSlotReader
-            ->getConfigurableBundleTemplateSlotById($configurableBundleTemplateSlotTransfer->getFkConfigurableBundleTemplate());
+            ->getConfigurableBundleTemplateSlotById($configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot());
 
         return $configurableBundleTemplateSlotResponseTransfer;
     }

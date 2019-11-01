@@ -10,7 +10,7 @@ namespace Spryker\Zed\MerchantRelationshipProductListGui\Communication\Mapper;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\ProductListUsedByTableRowTransfer;
 
-interface ProductListUsedByTableDataMapperInterface
+interface ProductListUsedByTableMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer

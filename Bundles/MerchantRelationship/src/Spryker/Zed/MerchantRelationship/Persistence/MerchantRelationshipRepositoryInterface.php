@@ -57,5 +57,5 @@ interface MerchantRelationshipRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
      */
-    public function getMerchantRelationshipCollection(?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer): array;
+    public function getMerchantRelationshipCollection(?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer = null): array;
 }

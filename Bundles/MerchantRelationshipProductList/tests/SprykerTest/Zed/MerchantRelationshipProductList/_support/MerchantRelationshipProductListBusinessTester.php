@@ -102,14 +102,6 @@ class MerchantRelationshipProductListBusinessTester extends Actor
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductListTransfer
-     */
-    public function createProductList(): ProductListTransfer
-    {
-        return $this->haveProductList();
-    }
-
-    /**
      * @return void
      */
     public function clearProductListTable(): void
