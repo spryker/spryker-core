@@ -94,24 +94,56 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
     {
         $quantity = new Decimal(0);
         foreach ($itemTransfers as $itemTransfer) {
-            if ($leadProductSku === $itemTransfer->getSku() && $leadProductSku !== $itemTransfer->getAmountLeadProduct()->getSku()) {
-                // Lead product is in cart as an individual item (but not self-lead)
+            if ($this->isLeadProductItemTransfer($leadProductSku, $itemTransfer)) {
                 $quantity = $quantity->add($itemTransfer->getQuantity());
                 continue;
             }
 
-            if (!$itemTransfer->getAmountLeadProduct()) {
-                // Skip remaining items without lead product
+            if (!$this->isProductPackagingUnitItemTransfer($itemTransfer)) {
                 continue;
             }
 
-            if ($itemTransfer->getAmountLeadProduct()->getSku() === $leadProductSku) {
-                // Item in cart has the matched lead product
+            if ($this->isProductPackagingUnitItemTransferOfLeadProduct($leadProductSku, $itemTransfer)) {
                 $quantity = $quantity->add($itemTransfer->getAmount());
             }
         }
 
         return $quantity;
+    }
+
+    /**
+     * Lead product is in cart as an individual item, but not self-lead.
+     *
+     * @param string $leadProductSku
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function isLeadProductItemTransfer(string $leadProductSku, ItemTransfer $itemTransfer): bool
+    {
+        return $leadProductSku === $itemTransfer->getSku() &&
+            $leadProductSku !== $itemTransfer->getAmountLeadProduct()->getSku();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function isProductPackagingUnitItemTransfer(ItemTransfer $itemTransfer): bool
+    {
+        return $itemTransfer->getAmountLeadProduct() !== null;
+    }
+
+    /**
+     * @param string $leadProductSku
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function isProductPackagingUnitItemTransferOfLeadProduct(string $leadProductSku, ItemTransfer $itemTransfer): bool
+    {
+        return $itemTransfer->getAmountLeadProduct()->getSku() === $leadProductSku;
     }
 
     /**
