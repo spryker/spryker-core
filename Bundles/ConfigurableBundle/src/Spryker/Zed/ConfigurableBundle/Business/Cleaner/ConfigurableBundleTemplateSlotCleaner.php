@@ -60,8 +60,6 @@ class ConfigurableBundleTemplateSlotCleaner implements ConfigurableBundleTemplat
 
         $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateSlotById($idConfigurableBundleTemplateSlot);
 
-        // TODO: remove translates
-
         return (new ConfigurableBundleTemplateSlotResponseTransfer())
             ->setIsSuccessful(true);
     }
