@@ -31,7 +31,6 @@ class CartConfigurableBundlePreReloadPlugin extends AbstractPlugin implements Pr
      */
     public function preReloadItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        return $this->getFacade()
-            ->filterInactiveItems($quoteTransfer);
+        return $this->getFacade()->removeInactiveConfiguredBundleItemsFromQuote($quoteTransfer);
     }
 }

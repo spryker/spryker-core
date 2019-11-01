@@ -24,39 +24,11 @@ interface ConfigurableBundleEntityManagerInterface
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */
     public function updateConfigurableBundleTemplate(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): bool;
-
-    /**
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return void
-     */
-    public function deleteConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void;
-
-    /**
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return void
-     */
-    public function deleteConfigurableBundleTemplateSlotsByIdConfigurableBundleTemplate(int $idConfigurableBundleTemplate): void;
-
-    /**
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return void
-     */
-    public function activateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void;
-
-    /**
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return void
-     */
-    public function deactivateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void;
+    ): ConfigurableBundleTemplateTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
@@ -70,11 +42,18 @@ interface ConfigurableBundleEntityManagerInterface
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
      */
     public function updateConfigurableBundleTemplateSlot(
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
-    ): bool;
+    ): ConfigurableBundleTemplateSlotTransfer;
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function deleteConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void;
 
     /**
      * @param int $idConfigurableBundleTemplateSlot
@@ -82,4 +61,11 @@ interface ConfigurableBundleEntityManagerInterface
      * @return void
      */
     public function deleteConfigurableBundleTemplateSlotById(int $idConfigurableBundleTemplateSlot): void;
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function deleteConfigurableBundleTemplateSlotsByIdTemplate(int $idConfigurableBundleTemplate): void;
 }

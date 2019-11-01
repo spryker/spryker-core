@@ -27,7 +27,7 @@ class ConfigurableBundleToUtilTextServiceBridge implements ConfigurableBundleToU
      *
      * @return string
      */
-    public function generateSlug($value)
+    public function generateSlug(string $value): string
     {
         return $this->utilTextService->generateSlug($value);
     }

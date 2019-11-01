@@ -30,7 +30,7 @@ class ConfigurableBundlePersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery
      */
-    public function createConfigurableBundleTemplateQuery(): SpyConfigurableBundleTemplateQuery
+    public function getConfigurableBundleTemplatePropelQuery(): SpyConfigurableBundleTemplateQuery
     {
         return SpyConfigurableBundleTemplateQuery::create();
     }
@@ -38,8 +38,8 @@ class ConfigurableBundlePersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery
      */
-    public function createConfigurableBundleTemplateSlotQuery(): SpyConfigurableBundleTemplateSlotQuery
+    public function getConfigurableBundleTemplateSlotPropelQuery(): SpyConfigurableBundleTemplateSlotQuery
     {
-        return new SpyConfigurableBundleTemplateSlotQuery();
+        return SpyConfigurableBundleTemplateSlotQuery::create();
     }
 }

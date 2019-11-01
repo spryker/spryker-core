@@ -7,24 +7,34 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business\Reader;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateCollectionTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
-use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
 
 interface ConfigurableBundleTemplateReaderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer|null
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
      */
-    public function findConfigurableBundleTemplate(
+    public function getConfigurableBundleTemplate(
         ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
-    ): ?ConfigurableBundleTemplateTransfer;
+    ): ConfigurableBundleTemplateResponseTransfer;
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer
+     */
+    public function getConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): ConfigurableBundleTemplateResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer[]
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateCollectionTransfer
      */
-    public function getConfigurableBundleTemplateCollection(ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer): array;
+    public function getConfigurableBundleTemplateCollection(
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): ConfigurableBundleTemplateCollectionTransfer;
 }

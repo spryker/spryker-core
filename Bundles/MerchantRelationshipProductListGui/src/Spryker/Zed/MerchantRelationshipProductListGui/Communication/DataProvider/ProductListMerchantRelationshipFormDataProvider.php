@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantRelationshipProductListGui\Communication\DataProvi
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\ProductListCollectionTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
+use Spryker\Zed\MerchantRelationshipProductListGui\Communication\FormExpander\ProductListMerchantRelationshipFormExpander;
 use Spryker\Zed\MerchantRelationshipProductListGui\Dependency\Facade\MerchantRelationshipProductListGuiToMerchantRelationshipProductListFacadeInterface;
 
 class ProductListMerchantRelationshipFormDataProvider
@@ -35,13 +36,12 @@ class ProductListMerchantRelationshipFormDataProvider
      */
     public function getOptions(?MerchantRelationshipTransfer $merchantRelationshipTransfer): array
     {
-        $productListCollectionTransfer = $this->merchantRelationshipProductListFacade->getAvailableProductListsForMerchantRelationship(
-            $merchantRelationshipTransfer ?: new MerchantRelationshipTransfer()
-        );
+        $productListCollectionTransfer = $this->merchantRelationshipProductListFacade
+            ->getAvailableProductListsForMerchantRelationship($merchantRelationshipTransfer ?: new MerchantRelationshipTransfer());
 
         return [
-            'choices' => $this->getProductListChoices($productListCollectionTransfer),
-            'data' => $this->getAssignedProductListIds($productListCollectionTransfer, $merchantRelationshipTransfer),
+            ProductListMerchantRelationshipFormExpander::OPTION_PRODUCT_LIST_CHOICES => $this->getProductListChoices($productListCollectionTransfer),
+            ProductListMerchantRelationshipFormExpander::OPTION_DATA => $this->getAssignedProductListIds($productListCollectionTransfer, $merchantRelationshipTransfer),
         ];
     }
 

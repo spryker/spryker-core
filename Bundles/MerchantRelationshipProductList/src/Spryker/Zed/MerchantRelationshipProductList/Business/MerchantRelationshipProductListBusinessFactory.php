@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantRelationshipProductList\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantRelationshipProductList\Business\Checker\ProductListDeleteChecker;
+use Spryker\Zed\MerchantRelationshipProductList\Business\Checker\ProductListDeleteCheckerInterface;
 use Spryker\Zed\MerchantRelationshipProductList\Business\CustomerExpander\CustomerExpander;
 use Spryker\Zed\MerchantRelationshipProductList\Business\CustomerExpander\CustomerExpanderInterface;
 use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListReader;
@@ -63,6 +65,16 @@ class MerchantRelationshipProductListBusinessFactory extends AbstractBusinessFac
         return new MerchantRelationshipReader(
             $this->getRepository(),
             $this->getMerchantRelationshipFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipProductList\Business\Checker\ProductListDeleteCheckerInterface
+     */
+    public function createProductListDeleteChecker(): ProductListDeleteCheckerInterface
+    {
+        return new ProductListDeleteChecker(
+            $this->createMerchantRelationshipReader()
         );
     }
 

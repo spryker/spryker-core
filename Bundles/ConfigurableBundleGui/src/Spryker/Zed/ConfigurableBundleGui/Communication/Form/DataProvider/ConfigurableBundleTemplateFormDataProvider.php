@@ -55,20 +55,21 @@ class ConfigurableBundleTemplateFormDataProvider
     public function getData(?int $idConfigurableBundleTemplate = null): ConfigurableBundleTemplateTransfer
     {
         if (!$idConfigurableBundleTemplate) {
-            return $this->createEmptyConfigurableBundleTemplateTransfer();
+            return $this->createEmptyConfigurableBundleTemplate();
         }
 
         $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())
             ->setIdConfigurableBundleTemplate($idConfigurableBundleTemplate);
 
         $configurableBundleTemplateTransfer = $this->configurableBundleFacade
-            ->findConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
+            ->getConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer)
+            ->getConfigurableBundleTemplate();
 
-        if ($configurableBundleTemplateTransfer) {
-            return $configurableBundleTemplateTransfer;
+        if (!$configurableBundleTemplateTransfer) {
+            return $this->createEmptyConfigurableBundleTemplate();
         }
 
-        return $this->createEmptyConfigurableBundleTemplateTransfer();
+        return $configurableBundleTemplateTransfer;
     }
 
     /**
@@ -84,7 +85,7 @@ class ConfigurableBundleTemplateFormDataProvider
     /**
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */
-    protected function createEmptyConfigurableBundleTemplateTransfer(): ConfigurableBundleTemplateTransfer
+    protected function createEmptyConfigurableBundleTemplate(): ConfigurableBundleTemplateTransfer
     {
         $configurableBundleTemplateTransfer = new ConfigurableBundleTemplateTransfer();
 

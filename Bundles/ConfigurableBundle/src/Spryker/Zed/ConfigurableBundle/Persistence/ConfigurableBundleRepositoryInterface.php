@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Persistence;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateCollectionTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotCollectionTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
@@ -26,23 +28,11 @@ interface ConfigurableBundleRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer[]
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateCollectionTransfer
      */
-    public function getConfigurableBundleTemplateCollection(ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer): array;
-
-    /**
-     * @param string[] $allowedTemplateUuid
-     *
-     * @return string[]
-     */
-    public function getActiveConfigurableBundleTemplateUuids(array $allowedTemplateUuid): array;
-
-    /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[]
-     */
-    public function getConfigurableBundleTemplateSlotCollection(ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer): array;
+    public function getConfigurableBundleTemplateCollection(
+        ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
+    ): ConfigurableBundleTemplateCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
@@ -54,9 +44,18 @@ interface ConfigurableBundleRepositoryInterface
     ): ?ConfigurableBundleTemplateSlotTransfer;
 
     /**
-     * @param int $idConfigurableBundleTemplate
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotCollectionTransfer
      */
-    public function getProductListIdByIdConfigurableBundleTemplate(int $idConfigurableBundleTemplate): int;
+    public function getConfigurableBundleTemplateSlotCollection(
+        ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
+    ): ConfigurableBundleTemplateSlotCollectionTransfer;
+
+    /**
+     * @param string[] $allowedTemplateUuid
+     *
+     * @return string[]
+     */
+    public function getActiveConfigurableBundleTemplateUuids(array $allowedTemplateUuid): array;
 }

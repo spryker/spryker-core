@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ConfigurableBundle\Business\Filter;
+namespace Spryker\Zed\ConfigurableBundle\Business\Cleaner;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface;
 
-class InactiveConfiguredBundleItemFilter implements InactiveConfiguredBundleItemFilterInterface
+class ConfiguredBundleItemCleaner implements ConfiguredBundleItemCleanerInterface
 {
     /**
      * @var \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface
@@ -22,9 +22,8 @@ class InactiveConfiguredBundleItemFilter implements InactiveConfiguredBundleItem
     /**
      * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface $configurableBundleRepository
      */
-    public function __construct(
-        ConfigurableBundleRepositoryInterface $configurableBundleRepository
-    ) {
+    public function __construct(ConfigurableBundleRepositoryInterface $configurableBundleRepository)
+    {
         $this->configurableBundleRepository = $configurableBundleRepository;
     }
 
@@ -33,28 +32,21 @@ class InactiveConfiguredBundleItemFilter implements InactiveConfiguredBundleItem
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function filterInactiveItems(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function removeInactiveConfiguredBundleItemsFromQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $activeConfigurableBundleTemplateUuids = $this->configurableBundleRepository->getActiveConfigurableBundleTemplateUuids(
-            $this->extractConfigurableBundleItemTemplateUuids($quoteTransfer)
-        );
-
         $filteredItemTransfers = new ArrayObject();
 
+        $templateUuids = $this->extractConfigurableBundleTemplateUuids($quoteTransfer);
+        $activeConfigurableBundleTemplateUuids = $this->configurableBundleRepository->getActiveConfigurableBundleTemplateUuids($templateUuids);
+
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $configurableBundleTemplateUuid = $this->extractConfigurableBundleItemTemplateUuid($itemTransfer);
+            $configurableBundleTemplateUuid = $this->extractConfigurableBundleTemplateUuid($itemTransfer);
 
-            if (!$configurableBundleTemplateUuid) {
-                $filteredItemTransfers[] = $itemTransfer;
-
+            if ($configurableBundleTemplateUuid && !in_array($configurableBundleTemplateUuid, $activeConfigurableBundleTemplateUuids, true)) {
                 continue;
             }
 
-            if (!in_array($configurableBundleTemplateUuid, $activeConfigurableBundleTemplateUuids)) {
-                continue;
-            }
-
-            $filteredItemTransfers[] = $itemTransfer;
+            $filteredItemTransfers->append($itemTransfer);
         }
 
         return $quoteTransfer->setItems($filteredItemTransfers);
@@ -65,12 +57,12 @@ class InactiveConfiguredBundleItemFilter implements InactiveConfiguredBundleItem
      *
      * @return string[]
      */
-    protected function extractConfigurableBundleItemTemplateUuids(QuoteTransfer $quoteTransfer): array
+    protected function extractConfigurableBundleTemplateUuids(QuoteTransfer $quoteTransfer): array
     {
         $configurableBundleTemplateUuids = [];
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $configurableBundleTemplateUuids[] = $this->extractConfigurableBundleItemTemplateUuid($itemTransfer);
+            $configurableBundleTemplateUuids[] = $this->extractConfigurableBundleTemplateUuid($itemTransfer);
         }
 
         return array_filter($configurableBundleTemplateUuids);
@@ -81,9 +73,9 @@ class InactiveConfiguredBundleItemFilter implements InactiveConfiguredBundleItem
      *
      * @return string|null
      */
-    protected function extractConfigurableBundleItemTemplateUuid(ItemTransfer $itemTransfer): ?string
+    protected function extractConfigurableBundleTemplateUuid(ItemTransfer $itemTransfer): ?string
     {
-        if (!$itemTransfer->getConfiguredBundle()) {
+        if (!$itemTransfer->getConfiguredBundle() || !$itemTransfer->getConfiguredBundle()->getTemplate()) {
             return null;
         }
 

@@ -36,22 +36,12 @@ class ConfigurableBundleTemplateSlotProductListDeletePreCheckPlugin extends Abst
      */
     public function execute(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
-        $configurableBundleTemplateSlotFilterTransfer = $this->createConfigurableBundleTemplateSlotFilterTransfer($productListTransfer);
-
-        return $this->getFacade()->checkProductListUsageAmongSlots($configurableBundleTemplateSlotFilterTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
-     *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer
-     */
-    protected function createConfigurableBundleTemplateSlotFilterTransfer(ProductListTransfer $productListTransfer): ConfigurableBundleTemplateSlotFilterTransfer
-    {
-        return (new ConfigurableBundleTemplateSlotFilterTransfer())
+        $configurableBundleTemplateSlotFilterTransfer = (new ConfigurableBundleTemplateSlotFilterTransfer())
             ->setProductList($productListTransfer)
             ->setTranslationLocales(new ArrayObject([
                 $this->getFactory()->getLocaleFacade()->getCurrentLocale(),
             ]));
+
+        return $this->getFacade()->isProductListDeletable($configurableBundleTemplateSlotFilterTransfer);
     }
 }

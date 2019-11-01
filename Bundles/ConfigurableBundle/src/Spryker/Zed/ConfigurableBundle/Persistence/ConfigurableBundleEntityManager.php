@@ -28,9 +28,10 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
     ): ConfigurableBundleTemplateTransfer {
         $configurableBundleTemplateEntity = $this->getFactory()
             ->createConfigurableBundleMapper()
-            ->mapConfigurableBundleTemplateTransferToEntity($configurableBundleTemplateTransfer, new SpyConfigurableBundleTemplate());
+            ->mapTemplateTransferToTemplateEntity($configurableBundleTemplateTransfer, new SpyConfigurableBundleTemplate());
 
         $configurableBundleTemplateEntity->save();
+
         $configurableBundleTemplateTransfer->setIdConfigurableBundleTemplate(
             $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate()
         );
@@ -41,95 +42,23 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */
     public function updateConfigurableBundleTemplate(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-    ): bool {
+    ): ConfigurableBundleTemplateTransfer {
         $configurableBundleTemplateEntity = $this->getFactory()
-            ->createConfigurableBundleTemplateQuery()
-            ->findOneByIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
-
-        if (!$configurableBundleTemplateEntity) {
-            return false;
-        }
+            ->getConfigurableBundleTemplatePropelQuery()
+            ->filterByIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+            ->findOne();
 
         $configurableBundleTemplateEntity = $this->getFactory()
             ->createConfigurableBundleMapper()
-            ->mapConfigurableBundleTemplateTransferToEntity($configurableBundleTemplateTransfer, $configurableBundleTemplateEntity);
+            ->mapTemplateTransferToTemplateEntity($configurableBundleTemplateTransfer, $configurableBundleTemplateEntity);
 
         $configurableBundleTemplateEntity->save();
 
-        return true;
-    }
-
-    /**
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return void
-     */
-    public function deleteConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
-    {
-        $configurableBundleTemplateEntity = $this->getFactory()
-            ->createConfigurableBundleTemplateQuery()
-            ->findOneByIdConfigurableBundleTemplate($idConfigurableBundleTemplate);
-
-        if (!$configurableBundleTemplateEntity) {
-            return;
-        }
-
-        $configurableBundleTemplateEntity->delete();
-    }
-
-    /**
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return void
-     */
-    public function deleteConfigurableBundleTemplateSlotsByIdConfigurableBundleTemplate(int $idConfigurableBundleTemplate): void
-    {
-        $this->getFactory()
-            ->createConfigurableBundleTemplateSlotQuery()
-            ->filterByFkConfigurableBundleTemplate($idConfigurableBundleTemplate)
-            ->delete();
-    }
-
-    /**
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return void
-     */
-    public function activateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
-    {
-        $configurableBundleTemplateEntity = $this->getFactory()
-            ->createConfigurableBundleTemplateQuery()
-            ->findOneByIdConfigurableBundleTemplate($idConfigurableBundleTemplate);
-
-        if (!$configurableBundleTemplateEntity) {
-            return;
-        }
-
-        $configurableBundleTemplateEntity->setIsActive(true)
-            ->save();
-    }
-
-    /**
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return void
-     */
-    public function deactivateConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
-    {
-        $configurableBundleTemplateEntity = $this->getFactory()
-            ->createConfigurableBundleTemplateQuery()
-            ->findOneByIdConfigurableBundleTemplate($idConfigurableBundleTemplate);
-
-        if (!$configurableBundleTemplateEntity) {
-            return;
-        }
-
-        $configurableBundleTemplateEntity->setIsActive(false)
-            ->save();
+        return $configurableBundleTemplateTransfer;
     }
 
     /**
@@ -142,9 +71,10 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
     ): ConfigurableBundleTemplateSlotTransfer {
         $configurableBundleTemplateSlotEntity = $this->getFactory()
             ->createConfigurableBundleMapper()
-            ->mapConfigurableBundleTemplateSlotTransferToEntity($configurableBundleTemplateSlotTransfer, new SpyConfigurableBundleTemplateSlot());
+            ->mapTemplateSlotTransferToTemplateSlotEntity($configurableBundleTemplateSlotTransfer, new SpyConfigurableBundleTemplateSlot());
 
         $configurableBundleTemplateSlotEntity->save();
+
         $configurableBundleTemplateSlotTransfer->setIdConfigurableBundleTemplateSlot(
             $configurableBundleTemplateSlotEntity->getIdConfigurableBundleTemplateSlot()
         );
@@ -155,26 +85,42 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
      */
     public function updateConfigurableBundleTemplateSlot(
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
-    ): bool {
+    ): ConfigurableBundleTemplateSlotTransfer {
         $configurableBundleTemplateSlotEntity = $this->getFactory()
-            ->createConfigurableBundleTemplateSlotQuery()
-            ->findOneByIdConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot());
-
-        if (!$configurableBundleTemplateSlotEntity) {
-            return false;
-        }
+            ->getConfigurableBundleTemplateSlotPropelQuery()
+            ->filterByIdConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer->getIdConfigurableBundleTemplateSlot())
+            ->findOne();
 
         $configurableBundleTemplateSlotEntity = $this->getFactory()
             ->createConfigurableBundleMapper()
-            ->mapConfigurableBundleTemplateSlotTransferToEntity($configurableBundleTemplateSlotTransfer, $configurableBundleTemplateSlotEntity);
+            ->mapTemplateSlotTransferToTemplateSlotEntity($configurableBundleTemplateSlotTransfer, $configurableBundleTemplateSlotEntity);
 
         $configurableBundleTemplateSlotEntity->save();
 
-        return true;
+        return $configurableBundleTemplateSlotTransfer;
+    }
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function deleteConfigurableBundleTemplateById(int $idConfigurableBundleTemplate): void
+    {
+        $configurableBundleTemplateEntity = $this->getFactory()
+            ->getConfigurableBundleTemplatePropelQuery()
+            ->filterByIdConfigurableBundleTemplate($idConfigurableBundleTemplate)
+            ->findOne();
+
+        if (!$configurableBundleTemplateEntity) {
+            return;
+        }
+
+        $configurableBundleTemplateEntity->delete();
     }
 
     /**
@@ -184,9 +130,32 @@ class ConfigurableBundleEntityManager extends AbstractEntityManager implements C
      */
     public function deleteConfigurableBundleTemplateSlotById(int $idConfigurableBundleTemplateSlot): void
     {
-        $this->getFactory()
-            ->createConfigurableBundleTemplateSlotQuery()
+        $configurableBundleTemplateSlotEntity = $this->getFactory()
+            ->getConfigurableBundleTemplateSlotPropelQuery()
             ->filterByIdConfigurableBundleTemplateSlot($idConfigurableBundleTemplateSlot)
-            ->delete();
+            ->findOne();
+
+        if (!$configurableBundleTemplateSlotEntity) {
+            return;
+        }
+
+        $configurableBundleTemplateSlotEntity->delete();
+    }
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return void
+     */
+    public function deleteConfigurableBundleTemplateSlotsByIdTemplate(int $idConfigurableBundleTemplate): void
+    {
+        $configurableBundleTemplateSlotEntities = $this->getFactory()
+            ->getConfigurableBundleTemplateSlotPropelQuery()
+            ->filterByFkConfigurableBundleTemplate($idConfigurableBundleTemplate)
+            ->find();
+
+        foreach ($configurableBundleTemplateSlotEntities as $configurableBundleTemplateSlotEntity) {
+            $configurableBundleTemplateSlotEntity->delete();
+        }
     }
 }

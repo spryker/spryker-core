@@ -7,26 +7,36 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Business;
 
+use Spryker\Zed\ConfigurableBundle\Business\Checker\ProductListDeleteChecker;
+use Spryker\Zed\ConfigurableBundle\Business\Checker\ProductListDeleteCheckerInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Cleaner\ConfigurableBundleTemplateCleaner;
+use Spryker\Zed\ConfigurableBundle\Business\Cleaner\ConfigurableBundleTemplateCleanerInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Cleaner\ConfigurableBundleTemplateSlotCleaner;
+use Spryker\Zed\ConfigurableBundle\Business\Cleaner\ConfigurableBundleTemplateSlotCleanerInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Cleaner\ConfiguredBundleItemCleaner;
+use Spryker\Zed\ConfigurableBundle\Business\Cleaner\ConfiguredBundleItemCleanerInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Creator\ConfigurableBundleTemplateCreator;
+use Spryker\Zed\ConfigurableBundle\Business\Creator\ConfigurableBundleTemplateCreatorInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Creator\ConfigurableBundleTemplateSlotCreator;
+use Spryker\Zed\ConfigurableBundle\Business\Creator\ConfigurableBundleTemplateSlotCreatorInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTemplateSlotProductListExpander;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTemplateSlotProductListExpanderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpander;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpanderInterface;
-use Spryker\Zed\ConfigurableBundle\Business\Filter\InactiveConfiguredBundleItemFilter;
-use Spryker\Zed\ConfigurableBundle\Business\Filter\InactiveConfiguredBundleItemFilterInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGenerator;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGeneratorInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Generator\ProductListTitleGenerator;
+use Spryker\Zed\ConfigurableBundle\Business\Generator\ProductListTitleGeneratorInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReader;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReader;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReaderInterface;
-use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateSlotTranslationWriter;
-use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateSlotTranslationWriterInterface;
-use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateSlotWriter;
-use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateSlotWriterInterface;
-use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateTranslationWriter;
-use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateTranslationWriterInterface;
-use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateWriter;
-use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateWriterInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Updater\ConfigurableBundleTemplateSlotUpdater;
+use Spryker\Zed\ConfigurableBundle\Business\Updater\ConfigurableBundleTemplateSlotUpdaterInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Updater\ConfigurableBundleTemplateUpdater;
+use Spryker\Zed\ConfigurableBundle\Business\Updater\ConfigurableBundleTemplateUpdaterInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTranslationWriter;
+use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTranslationWriterInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Writer\ProductListWriter;
 use Spryker\Zed\ConfigurableBundle\Business\Writer\ProductListWriterInterface;
 use Spryker\Zed\ConfigurableBundle\ConfigurableBundleDependencyProvider;
@@ -45,90 +55,73 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateWriterInterface
-     */
-    public function createConfigurableBundleTemplateWriter(): ConfigurableBundleTemplateWriterInterface
-    {
-        return new ConfigurableBundleTemplateWriter(
-            $this->getEntityManager(),
-            $this->createConfigurableBundleTemplateTranslationWriter(),
-            $this->createConfigurableBundleNameGenerator(),
-            $this->getEventFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateSlotWriterInterface
-     */
-    public function createConfigurableBundleTemplateSlotWriter(): ConfigurableBundleTemplateSlotWriterInterface
-    {
-        return new ConfigurableBundleTemplateSlotWriter(
-            $this->getEntityManager(),
-            $this->createConfigurableBundleTemplateSlotTranslationWriter(),
-            $this->createConfigurableBundleNameGenerator(),
-            $this->createProductListWriter()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateTranslationWriterInterface
-     */
-    public function createConfigurableBundleTemplateTranslationWriter(): ConfigurableBundleTemplateTranslationWriterInterface
-    {
-        return new ConfigurableBundleTemplateTranslationWriter(
-            $this->getGlossaryFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTemplateSlotTranslationWriterInterface
-     */
-    public function createConfigurableBundleTemplateSlotTranslationWriter(): ConfigurableBundleTemplateSlotTranslationWriterInterface
-    {
-        return new ConfigurableBundleTemplateSlotTranslationWriter($this->getGlossaryFacade());
-    }
-
-    /**
-     * @return \Spryker\Zed\ConfigurableBundle\Business\Writer\ProductListWriterInterface
-     */
-    public function createProductListWriter(): ProductListWriterInterface
-    {
-        return new ProductListWriter(
-            $this->createConfigurableBundleTemplateReader(),
-            $this->getProductListFacade(),
-            $this->getLocaleFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface
-     */
-    public function createConfigurableBundleTemplateReader(): ConfigurableBundleTemplateReaderInterface
-    {
-        return new ConfigurableBundleTemplateReader(
-            $this->getRepository(),
-            $this->createConfigurableBundleTranslationExpander()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReaderInterface
-     */
-    public function createConfigurableBundleTemplateSlotReader(): ConfigurableBundleTemplateSlotReaderInterface
-    {
-        return new ConfigurableBundleTemplateSlotReader(
-            $this->getRepository(),
-            $this->createConfigurableBundleTranslationExpander(),
-            $this->createConfigurableBundleTemplateSlotProductListExpander()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGeneratorInterface
      */
     public function createConfigurableBundleNameGenerator(): ConfigurableBundleNameGeneratorInterface
     {
-        return new ConfigurableBundleNameGenerator($this->getUtilTextService());
+        return new ConfigurableBundleNameGenerator(
+            $this->getUtilTextService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Generator\ProductListTitleGeneratorInterface
+     */
+    public function createProductListTitleGenerator(): ProductListTitleGeneratorInterface
+    {
+        return new ProductListTitleGenerator();
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Checker\ProductListDeleteCheckerInterface
+     */
+    public function createProductListDeleteChecker(): ProductListDeleteCheckerInterface
+    {
+        return new ProductListDeleteChecker(
+            $this->createConfigurableBundleTemplateSlotReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Cleaner\ConfigurableBundleTemplateCleanerInterface
+     */
+    public function createConfigurableBundleTemplateCleaner(): ConfigurableBundleTemplateCleanerInterface
+    {
+        return new ConfigurableBundleTemplateCleaner(
+            $this->getEntityManager(),
+            $this->createConfigurableBundleTemplateReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Cleaner\ConfigurableBundleTemplateSlotCleanerInterface
+     */
+    public function createConfigurableBundleTemplateSlotCleaner(): ConfigurableBundleTemplateSlotCleanerInterface
+    {
+        return new ConfigurableBundleTemplateSlotCleaner(
+            $this->getEntityManager(),
+            $this->createConfigurableBundleTemplateSlotReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Cleaner\ConfiguredBundleItemCleanerInterface
+     */
+    public function createConfiguredBundleItemCleaner(): ConfiguredBundleItemCleanerInterface
+    {
+        return new ConfiguredBundleItemCleaner(
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTemplateSlotProductListExpanderInterface
+     */
+    public function createConfigurableBundleTemplateSlotProductListExpander(): ConfigurableBundleTemplateSlotProductListExpanderInterface
+    {
+        return new ConfigurableBundleTemplateSlotProductListExpander(
+            $this->getProductListFacade()
+        );
     }
 
     /**
@@ -143,20 +136,102 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTemplateSlotProductListExpanderInterface
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Creator\ConfigurableBundleTemplateCreatorInterface
      */
-    public function createConfigurableBundleTemplateSlotProductListExpander(): ConfigurableBundleTemplateSlotProductListExpanderInterface
+    public function createConfigurableBundleTemplateCreator(): ConfigurableBundleTemplateCreatorInterface
     {
-        return new ConfigurableBundleTemplateSlotProductListExpander($this->getProductListFacade());
+        return new ConfigurableBundleTemplateCreator(
+            $this->getEntityManager(),
+            $this->createConfigurableBundleTranslationWriter(),
+            $this->createConfigurableBundleNameGenerator(),
+            $this->getEventFacade()
+        );
     }
 
     /**
-     * @return \Spryker\Zed\ConfigurableBundle\Business\Filter\InactiveConfiguredBundleItemFilterInterface
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Updater\ConfigurableBundleTemplateUpdaterInterface
      */
-    public function createInactiveConfiguredBundleItemFilter(): InactiveConfiguredBundleItemFilterInterface
+    public function createConfigurableBundleTemplateUpdater(): ConfigurableBundleTemplateUpdaterInterface
     {
-        return new InactiveConfiguredBundleItemFilter(
-            $this->getRepository()
+        return new ConfigurableBundleTemplateUpdater(
+            $this->getEntityManager(),
+            $this->createConfigurableBundleTranslationWriter(),
+            $this->createConfigurableBundleNameGenerator(),
+            $this->createConfigurableBundleTemplateReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Creator\ConfigurableBundleTemplateSlotCreatorInterface
+     */
+    public function createConfigurableBundleTemplateSlotCreator(): ConfigurableBundleTemplateSlotCreatorInterface
+    {
+        return new ConfigurableBundleTemplateSlotCreator(
+            $this->getEntityManager(),
+            $this->createConfigurableBundleTranslationWriter(),
+            $this->createConfigurableBundleNameGenerator(),
+            $this->createProductListWriter(),
+            $this->createConfigurableBundleTemplateReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Updater\ConfigurableBundleTemplateSlotUpdaterInterface
+     */
+    public function createConfigurableBundleTemplateSlotUpdater(): ConfigurableBundleTemplateSlotUpdaterInterface
+    {
+        return new ConfigurableBundleTemplateSlotUpdater(
+            $this->getEntityManager(),
+            $this->createConfigurableBundleTranslationWriter(),
+            $this->createConfigurableBundleNameGenerator(),
+            $this->createProductListWriter(),
+            $this->createConfigurableBundleTemplateSlotReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTranslationWriterInterface
+     */
+    public function createConfigurableBundleTranslationWriter(): ConfigurableBundleTranslationWriterInterface
+    {
+        return new ConfigurableBundleTranslationWriter(
+            $this->getGlossaryFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Writer\ProductListWriterInterface
+     */
+    public function createProductListWriter(): ProductListWriterInterface
+    {
+        return new ProductListWriter(
+            $this->getProductListFacade(),
+            $this->createProductListTitleGenerator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface
+     */
+    public function createConfigurableBundleTemplateReader(): ConfigurableBundleTemplateReaderInterface
+    {
+        return new ConfigurableBundleTemplateReader(
+            $this->getRepository(),
+            $this->createConfigurableBundleTranslationExpander(),
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReaderInterface
+     */
+    public function createConfigurableBundleTemplateSlotReader(): ConfigurableBundleTemplateSlotReaderInterface
+    {
+        return new ConfigurableBundleTemplateSlotReader(
+            $this->getRepository(),
+            $this->createConfigurableBundleTranslationExpander(),
+            $this->createConfigurableBundleTemplateSlotProductListExpander(),
+            $this->getLocaleFacade()
         );
     }
 

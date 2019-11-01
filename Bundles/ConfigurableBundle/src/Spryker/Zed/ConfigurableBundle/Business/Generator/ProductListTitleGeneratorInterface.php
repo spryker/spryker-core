@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ConfigurableBundle\Business\Writer;
+namespace Spryker\Zed\ConfigurableBundle\Business\Generator;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 
-interface ConfigurableBundleTemplateSlotTranslationWriterInterface
+interface ProductListTitleGeneratorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
      *
-     * @return void
+     * @return string
      */
-    public function saveTranslations(ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer): void;
+    public function generateProductListTitle(ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer): string;
 }

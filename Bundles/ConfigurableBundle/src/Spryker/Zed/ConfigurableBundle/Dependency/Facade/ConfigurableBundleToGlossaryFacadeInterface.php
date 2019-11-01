@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ConfigurableBundle\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\TranslationTransfer;
 
 interface ConfigurableBundleToGlossaryFacadeInterface
 {
@@ -19,7 +20,7 @@ interface ConfigurableBundleToGlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
+    public function createTranslation(string $keyName, LocaleTransfer $locale, string $value, bool $isActive = true): TranslationTransfer;
 
     /**
      * @param string $keyName
@@ -29,21 +30,21 @@ interface ConfigurableBundleToGlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function updateTranslation($keyName, $locale, $value, $isActive = true);
+    public function updateTranslation(string $keyName, LocaleTransfer $locale, string $value, bool $isActive = true): TranslationTransfer;
 
     /**
      * @param string $keyName
      *
      * @return int
      */
-    public function createKey($keyName);
+    public function createKey(string $keyName): int;
 
     /**
      * @param string $keyName
      *
      * @return bool
      */
-    public function hasKey($keyName);
+    public function hasKey(string $keyName): bool;
 
     /**
      * @param string $keyName
@@ -51,7 +52,7 @@ interface ConfigurableBundleToGlossaryFacadeInterface
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $locale = null);
+    public function hasTranslation(string $keyName, ?LocaleTransfer $locale = null): bool;
 
     /**
      * @param string $keyName
@@ -60,7 +61,7 @@ interface ConfigurableBundleToGlossaryFacadeInterface
      *
      * @return string
      */
-    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null);
+    public function translate(string $keyName, array $data = [], ?LocaleTransfer $localeTransfer = null): string;
 
     /**
      * @param string $glossaryKey
@@ -76,5 +77,5 @@ interface ConfigurableBundleToGlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation($keyName, LocaleTransfer $locale);
+    public function getTranslation(string $keyName, LocaleTransfer $locale): TranslationTransfer;
 }

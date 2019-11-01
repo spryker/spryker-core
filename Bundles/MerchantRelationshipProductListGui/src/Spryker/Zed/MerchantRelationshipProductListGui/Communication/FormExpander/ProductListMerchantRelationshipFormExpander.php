@@ -14,8 +14,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
-class ProductListMerchantRelationshipEditFormExpander implements ProductListMerchantRelationshipEditFormExpanderInterface
+class ProductListMerchantRelationshipFormExpander implements ProductListMerchantRelationshipFormExpanderInterface
 {
+    public const OPTION_PRODUCT_LIST_CHOICES = 'choices';
+    public const OPTION_DATA = 'data';
+
     /**
      * @var \Spryker\Zed\MerchantRelationshipProductListGui\Communication\DataProvider\ProductListMerchantRelationshipFormDataProvider
      */
@@ -39,12 +42,16 @@ class ProductListMerchantRelationshipEditFormExpander implements ProductListMerc
     public function expand(FormBuilderInterface $builder, array $options): void
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $productListOptions = $this->productListMerchantRelationshipFormDataProvider->getOptions($event->getData());
+
             $event->getForm()
-                ->add(MerchantRelationshipTransfer::PRODUCT_LIST_IDS, Select2ComboBoxType::class, array_merge([
+                ->add(MerchantRelationshipTransfer::PRODUCT_LIST_IDS, Select2ComboBoxType::class, [
                     'label' => 'Assigned Product Lists',
                     'multiple' => true,
                     'required' => false,
-                ], $this->productListMerchantRelationshipFormDataProvider->getOptions($event->getData())));
+                    'choices' => $productListOptions[static::OPTION_PRODUCT_LIST_CHOICES],
+                    'data' => $productListOptions[static::OPTION_DATA],
+                ]);
         });
     }
 }

@@ -2,8 +2,7 @@
     {{ tips | trans }}
 </div>
 
-{% embed '@ConfigurableBundleGui/Template/_partials/translations.twig' with {
+{% include '@ConfigurableBundleGui/Template/_partials/translations.twig' with {
     currentLocale: currentLocale,
     translations: form.translations
 } %}
-{% endembed %}

@@ -62,6 +62,14 @@
         <property name="translationLocales" type="Locale[]" singular="translationLocale"/>
     </transfer>
 
+    <transfer name="ConfigurableBundleTemplateCollection">
+        <property name="configurableBundleTemplates" type="ConfigurableBundleTemplate[]" singular="configurableBundleTemplate"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateSlotCollection">
+        <property name="configurableBundleTemplateSlots" type="ConfigurableBundleTemplateSlot[]" singular="configurableBundleTemplateSlot"/>
+    </transfer>
+
     <transfer name="ConfigurableBundleTemplateSlotFilter">
         <property name="idProductList" type="int"/>
         <property name="productList" type="ProductList"/>
@@ -71,6 +79,11 @@
 
     <transfer name="ConfigurableBundleTemplateResponse">
         <property name="configurableBundleTemplate" type="ConfigurableBundleTemplate"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateSlotResponse">
         <property name="configurableBundleTemplateSlot" type="ConfigurableBundleTemplateSlot"/>
         <property name="isSuccessful" type="bool"/>
         <property name="messages" type="Message[]" singular="message"/>
@@ -78,7 +91,6 @@
 
     <transfer name="Message">
         <property name="value" type="string"/>
-        <property name="type" type="string"/>
         <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 

@@ -8,7 +8,7 @@ $(document).ready(function () {
         $('#confirmation-modal-window').modal('show');
     });
 
-    $('#btn-confirm').on('click', function () {
+    $('.js-btn-confirm').on('click', function () {
         window.location.href = clickedButtonUrl;
     });
 });
