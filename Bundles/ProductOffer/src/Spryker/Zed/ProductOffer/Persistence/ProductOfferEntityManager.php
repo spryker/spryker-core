@@ -27,7 +27,9 @@ class ProductOfferEntityManager extends AbstractEntityManager implements Product
             ->filterByIdProductOffer($productOfferTransfer->getIdProductOffer())
             ->findOneOrCreate();
 
-        $productOfferEntity->fromArray($productOfferTransfer->toArray());
+        $productOfferEntity= $this->getFactory()
+            ->createPropelProductOfferMapper()
+            ->mapProductOfferTransferToProductOfferEntity($productOfferTransfer, $productOfferEntity);
         $productOfferEntity->save();
 
         return $this->getFactory()

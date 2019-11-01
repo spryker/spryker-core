@@ -3,25 +3,11 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="ProductConcreteProductOffersStorage">
-        <property name="idProductConcreteProductOffersStorage" type="int"/>
-        <property name="concreteSku" type="string"/>
-        <property name="data" type="string[]" singular="data"/>
-        <property name="key" type="string"/>
+    <transfer name="ProductOfferStorageCollection">
+        <property name="productOffersStorage" type="ProductOfferStorage[]" singular="ProductOfferStorage"/>
     </transfer>
 
     <transfer name="ProductOfferStorage">
-        <property name="idProductOfferStorage" type="int"/>
-        <property name="productOfferReference" type="string"/>
-        <property name="data" type="array" singular="data"/>
-        <property name="key" type="string"/>
-    </transfer>
-
-    <transfer name="ProductOfferViewCollection">
-        <property name="productOfferViews" type="ProductOfferView[]" singular="productOfferView"/>
-    </transfer>
-
-    <transfer name="ProductOfferView">
         <property name="idProductOffer" type="int"/>
         <property name="productOfferReference" type="string"/>
         <property name="idMerchant" type="int"/>

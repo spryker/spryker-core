@@ -20,19 +20,4 @@ use Spryker\Zed\ProductOffer\Business\Writer\ProductOfferWriterInterface;
  */
 class ProductOfferBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return \Spryker\Zed\ProductOffer\Business\Reader\ProductOfferReaderInterface
-     */
-    public function createProductOfferReader(): ProductOfferReaderInterface
-    {
-        return new ProductOfferReader($this->getRepository());
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOffer\Business\Writer\ProductOfferWriterInterface
-     */
-    public function createProductOfferWriter(): ProductOfferWriterInterface
-    {
-        return new ProductOfferWriter($this->getEntityManager());
-    }
 }

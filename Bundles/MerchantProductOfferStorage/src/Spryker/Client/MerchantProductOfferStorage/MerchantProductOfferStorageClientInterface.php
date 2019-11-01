@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\MerchantProductOfferStorage;
 
-use Generated\Shared\Transfer\ProductOfferViewCollectionTransfer;
-
 interface MerchantProductOfferStorageClientInterface
 {
     /**
@@ -20,7 +18,7 @@ interface MerchantProductOfferStorageClientInterface
      *
      * @param string $concreteSku
      *
-     * @return \Generated\Shared\Transfer\ProductOfferViewCollectionTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
      */
-    public function getProductOfferViewCollection(string $concreteSku): ProductOfferViewCollectionTransfer;
+    public function getProductOfferStorageCollection(string $concreteSku): array;
 }
