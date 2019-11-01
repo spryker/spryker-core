@@ -74,7 +74,7 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
         $configurableBundleTemplatePageSearchTransfers = $this->getConfigurableBundleTemplatePageSearchTransfers($configurableBundleTemplateIds);
 
         $this->getTransactionHandler()->handleTransaction(function () use ($configurableBundleTemplateTransfers, $configurableBundleTemplatePageSearchTransfers): void {
-            $this->executePublishTransaction($configurableBundleTemplateTransfers, $configurableBundleTemplatePageSearchTransfers);
+            $this->executePublishTransaction($configurableBundleTemplateTransfers->getConfigurableBundleTemplates()->getArrayCopy(), $configurableBundleTemplatePageSearchTransfers);
         });
     }
 

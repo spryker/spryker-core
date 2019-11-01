@@ -19,6 +19,8 @@ use Spryker\Zed\ConfigurableBundle\Business\Creator\ConfigurableBundleTemplateCr
 use Spryker\Zed\ConfigurableBundle\Business\Creator\ConfigurableBundleTemplateCreatorInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Creator\ConfigurableBundleTemplateSlotCreator;
 use Spryker\Zed\ConfigurableBundle\Business\Creator\ConfigurableBundleTemplateSlotCreatorInterface;
+use Spryker\Zed\ConfigurableBundle\Business\EventTriggerer\EventTriggerer;
+use Spryker\Zed\ConfigurableBundle\Business\EventTriggerer\EventTriggererInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTemplateSlotProductListExpander;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTemplateSlotProductListExpanderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpander;
@@ -144,7 +146,7 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createConfigurableBundleTranslationWriter(),
             $this->createConfigurableBundleNameGenerator(),
-            $this->getEventFacade()
+            $this->createEventTriggerer()
         );
     }
 
@@ -157,7 +159,8 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createConfigurableBundleTranslationWriter(),
             $this->createConfigurableBundleNameGenerator(),
-            $this->createConfigurableBundleTemplateReader()
+            $this->createConfigurableBundleTemplateReader(),
+            $this->createEventTriggerer()
         );
     }
 
@@ -233,6 +236,14 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
             $this->createConfigurableBundleTemplateSlotProductListExpander(),
             $this->getLocaleFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\EventTriggerer\EventTriggererInterface
+     */
+    public function createEventTriggerer(): EventTriggererInterface
+    {
+        return new EventTriggerer($this->getEventFacade());
     }
 
     /**

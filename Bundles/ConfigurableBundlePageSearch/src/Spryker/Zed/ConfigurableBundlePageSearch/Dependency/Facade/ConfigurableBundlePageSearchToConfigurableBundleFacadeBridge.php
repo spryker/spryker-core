@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateCollectionTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 
 class ConfigurableBundlePageSearchToConfigurableBundleFacadeBridge implements ConfigurableBundlePageSearchToConfigurableBundleFacadeInterface
@@ -27,9 +28,9 @@ class ConfigurableBundlePageSearchToConfigurableBundleFacadeBridge implements Co
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer[]
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateCollectionTransfer
      */
-    public function getConfigurableBundleTemplateCollection(ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer): array
+    public function getConfigurableBundleTemplateCollection(ConfigurableBundleTemplateFilterTransfer $configurableBundleTemplateFilterTransfer): ConfigurableBundleTemplateCollectionTransfer
     {
         return $this->configurableBundleFacade->getConfigurableBundleTemplateCollection($configurableBundleTemplateFilterTransfer);
     }

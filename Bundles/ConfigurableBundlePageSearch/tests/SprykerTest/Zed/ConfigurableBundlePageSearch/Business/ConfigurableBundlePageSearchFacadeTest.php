@@ -41,7 +41,7 @@ class ConfigurableBundlePageSearchFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testPublishConfigurableBundleTemplates(): void
+    public function testPublishConfigurableBundleTemplatesPublishesData(): void
     {
         // Arrange
         $configurableBundleTemplateTransfer = $this->tester->createConfigurableBundleTemplate();
@@ -70,7 +70,7 @@ class ConfigurableBundlePageSearchFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUnpublishConfigurableBundleTemplates(): void
+    public function testUnpublishConfigurableBundleTemplatesUnpublishesData(): void
     {
         // Arrange
         $configurableBundleTemplateTransfer = $this->tester->createConfigurableBundleTemplate();

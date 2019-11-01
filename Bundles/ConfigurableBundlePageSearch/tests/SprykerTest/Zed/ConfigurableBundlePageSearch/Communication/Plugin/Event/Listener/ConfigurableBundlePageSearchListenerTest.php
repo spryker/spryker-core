@@ -44,7 +44,7 @@ class ConfigurableBundlePageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testConfigurableBundleTemplatePublishListenerStoresData(): void
+    public function testConfigurableBundleTemplatePublishListenerPublishesData(): void
     {
         // Arrange
         $configurableBundleTemplateTransfer = $this->tester->createConfigurableBundleTemplate();
@@ -67,7 +67,7 @@ class ConfigurableBundlePageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testConfigurableBundleTemplateUnpublishListenerStoresData(): void
+    public function testConfigurableBundleTemplateUnpublishListenerUnpublishesData(): void
     {
         // Arrange
         $configurableBundleTemplateTransfer = $this->tester->createConfigurableBundleTemplate();

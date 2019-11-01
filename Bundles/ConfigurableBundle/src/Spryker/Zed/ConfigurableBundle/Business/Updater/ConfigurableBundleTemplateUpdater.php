@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Spryker\Zed\ConfigurableBundle\Business\EventTriggerer\EventTriggererInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGeneratorInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTranslationWriterInterface;
@@ -45,21 +46,29 @@ class ConfigurableBundleTemplateUpdater implements ConfigurableBundleTemplateUpd
     protected $configurableBundleTemplateReader;
 
     /**
+     * @var \Spryker\Zed\ConfigurableBundle\Business\EventTriggerer\EventTriggererInterface
+     */
+    protected $eventTriggerer;
+
+    /**
      * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager
      * @param \Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTranslationWriterInterface $configurableBundleTranslationWriter
      * @param \Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGeneratorInterface $configurableBundleNameGenerator
      * @param \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface $configurableBundleTemplateReader
+     * @param \Spryker\Zed\ConfigurableBundle\Business\EventTriggerer\EventTriggererInterface $eventTriggerer
      */
     public function __construct(
         ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager,
         ConfigurableBundleTranslationWriterInterface $configurableBundleTranslationWriter,
         ConfigurableBundleNameGeneratorInterface $configurableBundleNameGenerator,
-        ConfigurableBundleTemplateReaderInterface $configurableBundleTemplateReader
+        ConfigurableBundleTemplateReaderInterface $configurableBundleTemplateReader,
+        EventTriggererInterface $eventTriggerer
     ) {
         $this->configurableBundleEntityManager = $configurableBundleEntityManager;
         $this->configurableBundleTranslationWriter = $configurableBundleTranslationWriter;
         $this->configurableBundleNameGenerator = $configurableBundleNameGenerator;
         $this->configurableBundleTemplateReader = $configurableBundleTemplateReader;
+        $this->eventTriggerer = $eventTriggerer;
     }
 
     /**
@@ -99,6 +108,8 @@ class ConfigurableBundleTemplateUpdater implements ConfigurableBundleTemplateUpd
         $configurableBundleTemplateTransfer->setIsActive(true);
         $configurableBundleTemplateTransfer = $this->configurableBundleEntityManager->updateConfigurableBundleTemplate($configurableBundleTemplateTransfer);
 
+        $this->eventTriggerer->triggerConfigurableBundleTemplatePublishEvent($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+
         return (new ConfigurableBundleTemplateResponseTransfer())
             ->setConfigurableBundleTemplate($configurableBundleTemplateTransfer)
             ->setIsSuccessful(true);
@@ -128,6 +139,8 @@ class ConfigurableBundleTemplateUpdater implements ConfigurableBundleTemplateUpd
         $configurableBundleTemplateTransfer->setIsActive(false);
         $configurableBundleTemplateTransfer = $this->configurableBundleEntityManager->updateConfigurableBundleTemplate($configurableBundleTemplateTransfer);
 
+        $this->eventTriggerer->triggerConfigurableBundleTemplatePublishEvent($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+
         return (new ConfigurableBundleTemplateResponseTransfer())
             ->setConfigurableBundleTemplate($configurableBundleTemplateTransfer)
             ->setIsSuccessful(true);
@@ -154,6 +167,8 @@ class ConfigurableBundleTemplateUpdater implements ConfigurableBundleTemplateUpd
             ->updateConfigurableBundleTemplate($configurableBundleTemplateTransfer);
 
         $this->configurableBundleTranslationWriter->saveTemplateTranslations($configurableBundleTemplateTransfer);
+
+        $this->eventTriggerer->triggerConfigurableBundleTemplatePublishEvent($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
 
         return (new ConfigurableBundleTemplateResponseTransfer())
             ->setConfigurableBundleTemplate($configurableBundleTemplateTransfer)
