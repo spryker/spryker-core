@@ -41,7 +41,7 @@
         <id-method-parameter value="spy_cms_block_glossary_key_mapping_pk_seq"/>
     </table>
 
-    <table name="spy_cms_block" phpName="SpyCmsBlock">
+    <table name="spy_cms_block" phpName="SpyCmsBlock" identifierQuoting="true">
         <column name="id_cms_block" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_template" type="INTEGER" required="false"/>
         <column name="is_active" type="BOOLEAN" required="true" default="false"/>
