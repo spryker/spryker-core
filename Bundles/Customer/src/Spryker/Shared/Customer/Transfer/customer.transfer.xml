@@ -167,4 +167,10 @@
         <property name="name" type="string"/>
         <property name="prefix" type="string"/>
     </transfer>
+
+    <transfer name="SaveOrder">
+    </transfer>
+
+    <transfer name="Filter">
+    </transfer>
 </transfers>

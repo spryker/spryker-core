@@ -93,4 +93,10 @@
         <property name="actionButtons" type="ButtonCollection"/>
     </transfer>
 
+    <transfer name="ProductListCategoryRelation">
+    </transfer>
+
+    <transfer name="CategoryCollection">
+    </transfer>
+
 </transfers>

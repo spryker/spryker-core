@@ -24,6 +24,9 @@
         <property name="idMerchantRelationship" type="int"/>
     </transfer>
 
+    <transfer name="ProductList">
+    </transfer>
+
     <transfer name="Merchant">
         <property name="name" type="string"/>
     </transfer>
