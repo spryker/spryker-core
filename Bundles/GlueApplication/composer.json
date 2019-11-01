@@ -8,6 +8,7 @@
     "spryker/application": "^3.13.0",
     "spryker/container": "^1.0.0",
     "spryker/documentation-generator-rest-api-extension": "^1.0.0",
+    "spryker/event-dispatcher-extension": "^1.0.0",
     "spryker/glue-application-extension": "^1.2.0",
     "spryker/kernel": "^3.31.0",
     "spryker/log": "^3.0.0",
@@ -20,12 +21,14 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
+    "spryker/event-dispatcher": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker/silex": "If you want to use ServiceProvider.",
-    "spryker/config": "If you want to use Config."
+    "spryker/config": "If you want to use Config.",
+    "spryker/event-dispatcher": "If you want to use the EventDispatcher plugin."
   },
   "autoload": {
     "psr-4": {
