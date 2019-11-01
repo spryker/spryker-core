@@ -8,7 +8,6 @@
 namespace Spryker\Zed\MerchantProfileStorage\Persistence;
 
 use Generated\Shared\Transfer\MerchantProfileStorageTransfer;
-use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -17,21 +16,16 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class MerchantProfileStorageEntityManager extends AbstractEntityManager implements MerchantProfileStorageEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
+     * @param \Generated\Shared\Transfer\MerchantProfileStorageTransfer $merchantProfileStorageTransfer
      *
      * @return void
      */
-    public function saveMerchantProfileStorage(MerchantProfileTransfer $merchantProfileTransfer): void
+    public function saveMerchantProfileStorage(MerchantProfileStorageTransfer $merchantProfileStorageTransfer): void
     {
-        $merchantProfileTransfer->requireIdMerchantProfile();
-
         $merchantProfileStorageEntity = $this->getFactory()
             ->createMerchantProfileStorageQuery()
-            ->filterByFkMerchant($merchantProfileTransfer->getFkMerchant())
+            ->filterByFkMerchant($merchantProfileStorageTransfer->getFkMerchant())
             ->findOneOrCreate();
-
-        $merchantProfileStorageTransfer = new MerchantProfileStorageTransfer();
-        $merchantProfileStorageTransfer->fromArray($merchantProfileStorageEntity->toArray(), true);
 
         $merchantProfileStorageEntity->setData($merchantProfileStorageTransfer->toArray());
         $merchantProfileStorageEntity->setIsSendingToQueue($this->getFactory()->getConfig()->isSendingToQueue());

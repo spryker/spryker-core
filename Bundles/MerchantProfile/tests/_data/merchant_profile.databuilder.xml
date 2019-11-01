@@ -6,11 +6,6 @@
 >
 
     <transfer name="Merchant">
-        <property name="merchantKey" dataBuilderRule="unique()->sentence"/>
-        <property name="name" dataBuilderRule="word"/>
-        <property name="registrationNumber"  dataBuilderRule="word" />
-        <property name="status" dataBuilderRule="=waiting_for_approval" />
-        <property name="email" dataBuilderRule="email" />
         <property name="merchantProfile" type="MerchantProfile" />
     </transfer>
 

@@ -30,29 +30,7 @@ class EditController extends AbstractController
      */
     public function activateAction(Request $request): RedirectResponse
     {
-        $idMerchantProfile = $this->castId($request->query->get(static::URL_PARAM_ID_MERCHANT_PROFILE));
-
-        $merchantProfileFacade = $this->getFactory()
-            ->getMerchantProfileFacade();
-
-        $merchantProfileTransfer = $merchantProfileFacade->findOne(
-            (new MerchantProfileCriteriaFilterTransfer())
-                ->setIdMerchantProfile($idMerchantProfile)
-        );
-
-        if (!$merchantProfileTransfer) {
-            $this->addErrorMessage(static::MESSAGE_MERCHANT_PROFILE_NOT_FOUND);
-
-            return $this->redirectResponse($request->headers->get('referer'));
-        }
-
-        $merchantProfileTransfer->setIsActive(true);
-
-        $merchantProfileFacade->updateMerchantProfile($merchantProfileTransfer);
-
-        $this->addSuccessMessage(static::MESSAGE_SUCCESS_ACTIVATE);
-
-        return $this->redirectResponse($request->headers->get('referer'));
+        return $this->updateMerchantProfileActivityStatus($request, true, static::MESSAGE_SUCCESS_ACTIVATE);
     }
 
     /**
@@ -61,6 +39,18 @@ class EditController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deactivateAction(Request $request): RedirectResponse
+    {
+        return $this->updateMerchantProfileActivityStatus($request, false, static::MESSAGE_SUCCESS_DEACTIVATE);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param bool $isActive
+     * @param string $successMessage
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function updateMerchantProfileActivityStatus(Request $request, bool $isActive, string $successMessage): RedirectResponse
     {
         $idMerchantProfile = $this->castId($request->query->get(static::URL_PARAM_ID_MERCHANT_PROFILE));
 
@@ -78,11 +68,11 @@ class EditController extends AbstractController
             return $this->redirectResponse($request->headers->get('referer'));
         }
 
-        $merchantProfileTransfer->setIsActive(false);
+        $merchantProfileTransfer->setIsActive($isActive);
 
         $merchantProfileFacade->updateMerchantProfile($merchantProfileTransfer);
 
-        $this->addSuccessMessage(static::MESSAGE_SUCCESS_DEACTIVATE);
+        $this->addSuccessMessage($successMessage);
 
         return $this->redirectResponse($request->headers->get('referer'));
     }

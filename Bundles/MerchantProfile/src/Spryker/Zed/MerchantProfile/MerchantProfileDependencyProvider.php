@@ -31,6 +31,8 @@ class MerchantProfileDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
+        parent::provideBusinessLayerDependencies($container);
+
         $container = $this->addGlossaryFacade($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addUrlFacade($container);

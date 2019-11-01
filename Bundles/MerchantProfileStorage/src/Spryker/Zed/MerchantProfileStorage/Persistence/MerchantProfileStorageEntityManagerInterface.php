@@ -7,16 +7,16 @@
 
 namespace Spryker\Zed\MerchantProfileStorage\Persistence;
 
-use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Generated\Shared\Transfer\MerchantProfileStorageTransfer;
 
 interface MerchantProfileStorageEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
+     * @param \Generated\Shared\Transfer\MerchantProfileStorageTransfer $merchantProfileStorageTransfer
      *
      * @return void
      */
-    public function saveMerchantProfileStorage(MerchantProfileTransfer $merchantProfileTransfer): void;
+    public function saveMerchantProfileStorage(MerchantProfileStorageTransfer $merchantProfileStorageTransfer): void;
 
     /**
      * @param int[] $merchantIds

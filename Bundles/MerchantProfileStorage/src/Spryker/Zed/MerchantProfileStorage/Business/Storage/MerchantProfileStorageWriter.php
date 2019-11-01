@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantProfileStorage\Business\Storage;
 
 use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantProfileStorageTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Spryker\Zed\MerchantProfileStorage\Dependency\Facade\MerchantProfileStorageToMerchantProfileFacadeInterface;
 use Spryker\Zed\MerchantProfileStorage\MerchantProfileStorageConfig;
@@ -77,7 +78,10 @@ class MerchantProfileStorageWriter implements MerchantProfileStorageWriterInterf
                 continue;
             }
 
-            $this->entityManager->saveMerchantProfileStorage($merchantProfileTransfer);
+            $merchantProfileStorageTransfer = new MerchantProfileStorageTransfer();
+            $merchantProfileStorageTransfer->fromArray($merchantProfileTransfer->toArray(), true);
+
+            $this->entityManager->saveMerchantProfileStorage($merchantProfileStorageTransfer);
         }
     }
 
