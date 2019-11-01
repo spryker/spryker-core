@@ -1,3 +1,3 @@
 # CmsSlotBlockProductCategoryGui Changelog
 
-[Release Changelog](https://github.com/spryker/product-category-gui/releases)
+[Release Changelog](https://github.com/spryker/cms-slot-block-product-category-gui/releases)
