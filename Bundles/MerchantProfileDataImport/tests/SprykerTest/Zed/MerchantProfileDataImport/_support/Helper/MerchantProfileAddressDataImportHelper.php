@@ -43,16 +43,4 @@ class MerchantProfileAddressDataImportHelper extends Module
     {
         return SpyMerchantProfileAddressQuery::create();
     }
-
-    /**
-     * @param string $key
-     *
-     * @return \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress
-     */
-    public function findMerchantProfileAddressByKey(string $key): SpyMerchantProfileAddress
-    {
-        return $this->getMerchantProfileAddressQuery()
-            ->filterByKey($key)
-            ->findOne();
-    }
 }

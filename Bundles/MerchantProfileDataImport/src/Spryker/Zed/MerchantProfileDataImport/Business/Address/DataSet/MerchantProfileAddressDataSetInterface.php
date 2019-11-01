@@ -10,7 +10,6 @@ namespace Spryker\Zed\MerchantProfileDataImport\Business\Address\DataSet;
 interface MerchantProfileAddressDataSetInterface
 {
     public const MERCHANT_KEY = 'merchant_key';
-    public const KEY = 'key';
     public const COUNTRY_ISO2_CODE = 'country_iso2_code';
     public const COUNTRY_ISO3_CODE = 'country_iso3_code';
     public const ADDRESS1 = 'address1';
