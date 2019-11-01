@@ -32,6 +32,11 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     protected static $idProductPackagingUnitTypeHeap = [];
 
     /**
+     * @var int
+     */
+    protected static $idProductPackagingUnitTypeHeapCurrentSize = 0;
+
+    /**
      * @var array Keys are product SKUs, values are a set of product concrete ID in a `PRODUCT_CONCRETE_ID` key.
      */
     protected static $productHeap = [];
@@ -50,11 +55,6 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      * @var int
      */
     protected static $productMeasurementSalesUnitHeapCurrentSize = 0;
-
-    public function __construct()
-    {
-        $this->initIdProductPackagingUnitTypeHeap();
-    }
 
     /**
      * @module Product
@@ -135,14 +135,30 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     /**
      * @param string $name
      *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
-     *
      * @return int
      */
     protected function getIdProductPackagingUnitTypeByName(string $name): int
     {
+        $this->addProductPackagingUnitTypeToHeapByName($name);
+
+        return static::$idProductPackagingUnitTypeHeap[$name];
+    }
+
+    /**
+     * @param string $name
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
+     *
+     * @return void
+     */
+    protected function addProductPackagingUnitTypeToHeapByName(string $name): void
+    {
         if (isset(static::$idProductPackagingUnitTypeHeap[$name])) {
-            return static::$idProductPackagingUnitTypeHeap[$name];
+            return;
+        }
+
+        if (static::$idProductPackagingUnitTypeHeapCurrentSize >= static::HEAP_LIMIT) {
+            $this->clearProductPackagingUnitTypeHeap();
         }
 
         $productPackagingUnitType = $this->getProductPackagingUnitTypeQuery()->findOneByName($name);
@@ -152,8 +168,15 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
         }
 
         static::$idProductPackagingUnitTypeHeap[$name] = $productPackagingUnitType->getIdProductPackagingUnitType();
+    }
 
-        return $productPackagingUnitType->getIdProductPackagingUnitType();
+    /**
+     * @return void
+     */
+    protected function clearProductPackagingUnitTypeHeap(): void
+    {
+        static::$idProductPackagingUnitTypeHeapCurrentSize = 0;
+        static::$idProductPackagingUnitTypeHeap = [];
     }
 
     /**
@@ -266,20 +289,6 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
     {
         static::$productMeasurementSalesUnitHeapCurrentSize = 0;
         static::$productMeasurementSalesUnitHeap = [];
-    }
-
-    /**
-     * @return void
-     */
-    protected function initIdProductPackagingUnitTypeHeap(): void
-    {
-        $productPackagingUnitTypeEntities = $this->getProductPackagingUnitTypeQuery()->find();
-
-        foreach ($productPackagingUnitTypeEntities as $packagingUnitTypeEntity) {
-            static::$idProductPackagingUnitTypeHeap[$packagingUnitTypeEntity->getName()] = $packagingUnitTypeEntity->getIdProductPackagingUnitType();
-        }
-
-        unset($productPackagingUnitTypeEntities);
     }
 
     /**
