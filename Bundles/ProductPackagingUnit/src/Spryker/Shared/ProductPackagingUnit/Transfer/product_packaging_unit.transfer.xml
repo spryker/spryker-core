@@ -31,6 +31,7 @@
     </transfer>
 
     <transfer name="Item">
+        <property name="quantitySalesUnit" type="ProductMeasurementSalesUnit"/>
         <property name="amountLeadProduct" type="ProductConcrete"/>
         <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
         <property name="amount" type="decimal"/>
