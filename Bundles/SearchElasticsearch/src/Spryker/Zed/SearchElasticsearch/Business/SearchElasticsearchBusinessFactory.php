@@ -190,8 +190,8 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     {
         return new IndexSettingsUpdater(
             $this->getElasticsearchClient(),
-            $this->getUtilSanitizeService(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getUtilSanitizeService()
         );
     }
 
