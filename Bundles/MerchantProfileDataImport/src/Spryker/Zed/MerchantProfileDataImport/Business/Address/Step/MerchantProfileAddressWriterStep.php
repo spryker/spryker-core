@@ -18,7 +18,6 @@ use Spryker\Zed\MerchantProfileDataImport\Business\Address\DataSet\MerchantProfi
 class MerchantProfileAddressWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     protected const REQUIRED_DATA_SET_KEYS = [
-        MerchantProfileAddressDataSetInterface::KEY,
         MerchantProfileAddressDataSetInterface::ADDRESS1,
         MerchantProfileAddressDataSetInterface::ADDRESS2,
         MerchantProfileAddressDataSetInterface::CITY,
@@ -36,7 +35,13 @@ class MerchantProfileAddressWriterStep extends PublishAwareStep implements DataI
         $this->validateDataSet($dataSet);
 
         $merchantEntity = SpyMerchantProfileAddressQuery::create()
-            ->filterByKey($dataSet[MerchantProfileAddressDataSetInterface::KEY])
+            ->filterByAddress1($dataSet[MerchantProfileAddressDataSetInterface::ADDRESS1])
+            ->filterByAddress2($dataSet[MerchantProfileAddressDataSetInterface::ADDRESS2])
+            ->filterByAddress3($dataSet[MerchantProfileAddressDataSetInterface::ADDRESS3])
+            ->filterByCity($dataSet[MerchantProfileAddressDataSetInterface::CITY])
+            ->filterByZipCode($dataSet[MerchantProfileAddressDataSetInterface::ZIP_CODE])
+            ->filterByFkMerchantProfile($dataSet[MerchantProfileAddressDataSetInterface::ID_MERCHANT_PROFILE])
+            ->filterByFkCountry($dataSet[MerchantProfileAddressDataSetInterface::ID_COUNTRY])
             ->findOneOrCreate();
 
         $merchantEntity
