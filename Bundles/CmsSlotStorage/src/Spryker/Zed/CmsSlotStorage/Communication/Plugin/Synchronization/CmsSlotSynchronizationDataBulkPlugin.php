@@ -9,7 +9,7 @@ namespace Spryker\Zed\CmsSlotStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\CmsSlotStorage\Persistence\Map\SpyCmsSlotStorageTableMap;
-use Spryker\Shared\CmsSlotStorage\CmsSlotStorageConstants;
+use Spryker\Shared\CmsSlotStorage\CmsSlotStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
 
@@ -30,7 +30,7 @@ class CmsSlotSynchronizationDataBulkPlugin extends AbstractPlugin implements Syn
      */
     public function getResourceName(): string
     {
-        return CmsSlotStorageConstants::CMS_SLOT_RESOURCE_NAME;
+        return CmsSlotStorageConfig::CMS_SLOT_RESOURCE_NAME;
     }
 
     /**
@@ -84,7 +84,7 @@ class CmsSlotSynchronizationDataBulkPlugin extends AbstractPlugin implements Syn
      */
     public function getQueueName(): string
     {
-        return CmsSlotStorageConstants::CMS_SLOT_SYNC_STORAGE_QUEUE;
+        return CmsSlotStorageConfig::CMS_SLOT_SYNC_STORAGE_QUEUE;
     }
 
     /**

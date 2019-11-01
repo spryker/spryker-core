@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\CmsSlotStorage\Dependency\Client\CmsSlotStorageToStorageClientInterface;
 use Spryker\Client\CmsSlotStorage\Dependency\Service\CmsSlotStorageToSynchronizationServiceInterface;
 use Spryker\Client\CmsSlotStorage\Exception\CmsSlotNotFoundException;
-use Spryker\Shared\CmsSlotStorage\CmsSlotStorageConstants;
+use Spryker\Shared\CmsSlotStorage\CmsSlotStorageConfig;
 
 class CmsSlotStorageReader implements CmsSlotStorageReaderInterface
 {
@@ -83,7 +83,7 @@ class CmsSlotStorageReader implements CmsSlotStorageReaderInterface
             ->setReference((string)$cmsSlotKey);
 
         return $this->synchronizationService
-            ->getStorageKeyBuilder(CmsSlotStorageConstants::CMS_SLOT_RESOURCE_NAME)
+            ->getStorageKeyBuilder(CmsSlotStorageConfig::CMS_SLOT_RESOURCE_NAME)
             ->generateKey($synchronizationDataTransfer);
     }
 }

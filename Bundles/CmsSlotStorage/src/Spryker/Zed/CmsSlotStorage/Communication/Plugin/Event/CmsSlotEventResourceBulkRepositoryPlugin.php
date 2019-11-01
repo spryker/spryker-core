@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsSlotStorage\Communication\Plugin\Event;
 use Generated\Shared\Transfer\CmsSlotCriteriaFilterTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\CmsSlot\Persistence\Map\SpyCmsSlotTableMap;
-use Spryker\Shared\CmsSlotStorage\CmsSlotStorageConstants;
+use Spryker\Shared\CmsSlotStorage\CmsSlotStorageConfig;
 use Spryker\Zed\CmsSlot\Dependency\CmsSlotEvents;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceBulkRepositoryPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -31,7 +31,7 @@ class CmsSlotEventResourceBulkRepositoryPlugin extends AbstractPlugin implements
      */
     public function getResourceName(): string
     {
-        return CmsSlotStorageConstants::CMS_SLOT_RESOURCE_NAME;
+        return CmsSlotStorageConfig::CMS_SLOT_RESOURCE_NAME;
     }
 
     /**
