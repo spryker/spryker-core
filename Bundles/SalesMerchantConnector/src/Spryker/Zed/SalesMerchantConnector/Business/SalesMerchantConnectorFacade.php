@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\SalesMerchantConnector\Business\SalesMerchantConnectorBusinessFactory getFactory()
+ * @method \Spryker\Zed\SalesMerchantConnector\Persistence\SalesMerchantConnectorEntityManagerInterface getEntityManager()
  */
 class SalesMerchantConnectorFacade extends AbstractFacade implements SalesMerchantConnectorFacadeInterface
 {

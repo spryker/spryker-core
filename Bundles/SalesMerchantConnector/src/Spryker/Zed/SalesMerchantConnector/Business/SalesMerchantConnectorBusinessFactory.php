@@ -13,6 +13,7 @@ use Spryker\Zed\SalesMerchantConnector\Business\Expander\OrderItemExpanderInterf
 
 /**
  * @method \Spryker\Zed\SalesMerchantConnector\SalesMerchantConnectorConfig getConfig()
+ * @method \Spryker\Zed\SalesMerchantConnector\Persistence\SalesMerchantConnectorEntityManagerInterface getEntityManager()
  */
 class SalesMerchantConnectorBusinessFactory extends AbstractBusinessFactory
 {
