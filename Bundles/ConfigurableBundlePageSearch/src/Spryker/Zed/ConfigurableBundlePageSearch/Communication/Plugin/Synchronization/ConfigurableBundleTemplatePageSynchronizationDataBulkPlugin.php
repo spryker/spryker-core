@@ -58,7 +58,7 @@ class ConfigurableBundleTemplatePageSynchronizationDataBulkPlugin extends Abstra
     public function getData(int $offset, int $limit, array $ids = []): array
     {
         $synchronizationDataTransfers = [];
-        $configurableBundleTemplatePageSearchCollectionTransfer = $this->getFacade()->getConfigurableTemplateBundlePageSearchCollection(
+        $configurableBundleTemplatePageSearchCollectionTransfer = $this->getFacade()->getConfigurableBundleTemplatePageSearchCollection(
             (new ConfigurableBundleTemplatePageSearchFilterTransfer())->setConfigurableBundleTemplateIds($ids)
                 ->setOffset($offset)
                 ->setLimit($limit)

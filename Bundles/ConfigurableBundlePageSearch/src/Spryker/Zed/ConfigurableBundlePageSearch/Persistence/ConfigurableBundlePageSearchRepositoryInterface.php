@@ -19,7 +19,7 @@ interface ConfigurableBundlePageSearchRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchCollectionTransfer
      */
-    public function getConfigurableTemplateBundlePageSearchCollection(ConfigurableBundleTemplatePageSearchFilterTransfer $configurableBundleTemplatePageSearchFilterTransfer): ConfigurableBundleTemplatePageSearchCollectionTransfer;
+    public function getConfigurableBundleTemplatePageSearchCollection(ConfigurableBundleTemplatePageSearchFilterTransfer $configurableBundleTemplatePageSearchFilterTransfer): ConfigurableBundleTemplatePageSearchCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer

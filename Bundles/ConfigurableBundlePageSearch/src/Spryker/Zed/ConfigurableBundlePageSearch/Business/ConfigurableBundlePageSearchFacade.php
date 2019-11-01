@@ -61,14 +61,13 @@ class ConfigurableBundlePageSearchFacade extends AbstractFacade implements Confi
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchCollectionTransfer
      */
-    public function getConfigurableTemplateBundlePageSearchCollection(ConfigurableBundleTemplatePageSearchFilterTransfer $configurableBundleTemplatePageSearchFilterTransfer): ConfigurableBundleTemplatePageSearchCollectionTransfer
+    public function getConfigurableBundleTemplatePageSearchCollection(ConfigurableBundleTemplatePageSearchFilterTransfer $configurableBundleTemplatePageSearchFilterTransfer): ConfigurableBundleTemplatePageSearchCollectionTransfer
     {
-        return $this->getRepository()->getConfigurableTemplateBundlePageSearchCollection($configurableBundleTemplatePageSearchFilterTransfer);
+        return $this->getRepository()->getConfigurableBundleTemplatePageSearchCollection($configurableBundleTemplatePageSearchFilterTransfer);
     }
 
     /**
-     * Specification:
-     * - TBD
+     * {@inheritDoc}
      *
      * @api
      *

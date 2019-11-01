@@ -19,6 +19,9 @@
     "spryker/code-sniffer": "*",
     "spryker/elastica": "*",
     "spryker/event": "*",
+    "spryker/glossary": "*",
+    "spryker/propel": "*",
+    "spryker/queue": "*",
     "spryker/testify": "*"
   },
   "suggest": {

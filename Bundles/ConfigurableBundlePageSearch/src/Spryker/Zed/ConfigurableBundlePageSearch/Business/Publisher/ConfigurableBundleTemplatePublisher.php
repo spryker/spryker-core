@@ -111,7 +111,7 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
      */
     protected function getConfigurableBundleTemplatePageSearchTransfers(array $configurableBundleTemplateIds)
     {
-        $configurableBundleTemplatePageSearchCollectionTransfer = $this->configurableBundlePageSearchRepository->getConfigurableTemplateBundlePageSearchCollection(
+        $configurableBundleTemplatePageSearchCollectionTransfer = $this->configurableBundlePageSearchRepository->getConfigurableBundleTemplatePageSearchCollection(
             (new ConfigurableBundleTemplatePageSearchFilterTransfer())->setConfigurableBundleTemplateIds($configurableBundleTemplateIds)
         );
 
