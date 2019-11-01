@@ -7,10 +7,10 @@
 
 namespace Generated\Shared\Transfer;
 
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 {% if hasArrayObject %}
 use ArrayObject;
 {% endif %}
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 {% if entityNamespace is null %}
 {% set abstractClass = 'AbstractTransfer' %}
 {% set isEntityTransfer = false %}
