@@ -5,6 +5,18 @@
 
     <transfer name="Item">
         <property name="merchantReference" type="string"/>
+        <property name="offer" type="Offer"/>
+    </transfer>
+
+    <transfer name="SalesOrderMerchant">
+        <property name="idSalesOrderMerchant" type="int"/>
+        <property name="salesOrderMerchantReference" type="string"/>
+        <property name="merchantReference" type="string"/>
+        <property name="fkSalesOrder" type="int"/>
+    </transfer>
+
+    <transfer name="Offer">
+        <property name="offerReference" type="string"/>
     </transfer>
 
 </transfers>
