@@ -29,6 +29,7 @@ class CartCodeDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addFacadeCalculation($container);
         $container = $this->addQuoteFacade($container);
         $container = $this->addCartCodePluginCollection($container);
@@ -71,9 +72,9 @@ class CartCodeDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCartCodePluginCollection(Container $container): Container
     {
-        $container[static::PLUGIN_CART_CODE_COLLECTION] = function () {
+        $container->set(static::PLUGIN_CART_CODE_COLLECTION, function () {
             return $this->getCartCodePluginCollection();
-        };
+        });
 
         return $container;
     }

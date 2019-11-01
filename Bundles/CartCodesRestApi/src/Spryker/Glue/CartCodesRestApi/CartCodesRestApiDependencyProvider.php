@@ -37,7 +37,6 @@ class CartCodesRestApiDependencyProvider extends AbstractBundleDependencyProvide
     protected function addCartsResource(Container $container): Container
     {
         $container->set(static::CARTS_RESOURCE, function (Container $container) {
-            //TODO::
             return $container->getLocator()->cartsRestApi()->resource();
         });
 
