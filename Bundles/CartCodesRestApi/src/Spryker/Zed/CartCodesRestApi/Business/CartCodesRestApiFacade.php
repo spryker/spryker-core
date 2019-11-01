@@ -32,4 +32,21 @@ class CartCodesRestApiFacade extends AbstractFacade implements CartCodesRestApiF
             ->createCartCodeAdder()
             ->addCandidate($quoteTransfer, $voucherCode);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $voucherCode
+     *
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     */
+    public function removeCode(QuoteTransfer $quoteTransfer, string $voucherCode): CartCodeOperationResultTransfer
+    {
+        return $this->getFactory()
+            ->createCartCodeDeleter()
+            ->removeCode($quoteTransfer, $voucherCode);
+    }
 }

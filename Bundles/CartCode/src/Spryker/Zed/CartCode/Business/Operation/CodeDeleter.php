@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartCode\Dependency\Facade\CartCodeToCalculationFacadeInterface;
 
-class CodeAdder implements CodeAdderInterface
+class CodeDeleter implements CodeDeleterInterface
 {
     /**
      * @var \Spryker\Zed\CartCode\Dependency\Facade\CartCodeToCalculationFacadeInterface
@@ -49,14 +49,14 @@ class CodeAdder implements CodeAdderInterface
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function addCandidate(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
+    public function removeCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
     {
         $lockedCartCodeOperationResultTransfer = $this->quoteOperationChecker->checkLockedQuoteResponse($quoteTransfer);
         if ($lockedCartCodeOperationResultTransfer) {
             return $lockedCartCodeOperationResultTransfer;
         }
 
-        $quoteTransfer = $this->executeCartCodePlugins($quoteTransfer, $code);
+        $quoteTransfer = $this->executePlugins($quoteTransfer, $code);
         $quoteTransfer = $this->calculationFacade->recalculateQuote($quoteTransfer);
 
         return $this->processRecalculationResults($quoteTransfer, $code);
@@ -68,10 +68,10 @@ class CodeAdder implements CodeAdderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function executeCartCodePlugins(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
+    protected function executePlugins(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
     {
         foreach ($this->cartCodePlugins as $cartCodePlugin) {
-            $quoteTransfer = $cartCodePlugin->addCandidate($quoteTransfer, $code);
+            $quoteTransfer = $cartCodePlugin->removeCode($quoteTransfer, $code);
         }
 
         return $quoteTransfer;
