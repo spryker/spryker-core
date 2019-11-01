@@ -80,7 +80,7 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
 
         $productPackagingUnitEntity
             ->setFkLeadProduct($leadProductConcreteId)
-            ->setIsVariable($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE])
+            ->setIsAmountVariable($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_AMOUNT_VARIABLE])
             ->setDefaultAmount($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_DEFAULT_AMOUNT])
             ->setAmountMin($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MIN])
             ->setAmountMax($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MAX])
@@ -99,7 +99,7 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      */
     protected function normalizeDataSet(DataSetInterface $dataSet): DataSetInterface
     {
-        $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE] = (bool)$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE];
+        $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_AMOUNT_VARIABLE] = (bool)$dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_AMOUNT_VARIABLE];
 
         $dataSet = $this->normalizeAmount($dataSet);
 
@@ -113,17 +113,17 @@ class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImp
      */
     protected function normalizeAmount(DataSetInterface $dataSet): DataSetInterface
     {
-        $isVariable = $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_VARIABLE];
+        $isAmountVariable = $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_IS_AMOUNT_VARIABLE];
 
-        if ($isVariable && (new Decimal($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL]))->isZero()) {
+        if ($isAmountVariable && (new Decimal($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL]))->isZero()) {
             $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL] = static::AMOUNT_INTERVAL_DEFAULT;
         }
 
-        if ($isVariable && (new Decimal($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MIN]))->isZero()) {
+        if ($isAmountVariable && (new Decimal($dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MIN]))->isZero()) {
             $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MIN] = $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL];
         }
 
-        if (!$isVariable) {
+        if (!$isAmountVariable) {
             $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MIN] = null;
             $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_MAX] = null;
             $dataSet[ProductPackagingUnitDataSetInterface::COLUMN_AMOUNT_INTERVAL] = null;

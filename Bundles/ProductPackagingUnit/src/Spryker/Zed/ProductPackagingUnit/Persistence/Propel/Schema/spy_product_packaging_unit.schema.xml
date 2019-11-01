@@ -7,7 +7,7 @@
         <column name="fk_lead_product" type="INTEGER" required="true"/>
         <column name="fk_product_packaging_unit_type" type="INTEGER" required="true"/>
         <column name="default_amount" type="DECIMAL" size="20" scale="10" required="true"/>
-        <column name="is_variable" type="BOOLEAN" required="true"/>
+        <column name="is_amount_variable" type="BOOLEAN" required="true"/>
         <column name="amount_min" type="DECIMAL" size="20" scale="10" required="false"/>
         <column name="amount_max" type="DECIMAL" size="20" scale="10" required="false"/>
         <column name="amount_interval" type="DECIMAL" size="20" scale="10" required="false"/>

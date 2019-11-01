@@ -191,13 +191,13 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
         CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
     ): CartPreCheckResponseTransfer {
         $productPackagingUnitAmountTransfer
-            ->requireIsVariable()
+            ->requireIsAmountVariable()
             ->requireDefaultAmount();
 
-        $isVariableCaseMessage = $this->validateItemIsVariableCase($sku, $amount, $productPackagingUnitAmountTransfer);
-        if ($isVariableCaseMessage !== null) {
+        $isAmountVariableCaseMessage = $this->validateItemIsAmountVariableCase($sku, $amount, $productPackagingUnitAmountTransfer);
+        if ($isAmountVariableCaseMessage !== null) {
             return $cartPreCheckResponseTransfer
-                ->addMessage($isVariableCaseMessage);
+                ->addMessage($isAmountVariableCaseMessage);
         }
 
         $minCaseMessage = $this->validateItemMinCases($sku, $amount, $productPackagingUnitAmountTransfer);
@@ -220,14 +220,14 @@ class ProductPackagingUnitAmountRestrictionValidator implements ProductPackaging
      *
      * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    protected function validateItemIsVariableCase(
+    protected function validateItemIsAmountVariableCase(
         string $sku,
         Decimal $amount,
         ProductPackagingUnitAmountTransfer $productPackagingUnitAmountTransfer
     ): ?MessageTransfer {
         $defaultAmount = $productPackagingUnitAmountTransfer->getDefaultAmount();
 
-        if (!$productPackagingUnitAmountTransfer->getIsVariable() && !$amount->mod($defaultAmount)->isZero()) {
+        if (!$productPackagingUnitAmountTransfer->getIsAmountVariable() && !$amount->mod($defaultAmount)->isZero()) {
             return $this->createMessageTransfer(static::ERROR_AMOUNT_IS_NOT_VARIABLE, $sku, $defaultAmount, $amount);
         }
 

@@ -8,7 +8,7 @@
         <property name="typeName" type="string"/>
         <property name="idLeadProduct" type="int"/>
         <property name="defaultAmount" type="decimal"/>
-        <property name="isVariable" type="bool"/>
+        <property name="isAmountVariable" type="bool"/>
         <property name="amountMin" type="decimal"/>
         <property name="amountMax" type="decimal"/>
         <property name="amountInterval" type="decimal"/>

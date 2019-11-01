@@ -10,7 +10,7 @@
     </transfer>
 
     <transfer name="ProductPackagingUnitAmount">
-        <property name="isVariable" dataBuilderRule="boolean(100)"/>
+        <property name="isAmountVariable" dataBuilderRule="boolean(100)"/>
         <property name="defaultAmount" dataBuilderRule="randomFloat()"/>
     </transfer>
 

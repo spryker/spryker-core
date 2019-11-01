@@ -386,7 +386,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $unitGrossPrice = 6000;
 
         $productPackagingUnitAmountTransfer = (new ProductPackagingUnitAmountTransfer())
-            ->setIsVariable(true)
+            ->setIsAmountVariable(true)
             ->setDefaultAmount(4);
 
         $productPackagingUnitTransfer = (new ProductPackagingUnitTransfer())
@@ -547,7 +547,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
      * @param int|null $minRestriction
      * @param int|null $maxRestriction
      * @param int|null $intervalRestriction
-     * @param bool $isVariable
+     * @param bool $isAmountVariable
      *
      * @return void
      */
@@ -559,7 +559,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         ?int $minRestriction,
         ?int $maxRestriction,
         ?int $intervalRestriction,
-        bool $isVariable
+        bool $isAmountVariable
     ): void {
         // Arrange
         $itemProductConcreteTransfer = $this->tester->haveProduct();
@@ -584,7 +584,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
                 SpyProductPackagingUnitEntityTransfer::AMOUNT_MIN => $minRestriction,
                 SpyProductPackagingUnitEntityTransfer::AMOUNT_MAX => $maxRestriction,
                 SpyProductPackagingUnitEntityTransfer::AMOUNT_INTERVAL => $intervalRestriction,
-                SpyProductPackagingUnitEntityTransfer::IS_VARIABLE => $isVariable,
+                SpyProductPackagingUnitEntityTransfer::IS_AMOUNT_VARIABLE => $isAmountVariable,
             ]
         );
 
@@ -627,7 +627,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     public function itemAdditionAmounts(): array
     {
         return [
-            // expectedResult, defaultAmount, itemAmount, itemQuantity, minRestriction, maxRestriction, intervalRestriction, isVariable
+            // expectedResult, defaultAmount, itemAmount, itemQuantity, minRestriction, maxRestriction, intervalRestriction, isAmountVariable
             [true, 1, 2, 1, 1, null, 1, true], // general rule
             [true, 1, 7, 1, 7, null, 1, true], // min equals new amount
             [true, 1, 5, 1, 5, 5,    1, true], // max equals new amount
