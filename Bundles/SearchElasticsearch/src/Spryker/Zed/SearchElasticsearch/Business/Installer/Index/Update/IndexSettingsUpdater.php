@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\IndexDefinitionTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Exception\MissingIndexStateException;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\InstallerInterface;
+use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilSanitizeServiceInterface;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
 
 class IndexSettingsUpdater implements InstallerInterface
@@ -30,13 +31,20 @@ class IndexSettingsUpdater implements InstallerInterface
     protected $config;
 
     /**
+     * @var \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilSanitizeServiceInterface
+     */
+    protected $utilSanitizeService;
+
+    /**
      * @param \Elastica\Client $client
      * @param \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig $config
+     * @param \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilSanitizeServiceInterface $utilSanitizeService
      */
-    public function __construct(Client $client, SearchElasticsearchConfig $config)
+    public function __construct(Client $client, SearchElasticsearchConfig $config, SearchElasticsearchToUtilSanitizeServiceInterface $utilSanitizeService)
     {
         $this->client = $client;
         $this->config = $config;
+        $this->utilSanitizeService = $utilSanitizeService;
     }
 
     /**
@@ -81,6 +89,7 @@ class IndexSettingsUpdater implements InstallerInterface
 
         $settings = $this->filterSettingsByIndexState($indexState, $settings, $logger);
         $settings = $this->removeBlacklistedSettings($settings);
+        $settings = $this->filterEmptySettings($settings);
 
         return $settings;
     }
@@ -199,5 +208,15 @@ class IndexSettingsUpdater implements InstallerInterface
         });
 
         return !empty($settings);
+    }
+
+    /**
+     * @param array $settings
+     *
+     * @return array
+     */
+    protected function filterEmptySettings(array $settings): array
+    {
+        return $this->utilSanitizeService->filterOutBlankValuesRecursively($settings);
     }
 }

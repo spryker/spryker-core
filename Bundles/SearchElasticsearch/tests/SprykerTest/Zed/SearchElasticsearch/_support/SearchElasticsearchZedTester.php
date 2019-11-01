@@ -24,6 +24,7 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method void pause()
+ * @method \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchBusinessFactory getFactory()
  *
  * @SuppressWarnings(PHPMD)
  */
