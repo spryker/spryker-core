@@ -27,6 +27,7 @@ class MerchantProfileStorageDependencyProvider extends AbstractDependencyProvide
      */
     public function provideServiceLayerDependencies(Container $container): Container
     {
+        $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addSynchronizationService($container);
         $container = $this->addStorageClient($container);
 

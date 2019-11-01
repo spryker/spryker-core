@@ -7,14 +7,13 @@
 
 namespace Spryker\Zed\MerchantProfileGui\Communication\Controller;
 
-use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\MerchantProfileGui\Communication\MerchantProfileGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\MerchantProfileGui\Business\MerchantProfileGuiFacadeInterface getFacade()
  */
 class EditController extends AbstractController
 {
@@ -22,6 +21,7 @@ class EditController extends AbstractController
 
     protected const MESSAGE_SUCCESS_DEACTIVATE = 'merchant_profile.deactivated';
     protected const MESSAGE_SUCCESS_ACTIVATE = 'merchant_profile.activated';
+    protected const MESSAGE_MERCHANT_PROFILE_NOT_FOUND = 'merchant_profile.not_found';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -30,17 +30,7 @@ class EditController extends AbstractController
      */
     public function activateAction(Request $request): RedirectResponse
     {
-        $idMerchant = $this->castId($request->query->get(static::URL_PARAM_ID_MERCHANT_PROFILE));
-
-        $merchantProfileTransfer = new MerchantProfileTransfer();
-        $merchantProfileTransfer->setIdMerchantProfile($idMerchant);
-        $merchantProfileTransfer->setIsActive(true);
-
-        $this->getFactory()->getMerchantProfileFacade()->updateMerchantProfile($merchantProfileTransfer);
-
-        $this->addSuccessMessage(static::MESSAGE_SUCCESS_ACTIVATE);
-
-        return $this->redirectResponse($request->headers->get('referer'));
+        return $this->updateMerchantProfileActivityStatus($request, true, static::MESSAGE_SUCCESS_ACTIVATE);
     }
 
     /**
@@ -50,15 +40,39 @@ class EditController extends AbstractController
      */
     public function deactivateAction(Request $request): RedirectResponse
     {
-        $idMerchant = $this->castId($request->query->get(static::URL_PARAM_ID_MERCHANT_PROFILE));
+        return $this->updateMerchantProfileActivityStatus($request, false, static::MESSAGE_SUCCESS_DEACTIVATE);
+    }
 
-        $merchantProfileTransfer = new MerchantProfileTransfer();
-        $merchantProfileTransfer->setIdMerchantProfile($idMerchant);
-        $merchantProfileTransfer->setIsActive(false);
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param bool $isActive
+     * @param string $successMessage
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function updateMerchantProfileActivityStatus(Request $request, bool $isActive, string $successMessage): RedirectResponse
+    {
+        $idMerchantProfile = $this->castId($request->query->get(static::URL_PARAM_ID_MERCHANT_PROFILE));
 
-        $this->getFactory()->getMerchantProfileFacade()->updateMerchantProfile($merchantProfileTransfer);
+        $merchantProfileFacade = $this->getFactory()
+            ->getMerchantProfileFacade();
 
-        $this->addSuccessMessage(static::MESSAGE_SUCCESS_DEACTIVATE);
+        $merchantProfileTransfer = $merchantProfileFacade->findOne(
+            (new MerchantProfileCriteriaFilterTransfer())
+                ->setIdMerchantProfile($idMerchantProfile)
+        );
+
+        if (!$merchantProfileTransfer) {
+            $this->addErrorMessage(static::MESSAGE_MERCHANT_PROFILE_NOT_FOUND);
+
+            return $this->redirectResponse($request->headers->get('referer'));
+        }
+
+        $merchantProfileTransfer->setIsActive($isActive);
+
+        $merchantProfileFacade->updateMerchantProfile($merchantProfileTransfer);
+
+        $this->addSuccessMessage($successMessage);
 
         return $this->redirectResponse($request->headers->get('referer'));
     }

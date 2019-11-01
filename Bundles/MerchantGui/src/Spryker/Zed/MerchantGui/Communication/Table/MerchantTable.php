@@ -12,19 +12,21 @@ use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\MerchantGui\Communication\Controller\EditMerchantController;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
+use Spryker\Zed\MerchantGui\MerchantGuiConfig;
 
 class MerchantTable extends AbstractTable
 {
     protected const STATUS_CLASS_LABEL_MAPPING = [
-        'waiting-for-approval' => 'label-warning',
-        'approved' => 'label-info',
-        'denied' => 'label-danger',
+        MerchantGuiConfig::STATUS_WAITING_FOR_APPROVAL => 'label-warning',
+        MerchantGuiConfig::STATUS_APPROVED => 'label-info',
+        MerchantGuiConfig::STATUS_DENIED => 'label-danger',
     ];
 
     protected const STATUS_CLASS_BUTTON_MAPPING = [
-        'approved' => 'btn-create',
-        'denied' => 'btn-remove',
+        MerchantGuiConfig::STATUS_APPROVED => 'btn-create',
+        MerchantGuiConfig::STATUS_DENIED => 'btn-remove',
     ];
 
     /**
@@ -121,7 +123,7 @@ class MerchantTable extends AbstractTable
     protected function executeConfigExpanderPlugins(TableConfiguration $tableConfiguration): TableConfiguration
     {
         foreach ($this->merchantTableConfigExpanderPlugins as $merchantTableConfigExpanderPlugin) {
-            $tableConfiguration = $merchantTableConfigExpanderPlugin->expandConfig($tableConfiguration);
+            $tableConfiguration = $merchantTableConfigExpanderPlugin->expand($tableConfiguration);
         }
 
         return $tableConfiguration;
@@ -136,10 +138,10 @@ class MerchantTable extends AbstractTable
     {
         $data = [];
         foreach ($this->merchantTableDataExpanderPlugins as $merchantTableDataExpanderPlugin) {
-            $data = array_merge($data, $merchantTableDataExpanderPlugin->expandData($item));
+            $data[] = $merchantTableDataExpanderPlugin->expand($item);
         }
 
-        return $data;
+        return array_merge([], ...$data);
     }
 
     /**
@@ -170,10 +172,10 @@ class MerchantTable extends AbstractTable
     {
         $expandedData = [];
         foreach ($this->merchantTableHeaderExpanderPlugins as $plugin) {
-            $expandedData = array_merge($expandedData, $plugin->expandHeader());
+            $expandedData[] = $plugin->expand();
         }
 
-        return $expandedData;
+        return array_merge([], ...$expandedData);
     }
 
     /**
@@ -209,7 +211,7 @@ class MerchantTable extends AbstractTable
     {
         $buttons = [];
         $buttons[] = $this->generateEditButton(
-            Url::generate(MerchantTableConstants::URL_MERCHANT_EDIT, [MerchantTableConstants::REQUEST_ID_MERCHANT => $item[MerchantTableConstants::COL_ID_MERCHANT]]),
+            Url::generate(MerchantGuiConfig::URL_MERCHANT_EDIT, [EditMerchantController::REQUEST_ID_MERCHANT => $item[MerchantTableConstants::COL_ID_MERCHANT]]),
             'Edit'
         );
 
@@ -234,8 +236,8 @@ class MerchantTable extends AbstractTable
         foreach ($availableStatuses as $availableStatus) {
             $availableStatusButtons[] = $this->generateButton(
                 Url::generate(
-                    MerchantTableConstants::URL_MERCHANT_STATUS,
-                    [MerchantTableConstants::REQUEST_ID_MERCHANT => $item[MerchantTableConstants::COL_ID_MERCHANT], 'status' => $availableStatus]
+                    MerchantGuiConfig::URL_MERCHANT_STATUS,
+                    [EditMerchantController::REQUEST_ID_MERCHANT => $item[MerchantTableConstants::COL_ID_MERCHANT], 'status' => $availableStatus]
                 ),
                 $availableStatus . '_button',
                 ['icon' => 'fa fa-key', 'class' => static::STATUS_CLASS_BUTTON_MAPPING[$availableStatus]]
@@ -276,10 +278,10 @@ class MerchantTable extends AbstractTable
     {
         $buttonTransfers = [];
         foreach ($this->merchantTableActionExpanderPlugins as $merchantsTableExpanderPlugin) {
-            $buttonTransfers = array_merge($buttonTransfers, $merchantsTableExpanderPlugin->getActionButtonDefinitions($item));
+            $buttonTransfers[] = $merchantsTableExpanderPlugin->expand($item);
         }
 
-        return $buttonTransfers;
+        return array_merge([], ...$buttonTransfers);
     }
 
     /**

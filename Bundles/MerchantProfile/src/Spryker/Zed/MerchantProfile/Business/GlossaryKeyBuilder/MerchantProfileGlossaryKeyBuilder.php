@@ -9,8 +9,6 @@ namespace Spryker\Zed\MerchantProfile\Business\GlossaryKeyBuilder;
 
 class MerchantProfileGlossaryKeyBuilder implements MerchantProfileGlossaryKeyBuilderInterface
 {
-    protected const MERCHANT_PROFILE_GLOSSARY_KEY_PATTERN = 'merchantProfile.%s.fkMerchant.%s';
-
     /**
      * @param int $fkMerchant
      * @param string $merchantProfileGlossaryAttributeName
@@ -19,6 +17,6 @@ class MerchantProfileGlossaryKeyBuilder implements MerchantProfileGlossaryKeyBui
      */
     public function buildGlossaryKey(int $fkMerchant, string $merchantProfileGlossaryAttributeName): string
     {
-        return sprintf(static::MERCHANT_PROFILE_GLOSSARY_KEY_PATTERN, $merchantProfileGlossaryAttributeName, $fkMerchant);
+        return sprintf('merchantProfile.%s.fkMerchant.%s', $merchantProfileGlossaryAttributeName, $fkMerchant);
     }
 }

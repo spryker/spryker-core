@@ -5,16 +5,6 @@
         xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="MerchantProfileStorage">
-        <property name="idMerchantProfileStorage" type="int" />
-        <property name="fkMerchant" type="int" />
-        <property name="fkMerchantProfile" type="int" />
-        <property name="key" type="string" />
-        <property name="data" type="MerchantProfileView" />
-        <property name="locale" type="string" />
-        <property name="isSendingToQueue" type="bool" />
-    </transfer>
-
-    <transfer name="MerchantProfileView">
         <property name="merchantName" type="string"/>
         <property name="contactPersonRole" type="string"/>
         <property name="contactPersonTitle" type="string"/>
@@ -36,13 +26,40 @@
         <property name="latitude" type="string" />
         <property name="longitude" type="string" />
         <property name="faxNumber" type="string" />
+        <property name="addressCollection" type="MerchantProfileAddressStorage[]" singular="address"/>
+    </transfer>
+
+    <transfer name="MerchantProfileAddressStorage">
+        <property name="countryName" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="address3" type="string"/>
+        <property name="city" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="email" type="string"/>
     </transfer>
 
     <transfer name="MerchantProfileCollection">
-        <property name="merchantProfiles" type="MerchantProfile[]" singular="merchantProfile" />
+        <property name="merchantProfiles" type="MerchantProfile[]" singular="merchantProfile"/>
     </transfer>
 
     <transfer name="UrlStorage">
-        <property name="fkResourceMerchantProfile" type="int" />
+        <property name="fkResourceMerchantProfile" type="int"/>
     </transfer>
+
+    <transfer name="UrlStorageResourceMap">
+        <property name="resourceKey" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantProfileCriteriaFilter">
+        <property name="merchantIds" type="int[]" singular="idMerchant"/>
+        <property name="filter" type="Filter"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+    </transfer>
+
 </transfers>

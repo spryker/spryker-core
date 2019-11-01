@@ -10,13 +10,14 @@ namespace Spryker\Zed\MerchantProfileDataImport\Business\Address\Step;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddressQuery;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\MerchantProfile\Dependency\MerchantProfileEvents;
 use Spryker\Zed\MerchantProfileDataImport\Business\Address\DataSet\MerchantProfileAddressDataSetInterface;
 
-class MerchantProfileAddressWriterStep implements DataImportStepInterface
+class MerchantProfileAddressWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     protected const REQUIRED_DATA_SET_KEYS = [
-        MerchantProfileAddressDataSetInterface::KEY,
         MerchantProfileAddressDataSetInterface::ADDRESS1,
         MerchantProfileAddressDataSetInterface::ADDRESS2,
         MerchantProfileAddressDataSetInterface::CITY,
@@ -34,7 +35,13 @@ class MerchantProfileAddressWriterStep implements DataImportStepInterface
         $this->validateDataSet($dataSet);
 
         $merchantProfileAddress = SpyMerchantProfileAddressQuery::create()
-            ->filterByKey($dataSet[MerchantProfileAddressDataSetInterface::KEY])
+            ->filterByAddress1($dataSet[MerchantProfileAddressDataSetInterface::ADDRESS1])
+            ->filterByAddress2($dataSet[MerchantProfileAddressDataSetInterface::ADDRESS2])
+            ->filterByAddress3($dataSet[MerchantProfileAddressDataSetInterface::ADDRESS3])
+            ->filterByCity($dataSet[MerchantProfileAddressDataSetInterface::CITY])
+            ->filterByZipCode($dataSet[MerchantProfileAddressDataSetInterface::ZIP_CODE])
+            ->filterByFkMerchantProfile($dataSet[MerchantProfileAddressDataSetInterface::ID_MERCHANT_PROFILE])
+            ->filterByFkCountry($dataSet[MerchantProfileAddressDataSetInterface::ID_COUNTRY])
             ->findOneOrCreate();
 
         $merchantProfileAddress
@@ -46,6 +53,8 @@ class MerchantProfileAddressWriterStep implements DataImportStepInterface
             ->setFkMerchantProfile($dataSet[MerchantProfileAddressDataSetInterface::ID_MERCHANT_PROFILE])
             ->setFkCountry($dataSet[MerchantProfileAddressDataSetInterface::ID_COUNTRY])
             ->save();
+
+        $this->addPublishEvents(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_PUBLISH, $merchantEntity->getFkMerchantProfile());
     }
 
     /**

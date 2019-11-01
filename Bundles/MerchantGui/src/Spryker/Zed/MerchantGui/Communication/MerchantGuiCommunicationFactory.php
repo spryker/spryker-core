@@ -30,7 +30,7 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createMerchantTable(): MerchantTable
     {
         return new MerchantTable(
-            $this->getPropelMerchantQuery(),
+            $this->getMerchantPropelQuery(),
             $this->getMerchantFacade(),
             $this->getMerchantTableActionExpanderPlugins(),
             $this->getMerchantTableHeaderExpanderPlugins(),
@@ -92,7 +92,7 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
      */
-    public function getPropelMerchantQuery(): SpyMerchantQuery
+    public function getMerchantPropelQuery(): SpyMerchantQuery
     {
         return $this->getProvidedDependency(MerchantGuiDependencyProvider::PROPEL_MERCHANT_QUERY);
     }

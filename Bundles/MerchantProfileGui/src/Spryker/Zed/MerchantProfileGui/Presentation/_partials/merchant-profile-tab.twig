@@ -9,23 +9,44 @@
     {{ form_row(merchantForm.merchantProfile.longitude) }}
     {{ form_row(merchantForm.merchantProfile.latitude) }}
 
-    {% for localizedAttributes in merchantForm.merchantProfile.merchantProfileLocalizedGlossaryAttributes %}
-        {% set localeName = localizedAttributes.vars.value.localeName %}
-
-        {% embed '@Gui/Partials/localized-ibox.twig' with {
-            localeName: localeName,
-            collapsed: (loop.index == 1 ? false : true),
-            id: 'localizedAttributes-ibox-' ~ localeName
-        } %}
-            {% block content %}
-                {{ form_row(localizedAttributes.merchantProfileGlossaryAttributeValues.descriptionGlossaryKey) }}
-                {{ form_row(localizedAttributes.merchantProfileGlossaryAttributeValues.deliveryTimeGlossaryKey) }}
-                {{ form_row(localizedAttributes.merchantProfileGlossaryAttributeValues.bannerUrlGlossaryKey) }}
-                {{ form_row(localizedAttributes.fkLocale) }}
-                {{ form_row(localizedAttributes.localeName) }}
-            {% endblock %}
-        {% endembed %}
+    {% set isLabelRendered = false %}
+    {% for localizedUrl in merchantForm.merchantProfile.urlCollection %}
+        <div class="form-group {% if localizedUrl.url.vars.errors|length > 0 %}has-error{% endif %}" >
+            {% if not isLabelRendered %}
+                {{ form_label(localizedUrl.url) }}
+                {% set isLabelRendered = true %}
+            {% endif %}
+            {% if localizedUrl.vars.data.urlPrefix %}
+                <div class="input-group m-b">
+                    <span class="input-group-addon">
+                        {{ localizedUrl.vars.data.urlPrefix }}
+                    </span>
+                    {{ form_widget(localizedUrl.url) }}
+                </div>
+            {% else %}
+                {{ form_widget(localizedUrl.url) }}
+            {% endif %}
+            {{ form_errors(localizedUrl.url) }}
+        </div>
     {% endfor %}
+
+{% for localizedAttributes in merchantForm.merchantProfile.merchantProfileLocalizedGlossaryAttributes %}
+    {% set localeName = localizedAttributes.locale.vars.value.localeName %}
+
+    {% embed '@Gui/Partials/localized-ibox.twig' with {
+        localeName: localeName,
+        collapsed: (loop.index == 1 ? false : true),
+        id: 'localizedAttributes-ibox-' ~ localeName
+    } %}
+        {% block content %}
+            {{ form_row(localizedAttributes.merchantProfileGlossaryAttributeValues.descriptionGlossaryKey) }}
+            {{ form_row(localizedAttributes.merchantProfileGlossaryAttributeValues.deliveryTimeGlossaryKey) }}
+            {{ form_row(localizedAttributes.merchantProfileGlossaryAttributeValues.bannerUrlGlossaryKey) }}
+            {{ form_row(localizedAttributes.locale.idLocale) }}
+            {{ form_row(localizedAttributes.locale.localeName) }}
+        {% endblock %}
+    {% endembed %}
+{% endfor %}
 </div>
 <div class="col-md-6">
     {{ form_widget(merchantForm.merchantProfile.addressCollection) }}

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\MerchantProfile\Persistence\MerchantProfilePersistenceFactory getFactory()
@@ -50,7 +51,9 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
         $merchantProfileQuery = $this->getFactory()
             ->createMerchantProfileQuery()
             ->joinWithSpyMerchant()
-            ->leftJoinSpyMerchantProfileAddress();
+            ->useSpyMerchantProfileAddressQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinWithSpyCountry()
+            ->endUse();
 
         $merchantProfileQuery = $this->applyFilters($merchantProfileQuery, $merchantProfileCriteriaFilterTransfer);
         $merchantProfileEntityCollection = $merchantProfileQuery->find();
@@ -76,8 +79,8 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
         SpyMerchantProfileQuery $merchantProfileQuery,
         MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer
     ): SpyMerchantProfileQuery {
-        if ($merchantProfileCriteriaFilterTransfer->getIdMerchant() !== null) {
-            $merchantProfileQuery->filterByFkMerchant($merchantProfileCriteriaFilterTransfer->getIdMerchant());
+        if ($merchantProfileCriteriaFilterTransfer->getFkMerchant() !== null) {
+            $merchantProfileQuery->filterByFkMerchant($merchantProfileCriteriaFilterTransfer->getFkMerchant());
         }
 
         if ($merchantProfileCriteriaFilterTransfer->getMerchantIds()) {

@@ -36,12 +36,21 @@
     <transfer name="RestUser">
         <property name="idCompany" type="int"/>
         <property name="idCompanyBusinessUnit" type="int"/>
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
     <transfer name="RestErrorMessage">
         <property name="status" type="int"/>
         <property name="code" type="string"/>
         <property name="detail" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitCriteriaFilter">
+        <property name="idCompanyUser" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitCollection">
+        <property name="companyBusinessUnits" type="CompanyBusinessUnit[]" singular="companyBusinessUnit"/>
     </transfer>
 
 </transfers>

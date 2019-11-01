@@ -25,15 +25,7 @@ class MerchantProfileEntityManager extends AbstractEntityManager implements Merc
      */
     public function create(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
     {
-        $merchantProfileEntity = $this->getFactory()
-            ->createPropelMerchantProfileMapper()
-            ->mapMerchantProfileTransferToMerchantProfileEntity($merchantProfileTransfer, new SpyMerchantProfile());
-
-        $merchantProfileEntity->save();
-
-        $merchantProfileTransfer = $this->getFactory()
-            ->createPropelMerchantProfileMapper()
-            ->mapMerchantProfileEntityToMerchantProfileTransfer($merchantProfileEntity, $merchantProfileTransfer);
+        $merchantProfileTransfer = $this->saveMerchantProfile($merchantProfileTransfer, new SpyMerchantProfile());
 
         return $merchantProfileTransfer;
     }
@@ -50,6 +42,19 @@ class MerchantProfileEntityManager extends AbstractEntityManager implements Merc
             ->filterByIdMerchantProfile($merchantProfileTransfer->getIdMerchantProfile())
             ->findOne();
 
+        $merchantProfileTransfer = $this->saveMerchantProfile($merchantProfileTransfer, $merchantProfileEntity);
+
+        return $merchantProfileTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
+     * @param \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfile $merchantProfileEntity
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
+     */
+    protected function saveMerchantProfile(MerchantProfileTransfer $merchantProfileTransfer, SpyMerchantProfile $merchantProfileEntity): MerchantProfileTransfer
+    {
         $merchantProfileEntity = $this->getFactory()
             ->createPropelMerchantProfileMapper()
             ->mapMerchantProfileTransferToMerchantProfileEntity($merchantProfileTransfer, $merchantProfileEntity);

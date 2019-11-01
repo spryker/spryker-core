@@ -10,6 +10,8 @@ namespace Spryker\Zed\MerchantProfile\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MerchantProfile\Business\GlossaryKeyBuilder\MerchantProfileGlossaryKeyBuilder;
 use Spryker\Zed\MerchantProfile\Business\GlossaryKeyBuilder\MerchantProfileGlossaryKeyBuilderInterface;
+use Spryker\Zed\MerchantProfile\Business\MerchantProfile\Expander\MerchantProfileExpander;
+use Spryker\Zed\MerchantProfile\Business\MerchantProfile\Expander\MerchantProfileExpanderInterface;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileReader;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileReaderInterface;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileWriter;
@@ -18,6 +20,7 @@ use Spryker\Zed\MerchantProfile\Business\MerchantProfileAddress\MerchantProfileA
 use Spryker\Zed\MerchantProfile\Business\MerchantProfileAddress\MerchantProfileAddressWriterInterface;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary\MerchantProfileGlossaryWriter;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfileGlossary\MerchantProfileGlossaryWriterInterface;
+use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToEventFacadeInterface;
 use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToGlossaryFacadeInterface;
 use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToLocaleFacadeInterface;
 use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToUrlFacadeInterface;
@@ -39,7 +42,8 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createMerchantProfileGlossaryWriter(),
             $this->getUrlFacade(),
-            $this->createMerchantProfileAddressWriter()
+            $this->createMerchantProfileAddressWriter(),
+            $this->getEventFacade()
         );
     }
 
@@ -62,6 +66,16 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
             $this->getGlossaryFacade(),
             $this->getLocaleFacade(),
             $this->createMerchantProfileGlossaryKeyBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProfile\Business\MerchantProfile\Expander\MerchantProfileExpanderInterface
+     */
+    public function createMerchantProfileExpander(): MerchantProfileExpanderInterface
+    {
+        return new MerchantProfileExpander(
+            $this->getRepository()
         );
     }
 
@@ -105,5 +119,13 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
     public function getUrlFacade(): MerchantProfileToUrlFacadeInterface
     {
         return $this->getProvidedDependency(MerchantProfileDependencyProvider::FACADE_URL);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToEventFacadeInterface
+     */
+    public function getEventFacade(): MerchantProfileToEventFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProfileDependencyProvider::FACADE_EVENT);
     }
 }

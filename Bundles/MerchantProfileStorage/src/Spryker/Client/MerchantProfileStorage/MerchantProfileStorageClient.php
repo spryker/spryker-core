@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\MerchantProfileStorage;
 
-use Generated\Shared\Transfer\MerchantProfileViewTransfer;
+use Generated\Shared\Transfer\MerchantProfileStorageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -22,12 +22,12 @@ class MerchantProfileStorageClient extends AbstractClient implements MerchantPro
      *
      * @param array $data
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileViewTransfer
+     * @return \Generated\Shared\Transfer\MerchantProfileStorageTransfer
      */
-    public function mapMerchantProfileStorageViewData(array $data): MerchantProfileViewTransfer
+    public function mapMerchantProfileStorageData(array $data): MerchantProfileStorageTransfer
     {
         return $this->getFactory()
             ->createMerchantProfileStorageMapper()
-            ->mapMerchantProfileStorageDataToMerchantProfileViewTransfer($data);
+            ->mapMerchantProfileStorageDataToMerchantProfileStorageTransfer($data);
     }
 }

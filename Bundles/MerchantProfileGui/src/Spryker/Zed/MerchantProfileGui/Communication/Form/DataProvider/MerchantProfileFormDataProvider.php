@@ -72,6 +72,7 @@ class MerchantProfileFormDataProvider
         if ($merchantProfileTransfer === null) {
             $merchantProfileTransfer = new MerchantProfileTransfer();
         }
+
         $merchantProfileTransfer = $this->addLocalizedGlossaryAttributes($merchantProfileTransfer);
         $merchantProfileTransfer = $this->addInitialUrlCollection($merchantProfileTransfer);
 
@@ -149,6 +150,7 @@ class MerchantProfileFormDataProvider
                 $this->addGlossaryAttributesByLocale($merchantProfileTransfer, $localeTransfer)
             );
         }
+
         $merchantProfileTransfer->setMerchantProfileLocalizedGlossaryAttributes($merchantProfileGlossaryAttributeValues);
 
         return $merchantProfileTransfer;
@@ -165,8 +167,7 @@ class MerchantProfileFormDataProvider
         LocaleTransfer $localeTransfer
     ): MerchantProfileLocalizedGlossaryAttributesTransfer {
         $merchantProfileLocalizedGlossaryAttributesTransfer = new MerchantProfileLocalizedGlossaryAttributesTransfer();
-        $merchantProfileLocalizedGlossaryAttributesTransfer->setFkLocale($localeTransfer->getIdLocale());
-        $merchantProfileLocalizedGlossaryAttributesTransfer->setLocaleName($localeTransfer->getLocaleName());
+        $merchantProfileLocalizedGlossaryAttributesTransfer->setLocale($localeTransfer);
         $merchantProfileLocalizedGlossaryAttributesTransfer->setMerchantProfileGlossaryAttributeValues(
             $this->addGlossaryAttributeTranslations($merchantProfileTransfer, $localeTransfer)
         );
@@ -193,8 +194,10 @@ class MerchantProfileFormDataProvider
             if (empty($merchantProfileGlossaryKey)) {
                 continue;
             }
+
             $merchantProfileGlossaryAttributeValuesData[$merchantProfileGlossaryAttributeFieldName] = $this->getLocalizedTranslationValue($merchantProfileGlossaryKey, $localeTransfer);
         }
+
         $merchantProfileGlossaryAttributeValuesTransfer->fromArray($merchantProfileGlossaryAttributeValuesData);
 
         return $merchantProfileGlossaryAttributeValuesTransfer;

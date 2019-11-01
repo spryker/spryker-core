@@ -10,7 +10,6 @@ namespace Spryker\Zed\MerchantProfileStorage\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MerchantProfileStorage\Business\Storage\MerchantProfileStorageWriter;
 use Spryker\Zed\MerchantProfileStorage\Business\Storage\MerchantProfileStorageWriterInterface;
-use Spryker\Zed\MerchantProfileStorage\Dependency\Facade\MerchantProfileStorageToLocaleFacadeInterface;
 use Spryker\Zed\MerchantProfileStorage\Dependency\Facade\MerchantProfileStorageToMerchantProfileFacadeInterface;
 use Spryker\Zed\MerchantProfileStorage\MerchantProfileStorageDependencyProvider;
 
@@ -30,7 +29,6 @@ class MerchantProfileStorageBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->getMerchantProfileFacade(),
-            $this->getLocaleFacade(),
             $this->getConfig()
         );
     }
@@ -41,13 +39,5 @@ class MerchantProfileStorageBusinessFactory extends AbstractBusinessFactory
     public function getMerchantProfileFacade(): MerchantProfileStorageToMerchantProfileFacadeInterface
     {
         return $this->getProvidedDependency(MerchantProfileStorageDependencyProvider::FACADE_MERCHANT_PROFILE);
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantProfileStorage\Dependency\Facade\MerchantProfileStorageToLocaleFacadeInterface
-     */
-    public function getLocaleFacade(): MerchantProfileStorageToLocaleFacadeInterface
-    {
-        return $this->getProvidedDependency(MerchantProfileStorageDependencyProvider::FACADE_LOCALE);
     }
 }

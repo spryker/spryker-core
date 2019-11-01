@@ -9,8 +9,7 @@ namespace Spryker\Zed\MerchantProfileStorage\Business\Storage;
 
 use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantProfileStorageTransfer;
-use Generated\Shared\Transfer\MerchantProfileViewTransfer;
-use Spryker\Zed\MerchantProfileStorage\Dependency\Facade\MerchantProfileStorageToLocaleFacadeInterface;
+use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Spryker\Zed\MerchantProfileStorage\Dependency\Facade\MerchantProfileStorageToMerchantProfileFacadeInterface;
 use Spryker\Zed\MerchantProfileStorage\MerchantProfileStorageConfig;
 use Spryker\Zed\MerchantProfileStorage\Persistence\MerchantProfileStorageEntityManagerInterface;
@@ -34,11 +33,6 @@ class MerchantProfileStorageWriter implements MerchantProfileStorageWriterInterf
     protected $merchantProfileFacade;
 
     /**
-     * @var \Spryker\Zed\MerchantProfileStorage\Dependency\Facade\MerchantProfileStorageToLocaleFacadeInterface
-     */
-    protected $localeFacade;
-
-    /**
      * @var \Spryker\Zed\MerchantProfileStorage\MerchantProfileStorageConfig
      */
     protected $config;
@@ -47,20 +41,17 @@ class MerchantProfileStorageWriter implements MerchantProfileStorageWriterInterf
      * @param \Spryker\Zed\MerchantProfileStorage\Persistence\MerchantProfileStorageRepositoryInterface $repository
      * @param \Spryker\Zed\MerchantProfileStorage\Persistence\MerchantProfileStorageEntityManagerInterface $entityManager
      * @param \Spryker\Zed\MerchantProfileStorage\Dependency\Facade\MerchantProfileStorageToMerchantProfileFacadeInterface $merchantProfileFacade
-     * @param \Spryker\Zed\MerchantProfileStorage\Dependency\Facade\MerchantProfileStorageToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\MerchantProfileStorage\MerchantProfileStorageConfig $config
      */
     public function __construct(
         MerchantProfileStorageRepositoryInterface $repository,
         MerchantProfileStorageEntityManagerInterface $entityManager,
         MerchantProfileStorageToMerchantProfileFacadeInterface $merchantProfileFacade,
-        MerchantProfileStorageToLocaleFacadeInterface $localeFacade,
         MerchantProfileStorageConfig $config
     ) {
         $this->repository = $repository;
         $this->entityManager = $entityManager;
         $this->merchantProfileFacade = $merchantProfileFacade;
-        $this->localeFacade = $localeFacade;
         $this->config = $config;
     }
 
@@ -71,22 +62,26 @@ class MerchantProfileStorageWriter implements MerchantProfileStorageWriterInterf
      */
     public function publish(array $merchantProfileIds): void
     {
-        $merchantProfileCriteriaFilterTransfer = $this->createMerchantProfileCriteriaFilterTransfer($merchantProfileIds);
+        $merchantProfileCollectionTransfer = $this->merchantProfileFacade->find(
+            (new MerchantProfileCriteriaFilterTransfer())
+                ->setMerchantProfileIds($merchantProfileIds)
+        );
 
-        $merchantProfileCollectionTransfer = $this->merchantProfileFacade->find($merchantProfileCriteriaFilterTransfer);
         $merchantProfileTransfers = $merchantProfileCollectionTransfer->getMerchantProfiles();
 
         foreach ($merchantProfileTransfers as $merchantProfileTransfer) {
-            $merchantProfileViewTransfer = new MerchantProfileViewTransfer();
-            $merchantProfileViewTransfer->fromArray($merchantProfileTransfer->toArray(), true);
+            if (!$merchantProfileTransfer->getIsActive()) {
+                $this->entityManager->deleteMerchantProfileStorageEntitiesByMerchantIds([
+                    $merchantProfileTransfer->getIdMerchantProfile(),
+                ]);
+
+                continue;
+            }
 
             $merchantProfileStorageTransfer = new MerchantProfileStorageTransfer();
-            $merchantProfileStorageTransfer->setFkMerchant($merchantProfileTransfer->getFkMerchant());
-            $merchantProfileStorageTransfer->setFkMerchantProfile($merchantProfileTransfer->getIdMerchantProfile());
-            $merchantProfileStorageTransfer->setData($merchantProfileViewTransfer);
-            $merchantProfileStorageTransfer->setIsSendingToQueue($this->config->isSendingToQueue());
+            $merchantProfileStorageTransfer->fromArray($merchantProfileTransfer->toArray(), true);
 
-            $this->entityManager->saveMerchantProfileStorageEntity($merchantProfileStorageTransfer);
+            $this->entityManager->saveMerchantProfileStorage($merchantProfileStorageTransfer);
         }
     }
 
@@ -97,28 +92,17 @@ class MerchantProfileStorageWriter implements MerchantProfileStorageWriterInterf
      */
     public function unpublish(array $merchantProfileIds): void
     {
-        $merchantProfileCriteriaFilterTransfer = $this->createMerchantProfileCriteriaFilterTransfer($merchantProfileIds, false);
-        $merchantProfileCollectionTransfer = $this->merchantProfileFacade->find($merchantProfileCriteriaFilterTransfer);
+        $merchantProfileCollectionTransfer = $this->merchantProfileFacade->find(
+            (new MerchantProfileCriteriaFilterTransfer())
+                ->setMerchantIds($merchantProfileIds)
+        );
+
         $merchantProfileTransfers = $merchantProfileCollectionTransfer->getMerchantProfiles();
-        $merchantProfileIds = array_map(function ($merchantProfileTransfer) {
-            return $merchantProfileTransfer->getIdMerchantProfile();
+
+        $merchantProfileIds = array_map(function (MerchantProfileTransfer $merchantProfileTransfer) {
+            return $merchantProfileTransfer->getFkMerchant();
         }, $merchantProfileTransfers->getArrayCopy());
 
-        $this->entityManager->deleteMerchantProfileStorageEntitiesByMerchantProfileIds($merchantProfileIds);
-    }
-
-    /**
-     * @param int[] $merchantProfileIds
-     * @param bool $active
-     *
-     * @return \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer
-     */
-    protected function createMerchantProfileCriteriaFilterTransfer(array $merchantProfileIds, bool $active = true): MerchantProfileCriteriaFilterTransfer
-    {
-        $merchantCriteriaFilterTransfer = new MerchantProfileCriteriaFilterTransfer();
-        $merchantCriteriaFilterTransfer->setMerchantProfileIds($merchantProfileIds);
-        $merchantCriteriaFilterTransfer->setIsActive($active);
-
-        return $merchantCriteriaFilterTransfer;
+        $this->entityManager->deleteMerchantProfileStorageEntitiesByMerchantIds($merchantProfileIds);
     }
 }

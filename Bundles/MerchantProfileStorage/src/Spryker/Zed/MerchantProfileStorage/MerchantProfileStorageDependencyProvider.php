@@ -10,7 +10,6 @@ namespace Spryker\Zed\MerchantProfileStorage;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantProfileStorage\Dependency\Facade\MerchantProfileStorageToEventBehaviorFacadeBridge;
-use Spryker\Zed\MerchantProfileStorage\Dependency\Facade\MerchantProfileStorageToLocaleFacadeBridge;
 use Spryker\Zed\MerchantProfileStorage\Dependency\Facade\MerchantProfileStorageToMerchantProfileFacadeBridge;
 
 /**
@@ -20,7 +19,6 @@ class MerchantProfileStorageDependencyProvider extends AbstractBundleDependencyP
 {
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_MERCHANT_PROFILE = 'FACADE_MERCHANT_PROFILE';
-    public const FACADE_LOCALE = 'FACADE_LOCALE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -44,7 +42,6 @@ class MerchantProfileStorageDependencyProvider extends AbstractBundleDependencyP
     {
         parent::provideBusinessLayerDependencies($container);
         $container = $this->addMerchantProfileFacade($container);
-        $container = $this->addLocaleFacade($container);
 
         return $container;
     }
@@ -72,20 +69,6 @@ class MerchantProfileStorageDependencyProvider extends AbstractBundleDependencyP
     {
         $container->set(static::FACADE_MERCHANT_PROFILE, function (Container $container) {
             return new MerchantProfileStorageToMerchantProfileFacadeBridge($container->getLocator()->merchantProfile()->facade());
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addLocaleFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_LOCALE, function (Container $container) {
-            return new MerchantProfileStorageToLocaleFacadeBridge($container->getLocator()->locale()->facade());
         });
 
         return $container;
