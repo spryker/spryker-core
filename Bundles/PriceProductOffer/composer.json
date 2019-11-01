@@ -1,0 +1,32 @@
+{
+  "name": "spryker/price-product-offer",
+  "description": "PriceProductOffer module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.1",
+    "spryker/kernel": "^3.33.0",
+    "spryker/currency": "^3.10.0",
+    "pryker/price-product": "^4.0.0",
+    "spryker/product-offer": "^1.0.0",
+    "spryker/store": "^1.12.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
