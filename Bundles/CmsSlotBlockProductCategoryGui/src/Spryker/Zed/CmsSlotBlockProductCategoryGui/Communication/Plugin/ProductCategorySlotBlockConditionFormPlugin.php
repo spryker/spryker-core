@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class ProductCategorySlotBlockConditionFormPlugin extends AbstractPlugin implements CmsSlotBlockGuiConditionFormPluginInterface
 {
     /**
-     * @uses \Spryker\Shared\CmsSlotBlockProductCategoryGui\CmsSlotBlockProductCategoryGuiConfig::CONDITION_KEY
+     * @uses \Spryker\Shared\CmsSlotBlockProductCategoryConnector\CmsSlotBlockProductCategoryConnectorConfig::CONDITION_KEY
      */
     protected const CONDITION_KEY = 'productCategory';
 

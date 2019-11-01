@@ -26,7 +26,7 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
     protected const OPTION_URL_AUTOCOMPLETE = '/cms-slot-block-product-category-gui/product-autocomplete';
 
     /**
-     * @uses \Spryker\Shared\CmsSlotBlockProductCategoryGui\CmsSlotBlockProductCategoryGuiConfig::CONDITION_KEY
+     * @uses \Spryker\Shared\CmsSlotBlockProductCategoryConnector\CmsSlotBlockProductCategoryConnectorConfig::CONDITION_KEY
      */
     protected const FIELD_PRODUCT_CATEGORY = 'productCategory';
     protected const FIELD_ALL = 'all';
