@@ -504,10 +504,10 @@ class SalesConfigurableBundleFacadeTest extends Unit
     public function testTransformConfigurableBundleItem(ItemTransfer $itemTransfer, int $itemsCount, int $itemQuantity): void
     {
         //Arrange
-        $facade = $this->getSalesConfigurableBundleFacadeWithMockedConfig();
+        $salesConfigurableBundleFacade = $this->getSalesConfigurableBundleFacadeWithMockedConfig();
 
         //Act
-        $itemCollectionTransfer = $facade->transformConfigurableBundleItem($itemTransfer);
+        $itemCollectionTransfer = $salesConfigurableBundleFacade->transformConfigurableBundleItem($itemTransfer);
 
         //Assert
         $this->assertCount($itemsCount, $itemCollectionTransfer->getItems());
@@ -558,18 +558,18 @@ class SalesConfigurableBundleFacadeTest extends Unit
         int $configurableBundleQuantity = 1,
         int $quantityPerSlot = 1
     ): ItemTransfer {
-        $configuredBundle = (new ConfiguredBundleBuilder())
+        $configuredBundleTransfer = (new ConfiguredBundleBuilder())
             ->build()
             ->setQuantity($configurableBundleQuantity);
 
-        $configuredBundleItem = (new ConfiguredBundleItemBuilder())
+        $configuredBundleItemTransfer = (new ConfiguredBundleItemBuilder())
             ->build()
             ->setQuantityPerSlot($quantityPerSlot);
 
         $itemTransfer = (new ItemBuilder())
             ->build()
-            ->setConfiguredBundle($configuredBundle)
-            ->setConfiguredBundleItem($configuredBundleItem)
+            ->setConfiguredBundle($configuredBundleTransfer)
+            ->setConfiguredBundleItem($configuredBundleItemTransfer)
             ->setQuantity($quantity);
 
         return $itemTransfer;
