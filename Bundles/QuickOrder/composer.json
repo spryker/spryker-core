@@ -4,7 +4,7 @@
   "description": "QuickOrder module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.0.0",
     "spryker/product-storage": "^1.6.0",
