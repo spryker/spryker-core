@@ -17,8 +17,8 @@ use Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ConfigurableBundleT
 use Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ConfigurableBundleTemplateSlotEditFormExpanderInterface;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ProductListButtonsExpander;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ProductListButtonsExpanderInterface;
-use Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ProductListUsedByTableDataExpander;
-use Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ProductListUsedByTableDataExpanderInterface;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ProductListUsedByTableExpander;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ProductListUsedByTableExpanderInterface;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ConfigurableBundleTemplateForm;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ConfigurableBundleTemplateSlotCreateForm;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ConfigurableBundleTemplateSlotEditForm;
@@ -27,8 +27,8 @@ use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\Configurab
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateSlotEditFormDataProvider;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Handler\ConfigurableBundleTemplateSlotEditFormFileUploadHandler;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Handler\ConfigurableBundleTemplateSlotEditFormFileUploadHandlerInterface;
-use Spryker\Zed\ConfigurableBundleGui\Communication\Mapper\ProductListUsedByTableDataMapper;
-use Spryker\Zed\ConfigurableBundleGui\Communication\Mapper\ProductListUsedByTableDataMapperInterface;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Mapper\ProductListUsedByTableMapper;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Mapper\ProductListUsedByTableMapperInterface;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Provider\ProductConcreteRelationSubTabsProvider;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Provider\ProductConcreteRelationSubTabsProviderInterface;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Provider\ProductConcreteRelationTablesProvider;
@@ -49,7 +49,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
 /**
- * @method \Spryker\Zed\ConfigurableBundleGui\Business\ConfigurableBundleGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\ConfigurableBundleGui\ConfigurableBundleGuiConfig getConfig()
  */
 class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFactory
@@ -213,23 +212,23 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
     }
 
     /**
-     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ProductListUsedByTableDataExpanderInterface
+     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ProductListUsedByTableExpanderInterface
      */
-    public function createProductListUsedByTableDataExpander(): ProductListUsedByTableDataExpanderInterface
+    public function createProductListUsedByTableExpander(): ProductListUsedByTableExpanderInterface
     {
-        return new ProductListUsedByTableDataExpander(
+        return new ProductListUsedByTableExpander(
             $this->getConfigurableBundleFacade(),
             $this->getLocaleFacade(),
-            $this->createProductListUsedByTableDataMapper()
+            $this->createProductListUsedByTableMapper()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Mapper\ProductListUsedByTableDataMapperInterface
+     * @return \Spryker\Zed\ConfigurableBundleGui\Communication\Mapper\ProductListUsedByTableMapperInterface
      */
-    public function createProductListUsedByTableDataMapper(): ProductListUsedByTableDataMapperInterface
+    public function createProductListUsedByTableMapper(): ProductListUsedByTableMapperInterface
     {
-        return new ProductListUsedByTableDataMapper();
+        return new ProductListUsedByTableMapper();
     }
 
     /**

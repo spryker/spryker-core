@@ -40,7 +40,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
 
     public const PLUGINS_PRODUCT_LIST_TOP_BUTTONS_EXPANDER = 'PLUGINS_PRODUCT_LIST_TOP_BUTTONS_EXPANDER';
 
-    public const PLUGINS_PRODUCT_LIST_USED_BY_TABLE_DATA_EXPANDER = 'PLUGINS_PRODUCT_LIST_USED_BY_TABLE_DATA_EXPANDER';
+    public const PLUGINS_PRODUCT_LIST_USED_BY_TABLE_EXPANDER = 'PLUGINS_PRODUCT_LIST_USED_BY_TABLE_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -67,7 +67,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductListTableDataExpanderPlugins($container);
         $container = $this->addProductListTableHeaderExpanderPlugins($container);
         $container = $this->addProductListTopButtonsExpanderPlugins($container);
-        $container = $this->addProductListUsedByTableDataExpanderPlugins($container);
+        $container = $this->addProductListUsedByTableExpanderPlugins($container);
 
         return $container;
     }
@@ -261,10 +261,10 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductListUsedByTableDataExpanderPlugins(Container $container): Container
+    protected function addProductListUsedByTableExpanderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_PRODUCT_LIST_USED_BY_TABLE_DATA_EXPANDER, function (): array {
-            return $this->getProductListUsedByTableDataExpanderPlugins();
+        $container->set(static::PLUGINS_PRODUCT_LIST_USED_BY_TABLE_EXPANDER, function (): array {
+            return $this->getProductListUsedByTableExpanderPlugins();
         });
 
         return $container;
@@ -319,9 +319,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListUsedByTableDataExpanderPluginInterface[]
+     * @return \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListUsedByTableExpanderPluginInterface[]
      */
-    protected function getProductListUsedByTableDataExpanderPlugins(): array
+    protected function getProductListUsedByTableExpanderPlugins(): array
     {
         return [];
     }

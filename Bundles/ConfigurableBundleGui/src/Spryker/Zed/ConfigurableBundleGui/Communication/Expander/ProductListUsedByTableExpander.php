@@ -9,13 +9,13 @@ namespace Spryker\Zed\ConfigurableBundleGui\Communication\Expander;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
-use Generated\Shared\Transfer\ProductListUsedByTableDataTransfer;
 use Generated\Shared\Transfer\ProductListUsedByTableRowTransfer;
-use Spryker\Zed\ConfigurableBundleGui\Communication\Mapper\ProductListUsedByTableDataMapperInterface;
+use Generated\Shared\Transfer\ProductListUsedByTableTransfer;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Mapper\ProductListUsedByTableMapperInterface;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToConfigurableBundleFacadeInterface;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface;
 
-class ProductListUsedByTableDataExpander implements ProductListUsedByTableDataExpanderInterface
+class ProductListUsedByTableExpander implements ProductListUsedByTableExpanderInterface
 {
     /**
      * @var \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToConfigurableBundleFacadeInterface
@@ -28,69 +28,69 @@ class ProductListUsedByTableDataExpander implements ProductListUsedByTableDataEx
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\ConfigurableBundleGui\Communication\Mapper\ProductListUsedByTableDataMapperInterface
+     * @var \Spryker\Zed\ConfigurableBundleGui\Communication\Mapper\ProductListUsedByTableMapperInterface
      */
-    protected $productListUsedByTableDataMapper;
+    protected $productListUsedByTableMapper;
 
     /**
      * @param \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToConfigurableBundleFacadeInterface $configurableBundleFacade
      * @param \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface $localeFacade
-     * @param \Spryker\Zed\ConfigurableBundleGui\Communication\Mapper\ProductListUsedByTableDataMapperInterface $productListUsedByTableDataMapper
+     * @param \Spryker\Zed\ConfigurableBundleGui\Communication\Mapper\ProductListUsedByTableMapperInterface $productListUsedByTableMapper
      */
     public function __construct(
         ConfigurableBundleGuiToConfigurableBundleFacadeInterface $configurableBundleFacade,
         ConfigurableBundleGuiToLocaleFacadeInterface $localeFacade,
-        ProductListUsedByTableDataMapperInterface $productListUsedByTableDataMapper
+        ProductListUsedByTableMapperInterface $productListUsedByTableMapper
     ) {
         $this->configurableBundleFacade = $configurableBundleFacade;
-        $this->productListUsedByTableDataMapper = $productListUsedByTableDataMapper;
+        $this->productListUsedByTableMapper = $productListUsedByTableMapper;
         $this->localeFacade = $localeFacade;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer
+     * @param \Generated\Shared\Transfer\ProductListUsedByTableTransfer $productListUsedByTableTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductListUsedByTableDataTransfer
+     * @return \Generated\Shared\Transfer\ProductListUsedByTableTransfer
      */
-    public function expandTableData(ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer): ProductListUsedByTableDataTransfer
+    public function expandTableData(ProductListUsedByTableTransfer $productListUsedByTableTransfer): ProductListUsedByTableTransfer
     {
-        $productListUsedByTableDataTransfer->getProductList()->requireIdProductList();
+        $productListUsedByTableTransfer->getProductList()->requireIdProductList();
 
         $configurableBundleTemplateSlotFilterTransfer = (new ConfigurableBundleTemplateSlotFilterTransfer())->setIdProductList(
-            $productListUsedByTableDataTransfer->getProductList()->getIdProductList()
+            $productListUsedByTableTransfer->getProductList()->getIdProductList()
         )->setTranslationLocales(new ArrayObject([$this->localeFacade->getCurrentLocale()]));
 
         $configurableBundleTemplateSlotTransfers = $this->configurableBundleFacade
             ->getConfigurableBundleTemplateSlotCollection($configurableBundleTemplateSlotFilterTransfer)
             ->getConfigurableBundleTemplateSlots();
 
-        $productListUsedByTableDataTransfer = $this->expandProductListUsedByTableDataTransfer(
-            $productListUsedByTableDataTransfer,
+        $productListUsedByTableTransfer = $this->expandProductListUsedByTableTransfer(
+            $productListUsedByTableTransfer,
             $configurableBundleTemplateSlotTransfers
         );
 
-        return $productListUsedByTableDataTransfer;
+        return $productListUsedByTableTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer
+     * @param \Generated\Shared\Transfer\ProductListUsedByTableTransfer $productListUsedByTableTransfer
      * @param \ArrayObject|\Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[] $configurableBundleTemplateSlotTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductListUsedByTableDataTransfer
+     * @return \Generated\Shared\Transfer\ProductListUsedByTableTransfer
      */
-    protected function expandProductListUsedByTableDataTransfer(
-        ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer,
+    protected function expandProductListUsedByTableTransfer(
+        ProductListUsedByTableTransfer $productListUsedByTableTransfer,
         ArrayObject $configurableBundleTemplateSlotTransfers
-    ): ProductListUsedByTableDataTransfer {
+    ): ProductListUsedByTableTransfer {
         foreach ($configurableBundleTemplateSlotTransfers as $configurableBundleTemplateSlotTransfer) {
-            $productListUsedByTableDataTransfer->addRow(
-                $this->productListUsedByTableDataMapper->mapConfigurableBundleTemplateSlotTransferToProductListUsedByTableRowTransfer(
+            $productListUsedByTableTransfer->addRow(
+                $this->productListUsedByTableMapper->mapConfigurableBundleTemplateSlotTransferToProductListUsedByTableRowTransfer(
                     $configurableBundleTemplateSlotTransfer,
                     new ProductListUsedByTableRowTransfer()
                 )
             );
         }
 
-        return $productListUsedByTableDataTransfer;
+        return $productListUsedByTableTransfer;
     }
 }

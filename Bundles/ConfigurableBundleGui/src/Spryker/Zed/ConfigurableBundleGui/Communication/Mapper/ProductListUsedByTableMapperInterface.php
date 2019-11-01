@@ -10,7 +10,7 @@ namespace Spryker\Zed\ConfigurableBundleGui\Communication\Mapper;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ProductListUsedByTableRowTransfer;
 
-interface ProductListUsedByTableDataMapperInterface
+interface ProductListUsedByTableMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer

@@ -8,14 +8,14 @@
 namespace Spryker\Zed\ProductListGui\Communication\TableDataProvider;
 
 use Generated\Shared\Transfer\ProductListTransfer;
-use Generated\Shared\Transfer\ProductListUsedByTableDataTransfer;
+use Generated\Shared\Transfer\ProductListUsedByTableTransfer;
 
-interface ProductListUsedByTableDataProviderInterface
+interface ProductListUsedByTableProviderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductListUsedByTableDataTransfer
+     * @return \Generated\Shared\Transfer\ProductListUsedByTableTransfer
      */
-    public function getTableData(ProductListTransfer $productListTransfer): ProductListUsedByTableDataTransfer;
+    public function getTableData(ProductListTransfer $productListTransfer): ProductListUsedByTableTransfer;
 }

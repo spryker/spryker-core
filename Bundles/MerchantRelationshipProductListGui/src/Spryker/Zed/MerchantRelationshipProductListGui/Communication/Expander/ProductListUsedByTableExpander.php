@@ -9,13 +9,13 @@ namespace Spryker\Zed\MerchantRelationshipProductListGui\Communication\Expander;
 
 use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
-use Generated\Shared\Transfer\ProductListUsedByTableDataTransfer;
 use Generated\Shared\Transfer\ProductListUsedByTableRowTransfer;
-use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Mapper\ProductListUsedByTableDataMapperInterface;
+use Generated\Shared\Transfer\ProductListUsedByTableTransfer;
+use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Mapper\ProductListUsedByTableMapperInterface;
 use Spryker\Zed\MerchantRelationshipProductListGui\Dependency\Facade\MerchantRelationshipProductListGuiToMerchantRelationshipFacadeInterface;
 use Spryker\Zed\MerchantRelationshipProductListGui\Dependency\Facade\MerchantRelationshipProductListGuiToMerchantRelationshipProductListFacadeInterface;
 
-class ProductListUsedByTableDataExpander implements ProductListUsedByTableDataExpanderInterface
+class ProductListUsedByTableExpander implements ProductListUsedByTableExpanderInterface
 {
     /**
      * @var \Spryker\Zed\MerchantRelationshipProductListGui\Dependency\Facade\MerchantRelationshipProductListGuiToMerchantRelationshipFacadeInterface
@@ -28,42 +28,42 @@ class ProductListUsedByTableDataExpander implements ProductListUsedByTableDataEx
     protected $merchantRelationshipProductListFacade;
 
     /**
-     * @var \Spryker\Zed\MerchantRelationshipProductListGui\Communication\Mapper\ProductListUsedByTableDataMapperInterface
+     * @var \Spryker\Zed\MerchantRelationshipProductListGui\Communication\Mapper\ProductListUsedByTableMapperInterface
      */
-    protected $productListUsedByTableDataMapper;
+    protected $productListUsedByTableMapper;
 
     /**
      * @param \Spryker\Zed\MerchantRelationshipProductListGui\Dependency\Facade\MerchantRelationshipProductListGuiToMerchantRelationshipFacadeInterface $merchantRelationshipFacade
      * @param \Spryker\Zed\MerchantRelationshipProductListGui\Dependency\Facade\MerchantRelationshipProductListGuiToMerchantRelationshipProductListFacadeInterface $merchantRelationshipProductListFacade
-     * @param \Spryker\Zed\MerchantRelationshipProductListGui\Communication\Mapper\ProductListUsedByTableDataMapperInterface $productListUsedByTableDataMapper
+     * @param \Spryker\Zed\MerchantRelationshipProductListGui\Communication\Mapper\ProductListUsedByTableMapperInterface $productListUsedByTableMapper
      */
     public function __construct(
         MerchantRelationshipProductListGuiToMerchantRelationshipFacadeInterface $merchantRelationshipFacade,
         MerchantRelationshipProductListGuiToMerchantRelationshipProductListFacadeInterface $merchantRelationshipProductListFacade,
-        ProductListUsedByTableDataMapperInterface $productListUsedByTableDataMapper
+        ProductListUsedByTableMapperInterface $productListUsedByTableMapper
     ) {
         $this->merchantRelationshipFacade = $merchantRelationshipFacade;
-        $this->productListUsedByTableDataMapper = $productListUsedByTableDataMapper;
+        $this->productListUsedByTableMapper = $productListUsedByTableMapper;
         $this->merchantRelationshipProductListFacade = $merchantRelationshipProductListFacade;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer
+     * @param \Generated\Shared\Transfer\ProductListUsedByTableTransfer $productListUsedByTableTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductListUsedByTableDataTransfer
+     * @return \Generated\Shared\Transfer\ProductListUsedByTableTransfer
      */
-    public function expandTableData(ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer): ProductListUsedByTableDataTransfer
+    public function expandTableData(ProductListUsedByTableTransfer $productListUsedByTableTransfer): ProductListUsedByTableTransfer
     {
-        $productListUsedByTableDataTransfer->getProductList()->requireIdProductList();
+        $productListUsedByTableTransfer->getProductList()->requireIdProductList();
 
-        $merchantRelationshipTransfers = $this->getMerchantRelationshipTransfers($productListUsedByTableDataTransfer->getProductList());
+        $merchantRelationshipTransfers = $this->getMerchantRelationshipTransfers($productListUsedByTableTransfer->getProductList());
 
-        $productListUsedByTableDataTransfer = $this->expandProductListUsedByTableDataTransfer(
-            $productListUsedByTableDataTransfer,
+        $productListUsedByTableTransfer = $this->expandProductListUsedByTableTransfer(
+            $productListUsedByTableTransfer,
             $merchantRelationshipTransfers
         );
 
-        return $productListUsedByTableDataTransfer;
+        return $productListUsedByTableTransfer;
     }
 
     /**
@@ -87,24 +87,24 @@ class ProductListUsedByTableDataExpander implements ProductListUsedByTableDataEx
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer
+     * @param \Generated\Shared\Transfer\ProductListUsedByTableTransfer $productListUsedByTableTransfer
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer[] $merchantRelationshipTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductListUsedByTableDataTransfer
+     * @return \Generated\Shared\Transfer\ProductListUsedByTableTransfer
      */
-    protected function expandProductListUsedByTableDataTransfer(
-        ProductListUsedByTableDataTransfer $productListUsedByTableDataTransfer,
+    protected function expandProductListUsedByTableTransfer(
+        ProductListUsedByTableTransfer $productListUsedByTableTransfer,
         array $merchantRelationshipTransfers
-    ): ProductListUsedByTableDataTransfer {
+    ): ProductListUsedByTableTransfer {
         foreach ($merchantRelationshipTransfers as $merchantRelationshipTransfer) {
-            $productListUsedByTableDataTransfer->addRow(
-                $this->productListUsedByTableDataMapper->mapMerchantRelationshipTransferToProductListUsedByTableRowTransfer(
+            $productListUsedByTableTransfer->addRow(
+                $this->productListUsedByTableMapper->mapMerchantRelationshipTransferToProductListUsedByTableRowTransfer(
                     $merchantRelationshipTransfer,
                     new ProductListUsedByTableRowTransfer()
                 )
             );
         }
 
-        return $productListUsedByTableDataTransfer;
+        return $productListUsedByTableTransfer;
     }
 }
