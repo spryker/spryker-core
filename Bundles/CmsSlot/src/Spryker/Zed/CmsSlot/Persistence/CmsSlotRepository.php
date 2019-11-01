@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\CmsSlot\Persistence;
 
+use Generated\Shared\Transfer\CmsSlotCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
+use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -33,39 +35,54 @@ class CmsSlotRepository extends AbstractRepository implements CmsSlotRepositoryI
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotCriteriaFilterTransfer $cmsSlotCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
      */
-    public function getFilteredCmsSlots(FilterTransfer $filterTransfer): array
+    public function getCmsSlotsByCriteriaFilter(CmsSlotCriteriaFilterTransfer $cmsSlotCriteriaFilterTransfer): array
     {
-        $cmsSlotEntityTransfers = $this->buildQueryFromCriteria(
+        $cmsSlotQuery = $this->setQueryFilters(
             $this->getFactory()->createCmsSlotQuery(),
-            $filterTransfer
-        )->find();
+            $cmsSlotCriteriaFilterTransfer->getFilter()
+        );
 
-        return $this->getFactory()
-            ->createCmsSlotMapper()
-            ->mapCmsSlotEntityCollectionToTransferCollection($cmsSlotEntityTransfers);
-    }
-
-    /**
-     * @param int[] $cmsSlotIds
-     *
-     * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
-     */
-    public function getCmsSlotsByCmsSlotIds(array $cmsSlotIds): array
-    {
-        if (!$cmsSlotIds) {
-            return [];
+        if ($cmsSlotCriteriaFilterTransfer->getCmsSlotIds()) {
+            $cmsSlotQuery->filterByIdCmsSlot_In($cmsSlotCriteriaFilterTransfer->getCmsSlotIds());
         }
 
-        $cmsSlotEntities = $this->buildQueryFromCriteria(
-            $this->getFactory()->createCmsSlotQuery()->filterByIdCmsSlot_In($cmsSlotIds)
-        )->find();
+        $cmsSlotEntities = $cmsSlotQuery->find();
 
         return $this->getFactory()
             ->createCmsSlotMapper()
             ->mapCmsSlotEntityCollectionToTransferCollection($cmsSlotEntities);
+    }
+
+    /**
+     * @param \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery $cmsSlotQuery
+     * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
+     *
+     * @return \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery
+     */
+    protected function setQueryFilters(
+        SpyCmsSlotQuery $cmsSlotQuery,
+        ?FilterTransfer $filterTransfer
+    ): SpyCmsSlotQuery {
+        if (!$filterTransfer) {
+            return $cmsSlotQuery;
+        }
+
+        if ($filterTransfer->getLimit()) {
+            $cmsSlotQuery->setLimit($filterTransfer->getLimit());
+        }
+
+        if ($filterTransfer->getOffset()) {
+            $cmsSlotQuery->setOffset($filterTransfer->getOffset());
+        }
+
+        if ($filterTransfer->getOrderBy()) {
+            $cmsSlotQuery->orderBy($filterTransfer->getOrderBy());
+        }
+
+        return $cmsSlotQuery;
     }
 }

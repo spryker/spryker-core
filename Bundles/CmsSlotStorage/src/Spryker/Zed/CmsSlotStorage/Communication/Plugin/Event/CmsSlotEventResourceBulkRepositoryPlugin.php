@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotStorage\Communication\Plugin\Event;
 
+use Generated\Shared\Transfer\CmsSlotCriteriaFilterTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\CmsSlot\Persistence\Map\SpyCmsSlotTableMap;
 use Spryker\Shared\CmsSlotStorage\CmsSlotStorageConstants;
@@ -47,7 +48,9 @@ class CmsSlotEventResourceBulkRepositoryPlugin extends AbstractPlugin implements
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        return $this->getFactory()->getCmsSlotFacade()->getFilteredCmsSlots($filterTransfer);
+        return $this->getFactory()->getCmsSlotFacade()->getCmsSlotsByCriteriaFilter(
+            (new CmsSlotCriteriaFilterTransfer())->setFilter($filterTransfer)
+        );
     }
 
     /**

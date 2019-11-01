@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\CmsSlot\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CmsSlotCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
@@ -234,17 +235,19 @@ class CmsSlotFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetFilteredCmsSlotsReturnsCmsSlotTransfers(): void
+    public function testGetCmsSlotsByCriteriaFilterReturnsCmsSlotTransfers(): void
     {
         // Arrange
         $this->tester->haveCmsSlotInDb();
+        $filterTransfer = (new FilterTransfer())
+            ->setLimit(10)
+            ->setOffset(0)
+            ->setOrderBy(SpyCmsSlotTableMap::COL_ID_CMS_SLOT);
 
         // Act
-        $cmsSlotTransfers = $this->tester->getFacade()->getFilteredCmsSlots($this->tester->getFilterTransfer([
-            FilterTransfer::LIMIT => 10,
-            FilterTransfer::OFFSET => 0,
-            FilterTransfer::ORDER_BY => SpyCmsSlotTableMap::COL_ID_CMS_SLOT,
-        ]));
+        $cmsSlotTransfers = $this->tester->getFacade()->getCmsSlotsByCriteriaFilter(
+            (new CmsSlotCriteriaFilterTransfer())->setFilter($filterTransfer)
+        );
 
         // Assert
         foreach ($cmsSlotTransfers as $cmsSlotTransfer) {
@@ -255,14 +258,14 @@ class CmsSlotFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCmsSlotsByCmsSlotIdsReturnsCmsSlotTransfersWithCorrectData(): void
+    public function testGetCmsSlotsByCriteriaFilterReturnsCmsSlotTransfersWithCorrectData(): void
     {
         // Arrange
         $cmsSlotTransfer = $this->tester->haveCmsSlotInDb([CmsSlotTransfer::IS_ACTIVE => true]);
 
         // Act
-        $cmsSlotTransferFromDb = $this->tester->getFacade()->getCmsSlotsByCmsSlotIds(
-            [$cmsSlotTransfer->getIdCmsSlot()]
+        $cmsSlotTransferFromDb = $this->tester->getFacade()->getCmsSlotsByCriteriaFilter(
+            (new CmsSlotCriteriaFilterTransfer())->setCmsSlotIds([$cmsSlotTransfer->getIdCmsSlot()])
         )[0];
 
         // Assert

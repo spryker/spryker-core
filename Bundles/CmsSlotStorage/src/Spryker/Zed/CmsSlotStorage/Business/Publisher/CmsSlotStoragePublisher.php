@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotStorage\Business\Publisher;
 
+use Generated\Shared\Transfer\CmsSlotCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CmsSlotStorageTransfer;
 use Spryker\Zed\CmsSlotStorage\Dependency\Facade\CmsSlotStorageToCmsSlotFacadeInterface;
 use Spryker\Zed\CmsSlotStorage\Persistence\CmsSlotStorageEntityManagerInterface;
@@ -42,7 +43,9 @@ class CmsSlotStoragePublisher implements CmsSlotStoragePublisherInterface
      */
     public function publishByCmsSlotIds(array $cmsSlotIds): void
     {
-        $cmsSlotTransfers = $this->cmsSlotFacade->getCmsSlotsByCmsSlotIds($cmsSlotIds);
+        $cmsSlotTransfers = $this->cmsSlotFacade->getCmsSlotsByCriteriaFilter(
+            (new CmsSlotCriteriaFilterTransfer())->setCmsSlotIds($cmsSlotIds)
+        );
 
         $this->saveCmsSlots($cmsSlotTransfers);
     }

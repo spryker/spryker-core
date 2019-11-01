@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -28,5 +29,22 @@ class CmsSlotStorageFacade extends AbstractFacade implements CmsSlotStorageFacad
     public function publishCmsSlots(array $cmsSlotIds): void
     {
         $this->getFactory()->createCmsSlotStoragePublisher()->publishByCmsSlotIds($cmsSlotIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $cmsSlotStorageIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getSynchronizationTransferCollection(FilterTransfer $filterTransfer, array $cmsSlotStorageIds): array
+    {
+        return $this->getFactory()
+            ->createCmsSlotStorageReader()
+            ->getSynchronizationTransferCollection($filterTransfer, $cmsSlotStorageIds);
     }
 }

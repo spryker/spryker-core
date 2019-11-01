@@ -17,17 +17,17 @@ class CmsSlotStorageRepository extends AbstractRepository implements CmsSlotStor
 {
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $cmsSlotIds
+     * @param int[] $cmsSlotStorageIds
      *
      * @return \Generated\Shared\Transfer\SpyCmsSlotStorageEntityTransfer[]
      */
-    public function getFilteredCmsSlotStorageEntities(FilterTransfer $filterTransfer, array $cmsSlotIds): array
+    public function getFilteredCmsSlotStorageEntities(FilterTransfer $filterTransfer, array $cmsSlotStorageIds): array
     {
         $cmsSlotStorageQuery = $this->getFactory()
             ->getCmsSlotStorageQuery();
 
-        if ($cmsSlotIds) {
-            $cmsSlotStorageQuery->filterByIdCmsSlotStorage_In($cmsSlotIds);
+        if ($cmsSlotStorageIds) {
+            $cmsSlotStorageQuery->filterByIdCmsSlotStorage_In($cmsSlotStorageIds);
         }
 
         return $this->buildQueryFromCriteria($cmsSlotStorageQuery, $filterTransfer)->find();

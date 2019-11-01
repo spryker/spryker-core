@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CmsSlotStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Orm\Zed\CmsSlotStorage\Persistence\Map\SpyCmsSlotStorageTableMap;
 use Spryker\Shared\CmsSlotStorage\CmsSlotStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -59,20 +58,9 @@ class CmsSlotSynchronizationDataBulkPlugin extends AbstractPlugin implements Syn
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
-        $synchronizationDataTransfers = [];
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        $cmsSlotStorageEntities = $this->getRepository()->getFilteredCmsSlotStorageEntities($filterTransfer, $ids);
-
-        foreach ($cmsSlotStorageEntities as $cmsSlotStorageEntity) {
-            $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData($cmsSlotStorageEntity->getData());
-            $synchronizationDataTransfer->setKey($cmsSlotStorageEntity->getKey());
-
-            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
-        }
-
-        return $synchronizationDataTransfers;
+        return $this->getFacade()->getSynchronizationTransferCollection($filterTransfer, $ids);
     }
 
     /**

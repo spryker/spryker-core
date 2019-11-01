@@ -43,4 +43,9 @@
         <property name="orderBy" type="string"/>
     </transfer>
 
+    <transfer name="CmsSlotCriteriaFilter">
+        <property name="cmsSlotIds" type="array" singular="cmsSlotId"/>
+        <property name="filter" type="Filter"/>
+    </transfer>
+
 </transfers>

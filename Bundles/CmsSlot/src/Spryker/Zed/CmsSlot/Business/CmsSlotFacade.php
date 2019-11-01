@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\CmsSlot\Business;
 
+use Generated\Shared\Transfer\CmsSlotCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
-use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -81,26 +81,12 @@ class CmsSlotFacade extends AbstractFacade implements CmsSlotFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotCriteriaFilterTransfer $cmsSlotCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
      */
-    public function getFilteredCmsSlots(FilterTransfer $filterTransfer): array
+    public function getCmsSlotsByCriteriaFilter(CmsSlotCriteriaFilterTransfer $cmsSlotCriteriaFilterTransfer): array
     {
-        return $this->getRepository()->getFilteredCmsSlots($filterTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int[] $cmsSlotIds
-     *
-     * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
-     */
-    public function getCmsSlotsByCmsSlotIds(array $cmsSlotIds): array
-    {
-        return $this->getRepository()->getCmsSlotsByCmsSlotIds($cmsSlotIds);
+        return $this->getRepository()->getCmsSlotsByCriteriaFilter($cmsSlotCriteriaFilterTransfer);
     }
 }

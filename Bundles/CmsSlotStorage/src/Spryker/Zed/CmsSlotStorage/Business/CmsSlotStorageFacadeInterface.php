@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CmsSlotStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface CmsSlotStorageFacadeInterface
 {
     /**
@@ -22,4 +24,17 @@ interface CmsSlotStorageFacadeInterface
      * @return void
      */
     public function publishCmsSlots(array $cmsSlotIds): void;
+
+    /**
+     * Specification:
+     * - Returns SynchronizationDataTransfer[] according to provided offset, limit and ids.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $cmsSlotStorageIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getSynchronizationTransferCollection(FilterTransfer $filterTransfer, array $cmsSlotStorageIds): array;
 }
