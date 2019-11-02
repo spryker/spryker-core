@@ -5,7 +5,9 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/merchant": "^2.0.0"
+    "spryker/kernel": "*",
+    "spryker/merchant": "^2.0.0",
+    "spryker/product-offer": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
