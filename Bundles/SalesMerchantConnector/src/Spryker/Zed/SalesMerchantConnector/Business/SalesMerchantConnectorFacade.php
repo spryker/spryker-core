@@ -8,6 +8,8 @@
 namespace Spryker\Zed\SalesMerchantConnector\Business;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -34,5 +36,22 @@ class SalesMerchantConnectorFacade extends AbstractFacade implements SalesMercha
         return $this->getFactory()
             ->createOrderItemExpander()
             ->expandOrderItemWithReferences($salesOrderItemEntity, $itemTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveSalesOrderMerchants(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
+    {
+        $this->getFactory()
+            ->createSalesOrderMerchantSaver()
+            ->saveSalesOrderMerchants($quoteTransfer, $saveOrderTransfer);
     }
 }

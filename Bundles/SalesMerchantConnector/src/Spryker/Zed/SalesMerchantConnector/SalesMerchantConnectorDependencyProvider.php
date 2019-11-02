@@ -9,7 +9,9 @@ namespace Spryker\Zed\SalesMerchantConnector;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\SalesMerchantConnector\Dependency\Facade\SalesMerchantConnectorToMerchantFacadeBridge;
 use Spryker\Zed\SalesMerchantConnector\Dependency\Facade\SalesMerchantConnectorToMerchantProductOfferFacadeBridge;
+use Spryker\Zed\SalesMerchantConnector\Dependency\Facade\SalesMerchantConnectorToStoreFacadeBridge;
 
 /**
  * @method \Spryker\Zed\SalesMerchantConnector\SalesMerchantConnectorConfig getConfig()
@@ -17,6 +19,8 @@ use Spryker\Zed\SalesMerchantConnector\Dependency\Facade\SalesMerchantConnectorT
 class SalesMerchantConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_MERCHANT_PRODUCT_OFFER = 'FACADE_MERCHANT_PRODUCT_OFFER';
+    public const FACADE_MERCHANT = 'FACADE_MERCHANT';
+    public const FACADE_STORE = 'FACADE_STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -28,6 +32,8 @@ class SalesMerchantConnectorDependencyProvider extends AbstractBundleDependencyP
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addMerchantProductOfferFacade($container);
+        $container = $this->addMerchantFacade($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -42,6 +48,38 @@ class SalesMerchantConnectorDependencyProvider extends AbstractBundleDependencyP
         $container->set(static::FACADE_MERCHANT_PRODUCT_OFFER, function (Container $container) {
             return new SalesMerchantConnectorToMerchantProductOfferFacadeBridge(
                 $container->getLocator()->merchantProductOffer()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new SalesMerchantConnectorToStoreFacadeBridge(
+                $container->getLocator()->store()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function addMerchantFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MERCHANT, function (Container $container) {
+            return new SalesMerchantConnectorToMerchantFacadeBridge(
+                $container->getLocator()->merchant()->facade()
             );
         });
 
