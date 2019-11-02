@@ -10,6 +10,8 @@ namespace Spryker\Zed\SalesMerchantConnector\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesMerchantConnector\Business\Expander\OrderItemExpander;
 use Spryker\Zed\SalesMerchantConnector\Business\Expander\OrderItemExpanderInterface;
+use Spryker\Zed\SalesMerchantConnector\Dependency\Facade\SalesMerchantConnectorToMerchantProductOfferFacadeInterface;
+use Spryker\Zed\SalesMerchantConnector\SalesMerchantConnectorDependencyProvider;
 
 /**
  * @method \Spryker\Zed\SalesMerchantConnector\SalesMerchantConnectorConfig getConfig()
@@ -23,5 +25,13 @@ class SalesMerchantConnectorBusinessFactory extends AbstractBusinessFactory
     public function createOrderItemExpander(): OrderItemExpanderInterface
     {
         return new OrderItemExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesMerchantConnector\Dependency\Facade\SalesMerchantConnectorToMerchantProductOfferFacadeInterface
+     */
+    public function getMerchantProductOfferFacade(): SalesMerchantConnectorToMerchantProductOfferFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesMerchantConnectorDependencyProvider::FACADE_MERCHANT_PRODUCT_OFFER);
     }
 }

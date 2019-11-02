@@ -5,18 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProductOffer\Business;
+namespace Spryker\Zed\SalesMerchantConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductOfferTransfer;
 
-interface MerchantProductOfferFacadeInterface
+interface SalesMerchantConnectorToMerchantProductOfferFacadeInterface
 {
     /**
-     * Specification:
-     * - This method looks for merchant data by provided offer reference.
-     *
-     * @api
-     *
      * @param string $productOfferReference
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer|null

@@ -24,7 +24,7 @@ class MerchantProductOfferFacade extends AbstractFacade implements MerchantProdu
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
-    public function findMerchantByOfferReference(string $productOfferReference): ?ProductOfferTransfer
+    public function findMerchantByProductOfferReference(string $productOfferReference): ?ProductOfferTransfer
     {
         return $this->getRepository()->findMerchantProductOfferByOfferReference($productOfferReference);
     }
