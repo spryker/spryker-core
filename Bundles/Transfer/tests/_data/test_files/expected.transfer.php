@@ -576,32 +576,32 @@ class CatFaceTransfer extends AbstractTransfer
     public function fromArray(array $data, $ignoreMissingProperty = false)
     {
         foreach ($data as $property => $value) {
-            $property = $this->transferPropertyNameMap[$property] ?? null;
+            $normalizedPropertyName = $this->transferPropertyNameMap[$property] ?? null;
 
-            switch ($property) {
+            switch ($normalizedPropertyName) {
                 case 'name':
                 case 'typedArray':
                 case 'typedAssociativeStringArray':
                 case 'typedNotAssociativeStringArray':
                 case 'typedNotAssociativeArray':
-                    $this->$property = $value;
-                    $this->modifiedProperties[$property] = true;
+                    $this->$normalizedPropertyName = $value;
+                    $this->modifiedProperties[$normalizedPropertyName] = true;
                     break;
                 case 'item':
                     if (is_array($value)) {
-                        $type = $this->transferMetadata[$property]['type'];
+                        $type = $this->transferMetadata[$normalizedPropertyName]['type'];
                         /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject */
                         $value = (new $type())->fromArray($value, $ignoreMissingProperty);
                     }
-                    $this->$property = $value;
-                    $this->modifiedProperties[$property] = true;
+                    $this->$normalizedPropertyName = $value;
+                    $this->modifiedProperties[$normalizedPropertyName] = true;
 
                     break;
                 case 'items':
                 case 'typedAssociativeCollection':
-                    $elementType = $this->transferMetadata[$property]['type'];
-                    $this->$property = $this->processArrayObject($elementType, $value, $ignoreMissingProperty);
-                    $this->modifiedProperties[$property] = true;
+                    $elementType = $this->transferMetadata[$normalizedPropertyName]['type'];
+                    $this->$normalizedPropertyName = $this->processArrayObject($elementType, $value, $ignoreMissingProperty);
+                    $this->modifiedProperties[$normalizedPropertyName] = true;
                     break;
                 default:
                     if (!$ignoreMissingProperty) {
