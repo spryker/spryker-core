@@ -7,7 +7,7 @@
     <table name="spy_sales_order_merchant" phpName="SpySalesOrderMerchant">
         <column name="id_sales_order_merchant" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="sales_order_merchant_reference" required="true" type="VARCHAR" size="255"/>
-        <column name="merchantReference" type="VARCHAR" required="true" size="255" />
+        <column name="merchant_reference" type="VARCHAR" required="true" size="255" />
         <column name="fk_sales_order" type="INTEGER" required="true"/>
 
         <unique name="spy_sales_order_merchant-sales_order_merchant_reference">

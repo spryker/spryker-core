@@ -65,11 +65,16 @@ class SalesOrderMerchantSaver implements SalesOrderMerchantSaverInterface
      */
     public function saveSalesOrderMerchants(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
+        $usedOfferReferences = [];
+
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $offerTransfer = $itemTransfer->getOffer();
-            if (!$offerTransfer) {
+            if (!$offerTransfer || in_array($offerTransfer->getOfferReference(), $usedOfferReferences)) {
                 //TODO: Should be removed when MP-1301 is done.
                 //continue;
+                if (in_array('offer1', $usedOfferReferences)) {
+                    continue;
+                }
                 $offerTransfer = new OfferTransfer();
                 $offerTransfer->setOfferReference('offer1');
                 $itemTransfer->setOffer($offerTransfer);
@@ -79,6 +84,8 @@ class SalesOrderMerchantSaver implements SalesOrderMerchantSaverInterface
             if (!$salesOrderMerchantTransfer) {
                 continue;
             }
+
+            $usedOfferReferences[] = $offerTransfer->getOfferReference();
 
             $this->salesMerchantConnectorEntityManager->createSalesOrderMerchant($salesOrderMerchantTransfer);
         }
