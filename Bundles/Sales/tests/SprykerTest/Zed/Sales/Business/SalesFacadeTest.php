@@ -152,15 +152,16 @@ class SalesFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testTransformSplittableItem(): void
+    public function testTransformSplittableItemReturnsSplitItems(): void
     {
         //Arrange
-        $salesFacade = $this->createSalesFacade();
+        $salesFacade = $this->tester->getFacade();
         $itemTransfer = (new ItemBuilder())
             ->build()
             ->setQuantity(10);
 
         //Act
+        /** @var \Generated\Shared\Transfer\ItemCollectionTransfer $itemCollectionTransfer */
         $itemCollectionTransfer = $salesFacade->transformSplittableItem($itemTransfer);
 
         //Assert

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesConfigurableBundle\Business\Transformer;
 
+use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToSalesFacadeInterface;
@@ -43,15 +44,26 @@ class ConfigurableBundleItemTransformer implements ConfigurableBundleItemTransfo
      */
     public function transformConfigurableBundleItem(ItemTransfer $itemTransfer): ItemCollectionTransfer
     {
-        $configuredBundleQuantity = $itemTransfer->getConfiguredBundle()->getQuantity();
+        $configuredBundleQuantity = (int)$itemTransfer->getConfiguredBundle()->getQuantity();
         if ($configuredBundleQuantity === 1) {
             return $this->transformItemTransferToItemCollectionTransfer($itemTransfer);
         }
 
+        return $this->splitConfigurableBundleItems($itemTransfer, $configuredBundleQuantity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param int $configuredBundleQuantity
+     *
+     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     */
+    protected function splitConfigurableBundleItems(ItemTransfer $itemTransfer, int $configuredBundleQuantity): ItemCollectionTransfer
+    {
         $configurableBundleItemCollectionTransfer = new ItemCollectionTransfer();
 
         for ($index = 1; $index <= $configuredBundleQuantity; $index++) {
-            $transformedItemTransfer = $this->transformItem($itemTransfer, $index);
+            $transformedItemTransfer = $this->transformItemTransfer($itemTransfer, $index);
             $itemCollectionTransfer = $this->transformItemTransferToItemCollectionTransfer($transformedItemTransfer);
 
             foreach ($itemCollectionTransfer->getItems() as $itemTransfer) {
@@ -68,24 +80,41 @@ class ConfigurableBundleItemTransformer implements ConfigurableBundleItemTransfo
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function transformItem(ItemTransfer $itemTransfer, int $groupKeyIndex): ItemTransfer
+    protected function transformItemTransfer(ItemTransfer $itemTransfer, int $groupKeyIndex): ItemTransfer
     {
-        $transformedItemTransfer = new ItemTransfer();
-        $transformedItemTransfer->fromArray($itemTransfer->toArray(), true);
+        return (new ItemTransfer())
+            ->fromArray($itemTransfer->toArray(), true)
+            ->setQuantity($itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot())
+            ->setConfiguredBundle($this->transformConfiguredBundleTransfer($itemTransfer, $groupKeyIndex));
+    }
 
-        $groupKey = sprintf(
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param int $groupKeyIndex
+     *
+     * @return \Generated\Shared\Transfer\ConfiguredBundleTransfer
+     */
+    protected function transformConfiguredBundleTransfer(ItemTransfer $itemTransfer, int $groupKeyIndex): ConfiguredBundleTransfer
+    {
+        return (new ConfiguredBundleTransfer())
+            ->fromArray($itemTransfer->getConfiguredBundle()->toArray(), true)
+            ->setQuantity(1)
+            ->setGroupKey($this->generateTransformedGroupKey($itemTransfer, $groupKeyIndex));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param int $groupKeyIndex
+     *
+     * @return string
+     */
+    protected function generateTransformedGroupKey(ItemTransfer $itemTransfer, int $groupKeyIndex): string
+    {
+        return sprintf(
             '%s-%s',
             $itemTransfer->getConfiguredBundle()->getGroupKey(),
             $groupKeyIndex
         );
-
-        $transformedItemTransfer->getConfiguredBundle()->setGroupKey($groupKey);
-        $transformedItemTransfer->getConfiguredBundle()->setQuantity(1);
-        $transformedItemTransfer->setQuantity(
-            $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot()
-        );
-
-        return $transformedItemTransfer;
     }
 
     /**
@@ -109,11 +138,11 @@ class ConfigurableBundleItemTransformer implements ConfigurableBundleItemTransfo
      */
     protected function isNonSplittableQuantityThresholdExceeded(ItemTransfer $itemTransfer): bool
     {
-        $threshold = $this->salesConfigurableBundleConfig->findConfigurableBundleItemQuantityThreshold();
-        if ($threshold === null) {
+        $quantityThreshold = $this->salesConfigurableBundleConfig->findConfigurableBundleItemQuantityThreshold();
+        if ($quantityThreshold === null) {
             return false;
         }
 
-        return $itemTransfer->getQuantity() >= $threshold;
+        return $itemTransfer->getQuantity() >= $quantityThreshold;
     }
 }
