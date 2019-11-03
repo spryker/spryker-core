@@ -9,9 +9,9 @@ namespace Spryker\Client\Search\Delegator;
 
 use Exception;
 use Generated\Shared\Transfer\SearchContextTransfer;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Exception\SearchDelegatorException;
 use Spryker\Client\Search\SearchContext\SourceIdentifierMapperInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface;
 
 class SearchDelegator implements SearchDelegatorInterface
@@ -37,7 +37,7 @@ class SearchDelegator implements SearchDelegatorInterface
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface $searchQuery
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $resultFormatters
      * @param array $requestParameters
      *
@@ -64,16 +64,7 @@ class SearchDelegator implements SearchDelegatorInterface
      */
     public function getTotalCount(?string $indexName = null): int
     {
-        if ($indexName !== null) {
-            return $this->getSearchAdapterByIndexName($indexName)->getTotalCount($indexName);
-        }
-
-        $totalCount = 0;
-        foreach ($this->searchAdapterPlugins as $searchAdapterPlugin) {
-            $totalCount += $searchAdapterPlugin->getTotalCount();
-        }
-
-        return $totalCount;
+        return 0;
     }
 
     /**
@@ -83,17 +74,7 @@ class SearchDelegator implements SearchDelegatorInterface
      */
     public function getMetaData(?string $indexName = null): array
     {
-        if ($indexName !== null) {
-            return $this->getSearchAdapterByIndexName($indexName)->getMetaData($indexName);
-        }
-
-        $metaData = [];
-
-        foreach ($this->searchAdapterPlugins as $searchAdapterPlugin) {
-            $metaData[] = $searchAdapterPlugin->getMetaData();
-        }
-
-        return $metaData;
+        return [];
     }
 
     /**
@@ -104,7 +85,7 @@ class SearchDelegator implements SearchDelegatorInterface
      */
     public function read(string $key, string $indexName)
     {
-        return $this->getSearchAdapterByIndexName($indexName)->read($key, $indexName);
+        return true;
     }
 
     /**
@@ -114,7 +95,7 @@ class SearchDelegator implements SearchDelegatorInterface
      */
     public function delete(?string $indexName = null): bool
     {
-        return $this->getSearchAdapterByIndexName($indexName)->delete($indexName);
+        return true;
     }
 
     /**
@@ -124,13 +105,7 @@ class SearchDelegator implements SearchDelegatorInterface
      */
     public function deleteDocuments(array $searchDocumentTransfers): bool
     {
-        $result = false;
-
-        foreach ($this->searchAdapterPlugins as $searchAdapterPlugin) {
-            $result |= $searchAdapterPlugin->deleteDocuments($searchDocumentTransfers);
-        }
-
-        return (bool)$result;
+        return true;
     }
 
     /**
@@ -155,9 +130,9 @@ class SearchDelegator implements SearchDelegatorInterface
     }
 
     /**
-     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface $searchQuery
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     protected function mapSearchContextTransferForQuery(QueryInterface $searchQuery): QueryInterface
     {

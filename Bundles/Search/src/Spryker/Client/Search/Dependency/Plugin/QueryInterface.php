@@ -22,4 +22,4 @@ interface QueryInterface
     public function getSearchQuery();
 }
 
-class_alias(QueryInterface::class, SearchExtensionQueryInterface::class);
+class_alias(QueryInterface::class, SearchExtensionQueryInterface::class, false);

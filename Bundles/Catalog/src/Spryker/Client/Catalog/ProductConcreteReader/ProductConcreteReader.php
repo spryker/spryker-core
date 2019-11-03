@@ -9,9 +9,9 @@ namespace Spryker\Client\Catalog\ProductConcreteReader;
 
 use Generated\Shared\Transfer\ProductConcreteCriteriaFilterTransfer;
 use Spryker\Client\Catalog\CatalogConfig;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
 use Spryker\Client\Search\SearchClientInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
 class ProductConcreteReader implements ProductConcreteReaderInterface
 {
@@ -26,12 +26,12 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
     protected $searchClient;
 
     /**
-     * @var \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     * @var \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     protected $productConcretePageSearchQueryPlugin;
 
     /***
-     * @var \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @var \Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     protected $productConcretePageSearchQueryExpanderPlugins;
 

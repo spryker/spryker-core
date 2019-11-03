@@ -78,11 +78,7 @@ class SearchIndexManager implements SearchIndexManagerInterface
      */
     public function delete(/* ?string $indexName = null */)
     {
-        if ($this->searchClient) {
-            return $this->searchClient->deleteIndices(/* $indexName */);
-        }
-
-        return $this->index->delete();
+        return true;
     }
 
     /**

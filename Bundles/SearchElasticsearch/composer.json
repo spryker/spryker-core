@@ -15,6 +15,7 @@
     "spryker/symfony": "^3.0.0",
     "spryker/twig": "^3.0.0",
     "spryker/util-encoding": "^3.0.0",
+    "spryker/util-sanitize": "^2.2.0",
     "spryker/zend": "^3.0.0"
   },
   "require-dev": {

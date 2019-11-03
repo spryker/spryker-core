@@ -8,7 +8,6 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/elastica": "*",
     "spryker/log": "*",
     "spryker/testify": "*"
   },
