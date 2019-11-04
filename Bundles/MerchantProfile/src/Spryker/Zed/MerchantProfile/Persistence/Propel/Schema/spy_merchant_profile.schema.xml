@@ -39,7 +39,7 @@
 
     <table name="spy_merchant_profile_address" identifierQuoting="true">
         <column name="id_merchant_profile_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_country" required="true" type="INTEGER"/>
+        <column name="fk_country" type="INTEGER"/>
         <column name="address1" size="255" type="VARCHAR"/>
         <column name="address2" size="255" type="VARCHAR"/>
         <column name="address3" size="255" type="VARCHAR"/>

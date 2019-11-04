@@ -34,7 +34,7 @@ class MerchantProfileAddressWriterStep extends PublishAwareStep implements DataI
     {
         $this->validateDataSet($dataSet);
 
-        $merchantProfileAddress = SpyMerchantProfileAddressQuery::create()
+        $merchantProfileAddressEntity = SpyMerchantProfileAddressQuery::create()
             ->filterByAddress1($dataSet[MerchantProfileAddressDataSetInterface::ADDRESS1])
             ->filterByAddress2($dataSet[MerchantProfileAddressDataSetInterface::ADDRESS2])
             ->filterByAddress3($dataSet[MerchantProfileAddressDataSetInterface::ADDRESS3])
@@ -44,7 +44,7 @@ class MerchantProfileAddressWriterStep extends PublishAwareStep implements DataI
             ->filterByFkCountry($dataSet[MerchantProfileAddressDataSetInterface::ID_COUNTRY])
             ->findOneOrCreate();
 
-        $merchantProfileAddress
+        $merchantProfileAddressEntity
             ->setAddress1($dataSet[MerchantProfileAddressDataSetInterface::ADDRESS1])
             ->setAddress2($dataSet[MerchantProfileAddressDataSetInterface::ADDRESS2])
             ->setAddress3($dataSet[MerchantProfileAddressDataSetInterface::ADDRESS3])
@@ -54,7 +54,7 @@ class MerchantProfileAddressWriterStep extends PublishAwareStep implements DataI
             ->setFkCountry($dataSet[MerchantProfileAddressDataSetInterface::ID_COUNTRY])
             ->save();
 
-        $this->addPublishEvents(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_PUBLISH, $merchantProfileAddress->getFkMerchantProfile());
+        $this->addPublishEvents(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_PUBLISH, $merchantProfileAddressEntity->getFkMerchantProfile());
     }
 
     /**

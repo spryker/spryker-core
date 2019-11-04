@@ -20,6 +20,10 @@ class UniqueMerchantReferenceValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint): void
     {
+        if (!$value) {
+            return;
+        }
+
         $merchantTransfer = $constraint->findMerchantByReference($value);
 
         if ($merchantTransfer === null) {
