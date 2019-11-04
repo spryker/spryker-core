@@ -124,11 +124,29 @@ class ConfigurableBundleItemTransformer implements ConfigurableBundleItemTransfo
      */
     protected function transformItemTransferToItemCollectionTransfer(ItemTransfer $itemTransfer): ItemCollectionTransfer
     {
-        if (!$itemTransfer->getIsQuantitySplittable() || $this->isNonSplittableQuantityThresholdExceeded($itemTransfer)) {
-            return (new ItemCollectionTransfer())->addItem($itemTransfer);
+        if ($this->isItemQuantitySplittable($itemTransfer)) {
+            return $this->salesFacade->transformSplittableItem($itemTransfer);
         }
 
-        return $this->salesFacade->transformSplittableItem($itemTransfer);
+        return (new ItemCollectionTransfer())->addItem($itemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function isItemQuantitySplittable(ItemTransfer $itemTransfer): bool
+    {
+        if (!$itemTransfer->getIsQuantitySplittable()) {
+            return false;
+        }
+
+        if ($this->isNonSplittableQuantityThresholdExceeded($itemTransfer)) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
