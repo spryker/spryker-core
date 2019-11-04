@@ -37,7 +37,7 @@
     {% endfor %}
     <tr>
         <td colspan="8">
-            {{ 'Items:' | trans }} {{ bundleCurrentAmount }} / {{ bundle.salesOrderConfiguredBundleItems | length }}
+            {{ 'configured_bundle_widget.items' | trans }}: {{ bundleCurrentAmount }} / {{ bundle.salesOrderConfiguredBundleItems | length }}
         </td>
     </tr>
     <tr>
