@@ -58,7 +58,7 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
      */
     protected function addDescriptionGlossaryKeyField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_DESCRIPTION_GLOSSARY, TextType::class, [
+        $builder->add(static::FIELD_DESCRIPTION_GLOSSARY, TextareaType::class, [
             'label' => static::LABEL_DESCRIPTION_GLOSSARY,
             'required' => false,
         ]);

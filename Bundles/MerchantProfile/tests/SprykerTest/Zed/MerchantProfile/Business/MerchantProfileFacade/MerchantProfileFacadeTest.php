@@ -32,7 +32,26 @@ class MerchantProfileFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateMerchantProfile(): void
+    public function testFindFiltersByIdMerchantProfile(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+        $merchantProfileTransfer = $this->tester->haveMerchantProfile($merchantTransfer);
+
+        // Act
+        $merchantProfileCriteriaFilterTransfer = new MerchantProfileCriteriaFilterTransfer();
+        $merchantProfileCriteriaFilterTransfer->setMerchantProfileIds([$merchantProfileTransfer->getIdMerchantProfile()]);
+        $merchantProfileTransferCollection = $this->tester->getFacade()->find($merchantProfileCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertNotEmpty($merchantProfileTransferCollection->getMerchantProfiles());
+        $this->assertCount(1, $merchantProfileTransferCollection->getMerchantProfiles());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateMerchantProfilePersistsToDatabase(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -47,7 +66,7 @@ class MerchantProfileFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateMerchantProfile(): void
+    public function testUpdateMerchantProfilePersistsToDatabase(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -62,18 +81,20 @@ class MerchantProfileFacadeTest extends Unit
             ->setContactPersonFirstName('First Name Two');
 
         // Act
+        /** @var \Generated\Shared\Transfer\MerchantProfileTransfer $updatedMerchantProfileTransfer */
         $updatedMerchantProfileTransfer = $this->tester->getFacade()->updateMerchantProfile($merchantProfileTransfer);
 
         // Assert
         $this->assertSame($expectedIdMerchantProfile, $updatedMerchantProfileTransfer->getIdMerchantProfile());
         $this->assertEquals('Role two', $updatedMerchantProfileTransfer->getContactPersonRole());
         $this->assertEquals('First Name Two', $updatedMerchantProfileTransfer->getContactPersonFirstName());
+        $this->assertNotEmpty($updatedMerchantProfileTransfer->getAddressCollection());
     }
 
     /**
      * @return void
      */
-    public function testMerchantProfileGlossaryKey(): void
+    public function testCreateMerchantProfileSavesMerchantProfileGlossaryKey(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -111,7 +132,7 @@ class MerchantProfileFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindOneMerchantProfile(): void
+    public function testFindOneMerchantProfileFiltersByFkMerchant(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();

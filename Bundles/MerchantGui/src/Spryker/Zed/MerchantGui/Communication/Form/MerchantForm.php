@@ -69,8 +69,7 @@ class MerchantForm extends AbstractType
             ->addIdMerchantField($builder)
             ->addNameField($builder)
             ->addEmailField($builder, $options[static::OPTION_CURRENT_ID])
-            ->addRegistrationNumberField($builder)
-            ->addAddressCollectionSubform($builder);
+            ->addRegistrationNumberField($builder);
 
         $this->executeMerchantProfileFormExpanderPlugins($builder, $options);
     }
@@ -111,7 +110,6 @@ class MerchantForm extends AbstractType
     {
         $builder->add(static::FIELD_REGISTRATION_NUMBER, TextType::class, [
             'label' => static::LABEL_REGISTRATION_NUMBER,
-            'required' => false,
             'constraints' => [
                 new Length(['max' => 255]),
             ],
@@ -132,24 +130,6 @@ class MerchantForm extends AbstractType
             'label' => static::LABEL_EMAIL,
             'constraints' => $this->getEmailFieldConstraints($currentId),
         ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addAddressCollectionSubform(FormBuilderInterface $builder)
-    {
-        $merchantAddressFormDataProvider = $this->getFactory()->createMerchantAddressFormDataProvider();
-
-        $builder->add(
-            'addressCollection',
-            MerchantAddressForm::class,
-            $merchantAddressFormDataProvider->getOptions()
-        );
 
         return $this;
     }
@@ -185,8 +165,6 @@ class MerchantForm extends AbstractType
      */
     protected function getEmailFieldConstraints(?int $currentId = null): array
     {
-        $merchantFacade = $this->getFactory()->getMerchantFacade();
-
         return [
             new Required(),
             new NotBlank(),

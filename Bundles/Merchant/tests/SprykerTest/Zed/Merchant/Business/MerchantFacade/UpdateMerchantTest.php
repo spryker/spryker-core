@@ -55,7 +55,6 @@ class UpdateMerchantTest extends Unit
         $this->assertSame($expectedIdMerchant, $updatedMerchant->getIdMerchant());
         $this->assertEquals('second-key', $updatedMerchant->getMerchantKey());
         $this->assertEquals('Second Company', $updatedMerchant->getName());
-        $this->assertNotEmpty($updatedMerchant->getAddressCollection()->getAddresses()->offsetGet(0));
     }
 
     /**
@@ -104,7 +103,7 @@ class UpdateMerchantTest extends Unit
     public function testUpdateMerchantWithEmptyRequiredFieldsThrowsException(): void
     {
         // Arrange
-        $merchantTransfer = $this->tester->createMerchantTransferWithAddressTransfer();
+        $merchantTransfer = $this->tester->createMerchantTransfer();
         $merchantWithEmptyNameTransfer = clone $merchantTransfer;
         $merchantWithEmptyNameTransfer->setName(null);
 

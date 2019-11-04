@@ -8,8 +8,6 @@
 namespace SprykerTest\Zed\Merchant\Helper;
 
 use Codeception\Module;
-use Generated\Shared\DataBuilder\MerchantAddressBuilder;
-use Generated\Shared\DataBuilder\MerchantAddressCollectionBuilder;
 use Generated\Shared\DataBuilder\MerchantBuilder;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
@@ -32,10 +30,6 @@ class MerchantHelper extends Module
         /** @var \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer */
         $merchantTransfer = (new MerchantBuilder($seedData))->build();
         $merchantTransfer->setIdMerchant(null);
-        $merchantAddressTransfer = (new MerchantAddressBuilder())->build();
-        $merchantAddressCollection = (new MerchantAddressCollectionBuilder())->build();
-        $merchantAddressCollection->addAddress($merchantAddressTransfer);
-        $merchantTransfer->setAddressCollection($merchantAddressCollection);
 
         $merchantResponseTransfer = $this->getLocator()
             ->merchant()

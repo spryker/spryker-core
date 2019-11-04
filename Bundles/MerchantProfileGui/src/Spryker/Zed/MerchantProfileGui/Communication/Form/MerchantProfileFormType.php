@@ -8,8 +8,11 @@
 namespace Spryker\Zed\MerchantProfileGui\Communication\Form;
 
 use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\MerchantProfileGui\Communication\Form\MerchantProfileGlossary\MerchantProfileLocalizedGlossaryAttributesFormType;
+use Spryker\Zed\MerchantProfileGui\Communication\Form\MerchantProfileUrlCollection\MerchantProfileUrlCollectionFormType;
+use Spryker\Zed\MerchantProfileGui\Communication\Form\Transformer\MerchantProfileUrlCollectionDataTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -40,6 +43,7 @@ class MerchantProfileFormType extends AbstractType
     protected const FIELD_PUBLIC_PHONE = 'public_phone';
     protected const FIELD_MERCHANT_PROFILE_LOCALIZED_GLOSSARY_ATTRIBUTES = 'merchantProfileLocalizedGlossaryAttributes';
     protected const FIELD_IS_ACTIVE = 'is_active';
+    protected const FIELD_URL_COLLECTION = 'urlCollection';
     protected const FIELD_DESCRIPTION_GLOSSARY_KEY = 'description_glossary_key';
     protected const FIELD_BANNER_URL_GLOSSARY_KEY = 'banner_url_glossary_key';
     protected const FIELD_DELIVERY_TIME_GLOSSARY_KEY = 'delivery_time_glossary_key';
@@ -94,6 +98,7 @@ class MerchantProfileFormType extends AbstractType
             ->addPublicPhoneField($builder)
             ->addLogoUrlField($builder)
             ->addIsActiveField($builder)
+            ->addUrlCollectionField($builder)
             ->addDescriptionGlossaryKeyField($builder)
             ->addBannerUrlGlossaryKeyField($builder)
             ->addDeliveryTimeGlossaryKeyField($builder)
@@ -101,7 +106,31 @@ class MerchantProfileFormType extends AbstractType
             ->addCancellationPolicyGlossaryKeyField($builder)
             ->addImprintGlossaryKeyField($builder)
             ->addDataPrivacyGlossaryKeyField($builder)
-            ->addMerchantProfileLocalizedGlossaryAttributesSubform($builder);
+            ->addMerchantProfileLocalizedGlossaryAttributesSubform($builder)
+            ->addAddressCollectionSubform($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addUrlCollectionField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_URL_COLLECTION, CollectionType::class, [
+            'entry_type' => MerchantProfileUrlCollectionFormType::class,
+            'allow_add' => true,
+            'label' => false,
+            'allow_delete' => true,
+            'entry_options' => [
+                'label' => false,
+                'data_class' => UrlTransfer::class,
+            ],
+        ]);
+        $builder->get(static::FIELD_URL_COLLECTION)
+            ->addModelTransformer(new MerchantProfileUrlCollectionDataTransformer());
+
+        return $this;
     }
 
     /**
@@ -363,6 +392,24 @@ class MerchantProfileFormType extends AbstractType
             'allow_add' => true,
             'allow_delete' => true,
         ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addAddressCollectionSubform(FormBuilderInterface $builder)
+    {
+        $merchantProfileAddressFormDataProvider = $this->getFactory()->createMerchantProfileAddressFormDataProvider();
+
+        $builder->add(
+            'addressCollection',
+            MerchantProfileAddressFormType::class,
+            $merchantProfileAddressFormDataProvider->getOptions()
+        );
 
         return $this;
     }

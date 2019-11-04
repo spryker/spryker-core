@@ -10,13 +10,17 @@ namespace Spryker\Zed\MerchantProfileGui\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantProfileGui\Communication\ButtonCreator\MerchantProfileChangeStatusButtonCreator;
 use Spryker\Zed\MerchantProfileGui\Communication\ButtonCreator\MerchantProfileChangeStatusButtonCreatorInterface;
+use Spryker\Zed\MerchantProfileGui\Communication\Form\Constraint\UniqueUrl;
+use Spryker\Zed\MerchantProfileGui\Communication\Form\DataProvider\MerchantProfileAddressFormDataProvider;
 use Spryker\Zed\MerchantProfileGui\Communication\Form\DataProvider\MerchantProfileFormDataProvider;
 use Spryker\Zed\MerchantProfileGui\Communication\Form\MerchantProfileFormType;
 use Spryker\Zed\MerchantProfileGui\Communication\LabelCreator\MerchantProfileActiveLabelCreator;
 use Spryker\Zed\MerchantProfileGui\Communication\LabelCreator\MerchantProfileActiveLabelCreatorInterface;
+use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToCountryFacadeInterface;
 use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToGlossaryFacadeInterface;
 use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToLocaleFacadeInterface;
 use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToMerchantProfileFacadeInterface;
+use Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToUrlFacadeInterface;
 use Spryker\Zed\MerchantProfileGui\MerchantProfileGuiDependencyProvider;
 use Symfony\Component\Form\FormTypeInterface;
 use Twig\Environment;
@@ -68,6 +72,26 @@ class MerchantProfileGuiCommunicationFactory extends AbstractCommunicationFactor
     }
 
     /**
+     * @return \Spryker\Zed\MerchantProfileGui\Communication\Form\Constraint\UniqueUrl
+     */
+    public function createUniqueUrlConstraint(): UniqueUrl
+    {
+        return new UniqueUrl([
+            UniqueUrl::OPTION_URL_FACADE => $this->getUrlFacade(),
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProfileGui\Communication\Form\DataProvider\MerchantProfileAddressFormDataProvider
+     */
+    public function createMerchantProfileAddressFormDataProvider(): MerchantProfileAddressFormDataProvider
+    {
+        return new MerchantProfileAddressFormDataProvider(
+            $this->getCountryFacade()
+        );
+    }
+
+    /**
      * @return \Twig\Environment
      */
     public function getTwigEnvironment(): Environment
@@ -97,5 +121,21 @@ class MerchantProfileGuiCommunicationFactory extends AbstractCommunicationFactor
     public function getLocaleFacade(): MerchantProfileGuiToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(MerchantProfileGuiDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToUrlFacadeInterface
+     */
+    public function getUrlFacade(): MerchantProfileGuiToUrlFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProfileGuiDependencyProvider::FACADE_URL);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProfileGui\Dependency\Facade\MerchantProfileGuiToCountryFacadeInterface
+     */
+    public function getCountryFacade(): MerchantProfileGuiToCountryFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProfileGuiDependencyProvider::FACADE_COUNTRY);
     }
 }
