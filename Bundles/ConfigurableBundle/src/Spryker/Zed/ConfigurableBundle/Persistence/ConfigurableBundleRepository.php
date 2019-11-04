@@ -121,19 +121,19 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
     }
 
     /**
-     * @param string[] $allowedTemplateUuids
+     * @param string[] $templateUuids
      *
      * @return string[]
      */
-    public function getActiveConfigurableBundleTemplateUuids(array $allowedTemplateUuids): array
+    public function getActiveConfigurableBundleTemplateUuids(array $templateUuids): array
     {
-        if (empty($allowedTemplateUuids)) {
+        if (empty($templateUuids)) {
             return [];
         }
 
         return $this->getFactory()
             ->getConfigurableBundleTemplatePropelQuery()
-            ->filterByUuid_In($allowedTemplateUuids)
+            ->filterByUuid_In($templateUuids)
             ->filterByIsActive(true)
             ->select([SpyConfigurableBundleTemplateTableMap::COL_UUID])
             ->find()

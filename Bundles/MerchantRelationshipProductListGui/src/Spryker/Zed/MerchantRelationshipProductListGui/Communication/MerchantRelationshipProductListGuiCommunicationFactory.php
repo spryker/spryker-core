@@ -12,13 +12,13 @@ use Spryker\Zed\MerchantRelationshipProductListGui\Communication\DataProvider\Me
 use Spryker\Zed\MerchantRelationshipProductListGui\Communication\DataProvider\ProductListMerchantRelationshipFormDataProvider;
 use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Expander\ProductListButtonsExpander;
 use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Expander\ProductListButtonsExpanderInterface;
-use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Expander\ProductListUsedByTableDataExpander;
-use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Expander\ProductListUsedByTableDataExpanderInterface;
+use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Expander\ProductListUsedByTableExpander;
+use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Expander\ProductListUsedByTableExpanderInterface;
 use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Form\MerchantRelationshipChoiceFormType;
 use Spryker\Zed\MerchantRelationshipProductListGui\Communication\FormExpander\ProductListMerchantRelationshipFormExpander;
 use Spryker\Zed\MerchantRelationshipProductListGui\Communication\FormExpander\ProductListMerchantRelationshipFormExpanderInterface;
-use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Mapper\ProductListUsedByTableDataMapper;
-use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Mapper\ProductListUsedByTableDataMapperInterface;
+use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Mapper\ProductListUsedByTableMapper;
+use Spryker\Zed\MerchantRelationshipProductListGui\Communication\Mapper\ProductListUsedByTableMapperInterface;
 use Spryker\Zed\MerchantRelationshipProductListGui\Communication\ProductListQueryExpander\ProductListQueryExpander;
 use Spryker\Zed\MerchantRelationshipProductListGui\Communication\ProductListQueryExpander\ProductListQueryExpanderInterface;
 use Spryker\Zed\MerchantRelationshipProductListGui\Dependency\Facade\MerchantRelationshipProductListGuiToMerchantRelationshipFacadeInterface;
@@ -56,23 +56,23 @@ class MerchantRelationshipProductListGuiCommunicationFactory extends AbstractCom
     }
 
     /**
-     * @return \Spryker\Zed\MerchantRelationshipProductListGui\Communication\Expander\ProductListUsedByTableDataExpanderInterface
+     * @return \Spryker\Zed\MerchantRelationshipProductListGui\Communication\Expander\ProductListUsedByTableExpanderInterface
      */
-    public function createProductListUsedByTableDataExpander(): ProductListUsedByTableDataExpanderInterface
+    public function createProductListUsedByTableExpander(): ProductListUsedByTableExpanderInterface
     {
-        return new ProductListUsedByTableDataExpander(
+        return new ProductListUsedByTableExpander(
             $this->getMerchantRelationshipFacade(),
             $this->getMerchantRelationshipProductListFacade(),
-            $this->createProductListUsedByTableDataMapper()
+            $this->createProductListUsedByTableMapper()
         );
     }
 
     /**
-     * @return \Spryker\Zed\MerchantRelationshipProductListGui\Communication\Mapper\ProductListUsedByTableDataMapperInterface
+     * @return \Spryker\Zed\MerchantRelationshipProductListGui\Communication\Mapper\ProductListUsedByTableMapperInterface
      */
-    public function createProductListUsedByTableDataMapper(): ProductListUsedByTableDataMapperInterface
+    public function createProductListUsedByTableMapper(): ProductListUsedByTableMapperInterface
     {
-        return new ProductListUsedByTableDataMapper();
+        return new ProductListUsedByTableMapper();
     }
 
     /**

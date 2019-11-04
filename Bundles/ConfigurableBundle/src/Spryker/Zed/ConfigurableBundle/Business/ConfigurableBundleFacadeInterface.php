@@ -22,11 +22,11 @@ interface ConfigurableBundleFacadeInterface
 {
     /**
      * Specification:
-     * - Retrieves configurable bundle template in Persistence.
+     * - Retrieves configurable bundle template from Persistence.
      * - Filters by criteria from ConfigurableBundleTemplateFilterTransfer.
-     * - Expands found configurable bundle template with translations.
-     * - Provides translations for locales specified in ConfigurableBundleTemplateFilterTransfer::translationLocales, or for all available locales otherwise.
-     * - If single locale translation was requested but doesn't exist, fallback translation will be provided, or translation key if nothing found.
+     * - Expands found configurable bundle templates with translations.
+     * - Returns translations for locales specified in ConfigurableBundleTemplateFilterTransfer::translationLocales, or for all available locales otherwise.
+     * - Returns fallback locale translation if provided single locale translation does not exist or translation key if nothing found.
      *
      * @api
      *
@@ -40,10 +40,11 @@ interface ConfigurableBundleFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves configurable bundle templates in Persistence.
+     * - Retrieves configurable bundle templates from Persistence.
      * - Filters by criteria from ConfigurableBundleTemplateFilterTransfer.
      * - Expands found configurable bundle templates with translations.
-     * - Provides translations for locales specified in ConfigurableBundleTemplateFilterTransfer::translationLocales, or for all available locales otherwise.
+     * - Returns translations for locales specified in ConfigurableBundleTemplateFilterTransfer::translationLocales, or for all available locales otherwise.
+     * - Returns fallback locale translation if provided single locale translation does not exist or translation key if nothing found.
      *
      * @api
      *
@@ -96,6 +97,7 @@ interface ConfigurableBundleFacadeInterface
      * Specification:
      * - Expects configurable bundle template ID to be provided.
      * - Updates isActive configurable bundle template property to true in Persistence.
+     * - Returns with error if configurable bundle template is already active.
      *
      * @api
      *
@@ -111,6 +113,7 @@ interface ConfigurableBundleFacadeInterface
      * Specification:
      * - Expects configurable bundle template ID to be provided.
      * - Updates isActive configurable bundle template property to false in Persistence.
+     * - Returns with error if configurable bundle template is already inactive.
      *
      * @api
      *
@@ -125,7 +128,6 @@ interface ConfigurableBundleFacadeInterface
     /**
      * Specification:
      * - Expects configurable bundle template ID to be provided.
-     * - Retrieves configurable bundle template by id.
      * - Removes configurable bundle template from Persistence.
      * - Removes configurable bundle template slots from Persistence.
      *
@@ -141,12 +143,12 @@ interface ConfigurableBundleFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves configurable bundle template slot in Persistence.
+     * - Retrieves first match configurable bundle template slot from Persistence.
      * - Filters by criteria from ConfigurableBundleTemplateSlotFilterTransfer.
-     * - Expands found configurable bundle template slots with translations.
-     * - Expands found configurable bundle template slots with product lists.
-     * - Provides translations for locales specified in ConfigurableBundleTemplateSlotFilterTransfer::translationLocales, or for all available locales otherwise.
-     * - If single locale translation was requested but doesn't exist, fallback translation will be provided, or translation key if nothing found.
+     * - Expands found configurable bundle template slot with translations.
+     * - Expands found configurable bundle template slot with product list.
+     * - Returns translations for locales specified in ConfigurableBundleTemplateSlotFilterTransfer::translationLocales, or for all available locales otherwise.
+     * - Returns fallback locale translation if provided single locale translation does not exist or translation key if nothing found.
      *
      * @api
      *
@@ -160,10 +162,12 @@ interface ConfigurableBundleFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves configurable bundle template slots in Persistence.
+     * - Retrieves configurable bundle template slots from Persistence.
      * - Filters by criteria from ConfigurableBundleTemplateSlotFilterTransfer.
-     * - Expands found configurable bundle template slots with translations.
-     * - Provides translations for locales specified in ConfigurableBundleTemplateSlotFilterTransfer::translationLocales, or for all available locales otherwise.
+     * - Expands found configurable bundle template slot with translations.
+     * - Expands found configurable bundle template slot with product list.
+     * - Returns translations for locales specified in ConfigurableBundleTemplateSlotFilterTransfer::translationLocales, or for all available locales otherwise.
+     * - Returns fallback locale translation if provided single locale translation does not exist or translation key if nothing found.
      *
      * @api
      *
@@ -179,7 +183,7 @@ interface ConfigurableBundleFacadeInterface
      * Specification:
      * - Persists configurable bundle template slot.
      * - Expects configurable bundle template ID to be provided.
-     * - Creates new product list, assigns it to a slot.
+     * - Creates new product list, assigns it to the slot.
      * - Expects minimum one translation to be provided.
      * - Expects locale definition for each provided translation.
      * - Generates translation key using first translation.

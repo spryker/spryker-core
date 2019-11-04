@@ -111,4 +111,7 @@
         <property name="left" type="array" singular="left"/>
     </transfer>
 
+    <transfer name="Quote">
+    </transfer>
+
 </transfers>

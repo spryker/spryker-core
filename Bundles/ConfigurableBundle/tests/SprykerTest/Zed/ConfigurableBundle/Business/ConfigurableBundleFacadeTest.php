@@ -34,6 +34,235 @@ class ConfigurableBundleFacadeTest extends Unit
      */
     protected $tester;
 
+
+    public function testGetConfigurableBundleTemplate_Positive(): void
+    {
+        // TODO: test
+    }
+
+    public function testGetConfigurableBundleTemplate_WrongId(): void
+    {
+        // TODO: test
+    }
+
+    public function testGetConfigurableBundleTemplate_ExpandTranslations(): void
+    {
+        // TODO: test
+    }
+
+    public function testGetConfigurableBundleTemplateCollection_Positive(): void
+    {
+        // TODO: test
+    }
+
+    public function testGetConfigurableBundleTemplateCollection_EmptyFilter(): void
+    {
+        // TODO: test
+    }
+
+    public function testGetConfigurableBundleTemplateCollection_ExpandTranslations(): void
+    {
+        // TODO: test
+    }
+
+    public function testCreateConfigurableBundleTemplate_Positive(): void
+    {
+        // TODO: test
+    }
+
+    public function testCreateConfigurableBundleTemplate_WithoutTranslations(): void
+    {
+        // TODO: test
+    }
+
+    public function testUpdateConfigurableBundleTemplate_Positive(): void
+    {
+        // TODO: test
+    }
+
+    public function testUpdateConfigurableBundleTemplate_WrongId(): void
+    {
+        // TODO: test
+    }
+
+    public function testUpdateConfigurableBundleTemplate_WithoutTranslations(): void
+    {
+        // TODO: test
+    }
+
+    public function testActivateConfigurableBundleTemplate_Positive(): void
+    {
+        // TODO: test
+    }
+
+    public function testActivateConfigurableBundleTemplate_WrongId(): void
+    {
+        // TODO: test
+    }
+
+    public function testActivateConfigurableBundleTemplate_AlreadyActivated(): void
+    {
+        // TODO: test
+    }
+
+    public function testDeactivateConfigurableBundleTemplate_Positive(): void
+    {
+        // TODO: test
+    }
+
+    public function testDeactivateConfigurableBundleTemplate_WrongId(): void
+    {
+        // TODO: test
+    }
+
+    public function testDeactivateConfigurableBundleTemplate_AlreadyDeactivated(): void
+    {
+        // TODO: test
+    }
+
+    public function testDeleteConfigurableBundleTemplate_Positive(): void
+    {
+        // TODO: test
+    }
+
+    public function testDeleteConfigurableBundleTemplate_WrongId(): void
+    {
+        // TODO: test
+    }
+
+    public function testDeleteConfigurableBundleTemplate_MakeSureThatSlotsWasRemoved(): void
+    {
+        // TODO: test
+    }
+
+    public function testGetConfigurableBundleTemplateSlot_Positive(): void
+    {
+        // TODO: test
+    }
+
+    public function testGetConfigurableBundleTemplateSlot_WrongId(): void
+    {
+        // TODO: test
+    }
+
+    public function testGetConfigurableBundleTemplateSlot_ExpandProductList(): void
+    {
+        // TODO: test
+    }
+
+    public function testGetConfigurableBundleTemplateSlot_ExpandTranslations(): void
+    {
+        // TODO: test
+    }
+
+    public function testGetConfigurableBundleTemplateSlot_ExpandTemplate(): void
+    {
+        // TODO: test
+    }
+
+    public function testGetConfigurableBundleTemplateSlotCollection_Positive(): void
+    {
+        // TODO: test
+    }
+
+    public function testGetConfigurableBundleTemplateSlotCollection_EmptyFilter(): void
+    {
+        // TODO: test
+    }
+
+    public function testGetConfigurableBundleTemplateSlotCollection_ExpandProductList(): void
+    {
+        // TODO: test
+    }
+
+    public function testGetConfigurableBundleTemplateSlotCollection_ExpandTranslations(): void
+    {
+        // TODO: test
+    }
+
+    public function testGetConfigurableBundleTemplateSlotCollection_ExpandTemplate(): void
+    {
+        // TODO: test
+    }
+
+    public function testCreateConfigurableBundleTemplateSlot_Positive(): void
+    {
+        // TODO: test
+    }
+
+    public function testCreateConfigurableBundleTemplateSlot_WithoutTemplate(): void
+    {
+        // TODO: test
+    }
+
+    public function testCreateConfigurableBundleTemplateSlot_WithoutTranslations(): void
+    {
+        // TODO: test
+    }
+
+    public function testCreateConfigurableBundleTemplateSlot_ErrorWhileProductListCreation(): void
+    {
+        // TODO: test
+    }
+
+    public function testUpdateConfigurableBundleTemplateSlot_Positive(): void
+    {
+        // TODO: test
+    }
+
+    public function testUpdateConfigurableBundleTemplateSlot_WrongId(): void
+    {
+        // TODO: test
+    }
+
+    public function testUpdateConfigurableBundleTemplateSlot_ErrorWhileUpdatingProductList(): void
+    {
+        // TODO: test
+    }
+
+    public function testDeleteConfigurableBundleTemplateSlot_Positive(): void
+    {
+        // TODO: test
+    }
+
+    public function testDeleteConfigurableBundleTemplateSlot_WrongId(): void
+    {
+        // TODO: test
+    }
+
+    public function testRemoveInactiveConfiguredBundleItemsFromQuote_Positive(): void
+    {
+        // TODO: test
+    }
+
+    public function testRemoveInactiveConfiguredBundleItemsFromQuote_WithoutConfBundleItems(): void
+    {
+        // TODO: test
+    }
+
+    public function testIsProductListDeletable_Positive(): void
+    {
+        // TODO: test
+    }
+
+    public function testIsProductListDeletable_EmptyId(): void
+    {
+        // TODO: test
+    }
+
+    public function testIsProductListDeletable_WrongId(): void
+    {
+        // TODO: test
+    }
+
+    public function testIsProductListDeletable_WithoutSlots(): void
+    {
+        // TODO: test
+    }
+
+
+
+
     /**
      * @return void
      */

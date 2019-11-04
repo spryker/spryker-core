@@ -82,7 +82,7 @@
         <property name="value" type="string"/>
     </transfer>
 
-    <transfer name="ProductListUsedByTableData">
+    <transfer name="ProductListUsedByTable">
         <property name="productList" type="ProductList"/>
         <property name="rows" type="ProductListUsedByTableRow[]" singular="row"/>
     </transfer>
@@ -91,6 +91,12 @@
         <property name="title" type="string"/>
         <property name="name" type="string"/>
         <property name="actionButtons" type="ButtonCollection"/>
+    </transfer>
+
+    <transfer name="ProductListCategoryRelation">
+    </transfer>
+
+    <transfer name="CategoryCollection">
     </transfer>
 
 </transfers>

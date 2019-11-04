@@ -37,12 +37,12 @@ class ConfiguredBundleItemCleaner implements ConfiguredBundleItemCleanerInterfac
         $filteredItemTransfers = new ArrayObject();
 
         $templateUuids = $this->extractConfigurableBundleTemplateUuids($quoteTransfer);
-        $activeConfigurableBundleTemplateUuids = $this->configurableBundleRepository->getActiveConfigurableBundleTemplateUuids($templateUuids);
+        $activeTemplateUuids = $this->configurableBundleRepository->getActiveConfigurableBundleTemplateUuids($templateUuids);
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $configurableBundleTemplateUuid = $this->extractConfigurableBundleTemplateUuid($itemTransfer);
+            $templateUuid = $this->extractConfigurableBundleTemplateUuid($itemTransfer);
 
-            if ($configurableBundleTemplateUuid && !in_array($configurableBundleTemplateUuid, $activeConfigurableBundleTemplateUuids, true)) {
+            if ($templateUuid && !in_array($templateUuid, $activeTemplateUuids, true)) {
                 continue;
             }
 
