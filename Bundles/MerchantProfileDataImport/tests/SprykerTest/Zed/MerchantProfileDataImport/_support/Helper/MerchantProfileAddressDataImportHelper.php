@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\MerchantProfileDataImport\Helper;
 
 use Codeception\Module;
-use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddressQuery;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 

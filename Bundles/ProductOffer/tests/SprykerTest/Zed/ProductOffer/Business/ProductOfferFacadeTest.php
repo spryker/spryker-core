@@ -17,7 +17,7 @@ use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
  *
  * @group SprykerTest
  * @group Zed
- * @group ProductNew
+ * @group ProductOffer
  * @group Business
  * @group Facade
  * @group ProductOfferFacadeTest
@@ -33,7 +33,7 @@ class ProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    public function setUp(): void
+    public function setUp()
     {
         parent::setUp();
         $this->cleanProductOffer();
@@ -45,7 +45,7 @@ class ProductOfferFacadeTest extends Unit
     public function testFind(): void
     {
         // Arrange
-        $productOfferTransfer = $this->tester->haveProductOffer();
+        $productOfferTransfer = $this->tester->haveProductOffer(['fkMerchant' => $this->tester->haveMerchant()->getIdMerchant()]);
         $productOfferCriteriaFilterTransfer = new ProductOfferCriteriaFilterTransfer();
         $productOfferCriteriaFilterTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
 
@@ -61,7 +61,8 @@ class ProductOfferFacadeTest extends Unit
     public function testCreate(): void
     {
         // Arrange
-        $productOfferTransfer = (new ProductOfferBuilder())->build();
+        $merchantTransfer = $this->tester->haveMerchant();
+        $productOfferTransfer = (new ProductOfferBuilder(['fkMerchant' => $merchantTransfer->getIdMerchant()]))->build();
         $productOfferTransfer->setIdProductOffer(null);
 
         // Act
@@ -74,7 +75,7 @@ class ProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function cleanProductOffer(): void
+    protected function cleanProductOffer()
     {
         SpyProductOfferQuery::create()->deleteAll();
     }
