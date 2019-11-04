@@ -17,6 +17,7 @@ use Spryker\Shared\CmsBlockStorage\CmsBlockStorageConstants;
 class CmsBlockStorage implements CmsBlockStorageInterface
 {
     protected const OPTION_NAME = 'name';
+    protected const OPTION_KEY = 'key';
     protected const OPTION_KEYS = 'keys';
 
     protected const PREFIX_MAPPING_CMS_BLOCK_KEY = 'name:';
@@ -68,7 +69,12 @@ class CmsBlockStorage implements CmsBlockStorageInterface
      */
     public function getCmsBlocksByOptions(array $options, string $localeName, string $storeName): array
     {
+        $cmsBlockKey = $options[static::OPTION_KEY] ?? null;
         $cmsBlockKeys = $options[static::OPTION_KEYS] ?? [];
+
+        if ($cmsBlockKey) {
+            $cmsBlockKeys = array_merge($cmsBlockKeys, [$cmsBlockKey]);
+        }
 
         if ($cmsBlockKeys) {
             return $this->getBlocksByKeys($cmsBlockKeys, $localeName, $storeName);
@@ -226,6 +232,6 @@ class CmsBlockStorage implements CmsBlockStorageInterface
      */
     protected function mapOptionsToTransfer(array $options): CmsBlockRequestTransfer
     {
-        return (new CmsBlockRequestTransfer())->fromArray($options);
+        return (new CmsBlockRequestTransfer())->fromArray($options, true);
     }
 }
