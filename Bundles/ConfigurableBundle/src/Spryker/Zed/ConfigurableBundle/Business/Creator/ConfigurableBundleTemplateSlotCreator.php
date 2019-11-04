@@ -76,6 +76,16 @@ class ConfigurableBundleTemplateSlotCreator implements ConfigurableBundleTemplat
     public function createConfigurableBundleTemplateSlot(
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
     ): ConfigurableBundleTemplateSlotResponseTransfer {
+        $configurableBundleTemplateResponseTransfer = $this->getConfigurableBundleTemplate($configurableBundleTemplateSlotTransfer);
+
+        if (!$configurableBundleTemplateResponseTransfer->getIsSuccessful()) {
+            return $this->getErrorResponse($configurableBundleTemplateResponseTransfer->getMessages());
+        }
+
+        $configurableBundleTemplateSlotTransfer->setConfigurableBundleTemplate(
+            $configurableBundleTemplateResponseTransfer->getConfigurableBundleTemplate()
+        );
+
         return $this->getTransactionHandler()->handleTransaction(function () use ($configurableBundleTemplateSlotTransfer) {
             return $this->executeCreateConfigurableBundleTemplateSlotTransaction($configurableBundleTemplateSlotTransfer);
         });
@@ -89,16 +99,6 @@ class ConfigurableBundleTemplateSlotCreator implements ConfigurableBundleTemplat
     protected function executeCreateConfigurableBundleTemplateSlotTransaction(
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
     ): ConfigurableBundleTemplateSlotResponseTransfer {
-        $configurableBundleTemplateResponseTransfer = $this->getConfigurableBundleTemplate($configurableBundleTemplateSlotTransfer);
-
-        if (!$configurableBundleTemplateResponseTransfer->getIsSuccessful()) {
-            return $this->getErrorResponse($configurableBundleTemplateResponseTransfer->getMessages());
-        }
-
-        $configurableBundleTemplateSlotTransfer->setConfigurableBundleTemplate(
-            $configurableBundleTemplateResponseTransfer->getConfigurableBundleTemplate()
-        );
-
         $productListResponseTransfer = $this->productListWriter->createProductList($configurableBundleTemplateSlotTransfer);
 
         if (!$productListResponseTransfer->getIsSuccessful()) {
@@ -107,7 +107,7 @@ class ConfigurableBundleTemplateSlotCreator implements ConfigurableBundleTemplat
 
         $configurableBundleTemplateSlotTransfer
             ->setProductList($productListResponseTransfer->getProductList())
-            ->setName($this->configurableBundleNameGenerator->generateSlotName($configurableBundleTemplateSlotTransfer));
+            ->setName($this->configurableBundleNameGenerator->generateTemplateSlotName($configurableBundleTemplateSlotTransfer));
 
         $configurableBundleTemplateSlotTransfer = $this->configurableBundleEntityManager
             ->createConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer);
@@ -136,11 +136,11 @@ class ConfigurableBundleTemplateSlotCreator implements ConfigurableBundleTemplat
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[]|null $messageTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotResponseTransfer
      */
-    protected function getErrorResponse(?ArrayObject $messageTransfers): ConfigurableBundleTemplateSlotResponseTransfer
+    protected function getErrorResponse(ArrayObject $messageTransfers): ConfigurableBundleTemplateSlotResponseTransfer
     {
         return (new ConfigurableBundleTemplateSlotResponseTransfer())
             ->setMessages($messageTransfers)

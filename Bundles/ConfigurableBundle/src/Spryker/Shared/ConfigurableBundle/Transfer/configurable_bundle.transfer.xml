@@ -71,7 +71,6 @@
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlotFilter">
-        <property name="idProductList" type="int"/>
         <property name="productList" type="ProductList"/>
         <property name="idConfigurableBundleTemplateSlot" type="int"/>
         <property name="translationLocales" type="Locale[]" singular="translationLocale"/>

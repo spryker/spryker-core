@@ -80,7 +80,8 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
         ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
     ): ?ConfigurableBundleTemplateSlotTransfer {
         $configurableBundleTemplateSlotQuery = $this->getFactory()
-            ->getConfigurableBundleTemplateSlotPropelQuery();
+            ->getConfigurableBundleTemplateSlotPropelQuery()
+            ->joinWithSpyConfigurableBundleTemplate();
 
         $configurableBundleTemplateSlotQuery = $this->setConfigurableBundleTemplateSlotFilters(
             $configurableBundleTemplateSlotQuery,
@@ -127,7 +128,7 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
      */
     public function getActiveConfigurableBundleTemplateUuids(array $templateUuids): array
     {
-        if (empty($templateUuids)) {
+        if (!$templateUuids) {
             return [];
         }
 

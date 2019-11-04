@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ConfigurableBundleTemplateForm;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToConfigurableBundleFacadeInterface;
-use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToGlossaryFacadeInterface;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface;
 
 class ConfigurableBundleTemplateFormDataProvider
@@ -28,23 +27,15 @@ class ConfigurableBundleTemplateFormDataProvider
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToGlossaryFacadeInterface
-     */
-    protected $glossaryFacade;
-
-    /**
      * @param \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToConfigurableBundleFacadeInterface $configurableBundleFacade
      * @param \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface $localeFacade
-     * @param \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToGlossaryFacadeInterface $glossaryFacade
      */
     public function __construct(
         ConfigurableBundleGuiToConfigurableBundleFacadeInterface $configurableBundleFacade,
-        ConfigurableBundleGuiToLocaleFacadeInterface $localeFacade,
-        ConfigurableBundleGuiToGlossaryFacadeInterface $glossaryFacade
+        ConfigurableBundleGuiToLocaleFacadeInterface $localeFacade
     ) {
         $this->configurableBundleFacade = $configurableBundleFacade;
         $this->localeFacade = $localeFacade;
-        $this->glossaryFacade = $glossaryFacade;
     }
 
     /**

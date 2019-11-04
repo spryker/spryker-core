@@ -95,7 +95,7 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductListGui\Communication\Tabs\ProductListCreateAggregationTabs
+     * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
      */
     public function createProductListCreateAggregationTabs(): TabsInterface
     {
@@ -103,7 +103,7 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductListGui\Communication\Tabs\ProductListEditAggregationTabs
+     * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface
      */
     public function createProductListEditAggregationTabs(): TabsInterface
     {

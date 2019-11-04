@@ -8,13 +8,9 @@
 namespace Spryker\Zed\ConfigurableBundle;
 
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeBridge;
-use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeBridge;
-use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToProductListFacadeBridge;
-use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToProductListFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Service\ConfigurableBundleToUtilTextServiceBridge;
-use Spryker\Zed\ConfigurableBundle\Dependency\Service\ConfigurableBundleToUtilTextServiceInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -64,7 +60,7 @@ class ConfigurableBundleDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addGlossaryFacade(Container $container): Container
     {
-        $container->set(static::FACADE_GLOSSARY, function (Container $container): ConfigurableBundleToGlossaryFacadeInterface {
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new ConfigurableBundleToGlossaryFacadeBridge(
                 $container->getLocator()->glossary()->facade()
             );
@@ -80,7 +76,7 @@ class ConfigurableBundleDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container->set(static::FACADE_LOCALE, function (Container $container): ConfigurableBundleToLocaleFacadeInterface {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ConfigurableBundleToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade()
             );
@@ -96,7 +92,7 @@ class ConfigurableBundleDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addProductListFacade(Container $container): Container
     {
-        $container->set(static::FACADE_PRODUCT_LIST, function (Container $container): ConfigurableBundleToProductListFacadeInterface {
+        $container->set(static::FACADE_PRODUCT_LIST, function (Container $container) {
             return new ConfigurableBundleToProductListFacadeBridge(
                 $container->getLocator()->productList()->facade()
             );
@@ -112,7 +108,7 @@ class ConfigurableBundleDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addUtilTextService(Container $container): Container
     {
-        $container->set(static::SERVICE_UTIL_TEXT, function (Container $container): ConfigurableBundleToUtilTextServiceInterface {
+        $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
             return new ConfigurableBundleToUtilTextServiceBridge(
                 $container->getLocator()->utilText()->service()
             );

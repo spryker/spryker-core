@@ -42,7 +42,6 @@ use Spryker\Zed\ConfigurableBundleGui\Communication\Tabs\ConfigurableBundleTempl
 use Spryker\Zed\ConfigurableBundleGui\Communication\Tabs\ConfigurableBundleTemplateSlotEditTabs;
 use Spryker\Zed\ConfigurableBundleGui\ConfigurableBundleGuiDependencyProvider;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToConfigurableBundleFacadeInterface;
-use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToGlossaryFacadeInterface;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToProductListFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -111,8 +110,7 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
     {
         return new ConfigurableBundleTemplateFormDataProvider(
             $this->getConfigurableBundleFacade(),
-            $this->getLocaleFacade(),
-            $this->getGlossaryFacade()
+            $this->getLocaleFacade()
         );
     }
 
@@ -132,7 +130,6 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
         return new ConfigurableBundleTemplateSlotEditFormDataProvider(
             $this->getConfigurableBundleFacade(),
             $this->getLocaleFacade(),
-            $this->getGlossaryFacade(),
             $this->getConfigurableBundleTemplateSlotEditFormDataProviderExpanderPlugins()
         );
     }
@@ -309,14 +306,6 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
     public function getLocaleFacade(): ConfigurableBundleGuiToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleGuiDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
-     * @return \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToGlossaryFacadeInterface
-     */
-    public function getGlossaryFacade(): ConfigurableBundleGuiToGlossaryFacadeInterface
-    {
-        return $this->getProvidedDependency(ConfigurableBundleGuiDependencyProvider::FACADE_GLOSSARY);
     }
 
     /**
