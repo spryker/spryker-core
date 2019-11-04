@@ -13,7 +13,7 @@ use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGu
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToLocaleFacadeInterface;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToTranslatorFacadeInterface;
 
-class CategoryDataProvider implements CategoryDataProviderInterface
+class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInterface
 {
     protected const KEY_OPTION_ALL_CATEGORIES = 'All Category Pages';
     protected const KEY_OPTION_SPECIFIC_CATEGORY = 'Specific Category Pages';

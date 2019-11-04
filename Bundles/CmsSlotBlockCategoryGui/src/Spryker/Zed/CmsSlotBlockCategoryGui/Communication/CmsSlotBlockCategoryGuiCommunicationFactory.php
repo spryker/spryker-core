@@ -8,10 +8,10 @@
 namespace Spryker\Zed\CmsSlotBlockCategoryGui\Communication;
 
 use Spryker\Zed\CmsSlotBlockCategoryGui\CmsSlotBlockCategoryGuiDependencyProvider;
-use Spryker\Zed\CmsSlotBlockCategoryGui\Communication\DataProvider\CategoryDataProvider;
-use Spryker\Zed\CmsSlotBlockCategoryGui\Communication\DataProvider\CategoryDataProviderInterface;
+use Spryker\Zed\CmsSlotBlockCategoryGui\Communication\DataProvider\CategorySlotBlockDataProvider;
+use Spryker\Zed\CmsSlotBlockCategoryGui\Communication\DataProvider\CategorySlotBlockDataProviderInterface;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\CategorySlotBlockConditionForm;
-use Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\Validator\Constraints\CategoryConditionsConstraint;
+use Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\Validator\Constraints\CategoryConditionConstraint;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToCategoryFacadeInterface;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToLocaleFacadeInterface;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToTranslatorFacadeInterface;
@@ -28,11 +28,11 @@ class CmsSlotBlockCategoryGuiCommunicationFactory extends AbstractCommunicationF
     }
 
     /**
-     * @return \Spryker\Zed\CmsSlotBlockCategoryGui\Communication\DataProvider\CategoryDataProviderInterface
+     * @return \Spryker\Zed\CmsSlotBlockCategoryGui\Communication\DataProvider\CategorySlotBlockDataProviderInterface
      */
-    public function createCategoryDataProvider(): CategoryDataProviderInterface
+    public function createCategorySlotBlockDataProvider(): CategorySlotBlockDataProviderInterface
     {
-        return new CategoryDataProvider(
+        return new CategorySlotBlockDataProvider(
             $this->getCategoryFacade(),
             $this->getLocaleFacade(),
             $this->getTranslatorFacade()
@@ -40,11 +40,11 @@ class CmsSlotBlockCategoryGuiCommunicationFactory extends AbstractCommunicationF
     }
 
     /**
-     * @return \Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\Validator\Constraints\CategoryConditionsConstraint
+     * @return \Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\Validator\Constraints\CategoryConditionConstraint
      */
-    public function createCategoryConditionsConstraint(): CategoryConditionsConstraint
+    public function createCategoryConditionsConstraint(): CategoryConditionConstraint
     {
-        return new CategoryConditionsConstraint();
+        return new CategoryConditionConstraint();
     }
 
     /**

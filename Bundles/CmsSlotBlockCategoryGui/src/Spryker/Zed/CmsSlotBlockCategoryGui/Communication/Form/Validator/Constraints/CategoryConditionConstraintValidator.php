@@ -11,11 +11,11 @@ use Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\CategorySlotBlockCond
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-class CategoryConditionsConstraintValidator extends ConstraintValidator
+class CategoryConditionConstraintValidator extends ConstraintValidator
 {
     /**
      * @param mixed $value
-     * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\Validator\Constraints\CategoryConditionsConstraint $constraint
+     * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\Validator\Constraints\CategoryConditionConstraint $constraint
      *
      * @return void
      */

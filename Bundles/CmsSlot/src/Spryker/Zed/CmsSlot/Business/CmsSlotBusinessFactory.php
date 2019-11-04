@@ -9,11 +9,11 @@ namespace Spryker\Zed\CmsSlot\Business;
 
 use Spryker\Zed\CmsSlot\Business\Activator\CmsSlotActivator;
 use Spryker\Zed\CmsSlot\Business\Activator\CmsSlotActivatorInterface;
+use Spryker\Zed\CmsSlot\Business\CmsSlotTemplate\CmsSlotTemplateReader;
+use Spryker\Zed\CmsSlot\Business\CmsSlotTemplate\CmsSlotTemplateReaderInterface;
 use Spryker\Zed\CmsSlot\Business\ConstraintsProvider\CmsSlotConstraintsProvider;
 use Spryker\Zed\CmsSlot\Business\ConstraintsProvider\CmsSlotTemplateConstraintsProvider;
 use Spryker\Zed\CmsSlot\Business\ConstraintsProvider\ConstraintsProviderInterface;
-use Spryker\Zed\CmsSlot\Business\Reader\CmsSlotTemplate\CmsSlotTemplateReader;
-use Spryker\Zed\CmsSlot\Business\Reader\CmsSlotTemplate\CmsSlotTemplateReaderInterface;
 use Spryker\Zed\CmsSlot\Business\Validator\CmsSlotTemplateValidator;
 use Spryker\Zed\CmsSlot\Business\Validator\CmsSlotTemplateValidatorInterface;
 use Spryker\Zed\CmsSlot\Business\Validator\CmsSlotValidator;
@@ -71,7 +71,7 @@ class CmsSlotBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsSlot\Business\Reader\CmsSlotTemplate\CmsSlotTemplateReaderInterface
+     * @return \Spryker\Zed\CmsSlot\Business\CmsSlotTemplate\CmsSlotTemplateReaderInterface
      */
     public function createCmsSlotTemplateReader(): CmsSlotTemplateReaderInterface
     {

@@ -9,7 +9,7 @@ namespace Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\Validator\Const
 
 use Symfony\Component\Validator\Constraint;
 
-class CategoryConditionsConstraint extends Constraint
+class CategoryConditionConstraint extends Constraint
 {
     /**
      * @var string
