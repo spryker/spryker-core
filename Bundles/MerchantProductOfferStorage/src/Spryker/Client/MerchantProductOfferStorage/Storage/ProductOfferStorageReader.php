@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\MerchantProductOfferStorage\Storage;
 
+use Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToStorageClientInterface;
@@ -49,11 +50,11 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     /**
      * @param string $concreteSku
      *
-     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
+     * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
-    public function getProductOfferStorageCollection(string $concreteSku): array
+    public function getProductOfferStorageCollection(string $concreteSku): ProductOfferStorageCollectionTransfer
     {
-        $productOfferStorageCollection = [];
+        $productOfferStorageCollection = new ProductOfferStorageCollectionTransfer();
         $concreteProductOffersKey = $this->generateKey($concreteSku, MerchantProductOfferStorageConfig::RESOURCE_CONCRETE_PRODUCT_PRODUCT_OFFERS_NAME);
 
         $concreteProductOffers = $this->storageClient->get($concreteProductOffersKey);
@@ -66,7 +67,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
                 $merchantProductOfferKey = $this->generateKey($concreteProductOffer, MerchantProductOfferStorageConfig::RESOURCE_MERCHANT_PRODUCT_OFFER_NAME);
                 $concreteProductOfferData = $this->storageClient->get($merchantProductOfferKey);
                 $productOfferStorageTransfer = $this->merchantProductOfferMapper->mapMerchantProductOfferStorageDataToProductOfferStorageTransfer($concreteProductOfferData, (new ProductOfferStorageTransfer()));
-                $productOfferStorageCollection[] = $productOfferStorageTransfer;
+                $productOfferStorageCollection->addProductOfferStorage($productOfferStorageTransfer);
             }
         }
         

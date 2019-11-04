@@ -34,4 +34,16 @@ interface MerchantProfileStorageClientInterface
      * @return \Generated\Shared\Transfer\MerchantProfileStorageTransfer|null
      */
     public function findMerchantProfileStorageData(int $idMerchant): ?MerchantProfileStorageTransfer;
+
+    /**
+     * Specification:
+     * - Finds merchant profile data by merchantIds.
+     *
+     * @api
+     *
+     * @param int[] $merchantIds
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileStorageTransfer[]
+     */
+    public function findMerchantProfileStorageList(array $merchantIds): array;
 }
