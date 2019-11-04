@@ -26,6 +26,6 @@ class MerchantProductOfferFacade extends AbstractFacade implements MerchantProdu
      */
     public function findIdMerchantByProductOfferReference(string $productOfferReference): ?int
     {
-        return $this->getRepository()->findIdMerchantByOfferReference($productOfferReference);
+        return $this->getRepository()->findIdMerchantByProductOfferReference($productOfferReference);
     }
 }

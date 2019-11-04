@@ -19,7 +19,7 @@ class MerchantProductOfferPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
      */
-    public function createProductOfferQuery(): SpyProductOfferQuery
+    public function createProductOfferPropelQuery(): SpyProductOfferQuery
     {
         return SpyProductOfferQuery::create();
     }

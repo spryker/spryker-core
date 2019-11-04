@@ -19,9 +19,10 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
      *
      * @return int|null
      */
-    public function findIdMerchantByOfferReference(string $productOfferReference): ?int
+    public function findIdMerchantByProductOfferReference(string $productOfferReference): ?int
     {
-        $productOfferEntity = $this->getFactory()->createProductOfferQuery()
+        $productOfferEntity = $this->getFactory()
+            ->createProductOfferPropelQuery()
             ->findOneByProductOfferReference($productOfferReference);
 
         if (!$productOfferEntity || !$productOfferEntity->getFkMerchant()) {

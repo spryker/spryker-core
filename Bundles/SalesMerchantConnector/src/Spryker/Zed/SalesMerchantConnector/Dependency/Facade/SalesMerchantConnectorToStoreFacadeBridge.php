@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\SalesMerchantConnector\Dependency\Facade;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
 class SalesMerchantConnectorToStoreFacadeBridge implements SalesMerchantConnectorToStoreFacadeInterface
 {
     /**
@@ -27,7 +25,7 @@ class SalesMerchantConnectorToStoreFacadeBridge implements SalesMerchantConnecto
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore(): StoreTransfer
+    public function getCurrentStore()
     {
         return $this->storeFacade->getCurrentStore();
     }

@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\SalesOrderMerchantTransfer;
 interface SalesMerchantConnectorEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderMerchantTransfer $orderMerchantTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderMerchantTransfer $salesOrderMerchantTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderMerchantTransfer
      */
-    public function createSalesOrderMerchant(SalesOrderMerchantTransfer $orderMerchantTransfer): SalesOrderMerchantTransfer;
+    public function createSalesOrderMerchant(SalesOrderMerchantTransfer $salesOrderMerchantTransfer): SalesOrderMerchantTransfer;
 }

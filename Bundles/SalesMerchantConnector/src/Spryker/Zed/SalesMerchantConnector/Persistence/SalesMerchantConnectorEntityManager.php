@@ -16,27 +16,27 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class SalesMerchantConnectorEntityManager extends AbstractEntityManager implements SalesMerchantConnectorEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderMerchantTransfer $orderMerchantTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderMerchantTransfer $salesOrderMerchantTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderMerchantTransfer
      */
-    public function createSalesOrderMerchant(SalesOrderMerchantTransfer $orderMerchantTransfer): SalesOrderMerchantTransfer
+    public function createSalesOrderMerchant(SalesOrderMerchantTransfer $salesOrderMerchantTransfer): SalesOrderMerchantTransfer
     {
         $salesMerchantConnectorMapper = $this->getFactory()->createSalesMerchantConnectorMapper();
 
         $salesOrderMerchantEntity = $this->getFactory()->createSalesOrderMerchantQuery()
-            ->filterByMerchantReference($orderMerchantTransfer->getMerchantReference())
+            ->filterByMerchantReference($salesOrderMerchantTransfer->getMerchantReference())
             ->findOneOrCreate();
 
-        $salesOrderMerchant = $salesMerchantConnectorMapper->mapSalesOrderMerchantTransferToSalesOrderMerchantEntity(
-            $orderMerchantTransfer,
+        $salesOrderMerchantEntity = $salesMerchantConnectorMapper->mapSalesOrderMerchantTransferToSalesOrderMerchantEntity(
+            $salesOrderMerchantTransfer,
             $salesOrderMerchantEntity
         );
 
-        $salesOrderMerchant->save();
+        $salesOrderMerchantEntity->save();
 
         return $salesMerchantConnectorMapper->mapSalesOrderMerchantEntityToSalesOrderMerchantTransfer(
-            $salesOrderMerchant,
+            $salesOrderMerchantEntity,
             new SalesOrderMerchantTransfer()
         );
     }

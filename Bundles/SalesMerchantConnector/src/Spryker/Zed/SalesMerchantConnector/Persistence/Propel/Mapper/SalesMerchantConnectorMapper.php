@@ -13,30 +13,30 @@ use Orm\Zed\SalesMerchantConnector\Persistence\SpySalesOrderMerchant;
 class SalesMerchantConnectorMapper
 {
     /**
-     * @param \Orm\Zed\SalesMerchantConnector\Persistence\SpySalesOrderMerchant $salesOrderMerchant
+     * @param \Orm\Zed\SalesMerchantConnector\Persistence\SpySalesOrderMerchant $salesOrderMerchantEntity
      * @param \Generated\Shared\Transfer\SalesOrderMerchantTransfer $salesOrderMerchantTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderMerchantTransfer
      */
     public function mapSalesOrderMerchantEntityToSalesOrderMerchantTransfer(
-        SpySalesOrderMerchant $salesOrderMerchant,
+        SpySalesOrderMerchant $salesOrderMerchantEntity,
         SalesOrderMerchantTransfer $salesOrderMerchantTransfer
     ): SalesOrderMerchantTransfer {
-        return $salesOrderMerchantTransfer->fromArray($salesOrderMerchant->toArray(), true);
+        return $salesOrderMerchantTransfer->fromArray($salesOrderMerchantEntity->toArray(), true);
     }
 
     /**
      * @param \Generated\Shared\Transfer\SalesOrderMerchantTransfer $salesOrderMerchantTransfer
-     * @param \Orm\Zed\SalesMerchantConnector\Persistence\SpySalesOrderMerchant $salesOrderMerchant
+     * @param \Orm\Zed\SalesMerchantConnector\Persistence\SpySalesOrderMerchant $salesOrderMerchantEntity
      *
      * @return \Orm\Zed\SalesMerchantConnector\Persistence\SpySalesOrderMerchant
      */
     public function mapSalesOrderMerchantTransferToSalesOrderMerchantEntity(
         SalesOrderMerchantTransfer $salesOrderMerchantTransfer,
-        SpySalesOrderMerchant $salesOrderMerchant
+        SpySalesOrderMerchant $salesOrderMerchantEntity
     ): SpySalesOrderMerchant {
-        $salesOrderMerchant->fromArray($salesOrderMerchantTransfer->modifiedToArray());
+        $salesOrderMerchantEntity->fromArray($salesOrderMerchantTransfer->modifiedToArray());
 
-        return $salesOrderMerchant;
+        return $salesOrderMerchantEntity;
     }
 }

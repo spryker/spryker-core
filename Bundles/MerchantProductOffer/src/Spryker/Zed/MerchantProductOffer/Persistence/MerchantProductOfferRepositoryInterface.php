@@ -14,5 +14,5 @@ interface MerchantProductOfferRepositoryInterface
      *
      * @return int|null
      */
-    public function findIdMerchantByOfferReference(string $productOfferReference): ?int;
+    public function findIdMerchantByProductOfferReference(string $productOfferReference): ?int;
 }
