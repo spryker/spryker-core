@@ -1,7 +1,7 @@
 # ConfigurableBundlePageSearch Module
 [![Build Status](https://travis-ci.org/spryker/configurable-bundle-page-search.svg)](https://travis-ci.org/spryker/configurable-bundle-page-search)
 
-{{ADD DESCRIPTION HERE}}
+This module manages Elasticsearch documents for configurable bundle entities.
 
 ## Installation
 

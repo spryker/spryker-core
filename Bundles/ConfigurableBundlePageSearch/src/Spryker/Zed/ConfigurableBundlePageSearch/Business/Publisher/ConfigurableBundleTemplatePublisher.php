@@ -185,7 +185,7 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
     protected function validateConfigurableBundleTemplatePageSearchTransfer(ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer): bool
     {
         return $configurableBundleTemplatePageSearchTransfer->getTranslations() &&
-            !empty($configurableBundleTemplatePageSearchTransfer->getTranslations()[ConfigurableBundleTemplateTranslationTransfer::NAME]);
+            isset($configurableBundleTemplatePageSearchTransfer->getTranslations()[ConfigurableBundleTemplateTranslationTransfer::NAME]);
     }
 
     /**
