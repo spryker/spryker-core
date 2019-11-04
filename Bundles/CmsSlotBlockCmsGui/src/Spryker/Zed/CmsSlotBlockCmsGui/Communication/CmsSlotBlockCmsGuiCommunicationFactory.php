@@ -10,8 +10,8 @@ namespace Spryker\Zed\CmsSlotBlockCmsGui\Communication;
 use Spryker\Zed\CmsSlotBlockCmsGui\CmsSlotBlockCmsGuiDependencyProvider;
 use Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\CmsPageConditionForm;
 use Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\Constraint\CmsPageConditionsConstraint;
+use Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\DataProvider\CmsPageConditionDataProvider;
 use Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\DataProvider\CmsPageConditionDataProviderInterface;
-use Spryker\Zed\CmsSlotBlockCmsGui\Dependency\QueryContainer\CmsSlotBlockCmsGuiToCmsQueryContainerBridge;
 use Spryker\Zed\CmsSlotBlockCmsGui\Dependency\QueryContainer\CmsSlotBlockCmsGuiToCmsQueryContainerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -20,7 +20,7 @@ class CmsSlotBlockCmsGuiCommunicationFactory extends AbstractCommunicationFactor
     /**
      * @return \Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\CmsPageConditionForm
      */
-    public function createCmsPageSlotBlockConditionForm(): CmsPageConditionForm
+    public function createCmsPageConditionForm(): CmsPageConditionForm
     {
         return new CmsPageConditionForm();
     }
@@ -28,9 +28,9 @@ class CmsSlotBlockCmsGuiCommunicationFactory extends AbstractCommunicationFactor
     /**
      * @return \Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\DataProvider\CmsPageConditionDataProviderInterface
      */
-    public function createCmsPageSlotBlockFormDataProvider(): CmsPageConditionDataProviderInterface
+    public function createCmsPageConditionFormDataProvider(): CmsPageConditionDataProviderInterface
     {
-        return new CmsPageConditionsDataProvider($this->getCmsQueryContainer());
+        return new CmsPageConditionDataProvider($this->getCmsQueryContainer());
     }
 
     /**

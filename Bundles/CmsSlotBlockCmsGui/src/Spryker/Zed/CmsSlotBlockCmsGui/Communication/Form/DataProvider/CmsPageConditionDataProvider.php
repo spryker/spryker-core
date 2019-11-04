@@ -34,7 +34,7 @@ class CmsPageConditionDataProvider implements CmsPageConditionDataProviderInterf
     {
         return [
             'data_class' => CmsSlotBlockTransfer::class,
-            CmsPageConditionForm::OPTION_PAGE_IDS => $this->getPageIds(),
+            CmsPageConditionForm::OPTION_PAGE_ARRAY => $this->getPageIds(),
         ];
     }
 

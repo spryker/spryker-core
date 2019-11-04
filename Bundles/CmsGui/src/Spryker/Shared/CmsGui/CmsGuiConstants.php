@@ -28,10 +28,4 @@ interface CmsGuiConstants
      * @api
      */
     public const CMS_FOLDER_PATH = 'CMS_FOLDER_PATH';
-
-    /**
-     * Specification:
-     * - Defines the key of condition form plugin.
-     */
-    public const CONDITION_KEY = 'cms_page';
 }

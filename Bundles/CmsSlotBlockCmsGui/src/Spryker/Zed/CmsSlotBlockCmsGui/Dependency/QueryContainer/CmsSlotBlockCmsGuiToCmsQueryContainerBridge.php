@@ -7,11 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotBlockCmsGui\Dependency\QueryContainer;
 
-use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
-use Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributesQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
-use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 class CmsSlotBlockCmsGuiToCmsQueryContainerBridge implements CmsSlotBlockCmsGuiToCmsQueryContainerInterface
 {

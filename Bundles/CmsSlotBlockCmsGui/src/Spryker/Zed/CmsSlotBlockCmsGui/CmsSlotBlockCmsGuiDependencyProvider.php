@@ -7,14 +7,19 @@
 
 namespace Spryker\Zed\CmsSlotBlockCmsGui;
 
-use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Zed\CmsSlotBlockCmsGui\Dependency\QueryContainer\CmsSlotBlockCmsGuiToCmsQueryContainerBridge;
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
-class CmsSlotBlockCmsGuiDependencyProvider extends AbstractDependencyProvider
+class CmsSlotBlockCmsGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const QUERY_CONTAINER_CMS = 'QUERY_CONTAINER_CMS';
 
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addCmsQueryContainer($container);
@@ -32,6 +37,7 @@ class CmsSlotBlockCmsGuiDependencyProvider extends AbstractDependencyProvider
         $container->set(static::QUERY_CONTAINER_CMS, function (Container $container) {
             return new CmsSlotBlockCmsGuiToCmsQueryContainerBridge($container->getLocator()->cms()->queryContainer());
         });
+
         return $container;
     }
 }

@@ -13,13 +13,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * @method \Spryker\Zed\CmsGui\Communication\CmsGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\CmsGui\CmsGuiConfig getConfig()
+ * @method \Spryker\Zed\CmsSlotBlockCmsGui\Communication\CmsSlotBlockCmsGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsSlotBlockCmsGui\CmsSlotBlockCmsGuiConfig getConfig()
  */
 class CmsPageSlotBlockConditionFormPlugin extends AbstractPlugin implements CmsSlotBlockGuiConditionFormPluginInterface
 {
     /**
-     * @uses \Spryker\Shared\CmsGui\CmsGuiConstants::CONDITION_KEY
+     * @uses \Spryker\Shared\CmsSlotBlockCmsConnector\CmsSlotBlockCmsConnectorConfig::CONDITION_KEY
      */
     protected const CONDITION_KEY = 'cms_page';
 
@@ -48,8 +48,8 @@ class CmsPageSlotBlockConditionFormPlugin extends AbstractPlugin implements CmsS
      */
     public function addConditionForm(FormBuilderInterface $builder): void
     {
-        $cmsPageSlotBlockConditionForm = $this->getFactory()->createCmsPageSlotBlockConditionForm();
-        $cmsPageSlotBlockFormDataProvider = $this->getFactory()->createCmsPageSlotBlockFormDataProvider();
+        $cmsPageSlotBlockConditionForm = $this->getFactory()->createCmsPageConditionForm();
+        $cmsPageSlotBlockFormDataProvider = $this->getFactory()->createCmsPageConditionFormDataProvider();
         $cmsPageSlotBlockConditionForm->buildForm($builder, $cmsPageSlotBlockFormDataProvider->getOptions());
     }
 }

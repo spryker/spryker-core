@@ -13,13 +13,16 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * @method \Spryker\Zed\CmsGui\Communication\CmsGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\CmsGui\CmsGuiConfig getConfig()
+ * @method \Spryker\Zed\CmsSlotBlockCmsGui\Communication\CmsSlotBlockCmsGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsSlotBlockCmsGui\CmsSlotBlockCmsGuiConfig getConfig()
  */
 class CmsPageConditionForm extends AbstractType
 {
-    public const OPTION_PAGE_IDS = 'option-page-ids';
+    public const OPTION_PAGE_ARRAY = 'option-page-array';
 
+    /**
+     * @uses \Spryker\Shared\CmsSlotBlockCmsConnector\CmsSlotBlockCmsConnectorConfig::CONDITION_KEY
+     */
     protected const FIELD_CMS_PAGE = 'cms_page';
     protected const FIELD_ALL = 'all';
     protected const FIELD_PAGE_IDS = 'pageIds';
@@ -93,7 +96,7 @@ class CmsPageConditionForm extends AbstractType
     protected function addPageIdsField(FormBuilderInterface $builder, array $options)
     {
         $builder->get(static::FIELD_CMS_PAGE)->add(static::FIELD_PAGE_IDS, ChoiceType::class, [
-            'choices' => $options[static::OPTION_PAGE_IDS],
+            'choices' => $options[static::OPTION_PAGE_ARRAY],
             'required' => false,
             'multiple' => true,
             'label' => static::LABEL_CMS_PAGES,

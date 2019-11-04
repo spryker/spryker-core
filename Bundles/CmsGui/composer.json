@@ -8,7 +8,6 @@
     "spryker/application": "^3.2.0",
     "spryker/cms": "^7.0.0",
     "spryker/cms-gui-extension": "^1.0.0",
-    "spryker/cms-slot-block-gui-extension": "0.1.0",
     "spryker/glossary": "^3.0.0",
     "spryker/gui": "^3.21.0",
     "spryker/kernel": "^3.30.0",
