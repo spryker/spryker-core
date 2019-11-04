@@ -526,6 +526,11 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
             $value = $this->$property;
 
             $arrayKey = $property;
+
+            if ($value instanceof AbstractTransfer) {
+                $values[$arrayKey] = $value->modifiedToArray(true, true);
+                continue;
+            }
             switch ($property) {
                 case 'scalarField':
                 case 'arrayField':
@@ -554,6 +559,11 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
             $value = $this->$property;
 
             $arrayKey = $this->transferMetadata[$property]['name_underscore'];
+
+            if ($value instanceof AbstractTransfer) {
+                $values[$arrayKey] = $value->modifiedToArray(true, false);
+                continue;
+            }
             switch ($property) {
                 case 'scalarField':
                 case 'arrayField':
@@ -582,6 +592,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
             $value = $this->$property;
 
             $arrayKey = $this->transferMetadata[$property]['name_underscore'];
+
             $values[$arrayKey] = $value;
         }
 
@@ -598,6 +609,7 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
             $value = $this->$property;
 
             $arrayKey = $property;
+
             $values[$arrayKey] = $value;
         }
 
@@ -646,11 +658,11 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     public function toArrayRecursiveNotCamelCased()
     {
         return [
-            'scalar_field' => $this->scalarField,
-            'array_field' => $this->arrayField,
-            'project_level_deprecated_field' => $this->projectLevelDeprecatedField,
+            'scalar_field' => $this->scalarField instanceof AbstractTransfer ? $this->scalarField->toArray(true, false) : $this->scalarField,
+            'array_field' => $this->arrayField instanceof AbstractTransfer ? $this->arrayField->toArray(true, false) : $this->arrayField,
+            'project_level_deprecated_field' => $this->projectLevelDeprecatedField instanceof AbstractTransfer ? $this->projectLevelDeprecatedField->toArray(true, false) : $this->projectLevelDeprecatedField,
             'transfer_field' => $this->transferField instanceof AbstractTransfer ? $this->transferField->toArray(true, false) : $this->transferField,
-            'transfer_collection_field' => $this->addValuesToCollection($this->transferCollectionField, true, false),
+            'transfer_collection_field' => $this->transferCollectionField instanceof AbstractTransfer ? $this->transferCollectionField->toArray(true, false) : $this->addValuesToCollection($this->transferCollectionField, true, false),
         ];
     }
 
@@ -660,11 +672,11 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
     public function toArrayRecursiveCamelCased()
     {
         return [
-            'scalarField' => $this->scalarField,
-            'arrayField' => $this->arrayField,
-            'projectLevelDeprecatedField' => $this->projectLevelDeprecatedField,
+            'scalarField' => $this->scalarField instanceof AbstractTransfer ? $this->scalarField->toArray(true, true) : $this->scalarField,
+            'arrayField' => $this->arrayField instanceof AbstractTransfer ? $this->arrayField->toArray(true, true) : $this->arrayField,
+            'projectLevelDeprecatedField' => $this->projectLevelDeprecatedField instanceof AbstractTransfer ? $this->projectLevelDeprecatedField->toArray(true, true) : $this->projectLevelDeprecatedField,
             'transferField' => $this->transferField instanceof AbstractTransfer ? $this->transferField->toArray(true, true) : $this->transferField,
-            'transferCollectionField' => $this->addValuesToCollection($this->transferCollectionField, true, true),
+            'transferCollectionField' => $this->transferCollectionField instanceof AbstractTransfer ? $this->transferCollectionField->toArray(true, true) : $this->addValuesToCollection($this->transferCollectionField, true, true),
         ];
     }
 }

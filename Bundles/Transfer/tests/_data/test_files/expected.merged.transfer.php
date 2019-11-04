@@ -331,6 +331,11 @@ class FooBarTransfer extends AbstractTransfer
             $value = $this->$property;
 
             $arrayKey = $property;
+
+            if ($value instanceof AbstractTransfer) {
+                $values[$arrayKey] = $value->modifiedToArray(true, true);
+                continue;
+            }
             switch ($property) {
                 case 'name':
                 case 'bla':
@@ -355,6 +360,11 @@ class FooBarTransfer extends AbstractTransfer
             $value = $this->$property;
 
             $arrayKey = $this->transferMetadata[$property]['name_underscore'];
+
+            if ($value instanceof AbstractTransfer) {
+                $values[$arrayKey] = $value->modifiedToArray(true, false);
+                continue;
+            }
             switch ($property) {
                 case 'name':
                 case 'bla':
@@ -379,6 +389,7 @@ class FooBarTransfer extends AbstractTransfer
             $value = $this->$property;
 
             $arrayKey = $this->transferMetadata[$property]['name_underscore'];
+
             $values[$arrayKey] = $value;
         }
 
@@ -395,6 +406,7 @@ class FooBarTransfer extends AbstractTransfer
             $value = $this->$property;
 
             $arrayKey = $property;
+
             $values[$arrayKey] = $value;
         }
 
@@ -439,9 +451,9 @@ class FooBarTransfer extends AbstractTransfer
     public function toArrayRecursiveNotCamelCased()
     {
         return [
-            'name' => $this->name,
-            'bla' => $this->bla,
-            'self_reference' => $this->addValuesToCollection($this->selfReference, true, false),
+            'name' => $this->name instanceof AbstractTransfer ? $this->name->toArray(true, false) : $this->name,
+            'bla' => $this->bla instanceof AbstractTransfer ? $this->bla->toArray(true, false) : $this->bla,
+            'self_reference' => $this->selfReference instanceof AbstractTransfer ? $this->selfReference->toArray(true, false) : $this->addValuesToCollection($this->selfReference, true, false),
         ];
     }
 
@@ -451,9 +463,9 @@ class FooBarTransfer extends AbstractTransfer
     public function toArrayRecursiveCamelCased()
     {
         return [
-            'name' => $this->name,
-            'bla' => $this->bla,
-            'selfReference' => $this->addValuesToCollection($this->selfReference, true, true),
+            'name' => $this->name instanceof AbstractTransfer ? $this->name->toArray(true, true) : $this->name,
+            'bla' => $this->bla instanceof AbstractTransfer ? $this->bla->toArray(true, true) : $this->bla,
+            'selfReference' => $this->selfReference instanceof AbstractTransfer ? $this->selfReference->toArray(true, true) : $this->addValuesToCollection($this->selfReference, true, true),
         ];
     }
 }
