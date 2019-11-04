@@ -79,10 +79,6 @@ class ProductPackagingUnitCheckoutPreCheck extends ProductPackagingUnitAvailabil
         ItemTransfer $itemTransfer,
         QuoteTransfer $quoteTransfer
     ): ?CheckoutErrorTransfer {
-        if ($itemTransfer->getAmountLeadProduct()->getSku() === $itemTransfer->getSku()) {
-            return null;
-        }
-
         $isPackagingUnitSellable = $this->isPackagingUnitSellable(
             $itemTransfer,
             $quoteTransfer->getStore()
