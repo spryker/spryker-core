@@ -9,6 +9,8 @@ namespace Spryker\Zed\CmsSlotStorage\Business;
 
 use Spryker\Zed\CmsSlotStorage\Business\Publisher\CmsSlotStoragePublisher;
 use Spryker\Zed\CmsSlotStorage\Business\Publisher\CmsSlotStoragePublisherInterface;
+use Spryker\Zed\CmsSlotStorage\Business\Reader\CmsSlotStorageReader;
+use Spryker\Zed\CmsSlotStorage\Business\Reader\CmsSlotStorageReaderInterface;
 use Spryker\Zed\CmsSlotStorage\CmsSlotStorageDependencyProvider;
 use Spryker\Zed\CmsSlotStorage\Dependency\Facade\CmsSlotStorageToCmsSlotFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -29,6 +31,14 @@ class CmsSlotStorageBusinessFactory extends AbstractBusinessFactory
             $this->getCmsSlotFacade(),
             $this->getEntityManager()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsSlotStorage\Business\Reader\CmsSlotStorageReaderInterface
+     */
+    public function createCmsSlotStorageReader(): CmsSlotStorageReaderInterface
+    {
+        return new CmsSlotStorageReader($this->getRepository());
     }
 
     /**

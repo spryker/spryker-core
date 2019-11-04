@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsSlot\Persistence\Mapper;
 
 use Generated\Shared\Transfer\CmsSlotTransfer;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlot;
+use Propel\Runtime\Collection\Collection;
 
 class CmsSlotMapper
 {
@@ -36,15 +37,15 @@ class CmsSlotMapper
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyOfferEntityTransfer[] $cmsSlotEntityTransfers
+     * @param \Propel\Runtime\Collection\Collection $cmsSlotEntities
      *
      * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
      */
-    public function mapCmsSlotEntityCollectionToTransferCollection(array $cmsSlotEntityTransfers): array
+    public function mapCmsSlotEntityCollectionToTransferCollection(Collection $cmsSlotEntities): array
     {
         $cmsSlotTransfers = [];
-        foreach ($cmsSlotEntityTransfers as $cmsSlotEntityTransfer) {
-            $cmsSlotTransfers[] = (new CmsSlotTransfer())->fromArray($cmsSlotEntityTransfer->toArray(), true);
+        foreach ($cmsSlotEntities as $cmsSlotEntity) {
+            $cmsSlotTransfers[] = (new CmsSlotTransfer())->fromArray($cmsSlotEntity->toArray(), true);
         }
 
         return $cmsSlotTransfers;

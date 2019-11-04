@@ -7,21 +7,14 @@
 
 namespace Spryker\Zed\CmsSlotStorage\Dependency\Facade;
 
-use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\CmsSlotCriteriaTransfer;
 
 interface CmsSlotStorageToCmsSlotFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotCriteriaTransfer $cmsSlotCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
      */
-    public function getFilteredCmsSlots(FilterTransfer $filterTransfer): array;
-
-    /**
-     * @param int[] $cmsSlotIds
-     *
-     * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
-     */
-    public function getCmsSlotsByCmsSlotIds(array $cmsSlotIds): array;
+    public function getCmsSlotsByCriteria(CmsSlotCriteriaTransfer $cmsSlotCriteriaTransfer): array;
 }

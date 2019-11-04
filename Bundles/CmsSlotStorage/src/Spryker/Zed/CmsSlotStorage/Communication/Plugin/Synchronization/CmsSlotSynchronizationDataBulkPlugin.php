@@ -8,9 +8,8 @@
 namespace Spryker\Zed\CmsSlotStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Orm\Zed\CmsSlotStorage\Persistence\Map\SpyCmsSlotStorageTableMap;
-use Spryker\Shared\CmsSlotStorage\CmsSlotStorageConstants;
+use Spryker\Shared\CmsSlotStorage\CmsSlotStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
 
@@ -31,7 +30,7 @@ class CmsSlotSynchronizationDataBulkPlugin extends AbstractPlugin implements Syn
      */
     public function getResourceName(): string
     {
-        return CmsSlotStorageConstants::CMS_SLOT_RESOURCE_NAME;
+        return CmsSlotStorageConfig::CMS_SLOT_RESOURCE_NAME;
     }
 
     /**
@@ -59,20 +58,9 @@ class CmsSlotSynchronizationDataBulkPlugin extends AbstractPlugin implements Syn
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
-        $synchronizationDataTransfers = [];
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        $cmsSlotStorageEntities = $this->getRepository()->getFilteredCmsSlotStorageEntities($filterTransfer, $ids);
-
-        foreach ($cmsSlotStorageEntities as $cmsSlotStorageEntity) {
-            $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData($cmsSlotStorageEntity->getData());
-            $synchronizationDataTransfer->setKey($cmsSlotStorageEntity->getKey());
-
-            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
-        }
-
-        return $synchronizationDataTransfers;
+        return $this->getFacade()->getSynchronizationTransferCollection($filterTransfer, $ids);
     }
 
     /**
@@ -96,7 +84,7 @@ class CmsSlotSynchronizationDataBulkPlugin extends AbstractPlugin implements Syn
      */
     public function getQueueName(): string
     {
-        return CmsSlotStorageConstants::CMS_SLOT_SYNC_STORAGE_QUEUE;
+        return CmsSlotStorageConfig::CMS_SLOT_SYNC_STORAGE_QUEUE;
     }
 
     /**
