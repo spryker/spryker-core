@@ -28,6 +28,7 @@
     "spryker/cart": "*",
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
+    "spryker/currency": "*",
     "spryker/oms": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"

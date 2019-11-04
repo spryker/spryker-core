@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\ProductPackagingUnitStorage\Helper;
 
 use Codeception\Module;
-use Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductConcretePackagingStorageQuery;
+use Orm\Zed\ProductPackagingUnitStorage\Persistence\SpyProductPackagingUnitStorageQuery;
 
 class ProductPackagingUnitStorageHelper extends Module
 {
@@ -17,7 +17,7 @@ class ProductPackagingUnitStorageHelper extends Module
      */
     public function assertStorageDatabaseTableIsEmpty(): void
     {
-        $query = SpyProductConcretePackagingStorageQuery::create();
+        $query = SpyProductPackagingUnitStorageQuery::create();
         $query->deleteAll();
     }
 }

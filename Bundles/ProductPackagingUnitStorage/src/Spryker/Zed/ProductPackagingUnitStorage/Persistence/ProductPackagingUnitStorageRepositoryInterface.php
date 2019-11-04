@@ -14,14 +14,14 @@ interface ProductPackagingUnitStorageRepositoryInterface
     /**
      * @param int[] $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductConcretePackagingStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\SpyProductPackagingUnitStorageEntityTransfer[]
      */
-    public function findProductConcretePackagingStorageEntitiesByProductConcreteIds(array $productConcreteIds): array;
+    public function findProductPackagingUnitStorageEntitiesByProductConcreteIds(array $productConcreteIds): array;
 
     /**
      * @param int[] $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer[]
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer[]
      */
     public function findPackagingProductsByProductConcreteIds(array $productConcreteIds): array;
 
@@ -31,13 +31,13 @@ interface ProductPackagingUnitStorageRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer[]
      */
-    public function findFilteredProductConcretePackagingUnit(FilterTransfer $filterTransfer, array $productConcreteIds = []): array;
+    public function findFilteredProductPackagingUnit(FilterTransfer $filterTransfer, array $productConcreteIds = []): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductConcretePackagingStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\SpyProductPackagingUnitStorageEntityTransfer[]
      */
-    public function findFilteredProductConcretePackagingUnitStorages(FilterTransfer $filterTransfer, array $productConcreteIds = []): array;
+    public function findFilteredProductPackagingUnitStorageEntityTransfers(FilterTransfer $filterTransfer, array $productConcreteIds = []): array;
 }

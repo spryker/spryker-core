@@ -20,7 +20,7 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\ProductPackagingUnitEvents;
  * @method \Spryker\Zed\ProductPackagingUnitStorage\Communication\ProductPackagingUnitStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig getConfig()
  */
-class ProductConcretePackagingEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
+class ProductPackagingUnitEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -49,7 +49,7 @@ class ProductConcretePackagingEventResourceBulkRepositoryPlugin extends Abstract
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        return $this->getRepository()->findFilteredProductConcretePackagingUnit($filterTransfer);
+        return $this->getRepository()->findFilteredProductPackagingUnit($filterTransfer);
     }
 
     /**
@@ -67,7 +67,7 @@ class ProductConcretePackagingEventResourceBulkRepositoryPlugin extends Abstract
     /**
      * {@inheritDoc}
      * - Returns the name of ID column needed in the ProductPackagingUnit.product_packaging_unit.publish event.
-     * - The ID is selected from the key range of ProductConcretePackagingStorageTransfer.
+     * - The ID is selected from the key range of ProductPackagingUnitStorageTransfer.
      *
      * @api
      *

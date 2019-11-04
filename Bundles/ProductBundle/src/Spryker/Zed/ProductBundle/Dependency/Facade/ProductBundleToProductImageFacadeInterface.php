@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 
-interface ProductBundleToProductImageInterface
+interface ProductBundleToProductImageFacadeInterface
 {
     /**
      * @param int $idProductConcrete

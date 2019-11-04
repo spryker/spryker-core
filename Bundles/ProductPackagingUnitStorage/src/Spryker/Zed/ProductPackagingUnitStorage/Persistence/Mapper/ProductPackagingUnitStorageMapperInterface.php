@@ -7,19 +7,19 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Persistence\Mapper;
 
-use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer;
 
 interface ProductPackagingUnitStorageMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer $productPackagingUnitEntityTransfer
-     * @param \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer $productConcretePackagingStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer $productPackagingUnitStorageTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer
      */
-    public function mapProductConcretePackagingStorageEntityTransferToStorageTransfer(
+    public function mapProductPackagingUnitStorageEntityTransferToStorageTransfer(
         SpyProductPackagingUnitEntityTransfer $productPackagingUnitEntityTransfer,
-        ProductConcretePackagingStorageTransfer $productConcretePackagingStorageTransfer
-    ): ProductConcretePackagingStorageTransfer;
+        ProductPackagingUnitStorageTransfer $productPackagingUnitStorageTransfer
+    ): ProductPackagingUnitStorageTransfer;
 }

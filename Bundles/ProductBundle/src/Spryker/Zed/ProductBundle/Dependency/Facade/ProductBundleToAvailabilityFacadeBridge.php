@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
-class ProductBundleToAvailabilityBridge implements ProductBundleToAvailabilityInterface
+class ProductBundleToAvailabilityFacadeBridge implements ProductBundleToAvailabilityFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface

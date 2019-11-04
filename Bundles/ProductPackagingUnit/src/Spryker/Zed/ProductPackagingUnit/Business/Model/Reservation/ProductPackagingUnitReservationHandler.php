@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation;
 
+use Generated\Shared\Transfer\OmsStateCollectionTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
 
@@ -42,7 +44,7 @@ class ProductPackagingUnitReservationHandler implements ProductPackagingUnitRese
     public function updateLeadProductReservation(string $sku): void
     {
         $productPackagingLeadProductTransfer = $this->productPackagingUnitRepository
-            ->findProductPackagingLeadProductBySiblingProductSku($sku);
+            ->findProductPackagingUnitLeadProductForPackagingUnit($sku);
 
         if (!$productPackagingLeadProductTransfer) {
             return;
@@ -53,5 +55,24 @@ class ProductPackagingUnitReservationHandler implements ProductPackagingUnitRese
         }
 
         $this->omsFacade->updateReservationQuantity($productPackagingLeadProductTransfer->getSku());
+    }
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\OmsStateCollectionTransfer $reservedStates
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
+     */
+    public function aggregateProductPackagingUnitReservation(string $sku, OmsStateCollectionTransfer $reservedStates, StoreTransfer $storeTransfer): array
+    {
+        $storeTransfer->requireName();
+        $reservedStates->requireStates();
+
+        return $this->productPackagingUnitRepository->aggregateProductPackagingUnitReservation(
+            $sku,
+            array_keys($reservedStates->getStates()->getArrayCopy()),
+            $storeTransfer
+        );
     }
 }

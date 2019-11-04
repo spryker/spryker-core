@@ -54,11 +54,6 @@ interface ReservationInterface
     public function getReservationsFromOtherStores(string $sku, StoreTransfer $currentStoreTransfer): Decimal;
 
     /**
-     * @return string[]
-     */
-    public function getReservedStateNames(): array;
-
-    /**
      * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
      */
     public function getOmsReservedStateCollection(): OmsStateCollectionTransfer;

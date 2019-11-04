@@ -49,7 +49,6 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
             ->getSalesQueryContainer()
             ->querySalesOrderItem()
             ->filterBySku($sku)
-            ->groupBySku()
             ->useStateQuery()
                 ->filterByName_In($stateNames)
             ->endUse()

@@ -8,7 +8,7 @@
 namespace SprykerTest\Client\ProductPackagingUnitStorage;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer;
 use Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\ProductPackagingUnitStorageToStorageClientInterface;
@@ -35,7 +35,7 @@ class ProductPackagingUnitStorageClientTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductConcretePackagingById(): void
+    public function testFindProductPackagingUnitById(): void
     {
         // Arrange
         $itemProductConcreteTransfer = $this->tester->haveProduct();
@@ -52,17 +52,17 @@ class ProductPackagingUnitStorageClientTest extends Unit
         $productPackagingUnitStorageToStorageClientBridge = $this->getMockBuilder(ProductPackagingUnitStorageToStorageClientInterface::class)->getMock();
         $this->tester->setStorageMock(
             $productPackagingUnitStorageToStorageClientBridge,
-            (new ProductConcretePackagingStorageTransfer())->toArray()
+            (new ProductPackagingUnitStorageTransfer())->toArray()
         );
 
         // Act
-        $productConcretePackagingStorageTransfer = $this->getProductPackagingUnitStorageClient()
-            ->findProductConcretePackagingById(
+        $productPackagingUnitStorageTransfer = $this->getProductPackagingUnitStorageClient()
+            ->findProductPackagingUnitById(
                 $boxProductConcreteTransfer->getIdProductConcrete()
             );
 
         // Assert
-        $this->assertInstanceOf(ProductConcretePackagingStorageTransfer::class, $productConcretePackagingStorageTransfer);
+        $this->assertInstanceOf(ProductPackagingUnitStorageTransfer::class, $productPackagingUnitStorageTransfer);
     }
 
     /**

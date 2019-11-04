@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
-interface ProductBundleToAvailabilityInterface
+interface ProductBundleToAvailabilityFacadeInterface
 {
     /**
      * @param string $sku

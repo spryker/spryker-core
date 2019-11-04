@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Synchroni
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Orm\Zed\ProductPackagingUnitStorage\Persistence\Map\SpyProductConcretePackagingStorageTableMap;
+use Orm\Zed\ProductPackagingUnitStorage\Persistence\Map\SpyProductPackagingUnitStorageTableMap;
 use Spryker\Shared\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
@@ -62,13 +62,13 @@ class ProductPackagingUnitSynchronizationDataBulkPlugin extends AbstractPlugin i
         $synchronizationDataTransfers = [];
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        $productConcretePackagingUnitEntityTransfers = $this->getRepository()
-            ->findFilteredProductConcretePackagingUnitStorages($filterTransfer, $ids);
+        $productPackagingUnitStorageEntityTransfers = $this->getRepository()
+            ->findFilteredProductPackagingUnitStorageEntityTransfers($filterTransfer, $ids);
 
-        foreach ($productConcretePackagingUnitEntityTransfers as $productConcretePackagingUnitEntityTransfer) {
+        foreach ($productPackagingUnitStorageEntityTransfers as $productPackagingUnitStorageEntityTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData($productConcretePackagingUnitEntityTransfer->getData());
-            $synchronizationDataTransfer->setKey($productConcretePackagingUnitEntityTransfer->getKey());
+            $synchronizationDataTransfer->setData($productPackagingUnitStorageEntityTransfer->getData());
+            $synchronizationDataTransfer->setKey($productPackagingUnitStorageEntityTransfer->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
 
@@ -122,7 +122,7 @@ class ProductPackagingUnitSynchronizationDataBulkPlugin extends AbstractPlugin i
     protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
     {
         return (new FilterTransfer())
-            ->setOrderBy(SpyProductConcretePackagingStorageTableMap::COL_ID_PRODUCT_CONCRETE_PACKAGING_STORAGE)
+            ->setOrderBy(SpyProductPackagingUnitStorageTableMap::COL_ID_PRODUCT_PACKAGING_UNIT_STORAGE)
             ->setOffset($offset)
             ->setLimit($limit);
     }

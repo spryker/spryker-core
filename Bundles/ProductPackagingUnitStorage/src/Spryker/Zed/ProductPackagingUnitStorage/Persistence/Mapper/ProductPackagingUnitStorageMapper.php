@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnitStorage\Persistence\Mapper;
 
-use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer;
 use Spryker\DecimalObject\Decimal;
 
@@ -15,15 +15,15 @@ class ProductPackagingUnitStorageMapper implements ProductPackagingUnitStorageMa
 {
     /**
      * @param \Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer $productPackagingUnitEntityTransfer
-     * @param \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer $productConcretePackagingStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer $productPackagingUnitStorageTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer
      */
-    public function mapProductConcretePackagingStorageEntityTransferToStorageTransfer(
+    public function mapProductPackagingUnitStorageEntityTransferToStorageTransfer(
         SpyProductPackagingUnitEntityTransfer $productPackagingUnitEntityTransfer,
-        ProductConcretePackagingStorageTransfer $productConcretePackagingStorageTransfer
-    ): ProductConcretePackagingStorageTransfer {
-        return $productConcretePackagingStorageTransfer
+        ProductPackagingUnitStorageTransfer $productPackagingUnitStorageTransfer
+    ): ProductPackagingUnitStorageTransfer {
+        return $productPackagingUnitStorageTransfer
             ->fromArray($productPackagingUnitEntityTransfer->toArray(), true)
             ->setIdLeadProduct($productPackagingUnitEntityTransfer->getLeadProduct()->getIdProduct())
             ->setIdProduct($productPackagingUnitEntityTransfer->getFkProduct())

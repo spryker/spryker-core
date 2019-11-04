@@ -54,10 +54,6 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
 
             $this->expandItemWithLeadProduct($itemTransfer);
 
-            if ($itemTransfer->getSku() === $itemTransfer->getAmountLeadProduct()->getSku()) {
-                continue;
-            }
-
             $isPackagingUnitLeadProductSellable = $this->isPackagingUnitLeadProductSellable(
                 $itemTransfer,
                 $cartItems,
@@ -95,12 +91,13 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
     protected function expandItemWithLeadProduct(ItemTransfer $itemTransfer)
     {
         if ($itemTransfer->getAmountLeadProduct() !== null) {
+            // For performance reasons, if it's expanded already.
             return $itemTransfer;
         }
 
         $itemTransfer->requireSku();
         $productPackagingLeadProductTransfer = $this->productPackagingUnitRepository
-            ->findProductPackagingLeadProductBySiblingProductSku($itemTransfer->getSku());
+            ->findProductPackagingUnitLeadProductForPackagingUnit($itemTransfer->getSku());
 
         if ($productPackagingLeadProductTransfer) {
             $itemTransfer->setAmountLeadProduct($productPackagingLeadProductTransfer);
