@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/price-product-offer-data-import.svg)](https://travis-ci.org/spryker/price-product-offer-data-import)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/price-product-offer-data-import/badge.svg)](https://coveralls.io/github/spryker/price-product-offer-data-import)
 
-{{ADD DESCRIPTION HERE}}
+Module for importing offer prices from .csv file.
 
 ## Installation
 
