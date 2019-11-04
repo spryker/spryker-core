@@ -40,7 +40,7 @@ class SalesMerchantConnectorFacade extends AbstractFacade implements SalesMercha
 
     /**
      * Specification:
-     * - Create relation between order and merchant and save data to `spy_sales_order_merchant`.
+     * - Creates relation between an order and a merchant and save data to `spy_sales_order_merchant`.
      *
      * @api
      *
