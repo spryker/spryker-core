@@ -24,7 +24,7 @@ class CodeAdder implements CodeAdderInterface
     protected $quoteOperationChecker;
 
     /**
-     * @var \Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[]
+     * @var \Spryker\Shared\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[]
      */
     protected $cartCodePlugins;
 
