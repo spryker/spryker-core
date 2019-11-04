@@ -31,9 +31,10 @@ class CmsSlotDataImportHelper extends Module
 
         $cmsSlotTemplateEntity = new SpyCmsSlotTemplate();
         $cmsSlotTemplateEntity->fromArray($cmsSlotTemplateTransfer->toArray());
+        $cmsSlotTemplateEntity->setPathHash('path_hash');
         $cmsSlotTemplateEntity->save();
 
-        $cmsSlotTemplateTransfer->fromArray($cmsSlotTemplateEntity->toArray());
+        $cmsSlotTemplateTransfer->fromArray($cmsSlotTemplateEntity->toArray(), true);
 
         return $cmsSlotTemplateTransfer;
     }
