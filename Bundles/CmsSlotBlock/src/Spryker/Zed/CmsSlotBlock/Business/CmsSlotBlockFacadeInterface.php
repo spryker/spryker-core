@@ -57,7 +57,7 @@ interface CmsSlotBlockFacadeInterface
      *
      * @param string $twigPath
      *
-     * @return array
+     * @return string[]
      */
     public function getTemplateConditionsByPath(string $twigPath): array;
 }

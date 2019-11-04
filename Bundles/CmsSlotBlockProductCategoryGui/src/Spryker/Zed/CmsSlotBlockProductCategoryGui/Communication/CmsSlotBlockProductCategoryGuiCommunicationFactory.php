@@ -9,13 +9,15 @@ namespace Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication;
 
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\CmsSlotBlockProductCategoryGuiDependencyProvider;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\DataProvider\ProductCategorySlotBlockDataProvider;
+use Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\DataProvider\ProductCategorySlotBlockDataProviderInterface;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Form\ProductCategorySlotBlockConditionForm;
-use Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Form\Validator\Constraints\ProductCategoryConditionsConstraint;
+use Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Form\Validator\Constraints\ProductCategoryConditionConstraint;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Formatter\ProductLabelFormatter;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Formatter\ProductLabelFormatterInterface;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToCategoryFacadeInterface;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToLocaleFacadeInterface;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToProductFacadeInterface;
+use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToTranslatorFacadeInterface;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\QueryContainer\CmsSlotBlockProductCategoryGuiToProductQueryContainerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -38,24 +40,25 @@ class CmsSlotBlockProductCategoryGuiCommunicationFactory extends AbstractCommuni
     }
 
     /**
-     * @return \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\DataProvider\ProductCategorySlotBlockDataProvider
+     * @return \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\DataProvider\ProductCategorySlotBlockDataProviderInterface
      */
-    public function createProductCategorySlotBlockDataProvider(): ProductCategorySlotBlockDataProvider
+    public function createProductCategorySlotBlockDataProvider(): ProductCategorySlotBlockDataProviderInterface
     {
         return new ProductCategorySlotBlockDataProvider(
             $this->getProductQueryContainer(),
             $this->createProductLabelFormatter(),
             $this->getCategoryFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
+            $this->getTranslatorFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Form\Validator\Constraints\ProductCategoryConditionsConstraint
+     * @return \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Form\Validator\Constraints\ProductCategoryConditionConstraint
      */
-    public function createProductCategoryConditionsConstraint(): ProductCategoryConditionsConstraint
+    public function createProductCategoryConditionsConstraint(): ProductCategoryConditionConstraint
     {
-        return new ProductCategoryConditionsConstraint();
+        return new ProductCategoryConditionConstraint();
     }
 
     /**
@@ -88,5 +91,13 @@ class CmsSlotBlockProductCategoryGuiCommunicationFactory extends AbstractCommuni
     public function getLocaleFacade(): CmsSlotBlockProductCategoryGuiToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(CmsSlotBlockProductCategoryGuiDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToTranslatorFacadeInterface
+     */
+    public function getTranslatorFacade(): CmsSlotBlockProductCategoryGuiToTranslatorFacadeInterface
+    {
+        return $this->getProvidedDependency(CmsSlotBlockProductCategoryGuiDependencyProvider::FACADE_TRANSLATOR);
     }
 }

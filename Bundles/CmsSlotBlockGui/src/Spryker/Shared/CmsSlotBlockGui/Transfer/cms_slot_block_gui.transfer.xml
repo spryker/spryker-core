@@ -26,4 +26,18 @@
         <property name="orderBy" type="string"/>
     </transfer>
 
+    <transfer name="CmsSlotTemplate">
+        <property name="path" type="string"/>
+    </transfer>
+
+    <transfer name="CmsSlotBlockCollection">
+    </transfer>
+
+    <transfer name="CmsSlotBlock">
+    </transfer>
+
+    <transfer name="CmsSlotTemplateConfiguration">
+        <property name="conditions" type="array" singular="condition"/>
+    </transfer>
+
 </transfers>

@@ -23,15 +23,18 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
 {
     public const OPTION_PRODUCT_ARRAY = 'option-product-array';
     public const OPTION_CATEGORY_ARRAY = 'option-category-array';
+    public const OPTION_ALL_ARRAY = 'option-all-array';
+
+    public const FIELD_ALL = 'all';
+    public const FIELD_PRODUCT_IDS = 'productIds';
+    public const FIELD_CATEGORY_IDS = 'categoryIds';
+
     protected const OPTION_URL_AUTOCOMPLETE = '/cms-slot-block-product-category-gui/product-autocomplete';
 
     /**
      * @uses \Spryker\Shared\CmsSlotBlockProductCategoryConnector\CmsSlotBlockProductCategoryConnectorConfig::CONDITION_KEY
      */
     protected const FIELD_PRODUCT_CATEGORY = 'productCategory';
-    protected const FIELD_ALL = 'all';
-    protected const FIELD_PRODUCT_IDS = 'productIds';
-    protected const FIELD_CATEGORY_IDS = 'categoryIds';
 
     protected const LABEL_PRODUCT_PAGES = 'Products Pages';
     protected const LABEL_PRODUCT_PAGES_PER_CATEGORY = 'Products pages per Category';
@@ -44,8 +47,8 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addProductConditionField($builder)
-            ->addAllField($builder->get(static::FIELD_PRODUCT_CATEGORY))
+        $this->addProductCategoryConditionField($builder)
+            ->addAllField($builder->get(static::FIELD_PRODUCT_CATEGORY), $options)
             ->addProductIdsField($builder->get(static::FIELD_PRODUCT_CATEGORY), $options)
             ->addCategoryIdsField($builder->get(static::FIELD_PRODUCT_CATEGORY), $options);
     }
@@ -55,7 +58,7 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
      *
      * @return $this
      */
-    protected function addProductConditionField(FormBuilderInterface $builder)
+    protected function addProductCategoryConditionField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_PRODUCT_CATEGORY, FormType::class, [
             'label' => false,
@@ -78,7 +81,7 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
             $event->getForm()->get(static::FIELD_PRODUCT_IDS)->setData($assignedAbstractProductIds);
 
             $fieldOptions = $event->getForm()->get(static::FIELD_PRODUCT_IDS)->getConfig()->getOptions();
-            $this->replaceFieldProductIds($event->getForm(), $assignedAbstractProductIds, $fieldOptions);
+            $this->replaceProductIdsField($event->getForm(), $assignedAbstractProductIds, $fieldOptions);
         });
 
         return $this;
@@ -86,17 +89,15 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addAllField(FormBuilderInterface $builder)
+    protected function addAllField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_ALL, ChoiceType::class, [
             'required' => false,
-            'choices' => [
-                'All Product Pages' => true,
-                'Specific Product Pages' => false,
-            ],
+            'choices' => $options[static::OPTION_ALL_ARRAY],
             'expanded' => true,
             'multiple' => false,
             'placeholder' => false,
@@ -129,7 +130,7 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
 
             $assignedAbstractProductIds = array_filter(array_values($event->getData()));
 
-            $this->replaceFieldProductIds(
+            $this->replaceProductIdsField(
                 $event->getForm()->getParent(),
                 $assignedAbstractProductIds,
                 $event->getForm()->getConfig()->getOptions()
@@ -159,17 +160,17 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormInterface $productForm
-     * @param int[] $assignedAbstractProductIds
+     * @param int[] $assignedProductAbstractIds
      * @param array $options
      *
      * @return void
      */
-    protected function replaceFieldProductIds(
+    protected function replaceProductIdsField(
         FormInterface $productForm,
-        array $assignedAbstractProductIds,
+        array $assignedProductAbstractIds,
         array $options
     ): void {
-        $options['choices'] = $this->getChoicesOptionsByAbstractProductIds($assignedAbstractProductIds);
+        $options['choices'] = $this->getChoicesByProductAbstractIds($assignedProductAbstractIds);
         $productForm->add(static::FIELD_PRODUCT_IDS, Select2ComboBoxType::class, $options);
     }
 
@@ -178,7 +179,7 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
      *
      * @return array
      */
-    protected function getChoicesOptionsByAbstractProductIds(array $assignedAbstractProductIds): array
+    protected function getChoicesByProductAbstractIds(array $assignedAbstractProductIds): array
     {
         $options = $this->getFactory()
             ->createProductCategorySlotBlockDataProvider()

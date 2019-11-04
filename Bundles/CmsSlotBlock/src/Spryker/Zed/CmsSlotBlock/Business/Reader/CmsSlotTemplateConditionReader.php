@@ -27,16 +27,16 @@ class CmsSlotTemplateConditionReader implements CmsSlotTemplateConditionReaderIn
     /**
      * @param string $templatePath
      *
-     * @return array
+     * @return string[]
      */
     public function getTemplateConditionsByPath(string $templatePath): array
     {
-        $templatesAssignment = $this->cmsSlotBlockConfig->getTemplateConditionsAssignment();
+        $templateConditionsAssignment = $this->cmsSlotBlockConfig->getTemplateConditionsAssignment();
 
-        if (!isset($templatesAssignment[$templatePath])) {
+        if (!isset($templateConditionsAssignment[$templatePath])) {
             return [];
         }
 
-        return $templatesAssignment[$templatePath];
+        return $templateConditionsAssignment[$templatePath];
     }
 }

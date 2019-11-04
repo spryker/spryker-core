@@ -12,7 +12,7 @@ interface CmsSlotTemplateConditionReaderInterface
     /**
      * @param string $templatePath
      *
-     * @return array
+     * @return string[]
      */
     public function getTemplateConditionsByPath(string $templatePath): array;
 }

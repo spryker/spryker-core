@@ -25,6 +25,7 @@ class CmsSlotBlockForm extends AbstractType
     protected const FIELD_ID_SLOT = 'idSlot';
     protected const FIELD_ID_CMS_BLOCK = 'idCmsBlock';
     protected const FIELD_POSITION = 'position';
+    protected const FIELD_CONDITIONS = 'conditions';
     protected const OPTION_CONDITIONS = 'conditions';
 
     /**
@@ -50,7 +51,7 @@ class CmsSlotBlockForm extends AbstractType
             ->addIdSlotField($builder)
             ->addIdBlockField($builder)
             ->addPositionField($builder)
-            ->addConditionPluginForms($builder, $options);
+            ->addConditionForm($builder, $options);
     }
 
     /**
@@ -107,18 +108,33 @@ class CmsSlotBlockForm extends AbstractType
      *
      * @return $this
      */
-    protected function addConditionPluginForms(FormBuilderInterface $builder, array $options)
+    protected function addConditionForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::OPTION_CONDITIONS, FormType::class, ['label' => false]);
+        $builder->add(static::FIELD_CONDITIONS, FormType::class, ['label' => false]);
 
-        $cmsSlotTemplateConfigurationTransfer = (new CmsSlotTemplateConfigurationTransfer())->setConditions($options[static::OPTION_CONDITIONS]);
+        $cmsSlotTemplateConfigurationTransfer = (new CmsSlotTemplateConfigurationTransfer())
+            ->setConditions($options[static::OPTION_CONDITIONS]);
 
-        foreach ($this->getFactory()->getCmsSlotBlockFormPlugins() as $formPlugin) {
-            if ($formPlugin->isApplicable($cmsSlotTemplateConfigurationTransfer)) {
-                $formPlugin->addConditionForm($builder->get(static::OPTION_CONDITIONS));
-            }
-        }
+        $conditionFormBuilder = $builder->get(static::FIELD_CONDITIONS);
+        $this->runConditionFormPlugins($conditionFormBuilder, $cmsSlotTemplateConfigurationTransfer);
 
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Generated\Shared\Transfer\CmsSlotTemplateConfigurationTransfer $cmsSlotTemplateConfigurationTransfer
+     *
+     * @return void
+     */
+    protected function runConditionFormPlugins(
+        FormBuilderInterface $builder,
+        CmsSlotTemplateConfigurationTransfer $cmsSlotTemplateConfigurationTransfer
+    ): void {
+        foreach ($this->getFactory()->getCmsSlotBlockConditionFormPlugins() as $formPlugin) {
+            if ($formPlugin->isApplicable($cmsSlotTemplateConfigurationTransfer)) {
+                $formPlugin->addConditionForm($builder);
+            }
+        }
     }
 }

@@ -17,10 +17,6 @@ use Spryker\Zed\CmsSlotBlock\Dependency\Service\CmsSlotBlockToUtilEncodingServic
 
 class CmsSlotBlockMapper implements CmsSlotBlockMapperInterface
 {
-    protected const CONDITION_KEY_CATEGORY = 'category';
-    protected const CONDITION_KEY_CATEGORY_IDS = 'categoryIds';
-    protected const CONDITION_KEY_PRODUCT = 'product';
-
     /**
      * @var \Spryker\Zed\CmsSlotBlock\Dependency\Service\CmsSlotBlockToUtilEncodingServiceInterface
      */

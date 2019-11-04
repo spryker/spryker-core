@@ -13,10 +13,14 @@ use Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Form\ProductCategor
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Formatter\ProductLabelFormatterInterface;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToCategoryFacadeInterface;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToLocaleFacadeInterface;
+use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToTranslatorFacadeInterface;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\QueryContainer\CmsSlotBlockProductCategoryGuiToProductQueryContainerInterface;
 
 class ProductCategorySlotBlockDataProvider implements ProductCategorySlotBlockDataProviderInterface
 {
+    protected const KEY_OPTION_ALL_PRODUCTS = 'All Product Pages';
+    protected const KEY_OPTION_SPECIFIC_PRODUCTS = 'Specific Product Pages';
+
     /**
      * @var \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\QueryContainer\CmsSlotBlockProductCategoryGuiToProductQueryContainerInterface
      */
@@ -38,21 +42,29 @@ class ProductCategorySlotBlockDataProvider implements ProductCategorySlotBlockDa
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToTranslatorFacadeInterface
+     */
+    protected $translatorFacade;
+
+    /**
      * @param \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\QueryContainer\CmsSlotBlockProductCategoryGuiToProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Formatter\ProductLabelFormatterInterface $productLabelFormatter
      * @param \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToCategoryFacadeInterface $categoryFacade
      * @param \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToTranslatorFacadeInterface $translatorFacade
      */
     public function __construct(
         CmsSlotBlockProductCategoryGuiToProductQueryContainerInterface $productQueryContainer,
         ProductLabelFormatterInterface $productLabelFormatter,
         CmsSlotBlockProductCategoryGuiToCategoryFacadeInterface $categoryFacade,
-        CmsSlotBlockProductCategoryGuiToLocaleFacadeInterface $localeFacade
+        CmsSlotBlockProductCategoryGuiToLocaleFacadeInterface $localeFacade,
+        CmsSlotBlockProductCategoryGuiToTranslatorFacadeInterface $translatorFacade
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->productLabelFormatter = $productLabelFormatter;
         $this->categoryFacade = $categoryFacade;
         $this->localeFacade = $localeFacade;
+        $this->translatorFacade = $translatorFacade;
     }
 
     /**
@@ -63,8 +75,20 @@ class ProductCategorySlotBlockDataProvider implements ProductCategorySlotBlockDa
     public function getOptions(?array $productAbstractIds = []): array
     {
         return [
+            ProductCategorySlotBlockConditionForm::OPTION_ALL_ARRAY => $this->getAllOptions(),
             ProductCategorySlotBlockConditionForm::OPTION_PRODUCT_ARRAY => $this->getProductAbstracts($productAbstractIds),
             ProductCategorySlotBlockConditionForm::OPTION_CATEGORY_ARRAY => $this->getCategories(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getAllOptions(): array
+    {
+        return [
+            $this->translatorFacade->trans(static::KEY_OPTION_ALL_PRODUCTS) => true,
+            $this->translatorFacade->trans(static::KEY_OPTION_SPECIFIC_PRODUCTS) => false,
         ];
     }
 

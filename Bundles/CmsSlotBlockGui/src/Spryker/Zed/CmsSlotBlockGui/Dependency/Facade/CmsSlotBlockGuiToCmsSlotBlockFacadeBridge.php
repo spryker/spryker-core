@@ -59,7 +59,7 @@ class CmsSlotBlockGuiToCmsSlotBlockFacadeBridge implements CmsSlotBlockGuiToCmsS
     /**
      * @param string $twigPath
      *
-     * @return array
+     * @return string[]
      */
     public function getTemplateConditionsByPath(string $twigPath): array
     {
