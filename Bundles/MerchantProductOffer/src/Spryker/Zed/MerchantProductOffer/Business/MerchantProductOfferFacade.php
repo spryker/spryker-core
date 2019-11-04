@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantProductOffer\Business;
 
-use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -22,10 +21,10 @@ class MerchantProductOfferFacade extends AbstractFacade implements MerchantProdu
      *
      * @param string $productOfferReference
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
+     * @return int|null
      */
-    public function findMerchantByProductOfferReference(string $productOfferReference): ?ProductOfferTransfer
+    public function findIdMerchantByProductOfferReference(string $productOfferReference): ?int
     {
-        return $this->getRepository()->findMerchantProductOfferByOfferReference($productOfferReference);
+        return $this->getRepository()->findIdMerchantByOfferReference($productOfferReference);
     }
 }

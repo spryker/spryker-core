@@ -15,8 +15,13 @@
         <property name="fkSalesOrder" type="int"/>
     </transfer>
 
-    <transfer name="Offer">
+    <transfer name="SalesOrderMerchantSave">
         <property name="offerReference" type="string"/>
+        <property name="idSalesOrder" type="int"/>
+    </transfer>
+
+    <transfer name="Offer">
+        <property name="productOfferReference" type="string"/>
     </transfer>
 
 </transfers>

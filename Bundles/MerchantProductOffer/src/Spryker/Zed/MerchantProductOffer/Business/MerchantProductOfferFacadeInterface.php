@@ -7,19 +7,17 @@
 
 namespace Spryker\Zed\MerchantProductOffer\Business;
 
-use Generated\Shared\Transfer\ProductOfferTransfer;
-
 interface MerchantProductOfferFacadeInterface
 {
     /**
      * Specification:
-     * - This method looks for merchant data by provided offer reference.
+     * - This method looks for id merchant by provided offer reference.
      *
      * @api
      *
      * @param string $productOfferReference
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
+     * @return int|null
      */
-    public function findMerchantByProductOfferReference(string $productOfferReference): ?ProductOfferTransfer;
+    public function findIdMerchantByProductOfferReference(string $productOfferReference): ?int;
 }

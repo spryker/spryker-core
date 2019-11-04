@@ -8,8 +8,8 @@
 namespace Spryker\Zed\SalesMerchantConnector\Business;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SaveOrderTransfer;
+use Generated\Shared\Transfer\SalesOrderMerchantSaveTransfer;
+use Generated\Shared\Transfer\SalesOrderMerchantTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
 interface SalesMerchantConnectorFacadeInterface
@@ -33,14 +33,13 @@ interface SalesMerchantConnectorFacadeInterface
 
     /**
      * Specification:
-     * - For every item in order with merchant offer data save related data to `spy_sales_order_merchant`.
+     * - Create relation between order and merchant and save data to `spy_sales_order_merchant`.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderMerchantSaveTransfer $salesOrderMerchantSaveTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\SalesOrderMerchantTransfer
      */
-    public function saveSalesOrderMerchants(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
+    public function createSalesOrderMerchant(SalesOrderMerchantSaveTransfer $salesOrderMerchantSaveTransfer): SalesOrderMerchantTransfer;
 }

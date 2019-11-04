@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\SalesMerchantConnector\Dependency\Facade;
 
-use Generated\Shared\Transfer\ProductOfferTransfer;
-
 class SalesMerchantConnectorToMerchantProductOfferFacadeBridge implements SalesMerchantConnectorToMerchantProductOfferFacadeInterface
 {
     /**
@@ -27,10 +25,10 @@ class SalesMerchantConnectorToMerchantProductOfferFacadeBridge implements SalesM
     /**
      * @param string $productOfferReference
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
+     * @return int|null
      */
-    public function findMerchantByProductOfferReference(string $productOfferReference): ?ProductOfferTransfer
+    public function findIdMerchantByProductOfferReference(string $productOfferReference): ?int
     {
-        return $this->merchantProductOfferFacade->findMerchantByProductOfferReference($productOfferReference);
+        return $this->merchantProductOfferFacade->findIdMerchantByProductOfferReference($productOfferReference);
     }
 }

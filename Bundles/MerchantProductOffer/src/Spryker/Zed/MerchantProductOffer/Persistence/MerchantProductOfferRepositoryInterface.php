@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\MerchantProductOffer\Persistence;
 
-use Generated\Shared\Transfer\ProductOfferTransfer;
-
 interface MerchantProductOfferRepositoryInterface
 {
     /**
      * @param string $productOfferReference
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
+     * @return int|null
      */
-    public function findMerchantProductOfferByOfferReference(string $productOfferReference): ?ProductOfferTransfer;
+    public function findIdMerchantByOfferReference(string $productOfferReference): ?int;
 }

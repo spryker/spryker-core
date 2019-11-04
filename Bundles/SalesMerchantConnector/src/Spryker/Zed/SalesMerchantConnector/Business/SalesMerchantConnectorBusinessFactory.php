@@ -10,8 +10,8 @@ namespace Spryker\Zed\SalesMerchantConnector\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SalesMerchantConnector\Business\Expander\OrderItemExpander;
 use Spryker\Zed\SalesMerchantConnector\Business\Expander\OrderItemExpanderInterface;
-use Spryker\Zed\SalesMerchantConnector\Business\SalesOrderMerchantSaver\SalesOrderMerchantSaver;
-use Spryker\Zed\SalesMerchantConnector\Business\SalesOrderMerchantSaver\SalesOrderMerchantSaverInterface;
+use Spryker\Zed\SalesMerchantConnector\Business\SalesOrderMerchantWriter\SalesOrderMerchantWriter;
+use Spryker\Zed\SalesMerchantConnector\Business\SalesOrderMerchantWriter\SalesOrderMerchantWriterInterface;
 use Spryker\Zed\SalesMerchantConnector\Dependency\Facade\SalesMerchantConnectorToMerchantFacadeInterface;
 use Spryker\Zed\SalesMerchantConnector\Dependency\Facade\SalesMerchantConnectorToMerchantProductOfferFacadeInterface;
 use Spryker\Zed\SalesMerchantConnector\Dependency\Facade\SalesMerchantConnectorToStoreFacadeInterface;
@@ -32,11 +32,11 @@ class SalesMerchantConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesMerchantConnector\Business\SalesOrderMerchantSaver\SalesOrderMerchantSaverInterface
+     * @return \Spryker\Zed\SalesMerchantConnector\Business\SalesOrderMerchantWriter\SalesOrderMerchantWriterInterface
      */
-    public function createSalesOrderMerchantSaver(): SalesOrderMerchantSaverInterface
+    public function createSalesOrderMerchantWriter(): SalesOrderMerchantWriterInterface
     {
-        return new SalesOrderMerchantSaver(
+        return new SalesOrderMerchantWriter(
             $this->getEntityManager(),
             $this->getMerchantProductOfferFacade(),
             $this->getMerchantFacade(),

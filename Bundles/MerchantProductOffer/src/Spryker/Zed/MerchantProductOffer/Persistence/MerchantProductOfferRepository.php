@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantProductOffer\Persistence;
 
-use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -18,18 +17,17 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
     /**
      * @param string $productOfferReference
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
+     * @return int|null
      */
-    public function findMerchantProductOfferByOfferReference(string $productOfferReference): ?ProductOfferTransfer
+    public function findIdMerchantByOfferReference(string $productOfferReference): ?int
     {
         $productOfferEntity = $this->getFactory()->createProductOfferQuery()
             ->findOneByProductOfferReference($productOfferReference);
 
-        if (!$productOfferEntity) {
+        if (!$productOfferEntity || !$productOfferEntity->getFkMerchant()) {
             return null;
         }
 
-        return $this->getFactory()->createMerchantProductOfferMapper()
-            ->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, new ProductOfferTransfer());
+        return $productOfferEntity->getFkMerchant();
     }
 }
