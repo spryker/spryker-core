@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsSlot\Persistence;
 
-use Generated\Shared\Transfer\CmsSlotCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CmsSlotCriteriaTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery;
@@ -35,19 +35,19 @@ class CmsSlotRepository extends AbstractRepository implements CmsSlotRepositoryI
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotCriteriaFilterTransfer $cmsSlotCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotCriteriaTransfer $cmsSlotCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
      */
-    public function getCmsSlotsByCriteriaFilter(CmsSlotCriteriaFilterTransfer $cmsSlotCriteriaFilterTransfer): array
+    public function getCmsSlotsByCriteria(CmsSlotCriteriaTransfer $cmsSlotCriteriaTransfer): array
     {
         $cmsSlotQuery = $this->setQueryFilters(
             $this->getFactory()->createCmsSlotQuery(),
-            $cmsSlotCriteriaFilterTransfer->getFilter()
+            $cmsSlotCriteriaTransfer->getFilter()
         );
 
-        if ($cmsSlotCriteriaFilterTransfer->getCmsSlotIds()) {
-            $cmsSlotQuery->filterByIdCmsSlot_In($cmsSlotCriteriaFilterTransfer->getCmsSlotIds());
+        if ($cmsSlotCriteriaTransfer->getCmsSlotIds()) {
+            $cmsSlotQuery->filterByIdCmsSlot_In($cmsSlotCriteriaTransfer->getCmsSlotIds());
         }
 
         $cmsSlotEntities = $cmsSlotQuery->find();

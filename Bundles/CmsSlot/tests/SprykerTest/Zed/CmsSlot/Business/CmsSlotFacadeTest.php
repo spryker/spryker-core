@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\CmsSlot\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CmsSlotCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CmsSlotCriteriaTransfer;
 use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
@@ -235,7 +235,7 @@ class CmsSlotFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCmsSlotsByCriteriaFilterReturnsCmsSlotTransfers(): void
+    public function testGetCmsSlotsByCriteriaReturnsCmsSlotTransfers(): void
     {
         // Arrange
         $this->tester->haveCmsSlotInDb();
@@ -245,8 +245,8 @@ class CmsSlotFacadeTest extends Unit
             ->setOrderBy(SpyCmsSlotTableMap::COL_ID_CMS_SLOT);
 
         // Act
-        $cmsSlotTransfers = $this->tester->getFacade()->getCmsSlotsByCriteriaFilter(
-            (new CmsSlotCriteriaFilterTransfer())->setFilter($filterTransfer)
+        $cmsSlotTransfers = $this->tester->getFacade()->getCmsSlotsByCriteria(
+            (new CmsSlotCriteriaTransfer())->setFilter($filterTransfer)
         );
 
         // Assert
@@ -258,14 +258,14 @@ class CmsSlotFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCmsSlotsByCriteriaFilterReturnsCmsSlotTransfersWithCorrectData(): void
+    public function testGetCmsSlotsByCriteriaReturnsCmsSlotTransfersWithCorrectData(): void
     {
         // Arrange
         $cmsSlotTransfer = $this->tester->haveCmsSlotInDb([CmsSlotTransfer::IS_ACTIVE => true]);
 
         // Act
-        $cmsSlotTransferFromDb = $this->tester->getFacade()->getCmsSlotsByCriteriaFilter(
-            (new CmsSlotCriteriaFilterTransfer())->setCmsSlotIds([$cmsSlotTransfer->getIdCmsSlot()])
+        $cmsSlotTransferFromDb = $this->tester->getFacade()->getCmsSlotsByCriteria(
+            (new CmsSlotCriteriaTransfer())->setCmsSlotIds([$cmsSlotTransfer->getIdCmsSlot()])
         )[0];
 
         // Assert

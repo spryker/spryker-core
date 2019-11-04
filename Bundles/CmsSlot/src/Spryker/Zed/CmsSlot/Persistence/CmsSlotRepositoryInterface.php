@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsSlot\Persistence;
 
-use Generated\Shared\Transfer\CmsSlotCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CmsSlotCriteriaTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
 
 interface CmsSlotRepositoryInterface
@@ -20,9 +20,9 @@ interface CmsSlotRepositoryInterface
     public function findCmsSlotById(int $idCmsSlot): ?CmsSlotTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotCriteriaFilterTransfer $cmsSlotCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotCriteriaTransfer $cmsSlotCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
      */
-    public function getCmsSlotsByCriteriaFilter(CmsSlotCriteriaFilterTransfer $cmsSlotCriteriaFilterTransfer): array;
+    public function getCmsSlotsByCriteria(CmsSlotCriteriaTransfer $cmsSlotCriteriaTransfer): array;
 }
