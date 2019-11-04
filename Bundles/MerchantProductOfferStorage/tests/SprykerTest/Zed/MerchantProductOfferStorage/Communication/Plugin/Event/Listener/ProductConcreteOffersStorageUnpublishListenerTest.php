@@ -64,7 +64,7 @@ class ProductConcreteOffersStorageUnpublishListenerTest extends Unit
             ];
         });
 
-        $this->merchantProductOfferTransfer = $this->tester->haveMerchantProductOffer([
+        $this->merchantProductOfferTransfer = $this->tester->haveProductOffer([
             'fkMerchant' => $this->tester->haveMerchant()->getIdMerchant(),
         ]);
         $this->productConcreteOffersStoragePublishListener = new ProductConcreteOffersStoragePublishListener();
