@@ -29,7 +29,9 @@ class DiscountsResourceRoutePlugin extends AbstractPlugin implements ResourceRou
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        $resourceRouteCollection->addPost('post');
+        $resourceRouteCollection
+            ->addPost('post')
+            ->addDelete('delete');
 
         return $resourceRouteCollection;
     }

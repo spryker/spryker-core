@@ -10,6 +10,7 @@ namespace Spryker\Glue\GlueApplication\Rest\Request;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\MetadataInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 use Spryker\Glue\GlueApplication\Rest\Serialize\DecoderMatcherInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
@@ -78,18 +79,32 @@ class RequestResourceExtractor implements RequestResourceExtractorInterface
         $request->attributes->set(RestResourceInterface::RESOURCE_DATA, $data);
 
         if (!isset($data[RestResourceInterface::RESOURCE_TYPE]) ||
-            (!isset($data[RestResourceInterface::RESOURCE_ATTRIBUTES]) && $request->getMethod() !== 'DELETE')
+            (!isset($data[RestResourceInterface::RESOURCE_ATTRIBUTES])
+                && $request->getMethod() !== 'DELETE')
         ) {
             return null;
         }
 
-        $resourceId = $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_ID);
-
         return $this->restResourceBuilder->createRestResource(
             $data[RestResourceInterface::RESOURCE_TYPE],
-            $resourceId,
+            $this->getResourceId($request, $data),
             $this->mapEntityTransfer($request, $data)
         );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param array $data
+     *
+     * @return string|null
+     */
+    protected function getResourceId(Request $request, array $data): ?string
+    {
+        if ($request->getMethod() === 'DELETE') {
+            return $data[RestResourceInterface::RESOURCE_TYPE];
+        }
+
+        return $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_ID);
     }
 
     /**
@@ -100,6 +115,10 @@ class RequestResourceExtractor implements RequestResourceExtractorInterface
      */
     protected function mapEntityTransfer(Request $request, array $data): ?AbstractTransfer
     {
+        if (!isset($data[RestResourceInterface::RESOURCE_ATTRIBUTES])) {
+            return null;
+        }
+
         $className = $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_RESOURCE_FQCN);
 
         if (!$className) {

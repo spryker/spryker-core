@@ -29,4 +29,17 @@ class DiscountsResourceController extends AbstractController
     ): RestResponseInterface {
         return $this->getFactory()->createCartCodeAdder()->addCandidate($restRequest, $restDiscountRequestAttributesTransfer);
     }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function deleteAction(
+        RestRequestInterface $restRequest,
+        RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
+    ): RestResponseInterface {
+        return $this->getFactory()->createCartCodeDeleter()->removeCode($restRequest, $restDiscountRequestAttributesTransfer);
+    }
 }
