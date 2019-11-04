@@ -10,24 +10,12 @@ namespace SprykerTest\Yves\Security\Plugin\Application;
 use Codeception\Test\Unit;
 use Exception;
 use LogicException;
-use Spryker\Service\Container\ContainerInterface;
-use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
-use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
-use Spryker\Yves\EventDispatcher\EventDispatcherFactory;
-use Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin;
-use Spryker\Yves\Router\Plugin\EventDispatcher\RouterListenerEventDispatcherPlugin;
 use Spryker\Yves\Security\Configuration\SecurityConfiguration;
 use Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin;
 use SprykerTest\Yves\Security\Fixtures\TokenAuthenticator;
-use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -99,7 +87,6 @@ class SecurityApplicationPluginTest extends Unit
     public function testFormAuthentication()
     {
         $this->addFormAuthentication();
-        $this->addEventDispatcher();
 
         $container = $this->tester->getContainer();
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
@@ -153,7 +140,6 @@ class SecurityApplicationPluginTest extends Unit
     public function testHttpAuthentication()
     {
         $this->addHttpAuthentication();
-        $this->addEventDispatcher();
 
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
 
@@ -185,7 +171,6 @@ class SecurityApplicationPluginTest extends Unit
     public function testGuardAuthentication(): void
     {
         $this->addGuardAuthentication();
-        $this->addEventDispatcher();
 
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
         $httpKernelBrowser->request('get', '/');
@@ -212,7 +197,6 @@ class SecurityApplicationPluginTest extends Unit
     public function testSwitchUser(): void
     {
         $this->addSwitchUserAuthentication();
-        $this->addEventDispatcher();
 
         $container = $this->tester->getContainer();
 
@@ -257,7 +241,7 @@ class SecurityApplicationPluginTest extends Unit
                 'switch_user' => true,
                 'stateless' => true,
             ])
-            ->addAccessRules(['^/admin', 'ROLE_ADMIN'])
+            ->addAccessRules([['^/admin', 'ROLE_ADMIN']])
             ->addRoleHierarchy(['ROLE_ADMIN' => ['ROLE_USER', 'ROLE_ALLOWED_TO_SWITCH']]);
 
         $this->tester->addSecurityPlugin($securityConfiguration);
@@ -310,7 +294,6 @@ class SecurityApplicationPluginTest extends Unit
             };
         });
         $this->tester->addSecurityPlugin($securityConfiguration);
-        $this->addEventDispatcher();
 
         $this->tester->addRoute('homepage', '/', function () {
             return new Response('foo');
@@ -352,7 +335,6 @@ class SecurityApplicationPluginTest extends Unit
             };
         });
         $this->tester->addSecurityPlugin($securityConfiguration);
-        $this->addEventDispatcher();
 
         $this->tester->addRoute('homepage', '/', function () {
             return new Response('foo');
@@ -377,7 +359,6 @@ class SecurityApplicationPluginTest extends Unit
             'methods' => ['POST'],
         ]);
         $this->tester->addSecurityPlugin($securityConfiguration);
-        $this->addEventDispatcher();
         $this->tester->addRoute('homepage', '/', function () {
             return new Response('foo');
         }, [], [], [], null, null, ['POST', 'GET']);
@@ -402,7 +383,6 @@ class SecurityApplicationPluginTest extends Unit
             'hosts' => 'localhost2',
         ]);
         $this->tester->addSecurityPlugin($securityConfiguration);
-        $this->addEventDispatcher();
         $this->tester->addRoute('homepage-1', '/', function () {
             return new Response('foo');
         }, [], [], [], 'localhost1');
@@ -431,7 +411,7 @@ class SecurityApplicationPluginTest extends Unit
             ],
         ]);
         $this->tester->addSecurityPlugin($securityConfiguration);
-        $this->addEventDispatcher();
+
         $this->tester->addRoute('homepage', '/', function () {
             return new Response('foo');
         });
@@ -461,7 +441,6 @@ class SecurityApplicationPluginTest extends Unit
             'users' => 'my_user_provider',
         ]);
         $this->tester->addSecurityPlugin($securityConfiguration);
-        $this->addEventDispatcher();
         $users = [
             'user' => ['ROLE_ADMIN', '$2y$15$lzUNsTegNXvZW3qtfucV0erYBcEqWVeyOmjolB7R1uodsAVJ95vvu'],
         ];
@@ -496,7 +475,6 @@ class SecurityApplicationPluginTest extends Unit
             'http' => true,
         ]);
         $this->tester->addSecurityPlugin($securityConfiguration);
-        $this->addEventDispatcher();
 
         $this->tester->addRoute('homepage', '/', function () {
             return new Response('foo');
@@ -517,7 +495,6 @@ class SecurityApplicationPluginTest extends Unit
             'http' => true,
         ]);
         $this->tester->addSecurityPlugin($securityConfiguration);
-        $this->addEventDispatcher();
 
         $this->tester->getContainer()->get('security.token_storage')->setToken(new UsernamePasswordToken('foo', 'foo', 'foo'));
         $this->tester->addRoute('homepage', '/', function () {
@@ -539,9 +516,8 @@ class SecurityApplicationPluginTest extends Unit
             ->addFirewall('default', [
                 'http' => true,
             ])
-            ->addAccessRules([['path' => '^/admin'], 'ROLE_ADMIN']);
+            ->addAccessRules([[['path' => '^/admin'], 'ROLE_ADMIN']]);
         $this->tester->addSecurityPlugin($securityConfiguration);
-        $this->addEventDispatcher();
 
         $container = $this->tester->getContainer();
 
@@ -591,7 +567,6 @@ class SecurityApplicationPluginTest extends Unit
             return false;
         });
         $this->addFormAuthentication();
-        $this->addEventDispatcher();
 
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
 
@@ -626,79 +601,6 @@ class SecurityApplicationPluginTest extends Unit
     /**
      * @return void
      */
-    protected function addEventDispatcher(): void
-    {
-        $eventDispatcherApplicationPlugin = new EventDispatcherApplicationPlugin();
-        $eventDispatcherApplicationPlugin->setFactory($this->getEventDispatcherFactoryMock());
-        $this->tester->addApplicationPlugin($eventDispatcherApplicationPlugin);
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\EventDispatcher\EventDispatcherFactory
-     */
-    protected function getEventDispatcherFactoryMock()
-    {
-        $eventDispatcherFactoryMock = $this->getMockBuilder(EventDispatcherFactory::class)
-            ->setMethods(['getEventDispatcherPlugins'])
-            ->getMock();
-
-        $sessionEventDispatcherPlugin = new class implements EventDispatcherPluginInterface {
-            /**
-             * @param \Spryker\Shared\EventDispatcher\EventDispatcherInterface $eventDispatcher
-             * @param \Spryker\Service\Container\ContainerInterface $container
-             *
-             * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
-             */
-            public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
-            {
-                $eventDispatcher->addListener(KernelEvents::REQUEST, function (GetResponseEvent $event) {
-                    $session = new Session(new MockFileSessionStorage());
-                    $event->getRequest()->setSession($session);
-                    $cookies = $event->getRequest()->cookies;
-
-                    if ($cookies->has($session->getName())) {
-                        $session->setId($cookies->get($session->getName()));
-                    } else {
-                        $session->migrate(false);
-                    }
-                }, 192);
-
-                $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) {
-                    $session = $event->getRequest()->getSession();
-                    if ($session && $session->isStarted()) {
-                        $session->save();
-
-                        $params = session_get_cookie_params();
-
-                        $event->getResponse()->headers->setCookie(new Cookie(
-                            $session->getName(),
-                            $session->getId(),
-                            $params['lifetime'] === 0 ? 0 : time() + $params['lifetime'],
-                            $params['path'],
-                            $params['domain'],
-                            $params['secure'],
-                            $params['httponly'],
-                            false,
-                            null
-                        ));
-                    }
-                }, -128);
-
-                return $eventDispatcher;
-            }
-        };
-
-        $eventDispatcherFactoryMock->method('getEventDispatcherPlugins')->willReturn([
-            new RouterListenerEventDispatcherPlugin(),
-            $sessionEventDispatcherPlugin,
-        ]);
-
-        return $eventDispatcherFactoryMock;
-    }
-
-    /**
-     * @return void
-     */
     protected function addFormAuthentication(): void
     {
         $securityConfiguration = new SecurityConfiguration();
@@ -719,7 +621,7 @@ class SecurityApplicationPluginTest extends Unit
                     'admin' => ['ROLE_ADMIN', '$2y$15$lzUNsTegNXvZW3qtfucV0erYBcEqWVeyOmjolB7R1uodsAVJ95vvu'],
                 ],
             ])
-            ->addAccessRules(['^/admin', 'ROLE_ADMIN'])
+            ->addAccessRules([['^/admin', 'ROLE_ADMIN']])
             ->addRoleHierarchy(['ROLE_ADMIN' => ['ROLE_USER']]);
 
         $this->tester->addSecurityPlugin($securityConfiguration);
@@ -769,7 +671,7 @@ class SecurityApplicationPluginTest extends Unit
                     'admin' => ['ROLE_ADMIN', '$2y$15$lzUNsTegNXvZW3qtfucV0erYBcEqWVeyOmjolB7R1uodsAVJ95vvu'],
                 ],
             ])
-            ->addAccessRules(['^/admin', 'ROLE_ADMIN'])
+            ->addAccessRules([['^/admin', 'ROLE_ADMIN']])
             ->addRoleHierarchy(['ROLE_ADMIN' => ['ROLE_USER']]);
 
         $this->tester->addSecurityPlugin($securityConfiguration);
@@ -814,7 +716,7 @@ class SecurityApplicationPluginTest extends Unit
                     'victoria' => ['ROLE_USER', 'victoriasecret'],
                 ],
             ])
-            ->addAccessRules(['^/admin', 'ROLE_ADMIN'])
+            ->addAccessRules([['^/admin', 'ROLE_ADMIN']])
             ->addRoleHierarchy(['ROLE_ADMIN' => ['ROLE_USER']]);
 
         $this->tester->addSecurityPlugin($securityConfiguration);

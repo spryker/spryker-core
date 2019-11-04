@@ -756,7 +756,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected function addAuthenticationFailureHandlerPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set('security.authentication.failure_handler._proto', $container->protect(function ($name, $options) use ($container) {
-            return function () use ($name, $options, $container) {
+            return function () use ($options, $container) {
                 return new DefaultAuthenticationFailureHandler(
                     $container->get(static::SERVICE_KERNEL),
                     $container->get('security.http_utils'),
@@ -777,10 +777,10 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected function addAuthenticationLogoutHandlerPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set('security.authentication.logout_handler._proto', $container->protect(function ($name, $options) use ($container) {
-            return function () use ($name, $options, $container) {
+            return function () use ($options, $container) {
                 return new DefaultLogoutSuccessHandler(
                     $container->get('security.http_utils'),
-                    isset($options['target_url']) ? $options['target_url'] : '/'
+                    $options['target_url'] ?? '/'
                 );
             };
         }));
@@ -922,7 +922,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected function addAuthenticationListenerHttpPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set('security.authentication_listener.http._proto', $container->protect(function ($providerKey, $options) use ($container) {
-            return function () use ($container, $providerKey, $options) {
+            return function () use ($container, $providerKey) {
                 return new BasicAuthenticationListener(
                     $container->get('security.token_storage'),
                     $container->get('security.authentication_manager'),
@@ -944,7 +944,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected function addAuthenticationListenerAnonymousPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set('security.authentication_listener.anonymous._proto', $container->protect(function ($providerKey, $options) use ($container) {
-            return function () use ($container, $providerKey, $options) {
+            return function () use ($container, $providerKey) {
                 return new AnonymousAuthenticationListener(
                     $container->get('security.token_storage'),
                     $providerKey,
@@ -1060,9 +1060,9 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addEntryPointHttpPrototype(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.entry_point.http._proto', $container->protect(function ($name, array $options) use ($container) {
-            return function () use ($container, $name, $options) {
-                return new BasicAuthenticationEntryPoint(isset($options['real_name']) ? $options['real_name'] : 'Secured');
+        $container->set('security.entry_point.http._proto', $container->protect(function ($name, array $options) {
+            return function () use ($options) {
+                return new BasicAuthenticationEntryPoint($options['real_name'] ?? 'Secured');
             };
         }));
 
@@ -1167,8 +1167,8 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addAuthenticationProviderAnonymousPrototype(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.authentication_provider.anonymous._proto', $container->protect(function ($name, $options) use ($container) {
-            return function () use ($container, $name) {
+        $container->set('security.authentication_provider.anonymous._proto', $container->protect(function ($name, $options) {
+            return function () use ($name) {
                 return new AnonymousAuthenticationProvider($name);
             };
         }));

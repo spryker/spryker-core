@@ -76,7 +76,7 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      */
     public function addAccessRules(array $accessRules)
     {
-        $this->accessRules[] = $accessRules;
+        $this->accessRules = array_merge($this->accessRules, $accessRules);
 
         return $this;
     }

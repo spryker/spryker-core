@@ -15,6 +15,7 @@
     "spryker/event-dispatcher": "*",
     "spryker/event-dispatcher-extension": "*",
     "spryker/router": "*",
+    "spryker/session": "*",
     "spryker/testify": "*"
   },
   "suggest": {

@@ -11,6 +11,7 @@ use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
 use Spryker\Shared\Security\Dependency\Plugin\SecurityPluginInterface;
+use Spryker\Yves\Router\Plugin\EventDispatcher\RouterListenerEventDispatcherPlugin;
 use Spryker\Yves\Security\Configuration\SecurityBuilderInterface;
 use Spryker\Yves\Security\Configuration\SecurityConfiguration;
 use Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin;
@@ -20,11 +21,14 @@ use Spryker\Yves\Security\SecurityDependencyProvider;
 use Spryker\Yves\Security\SecurityFactory;
 use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 use SprykerTest\Shared\Testify\Helper\DependencyHelper;
+use SprykerTest\Yves\EventDispatcher\Helper\EventDispatcherHelper;
 use SprykerTest\Yves\Testify\Helper\ApplicationHelper;
 use SprykerTest\Yves\Testify\Helper\FactoryHelper;
 
 class SecurityHelper extends Module
 {
+    protected const MODULE_NAME = 'Security';
+
     /**
      * @var array
      */
@@ -42,6 +46,8 @@ class SecurityHelper extends Module
         $this->getApplicationHelper()->addApplicationPlugin(
             $this->getSecurityApplicationPluginStub()
         );
+
+        $this->getEventDispatcherHelper()->addEventDispatcherPlugin(new RouterListenerEventDispatcherPlugin());
     }
 
     /**
@@ -68,7 +74,7 @@ class SecurityHelper extends Module
     protected function getConfig(): SecurityConfig
     {
         /** @var \Spryker\Yves\Security\SecurityConfig $securityConfig */
-        $securityConfig = $this->getConfigHelper()->getModuleConfig();
+        $securityConfig = $this->getConfigHelper()->getModuleConfig(static::MODULE_NAME);
 
         return $securityConfig;
     }
@@ -90,7 +96,7 @@ class SecurityHelper extends Module
     protected function getFactory(): SecurityFactory
     {
         /** @var \Spryker\Yves\Security\SecurityFactory $securityFactory */
-        $securityFactory = $this->getFactoryHelper()->getFactory();
+        $securityFactory = $this->getFactoryHelper()->getFactory(static::MODULE_NAME);
 
         return $securityFactory;
     }
@@ -118,6 +124,17 @@ class SecurityHelper extends Module
     }
 
     /**
+     * @return \SprykerTest\Yves\EventDispatcher\Helper\EventDispatcherHelper
+     */
+    protected function getEventDispatcherHelper(): EventDispatcherHelper
+    {
+        /** @var \SprykerTest\Yves\EventDispatcher\Helper\EventDispatcherHelper $eventDispatcherHelper */
+        $eventDispatcherHelper = $this->getModule('\\' . EventDispatcherHelper::class);
+
+        return $eventDispatcherHelper;
+    }
+
+    /**
      * @param \Spryker\Yves\Security\Configuration\SecurityConfiguration $securityConfiguration
      *
      * @return $this
@@ -130,7 +147,7 @@ class SecurityHelper extends Module
                     $securityBuilder->addFirewall($firewallName, $firewallConfiguration);
                 }
                 foreach ($securityConfiguration->getAccessRules() as $accessRules) {
-                    $securityBuilder->addAccessRules($accessRules);
+                    $securityBuilder->addAccessRules([$accessRules]);
                 }
                 foreach ($securityConfiguration->getRoleHierarchies() as $mainRole => $roleHierarchy) {
                     $roleHierarchy = [$mainRole => $roleHierarchy];
