@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class CategorySlotBlockConditionFormPlugin extends AbstractPlugin implements CmsSlotBlockGuiConditionFormPluginInterface
 {
     /**
-     * @uses \Spryker\Shared\CategoryGui\CategoryGuiConstants::CONDITION_KEY
+     * @uses \Spryker\Shared\CmsSlotBlockCategoryConnector\CmsSlotBlockCategoryConnectorConfig::CONDITION_KEY
      */
     protected const CONDITION_KEY = 'category';
 
@@ -47,7 +47,7 @@ class CategorySlotBlockConditionFormPlugin extends AbstractPlugin implements Cms
      */
     public function addConditionForm(FormBuilderInterface $builder): void
     {
-        $categorySlotBlockDataProvider = $this->getFactory()->createCategorySlotBlockDataProvider();
+        $categorySlotBlockDataProvider = $this->getFactory()->createCategoryDataProvider();
         $categorySlotBlockConditionForm = $this->getFactory()->createCategorySlotBlockConditionForm();
         $categorySlotBlockConditionForm->buildForm($builder, $categorySlotBlockDataProvider->getOptions());
     }

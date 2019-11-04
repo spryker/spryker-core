@@ -137,7 +137,7 @@ class CmsSlotBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\CmsSlotBlockGuiExtension\Communication\Plugin\CmsSlotBlockGuiConditionFormPluginInterface[]
      */
-    public function getCmsSlotBlockFormPlugins(): array
+    public function getCmsSlotBlockConditionFormPlugins(): array
     {
         return $this->getProvidedDependency(CmsSlotBlockGuiDependencyProvider::CMS_SLOT_BLOCK_FORM_PLUGINS);
     }

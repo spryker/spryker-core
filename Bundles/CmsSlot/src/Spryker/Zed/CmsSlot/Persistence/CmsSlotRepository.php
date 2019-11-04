@@ -23,13 +23,17 @@ class CmsSlotRepository extends AbstractRepository implements CmsSlotRepositoryI
      */
     public function findCmsSlotById(int $idCmsSlot): ?CmsSlotTransfer
     {
-        $cmsSlot = $this->getFactory()->createCmsSlotQuery()->findOneByIdCmsSlot($idCmsSlot);
+        $cmsSlot = $this->getFactory()
+            ->createCmsSlotQuery()
+            ->findOneByIdCmsSlot($idCmsSlot);
 
         if (!$cmsSlot) {
             return null;
         }
 
-        return $this->getFactory()->createCmsSlotMapper()->mapCmsSlotEntityToTransfer($cmsSlot);
+        return $this->getFactory()
+            ->createCmsSlotMapper()
+            ->mapCmsSlotEntityToTransfer($cmsSlot);
     }
 
     /**
@@ -39,12 +43,16 @@ class CmsSlotRepository extends AbstractRepository implements CmsSlotRepositoryI
      */
     public function findCmsSlotTemplateById(int $idCmsSlotTemplate): ?CmsSlotTemplateTransfer
     {
-        $cmsSlotTemplateEntity = $this->getFactory()->createCmsSlotTemplateQuery()->findOneByIdCmsSlotTemplate($idCmsSlotTemplate);
+        $cmsSlotTemplateEntity = $this->getFactory()
+            ->createCmsSlotTemplateQuery()
+            ->findOneByIdCmsSlotTemplate($idCmsSlotTemplate);
 
         if (!$cmsSlotTemplateEntity) {
             return null;
         }
 
-        return $this->getFactory()->createCmsSlotMapper()->mapCmsSlotTemplateEntityToTransfer($cmsSlotTemplateEntity);
+        return $this->getFactory()
+            ->createCmsSlotMapper()
+            ->mapCmsSlotTemplateEntityToTransfer($cmsSlotTemplateEntity);
     }
 }

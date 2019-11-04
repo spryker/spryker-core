@@ -7,14 +7,13 @@
 
 namespace Spryker\Shared\CmsSlotBlockCategoryConnector;
 
-/**
- * Declares global environment configuration keys. Do not use it for other class constants.
- */
-class CmsSlotBlockCategoryConnectorConstants
+use Spryker\Shared\Kernel\AbstractBundleConfig;
+
+class CmsSlotBlockCategoryConnectorConfig extends AbstractBundleConfig
 {
     /**
      * Specification:
-     * - Defines the key of condition form plugin.
+     * - Defines the key for CMS block condition.
      *
      * @api
      */

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotBlockCategoryGui\Communication\DataProvider;
 
-interface CategorySlotBlockDataProviderInterface
+interface CategoryDataProviderInterface
 {
     /**
      * @return array

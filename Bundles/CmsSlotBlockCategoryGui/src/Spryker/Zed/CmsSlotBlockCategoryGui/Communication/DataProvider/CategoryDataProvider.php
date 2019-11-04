@@ -8,13 +8,16 @@
 namespace Spryker\Zed\CmsSlotBlockCategoryGui\Communication\DataProvider;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
-use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\CategorySlotBlockConditionForm;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToCategoryFacadeInterface;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToLocaleFacadeInterface;
+use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToTranslatorFacadeInterface;
 
-class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInterface
+class CategoryDataProvider implements CategoryDataProviderInterface
 {
+    protected const KEY_OPTION_ALL_CATEGORIES = 'All Category Pages';
+    protected const KEY_OPTION_SPECIFIC_CATEGORY = 'Specific Category Pages';
+
     /**
      * @var \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToCategoryFacadeInterface
      */
@@ -26,15 +29,23 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToTranslatorFacadeInterface
+     */
+    protected $translatorFacade;
+
+    /**
      * @param \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToCategoryFacadeInterface $categoryFacade
      * @param \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToTranslatorFacadeInterface $translatorFacade
      */
     public function __construct(
         CmsSlotBlockCategoryGuiToCategoryFacadeInterface $categoryFacade,
-        CmsSlotBlockCategoryGuiToLocaleFacadeInterface $localeFacade
+        CmsSlotBlockCategoryGuiToLocaleFacadeInterface $localeFacade,
+        CmsSlotBlockCategoryGuiToTranslatorFacadeInterface $translatorFacade
     ) {
         $this->categoryFacade = $categoryFacade;
         $this->localeFacade = $localeFacade;
+        $this->translatorFacade = $translatorFacade;
     }
 
     /**
@@ -43,15 +54,26 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
     public function getOptions(): array
     {
         return [
-            'data_class' => CmsSlotBlockTransfer::class,
-            CategorySlotBlockConditionForm::OPTION_CATEGORY_IDS => $this->getCategoryIds(),
+            CategorySlotBlockConditionForm::OPTION_ALL_ARRAY => $this->getAllOptions(),
+            CategorySlotBlockConditionForm::OPTION_CATEGORY_ARRAY => $this->getCategories(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getAllOptions(): array
+    {
+        return [
+            $this->translatorFacade->trans(static::KEY_OPTION_ALL_CATEGORIES) => true,
+            $this->translatorFacade->trans(static::KEY_OPTION_SPECIFIC_CATEGORY) => false,
         ];
     }
 
     /**
      * @return int[]
      */
-    protected function getCategoryIds(): array
+    protected function getCategories(): array
     {
         $categoryCollectionTransfer = $this->categoryFacade
             ->getAllCategoryCollection($this->localeFacade->getCurrentLocale());

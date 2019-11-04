@@ -17,11 +17,16 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class CategorySlotBlockConditionForm extends AbstractType
 {
-    public const OPTION_CATEGORY_IDS = 'option-category-ids';
+    public const OPTION_CATEGORY_ARRAY = 'option-category-array';
+    public const OPTION_ALL_ARRAY = 'option-all-array';
 
+    public const FIELD_CATEGORY_IDS = 'categoryIds';
+    public const FIELD_ALL = 'all';
+
+    /**
+     * @uses \Spryker\Shared\CmsSlotBlockCategoryConnector\CmsSlotBlockCategoryConnectorConfig::CONDITION_KEY
+     */
     protected const FIELD_CATEGORY = 'category';
-    protected const FIELD_CATEGORY_IDS = 'categoryIds';
-    protected const FIELD_ALL = 'all';
 
     protected const LABEL_CATEGORY_IDS = 'Category Pages';
 
@@ -34,8 +39,8 @@ class CategorySlotBlockConditionForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addCategoryField($builder)
-            ->addAllField($builder)
-            ->addCategoryIdsField($builder, $options);
+            ->addAllField($builder->get(static::FIELD_CATEGORY), $options)
+            ->addCategoryIdsField($builder->get(static::FIELD_CATEGORY), $options);
     }
 
     /**
@@ -60,17 +65,15 @@ class CategorySlotBlockConditionForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addAllField(FormBuilderInterface $builder)
+    protected function addAllField(FormBuilderInterface $builder, array $options = [])
     {
-        $builder->get(static::FIELD_CATEGORY)->add(static::FIELD_ALL, ChoiceType::class, [
+        $builder->add(static::FIELD_ALL, ChoiceType::class, [
             'required' => false,
-            'choices' => [
-                'All Category Pages' => true,
-                'Specific Category Pages' => false,
-            ],
+            'choices' => $options[static::OPTION_ALL_ARRAY],
             'choice_value' => function ($choice) {
                 return $choice ?? true;
             },
@@ -91,8 +94,8 @@ class CategorySlotBlockConditionForm extends AbstractType
      */
     protected function addCategoryIdsField(FormBuilderInterface $builder, array $options)
     {
-        $builder->get(static::FIELD_CATEGORY)->add(static::FIELD_CATEGORY_IDS, ChoiceType::class, [
-            'choices' => $options[static::OPTION_CATEGORY_IDS],
+        $builder->add(static::FIELD_CATEGORY_IDS, ChoiceType::class, [
+            'choices' => $options[static::OPTION_CATEGORY_ARRAY],
             'required' => false,
             'multiple' => true,
             'label' => static::LABEL_CATEGORY_IDS,

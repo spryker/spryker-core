@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsSlot\Business\Reader;
+namespace Spryker\Zed\CmsSlot\Business\Reader\CmsSlotTemplate;
 
 use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 

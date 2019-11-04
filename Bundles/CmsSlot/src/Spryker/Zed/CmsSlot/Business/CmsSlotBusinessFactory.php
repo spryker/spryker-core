@@ -12,8 +12,8 @@ use Spryker\Zed\CmsSlot\Business\Activator\CmsSlotActivatorInterface;
 use Spryker\Zed\CmsSlot\Business\ConstraintsProvider\CmsSlotConstraintsProvider;
 use Spryker\Zed\CmsSlot\Business\ConstraintsProvider\CmsSlotTemplateConstraintsProvider;
 use Spryker\Zed\CmsSlot\Business\ConstraintsProvider\ConstraintsProviderInterface;
-use Spryker\Zed\CmsSlot\Business\Reader\CmsSlotTemplateReader;
-use Spryker\Zed\CmsSlot\Business\Reader\CmsSlotTemplateReaderInterface;
+use Spryker\Zed\CmsSlot\Business\Reader\CmsSlotTemplate\CmsSlotTemplateReader;
+use Spryker\Zed\CmsSlot\Business\Reader\CmsSlotTemplate\CmsSlotTemplateReaderInterface;
 use Spryker\Zed\CmsSlot\Business\Validator\CmsSlotTemplateValidator;
 use Spryker\Zed\CmsSlot\Business\Validator\CmsSlotTemplateValidatorInterface;
 use Spryker\Zed\CmsSlot\Business\Validator\CmsSlotValidator;
@@ -71,7 +71,7 @@ class CmsSlotBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsSlot\Business\Reader\CmsSlotTemplateReaderInterface
+     * @return \Spryker\Zed\CmsSlot\Business\Reader\CmsSlotTemplate\CmsSlotTemplateReaderInterface
      */
     public function createCmsSlotTemplateReader(): CmsSlotTemplateReaderInterface
     {

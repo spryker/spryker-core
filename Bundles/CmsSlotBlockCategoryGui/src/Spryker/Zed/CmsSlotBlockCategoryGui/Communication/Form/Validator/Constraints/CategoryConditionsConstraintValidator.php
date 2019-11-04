@@ -7,27 +7,25 @@
 
 namespace Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\Validator\Constraints;
 
+use Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\CategorySlotBlockConditionForm;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 class CategoryConditionsConstraintValidator extends ConstraintValidator
 {
-    protected const CONDITION_KEY_ALL = 'all';
-    protected const CONDITION_KEY_CATEGORY_IDS = 'categoryIds';
-
     /**
      * @param mixed $value
-     * @param \Symfony\Component\Validator\Constraint $constraint
+     * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\Validator\Constraints\CategoryConditionsConstraint $constraint
      *
      * @return void
      */
     public function validate($value, Constraint $constraint): void
     {
-        if ($value[static::CONDITION_KEY_ALL]) {
+        if ($value[CategorySlotBlockConditionForm::FIELD_ALL]) {
             return;
         }
 
-        if (!$value[static::CONDITION_KEY_CATEGORY_IDS]) {
+        if (!$value[CategorySlotBlockConditionForm::FIELD_CATEGORY_IDS]) {
             $this->context->buildViolation($constraint->getMessage())
                 ->addViolation();
         }
