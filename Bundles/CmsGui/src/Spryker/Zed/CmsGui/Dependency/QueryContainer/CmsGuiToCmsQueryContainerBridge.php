@@ -99,7 +99,7 @@ class CmsGuiToCmsQueryContainerBridge implements CmsGuiToCmsQueryContainerInterf
      *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery
      */
-    public function queryGlossaryKeyMappingByPlaceholdersAndIdPage($placeholders, $idCmsPage)
+    public function queryGlossaryKeyMappingByPlaceholdersAndIdPage(array $placeholders, $idCmsPage)
     {
         return $this->cmsQueryContainer->queryGlossaryKeyMappingByPlaceholdersAndIdPage($placeholders, $idCmsPage);
     }
