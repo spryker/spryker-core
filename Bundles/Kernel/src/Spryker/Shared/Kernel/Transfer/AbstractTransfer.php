@@ -74,7 +74,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     /**
      * @return void
      */
-    protected function initCollectionProperties(): void
+    protected function initCollectionProperties()
     {
         foreach ($this->transferMetadata as $property => $metaData) {
             if ($metaData['is_collection'] && $this->$property === null) {
