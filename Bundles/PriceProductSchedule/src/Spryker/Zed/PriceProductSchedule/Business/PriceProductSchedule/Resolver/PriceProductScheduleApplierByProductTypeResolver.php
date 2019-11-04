@@ -45,7 +45,7 @@ class PriceProductScheduleApplierByProductTypeResolver implements PriceProductSc
         $priceProductScheduleTransfer->requirePriceProduct();
         $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
 
-        if ($priceProductTransfer->getIdProductAbstract() === null) {
+        if ($priceProductTransfer->getIdProduct() !== null) {
             $this->concreteProductPriceProductScheduleApplier->applyScheduledPrices($priceProductScheduleTransfer);
 
             return;

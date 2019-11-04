@@ -73,6 +73,15 @@ interface PriceProductScheduleGuiToPriceProductScheduleFacadeInterface
     public function validateCsvFile(UploadedFile $uploadedFile): PriceProductScheduleCsvValidationResultTransfer;
 
     /**
+     * @param int $idPriceProductScheduleList
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     */
+    public function findPriceProductSchedulesByIdPriceProductScheduleList(
+        int $idPriceProductScheduleList
+    ): array;
+
+    /**
      * @param int $idPriceProductSchedule
      *
      * @return void
@@ -106,4 +115,11 @@ interface PriceProductScheduleGuiToPriceProductScheduleFacadeInterface
      * @return bool
      */
     public function isPriceProductScheduleUnique(PriceProductScheduleTransfer $priceProductScheduleTransfer): bool;
+
+    /**
+     * @param int $idPriceProductScheduleList
+     *
+     * @return \Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer
+     */
+    public function removePriceProductScheduleList(int $idPriceProductScheduleList): PriceProductScheduleListResponseTransfer;
 }

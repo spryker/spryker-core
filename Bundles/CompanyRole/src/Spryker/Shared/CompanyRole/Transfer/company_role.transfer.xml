@@ -23,6 +23,7 @@
         <property name="permissionCollection" type="PermissionCollection"/>
         <property name="companyUserCollection" type="CompanyUserCollection"/>
         <property name="company" type="Company"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="Company">
@@ -62,14 +63,16 @@
     <transfer name="Permission">
         <property name="idPermission" type="int"/>
         <property name="key" type="string"/>
-        <property name="configuration" type="array"/>
-        <property name="configurationSignature" type="array"/>
+        <property name="configuration" type="array" singular="configuration"/>
+        <property name="configurationSignature" type="array" singular="configurationSignature"/>
         <property name="idCompanyRole" type="int"/>
     </transfer>
 
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
         <property name="companyRoleCollection" type="CompanyRoleCollection"/>
+        <property name="customer" type="Customer"/>
+        <property name="fkCompany" type="int"/>
     </transfer>
 
     <transfer name="CompanyRoleResponse">
@@ -85,10 +88,21 @@
     </transfer>
 
     <transfer name="Customer">
-        <property name="Permissions" type="PermissionCollection"/>
+        <property name="permissions" type="PermissionCollection"/>
+        <property name="companyUserTransfer" type="CompanyUser"/>
     </transfer>
 
     <transfer name="ResponseMessage">
         <property name="text" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyResponse">
+        <property name="companyTransfer" type="Company"/>
+        <property name="messages" type="ResponseMessage[]" singular="message"/>
+    </transfer>
+
+    <transfer name="CompanyUserResponse">
+        <property name="companyUser" type="CompanyUser"/>
+        <property name="isSuccessful" type="bool"/>
     </transfer>
 </transfers>

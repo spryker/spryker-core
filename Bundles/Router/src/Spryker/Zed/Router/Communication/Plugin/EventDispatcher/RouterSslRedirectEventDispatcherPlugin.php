@@ -33,7 +33,7 @@ class RouterSslRedirectEventDispatcherPlugin extends AbstractPlugin implements E
     public const SSL_SERVICE_PROVIDER_BC_FEATURE_FLAG = 'SSL_SERVICE_PROVIDER_BC_FEATURE_FLAG';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds a Listener to the EventDispatcher.
      *
      * @api

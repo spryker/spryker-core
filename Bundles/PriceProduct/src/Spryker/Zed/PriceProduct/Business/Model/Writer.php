@@ -293,7 +293,7 @@ class Writer implements WriterInterface
                 $priceProductCriteriaTransfer
             );
 
-        return ($priceEntities !== null);
+        return ($priceEntities->count() > 0);
     }
 
     /**

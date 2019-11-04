@@ -13,4 +13,9 @@
         <property name="locale" type="Locale"/>
     </transfer>
 
+    <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+        <property name="locale" type="string"/>
+    </transfer>
+
 </transfers>

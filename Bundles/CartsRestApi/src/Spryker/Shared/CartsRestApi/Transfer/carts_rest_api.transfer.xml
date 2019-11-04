@@ -39,6 +39,7 @@
     <transfer name="Customer">
         <property name="companyUserTransfer" type="CompanyUser"/>
         <property name="customerReference" type="string"/>
+        <property name="idCustomer" type="int"/>
     </transfer>
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
@@ -94,6 +95,15 @@
         <property name="customerReference" type="string"/>
         <property name="companyUserId" type="int"/>
         <property name="name" type="string"/>
+        <property name="priceMode" type="string"/>
+        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
+        <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
+        <property name="customer" type="Customer"/>
+        <property name="currency" type="Currency"/>
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="totals" type="Totals"/>
+        <property name="store" type="Store"/>
+        <property name="idQuote" type="int"/>
     </transfer>
 
     <transfer name="QuoteUpdateRequestAttributes">
@@ -119,6 +129,8 @@
 
     <transfer name="QuoteResponse">
         <property name="errors" type="QuoteError[]" singular="error"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="quoteTransfer" type="Quote"/>
     </transfer>
 
     <transfer name="RestUser">
@@ -131,6 +143,64 @@
         <property name="customerReference" type="string"/>
         <property name="idStore" type="int"/>
         <property name="idCompanyUser" type="int"/>
+    </transfer>
+
+    <transfer name="OauthResponse">
+        <property name="anonymousCustomerReference" type="string"/>
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="taxTotal" type="TaxTotal"/>
+    </transfer>
+
+    <transfer name="Discount">
+    </transfer>
+
+    <transfer name="TaxTotal">
+        <property name="amount" type="int"/>
+    </transfer>
+
+    <transfer name="QuoteCollection">
+        <property name="quotes" type="Quote[]" singular="quote"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="status" type="int"/>
+        <property name="code" type="string"/>
+        <property name="detail" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="groupKey" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+        <property name="idStore" type="int"/>
+        <property name="defaultCurrencyIsoCode" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteUpdateRequest">
+        <property name="quoteUpdateRequestAttributes" type="QuoteUpdateRequestAttributes"/>
+    </transfer>
+
+    <transfer name="PersistentCartChange">
+        <property name="customer" type="Customer"/>
+        <property name="idQuote" type="int"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="PersistentCartChangeQuantity">
+        <property name="idQuote" type="int"/>
+        <property name="item" type="Item"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
 </transfers>

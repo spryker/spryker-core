@@ -3,31 +3,31 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
     <transfer name="ContentFileListTerm">
-        <property name="fileIds" type="int[]"/>
+        <property name="fileIds" type="int[]" singular="fileIds"/>
     </transfer>
 
     <transfer name="ContentFileListType">
-        <property name="fileIds" type="array"/>
+        <property name="fileIds" type="array" singular="fileIds"/>
     </transfer>
 
     <transfer name="ContentTypeContext">
         <property name="idContent" type="int"/>
         <property name="term" type="string"/>
-        <property name="parameters" type="array"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
     <transfer name="ContentValidationResponse">
         <property name="isSuccess" type="bool"/>
-        <property name="parameterMessages" type="ContentParameterMessage[]"/>
+        <property name="parameterMessages" type="ContentParameterMessage[]" singular="parameterMessages"/>
     </transfer>
 
     <transfer name="ContentParameterMessage">
         <property name="parameter" type="string"/>
-        <property name="messages" type="Message[]"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="Message">
         <property name="value" type="string"/>
-        <property name="parameters" type="array"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 </transfers>
