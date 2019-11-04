@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesMerchantConnector;
 
+use Orm\Zed\SalesMerchantConnector\Persistence\SpySalesOrderMerchantQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\SalesMerchantConnector\Dependency\Facade\SalesMerchantConnectorToMerchantFacadeBridge;
@@ -22,6 +23,8 @@ class SalesMerchantConnectorDependencyProvider extends AbstractBundleDependencyP
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
     public const FACADE_STORE = 'FACADE_STORE';
 
+    public const PROPEL_QUERY_SALES_ORDER_MERCHANT = 'PROPEL_QUERY_SALES_ORDER_MERCHANT';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -34,6 +37,20 @@ class SalesMerchantConnectorDependencyProvider extends AbstractBundleDependencyP
         $container = $this->addMerchantProductOfferFacade($container);
         $container = $this->addMerchantFacade($container);
         $container = $this->addStoreFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
+
+        $container = $this->addSalesOrderMerchantPropelQuery($container);
 
         return $container;
     }
@@ -81,6 +98,20 @@ class SalesMerchantConnectorDependencyProvider extends AbstractBundleDependencyP
             return new SalesMerchantConnectorToMerchantFacadeBridge(
                 $container->getLocator()->merchant()->facade()
             );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function addSalesOrderMerchantPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_SALES_ORDER_MERCHANT, function (Container $container) {
+            return SpySalesOrderMerchantQuery::create();
         });
 
         return $container;

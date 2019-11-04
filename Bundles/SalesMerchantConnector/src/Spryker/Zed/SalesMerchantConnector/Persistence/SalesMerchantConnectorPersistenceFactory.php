@@ -10,6 +10,7 @@ namespace Spryker\Zed\SalesMerchantConnector\Persistence;
 use Orm\Zed\SalesMerchantConnector\Persistence\SpySalesOrderMerchantQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\SalesMerchantConnector\Persistence\Propel\Mapper\SalesMerchantConnectorMapper;
+use Spryker\Zed\SalesMerchantConnector\SalesMerchantConnectorDependencyProvider;
 
 /**
  * @method \Spryker\Zed\SalesMerchantConnector\SalesMerchantConnectorConfig getConfig()
@@ -22,7 +23,7 @@ class SalesMerchantConnectorPersistenceFactory extends AbstractPersistenceFactor
      */
     public function getSalesOrderConfiguredBundlePropelQuery(): SpySalesOrderMerchantQuery
     {
-        return SpySalesOrderMerchantQuery::create();
+        return $this->getProvidedDependency(SalesMerchantConnectorDependencyProvider::PROPEL_QUERY_SALES_ORDER_MERCHANT);
     }
 
     /**
