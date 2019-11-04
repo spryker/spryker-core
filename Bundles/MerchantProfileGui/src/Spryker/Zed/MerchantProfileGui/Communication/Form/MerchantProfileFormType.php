@@ -138,6 +138,7 @@ class MerchantProfileFormType extends AbstractType
                 'data_class' => UrlTransfer::class,
             ],
         ]);
+
         $builder->get(static::FIELD_URL_COLLECTION)
             ->addModelTransformer(new MerchantProfileUrlCollectionDataTransformer());
 

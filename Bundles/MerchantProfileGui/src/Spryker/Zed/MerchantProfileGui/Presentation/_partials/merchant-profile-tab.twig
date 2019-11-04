@@ -21,7 +21,8 @@
             {% else %}
                 {{ form_widget(localizedUrl.url) }}
             {% endif %}
-            {{ form_errors(localizedUrl.url) }}
+            {{ form_widget(localizedUrl.url) }}
+            {{ form_widget(localizedUrl.fkLocale) }}
         </div>
     {% endfor %}
 
