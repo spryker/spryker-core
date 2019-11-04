@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ProductNew\Business;
+namespace SprykerTest\Zed\ProductOffer\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductOfferBuilder;
@@ -21,6 +21,7 @@ use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
  * @group Business
  * @group Facade
  * @group ProductOfferFacadeTest
+ *
  * Add your own group annotations below this line
  */
 class ProductOfferFacadeTest extends Unit
@@ -33,7 +34,7 @@ class ProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->cleanProductOffer();
@@ -75,7 +76,7 @@ class ProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function cleanProductOffer()
+    protected function cleanProductOffer(): void
     {
         SpyProductOfferQuery::create()->deleteAll();
     }
