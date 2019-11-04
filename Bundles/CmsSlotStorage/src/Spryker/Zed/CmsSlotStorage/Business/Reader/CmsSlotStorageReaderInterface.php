@@ -7,18 +7,18 @@
 
 namespace Spryker\Zed\CmsSlotStorage\Business\Reader;
 
-use Generated\Shared\Transfer\CmsSlotCriteriaTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 
 interface CmsSlotStorageReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotCriteriaTransfer $cmsSlotCriteriaTransfer
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $cmsSlotStorageIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
     public function getSynchronizationTransferCollection(
-        CmsSlotCriteriaTransfer $cmsSlotCriteriaTransfer,
+        FilterTransfer $filterTransfer,
         array $cmsSlotStorageIds
     ): array;
 }

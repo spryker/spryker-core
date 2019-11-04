@@ -8,7 +8,6 @@
 namespace Spryker\CmsSlotStorage\tests\SprykerTest\Zed\CmsSlotStorage\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CmsSlotCriteriaTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 
 /**
@@ -42,10 +41,8 @@ class CmsSlotStorageFacadeTest extends Unit
         $this->tester->haveCmsSlotStorageInDb(2, 'key-2');
         $this->tester->haveCmsSlotStorageInDb(3, 'key-3');
 
-        $cmsSlotCriteriaTransfer = (new CmsSlotCriteriaTransfer())->setFilter(new FilterTransfer());
-
         // Act
-        $synchronizationDataTransfers = $this->tester->getFacade()->getSynchronizationTransferCollection($cmsSlotCriteriaTransfer, [1, 3]);
+        $synchronizationDataTransfers = $this->tester->getFacade()->getSynchronizationTransferCollection(new FilterTransfer(), [1, 3]);
 
         // Assert
         $this->assertCount(2, $synchronizationDataTransfers);
@@ -63,10 +60,8 @@ class CmsSlotStorageFacadeTest extends Unit
         ];
         $this->tester->haveCmsSlotStorageInDb(1, 'key-1', $data);
 
-        $cmsSlotCriteriaTransfer = (new CmsSlotCriteriaTransfer())->setFilter(new FilterTransfer());
-
         // Act
-        $synchronizationDataTransfer = $this->tester->getFacade()->getSynchronizationTransferCollection($cmsSlotCriteriaTransfer, [1])[0];
+        $synchronizationDataTransfer = $this->tester->getFacade()->getSynchronizationTransferCollection(new FilterTransfer(), [1])[0];
 
         // Assert
         $this->assertEquals($synchronizationDataTransfer->getData(), $data);
