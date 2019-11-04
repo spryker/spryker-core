@@ -3,12 +3,14 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="CompanyUnitAddressLabelCollection">
-        <property name="labels" type="SpyCompanyUnitAddressLabelEntity[]"/>
+    <transfer name="CompanyUser">
+        <property name="key" type="string"/>
     </transfer>
 
-    <transfer name="CompanyUnitAddress">
-        <property name="labelCollection" type="CompanyUnitAddressLabelCollection"/>
+    <transfer name="DataImporterConfiguration">
+    </transfer>
+
+    <transfer name="DataImporterReport">
     </transfer>
 
 </transfers>
