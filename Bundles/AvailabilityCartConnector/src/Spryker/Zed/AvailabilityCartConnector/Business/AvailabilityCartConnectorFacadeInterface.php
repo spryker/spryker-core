@@ -16,7 +16,7 @@ interface AvailabilityCartConnectorFacadeInterface
 {
     /**
      * Specification:
-     *  - Checks if newly added items have correct availability
+     *  - Checks if items in CartChangeTransfer are sellable.
      *  - In case `ItemTransfer.amount` was defined, item availability check will be ignored.
      *  - Returns transfer with error message and isSuccess flag set to false when some of items are not available.
      *

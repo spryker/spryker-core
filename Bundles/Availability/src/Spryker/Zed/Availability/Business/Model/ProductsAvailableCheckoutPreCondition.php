@@ -51,7 +51,8 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
         $isPassed = true;
 
         $storeTransfer = $quoteTransfer->getStore();
-        $groupedItemQuantities = $this->groupItemsBySku($quoteTransfer->getItems());
+        $filteredItems = $this->filterItemsWithAmount($quoteTransfer->getItems());
+        $groupedItemQuantities = $this->groupItemsBySku($filteredItems);
 
         foreach ($groupedItemQuantities as $sku => $quantity) {
             if ($this->isProductSellable($sku, $quantity, $storeTransfer) === true) {
@@ -86,10 +87,6 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
         /** @var \Spryker\DecimalObject\Decimal[] $result */
         $result = [];
         foreach ($itemTransfers as $itemTransfer) {
-            if ($itemTransfer->getAmount() !== null) {
-                continue;
-            }
-
             $sku = $itemTransfer->getSku();
 
             if (!isset($result[$sku])) {
@@ -100,6 +97,25 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
         }
 
         return $result;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return  \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function filterItemsWithAmount(iterable $itemTransfers): array
+    {
+        $filteredItems = [];
+        foreach ($itemTransfers as $itemTransfer) {
+            if ($itemTransfer->getAmount() !== null) {
+                continue;
+            }
+
+            $filteredItems[] = $itemTransfer;
+        }
+
+        return $filteredItems;
     }
 
     /**

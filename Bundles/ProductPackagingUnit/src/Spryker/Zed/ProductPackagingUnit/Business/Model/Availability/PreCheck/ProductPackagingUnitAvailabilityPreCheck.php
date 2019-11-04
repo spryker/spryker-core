@@ -35,8 +35,7 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
      */
     protected function isPackagingUnitSellable(ItemTransfer $itemTransfer, StoreTransfer $storeTransfer): bool
     {
-        if ($itemTransfer->getAmountLeadProduct()->getSku() === $itemTransfer->getSku()) {
-            // self-lead PU
+        if ($this->isSelfLeadPackagingUnitItem($itemTransfer)) {
             return true;
         }
 
@@ -45,6 +44,16 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
             new Decimal($itemTransfer->getQuantity()),
             $storeTransfer
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function isSelfLeadPackagingUnitItem(ItemTransfer $itemTransfer): bool
+    {
+        return $itemTransfer->getAmountLeadProduct()->getSku() === $itemTransfer->getSku();
     }
 
     /**
