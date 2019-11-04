@@ -102,7 +102,7 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return  \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
     protected function filterItemsWithAmount(iterable $itemTransfers): array
     {

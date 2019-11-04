@@ -55,12 +55,12 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
 
             $this->expandItemWithLeadProduct($itemTransfer);
 
-            $this->collectCartErrorMessages(
+            $cartErrorMessages = $this->collectCartErrorMessages(
                 $cartErrorMessages,
                 $this->checkPackagingUnitAvailability($itemTransfer, $cartChangeTransfer)
             );
 
-            $this->collectCartErrorMessages(
+            $cartErrorMessages = $this->collectCartErrorMessages(
                 $cartErrorMessages,
                 $this->checkPackagingUnitLeadProductAvailability($itemTransfer, $cartChangeTransfer)
             );

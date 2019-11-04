@@ -53,12 +53,12 @@ class ProductPackagingUnitCheckoutPreCheck extends ProductPackagingUnitAvailabil
                 continue;
             }
 
-            $this->collectCheckoutErrorMessages(
+            $checkoutErrorMessages = $this->collectCheckoutErrorMessages(
                 $checkoutErrorMessages,
                 $this->checkPackagingUnitAvailability($itemTransfer, $quoteTransfer)
             );
 
-            $this->collectCheckoutErrorMessages(
+            $checkoutErrorMessages = $this->collectCheckoutErrorMessages(
                 $checkoutErrorMessages,
                 $this->checkPackagingUnitLeadProductAvailability($itemTransfer, $quoteTransfer)
             );
