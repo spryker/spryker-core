@@ -5,24 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsSlotBlock;
+namespace Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageSlotBlockConditionForm;
-use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface;
+use Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\CmsPageConditionForm;
+use Spryker\Zed\CmsSlotBlockCmsGui\Dependency\QueryContainer\CmsSlotBlockCmsGuiToCmsQueryContainerInterface;
 
-class CmsPageSlotBlockFormDataProvider implements CmsPageSlotBlockFormDataProviderInterface
+class CmsPageConditionDataProvider implements CmsPageConditionDataProviderInterface
 {
     /**
-     * @var \Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface
+     * @var \Spryker\Zed\CmsSlotBlockCmsGui\Dependency\QueryContainer\CmsSlotBlockCmsGuiToCmsQueryContainerInterface
      */
     protected $cmsQueryContainer;
 
     /**
-     * @param \Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface $cmsQueryContainer
+     * @param \Spryker\Zed\CmsSlotBlockCmsGui\Dependency\QueryContainer\CmsSlotBlockCmsGuiToCmsQueryContainerInterface $cmsQueryContainer
      */
-    public function __construct(CmsGuiToCmsQueryContainerInterface $cmsQueryContainer)
+    public function __construct(CmsSlotBlockCmsGuiToCmsQueryContainerInterface $cmsQueryContainer)
     {
         $this->cmsQueryContainer = $cmsQueryContainer;
     }
@@ -34,7 +34,7 @@ class CmsPageSlotBlockFormDataProvider implements CmsPageSlotBlockFormDataProvid
     {
         return [
             'data_class' => CmsSlotBlockTransfer::class,
-            CmsPageSlotBlockConditionForm::OPTION_PAGE_IDS => $this->getPageIds(),
+            CmsPageConditionForm::OPTION_PAGE_IDS => $this->getPageIds(),
         ];
     }
 

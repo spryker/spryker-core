@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsGui\Communication\Form\Page;
+namespace Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -16,7 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
  * @method \Spryker\Zed\CmsGui\Communication\CmsGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\CmsGui\CmsGuiConfig getConfig()
  */
-class CmsPageSlotBlockConditionForm extends AbstractType
+class CmsPageConditionForm extends AbstractType
 {
     public const OPTION_PAGE_IDS = 'option-page-ids';
 

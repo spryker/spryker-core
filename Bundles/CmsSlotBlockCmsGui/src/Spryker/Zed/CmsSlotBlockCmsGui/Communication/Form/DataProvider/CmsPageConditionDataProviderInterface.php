@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsSlotBlock;
+namespace Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\DataProvider;
 
-interface CmsPageSlotBlockFormDataProviderInterface
+interface CmsPageConditionDataProviderInterface
 {
     /**
      * @return array

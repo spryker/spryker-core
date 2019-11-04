@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsGui\Communication\Plugin;
+namespace Spryker\Zed\CmsSlotBlockCmsGui\Communication\Plugin;
 
 use Generated\Shared\Transfer\CmsSlotTemplateConfigurationTransfer;
 use Spryker\Zed\CmsSlotBlockGuiExtension\Communication\Plugin\CmsSlotBlockGuiConditionFormPluginInterface;
