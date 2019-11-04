@@ -9,13 +9,9 @@
     {{ form_row(merchantForm.merchantProfile.longitude) }}
     {{ form_row(merchantForm.merchantProfile.latitude) }}
 
-    {% set isLabelRendered = false %}
     {% for localizedUrl in merchantForm.merchantProfile.urlCollection %}
+        {{ form_label(merchantForm.merchantProfile.urlCollection) }}
         <div class="form-group {% if localizedUrl.url.vars.errors|length > 0 %}has-error{% endif %}" >
-            {% if not isLabelRendered %}
-                {{ form_label(localizedUrl.url) }}*
-                {% set isLabelRendered = true %}
-            {% endif %}
             {% if localizedUrl.vars.data.urlPrefix %}
                 <div class="input-group m-b">
                     <span class="input-group-addon">

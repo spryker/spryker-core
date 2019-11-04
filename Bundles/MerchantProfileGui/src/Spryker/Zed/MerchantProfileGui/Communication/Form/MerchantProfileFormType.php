@@ -61,6 +61,7 @@ class MerchantProfileFormType extends AbstractType
     protected const LABEL_CONTACT_PERSON_LAST_NAME = 'Last Name';
     protected const LABEL_CONTACT_PERSON_PHONE = 'Phone';
     protected const LABEL_LOGO_URL = 'Logo URL';
+    protected const LABEL_URL = 'Profile URL';
     protected const LABEL_PUBLIC_EMAIL = 'Public Email';
     protected const LABEL_PUBLIC_PHONE = 'Public Phone';
     protected const LABEL_IS_ACTIVE = 'Is Active';
@@ -129,7 +130,8 @@ class MerchantProfileFormType extends AbstractType
         $builder->add(static::FIELD_URL_COLLECTION, CollectionType::class, [
             'entry_type' => MerchantProfileUrlCollectionFormType::class,
             'allow_add' => true,
-            'label' => false,
+            'label' => static::LABEL_URL,
+            'required' => true,
             'allow_delete' => true,
             'entry_options' => [
                 'label' => false,
