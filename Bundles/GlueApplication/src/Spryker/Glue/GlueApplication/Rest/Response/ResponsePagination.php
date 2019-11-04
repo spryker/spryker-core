@@ -16,8 +16,6 @@ use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 
 class ResponsePagination implements ResponsePaginationInterface
 {
-    protected const KEY_PAGE = 'page';
-
     /**
      * @var \Spryker\Glue\GlueApplication\GlueApplicationConfig
      */
