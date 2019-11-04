@@ -355,11 +355,11 @@ class ClassDefinitionTest extends Unit
      * @param string|null $constant
      * @param array $bundles
      * @param bool|null $hasDefaultNull
-     * @param bool|null $decimal
+     * @param bool|null $valueObject
      *
      * @return array
      */
-    private function getMethod($method, $property, $var = null, $return = null, $typeHint = null, $constant = null, array $bundles = [], $hasDefaultNull = null, $decimal = null)
+    private function getMethod($method, $property, $var = null, $return = null, $typeHint = null, $constant = null, array $bundles = [], $hasDefaultNull = null, $valueObject = null)
     {
         $method = [
             'name' => $method,
@@ -386,8 +386,8 @@ class ClassDefinitionTest extends Unit
             $method['hasDefaultNull'] = $hasDefaultNull;
         }
 
-        if ($decimal !== null) {
-            $method['decimal'] = $decimal;
+        if ($valueObject !== null) {
+            $method['valueObject'] = $valueObject;
         }
 
         return $method;

@@ -293,6 +293,10 @@ class FooBarTransfer extends AbstractTransfer
                     $this->$property = $this->processArrayObject($elementType, $value, $ignoreMissingProperty);
                     $this->modifiedProperties[$property] = true;
                     break;
+                case 'stock':
+                    $this->assignValueObject($property, $value);
+                    $this->modifiedProperties[$property] = true;
+                    break;
                 default:
                     if (!$ignoreMissingProperty) {
                         throw new \InvalidArgumentException(sprintf('Missing property `%s` in `%s`', $property, static::class));
@@ -398,6 +402,7 @@ class FooBarTransfer extends AbstractTransfer
             switch ($property) {
                 case 'name':
                 case 'bla':
+                case 'stock':
                     $values[$arrayKey] = $value;
                     break;
                 case 'selfReference':
@@ -422,6 +427,7 @@ class FooBarTransfer extends AbstractTransfer
             switch ($property) {
                 case 'name':
                 case 'bla':
+                case 'stock':
                     $values[$arrayKey] = $value;
                     break;
                 case 'selfReference':
@@ -482,6 +488,7 @@ class FooBarTransfer extends AbstractTransfer
             'name' => $this->name,
             'bla' => $this->bla,
             'selfReference' => $this->selfReference,
+            'stock' => $this->stock,
         ];
     }
 
@@ -494,6 +501,7 @@ class FooBarTransfer extends AbstractTransfer
             'name' => $this->name,
             'bla' => $this->bla,
             'self_reference' => $this->selfReference,
+            'stock' => $this->stock,
         ];
     }
 
@@ -506,6 +514,7 @@ class FooBarTransfer extends AbstractTransfer
             'name' => $this->name,
             'bla' => $this->bla,
             'self_reference' => $this->addValuesToCollection($this->selfReference, true, false),
+            'stock' => $this->stock,
         ];
     }
 
@@ -518,6 +527,7 @@ class FooBarTransfer extends AbstractTransfer
             'name' => $this->name,
             'bla' => $this->bla,
             'selfReference' => $this->addValuesToCollection($this->selfReference, true, true),
+            'stock' => $this->stock,
         ];
     }
 }

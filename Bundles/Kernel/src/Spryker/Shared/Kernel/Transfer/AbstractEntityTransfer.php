@@ -49,7 +49,8 @@ class AbstractEntityTransfer extends AbstractTransfer implements EntityTransferI
                 $value = $this->initializeNestedTransferObject($property, $value, $acceptVirtualProperties);
             }
 
-            $this->assignValue($property, $value);
+            $this->$propertyName = $value;
+            $this->modifiedProperties[$propertyName] = true;
         }
 
         return $this;
