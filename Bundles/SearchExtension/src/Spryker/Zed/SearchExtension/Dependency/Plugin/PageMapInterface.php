@@ -5,13 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Search\Dependency\Plugin;
+namespace Spryker\Zed\SearchExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
-use Spryker\Zed\SearchExtension\Dependency\Plugin\PageMapInterface as SearchExtensionPageMapInterface;
 
-interface PageMapInterface extends SearchExtensionPageMapInterface
+interface PageMapInterface
 {
     /**
      * @api

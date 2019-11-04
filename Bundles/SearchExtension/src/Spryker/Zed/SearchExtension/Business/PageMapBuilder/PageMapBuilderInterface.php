@@ -5,10 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper;
+namespace Spryker\Zed\SearchExtension\Business\PageMapBuilder;
 
 use Generated\Shared\Transfer\PageMapTransfer;
-use Spryker\Zed\SearchExtension\Business\PageMapBuilder as SearchExtensionPageMapBuilder;
 
 interface PageMapBuilderInterface
 {
@@ -109,4 +108,4 @@ interface PageMapBuilderInterface
     public function addCategory(PageMapTransfer $pageMapTransfer, array $allParents, array $directParents);
 }
 
-class_alias(PageMapBuilderInterface::class, SearchExtensionPageMapBuilder::class, false);
+class_alias(PageMapBuilderInterface::class, 'Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder', false);

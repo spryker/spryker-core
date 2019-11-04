@@ -34,6 +34,8 @@ interface SearchDelegatorInterface
      */
     public function getMetaData(?string $indexName = null): array;
 
+    public function write(array $dataSet, $typeName = null, $indexName = null): bool;
+
     /**
      * @param string $key
      * @param string $indexName

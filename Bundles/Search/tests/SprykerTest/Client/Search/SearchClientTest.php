@@ -11,6 +11,9 @@ use Codeception\Test\Unit;
 use Elastica\Client;
 use Elastica\ResultSet;
 use Elastica\Status;
+use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
+use Generated\Shared\Transfer\SearchContextTransfer;
+use Spryker\Client\Search\Delegator\SearchDelegator;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface;
@@ -19,7 +22,9 @@ use Spryker\Client\Search\Plugin\Config\SearchConfig;
 use Spryker\Client\Search\Plugin\Elasticsearch\Query\SearchKeysQuery;
 use Spryker\Client\Search\Plugin\Elasticsearch\Query\SearchStringQuery;
 use Spryker\Client\Search\SearchClient;
+use Spryker\Client\Search\SearchContext\SourceIdentifierMapperInterface;
 use Spryker\Client\Search\SearchFactory;
+use Spryker\Client\SearchElasticsearch\Plugin\ElasticsearchSearchAdapterPlugin;
 
 /**
  * Auto-generated group annotations
@@ -29,6 +34,7 @@ use Spryker\Client\Search\SearchFactory;
  * @group Search
  * @group SearchClientTest
  * Add your own group annotations below this line
+ * @property \SprykerTest\Client\Search\SearchClientTester $tester
  */
 class SearchClientTest extends Unit
 {
@@ -42,6 +48,8 @@ class SearchClientTest extends Unit
      */
     protected function setUp()
     {
+        parent::setUp();
+
         $this->searchClient = new SearchClient();
     }
 
@@ -231,5 +239,112 @@ class SearchClientTest extends Unit
             ->willReturn($elasticsearchSearchHandlerMock);
 
         $this->searchClient->setFactory($searchFactoryMock);
+    }
+
+    /**
+     * @group foobar
+     */
+    public function testCanWriteDocumentWhenNoSearchContextDefined(): void
+    {
+        // Arrange
+        $documentId = 'foo_doc';
+        $documentContent = ['foo' => 'bar'];
+        $documentData = [$documentId => $documentContent];
+        $typeName = 'page'; // source identifier
+        $indexName = 'de_page_testing';
+        $this->tester->haveIndex($indexName);
+        /** @var \Spryker\Client\Search\SearchContext\SourceIdentifierMapperInterface|\PHPUnit\Framework\MockObject\MockObject $sourceIdentifierMapperMock */
+        $sourceIdentifierMapperMock = $this->createMock(SourceIdentifierMapperInterface::class);
+        $sourceIdentifierMapperMock->method('mapSourceIdentifier')
+            ->willReturnCallback(function (SearchContextTransfer $searchContextTransfer) use ($indexName) {
+                $searchContextTransfer->setElasticsearchContext(
+                    (new ElasticsearchSearchContextTransfer())->setSourceName($indexName)
+                );
+
+                return $searchContextTransfer;
+            });
+        $searchDelegatorMock = $this->getMockBuilder(SearchDelegator::class)
+            ->setConstructorArgs([[], $sourceIdentifierMapperMock])
+            ->setMethods(['getSearchAdapterByIndexName'])
+            ->getMock();
+        $searchDelegatorMock->method('getSearchAdapterByIndexName')
+            ->willReturn(new ElasticsearchSearchAdapterPlugin());
+        $this->tester->mockFactoryMethod('createWriter', $searchDelegatorMock);
+
+        // Act
+        $this->tester->getClient()->write($documentData, $typeName, $indexName);
+
+        // Assert
+        $document = $this->getDocument($documentId, $indexName);
+        $this->assertSame($documentContent, $document->getData());
+    }
+
+    protected function getDocument(string $documentId, string $indexName, string $typeName = '_doc')
+    {
+        return $this->tester
+            ->getFactory()
+            ->getElasticsearchClient()
+            ->getIndex($indexName)
+            ->getType($typeName)
+            ->getDocument($documentId);
+    }
+
+    /**
+     * @group foobar
+     */
+    public function testCanWriteDocumentWhenSearchContextDefined(): void
+    {
+        // Arrange
+        $documentId = 'foo_doc';
+        $documentContent = ['foo' => 'bar'];
+        $documentData = [$documentId => $documentContent];
+        $typeName = 'page'; // source identifier
+        $indexName = 'de_page_testing';
+        $this->tester->haveIndex($indexName);
+        /** @var \Spryker\Client\Search\SearchContext\SourceIdentifierMapperInterface|\PHPUnit\Framework\MockObject\MockObject $sourceIdentifierMapperMock */
+        $sourceIdentifierMapperMock = $this->createMock(SourceIdentifierMapperInterface::class);
+        $sourceIdentifierMapperMock->method('mapSourceIdentifier')
+            ->willReturnCallback(function (SearchContextTransfer $searchContextTransfer) use ($indexName) {
+                $searchContextTransfer->setElasticsearchContext(
+                    (new ElasticsearchSearchContextTransfer())->setSourceName($indexName)
+                );
+
+                return $searchContextTransfer;
+            });
+        $searchDelegatorMock = $this->getMockBuilder(SearchDelegator::class)
+            ->setConstructorArgs([[], $sourceIdentifierMapperMock])
+            ->setMethods(['getSearchAdapterByIndexName'])
+            ->getMock();
+        $searchDelegatorMock->method('getSearchAdapterByIndexName')
+            ->willReturn(new ElasticsearchSearchAdapterPlugin());
+        $this->tester->mockFactoryMethod('createWriter', $searchDelegatorMock);
+        $searchContextTransfer = (new SearchContextTransfer())->setSourceIdentifier($typeName);
+
+        // Act
+        $this->tester->getClient()->write($documentData, $searchContextTransfer);
+
+        // Assert
+        $document = $this->getDocument($documentId, $indexName);
+        $this->assertSame($documentContent, $document->getData());
+    }
+
+    /**
+     * @group foobar
+     *
+     * @return void
+     */
+    public function testCanWriteDocumentInBcWay(): void
+    {
+        $documentId = 'foo_doc';
+        $documentContent = ['foo' => 'bar'];
+        $documentData = [$documentId => $documentContent];
+        $typeName = 'page'; // source identifier
+        $indexName = 'de_page_testing';
+        $this->tester->haveIndex($indexName);
+
+        $this->tester->getClient()->write($documentData, $typeName, $indexName);
+
+        $document = $this->getDocument($documentId, $indexName, $typeName);
+        $this->assertSame($documentContent, $document->getData());
     }
 }

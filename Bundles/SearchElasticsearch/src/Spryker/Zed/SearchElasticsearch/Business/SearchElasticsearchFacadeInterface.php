@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SearchElasticsearch\Business;
 
+use Generated\Shared\Transfer\DataMappingContextTransfer;
 use Psr\Log\LoggerInterface;
 
 interface SearchElasticsearchFacadeInterface
@@ -36,4 +37,14 @@ interface SearchElasticsearchFacadeInterface
      * @return void
      */
     public function installMapper(LoggerInterface $logger): void;
+
+    /**
+     * @api
+     *
+     * @param array $data
+     * @param \Generated\Shared\Transfer\DataMappingContextTransfer $dataMappingContextTransfer
+     *
+     * @return array
+     */
+    public function mapRawDataToSearchData(array $data, DataMappingContextTransfer $dataMappingContextTransfer): array;
 }

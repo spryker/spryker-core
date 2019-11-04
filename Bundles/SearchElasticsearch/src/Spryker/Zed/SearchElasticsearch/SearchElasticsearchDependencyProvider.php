@@ -23,7 +23,7 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
     public const CLIENT_SEARCH = 'search client';
     public const SERVICE_UTIL_ENCODING = 'util encoding service';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    public const PLUGIN_SEARCH_PAGE_MAPS = 'PLUGIN_SEARCH_PAGE_MAPS';
+    public const PLUGIN_PAGE_DATA_MAPPER_PLUGINS = 'PLUGIN_PAGE_DATA_MAPPER_PLUGINS';
     public const SEARCH_INSTALLER_PLUGINS = 'SEARCH_INSTALLER_PLUGINS';
 
     /**
@@ -37,6 +37,7 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addUtilEncodingFacade($container);
         $container = $this->addStoreClient($container);
         $container = $this->addUtilSanitizeService($container);
+        $container = $this->addPageDataMapperPlugins($container);
 
         return $container;
     }
@@ -97,5 +98,27 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPageDataMapperPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGIN_PAGE_DATA_MAPPER_PLUGINS, function (Container $container) {
+            return $this->getPageDataMapperPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\NamedPageMapInterface[]
+     */
+    protected function getPageDataMapperPlugins(): array
+    {
+        return [];
     }
 }

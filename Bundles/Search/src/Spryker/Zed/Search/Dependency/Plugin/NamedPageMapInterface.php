@@ -7,15 +7,11 @@
 
 namespace Spryker\Zed\Search\Dependency\Plugin;
 
-interface NamedPageMapInterface extends PageMapInterface
+use Spryker\Zed\SearchExtension\Dependency\Plugin\NamedPageMapInterface as SearchExtensionNamedPageMapInterface;
+
+/**
+ * @deprecated Use `\Spryker\Zed\SearchExtension\Dependency\Plugin\NamedPageMapInterface` instead.
+ */
+interface NamedPageMapInterface extends SearchExtensionNamedPageMapInterface
 {
-    /**
-     * Specification:
-     *  - This name will use for mapping specific type to a proper search plugin class
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getName();
 }

@@ -101,4 +101,6 @@ interface SearchAdapterPluginInterface
      * @return bool
      */
     public function isApplicable(SearchContextTransfer $searchContextTransfer): bool;
+
+    public function write(array $data, SearchContextTransfer $searchContextTransfer): bool;
 }

@@ -334,10 +334,14 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Model\Elasticsearch\Writer\WriterInterface
+     * @return \Spryker\Client\Search\Model\Elasticsearch\Writer\WriterInterface|\Spryker\Client\Search\Delegator\SearchDelegatorInterface
      */
     public function createWriter()
     {
+        if (count($this->getClientAdapterPlugins()) > 0) {
+            return $this->createSearchDelegator();
+        }
+
         return new Writer(
             $this->createCachedElasticsearchClient(),
             $this->getConfig()->getSearchIndexName(),

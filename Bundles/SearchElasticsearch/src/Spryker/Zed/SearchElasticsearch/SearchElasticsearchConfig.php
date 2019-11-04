@@ -52,6 +52,13 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
         'index.gc_deletes',
     ];
 
+    protected const APPLICABLE_MAPPING_RESOURCE_TYPES = [
+        'product_abstract',
+        'product_concrete',
+        'category_node',
+        'cms_page_search',
+    ];
+
     public const INDEX_OPEN_STATE = 'open';
 
     public const INDEX_CLOSE_STATE = 'close';
@@ -142,5 +149,13 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     public function getClientConfig(): array
     {
         return $this->getSharedConfig()->getClientConfig();
+    }
+
+    /**
+     * @return array
+     */
+    public function getApplicableMappingResourceTypes(): array
+    {
+        return static::APPLICABLE_MAPPING_RESOURCE_TYPES;
     }
 }

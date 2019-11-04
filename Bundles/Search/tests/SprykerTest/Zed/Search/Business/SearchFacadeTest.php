@@ -129,4 +129,11 @@ class SearchFacadeTest extends Unit
 
         return $searchFacade;
     }
+
+    /**
+     * @return void
+     */
+    public function testCanWriteDocument(): void
+    {
+    }
 }

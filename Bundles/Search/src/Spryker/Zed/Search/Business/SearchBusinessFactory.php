@@ -13,6 +13,8 @@ use Spryker\Client\Search\Provider\IndexClientProvider;
 use Spryker\Client\Search\Provider\SearchClientProvider;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Search\Business\DataMapper\SearchDataMapper;
+use Spryker\Zed\Search\Business\DataMapper\SearchDataMapperInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Copier\IndexCopier;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageDataMapper;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
@@ -307,5 +309,23 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     protected function getGuzzleClient()
     {
         return $this->getProvidedDependency(SearchDependencyProvider::GUZZLE_CLIENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Business\DataMapper\SearchDataMapperInterface
+     */
+    public function createSearchDataMapper(): SearchDataMapperInterface
+    {
+        return new SearchDataMapper(
+            $this->getSearchDataMapperPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\SearchDataMapperPluginInterface[]
+     */
+    protected function getSearchDataMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::PLUGINS_SEARCH_DATA_MAPPER);
     }
 }

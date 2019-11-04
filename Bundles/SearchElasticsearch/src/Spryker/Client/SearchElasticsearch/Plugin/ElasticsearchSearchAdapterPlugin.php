@@ -121,4 +121,9 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
     {
         return $this->getFactory()->createSourceIdentifierChecker()->isSupported($searchContextTransfer);
     }
+
+    public function write(array $data, SearchContextTransfer $searchContextTransfer): bool
+    {
+        return $this->getFactory()->createWriter()->write($data, $searchContextTransfer);
+    }
 }

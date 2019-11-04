@@ -136,10 +136,42 @@ class SearchDelegator implements SearchDelegatorInterface
      */
     protected function mapSearchContextTransferForQuery(QueryInterface $searchQuery): QueryInterface
     {
-        $mappedSearchContextTransfer = $this->sourceIdentifierMapper
-            ->mapSourceIdentifier($searchQuery->getSearchContext());
+        $mappedSearchContextTransfer = $this->mapSourceIdentifierToSourceName($searchQuery->getSearchContext());
         $searchQuery->setSearchContext($mappedSearchContextTransfer);
 
         return $searchQuery;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     *
+     * @return \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    protected function mapSourceIdentifierToSourceName(SearchContextTransfer $searchContextTransfer): SearchContextTransfer
+    {
+        return $this->sourceIdentifierMapper->mapSourceIdentifier($searchContextTransfer);
+    }
+
+    public function write(array $dataSet, $typeName = null, $indexName = null): bool
+    {
+        $searchContextTransfer = $typeName;
+        if (!$searchContextTransfer instanceof SearchContextTransfer) {
+            $searchContextTransfer = $this->createSearchContextTransferFromTypeName($typeName);
+        }
+
+        $searchContextTransfer = $this->mapSourceIdentifierToSourceName($searchContextTransfer);
+        $plugin = $this->getSearchAdapterByIndexName($searchContextTransfer);
+
+        return $plugin->write($dataSet, $searchContextTransfer);
+    }
+
+    /**
+     * @param string $typeName
+     *
+     * @return \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    protected function createSearchContextTransferFromTypeName(string $typeName): SearchContextTransfer
+    {
+        return (new SearchContextTransfer())->setSourceIdentifier($typeName);
     }
 }

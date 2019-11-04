@@ -22,6 +22,7 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_SEARCH_PAGE_MAPS = 'PLUGIN_SEARCH_PAGE_MAPS';
     public const PLUGINS_SEARCH_SOURCE_INSTALLER = 'SEARCH_SCHEMA_INSTALLER_PLUGINS';
     public const PLUGINS_SEARCH_MAP_INSTALLER = 'PLUGINS_SEARCH_MAP_INSTALLER';
+    public const PLUGINS_SEARCH_DATA_MAPPER = 'PLUGINS_SEARCH_DATA_MAPPER';
     public const GUZZLE_CLIENT = 'GUZZLE_CLIENT';
 
     /**
@@ -147,5 +148,27 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSearchDataMapperPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SEARCH_DATA_MAPPER, function () {
+            return $this->getSearchDataMapperPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\SearchDataMapperPluginInterface[]
+     */
+    protected function getSearchDataMapperPlugins(): array
+    {
+        return [];
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Search\Business;
 
+use Generated\Shared\Transfer\DataMappingContextTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -162,6 +163,21 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
         return $this->getFactory()
             ->createPageDataMapper()
             ->transferDataByMapperName($data, $localeTransfer, $mapperName);
+    }
+
+    /**
+     * @api
+     *
+     * @param array $data
+     * @param \Generated\Shared\Transfer\DataMappingContextTransfer $dataMappingContextTransfer
+     *
+     * @return array
+     */
+    public function mapRawDataToSearchData(array $data, DataMappingContextTransfer $dataMappingContextTransfer)
+    {
+        return $this->getFactory()
+            ->createSearchDataMapper()
+            ->mapRawDataToSearchData($data, $dataMappingContextTransfer);
     }
 
     /**

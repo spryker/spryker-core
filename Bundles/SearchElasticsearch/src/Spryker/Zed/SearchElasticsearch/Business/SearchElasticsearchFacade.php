@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SearchElasticsearch\Business;
 
+use Generated\Shared\Transfer\DataMappingContextTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -41,5 +42,18 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
     public function installMapper(LoggerInterface $logger): void
     {
         $this->getFactory()->createIndexMapperInstaller()->install($logger);
+    }
+
+    /**
+     * @api
+     *
+     * @param array $data
+     * @param \Generated\Shared\Transfer\DataMappingContextTransfer $dataMappingContextTransfer
+     *
+     * @return array
+     */
+    public function mapRawDataToSearchData(array $data, DataMappingContextTransfer $dataMappingContextTransfer): array
+    {
+        return $
     }
 }
