@@ -15,6 +15,7 @@ Discount,Rabatt
 "incl. %tax_amount% % tax","Inkl. %tax_amount% % Mehrwertsteuer"
 "Included tax amount","Enthaltener Steuerbetrag"
 "Item total","Artikel Gesamt"
+Items,Artikel
 Legend,Legende
 "List of orders","Liste der Bestellungen"
 Matrix,Matrix
