@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ConfigurableBundlePageSearch\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchFilterTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 
@@ -41,7 +42,7 @@ class ConfigurableBundlePageSearchFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testPublishConfigurableBundleTemplatesPublishesData(): void
+    public function testPublishConfigurableBundleTemplatesPublishesActiveTemplateData(): void
     {
         // Arrange
         $configurableBundleTemplateTransfer = $this->tester->createConfigurableBundleTemplate();
@@ -70,6 +71,31 @@ class ConfigurableBundlePageSearchFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testPublishConfigurableBundleTemplatesUnpublishesInactiveTemplateData(): void
+    {
+        // Arrange
+        $configurableBundleTemplateTransfer = $this->tester->createConfigurableBundleTemplate();
+        $configurableBundleTemplateIds = [$configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()];
+
+        // Act
+        $this->tester->getFacade()->publishConfigurableBundleTemplates($configurableBundleTemplateIds);
+        $this->tester->getLocator()->configurableBundle()->facade()->deactivateConfigurableBundleTemplate(
+            (new ConfigurableBundleTemplateFilterTransfer())->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+        );
+        $this->tester->getFacade()->publishConfigurableBundleTemplates($configurableBundleTemplateIds);
+        $configurableBundleTemplatePageSearchCollectionTransfer = $this->tester
+            ->getFacade()
+            ->getConfigurableBundleTemplatePageSearchCollection(
+                (new ConfigurableBundleTemplatePageSearchFilterTransfer())->setConfigurableBundleTemplateIds($configurableBundleTemplateIds)
+            );
+
+        // Assert
+        $this->assertCount(0, $configurableBundleTemplatePageSearchCollectionTransfer->getConfigurableBundleTemplatePageSearches());
+    }
+
+    /**
+     * @return void
+     */
     public function testUnpublishConfigurableBundleTemplatesUnpublishesData(): void
     {
         // Arrange
@@ -86,7 +112,7 @@ class ConfigurableBundlePageSearchFacadeTest extends Unit
             );
 
         // Assert
-        $this->assertEmpty($configurableBundleTemplatePageSearchCollectionTransfer->getConfigurableBundleTemplatePageSearches());
+        $this->assertCount(0, $configurableBundleTemplatePageSearchCollectionTransfer->getConfigurableBundleTemplatePageSearches());
     }
 
     /**
@@ -129,7 +155,7 @@ class ConfigurableBundlePageSearchFacadeTest extends Unit
     public function testGetConfigurableBundleTemplateCollectionReturnsEmptyCollection(): void
     {
         // Arrange
-        $configurableBundleTemplateIds = [-1, -2];
+        $configurableBundleTemplateIds = [-1];
 
         // Act
         $configurableBundleTemplatePageSearchCollectionTransfer = $this->tester
@@ -139,6 +165,6 @@ class ConfigurableBundlePageSearchFacadeTest extends Unit
             );
 
         // Assert
-        $this->assertEmpty($configurableBundleTemplatePageSearchCollectionTransfer->getConfigurableBundleTemplatePageSearches());
+        $this->assertCount(0, $configurableBundleTemplatePageSearchCollectionTransfer->getConfigurableBundleTemplatePageSearches());
     }
 }
