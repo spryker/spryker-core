@@ -7,10 +7,10 @@
 
 namespace SprykerTest\Zed\ConfigurableBundle\Business\Generator;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGenerator;
 use Spryker\Zed\ConfigurableBundle\Business\Generator\ConfigurableBundleNameGeneratorInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Service\ConfigurableBundleToUtilTextServiceBridge;
@@ -47,11 +47,10 @@ class ConfigurableBundleNameGeneratorTest extends Unit
         $configurableBundleTemplateTransfer = $this->createConfigurableBundleTemplateTransfer($rawName);
 
         // Act
-        $configurableBundleTemplateTransfer = $this->createConfigurableBundleNameGenerator()
-            ->setConfigurableBundleTemplateName($configurableBundleTemplateTransfer);
+        $templateName = $this->createConfigurableBundleNameGenerator()->generateTemplateName($configurableBundleTemplateTransfer);
 
         // Assert
-        $this->assertSame($expectedGeneratedName, $configurableBundleTemplateTransfer->getName());
+        $this->assertSame($expectedGeneratedName, $templateName);
     }
 
     /**
@@ -77,9 +76,9 @@ class ConfigurableBundleNameGeneratorTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ConfigurableBundle\Dependency\Service\ConfigurableBundleToUtilTextServiceBridge
      */
-    protected function createConfigurableBundleToUtilTextServiceBridgeMock(): MockObject
+    protected function createConfigurableBundleToUtilTextServiceBridgeMock()
     {
         return $this->getMockBuilder(ConfigurableBundleToUtilTextServiceBridge::class)
             ->setConstructorArgs([$this->tester->getLocator()->utilText()->service()])
@@ -94,13 +93,17 @@ class ConfigurableBundleNameGeneratorTest extends Unit
      */
     protected function createConfigurableBundleTemplateTransfer(string $firstTranslationName): ConfigurableBundleTemplateTransfer
     {
-        $firstConfigurableBundleTemplateTranslationTransfer = (new ConfigurableBundleTemplateTranslationTransfer())->setName($firstTranslationName);
-        $configurableBundleTemplateTranslationTransfers = $this->tester->createTranslationTransfersForAvailableLocales();
+        $firstConfigurableBundleTemplateTranslationTransfer = (new ConfigurableBundleTemplateTranslationTransfer())
+            ->setName($firstTranslationName);
 
-        $configurableBundleTemplateTranslationTransfers->exchangeArray(
-            array_merge([$firstConfigurableBundleTemplateTranslationTransfer], $configurableBundleTemplateTranslationTransfers->getArrayCopy())
+        $configurableBundleTemplateTranslationTransfers = $this->tester->createTemplateTranslationsForAvailableLocales();
+
+        $configurableBundleTemplateTranslationTransfers = array_merge(
+            [$firstConfigurableBundleTemplateTranslationTransfer],
+            $configurableBundleTemplateTranslationTransfers
         );
 
-        return (new ConfigurableBundleTemplateTransfer())->setTranslations($configurableBundleTemplateTranslationTransfers);
+        return (new ConfigurableBundleTemplateTransfer())
+            ->setTranslations(new ArrayObject($configurableBundleTemplateTranslationTransfers));
     }
 }
