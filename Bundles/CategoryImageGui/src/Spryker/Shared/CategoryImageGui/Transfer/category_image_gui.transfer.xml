@@ -21,4 +21,7 @@
         <property name="tabs" type="TabItem[]" singular="tab"/>
     </transfer>
 
+    <transfer name="CategoryImage">
+    </transfer>
+
 </transfers>

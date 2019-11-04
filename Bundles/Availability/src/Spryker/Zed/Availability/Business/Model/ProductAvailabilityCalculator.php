@@ -11,12 +11,15 @@ use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
+use Spryker\Zed\Availability\Business\Exception\ProductNotFoundException;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
 
 class ProductAvailabilityCalculator implements ProductAvailabilityCalculatorInterface
 {
+    protected const PRODUCT_SKU_NOT_FOUND_EXCEPTION_MESSAGE_FORMAT = 'The product was not found with this SKU: %s';
+
     /**
      * @var \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface
      */
@@ -100,14 +103,24 @@ class ProductAvailabilityCalculator implements ProductAvailabilityCalculatorInte
      * @param string $abstractSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
+     * @throws \Spryker\Zed\Availability\Business\Exception\ProductNotFoundException
+     *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
     public function getCalculatedProductAbstractAvailabilityTransfer(string $abstractSku, StoreTransfer $storeTransfer): ProductAbstractAvailabilityTransfer
     {
-        return $this->availabilityRepository
+        $productAbstractAvailabilityTransfer = $this->availabilityRepository
             ->getCalculatedProductAbstractAvailabilityBySkuAndStore(
                 $abstractSku,
                 $storeTransfer
             );
+
+        if ($productAbstractAvailabilityTransfer === null) {
+            throw new ProductNotFoundException(
+                sprintf(static::PRODUCT_SKU_NOT_FOUND_EXCEPTION_MESSAGE_FORMAT, $abstractSku)
+            );
+        }
+
+        return $productAbstractAvailabilityTransfer;
     }
 }

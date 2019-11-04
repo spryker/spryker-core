@@ -31,8 +31,8 @@ class DiscountPromotionToAvailabilityBridge implements DiscountPromotionToAvaila
      *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
      */
-    public function findProductAbstractAvailabilityBySkuForStore(string $sku, StoreTransfer $storeTransfer): ?ProductAbstractAvailabilityTransfer
+    public function findOrCreateProductAbstractAvailabilityBySkuForStore(string $sku, StoreTransfer $storeTransfer): ?ProductAbstractAvailabilityTransfer
     {
-        return $this->availabilityFacade->findProductAbstractAvailabilityBySkuForStore($sku, $storeTransfer);
+        return $this->availabilityFacade->findOrCreateProductAbstractAvailabilityBySkuForStore($sku, $storeTransfer);
     }
 }

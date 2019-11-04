@@ -120,13 +120,17 @@ class AvailabilityHelper implements AvailabilityHelperInterface
         $reservation = new Decimal(0);
         $reservationItems = array_unique(explode(',', $reservationAggregationSet));
         foreach ($reservationItems as $item) {
-            $itemParts = array_filter(explode(':', $item));
-            if (!isset($itemParts[0])) {
+            if ((int)strpos($item, ':') === 0) {
                 continue;
             }
 
-            $concreteProductReservation = new Decimal($itemParts[1] ?? 0);
-            $concreteProductReservation = $this->sumReservationsFromOtherStores($itemParts[0], $storeTransfer, $concreteProductReservation);
+            [$sku, $quantity] = explode(':', $item);
+            if ($sku === '' || !is_numeric($quantity)) {
+                continue;
+            }
+
+            $concreteProductReservation = $reservation->add(new Decimal($quantity));
+            $concreteProductReservation = $this->sumReservationsFromOtherStores($sku, $storeTransfer, $concreteProductReservation);
             $reservation = $reservation->add($concreteProductReservation);
         }
 
