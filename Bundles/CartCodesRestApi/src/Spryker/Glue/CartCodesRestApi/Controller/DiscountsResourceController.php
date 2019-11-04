@@ -18,6 +18,21 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class DiscountsResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "post": {
+     *          "summary": [
+     *              "Adds a code to cart."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "responses": {
+     *              "404": "Cart with given uuid not found."
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
      *
