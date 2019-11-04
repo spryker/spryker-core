@@ -8,8 +8,8 @@
 namespace Spryker\Zed\MerchantGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueMerchantReference;
 use Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueEmail;
+use Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueMerchantReference;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -114,6 +114,7 @@ class MerchantForm extends AbstractType
     {
         $builder->add(static::FIELD_REGISTRATION_NUMBER, TextType::class, [
             'label' => static::LABEL_REGISTRATION_NUMBER,
+            'required' => false,
             'constraints' => [
                 new Length(['max' => 255]),
             ],

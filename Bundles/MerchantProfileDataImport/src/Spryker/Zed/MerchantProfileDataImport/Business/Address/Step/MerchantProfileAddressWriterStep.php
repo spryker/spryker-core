@@ -54,7 +54,7 @@ class MerchantProfileAddressWriterStep extends PublishAwareStep implements DataI
             ->setFkCountry($dataSet[MerchantProfileAddressDataSetInterface::ID_COUNTRY])
             ->save();
 
-        $this->addPublishEvents(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_PUBLISH, $merchantEntity->getFkMerchantProfile());
+        $this->addPublishEvents(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_PUBLISH, $merchantProfileAddress->getFkMerchantProfile());
     }
 
     /**
