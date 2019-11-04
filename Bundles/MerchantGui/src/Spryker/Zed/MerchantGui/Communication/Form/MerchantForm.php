@@ -38,7 +38,7 @@ class MerchantForm extends AbstractType
     protected const LABEL_NAME = 'Name';
     protected const LABEL_REGISTRATION_NUMBER = 'Registration number';
     protected const LABEL_EMAIL = 'Email';
-    protected const LABEL_MERCHANT_REFERENCE = 'Merchant reference';
+    protected const LABEL_MERCHANT_REFERENCE = 'Merchant Reference';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
