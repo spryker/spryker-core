@@ -9,7 +9,7 @@
 
         {{ slotBlockTable | raw }}
 
-    {{ form_start(cmsSlotBlockCollectionForm, {'action': '/cms-slot-block-gui/slot-block'}) }}
+    {{ form_start(cmsSlotBlockCollectionForm) }}
 
         {% for slotBlockItemForm in cmsSlotBlockCollectionForm.cmsSlotBlocks %}
             {{ form_widget(slotBlockItemForm.idSlotTemplate) }}
