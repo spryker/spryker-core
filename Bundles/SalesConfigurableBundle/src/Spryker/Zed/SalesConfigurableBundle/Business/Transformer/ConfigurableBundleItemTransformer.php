@@ -124,7 +124,7 @@ class ConfigurableBundleItemTransformer implements ConfigurableBundleItemTransfo
      */
     protected function transformItemTransferToItemCollectionTransfer(ItemTransfer $itemTransfer): ItemCollectionTransfer
     {
-        if ($this->isNonSplittableQuantityThresholdExceeded($itemTransfer)) {
+        if (!$itemTransfer->getIsQuantitySplittable() || $this->isNonSplittableQuantityThresholdExceeded($itemTransfer)) {
             return (new ItemCollectionTransfer())->addItem($itemTransfer);
         }
 
