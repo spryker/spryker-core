@@ -81,4 +81,11 @@ interface AvailabilityRepositoryInterface
      * @return string|null
      */
     public function getProductConcreteSkuByConcreteId(int $idProductConcrete): ?string;
+
+    /**
+     * @param string $abstractSku
+     *
+     * @return bool
+     */
+    public function isProductAbstractExists(string $abstractSku): bool;
 }

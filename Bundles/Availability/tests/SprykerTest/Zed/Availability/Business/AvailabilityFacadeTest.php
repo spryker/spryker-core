@@ -210,8 +210,13 @@ class AvailabilityFacadeTest extends Unit
     public function testUpdateAvailabilityShouldStoreNewQuantity()
     {
         // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $stockTransfer = $this->tester->haveStock([
+            StockTransfer::STORE_RELATION => (new StoreRelationTransfer())->setIdStores([$storeTransfer->getIdStore()]),
+        ]);
         $productTransfer = $this->tester->haveProduct();
         $this->tester->haveProductInStock([
+            StockProductTransfer::FK_STOCK => $stockTransfer->getIdStock(),
             StockProductTransfer::SKU => $productTransfer->getSku(),
             StockProductTransfer::QUANTITY => 50,
             StockProductTransfer::IS_NEVER_OUT_OF_STOCK => false,

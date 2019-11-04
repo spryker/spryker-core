@@ -97,6 +97,11 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     public function updateAvailability($concreteSku)
     {
         $storeTransfers = $this->stockFacade->getStoresWhereProductStockIsDefined($concreteSku);
+
+        if ($storeTransfers === []) {
+            $storeTransfers = $this->storeFacade->getAllStores();
+        }
+
         foreach ($storeTransfers as $storeTransfer) {
             $this->updateAvailabilityForStore($concreteSku, $storeTransfer);
         }

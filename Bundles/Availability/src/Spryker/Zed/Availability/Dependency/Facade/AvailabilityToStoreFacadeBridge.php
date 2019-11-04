@@ -23,6 +23,14 @@ class AvailabilityToStoreFacadeBridge implements AvailabilityToStoreFacadeInterf
     }
 
     /**
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getAllStores()
+    {
+        return $this->storeFacade->getAllStores();
+    }
+
+    /**
      * @param int $idStore
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
@@ -30,14 +38,6 @@ class AvailabilityToStoreFacadeBridge implements AvailabilityToStoreFacadeInterf
     public function getStoreById($idStore)
     {
         return $this->storeFacade->getStoreById($idStore);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
-     */
-    public function getAllStores()
-    {
-        return $this->storeFacade->getAllStores();
     }
 
     /**

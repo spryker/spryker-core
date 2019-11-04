@@ -109,18 +109,16 @@ class ProductAvailabilityCalculator implements ProductAvailabilityCalculatorInte
      */
     public function getCalculatedProductAbstractAvailabilityTransfer(string $abstractSku, StoreTransfer $storeTransfer): ProductAbstractAvailabilityTransfer
     {
-        $productAbstractAvailabilityTransfer = $this->availabilityRepository
-            ->getCalculatedProductAbstractAvailabilityBySkuAndStore(
-                $abstractSku,
-                $storeTransfer
-            );
-
-        if ($productAbstractAvailabilityTransfer === null) {
+        if (!$this->availabilityRepository->isProductAbstractExists($abstractSku)) {
             throw new ProductNotFoundException(
                 sprintf(static::PRODUCT_SKU_NOT_FOUND_EXCEPTION_MESSAGE_FORMAT, $abstractSku)
             );
         }
 
-        return $productAbstractAvailabilityTransfer;
+        return $this->availabilityRepository
+            ->getCalculatedProductAbstractAvailabilityBySkuAndStore(
+                $abstractSku,
+                $storeTransfer
+            );
     }
 }
