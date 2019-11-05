@@ -259,7 +259,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CmsExtension\Dependency\Plugin\PreCmsPageRelationDeletePluginInterface[]
+     * @return \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageBeforeDeletePluginInterface[]
      */
     protected function getPreCmsPageRelationDeletePlugins(): array
     {

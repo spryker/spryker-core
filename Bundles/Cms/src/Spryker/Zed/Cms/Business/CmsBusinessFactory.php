@@ -166,7 +166,8 @@ class CmsBusinessFactory extends AbstractBusinessFactory
         return new PageRemover(
             $this->getQueryContainer(),
             $this->getTouchFacade(),
-            $this->getPreCmsPageRelationDeletePlugins()
+            $this->getPreCmsPageRelationDeletePlugins(),
+            $this->createCmsPageMapper()
         );
     }
 
@@ -466,7 +467,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsExtension\Dependency\Plugin\PreCmsPageRelationDeletePluginInterface[]
+     * @return \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageBeforeDeletePluginInterface[]
      */
     public function getPreCmsPageRelationDeletePlugins(): array
     {

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsNavigationConnector\Business\Writer\Navigation;
 
-interface NavigationNodesWriterInterface
+interface NavigationNodeWriterInterface
 {
     /**
      * @param int $idCmsPage

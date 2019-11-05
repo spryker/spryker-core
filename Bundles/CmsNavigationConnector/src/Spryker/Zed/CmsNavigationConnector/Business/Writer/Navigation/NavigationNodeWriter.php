@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsNavigationConnector\Business\Writer\Navigation;
 use Spryker\Zed\CmsNavigationConnector\Business\Model\NavigationNodeReaderInterface;
 use Spryker\Zed\CmsNavigationConnector\Dependency\Facade\CmsNavigationConnectorToNavigationFacadeInterface;
 
-class NavigationNodesWriter implements NavigationNodesWriterInterface
+class NavigationNodeWriter implements NavigationNodeWriterInterface
 {
     /**
      * @var \Spryker\Zed\CmsNavigationConnector\Dependency\Facade\CmsNavigationConnectorToNavigationFacadeInterface

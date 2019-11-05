@@ -9,12 +9,11 @@ namespace Spryker\Zed\CmsExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CmsPageTransfer;
 
-interface PreCmsPageRelationDeletePluginInterface
+interface CmsPageBeforeDeletePluginInterface
 {
     /**
      * Specification:
      * - Runs before delete CMS Page relations.
-     * - Removes all indirect relations to CMS Page.
      *
      * @api
      *

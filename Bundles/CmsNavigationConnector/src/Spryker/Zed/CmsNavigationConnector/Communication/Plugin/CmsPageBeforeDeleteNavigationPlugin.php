@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CmsNavigationConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\CmsPageTransfer;
-use Spryker\Zed\CmsExtension\Dependency\Plugin\PreCmsPageRelationDeletePluginInterface;
+use Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageBeforeDeletePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -16,9 +16,12 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\CmsNavigationConnector\Communication\CmsNavigationConnectorCommunicationFactory getFactory()
  * @method \Spryker\Zed\CmsNavigationConnector\CmsNavigationConnectorConfig getConfig()
  */
-class PreCmsPageRelationDeleteNavigationPlugin extends AbstractPlugin implements PreCmsPageRelationDeletePluginInterface
+class CmsPageBeforeDeleteNavigationPlugin extends AbstractPlugin implements CmsPageBeforeDeletePluginInterface
 {
     /**
+     * Specification:
+     * - Removes all Navigation nodes related to provided CMS Page.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer

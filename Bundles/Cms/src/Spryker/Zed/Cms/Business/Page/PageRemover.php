@@ -27,23 +27,31 @@ class PageRemover implements PageRemoverInterface
     protected $touchFacade;
 
     /**
-     * @var \Spryker\Zed\CmsExtension\Dependency\Plugin\PreCmsPageRelationDeletePluginInterface[]
+     * @var \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageBeforeDeletePluginInterface[]
      */
     protected $preCmsPageRelationDeletePlugins;
 
     /**
+     * @var \Spryker\Zed\Cms\Business\Page\CmsPageMapperInterface
+     */
+    protected $cmsPageMapper;
+
+    /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface $touchFacade
-     * @param \Spryker\Zed\CmsExtension\Dependency\Plugin\PreCmsPageRelationDeletePluginInterface[] $preCmsPageRelationDeletePlugins
+     * @param \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageBeforeDeletePluginInterface[] $preCmsPageRelationDeletePlugins
+     * @param \Spryker\Zed\Cms\Business\Page\CmsPageMapperInterface $cmsPageMapper
      */
     public function __construct(
         CmsQueryContainerInterface $cmsQueryContainer,
         CmsToTouchFacadeInterface $touchFacade,
-        array $preCmsPageRelationDeletePlugins
+        array $preCmsPageRelationDeletePlugins,
+        CmsPageMapperInterface $cmsPageMapper
     ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->touchFacade = $touchFacade;
         $this->preCmsPageRelationDeletePlugins = $preCmsPageRelationDeletePlugins;
+        $this->cmsPageMapper = $cmsPageMapper;
     }
 
     /**
@@ -95,7 +103,7 @@ class PageRemover implements PageRemoverInterface
      */
     protected function runPreCmsPageRelationDeletePlugins(SpyCmsPage $cmsPageEntity): void
     {
-        $cmsPageTransfer = $this->mapCmsPageEntityToTransfer($cmsPageEntity);
+        $cmsPageTransfer = $this->cmsPageMapper->mapCmsPageTransfer($cmsPageEntity);
 
         foreach ($this->preCmsPageRelationDeletePlugins as $preCmsPageRelationDeletePlugin) {
             $preCmsPageRelationDeletePlugin->execute($cmsPageTransfer);
