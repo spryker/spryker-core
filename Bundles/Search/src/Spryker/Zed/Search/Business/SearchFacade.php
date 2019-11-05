@@ -74,6 +74,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::deleteIndex()` instead.
+     *
      * @param string|null $indexName
      *
      * @return \Elastica\Response
@@ -309,6 +311,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::closeIndex()` instead.
+     *
      * @return bool
      */
     public function closeIndex()
@@ -320,6 +324,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::openIndex()` instead.
      *
      * @return bool
      */
@@ -333,6 +339,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::closeIndex()` instead.
+     *
      * @return bool
      */
     public function closeAllIndices()
@@ -344,6 +352,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::copyIndex()` instead.
      *
      * @param string $source
      * @param string $target

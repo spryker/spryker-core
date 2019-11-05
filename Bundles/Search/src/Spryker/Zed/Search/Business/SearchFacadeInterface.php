@@ -66,6 +66,8 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::deleteIndex()` instead.
+     *
      * @param string|null $indexName
      *
      * @return \Elastica\Response
@@ -172,6 +174,8 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::createSnapshot()` instead.
+     *
      * @param string $repositoryName
      * @param string $snapshotName
      * @param array $options
@@ -186,6 +190,8 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::existsSnapshot()` instead.
+     *
      * @param string $repositoryName
      * @param string $snapshotName
      *
@@ -198,6 +204,8 @@ interface SearchFacadeInterface
      * - Deletes a Snapshot.
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::deleteSnapshot()` instead.
      *
      * @param string $repositoryName
      * @param string $snapshotName
@@ -212,6 +220,8 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::existsSnapshotRepository()` instead.
+     *
      * @param string $repositoryName
      *
      * @return bool
@@ -223,6 +233,8 @@ interface SearchFacadeInterface
      * - Creates a Snapshot repository.
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::createSnapshotRepository()` instead.
      *
      * @param string $repositoryName
      * @param string $type
@@ -238,6 +250,8 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::restoreSnapshot()` instead.
+     *
      * @param string $repositoryName
      * @param string $snapshotName
      * @param array $options
@@ -252,6 +266,8 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::closeIndex()` instead.
+     *
      * @return bool
      */
     public function closeIndex();
@@ -261,6 +277,8 @@ interface SearchFacadeInterface
      * - Opens an Index.
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::openIndex()` instead.
      *
      * @return bool
      */
@@ -272,6 +290,8 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::closeIndex()` instead.
+     *
      * @return bool
      */
     public function closeAllIndices();
@@ -281,6 +301,8 @@ interface SearchFacadeInterface
      * - Copies one index to another index.
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::copyIndex()` instead.
      *
      * @param string $source
      * @param string $target
