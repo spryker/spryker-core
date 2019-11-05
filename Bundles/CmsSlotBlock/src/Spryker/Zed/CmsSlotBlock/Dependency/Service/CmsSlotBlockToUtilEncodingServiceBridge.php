@@ -33,4 +33,17 @@ class CmsSlotBlockToUtilEncodingServiceBridge implements CmsSlotBlockToUtilEncod
     {
         return $this->utilEncodingService->encodeJson($value, $options, $depth);
     }
+
+    /**
+     * @param $jsonValue
+     * @param bool $assoc
+     * @param null $depth
+     * @param null $options
+     *
+     * @return mixed|null
+     */
+    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
+    {
+        return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
+    }
 }

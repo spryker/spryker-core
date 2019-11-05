@@ -14,6 +14,9 @@ use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlot;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery;
+use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplate;
+use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplateQuery;
+use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotToCmsSlotTemplateQuery;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CmsSlotHelper extends Module
@@ -63,7 +66,7 @@ class CmsSlotHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CmsSlotTransfer
      */
-    public function haveCmsSlotInDb(array $override): CmsSlotTransfer
+    public function haveCmsSlotInDb(array $override = []): CmsSlotTransfer
     {
         $data = [
             CmsSlotTransfer::KEY => 'test-center',
@@ -85,6 +88,30 @@ class CmsSlotHelper extends Module
     }
 
     /**
+     * @param array $override
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotTemplateTransfer
+     */
+    public function haveCmsSlotTemplateInDb(array $override = []): CmsSlotTemplateTransfer
+    {
+        $data = [
+            CmsSlotTemplateTransfer::PATH => '@TestModule/views/test/test.twig',
+            CmsSlotTemplateTransfer::NAME => 'Test Name',
+            CmsSlotTemplateTransfer::DESCRIPTION => 'Test description.',
+        ];
+
+        $cmsSlotTemplateTransfer = (new CmsSlotTemplateBuilder(array_merge($data, $override)))->build();
+
+        $cmsSlotTemplateEntity = new SpyCmsSlotTemplate();
+        $cmsSlotTemplateEntity->fromArray($cmsSlotTemplateTransfer->toArray());
+        $cmsSlotTemplateEntity->save();
+
+        $cmsSlotTemplateTransfer->setIdCmsSlotTemplate($cmsSlotTemplateEntity->getIdCmsSlotTemplate());
+
+        return $cmsSlotTemplateTransfer;
+    }
+
+    /**
      * @param int $idCmsSlot
      *
      * @return bool
@@ -94,5 +121,51 @@ class CmsSlotHelper extends Module
         $cmsSlot = SpyCmsSlotQuery::create()->findOneByIdCmsSlot($idCmsSlot);
 
         return $cmsSlot->getIsActive();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureCmsSlotTableIsEmpty(): void
+    {
+        $cmsSlotToCmsSlotTemplateQuery = $this->getCmsSlotToCmsSlotTemplateQuery();
+        $cmsSlotQuery = $this->getCmsSlotQuery();
+        $cmsSlotToCmsSlotTemplateQuery->deleteAll();
+        $cmsSlotQuery->deleteAll();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureCmsSlotTemplateTableIsEmpty(): void
+    {
+        $cmsSlotToCmsSlotTemplateQuery = $this->getCmsSlotToCmsSlotTemplateQuery();
+        $cmsSlotTemplateQuery = $this->getCmsSlotTemplateQuery();
+        $cmsSlotToCmsSlotTemplateQuery->deleteAll();
+        $cmsSlotTemplateQuery->deleteAll();
+    }
+
+    /**
+     * @return \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery
+     */
+    protected function getCmsSlotQuery(): SpyCmsSlotQuery
+    {
+        return SpyCmsSlotQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplateQuery
+     */
+    protected function getCmsSlotTemplateQuery(): SpyCmsSlotTemplateQuery
+    {
+        return SpyCmsSlotTemplateQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotToCmsSlotTemplateQuery
+     */
+    protected function getCmsSlotToCmsSlotTemplateQuery(): SpyCmsSlotToCmsSlotTemplateQuery
+    {
+        return SpyCmsSlotToCmsSlotTemplateQuery::create();
     }
 }

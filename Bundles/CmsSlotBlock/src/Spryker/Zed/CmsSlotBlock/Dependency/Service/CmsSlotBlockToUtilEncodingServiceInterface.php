@@ -17,4 +17,14 @@ interface CmsSlotBlockToUtilEncodingServiceInterface
      * @return string|null
      */
     public function encodeJson($value, $options = null, $depth = null);
+
+    /**
+     * @param $jsonValue
+     * @param bool $assoc
+     * @param null $depth
+     * @param null $options
+     *
+     * @return mixed|null
+     */
+    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
 }
