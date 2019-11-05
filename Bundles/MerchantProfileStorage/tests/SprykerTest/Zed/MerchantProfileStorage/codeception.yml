@@ -27,4 +27,3 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\PropelTableRelationSanitizer
                 - \SprykerTest\Zed\MerchantProfile\Helper\MerchantProfileHelper
                 - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
-                - \SprykerTest\Zed\MerchantProfileStorage\Helper\MerchantProfileStorageHelper

@@ -7,20 +7,20 @@
 
 namespace Spryker\Client\MerchantProductOfferStorage\Mapper;
 
-use Generated\Shared\Transfer\ProductOfferViewTransfer;
+use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 
 class MerchantProductOfferMapper implements MerchantProductOfferMapperInterface
 {
     /**
      * @param array $data
-     * @param \Generated\Shared\Transfer\ProductOfferViewTransfer $productOfferViewTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer $productOfferStorageTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferViewTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer
      */
-    public function mapMerchantProductOfferStorageDataToProductOfferViewTransfer(array $data, ProductOfferViewTransfer $productOfferViewTransfer): ProductOfferViewTransfer
+    public function mapMerchantProductOfferStorageDataToProductOfferStorageTransfer(array $data, ProductOfferStorageTransfer $productOfferStorageTransfer): ProductOfferStorageTransfer
     {
-        $productOfferViewTransfer->fromArray($data, true);
+        $productOfferStorageTransfer->fromArray($data, true);
 
-        return $productOfferViewTransfer;
+        return $productOfferStorageTransfer;
     }
 }

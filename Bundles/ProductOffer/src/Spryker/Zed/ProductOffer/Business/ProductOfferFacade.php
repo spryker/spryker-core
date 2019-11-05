@@ -30,7 +30,7 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
      */
     public function find(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
     {
-        return $this->getFactory()->createProductOfferReader()->find($productOfferCriteriaFilter);
+        return $this->getRepository()->find($productOfferCriteriaFilter);
     }
 
     /**
@@ -44,6 +44,6 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
      */
     public function create(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
-        return $this->getFactory()->createProductOfferWriter()->create($productOfferTransfer);
+        return $this->getEntityManager()->createProductOffer($productOfferTransfer);
     }
 }

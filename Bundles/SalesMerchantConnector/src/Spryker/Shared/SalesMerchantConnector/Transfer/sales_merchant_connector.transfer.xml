@@ -24,4 +24,7 @@
         <property name="productOfferReference" type="string"/>
     </transfer>
 
+    <transfer name="Quote">
+    </transfer>
+
 </transfers>

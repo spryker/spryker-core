@@ -8,7 +8,6 @@
     "spryker/event-behavior": "^1.14.0",
     "spryker/kernel": "^3.33.0",
     "spryker/product-offer": "^1.0.0",
-    "spryker/propel-orm": "^1.5.0",
     "spryker/storage": "^3.4.0",
     "spryker/synchronization": "^1.0.0",
     "spryker/synchronization-behavior": "^1.0.0",
@@ -20,12 +19,14 @@
     "spryker/merchant": "*",
     "spryker/merchant-product-offer": "*",
     "spryker/propel": "*",
+    "spryker/propel-orm": "*",
     "spryker/queue": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker/merchant-product-offer": "Required for using the Listeners",
-    "spryker/event": "Required for using the Listeners"
+    "spryker/event": "Required for using the Listeners",
+    "spryker/propel-orm": "Required for using the synchronization data plugins"
   },
   "autoload": {
     "psr-4": {

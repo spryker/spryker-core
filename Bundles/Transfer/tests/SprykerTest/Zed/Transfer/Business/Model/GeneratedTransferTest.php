@@ -339,6 +339,132 @@ class GeneratedTransferTest extends Unit
     }
 
     /**
+     * @return array
+     */
+    public function toArrayProvider()
+    {
+        $input = [
+            'test_string' => 'string',
+            'test_string_array' => ['string a', 'string b'],
+            'test_int' => 100,
+            'test_int_array' => [100, 200],
+            'test_bool' => true,
+            'test_bool_array' => [true, false],
+            'test_transfer' => [
+                'test_string' => 'string',
+                'test_int' => 100,
+                'test_bool' => true,
+                'test_array' => [],
+            ],
+        ];
+        $underscoreOut = [
+            'test_string' => 'string',
+            'test_string_array' => ['string a', 'string b'],
+            'test_int' => 100,
+            'test_int_array' => [100, 200],
+            'test_bool' => true,
+            'test_bool_array' => [true, false],
+        ];
+        $camelCaseOut = [
+            'testString' => 'string',
+            'testStringArray' => ['string a', 'string b'],
+            'testInt' => 100,
+            'testIntArray' => [100, 200],
+            'testBool' => true,
+            'testBoolArray' => [true, false],
+        ];
+
+        return [
+            [
+                'isRecursive' => false,
+                'camelCase' => false,
+                'input' => $input,
+                'expected' => array_merge($underscoreOut, [
+                    'test_transfer' => function ($value) {
+                        $this->assertInstanceOf(GeneratedTransfer::class, $value);
+                    },
+                ]),
+
+            ],
+            [
+                'isRecursive' => true,
+                'camelCase' => false,
+                'input' => $input,
+                'expected' => array_merge($underscoreOut, [
+                    'test_transfer' => [
+                        'test_string' => 'string',
+                        'test_int' => 100,
+                        'test_bool' => true,
+                        'test_array' => [],
+                    ],
+                ]),
+            ],
+            [
+                'isRecursive' => false,
+                'camelCase' => true,
+                'input' => $input,
+                'expected' => array_merge($camelCaseOut, [
+                    'testTransfer' => function ($value) {
+                        $this->assertInstanceOf(GeneratedTransfer::class, $value);
+                    },
+                ]),
+            ],
+            [
+                'isRecursive' => true,
+                'camelCase' => true,
+                'input' => $input,
+                'expected' => array_merge($camelCaseOut, [
+                    'testTransfer' => [
+                        'testString' => 'string',
+                        'testInt' => 100,
+                        'testBool' => true,
+                        'testArray' => [],
+                    ],
+                ]),
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider toArrayProvider
+     *
+     * @param bool $isRecursive
+     * @param bool $isCamelCase
+     * @param array $input
+     * @param array $expected
+     *
+     * @return void
+     */
+    public function testToArray(bool $isRecursive, bool $isCamelCase, array $input, array $expected): void
+    {
+        $generatedTransfer = new GeneratedTransfer();
+        $generatedTransfer->fromArray($input);
+
+        $this->assertToArrayResult($generatedTransfer->toArray($isRecursive, $isCamelCase), $expected);
+        $this->assertToArrayResult($generatedTransfer->modifiedToArray($isRecursive, $isCamelCase), $expected);
+    }
+
+    /**
+     * @param array $result
+     * @param array $expected
+     *
+     * @return void
+     */
+    protected function assertToArrayResult(array $result, array $expected): void
+    {
+        foreach ($expected as $key => $value) {
+            $this->assertArrayHasKey($key, $result);
+            if (is_callable($value)) {
+                $value($result[$key]);
+            } elseif (is_array($value)) {
+                $this->assertToArrayResult($result[$key], $value);
+            } else {
+                $this->assertSame($value, $result[$key]);
+            }
+        }
+    }
+
+    /**
      * @return string
      */
     protected function getTargetDirectory()

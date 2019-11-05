@@ -33,8 +33,6 @@ class MerchantProfileAddressWriter implements MerchantProfileAddressWriterInterf
      */
     public function create(MerchantProfileAddressTransfer $merchantProfileAddressTransfer): MerchantProfileAddressTransfer
     {
-        $this->assertCreateMerchantProfileAddressTransferRequirements($merchantProfileAddressTransfer);
-
         return $this->merchantProfileEntityManager->createMerchantProfileAddress($merchantProfileAddressTransfer);
     }
 
@@ -45,8 +43,6 @@ class MerchantProfileAddressWriter implements MerchantProfileAddressWriterInterf
      */
     public function update(MerchantProfileAddressTransfer $merchantProfileAddressTransfer): MerchantProfileAddressTransfer
     {
-        $this->assertUpdateMerchantProfileAddressTransferRequirements($merchantProfileAddressTransfer);
-
         return $this->merchantProfileEntityManager->updateMerchantProfileAddress($merchantProfileAddressTransfer);
     }
 
@@ -62,7 +58,8 @@ class MerchantProfileAddressWriter implements MerchantProfileAddressWriterInterf
 
         foreach ($merchantProfileAddressCollectionTransfer->getAddresses() as $merchantProfileAddressTransfer) {
             $merchantProfileAddressTransfer->setFkMerchantProfile($idMerchantProfile);
-            $savedMerchantProfileAddressCollectionTransfer->addAddress($this->saveMerchantProfileAddress($merchantProfileAddressTransfer));
+            $merchantProfileAddressTransfer = $this->saveMerchantProfileAddress($merchantProfileAddressTransfer);
+            $savedMerchantProfileAddressCollectionTransfer->addAddress($merchantProfileAddressTransfer);
         }
 
         return $savedMerchantProfileAddressCollectionTransfer;
@@ -80,36 +77,5 @@ class MerchantProfileAddressWriter implements MerchantProfileAddressWriterInterf
         }
 
         return $this->update($merchantProfileAddressTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantProfileAddressTransfer $merchantProfileAddressTransfer
-     *
-     * @return void
-     */
-    protected function assertCreateMerchantProfileAddressTransferRequirements(MerchantProfileAddressTransfer $merchantProfileAddressTransfer): void
-    {
-        $merchantProfileAddressTransfer
-            ->requireCity()
-            ->requireZipCode()
-            ->requireAddress1()
-            ->requireFkMerchantProfile()
-            ->requireFkCountry();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantProfileAddressTransfer $merchantProfileAddressTransfer
-     *
-     * @return void
-     */
-    protected function assertUpdateMerchantProfileAddressTransferRequirements(MerchantProfileAddressTransfer $merchantProfileAddressTransfer): void
-    {
-        $merchantProfileAddressTransfer
-            ->requireIdMerchantProfileAddress()
-            ->requireCity()
-            ->requireZipCode()
-            ->requireAddress1()
-            ->requireFkMerchantProfile()
-            ->requireFkCountry();
     }
 }

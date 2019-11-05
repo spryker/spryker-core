@@ -47,4 +47,7 @@
         <property name="companies" type="Company[]" singular="company"/>
     </transfer>
 
+    <transfer name="Locale">
+    </transfer>
+
 </transfers>

@@ -7,10 +7,11 @@
 
 namespace Spryker\Client\MerchantProfileStorage\Storage;
 
-use Generated\Shared\Transfer\MerchantProfileViewTransfer;
+use Generated\Shared\Transfer\MerchantProfileStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\MerchantProfileStorage\Dependency\Client\MerchantProfileStorageToStorageClientInterface;
 use Spryker\Client\MerchantProfileStorage\Dependency\Service\MerchantProfileStorageConnectorToSynchronizationServiceInterface;
+use Spryker\Client\MerchantProfileStorage\Dependency\Service\MerchantProfileStorageToUtilEncodingServiceInterface;
 use Spryker\Client\MerchantProfileStorage\Mapper\MerchantProfileStorageMapperInterface;
 use Spryker\Shared\MerchantProfileStorage\MerchantProfileStorageConfig;
 
@@ -32,26 +33,34 @@ class MerchantProfileStorageReader implements MerchantProfileStorageReaderInterf
     protected $storageClient;
 
     /**
+     * @var \Spryker\Client\MerchantProfileStorage\Dependency\Service\MerchantProfileStorageToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @param \Spryker\Client\MerchantProfileStorage\Mapper\MerchantProfileStorageMapperInterface $merchantProfileStorageMapper
      * @param \Spryker\Client\MerchantProfileStorage\Dependency\Service\MerchantProfileStorageConnectorToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\MerchantProfileStorage\Dependency\Client\MerchantProfileStorageToStorageClientInterface $storageClient
+     * @param \Spryker\Client\MerchantProfileStorage\Dependency\Service\MerchantProfileStorageToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
         MerchantProfileStorageMapperInterface $merchantProfileStorageMapper,
         MerchantProfileStorageConnectorToSynchronizationServiceInterface $synchronizationService,
-        MerchantProfileStorageToStorageClientInterface $storageClient
+        MerchantProfileStorageToStorageClientInterface $storageClient,
+        MerchantProfileStorageToUtilEncodingServiceInterface $utilEncodingService
     ) {
         $this->merchantProfileStorageMapper = $merchantProfileStorageMapper;
         $this->synchronizationService = $synchronizationService;
         $this->storageClient = $storageClient;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
      * @param int $idMerchant
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileViewTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantProfileStorageTransfer|null
      */
-    public function findMerchantProfileStorageViewData(int $idMerchant): ?MerchantProfileViewTransfer
+    public function findMerchantProfileStorageData(int $idMerchant): ?MerchantProfileStorageTransfer
     {
         $merchantProfileKey = $this->generateKey($idMerchant);
         $merchantProfileData = $this->storageClient->get($merchantProfileKey);
@@ -59,7 +68,34 @@ class MerchantProfileStorageReader implements MerchantProfileStorageReaderInterf
             return null;
         }
 
-        return $this->merchantProfileStorageMapper->mapMerchantProfileStorageDataToMerchantProfileViewTransfer($merchantProfileData);
+        return $this->merchantProfileStorageMapper->mapMerchantProfileStorageDataToMerchantProfileStorageTransfer($merchantProfileData);
+    }
+
+    /**
+     * @param int[] $merchantIds
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileStorageTransfer[]
+     */
+    public function findMerchantProfileStorageList(array $merchantIds): array
+    {
+        $merchantProfileDataCollection = [];
+
+        $merchantProfileKeys = array_map(function ($idMerchant) {
+            return $this->generateKey($idMerchant);
+        }, $merchantIds);
+
+        $merchantProfileDataList = $this->storageClient->getMulti($merchantProfileKeys);
+
+        foreach ($merchantProfileDataList as $merchantProfileData) {
+            if ($merchantProfileData === null) {
+                continue;
+            }
+            $merchantProfileDataCollection[] = $this->merchantProfileStorageMapper->mapMerchantProfileStorageDataToMerchantProfileStorageTransfer(
+                $this->utilEncodingService->decodeJson($merchantProfileData, true)
+            );
+        }
+
+        return $merchantProfileDataCollection;
     }
 
     /**

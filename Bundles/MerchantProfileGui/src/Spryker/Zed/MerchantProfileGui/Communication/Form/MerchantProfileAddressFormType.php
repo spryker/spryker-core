@@ -15,8 +15,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\MerchantProfileGui\Communication\MerchantProfileGuiCommunicationFactory getFactory()
@@ -92,10 +90,9 @@ class MerchantProfileAddressFormType extends AbstractType
     {
         $builder->add(static::FIELD_FK_COUNTRY, ChoiceType::class, [
             'label' => static::LABEL_FK_COUNTRY,
-            'required' => false,
             'placeholder' => 'Select one',
+            'required' => false,
             'choices' => array_flip($choices),
-            'constraints' => $this->getRequiredConstraints(),
         ]);
 
         return $this;
@@ -111,10 +108,9 @@ class MerchantProfileAddressFormType extends AbstractType
         $builder->add(static::FIELD_CITY, TextType::class, [
             'label' => static::LABEL_CITY,
             'required' => false,
-            'constraints' => array_merge(
-                $this->getRequiredConstraints(),
-                [new Length(['max' => 255])]
-            ),
+            'constraints' => [
+                new Length(['max' => 255]),
+            ],
         ]);
 
         return $this;
@@ -130,10 +126,9 @@ class MerchantProfileAddressFormType extends AbstractType
         $builder->add(static::FIELD_ZIP_CODE, TextType::class, [
             'label' => static::LABEL_ZIP_CODE,
             'required' => false,
-            'constraints' => array_merge(
-                $this->getRequiredConstraints(),
-                [new Length(['max' => 10])]
-            ),
+            'constraints' => [
+                new Length(['max' => 10]),
+            ],
         ]);
 
         return $this;
@@ -149,10 +144,9 @@ class MerchantProfileAddressFormType extends AbstractType
         $builder->add(static::FIELD_ADDRESS_1, TextType::class, [
             'label' => static::LABEL_ADDRESS_1,
             'required' => false,
-            'constraints' => array_merge(
-                $this->getRequiredConstraints(),
-                [new Length(['max' => 255])]
-            ),
+            'constraints' => [
+                new Length(['max' => 255]),
+            ],
         ]);
 
         return $this;
@@ -196,16 +190,5 @@ class MerchantProfileAddressFormType extends AbstractType
     public function getBlockPrefix(): string
     {
         return 'merchant_profile_address';
-    }
-
-    /**
-     * @return array
-     */
-    protected function getRequiredConstraints(): array
-    {
-        return [
-            new Required(),
-            new NotBlank(),
-        ];
     }
 }

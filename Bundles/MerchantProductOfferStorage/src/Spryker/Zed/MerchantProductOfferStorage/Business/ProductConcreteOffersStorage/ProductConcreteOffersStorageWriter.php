@@ -7,11 +7,10 @@
 
 namespace Spryker\Zed\MerchantProductOfferStorage\Business\ProductConcreteOffersStorage;
 
-use Generated\Shared\Transfer\ProductConcreteProductOffersStorageTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorageQuery;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface;
-use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface;
 
 class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorageWriterInterface
 {
@@ -21,20 +20,11 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     protected $productOfferFacade;
 
     /**
-     * @var \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface
-     */
-    protected $merchantProductOfferStorageEntityManager;
-
-    /**
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade
-     * @param \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface $merchantProductOfferStorageEntityManager
      */
-    public function __construct(
-        MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade,
-        MerchantProductOfferStorageEntityManagerInterface $merchantProductOfferStorageEntityManager
-    ) {
+    public function __construct(MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade)
+    {
         $this->productOfferFacade = $productOfferFacade;
-        $this->merchantProductOfferStorageEntityManager = $merchantProductOfferStorageEntityManager;
     }
 
     /**
@@ -52,11 +42,12 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
         $productOffersGroupedBySku = $this->groupProductOfferByConcreteSku($productOfferCollectionTransfer);
 
         foreach ($productOffersGroupedBySku as $sku => $productOfferReferenceList) {
-            $productConcreteProductOffersStorageTransfer = new ProductConcreteProductOffersStorageTransfer();
-            $productConcreteProductOffersStorageTransfer->setConcreteSku($sku);
-            $productConcreteProductOffersStorageTransfer->setData($productOfferReferenceList);
+            $productConcreteProductOffersStorageEntity = SpyProductConcreteProductOffersStorageQuery::create()
+                ->filterByConcreteSku($sku)
+                ->findOneOrCreate();
+            $productConcreteProductOffersStorageEntity->setData($productOfferReferenceList);
 
-            $this->merchantProductOfferStorageEntityManager->saveProductConcreteProductOffersStorage($productConcreteProductOffersStorageTransfer);
+            $productConcreteProductOffersStorageEntity->save();
         }
     }
 
@@ -67,7 +58,13 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
      */
     public function unpublish(array $concreteSkus): void
     {
-        $this->merchantProductOfferStorageEntityManager->deleteProductConcreteProductOffersStorage($concreteSkus);
+        $productConcreteProductOffersStorageEntities = SpyProductConcreteProductOffersStorageQuery::create()
+            ->filterByConcreteSku_In($concreteSkus)
+            ->find();
+
+        foreach ($productConcreteProductOffersStorageEntities as $productConcreteProductOffersStorageEntity) {
+            $productConcreteProductOffersStorageEntity->delete();
+        }
     }
 
     /**

@@ -17,8 +17,6 @@ use Spryker\Zed\MerchantProductOfferStorage\MerchantProductOfferStorageDependenc
 
 /**
  * @method \Spryker\Zed\MerchantProductOfferStorage\MerchantProductOfferStorageConfig getConfig()
- * @method \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface getEntityManager()
- * @method \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface getRepository()
  */
 class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
 {
@@ -27,7 +25,7 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductConcreteProductOffersStorageWriter(): ProductConcreteOffersStorageWriterInterface
     {
-        return new ProductConcreteOffersStorageWriter($this->getProductOfferFacade(), $this->getEntityManager());
+        return new ProductConcreteOffersStorageWriter($this->getProductOfferFacade());
     }
 
     /**
@@ -35,7 +33,7 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductOfferStorageWriter(): ProductOfferStorageWriterInterface
     {
-        return new ProductOfferStorageWriter($this->getProductOfferFacade(), $this->getEntityManager());
+        return new ProductOfferStorageWriter($this->getProductOfferFacade());
     }
 
     /**

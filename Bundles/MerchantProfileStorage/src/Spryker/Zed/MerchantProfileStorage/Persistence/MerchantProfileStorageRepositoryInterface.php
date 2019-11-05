@@ -7,15 +7,14 @@
 
 namespace Spryker\Zed\MerchantProfileStorage\Persistence;
 
-use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
 
 interface MerchantProfileStorageRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $merchantIds
+     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileStorageTransfer[]
+     * @return \Generated\Shared\Transfer\SpyMerchantProfileStorageEntityTransfer[]
      */
-    public function getFilteredMerchantProfileStorageTransfers(FilterTransfer $filterTransfer, array $merchantIds = []): array;
+    public function getFilteredMerchantProfileStorageEntityTransfers(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): array;
 }
