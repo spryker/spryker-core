@@ -9,6 +9,7 @@ namespace Spryker\Zed\Availability\Business\Model;
 
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
@@ -51,7 +52,7 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
         $isPassed = true;
 
         $storeTransfer = $quoteTransfer->getStore();
-        $filteredItems = $this->filterItemsWithAmount($quoteTransfer->getItems());
+        $filteredItems = $this->filterItemsWithAmount($quoteTransfer->getItems()->getArrayCopy());
         $groupedItemQuantities = $this->groupItemsBySku($filteredItems);
 
         foreach ($groupedItemQuantities as $sku => $quantity) {
@@ -78,11 +79,11 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Spryker\DecimalObject\Decimal[] [string, \Spryker\DecimalObject\Decimal]
      */
-    protected function groupItemsBySku(iterable $itemTransfers): array
+    protected function groupItemsBySku(array $itemTransfers): array
     {
         /** @var \Spryker\DecimalObject\Decimal[] $result */
         $result = [];
@@ -100,22 +101,15 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function filterItemsWithAmount(iterable $itemTransfers): array
+    protected function filterItemsWithAmount(array $itemTransfers): array
     {
-        $filteredItems = [];
-        foreach ($itemTransfers as $itemTransfer) {
-            if ($itemTransfer->getAmount() !== null) {
-                continue;
-            }
-
-            $filteredItems[] = $itemTransfer;
-        }
-
-        return $filteredItems;
+        return array_filter($itemTransfers, function (ItemTransfer $itemTransfer) {
+            return $itemTransfer->getAmount() === null;
+        });
     }
 
     /**
