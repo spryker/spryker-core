@@ -131,4 +131,7 @@
     <transfer name="Store">
         <property name="idStore" type="int"/>
     </transfer>
+
+    <transfer name="Customer">
+    </transfer>
 </transfers>

@@ -183,4 +183,7 @@
         <property name="addresses" type="Address[]" singular="address"/>
     </transfer>
 
+    <transfer name="Money">
+    </transfer>
+
 </transfers>

@@ -13,4 +13,7 @@
         <property name="idProductAbstracts" type="array" singular="idProductAbstract"/>
     </transfer>
 
+    <transfer name="Locale">
+    </transfer>
+
 </transfers>
