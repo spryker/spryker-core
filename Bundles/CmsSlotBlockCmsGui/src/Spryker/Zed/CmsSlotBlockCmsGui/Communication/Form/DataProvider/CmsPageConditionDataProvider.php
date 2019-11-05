@@ -7,24 +7,45 @@
 
 namespace Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\CmsPageConditionForm;
+use Spryker\Zed\CmsSlotBlockCmsGui\Dependency\Facade\CmsSlotBlockCmsGuiToLocaleFacadeInterface;
+use Spryker\Zed\CmsSlotBlockCmsGui\Dependency\Facade\CmsSlotBlockCmsGuiToTranslatorFacadeInterface;
 use Spryker\Zed\CmsSlotBlockCmsGui\Dependency\QueryContainer\CmsSlotBlockCmsGuiToCmsQueryContainerInterface;
 
 class CmsPageConditionDataProvider implements CmsPageConditionDataProviderInterface
 {
+    protected const KEY_OPTION_ALL_CMS_PAGES = 'All CMS Pages';
+    protected const KEY_OPTION_SPECIFIC_CMS_PAGES = 'Specific CMS Pages';
+
     /**
      * @var \Spryker\Zed\CmsSlotBlockCmsGui\Dependency\QueryContainer\CmsSlotBlockCmsGuiToCmsQueryContainerInterface
      */
     protected $cmsQueryContainer;
 
     /**
-     * @param \Spryker\Zed\CmsSlotBlockCmsGui\Dependency\QueryContainer\CmsSlotBlockCmsGuiToCmsQueryContainerInterface $cmsQueryContainer
+     * @var \Spryker\Zed\CmsSlotBlockCmsGui\Dependency\Facade\CmsSlotBlockCmsGuiToTranslatorFacadeInterface
      */
-    public function __construct(CmsSlotBlockCmsGuiToCmsQueryContainerInterface $cmsQueryContainer)
-    {
+    protected $translatorFacade;
+
+    /**
+     * @var \Spryker\Zed\CmsSlotBlockCmsGui\Dependency\Facade\CmsSlotBlockCmsGuiToLocaleFacadeInterface
+     */
+    protected $localeFacade;
+
+    /**
+     * @param \Spryker\Zed\CmsSlotBlockCmsGui\Dependency\QueryContainer\CmsSlotBlockCmsGuiToCmsQueryContainerInterface $cmsQueryContainer
+     * @param \Spryker\Zed\CmsSlotBlockCmsGui\Dependency\Facade\CmsSlotBlockCmsGuiToTranslatorFacadeInterface $translatorFacade
+     * @param \Spryker\Zed\CmsSlotBlockCmsGui\Dependency\Facade\CmsSlotBlockCmsGuiToLocaleFacadeInterface $localeFacade
+     */
+    public function __construct(
+        CmsSlotBlockCmsGuiToCmsQueryContainerInterface $cmsQueryContainer,
+        CmsSlotBlockCmsGuiToTranslatorFacadeInterface $translatorFacade,
+        CmsSlotBlockCmsGuiToLocaleFacadeInterface $localeFacade
+    ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
+        $this->translatorFacade = $translatorFacade;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -33,17 +54,30 @@ class CmsPageConditionDataProvider implements CmsPageConditionDataProviderInterf
     public function getOptions(): array
     {
         return [
-            'data_class' => CmsSlotBlockTransfer::class,
-            CmsPageConditionForm::OPTION_PAGE_ARRAY => $this->getPageIds(),
+            CmsPageConditionForm::OPTION_ALL_ARRAY => $this->getAllOptions(),
+            CmsPageConditionForm::OPTION_PAGE_ARRAY => $this->getPages(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllOptions(): array
+    {
+        return [
+            $this->translatorFacade->trans(static::KEY_OPTION_ALL_CMS_PAGES) => true,
+            $this->translatorFacade->trans(static::KEY_OPTION_SPECIFIC_CMS_PAGES) => false,
         ];
     }
 
     /**
      * @return int[]
      */
-    protected function getPageIds(): array
+    protected function getPages(): array
     {
-        $cmsPageEntityCollection = $this->cmsQueryContainer->queryLocalizedPagesWithTemplates()->find();
+        $cmsPageEntityCollection = $this->cmsQueryContainer
+            ->queryPagesByLocale($this->localeFacade->getCurrentLocale()->getIdLocale())
+            ->find();
 
         return $this->getCmsPageIdsFromCollection($cmsPageEntityCollection);
     }
@@ -58,8 +92,7 @@ class CmsPageConditionDataProvider implements CmsPageConditionDataProviderInterf
         $pageIds = [];
 
         foreach ($cmsPageEntityCollection as $cmsPageEntity) {
-            $cmsPageName = explode(',', $cmsPageEntity->getName());
-            $pageIds[$cmsPageName[0]] = $cmsPageEntity->getIdCmsPage();
+            $pageIds[$cmsPageEntity->getName()] = $cmsPageEntity->getIdCmsPage();
         }
 
         return $pageIds;

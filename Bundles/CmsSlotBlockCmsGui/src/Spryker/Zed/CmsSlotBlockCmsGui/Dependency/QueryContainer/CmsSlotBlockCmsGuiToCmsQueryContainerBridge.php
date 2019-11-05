@@ -25,10 +25,12 @@ class CmsSlotBlockCmsGuiToCmsQueryContainerBridge implements CmsSlotBlockCmsGuiT
     }
 
     /**
+     * @param int $idLocale
+     *
      * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
      */
-    public function queryLocalizedPagesWithTemplates(): SpyCmsPageQuery
+    public function queryPagesByLocale(int $idLocale): SpyCmsPageQuery
     {
-        return $this->cmsQueryContainer->queryLocalizedPagesWithTemplates();
+        return $this->cmsQueryContainer->queryPagesByLocale($idLocale);
     }
 }

@@ -735,4 +735,20 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
 
         return $query;
     }
+
+    /**
+     * @api
+     *
+     * @param int $idLocale
+     *
+     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     */
+    public function queryPagesByLocale(int $idLocale): SpyCmsPageQuery
+    {
+        return $this->getFactory()->createCmsPageQuery()
+            ->useSpyCmsPageLocalizedAttributesQuery()
+                ->filterByFkLocale($idLocale)
+            ->endUse()
+            ->withColumn(SpyCmsPageLocalizedAttributesTableMap::COL_NAME, static::CMS_NAME);
+    }
 }

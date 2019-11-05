@@ -7,14 +7,12 @@
 
 namespace Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\Constraint;
 
+use Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\CmsPageConditionForm;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
-class CmsPageConditionsConstraintValidator extends ConstraintValidator
+class CmsPageConditionConstraintValidator extends ConstraintValidator
 {
-    protected const CONDITION_KEY_ALL = 'all';
-    protected const CONDITION_KEY_PAGE_IDS = 'pageIds';
-
     /**
      * @param mixed $value
      * @param \Symfony\Component\Validator\Constraint $constraint
@@ -23,11 +21,11 @@ class CmsPageConditionsConstraintValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint): void
     {
-        if ($value[static::CONDITION_KEY_ALL]) {
+        if ($value[CmsPageConditionForm::FIELD_ALL]) {
             return;
         }
 
-        if (!$value[static::CONDITION_KEY_PAGE_IDS]) {
+        if (!$value[CmsPageConditionForm::FIELD_PAGE_IDS]) {
             $this->context->buildViolation($constraint->getMessage())
                 ->addViolation();
         }

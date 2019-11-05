@@ -19,13 +19,14 @@ use Symfony\Component\Form\FormBuilderInterface;
 class CmsPageConditionForm extends AbstractType
 {
     public const OPTION_PAGE_ARRAY = 'option-page-array';
+    public const OPTION_ALL_ARRAY = 'option-all-array';
 
+    public const FIELD_ALL = 'all';
+    public const FIELD_PAGE_IDS = 'pageIds';
     /**
      * @uses \Spryker\Shared\CmsSlotBlockCmsConnector\CmsSlotBlockCmsConnectorConfig::CONDITION_KEY
      */
     protected const FIELD_CMS_PAGE = 'cms_page';
-    protected const FIELD_ALL = 'all';
-    protected const FIELD_PAGE_IDS = 'pageIds';
 
     protected const LABEL_CMS_PAGES = 'CMS Pages';
 
@@ -38,8 +39,8 @@ class CmsPageConditionForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addCmsPageField($builder)
-            ->addAllField($builder)
-            ->addPageIdsField($builder, $options);
+            ->addAllField($builder->get(static::FIELD_CMS_PAGE), $options)
+            ->addPageIdsField($builder->get(static::FIELD_CMS_PAGE), $options);
     }
 
     /**
@@ -64,17 +65,15 @@ class CmsPageConditionForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return $this
      */
-    protected function addAllField(FormBuilderInterface $builder)
+    protected function addAllField(FormBuilderInterface $builder, array $options)
     {
-        $builder->get(static::FIELD_CMS_PAGE)->add(static::FIELD_ALL, ChoiceType::class, [
+        $builder->add(static::FIELD_ALL, ChoiceType::class, [
             'required' => false,
-            'choices' => [
-                'All CMS Pages' => true,
-                'Specific CMS Pages' => false,
-            ],
+            'choices' => $options[static::OPTION_ALL_ARRAY],
             'choice_value' => function ($choice) {
                 return $choice ?? true;
             },
@@ -95,7 +94,7 @@ class CmsPageConditionForm extends AbstractType
      */
     protected function addPageIdsField(FormBuilderInterface $builder, array $options)
     {
-        $builder->get(static::FIELD_CMS_PAGE)->add(static::FIELD_PAGE_IDS, ChoiceType::class, [
+        $builder->add(static::FIELD_PAGE_IDS, ChoiceType::class, [
             'choices' => $options[static::OPTION_PAGE_ARRAY],
             'required' => false,
             'multiple' => true,

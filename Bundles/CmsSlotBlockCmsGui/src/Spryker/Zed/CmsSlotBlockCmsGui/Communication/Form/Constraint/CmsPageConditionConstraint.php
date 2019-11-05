@@ -9,7 +9,7 @@ namespace Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\Constraint;
 
 use Symfony\Component\Validator\Constraint;
 
-class CmsPageConditionsConstraint extends Constraint
+class CmsPageConditionConstraint extends Constraint
 {
     /**
      * @var string
