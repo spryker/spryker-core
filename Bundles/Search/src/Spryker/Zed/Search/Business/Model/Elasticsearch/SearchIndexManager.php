@@ -11,6 +11,9 @@ use Elastica\Exception\ResponseException;
 use Elastica\Index;
 use Spryker\Client\Search\SearchClientInterface;
 
+/**
+ * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\Index\Index` instead.
+ */
 class SearchIndexManager implements SearchIndexManagerInterface
 {
     /**

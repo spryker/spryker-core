@@ -65,7 +65,7 @@ class SourceIdentifierMapper implements SourceIdentifierMapperInterface
             $elasticsearchSearchContextTransfer = new ElasticsearchSearchContextTransfer();
         }
 
-        $elasticsearchSearchContextTransfer->setSourceName($indexName);
+        $elasticsearchSearchContextTransfer->setIndexName($indexName);
         $searchContextTransfer->setElasticsearchContext($elasticsearchSearchContextTransfer);
 
         return $searchContextTransfer;

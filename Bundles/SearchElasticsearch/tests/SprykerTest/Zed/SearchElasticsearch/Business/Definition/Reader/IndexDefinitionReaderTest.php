@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\SearchElasticsearch\Business\Definition\Reader;
 use Codeception\Test\Unit;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Reader\IndexDefinitionReader;
-use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingBridge;
+use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceBridge;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**
@@ -35,7 +35,7 @@ class IndexDefinitionReaderTest extends Unit
         $splFileInfoMock = $this->getFileMock();
         $splFileInfoMock->expects($this->once())->method('getContents')->willReturn('{"key": "value"}');
 
-        $searchToUtilEncodingBridge = new SearchToUtilEncodingBridge(new UtilEncodingService());
+        $searchToUtilEncodingBridge = new SearchElasticsearchToUtilEncodingServiceBridge(new UtilEncodingService());
         $indexDefinitionReader = new IndexDefinitionReader($searchToUtilEncodingBridge);
 
         $this->assertIsArray($indexDefinitionReader->read($splFileInfoMock));

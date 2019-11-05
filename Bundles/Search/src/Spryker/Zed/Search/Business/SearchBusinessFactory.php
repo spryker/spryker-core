@@ -44,6 +44,8 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchBusinessFactory::createIndex()` instead.
+     *
      * @param string|null $indexName
      *
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\SearchIndexManagerInterface
@@ -291,6 +293,8 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchBusinessFactory::createIndexCopier()` instead.
+     *
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Copier\IndexCopierInterface
      */
     public function createElasticsearchIndexCopier()

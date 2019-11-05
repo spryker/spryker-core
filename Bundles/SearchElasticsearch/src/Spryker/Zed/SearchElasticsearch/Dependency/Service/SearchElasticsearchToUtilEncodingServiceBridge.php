@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\SearchElasticsearch\Dependency\Service;
 
-class SearchToUtilEncodingBridge implements SearchToUtilEncodingInterface
+class SearchElasticsearchToUtilEncodingServiceBridge implements SearchElasticsearchToUtilEncodingServiceInterface
 {
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
@@ -33,5 +33,17 @@ class SearchToUtilEncodingBridge implements SearchToUtilEncodingInterface
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
     {
         return $this->utilEncodingService->decodeJson($jsonValue, $assoc, $depth, $options);
+    }
+
+    /**
+     * @param array $value
+     * @param int|null $options
+     * @param int|null $depth
+     *
+     * @return string|null
+     */
+    public function encodeJson($value, $options = null, $depth = null)
+    {
+        return $this->utilEncodingService->encodeJson($value, $options, $depth);
     }
 }
