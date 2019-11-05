@@ -35,10 +35,10 @@ class CmsSlotBlockToUtilEncodingServiceBridge implements CmsSlotBlockToUtilEncod
     }
 
     /**
-     * @param $jsonValue
+     * @param string $jsonValue
      * @param bool $assoc
-     * @param null $depth
-     * @param null $options
+     * @param int|null $depth
+     * @param int|null $options
      *
      * @return mixed|null
      */
