@@ -32,9 +32,9 @@ interface CartCodesRestApiFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $voucherCode
+     * @param int $idDiscount
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function removeCode(QuoteTransfer $quoteTransfer, string $voucherCode): CartCodeOperationResultTransfer;
+    public function removeCode(QuoteTransfer $quoteTransfer, int $idDiscount): CartCodeOperationResultTransfer;
 }

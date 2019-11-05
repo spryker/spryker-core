@@ -9,8 +9,10 @@ namespace SprykerTest\Zed\CartCodesRestApi;
 
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\QuoteBuilder;
-use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\DiscountGeneralTransfer;
+use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\Discount\DiscountConstants;
 
 /**
  * Inherited Methods
@@ -54,9 +56,29 @@ class CartCodesRestApiBusinessTester extends Actor
             [
                 'uuid' => static::TEST_QUOTE_UUID,
                 'customerReference' => static::TEST_CUSTOMER_REFERENCE,
-                'customer' => (new CustomerTransfer())->setCustomerReference(static::TEST_CUSTOMER_REFERENCE),
                 'items' => static::ITEMS,
             ]
         ))->build();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\DiscountVoucherTransfer
+     */
+    public function prepareDiscountVoucherTransfer(): DiscountVoucherTransfer
+    {
+        $override = [
+            DiscountVoucherTransfer::MAX_NUMBER_OF_USES => 5,
+            DiscountVoucherTransfer::CUSTOM_CODE => 'voucher',
+            DiscountVoucherTransfer::QUANTITY => 3,
+            DiscountVoucherTransfer::RANDOM_GENERATED_CODE_LENGTH => 3,
+        ];
+
+        $discountGeneralTransfer = $this->haveDiscount([
+            DiscountGeneralTransfer::DISCOUNT_TYPE => DiscountConstants::TYPE_VOUCHER,
+        ]);
+        $override[DiscountVoucherTransfer::ID_DISCOUNT] = $discountGeneralTransfer->getIdDiscount();
+        $discountVoucherTransfer = $this->haveGeneratedVoucherCodes($override);
+
+        return $discountVoucherTransfer;
     }
 }

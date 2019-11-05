@@ -28,18 +28,18 @@ class CartCodeAdder implements CartCodeAdderInterface
     /**
      * @var \Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeInterface
      */
-    protected $cartsRestApi;
+    protected $cartsRestApiFacade;
 
     /**
      * @param \Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeInterface $cartCodeFacade
-     * @param \Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeInterface $cartsRestApi
+     * @param \Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade
      */
     public function __construct(
         CartCodesRestApiToCartCodeFacadeInterface $cartCodeFacade,
-        CartCodesRestApiToCartsRestApiFacadeInterface $cartsRestApi
+        CartCodesRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade
     ) {
         $this->cartCodeFacade = $cartCodeFacade;
-        $this->cartsRestApi = $cartsRestApi;
+        $this->cartsRestApiFacade = $cartsRestApiFacade;
     }
 
     /**
@@ -50,7 +50,7 @@ class CartCodeAdder implements CartCodeAdderInterface
      */
     public function addCandidate(QuoteTransfer $quoteTransfer, string $voucherCode): CartCodeOperationResultTransfer
     {
-        $quoteResponseTransfer = $this->cartsRestApi->findQuoteByUuid($quoteTransfer);
+        $quoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer();

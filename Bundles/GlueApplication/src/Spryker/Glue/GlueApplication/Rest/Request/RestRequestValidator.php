@@ -69,7 +69,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
     protected function validateRequest(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         $method = $restRequest->getMetadata()->getMethod();
-        if (!in_array($method, [Request::METHOD_POST, Request::METHOD_PATCH, Request::METHOD_DELETE], true)) {
+        if (!in_array($method, [Request::METHOD_POST, Request::METHOD_PATCH], true)) {
             return null;
         }
 
@@ -99,6 +99,10 @@ class RestRequestValidator implements RestRequestValidatorInterface
     protected function validateResourceIdSpecified(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         $method = $restRequest->getMetadata()->getMethod();
+        if ($restRequest->getHttpRequest()->get(RestResourceInterface::RESOURCE_DATA) && $method === Request::METHOD_DELETE) {
+            return null;
+        }
+
         if (!in_array($method, [Request::METHOD_DELETE, Request::METHOD_PATCH], true)) {
             return null;
         }

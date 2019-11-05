@@ -9,6 +9,8 @@ namespace Spryker\Zed\CartCodesRestApi\Business;
 
 use Spryker\Zed\CartCodesRestApi\Business\CartCodeAdder\CartCodeAdder;
 use Spryker\Zed\CartCodesRestApi\Business\CartCodeAdder\CartCodeAdderInterface;
+use Spryker\Zed\CartCodesRestApi\Business\CartCodeDeleter\CartCodeDeleter;
+use Spryker\Zed\CartCodesRestApi\Business\CartCodeDeleter\CartCodeDeleterInterface;
 use Spryker\Zed\CartCodesRestApi\CartCodesRestApiDependencyProvider;
 use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeInterface;
 use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeInterface;
@@ -25,6 +27,17 @@ class CartCodesRestApiBusinessFactory extends AbstractBusinessFactory
     public function createCartCodeAdder(): CartCodeAdderInterface
     {
         return new CartCodeAdder(
+            $this->getCartCodeFacade(),
+            $this->getCartsRestApiFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CartCodesRestApi\Business\CartCodeDeleter\CartCodeDeleterInterface
+     */
+    public function createCartCodeDeleter(): CartCodeDeleterInterface
+    {
+        return new CartCodeDeleter(
             $this->getCartCodeFacade(),
             $this->getCartsRestApiFacade()
         );

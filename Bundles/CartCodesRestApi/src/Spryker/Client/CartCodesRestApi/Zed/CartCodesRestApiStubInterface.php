@@ -9,6 +9,7 @@ namespace Spryker\Client\CartCodesRestApi\Zed;
 
 use Generated\Shared\Transfer\AddCandidateRequestTransfer;
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
+use Generated\Shared\Transfer\RemoveCodeRequestTransfer;
 
 interface CartCodesRestApiStubInterface
 {
@@ -18,4 +19,11 @@ interface CartCodesRestApiStubInterface
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
     public function addCandidate(AddCandidateRequestTransfer $addCandidateRequestTransfer): CartCodeOperationResultTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\RemoveCodeRequestTransfer $removeCodeRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     */
+    public function removeCode(RemoveCodeRequestTransfer $removeCodeRequestTransfer): CartCodeOperationResultTransfer;
 }

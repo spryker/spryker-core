@@ -20,6 +20,8 @@ class CartCodeDeleter implements CartCodeDeleterInterface
      */
     protected const ERROR_IDENTIFIER_CART_NOT_FOUND = 'ERROR_IDENTIFIER_CART_NOT_FOUND';
 
+    protected const ERROR_MESSAGE_INVALID_DISCOUNT_ID = 'Invalid discount id.';
+
     /**
      * @var \Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeInterface
      */
@@ -28,44 +30,72 @@ class CartCodeDeleter implements CartCodeDeleterInterface
     /**
      * @var \Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeInterface
      */
-    protected $cartsRestApi;
+    protected $cartsRestApiFacade;
 
     /**
      * @param \Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeInterface $cartCodeFacade
-     * @param \Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeInterface $cartsRestApi
+     * @param \Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade
      */
     public function __construct(
         CartCodesRestApiToCartCodeFacadeInterface $cartCodeFacade,
-        CartCodesRestApiToCartsRestApiFacadeInterface $cartsRestApi
+        CartCodesRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade
     ) {
         $this->cartCodeFacade = $cartCodeFacade;
-        $this->cartsRestApi = $cartsRestApi;
+        $this->cartsRestApiFacade = $cartsRestApiFacade;
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $voucherCode
+     * @param int $idDiscount
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function removeCode(QuoteTransfer $quoteTransfer, string $voucherCode): CartCodeOperationResultTransfer
+    public function removeCode(QuoteTransfer $quoteTransfer, int $idDiscount): CartCodeOperationResultTransfer
     {
-        $quoteResponseTransfer = $this->cartsRestApi->findQuoteByUuid($quoteTransfer);
+        $quoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer();
+            return $this->createCartCodeOperationResultTransferWithCartNotFoundErrorMessageTransfer();
         }
 
-        return $this->cartCodeFacade->removeCode($quoteResponseTransfer->getQuoteTransfer(), $voucherCode);
+        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
+        /** @var \Generated\Shared\Transfer\DiscountTransfer[] $discountTransfers */
+        $discountTransfers = array_merge(
+            $quoteTransfer->getVoucherDiscounts()->getArrayCopy(),
+            $quoteTransfer->getCartRuleDiscounts()->getArrayCopy()
+        );
+
+        $voucherCode = '';
+        foreach ($discountTransfers as $discountTransfer) {
+            if ($discountTransfer->getIdDiscount() === $idDiscount) {
+                $voucherCode = $discountTransfer->getVoucherCode();
+            }
+        }
+
+        if (!$voucherCode) {
+            return $this->createCartCodeOperationResultTransferWithInvalidDiscountIdErrorMessageTransfer();
+        }
+
+        return $this->cartCodeFacade->removeCode($quoteTransfer, $voucherCode);
     }
 
     /**
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    protected function createCartCodeOperationResultTransferWithErrorMessageTransfer(): CartCodeOperationResultTransfer
+    protected function createCartCodeOperationResultTransferWithCartNotFoundErrorMessageTransfer(): CartCodeOperationResultTransfer
     {
         return (new CartCodeOperationResultTransfer())->addMessage(
             (new MessageTransfer())->setValue(static::ERROR_IDENTIFIER_CART_NOT_FOUND)
+        );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     */
+    protected function createCartCodeOperationResultTransferWithInvalidDiscountIdErrorMessageTransfer(): CartCodeOperationResultTransfer
+    {
+        return (new CartCodeOperationResultTransfer())->addMessage(
+            (new MessageTransfer())->setValue(static::ERROR_MESSAGE_INVALID_DISCOUNT_ID)
         );
     }
 }

@@ -39,14 +39,14 @@ class CartCodesRestApiFacade extends AbstractFacade implements CartCodesRestApiF
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $voucherCode
+     * @param int $idDiscount
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function removeCode(QuoteTransfer $quoteTransfer, string $voucherCode): CartCodeOperationResultTransfer
+    public function removeCode(QuoteTransfer $quoteTransfer, int $idDiscount): CartCodeOperationResultTransfer
     {
         return $this->getFactory()
             ->createCartCodeDeleter()
-            ->removeCode($quoteTransfer, $voucherCode);
+            ->removeCode($quoteTransfer, $idDiscount);
     }
 }

@@ -6,6 +6,11 @@
         <property name="voucherCode" type="string"/>
     </transfer>
 
+    <transfer name="RemoveCodeRequest">
+        <property name="quote" type="Quote"/>
+        <property name="idDiscount" type="int"/>
+    </transfer>
+
     <transfer name="RestDiscountsRequestAttributes">
         <property name="code" type="string"/>
     </transfer>

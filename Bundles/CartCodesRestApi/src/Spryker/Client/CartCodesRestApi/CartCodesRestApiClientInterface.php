@@ -24,4 +24,17 @@ interface CartCodesRestApiClientInterface
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
     public function addCandidate(QuoteTransfer $quoteTransfer, string $voucherCode): CartCodeOperationResultTransfer;
+
+    /**
+     * Specification:
+     * - TODO
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idDiscount
+     *
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     */
+    public function removeCode(QuoteTransfer $quoteTransfer, int $idDiscount): CartCodeOperationResultTransfer;
 }

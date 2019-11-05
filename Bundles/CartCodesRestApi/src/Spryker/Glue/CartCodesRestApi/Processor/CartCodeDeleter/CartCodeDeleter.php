@@ -5,19 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartCodesRestApi\Processor\CartCodeAdder;
+namespace Spryker\Glue\CartCodesRestApi\Processor\CartCodeDeleter;
 
-use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RestDiscountsRequestAttributesTransfer;
 use Spryker\Client\CartCodesRestApi\CartCodesRestApiClientInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\RestResponseBuilder\CartCodeRestResponseBuilderInterface;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-class CartCodeAdder implements CartCodeAdderInterface
+class CartCodeDeleter implements CartCodeDeleterInterface
 {
     /**
      * @var \Spryker\Client\CartCodesRestApi\CartCodesRestApiClientInterface
@@ -43,50 +41,42 @@ class CartCodeAdder implements CartCodeAdderInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addCandidateToCart(
-        RestRequestInterface $restRequest,
-        RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
-    ): RestResponseInterface {
+    public function removeCodeFromCart(RestRequestInterface $restRequest): RestResponseInterface
+    {
         $quoteTransfer = $this->createQuoteTransfer($restRequest, CartsRestApiConfig::RESOURCE_CARTS);
-        $cartCodeOperationResultTransfer = $this->addCandidate($restDiscountRequestAttributesTransfer, $quoteTransfer);
 
-        return $this->cartCodeResponseBuilder->buildCartRestResponse($cartCodeOperationResultTransfer, $restRequest);
+        return $this->removeCode($quoteTransfer, $restRequest);
     }
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addCandidateToGuestCart(
-        RestRequestInterface $restRequest,
-        RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
-    ): RestResponseInterface {
+    public function removeCodeFromGuestCart(RestRequestInterface $restRequest): RestResponseInterface
+    {
         $quoteTransfer = $this->createQuoteTransfer($restRequest, CartsRestApiConfig::RESOURCE_GUEST_CARTS);
-        $cartCodeOperationResultTransfer = $this->addCandidate($restDiscountRequestAttributesTransfer, $quoteTransfer);
 
-        return $this->cartCodeResponseBuilder->buildGuestCartRestResponse($cartCodeOperationResultTransfer);
+        return $this->removeCode($quoteTransfer, $restRequest);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function addCandidate(
-        RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer,
-        QuoteTransfer $quoteTransfer
-    ): CartCodeOperationResultTransfer {
-        return $this->cartCodesRestApiClient->addCandidate(
+    protected function removeCode(QuoteTransfer $quoteTransfer, RestRequestInterface $restRequest): RestResponseInterface
+    {
+        $cartCodeOperationResultTransfer = $this->cartCodesRestApiClient->removeCode(
             $quoteTransfer,
-            $restDiscountRequestAttributesTransfer->getCode()
+            $restRequest->getResource()->getId()
         );
+
+        return $this->cartCodeResponseBuilder->buildCartRestResponse($cartCodeOperationResultTransfer, $restRequest);
     }
 
     /**

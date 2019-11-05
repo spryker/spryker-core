@@ -62,4 +62,28 @@ class CartCodeBusinessTester extends Actor
             ]
         ))->build();
     }
+
+    /**
+     * @param bool $isLocked
+     * @param string $code
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function prepareQuoteTransferWithDiscount(bool $isLocked, string $code): QuoteTransfer
+    {
+        return (new QuoteBuilder(
+            [
+                'uuid' => static::TEST_QUOTE_UUID,
+                'customerReference' => static::TEST_CUSTOMER_REFERENCE,
+                'customer' => (new CustomerTransfer())->setCustomerReference(static::TEST_CUSTOMER_REFERENCE),
+                'items' => static::ITEMS,
+                'voucherDiscounts' => [
+                    [
+                        'voucherCode' => $code,
+                    ],
+                ],
+                'isLocked' => $isLocked,
+            ]
+        ))->build();
+    }
 }

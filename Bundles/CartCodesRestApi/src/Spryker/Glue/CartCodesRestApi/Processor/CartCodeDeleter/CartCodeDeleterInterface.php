@@ -5,29 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartCodesRestApi\Processor\RestResponseBuilder;
+namespace Spryker\Glue\CartCodesRestApi\Processor\CartCodeDeleter;
 
-use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface CartCodeRestResponseBuilderInterface
+interface CartCodeDeleterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CartCodeOperationResultTransfer $cartCodeOperationResultTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function buildCartRestResponse(
-        CartCodeOperationResultTransfer $cartCodeOperationResultTransfer,
+    public function removeCodeFromCart(
         RestRequestInterface $restRequest
     ): RestResponseInterface;
 
     /**
-     * @param \Generated\Shared\Transfer\CartCodeOperationResultTransfer $cartCodeOperationResultTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function buildGuestCartRestResponse(CartCodeOperationResultTransfer $cartCodeOperationResultTransfer): RestResponseInterface;
+    public function removeCodeFromGuestCart(RestRequestInterface $restRequest): RestResponseInterface;
 }

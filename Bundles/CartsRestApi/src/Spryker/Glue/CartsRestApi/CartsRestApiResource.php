@@ -32,6 +32,16 @@ class CartsRestApiResource extends AbstractRestResource implements CartsRestApiR
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createGuestCartRestResponse(QuoteTransfer $quoteTransfer): RestResponseInterface
+    {
+        return $this->getFactory()->createGuestCartRestResponseBuilder()->createGuestCartRestResponse($quoteTransfer);
+    }
+
+    /**
      * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
