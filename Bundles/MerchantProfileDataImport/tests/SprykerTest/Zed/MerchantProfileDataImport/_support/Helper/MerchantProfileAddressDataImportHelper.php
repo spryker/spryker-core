@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\MerchantProfileDataImport\Helper;
 
 use Codeception\Module;
-use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddressQuery;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -42,17 +41,5 @@ class MerchantProfileAddressDataImportHelper extends Module
     protected function getMerchantProfileAddressQuery(): SpyMerchantProfileAddressQuery
     {
         return SpyMerchantProfileAddressQuery::create();
-    }
-
-    /**
-     * @param string $key
-     *
-     * @return \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress
-     */
-    public function findMerchantProfileAddressByKey(string $key): SpyMerchantProfileAddress
-    {
-        return $this->getMerchantProfileAddressQuery()
-            ->filterByKey($key)
-            ->findOne();
     }
 }

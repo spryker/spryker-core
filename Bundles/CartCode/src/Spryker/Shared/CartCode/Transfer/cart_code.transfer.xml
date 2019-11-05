@@ -13,4 +13,7 @@
         <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
+    <transfer name="Quote">
+    </transfer>
+
 </transfers>

@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\MerchantProfileStorage\Persistence;
 
-use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\MerchantProfileStorageTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
+use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -18,40 +16,26 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class MerchantProfileStorageRepository extends AbstractRepository implements MerchantProfileStorageRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $merchantIds
+     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileStorageTransfer[]
+     * @return \Generated\Shared\Transfer\SpyMerchantProfileStorageEntityTransfer[]
      */
-    public function getFilteredMerchantProfileStorageTransfers(FilterTransfer $filterTransfer, array $merchantIds = []): array
+    public function getFilteredMerchantProfileStorageEntityTransfers(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): array
     {
-        $merchantStorageQuery = $this->getFactory()
+        $merchantProfileStorageQuery = $this->getFactory()
             ->createMerchantProfileStorageQuery();
-        if ($merchantIds) {
-            $merchantStorageQuery->filterByFkMerchant_In($merchantIds);
-        }
-        $merchantStorageQuery
-            ->setOffset($filterTransfer->getOffset())
-            ->setLimit($filterTransfer->getLimit());
-        $merchantStorageEntities = $merchantStorageQuery->find();
 
-        return $this->mapMerchantProfileStorageEntitiesToMerchantProfileStorageTransfers($merchantStorageEntities);
-    }
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantProfileStorage\Persistence\SpyMerchantProfileStorage[] $merchantProfileStorageEntities
-     *
-     * @return \Generated\Shared\Transfer\MerchantProfileStorageTransfer[]
-     */
-    protected function mapMerchantProfileStorageEntitiesToMerchantProfileStorageTransfers(ObjectCollection $merchantProfileStorageEntities): array
-    {
-        $merchantProfileStorageTransfers = [];
-        $merchantProfileStorageMapper = $this->getFactory()->createMerchantProfileStorageMapper();
-        foreach ($merchantProfileStorageEntities as $merchantProfileStorageEntity) {
-            $merchantProfileStorageTransfers[] = $merchantProfileStorageMapper
-                ->mapMerchantProfileStorageEntityToMerchantProfileStorageTransfer($merchantProfileStorageEntity, new MerchantProfileStorageTransfer());
+        if ($merchantProfileCriteriaFilterTransfer->getMerchantIds()) {
+            $merchantProfileStorageQuery->filterByFkMerchant_In($merchantProfileCriteriaFilterTransfer->getMerchantIds());
         }
 
-        return $merchantProfileStorageTransfers;
+        if ($merchantProfileCriteriaFilterTransfer->getFilter()) {
+            $merchantProfileStorageQuery = $this->buildQueryFromCriteria(
+                $merchantProfileStorageQuery,
+                $merchantProfileCriteriaFilterTransfer->getFilter()
+            );
+        }
+
+        return $merchantProfileStorageQuery->find();
     }
 }

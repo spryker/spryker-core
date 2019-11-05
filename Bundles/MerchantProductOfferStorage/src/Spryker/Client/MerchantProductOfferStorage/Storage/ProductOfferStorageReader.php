@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\MerchantProductOfferStorage\Storage;
 
-use Generated\Shared\Transfer\ProductOfferViewCollectionTransfer;
-use Generated\Shared\Transfer\ProductOfferViewTransfer;
+use Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToStorageClientInterface;
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToSynchronizationServiceInterface;
@@ -50,11 +50,11 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     /**
      * @param string $concreteSku
      *
-     * @return \Generated\Shared\Transfer\ProductOfferViewCollectionTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
-    public function getProductOfferViewCollection(string $concreteSku): ProductOfferViewCollectionTransfer
+    public function getProductOfferStorageCollection(string $concreteSku): ProductOfferStorageCollectionTransfer
     {
-        $productOfferViewCollectionTransfer = new ProductOfferViewCollectionTransfer();
+        $productOfferStorageCollection = new ProductOfferStorageCollectionTransfer();
         $concreteProductOffersKey = $this->generateKey($concreteSku, MerchantProductOfferStorageConfig::RESOURCE_CONCRETE_PRODUCT_PRODUCT_OFFERS_NAME);
 
         $concreteProductOffers = $this->storageClient->get($concreteProductOffersKey);
@@ -66,12 +66,12 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
                 }
                 $merchantProductOfferKey = $this->generateKey($concreteProductOffer, MerchantProductOfferStorageConfig::RESOURCE_MERCHANT_PRODUCT_OFFER_NAME);
                 $concreteProductOfferData = $this->storageClient->get($merchantProductOfferKey);
-                $productOfferViewTransfer = $this->merchantProductOfferMapper->mapMerchantProductOfferStorageDataToProductOfferViewTransfer($concreteProductOfferData, (new ProductOfferViewTransfer()));
-                $productOfferViewCollectionTransfer->addProductOfferView($productOfferViewTransfer);
+                $productOfferStorageTransfer = $this->merchantProductOfferMapper->mapMerchantProductOfferStorageDataToProductOfferStorageTransfer($concreteProductOfferData, (new ProductOfferStorageTransfer()));
+                $productOfferStorageCollection->addProductOfferStorage($productOfferStorageTransfer);
             }
         }
         
-        return $productOfferViewCollectionTransfer;
+        return $productOfferStorageCollection;
     }
 
     /**

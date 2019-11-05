@@ -52,12 +52,12 @@ class MerchantProfileMapper implements MerchantProfileMapperInterface
 
         $merchantProfileTransfer->setUrlCollection($urlTransfers);
 
-        $merchantProfileTransfer->setAddressCollection(
-            $this->merchantProfileAddressMapper->mapMerchantProfileAddressEntityCollectionToMerchantProfileAddressCollectionTransfer(
-                $merchantProfileEntity->getSpyMerchantProfileAddresses(),
-                new MerchantProfileAddressCollectionTransfer()
-            )
+        $merchantProfileAddressCollectionTransfer = $this->merchantProfileAddressMapper->mapMerchantProfileAddressEntityCollectionToMerchantProfileAddressCollectionTransfer(
+            $merchantProfileEntity->getSpyMerchantProfileAddresses(),
+            new MerchantProfileAddressCollectionTransfer()
         );
+
+        $merchantProfileTransfer->setAddressCollection($merchantProfileAddressCollectionTransfer);
 
         return $merchantProfileTransfer;
     }

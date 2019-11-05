@@ -8,10 +8,6 @@
 namespace Spryker\Zed\ProductOffer\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductOffer\Business\Reader\ProductOfferReader;
-use Spryker\Zed\ProductOffer\Business\Reader\ProductOfferReaderInterface;
-use Spryker\Zed\ProductOffer\Business\Writer\ProductOfferWriter;
-use Spryker\Zed\ProductOffer\Business\Writer\ProductOfferWriterInterface;
 
 /**
  * @method \Spryker\Zed\ProductOffer\ProductOfferConfig getConfig()
@@ -20,19 +16,4 @@ use Spryker\Zed\ProductOffer\Business\Writer\ProductOfferWriterInterface;
  */
 class ProductOfferBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return \Spryker\Zed\ProductOffer\Business\Reader\ProductOfferReaderInterface
-     */
-    public function createProductOfferReader(): ProductOfferReaderInterface
-    {
-        return new ProductOfferReader($this->getRepository());
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOffer\Business\Writer\ProductOfferWriterInterface
-     */
-    public function createProductOfferWriter(): ProductOfferWriterInterface
-    {
-        return new ProductOfferWriter($this->getEntityManager());
-    }
 }

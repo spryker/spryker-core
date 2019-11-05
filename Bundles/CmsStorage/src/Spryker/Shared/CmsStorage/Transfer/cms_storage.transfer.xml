@@ -36,4 +36,7 @@
         <property name="localeName" type="string"/>
     </transfer>
 
+    <transfer name="CmsVersionData">
+    </transfer>
+
 </transfers>

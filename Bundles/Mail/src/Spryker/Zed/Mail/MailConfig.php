@@ -45,4 +45,36 @@ class MailConfig extends AbstractBundleConfig
     {
         return $this->get(MailConstants::SMTP_PORT, 25);
     }
+
+    /**
+     * @return string
+     */
+    public function getSmtpEncryption(): string
+    {
+        return $this->get(MailConstants::SMTP_ENCRYPTION, '');
+    }
+
+    /**
+     * @return string
+     */
+    public function getSmtpAuthMode(): string
+    {
+        return $this->get(MailConstants::SMTP_AUTH_MODE, '');
+    }
+
+    /**
+     * @return string
+     */
+    public function getSmtpUsername(): string
+    {
+        return $this->get(MailConstants::SMTP_USERNAME, '');
+    }
+
+    /**
+     * @return string
+     */
+    public function getSmtpPassword(): string
+    {
+        return $this->get(MailConstants::SMTP_PASSWORD, '');
+    }
 }

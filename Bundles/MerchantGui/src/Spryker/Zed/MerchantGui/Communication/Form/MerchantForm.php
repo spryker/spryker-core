@@ -95,7 +95,6 @@ class MerchantForm extends AbstractType
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => static::LABEL_NAME,
-            'required' => false,
             'constraints' => $this->getTextFieldConstraints(),
         ]);
 
@@ -111,7 +110,6 @@ class MerchantForm extends AbstractType
     {
         $builder->add(static::FIELD_REGISTRATION_NUMBER, TextType::class, [
             'label' => static::LABEL_REGISTRATION_NUMBER,
-            'required' => false,
             'constraints' => [
                 new Length(['max' => 255]),
             ],
@@ -130,7 +128,6 @@ class MerchantForm extends AbstractType
     {
         $builder->add(static::FIELD_EMAIL, EmailType::class, [
             'label' => static::LABEL_EMAIL,
-            'required' => false,
             'constraints' => $this->getEmailFieldConstraints($currentId),
         ]);
 
@@ -168,8 +165,6 @@ class MerchantForm extends AbstractType
      */
     protected function getEmailFieldConstraints(?int $currentId = null): array
     {
-        $merchantFacade = $this->getFactory()->getMerchantFacade();
-
         return [
             new Required(),
             new NotBlank(),

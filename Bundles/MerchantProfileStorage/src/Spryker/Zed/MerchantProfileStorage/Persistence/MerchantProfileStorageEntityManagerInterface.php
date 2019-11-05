@@ -16,12 +16,12 @@ interface MerchantProfileStorageEntityManagerInterface
      *
      * @return void
      */
-    public function saveMerchantProfileStorageEntity(MerchantProfileStorageTransfer $merchantProfileStorageTransfer): void;
+    public function saveMerchantProfileStorage(MerchantProfileStorageTransfer $merchantProfileStorageTransfer): void;
 
     /**
-     * @param int[] $merchantProfileIds
+     * @param int[] $merchantIds
      *
      * @return void
      */
-    public function deleteMerchantProfileStorageEntitiesByMerchantProfileIds(array $merchantProfileIds): void;
+    public function deleteMerchantProfileStorageEntitiesByMerchantIds(array $merchantIds): void;
 }

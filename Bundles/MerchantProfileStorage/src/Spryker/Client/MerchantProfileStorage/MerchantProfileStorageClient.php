@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\MerchantProfileStorage;
 
-use Generated\Shared\Transfer\MerchantProfileViewTransfer;
+use Generated\Shared\Transfer\MerchantProfileStorageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -22,13 +22,13 @@ class MerchantProfileStorageClient extends AbstractClient implements MerchantPro
      *
      * @param array $data
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileViewTransfer
+     * @return \Generated\Shared\Transfer\MerchantProfileStorageTransfer
      */
-    public function mapMerchantProfileStorageViewData(array $data): MerchantProfileViewTransfer
+    public function mapMerchantProfileStorageData(array $data): MerchantProfileStorageTransfer
     {
         return $this->getFactory()
             ->createMerchantProfileStorageMapper()
-            ->mapMerchantProfileStorageDataToMerchantProfileViewTransfer($data);
+            ->mapMerchantProfileStorageDataToMerchantProfileStorageTransfer($data);
     }
 
     /**
@@ -38,12 +38,28 @@ class MerchantProfileStorageClient extends AbstractClient implements MerchantPro
      *
      * @param int $idMerchant
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileViewTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantProfileStorageTransfer|null
      */
-    public function findMerchantProfileStorageViewData(int $idMerchant): ?MerchantProfileViewTransfer
+    public function findMerchantProfileStorageData(int $idMerchant): ?MerchantProfileStorageTransfer
     {
         return $this->getFactory()
             ->createMerchantProfileStorageReader()
-            ->findMerchantProfileStorageViewData($idMerchant);
+            ->findMerchantProfileStorageData($idMerchant);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $merchantIds
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileStorageTransfer[]
+     */
+    public function findMerchantProfileStorageList(array $merchantIds): array
+    {
+        return $this->getFactory()
+            ->createMerchantProfileStorageReader()
+            ->findMerchantProfileStorageList($merchantIds);
     }
 }

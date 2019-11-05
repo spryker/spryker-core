@@ -10,8 +10,6 @@ namespace Spryker\Glue\CatalogSearchProductsResourceRelationship;
 use Spryker\Glue\CatalogSearchProductsResourceRelationship\Dependency\RestResource\CatalogSearchProductsResourceRelationshipToProductsRestApiInterface;
 use Spryker\Glue\CatalogSearchProductsResourceRelationship\Processor\Expander\CatalogSearchProductsResourceRelationshipExpander;
 use Spryker\Glue\CatalogSearchProductsResourceRelationship\Processor\Expander\CatalogSearchProductsResourceRelationshipExpanderInterface;
-use Spryker\Glue\CatalogSearchProductsResourceRelationship\Processor\Expander\CatalogSearchSuggestionsProductsResourceRelationshipExpander;
-use Spryker\Glue\CatalogSearchProductsResourceRelationship\Processor\Expander\CatalogSearchSuggestionsProductsResourceRelationshipExpanderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 class CatalogSearchProductsResourceRelationshipFactory extends AbstractFactory
@@ -22,14 +20,6 @@ class CatalogSearchProductsResourceRelationshipFactory extends AbstractFactory
     public function createCatalogSearchProductsResourceRelationshipExpander(): CatalogSearchProductsResourceRelationshipExpanderInterface
     {
         return new CatalogSearchProductsResourceRelationshipExpander($this->getProductsResource());
-    }
-
-    /**
-     * @return \Spryker\Glue\CatalogSearchProductsResourceRelationship\Processor\Expander\CatalogSearchSuggestionsProductsResourceRelationshipExpanderInterface
-     */
-    public function createCatalogSearchSuggestionsProductsResourceRelationshipExpander(): CatalogSearchSuggestionsProductsResourceRelationshipExpanderInterface
-    {
-        return new CatalogSearchSuggestionsProductsResourceRelationshipExpander($this->getProductsResource());
     }
 
     /**
