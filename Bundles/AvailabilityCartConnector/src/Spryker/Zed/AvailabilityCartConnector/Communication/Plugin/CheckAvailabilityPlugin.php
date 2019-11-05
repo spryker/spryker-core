@@ -19,6 +19,8 @@ class CheckAvailabilityPlugin extends AbstractPlugin implements CartPreCheckPlug
 {
     /**
      * {@inheritDoc}
+     *  - Checks if items in CartChangeTransfer are sellable.
+     *  - In case `ItemTransfer.amount` was defined, item availability check will be ignored.
      *
      * @api
      *

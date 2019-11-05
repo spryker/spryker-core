@@ -251,7 +251,8 @@ interface ProductPackagingUnitFacadeInterface
     /**
      * Specification:
      * - Checks if item amounts which being added to cart are available.
-     * - Even if same lead product added separately, the lead product availability is checked together.
+     * - Checks the quantity availability of the product packaging unit too, unless if it's a self-lead packaging unit.
+     * - If a lead product is added separately, the lead product total availability amount will be checked.
      * - Sets error message if not available.
      *
      * @api
