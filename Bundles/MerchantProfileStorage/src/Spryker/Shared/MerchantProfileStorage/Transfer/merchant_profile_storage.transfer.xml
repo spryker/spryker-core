@@ -23,11 +23,11 @@
         <property name="dataPrivacyGlossaryKey" type="string"/>
         <property name="idMerchantProfile" type="int"/>
         <property name="fkMerchant" type="int"/>
-        <property name="latitude" type="string" />
-        <property name="longitude" type="string" />
-        <property name="faxNumber" type="string" />
+        <property name="latitude" type="string"/>
+        <property name="longitude" type="string"/>
+        <property name="faxNumber" type="string"/>
         <property name="addressCollection" type="MerchantProfileAddressStorage[]" singular="address"/>
-        <property name="urlCollection" type="Url[]" singular="Url"/>
+        <property name="urlCollection" type="Url[]" singular="url"/>
     </transfer>
 
     <transfer name="MerchantProfileAddressStorage">
