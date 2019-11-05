@@ -25,7 +25,7 @@ class SalesMerchantConnectorEntityManager extends AbstractEntityManager implemen
         $salesMerchantConnectorMapper = $this->getFactory()->createSalesMerchantConnectorMapper();
 
         $salesOrderMerchantEntity = $this->getFactory()->createSalesOrderMerchantQuery()
-            ->filterByMerchantReference($salesOrderMerchantTransfer->getMerchantReference())
+            ->filterBySalesOrderMerchantReference($salesOrderMerchantTransfer->getSalesOrderMerchantReference())
             ->findOneOrCreate();
 
         $salesOrderMerchantEntity = $salesMerchantConnectorMapper->mapSalesOrderMerchantTransferToSalesOrderMerchantEntity(
