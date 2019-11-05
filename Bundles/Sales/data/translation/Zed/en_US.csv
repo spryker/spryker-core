@@ -15,6 +15,7 @@ Discount,Discount
 "incl. %tax_amount% % tax","incl. %tax_amount% % tax"
 "Included tax amount","Included tax amount"
 "Item total","Item Total"
+Items,Items
 Legend,Legend
 "List of orders","List of orders"
 Matrix,Matrix
