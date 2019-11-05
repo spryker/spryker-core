@@ -21,10 +21,11 @@ class ClassDefinition implements ClassDefinitionInterface
     public const TYPE_FULLY_QUALIFIED = 'type_fully_qualified';
     public const DEFAULT_ASSOCIATIVE_ARRAY_TYPE = 'string|int';
 
+    protected const EXTRA_TYPE_HINTS = 'extra_type_hints';
     protected const SUPPORTED_VALUE_OBJECTS = [
         'decimal' => [
             self::TYPE_FULLY_QUALIFIED => Decimal::class,
-            'extra_type_hints' => 'string|int|float',
+            self::EXTRA_TYPE_HINTS => 'string|int|float',
         ],
     ];
 
@@ -396,13 +397,13 @@ class ClassDefinition implements ClassDefinitionInterface
     protected function getSetVar(array $property): string
     {
         if ($this->isValueObject($property)) {
-            if (empty(static::SUPPORTED_VALUE_OBJECTS[$property['type']]['extra_type_hints'])) {
+            if (empty(static::SUPPORTED_VALUE_OBJECTS[$property['type']][static::EXTRA_TYPE_HINTS])) {
                 return sprintf('\%s', static::SUPPORTED_VALUE_OBJECTS[$property['type']][static::TYPE_FULLY_QUALIFIED]);
             }
 
             return sprintf(
                 '%s|\%s',
-                static::SUPPORTED_VALUE_OBJECTS[$property['type']]['extra_type_hints'],
+                static::SUPPORTED_VALUE_OBJECTS[$property['type']][static::EXTRA_TYPE_HINTS],
                 static::SUPPORTED_VALUE_OBJECTS[$property['type']][static::TYPE_FULLY_QUALIFIED]
             );
         }
