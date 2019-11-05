@@ -265,7 +265,7 @@ interface SearchFacadeInterface
 
     /**
      * Specification:
-     * - Installs Elasticsearch indices and mapping types based on the loaded index definitions if they don't exist.
+     * - Installs Elasticsearch indexes and mapping types based on the loaded index definitions if they don't exist.
      * - For each configured store a separated index name is generated.
      * - Only the index for the current store is created.
      * - The name of the index is automatically prefixed with the store name + underscore.
@@ -276,5 +276,5 @@ interface SearchFacadeInterface
      *
      * @return void
      */
-    public function installIndices(LoggerInterface $messenger): void;
+    public function installIndexes(LoggerInterface $messenger): void;
 }

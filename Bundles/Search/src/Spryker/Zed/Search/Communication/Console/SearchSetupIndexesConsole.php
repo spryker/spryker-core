@@ -15,11 +15,11 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\Search\Business\SearchFacadeInterface getFacade()
  * @method \Spryker\Zed\Search\Communication\SearchCommunicationFactory getFactory()
  */
-class SearchSetupIndicesConsole extends Console
+class SearchSetupIndexesConsole extends Console
 {
-    public const COMMAND_NAME = 'search:setup:indices';
-    public const DESCRIPTION = 'This command will create the search indices.';
-    public const COMMAND_NAME_SETUP_SEARCH_ALIAS = 'setup:search:indices';
+    public const COMMAND_NAME = 'search:setup:indexes';
+    public const DESCRIPTION = 'This command will create the search indexes.';
+    public const COMMAND_NAME_SETUP_SEARCH_ALIAS = 'setup:search:indexes';
 
     /**
      * @return void
@@ -41,7 +41,7 @@ class SearchSetupIndicesConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->getFacade()->installIndices($this->getMessenger());
+        $this->getFacade()->installIndexes($this->getMessenger());
 
         return static::CODE_SUCCESS;
     }
