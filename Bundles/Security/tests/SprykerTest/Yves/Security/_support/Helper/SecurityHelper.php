@@ -19,14 +19,20 @@ use Spryker\Yves\Security\Plugin\Security\RememberMeSecurityPlugin;
 use Spryker\Yves\Security\SecurityConfig;
 use Spryker\Yves\Security\SecurityDependencyProvider;
 use Spryker\Yves\Security\SecurityFactory;
-use SprykerTest\Shared\Testify\Helper\ConfigHelper;
-use SprykerTest\Shared\Testify\Helper\DependencyHelper;
-use SprykerTest\Yves\EventDispatcher\Helper\EventDispatcherHelper;
-use SprykerTest\Yves\Testify\Helper\ApplicationHelper;
-use SprykerTest\Yves\Testify\Helper\FactoryHelper;
+use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
+use SprykerTest\Yves\EventDispatcher\Helper\EventDispatcherHelperTrait;
+use SprykerTest\Yves\Testify\Helper\ApplicationHelperTrait;
+use SprykerTest\Yves\Testify\Helper\DependencyProviderHelperTrait;
+use SprykerTest\Yves\Testify\Helper\FactoryHelperTrait;
 
 class SecurityHelper extends Module
 {
+    use ConfigHelperTrait;
+    use FactoryHelperTrait;
+    use ApplicationHelperTrait;
+    use EventDispatcherHelperTrait;
+    use DependencyProviderHelperTrait;
+
     protected const MODULE_NAME = 'Security';
 
     /**
@@ -80,17 +86,6 @@ class SecurityHelper extends Module
     }
 
     /**
-     * @return \SprykerTest\Shared\Testify\Helper\ConfigHelper
-     */
-    protected function getConfigHelper(): ConfigHelper
-    {
-        /** @var \SprykerTest\Shared\Testify\Helper\ConfigHelper $configHelper */
-        $configHelper = $this->getModule('\\' . ConfigHelper::class);
-
-        return $configHelper;
-    }
-
-    /**
      * @return \Spryker\Yves\Security\SecurityFactory
      */
     protected function getFactory(): SecurityFactory
@@ -102,36 +97,17 @@ class SecurityHelper extends Module
     }
 
     /**
-     * @return \SprykerTest\Yves\Testify\Helper\FactoryHelper
+     * @param \Spryker\Shared\Security\Dependency\Plugin\SecurityPluginInterface $securityPlugin
+     *
+     * @return $this
      */
-    protected function getFactoryHelper(): FactoryHelper
+    public function addSecurityPlugin(SecurityPluginInterface $securityPlugin)
     {
-        /** @var \SprykerTest\Yves\Testify\Helper\FactoryHelper $factoryHelper */
-        $factoryHelper = $this->getModule('\\' . FactoryHelper::class);
+        $this->securityPlugins[] = $securityPlugin;
 
-        return $factoryHelper;
-    }
+        $this->getDependencyProviderHelper()->setDependency(SecurityDependencyProvider::PLUGINS_SECURITY, $this->securityPlugins);
 
-    /**
-     * @return \SprykerTest\Yves\Testify\Helper\ApplicationHelper
-     */
-    protected function getApplicationHelper(): ApplicationHelper
-    {
-        /** @var \SprykerTest\Yves\Testify\Helper\ApplicationHelper $applicationHelper */
-        $applicationHelper = $this->getModule('\\' . ApplicationHelper::class);
-
-        return $applicationHelper;
-    }
-
-    /**
-     * @return \SprykerTest\Yves\EventDispatcher\Helper\EventDispatcherHelper
-     */
-    protected function getEventDispatcherHelper(): EventDispatcherHelper
-    {
-        /** @var \SprykerTest\Yves\EventDispatcher\Helper\EventDispatcherHelper $eventDispatcherHelper */
-        $eventDispatcherHelper = $this->getModule('\\' . EventDispatcherHelper::class);
-
-        return $eventDispatcherHelper;
+        return $this;
     }
 
     /**
@@ -139,7 +115,7 @@ class SecurityHelper extends Module
      *
      * @return $this
      */
-    public function addSecurityPlugin(SecurityConfiguration $securityConfiguration)
+    public function mockSecurityPlugin(SecurityConfiguration $securityConfiguration)
     {
         $securityPluginStub = Stub::makeEmpty(SecurityPluginInterface::class, [
             'extend' => function (SecurityBuilderInterface $securityBuilder) use ($securityConfiguration) {
@@ -169,20 +145,9 @@ class SecurityHelper extends Module
 
         $this->securityPlugins[] = $securityPluginStub;
 
-        $this->getDependencyHelper()->setDependency(SecurityDependencyProvider::PLUGINS_SECURITY, $this->securityPlugins);
+        $this->getDependencyProviderHelper()->setDependency(SecurityDependencyProvider::PLUGINS_SECURITY, $this->securityPlugins);
 
         return $this;
-    }
-
-    /**
-     * @return \SprykerTest\Shared\Testify\Helper\DependencyHelper
-     */
-    protected function getDependencyHelper(): DependencyHelper
-    {
-        /** @var \SprykerTest\Shared\Testify\Helper\DependencyHelper $dependencyHelper */
-        $dependencyHelper = $this->getModule('\\' . DependencyHelper::class);
-
-        return $dependencyHelper;
     }
 
     /**

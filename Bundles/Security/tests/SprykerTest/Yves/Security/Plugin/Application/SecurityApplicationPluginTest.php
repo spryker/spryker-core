@@ -72,7 +72,7 @@ class SecurityApplicationPluginTest extends Unit
             'foobar' => true,
             'users' => [],
         ]);
-        $this->tester->addSecurityPlugin($securityConfiguration);
+        $this->tester->mockSecurityPlugin($securityConfiguration);
 
         $this->tester->addRoute('homepage', '/', function () {
         });
@@ -244,7 +244,7 @@ class SecurityApplicationPluginTest extends Unit
             ->addAccessRules([['^/admin', 'ROLE_ADMIN']])
             ->addRoleHierarchy(['ROLE_ADMIN' => ['ROLE_USER', 'ROLE_ALLOWED_TO_SWITCH']]);
 
-        $this->tester->addSecurityPlugin($securityConfiguration);
+        $this->tester->mockSecurityPlugin($securityConfiguration);
 
         $container = $this->tester->getContainer();
 
@@ -293,7 +293,7 @@ class SecurityApplicationPluginTest extends Unit
                 }
             };
         });
-        $this->tester->addSecurityPlugin($securityConfiguration);
+        $this->tester->mockSecurityPlugin($securityConfiguration);
 
         $this->tester->addRoute('homepage', '/', function () {
             return new Response('foo');
@@ -334,7 +334,7 @@ class SecurityApplicationPluginTest extends Unit
                 }
             };
         });
-        $this->tester->addSecurityPlugin($securityConfiguration);
+        $this->tester->mockSecurityPlugin($securityConfiguration);
 
         $this->tester->addRoute('homepage', '/', function () {
             return new Response('foo');
@@ -358,7 +358,7 @@ class SecurityApplicationPluginTest extends Unit
             'http' => true,
             'methods' => ['POST'],
         ]);
-        $this->tester->addSecurityPlugin($securityConfiguration);
+        $this->tester->mockSecurityPlugin($securityConfiguration);
         $this->tester->addRoute('homepage', '/', function () {
             return new Response('foo');
         }, [], [], [], null, null, ['POST', 'GET']);
@@ -382,7 +382,7 @@ class SecurityApplicationPluginTest extends Unit
             'http' => true,
             'hosts' => 'localhost2',
         ]);
-        $this->tester->addSecurityPlugin($securityConfiguration);
+        $this->tester->mockSecurityPlugin($securityConfiguration);
         $this->tester->addRoute('homepage-1', '/', function () {
             return new Response('foo');
         }, [], [], [], 'localhost1');
@@ -410,7 +410,7 @@ class SecurityApplicationPluginTest extends Unit
                 'user' => ['ROLE_ADMIN', '$2y$15$lzUNsTegNXvZW3qtfucV0erYBcEqWVeyOmjolB7R1uodsAVJ95vvu'],
             ],
         ]);
-        $this->tester->addSecurityPlugin($securityConfiguration);
+        $this->tester->mockSecurityPlugin($securityConfiguration);
 
         $this->tester->addRoute('homepage', '/', function () {
             return new Response('foo');
@@ -440,7 +440,7 @@ class SecurityApplicationPluginTest extends Unit
             'http' => true,
             'users' => 'my_user_provider',
         ]);
-        $this->tester->addSecurityPlugin($securityConfiguration);
+        $this->tester->mockSecurityPlugin($securityConfiguration);
         $users = [
             'user' => ['ROLE_ADMIN', '$2y$15$lzUNsTegNXvZW3qtfucV0erYBcEqWVeyOmjolB7R1uodsAVJ95vvu'],
         ];
@@ -474,7 +474,7 @@ class SecurityApplicationPluginTest extends Unit
         $securityConfiguration->addFirewall('default', [
             'http' => true,
         ]);
-        $this->tester->addSecurityPlugin($securityConfiguration);
+        $this->tester->mockSecurityPlugin($securityConfiguration);
 
         $this->tester->addRoute('homepage', '/', function () {
             return new Response('foo');
@@ -494,7 +494,7 @@ class SecurityApplicationPluginTest extends Unit
         $securityConfiguration->addFirewall('default', [
             'http' => true,
         ]);
-        $this->tester->addSecurityPlugin($securityConfiguration);
+        $this->tester->mockSecurityPlugin($securityConfiguration);
 
         $this->tester->getContainer()->get('security.token_storage')->setToken(new UsernamePasswordToken('foo', 'foo', 'foo'));
         $this->tester->addRoute('homepage', '/', function () {
@@ -517,7 +517,7 @@ class SecurityApplicationPluginTest extends Unit
                 'http' => true,
             ])
             ->addAccessRules([[['path' => '^/admin'], 'ROLE_ADMIN']]);
-        $this->tester->addSecurityPlugin($securityConfiguration);
+        $this->tester->mockSecurityPlugin($securityConfiguration);
 
         $container = $this->tester->getContainer();
 
@@ -545,7 +545,7 @@ class SecurityApplicationPluginTest extends Unit
                 'admin' => ['ROLE_ADMIN', '513aeb0121909'],
             ],
         ]);
-        $this->tester->addSecurityPlugin($securityConfiguration);
+        $this->tester->mockSecurityPlugin($securityConfiguration);
 
         $container = $this->tester->getContainer();
         $container->set('validator', true);
@@ -624,7 +624,7 @@ class SecurityApplicationPluginTest extends Unit
             ->addAccessRules([['^/admin', 'ROLE_ADMIN']])
             ->addRoleHierarchy(['ROLE_ADMIN' => ['ROLE_USER']]);
 
-        $this->tester->addSecurityPlugin($securityConfiguration);
+        $this->tester->mockSecurityPlugin($securityConfiguration);
 
         $container = $this->tester->getContainer();
         $this->tester->addRoute('login', '/login', function (Request $request) use ($container) {
@@ -674,7 +674,7 @@ class SecurityApplicationPluginTest extends Unit
             ->addAccessRules([['^/admin', 'ROLE_ADMIN']])
             ->addRoleHierarchy(['ROLE_ADMIN' => ['ROLE_USER']]);
 
-        $this->tester->addSecurityPlugin($securityConfiguration);
+        $this->tester->mockSecurityPlugin($securityConfiguration);
 
         $this->tester->addRoute('homepage', '/', function () {
             $container = $this->tester->getContainer();
@@ -719,7 +719,7 @@ class SecurityApplicationPluginTest extends Unit
             ->addAccessRules([['^/admin', 'ROLE_ADMIN']])
             ->addRoleHierarchy(['ROLE_ADMIN' => ['ROLE_USER']]);
 
-        $this->tester->addSecurityPlugin($securityConfiguration);
+        $this->tester->mockSecurityPlugin($securityConfiguration);
 
         $container = $this->tester->getContainer();
 

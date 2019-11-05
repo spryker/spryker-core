@@ -1229,6 +1229,8 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
+     * @throws \LogicException
+     *
      * @return void
      */
     protected function addRouter(ContainerInterface $container): void
@@ -1242,6 +1244,14 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 [$method, $pattern, $name] = $route;
 
                 $route = new Route($pattern);
+
+                $controller = function (Request $request) {
+                    throw new LogicException(sprintf('The "%s" route must have code to run when it matches.', $request->attributes->get('_route')));
+                };
+
+                $route->setDefault('_controller', $controller);
+//                $route->setMethods([$method]);
+
                 $routeCollection->add($name, $route);
             }
 

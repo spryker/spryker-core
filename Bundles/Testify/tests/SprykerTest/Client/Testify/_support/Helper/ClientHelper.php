@@ -116,6 +116,12 @@ class ClientHelper extends Module
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
 
+        $classNameCandidate = sprintf(static::CLIENT_CLASS_NAME_PATTERN, 'Spryker', $moduleName);
+
+        if ($namespaceParts[0] === 'SprykerShopTest' && class_exists($classNameCandidate)) {
+            return $classNameCandidate;
+        }
+
         return sprintf(static::CLIENT_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $moduleName);
     }
 

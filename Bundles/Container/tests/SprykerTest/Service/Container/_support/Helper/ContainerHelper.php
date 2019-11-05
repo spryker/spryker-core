@@ -9,8 +9,8 @@ namespace SprykerTest\Service\Container\Helper;
 
 use Codeception\Module;
 use Codeception\TestInterface;
+use Spryker\Service\Container\Container;
 use Spryker\Service\Container\ContainerInterface;
-use Spryker\Service\Kernel\Container;
 
 class ContainerHelper extends Module
 {

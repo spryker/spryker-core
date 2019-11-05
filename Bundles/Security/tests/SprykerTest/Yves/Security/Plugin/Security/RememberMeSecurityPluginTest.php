@@ -104,7 +104,7 @@ class RememberMeSecurityPluginTest extends Unit
                 ],
             ]);
 
-        $this->tester->addSecurityPlugin($securityConfiguration);
+        $this->tester->mockSecurityPlugin($securityConfiguration);
 
         $this->tester->addRoute('homepage', '/', function () {
             $authorizationChecker = $this->getAuthorizationChecker();

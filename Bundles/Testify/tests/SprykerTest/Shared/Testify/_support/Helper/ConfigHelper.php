@@ -21,6 +21,7 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 class ConfigHelper extends Module
 {
     protected const CONFIG_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\%3$sConfig';
+    protected const SHARED_CONFIG_CLASS_NAME_PATTERN = '\%1$s\Shared\%2$s\%2$sConfig';
     protected const MODULE_NAME_POSITION = 2;
 
     /**
@@ -220,6 +221,12 @@ class ConfigHelper extends Module
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
 
+        $classNameCandidate = sprintf(static::CONFIG_CLASS_NAME_PATTERN, 'Spryker', $namespaceParts[1], $moduleName);
+
+        if ($namespaceParts[0] === 'SprykerShopTest' && class_exists($classNameCandidate)) {
+            return $classNameCandidate;
+        }
+
         return sprintf(static::CONFIG_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $moduleName);
     }
 
@@ -284,7 +291,13 @@ class ConfigHelper extends Module
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
 
-        return sprintf('\%1$s\Shared\%2$s\%2$sConfig', rtrim($namespaceParts[0], 'Test'), $moduleName);
+        $classNameCandidate = sprintf(static::SHARED_CONFIG_CLASS_NAME_PATTERN, 'Spryker', $moduleName);
+
+        if ($namespaceParts[0] === 'SprykerShopTest' && class_exists($classNameCandidate)) {
+            return $classNameCandidate;
+        }
+
+        return sprintf(static::SHARED_CONFIG_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $moduleName);
     }
 
     /**

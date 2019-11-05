@@ -71,7 +71,7 @@ class FactoryHelper extends Module
 
         if (isset($this->factoryStubs[$moduleName])) {
             $this->factoryStubs[$moduleName] = $this->injectConfig($this->factoryStubs[$moduleName], $moduleName);
-            $this->factoryStubs[$moduleName] = $this->injectContainer($this->factoryStubs[$moduleName]);
+            $this->factoryStubs[$moduleName] = $this->injectContainer($this->factoryStubs[$moduleName], $moduleName);
 
             return $this->factoryStubs[$moduleName];
         }
@@ -79,7 +79,7 @@ class FactoryHelper extends Module
         $moduleFactory = $this->createFactory($moduleName);
 
         $moduleFactory = $this->injectConfig($moduleFactory, $moduleName);
-        $moduleFactory = $this->injectContainer($moduleFactory);
+        $moduleFactory = $this->injectContainer($moduleFactory, $moduleName);
 
         return $moduleFactory;
     }
@@ -123,6 +123,11 @@ class FactoryHelper extends Module
     {
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
+        $factoryClassNameCandidate = sprintf(static::FACTORY_CLASS_NAME_PATTERN, 'Spryker', $moduleName);
+
+        if ($namespaceParts[0] === 'SprykerShopTest' && class_exists($factoryClassNameCandidate)) {
+            return $factoryClassNameCandidate;
+        }
 
         return sprintf(static::FACTORY_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $moduleName);
     }
@@ -168,24 +173,27 @@ class FactoryHelper extends Module
 
     /**
      * @param \Spryker\Yves\Kernel\AbstractFactory $factory
+     * @param string $moduleName
      *
      * @return \Spryker\Yves\Kernel\AbstractFactory
      */
-    protected function injectContainer(AbstractFactory $factory)
+    protected function injectContainer(AbstractFactory $factory, string $moduleName)
     {
         if ($this->hasModule('\\' . DependencyProviderHelper::class)) {
-            $factory->setContainer($this->getContainer());
+            $factory->setContainer($this->getContainer($moduleName));
         }
 
         return $factory;
     }
 
     /**
+     * @param string $moduleName
+     *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function getContainer(): Container
+    protected function getContainer(string $moduleName)
     {
-        return $this->getDependencyProviderHelper()->getContainer();
+        return $this->getDependencyProviderHelper()->getModuleContainer($moduleName);
     }
 
     /**

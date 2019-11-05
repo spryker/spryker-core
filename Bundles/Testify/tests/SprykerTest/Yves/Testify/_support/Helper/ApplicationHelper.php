@@ -30,6 +30,11 @@ class ApplicationHelper extends Module
     protected $application;
 
     /**
+     * @var \Symfony\Component\HttpKernel\HttpKernelBrowser
+     */
+    protected $httpKernelBrowser;
+
+    /**
      * @param \Codeception\TestInterface $test
      *
      * @return void
@@ -56,7 +61,11 @@ class ApplicationHelper extends Module
      */
     public function getHttpKernelBrowser(): HttpKernelBrowser
     {
-        return new HttpKernelBrowser($this->getKernel());
+        if ($this->httpKernelBrowser === null) {
+            $this->httpKernelBrowser = new HttpKernelBrowser($this->getKernel());
+        }
+
+        return $this->httpKernelBrowser;
     }
 
     /**
