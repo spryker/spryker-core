@@ -24,5 +24,5 @@ interface ConfigurableBundleNameGeneratorInterface
      *
      * @return string
      */
-    public function generateSlotName(ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer): string;
+    public function generateTemplateSlotName(ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer): string;
 }

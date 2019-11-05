@@ -79,6 +79,15 @@ class ConfigurableBundleTemplateUpdater implements ConfigurableBundleTemplateUpd
     public function updateConfigurableBundleTemplate(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
     ): ConfigurableBundleTemplateResponseTransfer {
+        $configurableBundleTemplateResponseTransfer = $this->getConfigurableBundleTemplate($configurableBundleTemplateTransfer);
+
+        if (!$configurableBundleTemplateResponseTransfer->getIsSuccessful()) {
+            return $configurableBundleTemplateResponseTransfer;
+        }
+
+        $configurableBundleTemplateTransfer
+            ->setName($this->configurableBundleNameGenerator->generateTemplateName($configurableBundleTemplateTransfer));
+
         return $this->getTransactionHandler()->handleTransaction(function () use ($configurableBundleTemplateTransfer) {
             return $this->executeUpdateConfigurableBundleTemplateTransaction($configurableBundleTemplateTransfer);
         });
@@ -154,15 +163,6 @@ class ConfigurableBundleTemplateUpdater implements ConfigurableBundleTemplateUpd
     protected function executeUpdateConfigurableBundleTemplateTransaction(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
     ): ConfigurableBundleTemplateResponseTransfer {
-        $configurableBundleTemplateResponseTransfer = $this->getConfigurableBundleTemplate($configurableBundleTemplateTransfer);
-
-        if (!$configurableBundleTemplateResponseTransfer->getIsSuccessful()) {
-            return $configurableBundleTemplateResponseTransfer;
-        }
-
-        $configurableBundleTemplateTransfer
-            ->setName($this->configurableBundleNameGenerator->generateTemplateName($configurableBundleTemplateTransfer));
-
         $configurableBundleTemplateTransfer = $this->configurableBundleEntityManager
             ->updateConfigurableBundleTemplate($configurableBundleTemplateTransfer);
 

@@ -75,6 +75,18 @@ class ConfigurableBundleTemplateSlotUpdater implements ConfigurableBundleTemplat
     public function updateConfigurableBundleTemplateSlot(
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
     ): ConfigurableBundleTemplateSlotResponseTransfer {
+        $configurableBundleTemplateSlotResponseTransfer = $this->getConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer);
+
+        if (!$configurableBundleTemplateSlotResponseTransfer->getIsSuccessful()) {
+            return $this->getErrorResponse($configurableBundleTemplateSlotResponseTransfer->getMessages());
+        }
+
+        $configurableBundleTemplateSlotTransfer
+            ->setName($this->configurableBundleNameGenerator->generateTemplateSlotName($configurableBundleTemplateSlotTransfer))
+            ->setConfigurableBundleTemplate(
+                $configurableBundleTemplateSlotResponseTransfer->getConfigurableBundleTemplateSlot()->getConfigurableBundleTemplate()
+            );
+
         return $this->getTransactionHandler()->handleTransaction(function () use ($configurableBundleTemplateSlotTransfer) {
             return $this->executeUpdateConfigurableBundleTemplateSlotTransaction($configurableBundleTemplateSlotTransfer);
         });
@@ -88,18 +100,6 @@ class ConfigurableBundleTemplateSlotUpdater implements ConfigurableBundleTemplat
     protected function executeUpdateConfigurableBundleTemplateSlotTransaction(
         ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
     ): ConfigurableBundleTemplateSlotResponseTransfer {
-        $configurableBundleTemplateSlotResponseTransfer = $this->getConfigurableBundleTemplateSlot($configurableBundleTemplateSlotTransfer);
-
-        if (!$configurableBundleTemplateSlotResponseTransfer->getIsSuccessful()) {
-            return $this->getErrorResponse($configurableBundleTemplateSlotResponseTransfer->getMessages());
-        }
-
-        $configurableBundleTemplateSlotTransfer
-            ->setName($this->configurableBundleNameGenerator->generateSlotName($configurableBundleTemplateSlotTransfer))
-            ->setConfigurableBundleTemplate(
-                $configurableBundleTemplateSlotResponseTransfer->getConfigurableBundleTemplateSlot()->getConfigurableBundleTemplate()
-            );
-
         $productListResponseTransfer = $this->productListWriter->updateProductList($configurableBundleTemplateSlotTransfer);
 
         if (!$productListResponseTransfer->getIsSuccessful()) {
@@ -133,11 +133,11 @@ class ConfigurableBundleTemplateSlotUpdater implements ConfigurableBundleTemplat
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[]|null $messageTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotResponseTransfer
      */
-    protected function getErrorResponse(?ArrayObject $messageTransfers): ConfigurableBundleTemplateSlotResponseTransfer
+    protected function getErrorResponse(ArrayObject $messageTransfers): ConfigurableBundleTemplateSlotResponseTransfer
     {
         return (new ConfigurableBundleTemplateSlotResponseTransfer())
             ->setMessages($messageTransfers)

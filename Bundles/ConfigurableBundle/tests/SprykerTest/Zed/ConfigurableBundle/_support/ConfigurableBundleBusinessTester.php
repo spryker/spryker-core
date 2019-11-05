@@ -13,9 +13,6 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTranslationTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
-use Generated\Shared\Transfer\ConfiguredBundleTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 
 /**
@@ -137,23 +134,6 @@ class ConfigurableBundleBusinessTester extends Actor
     }
 
     /**
-     * @param string $templateUuid
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
-    public function createItemTransferWithConfigurableBundleTemplateUuid(string $templateUuid): ItemTransfer
-    {
-        return (new ItemTransfer())
-            ->setConfiguredBundle(
-                (new ConfiguredBundleTransfer())
-                    ->setTemplate(
-                        (new ConfigurableBundleTemplateTransfer())
-                            ->setUuid($templateUuid)
-                    )
-            );
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */
     public function createConfigurableBundleTemplateTransfer(): ConfigurableBundleTemplateTransfer
@@ -209,19 +189,6 @@ class ConfigurableBundleBusinessTester extends Actor
         }
 
         return $configurableBundleTemplateSlotTranslationTransfers;
-    }
-
-    /**
-     * @param string $uuid
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function createQuoteTransferWithConfigurableBundleTemplate(string $uuid): QuoteTransfer
-    {
-        return (new QuoteTransfer())
-            ->addItem(
-                $this->createItemTransferWithConfigurableBundleTemplateUuid($uuid)
-            );
     }
 
     /**

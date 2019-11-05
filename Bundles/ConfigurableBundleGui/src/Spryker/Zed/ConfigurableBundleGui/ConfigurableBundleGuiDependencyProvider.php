@@ -12,8 +12,6 @@ use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuer
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToConfigurableBundleFacadeBridge;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToConfigurableBundleFacadeInterface;
-use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToGlossaryFacadeBridge;
-use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToGlossaryFacadeInterface;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeBridge;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToProductListFacadeBridge;
@@ -28,7 +26,6 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
 {
     public const FACADE_CONFIGURABLE_BUNDLE = 'FACADE_CONFIGURABLE_BUNDLE';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
-    public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
     public const FACADE_PRODUCT_LIST = 'FACADE_PRODUCT_LIST';
     public const PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = 'PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT';
     public const PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE = 'PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE';
@@ -51,7 +48,6 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addConfigurableBundleFacade($container);
         $container = $this->addLocaleFacade($container);
-        $container = $this->addGlossaryFacade($container);
         $container = $this->addProductListFacade($container);
         $container = $this->addConfigurableBundleTemplatePropelQuery($container);
         $container = $this->addConfigurableBundleTemplateSlotPropelQuery($container);
@@ -92,22 +88,6 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
         $container->set(static::FACADE_LOCALE, function (Container $container): ConfigurableBundleGuiToLocaleFacadeInterface {
             return new ConfigurableBundleGuiToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade()
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addGlossaryFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_GLOSSARY, function (Container $container): ConfigurableBundleGuiToGlossaryFacadeInterface {
-            return new ConfigurableBundleGuiToGlossaryFacadeBridge(
-                $container->getLocator()->glossary()->facade()
             );
         });
 

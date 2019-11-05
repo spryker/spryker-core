@@ -14,5 +14,5 @@ interface ConfigurableBundleToUtilTextServiceInterface
      *
      * @return string
      */
-    public function generateSlug(string $value): string;
+    public function generateSlug($value);
 }
