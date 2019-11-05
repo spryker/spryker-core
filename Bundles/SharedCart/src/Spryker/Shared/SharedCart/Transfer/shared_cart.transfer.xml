@@ -182,4 +182,7 @@
         <property name="groupKeyPrefix" type="string"/>
     </transfer>
 
+    <transfer name="Filter">
+    </transfer>
+
 </transfers>

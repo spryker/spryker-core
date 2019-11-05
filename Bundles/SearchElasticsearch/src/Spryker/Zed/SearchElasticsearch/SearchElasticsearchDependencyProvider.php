@@ -12,6 +12,8 @@ use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToSt
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilSanitizeServiceBridge;
+use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingBridge;
 use Spryker\Zed\SearchElasticsearch\Dependency\Guzzle\SearchElasticsearchToGuzzleClientAdapter;
 use Spryker\Zed\SearchElasticsearch\Dependency\Guzzle\SearchElasticsearchToGuzzleClientInterface;
 use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingServiceBridge;
@@ -23,8 +25,11 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
 {
     public const CLIENT_STORE = 'CLIENT_STORE';
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
-    public const CLIENT_GUZZLE = 'CLIENT_GUZZLE';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    public const PLUGIN_SEARCH_PAGE_MAPS = 'PLUGIN_SEARCH_PAGE_MAPS';
+    public const SEARCH_INSTALLER_PLUGINS = 'SEARCH_INSTALLER_PLUGINS';
+    public const CLIENT_GUZZLE = 'CLIENT_GUZZLE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -37,6 +42,7 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addGuzzleClient($container);
         $container = $this->addUtilEncodingFacade($container);
         $container = $this->addStoreClient($container);
+        $container = $this->addUtilSanitizeService($container);
 
         return $container;
     }
@@ -80,6 +86,20 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
             return new SearchElasticsearchToStoreClientBridge(
                 $container->getLocator()->store()->client()
             );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilSanitizeService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
+            return new SearchElasticsearchToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
         });
 
         return $container;

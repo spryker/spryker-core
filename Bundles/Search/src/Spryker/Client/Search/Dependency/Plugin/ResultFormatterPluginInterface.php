@@ -12,6 +12,30 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterf
 /**
  * @deprecated Use `\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface` instead.
  */
-interface ResultFormatterPluginInterface extends SearchExtensionResultFormatterPluginInterface
+interface ResultFormatterPluginInterface
 {
+    /**
+     * Specification:
+     * - Returns the name for the current formatter.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getName();
+
+    /**
+     * Specification:
+     * - Formats the result.
+     *
+     * @api
+     *
+     * @param mixed $searchResult
+     * @param array $requestParameters
+     *
+     * @return mixed
+     */
+    public function formatResult($searchResult, array $requestParameters = []);
 }
+
+class_alias(ResultFormatterPluginInterface::class, SearchExtensionResultFormatterPluginInterface::class, false);

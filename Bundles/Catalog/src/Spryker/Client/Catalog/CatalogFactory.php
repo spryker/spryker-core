@@ -23,7 +23,7 @@ class CatalogFactory extends AbstractFactory
     /**
      * @param string $searchString
      *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     public function createCatalogSearchQuery($searchString)
     {
@@ -39,7 +39,7 @@ class CatalogFactory extends AbstractFactory
     /**
      * @param string $searchString
      *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     public function createSuggestSearchQuery($searchString)
     {
@@ -102,7 +102,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     public function getCatalogSearchQueryPlugin()
     {
@@ -134,7 +134,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     public function getSuggestionQueryExpanderPlugins()
     {
@@ -166,7 +166,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     public function getCatalogSearchCounterQueryExpanderPlugins(): array
     {
@@ -190,7 +190,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     public function getProductConcretePageSearchQueryExpanderPlugins(): array
     {

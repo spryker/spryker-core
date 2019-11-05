@@ -41,4 +41,7 @@
         <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
+    <transfer name="Locale">
+    </transfer>
+
 </transfers>

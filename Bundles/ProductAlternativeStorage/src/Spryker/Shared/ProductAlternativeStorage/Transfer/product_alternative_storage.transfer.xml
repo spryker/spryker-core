@@ -29,4 +29,10 @@
         <property name="productConcreteIds" type="array" singular="productConcreteIds"/>
     </transfer>
 
+    <transfer name="ProductAbstract">
+    </transfer>
+
+    <transfer name="ProductConcrete">
+    </transfer>
+
 </transfers>
