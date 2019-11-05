@@ -21,14 +21,14 @@ class SlotTable extends AbstractTable
     protected const COL_KEY = SpyCmsSlotTableMap::COL_KEY;
     protected const COL_NAME = SpyCmsSlotTableMap::COL_NAME;
     protected const COL_DESCRIPTION = SpyCmsSlotTableMap::COL_DESCRIPTION;
-    protected const COL_OWNERSHIP = SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE;
+    protected const COL_CONTENT_PROVIDER = SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE;
     protected const COL_STATUS = SpyCmsSlotTableMap::COL_IS_ACTIVE;
     protected const COL_ACTIONS = 'actions';
 
     protected const VALUE_COL_KEY = 'Slot Key';
     protected const VALUE_COL_NAME = 'Name';
     protected const VALUE_COL_DESCRIPTION = 'Description';
-    protected const VALUE_COL_OWNERSHIP = 'Ownership';
+    protected const VALUE_COL_CONTENT_PROVIDER = 'Content Provider';
     protected const VALUE_COL_STATUS = 'Status';
     protected const VALUE_COL_ACTIONS = 'Actions';
 
@@ -92,13 +92,13 @@ class SlotTable extends AbstractTable
             static::COL_KEY => static::VALUE_COL_KEY,
             static::COL_NAME => static::VALUE_COL_NAME,
             static::COL_DESCRIPTION => static::VALUE_COL_DESCRIPTION,
-            static::COL_OWNERSHIP => static::VALUE_COL_OWNERSHIP,
+            static::COL_CONTENT_PROVIDER => static::VALUE_COL_CONTENT_PROVIDER,
             static::COL_STATUS => static::VALUE_COL_STATUS,
             static::COL_ACTIONS => static::VALUE_COL_ACTIONS,
         ];
 
-        if (!$this->isOwnershipColumnVisible()) {
-            unset($header[static::COL_OWNERSHIP]);
+        if (!$this->isContentProviderColumnVisible()) {
+            unset($header[static::COL_CONTENT_PROVIDER]);
         }
 
         $config->setHeader($header);
@@ -119,8 +119,8 @@ class SlotTable extends AbstractTable
             static::COL_STATUS,
         ];
 
-        if ($this->isOwnershipColumnVisible()) {
-            $sortable[] = static::COL_OWNERSHIP;
+        if ($this->isContentProviderColumnVisible()) {
+            $sortable[] = static::COL_CONTENT_PROVIDER;
         }
 
         $config->setSortable($sortable);
@@ -141,8 +141,8 @@ class SlotTable extends AbstractTable
             static::COL_DESCRIPTION,
         ];
 
-        if ($this->isOwnershipColumnVisible()) {
-            $searchable[] = static::COL_OWNERSHIP;
+        if ($this->isContentProviderColumnVisible()) {
+            $searchable[] = static::COL_CONTENT_PROVIDER;
         }
 
         $config->setSearchable($searchable);
@@ -153,11 +153,11 @@ class SlotTable extends AbstractTable
     /**
      * @return bool
      */
-    protected function isOwnershipColumnVisible(): bool
+    protected function isContentProviderColumnVisible(): bool
     {
         if ($this->contentProviderTypesNumber === null) {
             $this->contentProviderTypesNumber = $this->cmsSlotQuery
-                ->select(static::COL_OWNERSHIP)
+                ->select(static::COL_CONTENT_PROVIDER)
                 ->distinct()
                 ->count();
         }
@@ -190,13 +190,13 @@ class SlotTable extends AbstractTable
                 static::COL_KEY => $slot[SpyCmsSlotTableMap::COL_KEY],
                 static::COL_NAME => $slot[SpyCmsSlotTableMap::COL_NAME],
                 static::COL_DESCRIPTION => $slot[SpyCmsSlotTableMap::COL_DESCRIPTION],
-                static::COL_OWNERSHIP => $slot[SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE],
+                static::COL_CONTENT_PROVIDER => $slot[SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE],
                 static::COL_STATUS => $this->getStatus($slot),
                 static::COL_ACTIONS => $this->buildLinks($slot),
             ];
 
-            if (!$this->isOwnershipColumnVisible()) {
-                unset($results[static::COL_OWNERSHIP]);
+            if (!$this->isContentProviderColumnVisible()) {
+                unset($results[static::COL_CONTENT_PROVIDER]);
             }
         }
 
