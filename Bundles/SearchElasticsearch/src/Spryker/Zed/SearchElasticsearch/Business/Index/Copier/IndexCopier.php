@@ -9,7 +9,7 @@ namespace Spryker\Zed\SearchElasticsearch\Business\Index\Copier;
 
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Zed\SearchElasticsearch\Dependency\Guzzle\SearchElasticsearchToGuzzleClientInterface;
-use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingServiceInterface;
+use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceInterface;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
 
 class IndexCopier implements IndexCopierInterface
@@ -27,19 +27,19 @@ class IndexCopier implements IndexCopierInterface
     protected $config;
 
     /**
-     * @var \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingServiceInterface
+     * @var \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceInterface
      */
     protected $utilEncodingService;
 
     /**
      * @param \Spryker\Zed\SearchElasticsearch\Dependency\Guzzle\SearchElasticsearchToGuzzleClientInterface $client
      * @param \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig $config
-     * @param \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
         SearchElasticsearchToGuzzleClientInterface $client,
         SearchElasticsearchConfig $config,
-        SearchToUtilEncodingServiceInterface $utilEncodingService
+        SearchElasticsearchToUtilEncodingServiceInterface $utilEncodingService
     ) {
         $this->client = $client;
         $this->config = $config;
@@ -58,7 +58,7 @@ class IndexCopier implements IndexCopierInterface
             'headers' => [
                 'Content-Type' => 'application/json',
             ],
-            'body' => $this->buildCopyCommand($sourceSearchContextTransfer, $targetSearchContextTransfer),
+            'body' => $this->buildCopyCommandRequestBody($sourceSearchContextTransfer, $targetSearchContextTransfer),
         ]);
 
         return $responseStatusCode === static::RESPONSE_STATUS_SUCCESS;
@@ -70,7 +70,7 @@ class IndexCopier implements IndexCopierInterface
      *
      * @return string
      */
-    protected function buildCopyCommand(SearchContextTransfer $sourceSearchContextTransfer, SearchContextTransfer $targetSearchContextTransfer): string
+    protected function buildCopyCommandRequestBody(SearchContextTransfer $sourceSearchContextTransfer, SearchContextTransfer $targetSearchContextTransfer): string
     {
         $sourceIndexName = $this->getIndexName($sourceSearchContextTransfer);
         $targetIndexName = $this->getIndexName($targetSearchContextTransfer);

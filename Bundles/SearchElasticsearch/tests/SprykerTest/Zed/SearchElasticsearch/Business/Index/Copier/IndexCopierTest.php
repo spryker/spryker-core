@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\SearchElasticsearch\Business\Index\Copier;
 use Codeception\Test\Unit;
 use Spryker\Zed\SearchElasticsearch\Business\Index\Copier\IndexCopier;
 use Spryker\Zed\SearchElasticsearch\Dependency\Guzzle\SearchElasticsearchToGuzzleClientInterface;
-use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingServiceInterface;
+use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceInterface;
 
 /**
  * Auto-generated group annotations
@@ -93,9 +93,9 @@ class IndexCopierTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingServiceInterface
+     * @return \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceInterface
      */
-    protected function getUtilEncodingService(): SearchToUtilEncodingServiceInterface
+    protected function getUtilEncodingService(): SearchElasticsearchToUtilEncodingServiceInterface
     {
         return $this->tester->getFactory()->getUtilEncodingService();
     }

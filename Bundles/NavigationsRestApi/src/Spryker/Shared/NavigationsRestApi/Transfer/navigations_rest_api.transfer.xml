@@ -31,4 +31,7 @@
         <property name="detail" type="string"/>
     </transfer>
 
+    <transfer name="UrlStorage">
+    </transfer>
+
 </transfers>

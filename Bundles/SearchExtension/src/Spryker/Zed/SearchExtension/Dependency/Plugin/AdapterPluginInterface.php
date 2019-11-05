@@ -58,7 +58,7 @@ interface AdapterPluginInterface
      * @param string $key
      * @param string $type
      *
-     * @return \Elastica\Document
+     * @return mixed
      */
     public function getDocument($key, $type);
 

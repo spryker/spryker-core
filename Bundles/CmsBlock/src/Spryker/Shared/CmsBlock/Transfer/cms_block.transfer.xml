@@ -55,4 +55,7 @@
         <property name="glossaryKey" type="int"/>
         <property name="locales" type="array" singular="locales"/>
     </transfer>
+
+    <transfer name="EventEntity">
+    </transfer>
 </transfers>

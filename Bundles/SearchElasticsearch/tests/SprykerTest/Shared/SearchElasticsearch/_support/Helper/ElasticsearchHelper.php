@@ -22,6 +22,8 @@ use SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper;
 
 class ElasticsearchHelper extends Module
 {
+    public const DEFAULT_MAPPING_TYPE = '_doc';
+
     protected const INDEX_SUFFIX = '_testing';
     protected const REPOSITORY_LOCATION_FILE_NAME = 'search_test_file';
     protected const REPOSITORY_TYPE_FILESYSTEM = 'fs';
@@ -102,7 +104,7 @@ class ElasticsearchHelper extends Module
         $index = $this->haveIndex($indexName);
 
         $documents = [
-            new Document($documentId, $documentData, '_doc'),
+            new Document($documentId, $documentData, static::DEFAULT_MAPPING_TYPE),
         ];
 
         $index->addDocuments($documents);

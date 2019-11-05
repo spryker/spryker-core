@@ -318,4 +318,7 @@
         <property name="prefix" type="string"/>
     </transfer>
 
+    <transfer name="Money">
+    </transfer>
+
 </transfers>

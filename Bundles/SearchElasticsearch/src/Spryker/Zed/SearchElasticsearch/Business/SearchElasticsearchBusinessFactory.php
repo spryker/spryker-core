@@ -48,7 +48,8 @@ use Spryker\Zed\SearchElasticsearch\Business\Snapshot\RepositoryInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Snapshot\Snapshot;
 use Spryker\Zed\SearchElasticsearch\Business\Snapshot\SnapshotInterface;
 use Spryker\Zed\SearchElasticsearch\Dependency\Guzzle\SearchElasticsearchToGuzzleClientInterface;
-use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingServiceInterface;
+use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceInterface;
+use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilSanitizeServiceInterface;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchDependencyProvider;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -100,9 +101,9 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingServiceInterface
+     * @return \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceInterface
      */
-    public function getUtilEncodingService(): SearchToUtilEncodingServiceInterface
+    public function getUtilEncodingService(): SearchElasticsearchToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::SERVICE_UTIL_ENCODING);
     }
@@ -199,7 +200,8 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     {
         return new IndexSettingsUpdater(
             $this->getElasticsearchClient(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getUtilSanitizeService()
         );
     }
 
@@ -268,6 +270,14 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     public function getStoreClient(): SearchElasticsearchToStoreClientInterface
     {
         return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
+     * @return \Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactoryInterface
+     */
+    public function getUtilSanitizeService(): SearchElasticsearchToUtilSanitizeServiceInterface
+    {
+        return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::SERVICE_UTIL_SANITIZE);
     }
 
     /**

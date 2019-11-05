@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\SearchElasticsearch\Business;
 
 use Codeception\Test\Unit;
 use Elastica\Index;
+use Elastica\Request;
 use Generated\Shared\Transfer\StoreTransfer;
 use Psr\Log\NullLogger;
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
@@ -16,6 +17,7 @@ use Spryker\Zed\SearchElasticsearch\Business\Snapshot\Repository;
 use Spryker\Zed\SearchElasticsearch\Business\Snapshot\RepositoryInterface;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchDependencyProvider;
+use SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchHelper;
 
 /**
  * Auto-generated group annotations
@@ -35,6 +37,7 @@ class SearchElasticsearchFacadeTest extends Unit
     protected const CURRENT_STORE = 'DE';
     protected const SOURCE_IDENTIFIER = 'index-name';
     protected const INDEX_NAME_ALL = '*_testing';
+    protected const DOCUMENT_CONTENT_KEY = '_source';
     protected const REPOSITORY_LOCATION_FILE_NAME = 'search_test_file';
     protected const REPOSITORY_NAME = 'search_test_repository';
     protected const REPOSITORY_TYPE_FILESYSTEM = 'fs';
@@ -272,6 +275,41 @@ class SearchElasticsearchFacadeTest extends Unit
         }
 
         return '';
+    }
+
+    /**
+     * @return void
+     */
+    public function testCanCopyIndexContentToAnotherIndex(): void
+    {
+        // Arrange
+        $documentContent = ['foo' => 'bar'];
+        $documentId = 'dummy_document';
+        $sourceIndex = $this->tester->haveDocumentInIndex('source_index_name', $documentId, $documentContent);
+        $destIndex = $this->tester->haveIndex('dest_index_name');
+
+        // Act
+        $this->tester->getFacade()->copyIndex(
+            $this->tester->buildSearchContextTransferFromIndexName($sourceIndex->getName()),
+            $this->tester->buildSearchContextTransferFromIndexName($destIndex->getName())
+        );
+
+        // Assert
+        $this->assertDocumentInIndexHasExpectedContent($destIndex, $documentId, $documentContent);
+    }
+
+    /**
+     * @param \Elastica\Index $index
+     * @param string $documentId
+     * @param array $expectedContent
+     *
+     * @return void
+     */
+    protected function assertDocumentInIndexHasExpectedContent(Index $index, string $documentId, array $expectedContent): void
+    {
+        $response = $index->request(sprintf('%s/%s', ElasticsearchHelper::DEFAULT_MAPPING_TYPE, $documentId), Request::GET);
+
+        $this->assertSame($expectedContent, $response->getData()[static::DOCUMENT_CONTENT_KEY]);
     }
 
     /**

@@ -44,12 +44,12 @@ class SearchElasticsearchDeleteIndexConsole extends AbstractIndexNameAwareSearch
         $searchContextTransfer = $this->buildSearchContextTransferFromIndexName($indexName);
 
         if ($this->getFacade()->deleteIndex($searchContextTransfer)) {
-            $this->info(sprintf('Search index %s successfully deleted.', $indexName));
+            $this->info(sprintf('Search index "%s" successfully deleted.', $indexName));
 
             return static::CODE_SUCCESS;
         }
 
-        $this->error(sprintf('Search index %s could not be deleted.', $indexName));
+        $this->error(sprintf('Search index "%s" could not be deleted.', $indexName));
 
         return static::CODE_ERROR;
     }
