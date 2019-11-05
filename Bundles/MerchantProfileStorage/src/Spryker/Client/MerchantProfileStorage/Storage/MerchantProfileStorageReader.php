@@ -87,6 +87,9 @@ class MerchantProfileStorageReader implements MerchantProfileStorageReaderInterf
         $merchantProfileDataList = $this->storageClient->getMulti($merchantProfileKeys);
 
         foreach ($merchantProfileDataList as $merchantProfileData) {
+            if ($merchantProfileData === null) {
+                continue;
+            }
             $merchantProfileDataCollection[] = $this->merchantProfileStorageMapper->mapMerchantProfileStorageDataToMerchantProfileStorageTransfer(
                 $this->utilEncodingService->decodeJson($merchantProfileData, true)
             );

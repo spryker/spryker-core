@@ -24,12 +24,7 @@
         <property name="idMerchantProfile" type="int"/>
         <property name="fkMerchant" type="int"/>
         <property name="addressCollection" type="MerchantProfileAddressStorage[]" singular="address"/>
-        <property name="urlCollection" type="MerchantProfileStorageUrl[]" singular="merchantProfileStorageUrl"/>
-    </transfer>
-
-    <transfer name="MerchantProfileStorageUrl">
-        <property name="url" type="string"/>
-        <property name="fkLocale" type="string"/>
+        <property name="urlCollection" type="Url[]" singular="Url"/>
     </transfer>
 
     <transfer name="MerchantProfileAddressStorage">
