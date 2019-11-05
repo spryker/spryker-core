@@ -35,8 +35,7 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
             $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
         }
         $merchantQuery = $this->getFactory()
-            ->createMerchantQuery()
-            ->leftJoinSpyMerchantAddress();
+            ->createMerchantQuery();
 
         $filterTransfer = $merchantCriteriaFilterTransfer->getFilter();
         if ($filterTransfer === null || empty($filterTransfer->getOrderBy())) {
@@ -103,6 +102,10 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
 
         if ($merchantCriteriaFilterTransfer->getEmail() !== null) {
             $merchantQuery->filterByEmail($merchantCriteriaFilterTransfer->getEmail());
+        }
+
+        if ($merchantCriteriaFilterTransfer->getMerchantReference() !== null) {
+            $merchantQuery->filterByMerchantReference($merchantCriteriaFilterTransfer->getMerchantReference());
         }
 
         return $merchantQuery;

@@ -27,4 +27,3 @@ suites:
              - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
              - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
              - \SprykerTest\Zed\MerchantDataImport\Helper\MerchantDataImportHelper
-             - \SprykerTest\Zed\MerchantDataImport\Helper\MerchantAddressDataImportHelper

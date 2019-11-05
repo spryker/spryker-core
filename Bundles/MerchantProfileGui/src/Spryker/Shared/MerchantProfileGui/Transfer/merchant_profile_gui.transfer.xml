@@ -10,7 +10,7 @@
     <transfer name="MerchantProfile">
         <property name="idMerchantProfile" type="int"/>
         <property name="isActive" type="bool"/>
-        <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" singular="merchantProfileLocalizedGlossaryAttributes"/>
+        <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" singular="merchantProfileLocalizedGlossaryAttribute"/>
     </transfer>
 
     <transfer name="MerchantProfileLocalizedGlossaryAttributes">

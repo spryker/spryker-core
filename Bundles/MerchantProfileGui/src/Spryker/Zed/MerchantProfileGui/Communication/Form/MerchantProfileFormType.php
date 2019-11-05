@@ -8,8 +8,11 @@
 namespace Spryker\Zed\MerchantProfileGui\Communication\Form;
 
 use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\MerchantProfileGui\Communication\Form\MerchantProfileGlossary\MerchantProfileLocalizedGlossaryAttributesFormType;
+use Spryker\Zed\MerchantProfileGui\Communication\Form\MerchantProfileUrlCollection\MerchantProfileUrlCollectionFormType;
+use Spryker\Zed\MerchantProfileGui\Communication\Form\Transformer\MerchantProfileUrlCollectionDataTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -40,6 +43,7 @@ class MerchantProfileFormType extends AbstractType
     protected const FIELD_PUBLIC_PHONE = 'public_phone';
     protected const FIELD_MERCHANT_PROFILE_LOCALIZED_GLOSSARY_ATTRIBUTES = 'merchantProfileLocalizedGlossaryAttributes';
     protected const FIELD_IS_ACTIVE = 'is_active';
+    protected const FIELD_URL_COLLECTION = 'urlCollection';
     protected const FIELD_DESCRIPTION_GLOSSARY_KEY = 'description_glossary_key';
     protected const FIELD_BANNER_URL_GLOSSARY_KEY = 'banner_url_glossary_key';
     protected const FIELD_DELIVERY_TIME_GLOSSARY_KEY = 'delivery_time_glossary_key';
@@ -47,6 +51,9 @@ class MerchantProfileFormType extends AbstractType
     protected const FIELD_CANCELLATION_POLICY_GLOSSARY_KEY = 'cancellation_policy_glossary_key';
     protected const FIELD_IMPRINT_GLOSSARY_KEY = 'imprint_glossary_key';
     protected const FIELD_DATA_PRIVACY_GLOSSARY_KEY = 'data_privacy_glossary_key';
+    protected const FIELD_LATITUDE = 'latitude';
+    protected const FIELD_LONGITUDE = 'longitude';
+    protected const FIELD_FAX_NUMBER = 'fax_number';
 
     protected const LABEL_CONTACT_PERSON_ROLE = 'Role';
     protected const LABEL_CONTACT_PERSON_TITLE = 'Title';
@@ -54,9 +61,13 @@ class MerchantProfileFormType extends AbstractType
     protected const LABEL_CONTACT_PERSON_LAST_NAME = 'Last Name';
     protected const LABEL_CONTACT_PERSON_PHONE = 'Phone';
     protected const LABEL_LOGO_URL = 'Logo URL';
+    protected const LABEL_URL = 'Profile URL';
     protected const LABEL_PUBLIC_EMAIL = 'Public Email';
     protected const LABEL_PUBLIC_PHONE = 'Public Phone';
     protected const LABEL_IS_ACTIVE = 'Is Active';
+    protected const LABEL_LATITUDE = 'Latitude';
+    protected const LABEL_LONGITUDE = 'Longitude';
+    protected const LABEL_FAX_NUMBER = 'Fax number';
 
     protected const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
 
@@ -94,6 +105,7 @@ class MerchantProfileFormType extends AbstractType
             ->addPublicPhoneField($builder)
             ->addLogoUrlField($builder)
             ->addIsActiveField($builder)
+            ->addUrlCollectionField($builder)
             ->addDescriptionGlossaryKeyField($builder)
             ->addBannerUrlGlossaryKeyField($builder)
             ->addDeliveryTimeGlossaryKeyField($builder)
@@ -101,7 +113,36 @@ class MerchantProfileFormType extends AbstractType
             ->addCancellationPolicyGlossaryKeyField($builder)
             ->addImprintGlossaryKeyField($builder)
             ->addDataPrivacyGlossaryKeyField($builder)
-            ->addMerchantProfileLocalizedGlossaryAttributesSubform($builder);
+            ->addMerchantProfileLocalizedGlossaryAttributesSubform($builder)
+            ->addFaxNumber($builder)
+            ->addLatitudeField($builder)
+            ->addLongitudeField($builder)
+            ->addAddressCollectionSubform($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addUrlCollectionField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_URL_COLLECTION, CollectionType::class, [
+            'entry_type' => MerchantProfileUrlCollectionFormType::class,
+            'allow_add' => true,
+            'label' => static::LABEL_URL,
+            'required' => true,
+            'allow_delete' => true,
+            'entry_options' => [
+                'label' => false,
+                'data_class' => UrlTransfer::class,
+            ],
+        ]);
+
+        $builder->get(static::FIELD_URL_COLLECTION)
+            ->addModelTransformer(new MerchantProfileUrlCollectionDataTransformer());
+
+        return $this;
     }
 
     /**
@@ -368,6 +409,24 @@ class MerchantProfileFormType extends AbstractType
     }
 
     /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addAddressCollectionSubform(FormBuilderInterface $builder)
+    {
+        $merchantProfileAddressFormDataProvider = $this->getFactory()->createMerchantProfileAddressFormDataProvider();
+
+        $builder->add(
+            'addressCollection',
+            MerchantProfileAddressFormType::class,
+            $merchantProfileAddressFormDataProvider->getOptions()
+        );
+
+        return $this;
+    }
+
+    /**
      * @return \Symfony\Component\Validator\Constraint[]
      */
     protected function getTextFieldConstraints(): array
@@ -391,5 +450,71 @@ class MerchantProfileFormType extends AbstractType
                 'message' => 'Invalid url provided. "Space" and "\" character is not allowed.',
             ]),
         ];
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addLongitudeField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_LONGITUDE, TextType::class, [
+            'label' => static::LABEL_LONGITUDE,
+            'required' => false,
+            'constraints' => [
+                new Length([
+                    'max' => 255,
+                ]),
+                new Regex([
+                    'pattern' => '/^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$/',
+                ]),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addLatitudeField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_LATITUDE, TextType::class, [
+            'label' => static::LABEL_LATITUDE,
+            'required' => false,
+            'constraints' => [
+                new Length([
+                    'max' => 255,
+                ]),
+                new Regex([
+                    'pattern' => '/^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$/',
+                ]),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addFaxNumber(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_FAX_NUMBER, TextType::class, [
+            'label' => static::LABEL_FAX_NUMBER,
+            'required' => false,
+            'constraints' => [
+                new Length([
+                    'max' => 255,
+                ]),
+            ],
+        ]);
+
+        return $this;
     }
 }

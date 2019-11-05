@@ -154,4 +154,7 @@
         <property name="message" type="string"/>
     </transfer>
 
+    <transfer name="QuotePermissionGroup">
+    </transfer>
+
 </transfers>

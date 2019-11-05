@@ -80,4 +80,10 @@
         <property name="locale" type="Locale"/>
     </transfer>
 
+    <transfer name="Translation">
+    </transfer>
+
+    <transfer name="ProductAbstract">
+    </transfer>
+
 </transfers>

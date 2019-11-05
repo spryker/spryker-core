@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\MerchantProfile\Persistence;
 
+use Generated\Shared\Transfer\MerchantProfileCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\MerchantProfile\Persistence\MerchantProfilePersistenceFactory getFactory()
@@ -24,18 +26,47 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
      */
     public function findOne(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): ?MerchantProfileTransfer
     {
-        $merchantEntity = $this->applyFilters(
+        $merchantProfileEntity = $this->applyFilters(
             $this->getFactory()->createMerchantProfileQuery(),
             $merchantProfileCriteriaFilterTransfer
         )->findOne();
 
-        if (!$merchantEntity) {
+        if (!$merchantProfileEntity) {
             return null;
         }
 
         return $this->getFactory()
             ->createPropelMerchantProfileMapper()
-            ->mapMerchantProfileEntityToMerchantProfileTransfer($merchantEntity, new MerchantProfileTransfer());
+            ->mapMerchantProfileEntityToMerchantProfileTransfer($merchantProfileEntity, new MerchantProfileTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileCollectionTransfer
+     */
+    public function find(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): MerchantProfileCollectionTransfer
+    {
+        $merchantProfileCollectionTransfer = new MerchantProfileCollectionTransfer();
+        $merchantProfileQuery = $this->getFactory()
+            ->createMerchantProfileQuery()
+            ->joinWithSpyMerchant()
+            ->useSpyMerchantProfileAddressQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinWithSpyCountry()
+            ->endUse();
+
+        $merchantProfileQuery = $this->applyFilters($merchantProfileQuery, $merchantProfileCriteriaFilterTransfer);
+        $merchantProfileEntityCollection = $merchantProfileQuery->find();
+
+        foreach ($merchantProfileEntityCollection as $merchantProfileEntity) {
+            $merchantProfileTransfer = $this->getFactory()
+                ->createPropelMerchantProfileMapper()
+                ->mapMerchantProfileEntityToMerchantProfileTransfer($merchantProfileEntity, new MerchantProfileTransfer());
+
+            $merchantProfileCollectionTransfer->addMerchantProfile($merchantProfileTransfer);
+        }
+
+        return $merchantProfileCollectionTransfer;
     }
 
     /**
@@ -50,6 +81,22 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
     ): SpyMerchantProfileQuery {
         if ($merchantProfileCriteriaFilterTransfer->getFkMerchant() !== null) {
             $merchantProfileQuery->filterByFkMerchant($merchantProfileCriteriaFilterTransfer->getFkMerchant());
+        }
+
+        if ($merchantProfileCriteriaFilterTransfer->getMerchantIds()) {
+            $merchantProfileQuery->filterByFkMerchant_In($merchantProfileCriteriaFilterTransfer->getMerchantIds());
+        }
+
+        if ($merchantProfileCriteriaFilterTransfer->getMerchantProfileIds()) {
+            $merchantProfileQuery->filterByIdMerchantProfile_In($merchantProfileCriteriaFilterTransfer->getMerchantProfileIds());
+        }
+
+        if ($merchantProfileCriteriaFilterTransfer->getIdMerchantProfile() !== null) {
+            $merchantProfileQuery->filterByIdMerchantProfile($merchantProfileCriteriaFilterTransfer->getIdMerchantProfile());
+        }
+
+        if ($merchantProfileCriteriaFilterTransfer->getIsActive() !== null) {
+            $merchantProfileQuery->filterByIsActive($merchantProfileCriteriaFilterTransfer->getIsActive());
         }
 
         return $merchantProfileQuery;

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProfile\Persistence;
 
+use Generated\Shared\Transfer\MerchantProfileAddressTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 
 interface MerchantProfileEntityManagerInterface
@@ -24,4 +25,18 @@ interface MerchantProfileEntityManagerInterface
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer
      */
     public function update(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProfileAddressTransfer $merchantProfileAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileAddressTransfer
+     */
+    public function createMerchantProfileAddress(MerchantProfileAddressTransfer $merchantProfileAddressTransfer): MerchantProfileAddressTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProfileAddressTransfer $merchantProfileAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileAddressTransfer
+     */
+    public function updateMerchantProfileAddress(MerchantProfileAddressTransfer $merchantProfileAddressTransfer): MerchantProfileAddressTransfer;
 }

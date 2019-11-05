@@ -14,4 +14,5 @@ interface MerchantDataSetInterface
     public const REGISTRATION_NUMBER = 'registration_number';
     public const STATUS = 'status';
     public const EMAIL = 'email';
+    public const MERCHANT_REFERENCE = 'merchant_reference';
 }

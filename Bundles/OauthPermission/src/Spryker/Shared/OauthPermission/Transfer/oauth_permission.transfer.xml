@@ -31,4 +31,7 @@
         <property name="uuid" type="string"/>
     </transfer>
 
+    <transfer name="Customer">
+    </transfer>
+
 </transfers>
