@@ -163,7 +163,8 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
                 $value = $this->initializeNestedTransferObject($property, $value, $ignoreMissingProperty);
             }
 
-            $this->assignValue($property, $value);
+            $this->$property = $value;
+            $this->modifiedProperties[$property] = true;
         }
 
         return $this;
@@ -171,21 +172,14 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
 
     /**
      * @param string $propertyName
-     * @param \ArrayObject|mixed|\Spryker\Shared\Kernel\Transfer\TransferInterface|null $value
+     * @param mixed|null $value
      *
      * @return void
      */
-    protected function assignValue(string $propertyName, $value): void
+    protected function assignValueObject(string $propertyName, $value): void
     {
-        if ($this->transferMetadata[$propertyName]['is_value_object'] ?? false) {
-            $propertySetterMethod = $this->getSetterMethod($propertyName);
-            $this->$propertySetterMethod($value);
-
-            return;
-        }
-
-        $this->$propertyName = $value;
-        $this->modifiedProperties[$propertyName] = true;
+        $propertySetterMethod = $this->getSetterMethod($propertyName);
+        $this->$propertySetterMethod($value);
     }
 
     /**

@@ -87,9 +87,9 @@
         }
 
         {% endif -%}
-        {% if method.decimal -%}
-            if (${{ method.property }} !== null && !${{ method.property }} instanceof Decimal) {
-            ${{ method.property }} = new Decimal(${{ method.property }});
+        {% if method.valueObject -%}
+            if (${{ method.property }} !== null && !${{ method.property }} instanceof {{ method.valueObject }}) {
+            ${{ method.property }} = new {{ method.valueObject }}(${{ method.property }});
         }
 
         {% endif -%}
@@ -203,7 +203,7 @@
 {% endmacro -%}
 
 
-{%- macro addModifiedToArray(methodName, camelCase, isRecursive, primitives, transfers, collections)-%}
+{%- macro addModifiedToArray(methodName, camelCase, isRecursive, primitives, transfers, collections, valueObjects)-%}
 
     /**
     * @return array
@@ -223,6 +223,9 @@
             switch ($property) {
 {% if primitives is not empty %}
 {% for value in primitives %}
+                case '{{ value.name }}':
+{% endfor %}
+{% for value in valueObjects %}
                 case '{{ value.name }}':
 {% endfor %}
                     $values[$arrayKey] = $value;
@@ -253,7 +256,7 @@
 
 {%- endmacro -%}
 
-{%- macro addToArray(methodName, isRecursive, isCamelCamed, primitives, transfers, transferCollections)-%}
+{%- macro addToArray(methodName, isRecursive, isCamelCamed, primitives, transfers, transferCollections, valueObjects)-%}
 {%- set nameKey = isCamelCamed ? 'name' : 'name_underscore' -%}
     /**
     * @return array
@@ -277,6 +280,9 @@
                 {%- else -%}
                     $this->{{ prop.name }}
                 {%- endif -%},
+{% endfor %}
+{% for prop in valueObjects %}
+            '{{ prop[nameKey] }}' => $this->{{ prop.name }},
 {% endfor %}
         ];
     }
