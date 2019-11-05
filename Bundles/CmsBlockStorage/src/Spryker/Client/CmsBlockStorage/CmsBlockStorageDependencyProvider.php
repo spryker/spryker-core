@@ -18,7 +18,7 @@ class CmsBlockStorageDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
-    public const PLUGINS_CMS_BLOCK_STORAGE_BLOCKS_FINDER = 'PLUGINS_CMS_BLOCK_STORAGE_BLOCKS_FINDER';
+    public const PLUGINS_CMS_BLOCK_STORAGE_READER = 'PLUGINS_CMS_BLOCK_STORAGE_READER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -30,7 +30,7 @@ class CmsBlockStorageDependencyProvider extends AbstractDependencyProvider
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
         $container = $this->addUtilEncodingService($container);
-        $container = $this->addCmsBlockStorageBlocksFinderPlugins($container);
+        $container = $this->addCmsBlockStorageReaderPlugins($container);
 
         return $container;
     }
@@ -84,10 +84,10 @@ class CmsBlockStorageDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addCmsBlockStorageBlocksFinderPlugins(Container $container): Container
+    protected function addCmsBlockStorageReaderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_CMS_BLOCK_STORAGE_BLOCKS_FINDER, function () {
-            return $this->getCmsBlockStorageBlocksFinderPlugins();
+        $container->set(static::PLUGINS_CMS_BLOCK_STORAGE_READER, function () {
+            return $this->getCmsBlockStorageReaderPlugins();
         });
 
         return $container;
@@ -96,7 +96,7 @@ class CmsBlockStorageDependencyProvider extends AbstractDependencyProvider
     /**
      * @return \Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageReaderPluginInterface[]
      */
-    protected function getCmsBlockStorageBlocksFinderPlugins(): array
+    protected function getCmsBlockStorageReaderPlugins(): array
     {
         return [];
     }

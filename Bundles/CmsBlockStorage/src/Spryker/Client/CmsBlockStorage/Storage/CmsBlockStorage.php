@@ -40,24 +40,24 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     /**
      * @var \Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageReaderPluginInterface[]
      */
-    protected $cmsBlockStorageBlocksFinderPlugins;
+    protected $cmsBlockStorageReaderPlugins;
 
     /**
      * @param \Spryker\Client\CmsBlockStorage\Dependency\Client\CmsBlockStorageToStorageInterface $storageClient
      * @param \Spryker\Client\CmsBlockStorage\Dependency\Service\CmsBlockStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\CmsBlockStorage\Dependency\Service\CmsBlockStorageToUtilEncodingServiceInterface $utilEncodingService
-     * @param \Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageReaderPluginInterface[] $cmsBlockStorageBlocksFinderPlugins
+     * @param \Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageReaderPluginInterface[] $cmsBlockStorageReaderPlugins
      */
     public function __construct(
         CmsBlockStorageToStorageInterface $storageClient,
         CmsBlockStorageToSynchronizationServiceInterface $synchronizationService,
         CmsBlockStorageToUtilEncodingServiceInterface $utilEncodingService,
-        array $cmsBlockStorageBlocksFinderPlugins
+        array $cmsBlockStorageReaderPlugins
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
         $this->utilEncodingService = $utilEncodingService;
-        $this->cmsBlockStorageBlocksFinderPlugins = $cmsBlockStorageBlocksFinderPlugins;
+        $this->cmsBlockStorageReaderPlugins = $cmsBlockStorageReaderPlugins;
     }
 
     /**
@@ -178,8 +178,8 @@ class CmsBlockStorage implements CmsBlockStorageInterface
 
         $cmsBlockRequestTransfer = $this->mapOptionsToTransfer($options);
 
-        foreach ($this->cmsBlockStorageBlocksFinderPlugins as $cmsBlockStorageBlocksFinderPlugin) {
-            $cmsBlockTransfers = $cmsBlockStorageBlocksFinderPlugin->getCmsBlocks($cmsBlockRequestTransfer);
+        foreach ($this->cmsBlockStorageReaderPlugins as $cmsBlockStorageReaderPlugin) {
+            $cmsBlockTransfers = $cmsBlockStorageReaderPlugin->getCmsBlocks($cmsBlockRequestTransfer);
 
             if (count($cmsBlockTransfers) < 1) {
                 continue;
