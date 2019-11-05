@@ -75,13 +75,13 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
                 return;
             }
 
-            $assignedAbstractProductIds = array_filter(array_values($eventData[static::FIELD_PRODUCT_IDS]));
-            $eventData[static::FIELD_PRODUCT_IDS] = $assignedAbstractProductIds;
+            $assignedProductAbstractIds = array_filter(array_values($eventData[static::FIELD_PRODUCT_IDS]));
+            $eventData[static::FIELD_PRODUCT_IDS] = $assignedProductAbstractIds;
             $event->getForm()->setData($eventData);
-            $event->getForm()->get(static::FIELD_PRODUCT_IDS)->setData($assignedAbstractProductIds);
+            $event->getForm()->get(static::FIELD_PRODUCT_IDS)->setData($assignedProductAbstractIds);
 
             $fieldOptions = $event->getForm()->get(static::FIELD_PRODUCT_IDS)->getConfig()->getOptions();
-            $this->replaceProductIdsField($event->getForm(), $assignedAbstractProductIds, $fieldOptions);
+            $this->replaceProductIdsField($event->getForm(), $assignedProductAbstractIds, $fieldOptions);
         });
 
         return $this;
@@ -128,11 +128,11 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
                 return;
             }
 
-            $assignedAbstractProductIds = array_filter(array_values($event->getData()));
+            $assignedProductAbstractIds = array_filter(array_values($event->getData()));
 
             $this->replaceProductIdsField(
                 $event->getForm()->getParent(),
-                $assignedAbstractProductIds,
+                $assignedProductAbstractIds,
                 $event->getForm()->getConfig()->getOptions()
             );
         });
@@ -175,15 +175,15 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
     }
 
     /**
-     * @param int[] $assignedAbstractProductIds
+     * @param int[] $assignedProductAbstractIds
      *
      * @return array
      */
-    protected function getChoicesByProductAbstractIds(array $assignedAbstractProductIds): array
+    protected function getChoicesByProductAbstractIds(array $assignedProductAbstractIds): array
     {
         $options = $this->getFactory()
             ->createProductCategorySlotBlockDataProvider()
-            ->getOptions($assignedAbstractProductIds);
+            ->getOptions($assignedProductAbstractIds);
 
         return $options[static::OPTION_PRODUCT_ARRAY];
     }
