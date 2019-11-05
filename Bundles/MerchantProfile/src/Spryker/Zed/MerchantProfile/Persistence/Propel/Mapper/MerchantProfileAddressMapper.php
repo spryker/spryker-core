@@ -66,7 +66,9 @@ class MerchantProfileAddressMapper implements MerchantProfileAddressMapperInterf
             true
         );
 
-        $merchantProfileAddressTransfer->setCountryName($merchantProfileAddressEntity->getSpyCountry()->getName());
+        if ($merchantProfileAddressEntity->getSpyCountry()) {
+            $merchantProfileAddressTransfer->setCountryName($merchantProfileAddressEntity->getSpyCountry()->getName());
+        }
 
         return $merchantProfileAddressTransfer;
     }

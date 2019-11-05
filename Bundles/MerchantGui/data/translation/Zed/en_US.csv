@@ -16,7 +16,7 @@ approved_button,"Approve Access"
 denied_button,"Deny Access"
 E-Mail,E-Mail
 Name,Name
-"Registration number","Registration number"
+"Registration number","Registration Number"
 "Contact person first name","Contact person first name"
 "Contact person last name","Contact person last name"
 "Contact person phone","Contact person phone"
@@ -25,3 +25,4 @@ Email,Email
 General,General
 merchant_gui.error_wrong_params,"Status can't be updated."
 merchant_gui.success_merchant_status_update,"Status has been updated."
+Merchant reference is already used.,Merchant reference is already used.

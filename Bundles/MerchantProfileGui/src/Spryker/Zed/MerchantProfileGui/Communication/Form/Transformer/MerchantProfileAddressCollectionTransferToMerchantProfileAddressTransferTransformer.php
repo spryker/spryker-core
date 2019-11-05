@@ -38,7 +38,7 @@ class MerchantProfileAddressCollectionTransferToMerchantProfileAddressTransferTr
      */
     public function reverseTransform($value): MerchantProfileAddressCollectionTransfer
     {
-        if (!$this->isValueSet($value)) {
+        if (!$value instanceof MerchantProfileAddressTransfer) {
             return new MerchantProfileAddressCollectionTransfer();
         }
 
@@ -46,15 +46,5 @@ class MerchantProfileAddressCollectionTransferToMerchantProfileAddressTransferTr
         $merchantProfileAddressCollectionTransfer->addAddress($value);
 
         return $merchantProfileAddressCollectionTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantProfileAddressTransfer|null $value
-     *
-     * @return bool
-     */
-    protected function isValueSet(?MerchantProfileAddressTransfer $value): bool
-    {
-        return $value instanceof MerchantProfileAddressTransfer;
     }
 }
