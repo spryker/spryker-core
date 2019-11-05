@@ -22,6 +22,7 @@ use SprykerTest\Zed\GlossaryStorage\GlossaryStorageConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group GlossaryStorage

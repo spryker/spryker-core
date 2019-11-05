@@ -19,7 +19,7 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 class GlossaryWritePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

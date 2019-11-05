@@ -15,6 +15,7 @@ use SprykerTest\Zed\Publisher\Business\Merger\MockPluginMerger;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Publisher

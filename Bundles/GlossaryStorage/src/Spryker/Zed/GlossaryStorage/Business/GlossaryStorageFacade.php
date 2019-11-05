@@ -46,7 +46,7 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -60,7 +60,7 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -74,7 +74,7 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -88,7 +88,7 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
