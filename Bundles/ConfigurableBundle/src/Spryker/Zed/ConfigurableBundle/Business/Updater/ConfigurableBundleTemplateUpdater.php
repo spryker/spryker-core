@@ -21,8 +21,8 @@ class ConfigurableBundleTemplateUpdater implements ConfigurableBundleTemplateUpd
 {
     use TransactionTrait;
 
-    protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_ALREADY_ACTIVATED = 'configurable-bundle.template.validation.error.already_activated';
-    protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_ALREADY_DEACTIVATED = 'configurable-bundle.template.validation.error.already_deactivated';
+    protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_ALREADY_ACTIVATED = 'configurable_bundle.template.validation.error.already_activated';
+    protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_ALREADY_DEACTIVATED = 'configurable_bundle.template.validation.error.already_deactivated';
 
     /**
      * @var \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface

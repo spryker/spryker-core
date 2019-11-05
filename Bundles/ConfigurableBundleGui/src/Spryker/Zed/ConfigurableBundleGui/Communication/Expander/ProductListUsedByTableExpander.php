@@ -54,11 +54,13 @@ class ProductListUsedByTableExpander implements ProductListUsedByTableExpanderIn
      */
     public function expandTableData(ProductListUsedByTableTransfer $productListUsedByTableTransfer): ProductListUsedByTableTransfer
     {
-        $productListUsedByTableTransfer->getProductList()->requireIdProductList();
+        $productListUsedByTableTransfer
+            ->getProductList()
+                ->requireIdProductList();
 
-        $configurableBundleTemplateSlotFilterTransfer = (new ConfigurableBundleTemplateSlotFilterTransfer())->setIdProductList(
-            $productListUsedByTableTransfer->getProductList()->getIdProductList()
-        )->setTranslationLocales(new ArrayObject([$this->localeFacade->getCurrentLocale()]));
+        $configurableBundleTemplateSlotFilterTransfer = (new ConfigurableBundleTemplateSlotFilterTransfer())
+            ->setProductList($productListUsedByTableTransfer->getProductList())
+            ->setTranslationLocales(new ArrayObject([$this->localeFacade->getCurrentLocale()]));
 
         $configurableBundleTemplateSlotTransfers = $this->configurableBundleFacade
             ->getConfigurableBundleTemplateSlotCollection($configurableBundleTemplateSlotFilterTransfer)
