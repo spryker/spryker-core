@@ -30,7 +30,7 @@ Country,Country
 Street,Street
 Number,Number
 "Addition to address","Addition to Address"
-Fax number,Fax Number
+"Fax number","Fax Number"
 Latitude,Latitude
 Longitude,Longitude
-Merchant reference,Merchant reference
+"Merchant Reference","Merchant reference"
