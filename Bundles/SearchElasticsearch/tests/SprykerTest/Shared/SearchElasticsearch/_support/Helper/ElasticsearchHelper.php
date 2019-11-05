@@ -204,11 +204,11 @@ class ElasticsearchHelper extends Module
      */
     public function addCleanupForSnapshotInRepository(string $repositoryName, string $snapshotName): void
     {
-        $this->cleanup[] = (function () use ($repositoryName, $snapshotName) {
+        $this->cleanup[] = function () use ($repositoryName, $snapshotName) {
             if ($this->existsSnapshotInRepository($repositoryName, $snapshotName)) {
                 $this->getSnapshot()->deleteSnapshot($repositoryName, $snapshotName);
             }
-        });
+        };
     }
 
     /**

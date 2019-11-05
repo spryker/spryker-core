@@ -1,11 +1,11 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\SearchElasticsearch\tests\SprykerTest\Zed\SearchElasticsearch\Business\Snapshot;
+namespace SprykerTest\Zed\SearchElasticsearch\Business\Snapshot;
 
 use Codeception\Test\Unit;
 use Elastica\Exception\NotFoundException;
@@ -18,9 +18,6 @@ use Spryker\Zed\SearchElasticsearch\Business\Snapshot\Repository;
 /**
  * Auto-generated group annotations
  *
- * @group Spryker
- * @group SearchElasticsearch
- * @group tests
  * @group SprykerTest
  * @group Zed
  * @group SearchElasticsearch
@@ -28,6 +25,8 @@ use Spryker\Zed\SearchElasticsearch\Business\Snapshot\Repository;
  * @group Snapshot
  * @group RepositoryTest
  * Add your own group annotations below this line
+ *
+ * @property \SprykerTest\Zed\SearchElasticsearch\SearchElasticsearchZedTester $tester
  */
 class RepositoryTest extends Unit
 {
