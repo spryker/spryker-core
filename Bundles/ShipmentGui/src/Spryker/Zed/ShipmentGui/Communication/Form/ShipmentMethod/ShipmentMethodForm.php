@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form\ShipmentMethod;
 
-use Spryker\Zed\ShipmentGui\Communication\Provider\ShipmentMethodFormDataProvider;
+use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentMethodFormDataProvider;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;

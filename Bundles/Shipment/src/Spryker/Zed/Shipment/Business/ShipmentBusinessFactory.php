@@ -65,6 +65,8 @@ use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodCreator;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodCreatorInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodDeleter;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodDeleterInterface;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodPluginReader;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodPluginReaderInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodReader;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodReaderInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodStoreRelationUpdater;
@@ -586,6 +588,14 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             ShipmentDependencyProvider::PRICE_PLUGINS => $this->getPricePlugins(),
             ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS => $this->getDeliveryTimePlugins(),
         ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodPluginReaderInterface
+     */
+    public function createShipmentMethodPluginReader(): ShipmentMethodPluginReaderInterface
+    {
+        return new ShipmentMethodPluginReader($this->getShipmentMethodPlugins());
     }
 
     /**

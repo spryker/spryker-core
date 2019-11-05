@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentCarrierFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDataProvider;
+use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentMethodFormDataProvider;
+use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ViewShipmentMethodFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentGroupFormType;
 use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentMethodDeleteForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentCarrier\ShipmentCarrierFormType;
@@ -23,8 +25,6 @@ use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentMethod\ShipmentMethodForm
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentMethod\ViewShipmentMethodForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\Transformer\StringToNumberTransformer;
 use Spryker\Zed\ShipmentGui\Communication\Mapper\ShipmentCarrierMapper;
-use Spryker\Zed\ShipmentGui\Communication\Provider\ShipmentMethodFormDataProvider;
-use Spryker\Zed\ShipmentGui\Communication\Provider\ViewShipmentMethodFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Table\ShipmentMethodTable;
 use Spryker\Zed\ShipmentGui\Communication\Tabs\ShipmentMethodTabs;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerFacadeInterface;
@@ -99,7 +99,7 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShipmentGui\Communication\Provider\ViewShipmentMethodFormDataProvider
+     * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ViewShipmentMethodFormDataProvider
      */
     public function createViewShipmentMethodFormDataProvider(): ViewShipmentMethodFormDataProvider
     {
@@ -162,7 +162,7 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShipmentGui\Communication\Provider\ShipmentMethodFormDataProvider
+     * @return \Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentMethodFormDataProvider
      */
     public function createShipmentMethodFormDataProvider(): ShipmentMethodFormDataProvider
     {

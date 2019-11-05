@@ -21,14 +21,14 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
 class ShipmentMethodMapper implements ShipmentMethodMapperInterface
 {
     /**
-     * @var \Spryker\Zed\Shipment\Persistence\Propel\Mapper\StoreRelationMapperInterface
+     * @var \Spryker\Zed\Shipment\Persistence\Propel\Mapper\StoreRelationMapper
      */
     protected $storeRelationMapper;
 
     /**
-     * @param \Spryker\Zed\Shipment\Persistence\Propel\Mapper\StoreRelationMapperInterface $storeRelationMapper
+     * @param \Spryker\Zed\Shipment\Persistence\Propel\Mapper\StoreRelationMapper $storeRelationMapper
      */
-    public function __construct(StoreRelationMapperInterface $storeRelationMapper)
+    public function __construct(StoreRelationMapper $storeRelationMapper)
     {
         $this->storeRelationMapper = $storeRelationMapper;
     }

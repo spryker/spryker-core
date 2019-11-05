@@ -9,7 +9,7 @@ namespace Spryker\Zed\ShipmentGui\Communication\Form\ShipmentMethod;
 
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Spryker\Zed\ShipmentGui\Communication\Provider\ViewShipmentMethodFormDataProvider;
+use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ViewShipmentMethodFormDataProvider;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

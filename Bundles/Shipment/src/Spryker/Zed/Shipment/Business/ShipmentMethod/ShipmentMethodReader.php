@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Business\ShipmentMethod;
 
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
@@ -58,17 +59,31 @@ class ShipmentMethodReader implements ShipmentMethodReaderInterface
             $moneyValueTransfer->requireCurrency();
             $idCurrency = $moneyValueTransfer->getFkCurrency();
 
-            if (isset(static::$currencyCache[$idCurrency])) {
-                $moneyValueTransfer->setCurrency(static::$currencyCache[$idCurrency]);
-
-                continue;
-            }
-
-            $currencyTransfer = $this->currencyFacade->getByIdCurrency($idCurrency);
-            $moneyValueTransfer->setCurrency($currencyTransfer);
-            static::$currencyCache[$idCurrency] = $currencyTransfer;
+            $this->setCurrencyToMoneyValue($moneyValueTransfer, $idCurrency);
         }
 
         return $shipmentMethodTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
+     * @param int $idCurrency
+     *
+     * @return void
+     */
+    protected function setCurrencyToMoneyValue(
+        MoneyValueTransfer $moneyValueTransfer,
+        int $idCurrency
+    ): void {
+        if (isset(static::$currencyCache[$idCurrency])) {
+            $moneyValueTransfer->setCurrency(static::$currencyCache[$idCurrency]);
+
+            return;
+        }
+
+        $currencyTransfer = $this->currencyFacade->getByIdCurrency($idCurrency);
+        static::$currencyCache[$idCurrency] = $currencyTransfer;
+
+        $moneyValueTransfer->setCurrency($currencyTransfer);
     }
 }

@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Generated\Shared\Transfer\ShipmentMethodPluginSelectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 
@@ -117,9 +118,9 @@ interface ShipmentGuiToShipmentFacadeInterface
     public function deleteMethod($idMethod);
 
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\ShipmentMethodPluginSelectionTransfer
      */
-    public function getShipmentMethodPlugins(): array;
+    public function getShipmentMethodPlugins(): ShipmentMethodPluginSelectionTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]

@@ -9,6 +9,12 @@
         <property name="excludedCarrierIds" type="array" singular="excludedCarrierId"/>
     </transfer>
 
+    <transfer name="ShipmentMethodPluginSelection">
+        <property name="availabilityPluginOptions" type="string[]" singular="availabilityPluginOption"/>
+        <property name="pricePluginOptions" type="string[]" singular="pricePluginOption"/>
+        <property name="deliveryTimePluginOptions" type="string[]" singular="deliveryTimePluginOption"/>
+    </transfer>
+
     <transfer name="Quote">
         <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>

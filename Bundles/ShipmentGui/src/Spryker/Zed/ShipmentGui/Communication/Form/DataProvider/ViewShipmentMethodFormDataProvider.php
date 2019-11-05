@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShipmentGui\Communication\Provider;
+namespace Spryker\Zed\ShipmentGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToTaxFacadeInterface;

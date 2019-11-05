@@ -353,7 +353,6 @@ class MethodReader implements MethodReaderInterface
             $storeTransfer->requireName();
             $storeTransfer = $this->storeFacade->getStoreByName($storeTransfer->getName());
         }
-        $storeTransfer->requireIdStore();
 
         return $storeTransfer->getIdStore();
     }

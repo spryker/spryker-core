@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
+use Generated\Shared\Transfer\ShipmentMethodPluginSelectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -496,11 +497,11 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @api
      *
-     * @return array[]
+     * @return \Generated\Shared\Transfer\ShipmentMethodPluginSelectionTransfer
      */
-    public function getShipmentMethodPlugins(): array
+    public function getShipmentMethodPlugins(): ShipmentMethodPluginSelectionTransfer
     {
-        return $this->getFactory()->getShipmentMethodPlugins();
+        return $this->getFactory()->createShipmentMethodPluginReader()->getShipmentMethodPlugins();
     }
 
     /**

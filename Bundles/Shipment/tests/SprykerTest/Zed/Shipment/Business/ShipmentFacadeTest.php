@@ -318,8 +318,8 @@ class ShipmentFacadeTest extends Test
         $hasMethod = $this->tester->getFacade()->hasMethod($shipmentMethod->getIdShipmentMethod());
 
         //Assert
-        $this->assertTrue($result);
-        $this->assertFalse($hasMethod);
+        $this->assertTrue($result, 'Result of deletion should be success.');
+        $this->assertFalse($hasMethod, 'Previously deleted shipment method should not exists');
     }
 
     /**

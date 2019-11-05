@@ -9,6 +9,12 @@
         <property name="isActive" type="bool"/>
     </transfer>
 
+    <transfer name="ShipmentMethodPluginSelection">
+        <property name="availabilityPluginOptions" type="string[]" singular="availabilityPluginOption"/>
+        <property name="pricePluginOptions" type="string[]" singular="pricePluginOption"/>
+        <property name="deliveryTimePluginOptions" type="string[]" singular="deliveryTimePluginOption"/>
+    </transfer>
+
     <transfer name="ShipmentCarrierRequest">
         <property name="idCarrier" type="int"/>
         <property name="carrierName" type="string"/>

@@ -5,8 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShipmentGui\Communication\Provider;
+namespace Spryker\Zed\ShipmentGui\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\ShipmentMethodPluginSelectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToTaxFacadeInterface;
@@ -57,11 +58,13 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
      */
     public function getOptions(bool $isDeliveryKeyDisabled = false): array
     {
+        $shipmentMethodPluginSelectionTransfer = $this->shipmentFacade->getShipmentMethodPlugins();
+
         $options = [
             static::OPTION_CARRIER_CHOICES => $this->getCarrierOptions(),
-            static::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST => $this->getPluginOptions(static::KEY_AVAILABILITY),
-            static::OPTION_PRICE_PLUGIN_CHOICE_LIST => $this->getPluginOptions(static::KEY_PRICE),
-            static::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST => $this->getPluginOptions(static::KEY_DELIVERY_TIME),
+            static::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST => $this->getAvailabilityPluginOptions($shipmentMethodPluginSelectionTransfer),
+            static::OPTION_PRICE_PLUGIN_CHOICE_LIST => $this->getPricePluginOptions($shipmentMethodPluginSelectionTransfer),
+            static::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST => $this->getDeliveryTimePluginOptions($shipmentMethodPluginSelectionTransfer),
         ];
 
         $options = array_merge(parent::getOptions(), $options);
@@ -89,14 +92,38 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
     }
 
     /**
-     * @param string $pluginsType
+     * @param \Generated\Shared\Transfer\ShipmentMethodPluginSelectionTransfer $shipmentMethodPluginSelectionTransfer
      *
      * @return string[]
      */
-    private function getPluginOptions($pluginsType): array
+    protected function getAvailabilityPluginOptions(ShipmentMethodPluginSelectionTransfer $shipmentMethodPluginSelectionTransfer): array
     {
-        $plugins = array_keys($this->shipmentFacade->getShipmentMethodPlugins()[$pluginsType]);
+        $availabilityPluginOptions = $shipmentMethodPluginSelectionTransfer->getAvailabilityPluginOptions();
 
-        return array_combine($plugins, $plugins);
+        return array_combine($availabilityPluginOptions, $availabilityPluginOptions);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodPluginSelectionTransfer $shipmentMethodPluginSelectionTransfer
+     *
+     * @return string[]
+     */
+    protected function getPricePluginOptions(ShipmentMethodPluginSelectionTransfer $shipmentMethodPluginSelectionTransfer): array
+    {
+        $pricePluginOptions = $shipmentMethodPluginSelectionTransfer->getPricePluginOptions();
+
+        return array_combine($pricePluginOptions, $pricePluginOptions);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodPluginSelectionTransfer $shipmentMethodPluginSelectionTransfer
+     *
+     * @return array
+     */
+    protected function getDeliveryTimePluginOptions(ShipmentMethodPluginSelectionTransfer $shipmentMethodPluginSelectionTransfer): array
+    {
+        $deliveryTimePluginOptions = $shipmentMethodPluginSelectionTransfer->getDeliveryTimePluginOptions();
+
+        return array_combine($deliveryTimePluginOptions, $deliveryTimePluginOptions);
     }
 }

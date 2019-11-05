@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Store\Persistence\SpyStore;
 use Propel\Runtime\Collection\ObjectCollection;
 
-class StoreRelationMapper implements StoreRelationMapperInterface
+class StoreRelationMapper
 {
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Shipment\Persistence\SpyShipmentMethodStore[] $shipmentMethodStoreEntities
