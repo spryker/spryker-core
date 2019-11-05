@@ -28,4 +28,7 @@
         <property name="grossAmount" type="int"/>
         <property name="netAmount" type="int"/>
     </transfer>
+
+    <transfer name="PriceProductCriteria">
+    </transfer>
 </transfers>

@@ -74,4 +74,7 @@
         <property name="fullyQualifiedClassName" type="string"/>
     </transfer>
 
+    <transfer name="OauthResponse">
+    </transfer>
+
 </transfers>

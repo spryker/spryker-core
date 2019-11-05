@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Merchant\Persistence\Propel\Mapper;
 
 use ArrayObject;
-use Generated\Shared\Transfer\MerchantAddressCollectionTransfer;
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\SpyMerchantEntityTransfer;
@@ -16,19 +15,6 @@ use Orm\Zed\Merchant\Persistence\SpyMerchant;
 
 class MerchantMapper implements MerchantMapperInterface
 {
-    /**
-     * @var \Spryker\Zed\Merchant\Persistence\Propel\Mapper\MerchantAddressMapperInterface
-     */
-    protected $merchantAddressMapper;
-
-    /**
-     * @param \Spryker\Zed\Merchant\Persistence\Propel\Mapper\MerchantAddressMapperInterface $merchantAddressMapper
-     */
-    public function __construct(MerchantAddressMapperInterface $merchantAddressMapper)
-    {
-        $this->merchantAddressMapper = $merchantAddressMapper;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      * @param \Orm\Zed\Merchant\Persistence\SpyMerchant $spyMerchant
@@ -61,13 +47,6 @@ class MerchantMapper implements MerchantMapperInterface
             true
         );
 
-        $merchantTransfer->setAddressCollection(
-            $this->merchantAddressMapper->mapMerchantAddressEntitiesToMerchantAddressCollectionTransfer(
-                $spyMerchant->getSpyMerchantAddresses()->getArrayCopy(),
-                new MerchantAddressCollectionTransfer()
-            )
-        );
-
         return $merchantTransfer;
     }
 
@@ -80,13 +59,6 @@ class MerchantMapper implements MerchantMapperInterface
     {
         $merchantTransfer = (new MerchantTransfer())
             ->fromArray($merchantEntityTransfer->toArray(), true);
-
-        $merchantTransfer->setAddressCollection(
-            $this->merchantAddressMapper->mapMerchantAddressEntityTransfersToMerchantAddressCollectionTransfer(
-                $merchantEntityTransfer->getSpyMerchantAddresses()->getArrayCopy(),
-                new MerchantAddressCollectionTransfer()
-            )
-        );
 
         return $merchantTransfer;
     }

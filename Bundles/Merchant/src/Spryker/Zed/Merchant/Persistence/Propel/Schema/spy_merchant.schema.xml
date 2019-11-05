@@ -12,32 +12,17 @@
         <column name="registration_number" type="VARCHAR" size="255"/>
         <column name="email" required="true" type="VARCHAR" size="255"/>
         <column name="status" required="true" size="64" type="VARCHAR"/>
+        <column name="merchant_reference" size="255" type="VARCHAR"/>
 
         <unique name="spy_merchant-unique-email">
             <unique-column name="email"/>
         </unique>
 
+        <unique name="spy_merchant-unique-merchant_reference">
+            <unique-column name="merchant_reference"/>
+        </unique>
+
         <id-method-parameter value="spy_merchant_pk_seq"/>
-    </table>
-
-    <table name="spy_merchant_address" identifierQuoting="true">
-        <column name="id_merchant_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_country" required="true" type="INTEGER"/>
-        <column name="address1" size="255" type="VARCHAR"/>
-        <column name="address2" size="255" type="VARCHAR"/>
-        <column name="address3" size="255" type="VARCHAR"/>
-        <column name="city" size="255" type="VARCHAR"/>
-        <column name="zip_code" size="15" type="VARCHAR"/>
-        <column name="fk_merchant" required="true" type="INTEGER"/>
-
-        <foreign-key name="spy_merchant_address-fk_country" foreignTable="spy_country">
-            <reference local="fk_country" foreign="id_country"/>
-        </foreign-key>
-        <foreign-key name="spy_merchant_address-fk_merchant" foreignTable="spy_merchant">
-            <reference local="fk_merchant" foreign="id_merchant"/>
-        </foreign-key>
-
-        <id-method-parameter value="spy_merchant_address_pk_seq"/>
     </table>
 
 </database>

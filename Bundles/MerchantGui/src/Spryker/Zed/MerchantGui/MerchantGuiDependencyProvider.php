@@ -9,7 +9,6 @@ namespace Spryker\Zed\MerchantGui;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToCountryFacadeBridge;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeBridge;
 
 /**
@@ -17,7 +16,6 @@ use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeBridge;
  */
 class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const FACADE_COUNTRY = 'FACADE_COUNTRY';
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
     public const PROPEL_MERCHANT_QUERY = 'PROPEL_MERCHANT_QUERY';
     public const PLUGINS_MERCHANT_PROFILE_FORM_EXPANDER = 'PLUGINS_MERCHANT_PROFILE_FORM_EXPANDER';
@@ -36,7 +34,6 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideCommunicationLayerDependencies($container);
 
-        $container = $this->addCountryFacade($container);
         $container = $this->addMerchantFacade($container);
         $container = $this->addPropelMerchantQuery($container);
         $container = $this->addMerchantProfileFormExpanderPlugins($container);
@@ -45,20 +42,6 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMerchantTableHeaderExpanderPlugins($container);
         $container = $this->addMerchantTableConfigExpanderPlugins($container);
         $container = $this->addMerchantFormTabsExpanderPlugins($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCountryFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_COUNTRY, function (Container $container) {
-            return new MerchantGuiToCountryFacadeBridge($container->getLocator()->country()->facade());
-        });
 
         return $container;
     }

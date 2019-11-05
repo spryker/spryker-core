@@ -27,7 +27,17 @@
         <property name="dataPrivacyGlossaryKey" type="string"/>
         <property name="fkMerchant" type="int"/>
         <property name="isActive" type="bool"/>
-        <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" singular="merchantProfileLocalizedGlossaryAttributes"/>
+        <property name="urlCollection" type="Url[]" singular="url"/>
+        <property name="merchantName" type="string"/>
+        <property name="latitude" type="string"/>
+        <property name="longitude" type="string"/>
+        <property name="faxNumber" type="string"/>
+        <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" singular="merchantProfileLocalizedGlossaryAttribute"/>
+        <property name="addressCollection" type="MerchantProfileAddressCollection" singular="address"/>
+    </transfer>
+
+    <transfer name="MerchantProfileCollection">
+        <property name="merchantProfiles" type="MerchantProfile[]"  singular="merchantProfile"/>
     </transfer>
 
     <transfer name="MerchantProfileLocalizedGlossaryAttributes">
@@ -52,6 +62,34 @@
 
     <transfer name="MerchantProfileCriteriaFilter">
         <property name="fkMerchant" type="int"/>
+        <property name="idMerchantProfile" type="int"/>
+        <property name="merchantIds" type="int[]" singular="idMerchant"/>
+        <property name="merchantProfileIds" type="int[]" singular="idMerchantProfile"/>
+        <property name="isActive" type="bool"/>
+    </transfer>
+
+    <transfer name="Url">
+        <property name="idUrl" type="int"/>
+        <property name="fkResourceMerchantProfile" type="int"/>
+        <property name="urlPrefix" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantProfileAddressCollection">
+        <property name="addresses" type="MerchantProfileAddress[]" singular="address"/>
+    </transfer>
+
+    <transfer name="MerchantProfileAddress">
+        <property name="idMerchantProfileAddress" type="int"/>
+        <property name="key" type="string"/>
+        <property name="fkCountry" type="int"/>
+        <property name="countryName" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="address3" type="string"/>
+        <property name="city" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="email" type="string"/>
+        <property name="fkMerchantProfile" type="int"/>
     </transfer>
 
 </transfers>

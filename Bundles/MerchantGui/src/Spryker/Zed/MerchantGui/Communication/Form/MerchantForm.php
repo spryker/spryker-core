@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantGui\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueEmail;
+use Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueMerchantReference;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -32,10 +33,12 @@ class MerchantForm extends AbstractType
     protected const FIELD_NAME = 'name';
     protected const FIELD_REGISTRATION_NUMBER = 'registration_number';
     protected const FIELD_EMAIL = 'email';
+    protected const FIELD_MERCHANT_REFERENCE = 'merchant_reference';
 
     protected const LABEL_NAME = 'Name';
     protected const LABEL_REGISTRATION_NUMBER = 'Registration number';
     protected const LABEL_EMAIL = 'Email';
+    protected const LABEL_MERCHANT_REFERENCE = 'Merchant Reference';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -70,7 +73,7 @@ class MerchantForm extends AbstractType
             ->addNameField($builder)
             ->addEmailField($builder, $options[static::OPTION_CURRENT_ID])
             ->addRegistrationNumberField($builder)
-            ->addAddressCollectionSubform($builder);
+            ->addMerchantReferenceField($builder, $options[static::OPTION_CURRENT_ID]);
 
         $this->executeMerchantProfileFormExpanderPlugins($builder, $options);
     }
@@ -138,18 +141,26 @@ class MerchantForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param int|null $currentMerchantId
      *
      * @return $this
      */
-    protected function addAddressCollectionSubform(FormBuilderInterface $builder)
+    protected function addMerchantReferenceField(FormBuilderInterface $builder, ?int $currentMerchantId = null)
     {
-        $merchantAddressFormDataProvider = $this->getFactory()->createMerchantAddressFormDataProvider();
-
-        $builder->add(
-            'addressCollection',
-            MerchantAddressForm::class,
-            $merchantAddressFormDataProvider->getOptions()
-        );
+        $builder
+            ->add(static::FIELD_MERCHANT_REFERENCE, TextType::class, [
+                'label' => static::LABEL_MERCHANT_REFERENCE,
+                'required' => false,
+                'constraints' => [
+                    new Length([
+                        'max' => 255,
+                    ]),
+                    new UniqueMerchantReference([
+                        UniqueMerchantReference::OPTION_CURRENT_MERCHANT_ID => $currentMerchantId,
+                        UniqueMerchantReference::OPTION_MERCHANT_FACADE => $this->getFactory()->getMerchantFacade(),
+                    ]),
+                ],
+            ]);
 
         return $this;
     }
@@ -185,8 +196,6 @@ class MerchantForm extends AbstractType
      */
     protected function getEmailFieldConstraints(?int $currentId = null): array
     {
-        $merchantFacade = $this->getFactory()->getMerchantFacade();
-
         return [
             new Required(),
             new NotBlank(),

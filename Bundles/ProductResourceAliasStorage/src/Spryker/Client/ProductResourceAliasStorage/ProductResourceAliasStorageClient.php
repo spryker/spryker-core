@@ -36,6 +36,23 @@ class ProductResourceAliasStorageClient extends AbstractClient implements Produc
      *
      * @api
      *
+     * @param string[] $skus
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getBulkProductAbstractStorageData(array $skus, string $localeName): array
+    {
+        return $this->getFactory()
+            ->createProductAbstractBulkStorageReader()
+            ->getProductAbstractStorageData($skus, $localeName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param string $sku
      * @param string $localeName
      *
