@@ -67,13 +67,20 @@ class ClassGenerator implements GeneratorInterface
         $collections = [];
         $primitives = [];
         $transfers = [];
+        $valueObjects = [];
         foreach ($definition->getNormalizedProperties() as $property) {
             if ($this->isPropertyTypeCollection($property)) {
                 $collections[] = $property;
                 continue;
             }
+
             if ($this->isPropertyTypeTransfer($property)) {
                 $transfers[] = $property;
+                continue;
+            }
+
+            if ($this->isPropertyTypeValueObject($property)) {
+                $valueObjects[] = $property;
                 continue;
             }
 
@@ -84,6 +91,7 @@ class ClassGenerator implements GeneratorInterface
             'transferCollections' => $collections,
             'primitives' => $primitives,
             'transfers' => $transfers,
+            'valueObjects' => $valueObjects,
         ];
     }
 
@@ -103,8 +111,7 @@ class ClassGenerator implements GeneratorInterface
             'methods' => $classDefinition->getMethods(),
             'normalizedProperties' => $classDefinition->getNormalizedProperties(),
             'deprecationDescription' => $classDefinition->getDeprecationDescription(),
-            'hasArrayObject' => $classDefinition->hasArrayObject(),
-            'hasDecimal' => $classDefinition->hasDecimal(),
+            'useStatements' => $classDefinition->getUseStatements(),
             'entityNamespace' => $classDefinition->getEntityNamespace(),
         ];
         $twigVariables += $this->getPropertiesSegregatedByType($classDefinition);
@@ -130,5 +137,15 @@ class ClassGenerator implements GeneratorInterface
     protected function isPropertyTypeCollection(array $property): bool
     {
         return $property['is_collection'];
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return bool
+     */
+    protected function isPropertyTypeValueObject(array $property): bool
+    {
+        return $property['is_value_object'];
     }
 }
