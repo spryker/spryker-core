@@ -33,4 +33,7 @@
         <property name="saveOrder" type="SaveOrder"/>
     </transfer>
 
+    <transfer name="SaveOrder">
+    </transfer>
+
 </transfers>

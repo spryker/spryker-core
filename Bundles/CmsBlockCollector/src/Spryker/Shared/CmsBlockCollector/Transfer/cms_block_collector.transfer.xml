@@ -7,4 +7,7 @@
         <property name="idStore" type="int"/>
     </transfer>
 
+    <transfer name="Locale">
+    </transfer>
+
 </transfers>

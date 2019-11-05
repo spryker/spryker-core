@@ -93,5 +93,8 @@
         <property name="quotes" type="Quote[]" singular="quote"/>
     </transfer>
 
+    <transfer name="Currency">
+    </transfer>
+
 </transfers>
 

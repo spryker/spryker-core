@@ -40,4 +40,7 @@
         <property name="value" type="string"/>
     </transfer>
 
+    <transfer name="Locale">
+    </transfer>
+
 </transfers>
