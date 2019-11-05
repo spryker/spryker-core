@@ -7,18 +7,16 @@
 
 namespace Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Synchronization;
 
-use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\ProductOfferStorageCriteriaFilterTransfer;
-use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Orm\Zed\MerchantProductOfferStorage\Persistence\Map\SpyProductOfferStorageTableMap;
+use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorage;
+use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorageQuery;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\MerchantProductOfferStorage\MerchantProductOfferStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
 
 /**
  * @method \Spryker\Zed\MerchantProductOfferStorage\MerchantProductOfferStorageConfig getConfig()
- * @method \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\MerchantProductOfferStorage\Business\MerchantProductOfferStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProductOfferStorage\Communication\MerchantProductOfferStorageCommunicationFactory getFactory()
  */
@@ -63,15 +61,10 @@ class ProductOfferSynchronizationDataPlugin extends AbstractPlugin implements Sy
     public function getData(int $offset, int $limit, array $ids = []): array
     {
         $synchronizationDataTransfers = [];
+        $productOfferStorageEntities = $this->getProductOfferStorageEntities($offset, $limit, $ids);
 
-        $productOfferStorageCriteriaFilterTransfer = new ProductOfferStorageCriteriaFilterTransfer();
-        $productOfferStorageCriteriaFilterTransfer->setProductOfferStorageIds($ids);
-        $productOfferStorageCriteriaFilterTransfer->setFilter($this->createFilterTransfer($offset, $limit));
-
-        $productOfferTransfers = $this->getRepository()->getProductOfferStorage($productOfferStorageCriteriaFilterTransfer);
-
-        foreach ($productOfferTransfers as $productOfferTransfer) {
-            $synchronizationDataTransfers[] = $this->createSynchronizationDataTransfer($productOfferTransfer);
+        foreach ($productOfferStorageEntities as $productOfferStorageEntity) {
+            $synchronizationDataTransfers[] = $this->createSynchronizationDataTransfer($productOfferStorageEntity);
         }
 
         return $synchronizationDataTransfers;
@@ -115,18 +108,18 @@ class ProductOfferSynchronizationDataPlugin extends AbstractPlugin implements Sy
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer $productOfferTransfer
+     * @param \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorage $productOfferStorage
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer
      */
-    protected function createSynchronizationDataTransfer(ProductOfferStorageTransfer $productOfferTransfer): SynchronizationDataTransfer
+    protected function createSynchronizationDataTransfer(SpyProductOfferStorage $productOfferStorage): SynchronizationDataTransfer
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
 
         /** @var string $data */
-        $data = $productOfferTransfer->getData();
+        $data = $productOfferStorage->getData();
         $synchronizationDataTransfer->setData($data);
-        $synchronizationDataTransfer->setKey($productOfferTransfer->getKey());
+        $synchronizationDataTransfer->setKey($productOfferStorage->getKey());
 
         return $synchronizationDataTransfer;
     }
@@ -134,14 +127,20 @@ class ProductOfferSynchronizationDataPlugin extends AbstractPlugin implements Sy
     /**
      * @param int $offset
      * @param int $limit
+     * @param array $ids
      *
-     * @return \Generated\Shared\Transfer\FilterTransfer
+     * @return \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorage[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
+    protected function getProductOfferStorageEntities(int $offset, int $limit, array $ids): ObjectCollection
     {
-        return (new FilterTransfer())
-            ->setOrderBy(SpyProductOfferStorageTableMap::COL_ID_PRODUCT_OFFER_STORAGE)
-            ->setOffset($offset)
-            ->setLimit($limit);
+        $productOfferStorageQuery = SpyProductOfferStorageQuery::create();
+
+        if ($ids) {
+            $productOfferStorageQuery->filterByIdProductOfferStorage_In($ids);
+        }
+        $productOfferStorageQuery->offset($offset);
+        $productOfferStorageQuery->limit($limit);
+
+        return $productOfferStorageQuery->find();
     }
 }

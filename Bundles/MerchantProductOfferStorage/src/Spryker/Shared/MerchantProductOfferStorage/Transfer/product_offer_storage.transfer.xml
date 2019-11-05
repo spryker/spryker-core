@@ -13,19 +13,4 @@
         <property name="idMerchant" type="int"/>
     </transfer>
 
-    <transfer name="ProductConcreteProductOffersStorageCriteriaFilter">
-        <property name="productConcreteProductOffersStorageIds" type="int[]" singular="productConcreteProductOffersStorageId"/>
-        <property name="filter" type="Filter"/>
-    </transfer>
-
-    <transfer name="ProductOfferStorageCriteriaFilter">
-        <property name="productOfferStorageIds" type="int[]" singular="productOfferStorageId"/>
-        <property name="filter" type="Filter"/>
-    </transfer>
-
-    <transfer name="Filter">
-        <property name="offset" type="int"/>
-        <property name="limit" type="int"/>
-    </transfer>
-
 </transfers>
