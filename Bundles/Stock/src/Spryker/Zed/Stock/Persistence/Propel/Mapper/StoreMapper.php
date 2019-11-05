@@ -10,7 +10,7 @@ namespace Spryker\Zed\Stock\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Store\Persistence\SpyStore;
 
-class StoreMapper implements StoreMapperInterface
+class StoreMapper
 {
     /**
      * @param \Orm\Zed\Store\Persistence\SpyStore[] $storeEntities

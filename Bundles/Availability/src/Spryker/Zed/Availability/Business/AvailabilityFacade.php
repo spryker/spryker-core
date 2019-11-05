@@ -98,8 +98,6 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @deprecated Use updateAvailabilityForStore() instead.
-     *
      * @param string $sku
      *
      * @return void

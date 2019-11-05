@@ -16,7 +16,6 @@ use Spryker\Zed\Stock\Persistence\Propel\Mapper\StockMapper;
 use Spryker\Zed\Stock\Persistence\Propel\Mapper\StockProductMapper;
 use Spryker\Zed\Stock\Persistence\Propel\Mapper\StockStoreRelationMapper;
 use Spryker\Zed\Stock\Persistence\Propel\Mapper\StoreMapper;
-use Spryker\Zed\Stock\Persistence\Propel\Mapper\StoreMapperInterface;
 use Spryker\Zed\Stock\StockDependencyProvider;
 
 /**
@@ -76,9 +75,9 @@ class StockPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\Stock\Persistence\Propel\Mapper\StoreMapperInterface
+     * @return \Spryker\Zed\Stock\Persistence\Propel\Mapper\StoreMapper
      */
-    public function createStoreMapper(): StoreMapperInterface
+    public function createStoreMapper(): StoreMapper
     {
         return new StoreMapper();
     }
