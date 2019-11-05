@@ -9,4 +9,10 @@
         <property name="reference" type="string"/>
     </transfer>
 
+    <transfer name="Store">
+        <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence"/>
+        <property name="name" type="string"/>
+        <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
+    </transfer>
+
 </transfers>

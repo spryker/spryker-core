@@ -129,13 +129,14 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
         $storeRelations = array_merge($storesWithSharedPersistence, [$storeName]);
 
         foreach ($pairedEntities as $pair) {
-            $cmsBlockEntity = $pair[static::CMS_BLOCK_ENTITY];
             $cmsBlockStorageEntity = $pair[static::CMS_BLOCK_STORAGE_ENTITY];
 
             if (!in_array($pair[static::STORE_NAME], $storeRelations, true)) {
                 $this->deleteStorageEntity($cmsBlockStorageEntity);
                 continue;
             }
+
+            $cmsBlockEntity = $pair[static::CMS_BLOCK_ENTITY];
 
             if ($cmsBlockEntity === null || !$cmsBlockEntity[static::COLUMN_CMS_BLOCK_IS_ACTIVE]) {
                 $this->deleteStorageEntity($cmsBlockStorageEntity);
