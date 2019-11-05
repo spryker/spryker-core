@@ -7,9 +7,9 @@
 
 namespace Spryker\Shared\CmsSlotBlockCmsConnector;
 
-use Spryker\Shared\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Kernel\AbstractSharedConfig;
 
-class CmsSlotBlockCmsConnectorConfig extends AbstractBundleConfig
+class CmsSlotBlockCmsConnectorConfig extends AbstractSharedConfig
 {
     /**
      * Specification:
