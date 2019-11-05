@@ -26,7 +26,7 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Client\\SearchElasticsearch\\Helper\\": "tests/SprykerTest/Client/SearchElasticsearch/_support/Helper/"
+      "SprykerTest\\Shared\\SearchElasticsearch\\Helper\\": "tests/SprykerTest/Shared/SearchElasticsearch/_support/Helper/"
     }
   },
   "autoload-dev": {
