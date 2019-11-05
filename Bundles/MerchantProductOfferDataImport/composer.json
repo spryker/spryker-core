@@ -2,15 +2,15 @@
   "name": "spryker/merchant-product-offer-data-import",
   "type": "library",
   "description": "MerchantProductOfferDataImport module",
-  "license": "proprietary",
+  "license": "MIT",
   "require": {
     "php": ">=7.1",
     "spryker/data-import": "^1.0.0",
     "spryker/kernel": "^3.33.0",
     "spryker/merchant": "^2.0.0",
+    "spryker/merchant-product-offer": "^1.0.0",
     "spryker/product": "^6.0.0",
-    "spryker/product-offer": "^1.0.0",
-    "spryker/merchant-product-offer": "^1.0.0"
+    "spryker/product-offer": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

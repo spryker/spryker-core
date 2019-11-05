@@ -9,10 +9,10 @@
     "spryker/kernel": "^3.33.0",
     "spryker/merchant-profile": "^1.0.0",
     "spryker/storage": "^3.4.0",
-    "spryker/util-encoding": "^2.0.0",
     "spryker/synchronization": "^1.0.0",
     "spryker/synchronization-behavior": "^1.0.0",
-    "spryker/synchronization-extension": "^1.0.0"
+    "spryker/synchronization-extension": "^1.0.0",
+    "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
@@ -29,8 +29,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\MerchantProfileStorage\\Helper\\": "tests/SprykerTest/Zed/MerchantProfileStorage/_support/Helper/"
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {
