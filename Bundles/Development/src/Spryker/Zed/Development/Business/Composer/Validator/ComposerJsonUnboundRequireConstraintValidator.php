@@ -27,12 +27,6 @@ class ComposerJsonUnboundRequireConstraintValidator implements ComposerJsonValid
         }
 
         foreach ($composerJsonArray[static::REQUIRE] as $packageName => $version) {
-            if (strtolower($packageName) !== $packageName) {
-                $validationMessageTransfer = new ValidationMessageTransfer();
-                $validationMessageTransfer->setMessage(sprintf('Package name `%s` is not in valid lowercase only format.', $packageName));
-                $composerJsonValidationResponseTransfer->addValidationMessage($validationMessageTransfer);
-            }
-
             if (preg_match('/^ext-/', $packageName)) {
                 continue;
             }
