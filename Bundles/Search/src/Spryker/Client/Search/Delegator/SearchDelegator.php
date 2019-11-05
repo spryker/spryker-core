@@ -155,6 +155,7 @@ class SearchDelegator implements SearchDelegatorInterface
     public function write(array $dataSet, $typeName = null, $indexName = null): bool
     {
         $searchContextTransfer = $typeName;
+
         if (!$searchContextTransfer instanceof SearchContextTransfer) {
             $searchContextTransfer = $this->createSearchContextTransferFromTypeName($typeName);
         }

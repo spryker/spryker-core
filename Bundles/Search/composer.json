@@ -33,7 +33,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
+      "SprykerTest\\": "tests/SprykerTest/",
+      "SprykerTest\\Shared\\Search\\Helper\\": "tests/SprykerTest/Shared/Search/_support/Helper/"
     }
   },
   "minimum-stability": "dev",

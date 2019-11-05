@@ -175,7 +175,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @return array
      */
-    public function mapRawDataToSearchData(array $data, DataMappingContextTransfer $dataMappingContextTransfer)
+    public function mapRawDataToSearchData(array $data, DataMappingContextTransfer $dataMappingContextTransfer): array
     {
         return $this->getFactory()
             ->createSearchDataMapper()

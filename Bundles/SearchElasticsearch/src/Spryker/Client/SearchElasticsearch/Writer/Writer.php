@@ -37,7 +37,7 @@ class Writer implements WriterInterface
      */
     public function write(array $data, SearchContextTransfer $searchContextTransfer): bool
     {
-        $indexName = $searchContextTransfer->getElasticsearchContext()->getSourceName();
+        $indexName = $searchContextTransfer->getElasticsearchContext()->getIndexName();
 
         if ($this->hasIntegerKeys($data)) {
             throw new Exception();

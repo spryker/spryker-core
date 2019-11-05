@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Search\Business;
 
+use Generated\Shared\Transfer\DataMappingContextTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
@@ -135,6 +136,16 @@ interface SearchFacadeInterface
      * @return array
      */
     public function transformPageMapToDocumentByMapperName(array $data, LocaleTransfer $localeTransfer, $mapperName);
+
+    /**
+     * @api
+     *
+     * @param array $data
+     * @param \Generated\Shared\Transfer\DataMappingContextTransfer $dataMappingContextTransfer
+     *
+     * @return array
+     */
+    public function mapRawDataToSearchData(array $data, DataMappingContextTransfer $dataMappingContextTransfer): array;
 
     /**
      * Specification:
