@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\SearchElasticsearch\Dependency\Service;
 
-class SearchToUtilEncodingServiceBridge implements SearchToUtilEncodingServiceInterface
+class SearchElasticsearchToUtilEncodingServiceBridge implements SearchElasticsearchToUtilEncodingServiceInterface
 {
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface

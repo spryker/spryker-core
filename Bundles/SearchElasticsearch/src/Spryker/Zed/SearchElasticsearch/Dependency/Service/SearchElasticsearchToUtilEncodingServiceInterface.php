@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\SearchElasticsearch\Dependency\Service;
 
-interface SearchToUtilEncodingServiceInterface
+interface SearchElasticsearchToUtilEncodingServiceInterface
 {
     /**
      * @param string $jsonValue

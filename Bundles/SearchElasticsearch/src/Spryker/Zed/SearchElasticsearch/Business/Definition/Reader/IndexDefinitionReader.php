@@ -7,20 +7,20 @@
 
 namespace Spryker\Zed\SearchElasticsearch\Business\Definition\Reader;
 
-use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingServiceInterface;
+use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceInterface;
 use Symfony\Component\Finder\SplFileInfo;
 
 class IndexDefinitionReader implements IndexDefinitionReaderInterface
 {
     /**
-     * @var \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingServiceInterface
+     * @var \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceInterface
      */
     protected $utilEncodingService;
 
     /**
-     * @param \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceInterface $utilEncodingService
      */
-    public function __construct(SearchToUtilEncodingServiceInterface $utilEncodingService)
+    public function __construct(SearchElasticsearchToUtilEncodingServiceInterface $utilEncodingService)
     {
         $this->utilEncodingService = $utilEncodingService;
     }
