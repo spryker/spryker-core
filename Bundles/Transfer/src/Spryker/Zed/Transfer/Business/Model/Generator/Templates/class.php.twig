@@ -110,7 +110,6 @@ class {{ className }} extends {{ abstractClass }}
             case '{{ value.name }}':
     {% endfor %}
                 $this->assignValueObject($property, $value);
-                    $this->modifiedProperties[$property] = true;
                     break;
 {% endif %}
                 default:

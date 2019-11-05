@@ -295,7 +295,6 @@ class FooBarTransfer extends AbstractTransfer
                     break;
                 case 'stock':
                     $this->assignValueObject($property, $value);
-                    $this->modifiedProperties[$property] = true;
                     break;
                 default:
                     if (!$ignoreMissingProperty) {
