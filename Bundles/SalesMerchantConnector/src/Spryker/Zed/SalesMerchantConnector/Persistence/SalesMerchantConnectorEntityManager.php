@@ -37,7 +37,7 @@ class SalesMerchantConnectorEntityManager extends AbstractEntityManager implemen
 
         return $salesMerchantConnectorMapper->mapSalesOrderMerchantEntityToSalesOrderMerchantTransfer(
             $salesOrderMerchantEntity,
-            new SalesOrderMerchantTransfer()
+            $salesOrderMerchantTransfer
         );
     }
 }

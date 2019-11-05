@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProductOffer\Persistence;
 
+use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -21,14 +22,9 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
      */
     public function findIdMerchantByProductOfferReference(string $productOfferReference): ?int
     {
-        $productOfferEntity = $this->getFactory()
+        return $this->getFactory()
             ->createProductOfferPropelQuery()
-            ->findOneByProductOfferReference($productOfferReference);
-
-        if (!$productOfferEntity || !$productOfferEntity->getFkMerchant()) {
-            return null;
-        }
-
-        return $productOfferEntity->getFkMerchant();
+            ->select(SpyProductOfferTableMap::COL_FK_MERCHANT)
+            ->findOne();
     }
 }
