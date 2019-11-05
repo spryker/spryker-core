@@ -71,4 +71,7 @@
         <property name="queueName" type="string"/>
     </transfer>
 
+    <transfer name="EventEntity">
+    </transfer>
+
 </transfers>

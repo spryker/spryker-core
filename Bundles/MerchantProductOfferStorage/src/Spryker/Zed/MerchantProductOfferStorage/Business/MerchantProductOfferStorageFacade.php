@@ -41,7 +41,7 @@ class MerchantProductOfferStorageFacade extends AbstractFacade implements Mercha
      */
     public function unpublishProductConcreteProductOffersStorage(array $concreteSkus): void
     {
-        $this->getFactory()->createProductConcreteProductOffersStorageWriter()->publish($concreteSkus);
+        $this->getFactory()->createProductConcreteProductOffersStorageWriter()->unpublish($concreteSkus);
     }
 
     /**
@@ -69,6 +69,6 @@ class MerchantProductOfferStorageFacade extends AbstractFacade implements Mercha
      */
     public function unpublishProductOfferStorage(array $productOfferReferences): void
     {
-        $this->getFactory()->createProductOfferStorageWriter()->publish($productOfferReferences);
+        $this->getFactory()->createProductOfferStorageWriter()->unpublish($productOfferReferences);
     }
 }

@@ -14,6 +14,10 @@ use Generated\Shared\Transfer\ProductOfferTransfer;
 interface ProductOfferFacadeInterface
 {
     /**
+     * Specification:
+     * - Returns collection of product offer by provided criteria.
+     * - Pagination is controlled with page, maxPerPage, nbResults, previousPage, nextPage, firstIndex, lastIndex, firstPage and lastPage values.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer|null $productOfferCriteriaFilter
@@ -35,6 +39,9 @@ interface ProductOfferFacadeInterface
     public function findOne(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer;
 
     /**
+     * Specification:
+     * - Creates a product offer.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferCriteriaFilter

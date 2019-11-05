@@ -29,18 +29,4 @@ class MerchantDataImportFacade extends AbstractFacade implements MerchantDataImp
     {
         return $this->getFactory()->createMerchantDataImport()->import($dataImporterConfigurationTransfer);
     }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
-     *
-     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
-     */
-    public function importAddresses(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
-    {
-        return $this->getFactory()->createMerchantAddressDataImport()->import($dataImporterConfigurationTransfer);
-    }
 }

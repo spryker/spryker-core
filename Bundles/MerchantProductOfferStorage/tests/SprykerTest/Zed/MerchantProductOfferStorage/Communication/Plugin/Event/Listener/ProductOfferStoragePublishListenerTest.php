@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\MerchantProductOfferStorage\Communication\Plugin\Event
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\MerchantProductOffer\Dependency\MerchantProductOfferEvents;
@@ -72,7 +73,7 @@ class ProductOfferStoragePublishListenerTest extends Unit
         //Arrange
         $expectedCount = 1;
         $eventTransfers = [
-            (new EventEntityTransfer())->setId($this->merchantProductOfferTransfer->getIdProductOffer()),
+            (new EventEntityTransfer())->setAdditionalValues([SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => $this->merchantProductOfferTransfer->getProductOfferReference()]),
         ];
 
         //Act
@@ -80,7 +81,7 @@ class ProductOfferStoragePublishListenerTest extends Unit
             $eventTransfers,
             MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_KEY_PUBLISH
         );
-        $merchantProductOfferStorageEntities = $this->tester->findProductOfferEntities($this->merchantProductOfferTransfer->getProductOfferReference());
+        $merchantProductOfferStorageEntities = $this->tester->getProductOfferEntities($this->merchantProductOfferTransfer->getProductOfferReference());
 
         //Assert
         $this->assertCount($expectedCount, $merchantProductOfferStorageEntities);
@@ -101,7 +102,7 @@ class ProductOfferStoragePublishListenerTest extends Unit
      */
     protected function cleanUpProductOfferStorage(): void
     {
-        $merchantProductOfferStorageEntities = $this->tester->findProductOfferEntities($this->merchantProductOfferTransfer->getProductOfferReference());
+        $merchantProductOfferStorageEntities = $this->tester->getProductOfferEntities($this->merchantProductOfferTransfer->getProductOfferReference());
 
         foreach ($merchantProductOfferStorageEntities as $merchantProductOfferStorageEntity) {
             $merchantProductOfferStorageEntity->delete();

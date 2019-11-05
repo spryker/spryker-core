@@ -14,7 +14,7 @@ class MerchantProductOfferStorageConfig
 {
     /**
      * Specification:
-     * - Queue name as used for processing merchant product offer messages
+     * - Queue name as used for processing merchant product offer messages.
      *
      * @api
      */
@@ -22,7 +22,7 @@ class MerchantProductOfferStorageConfig
 
     /**
      * Specification:
-     * - Queue name as used for processing merchant product offer messages
+     * - Queue name as used for processing merchant product offer messages.
      *
      * @api
      */
@@ -30,7 +30,7 @@ class MerchantProductOfferStorageConfig
 
     /**
      * Specification:
-     * - Resource name, this will use for key generating
+     * - Resource name, this will use for key generating.
      *
      * @api
      */
@@ -38,7 +38,7 @@ class MerchantProductOfferStorageConfig
 
     /**
      * Specification:
-     * - Resource name, this will use for key generating
+     * - Resource name, this will use for key generating.
      *
      * @api
      */

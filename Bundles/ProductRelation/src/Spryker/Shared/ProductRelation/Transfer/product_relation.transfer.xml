@@ -109,4 +109,10 @@
         <property name="url" type="string"/>
     </transfer>
 
+    <transfer name="ProductAbstract">
+    </transfer>
+
+    <transfer name="Money">
+    </transfer>
+
 </transfers>

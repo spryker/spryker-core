@@ -10,9 +10,8 @@ namespace Spryker\Zed\MerchantProductOfferStorage\Business\ProductOfferStorage;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
-use Generated\Shared\Transfer\ProductOfferViewTransfer;
+use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorageQuery;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface;
-use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface;
 
 class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
 {
@@ -22,24 +21,15 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     protected $productOfferFacade;
 
     /**
-     * @var \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface
-     */
-    protected $productOfferStorageEntityManager;
-
-    /**
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade
-     * @param \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface $productOfferStorageEntityManager
      */
-    public function __construct(
-        MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade,
-        MerchantProductOfferStorageEntityManagerInterface $productOfferStorageEntityManager
-    ) {
+    public function __construct(MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade)
+    {
         $this->productOfferFacade = $productOfferFacade;
-        $this->productOfferStorageEntityManager = $productOfferStorageEntityManager;
     }
 
     /**
-     * @param array $productOfferReferences
+     * @param string[] $productOfferReferences
      *
      * @return void
      */
@@ -50,37 +40,42 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
         $productOfferCollectionTransfer = $this->productOfferFacade->find($productOfferCriteriaFilterTransfer);
 
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
-            $productOfferStorageTransfer = new ProductOfferStorageTransfer();
-            $productOfferStorageTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
-            $productOfferStorageTransfer->setData($this->getMerchantViewTransfer($productOfferTransfer)->toArray());
+            $productOfferStorageEntity = SpyProductOfferStorageQuery::create()
+                ->filterByProductOfferReference($productOfferTransfer->getProductOfferReference())
+                ->findOneOrCreate();
+            $productOfferStorageEntity->setData($this->createProductOfferStorageTransfer($productOfferTransfer)->modifiedToArray());
 
-            $this->productOfferStorageEntityManager->saveProductOfferStorage($productOfferStorageTransfer);
+            $productOfferStorageEntity->save();
         }
     }
 
     /**
-     * @param array $productOfferReferences
+     * @param string[] $productOfferReferences
      *
      * @return void
      */
     public function unpublish(array $productOfferReferences): void
     {
-        $this->productOfferStorageEntityManager->deleteProductOfferStorage($productOfferReferences);
+        $productOfferStorageEntities = SpyProductOfferStorageQuery::create()->filterByProductOfferReference_In($productOfferReferences)->find();
+
+        foreach ($productOfferStorageEntities as $productOfferStorageEntity) {
+            $productOfferStorageEntity->delete();
+        }
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferViewTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer
      */
-    protected function getMerchantViewTransfer(ProductOfferTransfer $productOfferTransfer): ProductOfferViewTransfer
+    protected function createProductOfferStorageTransfer(ProductOfferTransfer $productOfferTransfer): ProductOfferStorageTransfer
     {
-        $productOfferViewTransfer = new ProductOfferViewTransfer();
+        $productOfferStorageTransfer = new ProductOfferStorageTransfer();
 
-        $productOfferViewTransfer->setIdProductOffer($productOfferTransfer->getIdProductOffer());
-        $productOfferViewTransfer->setIdMerchant($productOfferTransfer->getFkMerchant());
-        $productOfferViewTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
+        $productOfferStorageTransfer->setIdProductOffer($productOfferTransfer->getIdProductOffer());
+        $productOfferStorageTransfer->setIdMerchant($productOfferTransfer->getFkMerchant());
+        $productOfferStorageTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
 
-        return $productOfferViewTransfer;
+        return $productOfferStorageTransfer;
     }
 }

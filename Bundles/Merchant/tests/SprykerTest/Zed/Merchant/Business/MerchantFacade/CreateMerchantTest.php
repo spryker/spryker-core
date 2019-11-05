@@ -34,7 +34,7 @@ class CreateMerchantTest extends Unit
     public function testCreateMerchantStatus(): void
     {
         // Arrange
-        $merchantTransfer = $this->tester->createMerchantTransferWithAddressTransfer();
+        $merchantTransfer = $this->tester->createMerchantTransfer();
 
         // Act
         $merchantResponseTransfer = $this->tester->getFacade()->createMerchant($merchantTransfer);
@@ -51,7 +51,7 @@ class CreateMerchantTest extends Unit
     public function testCreateMerchantWithEmptyMerchantKeyStatus(): void
     {
         // Arrange
-        $merchantTransfer = $this->tester->createMerchantTransferWithAddressTransfer();
+        $merchantTransfer = $this->tester->createMerchantTransfer();
         $merchantTransfer->setMerchantKey(null);
 
         // Act
@@ -68,7 +68,7 @@ class CreateMerchantTest extends Unit
     public function testCreateMerchantWithEmptyRequiredFieldsThrowsException(): void
     {
         // Arrange
-        $merchantTransfer = $this->tester->createMerchantTransferWithAddressTransfer();
+        $merchantTransfer = $this->tester->createMerchantTransfer();
         $merchantWithEmptyNameTransfer = clone $merchantTransfer;
         $merchantWithEmptyNameTransfer->setName(null);
 

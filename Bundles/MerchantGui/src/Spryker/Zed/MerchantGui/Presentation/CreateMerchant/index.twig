@@ -15,7 +15,7 @@
 
         {% block widget_content %}
 
-            {{ form_start(form) }}
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
             {{ tabs(merchantFormTabs, {'merchantForm': form}) }}
 

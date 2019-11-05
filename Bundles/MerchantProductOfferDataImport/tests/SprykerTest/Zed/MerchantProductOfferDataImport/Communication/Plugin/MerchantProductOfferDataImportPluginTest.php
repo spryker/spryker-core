@@ -41,6 +41,7 @@ class MerchantProductOfferDataImportPluginTest extends Unit
      */
     public function testImportImportsData(): void
     {
+        // Arrange
         $this->tester->truncateProductOffers();
         $this->tester->assertDatabaseTableIsEmpty();
 
@@ -57,10 +58,11 @@ class MerchantProductOfferDataImportPluginTest extends Unit
         $facadePropertyReflection->setAccessible(true);
         $facadePropertyReflection->setValue($dataImportPlugin, $this->getFacadeMock());
 
+        // Act
         $dataImporterReportTransfer = $dataImportPlugin->import($dataImportConfigurationTransfer);
 
+        // Assert
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
-
         $this->tester->assertDatabaseTableContainsData();
     }
 
@@ -69,14 +71,17 @@ class MerchantProductOfferDataImportPluginTest extends Unit
      */
     public function testGetImportTypeReturnsTypeOfImporter(): void
     {
+        // Arrange
         $dataImportPlugin = new MerchantProductOfferDataImportPlugin();
+
+        // Assert
         $this->assertSame(MerchantProductOfferDataImportConfig::IMPORT_TYPE_MERCHANT_PRODUCT_OFFER, $dataImportPlugin->getImportType());
     }
 
     /**
      * @return \Spryker\Zed\MerchantProductOfferDataImport\Business\MerchantProductOfferDataImportFacade
      */
-    public function getFacadeMock(): MerchantProductOfferDataImportFacade
+    protected function getFacadeMock(): MerchantProductOfferDataImportFacade
     {
         $factoryMock = $this->getMockBuilder(MerchantProductOfferDataImportBusinessFactory::class)
             ->setMethods(

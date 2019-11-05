@@ -65,4 +65,7 @@
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
+    <transfer name="SaveOrder">
+    </transfer>
+
 </transfers>

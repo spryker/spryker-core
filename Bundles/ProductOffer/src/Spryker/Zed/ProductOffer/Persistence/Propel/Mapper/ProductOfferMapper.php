@@ -13,17 +13,17 @@ use Orm\Zed\ProductOffer\Persistence\SpyProductOffer;
 class ProductOfferMapper implements ProductOfferMapperInterface
 {
     /**
-     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOffer $spyProductOffer
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOffer $productOfferEntity
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
     public function mapProductOfferEntityToProductOfferTransfer(
-        SpyProductOffer $spyProductOffer,
+        SpyProductOffer $productOfferEntity,
         ProductOfferTransfer $productOfferTransfer
     ): ProductOfferTransfer {
         $productOfferTransfer = $productOfferTransfer->fromArray(
-            $spyProductOffer->toArray(),
+            $productOfferEntity->toArray(),
             true
         );
 
@@ -32,18 +32,18 @@ class ProductOfferMapper implements ProductOfferMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
-     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOffer $spyProductOffer
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOffer $productOfferEntity
      *
      * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOffer
      */
     public function mapProductOfferTransferToProductOfferEntity(
         ProductOfferTransfer $productOfferTransfer,
-        SpyProductOffer $spyProductOffer
+        SpyProductOffer $productOfferEntity
     ): SpyProductOffer {
-        $spyProductOffer->fromArray(
+        $productOfferEntity->fromArray(
             $productOfferTransfer->modifiedToArray(false)
         );
 
-        return $spyProductOffer;
+        return $productOfferEntity;
     }
 }

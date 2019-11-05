@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Event\Listener;
 
+use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -21,23 +22,21 @@ class ProductConcreteOffersStoragePublishListener extends AbstractPlugin impleme
     use TransactionTrait;
 
     /**
-     * @param array $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
      * @param string $eventName
      *
      * @return void
      */
     public function handleBulk(array $transfers, $eventName): void
     {
-        $this->getTransactionHandler()->handleTransaction(function () use ($transfers): void {
-            $concreteSkus = $this->getFactory()
-                ->getEventBehaviorFacade()
-                ->getEventTransferIds($transfers);
+        $concreteSkus = $this->getFactory()
+            ->getEventBehaviorFacade()
+            ->getEventTransfersAdditionalValues($transfers, SpyProductOfferTableMap::COL_CONCRETE_SKU);
 
-            if (!$concreteSkus) {
-                return;
-            }
+        if (!$concreteSkus) {
+            return;
+        }
 
-            $this->getFacade()->publishProductConcreteProductOffersStorage(['092_24495842']);
-        });
+        $this->getFacade()->publishProductConcreteProductOffersStorage($concreteSkus);
     }
 }

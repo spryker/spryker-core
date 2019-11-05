@@ -11,7 +11,7 @@ interface MerchantProductOfferEvents
 {
     /**
      * Specification
-     * - This events will be used for merchant product offer key publishing
+     * - This events will be used for merchant product offer key publishing.
      *
      * @api
      */
@@ -19,7 +19,7 @@ interface MerchantProductOfferEvents
 
     /**
      * Specification
-     * - This events will be used for merchant product offer key un-publishing
+     * - This events will be used for merchant product offer key un-publishing.
      *
      * @api
      */
@@ -27,7 +27,7 @@ interface MerchantProductOfferEvents
 
     /**
      * Specification
-     * - This events will be used for spy_product_offer entity creation
+     * - This events will be used for spy_product_offer entity creation.
      *
      * @api
      */
@@ -35,7 +35,7 @@ interface MerchantProductOfferEvents
 
     /**
      * Specification
-     * - This events will be used for spy_product_offer entity changes
+     * - This events will be used for spy_product_offer entity changes.
      *
      * @api
      */
@@ -43,7 +43,7 @@ interface MerchantProductOfferEvents
 
     /**
      * Specification
-     * - This events will be used for spy_product_offer entity deletion
+     * - This events will be used for spy_product_offer entity deletion.
      *
      * @api
      */

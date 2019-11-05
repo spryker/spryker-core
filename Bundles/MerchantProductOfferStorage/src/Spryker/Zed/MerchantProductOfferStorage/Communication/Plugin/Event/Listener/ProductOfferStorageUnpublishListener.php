@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Event\Listener;
 
+use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -21,22 +22,20 @@ class ProductOfferStorageUnpublishListener extends AbstractPlugin implements Eve
     use TransactionTrait;
 
     /**
-     * @param array $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
      * @param string $eventName
      *
      * @return void
      */
     public function handleBulk(array $transfers, $eventName): void
     {
-        $this->getTransactionHandler()->handleTransaction(function () use ($transfers): void {
-            $productOfferReferences = $this->getFactory()
-                ->getEventBehaviorFacade()
-                ->getEventTransferIds($transfers);
+        $productOfferReferences = $this->getFactory()
+            ->getEventBehaviorFacade()
+            ->getEventTransfersAdditionalValues($transfers, SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE);
 
-            if (!$productOfferReferences) {
-                return;
-            }
-            $this->getFacade()->unpublishProductOfferStorage($productOfferReferences);
-        });
+        if (!$productOfferReferences) {
+            return;
+        }
+        $this->getFacade()->unpublishProductOfferStorage($productOfferReferences);
     }
 }

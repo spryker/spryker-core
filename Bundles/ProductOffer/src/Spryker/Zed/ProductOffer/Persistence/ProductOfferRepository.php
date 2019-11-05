@@ -28,7 +28,7 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
     public function find(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
     {
         $productOfferCollectionTransfer = new ProductOfferCollectionTransfer();
-        $productOfferQuery = $this->getFactory()->createProductOfferQuery();
+        $productOfferQuery = $this->getFactory()->createProductOfferPropelQuery();
 
         if ($productOfferCriteriaFilter) {
             $productOfferQuery = $this->applyFilters($productOfferQuery, $productOfferCriteriaFilter);
@@ -36,10 +36,10 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
         $productOfferEntities = $productOfferQuery->find();
 
         foreach ($productOfferEntities as $productOfferEntity) {
-            $productOfferTransfer = new ProductOfferTransfer();
-            $productOfferCollectionTransfer->addProductOffer(
-                $this->getFactory()->createPropelProductOfferMapper()->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, $productOfferTransfer)
-            );
+            $productOfferTransfer = $this->getFactory()
+                ->createPropelProductOfferMapper()
+                ->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, (new ProductOfferTransfer()));
+            $productOfferCollectionTransfer->addProductOffer($productOfferTransfer);
         }
 
         return $productOfferCollectionTransfer;
@@ -52,7 +52,7 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
      */
     public function findOne(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer
     {
-        $productOfferQuery = $this->getFactory()->createProductOfferQuery();
+        $productOfferQuery = $this->getFactory()->createProductOfferPropelQuery();
 
         if ($productOfferCriteriaFilter) {
             $productOfferQuery = $this->applyFilters($productOfferQuery, $productOfferCriteriaFilter);
@@ -63,7 +63,8 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
             return null;
         }
 
-        return $this->getFactory()->createPropelProductOfferMapper()->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, new ProductOfferTransfer());
+        return $this->getFactory()->createPropelProductOfferMapper()
+            ->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, new ProductOfferTransfer());
     }
 
     /**
