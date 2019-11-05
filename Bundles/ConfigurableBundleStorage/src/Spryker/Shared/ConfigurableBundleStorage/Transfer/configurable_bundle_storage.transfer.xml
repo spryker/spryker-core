@@ -10,6 +10,7 @@
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlotStorage">
+        <property name="idConfigurableBundleTemplateSlot" type="int"/>
         <property name="uuid" type="string"/>
         <property name="name" type="string"/>
         <property name="idProductList" type="int"/>
