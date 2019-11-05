@@ -55,6 +55,8 @@ class SearchDataMapper implements SearchDataMapperInterface
             }
         }
 
-        throw new Exception();
+        throw new Exception(
+            sprintf('No applicable mapper plugin found for name "%s"', $dataMappingContextTransfer->getMapperName())
+        );
     }
 }

@@ -23,7 +23,7 @@ class PageDataMapper implements PageDataMapperInterface
     public const DIRECT_PARENTS = 'direct-parents';
 
     /**
-     * @var \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface
+     * @var \Spryker\Zed\SearchExtension\Business\PageMapBuilder\PageMapBuilderInterface
      */
     protected $pageMapBuilder;
 
@@ -38,18 +38,18 @@ class PageDataMapper implements PageDataMapperInterface
     protected $pageIndexMap;
 
     /**
-     * @var \Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface[]
+     * @var \Spryker\Zed\SearchExtension\Dependency\Plugin\NamedPageMapInterface[]
      */
     protected $pageMapPlugins = [];
 
     /**
      * @param \Spryker\Zed\SearchExtension\Business\PageMapBuilder\PageMapBuilderInterface $pageMapBuilder
-     * @param array $namedPageMapPlugins
+     * @param \Spryker\Zed\SearchExtension\Dependency\Plugin\NamedPageMapInterface[] $pageMapPlugins
      */
-    public function __construct(PageMapBuilderInterface $pageMapBuilder, array $namedPageMapPlugins = [])
+    public function __construct(PageMapBuilderInterface $pageMapBuilder, array $pageMapPlugins = [])
     {
         $this->pageMapBuilder = $pageMapBuilder;
-        $this->pageMapPlugins = $this->mapPluginClassesByName($namedPageMapPlugins);
+        $this->pageMapPlugins = $this->mapPluginClassesByName($pageMapPlugins);
         $this->underscoreToDashFilter = new UnderscoreToDash();
         $this->pageIndexMap = new PageIndexMap();
     }
@@ -87,8 +87,8 @@ class PageDataMapper implements PageDataMapperInterface
             throw new Exception(sprintf('PageMap plugin with this name: `%s` cannot be found', $mapperName));
         }
 
-        $pageMap = $this->pageMapPlugins[$mapperName];
-        $pageMapTransfer = $pageMap->buildPageMap($this->pageMapBuilder, $data, $localeTransfer);
+        $pageMapPlugin = $this->pageMapPlugins[$mapperName];
+        $pageMapTransfer = $pageMapPlugin->buildPageMap($this->pageMapBuilder, $data, $localeTransfer);
 
         foreach ($pageMapTransfer->modifiedToArray() as $key => $value) {
             $normalizedKey = $this->normalizeKey($key);

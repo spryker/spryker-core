@@ -14,6 +14,9 @@ use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactoryInter
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolver;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\SearchElasticsearch\Business\DataMapper\PageDataMapper;
+use Spryker\Zed\SearchElasticsearch\Business\DataMapper\PageDataMapperInterface;
+use Spryker\Zed\SearchElasticsearch\Business\DataMapper\PageMapBuilder;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Builder\IndexDefinitionBuilder;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Builder\IndexDefinitionBuilderInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Finder\SchemaDefinitionFinder;
@@ -268,5 +271,21 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     public function getUtilSanitizeService(): SearchElasticsearchToUtilSanitizeServiceInterface
     {
         return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::SERVICE_UTIL_SANITIZE);
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchElasticsearch\Business\DataMapper\PageDataMapperInterface
+     */
+    public function createPageDataMapper(): PageDataMapperInterface
+    {
+        return new PageDataMapper(new PageMapBuilder(), $this->getPageDataMapperPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\NamedPageMapInterface[]
+     */
+    public function getPageDataMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::PLUGINS_PAGE_DATA_MAPPER);
     }
 }

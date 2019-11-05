@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\SearchExtension\Dependency\Plugin;
 
+/**
+ * !!!THIS SHOULD GO TO SEARCHELASTICSEARCHEXTENSION MODULE. IT'S HERE ONLY FOR PROTOTYPE!!!
+ */
 interface NamedPageMapInterface extends PageMapInterface
 {
     /**

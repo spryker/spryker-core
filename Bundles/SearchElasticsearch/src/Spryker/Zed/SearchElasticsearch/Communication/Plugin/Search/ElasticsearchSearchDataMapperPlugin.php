@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SearchElasticsearch\Communication\Plugin\Search;
 
 use Generated\Shared\Transfer\DataMappingContextTransfer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SearchExtension\Dependency\Plugin\SearchDataMapperPluginInterface;
 
 /**
@@ -15,7 +16,7 @@ use Spryker\Zed\SearchExtension\Dependency\Plugin\SearchDataMapperPluginInterfac
  * @method \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig getConfig()
  * @method \Spryker\Zed\SearchElasticsearch\Communication\SearchElasticsearchCommunicationFactory getFactory()
  */
-class ElasticsearchSearchDataMapperPlugin implements SearchDataMapperPluginInterface
+class ElasticsearchSearchDataMapperPlugin extends AbstractPlugin implements SearchDataMapperPluginInterface
 {
     /**
      * @api

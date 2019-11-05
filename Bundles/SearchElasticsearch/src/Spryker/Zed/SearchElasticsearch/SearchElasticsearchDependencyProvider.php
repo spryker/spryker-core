@@ -9,8 +9,13 @@ namespace Spryker\Zed\SearchElasticsearch;
 
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientBridge;
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
+use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Search\CategoryNodeDataPageMapBuilder;
+use Spryker\Zed\CmsPageSearch\Communication\Plugin\Search\CmsDataPageMapBuilder;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Search\ProductConcretePageMapPlugin;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Search\ProductPageMapPlugin;
+use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Search\ProductSetPageMapPlugin;
 use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilSanitizeServiceBridge;
 use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchToUtilEncodingBridge;
 
@@ -23,7 +28,7 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
     public const CLIENT_SEARCH = 'search client';
     public const SERVICE_UTIL_ENCODING = 'util encoding service';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    public const PLUGIN_PAGE_DATA_MAPPER_PLUGINS = 'PLUGIN_PAGE_DATA_MAPPER_PLUGINS';
+    public const PLUGINS_PAGE_DATA_MAPPER = 'PLUGINS_PAGE_DATA_MAPPER';
     public const SEARCH_INSTALLER_PLUGINS = 'SEARCH_INSTALLER_PLUGINS';
 
     /**
@@ -107,7 +112,7 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addPageDataMapperPlugins(Container $container): Container
     {
-        $container->set(static::PLUGIN_PAGE_DATA_MAPPER_PLUGINS, function (Container $container) {
+        $container->set(static::PLUGINS_PAGE_DATA_MAPPER, function (Container $container) {
             return $this->getPageDataMapperPlugins();
         });
 
@@ -119,6 +124,13 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function getPageDataMapperPlugins(): array
     {
-        return [];
+        // WILL GO TO PROJECT LEVEL
+        return [
+            new ProductPageMapPlugin(),
+            new ProductConcretePageMapPlugin(),
+            new ProductSetPageMapPlugin(),
+            new CmsDataPageMapBuilder(),
+            new CategoryNodeDataPageMapBuilder(),
+        ];
     }
 }

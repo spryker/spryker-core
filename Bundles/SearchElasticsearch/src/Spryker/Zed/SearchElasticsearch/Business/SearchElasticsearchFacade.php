@@ -54,6 +54,6 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
      */
     public function mapRawDataToSearchData(array $data, DataMappingContextTransfer $dataMappingContextTransfer): array
     {
-        return $
+        return $this->getFactory()->createPageDataMapper()->mapRawDataToSearchData($data, $dataMappingContextTransfer);
     }
 }

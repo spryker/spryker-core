@@ -14,6 +14,7 @@ use Spryker\Client\Search\Provider\SearchClientProvider;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Search\Business\DataMapper\SearchDataMapper;
+use Spryker\Zed\Search\Business\DataMapper\SearchDataMapperAdapter;
 use Spryker\Zed\Search\Business\DataMapper\SearchDataMapperInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Copier\IndexCopier;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageDataMapper;
@@ -246,6 +247,12 @@ class SearchBusinessFactory extends AbstractBusinessFactory
      */
     public function createPageDataMapper()
     {
+        if (count($this->getSearchDataMapperPlugins()) > 0) {
+            return new SearchDataMapperAdapter(
+                $this->createSearchDataMapper()
+            );
+        }
+
         return new PageDataMapper(
             $this->createPageMapBuilder(),
             $this->getSearchPageMapPlugins()

@@ -8,14 +8,17 @@
 namespace Spryker\Zed\SearchExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
+use Spryker\Zed\SearchExtension\Business\PageMapBuilder\PageMapBuilderInterface;
 
+/**
+ * !!!THIS SHOULD GO TO SEARCHELASTICSEARCHEXTENSION MODULE. IT'S HERE ONLY FOR PROTOTYPE!!!
+ */
 interface PageMapInterface
 {
     /**
      * @api
      *
-     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
+     * @param \Spryker\Zed\SearchExtension\Business\PageMapBuilder\PageMapBuilderInterface $pageMapBuilder
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
