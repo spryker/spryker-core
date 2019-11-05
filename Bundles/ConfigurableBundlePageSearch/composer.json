@@ -5,7 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/configurable-bundle": "^1.0.0",
+    "spryker/configurable-bundle": "^2.0.0",
     "spryker/configurable-bundle-page-search-extension": "^1.0.0",
     "spryker/event-behavior": "^1.0.0",
     "spryker/kernel": "^3.33.0",

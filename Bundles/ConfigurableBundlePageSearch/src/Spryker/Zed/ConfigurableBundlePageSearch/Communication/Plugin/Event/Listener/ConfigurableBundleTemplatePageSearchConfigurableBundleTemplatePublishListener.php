@@ -30,7 +30,7 @@ class ConfigurableBundleTemplatePageSearchConfigurableBundleTemplatePublishListe
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventTransfers, $eventName): void
     {
         $this->preventTransaction();
         $configurableBundleTemplateIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);

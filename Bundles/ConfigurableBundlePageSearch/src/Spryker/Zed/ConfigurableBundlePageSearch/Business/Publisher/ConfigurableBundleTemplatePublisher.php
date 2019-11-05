@@ -107,9 +107,9 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
     /**
      * @param int[] $configurableBundleTemplateIds
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer[][]
      */
-    protected function getConfigurableBundleTemplatePageSearchTransfers(array $configurableBundleTemplateIds)
+    protected function getConfigurableBundleTemplatePageSearchTransfers(array $configurableBundleTemplateIds): array
     {
         $configurableBundleTemplatePageSearchCollectionTransfer = $this->configurableBundlePageSearchRepository->getConfigurableBundleTemplatePageSearchCollection(
             (new ConfigurableBundleTemplatePageSearchFilterTransfer())->setConfigurableBundleTemplateIds($configurableBundleTemplateIds)
@@ -121,7 +121,7 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchCollectionTransfer $configurableBundleTemplatePageSearchCollectionTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer[][]
      */
     protected function groupConfigurableBundleTemplatePageSearchTransfers(ConfigurableBundleTemplatePageSearchCollectionTransfer $configurableBundleTemplatePageSearchCollectionTransfer): array
     {
@@ -199,9 +199,10 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
         $mappedConfigurableBundleTemplatePageSearchTransfers = [];
 
         foreach ($configurableBundleTemplateTransfer->getTranslations() as $configurableBundleTemplateTranslationTransfer) {
-            $configurableBundleTemplateTranslationTransfer->requireLocale()
+            $configurableBundleTemplateTranslationTransfer
+                ->requireLocale()
                 ->getLocale()
-                ->requireLocaleName();
+                    ->requireLocaleName();
 
             $localeName = $configurableBundleTemplateTranslationTransfer->getLocale()->getLocaleName();
 

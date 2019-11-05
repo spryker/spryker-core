@@ -38,7 +38,7 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractDependencyP
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function addSearchClient(Container $container): Container
+    protected function addSearchClient(Container $container): Container
     {
         $container->set(static::CLIENT_SEARCH, function (Container $container) {
             return new ConfigurableBundlePageSearchToSearchClientBridge(

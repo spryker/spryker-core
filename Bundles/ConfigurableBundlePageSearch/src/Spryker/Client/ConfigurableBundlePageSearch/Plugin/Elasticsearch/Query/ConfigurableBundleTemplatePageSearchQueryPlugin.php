@@ -38,9 +38,11 @@ class ConfigurableBundleTemplatePageSearchQueryPlugin extends AbstractPlugin imp
     }
 
     /**
+     * @api
+     *
      * @return \Elastica\Query
      */
-    public function getSearchQuery()
+    public function getSearchQuery(): Query
     {
         return $this->query;
     }
@@ -48,7 +50,7 @@ class ConfigurableBundleTemplatePageSearchQueryPlugin extends AbstractPlugin imp
     /**
      * @return \Elastica\Query
      */
-    protected function createSearchQuery()
+    protected function createSearchQuery(): Query
     {
         $query = new Query();
 
@@ -77,7 +79,7 @@ class ConfigurableBundleTemplatePageSearchQueryPlugin extends AbstractPlugin imp
      *
      * @return void
      */
-    protected function setTypeFilter(BoolQuery $boolQuery)
+    protected function setTypeFilter(BoolQuery $boolQuery): void
     {
         $typeFilter = new Match();
         $typeFilter->setField(PageIndexMap::TYPE, ConfigurableBundlePageSearchConfig::CONFIGURABLE_BUNDLE_TEMPLATE_RESOURCE_NAME);

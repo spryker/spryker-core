@@ -89,7 +89,7 @@ class ConfigurableBundlePageSearchBusinessFactory extends AbstractBusinessFactor
     /**
      * @return \Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplatePageDataExpanderPluginInterface[]
      */
-    protected function getConfigurableBundleTemplatePageDataExpanderPlugins(): array
+    public function getConfigurableBundleTemplatePageDataExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ConfigurableBundlePageSearchDependencyProvider::PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_DATA_EXPANDER);
     }

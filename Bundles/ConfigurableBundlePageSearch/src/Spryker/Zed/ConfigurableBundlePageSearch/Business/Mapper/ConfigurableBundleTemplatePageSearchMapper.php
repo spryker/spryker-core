@@ -68,7 +68,7 @@ class ConfigurableBundleTemplatePageSearchMapper implements ConfigurableBundleTe
             $configurableBundleTemplatePageSearchTransfer
         );
 
-        $configurableBundleTemplatePageSearchTransfer = $this->expandConfigurableBundlePageSearchWithPlugins(
+        $configurableBundleTemplatePageSearchTransfer = $this->executeConfigurableBundleTemplatePageDataExpanderPlugins(
             $configurableBundleTemplateTransfer,
             $configurableBundleTemplatePageSearchTransfer
         );
@@ -165,7 +165,7 @@ class ConfigurableBundleTemplatePageSearchMapper implements ConfigurableBundleTe
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer
      */
-    protected function expandConfigurableBundlePageSearchWithPlugins(
+    protected function executeConfigurableBundleTemplatePageDataExpanderPlugins(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer,
         ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer
     ): ConfigurableBundleTemplatePageSearchTransfer {

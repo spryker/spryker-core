@@ -24,7 +24,7 @@ class ConfigurableBundleTemplatePageSearchResultFormatterPlugin extends Abstract
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return static::NAME;
     }
@@ -35,7 +35,7 @@ class ConfigurableBundleTemplatePageSearchResultFormatterPlugin extends Abstract
      *
      * @return array
      */
-    protected function formatSearchResult(ResultSet $searchResult, array $requestParameters)
+    protected function formatSearchResult(ResultSet $searchResult, array $requestParameters): array
     {
         $configurableBundleTemplateTransfers = [];
 

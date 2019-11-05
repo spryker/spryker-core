@@ -16,7 +16,7 @@ class ConfigurableBundlePageSearchConfig extends AbstractBundleConfig
 {
     /**
      * Specification:
-     * - Resource name, will be used for key generating.
+     * - Resource name, used for key generating.
      *
      * @api
      */
@@ -24,7 +24,7 @@ class ConfigurableBundlePageSearchConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Queue name as used for processing Configurable Bundle messages.
+     * - Queue name, used for processing Configurable Bundle messages.
      *
      * @api
      */
