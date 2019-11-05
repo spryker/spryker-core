@@ -84,7 +84,7 @@ var SelectTableAPI = function() {
                 rowData = productTableData.data()[rowIndex],
                 id = rowData[0];
 
-            if($(this).is(':checked')) {
+            if ($(this).is(':checked')) {
                 return self.addRow(rowData);
             }
 
@@ -99,7 +99,7 @@ var SelectTableAPI = function() {
         var productTable = this.$productTable.DataTable(),
             productTableData = productTable.data();
 
-        for(var i = 0; i < productTableData.length; i++) {
+        for (var i = 0; i < productTableData.length; i++) {
             var productItemData = productTableData[i],
                 productItemId = productItemData[0],
                 checkBox = $(productTable.row(i).node()).find('[type="checkbox"]');
@@ -116,7 +116,7 @@ var SelectTableAPI = function() {
      * @param {number} productItemId - Id if product row.
      */
     this.findSelectedProductsInTable = function(checkBox,productItemId) {
-        var itemEqualId = function equal(item) {
+        var itemEqualId = function(item) {
             return item[0] === productItemId;
         };
 
@@ -131,7 +131,7 @@ var SelectTableAPI = function() {
     this.updateCounter = function() {
         var counterText = '';
 
-        if(this.selectedProductsData.length) {
+        if (this.selectedProductsData.length) {
             counterText = ' ('+this.selectedProductsData.length+')';
         }
 
@@ -169,11 +169,13 @@ var SelectTableAPI = function() {
         var self = this;
 
         this.selectedProductsData.every(function(elem,index) {
-            if(elem[0] == id) {
-                self.selectedProductsData.splice(index,1);
-                return false;
+            if(elem[0] !== id) {
+                return true;
             }
-            return true;
+
+            self.selectedProductsData.splice(index,1);
+            return false;
+
         });
         self.renderSelectedItemsTable();
     };
