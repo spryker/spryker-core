@@ -44,4 +44,7 @@
         <property name="idProductLabel" type="int"/>
     </transfer>
 
+    <transfer name="Money">
+    </transfer>
+
 </transfers>
