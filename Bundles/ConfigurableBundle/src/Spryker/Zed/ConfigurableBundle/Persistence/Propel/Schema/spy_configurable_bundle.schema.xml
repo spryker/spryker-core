@@ -14,6 +14,10 @@
             <unique-column name="uuid"/>
         </unique>
 
+        <index name="index-spy_configurable_bundle_template-name">
+            <index-column name="name"/>
+        </index>
+
         <behavior name="uuid">
             <parameter name="key_columns" value="id_configurable_bundle_template"/>
         </behavior>
@@ -36,6 +40,10 @@
 
         <index name="spy_configurable_bundle_template_slot-fk_product_list">
             <index-column name="fk_product_list"/>
+        </index>
+
+        <index name="index-spy_configurable_bundle_template_slot-name">
+            <index-column name="name"/>
         </index>
 
         <behavior name="uuid">
