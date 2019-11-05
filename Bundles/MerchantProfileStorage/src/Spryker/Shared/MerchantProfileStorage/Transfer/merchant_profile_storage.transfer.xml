@@ -63,4 +63,10 @@
         <property name="offset" type="int"/>
     </transfer>
 
+    <transfer name="MerchantProfile">
+    </transfer>
+
+    <transfer name="SynchronizationData">
+    </transfer>
+
 </transfers>
