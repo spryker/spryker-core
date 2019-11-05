@@ -15,8 +15,6 @@ class CmsBlockToStorageClientBridge implements CmsBlockToStorageClientInterface
     protected $storage;
 
     /**
-     * @api
-     *
      * @param \Spryker\Client\Storage\StorageClientInterface $storage
      */
     public function __construct($storage)
@@ -25,13 +23,11 @@ class CmsBlockToStorageClientBridge implements CmsBlockToStorageClientInterface
     }
 
     /**
-     * @api
-     *
-     * @param array $keys
+     * @param string[] $keys
      *
      * @return array
      */
-    public function getMulti($keys)
+    public function getMulti(array $keys)
     {
         return $this->storage->getMulti($keys);
     }

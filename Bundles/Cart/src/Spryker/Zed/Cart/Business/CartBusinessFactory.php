@@ -159,7 +159,7 @@ class CartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Cart\Dependency\PostSavePluginInterface[]
+     * @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationPostSavePluginInterface[]
      */
     protected function getPostSavePlugins()
     {

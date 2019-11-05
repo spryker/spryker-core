@@ -384,7 +384,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      */
     public function listAllModules()
     {
-        return $this->getFactory()->createArchitectureBundleFinder()->find();
+        return $this->getFactory()->createAllModuleFinder()->find();
     }
 
     /**

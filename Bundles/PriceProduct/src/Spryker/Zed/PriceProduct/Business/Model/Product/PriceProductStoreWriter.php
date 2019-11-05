@@ -287,7 +287,7 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
     protected function doDeleteOrphanPriceProductStoreEntities(array $priceProductStoreEntityTransfers): void
     {
         foreach ($priceProductStoreEntityTransfers as $priceProductStoreEntityTransfer) {
-            $idPriceProductStore = $priceProductStoreEntityTransfer->getIdPriceProductStore();
+            $idPriceProductStore = (int)$priceProductStoreEntityTransfer->getIdPriceProductStore();
 
             $this->priceProductStoreWriterPluginExecutor->executePriceProductStorePreDeletePlugins($idPriceProductStore);
             $this->priceProductEntityManager->deletePriceProductStore($idPriceProductStore);
