@@ -163,7 +163,7 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
         string $abstractSku,
         StoreTransfer $storeTransfer
     ): ?ProductAbstractAvailabilityTransfer {
-        $query = $this->getFactory()
+        $availabilityAbstractEntityArray = $this->getFactory()
             ->getProductQueryContainer()
             ->queryProductAbstract()
             ->filterBySku($abstractSku)
@@ -189,8 +189,8 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
                 SpyOmsProductReservationTableMap::COL_SKU,
                 Criteria::LEFT_JOIN
             )->where(sprintf('(%s = %d OR %s IS NULL)', SpyOmsProductReservationTableMap::COL_FK_STORE, $storeTransfer->getIdStore(), SpyOmsProductReservationTableMap::COL_FK_STORE))
-            ->select(SpyProductAbstractTableMap::COL_SKU);
-        $availabilityAbstractEntityArray = $query->findOne();
+            ->select(SpyProductAbstractTableMap::COL_SKU)
+            ->findOne();
 
         if ($availabilityAbstractEntityArray === null) {
             return (new ProductAbstractAvailabilityTransfer())
