@@ -13,6 +13,8 @@ use Elastica\Request;
 use Generated\Shared\Transfer\StoreTransfer;
 use Psr\Log\NullLogger;
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
+use Spryker\Zed\SearchElasticsearch\Business\Snapshot\Repository;
+use Spryker\Zed\SearchElasticsearch\Business\Snapshot\RepositoryInterface;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchDependencyProvider;
 use SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchHelper;
@@ -36,6 +38,10 @@ class SearchElasticsearchFacadeTest extends Unit
     protected const SOURCE_IDENTIFIER = 'index-name';
     protected const INDEX_NAME_ALL = '*_testing';
     protected const DOCUMENT_CONTENT_KEY = '_source';
+    protected const REPOSITORY_LOCATION_FILE_NAME = 'search_test_file';
+    protected const REPOSITORY_NAME = 'search_test_repository';
+    protected const REPOSITORY_TYPE_FILESYSTEM = 'fs';
+    protected const SNAPSHOT_NAME = 'search_test_snapshot';
 
     /**
      * @return void
@@ -304,5 +310,141 @@ class SearchElasticsearchFacadeTest extends Unit
         $response = $index->request(sprintf('%s/%s', ElasticsearchHelper::DEFAULT_MAPPING_TYPE, $documentId), Request::GET);
 
         $this->assertSame($expectedContent, $response->getData()[static::DOCUMENT_CONTENT_KEY]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCanCreateSnapshotRepository(): void
+    {
+        $this->skipIfCi();
+
+        // Arrange
+        $this->tester->mockFactoryMethod('createRepository', $this->createRepositoryMock());
+
+        //Act
+        $result = $this->tester->getFacade()->registerSnapshotRepository(static::REPOSITORY_NAME);
+
+        //Assert
+        $this->assertTrue($result);
+        $this->assertRepositoryExists(static::REPOSITORY_NAME);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCanCheckForRepositoryExistence(): void
+    {
+        $this->skipIfCi();
+
+        // Arrange
+        $this->tester->mockFactoryMethod('createRepository', $this->createRepositoryMock());
+        $this->tester->registerSnapshotRepository(static::REPOSITORY_NAME);
+
+        // Act
+        $result = $this->tester->getFacade()->existsSnapshotRepository(static::REPOSITORY_NAME);
+
+        // Assert
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SearchElasticsearch\Business\Snapshot\RepositoryInterface
+     */
+    protected function createRepositoryMock(): RepositoryInterface
+    {
+        $repositoryMock = $this->getMockBuilder(Repository::class)
+            ->setConstructorArgs([$this->tester->getSnapshot()])
+            ->setMethods(['buildRepositorySettings'])
+            ->getMock();
+
+        $repositoryMock->method('buildRepositorySettings')->willReturnCallback(function (): array {
+            $settings = func_get_arg(2) ?? [];
+
+            return array_merge(
+                $settings,
+                ['location' => $this->tester->getVirtualRepositoryLocation()]
+            );
+        });
+
+        return $repositoryMock;
+    }
+
+    /**
+     * @param string $repositoryName
+     *
+     * @return void
+     */
+    protected function assertRepositoryExists(string $repositoryName): void
+    {
+        $this->assertTrue(
+            $this->createRepositoryMock()->existsSnapshotRepository($repositoryName)
+        );
+    }
+
+    /**
+     * @group somefoo
+     *
+     * @return void
+     */
+    public function testCanCreateSnapshot(): void
+    {
+        $this->skipIfCi();
+
+        // Arrange
+        $this->tester->addCleanupForSnapshotInRepository(static::REPOSITORY_NAME, static::SNAPSHOT_NAME);
+        $this->tester->registerSnapshotRepository(static::REPOSITORY_NAME);
+
+        // Act
+        $result = $this->tester->getFacade()->createSnapshot(static::REPOSITORY_NAME, static::SNAPSHOT_NAME);
+
+        // Assert
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCanCheckForSnapshotExistence(): void
+    {
+        $this->skipIfCi();
+
+        // Arrange
+        $this->tester->createSnapshotInRepository(static::REPOSITORY_NAME, static::SNAPSHOT_NAME);
+
+        // Act
+        $result = $this->tester->getFacade()->existsSnapshot(static::REPOSITORY_NAME, static::SNAPSHOT_NAME);
+
+        // Assert
+        $this->assertTrue($result);
+        $this->assertTrue($this->tester->existsSnapshotInRepository(static::REPOSITORY_NAME, static::SNAPSHOT_NAME));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCanDeleteSnapshot(): void
+    {
+        $this->skipIfCi();
+
+        // Arrange
+        $this->tester->createSnapshotInRepository(static::REPOSITORY_NAME, static::SNAPSHOT_NAME);
+
+        // Act
+        $result = $this->tester->getFacade()->deleteSnapshot(static::REPOSITORY_NAME, static::SNAPSHOT_NAME);
+
+        // Assert
+        $this->assertTrue($result);
+        $this->assertFalse($this->tester->existsSnapshotInRepository(static::REPOSITORY_NAME, static::SNAPSHOT_NAME));
+    }
+
+    /**
+     * @return void
+     */
+    protected function skipIfCi(): void
+    {
+        if (getenv('TRAVIS')) {
+            $this->markTestSkipped('Travis not set up properly');
+        }
     }
 }
