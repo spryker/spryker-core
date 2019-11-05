@@ -322,7 +322,7 @@ class ClassDefinition implements ClassDefinitionInterface
     protected function buildValueObjectPropertyDefinition(array $property): array
     {
         $property['is_value_object'] = true;
-        $property[static::TYPE_FULLY_QUALIFIED] = static::SUPPORTED_VALUE_OBJECTS[$property['type']][static::TYPE_FULLY_QUALIFIED];
+        $property[static::TYPE_FULLY_QUALIFIED] = $this->getValueObjectFullyQualifiedClassName($property);
 
         return $property;
     }
@@ -355,7 +355,7 @@ class ClassDefinition implements ClassDefinitionInterface
     protected function getPropertyType(array $property): string
     {
         if ($this->isValueObject($property)) {
-            return sprintf('\%s|null', static::SUPPORTED_VALUE_OBJECTS[$property['type']][static::TYPE_FULLY_QUALIFIED]);
+            return sprintf('\%s|null', $this->getValueObjectFullyQualifiedClassName($property));
         }
 
         if ($this->isTypedArray($property)) {
@@ -398,13 +398,13 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         if ($this->isValueObject($property)) {
             if (empty(static::SUPPORTED_VALUE_OBJECTS[$property['type']][static::EXTRA_TYPE_HINTS])) {
-                return sprintf('\%s', static::SUPPORTED_VALUE_OBJECTS[$property['type']][static::TYPE_FULLY_QUALIFIED]);
+                return sprintf('\%s', $this->getValueObjectFullyQualifiedClassName($property));
             }
 
             return sprintf(
                 '%s|\%s',
                 static::SUPPORTED_VALUE_OBJECTS[$property['type']][static::EXTRA_TYPE_HINTS],
-                static::SUPPORTED_VALUE_OBJECTS[$property['type']][static::TYPE_FULLY_QUALIFIED]
+                $this->getValueObjectFullyQualifiedClassName($property)
             );
         }
 
@@ -578,7 +578,7 @@ class ClassDefinition implements ClassDefinitionInterface
     protected function getReturnType(array $property): string
     {
         if ($this->isValueObject($property)) {
-            return sprintf('\%s|null', static::SUPPORTED_VALUE_OBJECTS[$property['type']][static::TYPE_FULLY_QUALIFIED]);
+            return sprintf('\%s|null', $this->getValueObjectFullyQualifiedClassName($property));
         }
 
         if ($this->isTypedArray($property)) {
@@ -658,7 +658,7 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if ($this->isValueObject($property)) {
-            $this->addUseStatement(static::SUPPORTED_VALUE_OBJECTS[$property['type']][static::TYPE_FULLY_QUALIFIED]);
+            $this->addUseStatement($this->getValueObjectFullyQualifiedClassName($property));
 
             return false;
         }
@@ -733,7 +733,9 @@ class ClassDefinition implements ClassDefinitionInterface
         $method = $this->addDefaultNull($method, $property);
 
         if ($this->isValueObject($property)) {
-            $method['valueObject'] = substr(strrchr(static::SUPPORTED_VALUE_OBJECTS[$property['type']][static::TYPE_FULLY_QUALIFIED], "\\"), 1);
+            $method['valueObject'] = $this->getShortClassName(
+                $this->getValueObjectFullyQualifiedClassName($property)
+            );
         }
 
         $this->methods[$methodName] = $method;
@@ -953,6 +955,26 @@ class ClassDefinition implements ClassDefinitionInterface
                 $name
             ));
         }
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string
+     */
+    public function getValueObjectFullyQualifiedClassName(array $property): string
+    {
+        return static::SUPPORTED_VALUE_OBJECTS[$property['type']][static::TYPE_FULLY_QUALIFIED];
+    }
+
+    /**
+     * @param string $fullyQualifiedClassName
+     *
+     * @return string
+     */
+    protected function getShortClassName(string $fullyQualifiedClassName): string
+    {
+        return substr(strrchr($fullyQualifiedClassName, "\\"), 1);
     }
 
     /**
