@@ -13,6 +13,7 @@ use Spryker\Client\Kernel\Locator;
 use Spryker\Client\Kernel\PermissionAwareTrait;
 use Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageInterface;
 use Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToSynchronizationServiceInterface;
+use Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToUtilEncodingServiceInterface;
 use Spryker\Client\ProductOptionStorage\Price\ValuePriceReaderInterface;
 use Spryker\Client\ProductOptionStorage\ProductOptionStorageConfig;
 use Spryker\Shared\Kernel\Store;
@@ -43,21 +44,29 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     protected $valuePriceReader;
 
     /**
+     * @var \Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @param \Spryker\Client\ProductOptionStorage\Dependency\Client\ProductOptionStorageToStorageInterface $storageClient
      * @param \Spryker\Shared\Kernel\Store $store
      * @param \Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ProductOptionStorage\Price\ValuePriceReaderInterface $valuePriceReader
+     * @param \Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
         ProductOptionStorageToStorageInterface $storageClient,
         Store $store,
         ProductOptionStorageToSynchronizationServiceInterface $synchronizationService,
-        ValuePriceReaderInterface $valuePriceReader
+        ValuePriceReaderInterface $valuePriceReader,
+        ProductOptionStorageToUtilEncodingServiceInterface $utilEncodingService
     ) {
         $this->storageClient = $storageClient;
         $this->store = $store;
         $this->synchronizationService = $synchronizationService;
         $this->valuePriceReader = $valuePriceReader;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -127,7 +136,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
             return $formattedCollectorData;
         }
 
-        $key = $this->generateKey($idProductAbstract);
+        $key = $this->generateProductOptionStorageKey($idProductAbstract);
 
         return $this->storageClient->get($key) ?? [];
     }
@@ -158,15 +167,81 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      *
      * @return string
      */
-    protected function generateKey($idProductAbstract)
+    protected function generateProductOptionStorageKey(int $idProductAbstract): string
     {
-        $synchronizationDataTransfer = new SynchronizationDataTransfer();
-        $synchronizationDataTransfer
+        $synchronizationDataTransfer = (new SynchronizationDataTransfer())
             ->setStore($this->store->getStoreName())
-            ->setReference($idProductAbstract);
+            ->setReference((string)$idProductAbstract);
 
         return $this->synchronizationService
             ->getStorageKeyBuilder(SharedProductOptionStorageConfig::PRODUCT_ABSTRACT_OPTION_RESOURCE_NAME)
             ->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[]
+     */
+    public function getBulkProductOptions(array $productAbstractIds): array
+    {
+        $productOptionStorageDataItems = $this->getProductOptionStorageDataItemsByProductAbstractIds($productAbstractIds);
+        $productAbstractOptionStorageTransfers = [];
+
+        foreach ($productOptionStorageDataItems as $productOptionStorageDataItem) {
+            $productAbstractOptionStorageTransfer = $this->mapToProductAbstractOptionStorageTransfer($productOptionStorageDataItem);
+            $productAbstractOptionStorageTransfers[$productAbstractOptionStorageTransfer->getIdProductAbstract()] = $productAbstractOptionStorageTransfer;
+        }
+
+        return $productAbstractOptionStorageTransfers;
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return int[][]
+     */
+    protected function getProductOptionStorageDataItemsByProductAbstractIds(array $productAbstractIds): array
+    {
+        $productOptionStorageKeys = $this->generateProductOptionStorageKeys($productAbstractIds);
+
+        return $this->getProductOptionStorageDataItemsByProductOptionStorageKeys($productOptionStorageKeys);
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return string[]
+     */
+    protected function generateProductOptionStorageKeys(array $productAbstractIds): array
+    {
+        $productOptionStorageKeys = [];
+
+        foreach ($productAbstractIds as $idProductAbstract) {
+            $productOptionStorageKeys[$idProductAbstract] = $this->generateProductOptionStorageKey($idProductAbstract);
+        }
+
+        return $productOptionStorageKeys;
+    }
+
+    /**
+     * @param string[] $productOptionStorageKeys
+     *
+     * @return array
+     */
+    protected function getProductOptionStorageDataItemsByProductOptionStorageKeys(array $productOptionStorageKeys): array
+    {
+        $productOptionStorageData = [];
+        $productOptionStorageEncodedData = $this->storageClient->getMulti($productOptionStorageKeys);
+
+        foreach ($productOptionStorageEncodedData as $productOptionStorageKey => $productOptionStorageEncodedDataItem) {
+            if (!$productOptionStorageEncodedDataItem) {
+                continue;
+            }
+
+            $productOptionStorageData[$productOptionStorageKey] = $this->utilEncodingService->decodeJson($productOptionStorageEncodedDataItem, true);
+        }
+
+        return $productOptionStorageData;
     }
 }

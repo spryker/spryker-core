@@ -23,4 +23,11 @@ interface ProductOptionStorageReaderInterface
      * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer|null
      */
     public function getProductOptionsForCurrentStore($idProductAbstract);
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[]
+     */
+    public function getBulkProductOptions(array $productAbstractIds): array;
 }
