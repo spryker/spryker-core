@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\MerchantProfileStorageTransfer;
 interface MerchantProfileStorageClientInterface
 {
     /**
+     * Specification:
      * - Maps raw merchant profile storage data to transfer object.
      *
      * @api
@@ -21,4 +22,28 @@ interface MerchantProfileStorageClientInterface
      * @return \Generated\Shared\Transfer\MerchantProfileStorageTransfer
      */
     public function mapMerchantProfileStorageData(array $data): MerchantProfileStorageTransfer;
+
+    /**
+     * Specification:
+     * - Finds merchant profile data by idMerchant.
+     *
+     * @api
+     *
+     * @param int $idMerchant
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileStorageTransfer|null
+     */
+    public function findMerchantProfileStorageData(int $idMerchant): ?MerchantProfileStorageTransfer;
+
+    /**
+     * Specification:
+     * - Finds merchant profile data by merchantIds.
+     *
+     * @api
+     *
+     * @param int[] $merchantIds
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileStorageTransfer[]
+     */
+    public function findMerchantProfileStorageList(array $merchantIds): array;
 }

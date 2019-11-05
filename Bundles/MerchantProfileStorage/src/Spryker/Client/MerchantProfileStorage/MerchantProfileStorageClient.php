@@ -30,4 +30,36 @@ class MerchantProfileStorageClient extends AbstractClient implements MerchantPro
             ->createMerchantProfileStorageMapper()
             ->mapMerchantProfileStorageDataToMerchantProfileStorageTransfer($data);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idMerchant
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileStorageTransfer|null
+     */
+    public function findMerchantProfileStorageData(int $idMerchant): ?MerchantProfileStorageTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantProfileStorageReader()
+            ->findMerchantProfileStorageData($idMerchant);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $merchantIds
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileStorageTransfer[]
+     */
+    public function findMerchantProfileStorageList(array $merchantIds): array
+    {
+        return $this->getFactory()
+            ->createMerchantProfileStorageReader()
+            ->findMerchantProfileStorageList($merchantIds);
+    }
 }
