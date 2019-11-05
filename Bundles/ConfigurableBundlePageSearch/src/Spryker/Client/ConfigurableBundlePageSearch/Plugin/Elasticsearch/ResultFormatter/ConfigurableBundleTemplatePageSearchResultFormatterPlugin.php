@@ -7,12 +7,9 @@
 
 namespace Spryker\Client\ConfigurableBundlePageSearch\Plugin\Elasticsearch\ResultFormatter;
 
-use ArrayObject;
 use Elastica\ResultSet;
 use Generated\Shared\Search\PageIndexMap;
-use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
-use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticsearchResultFormatterPlugin;
 
 class ConfigurableBundleTemplatePageSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
@@ -40,27 +37,12 @@ class ConfigurableBundleTemplatePageSearchResultFormatterPlugin extends Abstract
         $configurableBundleTemplateTransfers = [];
 
         foreach ($searchResult->getResults() as $document) {
-            $configurableBundleTemplateTransfers[] = $this->mapDataToConfigurableBundleTemplateTransfer(
-                $document->getSource()[PageIndexMap::SEARCH_RESULT_DATA]
+            $configurableBundleTemplateTransfers[] = (new ConfigurableBundleTemplateTransfer())->fromArray(
+                $document->getSource()[PageIndexMap::SEARCH_RESULT_DATA],
+                true
             );
         }
 
         return $configurableBundleTemplateTransfers;
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
-     */
-    protected function mapDataToConfigurableBundleTemplateTransfer(array $data): ConfigurableBundleTemplateTransfer
-    {
-        $configurableBundleTemplateTransfer = new ConfigurableBundleTemplateTransfer();
-        $configurableBundleTemplateTransfer->fromArray($data, true);
-        $configurableBundleTemplateTransfer->setTranslations(new ArrayObject([
-            (new ConfigurableBundleTemplateTranslationTransfer())->fromArray($data[ConfigurableBundleTemplatePageSearchTransfer::TRANSLATIONS], true),
-        ]));
-
-        return $configurableBundleTemplateTransfer;
     }
 }

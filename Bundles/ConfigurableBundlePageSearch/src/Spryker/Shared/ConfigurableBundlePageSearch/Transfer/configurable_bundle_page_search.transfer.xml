@@ -8,8 +8,6 @@
         <property name="fkConfigurableBundleTemplate" type="int"/>
         <property name="name" type="string"/>
         <property name="uuid" type="string"/>
-        <property name="isActive" type="bool"/>
-        <property name="translations" type="string[]" singular="translation"/>
         <property name="locale" type="string"/>
         <property name="type" type="string"/>
         <property name="key" type="string"/>
