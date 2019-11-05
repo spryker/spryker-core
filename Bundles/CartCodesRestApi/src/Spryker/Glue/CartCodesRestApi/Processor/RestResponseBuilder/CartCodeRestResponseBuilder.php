@@ -7,7 +7,9 @@
 
 namespace Spryker\Glue\CartCodesRestApi\Processor\RestResponseBuilder;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\CartCodeMapperInterface;
 use Spryker\Glue\CartsRestApi\CartsRestApiResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -58,7 +60,7 @@ class CartCodeRestResponseBuilder implements CartCodeRestResponseBuilderInterfac
     ): RestResponseInterface {
         $quoteTransfer = $cartCodeOperationResultTransfer->getQuote();
         if (!$quoteTransfer) {
-            return $this->cartsRestApiResource->createCartRestResponseWithErrors($cartCodeOperationResultTransfer->getMessages());
+            return $this->createFailedErrorResponse($cartCodeOperationResultTransfer->getMessages());
         }
 
         return $this->cartsRestApiResource->createCartRestResponse($quoteTransfer, $restRequest);
@@ -73,9 +75,30 @@ class CartCodeRestResponseBuilder implements CartCodeRestResponseBuilderInterfac
     {
         $quoteTransfer = $cartCodeOperationResultTransfer->getQuote();
         if (!$quoteTransfer) {
-            return $this->cartsRestApiResource->createCartRestResponseWithErrors($cartCodeOperationResultTransfer->getMessages());
+            return $this->createFailedErrorResponse($cartCodeOperationResultTransfer->getMessages());
         }
 
         return $this->cartsRestApiResource->createGuestCartRestResponse($quoteTransfer);
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createFailedErrorResponse(ArrayObject $messageTransfers): RestResponseInterface
+    {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+
+        foreach ($messageTransfers as $messageTransfer) {
+            $restResponse->addError(
+                $this->cartCodeMapper->mapMessageTransferToRestErrorMessageTransfer(
+                    $messageTransfer,
+                    new RestErrorMessageTransfer()
+                )
+            );
+        }
+
+        return $restResponse;
     }
 }

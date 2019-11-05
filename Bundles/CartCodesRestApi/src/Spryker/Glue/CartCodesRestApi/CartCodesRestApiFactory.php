@@ -24,6 +24,7 @@ use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
  * @method \Spryker\Client\CartCodesRestApi\CartCodesRestApiClientInterface getClient()
+ * @method \Spryker\Glue\CartCodesRestApi\CartCodesRestApiConfig getConfig()
  */
 class CartCodesRestApiFactory extends AbstractFactory
 {
@@ -66,7 +67,7 @@ class CartCodesRestApiFactory extends AbstractFactory
      */
     public function createCartCodeMapper(): CartCodeMapperInterface
     {
-        return new CartCodeMapper();
+        return new CartCodeMapper($this->getConfig());
     }
 
     /**

@@ -10,16 +10,12 @@ namespace Spryker\Zed\CartCodesRestApi\Business\CartCodeAdder;
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\CartCodesRestApi\CartCodesRestApiConfig;
 use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeInterface;
 use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeInterface;
 
 class CartCodeAdder implements CartCodeAdderInterface
 {
-    /**
-     * @uses \Spryker\Shared\CartsRestApi\CartsRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND
-     */
-    protected const ERROR_IDENTIFIER_CART_NOT_FOUND = 'ERROR_IDENTIFIER_CART_NOT_FOUND';
-
     /**
      * @var \Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeInterface
      */
@@ -53,19 +49,54 @@ class CartCodeAdder implements CartCodeAdderInterface
         $quoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer();
+            return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
+                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND
+            );
         }
 
-        return $this->cartCodeFacade->addCandidate($quoteResponseTransfer->getQuoteTransfer(), $voucherCode);
+        $cartCodeOperationResultTransfer = $this->cartCodeFacade->addCandidate($quoteResponseTransfer->getQuoteTransfer(), $voucherCode);
+        $quoteTransfer = $cartCodeOperationResultTransfer->getQuote();
+
+        $discountTransfers = array_merge(
+            $quoteTransfer->getCartRuleDiscounts()->getArrayCopy(),
+            $quoteTransfer->getVoucherDiscounts()->getArrayCopy()
+        );
+
+        if (!$this->checkIfCartCodeAdded($discountTransfers, $voucherCode)) {
+            return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
+                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_CANT_BE_ADDED
+            );
+        }
+
+        return $cartCodeOperationResultTransfer;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discountTransfers
+     * @param string $voucherCode
+     *
+     * @return bool
+     */
+    protected function checkIfCartCodeAdded(array $discountTransfers, string $voucherCode): bool
+    {
+        foreach ($discountTransfers as $discountTransfer) {
+            if ($discountTransfer->getVoucherCode() === $voucherCode) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $errorIdentifier
+     *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    protected function createCartCodeOperationResultTransferWithErrorMessageTransfer(): CartCodeOperationResultTransfer
+    protected function createCartCodeOperationResultTransferWithErrorMessageTransfer(string $errorIdentifier): CartCodeOperationResultTransfer
     {
         return (new CartCodeOperationResultTransfer())->addMessage(
-            (new MessageTransfer())->setValue(static::ERROR_IDENTIFIER_CART_NOT_FOUND)
+            (new MessageTransfer())->setValue($errorIdentifier)
         );
     }
 }

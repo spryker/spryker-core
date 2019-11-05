@@ -10,6 +10,7 @@ namespace Spryker\Zed\CartCodesRestApi\Business\CartCodeDeleter;
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\CartCodesRestApi\CartCodesRestApiConfig;
 use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeInterface;
 use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeInterface;
 
@@ -55,7 +56,9 @@ class CartCodeDeleter implements CartCodeDeleterInterface
         $quoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createCartCodeOperationResultTransferWithCartNotFoundErrorMessageTransfer();
+            return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
+                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND
+            );
         }
 
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
@@ -73,29 +76,23 @@ class CartCodeDeleter implements CartCodeDeleterInterface
         }
 
         if (!$voucherCode) {
-            return $this->createCartCodeOperationResultTransferWithInvalidDiscountIdErrorMessageTransfer();
+            return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
+                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_CANT_BE_DELETED
+            );
         }
 
         return $this->cartCodeFacade->removeCode($quoteTransfer, $voucherCode);
     }
 
     /**
+     * @param string $errorIdentifier
+     *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    protected function createCartCodeOperationResultTransferWithCartNotFoundErrorMessageTransfer(): CartCodeOperationResultTransfer
+    protected function createCartCodeOperationResultTransferWithErrorMessageTransfer(string $errorIdentifier): CartCodeOperationResultTransfer
     {
         return (new CartCodeOperationResultTransfer())->addMessage(
-            (new MessageTransfer())->setValue(static::ERROR_IDENTIFIER_CART_NOT_FOUND)
-        );
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
-     */
-    protected function createCartCodeOperationResultTransferWithInvalidDiscountIdErrorMessageTransfer(): CartCodeOperationResultTransfer
-    {
-        return (new CartCodeOperationResultTransfer())->addMessage(
-            (new MessageTransfer())->setValue(static::ERROR_MESSAGE_INVALID_DISCOUNT_ID)
+            (new MessageTransfer())->setValue($errorIdentifier)
         );
     }
 }
