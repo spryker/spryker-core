@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Cms\Business\Page;
 
-use Generated\Shared\Transfer\CmsPageTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Spryker\Shared\Cms\CmsConstants;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface;
@@ -29,7 +28,7 @@ class PageRemover implements PageRemoverInterface
     /**
      * @var \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageBeforeDeletePluginInterface[]
      */
-    protected $preCmsPageRelationDeletePlugins;
+    protected $cmsPageBeforeDeletePlugins;
 
     /**
      * @var \Spryker\Zed\Cms\Business\Page\CmsPageMapperInterface
@@ -39,18 +38,18 @@ class PageRemover implements PageRemoverInterface
     /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface $touchFacade
-     * @param \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageBeforeDeletePluginInterface[] $preCmsPageRelationDeletePlugins
+     * @param \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageBeforeDeletePluginInterface[] $cmsPageBeforeDeletePlugins
      * @param \Spryker\Zed\Cms\Business\Page\CmsPageMapperInterface $cmsPageMapper
      */
     public function __construct(
         CmsQueryContainerInterface $cmsQueryContainer,
         CmsToTouchFacadeInterface $touchFacade,
-        array $preCmsPageRelationDeletePlugins,
+        array $cmsPageBeforeDeletePlugins,
         CmsPageMapperInterface $cmsPageMapper
     ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->touchFacade = $touchFacade;
-        $this->preCmsPageRelationDeletePlugins = $preCmsPageRelationDeletePlugins;
+        $this->cmsPageBeforeDeletePlugins = $cmsPageBeforeDeletePlugins;
         $this->cmsPageMapper = $cmsPageMapper;
     }
 
@@ -69,7 +68,7 @@ class PageRemover implements PageRemoverInterface
             $cmsPageEntity = $this->findCmsPageEntity($idCmsPage);
 
             if ($cmsPageEntity) {
-                $this->runPreCmsPageRelationDeletePlugins($cmsPageEntity);
+                $this->runCmsPageBeforeDeletePlugins($cmsPageEntity);
                 $this->deletePageWithRelations($cmsPageEntity);
                 $this->touchDeletedPage($idCmsPage);
             }
@@ -101,26 +100,13 @@ class PageRemover implements PageRemoverInterface
      *
      * @return void
      */
-    protected function runPreCmsPageRelationDeletePlugins(SpyCmsPage $cmsPageEntity): void
+    protected function runCmsPageBeforeDeletePlugins(SpyCmsPage $cmsPageEntity): void
     {
         $cmsPageTransfer = $this->cmsPageMapper->mapCmsPageTransfer($cmsPageEntity);
 
-        foreach ($this->preCmsPageRelationDeletePlugins as $preCmsPageRelationDeletePlugin) {
+        foreach ($this->cmsPageBeforeDeletePlugins as $preCmsPageRelationDeletePlugin) {
             $preCmsPageRelationDeletePlugin->execute($cmsPageTransfer);
         }
-    }
-
-    /**
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
-     *
-     * @return \Generated\Shared\Transfer\CmsPageTransfer
-     */
-    protected function mapCmsPageEntityToTransfer(SpyCmsPage $cmsPageEntity): CmsPageTransfer
-    {
-        $cmsPageTransfer = new CmsPageTransfer();
-        $cmsPageTransfer->fromArray($cmsPageEntity->toArray(), true);
-
-        return $cmsPageTransfer->setFkPage($cmsPageEntity->getIdCmsPage());
     }
 
     /**

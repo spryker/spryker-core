@@ -206,7 +206,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     protected function addPreCmsPageRelationDeletePlugins(Container $container): void
     {
         $container[self::PLUGINS_CMS_PAGE_PRE_RELATION_DELETE] = function (Container $container) {
-            return $this->getPreCmsPageRelationDeletePlugins();
+            return $this->getCmsPageBeforeDeletePlugins();
         };
     }
 
@@ -261,7 +261,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageBeforeDeletePluginInterface[]
      */
-    protected function getPreCmsPageRelationDeletePlugins(): array
+    protected function getCmsPageBeforeDeletePlugins(): array
     {
         return [];
     }

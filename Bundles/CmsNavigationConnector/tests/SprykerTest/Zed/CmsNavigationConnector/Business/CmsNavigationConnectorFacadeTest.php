@@ -52,6 +52,7 @@ class CmsNavigationConnectorFacadeTest extends Unit
      */
     public function testDeleteCmsPageNavigationNodes(): void
     {
+        // Arrange
         $cmsPageTransfer = $this->createCmsPage();
         $navigationNodes = $this->createNavigationNodesByCmsPage($cmsPageTransfer);
 
@@ -73,6 +74,7 @@ class CmsNavigationConnectorFacadeTest extends Unit
      */
     protected function setUpNavigationNodeCmsTest($isActive)
     {
+        // Arrange
         $cmsPageTransfer = $this->createCmsPage($isActive);
         $navigationNodes = $this->createNavigationNodesByCmsPage($cmsPageTransfer);
 
