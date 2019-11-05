@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\Search\Business\DataMapper;
@@ -24,7 +24,6 @@ class SearchDataMapperAdapter implements PageDataMapperInterface
         $this->searchDataMapper = $searchDataMapper;
     }
 
-
     /**
      * @deprecated Use transferDataByMapperName() instead.
      *
@@ -43,8 +42,6 @@ class SearchDataMapperAdapter implements PageDataMapperInterface
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $mapperName
-     *
-     * @throws \Spryker\Zed\Search\Business\Exception\PluginNotFoundException
      *
      * @return array
      */

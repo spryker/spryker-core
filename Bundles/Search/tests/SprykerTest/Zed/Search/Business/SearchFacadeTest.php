@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Search\Business;
 
 use Codeception\Test\Unit;
 use Elastica\Snapshot;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Client\Search\Provider\SearchClientProvider;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\SnapshotHandler;
 use Spryker\Zed\Search\Business\SearchBusinessFactory;
@@ -131,9 +132,33 @@ class SearchFacadeTest extends Unit
     }
 
     /**
+     * @dataProvider canMapRawDataToSearchDataProvider
+     *
+     * @param array $inputData
+     * @param array $expected
+     * @param string $localeName
+     * @param string $mapperName
+     *
      * @return void
      */
-    public function testCanWriteDocument(): void
+    public function testCanMapRawDataToSearchData(array $inputData, array $expected, string $localeName, string $mapperName): void
     {
+        // Arrange
+        $localeTransfer = new LocaleTransfer();
+        $localeTransfer->setLocaleName($localeName);
+
+        // Act
+        $result = $this->tester->getFacade()->transformPageMapToDocumentByMapperName($inputData, $localeTransfer, $mapperName);
+
+        // Assert
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @return array
+     */
+    public function canMapRawDataToSearchDataProvider(): array
+    {
+        return require codecept_data_dir('Fixtures/SearchDataMap/search_data_map_test_provider_data.php');
     }
 }
