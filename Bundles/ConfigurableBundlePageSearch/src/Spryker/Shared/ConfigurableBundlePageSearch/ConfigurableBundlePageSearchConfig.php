@@ -32,7 +32,7 @@ class ConfigurableBundlePageSearchConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Queue name, used for processing Configurable Bundle messages.
+     * - Queue name, used for processing Configurable Bundle error messages.
      *
      * @api
      */

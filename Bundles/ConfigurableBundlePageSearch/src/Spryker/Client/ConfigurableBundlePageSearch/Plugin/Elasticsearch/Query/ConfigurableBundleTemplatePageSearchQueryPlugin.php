@@ -54,7 +54,8 @@ class ConfigurableBundleTemplatePageSearchQueryPlugin extends AbstractPlugin imp
     {
         $query = new Query();
 
-        $this->setQuery($query)->setSource($query);
+        $query = $this->setQuery($query);
+        $query = $query->setSource([PageIndexMap::SEARCH_RESULT_DATA]);
 
         return $query;
     }
@@ -62,40 +63,26 @@ class ConfigurableBundleTemplatePageSearchQueryPlugin extends AbstractPlugin imp
     /**
      * @param \Elastica\Query $baseQuery
      *
-     * @return $this
+     * @return \Elastica\Query
      */
-    protected function setQuery(Query $baseQuery)
+    protected function setQuery(Query $baseQuery): Query
     {
         $boolQuery = new BoolQuery();
-        $this->setTypeFilter($boolQuery);
+        $boolQuery = $this->setTypeFilter($boolQuery);
 
-        $baseQuery->setQuery($boolQuery);
-
-        return $this;
+        return $baseQuery->setQuery($boolQuery);
     }
 
     /**
      * @param \Elastica\Query\BoolQuery $boolQuery
      *
-     * @return void
+     * @return \Elastica\Query\BoolQuery
      */
-    protected function setTypeFilter(BoolQuery $boolQuery): void
+    protected function setTypeFilter(BoolQuery $boolQuery): BoolQuery
     {
         $typeFilter = new Match();
         $typeFilter->setField(PageIndexMap::TYPE, ConfigurableBundlePageSearchConfig::CONFIGURABLE_BUNDLE_TEMPLATE_RESOURCE_NAME);
 
-        $boolQuery->addMust($typeFilter);
-    }
-
-    /**
-     * @param \Elastica\Query $query
-     *
-     * @return $this
-     */
-    protected function setSource(Query $query)
-    {
-        $query->setSource([PageIndexMap::SEARCH_RESULT_DATA]);
-
-        return $this;
+        return $boolQuery->addMust($typeFilter);
     }
 }

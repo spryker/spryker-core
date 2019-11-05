@@ -17,7 +17,7 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticse
 
 class ConfigurableBundleTemplatePageSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
-    public const NAME = 'ConfigurableBundleTemplatePageSearchResultFormatterPlugin';
+    public const NAME = 'ConfigurableBundleTemplateCollection';
 
     /**
      * @api
