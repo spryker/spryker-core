@@ -15,14 +15,20 @@ use Spryker\Yves\Session\Plugin\Application\SessionApplicationPlugin;
 use Spryker\Yves\Session\Plugin\EventDispatcher\SessionEventDispatcherPlugin;
 use Spryker\Yves\Session\SessionConfig;
 use Spryker\Yves\Session\SessionFactory;
-use SprykerTest\Client\Testify\Helper\ClientHelper;
-use SprykerTest\Shared\Testify\Helper\ConfigHelper;
-use SprykerTest\Yves\EventDispatcher\Helper\EventDispatcherHelper;
-use SprykerTest\Yves\Testify\Helper\ApplicationHelper;
-use SprykerTest\Yves\Testify\Helper\FactoryHelper;
+use SprykerTest\Client\Testify\Helper\ClientHelperTrait;
+use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
+use SprykerTest\Yves\EventDispatcher\Helper\EventDispatcherHelperTrait;
+use SprykerTest\Yves\Testify\Helper\ApplicationHelperTrait;
+use SprykerTest\Yves\Testify\Helper\FactoryHelperTrait;
 
 class SessionHelper extends Module
 {
+    use ApplicationHelperTrait;
+    use EventDispatcherHelperTrait;
+    use ConfigHelperTrait;
+    use FactoryHelperTrait;
+    use ClientHelperTrait;
+
     protected const MODULE_NAME = 'Session';
 
     /**
@@ -75,17 +81,6 @@ class SessionHelper extends Module
     }
 
     /**
-     * @return \SprykerTest\Shared\Testify\Helper\ConfigHelper
-     */
-    protected function getConfigHelper(): ConfigHelper
-    {
-        /** @var \SprykerTest\Shared\Testify\Helper\ConfigHelper $configHelper */
-        $configHelper = $this->getModule('\\' . ConfigHelper::class);
-
-        return $configHelper;
-    }
-
-    /**
      * @return \Spryker\Yves\Session\SessionFactory
      */
     protected function getFactory(): SessionFactory
@@ -97,17 +92,6 @@ class SessionHelper extends Module
     }
 
     /**
-     * @return \SprykerTest\Yves\Testify\Helper\FactoryHelper
-     */
-    protected function getFactoryHelper(): FactoryHelper
-    {
-        /** @var \SprykerTest\Yves\Testify\Helper\FactoryHelper $factoryHelper */
-        $factoryHelper = $this->getModule('\\' . FactoryHelper::class);
-
-        return $factoryHelper;
-    }
-
-    /**
      * @return \Spryker\Client\Session\SessionClient
      */
     protected function getClient(): SessionClient
@@ -116,38 +100,5 @@ class SessionHelper extends Module
         $sessionClient = $this->getClientHelper()->getClient(static::MODULE_NAME);
 
         return $sessionClient;
-    }
-
-    /**
-     * @return \SprykerTest\Client\Testify\Helper\ClientHelper
-     */
-    protected function getClientHelper(): ClientHelper
-    {
-        /** @var \SprykerTest\Client\Testify\Helper\ClientHelper $clientHelper */
-        $clientHelper = $this->getModule('\\' . ClientHelper::class);
-
-        return $clientHelper;
-    }
-
-    /**
-     * @return \SprykerTest\Yves\Testify\Helper\ApplicationHelper
-     */
-    protected function getApplicationHelper(): ApplicationHelper
-    {
-        /** @var \SprykerTest\Yves\Testify\Helper\ApplicationHelper $applicationHelper */
-        $applicationHelper = $this->getModule('\\' . ApplicationHelper::class);
-
-        return $applicationHelper;
-    }
-
-    /**
-     * @return \SprykerTest\Yves\EventDispatcher\Helper\EventDispatcherHelper
-     */
-    protected function getEventDispatcherHelper(): EventDispatcherHelper
-    {
-        /** @var \SprykerTest\Yves\EventDispatcher\Helper\EventDispatcherHelper $eventDispatcherHelper */
-        $eventDispatcherHelper = $this->getModule('\\' . EventDispatcherHelper::class);
-
-        return $eventDispatcherHelper;
     }
 }

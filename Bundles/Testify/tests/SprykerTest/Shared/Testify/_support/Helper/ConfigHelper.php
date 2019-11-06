@@ -335,6 +335,10 @@ class ConfigHelper extends Module
     public function _after(TestInterface $test): void
     {
         $this->resetConfig();
+        $this->configStubs = [];
+        $this->mockedConfigMethods = [];
+        $this->sharedConfigStubs = [];
+        $this->mockedSharedConfigMethods = [];
     }
 
     /**

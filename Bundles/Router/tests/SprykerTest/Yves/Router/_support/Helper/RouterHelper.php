@@ -15,12 +15,15 @@ use Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin;
 use Spryker\Yves\Router\Route\Route;
 use Spryker\Yves\Router\Route\RouteCollection;
 use Spryker\Yves\Router\Router\ChainRouter;
-use SprykerTest\Service\Container\Helper\ContainerHelper;
-use SprykerTest\Yves\Testify\Helper\ApplicationHelper;
+use SprykerTest\Service\Container\Helper\ContainerHelperTrait;
+use SprykerTest\Yves\Testify\Helper\ApplicationHelperTrait;
 use Symfony\Component\Routing\Router;
 
 class RouterHelper extends Module
 {
+    use ApplicationHelperTrait;
+    use ContainerHelperTrait;
+
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
      */
@@ -87,17 +90,6 @@ class RouterHelper extends Module
     }
 
     /**
-     * @return \SprykerTest\Yves\Testify\Helper\ApplicationHelper
-     */
-    protected function getApplicationHelper(): ApplicationHelper
-    {
-        /** @var \SprykerTest\Yves\Testify\Helper\ApplicationHelper $applicationHelper */
-        $applicationHelper = $this->getModule('\\' . ApplicationHelper::class);
-
-        return $applicationHelper;
-    }
-
-    /**
      * @return \Spryker\Service\Container\ContainerInterface
      */
     protected function getContainer(): ContainerInterface
@@ -109,13 +101,12 @@ class RouterHelper extends Module
     }
 
     /**
-     * @return \SprykerTest\Service\Container\Helper\ContainerHelper
+     * @param \Codeception\TestInterface $test
+     *
+     * @return void
      */
-    protected function getContainerHelper(): ContainerHelper
+    public function _after(TestInterface $test): void
     {
-        /** @var \SprykerTest\Service\Container\Helper\ContainerHelper $containerHelper */
-        $containerHelper = $this->getModule('\\' . ContainerHelper::class);
-
-        return $containerHelper;
+        $this->routeCollection;
     }
 }

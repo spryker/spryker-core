@@ -13,12 +13,14 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Application\Application;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin;
-use SprykerTest\Service\Container\Helper\ContainerHelper;
+use SprykerTest\Service\Container\Helper\ContainerHelperTrait;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class ApplicationHelper extends Module
 {
+    use ContainerHelperTrait;
+
     /**
      * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_KERNEL
      */
@@ -30,7 +32,7 @@ class ApplicationHelper extends Module
     protected $application;
 
     /**
-     * @var \Symfony\Component\HttpKernel\HttpKernelBrowser
+     * @var \Symfony\Component\HttpKernel\HttpKernelBrowser|null
      */
     protected $httpKernelBrowser;
 
@@ -88,17 +90,6 @@ class ApplicationHelper extends Module
     }
 
     /**
-     * @return \SprykerTest\Service\Container\Helper\ContainerHelper
-     */
-    protected function getContainerHelper(): ContainerHelper
-    {
-        /** @var \SprykerTest\Service\Container\Helper\ContainerHelper $containerHelper */
-        $containerHelper = $this->getModule('\\' . ContainerHelper::class);
-
-        return $containerHelper;
-    }
-
-    /**
      * @return \Spryker\Shared\Application\Application
      */
     protected function getApplication(): Application
@@ -120,5 +111,6 @@ class ApplicationHelper extends Module
     public function _after(TestInterface $test): void
     {
         $this->application = null;
+        $this->httpKernelBrowser = null;
     }
 }

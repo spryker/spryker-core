@@ -14,9 +14,13 @@ use Codeception\TestInterface;
 use Exception;
 use Spryker\Yves\Kernel\AbstractFactory;
 use SprykerTest\Shared\Testify\Helper\ConfigHelper;
+use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 
 class FactoryHelper extends Module
 {
+    use DependencyProviderHelperTrait;
+    use ConfigHelperTrait;
+
     protected const FACTORY_CLASS_NAME_PATTERN = '\%1$s\Yves\%2$s\%2$sFactory';
     protected const MODULE_NAME_POSITION = 2;
 
@@ -161,17 +165,6 @@ class FactoryHelper extends Module
     }
 
     /**
-     * @return \SprykerTest\Shared\Testify\Helper\ConfigHelper
-     */
-    protected function getConfigHelper(): ConfigHelper
-    {
-        /** @var \SprykerTest\Shared\Testify\Helper\ConfigHelper $configHelper */
-        $configHelper = $this->getModule('\\' . ConfigHelper::class);
-
-        return $configHelper;
-    }
-
-    /**
      * @param \Spryker\Yves\Kernel\AbstractFactory $factory
      * @param string $moduleName
      *
@@ -194,17 +187,6 @@ class FactoryHelper extends Module
     protected function getContainer(string $moduleName)
     {
         return $this->getDependencyProviderHelper()->getModuleContainer($moduleName);
-    }
-
-    /**
-     * @return \SprykerTest\Yves\Testify\Helper\DependencyProviderHelper
-     */
-    protected function getDependencyProviderHelper(): DependencyProviderHelper
-    {
-        /** @var \SprykerTest\Yves\Testify\Helper\DependencyProviderHelper $dependencyProviderHelper */
-        $dependencyProviderHelper = $this->getModule('\\' . DependencyProviderHelper::class);
-
-        return $dependencyProviderHelper;
     }
 
     /**

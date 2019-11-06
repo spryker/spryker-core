@@ -90,6 +90,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected const SERVICE_DISPATCHER = 'dispatcher';
     protected const SERVICE_SECURITY_FIREWALLS = 'security.firewalls';
+    protected const SERVICE_SECURITY_AUTHORIZATION_CHECKER = 'security.authorization_checker';
 
     /**
      * Used to register routes for login_check and logout.
@@ -162,7 +163,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addAuthorizationChecker(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.authorization_checker', function (ContainerInterface $container) {
+        $container->set(static::SERVICE_SECURITY_AUTHORIZATION_CHECKER, function (ContainerInterface $container) {
             return new AuthorizationChecker(
                 $container->get('security.token_storage'),
                 $container->get('security.authentication_manager'),

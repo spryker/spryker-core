@@ -39,6 +39,11 @@ use Symfony\Component\Security\Http\SecurityEvents;
 class RememberMeSecurityPluginTest extends Unit
 {
     /**
+     * @uses \Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_AUTHORIZATION_CHECKER
+     */
+    protected const SERVICE_SECURITY_AUTHORIZATION_CHECKER = 'security.authorization_checker';
+
+    /**
      * @var \SprykerTest\Yves\Security\SecurityTester
      */
     protected $tester;
@@ -126,42 +131,8 @@ class RememberMeSecurityPluginTest extends Unit
     {
         $container = $this->tester->getContainer();
 
-        return $container->get('security.authorization_checker');
+        return $container->get(static::SERVICE_SECURITY_AUTHORIZATION_CHECKER);
     }
-
-//    public function addAuthentication()
-//    {
-//        $app = new Application();
-//        $app['debug'] = true;
-//        unset($app['exception_handler']);
-//        $app->register(new SessionServiceProvider(), [
-//            'session.test' => true,
-//        ]);
-//        $app->register(new SecurityServiceProvider());
-//        $app->register(new RememberMeServiceProvider());
-//        $app['security.firewalls'] = [
-//            'http-auth' => [
-//                'pattern' => '^.*$',
-//                'form' => true,
-//                'remember_me' => [],
-//                'logout' => true,
-//                'users' => [
-//                    'user' => ['ROLE_USER', '$2y$15$lzUNsTegNXvZW3qtfucV0erYBcEqWVeyOmjolB7R1uodsAVJ95vvu'],
-//                ],
-//            ],
-//        ];
-//        $app->get('/', function () use ($app) {
-//            if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY')) {
-//                return 'AUTHENTICATED_FULLY';
-//            } elseif ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-//                return 'AUTHENTICATED_REMEMBERED';
-//            } else {
-//                return 'AUTHENTICATED_ANONYMOUSLY';
-//            }
-//        });
-//
-//        return $app;
-//    }
 
     /**
      * @return void

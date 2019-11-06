@@ -39,6 +39,11 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerI
 class SecurityApplicationPluginTest extends Unit
 {
     /**
+     * @uses \Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_AUTHORIZATION_CHECKER
+     */
+    protected const SERVICE_SECURITY_AUTHORIZATION_CHECKER = 'security.authorization_checker';
+
+    /**
      * @var \SprykerTest\Yves\Security\SecurityTester
      */
     protected $tester;
@@ -253,11 +258,11 @@ class SecurityApplicationPluginTest extends Unit
 
             $content = is_object($user) ? $user->getUsername() : 'ANONYMOUS';
 
-            if ($container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            if ($container->get(static::SERVICE_SECURITY_AUTHORIZATION_CHECKER)->isGranted('IS_AUTHENTICATED_FULLY')) {
                 $content .= 'AUTHENTICATED';
             }
 
-            if ($container->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            if ($container->get(static::SERVICE_SECURITY_AUTHORIZATION_CHECKER)->isGranted('ROLE_ADMIN')) {
                 $content .= 'ADMIN';
             }
 
@@ -639,11 +644,11 @@ class SecurityApplicationPluginTest extends Unit
 
             $content = is_object($user) ? $user->getUsername() : 'ANONYMOUS';
 
-            if ($container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            if ($container->get(static::SERVICE_SECURITY_AUTHORIZATION_CHECKER)->isGranted('IS_AUTHENTICATED_FULLY')) {
                 $content .= 'AUTHENTICATED';
             }
 
-            if ($container->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            if ($container->get(static::SERVICE_SECURITY_AUTHORIZATION_CHECKER)->isGranted('ROLE_ADMIN')) {
                 $content .= 'ADMIN';
             }
 
@@ -681,11 +686,11 @@ class SecurityApplicationPluginTest extends Unit
             $user = $container->get('security.token_storage')->getToken()->getUser();
             $content = is_object($user) ? $user->getUsername() : 'ANONYMOUS';
 
-            if ($container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            if ($container->get(static::SERVICE_SECURITY_AUTHORIZATION_CHECKER)->isGranted('IS_AUTHENTICATED_FULLY')) {
                 $content .= 'AUTHENTICATED';
             }
 
-            if ($container->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            if ($container->get(static::SERVICE_SECURITY_AUTHORIZATION_CHECKER)->isGranted('ROLE_ADMIN')) {
                 $content .= 'ADMIN';
             }
 

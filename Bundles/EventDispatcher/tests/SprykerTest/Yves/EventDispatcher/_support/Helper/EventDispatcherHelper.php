@@ -13,11 +13,14 @@ use Codeception\TestInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
 use Spryker\Yves\EventDispatcher\EventDispatcherFactory;
 use Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin;
-use SprykerTest\Yves\Testify\Helper\ApplicationHelper;
-use SprykerTest\Yves\Testify\Helper\FactoryHelper;
+use SprykerTest\Yves\Testify\Helper\ApplicationHelperTrait;
+use SprykerTest\Yves\Testify\Helper\FactoryHelperTrait;
 
 class EventDispatcherHelper extends Module
 {
+    use ApplicationHelperTrait;
+    use FactoryHelperTrait;
+
     protected const MODULE_NAME = 'EventDispatcher';
 
     /**
@@ -88,27 +91,5 @@ class EventDispatcherHelper extends Module
         $eventDispatcherFactory = $factoryHelper->getFactory(static::MODULE_NAME);
 
         return $eventDispatcherFactory;
-    }
-
-    /**
-     * @return \SprykerTest\Yves\Testify\Helper\FactoryHelper
-     */
-    protected function getFactoryHelper(): FactoryHelper
-    {
-        /** @var \SprykerTest\Yves\Testify\Helper\FactoryHelper $factoryHelper */
-        $factoryHelper = $this->getModule('\\' . FactoryHelper::class);
-
-        return $factoryHelper;
-    }
-
-    /**
-     * @return \SprykerTest\Yves\Testify\Helper\ApplicationHelper
-     */
-    protected function getApplicationHelper(): ApplicationHelper
-    {
-        /** @var \SprykerTest\Yves\Testify\Helper\ApplicationHelper $applicationHelper */
-        $applicationHelper = $this->getModule('\\' . ApplicationHelper::class);
-
-        return $applicationHelper;
     }
 }
