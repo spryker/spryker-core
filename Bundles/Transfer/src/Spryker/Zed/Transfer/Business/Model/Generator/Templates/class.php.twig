@@ -109,7 +109,7 @@ class {{ className }} extends {{ abstractClass }}
     {% for value in valueObjects %}
             case '{{ value.name }}':
     {% endfor %}
-                $this->assignValueObject($property, $value);
+                $this->assignValueObject($normalizedPropertyName, $value);
                     break;
 {% endif %}
                 default:

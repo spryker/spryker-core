@@ -294,7 +294,7 @@ class FooBarTransfer extends AbstractTransfer
                     $this->modifiedProperties[$normalizedPropertyName] = true;
                     break;
                 case 'stock':
-                    $this->assignValueObject($property, $value);
+                    $this->assignValueObject($normalizedPropertyName, $value);
                     break;
                 default:
                     if (!$ignoreMissingProperty) {
