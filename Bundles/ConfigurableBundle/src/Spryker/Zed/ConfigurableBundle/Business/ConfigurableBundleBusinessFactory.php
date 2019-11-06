@@ -19,6 +19,8 @@ use Spryker\Zed\ConfigurableBundle\Business\Creator\ConfigurableBundleTemplateCr
 use Spryker\Zed\ConfigurableBundle\Business\Creator\ConfigurableBundleTemplateCreatorInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Creator\ConfigurableBundleTemplateSlotCreator;
 use Spryker\Zed\ConfigurableBundle\Business\Creator\ConfigurableBundleTemplateSlotCreatorInterface;
+use Spryker\Zed\ConfigurableBundle\Business\EventTriggerer\EventTriggerer;
+use Spryker\Zed\ConfigurableBundle\Business\EventTriggerer\EventTriggererInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTemplateSlotProductListExpander;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTemplateSlotProductListExpanderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpander;
@@ -40,6 +42,7 @@ use Spryker\Zed\ConfigurableBundle\Business\Writer\ConfigurableBundleTranslation
 use Spryker\Zed\ConfigurableBundle\Business\Writer\ProductListWriter;
 use Spryker\Zed\ConfigurableBundle\Business\Writer\ProductListWriterInterface;
 use Spryker\Zed\ConfigurableBundle\ConfigurableBundleDependencyProvider;
+use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToEventFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToProductListFacadeInterface;
@@ -142,7 +145,8 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
         return new ConfigurableBundleTemplateCreator(
             $this->getEntityManager(),
             $this->createConfigurableBundleTranslationWriter(),
-            $this->createConfigurableBundleNameGenerator()
+            $this->createConfigurableBundleNameGenerator(),
+            $this->createEventTriggerer()
         );
     }
 
@@ -155,7 +159,8 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createConfigurableBundleTranslationWriter(),
             $this->createConfigurableBundleNameGenerator(),
-            $this->createConfigurableBundleTemplateReader()
+            $this->createConfigurableBundleTemplateReader(),
+            $this->createEventTriggerer()
         );
     }
 
@@ -234,6 +239,14 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\EventTriggerer\EventTriggererInterface
+     */
+    public function createEventTriggerer(): EventTriggererInterface
+    {
+        return new EventTriggerer($this->getEventFacade());
+    }
+
+    /**
      * @return \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface
      */
     public function getGlossaryFacade(): ConfigurableBundleToGlossaryFacadeInterface
@@ -255,6 +268,14 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     public function getProductListFacade(): ConfigurableBundleToProductListFacadeInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleDependencyProvider::FACADE_PRODUCT_LIST);
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToEventFacadeInterface
+     */
+    public function getEventFacade(): ConfigurableBundleToEventFacadeInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleDependencyProvider::FACADE_EVENT);
     }
 
     /**

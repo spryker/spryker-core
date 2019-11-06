@@ -63,6 +63,7 @@ interface ConfigurableBundleFacadeInterface
      * - Expects locale definition for each provided translation.
      * - Generates translation key using first translation.
      * - Persists provided configurable bundle template name translations.
+     * - Triggers configurable bundle template publish event.
      *
      * @api
      *
@@ -82,6 +83,7 @@ interface ConfigurableBundleFacadeInterface
      * - Expects locale definition for each provided translation.
      * - Updates translation key using first translation.
      * - Updates provided configurable bundle template name translations.
+     * - Triggers configurable bundle template publish event.
      *
      * @api
      *
@@ -98,6 +100,7 @@ interface ConfigurableBundleFacadeInterface
      * - Expects configurable bundle template ID to be provided.
      * - Updates isActive configurable bundle template property to true in Persistence.
      * - Returns with error if configurable bundle template is already active.
+     * - Triggers configurable bundle template publish event.
      *
      * @api
      *
@@ -114,6 +117,7 @@ interface ConfigurableBundleFacadeInterface
      * - Expects configurable bundle template ID to be provided.
      * - Updates isActive configurable bundle template property to false in Persistence.
      * - Returns with error if configurable bundle template is already inactive.
+     * - Triggers configurable bundle template publish event.
      *
      * @api
      *
