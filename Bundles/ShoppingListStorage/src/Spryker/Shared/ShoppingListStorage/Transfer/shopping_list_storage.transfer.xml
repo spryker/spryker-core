@@ -27,4 +27,7 @@
         <property name="limit" type="int"/>
     </transfer>
 
+    <transfer name="ShoppingList">
+    </transfer>
+
 </transfers>

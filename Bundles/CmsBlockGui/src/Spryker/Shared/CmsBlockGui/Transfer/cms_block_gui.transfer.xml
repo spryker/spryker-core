@@ -35,4 +35,13 @@
         <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
 
+    <transfer name="CmsBlockGlossary">
+    </transfer>
+
+    <transfer name="CmsBlockGlossaryPlaceholder">
+    </transfer>
+
+    <transfer name="CmsBlockGlossaryPlaceholderTranslation">
+    </transfer>
+
 </transfers>
