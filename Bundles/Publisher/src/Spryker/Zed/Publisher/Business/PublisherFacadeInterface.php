@@ -11,7 +11,7 @@ interface PublisherFacadeInterface
 {
     /**
      * Specification:
-     *  - Returns all publisher plugins to one flatted array and groups them by event type
+     *  - Returns all publisher plugins to one flattened array and groups them by event type
      *
      * @api
      *

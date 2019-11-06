@@ -7,9 +7,9 @@
 
 namespace Spryker\Shared\Publisher;
 
-use Spryker\Shared\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Kernel\AbstractSharedConfig;
 
-class PublisherConfig extends AbstractBundleConfig
+class PublisherConfig extends AbstractSharedConfig
 {
     public const PUBLISHER_QUEUE_NAME = 'publisher';
     public const PUBLISHER_ERROR_QUEUE_NAME = 'publisher.error';
