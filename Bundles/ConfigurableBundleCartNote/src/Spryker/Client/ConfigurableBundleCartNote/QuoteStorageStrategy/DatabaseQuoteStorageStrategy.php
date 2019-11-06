@@ -54,7 +54,7 @@ class DatabaseQuoteStorageStrategy implements QuoteStorageStrategyInterface
      */
     public function setCartNoteToConfigurableBundle(string $cartNote, string $configurableBundleGroupKey): QuoteResponseTransfer
     {
-        $configurableBundleCartNoteRequestTransfer = $this->createConfigurableBundleCartNoteRequest($cartNote, $configurableBundleGroupKey);
+        $configurableBundleCartNoteRequestTransfer = $this->createConfigurableBundleCartNoteRequestTransfer($cartNote, $configurableBundleGroupKey);
         $quoteResponseTransfer = $this->configurableBundleCartNoteZedStub->setCartNoteToConfigurableBundle($configurableBundleCartNoteRequestTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -72,7 +72,7 @@ class DatabaseQuoteStorageStrategy implements QuoteStorageStrategyInterface
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleCartNoteRequestTransfer
      */
-    protected function createConfigurableBundleCartNoteRequest(
+    protected function createConfigurableBundleCartNoteRequestTransfer(
         string $cartNote,
         string $configurableBundleGroupKey
     ): ConfigurableBundleCartNoteRequestTransfer {

@@ -1,7 +1,7 @@
 # ConfigurableBundleCartNote Module
 [![Build Status](https://travis-ci.org/spryker/configurable-bundle-cart-note.svg)](https://travis-ci.org/spryker/configurable-bundle-cart-note)
 
-Module provides functionality to add cart notes to the configurable bundles and save them to order.
+Module provides functionality for setting cart notes to the configurable bundles and save them.
 
 ## Installation
 

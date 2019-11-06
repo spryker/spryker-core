@@ -25,7 +25,7 @@ class ConfigurableBundleCartNoteFactory extends AbstractFactory
      */
     public function getQuoteStorageStrategy(): QuoteStorageStrategyInterface
     {
-        return $this->createQuoteStorageStrategyProvider()->provideStorage();
+        return $this->createQuoteStorageStrategyProvider()->provideStorageStrategy();
     }
 
     /**

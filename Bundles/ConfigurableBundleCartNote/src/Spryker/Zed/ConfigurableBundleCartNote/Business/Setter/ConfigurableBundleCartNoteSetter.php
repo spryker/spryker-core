@@ -75,8 +75,8 @@ class ConfigurableBundleCartNoteSetter implements ConfigurableBundleCartNoteSett
         $itemCollectionTransfer = new ItemCollectionTransfer();
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $configuredBundle = $itemTransfer->getConfiguredBundle();
-            if ($configuredBundle && $configuredBundle->getGroupKey() === $configurableBundleGroupKey) {
+            $configuredBundleTransfer = $itemTransfer->getConfiguredBundle();
+            if ($configuredBundleTransfer && $configuredBundleTransfer->getGroupKey() === $configurableBundleGroupKey) {
                 $itemCollectionTransfer->addItem($itemTransfer);
             }
         }

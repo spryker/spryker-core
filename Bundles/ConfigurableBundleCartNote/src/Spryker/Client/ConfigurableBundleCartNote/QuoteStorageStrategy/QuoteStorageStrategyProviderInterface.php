@@ -12,5 +12,5 @@ interface QuoteStorageStrategyProviderInterface
     /**
      * @return \Spryker\Client\ConfigurableBundleCartNote\QuoteStorageStrategy\QuoteStorageStrategyInterface
      */
-    public function provideStorage(): QuoteStorageStrategyInterface;
+    public function provideStorageStrategy(): QuoteStorageStrategyInterface;
 }

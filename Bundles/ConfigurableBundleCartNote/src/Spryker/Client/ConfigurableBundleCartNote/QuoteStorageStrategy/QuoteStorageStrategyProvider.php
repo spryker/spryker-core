@@ -37,7 +37,7 @@ class QuoteStorageStrategyProvider implements QuoteStorageStrategyProviderInterf
      *
      * @return \Spryker\Client\ConfigurableBundleCartNote\QuoteStorageStrategy\QuoteStorageStrategyInterface
      */
-    public function provideStorage(): QuoteStorageStrategyInterface
+    public function provideStorageStrategy(): QuoteStorageStrategyInterface
     {
         $currentQuoteStorageStrategyType = $this->quoteClient->getStorageStrategy();
         foreach ($this->quoteStorageStrategies as $quoteStorageStrategy) {
