@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ConfigurableBundlePageSearch\Communication\Plugin\Event\Subscriber;
 
 use Spryker\Zed\ConfigurableBundle\Dependency\ConfigurableBundleEvents;
-use Spryker\Zed\ConfigurableBundlePageSearch\Communication\Plugin\Event\Listener\ConfigurableBundleTemplatePageSearchConfigurableBundleTemplatePublishListener;
+use Spryker\Zed\ConfigurableBundlePageSearch\Communication\Plugin\Event\Listener\ConfigurableBundleTemplateConfigurableBundlePageSearchPublishListener;
 use Spryker\Zed\ConfigurableBundlePageSearch\Communication\Plugin\Event\Listener\ConfigurableBundleTemplatePageSearchConfigurableBundleTemplateUnpublishListener;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
@@ -43,7 +43,7 @@ class ConfigurableBundleTemplatePageSearchEventSubscriber extends AbstractPlugin
      */
     protected function addConfigurableBundleTemplatePublishListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_PUBLISH, new ConfigurableBundleTemplatePageSearchConfigurableBundleTemplatePublishListener());
+        $eventCollection->addListenerQueued(ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_PUBLISH, new ConfigurableBundleTemplateConfigurableBundlePageSearchPublishListener());
 
         return $this;
     }
