@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\CmsSlot\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
+use Spryker\Zed\CmsSlot\Business\Exception\MissingCmsSlotTemplateException;
 
 /**
  * Auto-generated group annotations
@@ -24,6 +25,8 @@ use Generated\Shared\Transfer\CmsSlotTransfer;
  */
 class CmsSlotFacadeTest extends Unit
 {
+    protected const EXCEPTION_ERROR_MESSAGE_MISSING_CMS_SLOT_TEMPLATE = 'CMS Slot Template with id "%d" not found.';
+
     /**
      * @var \SprykerTest\Zed\CmsSlot\CmsSlotBusinessTester
      */
@@ -181,5 +184,48 @@ class CmsSlotFacadeTest extends Unit
         $this->tester->getFacade()->deactivateByIdCmsSlot($cmsSlotTransfer->getIdCmsSlot());
 
         $this->assertFalse($this->tester->isActiveCmsSlotById($cmsSlotTransfer->getIdCmsSlot()));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCmsSlotTemplateByIdSuccess(): void
+    {
+        //Arrange
+        $cmsSlotTemplateTransfer = $this->tester->haveCmsSlotTemplateInDb();
+
+        //Act
+        $foundCmsSlotTemplateTransfer = $this->tester->getFacade()->getCmsSlotTemplateById(
+            $cmsSlotTemplateTransfer->getIdCmsSlotTemplate()
+        );
+
+        // Assert
+        $this->assertEquals(
+            $cmsSlotTemplateTransfer->getIdCmsSlotTemplate(),
+            $foundCmsSlotTemplateTransfer->getIdCmsSlotTemplate()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCmsSlotTemplateByIdFailed(): void
+    {
+        //Arrange
+        $this->tester->ensureCmsSlotTemplateTableIsEmpty();
+        $this->expectExceptionObject(
+            new MissingCmsSlotTemplateException(
+                sprintf(
+                    static::EXCEPTION_ERROR_MESSAGE_MISSING_CMS_SLOT_TEMPLATE,
+                    1
+                )
+            )
+        );
+
+        //Act
+        $cmsSlotTemplateTransfer = $this->tester->getFacade()->getCmsSlotTemplateById(1);
+
+        // Assert
+        $this->assertNull($cmsSlotTemplateTransfer);
     }
 }

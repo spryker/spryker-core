@@ -14,6 +14,10 @@ use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlot;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery;
+use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplate;
+use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplateQuery;
+use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotToCmsSlotTemplate;
+use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotToCmsSlotTemplateQuery;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CmsSlotHelper extends Module
@@ -61,6 +65,24 @@ class CmsSlotHelper extends Module
     /**
      * @param array $override
      *
+     * @return \Generated\Shared\Transfer\CmsSlotTemplateTransfer
+     */
+    public function haveCmsSlotTemplateInDb(array $override = []): CmsSlotTemplateTransfer
+    {
+        $cmsSlotTemplateTransfer = $this->haveCmsSlotTemplate($override);
+
+        $cmsSlotTemplateEntity = new SpyCmsSlotTemplate();
+        $cmsSlotTemplateEntity->fromArray($cmsSlotTemplateTransfer->toArray());
+        $cmsSlotTemplateEntity->save();
+
+        $cmsSlotTemplateTransfer->setIdCmsSlotTemplate($cmsSlotTemplateEntity->getIdCmsSlotTemplate());
+
+        return $cmsSlotTemplateTransfer;
+    }
+
+    /**
+     * @param array $override
+     *
      * @return \Generated\Shared\Transfer\CmsSlotTransfer
      */
     public function haveCmsSlotInDb(array $override): CmsSlotTransfer
@@ -94,5 +116,14 @@ class CmsSlotHelper extends Module
         $cmsSlot = SpyCmsSlotQuery::create()->findOneByIdCmsSlot($idCmsSlot);
 
         return $cmsSlot->getIsActive();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureCmsSlotTemplateTableIsEmpty(): void
+    {
+        SpyCmsSlotToCmsSlotTemplateQuery::create()->deleteAll();
+        SpyCmsSlotTemplateQuery::create()->deleteAll();
     }
 }
