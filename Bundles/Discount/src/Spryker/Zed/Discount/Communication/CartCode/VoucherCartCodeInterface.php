@@ -14,19 +14,19 @@ interface VoucherCartCodeInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param string $voucherCode
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addCandidate(QuoteTransfer $quoteTransfer, $code): QuoteTransfer;
+    public function addCandidate(QuoteTransfer $quoteTransfer, string $voucherCode): QuoteTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param string $voucherCode
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeCode(QuoteTransfer $quoteTransfer, $code): QuoteTransfer;
+    public function removeCode(QuoteTransfer $quoteTransfer, string $voucherCode): QuoteTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

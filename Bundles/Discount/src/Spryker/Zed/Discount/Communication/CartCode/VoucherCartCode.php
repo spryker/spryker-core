@@ -22,18 +22,18 @@ class VoucherCartCode implements VoucherCartCodeInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param string $voucherCode
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addCandidate(QuoteTransfer $quoteTransfer, $code): QuoteTransfer
+    public function addCandidate(QuoteTransfer $quoteTransfer, string $voucherCode): QuoteTransfer
     {
-        if ($this->hasCandidate($quoteTransfer, $code)) {
+        if ($this->hasCandidate($quoteTransfer, $voucherCode)) {
             return $quoteTransfer;
         }
 
         $voucherDiscount = new DiscountTransfer();
-        $voucherDiscount->setVoucherCode($code);
+        $voucherDiscount->setVoucherCode($voucherCode);
 
         $quoteTransfer->addVoucherDiscount($voucherDiscount);
 
@@ -42,15 +42,15 @@ class VoucherCartCode implements VoucherCartCodeInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param string $voucherCode
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeCode(QuoteTransfer $quoteTransfer, $code): QuoteTransfer
+    public function removeCode(QuoteTransfer $quoteTransfer, string $voucherCode): QuoteTransfer
     {
         $voucherDiscountsIterator = $quoteTransfer->getVoucherDiscounts()->getIterator();
         foreach ($quoteTransfer->getVoucherDiscounts() as $key => $voucherDiscountTransfer) {
-            if ($voucherDiscountTransfer->getVoucherCode() === $code) {
+            if ($voucherDiscountTransfer->getVoucherCode() === $voucherCode) {
                 $voucherDiscountsIterator->offsetUnset($key);
             }
 
@@ -59,7 +59,7 @@ class VoucherCartCode implements VoucherCartCodeInterface
             }
         }
 
-        return $this->unsetNotAppliedVoucherCode($code, $quoteTransfer);
+        return $this->unsetNotAppliedVoucherCode($voucherCode, $quoteTransfer);
     }
 
     /**
@@ -121,19 +121,13 @@ class VoucherCartCode implements VoucherCartCodeInterface
      */
     protected function getVoucherApplySuccessMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
     {
-        if ($this->isVoucherFromPromotionDiscount($quoteTransfer, $code)) {
+        if ($this->isVoucherFromPromotionDiscount($quoteTransfer, $code) || !$this->isVoucherCodeApplied($quoteTransfer, $code)) {
             return null;
         }
 
-        if ($this->isVoucherCodeApplied($quoteTransfer, $code)) {
-            $messageTransfer = new MessageTransfer();
-            $messageTransfer->setValue(static::GLOSSARY_KEY_VOUCHER_APPLY_SUCCESSFUL);
-            $messageTransfer->setType(static::MESSAGE_TYPE_SUCCESS);
-
-            return $messageTransfer;
-        }
-
-        return null;
+        return (new MessageTransfer())
+            ->setValue(static::GLOSSARY_KEY_VOUCHER_APPLY_SUCCESSFUL)
+            ->setType(static::MESSAGE_TYPE_SUCCESS);
     }
 
     /**
@@ -146,7 +140,7 @@ class VoucherCartCode implements VoucherCartCodeInterface
     {
         $usedNotAppliedVoucherCodeResultList = array_filter(
             $quoteTransfer->getUsedNotAppliedVoucherCodes(),
-            function ($usedNotAppliedVoucherCode) use ($code) {
+            function (string $usedNotAppliedVoucherCode) use ($code) {
                 return $usedNotAppliedVoucherCode != $code;
             }
         );
@@ -164,13 +158,7 @@ class VoucherCartCode implements VoucherCartCodeInterface
      */
     protected function isVoucherFromPromotionDiscount(QuoteTransfer $quoteTransfer, string $code): bool
     {
-        foreach ($quoteTransfer->getUsedNotAppliedVoucherCodes() as $codeUsed) {
-            if ($codeUsed === $code) {
-                return true;
-            }
-        }
-
-        return false;
+        return in_array($code, $quoteTransfer->getUsedNotAppliedVoucherCodes(), true);
     }
 
     /**
@@ -217,12 +205,6 @@ class VoucherCartCode implements VoucherCartCodeInterface
      */
     protected function isVoucherCodeApplyFailed(QuoteTransfer $quoteTransfer, string $code): bool
     {
-        foreach ($quoteTransfer->getUsedNotAppliedVoucherCodes() as $notAppliedVoucherCode) {
-            if ($notAppliedVoucherCode !== $code) {
-                return true;
-            }
-        }
-
-        return false;
+        return !in_array($code, $quoteTransfer->getUsedNotAppliedVoucherCodes(), true);
     }
 }

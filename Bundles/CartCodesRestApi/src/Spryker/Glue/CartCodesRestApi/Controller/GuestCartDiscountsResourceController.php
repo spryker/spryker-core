@@ -29,6 +29,7 @@ class GuestCartDiscountsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "404": "Cart with given uuid not found."
+     *              "422": "Cart code can't be added."
      *          }
      *     }
      * })
@@ -57,6 +58,7 @@ class GuestCartDiscountsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "404": "Cart with given uuid not found."
+     *              "422": "Cart code can't be deleted."
      *          }
      *     }
      * })

@@ -15,7 +15,7 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginI
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
-class DiscountsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
+class CartDiscountsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -57,7 +57,7 @@ class DiscountsResourceRoutePlugin extends AbstractPlugin implements ResourceRou
      */
     public function getController(): string
     {
-        return 'discounts-resource';
+        return CartCodesRestApiConfig::CONTROLLER_CART_DISCOUNTS;
     }
 
     /**

@@ -15,7 +15,7 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 /**
  * @method \Spryker\Glue\CartCodesRestApi\CartCodesRestApiFactory getFactory()
  */
-class DiscountsResourceController extends AbstractController
+class CartDiscountsResourceController extends AbstractController
 {
     /**
      * @Glue({
@@ -28,7 +28,10 @@ class DiscountsResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
+     *              "401": "Invalid access token."
+     *              "403": "Missing access token."
      *              "404": "Cart with given uuid not found."
+     *              "422": "Cart code can't be added."
      *          }
      *     }
      * })
@@ -56,7 +59,10 @@ class DiscountsResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
+     *              "401": "Invalid access token."
+     *              "403": "Missing access token."
      *              "404": "Cart with given uuid not found."
+     *              "422": "Cart code can't be deleted."
      *          }
      *     }
      * })

@@ -31,7 +31,7 @@ class CodeAdder implements CodeAdderInterface
     /**
      * @param \Spryker\Zed\CartCode\Dependency\Facade\CartCodeToCalculationFacadeInterface $calculationClient
      * @param \Spryker\Zed\CartCode\Business\Operation\QuoteOperationCheckerInterface $quoteOperationChecker
-     * @param array $cartCodePlugins
+     * @param \Spryker\Shared\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[] $cartCodePlugins
      */
     public function __construct(
         CartCodeToCalculationFacadeInterface $calculationClient,
@@ -45,21 +45,21 @@ class CodeAdder implements CodeAdderInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param string $voucherCode
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function addCandidate(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
+    public function addCandidate(QuoteTransfer $quoteTransfer, string $voucherCode): CartCodeOperationResultTransfer
     {
         $lockedCartCodeOperationResultTransfer = $this->quoteOperationChecker->checkLockedQuoteResponse($quoteTransfer);
         if ($lockedCartCodeOperationResultTransfer) {
             return $lockedCartCodeOperationResultTransfer;
         }
 
-        $quoteTransfer = $this->executeCartCodePlugins($quoteTransfer, $code);
+        $quoteTransfer = $this->executeCartCodePlugins($quoteTransfer, $voucherCode);
         $quoteTransfer = $this->calculationFacade->recalculateQuote($quoteTransfer);
 
-        return $this->processRecalculationResults($quoteTransfer, $code);
+        return $this->processRecalculationResults($quoteTransfer, $voucherCode);
     }
 
     /**

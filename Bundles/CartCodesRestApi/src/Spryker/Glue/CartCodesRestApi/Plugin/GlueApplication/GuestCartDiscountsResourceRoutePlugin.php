@@ -57,7 +57,7 @@ class GuestCartDiscountsResourceRoutePlugin extends AbstractPlugin implements Re
      */
     public function getController(): string
     {
-        return 'guest-cart-discounts-resource';
+        return CartCodesRestApiConfig::CONTROLLER_GUEST_CART_DISCOUNTS;
     }
 
     /**
