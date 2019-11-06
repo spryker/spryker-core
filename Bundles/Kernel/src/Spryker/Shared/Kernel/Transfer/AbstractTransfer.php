@@ -338,14 +338,6 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     }
 
     /**
-     * @return void
-     */
-    public function __wakeup()
-    {
-        $this->initCollectionProperties();
-    }
-
-    /**
      * @param string $offset
      *
      * @return bool

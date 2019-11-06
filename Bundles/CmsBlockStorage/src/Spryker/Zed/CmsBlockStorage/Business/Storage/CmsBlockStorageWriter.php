@@ -11,23 +11,21 @@ use Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CmsBlockStorage\Dependency\Service\CmsBlockStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\CmsBlockStorage\Persistence\CmsBlockStorageQueryContainerInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
 {
-    use DatabaseTransactionHandlerTrait;
+    protected const RELATION_CMS_BLOCK_STORES = 'SpyCmsBlockStores';
+    protected const RELATION_STORE = 'SpyStore';
+    protected const COLUMN_ID_CMS_BLOCK = 'id_cms_block';
+    protected const COLUMN_STORE_NAME = 'name';
+    protected const COLUMN_CMS_BLOCK_NAME = 'name';
+    protected const COLUMN_CMS_BLOCK_KEY = 'key';
+    protected const COLUMN_CMS_BLOCK_IS_ACTIVE = 'is_active';
 
-    public const RELATION_CMS_BLOCK_STORES = 'SpyCmsBlockStores';
-    public const RELATION_STORE = 'SpyStore';
-    public const COLUMN_ID_CMS_BLOCK = 'id_cms_block';
-    public const COLUMN_STORE_NAME = 'name';
-    public const COLUMN_CMS_BLOCK_NAME = 'name';
-    public const COLUMN_CMS_BLOCK_IS_ACTIVE = 'is_active';
-
-    public const CMS_BLOCK_ENTITY = 'CMS_BLOCK_ENTITY';
-    public const CMS_BLOCK_STORAGE_ENTITY = 'CMS_BLOCK_STORAGE_ENTITY';
-    public const LOCALE_NAME = 'LOCALE_NAME';
-    public const STORE_NAME = 'STORE_NAME';
+    protected const CMS_BLOCK_ENTITY = 'CMS_BLOCK_ENTITY';
+    protected const CMS_BLOCK_STORAGE_ENTITY = 'CMS_BLOCK_STORAGE_ENTITY';
+    protected const LOCALE_NAME = 'LOCALE_NAME';
+    protected const STORE_NAME = 'STORE_NAME';
 
     /**
      * @var \Spryker\Zed\CmsBlockStorage\Persistence\CmsBlockStorageQueryContainerInterface
@@ -82,7 +80,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
      *
      * @return void
      */
-    public function publish(array $cmsBlockIds)
+    public function publish(array $cmsBlockIds): void
     {
         $cmsBlockEntities = $this->findCmsBlockEntities($cmsBlockIds);
         $cmsBlockStorageEntities = $this->findCmsBlockStorageEntities($cmsBlockIds);
@@ -105,7 +103,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
      *
      * @return void
      */
-    public function unpublish(array $cmsBlockIds)
+    public function unpublish(array $cmsBlockIds): void
     {
         $cmsBlockStorageEntities = $this->findCmsBlockStorageEntities($cmsBlockIds);
 
@@ -118,7 +116,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
      *
      * @return void
      */
-    protected function storeData(array $cmsBlockEntities, array $cmsBlockStorageEntities)
+    protected function storeData(array $cmsBlockEntities, array $cmsBlockStorageEntities): void
     {
         $pairedEntities = $this->pairCmsBlockEntitiesWithCmsBlockStorageEntities(
             $cmsBlockEntities,
@@ -135,11 +133,6 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
                 continue;
             }
 
-            if ($cmsBlockEntity[static::COLUMN_CMS_BLOCK_NAME] !== $cmsBlockStorageEntity->getName()) {
-                $this->deleteStorageEntity($cmsBlockStorageEntity);
-                $cmsBlockStorageEntity = new SpyCmsBlockStorage();
-            }
-
             $this->updateStoreData($cmsBlockEntity, $cmsBlockStorageEntity, $pair[static::STORE_NAME], $pair[static::LOCALE_NAME]);
         }
     }
@@ -149,7 +142,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
      *
      * @return void
      */
-    protected function deleteStorageEntities(array $cmsBlockStorageEntities)
+    protected function deleteStorageEntities(array $cmsBlockStorageEntities): void
     {
         foreach ($cmsBlockStorageEntities as $cmsBlockStorageEntity) {
             $cmsBlockStorageEntity->delete();
@@ -161,7 +154,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
      *
      * @return void
      */
-    protected function deleteStorageEntity(SpyCmsBlockStorage $cmsBlockStorageEntity)
+    protected function deleteStorageEntity(SpyCmsBlockStorage $cmsBlockStorageEntity): void
     {
         if (!$cmsBlockStorageEntity->isNew()) {
             $cmsBlockStorageEntity->delete();
@@ -176,8 +169,12 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
      *
      * @return void
      */
-    protected function updateStoreData(array $cmsBlockEntity, SpyCmsBlockStorage $cmsBlockStorageEntity, $storeName, $localeName)
-    {
+    protected function updateStoreData(
+        array $cmsBlockEntity,
+        SpyCmsBlockStorage $cmsBlockStorageEntity,
+        string $storeName,
+        string $localeName
+    ): void {
         foreach ($this->contentWidgetDataExpanderPlugins as $contentWidgetDataExpanderPlugin) {
             $cmsBlockEntity = $contentWidgetDataExpanderPlugin->expand($cmsBlockEntity, $localeName);
         }
@@ -185,6 +182,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
         $cmsBlockStorageEntity
             ->setData($cmsBlockEntity)
             ->setFkCmsBlock($cmsBlockEntity[static::COLUMN_ID_CMS_BLOCK])
+            ->setCmsBlockKey($cmsBlockEntity[static::COLUMN_CMS_BLOCK_KEY])
             ->setLocale($localeName)
             ->setStore($storeName)
             ->setName($cmsBlockEntity[static::COLUMN_CMS_BLOCK_NAME])
@@ -203,8 +201,10 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
      *
      * @return array
      */
-    protected function pairCmsBlockEntitiesWithCmsBlockStorageEntities(array $cmsBlockEntities, array $cmsBlockStorageEntities)
-    {
+    protected function pairCmsBlockEntitiesWithCmsBlockStorageEntities(
+        array $cmsBlockEntities,
+        array $cmsBlockStorageEntities
+    ): array {
         $mappedCmsBlockStorageEntities = $this->mapCmsBlockStorageEntities($cmsBlockStorageEntities);
         $localeNames = $this->store->getLocales();
 
@@ -230,7 +230,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
      *
      * @return array
      */
-    protected function mapCmsBlockStorageEntities(array $cmsBlockStorageEntities)
+    protected function mapCmsBlockStorageEntities(array $cmsBlockStorageEntities): array
     {
         $mappedCmsBlockStorageEntities = [];
         foreach ($cmsBlockStorageEntities as $entity) {
@@ -245,7 +245,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
      *
      * @return array
      */
-    protected function findCmsBlockEntities(array $cmsBlockIds)
+    protected function findCmsBlockEntities(array $cmsBlockIds): array
     {
         return $this->queryContainer->queryBlockWithRelationsByIds($cmsBlockIds)->find()->getData();
     }
@@ -255,7 +255,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
      *
      * @return \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage[]
      */
-    protected function findCmsBlockStorageEntities(array $cmsBlockIds)
+    protected function findCmsBlockStorageEntities(array $cmsBlockIds): array
     {
         return $this->queryContainer->queryCmsBlockStorageEntities($cmsBlockIds)->find()->getArrayCopy();
     }
@@ -266,7 +266,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
      *
      * @return array
      */
-    protected function pairRemainingCmsBlockStorageEntities(array $mappedCmsBlockStorageEntities, array $pairs)
+    protected function pairRemainingCmsBlockStorageEntities(array $mappedCmsBlockStorageEntities, array $pairs): array
     {
         array_walk_recursive($mappedCmsBlockStorageEntities, function (SpyCmsBlockStorage $cmsBlockStorageEntity) use (&$pairs) {
             $pairs[] = [
@@ -297,7 +297,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
         array $cmsBlockEntity,
         array $mappedCmsBlockStorageEntities,
         array $pairs
-    ) {
+    ): array {
         foreach ($localeNames as $localeName) {
             foreach ($cmsBlockStores as $cmsBlockStore) {
                 $storeName = $cmsBlockStore[static::RELATION_STORE][static::COLUMN_STORE_NAME];
