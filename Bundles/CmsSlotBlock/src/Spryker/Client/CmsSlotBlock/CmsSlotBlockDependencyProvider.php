@@ -1,12 +1,13 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\CmsSlotBlock;
 
+use Spryker\Client\CmsSlotBlockProductCategoryConnector\Plugin\CmsSlotBlock\ProductCategoryCmsSlotBlockConditionResolverPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
@@ -28,9 +29,9 @@ class CmsSlotBlockDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addCmsSlotBlockVisibilityResolverPlugins(Container $container): Container
     {
@@ -46,6 +47,7 @@ class CmsSlotBlockDependencyProvider extends AbstractDependencyProvider
      */
     protected function getCmsSlotBlockVisibilityResolverPlugins(): array
     {
-        return [];
+        //TODO remove
+        return [new ProductCategoryCmsSlotBlockConditionResolverPlugin()];
     }
 }

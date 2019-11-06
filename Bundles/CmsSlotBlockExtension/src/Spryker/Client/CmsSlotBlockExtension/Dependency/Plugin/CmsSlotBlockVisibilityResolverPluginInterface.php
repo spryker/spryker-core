@@ -30,14 +30,14 @@ interface CmsSlotBlockVisibilityResolverPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     * @param array $conditionData
+     * @param array $conditions
      * @param array $cmsSlotData
      *
      * @return bool
      */
     public function isCmsBlockVisibleInSlot(
         CmsBlockTransfer $cmsBlockTransfer,
-        array $conditionData,
+        array $conditions,
         array $cmsSlotData
     ): bool;
 }

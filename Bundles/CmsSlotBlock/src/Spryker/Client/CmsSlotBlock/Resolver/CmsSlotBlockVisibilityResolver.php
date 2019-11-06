@@ -1,12 +1,11 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\CmsSlotBlock\Resolver;
-
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 
@@ -37,6 +36,22 @@ class CmsSlotBlockVisibilityResolver implements CmsSlotBlockVisibilityResolverIn
         array $conditions,
         array $cmsSlotData
     ): bool {
+        foreach ($this->cmsSlotBlockVisibilityResolverPlugins as $cmsSlotBlockVisibilityResolverPlugin) {
+            if (!$cmsSlotBlockVisibilityResolverPlugin->isApplicable($conditions)) {
+                continue;
+            }
 
+            return $cmsSlotBlockVisibilityResolverPlugin->isCmsBlockVisibleInSlot($cmsBlockTransfer, $conditions, $cmsSlotData);
+        }
+
+        return $this->getIsCmsBlockVisibleInSlotDefault();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function getIsCmsBlockVisibleInSlotDefault(): bool
+    {
+        return true;
     }
 }
