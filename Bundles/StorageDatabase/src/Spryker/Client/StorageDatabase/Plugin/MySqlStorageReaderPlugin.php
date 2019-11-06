@@ -16,7 +16,7 @@ use Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderPlugi
 class MySqlStorageReaderPlugin extends AbstractPlugin implements StorageReaderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Fetches the data from MySql storage database.
      *
      * @api
@@ -31,7 +31,7 @@ class MySqlStorageReaderPlugin extends AbstractPlugin implements StorageReaderPl
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Fetches the data from MySql storage database.
      *
      * @api

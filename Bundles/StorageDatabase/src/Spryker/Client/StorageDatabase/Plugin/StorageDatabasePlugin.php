@@ -16,7 +16,7 @@ use Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface;
 class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -30,7 +30,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -44,7 +44,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -56,7 +56,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -68,7 +68,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param bool $debug
      *
@@ -80,7 +80,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -96,7 +96,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -110,7 +110,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -124,7 +124,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -138,7 +138,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -150,7 +150,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -162,7 +162,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -174,7 +174,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -188,7 +188,7 @@ class StorageDatabasePlugin extends AbstractPlugin implements StoragePluginInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

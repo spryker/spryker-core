@@ -21,7 +21,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
     protected static $storageDatabaseService;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,7 +49,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -61,7 +61,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -73,7 +73,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -87,7 +87,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -103,7 +103,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -117,7 +117,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -131,7 +131,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -145,7 +145,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -157,7 +157,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -169,7 +169,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -181,7 +181,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -195,7 +195,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

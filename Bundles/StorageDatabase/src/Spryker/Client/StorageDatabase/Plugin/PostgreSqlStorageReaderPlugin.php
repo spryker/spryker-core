@@ -16,7 +16,7 @@ use Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderPlugi
 class PostgreSqlStorageReaderPlugin extends AbstractPlugin implements StorageReaderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Fetches the data from PostgresSql storage database.
      *
      * @api
@@ -31,7 +31,7 @@ class PostgreSqlStorageReaderPlugin extends AbstractPlugin implements StorageRea
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Fetches the data from PostgresSql storage database.
      *
      * @api
