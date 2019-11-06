@@ -231,7 +231,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      */
     protected function getProductOptionStorageDataItemsByProductOptionStorageKeys(array $productOptionStorageKeys): array
     {
-        $productOptionStorageData = [];
+        $productOptionStorageDataItems = [];
         $productOptionStorageEncodedData = $this->storageClient->getMulti($productOptionStorageKeys);
 
         foreach ($productOptionStorageEncodedData as $productOptionStorageKey => $productOptionStorageEncodedDataItem) {
@@ -239,9 +239,9 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
                 continue;
             }
 
-            $productOptionStorageData[$productOptionStorageKey] = $this->utilEncodingService->decodeJson($productOptionStorageEncodedDataItem, true);
+            $productOptionStorageDataItems[$productOptionStorageKey] = $this->utilEncodingService->decodeJson($productOptionStorageEncodedDataItem, true);
         }
 
-        return $productOptionStorageData;
+        return $productOptionStorageDataItems;
     }
 }

@@ -9,6 +9,7 @@ namespace Spryker\Client\GlossaryStorage;
 
 use Spryker\Client\GlossaryStorage\Dependency\Client\GlossaryStorageToStorageClientBridge;
 use Spryker\Client\GlossaryStorage\Dependency\Service\GlossaryStorageToSynchronizationServiceBridge;
+use Spryker\Client\GlossaryStorage\Dependency\Service\GlossaryStorageToUtilEncodingServiceBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
@@ -19,6 +20,7 @@ class GlossaryStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -34,6 +36,24 @@ class GlossaryStorageDependencyProvider extends AbstractDependencyProvider
         $container[static::SERVICE_SYNCHRONIZATION] = function (Container $container) {
             return new GlossaryStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
         };
+
+        $container = $this->addUtilEncodingService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new GlossaryStorageToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service()
+            );
+        });
 
         return $container;
     }

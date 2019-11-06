@@ -8,4 +8,22 @@
         <property name="locale" type="string"/>
     </transfer>
 
+    <transfer name="GlossaryStorage">
+        <property name="value" type="string"/>
+        <property name="GlossaryKey" type="GlossaryStorageKey"/>
+        <property name="Locale" type="GlossaryStorageLocale"/>
+    </transfer>
+
+    <transfer name="GlossaryStorageKey">
+        <property name="idGlossaryKey" type="int"/>
+        <property name="isActive" type="bool"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="GlossaryStorageLocale">
+        <property name="idLocale" type="int"/>
+        <property name="isActive" type="bool"/>
+        <property name="localeName" type="string"/>
+    </transfer>
+
 </transfers>

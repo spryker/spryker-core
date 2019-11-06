@@ -17,4 +17,13 @@ interface GlossaryStorageInterface
      * @return string
      */
     public function translate($keyName, $localeName, array $parameters = []);
+
+    /**
+     * @param string[] $keyNames
+     * @param string $localeName
+     * @param array $parameters
+     *
+     * @return string[]
+     */
+    public function translateBulk(array $keyNames, string $localeName, array $parameters = []): array;
 }

@@ -32,4 +32,23 @@ class GlossaryStorageClient extends AbstractClient implements GlossaryStorageCli
             ->createTranslator()
             ->translate($id, $localeName, $parameters);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string[] $keyNames
+     * @param string $localeName
+     * @param array $parameters
+     *
+     * @return string[]
+     */
+    public function translateBulk(array $keyNames, string $localeName, array $parameters = []): array
+    {
+        return $this
+            ->getFactory()
+            ->createTranslator()
+            ->translateBulk($keyNames, $localeName, $parameters);
+    }
 }
