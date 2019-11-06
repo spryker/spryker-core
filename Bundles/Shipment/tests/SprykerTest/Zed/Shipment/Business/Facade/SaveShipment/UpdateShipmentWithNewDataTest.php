@@ -14,7 +14,6 @@ use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
@@ -34,8 +33,6 @@ use Spryker\Shared\Price\PriceConfig;
  */
 class UpdateShipmentWithNewDataTest extends Test
 {
-    protected const DEFAULT_UNIT_PRICE = 500;
-
     /**
      * @var \SprykerTest\Zed\Shipment\ShipmentBusinessTester
      */
@@ -153,9 +150,7 @@ class UpdateShipmentWithNewDataTest extends Test
             QuoteTransfer::PRICE_MODE => PriceConfig::PRICE_MODE_NET,
         ]))
             ->withItem(
-                (new ItemBuilder())->seed([
-                    ItemTransfer::UNIT_PRICE => static::DEFAULT_UNIT_PRICE,
-                ])
+                (new ItemBuilder())
                     ->withShipment(
                         (new ShipmentBuilder())
                             ->withShippingAddress()
@@ -163,9 +158,7 @@ class UpdateShipmentWithNewDataTest extends Test
                     )
             )
             ->withAnotherItem(
-                (new ItemBuilder())->seed([
-                    ItemTransfer::UNIT_PRICE => static::DEFAULT_UNIT_PRICE,
-                ])
+                (new ItemBuilder())
                     ->withShipment(
                         (new ShipmentBuilder())
                             ->withShippingAddress()

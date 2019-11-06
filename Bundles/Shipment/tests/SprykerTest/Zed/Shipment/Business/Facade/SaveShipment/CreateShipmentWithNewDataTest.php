@@ -38,8 +38,6 @@ use Spryker\Shared\Price\PriceConfig;
  */
 class CreateShipmentWithNewDataTest extends Test
 {
-    protected const DEFAULT_UNIT_PRICE = 500;
-
     /**
      * @var \SprykerTest\Zed\Shipment\ShipmentBusinessTester
      */
@@ -156,9 +154,7 @@ class CreateShipmentWithNewDataTest extends Test
             QuoteTransfer::PRICE_MODE => PriceConfig::PRICE_MODE_NET,
         ]))
             ->withItem(
-                (new ItemBuilder())->seed([
-                    ItemTransfer::UNIT_PRICE => static::DEFAULT_UNIT_PRICE,
-                ])
+                (new ItemBuilder())
                     ->withShipment(
                         (new ShipmentBuilder())
                             ->withShippingAddress()
@@ -168,9 +164,7 @@ class CreateShipmentWithNewDataTest extends Test
                     )
             )
             ->withAnotherItem(
-                (new ItemBuilder())->seed([
-                    ItemTransfer::UNIT_PRICE => static::DEFAULT_UNIT_PRICE,
-                ])
+                (new ItemBuilder())
                     ->withShipment(
                         (new ShipmentBuilder())
                             ->withShippingAddress()
