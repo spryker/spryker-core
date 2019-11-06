@@ -19,7 +19,7 @@
 
     {% embed '@Gui/Partials/widget.twig' %}
         {% block widget_title -%}
-            <h5>{{ 'List of Slots' | trans }}</h5>
+            <h5>{{ 'List of Slots for' | trans }} <span class="js-slot-template-name"></span> {{ 'Template' | trans }}</h5>
         {%- endblock %}
         {% block widget_content %}
             {{ slotListTable | raw }}
@@ -30,4 +30,5 @@
 {% block footer_js %}
     {{ parent() }}
     <script src="{{ assetsPath('js/spryker-zed-cms-slot-gui-main.js') }}"></script>
+    {% include '@CmsSlotBlockGui/_partial/assets.twig' ignore missing only %}
 {% endblock %}

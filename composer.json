@@ -119,6 +119,7 @@
     "spryker/cms-page-search": "*",
     "spryker/cms-slot": "*",
     "spryker/cms-slot-block": "*",
+    "spryker/cms-slot-block-gui": "*",
     "spryker/cms-slot-block-gui-extension": "*",
     "spryker/cms-slot-data-import": "*",
     "spryker/cms-slot-extension": "*",

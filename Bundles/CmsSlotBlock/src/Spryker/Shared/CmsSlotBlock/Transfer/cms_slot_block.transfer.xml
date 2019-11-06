@@ -18,4 +18,14 @@
     <transfer name="CmsSlotTemplateConfiguration">
         <property name="conditions" type="array" singular="condition"/>
     </transfer>
+
+    <transfer name="CmsBlock">
+        <property name="cmsSlotBlockCollection" type="CmsSlotBlockCollection"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
+    </transfer>
+
 </transfers>
