@@ -126,7 +126,7 @@ class ProductCategorySlotBlockDataProvider implements ProductCategorySlotBlockDa
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[] $productAbstractEntityCollection
      *
-     * @return array
+     * @return int[]
      */
     protected function getProductAbstractIdsFromCollection(ObjectCollection $productAbstractEntityCollection): array
     {

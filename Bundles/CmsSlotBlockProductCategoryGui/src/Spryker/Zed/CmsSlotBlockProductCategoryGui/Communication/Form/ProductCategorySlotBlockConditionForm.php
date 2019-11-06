@@ -68,7 +68,21 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
             'constraints' => [
                 $this->getFactory()->createProductCategoryConditionsConstraint(),
             ],
-        ])->get(static::FIELD_PRODUCT_CATEGORY)->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
+        ]);
+
+        $this->addPreSubmitEventToProductCategoryField($builder->get(static::FIELD_PRODUCT_CATEGORY));
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return void
+     */
+    protected function addPreSubmitEventToProductCategoryField(FormBuilderInterface $builder): void
+    {
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
             $eventData = $event->getData();
 
             if (!isset($eventData[static::FIELD_PRODUCT_IDS])) {
@@ -83,8 +97,6 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
             $fieldOptions = $event->getForm()->get(static::FIELD_PRODUCT_IDS)->getConfig()->getOptions();
             $this->replaceProductIdsField($event->getForm(), $assignedProductAbstractIds, $fieldOptions);
         });
-
-        return $this;
     }
 
     /**
@@ -123,7 +135,21 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
             'attr' => [
                 'data-autocomplete-url' => static::OPTION_URL_AUTOCOMPLETE,
             ],
-        ])->get(static::FIELD_PRODUCT_IDS)->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
+        ]);
+
+        $this->addPreSetDataEventToProductIdsField($builder->get(static::FIELD_PRODUCT_IDS));
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return void
+     */
+    protected function addPreSetDataEventToProductIdsField(FormBuilderInterface $builder): void
+    {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
             if (!$event->getData()) {
                 return;
             }
@@ -136,8 +162,6 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
                 $event->getForm()->getConfig()->getOptions()
             );
         });
-
-        return $this;
     }
 
     /**

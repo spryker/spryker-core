@@ -14,6 +14,7 @@
     <transfer name="Pagination">
         <property name="page" type="int"/>
         <property name="lastPage" type="int"/>
+        <property name="maxPerPage" type="int"/>
     </transfer>
 
     <transfer name="ProductAbstractSuggestionCollection">
