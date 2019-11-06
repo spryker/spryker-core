@@ -24,6 +24,7 @@ class ProductListMerchantRelationshipCreateFormExpanderPlugin extends AbstractPl
 
     /**
      * {@inheritDoc}
+     * - Does nothing if id_company option was not provided.
      * - Adds Product List multi-select field to merchant relationship create form.
      *
      * @api

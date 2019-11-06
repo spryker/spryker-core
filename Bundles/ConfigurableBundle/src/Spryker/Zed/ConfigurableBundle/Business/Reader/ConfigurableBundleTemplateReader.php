@@ -137,15 +137,11 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer|null
+     * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    protected function getDefaultLocale(): ?LocaleTransfer
+    protected function getDefaultLocale(): LocaleTransfer
     {
         $localeTransfers = $this->localeFacade->getLocaleCollection();
-
-        if (!$localeTransfers) {
-            return null;
-        }
 
         return array_shift($localeTransfers);
     }

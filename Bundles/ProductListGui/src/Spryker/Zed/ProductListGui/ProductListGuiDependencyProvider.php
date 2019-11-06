@@ -249,7 +249,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductListTopButtonsExpanderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_PRODUCT_LIST_TOP_BUTTONS_EXPANDER, function (): array {
+        $container->set(static::PLUGINS_PRODUCT_LIST_TOP_BUTTONS_EXPANDER, function () {
             return $this->getProductListTopButtonsExpanderPlugins();
         });
 
@@ -263,7 +263,7 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductListUsedByTableExpanderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_PRODUCT_LIST_USED_BY_TABLE_EXPANDER, function (): array {
+        $container->set(static::PLUGINS_PRODUCT_LIST_USED_BY_TABLE_EXPANDER, function () {
             return $this->getProductListUsedByTableExpanderPlugins();
         });
 

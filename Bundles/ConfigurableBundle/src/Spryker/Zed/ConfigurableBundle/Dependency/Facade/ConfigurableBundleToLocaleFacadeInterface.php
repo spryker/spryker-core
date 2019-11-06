@@ -7,17 +7,15 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Dependency\Facade;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-
 interface ConfigurableBundleToLocaleFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
-    public function getLocaleCollection(): array;
+    public function getLocaleCollection();
 
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale(): LocaleTransfer;
+    public function getCurrentLocale();
 }

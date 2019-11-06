@@ -9,7 +9,6 @@ namespace Spryker\Zed\ConfigurableBundleGui\Communication\Controller;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
-use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -329,18 +328,14 @@ class TemplateController extends AbstractController
 
         if ($configurableBundleTemplateResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::SUCCESS_MESSAGE_TEMPLATE_DEACTIVATED, [
-                static::MESSAGE_PARAM_TEMPLATE_NAME => $this->getFactory()
-                    ->getGlossaryFacade()
-                    ->translate($configurableBundleTemplateTransfer->getName()),
+                static::MESSAGE_PARAM_TEMPLATE_NAME => $configurableBundleTemplateTransfer->getName(),
             ]);
 
             return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
         }
 
         $this->addErrorMessage(static::ERROR_MESSAGE_TEMPLATE_DEACTIVATE_FAIL, [
-            static::MESSAGE_PARAM_TEMPLATE_NAME => $this->getFactory()
-                ->getGlossaryFacade()
-                ->translate($configurableBundleTemplateTransfer->getName()),
+            static::MESSAGE_PARAM_TEMPLATE_NAME => $configurableBundleTemplateTransfer->getName(),
         ]);
 
         return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
@@ -378,18 +373,14 @@ class TemplateController extends AbstractController
 
         if ($configurableBundleTemplateResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::SUCCESS_MESSAGE_TEMPLATE_ACTIVATED, [
-                static::MESSAGE_PARAM_TEMPLATE_NAME => $this->getFactory()
-                    ->getGlossaryFacade()
-                    ->translate($configurableBundleTemplateTransfer->getName()),
+                static::MESSAGE_PARAM_TEMPLATE_NAME => $configurableBundleTemplateTransfer->getName(),
             ]);
 
             return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
         }
 
         $this->addErrorMessage(static::ERROR_MESSAGE_TEMPLATE_ACTIVATE_FAIL, [
-            static::MESSAGE_PARAM_TEMPLATE_NAME => $this->getFactory()
-                ->getGlossaryFacade()
-                ->translate($configurableBundleTemplateTransfer->getName()),
+            static::MESSAGE_PARAM_TEMPLATE_NAME => $configurableBundleTemplateTransfer->getName(),
         ]);
 
         return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
@@ -461,15 +452,6 @@ class TemplateController extends AbstractController
 
             return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
         }
-
-        $configurableBundleTemplateTransfer->addTranslation(
-            (new ConfigurableBundleTemplateTranslationTransfer())
-                ->setName(
-                    $this->getFactory()
-                        ->getGlossaryFacade()
-                        ->translate($configurableBundleTemplateTransfer->getName())
-                )
-        );
 
         return [
             'configurableBundleTemplateTransfer' => $configurableBundleTemplateTransfer,
