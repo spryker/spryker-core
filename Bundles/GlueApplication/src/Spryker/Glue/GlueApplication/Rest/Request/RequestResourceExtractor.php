@@ -10,7 +10,6 @@ namespace Spryker\Glue\GlueApplication\Rest\Request;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\MetadataInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 use Spryker\Glue\GlueApplication\Rest\Serialize\DecoderMatcherInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
