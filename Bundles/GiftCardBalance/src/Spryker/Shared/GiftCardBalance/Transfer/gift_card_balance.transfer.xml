@@ -22,4 +22,10 @@
         <property name="idSalesOrder" type="int"/>
     </transfer>
 
+    <transfer name="Quote">
+    </transfer>
+
+    <transfer name="Money">
+    </transfer>
+
 </transfers>

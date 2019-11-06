@@ -66,5 +66,11 @@
         <property name="message" type="string"/>
     </transfer>
 
+    <transfer name="Currency">
+    </transfer>
+
+    <transfer name="Customer">
+    </transfer>
+
 </transfers>
 
