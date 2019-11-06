@@ -55,14 +55,9 @@ class CartCodeDeleter implements CartCodeDeleterInterface
         }
 
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
-        /** @var \Generated\Shared\Transfer\DiscountTransfer[] $discountTransfers */
-        $discountTransfers = array_merge(
-            $quoteTransfer->getVoucherDiscounts()->getArrayCopy(),
-            $quoteTransfer->getCartRuleDiscounts()->getArrayCopy()
-        );
 
         $voucherCode = '';
-        foreach ($discountTransfers as $discountTransfer) {
+        foreach ($quoteTransfer->getVoucherDiscounts() as $discountTransfer) {
             if ($discountTransfer->getIdDiscount() === $idDiscount) {
                 $voucherCode = $discountTransfer->getVoucherCode();
             }
