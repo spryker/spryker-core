@@ -8,34 +8,34 @@
 var BlocksChoice = function (options) {
     var _self = this;
     this.blocksChoiceFormSelector = {};
-    this.blocksChoiceForm = {};
-    this.blocksChoiceDropDown = {};
+    this.$blocksChoiceForm = {};
+    this.$blocksChoiceDropDown = {};
     this.blocksTable = {};
     this.blocksChoiceAddSelector = '[type=button]';
 
     $.extend(this, options);
 
     this.init = function () {
-        _self.blocksChoiceForm = $(_self.blocksChoiceFormSelector);
-        _self.blocksChoiceDropDown = _self.blocksChoiceForm.find('select');
+        _self.$blocksChoiceForm = $(_self.blocksChoiceFormSelector);
+        _self.$blocksChoiceDropDown = _self.$blocksChoiceForm.find('select');
         _self.updateSelect();
-        _self.blocksChoiceForm.on('click', _self.blocksChoiceAddSelector, _self.addBlock);
+        _self.$blocksChoiceForm.on('click', _self.blocksChoiceAddSelector, _self.addBlock);
     };
 
-    this.updateSelect = function (resetActiveOption = false) {
-        if (resetActiveOption) {
-            _self.blocksChoiceDropDown.select2().val(null);
-            return
-        }
-        _self.blocksChoiceDropDown.select2()
+    this.updateSelect = function () {
+        _self.$blocksChoiceDropDown.select2();
+    };
+
+    this.resetSelect = function () {
+        _self.$blocksChoiceDropDown.select2().val(null);
     };
 
     this.addBlock = function (event) {
         event.preventDefault();
-        var selectedBlock = _self.blocksChoiceDropDown.find('option:selected');
+        var selectedBlock = _self.$blocksChoiceDropDown.find('option:selected');
 
         if (!selectedBlock.val()) {
-            return
+            return;
         }
 
         var blockData = {
@@ -49,7 +49,7 @@ var BlocksChoice = function (options) {
 
         _self.blocksTable.addRow(blockData);
         selectedBlock.attr("disabled", true);
-        _self.updateSelect(true);
+        _self.resetSelect();
     };
 };
 

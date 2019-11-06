@@ -5,16 +5,13 @@
 
 'use strict';
 
-/**
- * @param {object} options
- */
 var SlotBlocks = function (options) {
     var _self = this;
     this.slotSelector = '';
     this.slotTableSelector = '';
-    this.blockContainerSelector = '',
+    this.blockContainerSelector = '';
     this.baseUrl = '';
-    this.slotTable = {};
+    this.$slotTable = {};
     this.blocksTable = {};
     this.blocksChoice = {};
     this.slotBlocksForm = {};
@@ -24,11 +21,11 @@ var SlotBlocks = function (options) {
     $.extend(this, options);
 
     this.init = function () {
-        _self.slotTable = $(_self.slotTableSelector).DataTable();
+        _self.$slotTable = $(_self.slotTableSelector).DataTable();
 
         $(_self.slotTableSelector).find('tbody').on('click', 'tr', _self.tableRowSelect);
-        _self.slotTable.on('draw', _self.selectFirstRow);
-        _self.slotTable.on('select', _self.loadBlocksTable);
+        _self.$slotTable.on('draw', _self.selectFirstRow);
+        _self.$slotTable.on('select', _self.loadBlocksTable);
     };
 
     this.tableRowSelect = function (element) {
@@ -42,7 +39,7 @@ var SlotBlocks = function (options) {
             return;
         }
 
-        var cmsSlotBlock = _self.blocksTable.cmsSlotBlocks;
+        var cmsSlotBlock = _self.blocksTable.$cmsSlotBlocks;
         window.sweetAlert({
             title: cmsSlotBlock.data('alert-title'),
             text: cmsSlotBlock.data('alert-text'),
@@ -55,12 +52,12 @@ var SlotBlocks = function (options) {
     };
 
     this.updateRow = function (index) {
-        _self.slotTable.rows().deselect();
-        _self.slotTable.row(index).select();
+        _self.$slotTable.rows().deselect();
+        _self.$slotTable.row(index).select();
     };
 
     this.selectFirstRow = function () {
-        _self.slotTable.row(0).select();
+        _self.$slotTable.row(0).select();
     };
 
     this.loadBlocksTable = function (element, api, type, indexes) {
@@ -83,11 +80,8 @@ var SlotBlocks = function (options) {
     };
 
     this.getDataTableApi = function () {
-        return _self.slotTable;
+        return _self.$slotTable;
     };
 };
 
-/**
- * Open public methods
- */
 module.exports = SlotBlocks;

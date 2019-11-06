@@ -15,8 +15,8 @@ var BlocksTable = function (options) {
     this.cmsSlotBlocksOverlaySelector = '';
     this.cmsSlotBlocksOverlayTogglerClass = '';
     this.viewBlockUrl = '';
-    this.cmsSlotBlocks = {};
-    this.blocksTable = {};
+    this.$cmsSlotBlocks = {};
+    this.$blocksTable = {};
     this.slotBlocksForm = {};
     this.blocksChoiceFormSelector = '';
     this.initTableState = [];
@@ -25,14 +25,14 @@ var BlocksTable = function (options) {
     $.extend(this, options);
 
     this.init = function () {
-        _self.blocksTable = $(_self.blocksTableSelector);
-        _self.cmsSlotBlocks = $(_self.cmsSlotBlocksSelector);
+        _self.$blocksTable = $(_self.blocksTableSelector);
+        _self.$cmsSlotBlocks = $(_self.cmsSlotBlocksSelector);
         if (!_self.isFirstInit) {
-            return
+            return;
         }
-        document.addEventListener('savedBlocksForm', function () {
-            _self.getInitTableState(_self.blocksTable.data('ajax'));
-        }, false);
+        $(document).on('savedBlocksForm', function () {
+            _self.getInitTableState(_self.$blocksTable.data('ajax'));
+        });
         _self.isFirstInit = false;
     };
 
@@ -41,9 +41,9 @@ var BlocksTable = function (options) {
         _self.idCmsSlot = idCmsSlot;
 
         var ajaxUrl = _self.tableBaseUrl + '?' + params;
-        _self.blocksTable.data('ajax', ajaxUrl);
+        _self.$blocksTable.data('ajax', ajaxUrl);
         _self.getInitTableState(ajaxUrl);
-        _self.blocksTable.DataTable({
+        _self.$blocksTable.DataTable({
             destroy: true,
             ajax: {
                 cache: false
@@ -59,10 +59,10 @@ var BlocksTable = function (options) {
     };
 
     this.initDataTableListeners = function (idCmsSlotTemplate, idCmsSlot) {
-        _self.blocksTable.on('processing.dt', function () {
+        _self.$blocksTable.on('processing.dt', function () {
             _self.overlayToggler(true);
         });
-        _self.slotBlocksForm.rebuildForm(idCmsSlotTemplate, idCmsSlot, _self.blocksTable.DataTable().rows().data(), _self.isUnsaved());
+        _self.slotBlocksForm.rebuildForm(idCmsSlotTemplate, idCmsSlot, _self.$blocksTable.DataTable().rows().data(), _self.isUnsaved());
         _self.getChangeOrderButtons().each(function () {
             $(this).on('click', _self.changeOrderButtonsHandler.bind(this));
         });
@@ -99,10 +99,10 @@ var BlocksTable = function (options) {
     };
 
     this.getActionButtons = function(blockId) {
-        var buttons = $(_self.cmsSlotBlocks.data('actions-buttons-template'));
+        var $buttons = $(_self.$cmsSlotBlocks.data('actions-buttons-template'));
         var buttonsTemplate = '';
 
-        buttons.each(function() {
+        $buttons.each(function() {
             var button = $(this);
 
             if (!button.is('a')) {
@@ -120,42 +120,42 @@ var BlocksTable = function (options) {
     };
 
     this.getStatusLabel = function (isActive) {
-        var labelStatus = isActive ? 'active-label-template' : 'inactive-label-template';
+        var statusLabel = isActive ? 'active-label-template' : 'inactive-label-template';
 
-        return _self.cmsSlotBlocks.data(labelStatus);
+        return _self.$cmsSlotBlocks.data(statusLabel);
     };
 
     this.getStoresLabels = function (stores) {
-        var storeTemplate = $(_self.cmsSlotBlocks.data('active-label-template'));
+        var $storeTemplate = $(_self.$cmsSlotBlocks.data('active-label-template'));
         var storesArray = stores.split(',');
 
         return storesArray.reduce(function (storesTemplate, store) {
-            return storesTemplate + storeTemplate.html(store)[0].outerHTML + ' ';
+            return storesTemplate + $storeTemplate.html(store)[0].outerHTML + ' ';
         }, '');
     };
 
     this.getTable = function () {
         return {
-            api: _self.blocksTable.dataTable().api(),
-            data: _self.blocksTable.dataTable().api().data().toArray(),
+            api: _self.$blocksTable.dataTable().api(),
+            data: _self.$blocksTable.dataTable().api().data().toArray(),
         }
     };
 
     this.getChangeOrderButtons = function () {
-        return _self.blocksTable.find('.btn[data-direction]');
+        return _self.$blocksTable.find('.btn[data-direction]');
     };
 
     this.changeOrderButtonsHandler = function (event) {
         var clickInfo = _self.getClickInfo(event);
-        var direction = clickInfo.button.data('direction');
-        var isRowFirst = clickInfo.clickedTableRow === 0;
-        var isRowLast = clickInfo.clickedTableRow === clickInfo.tableLength - 1;
+        var direction = clickInfo.$button.data('direction');
+        var isRowFirst = clickInfo.$clickedTableRow === 0;
+        var isRowLast = clickInfo.$clickedTableRow === clickInfo.$tableLength - 1;
 
         if (isRowFirst && direction === 'up' || isRowLast && direction === 'down') {
-            return
+            return;
         }
 
-        _self.changeOrderRow(clickInfo.clickedTableRow, direction);
+        _self.changeOrderRow(clickInfo.$clickedTableRow, direction);
     };
 
     this.changeOrderRow = function (rowIndex, direction) {
@@ -179,31 +179,31 @@ var BlocksTable = function (options) {
     };
 
     this.getRemoveButtons = function () {
-        return _self.blocksTable.find('.js-slot-block-remove-button');
+        return _self.$blocksTable.find('.js-slot-block-remove-button');
     };
 
     this.removeButtonsHandler = function (event) {
         var clickInfo = _self.getClickInfo(event);
         var table = _self.getTable();
-        var rowName = table.data[clickInfo.clickedTableRow][1];
-        _self.updateChoiseDropdown(rowName);
-        table.data.splice(clickInfo.clickedTableRow, 1);
+        var rowName = table.data[clickInfo.$clickedTableRow][1];
+        _self.updateChoiceDropdown(rowName);
+        table.data.splice(clickInfo.$clickedTableRow, 1);
         _self.updateTable(table.api, table.data);
     };
 
-    this.updateChoiseDropdown = function (optionLabel) {
-        var choiceDropdown = $(_self.blocksChoiceFormSelector).find('select');
-        choiceDropdown.children('option[disabled]')
+    this.updateChoiceDropdown = function (optionLabel) {
+        var $choiceDropdown = $(_self.blocksChoiceFormSelector).find('select');
+        $choiceDropdown.children('option[disabled]')
             .filter(function() { return $(this).text() === optionLabel })
             .attr("disabled", false);
-        choiceDropdown.select2();
+        $choiceDropdown.select2();
     };
 
     this.getClickInfo = function(event) {
         return {
-            button: $(event.currentTarget),
-            clickedTableRow: $(event.currentTarget).parents('tr').index(),
-            tableLength: $(event.currentTarget).parents('tbody').children('tr').length,
+            $button: $(event.currentTarget),
+            $clickedTableRow: $(event.currentTarget).parents('tr').index(),
+            $tableLength: $(event.currentTarget).parents('tbody').children('tr').length,
         }
     };
 
@@ -212,7 +212,7 @@ var BlocksTable = function (options) {
         var currentTableState = _self.getTable().data;
 
         if (initTableState.length !== currentTableState.length) {
-            return true
+            return true;
         }
 
         return initTableState.some(function (item, index) {
@@ -225,7 +225,4 @@ var BlocksTable = function (options) {
     };
 };
 
-/**
- * Open public methods
- */
 module.exports = BlocksTable;

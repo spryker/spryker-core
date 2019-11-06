@@ -70,7 +70,4 @@ var SlotTable = function (options) {
     }
 };
 
-/**
- * Open public methods
- */
 module.exports = SlotTable;

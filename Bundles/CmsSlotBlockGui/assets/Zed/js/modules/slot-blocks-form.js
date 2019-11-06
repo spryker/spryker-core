@@ -7,7 +7,7 @@
 
 var SlotBlocksForm = function (options) {
     var _self = this;
-    this.formWrapper = {};
+    this.$formWrapper = {};
     this.form = {};
     this.saveButton = {};
     this.formItemsCount = 0;
@@ -18,11 +18,11 @@ var SlotBlocksForm = function (options) {
     $.extend(this, options);
 
     this.init = function () {
-        _self.formWrapper = $(_self.cmsSlotBlocksSelector);
-        _self.form = _self.formWrapper.find('[name=slot_blocks]');
+        _self.$formWrapper = $(_self.cmsSlotBlocksSelector);
+        _self.form = _self.$formWrapper.find('[name=slot_blocks]');
         _self.saveButton = _self.form.find('input[type=submit]');
-        _self.formItemsCount = parseInt(_self.formWrapper.data('slot-block-item-count'));
-        _self.formTemplate = _self.formWrapper.data('slot-block-item-form-template');
+        _self.formItemsCount = parseInt(_self.$formWrapper.data('slot-block-item-count'));
+        _self.formTemplate = _self.$formWrapper.data('slot-block-item-form-template');
         _self.form.on('submit', _self.save);
     };
 
@@ -56,7 +56,7 @@ var SlotBlocksForm = function (options) {
             setTimeout(function() {
                 _self.activateButton();
             }, 0);
-            return
+            return;
         }
         var url = $(this).attr('action');
         var formSerialize = $(this).serialize();
@@ -67,9 +67,7 @@ var SlotBlocksForm = function (options) {
                 html: true,
                 type: 'success'
             });
-            var eventSaveBlocksForm = document.createEvent('Event');
-            eventSaveBlocksForm.initEvent('savedBlocksForm', true, true);
-            document.dispatchEvent(eventSaveBlocksForm);
+            $(document).trigger('savedBlocksForm');
             _self.isStateChanged = false;
         }).fail(function() {
             window.sweetAlert({
@@ -88,7 +86,4 @@ var SlotBlocksForm = function (options) {
     };
 };
 
-/**
- * Open public methods
- */
 module.exports = SlotBlocksForm;
