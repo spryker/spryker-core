@@ -1,0 +1,24 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Configurable Bundle Cart Notes' } %}
+    {% block widget_content %}
+        <div class="row">
+            {% if salesOrderConfiguredBundleCollection is not empty %}
+                <div class="col-md-6">
+                    <table class="table">
+                        {% for salesOrderConfiguredBundle in salesOrderConfiguredBundleCollection %}
+                            <tr>
+                                <td class="text-left">
+                                    <div>{{ salesOrderConfiguredBundle.name }}</div>
+                                </td>
+                                <td class="text-left">{{ salesOrderConfiguredBundle.cartNote | escape | nl2br }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            {% else %}
+                <div class="col-md-12">
+                    <span class="text-left">{{ 'Order has no configurable bundle cart notes' | trans }}</span>
+                </div>
+            {% endif %}
+        </div>
+    {% endblock %}
+{% endembed %}
