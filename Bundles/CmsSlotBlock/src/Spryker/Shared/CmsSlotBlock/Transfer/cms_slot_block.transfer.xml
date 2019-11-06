@@ -28,4 +28,12 @@
         <property name="orderDirection" type="string"/>
     </transfer>
 
+    <transfer name="ProductAbstractCategoryStorage">
+        <property name="categories" singular="category" type="ProductCategoryStorage[]"/>
+    </transfer>
+
+    <transfer name="ProductCategoryStorage">
+        <property name="categoryId" type="int"/>
+    </transfer>
+
 </transfers>
