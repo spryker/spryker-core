@@ -130,6 +130,7 @@ class CmsBlockFacadeTest extends Unit
         $placeholder->addTranslation($translation);
         $placeholder->setPlaceholder('placeholder');
         $placeholder->setFkCmsBlock($cmsBlockTransfer->getIdCmsBlock());
+        $placeholder->setTemplateName('test template name');
 
         $glossary = new CmsBlockGlossaryTransfer();
         $glossary->addGlossaryPlaceholder($placeholder);
@@ -160,6 +161,7 @@ class CmsBlockFacadeTest extends Unit
         $placeholder->addTranslation($translation);
         $placeholder->setPlaceholder('placeholder');
         $placeholder->setFkCmsBlock($cmsBlockTransfer->getIdCmsBlock());
+        $placeholder->setTemplateName('test template name');
 
         $glossary = new CmsBlockGlossaryTransfer();
         $glossary->addGlossaryPlaceholder($placeholder);

@@ -38,4 +38,10 @@
     <transfer name="Item">
         <property name="idSalesOrderItem" type="int"/>
     </transfer>
+
+    <transfer name="Quote">
+    </transfer>
+
+    <transfer name="SaveOrder">
+    </transfer>
 </transfers>

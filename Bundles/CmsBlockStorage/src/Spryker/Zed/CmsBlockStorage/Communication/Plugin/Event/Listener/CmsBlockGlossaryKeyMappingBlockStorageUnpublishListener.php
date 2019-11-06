@@ -10,7 +10,6 @@ namespace Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener;
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockGlossaryKeyMappingTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\CmsBlockStorage\Communication\CmsBlockStorageCommunicationFactory getFactory()
@@ -20,8 +19,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class CmsBlockGlossaryKeyMappingBlockStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * {@inheritDoc}
      *
@@ -32,9 +29,8 @@ class CmsBlockGlossaryKeyMappingBlockStorageUnpublishListener extends AbstractPl
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $this->preventTransaction();
         $cmsBlockIds = $this->findCmsBlockIds($eventTransfers);
 
         $this->getFacade()->unpublish($cmsBlockIds);
@@ -45,8 +41,13 @@ class CmsBlockGlossaryKeyMappingBlockStorageUnpublishListener extends AbstractPl
      *
      * @return array
      */
-    public function findCmsBlockIds(array $eventTransfers)
+    public function findCmsBlockIds(array $eventTransfers): array
     {
-        return $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventTransfers, SpyCmsBlockGlossaryKeyMappingTableMap::COL_FK_CMS_BLOCK);
+        return $this->getFactory()
+            ->getEventBehaviorFacade()
+            ->getEventTransferForeignKeys(
+                $eventTransfers,
+                SpyCmsBlockGlossaryKeyMappingTableMap::COL_FK_CMS_BLOCK
+            );
     }
 }

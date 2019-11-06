@@ -13,12 +13,12 @@ use Spryker\Yves\Router\Cache\Cache;
 use Spryker\Yves\Router\Loader\ClosureLoader;
 use Spryker\Yves\Router\Loader\LoaderInterface;
 use Spryker\Yves\Router\Resolver\RequestRequestValueResolver;
-use Spryker\Yves\Router\Resource\ResourceInterface;
-use Spryker\Yves\Router\Resource\RouterResource;
 use Spryker\Yves\Router\Route\RouteCollection;
 use Spryker\Yves\Router\Router\ChainRouter;
 use Spryker\Yves\Router\Router\Router;
 use Spryker\Yves\Router\Router\RouterInterface;
+use Spryker\Yves\Router\RouterResource\ResourceInterface;
+use Spryker\Yves\Router\RouterResource\RouterResource;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver\RequestAttributeValueResolver;
@@ -73,7 +73,7 @@ class RouterFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\Router\Resource\ResourceInterface
+     * @return \Spryker\Yves\Router\RouterResource\ResourceInterface
      */
     public function createResource(): ResourceInterface
     {
