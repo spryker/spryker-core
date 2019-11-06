@@ -66,7 +66,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionLoaderInterface
      */
-    protected function createJsonIndexDefinitionLoader()
+    public function createJsonIndexDefinitionLoader()
     {
         return new JsonIndexDefinitionLoader(
             $this->getConfig()->getJsonIndexDefinitionDirectories(),
@@ -83,7 +83,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]|\Spryker\Zed\Search\Business\Model\SearchInstallerInterface[]
      */
-    protected function getSearchInstallerStack(LoggerInterface $messenger)
+    public function getSearchInstallerStack(LoggerInterface $messenger)
     {
         $installerPlugins = $this->getInstallerPlugins();
 
@@ -130,7 +130,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface
      */
-    protected function createElasticsearchIndexInstaller(LoggerInterface $messenger)
+    public function createElasticsearchIndexInstaller(LoggerInterface $messenger)
     {
         return new IndexInstaller(
             $this->createJsonIndexDefinitionLoader(),
@@ -168,7 +168,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGeneratorInterface
      */
-    protected function createElasticsearchIndexMapGenerator()
+    public function createElasticsearchIndexMapGenerator()
     {
         return new IndexMapGenerator(
             $this->getConfig()->getClassTargetDirectory(),
@@ -179,7 +179,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleanerInterface
      */
-    protected function createElasticsearchIndexMapCleaner()
+    public function createElasticsearchIndexMapCleaner()
     {
         return new IndexMapCleaner($this->getConfig()->getClassTargetDirectory());
     }
@@ -200,7 +200,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Client\Search\Provider\SearchClientProvider
      */
-    protected function createSearchClientProvider()
+    public function createSearchClientProvider()
     {
         return new SearchClientProvider();
     }
@@ -210,7 +210,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Elastica\Index
      */
-    protected function getElasticsearchIndex($index = null)
+    public function getElasticsearchIndex($index = null)
     {
         return $this
             ->createIndexProvider()
@@ -220,7 +220,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Client\Search\Provider\IndexClientProvider
      */
-    protected function createIndexProvider()
+    public function createIndexProvider()
     {
         return new IndexClientProvider();
     }
@@ -228,7 +228,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\IndexDefinitionMergerInterface
      */
-    protected function createJsonIndexDefinitionMerger()
+    public function createJsonIndexDefinitionMerger()
     {
         return new JsonIndexDefinitionMerger();
     }
@@ -255,7 +255,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface
      */
-    protected function createPageMapBuilder()
+    public function createPageMapBuilder()
     {
         return new PageMapBuilder();
     }
@@ -263,7 +263,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingInterface
      */
-    protected function getUtilEncodingService()
+    public function getUtilEncodingService()
     {
         return $this->getProvidedDependency(SearchDependencyProvider::SERVICE_UTIL_ENCODING);
     }
@@ -287,7 +287,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Elastica\Snapshot
      */
-    protected function createElasticsearchSnapshot()
+    public function createElasticsearchSnapshot()
     {
         return new Snapshot($this->getElasticsearchClient());
     }
@@ -308,7 +308,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \GuzzleHttp\Client
      */
-    protected function getGuzzleClient()
+    public function getGuzzleClient()
     {
         return $this->getProvidedDependency(SearchDependencyProvider::GUZZLE_CLIENT);
     }

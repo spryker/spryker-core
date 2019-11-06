@@ -73,6 +73,17 @@ class ProductAttributeToGlossaryBridge implements ProductAttributeToGlossaryInte
     }
 
     /**
+     * @param string[] $keyNames
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     */
+    public function getTranslationsByGlossaryKeysAndLocaleTransfers(array $keyNames, array $localeTransfers): array
+    {
+        return $this->glossaryFacade->getTranslationsByGlossaryKeysAndLocaleTransfers($keyNames, $localeTransfers);
+    }
+
+    /**
      * @param string $keyName
      *
      * @return bool
@@ -101,5 +112,15 @@ class ProductAttributeToGlossaryBridge implements ProductAttributeToGlossaryInte
     public function createKey($keyName)
     {
         return $this->glossaryFacade->createKey($keyName);
+    }
+
+    /**
+     * @param string[] $glossaryKeys
+     *
+     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
+     */
+    public function getGlossaryKeyTransfersByGlossaryKeys(array $glossaryKeys): array
+    {
+        return $this->glossaryFacade->getGlossaryKeyTransfersByGlossaryKeys($glossaryKeys);
     }
 }

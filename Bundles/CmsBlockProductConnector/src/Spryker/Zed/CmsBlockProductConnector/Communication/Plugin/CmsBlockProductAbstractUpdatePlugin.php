@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CmsBlockProductConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
-use Spryker\Zed\CmsBlock\Communication\Plugin\CmsBlockUpdatePluginInterface;
+use Spryker\Zed\CmsBlockExtension\Dependency\Plugin\CmsBlockUpdatePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -26,7 +26,7 @@ class CmsBlockProductAbstractUpdatePlugin extends AbstractPlugin implements CmsB
      *
      * @return void
      */
-    public function handleUpdate(CmsBlockTransfer $cmsBlockTransfer)
+    public function handleUpdate(CmsBlockTransfer $cmsBlockTransfer): void
     {
         $this->getFacade()
             ->updateCmsBlockProductAbstractRelations($cmsBlockTransfer);
