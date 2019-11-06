@@ -29,7 +29,7 @@ class MerchantOpeningHoursWeekdayScheduleWriterStep implements DataImportStepInt
     {
         $this->validateDataSet($dataSet);
 
-        $merchantOpeningHoursWeekdayScheduleEntity = SpyMerchantOpeningHoursWeekdayScheduleQuery::create()
+        $merchantOpeningHoursWeekdayScheduleEntity = $this->createMerchantOpeningHoursWeekdaySchedulePropelQuery()
             ->filterByFkMerchant($dataSet[MerchantOpeningHoursWeekdayScheduleDataSetInterface::FK_MERCHANT])
             ->filterByFkWeekdaySchedule($dataSet[MerchantOpeningHoursWeekdayScheduleDataSetInterface::FK_WEEKDAY_SCHEDULE])
             ->findOneOrCreate();
@@ -68,5 +68,13 @@ class MerchantOpeningHoursWeekdayScheduleWriterStep implements DataImportStepInt
         if (!$dataSet[$requiredDataSetKey]) {
             throw new InvalidDataException(sprintf('"%s" is required.', $requiredDataSetKey));
         }
+    }
+
+    /**
+     * @return \Orm\Zed\MerchantOpeningHours\Persistence\SpyMerchantOpeningHoursWeekdayScheduleQuery
+     */
+    protected function createMerchantOpeningHoursWeekdaySchedulePropelQuery(): SpyMerchantOpeningHoursWeekdayScheduleQuery
+    {
+        return SpyMerchantOpeningHoursWeekdayScheduleQuery::create();
     }
 }

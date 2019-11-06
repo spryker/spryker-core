@@ -29,7 +29,7 @@ class MerchantOpeningHoursDateScheduleWriterStep implements DataImportStepInterf
     {
         $this->validateDataSet($dataSet);
 
-        $merchantOpeningHoursDateScheduleEntity = SpyMerchantOpeningHoursDateScheduleQuery::create()
+        $merchantOpeningHoursDateScheduleEntity = $this->createMerchantOpeningHoursDateSchedulePropelQuery()
             ->filterByFkMerchant($dataSet[MerchantOpeningHoursDateScheduleDataSetInterface::FK_MERCHANT])
             ->filterByFkDateSchedule($dataSet[MerchantOpeningHoursDateScheduleDataSetInterface::FK_DATE_SCHEDULE])
             ->findOneOrCreate();
@@ -68,5 +68,13 @@ class MerchantOpeningHoursDateScheduleWriterStep implements DataImportStepInterf
         if (!$dataSet[$requiredDataSetKey]) {
             throw new InvalidDataException(sprintf('"%s" is required.', $requiredDataSetKey));
         }
+    }
+
+    /**
+     * @return \Orm\Zed\MerchantOpeningHours\Persistence\SpyMerchantOpeningHoursDateScheduleQuery
+     */
+    protected function createMerchantOpeningHoursDateSchedulePropelQuery(): SpyMerchantOpeningHoursDateScheduleQuery
+    {
+        return SpyMerchantOpeningHoursDateScheduleQuery::create();
     }
 }

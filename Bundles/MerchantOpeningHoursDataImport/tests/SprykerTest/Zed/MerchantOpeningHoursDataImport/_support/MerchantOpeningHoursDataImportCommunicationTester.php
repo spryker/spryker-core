@@ -38,16 +38,16 @@ class MerchantOpeningHoursDataImportCommunicationTester extends Actor
      */
     public function ensureMerchantOpeningHoursTablesIsEmpty(): void
     {
-        $this->ensureDatabaseTableIsEmpty($this->getDateScheduleQuery());
-        $this->ensureDatabaseTableIsEmpty($this->getWeekdayScheduleQuery());
-        $this->ensureDatabaseTableIsEmpty($this->getMerchantOpeningHoursDateScheduleQuery());
-        $this->ensureDatabaseTableIsEmpty($this->getMerchantOpeningHoursWeekdayScheduleQuery());
+        $this->ensureDatabaseTableIsEmpty($this->getDateSchedulePropelQuery());
+        $this->ensureDatabaseTableIsEmpty($this->getWeekdaySchedulePropelQuery());
+        $this->ensureDatabaseTableIsEmpty($this->getMerchantOpeningHoursDateSchedulePropelQuery());
+        $this->ensureDatabaseTableIsEmpty($this->getMerchantOpeningHoursWeekdaySchedulePropelQuery());
     }
 
     /**
      * @return \Orm\Zed\WeekdaySchedule\Persistence\SpyDateScheduleQuery
      */
-    public function getDateScheduleQuery(): SpyDateScheduleQuery
+    public function getDateSchedulePropelQuery(): SpyDateScheduleQuery
     {
         return SpyDateScheduleQuery::create();
     }
@@ -55,7 +55,7 @@ class MerchantOpeningHoursDataImportCommunicationTester extends Actor
     /**
      * @return \Orm\Zed\WeekdaySchedule\Persistence\SpyWeekdayScheduleQuery
      */
-    public function getWeekdayScheduleQuery(): SpyWeekdayScheduleQuery
+    public function getWeekdaySchedulePropelQuery(): SpyWeekdayScheduleQuery
     {
         return SpyWeekdayScheduleQuery::create();
     }
@@ -63,7 +63,7 @@ class MerchantOpeningHoursDataImportCommunicationTester extends Actor
     /**
      * @return \Orm\Zed\MerchantOpeningHours\Persistence\SpyMerchantOpeningHoursDateScheduleQuery
      */
-    public function getMerchantOpeningHoursDateScheduleQuery(): SpyMerchantOpeningHoursDateScheduleQuery
+    public function getMerchantOpeningHoursDateSchedulePropelQuery(): SpyMerchantOpeningHoursDateScheduleQuery
     {
         return SpyMerchantOpeningHoursDateScheduleQuery::create();
     }
@@ -71,7 +71,7 @@ class MerchantOpeningHoursDataImportCommunicationTester extends Actor
     /**
      * @return \Orm\Zed\MerchantOpeningHours\Persistence\SpyMerchantOpeningHoursWeekdayScheduleQuery
      */
-    public function getMerchantOpeningHoursWeekdayScheduleQuery(): SpyMerchantOpeningHoursWeekdayScheduleQuery
+    public function getMerchantOpeningHoursWeekdaySchedulePropelQuery(): SpyMerchantOpeningHoursWeekdayScheduleQuery
     {
         return SpyMerchantOpeningHoursWeekdayScheduleQuery::create();
     }

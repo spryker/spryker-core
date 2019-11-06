@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/weekday-schedule.svg)](https://travis-ci.org/spryker/weekday-schedule)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/weekday-schedule/badge.svg)](https://coveralls.io/github/spryker/weekday-schedule)
 
-{{ADD DESCRIPTION HERE}}
+WeekdaySchedule module provides ability to configure a scheduling of weekdays and dates.
 
 ## Installation
 
