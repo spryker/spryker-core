@@ -1,7 +1,7 @@
 # SalesConfigurableBundleCartNoteGui Module
 [![Build Status](https://travis-ci.org/spryker/sales-configurable-bundle-cart-note-gui.svg)](https://travis-ci.org/spryker/sales-configurable-bundle-cart-note-gui)
 
-{{ADD DESCRIPTION HERE}}
+Module provides functionality for displaying configurable bundle cart notes on order details page in zed.
 
 ## Installation
 
