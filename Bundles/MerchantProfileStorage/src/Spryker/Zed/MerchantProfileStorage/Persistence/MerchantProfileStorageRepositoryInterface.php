@@ -14,7 +14,7 @@ interface MerchantProfileStorageRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyMerchantProfileStorageEntityTransfer[]
+     * @return \Orm\Zed\MerchantProfileStorage\Persistence\SpyMerchantProfileStorage[]
      */
-    public function getFilteredMerchantProfileStorageEntityTransfers(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): array;
+    public function getFilteredMerchantProfileStorageEntities(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): array;
 }
