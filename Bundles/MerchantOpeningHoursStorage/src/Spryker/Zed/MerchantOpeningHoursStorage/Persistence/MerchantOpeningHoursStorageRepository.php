@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\WeekdayScheduleTransfer;
 use Orm\Zed\WeekdaySchedule\Persistence\SpyDateSchedule;
 use Orm\Zed\WeekdaySchedule\Persistence\SpyWeekdaySchedule;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -32,7 +33,10 @@ class MerchantOpeningHoursStorageRepository extends AbstractRepository implement
     {
         $weekdayScheduleEntities = $this->getFactory()
             ->getMerchantOpeningHoursWeekdaySchedulePropelQuery()
-            ->leftJoinSpyWeekdaySchedule()
+            ->useSpyWeekdayScheduleQuery()
+                ->orderByDay(Criteria::ASC)
+                ->orderByTimeFrom(Criteria::ASC)
+            ->endUse()
             ->filterByFkMerchant($fkMerchant)
             ->find();
 
@@ -48,7 +52,10 @@ class MerchantOpeningHoursStorageRepository extends AbstractRepository implement
     {
         $dateScheduleEntities = $this->getFactory()
             ->getMerchantOpeningHoursDateSchedulePropelQuery()
-            ->leftJoinSpyDateSchedule()
+            ->useSpyDateScheduleQuery()
+                ->orderByDate(Criteria::ASC)
+                ->orderByTimeFrom(Criteria::ASC)
+            ->endUse()
             ->filterByFkMerchant($fkMerchant)
             ->find();
 
