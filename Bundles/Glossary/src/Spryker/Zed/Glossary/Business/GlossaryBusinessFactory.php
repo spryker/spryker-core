@@ -9,6 +9,8 @@ namespace Spryker\Zed\Glossary\Business;
 
 use Spryker\Zed\Glossary\Business\Internal\GlossaryInstaller;
 use Spryker\Zed\Glossary\Business\Key\KeyManager;
+use Spryker\Zed\Glossary\Business\Key\KeyReader;
+use Spryker\Zed\Glossary\Business\Key\KeyReaderInterface;
 use Spryker\Zed\Glossary\Business\Reader\TranslationReader;
 use Spryker\Zed\Glossary\Business\Reader\TranslationReaderInterface;
 use Spryker\Zed\Glossary\Business\Translation\TranslationManager;
@@ -90,5 +92,13 @@ class GlossaryBusinessFactory extends AbstractBusinessFactory
     public function createTranslationReader(): TranslationReaderInterface
     {
         return new TranslationReader($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\Glossary\Business\Key\KeyReaderInterface
+     */
+    public function createGlossaryKeyReader(): KeyReaderInterface
+    {
+        return new KeyReader($this->getRepository());
     }
 }

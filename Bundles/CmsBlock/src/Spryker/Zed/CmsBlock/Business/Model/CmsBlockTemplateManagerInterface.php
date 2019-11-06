@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\CmsBlock\Business\Model;
 
+use Generated\Shared\Transfer\CmsBlockTemplateTransfer;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate;
+
 interface CmsBlockTemplateManagerInterface
 {
     /**
@@ -14,7 +17,7 @@ interface CmsBlockTemplateManagerInterface
      *
      * @return void
      */
-    public function syncTemplate($templatePath);
+    public function syncTemplate(string $templatePath): void;
 
     /**
      * @param string $name
@@ -22,7 +25,7 @@ interface CmsBlockTemplateManagerInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTemplateTransfer
      */
-    public function createTemplate($name, $path);
+    public function createTemplate(string $name, string $path);
 
     /**
      * @param string $path
@@ -31,26 +34,26 @@ interface CmsBlockTemplateManagerInterface
      *
      * @return void
      */
-    public function checkTemplateFileExists($path);
+    public function checkTemplateFileExists(string $path): void;
 
     /**
      * @param int $idCmsBlockTemplate
      *
      * @return bool
      */
-    public function hasTemplateFileById($idCmsBlockTemplate);
+    public function hasTemplateFileById(int $idCmsBlockTemplate): bool;
 
     /**
      * @param int $idCmsBlockTemplate
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate|null
      */
-    public function getTemplateById($idCmsBlockTemplate);
+    public function getTemplateById(int $idCmsBlockTemplate): ?SpyCmsBlockTemplate;
 
     /**
      * @param string $path
      *
      * @return \Generated\Shared\Transfer\CmsBlockTemplateTransfer|null
      */
-    public function findTemplateByPath($path);
+    public function findTemplateByPath(string $path): ?CmsBlockTemplateTransfer;
 }

@@ -348,4 +348,18 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     {
         return $this->getFactory()->createElasticsearchIndexCopier()->copyIndex($source, $target);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
+     * @return void
+     */
+    public function installIndexes(LoggerInterface $messenger): void
+    {
+        $this->getFactory()->createElasticsearchIndexInstaller($messenger)->install();
+    }
 }
