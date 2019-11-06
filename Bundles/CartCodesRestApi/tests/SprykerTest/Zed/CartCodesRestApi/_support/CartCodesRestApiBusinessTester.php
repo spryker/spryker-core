@@ -8,11 +8,14 @@
 namespace SprykerTest\Zed\CartCodesRestApi;
 
 use Codeception\Actor;
+use DateTime;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
+use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
  * Inherited Methods
@@ -66,8 +69,15 @@ class CartCodesRestApiBusinessTester extends Actor
      */
     public function prepareDiscountVoucherTransfer(): DiscountVoucherTransfer
     {
+        $stores = (new StoreFacade())->getAllStores();
+
+        $expectedIdStores = [];
+        foreach ($stores as $storeTransfer) {
+            $expectedIdStores[] = $storeTransfer->getIdStore();
+        }
+
         $override = [
-            DiscountVoucherTransfer::MAX_NUMBER_OF_USES => 5,
+            DiscountVoucherTransfer::MAX_NUMBER_OF_USES => 10,
             DiscountVoucherTransfer::CUSTOM_CODE => 'voucher',
             DiscountVoucherTransfer::QUANTITY => 3,
             DiscountVoucherTransfer::RANDOM_GENERATED_CODE_LENGTH => 3,
@@ -75,7 +85,12 @@ class CartCodesRestApiBusinessTester extends Actor
 
         $discountGeneralTransfer = $this->haveDiscount([
             DiscountGeneralTransfer::DISCOUNT_TYPE => DiscountConstants::TYPE_VOUCHER,
+            DiscountGeneralTransfer::VALID_FROM => (new DateTime('-1 day'))->format('Y-m-d H:i:s'),
+            DiscountGeneralTransfer::VALID_TO => (new DateTime('+1 day'))->format('Y-m-d H:i:s'),
+            DiscountGeneralTransfer::IS_ACTIVE => true,
+            DiscountGeneralTransfer::STORE_RELATION => (new StoreRelationTransfer())->setIdStores($expectedIdStores),
         ]);
+
         $override[DiscountVoucherTransfer::ID_DISCOUNT] = $discountGeneralTransfer->getIdDiscount();
         $discountVoucherTransfer = $this->haveGeneratedVoucherCodes($override);
 

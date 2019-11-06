@@ -9,7 +9,10 @@ namespace SprykerTest\Zed\CartCodesRestApi\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Shared\Quote\QuoteConstants;
 use Spryker\Zed\CartCode\CartCodeDependencyProvider;
 use Spryker\Zed\Discount\Communication\Plugin\CartCode\VoucherCartCodePlugin;
 
@@ -32,6 +35,8 @@ class CartCodesRestApiFacadeTest extends Unit
 
     protected const ID_DISCOUNT = 9999;
 
+    protected const DISCOUNT_PERCENTAGE_200 = 20000;
+
     /**
      * @uses \Spryker\Shared\CartsRestApi\CartsRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND
      */
@@ -50,6 +55,9 @@ class CartCodesRestApiFacadeTest extends Unit
         parent::setUp();
 
         $this->setPluginCartCodeCollection();
+        $this->tester->setConfig(QuoteConstants::FIELDS_ALLOWED_FOR_SAVING, [
+            QuoteTransfer::VOUCHER_DISCOUNTS,
+        ]);
     }
 
     /**
@@ -101,6 +109,7 @@ class CartCodesRestApiFacadeTest extends Unit
         // Arrange
         $customerTransfer = $this->tester->haveCustomer();
         $discountVoucherTransfer = $this->tester->prepareDiscountVoucherTransfer();
+
         $discountTransfer = (new DiscountTransfer())
             ->setVoucherCode($discountVoucherTransfer->getCode())
             ->setIdDiscount($discountVoucherTransfer->getIdDiscount());
@@ -109,13 +118,23 @@ class CartCodesRestApiFacadeTest extends Unit
             QuoteTransfer::UUID => uniqid('uuid'),
             QuoteTransfer::CUSTOMER => $customerTransfer,
             QuoteTransfer::VOUCHER_DISCOUNTS => [$discountTransfer->toArray()],
+            QuoteTransfer::ITEMS => [
+                [
+                    ItemTransfer::QUANTITY => 3,
+                    ItemTransfer::SKU => 123,
+                ],
+            ],
+            QuoteTransfer::STORE => [
+                StoreTransfer::NAME => 'DE',
+                StoreTransfer::ID_STORE => 1,
+            ],
         ]);
 
         // Act
-        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCode($quoteTransfer, $discountTransfer->getIdDiscount());
+        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCode($quoteTransfer, $discountVoucherTransfer->getIdDiscount());
 
         // Assert
-        $this->assertEmpty(0, $cartCodeOperationResultTransfer->getQuote()->getVoucherDiscounts());
+        $this->assertEmpty($cartCodeOperationResultTransfer->getQuote()->getVoucherDiscounts());
     }
 
     /**

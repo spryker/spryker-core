@@ -17,13 +17,6 @@ use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestAp
 class CartCodeDeleter implements CartCodeDeleterInterface
 {
     /**
-     * @uses \Spryker\Shared\CartsRestApi\CartsRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND
-     */
-    protected const ERROR_IDENTIFIER_CART_NOT_FOUND = 'ERROR_IDENTIFIER_CART_NOT_FOUND';
-
-    protected const ERROR_MESSAGE_INVALID_DISCOUNT_ID = 'Invalid discount id.';
-
-    /**
      * @var \Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeInterface
      */
     protected $cartCodeFacade;

@@ -9,7 +9,7 @@ namespace Spryker\Zed\Discount\Communication\Plugin\CartCode;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface;
+use Spryker\Shared\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
