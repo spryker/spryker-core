@@ -105,8 +105,10 @@ class ShipmentDataProvider implements FormDataProviderInterface
         $this->setItemLevelEmptyShipmentFromQuote($quoteTransfer);
 
         $shipmentMethodsCollectionTransfer = $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
+        /** @var \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer */
+        $shipmentMethodsTransfer = $shipmentMethodsCollectionTransfer->getShipmentMethods()->getIterator()->current();
 
-        return current($shipmentMethodsCollectionTransfer->getShipmentMethods());
+        return $shipmentMethodsTransfer;
     }
 
     /**
