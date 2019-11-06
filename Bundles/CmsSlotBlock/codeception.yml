@@ -1,5 +1,7 @@
-namespace: CmsSlotBlock
+namespace: SprykerTest
 actor: Tester
+include:
+    - tests/SprykerTest/Zed/CmsSlotBlock
 paths:
     tests: tests
     log: tests/_output
