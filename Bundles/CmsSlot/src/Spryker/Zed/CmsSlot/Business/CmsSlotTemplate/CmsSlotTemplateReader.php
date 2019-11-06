@@ -37,7 +37,7 @@ class CmsSlotTemplateReader implements CmsSlotTemplateReaderInterface
     {
         $cmsSlotTemplateTransfer = $this->cmsSlotRepository->findCmsSlotTemplateById($idCmsSlotTemplate);
 
-        if (!$idCmsSlotTemplate) {
+        if (!$cmsSlotTemplateTransfer) {
             throw new MissingCmsSlotTemplateException(
                 sprintf(
                     'CMS Slot Template with id "%d" not found.',
