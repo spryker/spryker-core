@@ -10,7 +10,6 @@ namespace Spryker\Zed\Availability\Business\Model;
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Zed\Availability\Business\Exception\ProductNotFoundException;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
 
@@ -71,30 +70,26 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
      * @param string $abstractSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
     protected function updateProductAbstractAvailabilityBySku(
         string $abstractSku,
         StoreTransfer $storeTransfer
-    ): ?ProductAbstractAvailabilityTransfer {
-        try {
-            return $this->availabilityHandler
-                ->updateProductAbstractAvailabilityBySku($abstractSku, $storeTransfer);
-        } catch (ProductNotFoundException $exception) {
-            return null;
-        }
+    ): ProductAbstractAvailabilityTransfer {
+        return $this->availabilityHandler
+            ->updateProductAbstractAvailabilityBySku($abstractSku, $storeTransfer);
     }
 
     /**
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer
      */
     public function findOrCreateProductConcreteAvailabilityBySkuForStore(
         string $concreteSku,
         StoreTransfer $storeTransfer
-    ): ?ProductConcreteAvailabilityTransfer {
+    ): ProductConcreteAvailabilityTransfer {
         $storeTransfer = $this->assertStoreTransfer($storeTransfer);
         $productConcreteAvailabilityTransfer = $this->availabilityRepository
             ->findProductConcreteAvailabilityBySkuAndStore($concreteSku, $storeTransfer);
@@ -110,18 +105,14 @@ class ProductAvailabilityReader implements ProductAvailabilityReaderInterface
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer
      */
     protected function updateProductConcreteAvailabilityBySku(
         string $concreteSku,
         StoreTransfer $storeTransfer
-    ): ?ProductConcreteAvailabilityTransfer {
-        try {
-            return $this->availabilityHandler
-                ->updateProductConcreteAvailabilityBySku($concreteSku, $storeTransfer);
-        } catch (ProductNotFoundException $exception) {
-            return null;
-        }
+    ): ProductConcreteAvailabilityTransfer {
+        return $this->availabilityHandler
+            ->updateProductConcreteAvailabilityBySku($concreteSku, $storeTransfer);
     }
 
     /**

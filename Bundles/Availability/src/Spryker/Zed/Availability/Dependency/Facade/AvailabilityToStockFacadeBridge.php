@@ -26,6 +26,28 @@ class AvailabilityToStockFacadeBridge implements AvailabilityToStockFacadeInterf
     }
 
     /**
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    public function isProductAbstractNeverOutOfStockForStore(string $abstractSku, StoreTransfer $storeTransfer): bool
+    {
+        return $this->stockFacade->isProductAbstractNeverOutOfStockForStore($abstractSku, $storeTransfer);
+    }
+
+    /**
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function calculateProductAbstractStockForStore(string $abstractSku, StoreTransfer $storeTransfer): Decimal
+    {
+        return $this->stockFacade->calculateProductAbstractStockForStore($abstractSku, $storeTransfer);
+    }
+
+    /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *

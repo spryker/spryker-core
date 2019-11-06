@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
-use Spryker\Zed\Availability\Business\Exception\ProductNotFoundException;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
@@ -65,6 +64,20 @@ class ProductAvailabilityCalculator implements ProductAvailabilityCalculatorInte
     }
 
     /**
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function calculateAvailabilityForProductAbstract(string $abstractSku, StoreTransfer $storeTransfer): Decimal
+    {
+        $physicalItems = $this->stockFacade->calculateProductAbstractStockForStore($abstractSku, $storeTransfer);
+        $reservedItems = $this->omsFacade->getOmsReservedProductQuantityByAbstractProductSkuForStore($abstractSku, $storeTransfer);
+
+        return $this->normalizeQuantity($physicalItems->subtract($reservedItems));
+    }
+
+    /**
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
@@ -73,6 +86,17 @@ class ProductAvailabilityCalculator implements ProductAvailabilityCalculatorInte
     public function isNeverOutOfStockForStore(string $concreteSku, StoreTransfer $storeTransfer): bool
     {
         return $this->stockFacade->isNeverOutOfStockForStore($concreteSku, $storeTransfer);
+    }
+
+    /**
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    public function isProductAbstractNeverOutOfStockForStore(string $abstractSku, StoreTransfer $storeTransfer): bool
+    {
+        return $this->stockFacade->isProductAbstractNeverOutOfStockForStore($abstractSku, $storeTransfer);
     }
 
     /**
@@ -103,24 +127,13 @@ class ProductAvailabilityCalculator implements ProductAvailabilityCalculatorInte
      * @param string $abstractSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @throws \Spryker\Zed\Availability\Business\Exception\ProductNotFoundException
-     *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
     public function getCalculatedProductAbstractAvailabilityTransfer(string $abstractSku, StoreTransfer $storeTransfer): ProductAbstractAvailabilityTransfer
     {
-        $productAbstractAvailabilityTransfer = $this->availabilityRepository
-            ->getCalculatedProductAbstractAvailabilityBySkuAndStore(
-                $abstractSku,
-                $storeTransfer
-            );
-
-        if ($productAbstractAvailabilityTransfer === null) {
-            throw new ProductNotFoundException(
-                sprintf(static::PRODUCT_SKU_NOT_FOUND_EXCEPTION_MESSAGE_FORMAT, $abstractSku)
-            );
-        }
-
-        return $productAbstractAvailabilityTransfer;
+        return (new ProductAbstractAvailabilityTransfer())
+            ->setSku($abstractSku)
+            ->setAvailability($this->calculateAvailabilityForProductAbstract($abstractSku, $storeTransfer))
+            ->setIsNeverOutOfStock($this->isProductAbstractNeverOutOfStockForStore($abstractSku, $storeTransfer));
     }
 }

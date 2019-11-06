@@ -133,6 +133,19 @@ class Reservation implements ReservationInterface
     }
 
     /**
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function getOmsReservedProductQuantityByAbstractProductSkuForStore(string $abstractSku, StoreTransfer $storeTransfer): Decimal
+    {
+        $storeTransfer->requireIdStore();
+
+        return $this->omsRepository->getOmsReservedProductQuantityByAbstractProductSkuForStore($abstractSku, $storeTransfer);
+    }
+
+    /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $currentStoreTransfer
      *

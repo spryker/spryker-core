@@ -58,6 +58,14 @@ interface ReaderInterface
     public function isNeverOutOfStockForStore(string $sku, StoreTransfer $storeTransfer): bool;
 
     /**
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    public function isProductAbstractNeverOutOfStockForStore(string $abstractSku, StoreTransfer $storeTransfer): bool;
+
+    /**
      * @param string $sku
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]
@@ -71,6 +79,14 @@ interface ReaderInterface
      * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]
      */
     public function findProductStocksForStore(string $sku, StoreTransfer $storeTransfer): array;
+
+    /**
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     */
+    public function getStockProductByProductAbstractSkuForStore(string $abstractSku, StoreTransfer $storeTransfer): array;
 
     /**
      * @param string $sku

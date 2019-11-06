@@ -23,6 +23,14 @@ interface ProductAvailabilityCalculatorInterface
     public function calculateAvailabilityForProductConcrete(string $concreteSku, StoreTransfer $storeTransfer): Decimal;
 
     /**
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function calculateAvailabilityForProductAbstract(string $abstractSku, StoreTransfer $storeTransfer): Decimal;
+
+    /**
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *

@@ -293,6 +293,19 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
+     *  - Returns reserved quantity for the given abstract product sku which aggregated in OMS.
+     *
+     * @api
+     *
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function getOmsReservedProductQuantityByAbstractProductSkuForStore(string $abstractSku, StoreTransfer $storeTransfer): Decimal;
+
+    /**
+     * Specification:
      *  - Gets process entity by process name from persistence
      *
      * @api

@@ -33,6 +33,7 @@ interface StockFacadeInterface
     /**
      * Specification:
      * - Checks if the concrete product with the provided SKU has any stock type that is set as "never out of stock".
+     * - Filters out stocks that are inactive.
      *
      * @api
      *
@@ -42,6 +43,20 @@ interface StockFacadeInterface
      * @return bool
      */
     public function isNeverOutOfStockForStore($sku, StoreTransfer $storeTransfer);
+
+    /**
+     * Specification:
+     * - Checks if the abstract product with the provided SKU has any stock product that is set as "never out of stock".
+     * - Filters out stocks that are inactive.
+     *
+     * @api
+     *
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    public function isProductAbstractNeverOutOfStockForStore(string $abstractSku, StoreTransfer $storeTransfer): bool;
 
     /**
      * Specification:
@@ -69,6 +84,20 @@ interface StockFacadeInterface
      * @return \Spryker\DecimalObject\Decimal
      */
     public function calculateProductStockForStore(string $sku, StoreTransfer $storeTransfer): Decimal;
+
+    /**
+     * Specification:
+     *  - Returns the total stock amount of the abstract product for all its available stock types and store.
+     *  - Filters out stocks that are inactive.
+     *
+     * @api
+     *
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function calculateProductAbstractStockForStore(string $abstractSku, StoreTransfer $storeTransfer): Decimal;
 
     /**
      * @api

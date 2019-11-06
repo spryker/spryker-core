@@ -51,7 +51,20 @@ class Calculator implements CalculatorInterface
     }
 
     /**
-     * @param \Orm\Zed\Stock\Persistence\SpyStockProduct[] $productEntities
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function calculateProductAbstractStockForStore(string $abstractSku, StoreTransfer $storeTransfer): Decimal
+    {
+        $stockProductTransfers = $this->reader->getStockProductByProductAbstractSkuForStore($abstractSku, $storeTransfer);
+
+        return $this->calculateTotalQuantity($stockProductTransfers);
+    }
+
+    /**
+     * @param \Orm\Zed\Stock\Persistence\SpyStockProduct[]|\Generated\Shared\Transfer\StockProductTransfer[] $productEntities
      *
      * @return \Spryker\DecimalObject\Decimal
      */

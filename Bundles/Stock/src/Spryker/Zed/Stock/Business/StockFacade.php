@@ -57,6 +57,23 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @api
      *
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    public function isProductAbstractNeverOutOfStockForStore(string $abstractSku, StoreTransfer $storeTransfer): bool
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->isProductAbstractNeverOutOfStockForStore($abstractSku, $storeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param string $sku
      *
      * @return \Spryker\DecimalObject\Decimal
@@ -79,6 +96,25 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     public function calculateProductStockForStore(string $sku, StoreTransfer $storeTransfer): Decimal
     {
         return $this->getFactory()->createCalculatorModel()->calculateProductStockForStore($sku, $storeTransfer);
+    }
+
+    /**
+     * Specification:
+     *  - Returns the total stock amount of the abstract product for all its available stock types and store.
+     *  - Filters out stocks that are inactive.
+     *
+     * @api
+     *
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function calculateProductAbstractStockForStore(string $abstractSku, StoreTransfer $storeTransfer): Decimal
+    {
+        return $this->getFactory()
+            ->createCalculatorModel()
+            ->calculateProductAbstractStockForStore($abstractSku, $storeTransfer);
     }
 
     /**

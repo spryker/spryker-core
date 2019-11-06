@@ -190,6 +190,19 @@ class Reader implements ReaderInterface
     }
 
     /**
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    public function isProductAbstractNeverOutOfStockForStore(string $abstractSku, StoreTransfer $storeTransfer): bool
+    {
+        $storeTransfer->requireName();
+
+        return $this->stockRepository->isProductAbstractNeverOutOfStockForStore($abstractSku, $storeTransfer);
+    }
+
+    /**
      * @param string $sku
      *
      * @throws \InvalidArgumentException
@@ -232,6 +245,19 @@ class Reader implements ReaderInterface
             ->endUse()
             ->find()
             ->getData();
+    }
+
+    /**
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     */
+    public function getStockProductByProductAbstractSkuForStore(string $abstractSku, StoreTransfer $storeTransfer): array
+    {
+        $storeTransfer->requireName();
+
+        return $this->stockRepository->getStockProductByProductAbstractSkuForStore($abstractSku, $storeTransfer);
     }
 
     /**

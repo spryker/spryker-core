@@ -129,7 +129,7 @@ class AvailabilityHelper implements AvailabilityHelperInterface
                 continue;
             }
 
-            $concreteProductReservation = $reservation->add(new Decimal($quantity));
+            $concreteProductReservation = new Decimal($quantity);
             $concreteProductReservation = $this->sumReservationsFromOtherStores($sku, $storeTransfer, $concreteProductReservation);
             $reservation = $reservation->add($concreteProductReservation);
         }

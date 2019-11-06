@@ -28,10 +28,10 @@ interface ProductAvailabilityReaderInterface
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer
      */
     public function findOrCreateProductConcreteAvailabilityBySkuForStore(
         string $concreteSku,
         StoreTransfer $storeTransfer
-    ): ?ProductConcreteAvailabilityTransfer;
+    ): ProductConcreteAvailabilityTransfer;
 }
