@@ -53,9 +53,9 @@ class AvailabilityMapper implements AvailabilityMapperInterface
      */
     protected function processAvailabilityAbstractEntityArray(array $availabilityAbstractData): array
     {
-        if (isset($availabilityAbstractData[ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY])) {
+        if (array_key_exists(ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY, $availabilityAbstractData)) {
             $availabilityAbstractData[ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY] = $this->calculateReservation(
-                $availabilityAbstractData[ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY]
+                $availabilityAbstractData[ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY] ?? ''
             );
         }
 
