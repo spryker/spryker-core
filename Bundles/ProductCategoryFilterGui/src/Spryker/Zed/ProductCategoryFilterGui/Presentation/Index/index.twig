@@ -26,11 +26,11 @@
 
 {% block head_css %}
     {{ parent() }}
-    <link rel="stylesheet" href="/assets/css/spryker-zed-product-category-main.css" />
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-product-category-main.css') }}" />
 {% endblock %}
 
 {% block footer_js %}
     {{ parent() }}
-    <script src="/assets/js/spryker-zed-product-category-main.js"></script>
+    <script src="{{ assetsPath('js/spryker-zed-product-category-main.js') }}"></script>
 {% endblock %}
 

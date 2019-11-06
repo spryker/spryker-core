@@ -14,6 +14,7 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
 {
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    protected const KEY_SKU = 'sku';
 
     /**
      * @var \Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\ProductsCategoriesResourceRelationshipToProductStorageClientInterface
@@ -111,16 +112,16 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
     {
         $productAbstractIds = [];
         foreach ($abstractProductData as $item) {
-            $productAbstractIds[] = (int)$item[static::KEY_ID_PRODUCT_ABSTRACT];
+            $productAbstractIds[(int)$item[static::KEY_ID_PRODUCT_ABSTRACT]] = $item[static::KEY_SKU];
         }
 
         $productAbstractCategoryStorageTransfers = $this->productCategoryStorageClient
-            ->findBulkProductAbstractCategory($productAbstractIds, $localeName);
+            ->findBulkProductAbstractCategory(array_keys($productAbstractIds), $localeName);
 
         $productCategoryNodeIds = [];
         foreach ($productAbstractCategoryStorageTransfers as $productAbstractCategoryStorageTransfer) {
             foreach ($productAbstractCategoryStorageTransfer->getCategories() as $productCategoryStorageTransfer) {
-                $productCategoryNodeIds[$productAbstractCategoryStorageTransfer->getIdProductAbstract()][]
+                $productCategoryNodeIds[$productAbstractIds[$productAbstractCategoryStorageTransfer->getIdProductAbstract()]][]
                     = $productCategoryStorageTransfer->getCategoryNodeId();
             }
         }

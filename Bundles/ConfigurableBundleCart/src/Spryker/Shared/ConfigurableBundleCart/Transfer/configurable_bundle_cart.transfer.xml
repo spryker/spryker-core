@@ -26,6 +26,7 @@
     <transfer name="ConfiguredBundle">
         <property name="quantity" type="int"/>
         <property name="groupKey" type="string"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="ConfiguredBundleItem">
@@ -35,6 +36,11 @@
     <transfer name="QuoteResponse">
         <property name="quoteTransfer" type="Quote"/>
         <property name="isSuccessful" type="bool"/>
+        <property name="errors" type="QuoteError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="QuoteError">
+        <property name="message" type="string"/>
     </transfer>
 
 </transfers>

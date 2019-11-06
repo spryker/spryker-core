@@ -69,4 +69,13 @@
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
+    <transfer name="Filter">
+    </transfer>
+
+    <transfer name="EventEntity">
+    </transfer>
+
+    <transfer name="Locale">
+    </transfer>
+
 </transfers>

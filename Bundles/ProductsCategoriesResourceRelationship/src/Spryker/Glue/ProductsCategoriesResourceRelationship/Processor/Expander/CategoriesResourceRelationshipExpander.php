@@ -57,7 +57,7 @@ class CategoriesResourceRelationshipExpander implements CategoriesResourceRelati
             return;
         }
 
-        $categoryNodeIds = array_unique(array_merge(...$productCategoryNodeIds));
+        $categoryNodeIds = array_unique(array_merge(...array_values($productCategoryNodeIds)));
 
         $categoryNodesRestResources = $this->categoriesRestApiResource
             ->findCategoryNodeByIds($categoryNodeIds, $localeName);
