@@ -16,7 +16,6 @@ use Orm\Zed\CmsSlot\Persistence\SpyCmsSlot;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplate;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplateQuery;
-use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotToCmsSlotTemplate;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotToCmsSlotTemplateQuery;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
