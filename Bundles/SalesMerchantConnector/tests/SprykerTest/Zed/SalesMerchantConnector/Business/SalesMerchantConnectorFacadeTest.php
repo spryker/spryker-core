@@ -111,7 +111,7 @@ class SalesMerchantConnectorFacadeTest extends Unit
         $merchantTransfer = $this->tester->haveMerchant();
 
         $salesOrderMerchantSaveTransfer = new SalesOrderMerchantSaveTransfer();
-        $salesOrderMerchantSaveTransfer->setMerchantReference($merchantTransfer->getMerchantReference());
+        $salesOrderMerchantSaveTransfer->setMerchantReference($merchantTransfer->getMerchantKey());
         $salesOrderMerchantSaveTransfer->setIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
         $salesOrderMerchantSaveTransfer->setOrderReference($saveOrderTransfer->getOrderReference());
 
