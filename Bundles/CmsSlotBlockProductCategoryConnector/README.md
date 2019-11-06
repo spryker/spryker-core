@@ -1,7 +1,7 @@
 # CmsSlotBlockProductCategoryConnector Module
 [![Build Status](https://travis-ci.org/spryker/cms-slot-block-product-category-connector.svg)](https://travis-ci.org/spryker/cms-slot-block-product-category-connector)
 
-{{ADD DESCRIPTION HERE}}
+This module provides a connection between CmsSlotBlock and ProductCategory modules.
 
 ## Installation
 
