@@ -9,8 +9,9 @@ namespace SprykerTest\Zed\CartCodesRestApi;
 
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\QuoteBuilder;
-use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 /**
  * Inherited Methods
@@ -33,17 +34,15 @@ class CartCodesRestApiBusinessTester extends Actor
 {
     use _generated\CartCodesRestApiBusinessTesterActions;
 
+    public const CODE = 'testCode1';
+
+    public const ID_DISCOUNT = 9999;
+
+    public const NON_EXISTENT_ID_DISCOUNT = 7777;
+
     public const TEST_QUOTE_UUID = 'test-quote-uuid';
 
     public const TEST_CUSTOMER_REFERENCE = 'DE--666';
-
-    public const ITEMS = [
-        [
-            'sku' => 'test sku',
-            'quantity' => '666',
-
-        ],
-    ];
 
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -54,9 +53,40 @@ class CartCodesRestApiBusinessTester extends Actor
             [
                 'uuid' => static::TEST_QUOTE_UUID,
                 'customerReference' => static::TEST_CUSTOMER_REFERENCE,
-                'customer' => (new CustomerTransfer())->setCustomerReference(static::TEST_CUSTOMER_REFERENCE),
-                'items' => static::ITEMS,
             ]
         ))->build();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function havePersistentQuoteWithVouchers(): QuoteTransfer
+    {
+        $customerTransfer = $this->haveCustomer();
+
+        $discountTransfer = (new DiscountTransfer())
+            ->setVoucherCode(static::CODE)
+            ->setIdDiscount(static::ID_DISCOUNT);
+
+        return $this->havePersistentQuote([
+            QuoteTransfer::UUID => uniqid('uuid'),
+            QuoteTransfer::CUSTOMER => $customerTransfer,
+            QuoteTransfer::VOUCHER_DISCOUNTS => [$discountTransfer->toArray()],
+            QuoteTransfer::STORE => [
+                StoreTransfer::NAME => 'DE',
+                StoreTransfer::ID_STORE => 1,
+            ],
+        ]);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function havePersistentQuoteWithOutVouchers(): QuoteTransfer
+    {
+        return $this->havePersistentQuote([
+            QuoteTransfer::UUID => uniqid('uuid', true),
+            QuoteTransfer::CUSTOMER => $this->haveCustomer(),
+        ]);
     }
 }

@@ -16,12 +16,12 @@ class QuoteOperationChecker implements QuoteOperationCheckerInterface
 {
     protected const MESSAGE_TYPE_ERROR = 'error';
 
+    protected const GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED = 'cart.locked.change_denied';
+
     /**
      * @var \Spryker\Zed\CartCode\Dependency\Facade\CartCodeToQuoteFacadeInterface
      */
     protected $quoteFacade;
-
-    protected const GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED = 'cart.locked.change_denied';
 
     /**
      * @param \Spryker\Zed\CartCode\Dependency\Facade\CartCodeToQuoteFacadeInterface $quoteFacade
@@ -42,15 +42,10 @@ class QuoteOperationChecker implements QuoteOperationCheckerInterface
             return null;
         }
 
-        $messageTransfer = new MessageTransfer();
-        $messageTransfer->setValue(static::GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED);
-        $messageTransfer->setType(self::MESSAGE_TYPE_ERROR);
-
-        $cartCodeOperationResultTransfer = new CartCodeOperationResultTransfer();
-        $cartCodeOperationResultTransfer
+        return (new CartCodeOperationResultTransfer())
             ->setQuote($quoteTransfer)
-            ->addMessage($messageTransfer);
-
-        return $cartCodeOperationResultTransfer;
+            ->addMessage((new MessageTransfer())
+                ->setValue(static::GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED)
+                ->setType(self::MESSAGE_TYPE_ERROR));
     }
 }

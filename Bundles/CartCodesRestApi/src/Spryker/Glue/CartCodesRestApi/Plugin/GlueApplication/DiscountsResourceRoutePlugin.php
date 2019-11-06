@@ -55,7 +55,7 @@ class DiscountsResourceRoutePlugin extends AbstractPlugin implements ResourceRou
      */
     public function getController(): string
     {
-        return 'discounts-resource';
+        return CartCodesRestApiConfig::CONTROLLER_DISCOUNTS;
     }
 
     /**

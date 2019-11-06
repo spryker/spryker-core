@@ -29,6 +29,7 @@ class DiscountsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "404": "Cart with given uuid not found."
+     *              "422": "Cart code can't be added."
      *          }
      *     }
      * })
@@ -42,6 +43,6 @@ class DiscountsResourceController extends AbstractController
         RestRequestInterface $restRequest,
         RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
     ): RestResponseInterface {
-        return $this->getFactory()->createCartCodeAdder()->addCandidate($restRequest, $restDiscountRequestAttributesTransfer);
+        return $this->getFactory()->createCartCodeAdder()->addCandidateToCart($restRequest, $restDiscountRequestAttributesTransfer);
     }
 }

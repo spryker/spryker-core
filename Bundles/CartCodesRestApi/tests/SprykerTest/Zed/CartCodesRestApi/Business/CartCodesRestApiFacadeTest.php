@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\CartCodesRestApi\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\CartCodesRestApi\CartCodesRestApiConfig;
+use Spryker\Shared\Quote\QuoteConstants;
 use Spryker\Zed\CartCode\CartCodeDependencyProvider;
 use Spryker\Zed\Discount\Communication\Plugin\CartCode\VoucherCartCodePlugin;
 
@@ -45,6 +47,9 @@ class CartCodesRestApiFacadeTest extends Unit
         parent::setUp();
 
         $this->setPluginCartCodeCollection();
+        $this->tester->setConfig(QuoteConstants::FIELDS_ALLOWED_FOR_SAVING, [
+            QuoteTransfer::VOUCHER_DISCOUNTS,
+        ]);
     }
 
     /**
@@ -53,18 +58,15 @@ class CartCodesRestApiFacadeTest extends Unit
     public function testAddCandidateWillAddCodeWithExistingQuote(): void
     {
         // Arrange
-        $customerTransfer = $this->tester->haveCustomer();
-        $quoteTransfer = $this->tester->havePersistentQuote([
-            QuoteTransfer::CUSTOMER => $customerTransfer,
-        ]);
+        $quoteTransfer = $this->tester->havePersistentQuoteWithOutVouchers();
 
         // Act
-        $cartCodeOperationResultTransfer = $this->tester->getFacade()->addCandidate($quoteTransfer, static::CODE);
+        $cartCodeOperationResultTransfer = $this->tester->getFacade()->addCandidate($quoteTransfer, $this->tester::CODE);
 
         // Assert
         $this->assertEquals(1, $cartCodeOperationResultTransfer->getQuote()->getVoucherDiscounts()->count());
         $this->assertEquals(
-            static::CODE,
+            $this->tester::CODE,
             $cartCodeOperationResultTransfer->getQuote()->getVoucherDiscounts()[0]->getVoucherCode()
         );
     }
@@ -78,11 +80,11 @@ class CartCodesRestApiFacadeTest extends Unit
         $quoteTransfer = $this->tester->prepareQuoteTransfer();
 
         // Act
-        $cartCodeOperationResultTransfer = $this->tester->getFacade()->addCandidate($quoteTransfer, static::CODE);
+        $cartCodeOperationResultTransfer = $this->tester->getFacade()->addCandidate($quoteTransfer, $this->tester::CODE);
 
         // Assert
         $this->assertEquals(
-            static::ERROR_IDENTIFIER_CART_NOT_FOUND,
+            CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND,
             $cartCodeOperationResultTransfer->getMessages()[0]->getValue()
         );
     }

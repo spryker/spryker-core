@@ -14,7 +14,8 @@ interface CartCodesRestApiClientInterface
 {
     /**
      * Specification:
-     * - TODO
+     * - Extends QuoteTransfer with $code and its relevant data when the $code is applicable.
+     * - Sends Zed Request
      *
      * @api
      *

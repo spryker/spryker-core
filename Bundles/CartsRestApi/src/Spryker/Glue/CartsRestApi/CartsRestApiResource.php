@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CartsRestApi;
 
-use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -32,12 +31,12 @@ class CartsRestApiResource extends AbstractRestResource implements CartsRestApiR
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createCartRestResponseWithErrors(ArrayObject $messageTransfers): RestResponseInterface
+    public function createGuestCartRestResponse(QuoteTransfer $quoteTransfer): RestResponseInterface
     {
-        return $this->getFactory()->createCartRestResponseBuilder()->createCartRestResponseWithErrors($messageTransfers);
+        return $this->getFactory()->createGuestCartRestResponseBuilder()->createGuestCartRestResponse($quoteTransfer);
     }
 }

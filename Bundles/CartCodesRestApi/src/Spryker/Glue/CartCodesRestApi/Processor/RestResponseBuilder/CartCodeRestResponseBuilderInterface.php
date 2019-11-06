@@ -23,4 +23,11 @@ interface CartCodeRestResponseBuilderInterface
         CartCodeOperationResultTransfer $cartCodeOperationResultTransfer,
         RestRequestInterface $restRequest
     ): RestResponseInterface;
+
+    /**
+     * @param \Generated\Shared\Transfer\CartCodeOperationResultTransfer $cartCodeOperationResultTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function buildGuestCartRestResponse(CartCodeOperationResultTransfer $cartCodeOperationResultTransfer): RestResponseInterface;
 }
