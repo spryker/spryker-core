@@ -8,7 +8,7 @@
     <title>{% block head_title %}{% if title is defined %}{{ title | trans }}{% endif %}{% endblock %}</title>
 
     {% block head_css %}
-        <link rel="stylesheet" href="/assets/css/spryker-zed-gui-commons.css">
+        <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-gui-commons.css') }}">
     {% endblock %}
 
 </head>
@@ -111,10 +111,10 @@
 
 {% block footer_js %}
     {% block common_js %}
-        <script src="/assets/js/spryker-zed-gui-commons.js"></script>
+        <script src="{{ assetsPath('js/spryker-zed-gui-commons.js') }}"></script>
     {% endblock %}
     {% block init_js %}
-        <script src="/assets/js/spryker-zed-gui-init.js"></script>
+        <script src="{{ assetsPath('js/spryker-zed-gui-init.js') }}"></script>
     {% endblock %}
 {% endblock %}
 

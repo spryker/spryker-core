@@ -23,7 +23,7 @@ class CmsBlockStorageFacade extends AbstractFacade implements CmsBlockStorageFac
      *
      * @return void
      */
-    public function publish(array $cmsBlockIds)
+    public function publish(array $cmsBlockIds): void
     {
         $this->getFactory()->createCmsBlockStorageWriter()->publish($cmsBlockIds);
     }
@@ -37,7 +37,7 @@ class CmsBlockStorageFacade extends AbstractFacade implements CmsBlockStorageFac
      *
      * @return void
      */
-    public function unpublish(array $cmsBlockIds)
+    public function unpublish(array $cmsBlockIds): void
     {
         $this->getFactory()->createCmsBlockStorageWriter()->unpublish($cmsBlockIds);
     }
