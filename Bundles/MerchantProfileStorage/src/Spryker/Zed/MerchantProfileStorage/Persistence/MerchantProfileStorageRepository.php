@@ -18,9 +18,9 @@ class MerchantProfileStorageRepository extends AbstractRepository implements Mer
     /**
      * @param \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer
      *
-     * @return \Orm\Zed\MerchantProfileStorage\Persistence\SpyMerchantProfileStorage[]
+     * @return \Generated\Shared\Transfer\SpyMerchantProfileStorageEntityTransfer[]
      */
-    public function getFilteredMerchantProfileStorageEntities(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): array
+    public function getFilteredMerchantProfileStorageEntityTransfers(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): array
     {
         $merchantProfileStorageQuery = $this->getFactory()
             ->createMerchantProfileStorageQuery();
@@ -30,16 +30,12 @@ class MerchantProfileStorageRepository extends AbstractRepository implements Mer
         }
 
         if ($merchantProfileCriteriaFilterTransfer->getFilter()) {
-            $merchantProfileStorageQuery->setLimit(
-                $merchantProfileCriteriaFilterTransfer->getFilter()->getLimit()
-            );
-
-            $merchantProfileStorageQuery->setOffset(
-                $merchantProfileCriteriaFilterTransfer->getFilter()->getOffset()
+            $merchantProfileStorageQuery = $this->buildQueryFromCriteria(
+                $merchantProfileStorageQuery,
+                $merchantProfileCriteriaFilterTransfer->getFilter()
             );
         }
 
-        return $merchantProfileStorageQuery->find()
-            ->getData();
+        return $merchantProfileStorageQuery->find();
     }
 }

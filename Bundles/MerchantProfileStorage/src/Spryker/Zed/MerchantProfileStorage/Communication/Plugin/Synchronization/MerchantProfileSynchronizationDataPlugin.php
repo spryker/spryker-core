@@ -65,7 +65,7 @@ class MerchantProfileSynchronizationDataPlugin extends AbstractPlugin implements
     public function getData(int $offset, int $limit, array $ids = []): array
     {
         $merchantProfileStorageEntities = $this->getRepository()
-            ->getFilteredMerchantProfileStorageEntities(
+            ->getFilteredMerchantProfileStorageEntityTransfers(
                 (new MerchantProfileCriteriaFilterTransfer())
                     ->setFilter($this->createFilterTransfer($offset, $limit))
                     ->setMerchantIds($ids)
@@ -124,17 +124,17 @@ class MerchantProfileSynchronizationDataPlugin extends AbstractPlugin implements
     }
 
     /**
-     * @param \Orm\Zed\MerchantProfileStorage\Persistence\SpyMerchantProfileStorage[] $merchantProfileStorageEntities
+     * @param \Generated\Shared\Transfer\SpyMerchantProfileStorageEntityTransfer[] $merchantProfileStorageEntityTransfers
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    protected function mapMerchantProfileStorageEntitiesToSynchronizationDataTransfers(array $merchantProfileStorageEntities): array
+    protected function mapMerchantProfileStorageEntitiesToSynchronizationDataTransfers(array $merchantProfileStorageEntityTransfers): array
     {
         $synchronizationDataTransfers = [];
-        foreach ($merchantProfileStorageEntities as $merchantProfileStorageEntity) {
+        foreach ($merchantProfileStorageEntityTransfers as $merchantProfileStorageEntityTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData(json_encode($merchantProfileStorageEntity->getData()));
-            $synchronizationDataTransfer->setKey($merchantProfileStorageEntity->getKey());
+            $synchronizationDataTransfer->setData($merchantProfileStorageEntityTransfer->getData());
+            $synchronizationDataTransfer->setKey($merchantProfileStorageEntityTransfer->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;
         }
 
