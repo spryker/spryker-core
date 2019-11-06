@@ -16,12 +16,13 @@
     </transfer>
 
     <transfer name="SalesOrderMerchantSave">
-        <property name="offerReference" type="string"/>
         <property name="idSalesOrder" type="int"/>
+        <property name="orderReference" type="string"/>
+        <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="Offer">
-        <property name="productOfferReference" type="string"/>
+        <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="Quote">

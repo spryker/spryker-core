@@ -12,10 +12,6 @@ use Spryker\Zed\SalesMerchantConnector\Business\Expander\OrderItemExpander;
 use Spryker\Zed\SalesMerchantConnector\Business\Expander\OrderItemExpanderInterface;
 use Spryker\Zed\SalesMerchantConnector\Business\SalesOrderMerchantWriter\SalesOrderMerchantWriter;
 use Spryker\Zed\SalesMerchantConnector\Business\SalesOrderMerchantWriter\SalesOrderMerchantWriterInterface;
-use Spryker\Zed\SalesMerchantConnector\Dependency\Facade\SalesMerchantConnectorToMerchantFacadeInterface;
-use Spryker\Zed\SalesMerchantConnector\Dependency\Facade\SalesMerchantConnectorToMerchantProductOfferFacadeInterface;
-use Spryker\Zed\SalesMerchantConnector\Dependency\Facade\SalesMerchantConnectorToStoreFacadeInterface;
-use Spryker\Zed\SalesMerchantConnector\SalesMerchantConnectorDependencyProvider;
 
 /**
  * @method \Spryker\Zed\SalesMerchantConnector\SalesMerchantConnectorConfig getConfig()
@@ -37,34 +33,7 @@ class SalesMerchantConnectorBusinessFactory extends AbstractBusinessFactory
     public function createSalesOrderMerchantWriter(): SalesOrderMerchantWriterInterface
     {
         return new SalesOrderMerchantWriter(
-            $this->getEntityManager(),
-            $this->getMerchantProductOfferFacade(),
-            $this->getMerchantFacade(),
-            $this->getStoreFacade()
+            $this->getEntityManager()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\SalesMerchantConnector\Dependency\Facade\SalesMerchantConnectorToMerchantProductOfferFacadeInterface
-     */
-    public function getMerchantProductOfferFacade(): SalesMerchantConnectorToMerchantProductOfferFacadeInterface
-    {
-        return $this->getProvidedDependency(SalesMerchantConnectorDependencyProvider::FACADE_MERCHANT_PRODUCT_OFFER);
-    }
-
-    /**
-     * @return \Spryker\Zed\SalesMerchantConnector\Dependency\Facade\SalesMerchantConnectorToMerchantFacadeInterface
-     */
-    public function getMerchantFacade(): SalesMerchantConnectorToMerchantFacadeInterface
-    {
-        return $this->getProvidedDependency(SalesMerchantConnectorDependencyProvider::FACADE_MERCHANT);
-    }
-
-    /**
-     * @return \Spryker\Zed\SalesMerchantConnector\Dependency\Facade\SalesMerchantConnectorToStoreFacadeInterface
-     */
-    public function getStoreFacade(): SalesMerchantConnectorToStoreFacadeInterface
-    {
-        return $this->getProvidedDependency(SalesMerchantConnectorDependencyProvider::FACADE_STORE);
     }
 }

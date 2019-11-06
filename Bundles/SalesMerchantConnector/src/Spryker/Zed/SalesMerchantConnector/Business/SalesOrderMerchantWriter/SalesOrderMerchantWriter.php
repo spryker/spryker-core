@@ -7,12 +7,8 @@
 
 namespace Spryker\Zed\SalesMerchantConnector\Business\SalesOrderMerchantWriter;
 
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Generated\Shared\Transfer\SalesOrderMerchantSaveTransfer;
 use Generated\Shared\Transfer\SalesOrderMerchantTransfer;
-use Spryker\Zed\SalesMerchantConnector\Dependency\Facade\SalesMerchantConnectorToMerchantFacadeInterface;
-use Spryker\Zed\SalesMerchantConnector\Dependency\Facade\SalesMerchantConnectorToMerchantProductOfferFacadeInterface;
-use Spryker\Zed\SalesMerchantConnector\Dependency\Facade\SalesMerchantConnectorToStoreFacadeInterface;
 use Spryker\Zed\SalesMerchantConnector\Persistence\SalesMerchantConnectorEntityManagerInterface;
 
 class SalesOrderMerchantWriter implements SalesOrderMerchantWriterInterface
@@ -23,36 +19,12 @@ class SalesOrderMerchantWriter implements SalesOrderMerchantWriterInterface
     protected $salesMerchantConnectorEntityManager;
 
     /**
-     * @var \Spryker\Zed\SalesMerchantConnector\Dependency\Facade\SalesMerchantConnectorToMerchantProductOfferFacadeInterface
-     */
-    protected $merchantProductOfferFacade;
-
-    /**
-     * @var \Spryker\Zed\SalesMerchantConnector\Dependency\Facade\SalesMerchantConnectorToMerchantFacadeInterface
-     */
-    protected $merchantFacade;
-
-    /**
-     * @var \Spryker\Zed\SalesMerchantConnector\Dependency\Facade\SalesMerchantConnectorToStoreFacadeInterface
-     */
-    protected $storeFacade;
-
-    /**
      * @param \Spryker\Zed\SalesMerchantConnector\Persistence\SalesMerchantConnectorEntityManagerInterface $salesMerchantConnectorEntityManager
-     * @param \Spryker\Zed\SalesMerchantConnector\Dependency\Facade\SalesMerchantConnectorToMerchantProductOfferFacadeInterface $merchantProductOfferFacade
-     * @param \Spryker\Zed\SalesMerchantConnector\Dependency\Facade\SalesMerchantConnectorToMerchantFacadeInterface $merchantFacade
-     * @param \Spryker\Zed\SalesMerchantConnector\Dependency\Facade\SalesMerchantConnectorToStoreFacadeInterface $storeFacade
      */
     public function __construct(
-        SalesMerchantConnectorEntityManagerInterface $salesMerchantConnectorEntityManager,
-        SalesMerchantConnectorToMerchantProductOfferFacadeInterface $merchantProductOfferFacade,
-        SalesMerchantConnectorToMerchantFacadeInterface $merchantFacade,
-        SalesMerchantConnectorToStoreFacadeInterface $storeFacade
+        SalesMerchantConnectorEntityManagerInterface $salesMerchantConnectorEntityManager
     ) {
         $this->salesMerchantConnectorEntityManager = $salesMerchantConnectorEntityManager;
-        $this->merchantProductOfferFacade = $merchantProductOfferFacade;
-        $this->merchantFacade = $merchantFacade;
-        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -63,49 +35,43 @@ class SalesOrderMerchantWriter implements SalesOrderMerchantWriterInterface
     public function createSalesOrderMerchant(SalesOrderMerchantSaveTransfer $salesOrderMerchantSaveTransfer): ?SalesOrderMerchantTransfer
     {
         $salesOrderMerchantSaveTransfer->requireIdSalesOrder();
-        $salesOrderMerchantSaveTransfer->requireOfferReference();
+        $salesOrderMerchantSaveTransfer->requireOrderReference();
+        $salesOrderMerchantSaveTransfer->requireMerchantReference();
 
-        $idSalesOrder = $salesOrderMerchantSaveTransfer->getIdSalesOrder();
-        $idMerchant = $this->merchantProductOfferFacade->findIdMerchantByProductOfferReference($salesOrderMerchantSaveTransfer->getOfferReference());
-        if (!$idMerchant) {
-            return null;
-        }
+        $salesOrderMerchantTransfer = $this->createSalesOrderMerchantTransfer($salesOrderMerchantSaveTransfer);
 
-        $merchantTransfer = $this->merchantFacade->findOne((new MerchantCriteriaFilterTransfer())->setIdMerchant($idMerchant));
-
-        return $this->salesMerchantConnectorEntityManager->createSalesOrderMerchant(
-            $this->createSalesOrderMerchantTransfer($idSalesOrder, $idMerchant, $merchantTransfer->getMerchantKey())
-        );
+        return $this->salesMerchantConnectorEntityManager->createSalesOrderMerchant($salesOrderMerchantTransfer);
     }
 
     /**
-     * @param int $idSalesOrder
-     * @param int $idMerchant
-     * @param string $merchantReference
+     * @param \Generated\Shared\Transfer\SalesOrderMerchantSaveTransfer $salesOrderMerchantSaveTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderMerchantTransfer
      */
-    protected function createSalesOrderMerchantTransfer(
-        int $idSalesOrder,
-        int $idMerchant,
-        string $merchantReference
-    ): SalesOrderMerchantTransfer {
+    protected function createSalesOrderMerchantTransfer(SalesOrderMerchantSaveTransfer $salesOrderMerchantSaveTransfer): SalesOrderMerchantTransfer
+    {
+        $merchantReference = $salesOrderMerchantSaveTransfer->getMerchantReference();
+        $salesOrderMerchantReference = $this->generateSalesOrderMerchantReference(
+            $salesOrderMerchantSaveTransfer->getOrderReference(),
+            $merchantReference
+        );
+
         $salesOrderMerchantTransfer = new SalesOrderMerchantTransfer();
         $salesOrderMerchantTransfer->setMerchantReference($merchantReference);
-        $salesOrderMerchantTransfer->setFkSalesOrder($idSalesOrder);
-        $salesOrderMerchantTransfer->setSalesOrderMerchantReference($this->generateSalesOrderMerchantReference($idSalesOrder, $idMerchant));
+        $salesOrderMerchantTransfer->setFkSalesOrder($salesOrderMerchantSaveTransfer->getIdSalesOrder());
+        $salesOrderMerchantTransfer->setSalesOrderMerchantReference($salesOrderMerchantReference);
 
         return $salesOrderMerchantTransfer;
     }
 
     /**
-     * @param int $idSalesOrder
-     * @param int $idMerchant
+     * @param string $orderReference
+     * @param string $merchantReference
      *
      * @return string
      */
-    protected function generateSalesOrderMerchantReference(int $idSalesOrder, int $idMerchant): string
+    protected function generateSalesOrderMerchantReference(string $orderReference, string $merchantReference): string
     {
-        return sprintf('%s--%s--%s', $this->storeFacade->getCurrentStore()->getName(), $idSalesOrder, $idMerchant);
+        return sprintf('%s--%s', $orderReference, $merchantReference);
     }
 }

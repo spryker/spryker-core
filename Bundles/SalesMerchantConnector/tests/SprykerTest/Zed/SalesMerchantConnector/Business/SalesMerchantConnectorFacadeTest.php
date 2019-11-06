@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\SalesMerchantConnector\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\SalesOrderMerchantSaveTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
@@ -110,13 +109,11 @@ class SalesMerchantConnectorFacadeTest extends Unit
             ItemTransfer::SUM_PRICE => 100,
         ], static::TEST_STATE_MACHINE);
         $merchantTransfer = $this->tester->haveMerchant();
-        $merchantProductOfferTransfer = $this->tester->haveProductOffer([
-            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
-        ]);
 
         $salesOrderMerchantSaveTransfer = new SalesOrderMerchantSaveTransfer();
-        $salesOrderMerchantSaveTransfer->setOfferReference($merchantProductOfferTransfer->getProductOfferReference());
+        $salesOrderMerchantSaveTransfer->setMerchantReference($merchantTransfer->getMerchantReference());
         $salesOrderMerchantSaveTransfer->setIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
+        $salesOrderMerchantSaveTransfer->setOrderReference($saveOrderTransfer->getOrderReference());
 
         //Act
         $salesOrderMerchantTransfer = $this->tester->getLocator()->salesMerchantConnector()->facade()->createSalesOrderMerchant($salesOrderMerchantSaveTransfer);

@@ -6,14 +6,12 @@
   "require": {
     "php": ">=7.1",
     "spryker/kernel": "^3.33.0",
-    "spryker/merchant": "^1.2.0",
-    "spryker/merchant-product-offer": "^1.1.0",
     "spryker/sales": "^11.0.0",
-    "spryker/sales-extension": "^1.2.0",
-    "spryker/store": "^1.1.0"
+    "spryker/sales-extension": "^1.2.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/merchant": "*",
     "spryker/oms": "*",
     "spryker/product-offer": "*",
     "spryker/propel": "*",
