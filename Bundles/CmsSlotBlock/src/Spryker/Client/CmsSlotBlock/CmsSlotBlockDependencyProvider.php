@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\CmsSlotBlock;
 
-use Spryker\Client\CmsSlotBlockProductCategoryConnector\Plugin\CmsSlotBlock\ProductCategoryCmsSlotBlockConditionResolverPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
@@ -47,7 +46,6 @@ class CmsSlotBlockDependencyProvider extends AbstractDependencyProvider
      */
     protected function getCmsSlotBlockVisibilityResolverPlugins(): array
     {
-        //TODO remove
-        return [new ProductCategoryCmsSlotBlockConditionResolverPlugin()];
+        return [];
     }
 }

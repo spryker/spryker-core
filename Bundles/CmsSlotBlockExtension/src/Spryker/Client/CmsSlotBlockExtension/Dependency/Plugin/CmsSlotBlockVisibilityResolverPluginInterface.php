@@ -25,7 +25,7 @@ interface CmsSlotBlockVisibilityResolverPluginInterface
 
     /**
      * Specification:
-     * - Returns true if CMS block should be rendered on Yves.
+     * - Returns true if CMS block should be rendered.
      *
      * @api
      *
