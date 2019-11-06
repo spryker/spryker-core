@@ -8,6 +8,7 @@
 namespace Spryker\Yves\Security\Plugin\Application;
 
 use LogicException;
+use Psr\Log\LoggerInterface;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface;
@@ -39,6 +40,7 @@ use Symfony\Component\Security\Core\User\InMemoryUserProvider;
 use Symfony\Component\Security\Core\User\UserChecker;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPasswordValidator;
+use Symfony\Component\Security\Csrf\CsrfTokenManager;
 use Symfony\Component\Security\Guard\Firewall\GuardAuthenticationListener;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Guard\Provider\GuardAuthenticationProvider;
@@ -61,11 +63,13 @@ use Symfony\Component\Security\Http\Firewall\ContextListener;
 use Symfony\Component\Security\Http\Firewall\ExceptionListener;
 use Symfony\Component\Security\Http\Firewall\LogoutListener;
 use Symfony\Component\Security\Http\Firewall\SwitchUserListener;
+use Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener;
 use Symfony\Component\Security\Http\FirewallMap;
 use Symfony\Component\Security\Http\FirewallMapInterface;
 use Symfony\Component\Security\Http\HttpUtils;
 use Symfony\Component\Security\Http\Logout\DefaultLogoutSuccessHandler;
 use Symfony\Component\Security\Http\Logout\SessionLogoutHandler;
+use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface;
 
 /**
  * @method \Spryker\Yves\Security\SecurityFactory getFactory()
@@ -488,7 +492,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $container->has('request.http_port') ? $container->get('request.http_port') : 80,
                     $container->has('request.https_port') ? $container->get('request.https_port') : 443
                 ),
-                ($container->has('logger')) ? $container->get('logger') : null
+                $this->getLogger($container)
             );
         });
 
@@ -689,7 +693,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $container->get('security.token_storage'),
                     $userProviders,
                     $providerKey,
-                    ($container->has('logger')) ? $container->get('logger') : null,
+                    $this->getLogger($container),
                     $container->get(static::SERVICE_DISPATCHER)
                 );
             };
@@ -705,7 +709,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $container->get($entryPoint),
                     null, // errorPage
                     $accessDeniedHandler,
-                    ($container->has('logger')) ? $container->get('logger') : null
+                    $this->getLogger($container)
                 );
             };
         }));
@@ -762,7 +766,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $container->get(static::SERVICE_KERNEL),
                     $container->get('security.http_utils'),
                     $options,
-                    ($container->has('logger')) ? $container->get('logger') : null
+                    $this->getLogger($container)
                 );
             };
         }));
@@ -828,7 +832,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $container->get('security.authentication_manager'),
                     $providerKey,
                     $authenticators,
-                    ($container->has('logger')) ? $container->get('logger') : null
+                    $this->getLogger($container)
                 );
             };
         }));
@@ -845,32 +849,49 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     {
         $container->set('security.authentication_listener.form._proto', $container->protect(function ($name, $options) use ($container) {
             return function () use ($container, $name, $options) {
-                $tmp = isset($options['check_path']) ? $options['check_path'] : '/login_check';
-                $this->addFakeRoute(
-                    'match',
-                    $tmp,
-                    str_replace('/', '_', ltrim($tmp, '/'))
-                );
+                $tmp = $options['check_path'] ?? '/login_check';
+                $this->addFakeRoute('match', $tmp, str_replace('/', '_', ltrim($tmp, '/')));
 
-                $class = isset($options['listener_class']) ? $options['listener_class'] : 'Symfony\\Component\\Security\\Http\\Firewall\\UsernamePasswordFormAuthenticationListener';
+                $class = $options['listener_class'] ?? UsernamePasswordFormAuthenticationListener::class;
 
                 return new $class(
                     $container->get('security.token_storage'),
                     $container->get('security.authentication_manager'),
-                    $container->has('security.session_strategy.' . $name) ? $container->get('security.session_strategy.' . $name) : $this->getFactory()->createSessionStrategy(),
+                    $this->getSessionStrategy($container, $name),
                     $container->get('security.http_utils'),
                     $name,
                     $this->getAuthenticationSuccessHandler($container, $name, $options),
                     $this->getAuthenticationFailureHandler($container, $name, $options),
                     $options,
-                    ($container->has('logger')) ? $container->get('logger') : null,
+                    $this->getLogger($container),
                     $container->get(static::SERVICE_DISPATCHER),
-                    isset($options['with_csrf']) && $options['with_csrf'] && $container->has('csrf.token_manager') ? $container->get('csrf.token_manager') : null
+                    $this->getCsrfTokenManager($container, $options)
                 );
             };
         }));
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     * @param string $name
+     *
+     * @return \Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface
+     */
+    protected function getSessionStrategy(ContainerInterface $container, string $name): SessionAuthenticationStrategyInterface
+    {
+        return $container->has('security.session_strategy.' . $name) ? $container->get('security.session_strategy.' . $name) : $this->getFactory()->createSessionStrategy();
+    }
+
+    /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Psr\Log\LoggerInterface|null
+     */
+    protected function getLogger(ContainerInterface $container): ?LoggerInterface
+    {
+        return $container->has('logger') ? $container->get('logger') : null;
     }
 
     /**
@@ -929,7 +950,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $container->get('security.authentication_manager'),
                     $providerKey,
                     $container->get('security.entry_point.' . $providerKey . '.http'),
-                    ($container->has('logger')) ? $container->get('logger') : null
+                    $this->getLogger($container)
                 );
             };
         }));
@@ -949,7 +970,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 return new AnonymousAuthenticationListener(
                     $container->get('security.token_storage'),
                     $providerKey,
-                    ($container->has('logger')) ? $container->get('logger') : null
+                    $this->getLogger($container)
                 );
             };
         }));
@@ -966,32 +987,56 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     {
         $container->set('security.authentication_listener.logout._proto', $container->protect(function ($name, $options) use ($container) {
             return function () use ($container, $name, $options) {
-                $tmp = isset($options['logout_path']) ? $options['logout_path'] : '/logout';
-                $this->addFakeRoute(
-                    'get',
-                    $tmp,
-                    str_replace('/', '_', ltrim($tmp, '/'))
-                );
+                $tmp = $options['logout_path'] ?? '/logout';
+                $this->addFakeRoute('get', $tmp, str_replace('/', '_', ltrim($tmp, '/')));
+
                 if (!isset($container['security.authentication.logout_handler.' . $name])) {
                     $container->set('security.authentication.logout_handler.' . $name, $container->get('security.authentication.logout_handler._proto')($name, $options));
                 }
+
                 $listener = new LogoutListener(
                     $container->get('security.token_storage'),
                     $container->get('security.http_utils'),
                     $container->get('security.authentication.logout_handler.' . $name),
                     $options,
-                    isset($options['with_csrf']) && $options['with_csrf'] && $container->has('csrf.token_manager') ? $container->get('csrf.token_manager') : null
+                    $this->getCsrfTokenManager($container, $options)
                 );
-                $invalidateSession = isset($options['invalidate_session']) ? $options['invalidate_session'] : true;
-                if ($invalidateSession === true && $options['stateless'] === false) {
-                    $listener->addHandler(new SessionLogoutHandler());
-                }
+
+                $listener = $this->addSessionLogoutHandler($listener, $options);
 
                 return $listener;
             };
         }));
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     * @param array $options
+     *
+     * @return \Symfony\Component\Security\Csrf\CsrfTokenManager|null
+     */
+    protected function getCsrfTokenManager(ContainerInterface $container, array $options): ?CsrfTokenManager
+    {
+        return isset($options['with_csrf']) && $options['with_csrf'] && $container->has('csrf.token_manager') ? $container->get('csrf.token_manager') : null;
+    }
+
+    /**
+     * @param \Symfony\Component\Security\Http\Firewall\LogoutListener $listener
+     * @param array $options
+     *
+     * @return \Symfony\Component\Security\Http\Firewall\LogoutListener
+     */
+    protected function addSessionLogoutHandler(LogoutListener $listener, array $options): LogoutListener
+    {
+        $invalidateSession = $options['invalidate_session'] ?? true;
+
+        if ($invalidateSession === true && $options['stateless'] === false) {
+            $listener->addHandler(new SessionLogoutHandler());
+        }
+
+        return $listener;
     }
 
     /**
@@ -1009,7 +1054,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $container->get('security.user_checker'),
                     $name,
                     $container->get('security.access_manager'),
-                    ($container->has('logger')) ? $container->get('logger') : null,
+                    $this->getLogger($container),
                     isset($options['parameter']) ? $options['parameter'] : '_switch_user',
                     isset($options['role']) ? $options['role'] : 'ROLE_ALLOWED_TO_SWITCH',
                     $container->get(static::SERVICE_DISPATCHER),
