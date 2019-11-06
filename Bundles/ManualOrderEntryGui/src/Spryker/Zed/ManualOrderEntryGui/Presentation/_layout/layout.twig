@@ -2,10 +2,10 @@
 
 {% block footer_js %}
     {{ parent() }}
-    <script src="/assets/js/spryker-zed-manual-order-entry-gui-main.js"></script>
+    <script src="{{ assetsPath('js/spryker-zed-manual-order-entry-gui-main.js') }}"></script>
 {% endblock %}
 
 {% block head_css %}
     {{ parent() }}
-    <link rel="stylesheet" href="/assets/css/spryker-zed-manual-order-entry-gui-main.css">
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-manual-order-entry-gui-main.css') }}">
 {% endblock %}

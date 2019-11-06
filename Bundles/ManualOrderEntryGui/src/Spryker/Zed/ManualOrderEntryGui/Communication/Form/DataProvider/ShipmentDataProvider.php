@@ -107,7 +107,10 @@ class ShipmentDataProvider implements FormDataProviderInterface
         if ($this->hasItemLevelShipments($quoteTransfer)) {
             $shipmentMethodsCollectionTransfer = $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
 
-            return current($shipmentMethodsCollectionTransfer->getShipmentMethods());
+            /** @var \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer */
+            $shipmentMethodsTransfer = $shipmentMethodsCollectionTransfer->getShipmentMethods()->getIterator()->current();
+
+            return $shipmentMethodsTransfer;
         }
 
         return $this->shipmentFacade->getAvailableMethods($quoteTransfer);

@@ -584,32 +584,32 @@ class CatFaceTransfer extends AbstractTransfer
     public function fromArray(array $data, $ignoreMissingProperty = false)
     {
         foreach ($data as $property => $value) {
-            $property = $this->transferPropertyNameMap[$property] ?? null;
+            $normalizedPropertyName = $this->transferPropertyNameMap[$property] ?? null;
 
-            switch ($property) {
+            switch ($normalizedPropertyName) {
                 case 'name':
                 case 'typedArray':
                 case 'typedAssociativeStringArray':
                 case 'typedNotAssociativeStringArray':
                 case 'typedNotAssociativeArray':
-                    $this->$property = $value;
-                    $this->modifiedProperties[$property] = true;
+                    $this->$normalizedPropertyName = $value;
+                    $this->modifiedProperties[$normalizedPropertyName] = true;
                     break;
                 case 'item':
                     if (is_array($value)) {
-                        $type = $this->transferMetadata[$property]['type'];
+                        $type = $this->transferMetadata[$normalizedPropertyName]['type'];
                         /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject */
                         $value = (new $type())->fromArray($value, $ignoreMissingProperty);
                     }
-                    $this->$property = $value;
-                    $this->modifiedProperties[$property] = true;
+                    $this->$normalizedPropertyName = $value;
+                    $this->modifiedProperties[$normalizedPropertyName] = true;
 
                     break;
                 case 'items':
                 case 'typedAssociativeCollection':
-                    $elementType = $this->transferMetadata[$property]['type'];
-                    $this->$property = $this->processArrayObject($elementType, $value, $ignoreMissingProperty);
-                    $this->modifiedProperties[$property] = true;
+                    $elementType = $this->transferMetadata[$normalizedPropertyName]['type'];
+                    $this->$normalizedPropertyName = $this->processArrayObject($elementType, $value, $ignoreMissingProperty);
+                    $this->modifiedProperties[$normalizedPropertyName] = true;
                     break;
                 default:
                     if (!$ignoreMissingProperty) {
@@ -713,6 +713,11 @@ class CatFaceTransfer extends AbstractTransfer
             $value = $this->$property;
 
             $arrayKey = $property;
+
+            if ($value instanceof AbstractTransfer) {
+                $values[$arrayKey] = $value->modifiedToArray(true, true);
+                continue;
+            }
             switch ($property) {
                 case 'name':
                 case 'typedArray':
@@ -744,6 +749,11 @@ class CatFaceTransfer extends AbstractTransfer
             $value = $this->$property;
 
             $arrayKey = $this->transferMetadata[$property]['name_underscore'];
+
+            if ($value instanceof AbstractTransfer) {
+                $values[$arrayKey] = $value->modifiedToArray(true, false);
+                continue;
+            }
             switch ($property) {
                 case 'name':
                 case 'typedArray':
@@ -775,6 +785,7 @@ class CatFaceTransfer extends AbstractTransfer
             $value = $this->$property;
 
             $arrayKey = $this->transferMetadata[$property]['name_underscore'];
+
             $values[$arrayKey] = $value;
         }
 
@@ -791,6 +802,7 @@ class CatFaceTransfer extends AbstractTransfer
             $value = $this->$property;
 
             $arrayKey = $property;
+
             $values[$arrayKey] = $value;
         }
 
@@ -846,14 +858,14 @@ class CatFaceTransfer extends AbstractTransfer
     public function toArrayRecursiveNotCamelCased()
     {
         return [
-            'name' => $this->name,
-            'typed_array' => $this->typedArray,
-            'typed_associative_string_array' => $this->typedAssociativeStringArray,
-            'typed_not_associative_string_array' => $this->typedNotAssociativeStringArray,
-            'typed_not_associative_array' => $this->typedNotAssociativeArray,
+            'name' => $this->name instanceof AbstractTransfer ? $this->name->toArray(true, false) : $this->name,
+            'typed_array' => $this->typedArray instanceof AbstractTransfer ? $this->typedArray->toArray(true, false) : $this->typedArray,
+            'typed_associative_string_array' => $this->typedAssociativeStringArray instanceof AbstractTransfer ? $this->typedAssociativeStringArray->toArray(true, false) : $this->typedAssociativeStringArray,
+            'typed_not_associative_string_array' => $this->typedNotAssociativeStringArray instanceof AbstractTransfer ? $this->typedNotAssociativeStringArray->toArray(true, false) : $this->typedNotAssociativeStringArray,
+            'typed_not_associative_array' => $this->typedNotAssociativeArray instanceof AbstractTransfer ? $this->typedNotAssociativeArray->toArray(true, false) : $this->typedNotAssociativeArray,
             'item' => $this->item instanceof AbstractTransfer ? $this->item->toArray(true, false) : $this->item,
-            'items' => $this->addValuesToCollection($this->items, true, false),
-            'typed_associative_collection' => $this->addValuesToCollection($this->typedAssociativeCollection, true, false),
+            'items' => $this->items instanceof AbstractTransfer ? $this->items->toArray(true, false) : $this->addValuesToCollection($this->items, true, false),
+            'typed_associative_collection' => $this->typedAssociativeCollection instanceof AbstractTransfer ? $this->typedAssociativeCollection->toArray(true, false) : $this->addValuesToCollection($this->typedAssociativeCollection, true, false),
         ];
     }
 
@@ -863,14 +875,14 @@ class CatFaceTransfer extends AbstractTransfer
     public function toArrayRecursiveCamelCased()
     {
         return [
-            'name' => $this->name,
-            'typedArray' => $this->typedArray,
-            'typedAssociativeStringArray' => $this->typedAssociativeStringArray,
-            'typedNotAssociativeStringArray' => $this->typedNotAssociativeStringArray,
-            'typedNotAssociativeArray' => $this->typedNotAssociativeArray,
+            'name' => $this->name instanceof AbstractTransfer ? $this->name->toArray(true, true) : $this->name,
+            'typedArray' => $this->typedArray instanceof AbstractTransfer ? $this->typedArray->toArray(true, true) : $this->typedArray,
+            'typedAssociativeStringArray' => $this->typedAssociativeStringArray instanceof AbstractTransfer ? $this->typedAssociativeStringArray->toArray(true, true) : $this->typedAssociativeStringArray,
+            'typedNotAssociativeStringArray' => $this->typedNotAssociativeStringArray instanceof AbstractTransfer ? $this->typedNotAssociativeStringArray->toArray(true, true) : $this->typedNotAssociativeStringArray,
+            'typedNotAssociativeArray' => $this->typedNotAssociativeArray instanceof AbstractTransfer ? $this->typedNotAssociativeArray->toArray(true, true) : $this->typedNotAssociativeArray,
             'item' => $this->item instanceof AbstractTransfer ? $this->item->toArray(true, true) : $this->item,
-            'items' => $this->addValuesToCollection($this->items, true, true),
-            'typedAssociativeCollection' => $this->addValuesToCollection($this->typedAssociativeCollection, true, true),
+            'items' => $this->items instanceof AbstractTransfer ? $this->items->toArray(true, true) : $this->addValuesToCollection($this->items, true, true),
+            'typedAssociativeCollection' => $this->typedAssociativeCollection instanceof AbstractTransfer ? $this->typedAssociativeCollection->toArray(true, true) : $this->addValuesToCollection($this->typedAssociativeCollection, true, true),
         ];
     }
 }
