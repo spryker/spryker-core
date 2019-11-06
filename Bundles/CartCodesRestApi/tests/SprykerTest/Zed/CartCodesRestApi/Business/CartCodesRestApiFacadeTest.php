@@ -8,10 +8,8 @@
 namespace SprykerTest\Zed\CartCodesRestApi\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\DiscountTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Shared\CartCodesRestApi\CartCodesRestApiConfig;
 use Spryker\Shared\Quote\QuoteConstants;
 use Spryker\Zed\CartCode\CartCodeDependencyProvider;
 use Spryker\Zed\Discount\Communication\Plugin\CartCode\VoucherCartCodePlugin;
@@ -29,19 +27,6 @@ use Spryker\Zed\Discount\Communication\Plugin\CartCode\VoucherCartCodePlugin;
  */
 class CartCodesRestApiFacadeTest extends Unit
 {
-    protected const CODE = 'testCode1';
-
-    protected const QUOTE_UUID = 'QUOTE_UUID';
-
-    protected const ID_DISCOUNT = 9999;
-
-    protected const DISCOUNT_PERCENTAGE_200 = 20000;
-
-    /**
-     * @uses \Spryker\Shared\CartsRestApi\CartsRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND
-     */
-    protected const ERROR_IDENTIFIER_CART_NOT_FOUND = 'ERROR_IDENTIFIER_CART_NOT_FOUND';
-
     /**
      * @var \SprykerTest\Zed\CartCodesRestApi\CartCodesRestApiBusinessTester
      */
@@ -66,19 +51,15 @@ class CartCodesRestApiFacadeTest extends Unit
     public function testAddCandidateWillAddCodeWithExistingQuote(): void
     {
         // Arrange
-        $customerTransfer = $this->tester->haveCustomer();
-        $quoteTransfer = $this->tester->havePersistentQuote([
-            QuoteTransfer::UUID => uniqid('uuid', true),
-            QuoteTransfer::CUSTOMER => $customerTransfer,
-        ]);
+        $quoteTransfer = $this->tester->havePersistentQuoteWithOutVouchers();
 
         // Act
-        $cartCodeOperationResultTransfer = $this->tester->getFacade()->addCandidate($quoteTransfer, static::CODE);
+        $cartCodeOperationResultTransfer = $this->tester->getFacade()->addCandidate($quoteTransfer, $this->tester::CODE);
 
         // Assert
         $this->assertEquals(1, $cartCodeOperationResultTransfer->getQuote()->getVoucherDiscounts()->count());
         $this->assertEquals(
-            static::CODE,
+            $this->tester::CODE,
             $cartCodeOperationResultTransfer->getQuote()->getVoucherDiscounts()[0]->getVoucherCode()
         );
     }
@@ -92,11 +73,11 @@ class CartCodesRestApiFacadeTest extends Unit
         $quoteTransfer = $this->tester->prepareQuoteTransfer();
 
         // Act
-        $cartCodeOperationResultTransfer = $this->tester->getFacade()->addCandidate($quoteTransfer, static::CODE);
+        $cartCodeOperationResultTransfer = $this->tester->getFacade()->addCandidate($quoteTransfer, $this->tester::CODE);
 
         // Assert
         $this->assertEquals(
-            static::ERROR_IDENTIFIER_CART_NOT_FOUND,
+            CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND,
             $cartCodeOperationResultTransfer->getMessages()[0]->getValue()
         );
     }
@@ -107,34 +88,32 @@ class CartCodesRestApiFacadeTest extends Unit
     public function testRemoveCodeWillRemoveDiscountWithExistingQuote(): void
     {
         // Arrange
-        $customerTransfer = $this->tester->haveCustomer();
-        $discountVoucherTransfer = $this->tester->prepareDiscountVoucherTransfer();
-
-        $discountTransfer = (new DiscountTransfer())
-            ->setVoucherCode($discountVoucherTransfer->getCode())
-            ->setIdDiscount($discountVoucherTransfer->getIdDiscount());
-
-        $quoteTransfer = $this->tester->havePersistentQuote([
-            QuoteTransfer::UUID => uniqid('uuid'),
-            QuoteTransfer::CUSTOMER => $customerTransfer,
-            QuoteTransfer::VOUCHER_DISCOUNTS => [$discountTransfer->toArray()],
-            QuoteTransfer::ITEMS => [
-                [
-                    ItemTransfer::QUANTITY => 3,
-                    ItemTransfer::SKU => 123,
-                ],
-            ],
-            QuoteTransfer::STORE => [
-                StoreTransfer::NAME => 'DE',
-                StoreTransfer::ID_STORE => 1,
-            ],
-        ]);
+        $quoteTransfer = $this->tester->havePersistentQuoteWithVouchers();
 
         // Act
-        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCode($quoteTransfer, $discountVoucherTransfer->getIdDiscount());
+        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCode($quoteTransfer, $this->tester::ID_DISCOUNT);
 
         // Assert
         $this->assertEmpty($cartCodeOperationResultTransfer->getQuote()->getVoucherDiscounts());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveCodeWillNotRemoveDiscountWithNonExistentIdDiscount(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->havePersistentQuoteWithVouchers();
+
+        // Act
+        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCode($quoteTransfer, $this->tester::NON_EXISTENT_ID_DISCOUNT);
+
+        // Assert
+        $this->assertEmpty($cartCodeOperationResultTransfer->getQuote());
+        $this->assertEquals(
+            CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_CANT_BE_DELETED,
+            $cartCodeOperationResultTransfer->getMessages()[0]->getValue()
+        );
     }
 
     /**
@@ -146,11 +125,12 @@ class CartCodesRestApiFacadeTest extends Unit
         $quoteTransfer = $this->tester->prepareQuoteTransfer();
 
         // Act
-        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCode($quoteTransfer, static::ID_DISCOUNT);
+        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCode($quoteTransfer, $this->tester::ID_DISCOUNT);
 
         // Assert
+        $this->assertEmpty($cartCodeOperationResultTransfer->getQuote());
         $this->assertEquals(
-            static::ERROR_IDENTIFIER_CART_NOT_FOUND,
+            CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND,
             $cartCodeOperationResultTransfer->getMessages()[0]->getValue()
         );
     }
