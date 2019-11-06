@@ -226,4 +226,7 @@
         <property name="orderDirection" type="string"/>
     </transfer>
 
+    <transfer name="EventEntity">
+    </transfer>
+
 </transfers>

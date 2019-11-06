@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CmsBlock\Business\Model;
 
+use Generated\Shared\Transfer\CmsBlockTransfer;
+
 interface CmsBlockReaderInterface
 {
     /**
@@ -14,5 +16,5 @@ interface CmsBlockReaderInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer|null
      */
-    public function findCmsBlockById($idCmsBlock);
+    public function findCmsBlockById(int $idCmsBlock): ?CmsBlockTransfer;
 }

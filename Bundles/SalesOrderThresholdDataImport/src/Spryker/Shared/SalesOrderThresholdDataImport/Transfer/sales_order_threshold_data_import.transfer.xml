@@ -20,4 +20,16 @@
         <property name="key" type="string"/>
     </transfer>
 
+    <transfer name="DataImporterConfiguration">
+    </transfer>
+
+    <transfer name="DataImporterReport">
+    </transfer>
+
+    <transfer name="Currency">
+    </transfer>
+
+    <transfer name="Store">
+    </transfer>
+
 </transfers>
