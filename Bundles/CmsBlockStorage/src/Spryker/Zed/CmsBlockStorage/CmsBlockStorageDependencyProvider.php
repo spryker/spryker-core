@@ -19,10 +19,6 @@ use Spryker\Zed\Kernel\Container;
 class CmsBlockStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    /**
-     * @deprecated Use FACADE_EVENT_BEHAVIOR class constant instead.
-     */
-    public const FACADE_EVENT_BEHAVIOUR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const PLUGIN_CONTENT_WIDGET_DATA_EXPANDER = 'PLUGIN_CONTENT_WIDGET_DATA_EXPANDER';
     public const FACADE_STORE = 'FACADE_STORE';
@@ -32,7 +28,7 @@ class CmsBlockStorageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addEventBehaviorFacade($container);
 
@@ -44,7 +40,7 @@ class CmsBlockStorageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addUtilSanitizeService($container);
         $container = $this->addContentWidgetDataExpanderPlugin($container);
@@ -58,11 +54,11 @@ class CmsBlockStorageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUtilSanitizeService(Container $container)
+    protected function addUtilSanitizeService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
             return new CmsBlockStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
-        };
+        });
 
         return $container;
     }
@@ -72,11 +68,11 @@ class CmsBlockStorageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addEventBehaviorFacade(Container $container)
+    protected function addEventBehaviorFacade(Container $container): Container
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new CmsBlockStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
         return $container;
     }
@@ -86,11 +82,11 @@ class CmsBlockStorageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addContentWidgetDataExpanderPlugin(Container $container)
+    protected function addContentWidgetDataExpanderPlugin(Container $container): Container
     {
-        $container[static::PLUGIN_CONTENT_WIDGET_DATA_EXPANDER] = function () {
+        $container->set(static::PLUGIN_CONTENT_WIDGET_DATA_EXPANDER, function () {
             return $this->getContentWidgetDataExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -100,7 +96,7 @@ class CmsBlockStorageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addStoreFacade(Container $container)
+    protected function addStoreFacade(Container $container): Container
     {
         $container->set(static::FACADE_STORE, function (Container $container) {
             return new CmsBlockStorageToStoreFacadeBridge($container->getLocator()->store()->facade());
@@ -112,7 +108,7 @@ class CmsBlockStorageDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\CmsBlockStorage\Dependency\Plugin\CmsBlockStorageDataExpanderPluginInterface[]
      */
-    protected function getContentWidgetDataExpanderPlugins()
+    protected function getContentWidgetDataExpanderPlugins(): array
     {
         return [];
     }

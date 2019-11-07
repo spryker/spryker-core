@@ -14,9 +14,7 @@ use Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorageQuery;
 use Spryker\Zed\CmsBlock\Dependency\CmsBlockEvents;
 use Spryker\Zed\CmsBlockStorage\Business\CmsBlockStorageBusinessFactory;
 use Spryker\Zed\CmsBlockStorage\Business\CmsBlockStorageFacade;
-use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockGlossaryKeyMappingBlockStorageListener;
 use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockGlossaryKeyMappingBlockStoragePublishListener;
-use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockStorageListener;
 use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockStoragePublishListener;
 use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockStorageUnpublishListener;
 use SprykerTest\Zed\CmsBlockStorage\CmsBlockStorageConfigMock;
@@ -39,46 +37,6 @@ class CmsBlockStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testCmsBlockStorageListenerStoreData(): void
-    {
-        SpyCmsBlockStorageQuery::create()->filterByFkCmsBlock(1)->delete();
-        $beforeCount = SpyCmsBlockStorageQuery::create()->count();
-
-        $cmsBlockStorageListener = new CmsBlockStorageListener();
-        $cmsBlockStorageListener->setFacade($this->getCmsBlockStorageFacade());
-
-        $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
-        ];
-        $cmsBlockStorageListener->handleBulk($eventTransfers, CmsBlockEvents::CMS_BLOCK_PUBLISH);
-
-        // Assert
-        $this->assertCmsBlockCategoryStorage($beforeCount);
-    }
-
-    /**
-     * @return void
-     */
-    public function testCmsBlockStoragePublishListener(): void
-    {
-        SpyCmsBlockStorageQuery::create()->filterByFkCmsBlock(1)->delete();
-        $beforeCount = SpyCmsBlockStorageQuery::create()->count();
-
-        $cmsBlockStoragePublishListener = new CmsBlockStoragePublishListener();
-        $cmsBlockStoragePublishListener->setFacade($this->getCmsBlockStorageFacade());
-
-        $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
-        ];
-        $cmsBlockStoragePublishListener->handleBulk($eventTransfers, CmsBlockEvents::CMS_BLOCK_PUBLISH);
-
-        // Assert
-        $this->assertCmsBlockCategoryStorage($beforeCount);
-    }
-
-    /**
-     * @return void
-     */
     public function testCmsBlockStorageUnpublishListener(): void
     {
         $cmsBlockStorageUnpublishListener = new CmsBlockStorageUnpublishListener();
@@ -96,20 +54,18 @@ class CmsBlockStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testCmsBlockGlossaryKeyMappingBlockStorageListenerStoreData(): void
+    public function testCmsBlockStoragePublishListener(): void
     {
         SpyCmsBlockStorageQuery::create()->filterByFkCmsBlock(1)->delete();
         $beforeCount = SpyCmsBlockStorageQuery::create()->count();
 
-        $cmsBlockGlossaryKeyMappingBlockStorageListener = new CmsBlockGlossaryKeyMappingBlockStorageListener();
-        $cmsBlockGlossaryKeyMappingBlockStorageListener->setFacade($this->getCmsBlockStorageFacade());
+        $cmsBlockStoragePublishListener = new CmsBlockStoragePublishListener();
+        $cmsBlockStoragePublishListener->setFacade($this->getCmsBlockStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setForeignKeys([
-                SpyCmsBlockGlossaryKeyMappingTableMap::COL_FK_CMS_BLOCK => 1,
-            ]),
+            (new EventEntityTransfer())->setId(1),
         ];
-        $cmsBlockGlossaryKeyMappingBlockStorageListener->handleBulk($eventTransfers, CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_CREATE);
+        $cmsBlockStoragePublishListener->handleBulk($eventTransfers, CmsBlockEvents::CMS_BLOCK_PUBLISH);
 
         // Assert
         $this->assertCmsBlockCategoryStorage($beforeCount);
