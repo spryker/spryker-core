@@ -5,19 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsSlot\Persistence\Mapper;
+namespace Spryker\Zed\CmsSlot\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\CmsSlotTransfer;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlot;
 
-interface CmsSlotMapperInterface
+class CmsSlotMapper
 {
     /**
      * @param \Orm\Zed\CmsSlot\Persistence\SpyCmsSlot $cmsSlot
      *
      * @return \Generated\Shared\Transfer\CmsSlotTransfer
      */
-    public function mapCmsSlotEntityToTransfer(SpyCmsSlot $cmsSlot): CmsSlotTransfer;
+    public function mapCmsSlotEntityToTransfer(SpyCmsSlot $cmsSlot): CmsSlotTransfer
+    {
+        return (new CmsSlotTransfer())->fromArray($cmsSlot->toArray(), true);
+    }
 
     /**
      * @param \Orm\Zed\CmsSlot\Persistence\SpyCmsSlot $cmsSlot
@@ -25,5 +28,10 @@ interface CmsSlotMapperInterface
      *
      * @return \Orm\Zed\CmsSlot\Persistence\SpyCmsSlot
      */
-    public function mapCmsSlotTransferToEntity(SpyCmsSlot $cmsSlot, CmsSlotTransfer $cmsSlotTransfer): SpyCmsSlot;
+    public function mapCmsSlotTransferToEntity(SpyCmsSlot $cmsSlot, CmsSlotTransfer $cmsSlotTransfer): SpyCmsSlot
+    {
+        $cmsSlot->fromArray($cmsSlotTransfer->toArray());
+
+        return $cmsSlot;
+    }
 }

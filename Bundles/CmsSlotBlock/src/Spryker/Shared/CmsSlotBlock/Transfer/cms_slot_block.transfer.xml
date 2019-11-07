@@ -3,10 +3,6 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="CmsSlotBlockCollection">
-        <property name="cmsSlotBlocks" type="CmsSlotBlock[]" singular="cmsSlotBlock"/>
-    </transfer>
-
     <transfer name="CmsSlotBlock">
         <property name="idSlotTemplate" type="int"/>
         <property name="idSlot" type="int"/>
@@ -15,12 +11,26 @@
         <property name="conditions" type="array" singular="condition" associative="true"/>
     </transfer>
 
+    <transfer name="CmsSlotBlockCollection">
+        <property name="cmsSlotBlocks" type="CmsSlotBlock[]" singular="cmsSlotBlock"/>
+    </transfer>
+
+    <transfer name="CmsSlotBlockCriteria">
+        <property name="filter" type="Filter"/>
+        <property name="idCmsSlotTemplate" type="int"/>
+        <property name="idCmsSlot" type="int"/>
+    </transfer>
+
     <transfer name="CmsSlotTemplateConfiguration">
         <property name="conditions" type="array" singular="condition"/>
     </transfer>
 
     <transfer name="CmsBlock">
         <property name="cmsSlotBlockCollection" type="CmsSlotBlockCollection"/>
+    </transfer>
+
+    <transfer name="EventEntity">
+        <property name="id" type="int"/>
     </transfer>
 
     <transfer name="Filter">

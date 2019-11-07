@@ -8,14 +8,16 @@
 namespace Spryker\Zed\CmsSlotBlock\Business\Reader;
 
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 
 interface CmsSlotBlockReaderInterface
 {
     /**
-     * @param int $idCmsSlotTemplate
-     * @param int $idCmsSlot
+     * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer
      */
-    public function getCmsSlotBlockCollection(int $idCmsSlotTemplate, int $idCmsSlot): CmsSlotBlockCollectionTransfer;
+    public function getCmsSlotBlockCollection(
+        CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
+    ): CmsSlotBlockCollectionTransfer;
 }
