@@ -496,24 +496,22 @@ class SalesConfigurableBundleFacadeTest extends Unit
      * @dataProvider transformConfigurableBundleItemDataProvider
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param int $itemsCount
      * @param int $itemQuantity
      *
      * @return void
      */
-    public function testTransformConfigurableBundleItem(ItemTransfer $itemTransfer, int $itemsCount, int $itemQuantity): void
+    public function testTransformConfigurableBundleItem(ItemTransfer $itemTransfer, int $itemQuantity): void
     {
         //Arrange
         $salesConfigurableBundleFacade = $this->getSalesConfigurableBundleFacadeWithMockedConfig();
 
         //Act
-        $itemCollectionTransfer = $salesConfigurableBundleFacade->transformConfigurableBundleItem($itemTransfer);
+        $itemCollectionTransfer = $salesConfigurableBundleFacade->transformConfigurableBundleOrderItems(
+            (new OrderTransfer())->addItem($itemTransfer)
+        );
 
         //Assert
-        $this->assertCount($itemsCount, $itemCollectionTransfer->getItems());
-        foreach ($itemCollectionTransfer->getItems() as $itemTransfer) {
-            $this->assertSame($itemQuantity, $itemTransfer->getQuantity());
-        }
+        $this->assertCount($itemQuantity, $itemCollectionTransfer->getItems());
     }
 
     /**
@@ -522,10 +520,10 @@ class SalesConfigurableBundleFacadeTest extends Unit
     public function transformConfigurableBundleItemDataProvider(): array
     {
         return [
-            [$this->createConfigurableBundleItem(10, 1, 10), 1, 10],
-            [$this->createConfigurableBundleItem(8, 1, 8), 8, 1],
-            [$this->createConfigurableBundleItem(20, 2, 10), 2, 10],
-            [$this->createConfigurableBundleItem(20, 4, 5), 20, 1],
+            [$this->createConfigurableBundleItem(10, 1, 10), 1],
+            [$this->createConfigurableBundleItem(8, 1, 8), 1],
+            [$this->createConfigurableBundleItem(20, 2, 10), 2],
+            [$this->createConfigurableBundleItem(20, 4, 5), 4],
         ];
     }
 

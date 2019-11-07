@@ -7,15 +7,14 @@
 
 namespace Spryker\Zed\SalesConfigurableBundle\Business\Transformer;
 
-use Generated\Shared\Transfer\ItemCollectionTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 
 interface ConfigurableBundleItemTransformerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function transformConfigurableBundleItem(ItemTransfer $itemTransfer): ItemCollectionTransfer;
+    public function transformConfigurableBundleOrderItems(OrderTransfer $orderTransfer): OrderTransfer;
 }

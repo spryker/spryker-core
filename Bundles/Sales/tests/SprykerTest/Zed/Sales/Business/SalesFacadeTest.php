@@ -150,29 +150,6 @@ class SalesFacadeTest extends Unit
     }
 
     /**
-     * @return void
-     */
-    public function testTransformSplittableItemReturnsSplitItems(): void
-    {
-        //Arrange
-        $salesFacade = $this->tester->getFacade();
-        $itemTransfer = (new ItemBuilder())
-            ->build()
-            ->setQuantity(10);
-
-        //Act
-        /** @var \Generated\Shared\Transfer\ItemCollectionTransfer $itemCollectionTransfer */
-        $itemCollectionTransfer = $salesFacade->transformSplittableItem($itemTransfer);
-
-        //Assert
-        $this->assertCount($itemTransfer->getQuantity(), $itemCollectionTransfer->getItems());
-
-        foreach ($itemCollectionTransfer->getItems() as $itemTransfer) {
-            $this->assertSame(1, $itemTransfer->getQuantity());
-        }
-    }
-
-    /**
      * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
      */
     protected function createSalesFacade()
