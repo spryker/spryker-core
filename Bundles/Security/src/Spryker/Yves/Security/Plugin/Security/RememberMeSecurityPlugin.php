@@ -8,7 +8,7 @@
 namespace Spryker\Yves\Security\Plugin\Security;
 
 use Spryker\Service\Container\ContainerInterface;
-use Spryker\Shared\Security\Dependency\Plugin\SecurityPluginInterface;
+use Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface;
 use Spryker\Yves\Security\Configuration\SecurityBuilderInterface;
 use Symfony\Component\Security\Core\Authentication\Provider\RememberMeAuthenticationProvider;
 use Symfony\Component\Security\Http\Firewall\RememberMeListener;

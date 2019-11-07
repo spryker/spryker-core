@@ -33,7 +33,7 @@ class SecurityDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\Security\Dependency\Plugin\SecurityPluginInterface[]
+     * @return \Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface[]
      */
     protected function getSecurityPlugins(): array
     {

@@ -10,7 +10,7 @@ namespace SprykerTest\Yves\Security\Helper;
 use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
-use Spryker\Shared\Security\Dependency\Plugin\SecurityPluginInterface;
+use Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface;
 use Spryker\Yves\Router\Plugin\EventDispatcher\RouterListenerEventDispatcherPlugin;
 use Spryker\Yves\Security\Configuration\SecurityBuilderInterface;
 use Spryker\Yves\Security\Configuration\SecurityConfiguration;
@@ -97,7 +97,7 @@ class SecurityHelper extends Module
     }
 
     /**
-     * @param \Spryker\Shared\Security\Dependency\Plugin\SecurityPluginInterface $securityPlugin
+     * @param \Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface $securityPlugin
      *
      * @return $this
      */

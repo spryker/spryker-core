@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Security\Dependency\Plugin;
+namespace Spryker\Shared\SecurityExtension\Dependency\Plugin;
 
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Yves\Security\Configuration\SecurityBuilderInterface;
