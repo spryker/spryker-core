@@ -47,16 +47,16 @@ class CmsSlotBlockEntityManager extends AbstractEntityManager implements CmsSlot
 
     /**
      * @param int $idSlotTemplate
-     * @param int[] $cmsSlotIds
+     * @param int $idSlot
      *
      * @return void
      */
-    public function deleteCmsSlotBlocks(int $idSlotTemplate, array $cmsSlotIds): void
+    public function deleteCmsSlotBlocks(int $idSlotTemplate, int $idSlot): void
     {
         $this->getFactory()
             ->getCmsSlotBlockQuery()
             ->filterByFkCmsSlotTemplate($idSlotTemplate)
-            ->filterByFkCmsSlot_In($cmsSlotIds)
+            ->filterByFkCmsSlot($idSlot)
             ->delete();
     }
 }
