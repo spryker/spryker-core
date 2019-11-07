@@ -35,7 +35,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS = 'PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS';
     public const PLUGINS_CMS_PAGE_DATA_EXPANDER = 'PLUGINS_CMS_PAGE_DATA_EXPANDER';
     public const PLUGINS_CMS_PAGE_POST_ACTIVATOR = 'PLUGINS_CMS_PAGE_POST_ACTIVATOR';
-    public const PLUGINS_CMS_PAGE_PRE_RELATION_DELETE = 'PLUGINS_CMS_PAGE_PRE_RELATION_DELETE';
+    public const PLUGINS_CMS_PAGE_BEFORE_DELETE = 'PLUGINS_CMS_PAGE_BEFORE_DELETE';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
@@ -70,7 +70,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
         $this->addCmsPagePostActivatorPlugins($container);
         $this->addUtilEncodingService($container);
         $this->addCmsPageDataExpanderPlugins($container);
-        $this->addPreCmsPageRelationDeletePlugins($container);
+        $this->addCmsPageBeforeDeletePlugins($container);
 
         return $container;
     }
@@ -203,9 +203,9 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return void
      */
-    protected function addPreCmsPageRelationDeletePlugins(Container $container): void
+    protected function addCmsPageBeforeDeletePlugins(Container $container): void
     {
-        $container[self::PLUGINS_CMS_PAGE_PRE_RELATION_DELETE] = function (Container $container) {
+        $container[self::PLUGINS_CMS_PAGE_BEFORE_DELETE] = function (Container $container) {
             return $this->getCmsPageBeforeDeletePlugins();
         };
     }

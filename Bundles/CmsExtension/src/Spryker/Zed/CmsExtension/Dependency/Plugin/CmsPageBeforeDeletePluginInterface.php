@@ -13,7 +13,7 @@ interface CmsPageBeforeDeletePluginInterface
 {
     /**
      * Specification:
-     * - Runs before delete CMS Page relations.
+     * - Runs before delete CMS Page.
      *
      * @api
      *

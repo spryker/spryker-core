@@ -36,7 +36,7 @@ class CmsNavigationConnectorFacadeTest extends Unit
      */
     public function testSetNavigationNodeToActiveWhenCmsIsActive()
     {
-        $this->setUpNavigationNodeCmsTest(true);
+        $this->runUpNavigationNodeCmsTest(true);
     }
 
     /**
@@ -44,13 +44,13 @@ class CmsNavigationConnectorFacadeTest extends Unit
      */
     public function testSetNavigationNodeToInactiveWhenCmsIsInactive()
     {
-        $this->setUpNavigationNodeCmsTest(false);
+        $this->runUpNavigationNodeCmsTest(false);
     }
 
     /**
      * @return void
      */
-    public function testDeleteCmsPageNavigationNodes(): void
+    public function testDeleteCmsPageNavigationNodesSuccess(): void
     {
         // Arrange
         $cmsPageTransfer = $this->createCmsPage();
@@ -60,7 +60,7 @@ class CmsNavigationConnectorFacadeTest extends Unit
         $this->tester->getFacade()->deleteCmsPageNavigationNodes($cmsPageTransfer);
 
         // Assert
-        $navigationFacade = $this->tester->getLocator()->navigation()->facade();
+        $navigationFacade = $this->tester->getNavigationFacade();
         foreach ($navigationNodes as $navigationNode) {
             $navigationNode = $navigationFacade->findNavigationNode($navigationNode);
             $this->assertNull($navigationNode);
@@ -72,7 +72,7 @@ class CmsNavigationConnectorFacadeTest extends Unit
      *
      * @return void
      */
-    protected function setUpNavigationNodeCmsTest($isActive)
+    protected function runUpNavigationNodeCmsTest($isActive): void
     {
         // Arrange
         $cmsPageTransfer = $this->createCmsPage($isActive);
