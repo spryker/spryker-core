@@ -12,16 +12,13 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @deprecated Use `\Spryker\Zed\Search\Communication\Console\SearchSetupSourcesConsole` instead.
- *
  * @method \Spryker\Zed\Search\Business\SearchFacadeInterface getFacade()
  * @method \Spryker\Zed\Search\Communication\SearchCommunicationFactory getFactory()
  */
-class SearchSetupIndexesConsole extends Console
+class SearchSetupSourcesConsole extends Console
 {
-    public const COMMAND_NAME = 'search:setup:indexes';
-    public const DESCRIPTION = 'This command will create the search indexes.';
-    public const COMMAND_NAME_SETUP_SEARCH_ALIAS = 'setup:search:indexes';
+    public const COMMAND_NAME = 'search:setup:sources';
+    public const DESCRIPTION = 'This command will create the search sources.';
 
     /**
      * @return void
@@ -30,7 +27,6 @@ class SearchSetupIndexesConsole extends Console
     {
         $this->setName(static::COMMAND_NAME);
         $this->setDescription(static::DESCRIPTION);
-        $this->setAliases([static::COMMAND_NAME_SETUP_SEARCH_ALIAS]);
 
         parent::configure();
     }
@@ -43,7 +39,7 @@ class SearchSetupIndexesConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->getFacade()->installIndexes($this->getMessenger());
+        $this->getFacade()->installSources($this->getMessenger());
 
         return static::CODE_SUCCESS;
     }

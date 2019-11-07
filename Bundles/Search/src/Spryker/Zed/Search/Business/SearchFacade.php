@@ -354,6 +354,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\Search\Business\SearchFacade::installSources()` instead.
+     *
      * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return void
@@ -361,5 +363,20 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     public function installIndexes(LoggerInterface $messenger): void
     {
         $this->getFactory()->createElasticsearchIndexInstaller($messenger)->install();
+    }
+
+    /**
+     * Specification:
+     * - Sets up search sources based on the loaded schema definitions if they don't exist.
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
+     * @return void
+     */
+    public function installSources(LoggerInterface $messenger): void
+    {
+        $this->getFactory()->createSearchSourceInstaller($messenger)->install();
     }
 }
