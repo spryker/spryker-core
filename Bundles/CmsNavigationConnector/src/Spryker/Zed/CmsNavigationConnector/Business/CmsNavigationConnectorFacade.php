@@ -28,7 +28,7 @@ class CmsNavigationConnectorFacade extends AbstractFacade implements CmsNavigati
     {
         $this->getFactory()
             ->createNavigationNodesIsActiveUpdater()
-            ->updateCmsPageNavigationNodes($cmsPageTransfer->getFkPage(), (bool)$cmsPageTransfer->getIsActive());
+            ->updateCmsPageNavigationNodes($cmsPageTransfer->getFkPage(), $cmsPageTransfer->getIsActive());
     }
 
     /**
