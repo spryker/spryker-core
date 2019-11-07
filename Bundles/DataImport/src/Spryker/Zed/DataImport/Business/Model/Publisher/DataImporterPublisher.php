@@ -8,6 +8,8 @@
 namespace Spryker\Zed\DataImport\Business\Model\Publisher;
 
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\DataImport\DataImportConstants;
 use Spryker\Zed\Kernel\Locator;
 
 class DataImporterPublisher implements DataImporterPublisherInterface
@@ -43,7 +45,9 @@ class DataImporterPublisher implements DataImporterPublisherInterface
 
         static::$importedEntityEvents[$eventName][$entityId] = true;
 
-        if (count(static::$importedEntityEvents, COUNT_RECURSIVE) >= static::CHUNK_SIZE) {
+        $chunkSize = Config::get(DataImportConstants::PUBLISHER_TRIGGER_CHUNK_SIZE, static::CHUNK_SIZE);
+
+        if (count(static::$importedEntityEvents, COUNT_RECURSIVE) >= $chunkSize) {
             static::triggerEvents();
         }
     }
@@ -61,11 +65,11 @@ class DataImporterPublisher implements DataImporterPublisherInterface
     }
 
     /**
-     * @param int $flushChunkSize
+     * @param int|null $flushChunkSize
      *
      * @return void
      */
-    public static function triggerEvents($flushChunkSize = self::FLUSH_CHUNK_SIZE): void
+    public static function triggerEvents(?int $flushChunkSize = null): void
     {
         $uniqueEvents = static::$importedEntityEvents;
         foreach ($uniqueEvents as $eventName => $ids) {
@@ -81,7 +85,11 @@ class DataImporterPublisher implements DataImporterPublisherInterface
 
         static::$importedEntityEvents = [];
 
-        if (count(static::$triggeredEventIds, COUNT_RECURSIVE) > $flushChunkSize) {
+        if ($flushChunkSize === null) {
+            $flushChunkSize = Config::get(DataImportConstants::PUBLISHER_FLUSH_CHUNK_SIZE, static::FLUSH_CHUNK_SIZE);
+        }
+
+        if (count(static::$triggeredEventIds, COUNT_RECURSIVE) >= $flushChunkSize) {
             static::$triggeredEventIds = [];
         }
     }
