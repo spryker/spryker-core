@@ -55,7 +55,7 @@ interface ConfigurableBundlePageSearchFacadeInterface
      * Specification:
      * - Finds ConfigurableBundleTemplate records by criteria from FilterTransfer.
      * - ConfigurableBundleTemplateCollectionTransfer::configurableBundleTemplates are populated with idConfigurableBundleTemplate field only.
-     * - Returns ConfigurableBundleTemplateCollectionTransfer with with found records.
+     * - Returns ConfigurableBundleTemplateCollectionTransfer with found records.
      *
      * @api
      *

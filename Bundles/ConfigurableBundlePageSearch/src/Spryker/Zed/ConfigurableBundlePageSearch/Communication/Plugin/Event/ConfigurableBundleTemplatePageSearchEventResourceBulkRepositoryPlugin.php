@@ -35,6 +35,7 @@ class ConfigurableBundleTemplatePageSearchEventResourceBulkRepositoryPlugin exte
 
     /**
      * {@inheritDoc}
+     * - Returns array of ConfigurableBundleTemplateTransfer.
      *
      * @api
      *

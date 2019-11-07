@@ -16,7 +16,7 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\ConfigurableBundlePageSearch\ConfigurableBundlePageSearchConfig getConfig()
  * @method \Spryker\Zed\ConfigurableBundlePageSearch\Communication\ConfigurableBundlePageSearchCommunicationFactory getFactory()
  */
-class ConfigurableBundleTemplatePageSearchConfigurableBundleTemplatePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ConfigurableBundleTemplateConfigurableBundlePageSearchPublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
@@ -30,7 +30,7 @@ class ConfigurableBundleTemplatePageSearchConfigurableBundleTemplatePublishListe
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventTransfers, $eventName): void
     {
         $this->preventTransaction();
         $configurableBundleTemplateIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
