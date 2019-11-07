@@ -8,7 +8,6 @@
 namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\EventBehaviour;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceBulkRepositoryPluginInterface;
 use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
@@ -22,6 +21,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class GlossaryEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
 {
+    protected const COL_ID_GLOSSARY_KEY = 'spy_glossary_key.id_glossary_key';
+
     /**
      * {@inheritDoc}
      *
@@ -73,7 +74,7 @@ class GlossaryEventResourceBulkRepositoryPlugin extends AbstractPlugin implement
      */
     public function getIdColumnName(): ?string
     {
-        return SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY;
+        return static::COL_ID_GLOSSARY_KEY;
     }
 
     /**

@@ -71,7 +71,7 @@ class GlossaryTranslationStorageDeleter implements GlossaryTranslationStorageDel
      *
      * @return void
      */
-    public function deleteGlossaryStorageCollectionByGlossaryKeyEvents(array $eventTransfers)
+    public function deleteGlossaryStorageCollectionByGlossaryKeyEvents(array $eventTransfers): void
     {
         $glossaryKeyIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
 

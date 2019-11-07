@@ -67,7 +67,7 @@ interface GlossaryStorageFacadeInterface
      *
      * @return void
      */
-    public function deleteGlossaryStorageCollectionByGlossaryKeyEvents(array $eventTransfers);
+    public function deleteGlossaryStorageCollectionByGlossaryKeyEvents(array $eventTransfers): void;
 
     /**
      * Specification:
@@ -81,7 +81,7 @@ interface GlossaryStorageFacadeInterface
      *
      * @return void
      */
-    public function writeGlossaryStorageCollectionByGlossaryTranslationEvents(array $eventTransfers);
+    public function writeGlossaryStorageCollectionByGlossaryTranslationEvents(array $eventTransfers): void;
 
     /**
      * Specification
@@ -93,5 +93,18 @@ interface GlossaryStorageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SpyGlossaryKeyEntityTransfer[]
      */
-    public function findFilteredGlossaryKeyEntityTransfers(FilterTransfer $filterTransfer);
+    public function findFilteredGlossaryKeyEntityTransfers(FilterTransfer $filterTransfer): array;
+
+    /**
+     * Specification
+     * - Retrieves a collection of glossary storage entity transfer according to provided offset, limit and ida.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param array $ids
+     *
+     * @return \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer[]
+     */
+    public function findFilteredGlossaryStorageEntities(FilterTransfer $filterTransfer, array $ids): array;
 }

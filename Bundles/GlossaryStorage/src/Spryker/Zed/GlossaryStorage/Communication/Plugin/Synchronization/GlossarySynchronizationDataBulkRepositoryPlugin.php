@@ -63,7 +63,7 @@ class GlossarySynchronizationDataBulkRepositoryPlugin extends AbstractPlugin imp
         $synchronizationDataTransfers = [];
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        $glossaryStorageEntities = $this->getRepository()->findFilteredGlossaryStorageEntities($filterTransfer, $ids);
+        $glossaryStorageEntities = $this->getFacade()->findFilteredGlossaryStorageEntities($filterTransfer, $ids);
 
         foreach ($glossaryStorageEntities as $glossaryStorageEntity) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();

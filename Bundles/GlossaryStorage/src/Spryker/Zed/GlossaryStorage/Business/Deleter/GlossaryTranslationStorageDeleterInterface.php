@@ -23,5 +23,5 @@ interface GlossaryTranslationStorageDeleterInterface
      *
      * @return void
      */
-    public function deleteGlossaryStorageCollectionByGlossaryKeyEvents(array $eventTransfers);
+    public function deleteGlossaryStorageCollectionByGlossaryKeyEvents(array $eventTransfers): void;
 }

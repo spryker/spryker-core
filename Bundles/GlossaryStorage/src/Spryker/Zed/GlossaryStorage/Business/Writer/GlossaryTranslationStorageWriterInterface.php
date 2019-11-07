@@ -23,12 +23,12 @@ interface GlossaryTranslationStorageWriterInterface
      *
      * @return void
      */
-    public function writeGlossaryStorageCollectionByGlossaryKeyEvents(array $eventTransfers);
+    public function writeGlossaryStorageCollectionByGlossaryKeyEvents(array $eventTransfers): void;
 
     /**
      * @param array $eventTransfers
      *
      * @return void
      */
-    public function writeGlossaryStorageCollectionByGlossaryTranslationEvents(array $eventTransfers);
+    public function writeGlossaryStorageCollectionByGlossaryTranslationEvents(array $eventTransfers): void;
 }

@@ -68,7 +68,7 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      *
      * @return void
      */
-    public function deleteGlossaryStorageCollectionByGlossaryKeyEvents(array $eventTransfers)
+    public function deleteGlossaryStorageCollectionByGlossaryKeyEvents(array $eventTransfers): void
     {
         $this->getFactory()->createGlossaryTranslationStorageDeleter()->deleteGlossaryStorageCollectionByGlossaryKeyEvents($eventTransfers);
     }
@@ -82,7 +82,7 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      *
      * @return void
      */
-    public function writeGlossaryStorageCollectionByGlossaryTranslationEvents(array $eventTransfers)
+    public function writeGlossaryStorageCollectionByGlossaryTranslationEvents(array $eventTransfers): void
     {
         $this->getFactory()->createGlossaryTranslationStorageWriter()->writeGlossaryStorageCollectionByGlossaryTranslationEvents($eventTransfers);
     }
@@ -96,8 +96,23 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      *
      * @return \Generated\Shared\Transfer\SpyGlossaryKeyEntityTransfer[]
      */
-    public function findFilteredGlossaryKeyEntityTransfers(FilterTransfer $filterTransfer)
+    public function findFilteredGlossaryKeyEntityTransfers(FilterTransfer $filterTransfer): array
     {
         return $this->getRepository()->findFilteredGlossaryKeyEntityTransfers($filterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param array $ids
+     *
+     * @return array
+     */
+    public function findFilteredGlossaryStorageEntities(FilterTransfer $filterTransfer, array $ids): array
+    {
+        return $this->getRepository()->findFilteredGlossaryStorageEntities($filterTransfer, $ids);
     }
 }
