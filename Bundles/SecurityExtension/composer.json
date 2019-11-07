@@ -1,5 +1,6 @@
 {
   "name": "spryker/security-extension",
+  "type": "library",
   "description": "SecurityExtension module",
   "license": "proprietary",
   "require": {

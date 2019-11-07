@@ -12,8 +12,8 @@ use Psr\Log\LoggerInterface;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface;
+use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Security\Configuration\SecurityConfiguration;
 use Spryker\Yves\Security\Configuration\SecurityConfigurationInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -69,6 +69,7 @@ use Symfony\Component\Security\Http\FirewallMap;
 use Symfony\Component\Security\Http\FirewallMapInterface;
 use Symfony\Component\Security\Http\HttpUtils;
 use Symfony\Component\Security\Http\Logout\DefaultLogoutSuccessHandler;
+use Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface;
 use Symfony\Component\Security\Http\Logout\SessionLogoutHandler;
 use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface;
 
@@ -79,6 +80,20 @@ use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterfa
 class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface, BootableApplicationPluginInterface
 {
     protected const SERVICE_SECURITY_FIREWALL = 'security.firewall';
+    protected const SERVICE_SECURITY_AUTHORIZATION_CHECKER = 'security.authorization_checker';
+    protected const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
+    protected const SERVICE_USER = 'user';
+    protected const SERVICE_SECURITY_AUTHENTICATION_MANAGER = 'security.authentication_manager';
+    protected const SERVICE_SECURITY_ACCESS_MANAGER = 'security.access_manager';
+    protected const SERVICE_SECURITY_AUTHENTICATION_PROVIDERS = 'security.authentication_providers';
+    protected const SERVICE_SECURITY_ENCODER_FACTORY = 'security.encoder_factory';
+    protected const SERVICE_SECURITY_USER_CHECKER = 'security.user_checker';
+    protected const SERVICE_SECURITY_VOTERS = 'security.voters';
+    protected const SERVICE_SECURITY_TRUST_RESOLVER = 'security.trust_resolver';
+    protected const SERVICE_SECURITY_HTTP_UTILS = 'security.http_utils';
+    protected const SERVICE_SECURITY_LAST_ERROR = 'security.last_error';
+    protected const SERVICE_SECURITY_ACCESS_MAP = 'security.access_map';
+    protected const SERVICE_SECURITY_AUTHENTICATION_UTILS = 'security.authentication_utils';
 
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
@@ -94,12 +109,13 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      * @uses \Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin::SERVICE_DISPATCHER
      */
     protected const SERVICE_DISPATCHER = 'dispatcher';
-    protected const SERVICE_SECURITY_FIREWALLS = 'security.firewalls';
-    protected const SERVICE_SECURITY_AUTHORIZATION_CHECKER = 'security.authorization_checker';
 
     /**
-     * Used to register routes for login_check and logout.
-     *
+     * @uses \Spryker\Yves\Validator\Plugin\Application\ValidatorApplicationPlugin::SERVICE_VALIDATOR
+     */
+    protected const SERVICE_VALIDATOR = 'validator';
+
+    /**
      * @var array
      */
     protected $securityRoutes = [];
@@ -150,15 +166,27 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected function getSecurityConfiguration(ContainerInterface $container): SecurityConfigurationInterface
     {
         if ($this->securityConfiguration === null) {
-            $securityConfiguration = new SecurityConfiguration();
-            foreach ($this->getFactory()->getSecurityPlugins() as $securityPlugin) {
-                $securityConfiguration = $securityPlugin->extend($securityConfiguration, $container);
-            }
-
+            /** @var \Spryker\Yves\Security\Configuration\SecurityConfigurationInterface $securityConfiguration */
+            $securityConfiguration = $this->getSecurityConfigurationFromPlugins($container);
             $this->securityConfiguration = $securityConfiguration;
         }
 
         return $this->securityConfiguration;
+    }
+
+    /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
+     */
+    protected function getSecurityConfigurationFromPlugins(ContainerInterface $container): SecurityBuilderInterface
+    {
+        $securityConfiguration = new SecurityConfiguration();
+        foreach ($this->getFactory()->getSecurityPlugins() as $securityPlugin) {
+            $securityConfiguration = $securityPlugin->extend($securityConfiguration, $container);
+        }
+
+        return $securityConfiguration;
     }
 
     /**
@@ -170,9 +198,9 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     {
         $container->set(static::SERVICE_SECURITY_AUTHORIZATION_CHECKER, function (ContainerInterface $container) {
             return new AuthorizationChecker(
-                $container->get('security.token_storage'),
-                $container->get('security.authentication_manager'),
-                $container->get('security.access_manager')
+                $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
+                $container->get(static::SERVICE_SECURITY_AUTHENTICATION_MANAGER),
+                $container->get(static::SERVICE_SECURITY_ACCESS_MANAGER)
             );
         });
 
@@ -186,7 +214,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addTokenStorage(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.token_storage', function () {
+        $container->set(static::SERVICE_SECURITY_TOKEN_STORAGE, function () {
             return new TokenStorage();
         });
 
@@ -200,12 +228,15 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addUser(ContainerInterface $container): ContainerInterface
     {
-        $container->set('user', $container->factory(function (ContainerInterface $container) {
-            $token = $container->get('security.token_storage')->getToken();
+        $container->set(static::SERVICE_USER, $container->factory(function (ContainerInterface $container) {
+            $token = $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE)->getToken();
             if ($token === null) {
                 return null;
             }
-            if (!is_object($user = $token->getUser())) {
+
+            $user = $token->getUser();
+
+            if (!is_object($user)) {
                 return null;
             }
 
@@ -222,8 +253,8 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addAuthenticationManager(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.authentication_manager', function (ContainerInterface $container) {
-            $manager = new AuthenticationProviderManager($container->get('security.authentication_providers'));
+        $container->set(static::SERVICE_SECURITY_AUTHENTICATION_MANAGER, function (ContainerInterface $container) {
+            $manager = new AuthenticationProviderManager($container->get(static::SERVICE_SECURITY_AUTHENTICATION_PROVIDERS));
             $manager->setEventDispatcher($container->get(static::SERVICE_DISPATCHER));
 
             return $manager;
@@ -239,7 +270,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addEncoder(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.encoder_factory', function () {
+        $container->set(static::SERVICE_SECURITY_ENCODER_FACTORY, function () {
             return new EncoderFactory([
                 UserInterface::class => $this->getFactory()->createPasswordEncoder(),
             ]);
@@ -255,7 +286,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addUserChecker(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.user_checker', function () {
+        $container->set(static::SERVICE_SECURITY_USER_CHECKER, function () {
             return new UserChecker();
         });
 
@@ -269,8 +300,8 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addAccessManager(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.access_manager', function (ContainerInterface $container) {
-            return new AccessDecisionManager($container->get('security.voters'));
+        $container->set(static::SERVICE_SECURITY_ACCESS_MANAGER, function (ContainerInterface $container) {
+            return new AccessDecisionManager($container->get(static::SERVICE_SECURITY_VOTERS));
         });
 
         return $container;
@@ -283,12 +314,12 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addVoters(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.voters', function (ContainerInterface $container) {
+        $container->set(static::SERVICE_SECURITY_VOTERS, function (ContainerInterface $container) {
             $securityConfiguration = $this->getSecurityConfiguration($container);
 
             return [
                 new RoleHierarchyVoter(new RoleHierarchy($securityConfiguration->getRoleHierarchies())),
-                new AuthenticatedVoter($container->get('security.trust_resolver')),
+                new AuthenticatedVoter($container->get(static::SERVICE_SECURITY_TRUST_RESOLVER)),
             ];
         });
 
@@ -302,10 +333,10 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addFirewall(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.firewall', function (ContainerInterface $container) {
-            if ($container->has('validator')) {
+        $container->set(static::SERVICE_SECURITY_FIREWALL, function (ContainerInterface $container) {
+            if ($container->has(static::SERVICE_VALIDATOR)) {
                 $container->set('security.validator.user_password_validator', function (ContainerInterface $container) {
-                    return new UserPasswordValidator($container->get('security.token_storage'), $container->get('security.encoder_factory'));
+                    return new UserPasswordValidator($container->get(static::SERVICE_SECURITY_TOKEN_STORAGE), $container->get(static::SERVICE_SECURITY_ENCODER_FACTORY));
                 });
                 $container->set('validator.validator_service_ids', array_merge(
                     $container->get('validator.validator_service_ids'),
@@ -421,19 +452,19 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
             return $container->get($provider);
         }, array_unique($providers));
 
-        $container->set('security.authentication_providers', $securityAuthenticationProviders);
+        $container->set(static::SERVICE_SECURITY_AUTHENTICATION_PROVIDERS, $securityAuthenticationProviders);
 
         return $this->buildFirewallMap($container, $configs);
     }
 
     /**
      * @param string $firewallName
-     * @param string $entryPoint
-     * @param ContainerInterface $container
+     * @param string|null $entryPoint
+     * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return ContainerInterface
+     * @return \Spryker\Service\Container\ContainerInterface
      */
-    protected function setFirewallExceptionListener(string $firewallName, string $entryPoint, ContainerInterface $container): ContainerInterface
+    protected function setFirewallExceptionListener(string $firewallName, ?string $entryPoint, ContainerInterface $container): ContainerInterface
     {
         if (!$container->has('security.exception_listener.' . $firewallName)) {
             if ($entryPoint === null) {
@@ -482,7 +513,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     }
 
     /**
-     * @param ContainerInterface $container
+     * @param \Spryker\Service\Container\ContainerInterface $container
      * @param array $listeners
      * @param string $name
      *
@@ -514,7 +545,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     {
         $container->set('security.channel_listener', function (ContainerInterface $container) {
             return new ChannelListener(
-                $container->get('security.access_map'),
+                $container->get(static::SERVICE_SECURITY_ACCESS_MAP),
                 new RetryAuthenticationEntryPoint(
                     $container->has('request.http_port') ? $container->get('request.http_port') : 80,
                     $container->has('request.https_port') ? $container->get('request.https_port') : 443
@@ -536,23 +567,23 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         foreach (['logout', 'pre_auth', 'guard', 'form', 'http', 'remember_me', 'anonymous'] as $type) {
             $entryPoint = $this->getEntryPoint($type);
 
-            $container->set('security.authentication_listener.factory.' . $type, $container->protect(function ($name, $options) use ($type, $container, $entryPoint) {
-                if ($entryPoint && !$container->has('security.entry_point.' . $name . '.' . $entryPoint)) {
-                    $container->set('security.entry_point.' . $name . '.' . $entryPoint, $container->get('security.entry_point.' . $entryPoint . '._proto')($name, $options));
+            $container->set('security.authentication_listener.factory.' . $type, $container->protect(function ($firewallName, $options) use ($type, $container, $entryPoint) {
+                if ($entryPoint && !$container->has('security.entry_point.' . $firewallName . '.' . $entryPoint)) {
+                    $container->set('security.entry_point.' . $firewallName . '.' . $entryPoint, $container->get('security.entry_point.' . $entryPoint . '._proto')($firewallName, $options));
                 }
-                if (!$container->has('security.authentication_listener.' . $name . '.' . $type)) {
-                    $container->set('security.authentication_listener.' . $name . '.' . $type, $container->get('security.authentication_listener.' . $type . '._proto')($name, $options));
+                if (!$container->has('security.authentication_listener.' . $firewallName . '.' . $type)) {
+                    $container->set('security.authentication_listener.' . $firewallName . '.' . $type, $container->get('security.authentication_listener.' . $type . '._proto')($firewallName, $options));
                 }
                 $provider = $this->getProvider($type);
 
-                if (!$container->has('security.authentication_provider.' . $name . '.' . $provider)) {
-                    $container->set('security.authentication_provider.' . $name . '.' . $provider, $container->get('security.authentication_provider.' . $provider . '._proto')($name, $options));
+                if (!$container->has('security.authentication_provider.' . $firewallName . '.' . $provider)) {
+                    $container->set('security.authentication_provider.' . $firewallName . '.' . $provider, $container->get('security.authentication_provider.' . $provider . '._proto')($firewallName, $options));
                 }
 
                 return [
-                    'security.authentication_provider.' . $name . '.' . $provider,
-                    'security.authentication_listener.' . $name . '.' . $type,
-                    $entryPoint ? 'security.entry_point.' . $name . '.' . $entryPoint : null,
+                    'security.authentication_provider.' . $firewallName . '.' . $provider,
+                    'security.authentication_listener.' . $firewallName . '.' . $type,
+                    $entryPoint ? 'security.entry_point.' . $firewallName . '.' . $entryPoint : null,
                     $type,
                 ];
             }));
@@ -598,10 +629,10 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     {
         $container->set('security.access_listener', function (ContainerInterface $container) {
             return new AccessListener(
-                $container->get('security.token_storage'),
-                $container->get('security.access_manager'),
-                $container->get('security.access_map'),
-                $container->get('security.authentication_manager')
+                $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
+                $container->get(static::SERVICE_SECURITY_ACCESS_MANAGER),
+                $container->get(static::SERVICE_SECURITY_ACCESS_MAP),
+                $container->get(static::SERVICE_SECURITY_AUTHENTICATION_MANAGER)
             );
         });
 
@@ -615,7 +646,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addAccessMap(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.access_map', function (ContainerInterface $container) {
+        $container->set(static::SERVICE_SECURITY_ACCESS_MAP, function (ContainerInterface $container) {
             $map = new AccessMap();
             $accessRules = $this->getSecurityConfiguration($container)->getAccessRules();
             foreach ($accessRules as $rule) {
@@ -648,7 +679,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addTrustResolver(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.trust_resolver', function () {
+        $container->set(static::SERVICE_SECURITY_TRUST_RESOLVER, function () {
             return new AuthenticationTrustResolver(AnonymousToken::class, RememberMeToken::class);
         });
 
@@ -662,13 +693,13 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addUtils(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.http_utils', function (ContainerInterface $container) {
+        $container->set(static::SERVICE_SECURITY_HTTP_UTILS, function (ContainerInterface $container) {
             $chainRouter = $container->get(static::SERVICE_ROUTER);
 
             return new HttpUtils($chainRouter, $chainRouter);
         });
 
-        $container->set('security.authentication_utils', function (ContainerInterface $container) {
+        $container->set(static::SERVICE_SECURITY_AUTHENTICATION_UTILS, function (ContainerInterface $container) {
             return new AuthenticationUtils($container->get('request_stack'));
         });
 
@@ -682,7 +713,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addLastError(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.last_error', $container->protect(function (Request $request) {
+        $container->set(static::SERVICE_SECURITY_LAST_ERROR, $container->protect(function (Request $request) {
             if ($request->attributes->has(Security::AUTHENTICATION_ERROR)) {
                 return $request->attributes->get(Security::AUTHENTICATION_ERROR)->getMessage();
             }
@@ -731,7 +762,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         $container->set('security.context_listener._proto', $container->protect(function ($providerKey, $userProviders) use ($container) {
             return function () use ($container, $userProviders, $providerKey) {
                 return new ContextListener(
-                    $container->get('security.token_storage'),
+                    $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
                     $userProviders,
                     $providerKey,
                     $this->getLogger($container),
@@ -743,9 +774,9 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         $container->set('security.exception_listener._proto', $container->protect(function ($entryPoint, $name, $accessDeniedHandler = null) use ($container) {
             return function () use ($container, $entryPoint, $name, $accessDeniedHandler) {
                 return new ExceptionListener(
-                    $container->get('security.token_storage'),
-                    $container->get('security.trust_resolver'),
-                    $container->get('security.http_utils'),
+                    $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
+                    $container->get(static::SERVICE_SECURITY_TRUST_RESOLVER),
+                    $container->get(static::SERVICE_SECURITY_HTTP_UTILS),
                     $name,
                     $container->get($entryPoint),
                     null, // errorPage
@@ -782,7 +813,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         $container->set('security.authentication.success_handler._proto', $container->protect(function ($name, $options) use ($container) {
             return function () use ($name, $options, $container) {
                 $handler = new DefaultAuthenticationSuccessHandler(
-                    $container->get('security.http_utils'),
+                    $container->get(static::SERVICE_SECURITY_HTTP_UTILS),
                     $options
                 );
                 $handler->setProviderKey($name);
@@ -805,7 +836,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
             return function () use ($options, $container) {
                 return new DefaultAuthenticationFailureHandler(
                     $container->get(static::SERVICE_KERNEL),
-                    $container->get('security.http_utils'),
+                    $container->get(static::SERVICE_SECURITY_HTTP_UTILS),
                     $options,
                     $this->getLogger($container)
                 );
@@ -825,7 +856,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         $container->set('security.authentication.logout_handler._proto', $container->protect(function ($name, $options) use ($container) {
             return function () use ($options, $container) {
                 return new DefaultLogoutSuccessHandler(
-                    $container->get('security.http_utils'),
+                    $container->get(static::SERVICE_SECURITY_HTTP_UTILS),
                     $options['target_url'] ?? '/'
                 );
             };
@@ -861,7 +892,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         $container->set('security.authentication_listener.guard._proto', $container->protect(function ($providerKey, $options) use ($container) {
             return function () use ($container, $providerKey, $options) {
                 if (!$container->has('security.authentication.guard_handler')) {
-                    $container->set('security.authentication.guard_handler', new GuardAuthenticatorHandler($container->get('security.token_storage'), $container->get(static::SERVICE_DISPATCHER)));
+                    $container->set('security.authentication.guard_handler', new GuardAuthenticatorHandler($container->get(static::SERVICE_SECURITY_TOKEN_STORAGE), $container->get(static::SERVICE_DISPATCHER)));
                 }
                 $authenticators = [];
                 foreach ($options['authenticators'] as $authenticatorId) {
@@ -870,7 +901,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
 
                 return new GuardAuthenticationListener(
                     $container->get('security.authentication.guard_handler'),
-                    $container->get('security.authentication_manager'),
+                    $container->get(static::SERVICE_SECURITY_AUTHENTICATION_MANAGER),
                     $providerKey,
                     $authenticators,
                     $this->getLogger($container)
@@ -896,10 +927,10 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 $class = $options['listener_class'] ?? UsernamePasswordFormAuthenticationListener::class;
 
                 return new $class(
-                    $container->get('security.token_storage'),
-                    $container->get('security.authentication_manager'),
+                    $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
+                    $container->get(static::SERVICE_SECURITY_AUTHENTICATION_MANAGER),
                     $this->getSessionStrategy($container, $name),
-                    $container->get('security.http_utils'),
+                    $container->get(static::SERVICE_SECURITY_HTTP_UTILS),
                     $name,
                     $this->getAuthenticationSuccessHandler($container, $name, $options),
                     $this->getAuthenticationFailureHandler($container, $name, $options),
@@ -987,8 +1018,8 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         $container->set('security.authentication_listener.http._proto', $container->protect(function ($providerKey, $options) use ($container) {
             return function () use ($container, $providerKey) {
                 return new BasicAuthenticationListener(
-                    $container->get('security.token_storage'),
-                    $container->get('security.authentication_manager'),
+                    $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
+                    $container->get(static::SERVICE_SECURITY_AUTHENTICATION_MANAGER),
                     $providerKey,
                     $container->get('security.entry_point.' . $providerKey . '.http'),
                     $this->getLogger($container)
@@ -1009,7 +1040,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         $container->set('security.authentication_listener.anonymous._proto', $container->protect(function ($providerKey, $options) use ($container) {
             return function () use ($container, $providerKey) {
                 return new AnonymousAuthenticationListener(
-                    $container->get('security.token_storage'),
+                    $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
                     $providerKey,
                     $this->getLogger($container)
                 );
@@ -1031,14 +1062,10 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 $tmp = $options['logout_path'] ?? '/logout';
                 $this->addFakeRoute('get', $tmp, str_replace('/', '_', ltrim($tmp, '/')));
 
-                if (!isset($container['security.authentication.logout_handler.' . $name])) {
-                    $container->set('security.authentication.logout_handler.' . $name, $container->get('security.authentication.logout_handler._proto')($name, $options));
-                }
-
                 $listener = new LogoutListener(
-                    $container->get('security.token_storage'),
-                    $container->get('security.http_utils'),
-                    $container->get('security.authentication.logout_handler.' . $name),
+                    $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
+                    $container->get(static::SERVICE_SECURITY_HTTP_UTILS),
+                    $this->getLogoutHandler($container, $name, $options),
                     $options,
                     $this->getCsrfTokenManager($container, $options)
                 );
@@ -1050,6 +1077,27 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         }));
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     * @param string $firewallName
+     * @param array $options
+     *
+     * @return \Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface
+     */
+    protected function getLogoutHandler(ContainerInterface $container, string $firewallName, array $options): LogoutSuccessHandlerInterface
+    {
+        $securityConfiguration = $this->getSecurityConfiguration($container);
+        if (isset($securityConfiguration->getLogoutHandler()[$firewallName])) {
+            return call_user_func($securityConfiguration->getLogoutHandler()[$firewallName], $container, $options);
+        }
+
+        if (!$container->has('security.authentication.logout_handler.' . $firewallName)) {
+            $container->set('security.authentication.logout_handler.' . $firewallName, $container->get('security.authentication.logout_handler._proto')($firewallName, $options));
+        }
+
+        return $container->get('security.authentication.logout_handler.' . $firewallName);
     }
 
     /**
@@ -1087,14 +1135,14 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addAuthenticationListenerSwitchUserPrototype(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.authentication_listener.switch_user._proto', $container->protect(function ($name, $options) use ($container) {
-            return function () use ($container, $name, $options) {
+        $container->set('security.authentication_listener.switch_user._proto', $container->protect(function ($firewallName, $options) use ($container) {
+            return function () use ($container, $firewallName, $options) {
                 return new SwitchUserListener(
-                    $container->get('security.token_storage'),
-                    $container->get('security.user_provider.' . $name),
-                    $container->get('security.user_checker'),
-                    $name,
-                    $container->get('security.access_manager'),
+                    $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
+                    $container->get('security.user_provider.' . $firewallName),
+                    $container->get(static::SERVICE_SECURITY_USER_CHECKER),
+                    $firewallName,
+                    $container->get(static::SERVICE_SECURITY_ACCESS_MANAGER),
                     $this->getLogger($container),
                     isset($options['parameter']) ? $options['parameter'] : '_switch_user',
                     isset($options['role']) ? $options['role'] : 'ROLE_ALLOWED_TO_SWITCH',
@@ -1133,7 +1181,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 $loginPath = isset($options['login_path']) ? $options['login_path'] : '/login';
                 $useForward = isset($options['use_forward']) ? $options['use_forward'] : false;
 
-                return new FormAuthenticationEntryPoint($container->get(static::SERVICE_KERNEL), $container->get('security.http_utils'), $loginPath, $useForward);
+                return new FormAuthenticationEntryPoint($container->get(static::SERVICE_KERNEL), $container->get(static::SERVICE_SECURITY_HTTP_UTILS), $loginPath, $useForward);
             };
         }));
 
@@ -1210,9 +1258,9 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
             return function () use ($container, $name) {
                 return new DaoAuthenticationProvider(
                     $container->get('security.user_provider.' . $name),
-                    $container->get('security.user_checker'),
+                    $container->get(static::SERVICE_SECURITY_USER_CHECKER),
                     $name,
-                    $container->get('security.encoder_factory'),
+                    $container->get(static::SERVICE_SECURITY_ENCODER_FACTORY),
                     $this->getConfig()->hideUserNotFoundException()
                 );
             };
@@ -1239,7 +1287,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $authenticators,
                     $container->get('security.user_provider.' . $name),
                     $name,
-                    $container->get('security.user_checker')
+                    $container->get(static::SERVICE_SECURITY_USER_CHECKER)
                 );
             };
         }));
@@ -1337,7 +1385,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 };
 
                 $route->setDefault('_controller', $controller);
-//                $route->setMethods([$method]);
 
                 $routeCollection->add($name, $route);
             }

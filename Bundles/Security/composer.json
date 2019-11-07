@@ -1,5 +1,6 @@
 {
   "name": "spryker/security",
+  "type": "library",
   "description": "Security module",
   "license": "proprietary",
   "require": {
@@ -27,14 +28,13 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Yves\\Security\\Helper\\": "tests/SprykerTest/Yves/Security/_support/Helper/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/",
-      "SprykerTest\\Yves\\Security\\Fixtures\\": "tests/SprykerTest/Yves/Security/_support/Fixtures/",
-      "SprykerTest\\Yves\\Security\\Helper\\": "tests/SprykerTest/Yves/Security/_support/Helper/"
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

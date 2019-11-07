@@ -39,6 +39,11 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
     /**
      * @var callable[]
      */
+    protected $logoutHandler = [];
+
+    /**
+     * @var callable[]
+     */
     protected $accessDeniedHandler = [];
 
     /**
@@ -153,6 +158,27 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
     public function getAuthenticationFailureHandler(): array
     {
         return $this->authenticationFailureHandler;
+    }
+
+    /**
+     * @param string $firewallName
+     * @param callable $logoutHandler
+     *
+     * @return $this
+     */
+    public function addLogoutHandler(string $firewallName, callable $logoutHandler)
+    {
+        $this->logoutHandler[$firewallName] = $logoutHandler;
+
+        return $this;
+    }
+
+    /**
+     * @return callable[]
+     */
+    public function getLogoutHandler(): array
+    {
+        return $this->logoutHandler;
     }
 
     /**

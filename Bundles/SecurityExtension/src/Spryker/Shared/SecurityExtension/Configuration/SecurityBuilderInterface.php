@@ -49,6 +49,14 @@ interface SecurityBuilderInterface
 
     /**
      * @param string $firewallName
+     * @param callable $logoutHandler
+     *
+     * @return $this
+     */
+    public function addLogoutHandler(string $firewallName, callable $logoutHandler);
+
+    /**
+     * @param string $firewallName
      * @param callable $accessDeniedHandler
      *
      * @return $this

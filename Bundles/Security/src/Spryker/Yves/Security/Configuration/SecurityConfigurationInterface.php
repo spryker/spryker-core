@@ -37,6 +37,11 @@ interface SecurityConfigurationInterface
     /**
      * @return callable[]
      */
+    public function getLogoutHandler(): array;
+
+    /**
+     * @return callable[]
+     */
     public function getAccessDeniedHandler(): array;
 
     /**
