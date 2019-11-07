@@ -46,12 +46,12 @@ interface ReservationInterface
     public function getOmsReservedProductQuantityForSku(string $sku, StoreTransfer $storeTransfer): Decimal;
 
     /**
-     * @param string $abstractSku
+     * @param string[] $skus
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function getOmsReservedProductQuantityByAbstractProductSkuForStore(string $abstractSku, StoreTransfer $storeTransfer): Decimal;
+    public function getOmsReservedProductQuantityForSkus(array $skus, StoreTransfer $storeTransfer): Decimal;
 
     /**
      * @param string $sku

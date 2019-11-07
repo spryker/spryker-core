@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\StockGui\Communication\Controller;
 
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\Stock\Business\StockFacade;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
@@ -22,11 +20,6 @@ class WarehouseController extends AbstractController
      */
     public function listAction(): array
     {
-        $dec = (new StockFacade())->calculateProductAbstractStockForStore(
-            '070',
-            (new StoreTransfer())->setName('DE')
-        );
-
         $stockTable = $this->getFactory()->createStockTable();
 
         return $this->viewResponse([

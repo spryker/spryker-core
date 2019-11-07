@@ -12,12 +12,9 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderProcessTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsProductReservationTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\Oms\Persistence\OmsPersistenceFactory getFactory()
@@ -83,28 +80,19 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
     }
 
     /**
-     * @param string $abstractSku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param string[] $concreteSkus
+     * @param int $idStore
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function getOmsReservedProductQuantityByAbstractProductSkuForStore(string $abstractSku, StoreTransfer $storeTransfer): Decimal
+    public function getOmsReservedProductQuantityByConcreteProductSkusForStore(array $concreteSkus, int $idStore): Decimal
     {
         $productReservationTotalQuantity = $this->getFactory()
             ->createOmsProductReservationQuery()
             ->select([static::COL_PRODUCT_RESERVATION_TOTAL_QUANTITY])
-            ->filterByFkStore($storeTransfer->getIdStore())
-            ->addJoin(
-                SpyOmsProductReservationTableMap::COL_SKU,
-                SpyProductTableMap::COL_SKU,
-                Criteria::LEFT_JOIN
-            )->addJoin(
-                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
-                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
-                Criteria::LEFT_JOIN
-            )
+            ->filterByFkStore($idStore)
+            ->filterBySku_In($concreteSkus)
             ->withColumn(sprintf('SUM(%s)', SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY), static::COL_PRODUCT_RESERVATION_TOTAL_QUANTITY)
-            ->where(sprintf("%s = '%s'", SpyProductAbstractTableMap::COL_SKU, $abstractSku))
             ->findOne();
 
         return new Decimal($productReservationTotalQuantity ?? 0);

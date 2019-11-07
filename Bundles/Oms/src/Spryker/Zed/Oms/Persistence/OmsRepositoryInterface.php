@@ -30,10 +30,10 @@ interface OmsRepositoryInterface
     public function getSalesOrderAggregationBySkuAndStatesNames(array $stateNames, string $sku, StoreTransfer $storeTransfer): array;
 
     /**
-     * @param string $abstractSku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param string[] $concreteSkus
+     * @param int $idStore
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function getOmsReservedProductQuantityByAbstractProductSkuForStore(string $abstractSku, StoreTransfer $storeTransfer): Decimal;
+    public function getOmsReservedProductQuantityByConcreteProductSkusForStore(array $concreteSkus, int $idStore): Decimal;
 }

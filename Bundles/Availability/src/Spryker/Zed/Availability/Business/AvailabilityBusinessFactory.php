@@ -22,6 +22,7 @@ use Spryker\Zed\Availability\Business\Model\Sellable;
 use Spryker\Zed\Availability\Business\Model\SellableInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchFacadeInterface;
@@ -55,7 +56,8 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
         return new ProductAvailabilityCalculator(
             $this->getRepository(),
             $this->getOmsFacade(),
-            $this->getStockFacade()
+            $this->getStockFacade(),
+            $this->getProductFacade()
         );
     }
 
@@ -83,7 +85,8 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
         return new ProductAvailabilityReader(
             $this->getRepository(),
             $this->createAvailabilityHandler(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getProductFacade()
         );
     }
 
@@ -147,5 +150,13 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     public function getEventFacade(): AvailabilityToEventFacadeInterface
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_EVENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductFacadeInterface
+     */
+    public function getProductFacade(): AvailabilityToProductFacadeInterface
+    {
+        return $this->getProvidedDependency(AvailabilityDependencyProvider::FACADE_PRODUCT);
     }
 }

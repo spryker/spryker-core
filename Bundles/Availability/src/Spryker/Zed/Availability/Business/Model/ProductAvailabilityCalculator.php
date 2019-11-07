@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
 
@@ -35,18 +36,26 @@ class ProductAvailabilityCalculator implements ProductAvailabilityCalculatorInte
     protected $stockFacade;
 
     /**
+     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductFacadeInterface
+     */
+    protected $productFacade;
+
+    /**
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface $availabilityRepository
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface $omsFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface $stockFacade
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductFacadeInterface $productFacade
      */
     public function __construct(
         AvailabilityRepositoryInterface $availabilityRepository,
         AvailabilityToOmsFacadeInterface $omsFacade,
-        AvailabilityToStockFacadeInterface $stockFacade
+        AvailabilityToStockFacadeInterface $stockFacade,
+        AvailabilityToProductFacadeInterface $productFacade
     ) {
         $this->availabilityRepository = $availabilityRepository;
         $this->omsFacade = $omsFacade;
         $this->stockFacade = $stockFacade;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -71,8 +80,13 @@ class ProductAvailabilityCalculator implements ProductAvailabilityCalculatorInte
      */
     public function calculateAvailabilityForProductAbstract(string $abstractSku, StoreTransfer $storeTransfer): Decimal
     {
+        $concreteProductSkus = $this->productFacade->getProductConcreteSkusByAbstractProductSku($abstractSku);
+        if ($concreteProductSkus === []) {
+            return new Decimal(0);
+        }
+
         $physicalItems = $this->stockFacade->calculateProductAbstractStockForStore($abstractSku, $storeTransfer);
-        $reservedItems = $this->omsFacade->getOmsReservedProductQuantityByAbstractProductSkuForStore($abstractSku, $storeTransfer);
+        $reservedItems = $this->omsFacade->getOmsReservedProductQuantityForSkus($concreteProductSkus, $storeTransfer);
 
         return $this->normalizeQuantity($physicalItems->subtract($reservedItems));
     }

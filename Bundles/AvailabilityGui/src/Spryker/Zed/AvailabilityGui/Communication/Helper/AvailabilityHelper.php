@@ -75,10 +75,10 @@ class AvailabilityHelper implements AvailabilityHelperInterface
     public function findProductAbstractAvailabilityTransfer(int $idProductAbstract, int $idLocale, int $idStore): ?ProductAbstractAvailabilityTransfer
     {
         $storeTransfer = $this->storeFacade->getStoreById($idStore);
-        $stockTypes = $this->stockFacade->getStoreToWarehouseMapping()[$storeTransfer->getName()];
+        $stockNames = $this->getStockNamesForStore($storeTransfer);
 
         $productAbstractAvailabilityEntity = $this->availabilityQueryContainer
-            ->queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale, $idStore, $stockTypes)
+            ->queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale, $idStore, $stockNames)
             ->findOne();
 
         if ($productAbstractAvailabilityEntity === null) {
@@ -172,7 +172,7 @@ class AvailabilityHelper implements AvailabilityHelperInterface
         return $this->availabilityQueryContainer->queryAvailabilityAbstractWithStockByIdLocale(
             $idLocale,
             $idStore,
-            $this->getStockWarehousesForStore($idStore)
+            $this->getStockNamesForStoreByStoreId($idStore)
         );
     }
 
@@ -189,7 +189,7 @@ class AvailabilityHelper implements AvailabilityHelperInterface
             $idProductAbstract,
             $idLocale,
             $idStore,
-            $this->getStockWarehousesForStore($idStore)
+            $this->getStockNamesForStoreByStoreId($idStore)
         );
     }
 
@@ -198,9 +198,20 @@ class AvailabilityHelper implements AvailabilityHelperInterface
      *
      * @return string[]
      */
-    protected function getStockWarehousesForStore(int $idStore): array
+    protected function getStockNamesForStoreByStoreId(int $idStore): array
     {
         $storeTransfer = $this->storeFacade->getStoreById($idStore);
+
+        return $this->getStockNamesForStore($storeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return string[]
+     */
+    protected function getStockNamesForStore(StoreTransfer $storeTransfer): array
+    {
         $stockTransfers = $this->stockFacade->getAvailableWarehousesForStore($storeTransfer);
 
         return array_map(function (StockTransfer $stockTransfer): string {

@@ -373,6 +373,23 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
+     * @param string $productAbstractSku
+     *
+     * @return string[]
+     */
+    public function getProductConcreteSkusByAbstractProductSku(string $productAbstractSku): array
+    {
+        return $this->getFactory()
+            ->createProductQuery()
+            ->useSpyProductAbstractQuery(null, Criteria::LEFT_JOIN)
+                ->filterBySku($productAbstractSku)
+            ->endUse()
+            ->select(SpyProductTableMap::COL_SKU)
+            ->find()
+            ->getData();
+    }
+
+    /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $spyProductAbstractQuery
      * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *

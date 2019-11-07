@@ -122,4 +122,11 @@ interface ProductRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getProductConcretesByConcreteSkus(array $productConcreteSkus): array;
+
+    /**
+     * @param string $productAbstractSku
+     *
+     * @return string[]
+     */
+    public function getProductConcreteSkusByAbstractProductSku(string $productAbstractSku): array;
 }

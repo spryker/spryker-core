@@ -34,4 +34,8 @@
         <property name="isNeverOutOfStock" type="bool"/>
     </transfer>
 
+    <transfer name="Stock">
+        <property name="name" type="string"/>
+    </transfer>
+
 </transfers>

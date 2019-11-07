@@ -94,6 +94,34 @@ class ProductFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetProductConcreteSkusByAbstractProductSkuWillReturnAllProductConcreteSkusOFProductAbstract(): void
+    {
+        //Arrange
+        $idProductAbstract = $this->tester->getProductAbstractIds()[0];
+        $productAbstractTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
+        $productConcreteTransfers = $this->productFacade->getConcreteProductsByAbstractProductId($idProductAbstract);
+
+        //Act
+        $concreteProductSkus = $this->productFacade->getProductConcreteSkusByAbstractProductSku($productAbstractTransfer->getSku());
+
+        //Assert
+        $this->assertCount(
+            count($productConcreteTransfers),
+            $concreteProductSkus,
+            'Product concrete SKUs collection count does not match expected value.'
+        );
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $this->assertContains(
+                $productConcreteTransfer->getSku(),
+                $concreteProductSkus,
+                'Product concrete SKUs collection does not contains expected value.'
+            );
+        }
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
     protected function createProductAbstractTransfer()

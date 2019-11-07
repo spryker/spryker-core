@@ -920,4 +920,16 @@ interface ProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getRawProductConcreteTransfersByConcreteSkus(array $productConcreteSkus): array;
+
+    /**
+     * Specification:
+     *  - Returns concrete products skus by abstract product sku.
+     *
+     * @api
+     *
+     * @param string $productAbstractSku
+     *
+     * @return string[]
+     */
+    public function getProductConcreteSkusByAbstractProductSku(string $productAbstractSku): array;
 }
