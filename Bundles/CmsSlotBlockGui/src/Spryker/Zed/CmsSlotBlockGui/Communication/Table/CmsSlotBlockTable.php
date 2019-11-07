@@ -238,6 +238,7 @@ class CmsSlotBlockTable extends AbstractTable
             static::BUTTON_VIEW_BLOCK,
             [
                 'class' => 'btn-view',
+                'target' => '_blank',
             ]
         );
         $actionButtons[] = $this->generateButton(
