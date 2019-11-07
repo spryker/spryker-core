@@ -8,7 +8,7 @@
     "spryker/kernel": "^3.3.0",
     "spryker/currency": "^3.10.0",
     "spryker/event": "^2.0.0",
-    "spryker/event-behavior": "^3.3.0",
+    "spryker/event-behavior": "^1.14.0",
     "spryker/merchant-product-offer": "^1.0.0",
     "spryker/price-product": "^4.0.0",
     "spryker/price-product-offer": "^1.0.0",
