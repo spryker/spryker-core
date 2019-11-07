@@ -7,4 +7,19 @@
         <property name="fkCmsPage" type="int"/>
     </transfer>
 
+    <transfer name="DataImporterConfiguration">
+    </transfer>
+
+    <transfer name="DataImporterReport">
+    </transfer>
+
+    <transfer name="CmsGlossary">
+    </transfer>
+
+    <transfer name="CmsPageAttributes">
+    </transfer>
+
+    <transfer name="CmsPage">
+    </transfer>
+
 </transfers>

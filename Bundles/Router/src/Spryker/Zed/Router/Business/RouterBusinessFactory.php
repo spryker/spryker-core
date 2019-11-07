@@ -12,11 +12,11 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Router\Business\Cache\Cache;
 use Spryker\Zed\Router\Business\Loader\ClosureLoader;
 use Spryker\Zed\Router\Business\Loader\LoaderInterface;
-use Spryker\Zed\Router\Business\Resource\ResourceInterface;
 use Spryker\Zed\Router\Business\Router\ChainRouter;
-use Spryker\Zed\Router\Business\Router\Resource\RouterResource;
 use Spryker\Zed\Router\Business\Router\Router;
 use Spryker\Zed\Router\Business\Router\RouterInterface;
+use Spryker\Zed\Router\Business\Router\RouterResource\RouterResource;
+use Spryker\Zed\Router\Business\RouterResource\ResourceInterface;
 use Spryker\Zed\Router\RouterDependencyProvider;
 
 /**
@@ -75,7 +75,7 @@ class RouterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Router\Business\Resource\ResourceInterface
+     * @return \Spryker\Zed\Router\Business\RouterResource\ResourceInterface
      */
     public function createResource(): ResourceInterface
     {

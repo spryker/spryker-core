@@ -25,23 +25,23 @@ class CmsBlockToGlossaryBridge implements CmsBlockToGlossaryInterface
     }
 
     /**
-     * @param array $keys
+     * @param array $idKeys
      *
      * @return void
      */
-    public function deleteTranslationsByFkKeys(array $keys)
+    public function deleteTranslationsByFkKeys(array $idKeys)
     {
-        $this->glossaryFacade->deleteTranslationsByFkKeys($keys);
+        $this->glossaryFacade->deleteTranslationsByFkKeys($idKeys);
     }
 
     /**
-     * @param array $keys
+     * @param array $idKeys
      *
      * @return bool
      */
-    public function deleteKeys(array $keys)
+    public function deleteKeys(array $idKeys)
     {
-        return $this->glossaryFacade->deleteKeys($keys);
+        return $this->glossaryFacade->deleteKeys($idKeys);
     }
 
     /**

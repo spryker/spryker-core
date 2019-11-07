@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\Testify\OpenApi3;
 
-use Spryker\Glue\Testify\OpenApi3\Object\OpenApi;
+use Spryker\Glue\Testify\OpenApi3\SchemaObject\OpenApi;
 
 interface OpenApiSchemaParserInterface
 {
@@ -16,7 +16,7 @@ interface OpenApiSchemaParserInterface
      *
      * @throws \Spryker\Glue\Testify\OpenApi3\Exception\ParseException
      *
-     * @return \Spryker\Glue\Testify\OpenApi3\Object\OpenApi
+     * @return \Spryker\Glue\Testify\OpenApi3\SchemaObject\OpenApi
      */
     public function parse(ReaderInterface $reader): OpenApi;
 }
