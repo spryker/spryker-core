@@ -40,11 +40,13 @@ class ClassGenerator implements GeneratorInterface
      *
      * @return string
      */
-    public function generate(DefinitionInterface $definition)
+    public function generate(DefinitionInterface $definition): string
     {
-        $twigData = $this->getTwigData($definition);
+        $twigContext = $this->getTwigContext($definition);
+
         $fileName = $definition->getName() . '.php';
-        $fileContent = $this->twig->render('class.php.twig', $twigData);
+
+        $fileContent = $this->twig->render('class.php.twig', $twigContext);
 
         if (!is_dir($this->targetDirectory)) {
             mkdir($this->targetDirectory, 0775, true);
@@ -56,13 +58,43 @@ class ClassGenerator implements GeneratorInterface
     }
 
     /**
+     * @param \Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinitionInterface $definition
+     *
+     * @return array
+     */
+    public function getPropertiesSegregatedByType(ClassDefinitionInterface $definition): array
+    {
+        $collections = [];
+        $primitives = [];
+        $transfers = [];
+        foreach ($definition->getNormalizedProperties() as $property) {
+            if ($this->isPropertyTypeCollection($property)) {
+                $collections[] = $property;
+                continue;
+            }
+            if ($this->isPropertyTypeTransfer($property)) {
+                $transfers[] = $property;
+                continue;
+            }
+
+            $primitives[] = $property;
+        }
+
+        return [
+            'transferCollections' => $collections,
+            'primitives' => $primitives,
+            'transfers' => $transfers,
+        ];
+    }
+
+    /**
      * @param \Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinitionInterface $classDefinition
      *
      * @return array
      */
-    public function getTwigData(ClassDefinitionInterface $classDefinition)
+    public function getTwigContext(ClassDefinitionInterface $classDefinition): array
     {
-        return [
+        $twigVariables = [
             'className' => $classDefinition->getName(),
             'constructorDefinition' => $classDefinition->getConstructorDefinition(),
             'constants' => $classDefinition->getConstants(),
@@ -74,5 +106,28 @@ class ClassGenerator implements GeneratorInterface
             'hasArrayObject' => $classDefinition->hasArrayObject(),
             'entityNamespace' => $classDefinition->getEntityNamespace(),
         ];
+        $twigVariables += $this->getPropertiesSegregatedByType($classDefinition);
+
+        return $twigVariables;
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return bool
+     */
+    protected function isPropertyTypeTransfer(array $property): bool
+    {
+        return $property['is_transfer'];
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return bool
+     */
+    protected function isPropertyTypeCollection(array $property): bool
+    {
+        return $property['is_collection'];
     }
 }
