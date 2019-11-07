@@ -58,13 +58,7 @@ class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterfac
      */
     public function deleteCmsSlotBlockRelationsByCriteria(CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer): void
     {
-        $cmsSlotBlockCriteriaTransfer->requireIdCmsSlotTemplate()
-            ->requireIdCmsSlot();
-
-        $this->cmsSlotBlockEntityManager->deleteCmsSlotBlocks(
-            $cmsSlotBlockCriteriaTransfer->getIdCmsSlotTemplate(),
-            $cmsSlotBlockCriteriaTransfer->getIdCmsSlot()
-        );
+        $this->cmsSlotBlockEntityManager->deleteCmsSlotBlocksByCriteria($cmsSlotBlockCriteriaTransfer);
     }
 
     /**
