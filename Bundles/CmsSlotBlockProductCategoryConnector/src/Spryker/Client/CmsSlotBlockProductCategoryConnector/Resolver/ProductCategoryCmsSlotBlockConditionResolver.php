@@ -13,8 +13,17 @@ use Spryker\Client\CmsSlotBlockProductCategoryConnector\Dependency\Client\CmsSlo
 
 class ProductCategoryCmsSlotBlockConditionResolver implements ProductCategoryCmsSlotBlockConditionResolverInterface
 {
+    /**
+     * @uses \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Form\ProductCategorySlotBlockConditionForm::FIELD_ALL
+     */
     protected const CONDITIONS_DATA_KEY_ALL = 'all';
+    /**
+     * @uses \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Form\ProductCategorySlotBlockConditionForm::FIELD_PRODUCT_IDS
+     */
     protected const CONDITIONS_DATA_KEY_PRODUCT_IDS = 'productIds';
+    /**
+     * @uses \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Form\ProductCategorySlotBlockConditionForm::FIELD_CATEGORY_IDS
+     */
     protected const CONDITIONS_DATA_KEY_CATEGORIES_IDS = 'categoryIds';
     protected const SLOT_DATA_KEY_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
 
