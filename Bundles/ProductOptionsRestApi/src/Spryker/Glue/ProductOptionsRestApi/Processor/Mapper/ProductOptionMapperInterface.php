@@ -8,18 +8,17 @@
 namespace Spryker\Glue\ProductOptionsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
-use Generated\Shared\Transfer\RestProductOptionsAttributesTransfer;
 
 interface ProductOptionMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
-     * @param \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer $restProductOptionsAttributesTransfer
+     * @param string[] $translations
      *
-     * @return \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer
+     * @return \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[]
      */
-    public function mapProductAbstractOptionStorageTransferToRestProductOptionsAttributesTransfer(
+    public function mapProductAbstractOptionStorageTransferToRestProductOptionsAttributesTransfers(
         ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer,
-        RestProductOptionsAttributesTransfer $restProductOptionsAttributesTransfer
-    ): RestProductOptionsAttributesTransfer;
+        array $translations
+    ): array;
 }

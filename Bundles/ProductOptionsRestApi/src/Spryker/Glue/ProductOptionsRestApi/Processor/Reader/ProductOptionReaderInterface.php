@@ -13,7 +13,7 @@ interface ProductOptionReaderInterface
      * @param string[] $productAbstractSkus
      * @param string $localeName
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
      */
     public function getByProductAbstractSkus(array $productAbstractSkus, string $localeName): array;
 }

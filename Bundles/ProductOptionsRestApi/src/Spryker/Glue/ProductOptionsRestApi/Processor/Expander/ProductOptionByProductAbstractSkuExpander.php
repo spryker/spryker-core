@@ -38,10 +38,20 @@ class ProductOptionByProductAbstractSkuExpander implements ProductOptionByProduc
             return $restResource->getId();
         }, $restResources);
 
-        $productOptionResources = $this->productOptionReader->getByProductAbstractSkus(
+        $productOptionRestResources = $this->productOptionReader->getByProductAbstractSkus(
             $productAbstractSkus,
             $restRequest->getMetadata()->getLocale()
         );
+
+        foreach ($restResources as $restResource) {
+            if (empty($productOptionRestResources[$restResource->getId()])) {
+                continue;
+            }
+
+            foreach ($productOptionRestResources[$restResource->getId()] as $productOptionRestResource) {
+                $restResource->addRelationship($productOptionRestResource);
+            }
+        }
 
         return $restResources;
     }

@@ -193,7 +193,7 @@ class GlossaryStorage implements GlossaryStorageInterface
      */
     protected function loadTranslations(array $keyNames, string $localeName): void
     {
-        $keyNames = array_diff_key(array_flip($keyNames), $this->translations);
+        $keyNames = array_diff_key($keyNames, array_keys($this->translations));
         $glossaryStorageKeys = $this->generateGlossaryStorageKeys($keyNames, $localeName);
         $glossaryStorageDataItems = $this->getGlossaryStorageDataItemsByGlossaryStorageKeys($glossaryStorageKeys);
         $glossaryStorageTransfers = $this->glossaryStorageMapper->mapGlossaryStorageDataItemsToGlossaryStorageTransfers(
@@ -259,7 +259,7 @@ class GlossaryStorage implements GlossaryStorageInterface
             );
         }
 
-        foreach (array_diff_key(array_flip($keyNames), $this->translations) as $keyName) {
+        foreach (array_diff_key($keyNames, array_keys($this->translations)) as $keyName) {
             $this->addTranslation($keyName, null);
         }
     }

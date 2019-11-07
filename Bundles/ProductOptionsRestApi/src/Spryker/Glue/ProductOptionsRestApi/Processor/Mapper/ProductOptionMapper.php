@@ -14,17 +14,27 @@ class ProductOptionMapper implements ProductOptionMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
-     * @param \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer $restProductOptionsAttributesTransfer
+     * @param string[] $translations
      *
-     * @return \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer
+     * @return \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[]
      */
-    public function mapProductAbstractOptionStorageTransferToRestProductOptionsAttributesTransfer(
+    public function mapProductAbstractOptionStorageTransferToRestProductOptionsAttributesTransfers(
         ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer,
-        RestProductOptionsAttributesTransfer $restProductOptionsAttributesTransfer
-    ): RestProductOptionsAttributesTransfer {
-        return $restProductOptionsAttributesTransfer->fromArray(
-            $productAbstractOptionStorageTransfer->toArray(),
-            true
-        );
+        array $translations
+    ): array {
+        $restProductOptionsAttributesTransfers = [];
+
+        foreach ($productAbstractOptionStorageTransfer->getProductOptionGroups() as $productOptionGroupStorageTransfer) {
+            foreach ($productOptionGroupStorageTransfer->getProductOptionValues() as $productOptionValueStorageTransfer) {
+                $restProductOptionsAttributesTransfers[] = (new RestProductOptionsAttributesTransfer())
+                    ->setSku($productOptionValueStorageTransfer->getSku())
+                    ->setOptionGroupName($translations[$productOptionGroupStorageTransfer->getName()])
+                    ->setOptionName($translations[$productOptionValueStorageTransfer->getValue()])
+                    ->setPrice($productOptionValueStorageTransfer->getPrice())
+                    ->setCurrencyIsoCode($productOptionValueStorageTransfer->getCurrencyIsoCode());
+            }
+        }
+
+        return $restProductOptionsAttributesTransfers;
     }
 }

@@ -44,6 +44,6 @@ class ProductOptionsByProductAbstractResourceRelationshipPlugin extends Abstract
      */
     public function getRelationshipResourceType(): string
     {
-        ProductOptionsRestApiConfig::RESOURCE_PRODUCT_OPTIONS;
+        return ProductOptionsRestApiConfig::RESOURCE_PRODUCT_OPTIONS;
     }
 }
