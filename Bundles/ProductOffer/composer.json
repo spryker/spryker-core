@@ -10,9 +10,9 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
+    "spryker/merchant": "*",
     "spryker/propel": "*",
-    "spryker/merchant": "*"
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
