@@ -22,6 +22,8 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBu
  */
 class GlossarySynchronizationDataBulkRepositoryPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
+    protected const COL_ID_GLOSSARY_STORAGE = 'spy_glossary_storage.id_glossary_storage';
+
     /**
      * {@inheritDoc}
      *
@@ -120,6 +122,7 @@ class GlossarySynchronizationDataBulkRepositoryPlugin extends AbstractPlugin imp
     protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
     {
         return (new FilterTransfer())
+            ->setOrderBy(static::COL_ID_GLOSSARY_STORAGE)
             ->setOffset($offset)
             ->setLimit($limit);
     }

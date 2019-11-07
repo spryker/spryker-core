@@ -19,14 +19,14 @@ interface GlossaryTranslationStorageWriterInterface
     public function publish(array $glossaryKeyIds);
 
     /**
-     * @param array $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
      * @return void
      */
     public function writeGlossaryStorageCollectionByGlossaryKeyEvents(array $eventTransfers): void;
 
     /**
-     * @param array $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
      * @return void
      */

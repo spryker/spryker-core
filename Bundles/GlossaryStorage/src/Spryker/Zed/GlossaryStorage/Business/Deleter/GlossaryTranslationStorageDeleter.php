@@ -67,7 +67,7 @@ class GlossaryTranslationStorageDeleter implements GlossaryTranslationStorageDel
     }
 
     /**
-     * @param array $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
      * @return void
      */

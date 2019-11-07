@@ -86,6 +86,7 @@ class GlossaryEventResourceBulkRepositoryPlugin extends AbstractPlugin implement
     protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
     {
         return (new FilterTransfer())
+            ->setOrderBy($this->getIdColumnName())
             ->setOffset($offset)
             ->setLimit($limit);
     }

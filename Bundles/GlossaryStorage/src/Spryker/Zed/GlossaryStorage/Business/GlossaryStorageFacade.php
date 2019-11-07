@@ -50,7 +50,7 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      *
      * @api
      *
-     * @param array $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
      * @return void
      */
@@ -64,7 +64,7 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      *
      * @api
      *
-     * @param array $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
      * @return void
      */
@@ -78,7 +78,7 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      *
      * @api
      *
-     * @param array $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
      * @return void
      */
