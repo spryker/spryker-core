@@ -35,10 +35,10 @@
 
 {% block footer_js %}
     {{ parent() }}
-    <script src="/assets/js/spryker-zed-price-product-schedule-gui-main.js"></script>
+    <script src="{{ assetsPath('js/spryker-zed-price-product-schedule-gui-main.js') }}"></script>
 {% endblock %}
 
 {% block head_css %}
     {{ parent() }}
-    <link rel="stylesheet" href="/assets/css/spryker-zed-price-product-schedule-gui-main.css"/>
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-price-product-schedule-gui-main.css') }}"/>
 {% endblock %}

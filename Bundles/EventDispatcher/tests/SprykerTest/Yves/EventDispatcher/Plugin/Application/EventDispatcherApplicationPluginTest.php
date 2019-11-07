@@ -11,10 +11,12 @@ use Codeception\Test\Unit;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
+use Spryker\Yves\EventDispatcher\EventDispatcherDependencyProvider;
 use Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin;
 use Spryker\Yves\Kernel\Container;
 use Symfony\Component\EventDispatcher\EventDispatcher as SymfonyEventDispatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher;
 
 /**
  * Auto-generated group annotations
@@ -29,8 +31,13 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class EventDispatcherApplicationPluginTest extends Unit
 {
-    public const SERVICE_DISPATCHER = 'dispatcher';
+    protected const SERVICE_DISPATCHER = 'dispatcher';
     public const DUMMY_EVENT = 'DUMMY_EVENT';
+
+    /**
+     * @var \SprykerTest\Yves\EventDispatcher\EventDispatcherYvesTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -47,6 +54,25 @@ class EventDispatcherApplicationPluginTest extends Unit
         //Assert
         $this->assertTrue($container->has(static::SERVICE_DISPATCHER));
         $this->assertInstanceOf(EventDispatcherInterface::class, $container->get(static::SERVICE_DISPATCHER));
+    }
+
+    /**
+     * @return void
+     */
+    public function testEventDispatcherSetNewTraceableDispatcher(): void
+    {
+        //Arrange
+        $container = $this->createContainer();
+        $container = $this->tester->provideTraceableEventDispatcher($container);
+
+        $eventDispatcherApplicationPlugin = $this->createEventDispatcherApplicationPlugin();
+
+        //Act
+        $container = $eventDispatcherApplicationPlugin->provide($container);
+
+        //Assert
+        $this->assertTrue($container->has(static::SERVICE_DISPATCHER));
+        $this->assertInstanceOf(TraceableEventDispatcher::class, $container->get(static::SERVICE_DISPATCHER));
     }
 
     /**
@@ -92,6 +118,26 @@ class EventDispatcherApplicationPluginTest extends Unit
         $this->assertTrue($container->has(static::SERVICE_DISPATCHER));
         $eventDispatcher = $this->getEventDispatcher($container);
         $this->assertNotEmpty($eventDispatcher->getListeners());
+    }
+
+    /**
+     * @return void
+     */
+    public function testEventDispatcherCanBeExtendedWithPlugins(): void
+    {
+        // Arrange
+        $container = $this->createContainer();
+        $eventDispatcherApplicationPlugin = $this->createEventDispatcherApplicationPlugin();
+        $this->tester->setDependency(EventDispatcherDependencyProvider::PLUGINS_EVENT_DISPATCHER_PLUGINS, [
+            $this->tester->mockEventDispatcherPlugin(),
+        ]);
+
+        //Act
+        $container = $eventDispatcherApplicationPlugin->provide($container);
+        $eventDispatcher = $this->getEventDispatcher($container);
+
+        //Assert
+        $this->assertTrue($eventDispatcher->hasListeners('foo'));
     }
 
     /**
