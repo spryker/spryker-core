@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\SalesMerchantConnector\Business\SalesOrderMerchantWriter;
 
-use Generated\Shared\Transfer\SalesOrderMerchantSaveTransfer;
+use Generated\Shared\Transfer\SalesOrderMerchantCriteriaFilterTransfer;
 use Generated\Shared\Transfer\SalesOrderMerchantTransfer;
 use Spryker\Zed\SalesMerchantConnector\Persistence\SalesMerchantConnectorEntityManagerInterface;
+use Spryker\Zed\SalesMerchantConnector\Persistence\SalesMerchantConnectorRepositoryInterface;
 
 class SalesOrderMerchantWriter implements SalesOrderMerchantWriterInterface
 {
@@ -19,49 +20,46 @@ class SalesOrderMerchantWriter implements SalesOrderMerchantWriterInterface
     protected $salesMerchantConnectorEntityManager;
 
     /**
+     * @var \Spryker\Zed\SalesMerchantConnector\Persistence\SalesMerchantConnectorRepositoryInterface
+     */
+    protected $salesMerchantConnectorRepository;
+
+    /**
      * @param \Spryker\Zed\SalesMerchantConnector\Persistence\SalesMerchantConnectorEntityManagerInterface $salesMerchantConnectorEntityManager
+     * @param \Spryker\Zed\SalesMerchantConnector\Persistence\SalesMerchantConnectorRepositoryInterface $salesMerchantConnectorRepository
      */
     public function __construct(
-        SalesMerchantConnectorEntityManagerInterface $salesMerchantConnectorEntityManager
+        SalesMerchantConnectorEntityManagerInterface $salesMerchantConnectorEntityManager,
+        SalesMerchantConnectorRepositoryInterface $salesMerchantConnectorRepository
     ) {
         $this->salesMerchantConnectorEntityManager = $salesMerchantConnectorEntityManager;
+        $this->salesMerchantConnectorRepository = $salesMerchantConnectorRepository;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderMerchantSaveTransfer $salesOrderMerchantSaveTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderMerchantTransfer $salesOrderMerchantTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderMerchantTransfer|null
      */
-    public function createSalesOrderMerchant(SalesOrderMerchantSaveTransfer $salesOrderMerchantSaveTransfer): ?SalesOrderMerchantTransfer
+    public function createSalesOrderMerchant(SalesOrderMerchantTransfer $salesOrderMerchantTransfer): ?SalesOrderMerchantTransfer
     {
-        $salesOrderMerchantSaveTransfer->requireIdSalesOrder();
-        $salesOrderMerchantSaveTransfer->requireOrderReference();
-        $salesOrderMerchantSaveTransfer->requireMerchantReference();
+        $salesOrderMerchantTransfer->requireFkSalesOrder();
+        $salesOrderMerchantTransfer->requireOrderReference();
+        $salesOrderMerchantTransfer->requireMerchantReference();
 
-        $salesOrderMerchantTransfer = $this->createSalesOrderMerchantTransfer($salesOrderMerchantSaveTransfer);
-
-        return $this->salesMerchantConnectorEntityManager->createSalesOrderMerchant($salesOrderMerchantTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SalesOrderMerchantSaveTransfer $salesOrderMerchantSaveTransfer
-     *
-     * @return \Generated\Shared\Transfer\SalesOrderMerchantTransfer
-     */
-    protected function createSalesOrderMerchantTransfer(SalesOrderMerchantSaveTransfer $salesOrderMerchantSaveTransfer): SalesOrderMerchantTransfer
-    {
-        $merchantReference = $salesOrderMerchantSaveTransfer->getMerchantReference();
         $salesOrderMerchantReference = $this->generateSalesOrderMerchantReference(
-            $salesOrderMerchantSaveTransfer->getOrderReference(),
-            $merchantReference
+            $salesOrderMerchantTransfer->getOrderReference(),
+            $salesOrderMerchantTransfer->getMerchantReference()
         );
 
-        $salesOrderMerchantTransfer = new SalesOrderMerchantTransfer();
-        $salesOrderMerchantTransfer->setMerchantReference($merchantReference);
-        $salesOrderMerchantTransfer->setFkSalesOrder($salesOrderMerchantSaveTransfer->getIdSalesOrder());
+        $salesOrderMerchantCriteriaFilterTransfer = $this->createSalesOrderMerchantCriteriaFilterTransfer($salesOrderMerchantReference);
+        if ($this->salesMerchantConnectorRepository->findOne($salesOrderMerchantCriteriaFilterTransfer)) {
+            return $salesOrderMerchantTransfer;
+        }
+
         $salesOrderMerchantTransfer->setSalesOrderMerchantReference($salesOrderMerchantReference);
 
-        return $salesOrderMerchantTransfer;
+        return $this->salesMerchantConnectorEntityManager->createSalesOrderMerchant($salesOrderMerchantTransfer);
     }
 
     /**
@@ -73,5 +71,16 @@ class SalesOrderMerchantWriter implements SalesOrderMerchantWriterInterface
     protected function generateSalesOrderMerchantReference(string $orderReference, string $merchantReference): string
     {
         return sprintf('%s--%s', $orderReference, $merchantReference);
+    }
+
+    /**
+     * @param string $salesOrderMerchantReference
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderMerchantCriteriaFilterTransfer
+     */
+    protected function createSalesOrderMerchantCriteriaFilterTransfer(string $salesOrderMerchantReference): SalesOrderMerchantCriteriaFilterTransfer
+    {
+        return (new SalesOrderMerchantCriteriaFilterTransfer())
+            ->setSalesOrderMerchantReference($salesOrderMerchantReference);
     }
 }

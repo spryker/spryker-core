@@ -8,7 +8,6 @@
 namespace Spryker\Zed\SalesMerchantConnector\Business;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\SalesOrderMerchantSaveTransfer;
 use Generated\Shared\Transfer\SalesOrderMerchantTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -16,6 +15,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\SalesMerchantConnector\Business\SalesMerchantConnectorBusinessFactory getFactory()
  * @method \Spryker\Zed\SalesMerchantConnector\Persistence\SalesMerchantConnectorEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\SalesMerchantConnector\Persistence\SalesMerchantConnectorRepositoryInterface getRepository()
  */
 class SalesMerchantConnectorFacade extends AbstractFacade implements SalesMerchantConnectorFacadeInterface
 {
@@ -39,19 +39,18 @@ class SalesMerchantConnectorFacade extends AbstractFacade implements SalesMercha
     }
 
     /**
-     * Specification:
-     * - Creates relation between an order and a merchant and save data to `spy_sales_order_merchant`.
+     * {@inheritDoc}
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SalesOrderMerchantSaveTransfer $salesOrderMerchantSaveTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderMerchantTransfer $salesOrderMerchantTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderMerchantTransfer
      */
-    public function createSalesOrderMerchant(SalesOrderMerchantSaveTransfer $salesOrderMerchantSaveTransfer): SalesOrderMerchantTransfer
+    public function createSalesOrderMerchant(SalesOrderMerchantTransfer $salesOrderMerchantTransfer): SalesOrderMerchantTransfer
     {
         return $this->getFactory()
             ->createSalesOrderMerchantWriter()
-            ->createSalesOrderMerchant($salesOrderMerchantSaveTransfer);
+            ->createSalesOrderMerchant($salesOrderMerchantTransfer);
     }
 }

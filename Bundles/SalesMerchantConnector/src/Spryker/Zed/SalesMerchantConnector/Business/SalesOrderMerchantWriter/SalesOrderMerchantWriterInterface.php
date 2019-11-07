@@ -7,15 +7,14 @@
 
 namespace Spryker\Zed\SalesMerchantConnector\Business\SalesOrderMerchantWriter;
 
-use Generated\Shared\Transfer\SalesOrderMerchantSaveTransfer;
 use Generated\Shared\Transfer\SalesOrderMerchantTransfer;
 
 interface SalesOrderMerchantWriterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderMerchantSaveTransfer $salesOrderMerchantSaveTransfer
+     * @param \Generated\Shared\Transfer\SalesOrderMerchantTransfer $salesOrderMerchantTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderMerchantTransfer|null
      */
-    public function createSalesOrderMerchant(SalesOrderMerchantSaveTransfer $salesOrderMerchantSaveTransfer): ?SalesOrderMerchantTransfer;
+    public function createSalesOrderMerchant(SalesOrderMerchantTransfer $salesOrderMerchantTransfer): ?SalesOrderMerchantTransfer;
 }

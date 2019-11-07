@@ -14,6 +14,7 @@ use Spryker\Zed\SalesMerchantConnector\Persistence\Propel\Mapper\SalesMerchantCo
 /**
  * @method \Spryker\Zed\SalesMerchantConnector\SalesMerchantConnectorConfig getConfig()
  * @method \Spryker\Zed\SalesMerchantConnector\Persistence\SalesMerchantConnectorEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\SalesMerchantConnector\Persistence\SalesMerchantConnectorRepositoryInterface getRepository()
  */
 class SalesMerchantConnectorPersistenceFactory extends AbstractPersistenceFactory
 {

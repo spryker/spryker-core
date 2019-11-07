@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesMerchantConnector\Persistence;
 
 use Generated\Shared\Transfer\SalesOrderMerchantTransfer;
+use Orm\Zed\SalesMerchantConnector\Persistence\SpySalesOrderMerchant;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -24,13 +25,9 @@ class SalesMerchantConnectorEntityManager extends AbstractEntityManager implemen
     {
         $salesMerchantConnectorMapper = $this->getFactory()->createSalesMerchantConnectorMapper();
 
-        $salesOrderMerchantEntity = $this->getFactory()->createSalesOrderMerchantQuery()
-            ->filterBySalesOrderMerchantReference($salesOrderMerchantTransfer->getSalesOrderMerchantReference())
-            ->findOneOrCreate();
-
         $salesOrderMerchantEntity = $salesMerchantConnectorMapper->mapSalesOrderMerchantTransferToSalesOrderMerchantEntity(
             $salesOrderMerchantTransfer,
-            $salesOrderMerchantEntity
+            new SpySalesOrderMerchant()
         );
 
         $salesOrderMerchantEntity->save();

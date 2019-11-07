@@ -16,6 +16,7 @@ use Spryker\Zed\SalesMerchantConnector\Business\SalesOrderMerchantWriter\SalesOr
 /**
  * @method \Spryker\Zed\SalesMerchantConnector\SalesMerchantConnectorConfig getConfig()
  * @method \Spryker\Zed\SalesMerchantConnector\Persistence\SalesMerchantConnectorEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\SalesMerchantConnector\Persistence\SalesMerchantConnectorRepositoryInterface getRepository()
  */
 class SalesMerchantConnectorBusinessFactory extends AbstractBusinessFactory
 {
@@ -33,7 +34,8 @@ class SalesMerchantConnectorBusinessFactory extends AbstractBusinessFactory
     public function createSalesOrderMerchantWriter(): SalesOrderMerchantWriterInterface
     {
         return new SalesOrderMerchantWriter(
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getRepository()
         );
     }
 }
