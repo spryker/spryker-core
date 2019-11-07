@@ -28,34 +28,34 @@ class CmsBlockNameToCmsBlockIdStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $dataSet[CmsSlotBlockDataSetInterface::CMS_BLOCK_ID] = $this->getIdCmsBlockByName(
-            $dataSet[CmsSlotBlockDataSetInterface::CMS_BLOCK_NAME]
+        $dataSet[CmsSlotBlockDataSetInterface::CMS_BLOCK_ID] = $this->getIdCmsBlockByKey(
+            $dataSet[CmsSlotBlockDataSetInterface::CMS_BLOCK_KEY]
         );
     }
 
     /**
-     * @param string $cmsBlockName
+     * @param string $cmsBlockKey
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
      *
      * @return int
      */
-    protected function getIdCmsBlockByName(string $cmsBlockName): int
+    protected function getIdCmsBlockByKey(string $cmsBlockKey): int
     {
-        if (isset($this->idCmsBlockCache[$cmsBlockName])) {
-            return $this->idCmsBlockCache[$cmsBlockName];
+        if (isset($this->idCmsBlockCache[$cmsBlockKey])) {
+            return $this->idCmsBlockCache[$cmsBlockKey];
         }
 
         $idCmsBlock = SpyCmsBlockQuery::create()
-            ->filterByName($cmsBlockName)
+            ->filterByKey($cmsBlockKey)
             ->select([SpyCmsBlockTableMap::COL_ID_CMS_BLOCK])
             ->findOne();
 
         if (!$idCmsBlock) {
-            throw new EntityNotFoundException(sprintf('Could not find CMS Block ID by name "%s".', $cmsBlockName));
+            throw new EntityNotFoundException(sprintf('Could not find CMS Block ID by key "%s".', $cmsBlockKey));
         }
 
-        $this->idCmsBlockCache[$cmsBlockName] = $idCmsBlock;
+        $this->idCmsBlockCache[$cmsBlockKey] = $idCmsBlock;
 
         return $idCmsBlock;
     }
