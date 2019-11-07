@@ -94,11 +94,11 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyGlossaryKeyEntityTransfer[]
+     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
      */
-    public function findFilteredGlossaryKeyEntityTransfers(FilterTransfer $filterTransfer): array
+    public function findFilteredGlossaryKeyEntities(FilterTransfer $filterTransfer): array
     {
-        return $this->getRepository()->findFilteredGlossaryKeyEntityTransfers($filterTransfer);
+        return $this->getRepository()->findFilteredGlossaryKeyEntities($filterTransfer);
     }
 
     /**
@@ -109,7 +109,7 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param array $ids
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\GlossaryStorageTransfer[]
      */
     public function findFilteredGlossaryStorageEntities(FilterTransfer $filterTransfer, array $ids): array
     {

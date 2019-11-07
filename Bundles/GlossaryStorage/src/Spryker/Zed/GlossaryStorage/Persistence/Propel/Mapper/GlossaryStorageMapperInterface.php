@@ -22,4 +22,22 @@ interface GlossaryStorageMapperInterface
         SpyGlossaryStorage $glossaryStorage,
         SpyGlossaryStorageEntityTransfer $glossaryStorageEntityTransfer
     ): SpyGlossaryStorage;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer[] $glossaryStorageEntityTransfers
+     *
+     * @return \Generated\Shared\Transfer\GlossaryStorageTransfer[]
+     */
+    public function hydrateGlossaryStorageTransfer(
+        array $glossaryStorageEntityTransfers
+    ): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyGlossaryKeyEntityTransfer[] $glossaryKeyEntityTransfers
+     *
+     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
+     */
+    public function hydrateGlossaryKeyTransfer(
+        array $glossaryKeyEntityTransfers
+    ): array;
 }

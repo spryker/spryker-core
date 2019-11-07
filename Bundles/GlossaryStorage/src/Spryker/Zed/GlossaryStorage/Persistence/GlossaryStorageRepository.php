@@ -38,9 +38,9 @@ class GlossaryStorageRepository extends AbstractRepository implements GlossarySt
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param array $ids
      *
-     * @return \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\GlossaryStorageTransfer[]
      */
-    public function findFilteredGlossaryStorageEntities(FilterTransfer $filterTransfer, array $ids)
+    public function findFilteredGlossaryStorageEntities(FilterTransfer $filterTransfer, array $ids): array
     {
         $query = $this->getFactory()->createGlossaryStorageQuery();
 
@@ -48,7 +48,9 @@ class GlossaryStorageRepository extends AbstractRepository implements GlossarySt
             $query->filterByIdGlossaryStorage_In($ids);
         }
 
-        return $this->buildQueryFromCriteria($query, $filterTransfer)->find();
+        $spyGlossaryStorageEntityTransfers = $this->buildQueryFromCriteria($query, $filterTransfer)->find();
+
+        return $this->getFactory()->createGlossaryStorageMapper()->hydrateGlossaryStorageTransfer($spyGlossaryStorageEntityTransfers);
     }
 
     /**
@@ -74,15 +76,17 @@ class GlossaryStorageRepository extends AbstractRepository implements GlossarySt
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyGlossaryKeyEntityTransfer[]
+     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
      */
-    public function findFilteredGlossaryKeyEntityTransfers(FilterTransfer $filterTransfer): array
+    public function findFilteredGlossaryKeyEntities(FilterTransfer $filterTransfer): array
     {
         $query = $this->getFactory()
             ->getGlossaryKeyQuery()
             ->setLimit($filterTransfer->getLimit())
             ->setOffset($filterTransfer->getOffset());
 
-        return $this->buildQueryFromCriteria($query)->find();
+        $glossaryKeyEntityTransfers = $this->buildQueryFromCriteria($query)->find();
+
+        return $this->getFactory()->createGlossaryStorageMapper()->hydrateGlossaryKeyTransfer($glossaryKeyEntityTransfers);
     }
 }

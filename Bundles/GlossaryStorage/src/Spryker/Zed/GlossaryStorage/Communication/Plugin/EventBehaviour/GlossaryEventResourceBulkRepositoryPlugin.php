@@ -44,13 +44,13 @@ class GlossaryEventResourceBulkRepositoryPlugin extends AbstractPlugin implement
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\SpyGlossaryKeyEntityTransfer[]
+     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
      */
     public function getData(int $offset, int $limit): array
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        return $this->getFacade()->findFilteredGlossaryKeyEntityTransfers($filterTransfer);
+        return $this->getFacade()->findFilteredGlossaryKeyEntities($filterTransfer);
     }
 
     /**

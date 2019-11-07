@@ -85,26 +85,26 @@ interface GlossaryStorageFacadeInterface
 
     /**
      * Specification
-     * - Retrieves a collection of glossary key entity transfer according to provided offset and limit.
+     * - Retrieves a collection of glossary key transfer according to provided offset and limit.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyGlossaryKeyEntityTransfer[]
+     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
      */
-    public function findFilteredGlossaryKeyEntityTransfers(FilterTransfer $filterTransfer): array;
+    public function findFilteredGlossaryKeyEntities(FilterTransfer $filterTransfer): array;
 
     /**
      * Specification
-     * - Retrieves a collection of glossary storage entity transfer according to provided offset, limit and ida.
+     * - Retrieves a collection of glossary storage transfer according to provided offset, limit and ida.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param array $ids
      *
-     * @return \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\GlossaryStorageTransfer[]
      */
     public function findFilteredGlossaryStorageEntities(FilterTransfer $filterTransfer, array $ids): array;
 }

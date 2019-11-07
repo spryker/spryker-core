@@ -22,9 +22,9 @@ interface GlossaryStorageRepositoryInterface
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param array $ids
      *
-     * @return \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\GlossaryStorageTransfer[]
      */
-    public function findFilteredGlossaryStorageEntities(FilterTransfer $filterTransfer, array $ids);
+    public function findFilteredGlossaryStorageEntities(FilterTransfer $filterTransfer, array $ids): array;
 
     /**
      * @param array $glossaryKeyIds
@@ -36,7 +36,7 @@ interface GlossaryStorageRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyGlossaryKeyEntityTransfer[]
+     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
      */
-    public function findFilteredGlossaryKeyEntityTransfers(FilterTransfer $filterTransfer): array;
+    public function findFilteredGlossaryKeyEntities(FilterTransfer $filterTransfer): array;
 }
