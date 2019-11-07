@@ -1,0 +1,75 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Glue\ProductOptionsRestApi;
+
+use Spryker\Glue\Kernel\AbstractFactory;
+use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToGlossaryStorageClientInterface;
+use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductOptionStorageClientInterface;
+use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductStorageClientInterface;
+use Spryker\Glue\ProductOptionsRestApi\Processor\Expander\ProductOptionByProductAbstractSkuExpander;
+use Spryker\Glue\ProductOptionsRestApi\Processor\Expander\ProductOptionByProductAbstractSkuExpanderInterface;
+use Spryker\Glue\ProductOptionsRestApi\Processor\Mapper\ProductOptionMapper;
+use Spryker\Glue\ProductOptionsRestApi\Processor\Mapper\ProductOptionMapperInterface;
+use Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionReader;
+use Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionReaderInterface;
+
+class ProductOptionsRestApiFactory extends AbstractFactory
+{
+    /**
+     * @return \Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionReaderInterface
+     */
+    public function createProductOptionReader(): ProductOptionReaderInterface
+    {
+        return new ProductOptionReader(
+            $this->getResourceBuilder(),
+            $this->getProductStorageClient(),
+            $this->getProductOptionStorageClient(),
+            $this->getGlossaryStorageClient(),
+            $this->createProductOptionMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductStorageClientInterface
+     */
+    public function getProductStorageClient(): ProductOptionsRestApiToProductStorageClientInterface
+    {
+        return $this->getProvidedDependency(ProductOptionsRestApiDependencyProvider::PRODUCT_STORAGE_CLIENT);
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductOptionStorageClientInterface
+     */
+    public function getProductOptionStorageClient(): ProductOptionsRestApiToProductOptionStorageClientInterface
+    {
+        return $this->getProvidedDependency(ProductOptionsRestApiDependencyProvider::PRODUCT_OPTION_STORAGE_CLIENT);
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToGlossaryStorageClientInterface
+     */
+    public function getGlossaryStorageClient(): ProductOptionsRestApiToGlossaryStorageClientInterface
+    {
+        return $this->getProvidedDependency(ProductOptionsRestApiDependencyProvider::GLOSSARY_STORAGE_CLIENT);
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductOptionsRestApi\Processor\Mapper\ProductOptionMapperInterface
+     */
+    public function createProductOptionMapper(): ProductOptionMapperInterface
+    {
+        return new ProductOptionMapper();
+    }
+
+    public function createProductOptionByProductAbstractSkuExpander(): ProductOptionByProductAbstractSkuExpanderInterface
+    {
+        return new ProductOptionByProductAbstractSkuExpander(
+            $this->createProductOptionReader()
+        );
+    }
+}
