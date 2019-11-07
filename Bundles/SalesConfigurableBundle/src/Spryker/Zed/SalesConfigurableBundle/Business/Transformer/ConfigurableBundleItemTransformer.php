@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
 
 class ConfigurableBundleItemTransformer implements ConfigurableBundleItemTransformerInterface
 {
@@ -60,10 +61,14 @@ class ConfigurableBundleItemTransformer implements ConfigurableBundleItemTransfo
      */
     protected function transformItemTransfer(ItemTransfer $itemTransfer, int $groupKeyIndex): ItemTransfer
     {
-        return (new ItemTransfer())
+        $transformedItemTransfer = (new ItemTransfer())
             ->fromArray($itemTransfer->toArray(), true)
             ->setQuantity($itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot())
             ->setConfiguredBundle($this->transformConfiguredBundleTransfer($itemTransfer, $groupKeyIndex));
+
+        $transformedItemTransfer = $this->transformProductOptions($transformedItemTransfer, $itemTransfer);
+
+        return $transformedItemTransfer;
     }
 
     /**
@@ -93,5 +98,40 @@ class ConfigurableBundleItemTransformer implements ConfigurableBundleItemTransfo
             $itemTransfer->getConfiguredBundle()->getGroupKey(),
             $groupKeyIndex
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $transformedItemTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function transformProductOptions(ItemTransfer $transformedItemTransfer, ItemTransfer $itemTransfer): ItemTransfer
+    {
+        $transformedProductOptions = new ArrayObject();
+        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+            $transformedProductOptions->append($this->copyProductOptionTransfer($productOptionTransfer));
+        }
+
+        $transformedItemTransfer->setProductOptions($transformedProductOptions);
+
+        return $transformedItemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer
+     */
+    protected function copyProductOptionTransfer(ProductOptionTransfer $productOptionTransfer): ProductOptionTransfer
+    {
+        $transformedProductOptionTransfer = new ProductOptionTransfer();
+        $transformedProductOptionTransfer->fromArray($productOptionTransfer->toArray(), true);
+
+        $transformedProductOptionTransfer
+            ->setQuantity(1)
+            ->setIdProductOptionValue(null);
+
+        return $transformedProductOptionTransfer;
     }
 }
