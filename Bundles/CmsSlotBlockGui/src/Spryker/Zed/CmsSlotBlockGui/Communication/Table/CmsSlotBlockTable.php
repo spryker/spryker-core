@@ -117,8 +117,8 @@ class CmsSlotBlockTable extends AbstractTable
         $header = [
             static::COL_ID_CMS_BLOCK => 'ID',
             static::COL_NAME => 'Name',
-            static::COL_VALID_FROM => 'Valid From',
-            static::COL_VALID_TO => 'Valid To',
+            static::COL_VALID_FROM => 'Valid From (Included)',
+            static::COL_VALID_TO => 'Valid To (Excluded)',
             static::COL_IS_ACTIVE => 'Status',
             static::COL_STORE_RELATION => 'Stores',
             static::COL_ACTIONS => static::COL_ACTIONS,
@@ -176,7 +176,7 @@ class CmsSlotBlockTable extends AbstractTable
     protected function formatValidityDateTime(?string $dateTime): string
     {
         return $dateTime
-            ? date('d.m.Y', strtotime($dateTime))
+            ? date('F d, Y H:i', strtotime($dateTime))
             : '-';
     }
 
