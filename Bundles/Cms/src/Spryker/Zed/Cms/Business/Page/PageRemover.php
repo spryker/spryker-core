@@ -104,8 +104,8 @@ class PageRemover implements PageRemoverInterface
     {
         $cmsPageTransfer = $this->cmsPageMapper->mapCmsPageTransfer($cmsPageEntity);
 
-        foreach ($this->cmsPageBeforeDeletePlugins as $preCmsPageRelationDeletePlugin) {
-            $preCmsPageRelationDeletePlugin->execute($cmsPageTransfer);
+        foreach ($this->cmsPageBeforeDeletePlugins as $cmsPageBeforeDeletePlugin) {
+            $cmsPageBeforeDeletePlugin->execute($cmsPageTransfer);
         }
     }
 

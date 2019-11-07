@@ -50,7 +50,7 @@ class CmsNavigationConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteCmsPageNavigationNodesSuccess(): void
+    public function testDeleteCmsPageNavigationNodesIsSuccessful(): void
     {
         // Arrange
         $cmsPageTransfer = $this->createCmsPage();
