@@ -1,4 +1,8 @@
 namespace: ConfigurableBundleCartNote
+
+include:
+  - tests/SprykerTest/Zed/ConfigurableBundleCartNote
+
 actor: Tester
 paths:
     tests: tests
