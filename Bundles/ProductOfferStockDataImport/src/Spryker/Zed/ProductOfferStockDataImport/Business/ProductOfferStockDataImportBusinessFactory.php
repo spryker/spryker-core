@@ -33,7 +33,7 @@ class ProductOfferStockDataImportBusinessFactory extends DataImportBusinessFacto
 
         /** @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware $dataSetStepBroker */
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
-        $dataSetStepBroker->addStep($this->createAddLocalesStep())
+        $dataSetStepBroker
             ->addStep($this->createProductOfferReferenceToIdProductOfferStep())
             ->addStep($this->createStockNameToIdStockStep())
             ->addStep(new ProductOfferStockWriterStep());

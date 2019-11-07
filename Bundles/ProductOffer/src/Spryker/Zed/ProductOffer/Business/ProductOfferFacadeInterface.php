@@ -17,6 +17,7 @@ interface ProductOfferFacadeInterface
      * Specification:
      * - Returns collection of product offer by provided criteria.
      * - Pagination is controlled with page, maxPerPage, nbResults, previousPage, nextPage, firstIndex, lastIndex, firstPage and lastPage values.
+     * - Result might be filtered with concreteSku(s), productOfferReference(s) values.
      *
      * @api
      *
@@ -29,6 +30,7 @@ interface ProductOfferFacadeInterface
     /**
      * Specification:
      * - Finds ProductOfferTransfer by provided ProductOfferCriteriaFilterTransfer.
+     * - Result might be filtered with concreteSku(s), productOfferReference(s) values.
      *
      * @api
      *
