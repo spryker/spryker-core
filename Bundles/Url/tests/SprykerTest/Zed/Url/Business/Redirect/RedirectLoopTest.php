@@ -37,7 +37,7 @@ class RedirectLoopTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -45,12 +45,12 @@ class RedirectLoopTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Url\Business\Exception\RedirectLoopException
      *
      * @return void
      */
     public function testCreatingCyclicRedirectsThrowsException()
     {
+        $this->expectException('Spryker\Zed\Url\Business\Exception\RedirectLoopException');
         $localeTransfer = $this->prepareTestData();
 
         $sourceUrlTransfer = new UrlTransfer();

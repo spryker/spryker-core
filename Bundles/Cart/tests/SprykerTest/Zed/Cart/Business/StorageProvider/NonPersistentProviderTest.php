@@ -38,7 +38,7 @@ class NonPersistentProviderTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->provider = new NonPersistentProvider([], []);
@@ -214,13 +214,13 @@ class NonPersistentProviderTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption
-     * @expectedExceptionMessage Could not change the quantity of cart item "123" to "-3".
      *
      * @return void
      */
     public function testIncreaseWithNegativeValue()
     {
+        $this->expectException('Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption');
+        $this->expectExceptionMessage('Could not change the quantity of cart item "123" to "-3".');
         $itemId = '123';
         $newId = '123';
         $existingQuantity = 1;
@@ -237,13 +237,13 @@ class NonPersistentProviderTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption
-     * @expectedExceptionMessage Could not change the quantity of cart item "123" to "0".
      *
      * @return void
      */
     public function testIncreaseWithZeroValue()
     {
+        $this->expectException('Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption');
+        $this->expectExceptionMessage('Could not change the quantity of cart item "123" to "0".');
         $itemId = '123';
         $newId = '123';
         $existingQuantity = 1;
@@ -260,13 +260,13 @@ class NonPersistentProviderTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption
-     * @expectedExceptionMessage Could not change the quantity of cart item "123" to "-3".
      *
      * @return void
      */
     public function testDecreaseWithNegativeValue()
     {
+        $this->expectException('Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption');
+        $this->expectExceptionMessage('Could not change the quantity of cart item "123" to "-3".');
         $itemId = '123';
         $newId = '123';
         $existingQuantity = 1;
@@ -283,13 +283,13 @@ class NonPersistentProviderTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption
-     * @expectedExceptionMessage Could not change the quantity of cart item "123" to "0".
      *
      * @return void
      */
     public function testDecreaseWithZeroValue()
     {
+        $this->expectException('Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption');
+        $this->expectExceptionMessage('Could not change the quantity of cart item "123" to "0".');
         $itemId = '123';
         $newId = '123';
         $existingQuantity = 1;

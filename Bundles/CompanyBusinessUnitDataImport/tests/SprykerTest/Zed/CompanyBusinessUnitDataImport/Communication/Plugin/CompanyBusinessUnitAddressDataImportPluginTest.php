@@ -58,12 +58,12 @@ class CompanyBusinessUnitAddressDataImportPluginTest extends AbstractCompanyBusi
     }
 
     /**
-     * @expectedException \Spryker\Zed\DataImport\Business\Exception\DataImportException
      *
      * @return void
      */
     public function testImportCompanyBusinessUnitAddressThrowsExceptionWhenCompanyAddressKeyNotFound(): void
     {
+        $this->expectException('Spryker\Zed\DataImport\Business\Exception\DataImportException');
         $dataImportConfigurationTransfer = $this->getDataImportConfigurationTransfer(static::IMPORT_COMPANY_BUSINESS_UNIT_ADDRESS_WITH_INVALID_COMPANY_ADDRESS_CSV);
 
         $companyBusinessUnitAddressDataImportPlugin = new CompanyBusinessUnitAddressDataImportPlugin();

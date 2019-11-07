@@ -39,7 +39,7 @@ class RedirectOverwriteTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -60,12 +60,12 @@ class RedirectOverwriteTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Url\Business\Exception\UrlExistsException
      *
      * @return void
      */
     public function testOverwritingRedirectedUrlsWithNewRedirectUrlsShouldNotBePossible()
     {
+        $this->expectException('Spryker\Zed\Url\Business\Exception\UrlExistsException');
         $localeTransfer = $this->createLocaleEntity();
         $this->createUrlRedirectEntity('/test/source/url', '/test/redirected/url', $localeTransfer->getIdLocale());
         $this->urlFacade->createUrlRedirect($this->createUrlRedirectTransfer('/test/source/url', '/test/redirected/url2', $localeTransfer->getIdLocale()));

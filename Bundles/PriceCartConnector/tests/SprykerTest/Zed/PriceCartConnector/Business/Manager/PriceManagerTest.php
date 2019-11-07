@@ -114,12 +114,12 @@ class PriceManagerTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException
      *
      * @return void
      */
     public function testIsNotPriceAbleWithInvalidPrice()
     {
+        $this->expectException('Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException');
         $priceProductFacadeStub = $this->createPriceProductFacadeStub();
         $priceProductFacadeStub->addPriceStub('123', 1000);
         $priceProductFacadeStub->addValidityStub('123', false);

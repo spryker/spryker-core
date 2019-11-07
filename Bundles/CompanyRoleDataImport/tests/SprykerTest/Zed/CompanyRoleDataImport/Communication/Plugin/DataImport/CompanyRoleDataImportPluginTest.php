@@ -51,12 +51,12 @@ class CompanyRoleDataImportPluginTest extends AbstractCompanyRoleDataImportMock
     }
 
     /**
-     * @expectedException \Spryker\Zed\DataImport\Business\Exception\DataImportException
      *
      * @return void
      */
     public function testImportCompanyRoleWithInvalidCompany(): void
     {
+        $this->expectException('Spryker\Zed\DataImport\Business\Exception\DataImportException');
         $this->tester->truncateCompanyRoles();
         $this->tester->assertCompanyRoleTableIsEmtpy();
 

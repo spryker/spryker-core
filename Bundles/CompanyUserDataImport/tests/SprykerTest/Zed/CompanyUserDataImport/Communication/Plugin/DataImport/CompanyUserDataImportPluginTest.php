@@ -66,12 +66,12 @@ class CompanyUserDataImportPluginTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\DataImport\Business\Exception\DataImportException
      *
      * @return void
      */
     public function testImportWithInvalidDataThrowsException(): void
     {
+        $this->expectException('Spryker\Zed\DataImport\Business\Exception\DataImportException');
         // Arrange
         $this->tester->truncateCompanyUsers(['ComUser--1', 'ComUser--2']);
         $this->tester->assertCompanyUserTableDoesNotContainsRecords(['ComUser--1', 'ComUser--2']);

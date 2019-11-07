@@ -55,7 +55,7 @@ class CustomerAddressFacadeTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->customerFacade = new CustomerFacade();
@@ -230,12 +230,12 @@ class CustomerAddressFacadeTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Customer\Business\Exception\AddressNotFoundException
      *
      * @return void
      */
     public function testDeleteCustomerWithDefaultAddresses()
     {
+        $this->expectException('Spryker\Zed\Customer\Business\Exception\AddressNotFoundException');
         $customerTransfer = $this->createCustomerWithAddress();
 
         $addresses = $customerTransfer->getAddresses()->getAddresses();

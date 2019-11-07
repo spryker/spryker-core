@@ -86,12 +86,12 @@ class AbstractTransferTest extends Unit
     }
 
     /**
-     * @expectedException \InvalidArgumentException
      *
      * @return void
      */
     public function testFromArrayWithIgnoreMissingPropertyFalseShouldThrowExceptionIfPropertyIsInArrayButNotInObject()
     {
+        $this->expectException('InvalidArgumentException');
         $data = [
             'not existing property key' => '',
         ];

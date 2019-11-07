@@ -91,12 +91,12 @@ class LockedOrderStateMachineTest extends Unit
     /**
      * @dataProvider triggerEventsDataProvider
      *
-     * @expectedException \Spryker\Zed\Oms\Business\Exception\LockException
      *
      * @return void
      */
     public function testTriggerSimilarEventsWhenTriggerIsLocked()
     {
+        $this->expectException('Spryker\Zed\Oms\Business\Exception\LockException');
         $arguments = func_get_args();
         $methodToTest = array_shift($arguments);
         $expectedIdentifier = array_shift($arguments);
@@ -129,12 +129,12 @@ class LockedOrderStateMachineTest extends Unit
     /**
      * @dataProvider triggerEventsDataProvider
      *
-     * @expectedException \Exception
      *
      * @return void
      */
     public function testTriggerEventLockReleasesWhenTriggerFails()
     {
+        $this->expectException('Exception');
         $arguments = func_get_args();
         $methodToTest = array_shift($arguments);
         $expectedIdentifier = array_shift($arguments);

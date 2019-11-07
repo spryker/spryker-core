@@ -62,12 +62,12 @@ class CmsSlotDataImportPluginTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\DataImport\Business\Exception\DataImportException
      *
      * @return void
      */
     public function testCmsSlotImportWithInvalidDataThrowsException(): void
     {
+        $this->expectException('Spryker\Zed\DataImport\Business\Exception\DataImportException');
         $this->tester->hasCmsSlotTemplate([
             CmsSlotTemplateTransfer::PATH => static::CMS_SLOT_TEMPLATE_PATH,
             CmsSlotTemplateTransfer::NAME => static::CMS_SLOT_TEMPLATE_NAME,

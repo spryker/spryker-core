@@ -430,12 +430,12 @@ class ClassDefinitionTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Transfer\Business\Exception\InvalidNameException
      *
      * @return void
      */
     public function testInvalidPropertyNameShouldThrowException()
     {
+        $this->expectException('Spryker\Zed\Transfer\Business\Exception\InvalidNameException');
         $property = $this->getProperty('invalid_property_name', 'string');
 
         $transferDefinition = [
@@ -556,12 +556,12 @@ class ClassDefinitionTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException
      *
      * @return void
      */
     public function testInvalidAssociativeTypeException()
     {
+        $this->expectException('Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException');
         $transferDefinition = [
             'name' => 'name',
             'property' => [$this->getPropertyAssociative('property1', 'string', null, null, [], true)],
@@ -572,12 +572,12 @@ class ClassDefinitionTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException
      *
      * @return void
      */
     public function testInvalidAssociativeValueException()
     {
+        $this->expectException('Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException');
         $transferDefinition = [
             'name' => 'name',
             'property' => [$this->getPropertyAssociative('properties', 'string[]', 'property', null, [], 'Yeah')],

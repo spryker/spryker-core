@@ -30,7 +30,7 @@ class ResourceActionPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }
@@ -66,12 +66,12 @@ class ResourceActionPreProcessorTest extends Unit
     }
 
     /**
-     * @expectedException \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
      *
      * @return void
      */
     public function testProcessPostInvalid()
     {
+        $this->expectException('Symfony\Component\HttpKernel\Exception\BadRequestHttpException');
         $processor = new ResourceActionPreProcessor();
 
         $apiRequestTransfer = new ApiRequestTransfer();

@@ -33,7 +33,7 @@ class PaginationByHeaderFilterPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
     }
@@ -97,12 +97,12 @@ class PaginationByHeaderFilterPreProcessorTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Api\Business\Exception\ApiDispatchingException
      *
      * @return void
      */
     public function testProcessWithInvalidOffsetPagination()
     {
+        $this->expectException('Spryker\Zed\Api\Business\Exception\ApiDispatchingException');
         $config = new ApiConfig();
         $processor = new PaginationByHeaderFilterPreProcessor($config);
 

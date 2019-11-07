@@ -29,7 +29,7 @@ class StoreTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -78,12 +78,12 @@ class StoreTest extends Unit
     }
 
     /**
-     * @expectedException \InvalidArgumentException
      *
      * @return void
      */
     public function testSetCurrentLocaleInvalid()
     {
+        $this->expectException('InvalidArgumentException');
         $newLocale = 'xy_XY';
         $this->Store->setCurrentLocale($newLocale);
     }

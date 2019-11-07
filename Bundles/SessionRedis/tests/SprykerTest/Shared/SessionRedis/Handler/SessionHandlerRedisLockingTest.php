@@ -72,12 +72,12 @@ class SessionHandlerRedisLockingTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Shared\SessionRedis\Handler\Exception\LockCouldNotBeAcquiredException
      *
      * @return void
      */
     public function testReadingSessionDataWillThrowExceptionWhenImpossibleToAcquireLock(): void
     {
+        $this->expectException('Spryker\Shared\SessionRedis\Handler\Exception\LockCouldNotBeAcquiredException');
         $this->spinLockLockerMock
             ->expects($this->once())
             ->method('lock')

@@ -33,7 +33,7 @@ class DatabaseTransactionHandlerTraitTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->connection = $this->getMockBuilder(ConnectionInterface::class)->getMock();
     }

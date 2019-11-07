@@ -55,12 +55,12 @@ class ContentBannerDataImportPluginTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\DataImport\Business\Exception\DataImportException
      *
      * @return void
      */
     public function testImportWithInvalidDefaultLocaleDataThrowsException(): void
     {
+        $this->expectException('Spryker\Zed\DataImport\Business\Exception\DataImportException');
         // Arrange
         $this->tester->ensureDatabaseTableIsEmpty();
 
@@ -82,12 +82,12 @@ class ContentBannerDataImportPluginTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\DataImport\Business\Exception\DataImportException
      *
      * @return void
      */
     public function testImportWithMissingPropertyThrowsException(): void
     {
+        $this->expectException('Spryker\Zed\DataImport\Business\Exception\DataImportException');
         // Arrange
         $this->tester->ensureDatabaseTableIsEmpty();
 
