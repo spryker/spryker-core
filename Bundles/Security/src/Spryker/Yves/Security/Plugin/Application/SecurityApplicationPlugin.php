@@ -13,6 +13,7 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
+use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Security\Configuration\SecurityConfiguration;
 use Spryker\Yves\Security\Configuration\SecurityConfigurationInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -405,23 +406,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $listeners[] = 'security.switch_user.' . $firewallName;
                 }
 
-                if (!$container->has('security.exception_listener.' . $firewallName)) {
-                    if ($entryPoint === null) {
-                        $entryPoint = 'security.entry_point.' . $firewallName . '.form';
-                        $container->set($entryPoint, $container->get('security.entry_point.form._proto')($firewallName, []));
-                    }
-                    $accessDeniedHandler = null;
-                    if ($container->has('security.access_denied_handler.' . $firewallName)) {
-                        $accessDeniedHandler = $container->get('security.access_denied_handler.' . $firewallName);
-                    }
-
-                    $securityConfiguration = $this->getSecurityConfiguration($container);
-                    if (isset($securityConfiguration->getAccessDeniedHandler()[$firewallName])) {
-                        $accessDeniedHandler = call_user_func($securityConfiguration->getAccessDeniedHandler()[$firewallName], $container);
-                    }
-
-                    $container->set('security.exception_listener.' . $firewallName, $container->get('security.exception_listener._proto')($entryPoint, $firewallName, $accessDeniedHandler));
-                }
+                $container = $this->setFirewallExceptionListener($firewallName, $entryPoint, $container);
             }
             $configs[$firewallName] = [
                 'pattern' => $pattern,
@@ -442,6 +427,36 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     }
 
     /**
+     * @param string $firewallName
+     * @param string $entryPoint
+     * @param ContainerInterface $container
+     *
+     * @return ContainerInterface
+     */
+    protected function setFirewallExceptionListener(string $firewallName, string $entryPoint, ContainerInterface $container): ContainerInterface
+    {
+        if (!$container->has('security.exception_listener.' . $firewallName)) {
+            if ($entryPoint === null) {
+                $entryPoint = 'security.entry_point.' . $firewallName . '.form';
+                $container->set($entryPoint, $container->get('security.entry_point.form._proto')($firewallName, []));
+            }
+            $accessDeniedHandler = null;
+            if ($container->has('security.access_denied_handler.' . $firewallName)) {
+                $accessDeniedHandler = $container->get('security.access_denied_handler.' . $firewallName);
+            }
+
+            $securityConfiguration = $this->getSecurityConfiguration($container);
+            if (isset($securityConfiguration->getAccessDeniedHandler()[$firewallName])) {
+                $accessDeniedHandler = call_user_func($securityConfiguration->getAccessDeniedHandler()[$firewallName], $container);
+            }
+
+            $container->set('security.exception_listener.' . $firewallName, $container->get('security.exception_listener._proto')($entryPoint, $firewallName, $accessDeniedHandler));
+        }
+
+        return $container;
+    }
+
+    /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      * @param array $configs
      *
@@ -458,24 +473,36 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
 
             $firewallMap->add(
                 $requestMatcher,
-                array_map(function ($listenerId) use ($container, $name) {
-                    $listener = $container->get($listenerId);
-                    if ($container->has('security.remember_me.service.' . $name)) {
-                        if ($listener instanceof AbstractAuthenticationListener || $listener instanceof GuardAuthenticationListener) {
-                            $listener->setRememberMeServices($container->get('security.remember_me.service.' . $name));
-                        }
-                        if ($listener instanceof LogoutListener) {
-                            $listener->addHandler($container->get('security.remember_me.service.' . $name));
-                        }
-                    }
-
-                    return $listener;
-                }, $config['listeners']),
+                $this->mapListeners($container, $config['listeners'], $name),
                 $config['protected'] ? $container->get('security.exception_listener.' . $name) : null
             );
         }
 
         return $firewallMap;
+    }
+
+    /**
+     * @param ContainerInterface $container
+     * @param array $listeners
+     * @param string $name
+     *
+     * @return array
+     */
+    protected function mapListeners(ContainerInterface $container, array $listeners, string $name): array
+    {
+        return array_map(function ($listenerId) use ($container, $name) {
+            $listener = $container->get($listenerId);
+            if ($container->has('security.remember_me.service.' . $name)) {
+                if ($listener instanceof AbstractAuthenticationListener || $listener instanceof GuardAuthenticationListener) {
+                    $listener->setRememberMeServices($container->get('security.remember_me.service.' . $name));
+                }
+                if ($listener instanceof LogoutListener) {
+                    $listener->addHandler($container->get('security.remember_me.service.' . $name));
+                }
+            }
+
+            return $listener;
+        }, $listeners);
     }
 
     /**
@@ -507,15 +534,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected function addAuthenticationListenerFactories(ContainerInterface $container): ContainerInterface
     {
         foreach (['logout', 'pre_auth', 'guard', 'form', 'http', 'remember_me', 'anonymous'] as $type) {
-            $entryPoint = null;
-
-            if ($type === 'http') {
-                $entryPoint = 'http';
-            } elseif ($type === 'form') {
-                $entryPoint = 'form';
-            } elseif ($type === 'guard') {
-                $entryPoint = 'guard';
-            }
+            $entryPoint = $this->getEntryPoint($type);
 
             $container->set('security.authentication_listener.factory.' . $type, $container->protect(function ($name, $options) use ($type, $container, $entryPoint) {
                 if ($entryPoint && !$container->has('security.entry_point.' . $name . '.' . $entryPoint)) {
@@ -524,13 +543,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 if (!$container->has('security.authentication_listener.' . $name . '.' . $type)) {
                     $container->set('security.authentication_listener.' . $name . '.' . $type, $container->get('security.authentication_listener.' . $type . '._proto')($name, $options));
                 }
-                $provider = 'dao';
-
-                if ($type === 'anonymous') {
-                    $provider = 'anonymous';
-                } elseif ($type === 'guard') {
-                    $provider = 'guard';
-                }
+                $provider = $this->getProvider($type);
 
                 if (!$container->has('security.authentication_provider.' . $name . '.' . $provider)) {
                     $container->set('security.authentication_provider.' . $name . '.' . $provider, $container->get('security.authentication_provider.' . $provider . '._proto')($name, $options));
@@ -546,6 +559,34 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         }
 
         return $container;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return string|null
+     */
+    protected function getEntryPoint(string $type): ?string
+    {
+        if (in_array($type, ['http', 'form', 'guard'])) {
+            return $type;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return string|null
+     */
+    protected function getProvider(string $type): ?string
+    {
+        if (in_array($type, ['anonymous', 'guard'])) {
+            return $type;
+        }
+
+        return 'dao';
     }
 
     /**

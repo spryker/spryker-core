@@ -69,7 +69,7 @@ class RememberMeSecurityPluginTest extends Unit
     public function testRememberMeAuthentication(): void
     {
         $this->addAuthentication();
-        $this->addEventDispatcher();
+        $this->tester->addEventDispatcherPlugin($this->getEventDispatcherPlugin($this));
 
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
 
@@ -143,72 +143,13 @@ class RememberMeSecurityPluginTest extends Unit
     }
 
     /**
-     * @return void
+     * @param RememberMeSecurityPluginTest $testClass
+     *
+     * @return EventDispatcherPluginInterface
      */
-    protected function addEventDispatcher(): void
+    protected function getEventDispatcherPlugin(RememberMeSecurityPluginTest $testClass): EventDispatcherPluginInterface
     {
-        $eventDispatcherApplicationPlugin = new EventDispatcherApplicationPlugin();
-        $eventDispatcherApplicationPlugin->setFactory($this->getEventDispatcherFactoryMock());
-        $this->tester->addApplicationPlugin($eventDispatcherApplicationPlugin);
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\EventDispatcher\EventDispatcherFactory
-     */
-    protected function getEventDispatcherFactoryMock()
-    {
-        $eventDispatcherFactoryMock = $this->getMockBuilder(EventDispatcherFactory::class)
-            ->setMethods(['getEventDispatcherPlugins'])
-            ->getMock();
-
-        $sessionEventDispatcherPlugin = new class implements EventDispatcherPluginInterface {
-            /**
-             * @param \Spryker\Shared\EventDispatcher\EventDispatcherInterface $eventDispatcher
-             * @param \Spryker\Service\Container\ContainerInterface $container
-             *
-             * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
-             */
-            public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
-            {
-                $eventDispatcher->addListener(KernelEvents::REQUEST, function (GetResponseEvent $event) {
-                    $session = new Session(new MockFileSessionStorage());
-                    $event->getRequest()->setSession($session);
-                    $cookies = $event->getRequest()->cookies;
-
-                    if ($cookies->has($session->getName())) {
-                        $session->setId($cookies->get($session->getName()));
-                    } else {
-                        $session->migrate(false);
-                    }
-                }, 192);
-
-                $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) {
-                    $session = $event->getRequest()->getSession();
-                    if ($session && $session->isStarted()) {
-                        $session->save();
-
-                        $params = session_get_cookie_params();
-
-                        $event->getResponse()->headers->setCookie(new Cookie(
-                            $session->getName(),
-                            $session->getId(),
-                            $params['lifetime'] === 0 ? 0 : time() + $params['lifetime'],
-                            $params['path'],
-                            $params['domain'],
-                            $params['secure'],
-                            $params['httponly'],
-                            false,
-                            null
-                        ));
-                    }
-                }, -128);
-
-                return $eventDispatcher;
-            }
-        };
-
-        $testClass = $this;
-        $testEventDispatcherPlugin = new class ($testClass) implements EventDispatcherPluginInterface {
+        return new class ($testClass) implements EventDispatcherPluginInterface {
 
             /**
              * @var \SprykerTest\Yves\Security\Plugin\Security\RememberMeSecurityPluginTest
@@ -238,13 +179,5 @@ class RememberMeSecurityPluginTest extends Unit
                 return $eventDispatcher;
             }
         };
-
-        $eventDispatcherFactoryMock->method('getEventDispatcherPlugins')->willReturn([
-            new RouterListenerEventDispatcherPlugin(),
-            $sessionEventDispatcherPlugin,
-            $testEventDispatcherPlugin,
-        ]);
-
-        return $eventDispatcherFactoryMock;
     }
 }
