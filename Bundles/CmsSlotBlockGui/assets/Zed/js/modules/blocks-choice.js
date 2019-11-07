@@ -18,11 +18,11 @@ var BlocksChoice = function (options) {
     this.init = function () {
         _self.$blocksChoiceForm = $(_self.blocksChoiceFormSelector);
         _self.$blocksChoiceDropDown = _self.$blocksChoiceForm.find('select');
-        _self.updateSelect();
+        _self.initSelect();
         _self.$blocksChoiceForm.on('click', _self.blocksChoiceAddSelector, _self.addBlock);
     };
 
-    this.updateSelect = function () {
+    this.initSelect = function () {
         _self.$blocksChoiceDropDown.select2();
     };
 
