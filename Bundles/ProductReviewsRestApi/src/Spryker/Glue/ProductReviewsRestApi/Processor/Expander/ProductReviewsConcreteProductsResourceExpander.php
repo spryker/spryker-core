@@ -19,7 +19,7 @@ class ProductReviewsConcreteProductsResourceExpander implements ProductReviewsCo
     /**
      * @var \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewStorageClientInterface
      */
-    protected $productReviewsStorageClient;
+    protected $productReviewStorageClient;
 
     /**
      * @var \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface
@@ -27,14 +27,14 @@ class ProductReviewsConcreteProductsResourceExpander implements ProductReviewsCo
     protected $productStorageClient;
 
     /**
-     * @param \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewStorageClientInterface $productReviewsStorageClient
+     * @param \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewStorageClientInterface $productReviewStorageClient
      * @param \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface $productStorageClient
      */
     public function __construct(
-        ProductReviewsRestApiToProductReviewStorageClientInterface $productReviewsStorageClient,
+        ProductReviewsRestApiToProductReviewStorageClientInterface $productReviewStorageClient,
         ProductReviewsRestApiToProductStorageClientInterface $productStorageClient
     ) {
-        $this->productReviewsStorageClient = $productReviewsStorageClient;
+        $this->productReviewStorageClient = $productReviewStorageClient;
         $this->productStorageClient = $productStorageClient;
     }
 
@@ -50,19 +50,19 @@ class ProductReviewsConcreteProductsResourceExpander implements ProductReviewsCo
         int $idProductConcrete,
         RestRequestInterface $restRequest
     ): ConcreteProductsRestAttributesTransfer {
-        $concreteProductData = $this->productStorageClient->findProductConcreteStorageData(
+        $productConcreteData = $this->productStorageClient->findProductConcreteStorageData(
             $idProductConcrete,
             $restRequest->getMetadata()->getLocale()
         );
 
-        $productReviewsStorageTransfer = $this->productReviewsStorageClient
-            ->findProductAbstractReview($concreteProductData[static::KEY_ID_PRODUCT_ABSTRACT]);
-        if (!$productReviewsStorageTransfer) {
+        $productReviewStorageTransfer = $this->productReviewStorageClient
+            ->findProductAbstractReview($productConcreteData[static::KEY_ID_PRODUCT_ABSTRACT]);
+        if (!$productReviewStorageTransfer) {
             $concreteProductsRestAttributesTransfer->setReviewCount(0);
 
             return $concreteProductsRestAttributesTransfer;
         }
 
-        return $concreteProductsRestAttributesTransfer->fromArray($productReviewsStorageTransfer->toArray(), true);
+        return $concreteProductsRestAttributesTransfer->fromArray($productReviewStorageTransfer->toArray(), true);
     }
 }

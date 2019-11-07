@@ -8,43 +8,32 @@
 namespace Spryker\Glue\ProductReviewsRestApi\Processor\RestResponseBuilder;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ProductReviewTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 interface ProductReviewRestResponseBuilderInterface
 {
     /**
-     * @param int $itemsPerPage
-     * @param int $pageLimit
      * @param \Generated\Shared\Transfer\ProductReviewTransfer[] $productReviewTransfers
+     * @param int $responseStatus
+     * @param int $totalItems
+     * @param int $pageLimit
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createProductReviewRestResponse(int $itemsPerPage, int $pageLimit, array $productReviewTransfers): RestResponseInterface;
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
-    public function createProductReviewRestResource(ProductReviewTransfer $productReviewTransfer): RestResourceInterface;
+    public function createProductReviewRestResponse(
+        array $productReviewTransfers,
+        int $responseStatus = Response::HTTP_CREATED,
+        int $totalItems = 0,
+        int $pageLimit = 0
+    ): RestResponseInterface;
 
     /**
      * @param array $productReviewsData
-     * @param int[] $productAbstractIds
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array
      */
-    public function prepareRestResourceCollection(array $productReviewsData, array $productAbstractIds): array;
-
-    /**
-     * @param int $totalItems
-     * @param int $limit
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createRestResponse(int $totalItems = 0, int $limit = 0): RestResponseInterface;
+    public function prepareRestResourceCollection(array $productReviewsData): array;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

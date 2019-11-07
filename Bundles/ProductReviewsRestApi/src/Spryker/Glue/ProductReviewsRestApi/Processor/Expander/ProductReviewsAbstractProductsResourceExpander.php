@@ -15,33 +15,33 @@ class ProductReviewsAbstractProductsResourceExpander implements ProductReviewsAb
     /**
      * @var \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewStorageClientInterface
      */
-    protected $productReviewsStorageClient;
+    protected $productReviewStorageClient;
 
     /**
-     * @param \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewStorageClientInterface $productReviewsStorageClient
+     * @param \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewStorageClientInterface $productReviewStorageClient
      */
-    public function __construct(ProductReviewsRestApiToProductReviewStorageClientInterface $productReviewsStorageClient)
+    public function __construct(ProductReviewsRestApiToProductReviewStorageClientInterface $productReviewStorageClient)
     {
-        $this->productReviewsStorageClient = $productReviewsStorageClient;
+        $this->productReviewStorageClient = $productReviewStorageClient;
     }
 
     /**
-     * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer
+     * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer
      */
     public function expand(
-        int $idProductAbstract,
-        AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer
+        AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer,
+        int $idProductAbstract
     ): AbstractProductsRestAttributesTransfer {
-        $productReviewsStorageTransfer = $this->productReviewsStorageClient->findProductAbstractReview($idProductAbstract);
-        if (!$productReviewsStorageTransfer) {
+        $productReviewStorageTransfer = $this->productReviewStorageClient->findProductAbstractReview($idProductAbstract);
+        if (!$productReviewStorageTransfer) {
             $abstractProductsRestAttributesTransfer->setReviewCount(0);
 
             return $abstractProductsRestAttributesTransfer;
         }
 
-        return $abstractProductsRestAttributesTransfer->fromArray($productReviewsStorageTransfer->toArray(), true);
+        return $abstractProductsRestAttributesTransfer->fromArray($productReviewStorageTransfer->toArray(), true);
     }
 }

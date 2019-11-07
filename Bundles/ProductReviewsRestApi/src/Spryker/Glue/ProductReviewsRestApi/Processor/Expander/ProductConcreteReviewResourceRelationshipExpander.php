@@ -9,9 +9,48 @@ namespace Spryker\Glue\ProductReviewsRestApi\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface;
+use Spryker\Glue\ProductReviewsRestApi\Processor\Reader\ProductReviewReaderInterface;
+use Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig;
 
-class ProductConcreteReviewResourceRelationshipExpander extends AbstractProductReviewResourceRelationshipExpander implements ProductConcreteReviewResourceRelationshipExpanderInterface
+class ProductConcreteReviewResourceRelationshipExpander implements ProductConcreteReviewResourceRelationshipExpanderInterface
 {
+    protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
+    protected const KEY_SKU = 'sku';
+
+    protected const PRODUCT_MAPPING_TYPE = 'sku';
+
+    /**
+     * @var \Spryker\Glue\ProductReviewsRestApi\Processor\Reader\ProductReviewReaderInterface
+     */
+    protected $productReviewReader;
+
+    /**
+     * @var \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface
+     */
+    protected $productStorageClient;
+
+    /**
+     * @var \Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig
+     */
+    protected $productReviewsRestApiConfig;
+
+    /**
+     * @param \Spryker\Glue\ProductReviewsRestApi\Processor\Reader\ProductReviewReaderInterface $productReviewReader
+     * @param \Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface $productStorageClient
+     * @param \Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig $productReviewsRestApiConfig
+     */
+    public function __construct(
+        ProductReviewReaderInterface $productReviewReader,
+        ProductReviewsRestApiToProductStorageClientInterface $productStorageClient,
+        ProductReviewsRestApiConfig $productReviewsRestApiConfig
+    ) {
+        $this->productReviewReader = $productReviewReader;
+        $this->productStorageClient = $productStorageClient;
+        $this->productReviewsRestApiConfig = $productReviewsRestApiConfig;
+    }
+
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
@@ -20,39 +59,39 @@ class ProductConcreteReviewResourceRelationshipExpander extends AbstractProductR
      */
     public function addRelationshipsByConcreteSku(array $resources, RestRequestInterface $restRequest): void
     {
-        $concreteSkus = $this->getAllSkus($resources);
+        $productConcreteSkus = $this->getAllSkus($resources);
 
-        $productsConcrete = $this->productStorageClient->getProductConcreteStorageDataByMappingAndIdentifiers(
+        $productConcreteDataCollection = $this->productStorageClient->getProductConcreteStorageDataByMappingAndIdentifiers(
             static::PRODUCT_MAPPING_TYPE,
-            $concreteSkus,
+            $productConcreteSkus,
             $restRequest->getMetadata()->getLocale()
         );
 
-        if (!$productsConcrete) {
+        if (!$productConcreteDataCollection) {
             return;
         }
 
         $productAbstractIds = [];
-        foreach ($productsConcrete as $productConcrete) {
+        foreach ($productConcreteDataCollection as $productConcrete) {
             $productAbstractIds[] = $productConcrete[static::KEY_ID_PRODUCT_ABSTRACT];
         }
 
-        $productReviewsDataRestResourcesData = $this->productReviewReader
-            ->getProductReviewsDataByProductAbstractIds(
-                $this->createRequestParams(),
-                $productAbstractIds
+        $productReviewsRestResourcesCollection = $this->productReviewReader
+            ->getProductReviewsResourceCollection(
+                $productAbstractIds,
+                $this->createRequestParams()
             );
 
         foreach ($resources as $resource) {
-            foreach ($productReviewsDataRestResourcesData as $key => $productReviewsRestResources) {
-                $this->addProductReviewsRelationship($key, $productsConcrete, $resource, $productReviewsRestResources);
+            foreach ($productReviewsRestResourcesCollection as $idProductAbstract => $productReviewsRestResources) {
+                $this->addProductReviewsRelationship($idProductAbstract, $productConcreteDataCollection, $resource, $productReviewsRestResources);
             }
         }
     }
 
     /**
      * @param int $idProductAbstract
-     * @param array $productsConcrete
+     * @param array $productConcreteDataCollection
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $productReviewsRestResources
      *
@@ -60,11 +99,11 @@ class ProductConcreteReviewResourceRelationshipExpander extends AbstractProductR
      */
     protected function addProductReviewsRelationship(
         int $idProductAbstract,
-        array $productsConcrete,
+        array $productConcreteDataCollection,
         RestResourceInterface $resource,
         array $productReviewsRestResources
     ): void {
-        foreach ($productsConcrete as $productConcrete) {
+        foreach ($productConcreteDataCollection as $productConcrete) {
             if ($idProductAbstract !== $productConcrete[static::KEY_ID_PRODUCT_ABSTRACT]) {
                 continue;
             }
@@ -75,7 +114,48 @@ class ProductConcreteReviewResourceRelationshipExpander extends AbstractProductR
                 continue;
             }
 
-            $this->addResourceRelationship($productReviewsRestResources, $resource);
+            $this->addResourceRelationship($resource, $productReviewsRestResources);
+        }
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     *
+     * @return string[]
+     */
+    protected function getAllSkus(array $resources): array
+    {
+        $skus = [];
+        foreach ($resources as $resource) {
+            $skus[] = $resource->getId();
+        }
+
+        return $skus;
+    }
+
+    /**
+     * (
+     *
+     * @return array
+     */
+    protected function createRequestParams(): array
+    {
+        return [
+            'offset' => 0,
+            'limit' => $this->productReviewsRestApiConfig->getMaximumNumberOfResults(),
+        ];
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $productReviewsRestResources
+     *
+     * @return void
+     */
+    protected function addResourceRelationship(RestResourceInterface $resource, array $productReviewsRestResources): void
+    {
+        foreach ($productReviewsRestResources as $productReviewsRestResource) {
+            $resource->addRelationship($productReviewsRestResource);
         }
     }
 }

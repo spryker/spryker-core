@@ -95,10 +95,9 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
         }
 
         return $this->productReviewRestResponseBuilder->createProductReviewRestResponse(
-            0,
-            0,
-            [$productReviewResponseTransfer->getProductReview()]
-        )->setStatus(Response::HTTP_ACCEPTED);
+            [$productReviewResponseTransfer->getProductReview()],
+            Response::HTTP_ACCEPTED
+        );
     }
 
     /**

@@ -36,9 +36,6 @@ class PaginationExpander implements PaginationExpanderInterface
      */
     public function addPaginationToQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface
     {
-        $currentPage = $this->paginationConfigBuilder->getCurrentPage($requestParameters);
-        $itemsPerPage = $this->paginationConfigBuilder->getCurrentItemsPerPage($requestParameters);
-
         /** @var \Elastica\Query $query */
         $query = $searchQuery->getSearchQuery();
         if (isset($requestParameters[static::PARAMETER_NAME_OFFSET])
@@ -49,6 +46,9 @@ class PaginationExpander implements PaginationExpanderInterface
 
             return $searchQuery;
         }
+
+        $currentPage = $this->paginationConfigBuilder->getCurrentPage($requestParameters);
+        $itemsPerPage = $this->paginationConfigBuilder->getCurrentItemsPerPage($requestParameters);
 
         $query->setSize($itemsPerPage);
         $query->setFrom(($currentPage - 1) * $itemsPerPage);

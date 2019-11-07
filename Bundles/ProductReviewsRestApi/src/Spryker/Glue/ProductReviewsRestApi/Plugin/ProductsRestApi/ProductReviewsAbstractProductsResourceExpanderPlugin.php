@@ -22,19 +22,19 @@ class ProductReviewsAbstractProductsResourceExpanderPlugin extends AbstractPlugi
      *
      * @api
      *
-     * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer
+     * @param int $idProductAbstract
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer
      */
     public function expand(
-        int $idProductAbstract,
         AbstractProductsRestAttributesTransfer $abstractProductsRestAttributesTransfer,
+        int $idProductAbstract,
         string $localeName
     ): AbstractProductsRestAttributesTransfer {
         return $this->getFactory()
             ->createProductReviewsAbstractProductsResourceExpander()
-            ->expand($idProductAbstract, $abstractProductsRestAttributesTransfer);
+            ->expand($abstractProductsRestAttributesTransfer, $idProductAbstract);
     }
 }

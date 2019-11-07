@@ -20,13 +20,10 @@ interface ProductReviewReaderInterface
     public function getProductReviews(RestRequestInterface $restRequest): RestResponseInterface;
 
     /**
-     * @param array $requestParams
      * @param int[] $productAbstractIds
+     * @param array $requestParams
      *
      * @return array
      */
-    public function getProductReviewsDataByProductAbstractIds(
-        array $requestParams,
-        array $productAbstractIds
-    ): array;
+    public function getProductReviewsResourceCollection(array $productAbstractIds, array $requestParams): array;
 }

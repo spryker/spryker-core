@@ -44,18 +44,20 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductReviewTransfer[] $productReviewTransfers
+     * @param int $responseStatus
      * @param int $totalItems
      * @param int $pageLimit
-     * @param \Generated\Shared\Transfer\ProductReviewTransfer[] $productReviewTransfers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createProductReviewRestResponse(
-        int $totalItems,
-        int $pageLimit,
-        array $productReviewTransfers
+        array $productReviewTransfers,
+        int $responseStatus = Response::HTTP_CREATED,
+        int $totalItems = 0,
+        int $pageLimit = 0
     ): RestResponseInterface {
-        $restResponse = $this->createRestResponse(
+        $restResponse = $this->restResourceBuilder->createRestResponse(
             $totalItems,
             $pageLimit
         );
@@ -66,61 +68,24 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
             $restResponse->addResource($restResource);
         }
 
-        return $restResponse;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
-    public function createProductReviewRestResource(ProductReviewTransfer $productReviewTransfer): RestResourceInterface
-    {
-        $restProductReviewsAttributesTransfer = $this->productReviewMapper
-            ->mapProductReviewTransferToRestProductReviewsAttributesTransfer(
-                $productReviewTransfer,
-                new RestProductReviewsAttributesTransfer()
-            );
-
-        $resourceId = (string)$productReviewTransfer->getIdProductReview();
-
-        return $this->restResourceBuilder->createRestResource(
-            ProductReviewsRestApiConfig::RESOURCE_PRODUCT_REVIEWS,
-            $resourceId,
-            $restProductReviewsAttributesTransfer
-        )->addLink(
-            RestLinkInterface::LINK_SELF,
-            $this->createSelfLink($resourceId)
-        );
+        return $restResponse->setStatus($responseStatus);
     }
 
     /**
      * @param array $productReviewsData
-     * @param int[] $productAbstractIds
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array
      */
-    public function prepareRestResourceCollection(array $productReviewsData, array $productAbstractIds): array
+    public function prepareRestResourceCollection(array $productReviewsData): array
     {
-        $productReviewResources = [];
-        foreach ($productReviewsData as $productAbstractSku => $productReviewTransfers) {
+        $productReviewTransfersByProductAbstractId = [];
+        foreach ($productReviewsData as $idProductAbstract => $productReviewTransfers) {
             foreach ($productReviewTransfers as $productReviewTransfer) {
-                $productReviewResources[$productAbstractSku][] = $this->createProductReviewRestResource($productReviewTransfer);
+                $productReviewTransfersByProductAbstractId[$idProductAbstract][] = $this->createProductReviewRestResource($productReviewTransfer);
             }
         }
 
-        return $productReviewResources;
-    }
-
-    /**
-     * @param int $totalItems
-     * @param int $limit
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createRestResponse(int $totalItems = 0, int $limit = 0): RestResponseInterface
-    {
-        return $this->restResourceBuilder->createRestResponse($totalItems, $limit);
+        return $productReviewTransfersByProductAbstractId;
     }
 
     /**
@@ -189,6 +154,31 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
         }
 
         return $restResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function createProductReviewRestResource(ProductReviewTransfer $productReviewTransfer): RestResourceInterface
+    {
+        $restProductReviewsAttributesTransfer = $this->productReviewMapper
+            ->mapProductReviewTransferToRestProductReviewsAttributesTransfer(
+                $productReviewTransfer,
+                new RestProductReviewsAttributesTransfer()
+            );
+
+        $resourceId = (string)$productReviewTransfer->getIdProductReview();
+
+        return $this->restResourceBuilder->createRestResource(
+            ProductReviewsRestApiConfig::RESOURCE_PRODUCT_REVIEWS,
+            $resourceId,
+            $restProductReviewsAttributesTransfer
+        )->addLink(
+            RestLinkInterface::LINK_SELF,
+            $this->createSelfLink($resourceId)
+        );
     }
 
     /**

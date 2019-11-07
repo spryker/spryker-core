@@ -17,6 +17,7 @@ use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiTo
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductReviewsRestApi\Processor\RestResponseBuilder\ProductReviewRestResponseBuilderInterface;
 use Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductReviewReader implements ProductReviewReaderInterface
 {
@@ -101,22 +102,21 @@ class ProductReviewReader implements ProductReviewReaderInterface
         $productReviews = $this->getProductReviewsInSearch($restRequest, $productAbstractData[static::KEY_ID_PRODUCT_ABSTRACT]);
 
         return $this->productReviewRestResponseBuilder->createProductReviewRestResponse(
+            $productReviews[static::PRODUCT_REVIEWS],
+            Response::HTTP_CREATED,
             $productReviews[static::PAGINATION]->getNumFound(),
-            $restRequest->getPage()->getLimit(),
-            $productReviews[static::PRODUCT_REVIEWS]
+            $restRequest->getPage()->getLimit()
         );
     }
 
     /**
-     * @param array $requestParams
      * @param int[] $productAbstractIds
+     * @param array $requestParams
      *
      * @return array
      */
-    public function getProductReviewsDataByProductAbstractIds(
-        array $requestParams,
-        array $productAbstractIds
-    ): array {
+    public function getProductReviewsResourceCollection(array $productAbstractIds, array $requestParams): array
+    {
         /** @var \Generated\Shared\Transfer\ProductReviewTransfer[] $productReviewTransfers */
         $productReviewTransfers = $this->getBulkProductReviewsInSearch(
             $requestParams,
@@ -128,10 +128,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
             $indexedProductReviewsData[$productReviewTransfer->getFkProductAbstract()][] = $productReviewTransfer;
         }
 
-        return $this->productReviewRestResponseBuilder->prepareRestResourceCollection(
-            $indexedProductReviewsData,
-            $productAbstractIds
-        );
+        return $this->productReviewRestResponseBuilder->prepareRestResourceCollection($indexedProductReviewsData);
     }
 
     /**
@@ -181,16 +178,15 @@ class ProductReviewReader implements ProductReviewReaderInterface
      */
     protected function createRequestParamsWithPaginationParameters(RestRequestInterface $restRequest): array
     {
-        $requestParams = [];
         if (!$restRequest->getPage()) {
             $restRequest->setPage(new Page(0, $this->productReviewsRestApiConfig->getDefaultReviewsPerPage()));
         }
 
         $page = $restRequest->getPage();
 
-        $requestParams[RequestConstantsInterface::QUERY_OFFSET] = $page->getOffset() ?: 0;
-        $requestParams[RequestConstantsInterface::QUERY_LIMIT] = $page->getLimit() ?: $this->productReviewsRestApiConfig->getDefaultReviewsPerPage();
-
-        return $requestParams;
+        return [
+            RequestConstantsInterface::QUERY_OFFSET => $page->getOffset(),
+            RequestConstantsInterface::QUERY_LIMIT => $page->getLimit(),
+        ];
     }
 }
