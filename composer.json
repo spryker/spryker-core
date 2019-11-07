@@ -121,6 +121,7 @@
     "spryker/cms-slot-block": "*",
     "spryker/cms-slot-block-gui": "*",
     "spryker/cms-slot-block-gui-extension": "*",
+    "spryker/cms-slot-block-storage": "*",
     "spryker/cms-slot-data-import": "*",
     "spryker/cms-slot-extension": "*",
     "spryker/cms-slot-gui": "*",
