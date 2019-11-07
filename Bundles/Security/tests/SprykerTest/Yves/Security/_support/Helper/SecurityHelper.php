@@ -10,9 +10,9 @@ namespace SprykerTest\Yves\Security\Helper;
 use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
+use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
 use Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface;
 use Spryker\Yves\Router\Plugin\EventDispatcher\RouterListenerEventDispatcherPlugin;
-use Spryker\Yves\Security\Configuration\SecurityBuilderInterface;
 use Spryker\Yves\Security\Configuration\SecurityConfiguration;
 use Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin;
 use Spryker\Yves\Security\Plugin\Security\RememberMeSecurityPlugin;
@@ -138,10 +138,10 @@ class SecurityHelper extends Module
     }
 
     /**
-     * @param \Spryker\Yves\Security\Configuration\SecurityBuilderInterface $securityBuilder
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
      * @param \Spryker\Yves\Security\Configuration\SecurityConfiguration $securityConfiguration
      *
-     * @return \Spryker\Yves\Security\Configuration\SecurityBuilderInterface
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
     protected function addFirewalls(SecurityBuilderInterface $securityBuilder, SecurityConfiguration $securityConfiguration): SecurityBuilderInterface
     {
@@ -153,10 +153,10 @@ class SecurityHelper extends Module
     }
 
     /**
-     * @param \Spryker\Yves\Security\Configuration\SecurityBuilderInterface $securityBuilder
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
      * @param \Spryker\Yves\Security\Configuration\SecurityConfiguration $securityConfiguration
      *
-     * @return \Spryker\Yves\Security\Configuration\SecurityBuilderInterface
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
     protected function addAccessRules(SecurityBuilderInterface $securityBuilder, SecurityConfiguration $securityConfiguration): SecurityBuilderInterface
     {
@@ -168,10 +168,10 @@ class SecurityHelper extends Module
     }
 
     /**
-     * @param \Spryker\Yves\Security\Configuration\SecurityBuilderInterface $securityBuilder
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
      * @param \Spryker\Yves\Security\Configuration\SecurityConfiguration $securityConfiguration
      *
-     * @return \Spryker\Yves\Security\Configuration\SecurityBuilderInterface
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
     protected function addRoleHierarchy(SecurityBuilderInterface $securityBuilder, SecurityConfiguration $securityConfiguration): SecurityBuilderInterface
     {
@@ -184,10 +184,10 @@ class SecurityHelper extends Module
     }
 
     /**
-     * @param \Spryker\Yves\Security\Configuration\SecurityBuilderInterface $securityBuilder
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
      * @param \Spryker\Yves\Security\Configuration\SecurityConfiguration $securityConfiguration
      *
-     * @return \Spryker\Yves\Security\Configuration\SecurityBuilderInterface
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
     protected function addAccessDeniedHandler(SecurityBuilderInterface $securityBuilder, SecurityConfiguration $securityConfiguration): SecurityBuilderInterface
     {
@@ -199,10 +199,10 @@ class SecurityHelper extends Module
     }
 
     /**
-     * @param \Spryker\Yves\Security\Configuration\SecurityBuilderInterface $securityBuilder
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
      * @param \Spryker\Yves\Security\Configuration\SecurityConfiguration $securityConfiguration
      *
-     * @return \Spryker\Yves\Security\Configuration\SecurityBuilderInterface
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
     protected function addAuthenticationSuccessHandler(SecurityBuilderInterface $securityBuilder, SecurityConfiguration $securityConfiguration): SecurityBuilderInterface
     {
@@ -214,10 +214,10 @@ class SecurityHelper extends Module
     }
 
     /**
-     * @param \Spryker\Yves\Security\Configuration\SecurityBuilderInterface $securityBuilder
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
      * @param \Spryker\Yves\Security\Configuration\SecurityConfiguration $securityConfiguration
      *
-     * @return \Spryker\Yves\Security\Configuration\SecurityBuilderInterface
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
     protected function addAuthenticationFailureHandler(SecurityBuilderInterface $securityBuilder, SecurityConfiguration $securityConfiguration): SecurityBuilderInterface
     {

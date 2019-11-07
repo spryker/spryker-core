@@ -8,7 +8,7 @@
 namespace Spryker\Shared\SecurityExtension\Dependency\Plugin;
 
 use Spryker\Service\Container\ContainerInterface;
-use Spryker\Yves\Security\Configuration\SecurityBuilderInterface;
+use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
 
 interface SecurityPluginInterface
 {
@@ -18,10 +18,10 @@ interface SecurityPluginInterface
      *
      * @api
      *
-     * @param \Spryker\Yves\Security\Configuration\SecurityBuilderInterface $securityBuilder
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return \Spryker\Yves\Security\Configuration\SecurityBuilderInterface
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
     public function extend(SecurityBuilderInterface $securityBuilder, ContainerInterface $container): SecurityBuilderInterface;
 }

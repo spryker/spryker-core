@@ -8,12 +8,10 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
-    "spryker/security": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/container": "Add this module to use the Container.",
-    "spryker/security": "Add this module to use the SecurityApplicationPlugin."
+    "spryker/container": "Add this module to use the Container."
   },
   "autoload": {
     "psr-4": {

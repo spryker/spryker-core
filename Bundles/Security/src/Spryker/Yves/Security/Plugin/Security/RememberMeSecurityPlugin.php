@@ -8,8 +8,8 @@
 namespace Spryker\Yves\Security\Plugin\Security;
 
 use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
 use Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface;
-use Spryker\Yves\Security\Configuration\SecurityBuilderInterface;
 use Symfony\Component\Security\Core\Authentication\Provider\RememberMeAuthenticationProvider;
 use Symfony\Component\Security\Http\Firewall\RememberMeListener;
 use Symfony\Component\Security\Http\RememberMe\ResponseListener;
@@ -23,10 +23,10 @@ class RememberMeSecurityPlugin implements SecurityPluginInterface
     protected const SERVICE_DISPATCHER = 'dispatcher';
 
     /**
-     * @param \Spryker\Yves\Security\Configuration\SecurityBuilderInterface $securityBuilder
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return \Spryker\Yves\Security\Configuration\SecurityBuilderInterface
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
     public function extend(SecurityBuilderInterface $securityBuilder, ContainerInterface $container): SecurityBuilderInterface
     {

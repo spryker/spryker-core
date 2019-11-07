@@ -7,6 +7,8 @@
 
 namespace Spryker\Yves\Security\Configuration;
 
+use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
+
 class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigurationInterface
 {
     /**
@@ -157,7 +159,7 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      * @param string $firewallName
      * @param callable $accessDeniedHandler
      *
-     * @return \Spryker\Yves\Security\Configuration\SecurityBuilderInterface
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
     public function addAccessDeniedHandler(string $firewallName, callable $accessDeniedHandler)
     {
@@ -177,7 +179,7 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
     /**
      * @param callable $eventSubscriber
      *
-     * @return \Spryker\Yves\Security\Configuration\SecurityBuilderInterface
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
     public function addEventSubscriber(callable $eventSubscriber)
     {
