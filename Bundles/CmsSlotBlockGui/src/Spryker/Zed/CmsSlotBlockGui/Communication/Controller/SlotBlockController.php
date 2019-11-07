@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotBlockGui\Communication\Controller;
 
+use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,11 +36,15 @@ class SlotBlockController extends AbstractController
             ->handleRequest($request);
 
         if ($cmsSlotBlockCollectionForm->isSubmitted() && $cmsSlotBlockCollectionForm->isValid()) {
+            $cmsSlotBlockFacade = $this->getFactory()->getCmsSlotBlockFacade();
+
+            $cmsSlotBlockCriteriaTransfer = (new CmsSlotBlockCriteriaTransfer())
+                ->setIdCmsSlotTemplate($idCmsSlotTemplate)
+                ->setIdCmsSlot($idCmsSlot);
             $cmsSlotBlockCollectionTransfer = $cmsSlotBlockCollectionForm->getData();
 
-            $this->getFactory()
-                ->getCmsSlotBlockFacade()
-                ->saveCmsSlotBlockRelations($cmsSlotBlockCollectionTransfer);
+            $cmsSlotBlockFacade->deleteCmsSlotBlockRelationsByCriteria($cmsSlotBlockCriteriaTransfer);
+            $cmsSlotBlockFacade->createCmsSlotBlockRelations($cmsSlotBlockCollectionTransfer);
         }
 
         return $this->viewResponse([
