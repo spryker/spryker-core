@@ -277,7 +277,6 @@
     "spryker/log": "*",
     "spryker/mail": "*",
     "spryker/maintenance": "*",
-    "spryker/mandrill": "*",
     "spryker/manual-order-entry": "*",
     "spryker/manual-order-entry-gui": "*",
     "spryker/manual-order-entry-gui-extension": "*",
