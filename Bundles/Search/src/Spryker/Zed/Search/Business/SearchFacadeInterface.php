@@ -320,9 +320,23 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\Search\Business\SearchFacadeInterface::installSources()` instead.
+     *
      * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return void
      */
     public function installIndexes(LoggerInterface $messenger): void;
+
+    /**
+     * Specification:
+     * - Sets up search sources based on the loaded schema definitions if they don't exist.
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
+     * @return void
+     */
+    public function installSources(LoggerInterface $messenger): void;
 }

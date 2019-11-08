@@ -104,7 +104,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     public function getInstallerPlugins(): array
     {
         return array_merge(
-            $this->getSchemaInstallerPlugins(),
+            $this->getSourceInstallerPlugins(),
             $this->getMapInstallerPlugins()
         );
     }
@@ -112,7 +112,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]
      */
-    public function getSchemaInstallerPlugins(): array
+    public function getSourceInstallerPlugins(): array
     {
         return $this->getProvidedDependency(SearchDependencyProvider::PLUGINS_SEARCH_SOURCE_INSTALLER);
     }
@@ -126,6 +126,8 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\Search\Business\SearchBusinessFactory::createSearchSourceInstaller()` instead.
+     *
      * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface
@@ -163,6 +165,16 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     public function createSourceMapInstaller(LoggerInterface $messenger): SearchInstallerInterface
     {
         return new SearchInstaller($messenger, $this->getMapInstallerPlugins());
+    }
+
+    /**
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
+     * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface
+     */
+    public function createSearchSourceInstaller(LoggerInterface $messenger): SearchInstallerInterface
+    {
+        return new SearchInstaller($messenger, $this->getSourceInstallerPlugins());
     }
 
     /**
