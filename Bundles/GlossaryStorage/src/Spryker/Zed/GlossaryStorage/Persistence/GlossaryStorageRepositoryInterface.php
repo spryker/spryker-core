@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface GlossaryStorageRepositoryInterface
 {
     /**
-     * @param array $glossaryKeyIds
+     * @param int[] $glossaryKeyIds
      *
      * @return \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer[]
      */
@@ -20,14 +20,14 @@ interface GlossaryStorageRepositoryInterface
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param array $ids
+     * @param int[] $ids
      *
      * @return \Generated\Shared\Transfer\GlossaryStorageTransfer[]
      */
     public function findFilteredGlossaryStorageEntities(FilterTransfer $filterTransfer, array $ids): array;
 
     /**
-     * @param array $glossaryKeyIds
+     * @param int[] $glossaryKeyIds
      *
      * @return \Generated\Shared\Transfer\SpyGlossaryTranslationEntityTransfer[]
      */

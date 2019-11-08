@@ -18,7 +18,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class GlossaryStorageRepository extends AbstractRepository implements GlossaryStorageRepositoryInterface
 {
     /**
-     * @param array $glossaryKeyIds
+     * @param int[] $glossaryKeyIds
      *
      * @return \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer[]
      */
@@ -37,7 +37,7 @@ class GlossaryStorageRepository extends AbstractRepository implements GlossarySt
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param array $ids
+     * @param int[] $ids
      *
      * @return \Generated\Shared\Transfer\GlossaryStorageTransfer[]
      */
@@ -58,7 +58,7 @@ class GlossaryStorageRepository extends AbstractRepository implements GlossarySt
     }
 
     /**
-     * @param array $glossaryKeyIds
+     * @param int[] $glossaryKeyIds
      *
      * @return \Generated\Shared\Transfer\SpyGlossaryTranslationEntityTransfer[]
      */

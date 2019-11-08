@@ -87,7 +87,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
      */
     public function writeGlossaryStorageCollectionByGlossaryTranslationEvents(array $eventTransfers): void
     {
-        $glossaryKeyIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, self::COL_FK_GLOSSARY_KEY);
+        $glossaryKeyIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, static::COL_FK_GLOSSARY_KEY);
 
         $this->writerGlossaryStorageCollection($glossaryKeyIds);
     }

@@ -50,7 +50,7 @@ interface GlossaryStorageFacadeInterface
      *
      * @api
      *
-     * @param array $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
      * @return void
      */
@@ -63,7 +63,7 @@ interface GlossaryStorageFacadeInterface
      *
      * @api
      *
-     * @param array $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
      * @return void
      */
@@ -77,7 +77,7 @@ interface GlossaryStorageFacadeInterface
      *
      * @api
      *
-     * @param array $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
      * @return void
      */

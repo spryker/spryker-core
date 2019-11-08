@@ -13,7 +13,7 @@ namespace Spryker\Shared\GlossaryStorage;
 class GlossaryStorageConstants
 {
     /**
-     * @deprecated Use `\Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::SYNC_STORAGE_QUEUE` instead
+     * @deprecated Use `\Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::SYNC_QUEUE` instead
      *
      * Specification:
      * - Queue name as used for processing translation messages
@@ -23,7 +23,7 @@ class GlossaryStorageConstants
     public const SYNC_STORAGE_QUEUE = 'sync.storage.translation';
 
     /**
-     * @deprecated Use `\Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::SYNC_STORAGE_ERROR_QUEUE` instead
+     * @deprecated Use `\Spryker\Shared\GlossaryStorage\GlossaryStorageConfig::SYNC_ERROR_QUEUE` instead
      *
      * Specification:
      * - Queue name as used for processing translation messages

@@ -107,7 +107,7 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param array $ids
+     * @param int[] $ids
      *
      * @return \Generated\Shared\Transfer\GlossaryStorageTransfer[]
      */
