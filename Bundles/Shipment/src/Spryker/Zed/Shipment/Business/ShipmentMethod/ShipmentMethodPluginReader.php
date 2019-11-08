@@ -45,8 +45,8 @@ class ShipmentMethodPluginReader implements ShipmentMethodPluginReaderInterface
      */
     protected function addAvailabilityPlugins(ShipmentMethodPluginSelectionTransfer $shipmentMethodPluginSelectionTransfer): ShipmentMethodPluginSelectionTransfer
     {
-        foreach ($this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS] as $plugin) {
-            $shipmentMethodPluginSelectionTransfer->addAvailabilityPluginOption(get_class($plugin));
+        foreach ($this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS] as $name => $plugin) {
+            $shipmentMethodPluginSelectionTransfer->addAvailabilityPluginOption($name);
         }
 
         return $shipmentMethodPluginSelectionTransfer;
@@ -59,8 +59,8 @@ class ShipmentMethodPluginReader implements ShipmentMethodPluginReaderInterface
      */
     protected function addPricePlugins(ShipmentMethodPluginSelectionTransfer $shipmentMethodPluginSelectionTransfer): ShipmentMethodPluginSelectionTransfer
     {
-        foreach ($this->plugins[ShipmentDependencyProvider::PRICE_PLUGINS] as $plugin) {
-            $shipmentMethodPluginSelectionTransfer->addPricePluginOption(get_class($plugin));
+        foreach ($this->plugins[ShipmentDependencyProvider::PRICE_PLUGINS] as $name => $plugin) {
+            $shipmentMethodPluginSelectionTransfer->addPricePluginOption($name);
         }
 
         return $shipmentMethodPluginSelectionTransfer;
@@ -73,8 +73,8 @@ class ShipmentMethodPluginReader implements ShipmentMethodPluginReaderInterface
      */
     protected function addDeliveryTimePlugins(ShipmentMethodPluginSelectionTransfer $shipmentMethodPluginSelectionTransfer): ShipmentMethodPluginSelectionTransfer
     {
-        foreach ($this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS] as $plugin) {
-            $shipmentMethodPluginSelectionTransfer->addDeliveryTimePluginOption(get_class($plugin));
+        foreach ($this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS] as $name => $plugin) {
+            $shipmentMethodPluginSelectionTransfer->addDeliveryTimePluginOption($name);
         }
 
         return $shipmentMethodPluginSelectionTransfer;
