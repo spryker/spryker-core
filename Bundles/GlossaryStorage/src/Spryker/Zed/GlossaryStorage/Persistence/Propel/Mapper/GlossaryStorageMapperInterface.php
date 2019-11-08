@@ -24,20 +24,20 @@ interface GlossaryStorageMapperInterface
     ): SpyGlossaryStorage;
 
     /**
-     * @param \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer[] $glossaryStorageEntityTransfers
+     * @param \Orm\Zed\GlossaryStorage\Persistence\SpyGlossaryStorage[] $glossaryStorageEntities
      *
      * @return \Generated\Shared\Transfer\GlossaryStorageTransfer[]
      */
     public function hydrateGlossaryStorageTransfer(
-        array $glossaryStorageEntityTransfers
+        array $glossaryStorageEntities
     ): array;
 
     /**
-     * @param \Generated\Shared\Transfer\SpyGlossaryKeyEntityTransfer[] $glossaryKeyEntityTransfers
+     * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryKey[] $glossaryKeyEntities
      *
      * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
      */
     public function hydrateGlossaryKeyTransfer(
-        array $glossaryKeyEntityTransfers
+        array $glossaryKeyEntities
     ): array;
 }

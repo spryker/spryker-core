@@ -28,30 +28,30 @@ class GlossaryStorageMapper implements GlossaryStorageMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer[] $glossaryStorageEntityTransfers
+     * @param \Orm\Zed\GlossaryStorage\Persistence\SpyGlossaryStorage[] $glossaryStorageEntities
      *
      * @return \Generated\Shared\Transfer\GlossaryStorageTransfer[]
      */
-    public function hydrateGlossaryStorageTransfer(array $glossaryStorageEntityTransfers): array
+    public function hydrateGlossaryStorageTransfer(array $glossaryStorageEntities): array
     {
         $glossaryStorageTransfers = [];
-        foreach ($glossaryStorageEntityTransfers as $spyGlossaryStorageEntityTransfer) {
-            $glossaryStorageTransfers[] = (new GlossaryStorageTransfer())->fromArray($spyGlossaryStorageEntityTransfer->toArray(true));
+        foreach ($glossaryStorageEntities as $spyGlossaryStorageEntity) {
+            $glossaryStorageTransfers[] = (new GlossaryStorageTransfer())->fromArray($spyGlossaryStorageEntity->toArray(), true);
         }
 
         return $glossaryStorageTransfers;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyGlossaryKeyEntityTransfer[] $glossaryKeyEntityTransfers
+     * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryKey[] $glossaryKeyEntities
      *
      * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
      */
-    public function hydrateGlossaryKeyTransfer(array $glossaryKeyEntityTransfers): array
+    public function hydrateGlossaryKeyTransfer(array $glossaryKeyEntities): array
     {
         $glossaryKeyTransfers = [];
-        foreach ($glossaryKeyEntityTransfers as $glossaryKeyEntityTransfer) {
-            $glossaryKeyTransfers[] = (new GlossaryKeyTransfer())->fromArray($glossaryKeyEntityTransfer->toArray(true), true);
+        foreach ($glossaryKeyEntities as $glossaryKeyEntity) {
+            $glossaryKeyTransfers[] = (new GlossaryKeyTransfer())->fromArray($glossaryKeyEntity->toArray(), true);
         }
 
         return $glossaryKeyTransfers;

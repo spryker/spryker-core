@@ -8,6 +8,7 @@
 namespace Spryker\Zed\GlossaryStorage\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -48,9 +49,12 @@ class GlossaryStorageRepository extends AbstractRepository implements GlossarySt
             $query->filterByIdGlossaryStorage_In($ids);
         }
 
-        $spyGlossaryStorageEntityTransfers = $this->buildQueryFromCriteria($query, $filterTransfer)->find();
+        $glossaryStorageEntities = $this->buildQueryFromCriteria($query, $filterTransfer)
+            ->setFormatter(ModelCriteria::FORMAT_OBJECT)
+            ->find()
+            ->getData();
 
-        return $this->getFactory()->createGlossaryStorageMapper()->hydrateGlossaryStorageTransfer($spyGlossaryStorageEntityTransfers);
+        return $this->getFactory()->createGlossaryStorageMapper()->hydrateGlossaryStorageTransfer($glossaryStorageEntities);
     }
 
     /**
@@ -64,6 +68,7 @@ class GlossaryStorageRepository extends AbstractRepository implements GlossarySt
             return [];
         }
 
+        /** @var \Propel\Runtime\ActiveQuery\ModelCriteria $query */
         $query = $this->getFactory()
             ->getGlossaryTranslationQuery()
             ->leftJoinWithGlossaryKey()
@@ -80,12 +85,16 @@ class GlossaryStorageRepository extends AbstractRepository implements GlossarySt
      */
     public function findFilteredGlossaryKeyEntities(FilterTransfer $filterTransfer): array
     {
+        /** @var \Propel\Runtime\ActiveQuery\ModelCriteria $query */
         $query = $this->getFactory()
             ->getGlossaryKeyQuery()
             ->setLimit($filterTransfer->getLimit())
             ->setOffset($filterTransfer->getOffset());
 
-        $glossaryKeyEntityTransfers = $this->buildQueryFromCriteria($query)->find();
+        $glossaryKeyEntityTransfers = $this->buildQueryFromCriteria($query)
+            ->setFormatter(ModelCriteria::FORMAT_OBJECT)
+            ->find()
+            ->getData();
 
         return $this->getFactory()->createGlossaryStorageMapper()->hydrateGlossaryKeyTransfer($glossaryKeyEntityTransfers);
     }
