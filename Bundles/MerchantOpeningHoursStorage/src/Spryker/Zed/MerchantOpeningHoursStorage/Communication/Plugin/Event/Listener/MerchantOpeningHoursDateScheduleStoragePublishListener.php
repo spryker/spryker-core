@@ -18,6 +18,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class MerchantOpeningHoursDateScheduleStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
@@ -25,7 +27,7 @@ class MerchantOpeningHoursDateScheduleStoragePublishListener extends AbstractPlu
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventTransfers, $eventName): void
     {
         $merchantIds = $this->getFactory()
             ->getEventBehaviorFacade()

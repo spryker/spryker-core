@@ -20,7 +20,7 @@ use Spryker\Zed\MerchantOpeningHours\Dependency\MerchantOpeningHoursEvents;
  * @method \Spryker\Zed\MerchantOpeningHoursStorage\Communication\MerchantOpeningHoursStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig getConfig()
  */
-class MerchantOpeningHoursScheduleEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
+class MerchantOpeningHoursEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -60,7 +60,7 @@ class MerchantOpeningHoursScheduleEventResourceBulkRepositoryPlugin extends Abst
      */
     public function getEventName(): string
     {
-        return MerchantOpeningHoursEvents::MERCHANT_OPENING_HOURS_SCHEDULE_PUBLISH;
+        return MerchantOpeningHoursEvents::MERCHANT_OPENING_HOURS_PUBLISH;
     }
 
     /**

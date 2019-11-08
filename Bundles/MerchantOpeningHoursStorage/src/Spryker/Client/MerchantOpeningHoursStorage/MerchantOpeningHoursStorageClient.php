@@ -24,10 +24,10 @@ class MerchantOpeningHoursStorageClient extends AbstractClient implements Mercha
      *
      * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer|null
      */
-    public function findMerchantOpeningHoursByIdIdMerchant(int $idMerchant): ?MerchantOpeningHoursStorageTransfer
+    public function findMerchantOpeningHoursByIdMerchant(int $idMerchant): ?MerchantOpeningHoursStorageTransfer
     {
         return $this->getFactory()
             ->createMerchantOpeningHoursStorageReader()
-            ->findMerchantOpeningHoursByIdIdMerchant($idMerchant);
+            ->findMerchantOpeningHoursByIdMerchant($idMerchant);
     }
 }

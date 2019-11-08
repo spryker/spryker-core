@@ -25,7 +25,7 @@ class MerchantOpeningHoursStorageToStorageClientBridge implements MerchantOpenin
     /**
      * @param string $key
      *
-     * @return array
+     * @return mixed
      */
     public function get($key)
     {

@@ -11,7 +11,7 @@ class MerchantOpeningHoursStorageConfig
 {
     /**
      * Specification:
-     * - Queue name as used for processing merchant opening hours messages
+     * - Queue name as used for processing merchant opening hours messages.
      *
      * @api
      */
@@ -19,7 +19,7 @@ class MerchantOpeningHoursStorageConfig
 
     /**
      * Specification:
-     * - Queue name as used for processing merchant opening hours messages
+     * - Queue name as used for processing merchant opening hours messages.
      *
      * @api
      */

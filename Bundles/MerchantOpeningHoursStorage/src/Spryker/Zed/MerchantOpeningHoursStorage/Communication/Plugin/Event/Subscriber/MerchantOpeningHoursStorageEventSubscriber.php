@@ -22,6 +22,8 @@ use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Event\Listener\
 class MerchantOpeningHoursStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
@@ -30,7 +32,7 @@ class MerchantOpeningHoursStorageEventSubscriber extends AbstractPlugin implemen
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $this->addMerchantOpeningHoursSchedulePublishListener($eventCollection)
+        $this->addMerchantOpeningHoursPublishListener($eventCollection)
             ->addMerchantOpeningHoursWeekdayScheduleCreateListener($eventCollection)
             ->addMerchantOpeningHoursDateScheduleCreateListener($eventCollection);
 
@@ -42,10 +44,10 @@ class MerchantOpeningHoursStorageEventSubscriber extends AbstractPlugin implemen
      *
      * @return $this
      */
-    protected function addMerchantOpeningHoursSchedulePublishListener(EventCollectionInterface $eventCollection)
+    protected function addMerchantOpeningHoursPublishListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(MerchantOpeningHoursEvents::MERCHANT_OPENING_HOURS_SCHEDULE_PUBLISH, new MerchantOpeningHoursWeekdayScheduleStoragePublishListener());
+            ->addListenerQueued(MerchantOpeningHoursEvents::MERCHANT_OPENING_HOURS_PUBLISH, new MerchantOpeningHoursWeekdayScheduleStoragePublishListener());
 
         return $this;
     }

@@ -69,8 +69,6 @@ class MerchantOpeningHoursStorageDependencyProvider extends AbstractBundleDepend
     }
 
     /**
-     * @module MerchantOpeningHours
-     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -85,8 +83,6 @@ class MerchantOpeningHoursStorageDependencyProvider extends AbstractBundleDepend
     }
 
     /**
-     * @module MerchantOpeningHours
-     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -101,8 +97,6 @@ class MerchantOpeningHoursStorageDependencyProvider extends AbstractBundleDepend
     }
 
     /**
-     * @module MerchantOpeningHours
-     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container

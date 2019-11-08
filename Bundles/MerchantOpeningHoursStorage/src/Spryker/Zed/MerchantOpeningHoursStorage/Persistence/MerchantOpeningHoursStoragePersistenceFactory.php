@@ -13,6 +13,10 @@ use Orm\Zed\MerchantOpeningHours\Persistence\SpyMerchantOpeningHoursWeekdaySched
 use Orm\Zed\MerchantOpeningHoursStorage\Persistence\SpyMerchantOpeningHoursStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageDependencyProvider;
+use Spryker\Zed\MerchantOpeningHoursStorage\Persistence\Propel\Mapper\MerchantMapper;
+use Spryker\Zed\MerchantOpeningHoursStorage\Persistence\Propel\Mapper\MerchantMapperInterface;
+use Spryker\Zed\MerchantOpeningHoursStorage\Persistence\Propel\Mapper\MerchantOpeningHoursMapper;
+use Spryker\Zed\MerchantOpeningHoursStorage\Persistence\Propel\Mapper\MerchantOpeningHoursMapperInterface;
 
 /**
  * @method \Spryker\Zed\MerchantOpeningHoursStorage\Persistence\MerchantOpeningHoursStorageEntityManagerInterface getEntityManager()
@@ -27,6 +31,22 @@ class MerchantOpeningHoursStoragePersistenceFactory extends AbstractPersistenceF
     public function getMerchantOpeningHoursStoragePropelQuery(): SpyMerchantOpeningHoursStorageQuery
     {
         return SpyMerchantOpeningHoursStorageQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantOpeningHoursStorage\Persistence\Propel\Mapper\MerchantMapperInterface
+     */
+    public function createMerchantMapper(): MerchantMapperInterface
+    {
+        return new MerchantMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantOpeningHoursStorage\Persistence\Propel\Mapper\MerchantOpeningHoursMapperInterface
+     */
+    public function createMerchantOpeningHoursMapper(): MerchantOpeningHoursMapperInterface
+    {
+        return new MerchantOpeningHoursMapper();
     }
 
     /**

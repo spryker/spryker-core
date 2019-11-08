@@ -48,22 +48,10 @@ class MerchantOpeningHoursStoragePublisher implements MerchantOpeningHoursStorag
             $dateScheduleTransfers = $this->merchantOpeningHoursStorageRepository->getMerchantOpeningHoursDateScheduleByFkMerchant($idMerchant);
 
             if ($weekdayScheduleTransfers->count() > 0 || $dateScheduleTransfers->count() > 0) {
-                $this->saveStorageEntity($weekdayScheduleTransfers, $dateScheduleTransfers, $idMerchant);
+                $merchantOpenHoursStorageTransfer = $this->createMerchantOpeningHoursStorageTransfer($weekdayScheduleTransfers, $dateScheduleTransfers);
+                $this->merchantOpeningHoursStorageEntityManager->saveMerchantOpenHoursStorage($merchantOpenHoursStorageTransfer, $idMerchant);
             }
         }
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\WeekdayScheduleTransfer[] $weekdayScheduleTransfers
-     * @param \ArrayObject|\Generated\Shared\Transfer\DateScheduleTransfer[] $dateScheduleTransfers
-     * @param int $idMerchant
-     *
-     * @return void
-     */
-    protected function saveStorageEntity(ArrayObject $weekdayScheduleTransfers, ArrayObject $dateScheduleTransfers, int $idMerchant): void
-    {
-        $merchantOpenHoursStorageTransfer = $this->createMerchantOpeningHoursStorageTransfer($weekdayScheduleTransfers, $dateScheduleTransfers);
-        $this->merchantOpeningHoursStorageEntityManager->saveMerchantOpenHoursStorage($merchantOpenHoursStorageTransfer, $idMerchant);
     }
 
     /**
@@ -74,10 +62,8 @@ class MerchantOpeningHoursStoragePublisher implements MerchantOpeningHoursStorag
      */
     protected function createMerchantOpeningHoursStorageTransfer(ArrayObject $weekdayScheduleTransfers, ArrayObject $dateScheduleTransfers): MerchantOpeningHoursStorageTransfer
     {
-        $merchantOpenHoursStorageTransfer = (new MerchantOpeningHoursStorageTransfer())
+        return (new MerchantOpeningHoursStorageTransfer())
             ->setWeekdaySchedule($weekdayScheduleTransfers)
             ->setDateSchedule($dateScheduleTransfers);
-
-        return $merchantOpenHoursStorageTransfer;
     }
 }

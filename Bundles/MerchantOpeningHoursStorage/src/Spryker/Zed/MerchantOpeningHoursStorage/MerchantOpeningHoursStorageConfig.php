@@ -24,6 +24,6 @@ class MerchantOpeningHoursStorageConfig extends AbstractBundleConfig
      */
     public function getMerchantOpeningHoursSynchronizationPoolName(): ?string
     {
-        return 'synchronizationPool';
+        return null;
     }
 }
