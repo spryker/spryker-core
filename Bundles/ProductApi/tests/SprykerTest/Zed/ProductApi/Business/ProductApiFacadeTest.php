@@ -121,7 +121,6 @@ class ProductApiFacadeTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testFindOutOfBounds()

@@ -51,7 +51,6 @@ class CompanyUserRoleDataImportPluginTest extends AbstractCompanyRoleDataImportM
     }
 
     /**
-     *
      * @return void
      */
     public function testImportCompanyUserRoleWithInvlaidCompanyUser(): void

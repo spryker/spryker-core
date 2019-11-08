@@ -58,7 +58,6 @@ class CompanyBusinessUnitAddressDataImportPluginTest extends AbstractCompanyBusi
     }
 
     /**
-     *
      * @return void
      */
     public function testImportCompanyBusinessUnitAddressThrowsExceptionWhenCompanyAddressKeyNotFound(): void

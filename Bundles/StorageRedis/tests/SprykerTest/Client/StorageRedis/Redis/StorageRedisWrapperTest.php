@@ -237,7 +237,6 @@ class StorageRedisWrapperTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testWillThrowExceptionWhenEmptyResultIsReturnedBySet(): void
@@ -271,7 +270,6 @@ class StorageRedisWrapperTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testSetThrowsExceptionWhenResultIsFalsy(): void
@@ -284,7 +282,6 @@ class StorageRedisWrapperTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testSetexWillThrowExceptionWhenResultIsFalsy(): void
@@ -331,7 +328,6 @@ class StorageRedisWrapperTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testSetMultiThrowsExceptionWhenResultIsFalsy(): void

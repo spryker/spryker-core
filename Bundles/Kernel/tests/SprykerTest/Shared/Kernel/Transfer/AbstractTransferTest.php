@@ -86,7 +86,6 @@ class AbstractTransferTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testFromArrayWithIgnoreMissingPropertyFalseShouldThrowExceptionIfPropertyIsInArrayButNotInObject()

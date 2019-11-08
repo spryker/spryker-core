@@ -60,7 +60,6 @@ class RedirectOverwriteTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testOverwritingRedirectedUrlsWithNewRedirectUrlsShouldNotBePossible()

@@ -28,7 +28,6 @@ use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\SpellingSuggestionQ
 class SpellingSuggestionQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 {
     /**
-     *
      * @return void
      */
     public function testCompletionQueryExpanderShouldThrowExceptionWhenBaseQueryDoesntSupportSuggest()

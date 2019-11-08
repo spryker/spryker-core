@@ -66,7 +66,6 @@ class CompanyUserDataImportPluginTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testImportWithInvalidDataThrowsException(): void

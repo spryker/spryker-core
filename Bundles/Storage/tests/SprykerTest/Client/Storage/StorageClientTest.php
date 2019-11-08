@@ -198,7 +198,6 @@ class StorageClientTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testInvalidStorageScanPluginInterfaceExceptionThrown(): void

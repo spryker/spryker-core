@@ -51,7 +51,6 @@ class CompanyRoleDataImportPluginTest extends AbstractCompanyRoleDataImportMock
     }
 
     /**
-     *
      * @return void
      */
     public function testImportCompanyRoleWithInvalidCompany(): void

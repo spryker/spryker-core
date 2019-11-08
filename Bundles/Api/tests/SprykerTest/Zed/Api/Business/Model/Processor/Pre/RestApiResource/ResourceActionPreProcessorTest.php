@@ -66,7 +66,6 @@ class ResourceActionPreProcessorTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testProcessPostInvalid()

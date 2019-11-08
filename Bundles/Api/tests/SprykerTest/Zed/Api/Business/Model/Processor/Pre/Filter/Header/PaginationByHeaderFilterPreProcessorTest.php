@@ -97,7 +97,6 @@ class PaginationByHeaderFilterPreProcessorTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testProcessWithInvalidOffsetPagination()

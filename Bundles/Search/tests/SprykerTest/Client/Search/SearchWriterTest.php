@@ -52,7 +52,6 @@ class SearchWriterTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testWriteCreateDocumentsWithInvalidDataSet()

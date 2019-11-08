@@ -43,7 +43,6 @@ class TransferDefinitionMergerTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testMergeShouldThrowExceptionIfTwoPropertiesWithSameNameDefineDifferentAttributes()

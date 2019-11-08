@@ -56,7 +56,6 @@ class ElasticsearchWriterTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testWriteCreateDocumentsWithInValidDataSet()

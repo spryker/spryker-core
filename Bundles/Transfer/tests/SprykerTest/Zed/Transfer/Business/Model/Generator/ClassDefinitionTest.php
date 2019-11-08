@@ -430,7 +430,6 @@ class ClassDefinitionTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testInvalidPropertyNameShouldThrowException()
@@ -556,7 +555,6 @@ class ClassDefinitionTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testInvalidAssociativeTypeException()
@@ -572,7 +570,6 @@ class ClassDefinitionTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testInvalidAssociativeValueException()

@@ -91,7 +91,6 @@ class LockedOrderStateMachineTest extends Unit
     /**
      * @dataProvider triggerEventsDataProvider
      *
-     *
      * @return void
      */
     public function testTriggerSimilarEventsWhenTriggerIsLocked()
@@ -128,7 +127,6 @@ class LockedOrderStateMachineTest extends Unit
 
     /**
      * @dataProvider triggerEventsDataProvider
-     *
      *
      * @return void
      */

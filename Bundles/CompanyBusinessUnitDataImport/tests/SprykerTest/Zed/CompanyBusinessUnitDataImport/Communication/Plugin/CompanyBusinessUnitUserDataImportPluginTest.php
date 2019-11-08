@@ -67,7 +67,6 @@ class CompanyBusinessUnitUserDataImportPluginTest extends AbstractCompanyBusines
     }
 
     /**
-     *
      * @return void
      */
     public function testImportCompanyBusinessUnitUserThrowsExceptionWhenCompanyUserKeyNotFound(): void

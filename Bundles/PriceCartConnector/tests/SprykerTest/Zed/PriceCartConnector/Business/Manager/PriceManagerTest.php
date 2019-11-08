@@ -114,7 +114,6 @@ class PriceManagerTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testIsNotPriceAbleWithInvalidPrice()

@@ -67,7 +67,6 @@ class FinderTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testGetStateDisplayNameShouldThrowExceptionWhenStateNotFound()

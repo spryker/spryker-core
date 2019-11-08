@@ -72,7 +72,6 @@ class SessionHandlerRedisLockingTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testReadingSessionDataWillThrowExceptionWhenImpossibleToAcquireLock(): void

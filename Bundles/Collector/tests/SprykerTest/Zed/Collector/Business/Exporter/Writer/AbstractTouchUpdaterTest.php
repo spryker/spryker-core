@@ -119,7 +119,6 @@ class AbstractTouchUpdaterTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testBulkUpdateIsFailingWithWrongTouchQueryConfigured()
@@ -131,7 +130,6 @@ class AbstractTouchUpdaterTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testBulkDeleteIsFailingWithWrongTouchQueryConfigured()

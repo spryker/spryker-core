@@ -61,7 +61,6 @@ class CompanyBusinessUnitDataImportPluginTest extends AbstractCompanyBusinessUni
     }
 
     /**
-     *
      * @return void
      */
     public function testImportThrowsExceptionWhenCompanyNotFound(): void
@@ -80,7 +79,6 @@ class CompanyBusinessUnitDataImportPluginTest extends AbstractCompanyBusinessUni
     }
 
     /**
-     *
      * @return void
      */
     public function testImportThrowsExceptionWhenParentBusinessUnitNotFound(): void

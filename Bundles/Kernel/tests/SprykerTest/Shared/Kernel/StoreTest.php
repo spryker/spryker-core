@@ -78,7 +78,6 @@ class StoreTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testSetCurrentLocaleInvalid()

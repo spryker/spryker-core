@@ -45,7 +45,6 @@ class RedirectLoopTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testCreatingCyclicRedirectsThrowsException()

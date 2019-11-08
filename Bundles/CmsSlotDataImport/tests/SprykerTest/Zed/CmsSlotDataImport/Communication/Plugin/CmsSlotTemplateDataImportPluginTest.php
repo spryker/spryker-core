@@ -52,7 +52,6 @@ class CmsSlotTemplateDataImportPluginTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testCmsSlotTemplateImportWithInvalidDataThrowsException(): void

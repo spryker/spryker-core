@@ -230,7 +230,6 @@ class CustomerAddressFacadeTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testDeleteCustomerWithDefaultAddresses()

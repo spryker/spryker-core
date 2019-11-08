@@ -57,7 +57,6 @@ class RedisAdapterProviderTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testThrowsExceptionWhenConnectionNotInitialized(): void
