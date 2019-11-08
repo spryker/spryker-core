@@ -17,7 +17,7 @@ use Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageRepositoryInterface;
 class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWriterInterface
 {
     /**
-     * @uses `\Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY`
+     * @uses \Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY
      */
     protected const COL_FK_GLOSSARY_KEY = 'spy_glossary_translation.fk_glossary_key';
 
