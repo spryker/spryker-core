@@ -17,12 +17,12 @@ var SlotBlocks = function (options) {
     this.slotBlocksForm = {};
     this.paramIdCmsSlotTemplate = '';
     this.paramIdCmsSlot = '';
+    this.isFirstInit = true;
 
     $.extend(this, options);
 
     this.init = function () {
         _self.$slotTable = $(_self.slotTableSelector).DataTable();
-
         $(_self.slotTableSelector).find('tbody').on('click', 'tr', _self.tableRowSelect);
         _self.$slotTable.on('draw', _self.selectFirstRow);
         _self.$slotTable.on('select', _self.loadBlocksTable);
@@ -39,16 +39,7 @@ var SlotBlocks = function (options) {
             return;
         }
 
-        var cmsSlotBlock = _self.blocksTable.$cmsSlotBlocks;
-        window.sweetAlert({
-            title: cmsSlotBlock.data('alert-title'),
-            text: cmsSlotBlock.data('alert-text'),
-            type: 'warning',
-            showCancelButton: true,
-            html: false,
-        }, function () {
-            _self.updateRow(cellIndex);
-        });
+        _self.showAlert();
     };
 
     this.updateRow = function (index) {
@@ -77,11 +68,31 @@ var SlotBlocks = function (options) {
             _self.slotBlocksForm.init();
             _self.blocksTable.loadBlocksTable(params, idCmsSlotTemplate, idCmsSlot);
         });
+        if (!_self.isFirstInit) {
+            return;
+        }
+        _self.isFirstInit = false;
+        _self.$slotTable.on('preDraw', function () {
+            if (_self.blocksTable.isUnsaved()) {
+                _self.showAlert();
+                return false;
+            }
+        });
     };
 
     this.getDataTableApi = function () {
         return _self.$slotTable;
     };
+
+    this.showAlert = function () {
+        var cmsSlotBlock = _self.blocksTable.$cmsSlotBlocks;
+        window.sweetAlert({
+            title: cmsSlotBlock.data('alert-title'),
+            text: cmsSlotBlock.data('alert-text'),
+            type: 'warning',
+            html: false,
+        });
+    }
 };
 
 module.exports = SlotBlocks;

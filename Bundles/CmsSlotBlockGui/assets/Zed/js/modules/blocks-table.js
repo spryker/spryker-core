@@ -19,21 +19,31 @@ var BlocksTable = function (options) {
     this.$blocksTable = {};
     this.slotBlocksForm = {};
     this.blocksChoiceFormSelector = '';
+    this.$blocksChoiceDropDown = '';
+    this.initOptionsState = [];
     this.initTableState = [];
     this.isFirstInit = true;
+    this.isFirstTableRender = true;
+    this.changeOrderButtonSelector = '.btn[data-direction]';
+    this.removeButtonSelector = '.js-slot-block-remove-button';
+    this.resetButtonSelector = '.js-slot-block-reset-button';
 
     $.extend(this, options);
 
     this.init = function () {
         _self.$blocksTable = $(_self.blocksTableSelector);
         _self.$cmsSlotBlocks = $(_self.cmsSlotBlocksSelector);
+        _self.$blocksChoiceDropDown = $(_self.blocksChoiceFormSelector).find('select');
+        _self.isFirstTableRender = true;
         if (!_self.isFirstInit) {
             return;
         }
         $(document).on('savedBlocksForm', function () {
             _self.getInitTableState(_self.$blocksTable.data('ajax'));
+            _self.toggleResetButton(false);
         });
         _self.isFirstInit = false;
+        _self.setInitOptionsState();
     };
 
     this.loadBlocksTable = function (params, idCmsSlotTemplate, idCmsSlot) {
@@ -63,12 +73,18 @@ var BlocksTable = function (options) {
             _self.overlayToggler(true);
         });
         _self.slotBlocksForm.rebuildForm(idCmsSlotTemplate, idCmsSlot, _self.$blocksTable.DataTable().rows().data(), _self.isUnsaved());
-        _self.getChangeOrderButtons().each(function () {
-            $(this).on('click', _self.changeOrderButtonsHandler.bind(this));
-        });
-        _self.getRemoveButtons().each(function () {
-            $(this).on('click', _self.removeButtonsHandler.bind(this));
-        });
+        if (!_self.isFirstTableRender) {
+            _self.toggleResetButton();
+            return;
+        }
+        _self.isFirstTableRender = false;
+        _self.initActionButtonsListeners();
+    };
+
+    this.initActionButtonsListeners = function () {
+        _self.$blocksTable.on('click', _self.changeOrderButtonSelector, _self.changeOrderButtonsHandler.bind(this));
+        _self.$blocksTable.on('click', _self.removeButtonSelector, _self.removeButtonsHandler.bind(this));
+        _self.$cmsSlotBlocks.on('click', _self.resetButtonSelector, _self.resetButtonsHandler.bind(this));
     };
 
     this.updateTable = function (tableApi, tableData) {
@@ -141,10 +157,6 @@ var BlocksTable = function (options) {
         }
     };
 
-    this.getChangeOrderButtons = function () {
-        return _self.$blocksTable.find('.btn[data-direction]');
-    };
-
     this.changeOrderButtonsHandler = function (event) {
         var clickInfo = _self.getClickInfo(event);
         var direction = clickInfo.$button.data('direction');
@@ -178,10 +190,6 @@ var BlocksTable = function (options) {
         _self.updateTable(table.api, table.data);
     };
 
-    this.getRemoveButtons = function () {
-        return _self.$blocksTable.find('.js-slot-block-remove-button');
-    };
-
     this.removeButtonsHandler = function (event) {
         var clickInfo = _self.getClickInfo(event);
         var table = _self.getTable();
@@ -191,12 +199,37 @@ var BlocksTable = function (options) {
         _self.updateTable(table.api, table.data);
     };
 
+    this.setInitOptionsState = function () {
+        _self.$blocksChoiceDropDown.find('option').each(function () {
+            _self.initOptionsState.push($(this).prop('disabled'));
+        });
+    };
+
     this.updateChoiceDropdown = function (optionLabel) {
-        var $choiceDropdown = $(_self.blocksChoiceFormSelector).find('select');
-        $choiceDropdown.children('option[disabled]')
+        _self.$blocksChoiceDropDown.children('option[disabled]')
             .filter(function() { return $(this).text() === optionLabel })
-            .attr("disabled", false);
-        $choiceDropdown.select2();
+            .prop('disabled', false);
+        _self.$blocksChoiceDropDown.select2();
+    };
+
+    this.resetChoiceDropdown = function () {
+        _self.$blocksChoiceDropDown.children('option').each(function (index) {
+            $(this).prop('disabled', _self.initOptionsState[index]);
+        });
+        _self.$blocksChoiceDropDown.select2();
+    };
+
+    this.resetButtonsHandler = function () {
+        if (!_self.isUnsaved()) {
+            return;
+        }
+        var table = _self.getTable();
+        _self.updateTable(table.api, _self.initTableState);
+        _self.resetChoiceDropdown();
+    };
+
+    this.toggleResetButton = function (state = _self.isUnsaved()) {
+        $(_self.resetButtonSelector).toggleClass('hidden', !state);
     };
 
     this.getClickInfo = function(event) {

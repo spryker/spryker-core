@@ -10,7 +10,7 @@
     <a href="" class="btn btn-xs btn-outline btn-view">
         {{ 'View Block' | trans }}
     </a>
-    <a href="#" class="btn btn-xs btn-outline btn-danger" onclick="return false;">
+    <a href="#" class="btn btn-xs btn-outline btn-danger js-slot-block-remove-button" onclick="return false;">
         <i class="fa fa-trash"></i>
         {{ 'Delete' | trans }}
     </a>
@@ -43,7 +43,7 @@
             data-store-template="{{ storeTemplate | e }}"
             data-slot-block-item-form-template="{{ form_widget(cmsSlotBlockCollectionForm.cmsSlotBlocks.vars.prototype) | e }}"
             data-alert-title="{{ 'Unsaved changes' | trans }}"
-            data-alert-text="{{ 'You have unsaved changes! Do you want to continue and lose the changes?' | trans }}"
+            data-alert-text="{{ 'You have unsaved changes! Please save or reset the changes.' | trans }}"
         >
             {{ form_start(cmsBlockChoiceForm) }}
                 <div class="row">
@@ -69,6 +69,7 @@
             {% endfor %}
 
             <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}">
+            <input type="reset" class="btn btn-danger js-slot-block-reset-button hidden" value="{{ 'Reset' | trans }}">
 
             {{ form_end(cmsSlotBlockCollectionForm) }}
             <div class="cms-slot-blocks__overlay js-cms-slot-blocks__overlay"></div>
