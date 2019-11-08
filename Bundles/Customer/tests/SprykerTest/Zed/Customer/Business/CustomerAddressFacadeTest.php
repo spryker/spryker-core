@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Customer\Business\CustomerBusinessFactory;
 use Spryker\Zed\Customer\Business\CustomerFacade;
+use Spryker\Zed\Customer\Business\Exception\AddressNotFoundException;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 use Spryker\Zed\Kernel\Container;
@@ -234,7 +235,7 @@ class CustomerAddressFacadeTest extends Unit
      */
     public function testDeleteCustomerWithDefaultAddresses()
     {
-        $this->expectException('Spryker\Zed\Customer\Business\Exception\AddressNotFoundException');
+        $this->expectException(AddressNotFoundException::class);
         $customerTransfer = $this->createCustomerWithAddress();
 
         $addresses = $customerTransfer->getAddresses()->getAddresses();

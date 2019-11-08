@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\CompanyBusinessUnitDataImport\Communication\Plugin\CompanyBusinessUnitDataImportPlugin;
+use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 
 /**
  * Auto-generated group annotations
@@ -65,7 +66,7 @@ class CompanyBusinessUnitDataImportPluginTest extends AbstractCompanyBusinessUni
      */
     public function testImportThrowsExceptionWhenCompanyNotFound(): void
     {
-        $this->expectException('Spryker\Zed\DataImport\Business\Exception\DataImportException');
+        $this->expectException(DataImportException::class);
         $this->expectExceptionMessage('Could not find company by key "invalid company"');
         $this->tester->truncateCompanyBusinessUnitRelations();
 
@@ -83,7 +84,7 @@ class CompanyBusinessUnitDataImportPluginTest extends AbstractCompanyBusinessUni
      */
     public function testImportThrowsExceptionWhenParentBusinessUnitNotFound(): void
     {
-        $this->expectException('Spryker\Zed\DataImport\Business\Exception\DataImportException');
+        $this->expectException(DataImportException::class);
         $this->expectExceptionMessage('Could not find company business unit by key "invalid parent"');
         $this->tester->truncateCompanyBusinessUnitRelations();
 

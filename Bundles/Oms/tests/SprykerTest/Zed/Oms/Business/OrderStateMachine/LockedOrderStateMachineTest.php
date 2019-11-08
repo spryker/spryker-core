@@ -15,6 +15,7 @@ use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Exception\PropelException;
 use ReflectionMethod;
+use Spryker\Zed\Oms\Business\Exception\LockException;
 use Spryker\Zed\Oms\Business\Lock\TriggerLocker;
 use Spryker\Zed\Oms\Business\OrderStateMachine\LockedOrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface;
@@ -95,7 +96,7 @@ class LockedOrderStateMachineTest extends Unit
      */
     public function testTriggerSimilarEventsWhenTriggerIsLocked()
     {
-        $this->expectException('Spryker\Zed\Oms\Business\Exception\LockException');
+        $this->expectException(LockException::class);
         $arguments = func_get_args();
         $methodToTest = array_shift($arguments);
         $expectedIdentifier = array_shift($arguments);
@@ -132,7 +133,7 @@ class LockedOrderStateMachineTest extends Unit
      */
     public function testTriggerEventLockReleasesWhenTriggerFails()
     {
-        $this->expectException('Exception');
+        $this->expectException(Exception::class);
         $arguments = func_get_args();
         $methodToTest = array_shift($arguments);
         $expectedIdentifier = array_shift($arguments);

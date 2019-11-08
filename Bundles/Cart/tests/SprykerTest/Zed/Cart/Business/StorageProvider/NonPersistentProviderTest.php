@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
 use SprykerTest\Zed\Cart\Business\Mocks\CartItemAddTripleStrategy;
 
@@ -214,12 +215,11 @@ class NonPersistentProviderTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testIncreaseWithNegativeValue()
     {
-        $this->expectException('Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption');
+        $this->expectException(InvalidQuantityExeption::class);
         $this->expectExceptionMessage('Could not change the quantity of cart item "123" to "-3".');
         $itemId = '123';
         $newId = '123';
@@ -242,7 +242,7 @@ class NonPersistentProviderTest extends Unit
      */
     public function testIncreaseWithZeroValue()
     {
-        $this->expectException('Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption');
+        $this->expectException(InvalidQuantityExeption::class);
         $this->expectExceptionMessage('Could not change the quantity of cart item "123" to "0".');
         $itemId = '123';
         $newId = '123';
@@ -260,12 +260,11 @@ class NonPersistentProviderTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testDecreaseWithNegativeValue()
     {
-        $this->expectException('Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption');
+        $this->expectException(InvalidQuantityExeption::class);
         $this->expectExceptionMessage('Could not change the quantity of cart item "123" to "-3".');
         $itemId = '123';
         $newId = '123';
@@ -283,12 +282,11 @@ class NonPersistentProviderTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testDecreaseWithZeroValue()
     {
-        $this->expectException('Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption');
+        $this->expectException(InvalidQuantityExeption::class);
         $this->expectExceptionMessage('Could not change the quantity of cart item "123" to "0".');
         $itemId = '123';
         $newId = '123';

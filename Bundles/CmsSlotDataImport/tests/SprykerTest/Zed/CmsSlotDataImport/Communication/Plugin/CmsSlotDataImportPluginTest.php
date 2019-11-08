@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\CmsSlotDataImport\Communication\Plugin\CmsSlotDataImportPlugin;
+use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 
 /**
  * Auto-generated group annotations
@@ -66,7 +67,7 @@ class CmsSlotDataImportPluginTest extends Unit
      */
     public function testCmsSlotImportWithInvalidDataThrowsException(): void
     {
-        $this->expectException('Spryker\Zed\DataImport\Business\Exception\DataImportException');
+        $this->expectException(DataImportException::class);
         $this->tester->hasCmsSlotTemplate([
             CmsSlotTemplateTransfer::PATH => static::CMS_SLOT_TEMPLATE_PATH,
             CmsSlotTemplateTransfer::NAME => static::CMS_SLOT_TEMPLATE_NAME,

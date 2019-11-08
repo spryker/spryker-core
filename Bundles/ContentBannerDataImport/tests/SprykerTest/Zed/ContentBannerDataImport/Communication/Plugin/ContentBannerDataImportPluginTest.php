@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\ContentBannerDataImport\Communication\Plugin\ContentBannerDataImportPlugin;
+use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 
 /**
  * Auto-generated group annotations
@@ -55,12 +56,11 @@ class ContentBannerDataImportPluginTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testImportWithInvalidDefaultLocaleDataThrowsException(): void
     {
-        $this->expectException('Spryker\Zed\DataImport\Business\Exception\DataImportException');
+        $this->expectException(DataImportException::class);
         // Arrange
         $this->tester->ensureDatabaseTableIsEmpty();
 
@@ -82,12 +82,11 @@ class ContentBannerDataImportPluginTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testImportWithMissingPropertyThrowsException(): void
     {
-        $this->expectException('Spryker\Zed\DataImport\Business\Exception\DataImportException');
+        $this->expectException(DataImportException::class);
         // Arrange
         $this->tester->ensureDatabaseTableIsEmpty();
 

@@ -9,6 +9,7 @@ namespace SprykerTest\Client\StorageRedis\Redis;
 
 use Codeception\Test\Unit;
 use Spryker\Client\StorageRedis\Dependency\Client\StorageRedisToRedisClientInterface;
+use Spryker\Client\StorageRedis\Exception\StorageRedisException;
 use Spryker\Client\StorageRedis\Redis\StorageRedisWrapper;
 use Spryker\Client\StorageRedis\StorageRedisConfig;
 
@@ -241,7 +242,7 @@ class StorageRedisWrapperTest extends Unit
      */
     public function testWillThrowExceptionWhenEmptyResultIsReturnedBySet(): void
     {
-        $this->expectException('Spryker\Client\StorageRedis\Exception\StorageRedisException');
+        $this->expectException(StorageRedisException::class);
         $this->expectExceptionMessage('Could not set redisKey: "kv:plainTextKey" with value: ""plain text data""');
         $this->storageRedisWrapper->set(static::PLAIN_TEXT_KEY, static::PLAIN_TEXT_DATA);
     }
@@ -274,7 +275,7 @@ class StorageRedisWrapperTest extends Unit
      */
     public function testSetThrowsExceptionWhenResultIsFalsy(): void
     {
-        $this->expectException('Spryker\Client\StorageRedis\Exception\StorageRedisException');
+        $this->expectException(StorageRedisException::class);
         $this->expectExceptionMessage('Could not set redisKey: "kv:plainTextKey" with value: ""plain text data""');
         $this->redisClientMock->method('setex')->willReturn(false);
 
@@ -286,7 +287,7 @@ class StorageRedisWrapperTest extends Unit
      */
     public function testSetexWillThrowExceptionWhenResultIsFalsy(): void
     {
-        $this->expectException('Spryker\Client\StorageRedis\Exception\StorageRedisException');
+        $this->expectException(StorageRedisException::class);
         $this->expectExceptionMessage('Could not set redisKey: "kv:plainTextKey" with value: ""plain text data""');
         $this->redisClientMock->method('setex')->willReturn(false);
 
@@ -332,7 +333,7 @@ class StorageRedisWrapperTest extends Unit
      */
     public function testSetMultiThrowsExceptionWhenResultIsFalsy(): void
     {
-        $this->expectException('Spryker\Client\StorageRedis\Exception\StorageRedisException');
+        $this->expectException(StorageRedisException::class);
         $items = array_combine(
             [static::PLAIN_TEXT_KEY, static::JSON_KEY],
             [static::PLAIN_TEXT_DATA, static::JSON_DATA]
