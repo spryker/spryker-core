@@ -65,6 +65,7 @@ class AutoloadUpdater implements UpdaterInterface
         'Shared',
         'Yves',
         'Zed',
+        'Glue',
     ];
 
     /**

@@ -14,7 +14,23 @@
     </transfer>
 
     <transfer name="Collection">
-        <property name="user" type="User[]"/>
+        <property name="user" type="User[]" singular="user"/>
+    </transfer>
+
+    <transfer name="Groups">
+        <property name="groups" type="Group[]" singular="group"/>
+    </transfer>
+
+    <transfer name="Group">
+        <property name="idAclGroup" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Button">
+        <property name="url" type="string"/>
+        <property name="title" type="string"/>
+        <property name="defaultOptions" type="array" singular="defaultOptions"/>
+        <property name="customOptions" type="array" singular="customOptions"/>
     </transfer>
 
 </transfers>

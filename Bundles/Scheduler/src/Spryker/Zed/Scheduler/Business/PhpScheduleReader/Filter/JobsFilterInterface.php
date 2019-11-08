@@ -15,7 +15,7 @@ interface JobsFilterInterface
      * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $filterTransfer
      * @param array $jobs
      *
-     * @return array $jobs
+     * @return array
      */
     public function filterJobs(SchedulerFilterTransfer $filterTransfer, array $jobs): array;
 }

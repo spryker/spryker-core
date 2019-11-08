@@ -1,7 +1,7 @@
 # Http Module
 [![Build Status](https://travis-ci.org/spryker/http.svg)](https://travis-ci.org/spryker/http)
 
-Provides HTTP functionality. E.g. `HttpFoundationFormPlugin` or `HttpApplicationPlugin`.
+Http module includes all Http related code.
 
 ## Installation
 

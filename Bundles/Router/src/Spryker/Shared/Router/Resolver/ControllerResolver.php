@@ -134,7 +134,7 @@ class ControllerResolver implements ControllerResolverInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @deprecated This method is deprecated as of 3.1 and will be removed in 4.0. Implement the ArgumentResolverInterface and inject it in the HttpKernel instead.
      */

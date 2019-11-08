@@ -87,6 +87,7 @@ class QuoteItemOperation implements QuoteItemOperationInterface
         $cartChangeTransfer = $this->createCartChangeTransfer($quoteTransfer, $itemTransferList);
 
         $quoteResponseTransfer = $this->cartFacade->addToCart($cartChangeTransfer);
+        $quoteResponseTransfer->setCustomer($quoteTransfer->getCustomer());
         $updatedQuoteResponseTransfer = $this->quoteFacade->updateQuote($quoteResponseTransfer->getQuoteTransfer());
 
         $mergedQuoteResponseTransfer = $this->mergeQuoteResponseTransfers($quoteResponseTransfer, $updatedQuoteResponseTransfer);
@@ -132,13 +133,12 @@ class QuoteItemOperation implements QuoteItemOperationInterface
         $cartChangeTransfer = $this->createCartChangeTransfer($quoteTransfer, $itemTransferList);
 
         $cartChangeTransfer = $this->cartChangeRequestExpander->removeItemRequestExpand($cartChangeTransfer);
-        $quoteTransfer = $this->cartFacade->remove($cartChangeTransfer);
-        $this->quoteFacade->updateQuote($quoteTransfer);
+        $quoteResponseTransfer = $this->cartFacade->removeFromCart($cartChangeTransfer);
+        $updatedQuoteResponseTransfer = $this->quoteFacade->updateQuote($quoteResponseTransfer->getQuoteTransfer());
 
-        $quoteResponseTransfer->setIsSuccessful(true);
-        $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
+        $mergedQuoteResponseTransfer = $this->mergeQuoteResponseTransfers($quoteResponseTransfer, $updatedQuoteResponseTransfer);
 
-        return $this->quoteResponseExpander->expand($quoteResponseTransfer);
+        return $this->quoteResponseExpander->expand($mergedQuoteResponseTransfer);
     }
 
     /**

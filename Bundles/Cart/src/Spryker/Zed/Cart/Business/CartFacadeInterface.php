@@ -100,6 +100,24 @@ interface CartFacadeInterface
 
     /**
      * Specification:
+     *  - For each item runs the item expander plugins (requires a SKU for each new item).
+     *  - Decreases the given quantity for the given item(s) from the quote.
+     *  - Recalculates quote (-> Calculation).
+     *  - Adds success message to messenger (-> Messenger).
+     *  - Returns updated quote.
+     *  - Returns QuoteResponse with updated quote if quote is not locked.
+     *  - In case of error adds messenger error message and returns QuoteResponse with unchanged QuoteTransfer and errors.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function removeFromCart(CartChangeTransfer $cartChangeTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
      * - Uses CartFacade::validateQuote before reloading
      * - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles if quote is not locked.
      *

@@ -25,7 +25,7 @@ class ChangeProductOptionQuantityPlugin extends AbstractPlugin implements PostSa
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function postSave(QuoteTransfer $quoteTransfer)
     {

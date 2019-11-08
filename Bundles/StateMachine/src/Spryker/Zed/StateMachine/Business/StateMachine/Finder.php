@@ -125,7 +125,7 @@ class Finder implements FinderInterface
      * @param string $flag
      * @param string $sort
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfer
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
     public function getItemsWithFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flag, string $sort = 'ASC')
     {
@@ -137,7 +137,7 @@ class Finder implements FinderInterface
      * @param string $flag
      * @param string $sort
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfer
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
     public function getItemsWithoutFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flag, string $sort = 'ASC')
     {

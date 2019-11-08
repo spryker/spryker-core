@@ -28,15 +28,7 @@ class GuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Twig\TwigFunction[]
-     */
-    public function getTwigFunctions(): array
-    {
-        return $this->getProvidedDependency(GuiDependencyProvider::GUI_TWIG_FUNCTIONS);
-    }
-
-    /**
-     * @return \Twig\TwigFunction[]
+     * @return \Twig\TwigFilter[]
      */
     public function getTwigFilters(): array
     {

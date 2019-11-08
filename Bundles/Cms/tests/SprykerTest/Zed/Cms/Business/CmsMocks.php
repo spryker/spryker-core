@@ -22,6 +22,7 @@ use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationReader;
 use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationReaderInterface;
 use Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationWriterInterface;
 use Spryker\Zed\Cms\Business\Template\TemplateManager;
+use Spryker\Zed\Cms\Business\Template\TemplateReader;
 use Spryker\Zed\Cms\CmsConfig;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeInterface;
@@ -75,7 +76,7 @@ abstract class CmsMocks extends Unit
     protected function createCmsPageEntityMock()
     {
         return $this->getMockBuilder(SpyCmsPage::class)
-            ->setMethods(['save'])
+            ->setMethods(['save', 'getVirtualColumn'])
             ->getMock();
     }
 
@@ -251,6 +252,17 @@ abstract class CmsMocks extends Unit
         return $this->getMockBuilder(CmsPageMapper::class)
             ->setConstructorArgs([$cmsPageUrlBuilderMock, $cmsPageStoreRelationReaderMock])
             ->setMethods(null)
+            ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Business\Template\TemplateReaderInterface
+     */
+    protected function createTemplateReaderMock()
+    {
+        return $this->getMockBuilder(TemplateReader::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getPlaceholdersByTemplatePath'])
             ->getMock();
     }
 }

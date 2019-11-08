@@ -196,7 +196,7 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
             $storeTransfer = $storeTransfers[$priceProductFilterTransfer->getStoreName()] ?? $this->getCurrentStore();
 
             $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
-                ->fromArray($priceProductFilterTransfer->toArray(), true);
+                ->fromArray($priceProductFilterTransfer->toArray(false), true);
 
             $priceProductCriteriaTransfer
                 ->setPriceDimension(

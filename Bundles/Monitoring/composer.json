@@ -5,6 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/event-dispatcher-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.0.0",
     "spryker/monitoring-extension": "^1.0.0",
@@ -13,13 +14,17 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/container": "*",
+    "spryker/event-dispatcher": "*",
     "spryker/silex": "^2.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/silex": "If you want to use the Monitoring ServiceProvider, please add spryker/silex",
-    "spryker/symfony": "If you want to use the Monitoring ServiceProvider, please add spryker/symfony"
+    "spryker/container": "Add this module when you want to use the EventDispatcher plugins.",
+    "spryker/event-dispatcher": "Add this module when you want to use the EventDispatcher plugins.",
+    "spryker/silex": "If you want to use the Monitoring ServiceProvider, please add spryker/silex.",
+    "spryker/symfony": "If you want to use the Monitoring ServiceProvider, please add spryker/symfony."
   },
   "autoload": {
     "psr-4": {
