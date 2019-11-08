@@ -8,10 +8,6 @@
 namespace SprykerTest\Zed\CmsSlotBlock\Business;
 
 use Codeception\Test\Unit;
-use Spryker\Zed\CmsSlotBlock\Business\CmsSlotBlockBusinessFactory;
-use Spryker\Zed\CmsSlotBlock\Business\CmsSlotBlockFacade;
-use Spryker\Zed\CmsSlotBlock\Business\CmsSlotBlockFacadeInterface;
-use SprykerTest\Zed\CmsSlotBlock\CmsSlotBlockConfigTest;
 
 /**
  * Auto-generated group annotations
@@ -34,10 +30,10 @@ class CmsSlotBlockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetTemplateConditionsByPathSuccess(): void
+    public function testGetTemplateConditionsByPathIsSuccessful(): void
     {
         //Act
-        $templateConditionsAssignment = $this->createCmsSlotBlockFacade()
+        $templateConditionsAssignment = $this->tester->createCmsSlotBlockFacade()
             ->getTemplateConditionsByPath('@Test/test/test/test.twig');
 
         //Assert
@@ -48,29 +44,14 @@ class CmsSlotBlockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetTemplateConditionsByPathFailed(): void
+    public function testGetTemplateConditionsByPathIsFailed(): void
     {
         //Act
-        $templateConditionsAssignment = $this->createCmsSlotBlockFacade()
+        $templateConditionsAssignment = $this->tester->createCmsSlotBlockFacade()
             ->getTemplateConditionsByPath('@Test/test/test/test2.twig');
 
         //Assert
         $this->assertIsArray($templateConditionsAssignment);
         $this->assertEmpty($templateConditionsAssignment);
-    }
-
-    /**
-     * @return \Spryker\Zed\CmsSlotBlock\Business\CmsSlotBlockFacadeInterface
-     */
-    protected function createCmsSlotBlockFacade(): CmsSlotBlockFacadeInterface
-    {
-        $factory = new CmsSlotBlockBusinessFactory();
-        $config = new CmsSlotBlockConfigTest();
-        $factory->setConfig($config);
-
-        $facade = new CmsSlotBlockFacade();
-        $facade->setFactory($factory);
-
-        return $facade;
     }
 }

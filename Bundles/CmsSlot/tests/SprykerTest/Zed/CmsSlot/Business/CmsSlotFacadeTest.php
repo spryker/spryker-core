@@ -189,7 +189,7 @@ class CmsSlotFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCmsSlotTemplateByIdSuccess(): void
+    public function testGetCmsSlotTemplateByIdIsSuccessful(): void
     {
         //Arrange
         $cmsSlotTemplateTransfer = $this->tester->haveCmsSlotTemplateInDb();
@@ -209,7 +209,7 @@ class CmsSlotFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCmsSlotTemplateByIdFailed(): void
+    public function testGetCmsSlotTemplateByIdIsFailed(): void
     {
         //Arrange
         $this->tester->ensureCmsSlotTemplateTableIsEmpty();

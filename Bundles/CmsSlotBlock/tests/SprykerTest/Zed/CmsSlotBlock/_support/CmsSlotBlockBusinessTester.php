@@ -8,6 +8,9 @@
 namespace SprykerTest\Zed\CmsSlotBlock;
 
 use Codeception\Actor;
+use Spryker\Zed\CmsSlotBlock\Business\CmsSlotBlockBusinessFactory;
+use Spryker\Zed\CmsSlotBlock\Business\CmsSlotBlockFacade;
+use Spryker\Zed\CmsSlotBlock\Business\CmsSlotBlockFacadeInterface;
 
 /**
  * Inherited Methods
@@ -29,7 +32,18 @@ class CmsSlotBlockBusinessTester extends Actor
 {
     use _generated\CmsSlotBlockBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @return \Spryker\Zed\CmsSlotBlock\Business\CmsSlotBlockFacadeInterface
+     */
+    protected function createCmsSlotBlockFacade(): CmsSlotBlockFacadeInterface
+    {
+        $factory = new CmsSlotBlockBusinessFactory();
+        $config = new CmsSlotBlockConfigTest();
+        $factory->setConfig($config);
+
+        $facade = new CmsSlotBlockFacade();
+        $facade->setFactory($factory);
+
+        return $facade;
+    }
 }
