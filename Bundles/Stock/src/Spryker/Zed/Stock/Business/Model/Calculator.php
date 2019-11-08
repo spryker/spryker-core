@@ -9,20 +9,21 @@ namespace Spryker\Zed\Stock\Business\Model;
 
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
+use Spryker\Zed\Stock\Business\StockProduct\StockProductReaderInterface;
 
 class Calculator implements CalculatorInterface
 {
     /**
-     * @var \Spryker\Zed\Stock\Business\Model\ReaderInterface
+     * @var \Spryker\Zed\Stock\Business\StockProduct\StockProductReaderInterface
      */
-    protected $reader;
+    protected $stockProductReader;
 
     /**
-     * @param \Spryker\Zed\Stock\Business\Model\ReaderInterface $reader
+     * @param \Spryker\Zed\Stock\Business\StockProduct\StockProductReaderInterface $stockProductReader
      */
-    public function __construct(ReaderInterface $reader)
+    public function __construct(StockProductReaderInterface $stockProductReader)
     {
-        $this->reader = $reader;
+        $this->stockProductReader = $stockProductReader;
     }
 
     /**
@@ -32,7 +33,7 @@ class Calculator implements CalculatorInterface
      */
     public function calculateStockForProduct(string $sku): Decimal
     {
-        $productEntities = $this->reader->getStocksProduct($sku);
+        $productEntities = $this->stockProductReader->getStocksProduct($sku);
 
         return $this->calculateTotalQuantity($productEntities);
     }
@@ -45,7 +46,7 @@ class Calculator implements CalculatorInterface
      */
     public function calculateProductStockForStore(string $sku, StoreTransfer $storeTransfer): Decimal
     {
-        $productEntities = $this->reader->findProductStocksForStore($sku, $storeTransfer);
+        $productEntities = $this->stockProductReader->findProductStocksForStore($sku, $storeTransfer);
 
         return $this->calculateTotalQuantity($productEntities);
     }
@@ -58,7 +59,7 @@ class Calculator implements CalculatorInterface
      */
     public function calculateProductAbstractStockForStore(string $abstractSku, StoreTransfer $storeTransfer): Decimal
     {
-        $stockProductTransfers = $this->reader->getStockProductByProductAbstractSkuForStore($abstractSku, $storeTransfer);
+        $stockProductTransfers = $this->stockProductReader->getStockProductByProductAbstractSkuForStore($abstractSku, $storeTransfer);
 
         return $this->calculateTotalQuantity($stockProductTransfers);
     }

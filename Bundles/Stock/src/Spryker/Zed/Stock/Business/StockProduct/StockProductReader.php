@@ -5,13 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Stock\Business\Model;
+namespace Spryker\Zed\Stock\Business\StockProduct;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
-use Generated\Shared\Transfer\StockTransfer;
-use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use InvalidArgumentException;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
@@ -21,22 +18,15 @@ use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Spryker\Zed\Stock\Business\Exception\MissingProductException;
 use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
 use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
+use Spryker\Zed\Stock\Business\Stock\StockReaderInterface;
 use Spryker\Zed\Stock\Business\Transfer\StockProductTransferMapperInterface;
 use Spryker\Zed\Stock\Dependency\Facade\StockToProductInterface;
-use Spryker\Zed\Stock\Dependency\Facade\StockToStoreFacadeInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 use Spryker\Zed\Stock\Persistence\StockRepositoryInterface;
-use Spryker\Zed\Stock\StockConfig;
 
-class Reader implements ReaderInterface
+class StockProductReader implements StockProductReaderInterface
 {
     public const MESSAGE_NO_RESULT = 'no stock set for this sku';
-    public const ERROR_STOCK_TYPE_UNKNOWN = 'stock type unknown';
-
-    /**
-     * @var \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface
-     */
-    protected $queryContainer;
 
     /**
      * @var \Spryker\Zed\Stock\Dependency\Facade\StockToProductInterface
@@ -44,19 +34,14 @@ class Reader implements ReaderInterface
     protected $productFacade;
 
     /**
-     * @var \Spryker\Zed\Stock\Business\Transfer\StockProductTransferMapperInterface
+     * @var \Spryker\Zed\Stock\Business\Stock\StockReaderInterface
      */
-    protected $transferMapper;
+    protected $stockReader;
 
     /**
-     * @var \Spryker\Zed\Stock\StockConfig
+     * @var \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface
      */
-    protected $stockConfig;
-
-    /**
-     * @var \Spryker\Zed\Stock\Dependency\Facade\StockToStoreFacadeInterface
-     */
-    protected $storeFacade;
+    protected $queryContainer;
 
     /**
      * @var \Spryker\Zed\Stock\Persistence\StockRepositoryInterface
@@ -64,97 +49,29 @@ class Reader implements ReaderInterface
     protected $stockRepository;
 
     /**
-     * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $queryContainer
+     * @var \Spryker\Zed\Stock\Business\Transfer\StockProductTransferMapperInterface
+     */
+    protected $transferMapper;
+
+    /**
      * @param \Spryker\Zed\Stock\Dependency\Facade\StockToProductInterface $productFacade
-     * @param \Spryker\Zed\Stock\Business\Transfer\StockProductTransferMapperInterface $transferMapper
-     * @param \Spryker\Zed\Stock\StockConfig $stockConfig
-     * @param \Spryker\Zed\Stock\Dependency\Facade\StockToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\Stock\Business\Stock\StockReaderInterface $stockReader
+     * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Stock\Persistence\StockRepositoryInterface $stockRepository
+     * @param \Spryker\Zed\Stock\Business\Transfer\StockProductTransferMapperInterface $transferMapper
      */
     public function __construct(
-        StockQueryContainerInterface $queryContainer,
         StockToProductInterface $productFacade,
-        StockProductTransferMapperInterface $transferMapper,
-        StockConfig $stockConfig,
-        StockToStoreFacadeInterface $storeFacade,
-        StockRepositoryInterface $stockRepository
+        StockReaderInterface $stockReader,
+        StockQueryContainerInterface $queryContainer,
+        StockRepositoryInterface $stockRepository,
+        StockProductTransferMapperInterface $transferMapper
     ) {
-        $this->queryContainer = $queryContainer;
         $this->productFacade = $productFacade;
-        $this->transferMapper = $transferMapper;
-        $this->stockConfig = $stockConfig;
-        $this->storeFacade = $storeFacade;
+        $this->stockReader = $stockReader;
+        $this->queryContainer = $queryContainer;
         $this->stockRepository = $stockRepository;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getStockTypes(): array
-    {
-        $stockNames = $this->stockRepository->getStockNames();
-
-        return array_combine($stockNames, $stockNames);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return string[]
-     */
-    public function getStockTypesForStore(StoreTransfer $storeTransfer): array
-    {
-        $storeTransfer->requireName();
-        $stockNames = $this->stockRepository->getStockNamesForStore($storeTransfer->getName());
-
-        return array_combine($stockNames, $stockNames);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Generated\Shared\Transfer\StockTransfer[]
-     */
-    public function getAvailableWarehousesForStore(StoreTransfer $storeTransfer): array
-    {
-        $storeTransfer->requireName();
-
-        $stockCriteriaFilterTransfer = (new StockCriteriaFilterTransfer())
-            ->setIsActive(true)
-            ->setStoreNames([$storeTransfer->getName()]);
-
-        return $this->stockRepository->getStocksWithRelatedStoresByCriteriaFilter($stockCriteriaFilterTransfer);
-    }
-
-    /**
-     * @return array
-     */
-    public function getWarehouseToStoreMapping(): array
-    {
-        $stockTransfers = $this->stockRepository->getStocksWithRelatedStoresByCriteriaFilter(new StockCriteriaFilterTransfer());
-
-        $mapping = [];
-        foreach ($stockTransfers as $stockTransfer) {
-            $mapping[$stockTransfer->getName()] = $this->getStoreNamesFromStoreRelation($stockTransfer->getStoreRelation());
-        }
-
-        return $mapping;
-    }
-
-    /**
-     * @return string[][]
-     */
-    public function getStoreToWarehouseMapping(): array
-    {
-        $storeTransfers = $this->storeFacade->getAllStores();
-        $stockTransfers = $this->stockRepository->getStocksWithRelatedStoresByCriteriaFilter(new StockCriteriaFilterTransfer());
-
-        $mapping = array_fill_keys($this->getStoreNamesFromStoreTransferCollection($storeTransfers), []);
-        foreach ($stockTransfers as $stockTransfer) {
-            $mapping = $this->mapStockToStores($stockTransfer, $storeTransfers, $mapping);
-        }
-
-        return $mapping;
+        $this->transferMapper = $transferMapper;
     }
 
     /**
@@ -261,34 +178,6 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param string $storeName
-     *
-     * @return string[]
-     */
-    protected function getStoreWarehouses(string $storeName): array
-    {
-        return $this->stockRepository->getStockNamesForStore($storeName);
-    }
-
-    /**
-     * @param string $stockType
-     *
-     * @throws \InvalidArgumentException
-     *
-     * @return int
-     */
-    public function getStockTypeIdByName(string $stockType): int
-    {
-        $stockTypes = $this->queryContainer->queryStockByName($stockType)->findOne();
-
-        if (!$stockTypes) {
-            throw new InvalidArgumentException(self::ERROR_STOCK_TYPE_UNKNOWN);
-        }
-
-        return $stockTypes->getIdStock();
-    }
-
-    /**
      * @param string $sku
      * @param string $stockType
      *
@@ -328,7 +217,7 @@ class Reader implements ReaderInterface
      */
     public function getIdStockProduct(string $sku, string $stockType): int
     {
-        $idStockType = $this->getStockTypeIdByName($stockType);
+        $idStockType = $this->stockReader->getStockTypeIdByName($stockType);
         $idProduct = $this->getProductConcreteIdBySku($sku);
 
         $stockProductEntity = $this->queryContainer
@@ -346,26 +235,6 @@ class Reader implements ReaderInterface
         }
 
         return $stockProductEntity->getIdStockProduct();
-    }
-
-    /**
-     * @param int $idStockType
-     * @param int $idProduct
-     *
-     * @throws \Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException
-     *
-     * @return void
-     */
-    public function checkStockDoesNotExist($idStockType, $idProduct): void
-    {
-        $stockProductQuery = $this->queryContainer
-            ->queryStockProductByStockAndProduct($idStockType, $idProduct);
-
-        if ($stockProductQuery->count() > 0) {
-            throw new StockProductAlreadyExistsException(
-                'Cannot duplicate entry: this stock type is already set for this product'
-            );
-        }
     }
 
     /**
@@ -429,7 +298,7 @@ class Reader implements ReaderInterface
         $stockProducts = $this->queryContainer
             ->queryStockByIdProduct($idProductConcrete)
             ->useStockQuery()
-                ->filterByIsActive(true)
+            ->filterByIsActive(true)
             ->endUse()
             ->find();
 
@@ -490,7 +359,7 @@ class Reader implements ReaderInterface
             ->queryStockByProducts($productConcreteTransfer->requireIdProductConcrete()->getIdProductConcrete())
             ->innerJoinStock()
             ->useStockQuery()
-                ->filterByIsActive(true)
+            ->filterByIsActive(true)
             ->endUse()
             ->find();
 
@@ -509,49 +378,32 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
+     * @param int $idStockType
+     * @param int $idProduct
      *
-     * @return string[]
+     * @throws \Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException
+     *
+     * @return void
      */
-    protected function getStoreNamesFromStoreTransferCollection(array $storeTransfers): array
+    public function checkStockDoesNotExist($idStockType, $idProduct): void
     {
-        return array_map(function (StoreTransfer $storeTransfer): string {
-            return $storeTransfer->getName();
-        }, $storeTransfers);
+        $stockProductQuery = $this->queryContainer
+            ->queryStockProductByStockAndProduct($idStockType, $idProduct);
+
+        if ($stockProductQuery->count() > 0) {
+            throw new StockProductAlreadyExistsException(
+                'Cannot duplicate entry: this stock type is already set for this product'
+            );
+        }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
+     * @param string $storeName
      *
      * @return string[]
      */
-    protected function getStoreNamesFromStoreRelation(StoreRelationTransfer $storeRelationTransfer): array
+    protected function getStoreWarehouses(string $storeName): array
     {
-        $storeNames = [];
-        foreach ($storeRelationTransfer->getStores() as $storeTransfer) {
-            $storeName = $storeTransfer->getName();
-            $storeNames[$storeName] = $storeName;
-        }
-
-        return $storeNames;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
-     * @param string[][] $storeStockMapping
-     *
-     * @return string[][]
-     */
-    protected function mapStockToStores(StockTransfer $stockTransfer, array $storeTransfers, array $storeStockMapping): array
-    {
-        $relatedStoreNames = $this->getStoreNamesFromStoreRelation($stockTransfer->getStoreRelation());
-        foreach ($storeTransfers as $storeTransfer) {
-            if (in_array($storeTransfer->getName(), $relatedStoreNames, true)) {
-                $storeStockMapping[$storeTransfer->getName()][] = $stockTransfer->getName();
-            }
-        }
-
-        return $storeStockMapping;
+        return $this->stockRepository->getStockNamesForStore($storeName);
     }
 }
