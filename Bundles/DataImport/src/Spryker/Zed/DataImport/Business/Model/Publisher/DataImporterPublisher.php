@@ -14,7 +14,8 @@ use Spryker\Zed\Kernel\Locator;
 
 class DataImporterPublisher implements DataImporterPublisherInterface
 {
-    public const CHUNK_SIZE = 20000;
+    public const DEFAULT_CHUNK_SIZE = 20000;
+    public const DEFAULT_FLUSH_CHUNK_SIZE = 10000000;
 
     /**
      * @var \Spryker\Zed\Event\Business\EventFacadeInterface|null
@@ -45,7 +46,7 @@ class DataImporterPublisher implements DataImporterPublisherInterface
 
         static::$importedEntityEvents[$eventName][$entityId] = true;
 
-        $chunkSize = Config::get(DataImportConstants::PUBLISHER_TRIGGER_CHUNK_SIZE, static::CHUNK_SIZE);
+        $chunkSize = Config::get(DataImportConstants::PUBLISHER_TRIGGER_CHUNK_SIZE, static::DEFAULT_CHUNK_SIZE);
 
         if (count(static::$importedEntityEvents, COUNT_RECURSIVE) >= $chunkSize) {
             static::triggerEvents();
@@ -86,7 +87,7 @@ class DataImporterPublisher implements DataImporterPublisherInterface
         static::$importedEntityEvents = [];
 
         if ($flushChunkSize === null) {
-            $flushChunkSize = Config::get(DataImportConstants::PUBLISHER_FLUSH_CHUNK_SIZE, static::FLUSH_CHUNK_SIZE);
+            $flushChunkSize = Config::get(DataImportConstants::PUBLISHER_FLUSH_CHUNK_SIZE, static::DEFAULT_FLUSH_CHUNK_SIZE);
         }
 
         if (count(static::$triggeredEventIds, COUNT_RECURSIVE) >= $flushChunkSize) {

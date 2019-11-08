@@ -37,7 +37,7 @@ interface DataImportConstants
 
     /**
      * Specification:
-     * - Defines the size of the chunk to be used in publisher for triggering events to the queue
+     * - Defines the size of the chunk to be used in publisher for triggering events to the queue.
      *
      * @api
      */
@@ -45,7 +45,7 @@ interface DataImportConstants
 
     /**
      * Specification:
-     * - Defines the size of the chunk to be used in publisher for flushing local cache of events
+     * - Defines the size of the chunk to be used in publisher for flushing local cache of events.
      *
      * @api
      */
