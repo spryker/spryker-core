@@ -232,4 +232,7 @@
         <property name="detail" type="string"/>
     </transfer>
 
+    <transfer name="Shipment">
+    </transfer>
+
 </transfers>

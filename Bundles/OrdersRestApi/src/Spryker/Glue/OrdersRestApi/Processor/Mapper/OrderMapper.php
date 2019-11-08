@@ -100,7 +100,8 @@ class OrderMapper implements OrderMapperInterface
             return null;
         }
 
-        $firstItemTransfer = current($orderTransfer->getItems());
+        /** @var \Generated\Shared\Transfer\ItemTransfer $firstItemTransfer */
+        $firstItemTransfer = $orderTransfer->getItems()->getIterator()->current();
         if ($firstItemTransfer->getShipment() === null
             || $firstItemTransfer->getShipment()->getShippingAddress() === null
         ) {

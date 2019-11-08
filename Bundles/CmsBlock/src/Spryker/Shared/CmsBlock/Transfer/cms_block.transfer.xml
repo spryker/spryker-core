@@ -6,6 +6,7 @@
     <transfer name="CmsBlock">
         <property name="idCmsBlock" type="int"/>
         <property name="name" type="string"/>
+        <property name="key" type="string"/>
         <property name="validFrom" type="string"/>
         <property name="validTo" type="string"/>
         <property name="isActive" type="bool"/>
@@ -54,5 +55,8 @@
     <transfer name="KeyTranslation">
         <property name="glossaryKey" type="int"/>
         <property name="locales" type="array" singular="locales"/>
+    </transfer>
+
+    <transfer name="EventEntity">
     </transfer>
 </transfers>

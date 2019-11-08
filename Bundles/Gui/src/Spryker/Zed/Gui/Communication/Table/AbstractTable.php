@@ -666,10 +666,11 @@ abstract class AbstractTable
         $this->total = $query->count();
         $query->orderBy($orderColumn, $order[0][self::SORT_BY_DIRECTION]);
         $searchTerm = $this->getSearchTerm();
+        $searchValue = $searchTerm[static::PARAMETER_VALUE] ?? '';
 
         $isFirst = true;
 
-        if (mb_strlen($searchTerm[self::PARAMETER_VALUE]) > 0) {
+        if (mb_strlen($searchValue) > 0) {
             $query->setIdentifierQuoting(true);
 
             foreach ($config->getSearchable() as $value) {
@@ -685,7 +686,7 @@ abstract class AbstractTable
                     $filter = '::TEXT';
                 }
 
-                $conditionParameter = '%' . mb_strtolower($searchTerm[self::PARAMETER_VALUE]) . '%';
+                $conditionParameter = '%' . mb_strtolower($searchValue) . '%';
                 $condition = sprintf(
                     'LOWER(%s%s) LIKE %s',
                     $value,

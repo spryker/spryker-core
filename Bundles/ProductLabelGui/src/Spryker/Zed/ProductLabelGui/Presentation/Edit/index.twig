@@ -68,9 +68,9 @@
 
 {% block footer_js %}
     {{ parent() }}
-    <script src="/assets/js/spryker-zed-product-label-form.js"></script>
+    <script src="{{ assetsPath('js/spryker-zed-product-label-form.js') }}"></script>
     {% if productLabelTransfer.getIsDynamic() %}
-        <script src="/assets/js/spryker-zed-product-label-dynamic-label.js"></script>
+        <script src="{{ assetsPath('js/spryker-zed-product-label-dynamic-label.js') }}"></script>
     {% endif %}
 {% endblock %}
 
