@@ -250,20 +250,17 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
      *
      * @param string $sku
      * @param string[] $reservedStateNames
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function aggregateProductPackagingUnitReservation(string $sku, array $reservedStateNames, StoreTransfer $storeTransfer): array
+    public function aggregateProductPackagingUnitReservation(string $sku, array $reservedStateNames, ?StoreTransfer $storeTransfer = null): array
     {
         $salesOrderItemQuery = $this->getFactory()
             ->getSalesOrderItemQuery()
             ->groupByAmountSku()
             ->useStateQuery()
                 ->filterByName_In($reservedStateNames)
-            ->endUse()
-            ->useOrderQuery()
-                ->filterByStore($storeTransfer->getName())
             ->endUse()
             ->groupByFkOmsOrderItemState()
             ->innerJoinProcess()
@@ -284,6 +281,15 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
             ->condition('sku', 'spy_sales_order_item.sku = ?', $sku)
             ->condition('amount_sku', 'spy_sales_order_item.amount_sku = ?', $sku)
             ->where(['sku', 'amount_sku'], Criteria::LOGICAL_OR);
+
+        if ($storeTransfer !== null) {
+            $storeTransfer->requireName();
+
+            $salesOrderItemQuery
+                ->useOrderQuery()
+                    ->filterByStore($storeTransfer->getName())
+                ->endUse();
+        }
 
         $salesAggregationTransfers = [];
         foreach ($salesOrderItemQuery->find() as $salesOrderItemAggregation) {
