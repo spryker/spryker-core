@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotBlock\Persistence;
 
+use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 use Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlock;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
@@ -46,17 +47,19 @@ class CmsSlotBlockEntityManager extends AbstractEntityManager implements CmsSlot
     }
 
     /**
-     * @param int $idSlotTemplate
-     * @param int[] $cmsSlotIds
+     * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
      *
      * @return void
      */
-    public function deleteCmsSlotBlocks(int $idSlotTemplate, array $cmsSlotIds): void
+    public function deleteCmsSlotBlocksByCriteria(CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer): void
     {
+        $cmsSlotBlockCriteriaTransfer->requireIdCmsSlotTemplate()
+            ->requireIdCmsSlot();
+
         $this->getFactory()
             ->getCmsSlotBlockQuery()
-            ->filterByFkCmsSlotTemplate($idSlotTemplate)
-            ->filterByFkCmsSlot_In($cmsSlotIds)
+            ->filterByFkCmsSlotTemplate($cmsSlotBlockCriteriaTransfer->getIdCmsSlotTemplate())
+            ->filterByFkCmsSlot($cmsSlotBlockCriteriaTransfer->getIdCmsSlot())
             ->delete();
     }
 }

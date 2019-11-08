@@ -117,8 +117,8 @@ class CmsSlotBlockTable extends AbstractTable
         $header = [
             static::COL_ID_CMS_BLOCK => 'ID',
             static::COL_NAME => 'Name',
-            static::COL_VALID_FROM => 'Valid From',
-            static::COL_VALID_TO => 'Valid To',
+            static::COL_VALID_FROM => 'Valid From (Included)',
+            static::COL_VALID_TO => 'Valid To (Excluded)',
             static::COL_IS_ACTIVE => 'Status',
             static::COL_STORE_RELATION => 'Stores',
             static::COL_ACTIONS => static::COL_ACTIONS,
@@ -144,8 +144,8 @@ class CmsSlotBlockTable extends AbstractTable
             $results[] = [
                 static::COL_ID_CMS_BLOCK => $cmsBlock[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK],
                 static::COL_NAME => $cmsBlock[SpyCmsBlockTableMap::COL_NAME],
-                static::COL_VALID_FROM => $cmsBlock[SpyCmsBlockTableMap::COL_VALID_FROM],
-                static::COL_VALID_TO => $cmsBlock[SpyCmsBlockTableMap::COL_VALID_TO],
+                static::COL_VALID_FROM => $this->formatValidityDateTime($cmsBlock[SpyCmsBlockTableMap::COL_VALID_FROM]),
+                static::COL_VALID_TO => $this->formatValidityDateTime($cmsBlock[SpyCmsBlockTableMap::COL_VALID_TO]),
                 static::COL_IS_ACTIVE => $this->generateStatusLabels($cmsBlock),
                 static::COL_STORE_RELATION => $this->getStoreNames($cmsBlock[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK]),
                 static::COL_ACTIONS => $this->getActionButtons($cmsBlock),
@@ -166,6 +166,18 @@ class CmsSlotBlockTable extends AbstractTable
                 ->filterByFkCmsSlotTemplate($this->idCmsSlotTemplate)
                 ->orderByPosition()
             ->endUse();
+    }
+
+    /**
+     * @param string|null $dateTime
+     *
+     * @return string
+     */
+    protected function formatValidityDateTime(?string $dateTime): string
+    {
+        return $dateTime
+            ? date('F d, Y H:i', strtotime($dateTime))
+            : '-';
     }
 
     /**
@@ -238,6 +250,7 @@ class CmsSlotBlockTable extends AbstractTable
             static::BUTTON_VIEW_BLOCK,
             [
                 'class' => 'btn-view',
+                'target' => '_blank',
             ]
         );
         $actionButtons[] = $this->generateButton(

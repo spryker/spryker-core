@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsSlotBlock\Business;
 
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -27,11 +28,11 @@ class CmsSlotBlockFacade extends AbstractFacade implements CmsSlotBlockFacadeInt
      *
      * @return void
      */
-    public function saveCmsSlotBlockRelations(CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer): void
+    public function createCmsSlotBlockRelations(CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer): void
     {
         $this->getFactory()
             ->createCmsSlotBlockRelationsWriter()
-            ->saveCmsSlotBlockRelations($cmsSlotBlockCollectionTransfer);
+            ->createCmsSlotBlockRelations($cmsSlotBlockCollectionTransfer);
     }
 
     /**
@@ -39,16 +40,32 @@ class CmsSlotBlockFacade extends AbstractFacade implements CmsSlotBlockFacadeInt
      *
      * @api
      *
-     * @param int $idCmsSlotTemplate
-     * @param int $idCmsSlot
+     * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
+     *
+     * @return void
+     */
+    public function deleteCmsSlotBlockRelationsByCriteria(CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer): void
+    {
+        $this->getFactory()
+            ->createCmsSlotBlockRelationsWriter()
+            ->deleteCmsSlotBlockRelationsByCriteria($cmsSlotBlockCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer
      */
-    public function getCmsSlotBlockCollection(int $idCmsSlotTemplate, int $idCmsSlot): CmsSlotBlockCollectionTransfer
-    {
+    public function getCmsSlotBlockCollection(
+        CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
+    ): CmsSlotBlockCollectionTransfer {
         return $this->getFactory()
             ->createCmsSlotBlockReader()
-            ->getCmsSlotBlockCollection($idCmsSlotTemplate, $idCmsSlot);
+            ->getCmsSlotBlockCollection($cmsSlotBlockCriteriaTransfer);
     }
 
     /**

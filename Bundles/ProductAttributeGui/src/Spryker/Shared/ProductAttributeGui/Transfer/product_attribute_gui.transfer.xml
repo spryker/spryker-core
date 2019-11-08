@@ -35,4 +35,7 @@
     <transfer name="ProductManagementAttributeValueTranslation">
     </transfer>
 
+    <transfer name="ProductAbstract">
+    </transfer>
+
 </transfers>
