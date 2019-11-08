@@ -1,0 +1,5 @@
+merchant_key,merchant_opening_hours_date_key,date,time_from,time_to,note
+merchant-profile-data-import-test-key,m-o-h-d-test-1,2020-01-01,,,merchant_weekday_schedule.new_year
+merchant-profile-data-import-test-key,m-o-h-d-test-2,2020-04-10,,,merchant_weekday_schedule.good_friday
+merchant-profile-data-import-test-key,m-o-h-d-test-3,2020-04-12,,,merchant_weekday_schedule.easter_sunday
+merchant-profile-data-import-test-key,m-o-h-d-test-4,2021-12-31,14:00:00,17:00:00,

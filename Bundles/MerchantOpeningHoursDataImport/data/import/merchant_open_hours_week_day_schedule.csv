@@ -1,0 +1,17 @@
+merchant_key,merchant_opening_hours_weekday_key,week_day_key,time_from,time_to
+roan-gmbh-und-co-k-g,m-o-h-w-d-1,MONDAY,7:00:00,13:00:00
+roan-gmbh-und-co-k-g,m-o-h-w-d-2,MONDAY,14:00:00,20:00:00
+roan-gmbh-und-co-k-g,m-o-h-w-d-3,TUESDAY,7:00:00,20:00:00
+roan-gmbh-und-co-k-g,m-o-h-w-d-4,WEDNESDAY,7:00:00,20:00:00
+roan-gmbh-und-co-k-g,m-o-h-w-d-5,THURSDAY,7:00:00,20:00:00
+roan-gmbh-und-co-k-g,m-o-h-w-d-6,FRIDAY,7:00:00,20:00:00
+roan-gmbh-und-co-k-g,m-o-h-w-d-7,SATURDAY,7:00:00,20:00:00
+roan-gmbh-und-co-k-g,m-o-h-w-d-8,SUNDAY,,
+steenbok,m-o-h-w-d-9,MONDAY,8:00:00,13:00:00
+steenbok,m-o-h-w-d-10,MONDAY,14:00:00,19:00:00
+steenbok,m-o-h-w-d-11,TUESDAY,8:00:00,19:00:00
+steenbok,m-o-h-w-d-12,WEDNESDAY,8:00:00,19:00:00
+steenbok,m-o-h-w-d-13,THURSDAY,8:00:00,19:00:00
+steenbok,m-o-h-w-d-14,FRIDAY,8:00:00,19:00:00
+steenbok,m-o-h-w-d-15,SATURDAY,8:00:00,19:00:00
+steenbok,m-o-h-w-d-16,SUNDAY,,
