@@ -11,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RestOrderShipmentTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Spryker\Shared\Shipment\ShipmentConstants;
 
 class OrderShipmentMapper implements OrderShipmentMapperInterface
 {
