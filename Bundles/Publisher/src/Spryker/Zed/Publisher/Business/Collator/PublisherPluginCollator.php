@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Publisher\Business\Merger;
+namespace Spryker\Zed\Publisher\Business\Collator;
 
 use Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface;
 
-class PublisherPluginMerger implements PublisherPluginMergerInterface
+class PublisherPluginCollator implements PublisherPluginCollatorInterface
 {
     /**
      * @var \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryPluginInterface[]

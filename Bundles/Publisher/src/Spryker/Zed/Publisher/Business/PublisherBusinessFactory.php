@@ -8,8 +8,8 @@
 namespace Spryker\Zed\Publisher\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Publisher\Business\Merger\PublisherPluginMerger;
-use Spryker\Zed\Publisher\Business\Merger\PublisherPluginMergerInterface;
+use Spryker\Zed\Publisher\Business\Collator\PublisherPluginCollator;
+use Spryker\Zed\Publisher\Business\Collator\PublisherPluginCollatorInterface;
 use Spryker\Zed\Publisher\Business\Registry\PublisherEventRegistry;
 use Spryker\Zed\Publisher\PublisherDependencyProvider;
 use Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface;
@@ -20,11 +20,11 @@ use Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface;
 class PublisherBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\Publisher\Business\Merger\PublisherPluginMergerInterface
+     * @return \Spryker\Zed\Publisher\Business\Collator\PublisherPluginCollatorInterface
      */
-    public function createPublisherPluginMerger(): PublisherPluginMergerInterface
+    public function createPublisherPluginCollator(): PublisherPluginCollatorInterface
     {
-        return new PublisherPluginMerger(
+        return new PublisherPluginCollator(
             $this->getPublisherRegistryPlugins(),
             $this->createPublisherEventRegistry()
         );

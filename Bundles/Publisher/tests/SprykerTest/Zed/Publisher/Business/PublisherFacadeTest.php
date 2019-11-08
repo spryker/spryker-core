@@ -11,7 +11,7 @@ use Codeception\Test\Unit;
 use Spryker\Zed\Publisher\Business\Registry\PublisherEventRegistry;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherRegistryPluginInterface;
 use Spryker\Zed\PublisherExtension\Dependency\PublisherEventRegistryInterface;
-use SprykerTest\Zed\Publisher\Business\Merger\MockPluginMerger;
+use SprykerTest\Zed\Publisher\Business\Collator\MockPublishPluginCollator;
 
 /**
  * Auto-generated group annotations
@@ -75,7 +75,7 @@ class PublisherFacadeTest extends Unit
      */
     protected function setPublisherRegistryPlugins(): void
     {
-        $this->tester->mockFactoryMethod('createPublisherPluginMerger', new MockPluginMerger(
+        $this->tester->mockFactoryMethod('createPublisherPluginCollator', new MockPublishPluginCollator(
             $this->getPublisherRegistryPlugins(),
             $this->createPublisherEventRegistry()
         ));

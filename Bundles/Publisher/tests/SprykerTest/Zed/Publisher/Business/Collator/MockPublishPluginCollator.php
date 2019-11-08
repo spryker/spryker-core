@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Publisher\Business\Merger;
+namespace SprykerTest\Zed\Publisher\Business\Collator;
 
-use Spryker\Zed\Publisher\Business\Merger\PublisherPluginMerger;
+use Spryker\Zed\Publisher\Business\Collator\PublisherPluginCollator;
 
-class MockPluginMerger extends PublisherPluginMerger
+class MockPublishPluginCollator extends PublisherPluginCollator
 {
     /**
      * @return array

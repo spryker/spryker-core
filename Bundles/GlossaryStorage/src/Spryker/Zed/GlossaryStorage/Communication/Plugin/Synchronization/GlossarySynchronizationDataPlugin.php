@@ -89,7 +89,7 @@ class GlossarySynchronizationDataPlugin extends AbstractPlugin implements Synchr
      */
     public function getQueueName(): string
     {
-        return GlossaryStorageConfig::SYNC_STORAGE_QUEUE;
+        return GlossaryStorageConfig::SYNC_QUEUE;
     }
 
     /**
