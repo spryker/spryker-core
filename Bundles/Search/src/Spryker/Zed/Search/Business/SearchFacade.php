@@ -366,8 +366,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Sets up search sources based on the loaded schema definitions if they don't exist.
+     * {@inheritDoc}
      *
      * @api
      *
