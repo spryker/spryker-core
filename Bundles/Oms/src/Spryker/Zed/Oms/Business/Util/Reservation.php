@@ -142,7 +142,7 @@ class Reservation implements ReservationInterface
     {
         $idStore = $this->getIdStore($storeTransfer);
 
-        return $this->omsRepository->getOmsReservedProductQuantityByConcreteProductSkusForStore($skus, $idStore);
+        return $this->omsRepository->getSumOmsReservedProductQuantityByConcreteProductSkusForStore($skus, $idStore);
     }
 
     /**

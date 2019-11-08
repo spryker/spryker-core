@@ -23,26 +23,6 @@ class AvailabilityToProductFacadeBridge implements AvailabilityToProductFacadeIn
     }
 
     /**
-     * @param string $productAbstractSku
-     *
-     * @return string[]
-     */
-    public function getProductConcreteSkusByAbstractProductSku(string $productAbstractSku): array
-    {
-        return $this->productFacade->getProductConcreteSkusByAbstractProductSku($productAbstractSku);
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
-     */
-    public function getConcreteProductsByAbstractProductId($idProductAbstract)
-    {
-        return $this->productFacade->getConcreteProductsByAbstractProductId($idProductAbstract);
-    }
-
-    /**
      * @param string $sku
      *
      * @return bool

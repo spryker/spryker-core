@@ -10,20 +10,6 @@ namespace Spryker\Zed\Availability\Dependency\Facade;
 interface AvailabilityToProductFacadeInterface
 {
     /**
-     * @param string $productAbstractSku
-     *
-     * @return string[]
-     */
-    public function getProductConcreteSkusByAbstractProductSku(string $productAbstractSku): array;
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
-     */
-    public function getConcreteProductsByAbstractProductId($idProductAbstract);
-
-    /**
      * @param string $sku
      *
      * @return bool

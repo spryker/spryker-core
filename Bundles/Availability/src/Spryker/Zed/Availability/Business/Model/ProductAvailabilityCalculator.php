@@ -80,7 +80,7 @@ class ProductAvailabilityCalculator implements ProductAvailabilityCalculatorInte
      */
     public function calculateAvailabilityForProductAbstract(string $abstractSku, StoreTransfer $storeTransfer): Decimal
     {
-        $concreteProductSkus = $this->productFacade->getProductConcreteSkusByAbstractProductSku($abstractSku);
+        $concreteProductSkus = $this->availabilityRepository->getProductConcreteSkusByAbstractProductSku($abstractSku);
         if ($concreteProductSkus === []) {
             return new Decimal(0);
         }

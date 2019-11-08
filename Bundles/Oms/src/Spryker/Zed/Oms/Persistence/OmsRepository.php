@@ -85,7 +85,7 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function getOmsReservedProductQuantityByConcreteProductSkusForStore(array $concreteSkus, int $idStore): Decimal
+    public function getSumOmsReservedProductQuantityByConcreteProductSkusForStore(array $concreteSkus, int $idStore): Decimal
     {
         $productReservationTotalQuantity = $this->getFactory()
             ->createOmsProductReservationQuery()

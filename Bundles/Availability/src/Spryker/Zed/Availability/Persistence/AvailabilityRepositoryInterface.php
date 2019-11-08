@@ -70,4 +70,11 @@ interface AvailabilityRepositoryInterface
      * @return string|null
      */
     public function getProductConcreteSkuByConcreteId(int $idProductConcrete): ?string;
+
+    /**
+     * @param string $productAbstractSku
+     *
+     * @return string[]
+     */
+    public function getProductConcreteSkusByAbstractProductSku(string $productAbstractSku): array;
 }
