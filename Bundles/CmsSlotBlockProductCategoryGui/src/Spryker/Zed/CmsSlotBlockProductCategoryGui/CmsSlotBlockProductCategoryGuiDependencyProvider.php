@@ -30,11 +30,22 @@ class CmsSlotBlockProductCategoryGuiDependencyProvider extends AbstractBundleDep
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
+        $container = $this->addTranslatorFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = $this->addProductFacade($container);
         $container = $this->addProductQueryContainer($container);
         $container = $this->addCategoryFacade($container);
-        $container = $this->addProductFacade($container);
         $container = $this->addLocaleFacade($container);
-        $container = $this->addTranslatorFacade($container);
 
         return $container;
     }

@@ -7,14 +7,10 @@
 
 namespace Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\DataProvider;
 
-use Generated\Shared\Transfer\CategoryCollectionTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Form\ProductCategorySlotBlockConditionForm;
-use Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Formatter\ProductLabelFormatterInterface;
-use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToCategoryFacadeInterface;
-use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToLocaleFacadeInterface;
+use Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Reader\Category\CmsSlotBlockProductCategoryGuiCategoryReaderInterface;
+use Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Reader\Product\CmsSlotBlockProductCategoryGuiProductReaderInterface;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToTranslatorFacadeInterface;
-use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\QueryContainer\CmsSlotBlockProductCategoryGuiToProductQueryContainerInterface;
 
 class ProductCategorySlotBlockDataProvider implements ProductCategorySlotBlockDataProviderInterface
 {
@@ -22,24 +18,14 @@ class ProductCategorySlotBlockDataProvider implements ProductCategorySlotBlockDa
     protected const KEY_OPTION_SPECIFIC_PRODUCTS = 'Specific Product Pages';
 
     /**
-     * @var \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\QueryContainer\CmsSlotBlockProductCategoryGuiToProductQueryContainerInterface
+     * @var \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Reader\Product\CmsSlotBlockProductCategoryGuiProductReaderInterface
      */
-    protected $productQueryContainer;
+    protected $cmsSlotBlockProductCategoryGuiProductReader;
 
     /**
-     * @var \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Formatter\ProductLabelFormatterInterface
+     * @var \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Reader\Category\CmsSlotBlockProductCategoryGuiCategoryReaderInterface
      */
-    protected $productLabelFormatter;
-
-    /**
-     * @var \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToCategoryFacadeInterface
-     */
-    protected $categoryFacade;
-
-    /**
-     * @var \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToLocaleFacadeInterface
-     */
-    protected $localeFacade;
+    protected $cmsSlotBlockProductCategoryGuiCategoryReader;
 
     /**
      * @var \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToTranslatorFacadeInterface
@@ -47,23 +33,17 @@ class ProductCategorySlotBlockDataProvider implements ProductCategorySlotBlockDa
     protected $translatorFacade;
 
     /**
-     * @param \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\QueryContainer\CmsSlotBlockProductCategoryGuiToProductQueryContainerInterface $productQueryContainer
-     * @param \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Formatter\ProductLabelFormatterInterface $productLabelFormatter
-     * @param \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToCategoryFacadeInterface $categoryFacade
-     * @param \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Reader\Product\CmsSlotBlockProductCategoryGuiProductReaderInterface $cmsSlotBlockProductCategoryGuiProductReader
+     * @param \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Reader\Category\CmsSlotBlockProductCategoryGuiCategoryReaderInterface $cmsSlotBlockProductCategoryGuiCategoryReader
      * @param \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToTranslatorFacadeInterface $translatorFacade
      */
     public function __construct(
-        CmsSlotBlockProductCategoryGuiToProductQueryContainerInterface $productQueryContainer,
-        ProductLabelFormatterInterface $productLabelFormatter,
-        CmsSlotBlockProductCategoryGuiToCategoryFacadeInterface $categoryFacade,
-        CmsSlotBlockProductCategoryGuiToLocaleFacadeInterface $localeFacade,
+        CmsSlotBlockProductCategoryGuiProductReaderInterface $cmsSlotBlockProductCategoryGuiProductReader,
+        CmsSlotBlockProductCategoryGuiCategoryReaderInterface $cmsSlotBlockProductCategoryGuiCategoryReader,
         CmsSlotBlockProductCategoryGuiToTranslatorFacadeInterface $translatorFacade
     ) {
-        $this->productQueryContainer = $productQueryContainer;
-        $this->productLabelFormatter = $productLabelFormatter;
-        $this->categoryFacade = $categoryFacade;
-        $this->localeFacade = $localeFacade;
+        $this->cmsSlotBlockProductCategoryGuiProductReader = $cmsSlotBlockProductCategoryGuiProductReader;
+        $this->cmsSlotBlockProductCategoryGuiCategoryReader = $cmsSlotBlockProductCategoryGuiCategoryReader;
         $this->translatorFacade = $translatorFacade;
     }
 
@@ -76,8 +56,10 @@ class ProductCategorySlotBlockDataProvider implements ProductCategorySlotBlockDa
     {
         return [
             ProductCategorySlotBlockConditionForm::OPTION_ALL_ARRAY => $this->getAllOptions(),
-            ProductCategorySlotBlockConditionForm::OPTION_PRODUCT_ARRAY => $this->getProductAbstracts($productAbstractIds),
-            ProductCategorySlotBlockConditionForm::OPTION_CATEGORY_ARRAY => $this->getCategories(),
+            ProductCategorySlotBlockConditionForm::OPTION_PRODUCT_ARRAY => $this->cmsSlotBlockProductCategoryGuiProductReader
+                ->getProductAbstracts($productAbstractIds),
+            ProductCategorySlotBlockConditionForm::OPTION_CATEGORY_ARRAY => $this->cmsSlotBlockProductCategoryGuiCategoryReader
+                ->getCategories(),
         ];
     }
 
@@ -90,72 +72,5 @@ class ProductCategorySlotBlockDataProvider implements ProductCategorySlotBlockDa
             $this->translatorFacade->trans(static::KEY_OPTION_ALL_PRODUCTS) => true,
             $this->translatorFacade->trans(static::KEY_OPTION_SPECIFIC_PRODUCTS) => false,
         ];
-    }
-
-    /**
-     * @param int[]|null $productAbstractIds
-     *
-     * @return int[]
-     */
-    protected function getProductAbstracts(?array $productAbstractIds = []): array
-    {
-        if (!$productAbstractIds) {
-             return [];
-        }
-
-        $idLocale = $this->localeFacade->getCurrentLocale()->getIdLocale();
-        $productAbstractEntityCollection = $this->productQueryContainer
-                ->queryProductAbstractWithName($idLocale)
-                ->filterByIdProductAbstract_In($productAbstractIds)
-                ->find();
-
-        return $this->getProductAbstractIdsFromCollection($productAbstractEntityCollection);
-    }
-
-    /**
-     * @return int[]
-     */
-    protected function getCategories(): array
-    {
-        $categoryCollectionTransfer = $this->categoryFacade
-            ->getAllCategoryCollection($this->localeFacade->getCurrentLocale());
-
-        return $this->getCategoryIdsFromCollection($categoryCollectionTransfer);
-    }
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[] $productAbstractEntityCollection
-     *
-     * @return int[]
-     */
-    protected function getProductAbstractIdsFromCollection(ObjectCollection $productAbstractEntityCollection): array
-    {
-        $productIds = [];
-
-        foreach ($productAbstractEntityCollection as $productAbstract) {
-            $label = $this->productLabelFormatter->format(
-                $productAbstract->getName(),
-                $productAbstract->getSku()
-            );
-            $productIds[$label] = $productAbstract->getIdProductAbstract();
-        }
-
-        return $productIds;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CategoryCollectionTransfer $categoryCollectionTransfer
-     *
-     * @return int[]
-     */
-    protected function getCategoryIdsFromCollection(CategoryCollectionTransfer $categoryCollectionTransfer): array
-    {
-        $categoryIds = [];
-
-        foreach ($categoryCollectionTransfer->getCategories() as $categoryTransfer) {
-            $categoryIds[$categoryTransfer->getName()] = $categoryTransfer->getIdCategory();
-        }
-
-        return $categoryIds;
     }
 }
