@@ -21,11 +21,20 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     protected $productOfferFacade;
 
     /**
-     * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade
+     * @var \Spryker\Zed\MerchantProductOfferStorageExtension\Dependency\Plugin\MerchantProductOfferStorageExpanderPluginInterface[]
      */
-    public function __construct(MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade)
-    {
+    protected $merchantProductOfferStorageExpanderPlugins;
+
+    /**
+     * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade
+     * @param \Spryker\Zed\MerchantProductOfferStorageExtension\Dependency\Plugin\MerchantProductOfferStorageExpanderPluginInterface[] $merchantProductOfferStorageExpanderPlugins
+     */
+    public function __construct(
+        MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade,
+        array $merchantProductOfferStorageExpanderPlugins
+    ) {
         $this->productOfferFacade = $productOfferFacade;
+        $this->merchantProductOfferStorageExpanderPlugins = $merchantProductOfferStorageExpanderPlugins;
     }
 
     /**
@@ -43,7 +52,10 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
             $productOfferStorageEntity = SpyProductOfferStorageQuery::create()
                 ->filterByProductOfferReference($productOfferTransfer->getProductOfferReference())
                 ->findOneOrCreate();
-            $productOfferStorageEntity->setData($this->createProductOfferStorageTransfer($productOfferTransfer)->modifiedToArray());
+            $productOfferStorageTransfer = $this->createProductOfferStorageTransfer($productOfferTransfer);
+            $productOfferStorageTransfer = $this->expandMerchantProductOfferStoragePlugins($productOfferStorageTransfer);
+            
+            $productOfferStorageEntity->setData($productOfferStorageTransfer->modifiedToArray());
 
             $productOfferStorageEntity->save();
         }
@@ -75,6 +87,20 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
         $productOfferStorageTransfer->setIdProductOffer($productOfferTransfer->getIdProductOffer());
         $productOfferStorageTransfer->setIdMerchant($productOfferTransfer->getFkMerchant());
         $productOfferStorageTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
+
+        return $productOfferStorageTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer $productOfferStorageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer
+     */
+    protected function expandMerchantProductOfferStoragePlugins(ProductOfferStorageTransfer $productOfferStorageTransfer): ProductOfferStorageTransfer
+    {
+        foreach ($this->merchantProductOfferStorageExpanderPlugins as $merchantProductOfferStorageExpanderPlugin) {
+            $productOfferStorageTransfer = $merchantProductOfferStorageExpanderPlugin->expand($productOfferStorageTransfer);
+        }
 
         return $productOfferStorageTransfer;
     }

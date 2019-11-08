@@ -326,7 +326,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
                 SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => $productOfferReference,
             ]);
 
-            $this->eventFacade->trigger(MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_KEY_PUBLISH, $eventEntityTransfer);
+            $this->eventFacade->trigger(MerchantProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_UPDATE, $eventEntityTransfer);
         }
     }
 

@@ -17,7 +17,8 @@
     "spryker/propel-orm": "^1.5.0",
     "spryker/store": "^1.10.0",
     "spryker/synchronization-behavior": "^1.0.0",
-    "spryker/synchronization-extension": "^1.1.0"
+    "spryker/synchronization-extension": "^1.0.0",
+    "spryker/merchant-product-offer-storage-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

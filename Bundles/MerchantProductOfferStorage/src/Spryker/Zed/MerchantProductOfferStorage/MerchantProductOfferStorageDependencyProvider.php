@@ -19,6 +19,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
 {
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
+    public const PLUGINS_MERCHANT_PRODUCT_OFFER_STORAGE_EXPANDER = 'PLUGINS_MERCHANT_PRODUCT_OFFER_STORAGE_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -44,6 +45,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
         parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addProductOfferFacade($container);
+        $container = $this->addMerchantProductOfferStorageExpanderPlugins($container);
 
         return $container;
     }
@@ -78,5 +80,27 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantProductOfferStorageExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGINS_MERCHANT_PRODUCT_OFFER_STORAGE_EXPANDER] = function () {
+            return $this->getMerchantProductOfferStorageExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductOfferStorageExtension\Dependency\Plugin\MerchantProductOfferStorageExpanderPluginInterface[]
+     */
+    protected function getMerchantProductOfferStorageExpanderPlugins()
+    {
+        return [];
     }
 }
