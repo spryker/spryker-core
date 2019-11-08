@@ -16,6 +16,7 @@ use Orm\Zed\Url\Persistence\Base\SpyUrlQuery;
 use Orm\Zed\Url\Persistence\SpyUrl;
 use Orm\Zed\Url\Persistence\SpyUrlRedirect;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 use Spryker\Zed\Url\Business\UrlFacade;
 
 /**
@@ -64,7 +65,7 @@ class RedirectOverwriteTest extends Unit
      */
     public function testOverwritingRedirectedUrlsWithNewRedirectUrlsShouldNotBePossible()
     {
-        $this->expectException('Spryker\Zed\Url\Business\Exception\UrlExistsException');
+        $this->expectException(UrlExistsException::class);
         $localeTransfer = $this->createLocaleEntity();
         $this->createUrlRedirectEntity('/test/source/url', '/test/redirected/url', $localeTransfer->getIdLocale());
         $this->urlFacade->createUrlRedirect($this->createUrlRedirectTransfer('/test/source/url', '/test/redirected/url2', $localeTransfer->getIdLocale()));

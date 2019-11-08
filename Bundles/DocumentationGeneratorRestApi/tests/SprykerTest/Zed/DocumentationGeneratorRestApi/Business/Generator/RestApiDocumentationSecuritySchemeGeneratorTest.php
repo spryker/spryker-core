@@ -53,6 +53,6 @@ class RestApiDocumentationSecuritySchemeGeneratorTest extends Unit
         $this->assertSame([
             'type' => 'http',
             'scheme' => 'bearer',
-        ], $securitySchemes['static::BEARER_AUTH']);
+        ], $securitySchemes[static::BEARER_AUTH]);
     }
 }

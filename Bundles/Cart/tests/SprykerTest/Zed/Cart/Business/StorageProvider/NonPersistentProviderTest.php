@@ -237,7 +237,6 @@ class NonPersistentProviderTest extends Unit
     }
 
     /**
-     *
      * @return void
      */
     public function testIncreaseWithZeroValue()
