@@ -7,37 +7,152 @@
 
 namespace Spryker\Client\StorageDatabase\Storage\Reader;
 
+use PDOStatement;
+
 class MySqlStorageReader extends AbstractStorageReader
 {
+    protected const DEFAULT_PLACEHOLDER_KEY = ':key';
+    protected const DEFAULT_PLACEHOLDER_ALIAS_KEY = ':alias_key';
+
+    protected const SELECT_STATEMENT_PATTERN = '
+      SELECT %1$s as resource_key, (CASE WHEN `key` = %1$s THEN data WHEN alias_keys -> %2$s IS NOT NULL THEN alias_keys -> %2$s END) AS resource_data
+        FROM %3$s
+        HAVING resource_data IS NOT NULL
+    ';
+
     /**
-     * @param string $keyPlaceholder
+     * @param string $resourceKey
      *
-     * @return string
+     * @return \PDOStatement
      */
-    protected function buildValueInAliasKeysPredicateFragment(string $keyPlaceholder): string
+    protected function createSingleSelectStatementForResourceKey(string $resourceKey): PDOStatement
     {
-        return sprintf('JSON_CONTAINS(%s, %s)', static::FIELD_ALIAS_KEYS, $keyPlaceholder);
+        $tableName = $this->tableNameResolver->resolveByResourceKey($resourceKey);
+        $selectSqlString = $this->buildSelectQuerySql($tableName);
+        $statement = $this->createPreparedStatement($selectSqlString);
+        $statement->bindValue(static::DEFAULT_PLACEHOLDER_KEY, $resourceKey);
+        $statement->bindValue(static::DEFAULT_PLACEHOLDER_ALIAS_KEY, $this->formatKeyAsAsMySqlSearchPath($resourceKey));
+
+        return $statement;
     }
 
     /**
-     * @param string $keyPlaceholder
+     * @param array $resourceKeys
      *
-     * @return string
+     * @return \PDOStatement
      */
-    protected function buildKeyEqualsValuePredicateFragment(string $keyPlaceholder): string
+    protected function createMultiSelectStatementForResourceKeys(array $resourceKeys): PDOStatement
     {
-        return sprintf('`%s` = %s', static::FIELD_KEY, $keyPlaceholder);
+        $queryDataPerTable = $this->prepareMultiTableQueryData($resourceKeys);
+        $statement = $this->buildMultiTableSelectStatement($queryDataPerTable);
+
+        return $this->bindValuesToStatement($statement, $queryDataPerTable);
     }
 
     /**
-     * @param string[] $keyPlaceholders
+     * @param string[] $resourceKeys
+     *
+     * @return array
+     */
+    protected function prepareMultiTableQueryData(array $resourceKeys): array
+    {
+        $multiTableQueryData = [];
+
+        foreach ($resourceKeys as $index => $resourceKey) {
+            $tableName = $this->tableNameResolver->resolveByResourceKey($resourceKey);
+            $keyPlaceholder = $this->buildKeyPlaceholder($index);
+            $aliasKeyPlaceholder = $this->buildAliasKeysPlaceholder($index);
+            $multiTableQueryData[$tableName][] = [
+                $keyPlaceholder => $resourceKey,
+                $aliasKeyPlaceholder => $this->formatKeyAsAsMySqlSearchPath($resourceKey),
+            ];
+        }
+
+        return $multiTableQueryData;
+    }
+
+    /**
+     * @param array $queryDataPerTable
+     *
+     * @return \PDOStatement
+     */
+    protected function buildMultiTableSelectStatement(array $queryDataPerTable): PDOStatement
+    {
+        $selectFragments = [];
+
+        foreach ($queryDataPerTable as $tableName => $tableQueryData) {
+            foreach ($tableQueryData as $dataSet) {
+                [$keyPlaceholder, $aliasKeyPlaceholder] = array_keys($dataSet);
+                $selectFragments[] = $this->buildSelectQuerySql($tableName, $keyPlaceholder, $aliasKeyPlaceholder);
+            }
+        }
+
+        $selectSqlString = implode(' UNION ', $selectFragments);
+
+        return $this->createPreparedStatement($selectSqlString);
+    }
+
+    /**
+     * @param \PDOStatement $statement
+     * @param string[][] $queryDataPerTable
+     *
+     * @return \PDOStatement
+     */
+    protected function bindValuesToStatement(PDOStatement $statement, array $queryDataPerTable): PDOStatement
+    {
+        foreach ($queryDataPerTable as $queryData) {
+            foreach (array_merge(...$queryData) as $placeholder => $value) {
+                $statement->bindValue($placeholder, $value);
+            }
+        }
+
+        return $statement;
+    }
+
+    /**
+     * @param string $tableName
+     * @param string $keyPlaceholder
+     * @param string $aliasKeyPlaceholder
      *
      * @return string
      */
-    protected function buildKeyInValuesPredicateFragment(array $keyPlaceholders): string
+    protected function buildSelectQuerySql(string $tableName, string $keyPlaceholder = self::DEFAULT_PLACEHOLDER_KEY, string $aliasKeyPlaceholder = self::DEFAULT_PLACEHOLDER_ALIAS_KEY): string
     {
-        $keyInCriterion = implode(',', $keyPlaceholders);
+        return sprintf(
+            static::SELECT_STATEMENT_PATTERN,
+            $keyPlaceholder,
+            $aliasKeyPlaceholder,
+            $tableName
+        );
+    }
 
-        return sprintf('`%s` IN (%s)', static::FIELD_KEY, $keyInCriterion);
+    /**
+     * @param string $key
+     *
+     * @return string
+     */
+    protected function formatKeyAsAsMySqlSearchPath(string $key): string
+    {
+        return sprintf('$."%s"', $key);
+    }
+
+    /**
+     * @param int $index
+     *
+     * @return string
+     */
+    protected function buildKeyPlaceholder(int $index = 0): string
+    {
+        return static::DEFAULT_PLACEHOLDER_KEY . $index;
+    }
+
+    /**
+     * @param int $index
+     *
+     * @return string
+     */
+    protected function buildAliasKeysPlaceholder(int $index = 0): string
+    {
+        return static::DEFAULT_PLACEHOLDER_ALIAS_KEY . $index;
     }
 }

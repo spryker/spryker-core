@@ -77,8 +77,27 @@ class StorageDatabase implements StorageDatabaseInterface
             return [];
         }
 
-        $results = array_combine($this->getPrefixedKeys($keys), $this->getStorageReaderPlugin()->getMulti($keys));
+        $results = $this->getStorageReaderPlugin()->getMulti($keys);
+        $results = $this->combineKeysWithValues($keys, $results);
         $this->addMultiReadAccessStats($keys);
+
+        return $results;
+    }
+
+    /**
+     * @param string[] $keys
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function combineKeysWithValues(array $keys, array $data): array
+    {
+        $results = [];
+
+        foreach ($keys as $key) {
+            $prefixedKey = $this->getPrefixedKeyName($key);
+            $results[$prefixedKey] = isset($data[$key]) ? $data[$key] : null;
+        }
 
         return $results;
     }
