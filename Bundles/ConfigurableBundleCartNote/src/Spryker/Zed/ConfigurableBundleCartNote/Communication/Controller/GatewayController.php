@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundleCartNote\Communication\Controller;
 
-use Generated\Shared\Transfer\ConfigurableBundleCartNoteRequestTransfer;
+use Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
@@ -17,13 +17,13 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 class GatewayController extends AbstractGatewayController
 {
     /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleCartNoteRequestTransfer $configurableBundleCartNoteRequestTransfer
+     * @param \Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function setCartNoteToConfigurableBundleAction(
-        ConfigurableBundleCartNoteRequestTransfer $configurableBundleCartNoteRequestTransfer
+        ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
     ): QuoteResponseTransfer {
-        return $this->getFacade()->setCartNoteToConfigurableBundle($configurableBundleCartNoteRequestTransfer);
+        return $this->getFacade()->setCartNoteToConfigurableBundle($configuredBundleCartNoteRequestTransfer);
     }
 }

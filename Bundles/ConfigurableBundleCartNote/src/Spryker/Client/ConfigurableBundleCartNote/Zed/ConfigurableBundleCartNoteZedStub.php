@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ConfigurableBundleCartNote\Zed;
 
-use Generated\Shared\Transfer\ConfigurableBundleCartNoteRequestTransfer;
+use Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Client\ConfigurableBundleCartNote\Dependency\Client\ConfigurableBundleCartNoteToZedRequestClientInterface;
 
@@ -27,17 +27,17 @@ class ConfigurableBundleCartNoteZedStub implements ConfigurableBundleCartNoteZed
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleCartNoteRequestTransfer $configurableBundleCartNoteRequestTransfer
+     * @param \Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function setCartNoteToConfigurableBundle(
-        ConfigurableBundleCartNoteRequestTransfer $configurableBundleCartNoteRequestTransfer
+        ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
     ): QuoteResponseTransfer {
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
         $quoteResponseTransfer = $this->zedRequestClient->call(
             '/configurable-bundle-cart-note/gateway/set-cart-note-to-configurable-bundle',
-            $configurableBundleCartNoteRequestTransfer
+            $configuredBundleCartNoteRequestTransfer
         );
 
         return $quoteResponseTransfer;

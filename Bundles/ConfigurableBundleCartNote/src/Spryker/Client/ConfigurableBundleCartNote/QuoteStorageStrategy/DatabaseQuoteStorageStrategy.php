@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ConfigurableBundleCartNote\QuoteStorageStrategy;
 
-use Generated\Shared\Transfer\ConfigurableBundleCartNoteRequestTransfer;
+use Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Client\ConfigurableBundleCartNote\Dependency\Client\ConfigurableBundleCartNoteToQuoteClientInterface;
 use Spryker\Client\ConfigurableBundleCartNote\Zed\ConfigurableBundleCartNoteZedStubInterface;
@@ -47,15 +47,14 @@ class DatabaseQuoteStorageStrategy implements QuoteStorageStrategyInterface
     }
 
     /**
-     * @param string $cartNote
-     * @param string $configurableBundleGroupKey
+     * @param \Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setCartNoteToConfigurableBundle(string $cartNote, string $configurableBundleGroupKey): QuoteResponseTransfer
-    {
-        $configurableBundleCartNoteRequestTransfer = $this->createConfigurableBundleCartNoteRequestTransfer($cartNote, $configurableBundleGroupKey);
-        $quoteResponseTransfer = $this->configurableBundleCartNoteZedStub->setCartNoteToConfigurableBundle($configurableBundleCartNoteRequestTransfer);
+    public function setCartNoteToConfigurableBundle(
+        ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
+    ): QuoteResponseTransfer {
+        $quoteResponseTransfer = $this->persistCartNoteToConfigurableBundle($configuredBundleCartNoteRequestTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
@@ -67,22 +66,18 @@ class DatabaseQuoteStorageStrategy implements QuoteStorageStrategyInterface
     }
 
     /**
-     * @param string $cartNote
-     * @param string $configurableBundleGroupKey
+     * @param \Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleCartNoteRequestTransfer
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    protected function createConfigurableBundleCartNoteRequestTransfer(
-        string $cartNote,
-        string $configurableBundleGroupKey
-    ): ConfigurableBundleCartNoteRequestTransfer {
+    protected function persistCartNoteToConfigurableBundle(
+        ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
+    ): QuoteResponseTransfer {
         $quoteTransfer = $this->quoteClient->getQuote();
-        $customerTransfer = $quoteTransfer->getCustomer();
+        $configuredBundleCartNoteRequestTransfer
+            ->setCustomer($quoteTransfer->getCustomer())
+            ->setIdQuote($quoteTransfer->getIdQuote());
 
-        return (new ConfigurableBundleCartNoteRequestTransfer())
-            ->setCustomer($customerTransfer)
-            ->setIdQuote($quoteTransfer->getIdQuote())
-            ->setConfigurableBundleGroupKey($configurableBundleGroupKey)
-            ->setCartNote($cartNote);
+        return $this->configurableBundleCartNoteZedStub->setCartNoteToConfigurableBundle($configuredBundleCartNoteRequestTransfer);
     }
 }

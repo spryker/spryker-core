@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ConfigurableBundleCartNote\QuoteStorageStrategy;
 
+use Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -38,30 +39,52 @@ class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
     }
 
     /**
-     * @param string $cartNote
-     * @param string $configurableBundleGroupKey
+     * @param \Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setCartNoteToConfigurableBundle(string $cartNote, string $configurableBundleGroupKey): QuoteResponseTransfer
-    {
-        $quoteResponseTransfer = (new QuoteResponseTransfer())
-            ->setIsSuccessful(false);
-        $quoteTransfer = $this->quoteClient->getQuote();
-        $itemCollectionTransfer = $this->getItemCollectionTransferByConfigurableBundleGroupKey($quoteTransfer, $configurableBundleGroupKey);
+    public function setCartNoteToConfigurableBundle(
+        ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
+    ): QuoteResponseTransfer {
+        $quoteResponseTransfer = $this->storeCartNoteToConfigurableBundle($configuredBundleCartNoteRequestTransfer);
 
-        if ($itemCollectionTransfer->getItems()->count() === 0) {
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }
 
-        foreach ($itemCollectionTransfer->getItems() as $itemTransfer) {
-            $itemTransfer->getConfiguredBundle()->setCartNote($cartNote);
-        }
-
-        $this->quoteClient->setQuote($quoteTransfer);
-        $quoteResponseTransfer->setIsSuccessful(true);
+        $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
 
         return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function storeCartNoteToConfigurableBundle(
+        ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
+    ): QuoteResponseTransfer {
+        $quoteTransfer = $this->quoteClient->getQuote();
+        $itemCollectionTransfer = $this->getItemCollectionTransferByConfigurableBundleGroupKey(
+            $quoteTransfer,
+            $configuredBundleCartNoteRequestTransfer->getConfigurableBundleGroupKey()
+        );
+
+        if ($itemCollectionTransfer->getItems()->count() === 0) {
+            return (new QuoteResponseTransfer())
+                ->setIsSuccessful(false);
+        }
+
+        foreach ($itemCollectionTransfer->getItems() as $itemTransfer) {
+            $itemTransfer
+                ->getConfiguredBundle()
+                ->setCartNote($configuredBundleCartNoteRequestTransfer->getCartNote());
+        }
+
+        return (new QuoteResponseTransfer())
+            ->setQuoteTransfer($quoteTransfer)
+            ->setIsSuccessful(true);
     }
 
     /**

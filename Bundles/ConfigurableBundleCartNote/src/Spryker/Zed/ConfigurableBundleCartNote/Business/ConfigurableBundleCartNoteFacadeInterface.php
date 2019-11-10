@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundleCartNote\Business;
 
-use Generated\Shared\Transfer\ConfigurableBundleCartNoteRequestTransfer;
+use Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 
 interface ConfigurableBundleCartNoteFacadeInterface
@@ -18,11 +18,11 @@ interface ConfigurableBundleCartNoteFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ConfigurableBundleCartNoteRequestTransfer $configurableBundleCartNoteRequestTransfer
+     * @param \Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function setCartNoteToConfigurableBundle(
-        ConfigurableBundleCartNoteRequestTransfer $configurableBundleCartNoteRequestTransfer
+        ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
     ): QuoteResponseTransfer;
 }

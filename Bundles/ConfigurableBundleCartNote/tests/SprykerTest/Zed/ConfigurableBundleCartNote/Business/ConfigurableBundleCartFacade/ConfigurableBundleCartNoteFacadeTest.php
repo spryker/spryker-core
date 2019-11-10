@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\ConfigurableBundleCartNote\Business\ConfigurableBundle
 use Codeception\TestCase\Test;
 use Generated\Shared\DataBuilder\ConfiguredBundleBuilder;
 use Generated\Shared\DataBuilder\ProductConcreteBuilder;
-use Generated\Shared\Transfer\ConfigurableBundleCartNoteRequestTransfer;
+use Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer;
 use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -46,13 +46,13 @@ class ConfigurableBundleCartNoteFacadeTest extends Test
     {
         //Arrange
         $quoteTransfer = $this->createFakeQuoteTransferWithConfiguredBundle();
-        $configurableBundleCartNoteRequestTransfer = $this->createConfigurableBundleCartNoteRequestTransfer($quoteTransfer);
-        $configurableBundleCartNoteRequestTransfer
+        $configuredBundleCartNoteRequestTransfer = $this->createConfiguredBundleCartNoteRequestTransfer($quoteTransfer);
+        $configuredBundleCartNoteRequestTransfer
             ->setConfigurableBundleGroupKey(static::FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY)
             ->setCartNote(static::FAKE_CONFIGURABLE_BUNDLE_CART_NOTE);
 
         //Act
-        $quoteResponseTransfer = $this->tester->getFacade()->setCartNoteToConfigurableBundle($configurableBundleCartNoteRequestTransfer);
+        $quoteResponseTransfer = $this->tester->getFacade()->setCartNoteToConfigurableBundle($configuredBundleCartNoteRequestTransfer);
 
         //Assert
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
@@ -71,13 +71,13 @@ class ConfigurableBundleCartNoteFacadeTest extends Test
     {
         //Arrange
         $quoteTransfer = $this->createFakeQuoteTransferWithConfiguredBundle();
-        $configurableBundleCartNoteRequestTransfer = $this->createConfigurableBundleCartNoteRequestTransfer($quoteTransfer);
-        $configurableBundleCartNoteRequestTransfer
+        $configuredBundleCartNoteRequestTransfer = $this->createConfiguredBundleCartNoteRequestTransfer($quoteTransfer);
+        $configuredBundleCartNoteRequestTransfer
             ->setConfigurableBundleGroupKey('not-existing-configurable-bundle-group-key')
             ->setCartNote(static::FAKE_CONFIGURABLE_BUNDLE_CART_NOTE);
 
         //Act
-        $quoteResponseTransfer = $this->tester->getFacade()->setCartNoteToConfigurableBundle($configurableBundleCartNoteRequestTransfer);
+        $quoteResponseTransfer = $this->tester->getFacade()->setCartNoteToConfigurableBundle($configuredBundleCartNoteRequestTransfer);
 
         //Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
@@ -92,20 +92,26 @@ class ConfigurableBundleCartNoteFacadeTest extends Test
         $quoteTransfer = $this->tester->havePersistentQuote([
             QuoteTransfer::CUSTOMER => (new CustomerTransfer())->setCustomerReference(static::FAKE_CUSTOMER_REFERENCE),
         ]);
-        $configurableBundleCartNoteRequestTransfer = $this->createConfigurableBundleCartNoteRequestTransfer($quoteTransfer);
-        $configurableBundleCartNoteRequestTransfer
+        $configuredBundleCartNoteRequestTransfer = $this->createConfiguredBundleCartNoteRequestTransfer($quoteTransfer);
+        $configuredBundleCartNoteRequestTransfer
             ->setConfigurableBundleGroupKey(static::FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY)
             ->setCartNote(static::FAKE_CONFIGURABLE_BUNDLE_CART_NOTE);
+
+        //Act
+        $quoteResponseTransfer = $this->tester->getFacade()->setCartNoteToConfigurableBundle($configuredBundleCartNoteRequestTransfer);
+
+        //Assert
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleCartNoteRequestTransfer
+     * @return \Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer
      */
-    protected function createConfigurableBundleCartNoteRequestTransfer(QuoteTransfer $quoteTransfer): ConfigurableBundleCartNoteRequestTransfer
+    protected function createConfiguredBundleCartNoteRequestTransfer(QuoteTransfer $quoteTransfer): ConfiguredBundleCartNoteRequestTransfer
     {
-        return (new ConfigurableBundleCartNoteRequestTransfer())
+        return (new ConfiguredBundleCartNoteRequestTransfer())
             ->setCustomer($quoteTransfer->getCustomer())
             ->setIdQuote($quoteTransfer->getIdQuote());
     }

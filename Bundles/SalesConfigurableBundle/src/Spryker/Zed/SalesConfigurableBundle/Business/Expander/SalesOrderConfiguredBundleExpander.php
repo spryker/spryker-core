@@ -10,8 +10,6 @@ namespace Spryker\Zed\SalesConfigurableBundle\Business\Expander;
 use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleFilterTransfer;
-use Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer;
-use Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer;
 use Spryker\Zed\SalesConfigurableBundle\Persistence\SalesConfigurableBundleRepositoryInterface;
 
 class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleExpanderInterface
@@ -24,9 +22,8 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
     /**
      * @param \Spryker\Zed\SalesConfigurableBundle\Persistence\SalesConfigurableBundleRepositoryInterface $salesConfigurableBundleRepository
      */
-    public function __construct(
-        SalesConfigurableBundleRepositoryInterface $salesConfigurableBundleRepository
-    ) {
+    public function __construct(SalesConfigurableBundleRepositoryInterface $salesConfigurableBundleRepository)
+    {
         $this->salesConfigurableBundleRepository = $salesConfigurableBundleRepository;
     }
 
@@ -48,7 +45,7 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
 
         $orderTransfer->setSalesOrderConfiguredBundles($salesOrderConfiguredBundleTransfers);
 
-        $orderTransfer = $this->expandOrderItems($orderTransfer, $salesOrderConfiguredBundleTransfers);
+        $orderTransfer = $this->expandOrderItemsWithSalesOrderConfiguredBundleItems($orderTransfer, $salesOrderConfiguredBundleTransfers);
 
         return $orderTransfer;
     }
@@ -59,7 +56,7 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    protected function expandOrderItems(
+    protected function expandOrderItemsWithSalesOrderConfiguredBundleItems(
         OrderTransfer $orderTransfer,
         ArrayObject $salesOrderConfiguredBundleTransfers
     ): OrderTransfer {
@@ -67,10 +64,8 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
 
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             if (array_key_exists($itemTransfer->getIdSalesOrderItem(), $salesOrderConfiguredBundleItemTransfers)) {
-                $salesOrderConfiguredBundleItemTransfer = $salesOrderConfiguredBundleItemTransfers[$itemTransfer->getIdSalesOrderItem()];
-                $itemTransfer->setSalesOrderConfiguredBundleItem($salesOrderConfiguredBundleItemTransfer);
-                $itemTransfer->setSalesOrderConfiguredBundle(
-                    $this->findConfiguredBundleByConfiguredBundleItem($salesOrderConfiguredBundleItemTransfer, $salesOrderConfiguredBundleTransfers)
+                $itemTransfer->setSalesOrderConfiguredBundleItem(
+                    $salesOrderConfiguredBundleItemTransfers[$itemTransfer->getIdSalesOrderItem()]
                 );
             }
         }
@@ -111,24 +106,5 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
         }
 
         return $salesOrderItemIds;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer $salesOrderConfiguredBundleItemTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[] $salesOrderConfiguredBundleTransfers
-     *
-     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer|null
-     */
-    protected function findConfiguredBundleByConfiguredBundleItem(
-        SalesOrderConfiguredBundleItemTransfer $salesOrderConfiguredBundleItemTransfer,
-        ArrayObject $salesOrderConfiguredBundleTransfers
-    ): ?SalesOrderConfiguredBundleTransfer {
-        foreach ($salesOrderConfiguredBundleTransfers as $salesOrderConfiguredBundleTransfer) {
-            if ($salesOrderConfiguredBundleItemTransfer->getIdSalesOrderConfiguredBundle() === $salesOrderConfiguredBundleTransfer->getIdSalesOrderConfiguredBundle()) {
-                return $salesOrderConfiguredBundleTransfer;
-            }
-        }
-
-        return null;
     }
 }

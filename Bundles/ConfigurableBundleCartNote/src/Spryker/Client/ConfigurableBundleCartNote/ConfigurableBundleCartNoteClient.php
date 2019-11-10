@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ConfigurableBundleCartNote;
 
+use Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -20,15 +21,15 @@ class ConfigurableBundleCartNoteClient extends AbstractClient implements Configu
      *
      * @api
      *
-     * @param string $cartNote
-     * @param string $configurableBundleGroupKey
+     * @param \Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setCartNoteToConfigurableBundle(string $cartNote, string $configurableBundleGroupKey): QuoteResponseTransfer
-    {
+    public function setCartNoteToConfigurableBundle(
+        ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
+    ): QuoteResponseTransfer {
         return $this->getFactory()
             ->getQuoteStorageStrategy()
-            ->setCartNoteToConfigurableBundle($cartNote, $configurableBundleGroupKey);
+            ->setCartNoteToConfigurableBundle($configuredBundleCartNoteRequestTransfer);
     }
 }

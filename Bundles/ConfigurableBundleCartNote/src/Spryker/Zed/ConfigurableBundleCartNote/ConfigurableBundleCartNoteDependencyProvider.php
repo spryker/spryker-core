@@ -11,6 +11,9 @@ use Spryker\Zed\ConfigurableBundleCartNote\Dependency\Facade\ConfigurableBundleC
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\ConfigurableBundleCartNote\ConfigurableBundleCartNoteConfig getConfig()
+ */
 class ConfigurableBundleCartNoteDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_QUOTE = 'FACADE_QUOTE';

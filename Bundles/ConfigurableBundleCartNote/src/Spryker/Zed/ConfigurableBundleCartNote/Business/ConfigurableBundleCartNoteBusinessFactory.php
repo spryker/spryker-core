@@ -13,6 +13,9 @@ use Spryker\Zed\ConfigurableBundleCartNote\ConfigurableBundleCartNoteDependencyP
 use Spryker\Zed\ConfigurableBundleCartNote\Dependency\Facade\ConfigurableBundleCartNoteToQuoteFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
+/**
+ * @method \Spryker\Zed\ConfigurableBundleCartNote\ConfigurableBundleCartNoteConfig getConfig()
+ */
 class ConfigurableBundleCartNoteBusinessFactory extends AbstractBusinessFactory
 {
     /**

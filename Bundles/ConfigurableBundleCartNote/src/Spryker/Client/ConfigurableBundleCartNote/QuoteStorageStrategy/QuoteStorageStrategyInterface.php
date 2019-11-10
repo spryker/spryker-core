@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ConfigurableBundleCartNote\QuoteStorageStrategy;
 
+use Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 
 interface QuoteStorageStrategyInterface
@@ -17,10 +18,11 @@ interface QuoteStorageStrategyInterface
     public function getStorageStrategy(): string;
 
     /**
-     * @param string $cartNote
-     * @param string $configurableBundleGroupKey
+     * @param \Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setCartNoteToConfigurableBundle(string $cartNote, string $configurableBundleGroupKey): QuoteResponseTransfer;
+    public function setCartNoteToConfigurableBundle(
+        ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
+    ): QuoteResponseTransfer;
 }

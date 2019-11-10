@@ -1,16 +1,30 @@
 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Configurable Bundle Cart Notes' } %}
     {% block widget_content %}
+        {% set configurableBundlesHaveCartNote = false %}
+        {% for salesOrderConfiguredBundle in order.salesOrderConfiguredBundles %}
+            {% if salesOrderConfiguredBundle.cartNote %}
+                {% set configurableBundlesHaveCartNote = true %}
+            {% endif %}
+        {% endfor %}
+
         <div class="row">
-            {% if salesOrderConfiguredBundleCollection is not empty %}
+            {% if configurableBundlesHaveCartNote %}
                 <div class="col-md-6">
                     <table class="table">
-                        {% for salesOrderConfiguredBundle in salesOrderConfiguredBundleCollection %}
-                            <tr>
-                                <td class="text-left">
-                                    <div>{{ salesOrderConfiguredBundle.name }}</div>
-                                </td>
-                                <td class="text-left">{{ salesOrderConfiguredBundle.cartNote | escape | nl2br }}</td>
-                            </tr>
+                        {% for salesOrderConfiguredBundle in order.salesOrderConfiguredBundles %}
+                            {% if salesOrderConfiguredBundle.cartNote %}
+                                <tr>
+                                    <td class="text-left">
+                                        <div>
+                                            {{ salesOrderConfiguredBundle.name | trans }}
+                                            ({{ 'ID:' | trans }} {{ salesOrderConfiguredBundle.configurableBundleTemplateUuid }})
+                                        </div>
+                                    </td>
+                                    <td class="text-left">
+                                        <div>{{ salesOrderConfiguredBundle.cartNote | escape | nl2br }}</div>
+                                    </td>
+                                </tr>
+                            {% endif %}
                         {% endfor %}
                     </table>
                 </div>
