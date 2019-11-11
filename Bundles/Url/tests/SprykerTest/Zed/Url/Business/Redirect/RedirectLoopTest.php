@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocale;
 use Orm\Zed\Url\Persistence\SpyUrl;
 use Orm\Zed\Url\Persistence\SpyUrlRedirect;
+use Spryker\Zed\Url\Business\Exception\RedirectLoopException;
 use Spryker\Zed\Url\Business\UrlFacade;
 
 /**
@@ -37,7 +38,7 @@ class RedirectLoopTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -45,12 +46,11 @@ class RedirectLoopTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Url\Business\Exception\RedirectLoopException
-     *
      * @return void
      */
     public function testCreatingCyclicRedirectsThrowsException()
     {
+        $this->expectException(RedirectLoopException::class);
         $localeTransfer = $this->prepareTestData();
 
         $sourceUrlTransfer = new UrlTransfer();
