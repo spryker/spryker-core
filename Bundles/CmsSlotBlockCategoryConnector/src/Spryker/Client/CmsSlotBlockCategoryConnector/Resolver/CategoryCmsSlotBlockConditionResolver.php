@@ -1,28 +1,30 @@
 <?php
+
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\CmsSlotBlockCategoryConnector\Resolver;
 
-use Generated\Shared\Transfer\CmsBlockTransfer;
-
 class CategoryCmsSlotBlockConditionResolver implements CategoryCmsSlotBlockConditionResolverInterface
 {
     // TODO: add @uses
-    protected const CONDITIONS_DATA_KEY_All = 'all';
+    protected const CONDITIONS_DATA_KEY_ALL = 'all';
 
     // TODO: add @uses
     protected const CONDITIONS_DATA_KEY_CATEGORY_IDS = 'categoryIds';
 
     protected const CMS_SLOT_DATA_CATEGORY_KEY = 'idCategory';
 
-    public function isCmsBlockVisibleInSlot(
-        CmsBlockTransfer $cmsBlockTransfer,
-        array $conditionData,
-        array $cmsSlotData
-    ): bool {
+    /**
+     * @param array $conditionData
+     * @param array $cmsSlotData
+     *
+     * @return bool
+     */
+    public function getIsCmsBlockVisibleInSlot(array $conditionData, array $cmsSlotData): bool
+    {
         if ($this->getIsConditionDataKeyAll($conditionData)) {
             return true;
         }
@@ -40,28 +42,40 @@ class CategoryCmsSlotBlockConditionResolver implements CategoryCmsSlotBlockCondi
         return false;
     }
 
+    /**
+     * @param array $conditionData
+     *
+     * @return bool
+     */
     protected function getIsConditionDataKeyAll(array $conditionData): bool
     {
         if (!isset($conditionData[static::CONDITIONS_DATA_KEY_All])) {
             return false;
         }
 
-        if ($conditionData[static::CONDITIONS_DATA_KEY_All] !== 1) {
+        if (!$conditionData[static::CONDITIONS_DATA_KEY_All]) {
             return false;
         }
 
         return true;
     }
 
+    /**
+     * @param array $cmsSlotData
+     *
+     * @return int|null
+     */
     protected function getIdCategory(array $cmsSlotData): ?int
     {
-        if (!isset($cmsSlotData[static::CMS_SLOT_DATA_CATEGORY_KEY])) {
-            return null;
-        }
-
-        return $cmsSlotData[static::CMS_SLOT_DATA_CATEGORY_KEY];
+        return $cmsSlotData[static::CMS_SLOT_DATA_CATEGORY_KEY] ?? null;
     }
 
+    /**
+     * @param int $idCategory
+     * @param array $conditionData
+     *
+     * @return bool
+     */
     protected function getIsCategoryMeetConditions(int $idCategory, array $conditionData): bool
     {
         if (!isset($conditionData[static::CONDITIONS_DATA_KEY_CATEGORY_IDS])) {
