@@ -24,6 +24,19 @@ interface ProductResourceAliasStorageClientInterface
 
     /**
      * Specification:
+     * - Retrieves a current Store specific ProductAbstract resources from Storage by skus.
+     *
+     * @api
+     *
+     * @param string[] $skus
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getBulkProductAbstractStorageData(array $skus, string $localeName): array;
+
+    /**
+     * Specification:
      * - Retrieves a current Store specific ProductConcrete resource from Storage by sku.
      *
      * @api

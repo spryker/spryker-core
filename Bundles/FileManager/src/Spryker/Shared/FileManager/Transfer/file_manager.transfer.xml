@@ -129,4 +129,16 @@
         <property name="idLocale" type="int"/>
     </transfer>
 
+    <transfer name="FileSystemCopy">
+    </transfer>
+
+    <transfer name="FileSystemCreateDirectory">
+    </transfer>
+
+    <transfer name="FileSystemList">
+    </transfer>
+
+    <transfer name="FileSystemVisibility">
+    </transfer>
+
 </transfers>
