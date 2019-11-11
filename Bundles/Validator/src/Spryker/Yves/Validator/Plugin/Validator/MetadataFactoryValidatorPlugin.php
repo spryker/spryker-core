@@ -18,7 +18,7 @@ use Symfony\Component\Validator\ValidatorBuilderInterface;
 class MetadataFactoryValidatorPlugin extends AbstractPlugin implements ValidatorPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds metadata factory.
      *
      * @api

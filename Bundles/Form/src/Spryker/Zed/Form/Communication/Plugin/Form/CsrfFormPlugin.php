@@ -24,7 +24,7 @@ class CsrfFormPlugin extends AbstractPlugin implements FormPluginInterface
     protected const SERVICE_TRANSLATOR = 'translator';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds `Symfony\Component\Form\Extension\Csrf\CsrfExtension` to `form.factory` service.
      *
      * @api

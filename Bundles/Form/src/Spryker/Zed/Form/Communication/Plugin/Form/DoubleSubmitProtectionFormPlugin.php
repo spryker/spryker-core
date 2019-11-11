@@ -26,7 +26,7 @@ class DoubleSubmitProtectionFormPlugin extends AbstractPlugin implements FormPlu
     protected const SERVICE_TRANSLATOR = 'translator';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds `Spryker\Shared\Form\DoubleSubmitProtection\DoubleSubmitProtectionExtension`.
      *
      * @api

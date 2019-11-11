@@ -19,7 +19,7 @@ use Symfony\Component\Form\FormFactoryBuilderInterface;
 class WebProfilerFormPlugin extends AbstractPlugin implements FormPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds `Symfony\Component\Form\Extension\DataCollector\Proxy\ResolvedTypeFactoryDataCollectorProxy` as resolved type factory.
      * - Adds `Symfony\Component\Form\Extension\DataCollector\Type\DataCollectorTypeExtension` to type extensions.
      *

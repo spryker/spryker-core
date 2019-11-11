@@ -17,7 +17,7 @@ class TranslatorValidatorPlugin implements ValidatorPluginInterface
     protected const TRANSLATION_DOMAIN = 'validators';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds `translator`.
      *
      * @api

@@ -20,7 +20,7 @@ class ValidatorApplicationPlugin extends AbstractPlugin implements ApplicationPl
     protected const SERVICE_VALIDATOR = 'validator';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds `validator` service.
      *
      * @api

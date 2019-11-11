@@ -18,7 +18,7 @@ use Symfony\Component\Form\FormFactoryBuilderInterface;
 class HttpFoundationFormPlugin extends AbstractPlugin implements FormPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds the basic Symfony HttpFoundation extension.
      *
      * @api

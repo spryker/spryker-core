@@ -21,7 +21,7 @@ class ValidatorExtensionFormPlugin extends AbstractPlugin implements FormPluginI
     protected const SERVICE_VALIDATOR = 'validator';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds `Symfony\Component\Form\Extension\Validator\ValidatorExtension`.
      *
      * @api
