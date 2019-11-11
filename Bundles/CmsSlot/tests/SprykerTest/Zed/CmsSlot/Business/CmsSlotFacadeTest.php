@@ -200,18 +200,13 @@ class CmsSlotFacadeTest extends Unit
         );
 
         // Assert
-        $this->assertInstanceOf(CmsSlotTemplateTransfer::class, $cmsSlotTemplateTransfer);
-        $this->assertInstanceOf(CmsSlotTemplateTransfer::class, $foundCmsSlotTemplateTransfer);
-        $this->assertEquals(
-            $cmsSlotTemplateTransfer->getIdCmsSlotTemplate(),
-            $foundCmsSlotTemplateTransfer->getIdCmsSlotTemplate()
-        );
+        $this->assertEquals($cmsSlotTemplateTransfer, $foundCmsSlotTemplateTransfer);
     }
 
     /**
      * @return void
      */
-    public function testGetCmsSlotTemplateByIdIsFailed(): void
+    public function testGetCmsSlotTemplateByIdFailsWithException(): void
     {
         //Arrange
         $this->tester->ensureCmsSlotTemplateTableIsEmpty();
