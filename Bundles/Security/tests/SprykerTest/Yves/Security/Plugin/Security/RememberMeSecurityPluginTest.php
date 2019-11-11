@@ -11,17 +11,8 @@ use Codeception\Test\Unit;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
-use Spryker\Yves\EventDispatcher\EventDispatcherFactory;
-use Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin;
-use Spryker\Yves\Router\Plugin\EventDispatcher\RouterListenerEventDispatcherPlugin;
 use Spryker\Yves\Security\Configuration\SecurityConfiguration;
-use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Http\SecurityEvents;
 
@@ -143,9 +134,9 @@ class RememberMeSecurityPluginTest extends Unit
     }
 
     /**
-     * @param RememberMeSecurityPluginTest $testClass
+     * @param \SprykerTest\Yves\Security\Plugin\Security\RememberMeSecurityPluginTest $testClass
      *
-     * @return EventDispatcherPluginInterface
+     * @return \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface
      */
     protected function getEventDispatcherPlugin(RememberMeSecurityPluginTest $testClass): EventDispatcherPluginInterface
     {

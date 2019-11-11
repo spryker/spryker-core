@@ -17,6 +17,8 @@ use Symfony\Component\Security\Http\RememberMe\TokenBasedRememberMeServices;
 
 class RememberMeSecurityPlugin implements SecurityPluginInterface
 {
+    protected const LIFETIME_ONE_YEAR = 31536000;
+
     /**
      * @uses \Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin::SERVICE_DISPATCHER
      */
@@ -100,7 +102,7 @@ class RememberMeSecurityPlugin implements SecurityPluginInterface
             return function () use ($providerKey, $options, $container) {
                 $options = array_replace([
                     'name' => 'REMEMBERME',
-                    'lifetime' => 31536000,
+                    'lifetime' => static::LIFETIME_ONE_YEAR,
                     'path' => '/',
                     'domain' => null,
                     'secure' => false,

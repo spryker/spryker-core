@@ -94,6 +94,28 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected const SERVICE_SECURITY_LAST_ERROR = 'security.last_error';
     protected const SERVICE_SECURITY_ACCESS_MAP = 'security.access_map';
     protected const SERVICE_SECURITY_AUTHENTICATION_UTILS = 'security.authentication_utils';
+    protected const SERVICE_SECURITY_CHANNEL_LISTENER = 'security.channel_listener';
+    protected const SERVICE_SECURITY_ACCESS_LISTENER = 'security.access_listener';
+    protected const SERVICE_SECURITY_USER_PROVIDER_INMEMORY_PROTO = 'security.user_provider.inmemory._proto';
+    protected const SERVICE_SECURITY_CONTEXT_LISTENER_PROTO = 'security.context_listener._proto';
+    protected const SERVICE_SECURITY_EXCEPTION_LISTENER_PROTO = 'security.exception_listener._proto';
+    protected const SERVICE_SECURITY_AUTHENTICATION_SUCCESS_HANDLER_PROTO = 'security.authentication.success_handler._proto';
+    protected const SERVICE_SECURITY_AUTHENTICATION_FAILURE_HANDLER_PROTO = 'security.authentication.failure_handler._proto';
+    protected const SERVICE_SECURITY_AUTHENTICATION_LOGOUT_HANDLER_PROTO = 'security.authentication.logout_handler._proto';
+    protected const SERVICE_SECURITY_AUTHENTICATION_LISTENER_GUARD_PROTO = 'security.authentication_listener.guard._proto';
+    protected const SERVICE_SECURITY_AUTHENTICATION_GUARD_HANDLER = 'security.authentication.guard_handler';
+    protected const SERVICE_SECURITY_AUTHENTICATION_LISTENER_FORM_PROTO = 'security.authentication_listener.form._proto';
+    protected const SERVICE_SECURITY_AUTHENTICATION_LISTENER_HTTP_PROTO = 'security.authentication_listener.http._proto';
+    protected const SERVICE_SECURITY_AUTHENTICATION_LISTENER_ANONYMOUS_PROTO = 'security.authentication_listener.anonymous._proto';
+    protected const SERVICE_SECURITY_AUTHENTICATION_LISTENER_LOGOUT_PROTO = 'security.authentication_listener.logout._proto';
+    protected const SERVICE_SECURITY_AUTHENTICATION_LISTENER_SWITCH_USER_PROTO = 'security.authentication_listener.switch_user._proto';
+    protected const SERVICE_SECURITY_ENTRY_POINT_FORM_PROTO = 'security.entry_point.form._proto';
+    protected const SERVICE_SECURITY_ENTRY_POINT_HTTP_PROTO = 'security.entry_point.http._proto';
+    protected const SERVICE_SECURITY_ENTRY_POINT_GUARD_PROTO = 'security.entry_point.guard._proto';
+    protected const SERVICE_SECURITY_AUTHENTICATION_PROVIDER_DAO_PROTO = 'security.authentication_provider.dao._proto';
+    protected const SERVICE_SECURITY_AUTHENTICATION_PROVIDER_GUARD_PROTO = 'security.authentication_provider.guard._proto';
+    protected const SERVICE_SECURITY_AUTHENTICATION_PROVIDER_ANONYMOUS_PROTO = 'security.authentication_provider.anonymous._proto';
+    protected const SERVICE_LOGGER = 'logger';
 
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
@@ -114,6 +136,8 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      * @uses \Spryker\Yves\Validator\Plugin\Application\ValidatorApplicationPlugin::SERVICE_VALIDATOR
      */
     protected const SERVICE_VALIDATOR = 'validator';
+
+    protected const POSITIONS = ['logout', 'pre_auth', 'guard', 'form', 'http', 'remember_me', 'anonymous'];
 
     /**
      * @var array
@@ -359,7 +383,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function getFirewallMap(ContainerInterface $container): FirewallMapInterface
     {
-        $positions = ['logout', 'pre_auth', 'guard', 'form', 'http', 'remember_me', 'anonymous'];
         $providers = [];
         $configs = [];
 
@@ -374,7 +397,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
             $methods = $firewallConfiguration['methods'] ?? null;
             unset($firewallConfiguration['pattern'], $firewallConfiguration['users'], $firewallConfiguration['security'], $firewallConfiguration['stateless'], $firewallConfiguration['context'], $firewallConfiguration['methods'], $firewallConfiguration['hosts']);
             $protected = $security === false ? false : count($firewallConfiguration);
-            $listeners = ['security.channel_listener'];
+            $listeners = [static::SERVICE_SECURITY_CHANNEL_LISTENER];
 
             if (is_string($users)) {
                 $users = function () use ($container, $users) {
@@ -384,11 +407,11 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
 
             if ($protected) {
                 if (!$container->has('security.user_provider.' . $firewallName)) {
-                    $container->set('security.user_provider.' . $firewallName, is_array($users) ? $container->get('security.user_provider.inmemory._proto')($users) : $users);
+                    $container->set('security.user_provider.' . $firewallName, is_array($users) ? $container->get(static::SERVICE_SECURITY_USER_PROVIDER_INMEMORY_PROTO)($users) : $users);
                 }
 
                 if (!$container->has('security.context_listener.' . $context)) {
-                    $container->set('security.context_listener.' . $context, $container->get('security.context_listener._proto')($firewallName, [$container->get('security.user_provider.' . $firewallName)]));
+                    $container->set('security.context_listener.' . $context, $container->get(static::SERVICE_SECURITY_CONTEXT_LISTENER_PROTO)($firewallName, [$container->get('security.user_provider.' . $firewallName)]));
                 }
 
                 if ($stateless === false) {
@@ -396,7 +419,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 }
 
                 $factories = [];
-                foreach ($positions as $position) {
+                foreach (static::POSITIONS as $position) {
                     $factories[$position] = [];
                 }
 
@@ -423,17 +446,17 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $providers[] = $providerId;
                 }
 
-                foreach ($positions as $position) {
+                foreach (static::POSITIONS as $position) {
                     foreach ($factories[$position] as $listener) {
                         $listeners[] = $listener;
                     }
                 }
 
-                $listeners[] = 'security.access_listener';
+                $listeners[] = static::SERVICE_SECURITY_ACCESS_LISTENER;
                 if (isset($firewallConfiguration['switch_user'])) {
                     $switchUserConfiguration = (array)$firewallConfiguration['switch_user'];
                     $switchUserConfiguration['stateless'] = $stateless;
-                    $container->set('security.switch_user.' . $firewallName, $container->get('security.authentication_listener.switch_user._proto')($firewallName, $switchUserConfiguration));
+                    $container->set('security.switch_user.' . $firewallName, $container->get(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_SWITCH_USER_PROTO)($firewallName, $switchUserConfiguration));
                     $listeners[] = 'security.switch_user.' . $firewallName;
                 }
 
@@ -469,7 +492,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         if (!$container->has('security.exception_listener.' . $firewallName)) {
             if ($entryPoint === null) {
                 $entryPoint = 'security.entry_point.' . $firewallName . '.form';
-                $container->set($entryPoint, $container->get('security.entry_point.form._proto')($firewallName, []));
+                $container->set($entryPoint, $container->get(static::SERVICE_SECURITY_ENTRY_POINT_FORM_PROTO)($firewallName, []));
             }
             $accessDeniedHandler = null;
             if ($container->has('security.access_denied_handler.' . $firewallName)) {
@@ -481,7 +504,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 $accessDeniedHandler = call_user_func($securityConfiguration->getAccessDeniedHandler()[$firewallName], $container);
             }
 
-            $container->set('security.exception_listener.' . $firewallName, $container->get('security.exception_listener._proto')($entryPoint, $firewallName, $accessDeniedHandler));
+            $container->set('security.exception_listener.' . $firewallName, $container->get(static::SERVICE_SECURITY_EXCEPTION_LISTENER_PROTO)($entryPoint, $firewallName, $accessDeniedHandler));
         }
 
         return $container;
@@ -496,7 +519,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected function buildFirewallMap(ContainerInterface $container, array $configs): FirewallMapInterface
     {
         $firewallMap = new FirewallMap();
-        foreach ($configs as $name => $config) {
+        foreach ($configs as $firewallName => $config) {
             $requestMatcher = $config['pattern'];
             if (is_string($config['pattern'])) {
                 $requestMatcher = new RequestMatcher($config['pattern'], $config['hosts'], $config['methods']);
@@ -504,8 +527,8 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
 
             $firewallMap->add(
                 $requestMatcher,
-                $this->mapListeners($container, $config['listeners'], $name),
-                $config['protected'] ? $container->get('security.exception_listener.' . $name) : null
+                $this->mapListeners($container, $config['listeners'], $firewallName),
+                $config['protected'] ? $container->get('security.exception_listener.' . $firewallName) : null
             );
         }
 
@@ -515,20 +538,20 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      * @param array $listeners
-     * @param string $name
+     * @param string $firewallName
      *
      * @return array
      */
-    protected function mapListeners(ContainerInterface $container, array $listeners, string $name): array
+    protected function mapListeners(ContainerInterface $container, array $listeners, string $firewallName): array
     {
-        return array_map(function ($listenerId) use ($container, $name) {
+        return array_map(function ($listenerId) use ($container, $firewallName) {
             $listener = $container->get($listenerId);
-            if ($container->has('security.remember_me.service.' . $name)) {
+            if ($container->has('security.remember_me.service.' . $firewallName)) {
                 if ($listener instanceof AbstractAuthenticationListener || $listener instanceof GuardAuthenticationListener) {
-                    $listener->setRememberMeServices($container->get('security.remember_me.service.' . $name));
+                    $listener->setRememberMeServices($container->get('security.remember_me.service.' . $firewallName));
                 }
                 if ($listener instanceof LogoutListener) {
-                    $listener->addHandler($container->get('security.remember_me.service.' . $name));
+                    $listener->addHandler($container->get('security.remember_me.service.' . $firewallName));
                 }
             }
 
@@ -543,7 +566,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addChannelListener(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.channel_listener', function (ContainerInterface $container) {
+        $container->set(static::SERVICE_SECURITY_CHANNEL_LISTENER, function (ContainerInterface $container) {
             return new ChannelListener(
                 $container->get(static::SERVICE_SECURITY_ACCESS_MAP),
                 new RetryAuthenticationEntryPoint(
@@ -627,7 +650,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addAccessListener(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.access_listener', function (ContainerInterface $container) {
+        $container->set(static::SERVICE_SECURITY_ACCESS_LISTENER, function (ContainerInterface $container) {
             return new AccessListener(
                 $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
                 $container->get(static::SERVICE_SECURITY_ACCESS_MANAGER),
@@ -738,7 +761,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addUserProviderPrototypes(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.user_provider.inmemory._proto', $container->protect(function ($params) {
+        $container->set(static::SERVICE_SECURITY_USER_PROVIDER_INMEMORY_PROTO, $container->protect(function ($params) {
             return function () use ($params) {
                 $users = [];
                 foreach ($params as $name => $user) {
@@ -759,7 +782,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addListenerPrototypes(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.context_listener._proto', $container->protect(function ($providerKey, $userProviders) use ($container) {
+        $container->set(static::SERVICE_SECURITY_CONTEXT_LISTENER_PROTO, $container->protect(function ($providerKey, $userProviders) use ($container) {
             return function () use ($container, $userProviders, $providerKey) {
                 return new ContextListener(
                     $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
@@ -771,7 +794,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
             };
         }));
 
-        $container->set('security.exception_listener._proto', $container->protect(function ($entryPoint, $name, $accessDeniedHandler = null) use ($container) {
+        $container->set(static::SERVICE_SECURITY_EXCEPTION_LISTENER_PROTO, $container->protect(function ($entryPoint, $name, $accessDeniedHandler = null) use ($container) {
             return function () use ($container, $entryPoint, $name, $accessDeniedHandler) {
                 return new ExceptionListener(
                     $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
@@ -810,7 +833,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addAuthenticationSuccessHandlerPrototype(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.authentication.success_handler._proto', $container->protect(function ($name, $options) use ($container) {
+        $container->set(static::SERVICE_SECURITY_AUTHENTICATION_SUCCESS_HANDLER_PROTO, $container->protect(function ($name, $options) use ($container) {
             return function () use ($name, $options, $container) {
                 $handler = new DefaultAuthenticationSuccessHandler(
                     $container->get(static::SERVICE_SECURITY_HTTP_UTILS),
@@ -832,7 +855,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addAuthenticationFailureHandlerPrototype(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.authentication.failure_handler._proto', $container->protect(function ($name, $options) use ($container) {
+        $container->set(static::SERVICE_SECURITY_AUTHENTICATION_FAILURE_HANDLER_PROTO, $container->protect(function ($name, $options) use ($container) {
             return function () use ($options, $container) {
                 return new DefaultAuthenticationFailureHandler(
                     $container->get(static::SERVICE_KERNEL),
@@ -853,7 +876,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addAuthenticationLogoutHandlerPrototype(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.authentication.logout_handler._proto', $container->protect(function ($name, $options) use ($container) {
+        $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LOGOUT_HANDLER_PROTO, $container->protect(function ($name, $options) use ($container) {
             return function () use ($options, $container) {
                 return new DefaultLogoutSuccessHandler(
                     $container->get(static::SERVICE_SECURITY_HTTP_UTILS),
@@ -889,10 +912,10 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addAuthenticationListenerGuardPrototype(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.authentication_listener.guard._proto', $container->protect(function ($providerKey, $options) use ($container) {
+        $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_GUARD_PROTO, $container->protect(function ($providerKey, $options) use ($container) {
             return function () use ($container, $providerKey, $options) {
-                if (!$container->has('security.authentication.guard_handler')) {
-                    $container->set('security.authentication.guard_handler', new GuardAuthenticatorHandler($container->get(static::SERVICE_SECURITY_TOKEN_STORAGE), $container->get(static::SERVICE_DISPATCHER)));
+                if (!$container->has(static::SERVICE_SECURITY_AUTHENTICATION_GUARD_HANDLER)) {
+                    $container->set(static::SERVICE_SECURITY_AUTHENTICATION_GUARD_HANDLER, new GuardAuthenticatorHandler($container->get(static::SERVICE_SECURITY_TOKEN_STORAGE), $container->get(static::SERVICE_DISPATCHER)));
                 }
                 $authenticators = [];
                 foreach ($options['authenticators'] as $authenticatorId) {
@@ -900,7 +923,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 }
 
                 return new GuardAuthenticationListener(
-                    $container->get('security.authentication.guard_handler'),
+                    $container->get(static::SERVICE_SECURITY_AUTHENTICATION_GUARD_HANDLER),
                     $container->get(static::SERVICE_SECURITY_AUTHENTICATION_MANAGER),
                     $providerKey,
                     $authenticators,
@@ -919,7 +942,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addAuthenticationListenerFormPrototype(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.authentication_listener.form._proto', $container->protect(function ($name, $options) use ($container) {
+        $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_FORM_PROTO, $container->protect(function ($name, $options) use ($container) {
             return function () use ($container, $name, $options) {
                 $tmp = $options['check_path'] ?? '/login_check';
                 $this->addFakeRoute('match', $tmp, str_replace('/', '_', ltrim($tmp, '/')));
@@ -963,7 +986,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function getLogger(ContainerInterface $container): ?LoggerInterface
     {
-        return $container->has('logger') ? $container->get('logger') : null;
+        return $container->has(static::SERVICE_LOGGER) ? $container->get(static::SERVICE_LOGGER) : null;
     }
 
     /**
@@ -981,7 +1004,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         }
 
         if (!$container->has('security.authentication.success_handler.' . $firewallName)) {
-            $container->set('security.authentication.success_handler.' . $firewallName, $container->get('security.authentication.success_handler._proto')($firewallName, $options));
+            $container->set('security.authentication.success_handler.' . $firewallName, $container->get(static::SERVICE_SECURITY_AUTHENTICATION_SUCCESS_HANDLER_PROTO)($firewallName, $options));
         }
 
         return $container->get('security.authentication.success_handler.' . $firewallName);
@@ -1002,7 +1025,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         }
 
         if (!$container->has('security.authentication.failure_handler.' . $firewallName)) {
-            $container->set('security.authentication.failure_handler.' . $firewallName, $container->get('security.authentication.failure_handler._proto')($firewallName, $options));
+            $container->set('security.authentication.failure_handler.' . $firewallName, $container->get(static::SERVICE_SECURITY_AUTHENTICATION_FAILURE_HANDLER_PROTO)($firewallName, $options));
         }
 
         return $container->get('security.authentication.failure_handler.' . $firewallName);
@@ -1015,7 +1038,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addAuthenticationListenerHttpPrototype(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.authentication_listener.http._proto', $container->protect(function ($providerKey, $options) use ($container) {
+        $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_HTTP_PROTO, $container->protect(function ($providerKey, $options) use ($container) {
             return function () use ($container, $providerKey) {
                 return new BasicAuthenticationListener(
                     $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
@@ -1037,7 +1060,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addAuthenticationListenerAnonymousPrototype(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.authentication_listener.anonymous._proto', $container->protect(function ($providerKey, $options) use ($container) {
+        $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_ANONYMOUS_PROTO, $container->protect(function ($providerKey, $options) use ($container) {
             return function () use ($container, $providerKey) {
                 return new AnonymousAuthenticationListener(
                     $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
@@ -1057,7 +1080,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addAuthenticationListenerLogoutPrototype(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.authentication_listener.logout._proto', $container->protect(function ($name, $options) use ($container) {
+        $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_LOGOUT_PROTO, $container->protect(function ($name, $options) use ($container) {
             return function () use ($container, $name, $options) {
                 $tmp = $options['logout_path'] ?? '/logout';
                 $this->addFakeRoute('get', $tmp, str_replace('/', '_', ltrim($tmp, '/')));
@@ -1094,7 +1117,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         }
 
         if (!$container->has('security.authentication.logout_handler.' . $firewallName)) {
-            $container->set('security.authentication.logout_handler.' . $firewallName, $container->get('security.authentication.logout_handler._proto')($firewallName, $options));
+            $container->set('security.authentication.logout_handler.' . $firewallName, $container->get(static::SERVICE_SECURITY_AUTHENTICATION_LOGOUT_HANDLER_PROTO)($firewallName, $options));
         }
 
         return $container->get('security.authentication.logout_handler.' . $firewallName);
@@ -1135,7 +1158,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addAuthenticationListenerSwitchUserPrototype(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.authentication_listener.switch_user._proto', $container->protect(function ($firewallName, $options) use ($container) {
+        $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_SWITCH_USER_PROTO, $container->protect(function ($firewallName, $options) use ($container) {
             return function () use ($container, $firewallName, $options) {
                 return new SwitchUserListener(
                     $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
@@ -1176,7 +1199,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addEntryPointFormPrototype(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.entry_point.form._proto', $container->protect(function ($name, array $options) use ($container) {
+        $container->set(static::SERVICE_SECURITY_ENTRY_POINT_FORM_PROTO, $container->protect(function ($name, array $options) use ($container) {
             return function () use ($container, $options) {
                 $loginPath = isset($options['login_path']) ? $options['login_path'] : '/login';
                 $useForward = isset($options['use_forward']) ? $options['use_forward'] : false;
@@ -1195,7 +1218,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addEntryPointHttpPrototype(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.entry_point.http._proto', $container->protect(function ($name, array $options) {
+        $container->set(static::SERVICE_SECURITY_ENTRY_POINT_HTTP_PROTO, $container->protect(function ($name, array $options) {
             return function () use ($options) {
                 return new BasicAuthenticationEntryPoint($options['real_name'] ?? 'Secured');
             };
@@ -1213,7 +1236,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addEntryPointGuardPrototype(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.entry_point.guard._proto', $container->protect(function ($name, array $options) use ($container) {
+        $container->set(static::SERVICE_SECURITY_ENTRY_POINT_GUARD_PROTO, $container->protect(function ($name, array $options) use ($container) {
             if (isset($options['entry_point'])) {
                 return $container->get($options['entry_point']);
             }
@@ -1254,7 +1277,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addAuthenticationProviderDaoPrototype(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.authentication_provider.dao._proto', $container->protect(function ($name, $options) use ($container) {
+        $container->set(static::SERVICE_SECURITY_AUTHENTICATION_PROVIDER_DAO_PROTO, $container->protect(function ($name, $options) use ($container) {
             return function () use ($container, $name) {
                 return new DaoAuthenticationProvider(
                     $container->get('security.user_provider.' . $name),
@@ -1276,7 +1299,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addAuthenticationProviderGuardPrototype(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.authentication_provider.guard._proto', $container->protect(function ($name, $options) use ($container) {
+        $container->set(static::SERVICE_SECURITY_AUTHENTICATION_PROVIDER_GUARD_PROTO, $container->protect(function ($name, $options) use ($container) {
             return function () use ($container, $name, $options) {
                 $authenticators = [];
                 foreach ($options['authenticators'] as $authenticatorId) {
@@ -1302,7 +1325,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addAuthenticationProviderAnonymousPrototype(ContainerInterface $container): ContainerInterface
     {
-        $container->set('security.authentication_provider.anonymous._proto', $container->protect(function ($name, $options) {
+        $container->set(static::SERVICE_SECURITY_AUTHENTICATION_PROVIDER_ANONYMOUS_PROTO, $container->protect(function ($name, $options) {
             return function () use ($name) {
                 return new AnonymousAuthenticationProvider($name);
             };
