@@ -89,6 +89,6 @@ class CmsSlotBlockDataImportBusinessFactory extends DataImportBusinessFactory
      */
     public function createAfterImportHook(): DataImporterAfterImportInterface
     {
-        return new CmsSlotBlockDataImportAfterImportHook();
+        return new CmsSlotBlockDataImportAfterImportHook($this->getEventFacade());
     }
 }

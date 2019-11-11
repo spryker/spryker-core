@@ -63,7 +63,7 @@ class CmsSlotHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CmsSlotTransfer
      */
-    public function haveCmsSlotInDb(array $override): CmsSlotTransfer
+    public function haveCmsSlotInDb(array $override = []): CmsSlotTransfer
     {
         $data = [
             CmsSlotTransfer::KEY => 'test-center',
