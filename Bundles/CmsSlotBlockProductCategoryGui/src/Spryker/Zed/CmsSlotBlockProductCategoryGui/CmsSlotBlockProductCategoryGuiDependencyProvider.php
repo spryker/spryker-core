@@ -30,6 +30,9 @@ class CmsSlotBlockProductCategoryGuiDependencyProvider extends AbstractBundleDep
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
+        $container = $this->addProductFacade($container);
+        $container = $this->addCategoryFacade($container);
+        $container = $this->addLocaleFacade($container);
         $container = $this->addTranslatorFacade($container);
 
         return $container;
@@ -42,9 +45,7 @@ class CmsSlotBlockProductCategoryGuiDependencyProvider extends AbstractBundleDep
      */
     public function providePersistenceLayerDependencies(Container $container): Container
     {
-        $container = $this->addProductFacade($container);
         $container = $this->addProductQueryContainer($container);
-        $container = $this->addCategoryFacade($container);
         $container = $this->addLocaleFacade($container);
 
         return $container;
