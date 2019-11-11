@@ -33,7 +33,7 @@ class IndexMapClassGeneratorTest extends Unit
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $searchMapCleaner = new IndexMapCleaner(self::TARGET_DIRECTORY);
         $searchMapCleaner->cleanDirectory();

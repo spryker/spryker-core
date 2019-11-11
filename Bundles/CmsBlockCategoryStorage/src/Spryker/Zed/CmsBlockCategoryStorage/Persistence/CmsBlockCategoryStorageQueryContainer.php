@@ -133,6 +133,6 @@ class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer imple
      */
     protected function isCmsBlockKeyPropertyExists(): bool
     {
-        return defined('\Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap::COL_KEY');
+        return defined(SpyCmsBlockTableMap::class . '::COL_KEY');
     }
 }
