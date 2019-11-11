@@ -17,6 +17,8 @@ use Spryker\Glue\ProductOptionsRestApi\Processor\Mapper\ProductOptionMapper;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Mapper\ProductOptionMapperInterface;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionReader;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionReaderInterface;
+use Spryker\Glue\ProductOptionsRestApi\Processor\Sorter\ProductOptionSorter;
+use Spryker\Glue\ProductOptionsRestApi\Processor\Sorter\ProductOptionSorterInterface;
 
 class ProductOptionsRestApiFactory extends AbstractFactory
 {
@@ -66,10 +68,22 @@ class ProductOptionsRestApiFactory extends AbstractFactory
         return new ProductOptionMapper();
     }
 
+    /**
+     * @return \Spryker\Glue\ProductOptionsRestApi\Processor\Sorter\ProductOptionSorterInterface
+     */
+    public function createProductOptionSorter(): ProductOptionSorterInterface
+    {
+        return new ProductOptionSorter();
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductOptionsRestApi\Processor\Expander\ProductOptionByProductAbstractSkuExpanderInterface
+     */
     public function createProductOptionByProductAbstractSkuExpander(): ProductOptionByProductAbstractSkuExpanderInterface
     {
         return new ProductOptionByProductAbstractSkuExpander(
-            $this->createProductOptionReader()
+            $this->createProductOptionReader(),
+            $this->createProductOptionSorter()
         );
     }
 }

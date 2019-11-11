@@ -10,6 +10,7 @@ namespace Spryker\Glue\ProductOptionsRestApi\Processor\Expander;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionReaderInterface;
+use Spryker\Glue\ProductOptionsRestApi\Processor\Sorter\ProductOptionSorterInterface;
 
 class ProductOptionByProductAbstractSkuExpander implements ProductOptionByProductAbstractSkuExpanderInterface
 {
@@ -19,11 +20,20 @@ class ProductOptionByProductAbstractSkuExpander implements ProductOptionByProduc
     protected $productOptionReader;
 
     /**
-     * @param \Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionReaderInterface $productOptionReader
+     * @var \Spryker\Glue\ProductOptionsRestApi\Processor\Sorter\ProductOptionSorterInterface
      */
-    public function __construct(ProductOptionReaderInterface $productOptionReader)
-    {
+    protected $productOptionSorter;
+
+    /**
+     * @param \Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionReaderInterface $productOptionReader
+     * @param \Spryker\Glue\ProductOptionsRestApi\Processor\Sorter\ProductOptionSorterInterface $productOptionSorter
+     */
+    public function __construct(
+        ProductOptionReaderInterface $productOptionReader,
+        ProductOptionSorterInterface $productOptionSorter
+    ) {
         $this->productOptionReader = $productOptionReader;
+        $this->productOptionSorter = $productOptionSorter;
     }
 
     /**
@@ -47,6 +57,11 @@ class ProductOptionByProductAbstractSkuExpander implements ProductOptionByProduc
             if (empty($productOptionRestResources[$restResource->getId()])) {
                 continue;
             }
+
+            $this->productOptionSorter->sortRestProductOptionsAttributesTransfers(
+                $productOptionRestResources[$restResource->getId()],
+                $restRequest
+            );
 
             foreach ($productOptionRestResources[$restResource->getId()] as $productOptionRestResource) {
                 $restResource->addRelationship($productOptionRestResource);
