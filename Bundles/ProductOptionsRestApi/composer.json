@@ -12,7 +12,6 @@
     "spryker/product-option-storage": "^1.6.0",
     "spryker/product-storage": "^1.15.0",
     "spryker/products-rest-api": "^2.0.0",
-    "spryker/symfony": "^3.0.0",
     "spryker/synchronization-behavior": "^1.0.0"
   },
   "require-dev": {
