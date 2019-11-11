@@ -12,6 +12,7 @@
     <transfer name="MerchantRelationship">
         <property name="idMerchantRelationship" type="int"/>
         <property name="productListIds" type="int[]" singular="productListId"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="Customer">

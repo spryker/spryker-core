@@ -19,6 +19,8 @@
         <property name="name" type="string"/>
         <property name="fkConfigurableBundleTemplate" type="int"/>
         <property name="translations" type="ConfigurableBundleTemplateSlotTranslation[]" singular="translation"/>
+        <property name="productList" type="ProductList"/>
+        <property name="configurableBundleTemplate" type="ConfigurableBundleTemplate"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateTranslation">
@@ -40,10 +42,13 @@
 
     <transfer name="ConfigurableBundleTemplateFilter">
         <property name="idConfigurableBundleTemplate" type="int"/>
+        <property name="translationLocales" type="Locale[]" singular="translationLocale"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlotFilter">
         <property name="idConfigurableBundleTemplateSlot" type="int"/>
+        <property name="translationLocales" type="Locale[]" singular="translationLocale"/>
+        <property name="productList" type="ProductList"/>
     </transfer>
 
     <transfer name="ButtonCollection">
@@ -69,6 +74,8 @@
 
     <transfer name="ProductList">
         <property name="idProductList" type="int"/>
+        <property name="productListCategoryRelation" type="ProductListCategoryRelation"/>
+        <property name="productListProductConcreteRelation" type="ProductListProductConcreteRelation"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlotEditForm">
@@ -83,6 +90,42 @@
         <property name="assignedProductIds" type="string"/>
         <property name="productIdsToBeAssigned" type="string"/>
         <property name="productIdsToBeDeAssigned" type="string"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateSlotResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="configurableBundleTemplateSlot" type="ConfigurableBundleTemplateSlot"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateResponse">
+        <property name="configurableBundleTemplate" type="ConfigurableBundleTemplate"/>
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateSlotCollection">
+        <property name="configurableBundleTemplateSlots" type="ConfigurableBundleTemplateSlot[]" singular="configurableBundleTemplateSlot"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateSlotTranslation">
+        <property name="locale" type="Locale"/>
+    </transfer>
+
+    <transfer name="TabsView">
+        <property name="isNavigable" type="bool"/>
+        <property name="tabs" type="TabItem[]" singular="tab"/>
+        <property name="footerTemplate" type="string"/>
+    </transfer>
+
+    <transfer name="TabItem">
+        <property name="name" type="string"/>
+        <property name="title" type="string"/>
+        <property name="template" type="string"/>
+    </transfer>
+
+    <transfer name="ProductListProductConcreteRelation">
+    </transfer>
+
+    <transfer name="ProductListCategoryRelation">
     </transfer>
 
 </transfers>

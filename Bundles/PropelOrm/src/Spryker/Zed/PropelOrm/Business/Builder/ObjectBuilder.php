@@ -570,4 +570,199 @@ class ObjectBuilder extends PropelObjectBuilder
     {
         return $column->isNotNull() ? null : static::COMMENT_DOC_BLOCK_NULLABLE_PART;
     }
+
+    /**
+     * Adds the base object hook functions.
+     *
+     * @param string $script
+     *
+     * @return void
+     */
+    protected function addHookMethods(&$script): void
+    {
+        $hooks = [
+            'pre',
+            'post',
+        ];
+        $actions = [
+            'Insert',
+            'Update',
+            'Save',
+            'Delete',
+        ];
+        foreach ($hooks as $hook) {
+            foreach ($actions as $action) {
+                $methodName = sprintf('add%s%sHook', ucfirst($hook), $action);
+                if (strpos($script, sprintf('function %s%s(', $hook, $action)) !== false || !method_exists($this, $methodName)) {
+                    continue;
+                }
+
+                $script .= $this->{$methodName}();
+            }
+        }
+    }
+
+    /**
+     * @return string
+     */
+    protected function addPreInsertHook(): string
+    {
+        $script = '
+        
+    /**
+     * Code to be run before inserting to database
+     * @param  \Propel\Runtime\Connection\ConnectionInterface $con
+     *
+     * @return bool
+     */
+    public function preInsert(ConnectionInterface $con = null)
+    {
+        return true;
+    }';
+
+        return $script;
+    }
+
+    /**
+     * @return string
+     */
+    protected function addPreUpdateHook(): string
+    {
+        $script = '
+        
+    /**
+     * Code to be run before updating the object in database
+     * @param  \Propel\Runtime\Connection\ConnectionInterface $con
+     *
+     * @return bool
+     */
+    public function preUpdate(ConnectionInterface $con = null)
+    {
+        return true;
+    }';
+
+        return $script;
+    }
+
+    /**
+     * @return string
+     */
+    protected function addPreSaveHook(): string
+    {
+        $script = '
+        
+    /**
+     * Code to be run before persisting the object
+     * @param  \Propel\Runtime\Connection\ConnectionInterface $con
+     *
+     * @return bool
+     */
+    public function preSave(ConnectionInterface $con = null)
+    {
+        return true;
+    }';
+
+        return $script;
+    }
+
+    /**
+     * @return string
+     */
+    protected function addPreDeleteHook(): string
+    {
+        $script = '
+        
+    /**
+     * Code to be run before deleting the object in database
+     * @param  \Propel\Runtime\Connection\ConnectionInterface $con
+     *
+     * @return bool
+     */
+    public function preDelete(ConnectionInterface $con = null)
+    {
+        return true;
+    }';
+
+        return $script;
+    }
+
+    /**
+     * @return string
+     */
+    protected function addPostInsertHook(): string
+    {
+        $script = '
+        
+    /**
+     * Code to be run after inserting to database
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
+     *
+     * @return void
+     */
+    public function postInsert(ConnectionInterface $con = null)
+    {
+    }';
+
+        return $script;
+    }
+
+    /**
+     * @return string
+     */
+    protected function addPostUpdateHook(): string
+    {
+        $script = '
+        
+    /**
+     * Code to be run after updating the object in database
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
+     *
+     * @return void
+     */
+    public function postUpdate(ConnectionInterface $con = null)
+    {
+    }';
+
+        return $script;
+    }
+
+    /**
+     * @return string
+     */
+    protected function addPostSaveHook(): string
+    {
+        $script = '
+        
+    /**
+     * Code to be run after persisting the object
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
+     *
+     * @return void
+     */
+    public function postSave(ConnectionInterface $con = null)
+    {
+    }';
+
+        return $script;
+    }
+
+    /**
+     * @return string
+     */
+    protected function addPostDeleteHook(): string
+    {
+        $script = '
+        
+    /**
+     * Code to be run after deleting the object in database
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
+     *
+     * @return void
+     */
+    public function postDelete(ConnectionInterface $con = null)
+    {
+    }';
+
+        return $script;
+    }
 }

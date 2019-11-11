@@ -99,4 +99,8 @@
     <transfer name="CategoryCollection">
     </transfer>
 
+    <transfer name="ConfigurableBundleTemplateSlotEditForm">
+        <property name="productListAggregateForm" type="ProductListAggregateForm"/>
+    </transfer>
+
 </transfers>

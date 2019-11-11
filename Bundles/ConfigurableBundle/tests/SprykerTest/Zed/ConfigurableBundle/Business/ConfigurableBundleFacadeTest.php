@@ -41,22 +41,22 @@ class ConfigurableBundleFacadeTest extends Unit
     /**
      * @see \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReader::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_EXISTS
      */
-    protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_EXISTS = 'configurable-bundle.template.validation.error.not_exists';
+    protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_EXISTS = 'configurable_bundle.template.validation.error.not_exists';
 
     /**
      * @see \Spryker\Zed\ConfigurableBundle\Business\Updater\ConfigurableBundleTemplateUpdater::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_ALREADY_ACTIVATED
      */
-    protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_ALREADY_ACTIVATED = 'configurable-bundle.template.validation.error.already_activated';
+    protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_ALREADY_ACTIVATED = 'configurable_bundle.template.validation.error.already_activated';
 
     /**
      * @see \Spryker\Zed\ConfigurableBundle\Business\Updater\ConfigurableBundleTemplateUpdater::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_ALREADY_DEACTIVATED
      */
-    protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_ALREADY_DEACTIVATED = 'configurable-bundle.template.validation.error.already_deactivated';
+    protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_ALREADY_DEACTIVATED = 'configurable_bundle.template.validation.error.already_deactivated';
 
     /**
      * @see \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReader::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NOT_EXISTS
      */
-    protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NOT_EXISTS = 'configurable-bundle.slot.validation.error.not_exists';
+    protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NOT_EXISTS = 'configurable_bundle.slot.validation.error.not_exists';
 
     /**
      * @var \SprykerTest\Zed\ConfigurableBundle\ConfigurableBundleBusinessTester
