@@ -9,8 +9,6 @@ namespace Spryker\Zed\MerchantOpeningHoursStorage\Persistence;
 
 use ArrayObject;
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\MerchantTransfer;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -30,8 +28,8 @@ class MerchantOpeningHoursStorageRepository extends AbstractRepository implement
         $weekdayScheduleEntities = $this->getFactory()
             ->getMerchantOpeningHoursWeekdaySchedulePropelQuery()
             ->useSpyWeekdayScheduleQuery()
-                ->orderByDay(Criteria::ASC)
-                ->orderByTimeFrom(Criteria::ASC)
+                ->orderByDay()
+                ->orderByTimeFrom()
             ->endUse()
             ->filterByFkMerchant($fkMerchant)
             ->find();
@@ -53,8 +51,8 @@ class MerchantOpeningHoursStorageRepository extends AbstractRepository implement
         $dateScheduleEntities = $this->getFactory()
             ->getMerchantOpeningHoursDateSchedulePropelQuery()
             ->useSpyDateScheduleQuery()
-                ->orderByDate(Criteria::ASC)
-                ->orderByTimeFrom(Criteria::ASC)
+                ->orderByDate()
+                ->orderByTimeFrom()
             ->endUse()
             ->filterByFkMerchant($fkMerchant)
             ->find();
@@ -70,7 +68,7 @@ class MerchantOpeningHoursStorageRepository extends AbstractRepository implement
      *
      * @return \Generated\Shared\Transfer\SpyMerchantOpeningHoursStorageEntityTransfer[]
      */
-    public function getFilteredMerchantOpeningHoursStorageEntities(FilterTransfer $filterTransfer, array $merchantIds): array
+    public function getFilteredMerchantOpeningHoursStorageEntityTransfers(FilterTransfer $filterTransfer, array $merchantIds): array
     {
         $merchantOpeningHoursStoragePropelQuery = $this->getFactory()
             ->getMerchantOpeningHoursStoragePropelQuery();
@@ -88,7 +86,7 @@ class MerchantOpeningHoursStorageRepository extends AbstractRepository implement
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer[]
+     * @return \Generated\Shared\Transfer\SpyMerchantEntityTransfer[]
      */
     public function getFilteredMerchantTransfers(FilterTransfer $filterTransfer): array
     {
@@ -98,8 +96,6 @@ class MerchantOpeningHoursStorageRepository extends AbstractRepository implement
         $merchantEntityTransfers = $this->buildQueryFromCriteria($merchantOpeningHoursDateSchedulePropelQuery, $filterTransfer)
             ->find();
 
-        return $this->getFactory()
-            ->createMerchantMapper()
-            ->mapMerchantEntityTransfersToMerchantTransfers($merchantEntityTransfers, new MerchantTransfer());
+        return $merchantEntityTransfers;
     }
 }

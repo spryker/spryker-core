@@ -63,7 +63,7 @@ class MerchantOpeningHoursSynchronizationDataBulkPlugin extends AbstractPlugin i
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
         $merchantOpeningHoursStorageEntities = $this->getRepository()
-            ->getFilteredMerchantOpeningHoursStorageEntities($filterTransfer, $ids);
+            ->getFilteredMerchantOpeningHoursStorageEntityTransfers($filterTransfer, $ids);
 
         foreach ($merchantOpeningHoursStorageEntities as $merchantOpeningHoursStorageEntity) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();

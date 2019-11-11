@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface MerchantOpeningHoursStorageRepositoryInterface
 {
     /**
+     * @module MerchantOpeningHours
+     *
      * @param int $fkMerchant
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\WeekdayScheduleTransfer[]
@@ -20,6 +22,8 @@ interface MerchantOpeningHoursStorageRepositoryInterface
     public function getMerchantOpeningHoursWeekdayScheduleByFkMerchant(int $fkMerchant): ArrayObject;
 
     /**
+     * @module MerchantOpeningHours
+     *
      * @param int $fkMerchant
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\DateScheduleTransfer[]
@@ -32,12 +36,14 @@ interface MerchantOpeningHoursStorageRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SpyMerchantOpeningHoursStorageEntityTransfer[]
      */
-    public function getFilteredMerchantOpeningHoursStorageEntities(FilterTransfer $filterTransfer, array $merchantIds): array;
+    public function getFilteredMerchantOpeningHoursStorageEntityTransfers(FilterTransfer $filterTransfer, array $merchantIds): array;
 
     /**
+     * @module Merchant
+     *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantTransfer[]
+     * @return \Generated\Shared\Transfer\SpyMerchantEntityTransfer[]
      */
     public function getFilteredMerchantTransfers(FilterTransfer $filterTransfer): array;
 }

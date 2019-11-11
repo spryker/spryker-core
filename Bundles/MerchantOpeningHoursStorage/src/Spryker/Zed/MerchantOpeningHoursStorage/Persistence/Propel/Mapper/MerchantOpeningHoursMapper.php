@@ -17,7 +17,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class MerchantOpeningHoursMapper implements MerchantOpeningHoursMapperInterface
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $weekdayScheduleEntities
+     * @param \Orm\Zed\MerchantOpeningHours\Persistence\SpyMerchantOpeningHoursWeekdaySchedule[]|\Propel\Runtime\Collection\ObjectCollection $weekdayScheduleEntities
      * @param \ArrayObject $weekdayScheduleTransfers
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\WeekdayScheduleTransfer[]
