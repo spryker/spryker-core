@@ -364,4 +364,34 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     {
         return $this->getFactory()->createElasticsearchIndexCopier()->copyIndex($source, $target);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Use `\Spryker\Zed\Search\Business\SearchFacade::installSources()` instead.
+     *
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
+     * @return void
+     */
+    public function installIndexes(LoggerInterface $messenger): void
+    {
+        $this->getFactory()->createElasticsearchIndexInstaller($messenger)->install();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
+     * @return void
+     */
+    public function installSources(LoggerInterface $messenger): void
+    {
+        $this->getFactory()->createSearchSourceInstaller($messenger)->install();
+    }
 }

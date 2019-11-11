@@ -9,6 +9,7 @@ namespace Spryker\Zed\Gui\Communication;
 
 use Spryker\Shared\Twig\Loader\FilesystemLoader;
 use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
+use Spryker\Zed\Gui\GuiDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -22,5 +23,13 @@ class GuiCommunicationFactory extends AbstractCommunicationFactory
     public function createFilesystemLoader(): FilesystemLoaderInterface
     {
         return new FilesystemLoader($this->getConfig()->getTemplatePaths());
+    }
+
+    /**
+     * @return \Twig\TwigFilter[]
+     */
+    public function getTwigFilters(): array
+    {
+        return $this->getProvidedDependency(GuiDependencyProvider::GUI_TWIG_FILTERS);
     }
 }
