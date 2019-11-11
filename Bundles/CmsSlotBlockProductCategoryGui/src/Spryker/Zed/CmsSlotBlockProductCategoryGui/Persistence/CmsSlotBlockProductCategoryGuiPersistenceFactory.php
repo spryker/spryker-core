@@ -8,9 +8,7 @@
 namespace Spryker\Zed\CmsSlotBlockProductCategoryGui\Persistence;
 
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\CmsSlotBlockProductCategoryGuiDependencyProvider;
-use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToCategoryFacadeInterface;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToLocaleFacadeInterface;
-use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToProductFacadeInterface;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\QueryContainer\CmsSlotBlockProductCategoryGuiToProductQueryContainerInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -33,22 +31,6 @@ class CmsSlotBlockProductCategoryGuiPersistenceFactory extends AbstractPersisten
     public function getProductQueryContainer(): CmsSlotBlockProductCategoryGuiToProductQueryContainerInterface
     {
         return $this->getProvidedDependency(CmsSlotBlockProductCategoryGuiDependencyProvider::QUERY_CONTAINER_PRODUCT);
-    }
-
-    /**
-     * @return \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToProductFacadeInterface
-     */
-    public function getProductFacade(): CmsSlotBlockProductCategoryGuiToProductFacadeInterface
-    {
-        return $this->getProvidedDependency(CmsSlotBlockProductCategoryGuiDependencyProvider::FACADE_PRODUCT);
-    }
-
-    /**
-     * @return \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToCategoryFacadeInterface
-     */
-    public function getCategoryFacade(): CmsSlotBlockProductCategoryGuiToCategoryFacadeInterface
-    {
-        return $this->getProvidedDependency(CmsSlotBlockProductCategoryGuiDependencyProvider::FACADE_CATEGORY);
     }
 
     /**

@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\CmsSlotBlockProductCategoryGui\Persistence;
 
-use Generated\Shared\Transfer\CategoryCollectionTransfer;
-use Generated\Shared\Transfer\PaginationTransfer;
-use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -37,29 +34,5 @@ class CmsSlotBlockProductCategoryGuiRepository extends AbstractRepository implem
 
         return $this->getFactory()->createCmsSlotBlockProductCategoryGuiMapper()
             ->mapProductAbstractCollectionToTransfers($productAbstractCollection);
-    }
-
-    /**
-     * @param string $suggestion
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer
-     */
-    public function getPaginatedProductAbstractSuggestions(
-        string $suggestion,
-        PaginationTransfer $paginationTransfer
-    ): ProductAbstractSuggestionCollectionTransfer {
-        return $this->getFactory()->getProductFacade()
-            ->getPaginatedProductAbstractSuggestions($suggestion, $paginationTransfer);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
-     */
-    public function getCategories(): CategoryCollectionTransfer
-    {
-        $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
-
-        return $this->getFactory()->getCategoryFacade()->getAllCategoryCollection($localeTransfer);
     }
 }

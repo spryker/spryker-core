@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Reader\Category;
 
-interface CmsSlotBlockProductCategoryGuiCategoryReaderInterface
+interface CategoryReaderInterface
 {
     /**
      * @return int[]

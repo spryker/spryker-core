@@ -8,8 +8,8 @@
 namespace Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\DataProvider;
 
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Form\ProductCategorySlotBlockConditionForm;
-use Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Reader\Category\CmsSlotBlockProductCategoryGuiCategoryReaderInterface;
-use Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Reader\Product\CmsSlotBlockProductCategoryGuiProductReaderInterface;
+use Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Reader\Category\CategoryReaderInterface;
+use Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Reader\Product\ProductReaderInterface;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToTranslatorFacadeInterface;
 
 class ProductCategorySlotBlockDataProvider implements ProductCategorySlotBlockDataProviderInterface
@@ -18,12 +18,12 @@ class ProductCategorySlotBlockDataProvider implements ProductCategorySlotBlockDa
     protected const KEY_OPTION_SPECIFIC_PRODUCTS = 'Specific Product Pages';
 
     /**
-     * @var \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Reader\Product\CmsSlotBlockProductCategoryGuiProductReaderInterface
+     * @var \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Reader\Product\ProductReaderInterface
      */
     protected $cmsSlotBlockProductCategoryGuiProductReader;
 
     /**
-     * @var \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Reader\Category\CmsSlotBlockProductCategoryGuiCategoryReaderInterface
+     * @var \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Reader\Category\CategoryReaderInterface
      */
     protected $cmsSlotBlockProductCategoryGuiCategoryReader;
 
@@ -33,13 +33,13 @@ class ProductCategorySlotBlockDataProvider implements ProductCategorySlotBlockDa
     protected $translatorFacade;
 
     /**
-     * @param \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Reader\Product\CmsSlotBlockProductCategoryGuiProductReaderInterface $cmsSlotBlockProductCategoryGuiProductReader
-     * @param \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Reader\Category\CmsSlotBlockProductCategoryGuiCategoryReaderInterface $cmsSlotBlockProductCategoryGuiCategoryReader
+     * @param \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Reader\Product\ProductReaderInterface $cmsSlotBlockProductCategoryGuiProductReader
+     * @param \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Reader\Category\CategoryReaderInterface $cmsSlotBlockProductCategoryGuiCategoryReader
      * @param \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToTranslatorFacadeInterface $translatorFacade
      */
     public function __construct(
-        CmsSlotBlockProductCategoryGuiProductReaderInterface $cmsSlotBlockProductCategoryGuiProductReader,
-        CmsSlotBlockProductCategoryGuiCategoryReaderInterface $cmsSlotBlockProductCategoryGuiCategoryReader,
+        ProductReaderInterface $cmsSlotBlockProductCategoryGuiProductReader,
+        CategoryReaderInterface $cmsSlotBlockProductCategoryGuiCategoryReader,
         CmsSlotBlockProductCategoryGuiToTranslatorFacadeInterface $translatorFacade
     ) {
         $this->cmsSlotBlockProductCategoryGuiProductReader = $cmsSlotBlockProductCategoryGuiProductReader;

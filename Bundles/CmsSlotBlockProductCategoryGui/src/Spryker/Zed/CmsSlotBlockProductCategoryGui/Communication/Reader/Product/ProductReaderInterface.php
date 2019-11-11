@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Reader\Product;
 
-interface CmsSlotBlockProductCategoryGuiProductReaderInterface
+interface ProductReaderInterface
 {
     /**
      * @param int[]|null $productAbstractIds

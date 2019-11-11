@@ -10,9 +10,10 @@ namespace Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Reader\Produc
 use ArrayObject;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Formatter\ProductLabelFormatterInterface;
+use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToProductFacadeInterface;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Persistence\CmsSlotBlockProductCategoryGuiRepositoryInterface;
 
-class CmsSlotBlockProductCategoryGuiProductReader implements CmsSlotBlockProductCategoryGuiProductReaderInterface
+class ProductReader implements ProductReaderInterface
 {
     protected const KEY_RESULTS = 'results';
     protected const KEY_PAGINATION = 'pagination';
@@ -28,19 +29,27 @@ class CmsSlotBlockProductCategoryGuiProductReader implements CmsSlotBlockProduct
     protected $cmsSlotBlockProductCategoryGuiRepository;
 
     /**
+     * @var \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToProductFacadeInterface
+     */
+    protected $productFacade;
+
+    /**
      * @var \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Formatter\ProductLabelFormatterInterface
      */
     protected $productLabelFormatter;
 
     /**
      * @param \Spryker\Zed\CmsSlotBlockProductCategoryGui\Persistence\CmsSlotBlockProductCategoryGuiRepositoryInterface $cmsSlotBlockProductCategoryGuiRepository
+     * @param \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Formatter\ProductLabelFormatterInterface $productLabelFormatter
      */
     public function __construct(
         CmsSlotBlockProductCategoryGuiRepositoryInterface $cmsSlotBlockProductCategoryGuiRepository,
+        CmsSlotBlockProductCategoryGuiToProductFacadeInterface $productFacade,
         ProductLabelFormatterInterface $productLabelFormatter
     ) {
         $this->cmsSlotBlockProductCategoryGuiRepository = $cmsSlotBlockProductCategoryGuiRepository;
+        $this->productFacade = $productFacade;
         $this->productLabelFormatter = $productLabelFormatter;
     }
 
@@ -68,7 +77,7 @@ class CmsSlotBlockProductCategoryGuiProductReader implements CmsSlotBlockProduct
         $paginationTransfer = $this->getPaginationTransfer($page);
 
         /** @var \Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer $productAbstractSuggestionCollectionTransfer */
-        $productAbstractSuggestionCollectionTransfer = $this->cmsSlotBlockProductCategoryGuiRepository
+        $productAbstractSuggestionCollectionTransfer = $this->productFacade
             ->getPaginatedProductAbstractSuggestions($suggestion, $paginationTransfer);
 
         return [
