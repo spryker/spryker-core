@@ -73,7 +73,7 @@ class CartCodeDeleter implements CartCodeDeleterInterface
     {
         $cartCodeOperationResultTransfer = $this->cartCodesRestApiClient->removeCode(
             $quoteTransfer,
-            $restRequest->getResource()->getId()
+            (int)$restRequest->getResource()->getId()
         );
 
         return $this->cartCodeResponseBuilder->buildCartRestResponse($cartCodeOperationResultTransfer, $restRequest);

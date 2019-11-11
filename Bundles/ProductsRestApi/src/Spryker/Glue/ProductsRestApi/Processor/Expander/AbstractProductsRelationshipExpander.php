@@ -37,25 +37,27 @@ class AbstractProductsRelationshipExpander implements AbstractProductsRelationsh
      */
     public function addResourceRelationshipsBySkus(array $resources, RestRequestInterface $restRequest): array
     {
-        $abstractSkus = [];
+        $productAbstractSkus = [];
         foreach ($resources as $resource) {
             $productAbstractSku = $this->findSku($resource->getAttributes());
             if (!$productAbstractSku) {
                 continue;
             }
 
-            $abstractSkus[] = $productAbstractSku;
+            $productAbstractSkus[] = $productAbstractSku;
         }
 
-        if (!$abstractSkus) {
+        if (!$productAbstractSkus) {
+            return [];
+        }
+
+        $abstractProductsResources = $this->abstractProductsReader->getProductAbstractsBySkus($productAbstractSkus, $restRequest);
+        if (!$abstractProductsResources) {
             return [];
         }
 
         foreach ($resources as $resource) {
-            $abstractProductsResources = $this->abstractProductsReader->getProductAbstractsBySkus($abstractSkus, $restRequest);
-            if ($abstractProductsResources) {
-                $this->addRelationships($abstractProductsResources, $resource);
-            }
+            $this->addRelationships($abstractProductsResources, $resource);
         }
 
         return $resources;
@@ -69,7 +71,11 @@ class AbstractProductsRelationshipExpander implements AbstractProductsRelationsh
      */
     protected function addRelationships(array $abstractProductsResources, RestResourceInterface $resource): void
     {
-        foreach ($abstractProductsResources as $abstractProductsResource) {
+        foreach ($abstractProductsResources as $idProductAbstract => $abstractProductsResource) {
+            if ($this->findSku($resource->getAttributes()) !== $idProductAbstract) {
+                continue;
+            }
+
             $resource->addRelationship($abstractProductsResource);
         }
     }

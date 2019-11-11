@@ -8,12 +8,10 @@
 namespace Spryker\Glue\CartCodesRestApi\Processor\Expander;
 
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\RestDiscountsAttributesTransfer;
 use Generated\Shared\Transfer\RestPromotionalItemsAttributesTransfer;
 use Spryker\Glue\CartCodesRestApi\CartCodesRestApiConfig;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\DiscountMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class PromotionItemByQuoteTransferResourceRelationshipExpander implements PromotionItemByQuoteTransferResourceRelationshipExpanderInterface
@@ -68,7 +66,7 @@ class PromotionItemByQuoteTransferResourceRelationshipExpander implements Promot
 
                 $promotionalItemsResource = $this->restResourceBuilder->createRestResource(
                     CartCodesRestApiConfig::RESOURCE_PROMOTIONAL_ITEMS,
-                    $promotionItemTransfer->getIdDiscountPromotion(),
+                    (string)$promotionItemTransfer->getIdDiscountPromotion(),
                     $restPromotionalItemsAttributesTransfer
                 );
 
