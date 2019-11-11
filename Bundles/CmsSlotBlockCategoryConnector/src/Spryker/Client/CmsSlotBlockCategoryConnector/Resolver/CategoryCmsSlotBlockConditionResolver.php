@@ -49,11 +49,11 @@ class CategoryCmsSlotBlockConditionResolver implements CategoryCmsSlotBlockCondi
      */
     protected function getIsConditionDataKeyAll(array $conditionData): bool
     {
-        if (!isset($conditionData[static::CONDITIONS_DATA_KEY_All])) {
+        if (!isset($conditionData[static::CONDITIONS_DATA_KEY_ALL])) {
             return false;
         }
 
-        if (!$conditionData[static::CONDITIONS_DATA_KEY_All]) {
+        if (!$conditionData[static::CONDITIONS_DATA_KEY_ALL]) {
             return false;
         }
 
