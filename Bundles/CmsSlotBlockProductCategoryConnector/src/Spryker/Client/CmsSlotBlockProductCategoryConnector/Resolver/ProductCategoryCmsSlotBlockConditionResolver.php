@@ -102,9 +102,9 @@ class ProductCategoryCmsSlotBlockConditionResolver implements ProductCategoryCms
      */
     protected function checkCategoryConditions(array $conditionData, int $idProductAbstract): bool
     {
-        $conditionsDataCategoryIds = $conditionData[static::CONDITIONS_DATA_KEY_CATEGORIES_IDS];
+        $conditionDataCategoryIds = $conditionData[static::CONDITIONS_DATA_KEY_CATEGORIES_IDS];
         $productCategoryIds = $this->productCategoryReader->getAbstractProductCategoryIds($idProductAbstract);
 
-        return count(array_intersect($conditionsDataCategoryIds, $productCategoryIds)) > 0;
+        return count(array_intersect($conditionDataCategoryIds, $productCategoryIds)) > 0;
     }
 }

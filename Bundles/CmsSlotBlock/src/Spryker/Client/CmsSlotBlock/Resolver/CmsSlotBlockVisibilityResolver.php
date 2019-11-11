@@ -68,7 +68,7 @@ class CmsSlotBlockVisibilityResolver implements CmsSlotBlockVisibilityResolverIn
     {
         $applicablePlugins = [];
         foreach ($this->cmsSlotBlockVisibilityResolverPlugins as $cmsSlotBlockVisibilityResolverPlugin) {
-            if (!$cmsSlotBlockVisibilityResolverPlugin->isApplicable($cmsBlockTransfer)) {
+            if ($cmsSlotBlockVisibilityResolverPlugin->isApplicable($cmsBlockTransfer)) {
                 $applicablePlugins[] = $cmsSlotBlockVisibilityResolverPlugin;
             }
         }
