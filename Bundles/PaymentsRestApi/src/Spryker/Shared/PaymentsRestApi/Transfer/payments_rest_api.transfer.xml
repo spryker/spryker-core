@@ -44,8 +44,13 @@
     <transfer name="PaymentMethods">
         <property name="methods" type="PaymentMethod[]" singular="method"/>
     </transfer>
+
     <transfer name="RestCheckoutData">
         <property name="paymentProviders" type="PaymentProviderCollection"/>
         <property name="availablePaymentMethods" type="PaymentMethods"/>
+    </transfer>
+
+    <transfer name="PaymentProviderCollection">
+        <property name="paymentProviders" type="PaymentProvider[]" singular="paymentProvider"/>
     </transfer>
 </transfers>
