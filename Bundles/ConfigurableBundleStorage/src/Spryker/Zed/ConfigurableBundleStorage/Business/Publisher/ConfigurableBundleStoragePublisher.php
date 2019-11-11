@@ -90,6 +90,7 @@ class ConfigurableBundleStoragePublisher implements ConfigurableBundleStoragePub
         }
 
         $configurableBundleTemplateStorageTransfer = (new ConfigurableBundleTemplateStorageTransfer())
+            ->setIdConfigurableBundleTemplate($configurableBundleTemplateEntity->getIdConfigurableBundleTemplate())
             ->setName($configurableBundleTemplateEntity->getName())
             ->setUuid($configurableBundleTemplateEntity->getUuid())
             ->setSlots(new ArrayObject($configurableBundleTemplateSlotStorageTransfers));
