@@ -139,7 +139,7 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
         ?MessageTransfer $messageTransfer
     ): ArrayObject {
         if ($messageTransfer !== null) {
-            $cartErrorMessages->append($cartErrorMessages);
+            $cartErrorMessages->append($messageTransfer);
         }
 
         return $cartErrorMessages;
