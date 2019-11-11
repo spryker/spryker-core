@@ -17,4 +17,11 @@ interface CmsNavigationConnectorToNavigationFacadeInterface
      * @return \Generated\Shared\Transfer\NavigationNodeTransfer
      */
     public function updateNavigationNode(NavigationNodeTransfer $navigationNodeTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     *
+     * @return void
+     */
+    public function deleteNavigationNode(NavigationNodeTransfer $navigationNodeTransfer);
 }

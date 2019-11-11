@@ -8,6 +8,9 @@
 namespace Spryker\Zed\CmsSlotBlock\Business\Writer;
 
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
+use Generated\Shared\Transfer\EventEntityTransfer;
+use Spryker\Zed\CmsSlotBlock\Dependency\CmsSlotBlockEvents;
+use Spryker\Zed\CmsSlotBlock\Dependency\Facade\CmsSlotBlockToEventFacadeInterface;
 use Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockEntityManagerInterface;
 
 class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterface
@@ -18,11 +21,20 @@ class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterfac
     protected $cmsSlotBlockEntityManager;
 
     /**
-     * @param \Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockEntityManagerInterface $cmsSlotBlockEntityManager
+     * @var \Spryker\Zed\CmsSlotBlock\Dependency\Facade\CmsSlotBlockToEventFacadeInterface
      */
-    public function __construct(CmsSlotBlockEntityManagerInterface $cmsSlotBlockEntityManager)
-    {
+    protected $eventFacade;
+
+    /**
+     * @param \Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockEntityManagerInterface $cmsSlotBlockEntityManager
+     * @param \Spryker\Zed\CmsSlotBlock\Dependency\Facade\CmsSlotBlockToEventFacadeInterface $eventFacade
+     */
+    public function __construct(
+        CmsSlotBlockEntityManagerInterface $cmsSlotBlockEntityManager,
+        CmsSlotBlockToEventFacadeInterface $eventFacade
+    ) {
         $this->cmsSlotBlockEntityManager = $cmsSlotBlockEntityManager;
+        $this->eventFacade = $eventFacade;
     }
 
     /**
@@ -36,6 +48,7 @@ class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterfac
 
         $this->deleteCmsSlotBlocks($cmsSlotBlockTransfers);
         $this->cmsSlotBlockEntityManager->createCmsSlotBlocks($cmsSlotBlockTransfers);
+        $this->triggerCmsSlotBlockPublishEvents($cmsSlotBlockTransfers);
     }
 
     /**
@@ -84,5 +97,33 @@ class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterfac
         }
 
         return $cmsSlotIds;
+    }
+
+    /**
+     * @param array $cmsSlotBlockTransfers
+     *
+     * @return void
+     */
+    protected function triggerCmsSlotBlockPublishEvents(array $cmsSlotBlockTransfers): void
+    {
+        $eventTransfers = $this->mapCmsSlotBlockTransfersToEventTransfers($cmsSlotBlockTransfers);
+        $this->eventFacade->triggerBulk(CmsSlotBlockEvents::CMS_SLOT_BLOCK_PUBLISH, $eventTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
+     *
+     * @return \Generated\Shared\Transfer\EventEntityTransfer[]
+     */
+    protected function mapCmsSlotBlockTransfersToEventTransfers(array $cmsSlotBlockTransfers): array
+    {
+        $eventTransfers = [];
+
+        foreach ($cmsSlotBlockTransfers as $cmsSlotBlockTransfer) {
+            $eventTransfers[] = (new EventEntityTransfer())
+                ->setId($cmsSlotBlockTransfer->getIdCmsBlock());
+        }
+
+        return $eventTransfers;
     }
 }

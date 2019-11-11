@@ -13,6 +13,11 @@
         <property name="isAssignedToSlotAndTemplate" type="bool"/>
     </transfer>
 
+    <transfer name="CmsSlotBlockCriteria">
+        <property name="idCmsSlotTemplate" type="int"/>
+        <property name="idCmsSlot" type="int"/>
+    </transfer>
+
     <transfer name="StoreRelation">
         <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
