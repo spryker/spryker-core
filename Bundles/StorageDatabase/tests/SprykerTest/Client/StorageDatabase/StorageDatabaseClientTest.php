@@ -65,6 +65,10 @@ class StorageDatabaseClientTest extends Unit
      */
     public function testDataCanBeRetrievedBySingleKey(): void
     {
+        if (!Config::get(StorageDatabaseConstants::DB_ENGINE)) {
+            $this->markTestSkipped('Storage database is disabled.');
+        }
+
         $productConcreteTransfer = $this->tester->haveProduct();
         $resourceKey = $this->tester->haveProductQuantityStorage($productConcreteTransfer->getIdProductConcrete());
 
@@ -80,6 +84,10 @@ class StorageDatabaseClientTest extends Unit
      */
     public function testDataCanBeRetrievedByMultipleKeys(): void
     {
+        if (!Config::get(StorageDatabaseConstants::DB_ENGINE)) {
+            $this->markTestSkipped('Storage database is disabled.');
+        }
+
         $productConcreteTransfer = $this->tester->haveProduct();
         $availabilityAbstractEntity = $this->tester->haveAvailabilityAbstract($productConcreteTransfer);
         $productQuantityResourceKey = $this->tester->haveProductQuantityStorage($productConcreteTransfer->getIdProductConcrete());
@@ -101,6 +109,10 @@ class StorageDatabaseClientTest extends Unit
      */
     public function testAccessStatsAreUpdated(): void
     {
+        if (!Config::get(StorageDatabaseConstants::DB_ENGINE)) {
+            $this->markTestSkipped('Storage database is disabled.');
+        }
+
         $dummyKey = sprintf('%s:dummy:key:1', static::PRODUCT_QUANTITY_RESOURCE_PREFIX);
         $anotherDummyKey = sprintf('%s:dummy:key:2', static::PRODUCT_QUANTITY_RESOURCE_PREFIX);
         $yetAnotherDummyKey = sprintf('%s:dummy:key:3', static::AVAILABILITY_RESOURCE_PREFIX);
