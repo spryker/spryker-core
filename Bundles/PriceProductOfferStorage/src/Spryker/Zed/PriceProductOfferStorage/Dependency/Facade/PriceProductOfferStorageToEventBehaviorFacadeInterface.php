@@ -14,7 +14,7 @@ interface PriceProductOfferStorageToEventBehaviorFacadeInterface
      *
      * @return array
      */
-    public function getEventTransferIds(array $eventTransfers);
+    public function getEventTransferIds(array $eventTransfers): array;
 
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
@@ -22,7 +22,7 @@ interface PriceProductOfferStorageToEventBehaviorFacadeInterface
      *
      * @return array
      */
-    public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName);
+    public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName): array;
 
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
@@ -30,5 +30,5 @@ interface PriceProductOfferStorageToEventBehaviorFacadeInterface
      *
      * @return \Generated\Shared\Transfer\EventEntityTransfer[]
      */
-    public function getEventTransfersByModifiedColumns(array $eventTransfers, array $columns);
+    public function getEventTransfersByModifiedColumns(array $eventTransfers, array $columns): array;
 }

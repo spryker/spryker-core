@@ -1,0 +1,33 @@
+namespace: SprykerTest\Zed\PriceProductOfferStorage
+
+paths:
+  tests: .
+  data: ../../../_data
+  support: _support
+  log: ../../../_output
+
+coverage:
+  enabled: true
+  remote: false
+  whitelist: { include: ['../../../../src/*'] }
+
+suites:
+  Communication:
+    path: Communication
+    class_name: PriceProductOfferStorageTester
+    modules:
+      enabled:
+      - Asserts
+      - \SprykerTest\Shared\Testify\Helper\Environment
+      - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+      - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+      - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+      - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+      - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
+      - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+      - \SprykerTest\Shared\PriceProductOffer\Helper\PriceProductOfferHelper
+      - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
+      - \SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper
+      - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+      - \SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper
+      - \SprykerTest\Shared\Currency\Helper\CurrencyDataHelper

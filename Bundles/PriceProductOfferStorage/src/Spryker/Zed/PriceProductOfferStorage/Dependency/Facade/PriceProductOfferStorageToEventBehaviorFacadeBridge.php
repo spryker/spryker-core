@@ -27,7 +27,7 @@ class PriceProductOfferStorageToEventBehaviorFacadeBridge implements PriceProduc
      *
      * @return array
      */
-    public function getEventTransferIds(array $eventTransfers)
+    public function getEventTransferIds(array $eventTransfers): array
     {
         return $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
     }
@@ -38,7 +38,7 @@ class PriceProductOfferStorageToEventBehaviorFacadeBridge implements PriceProduc
      *
      * @return array
      */
-    public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName)
+    public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName): array
     {
         return $this->eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, $foreignKeyColumnName);
     }
@@ -49,7 +49,7 @@ class PriceProductOfferStorageToEventBehaviorFacadeBridge implements PriceProduc
      *
      * @return \Generated\Shared\Transfer\EventEntityTransfer[]
      */
-    public function getEventTransfersByModifiedColumns(array $eventTransfers, array $columns)
+    public function getEventTransfersByModifiedColumns(array $eventTransfers, array $columns): array
     {
         return $this->eventBehaviorFacade->getEventTransfersByModifiedColumns($eventTransfers, $columns);
     }

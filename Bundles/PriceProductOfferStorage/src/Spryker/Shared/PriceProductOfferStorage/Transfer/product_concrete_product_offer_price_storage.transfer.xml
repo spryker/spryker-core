@@ -16,7 +16,7 @@
         <property name="grossPrice" type="string"/>
     </transfer>
 
-    <transfer name="PriceProductOffer">
+    <transfer name="PriceProductOfferData">
         <property name="priceType" type="string"/>
         <property name="currency" type="string"/>
         <property name="netPrice" type="string"/>
@@ -25,6 +25,6 @@
 
     <transfer name="ProductOfferStorage">
         <property name="idProductOffer" type="int"/>
-        <property name="prices" type="PriceProductOffer[]" singular="price"/>
+        <property name="prices" type="PriceProductOfferData[]" singular="price"/>
     </transfer>
 </transfers>

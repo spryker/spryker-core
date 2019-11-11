@@ -319,7 +319,6 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
      */
     protected function triggerProductOffer(array $productOfferReferences): void
     {
-        $r = '';
         foreach ($productOfferReferences as $productOfferReference) {
             $eventEntityTransfer = new EventEntityTransfer();
             $eventEntityTransfer->setAdditionalValues([

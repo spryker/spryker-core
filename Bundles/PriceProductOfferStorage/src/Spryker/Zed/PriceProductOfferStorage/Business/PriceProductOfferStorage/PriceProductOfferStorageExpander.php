@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PriceProductOfferStorage\Business\PriceProductOfferStorage;
 
-use Generated\Shared\Transfer\PriceProductOfferTransfer;
+use Generated\Shared\Transfer\PriceProductOfferDataTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Orm\Zed\Currency\Persistence\Map\SpyCurrencyTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
@@ -30,9 +30,9 @@ class PriceProductOfferStorageExpander implements PriceProductOfferStorageExpand
         $priceProductOffers = $this->getPriceProductOffersByIdProductOffer($idProductOffer);
 
         foreach ($priceProductOffers as $priceProductOffer) {
-            $priceProductOfferTransfer = $this->getPriceProductOfferTransfer($priceProductOffer, (new PriceProductOfferTransfer()));
+            $priceProductOfferDataTransfer = $this->getPriceProductOfferDataTransfer($priceProductOffer, (new PriceProductOfferDataTransfer()));
 
-            $productOfferStorageTransfer->addPrice($priceProductOfferTransfer);
+            $productOfferStorageTransfer->addPrice($priceProductOfferDataTransfer);
         }
 
         return $productOfferStorageTransfer;
@@ -40,18 +40,18 @@ class PriceProductOfferStorageExpander implements PriceProductOfferStorageExpand
 
     /**
      * @param array $priceProductOffer
-     * @param \Generated\Shared\Transfer\PriceProductOfferTransfer $priceProductOfferTransfer
+     * @param \Generated\Shared\Transfer\PriceProductOfferDataTransfer $priceProductOfferDataTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductOfferTransfer
+     * @return \Generated\Shared\Transfer\PriceProductOfferDataTransfer
      */
-    protected function getPriceProductOfferTransfer(array $priceProductOffer, PriceProductOfferTransfer $priceProductOfferTransfer)
+    protected function getPriceProductOfferDataTransfer(array $priceProductOffer, PriceProductOfferDataTransfer $priceProductOfferDataTransfer): PriceProductOfferDataTransfer
     {
-        $priceProductOfferTransfer->setPriceType($priceProductOffer[SpyPriceTypeTableMap::COL_NAME]);
-        $priceProductOfferTransfer->setCurrency($priceProductOffer[SpyCurrencyTableMap::COL_CODE]);
-        $priceProductOfferTransfer->setNetPrice($priceProductOffer[SpyPriceProductOfferTableMap::COL_NET_PRICE]);
-        $priceProductOfferTransfer->setGrossPrice($priceProductOffer[SpyPriceProductOfferTableMap::COL_GROSS_PRICE]);
+        $priceProductOfferDataTransfer->setPriceType($priceProductOffer[SpyPriceTypeTableMap::COL_NAME]);
+        $priceProductOfferDataTransfer->setCurrency($priceProductOffer[SpyCurrencyTableMap::COL_CODE]);
+        $priceProductOfferDataTransfer->setNetPrice($priceProductOffer[SpyPriceProductOfferTableMap::COL_NET_PRICE]);
+        $priceProductOfferDataTransfer->setGrossPrice($priceProductOffer[SpyPriceProductOfferTableMap::COL_GROSS_PRICE]);
 
-        return $priceProductOfferTransfer;
+        return $priceProductOfferDataTransfer;
     }
 
     /**
