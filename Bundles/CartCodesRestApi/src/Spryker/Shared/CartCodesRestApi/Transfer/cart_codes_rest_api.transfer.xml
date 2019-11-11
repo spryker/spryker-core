@@ -27,9 +27,18 @@
         <property name="discountPromotionQuantity" type="int"/>
     </transfer>
 
+    <transfer name="RestPromotionalItemsAttributes">
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
     <transfer name="CartCodeOperationResult">
         <property name="quote" type="Quote"/>
         <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
     </transfer>
 
 </transfers>

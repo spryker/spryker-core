@@ -13,6 +13,8 @@ use Spryker\Glue\CartCodesRestApi\Processor\CartCodeDeleter\CartCodeDeleter;
 use Spryker\Glue\CartCodesRestApi\Processor\CartCodeDeleter\CartCodeDeleterInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\Expander\DiscountByCartResourceRelationshipExpander;
 use Spryker\Glue\CartCodesRestApi\Processor\Expander\DiscountByCartResourceRelationshipExpanderInterface;
+use Spryker\Glue\CartCodesRestApi\Processor\Expander\PromotionItemByQuoteTransferResourceRelationshipExpander;
+use Spryker\Glue\CartCodesRestApi\Processor\Expander\PromotionItemByQuoteTransferResourceRelationshipExpanderInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\CartCodeMapper;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\CartCodeMapperInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\DiscountMapper;
@@ -84,6 +86,17 @@ class CartCodesRestApiFactory extends AbstractFactory
     public function createDiscountByCartResourceRelationshipExpander(): DiscountByCartResourceRelationshipExpanderInterface
     {
         return new DiscountByCartResourceRelationshipExpander(
+            $this->getResourceBuilder(),
+            $this->createDiscountMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CartCodesRestApi\Processor\Expander\PromotionItemByQuoteTransferResourceRelationshipExpanderInterface
+     */
+    public function createPromotionItemByQuoteTransferResourceRelationshipExpander(): PromotionItemByQuoteTransferResourceRelationshipExpanderInterface
+    {
+        return new PromotionItemByQuoteTransferResourceRelationshipExpander(
             $this->getResourceBuilder(),
             $this->createDiscountMapper()
         );
