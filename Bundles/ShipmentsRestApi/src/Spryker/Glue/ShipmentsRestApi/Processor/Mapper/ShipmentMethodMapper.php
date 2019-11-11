@@ -25,7 +25,7 @@ class ShipmentMethodMapper implements ShipmentMethodMapperInterface
             $restShipmentMethodsAttributesTransfer = (new RestShipmentMethodsAttributesTransfer())
                 ->fromArray($shipmentMethodTransfer->toArray(), true);
 
-            $moneyValueTransfer = current($shipmentMethodTransfer->getPrices());
+            $moneyValueTransfer = $shipmentMethodTransfer->getPrices()->getIterator()->current();
 
             if (!$moneyValueTransfer) {
                 continue;
