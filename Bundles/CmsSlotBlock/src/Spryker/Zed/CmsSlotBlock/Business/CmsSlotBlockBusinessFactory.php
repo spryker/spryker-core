@@ -13,6 +13,8 @@ use Spryker\Zed\CmsSlotBlock\Business\Reader\CmsSlotTemplateConditionReader;
 use Spryker\Zed\CmsSlotBlock\Business\Reader\CmsSlotTemplateConditionReaderInterface;
 use Spryker\Zed\CmsSlotBlock\Business\Writer\CmsSlotBlockRelationsWriter;
 use Spryker\Zed\CmsSlotBlock\Business\Writer\CmsSlotBlockRelationsWriterInterface;
+use Spryker\Zed\CmsSlotBlock\CmsSlotBlockDependencyProvider;
+use Spryker\Zed\CmsSlotBlock\Dependency\Facade\CmsSlotBlockToEventFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -27,7 +29,10 @@ class CmsSlotBlockBusinessFactory extends AbstractBusinessFactory
      */
     public function createCmsSlotBlockRelationsWriter(): CmsSlotBlockRelationsWriterInterface
     {
-        return new CmsSlotBlockRelationsWriter($this->getEntityManager());
+        return new CmsSlotBlockRelationsWriter(
+            $this->getEntityManager(),
+            $this->getEventFacade()
+        );
     }
 
     /**
@@ -44,5 +49,13 @@ class CmsSlotBlockBusinessFactory extends AbstractBusinessFactory
     public function createCmsSlotTemplateConditionReader(): CmsSlotTemplateConditionReaderInterface
     {
         return new CmsSlotTemplateConditionReader($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsSlotBlock\Dependency\Facade\CmsSlotBlockToEventFacadeInterface
+     */
+    public function getEventFacade(): CmsSlotBlockToEventFacadeInterface
+    {
+        return $this->getProvidedDependency(CmsSlotBlockDependencyProvider::FACADE_EVENT);
     }
 }

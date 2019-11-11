@@ -8,7 +8,10 @@
 namespace Spryker\Zed\CmsSlot\Persistence;
 
 use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
+use Generated\Shared\Transfer\CmsSlotCriteriaTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
+use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -54,5 +57,57 @@ class CmsSlotRepository extends AbstractRepository implements CmsSlotRepositoryI
         return $this->getFactory()
             ->createCmsSlotMapper()
             ->mapCmsSlotTemplateEntityToTransfer($cmsSlotTemplateEntity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsSlotCriteriaTransfer $cmsSlotCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
+     */
+    public function getCmsSlotsByCriteria(CmsSlotCriteriaTransfer $cmsSlotCriteriaTransfer): array
+    {
+        $cmsSlotQuery = $this->setQueryFilters(
+            $this->getFactory()->createCmsSlotQuery(),
+            $cmsSlotCriteriaTransfer->getFilter()
+        );
+
+        if ($cmsSlotCriteriaTransfer->getCmsSlotIds()) {
+            $cmsSlotQuery->filterByIdCmsSlot_In($cmsSlotCriteriaTransfer->getCmsSlotIds());
+        }
+
+        $cmsSlotEntities = $cmsSlotQuery->find();
+
+        return $this->getFactory()
+            ->createCmsSlotMapper()
+            ->mapCmsSlotEntityCollectionToTransferCollection($cmsSlotEntities);
+    }
+
+    /**
+     * @param \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery $cmsSlotQuery
+     * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
+     *
+     * @return \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery
+     */
+    protected function setQueryFilters(
+        SpyCmsSlotQuery $cmsSlotQuery,
+        ?FilterTransfer $filterTransfer
+    ): SpyCmsSlotQuery {
+        if (!$filterTransfer) {
+            return $cmsSlotQuery;
+        }
+
+        if ($filterTransfer->getLimit()) {
+            $cmsSlotQuery->setLimit($filterTransfer->getLimit());
+        }
+
+        if ($filterTransfer->getOffset()) {
+            $cmsSlotQuery->setOffset($filterTransfer->getOffset());
+        }
+
+        if ($filterTransfer->getOrderBy()) {
+            $cmsSlotQuery->orderBy($filterTransfer->getOrderBy());
+        }
+
+        return $cmsSlotQuery;
     }
 }

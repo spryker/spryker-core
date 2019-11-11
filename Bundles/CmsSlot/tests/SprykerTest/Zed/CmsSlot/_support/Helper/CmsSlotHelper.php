@@ -17,6 +17,7 @@ use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplate;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplateQuery;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotToCmsSlotTemplateQuery;
+use Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlockQuery;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CmsSlotHelper extends Module
@@ -72,6 +73,7 @@ class CmsSlotHelper extends Module
 
         $cmsSlotTemplateEntity = new SpyCmsSlotTemplate();
         $cmsSlotTemplateEntity->fromArray($cmsSlotTemplateTransfer->toArray());
+        $cmsSlotTemplateEntity->setPathHash('path_hash');
         $cmsSlotTemplateEntity->save();
 
         $cmsSlotTemplateTransfer->setIdCmsSlotTemplate($cmsSlotTemplateEntity->getIdCmsSlotTemplate());
@@ -84,7 +86,7 @@ class CmsSlotHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CmsSlotTransfer
      */
-    public function haveCmsSlotInDb(array $override): CmsSlotTransfer
+    public function haveCmsSlotInDb(array $override = []): CmsSlotTransfer
     {
         $data = [
             CmsSlotTransfer::KEY => 'test-center',
@@ -122,6 +124,7 @@ class CmsSlotHelper extends Module
      */
     public function ensureCmsSlotTemplateTableIsEmpty(): void
     {
+        SpyCmsSlotBlockQuery::create()->deleteAll();
         SpyCmsSlotToCmsSlotTemplateQuery::create()->deleteAll();
         SpyCmsSlotTemplateQuery::create()->deleteAll();
     }

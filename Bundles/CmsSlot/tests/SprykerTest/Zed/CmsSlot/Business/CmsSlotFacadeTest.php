@@ -8,8 +8,11 @@
 namespace SprykerTest\Zed\CmsSlot\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CmsSlotCriteriaTransfer;
 use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
+use Orm\Zed\CmsSlot\Persistence\Map\SpyCmsSlotTableMap;
 use Spryker\Zed\CmsSlot\Business\Exception\MissingCmsSlotTemplateException;
 
 /**
@@ -37,9 +40,13 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testValidateCmsSlotSuccess(): void
     {
+        // Arrange
         $cmsSlotTransfer = $this->tester->haveCmsSlot();
+
+        // Act
         $validationResponse = $this->tester->getFacade()->validateCmsSlot($cmsSlotTransfer);
 
+        // Assert
         $this->assertTrue($validationResponse->getIsSuccess());
     }
 
@@ -48,11 +55,15 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testValidateCmsSlotFailsOnInvalidName(): void
     {
+        // Arrange
         $cmsSlotTransfer = $this->tester->haveCmsSlot([
             CmsSlotTransfer::NAME => str_repeat('t', 300),
         ]);
+
+        // Act
         $validationResponse = $this->tester->getFacade()->validateCmsSlot($cmsSlotTransfer);
 
+        // Assert
         $this->assertFalse($validationResponse->getIsSuccess());
     }
 
@@ -61,11 +72,15 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testValidateCmsSlotFailsOnInvalidDescription(): void
     {
+        // Arrange
         $cmsSlotTransfer = $this->tester->haveCmsSlot([
             CmsSlotTransfer::DESCRIPTION => str_repeat('t', 1500),
         ]);
+
+        // Act
         $validationResponse = $this->tester->getFacade()->validateCmsSlot($cmsSlotTransfer);
 
+        // Assert
         $this->assertFalse($validationResponse->getIsSuccess());
     }
 
@@ -74,11 +89,15 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testValidateCmsSlotFailsOnInvalidKey(): void
     {
+        // Arrange
         $cmsSlotTransfer = $this->tester->haveCmsSlot([
             CmsSlotTransfer::KEY => 'invalid key',
         ]);
+
+        // Act
         $validationResponse = $this->tester->getFacade()->validateCmsSlot($cmsSlotTransfer);
 
+        // Assert
         $this->assertFalse($validationResponse->getIsSuccess());
     }
 
@@ -87,11 +106,15 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testValidateCmsSlotFailsOnInvalidContentProviderType(): void
     {
+        // Arrange
         $cmsSlotTransfer = $this->tester->haveCmsSlot([
             CmsSlotTransfer::CONTENT_PROVIDER_TYPE => '',
         ]);
+
+        // Act
         $validationResponse = $this->tester->getFacade()->validateCmsSlot($cmsSlotTransfer);
 
+        // Assert
         $this->assertFalse($validationResponse->getIsSuccess());
     }
 
@@ -100,11 +123,15 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testValidateCmsSlotFailsOnInvalidIsActive(): void
     {
+        // Arrange
         $cmsSlotTransfer = $this->tester->haveCmsSlot([
             CmsSlotTransfer::IS_ACTIVE => 2,
         ]);
+
+        // Act
         $validationResponse = $this->tester->getFacade()->validateCmsSlot($cmsSlotTransfer);
 
+        // Assert
         $this->assertFalse($validationResponse->getIsSuccess());
     }
 
@@ -113,9 +140,13 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testValidateCmsSlotTemplateSuccess(): void
     {
+        // Arrange
         $cmsSlotTemplateTransfer = $this->tester->haveCmsSlotTemplate();
+
+        // Act
         $validationResponse = $this->tester->getFacade()->validateCmsSlotTemplate($cmsSlotTemplateTransfer);
 
+        // Assert
         $this->assertTrue($validationResponse->getIsSuccess());
     }
 
@@ -124,11 +155,15 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testValidateCmsSlotTemplateFailsOnInvalidName(): void
     {
+        // Arrange
         $cmsSlotTemplateTransfer = $this->tester->haveCmsSlotTemplate([
             CmsSlotTemplateTransfer::NAME => str_repeat('t', 300),
         ]);
+
+        // Act
         $validationResponse = $this->tester->getFacade()->validateCmsSlotTemplate($cmsSlotTemplateTransfer);
 
+        // Assert
         $this->assertFalse($validationResponse->getIsSuccess());
     }
 
@@ -137,11 +172,15 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testValidateCmsSlotTemplateFailsOnInvalidDescription(): void
     {
+        // Arrange
         $cmsSlotTemplateTransfer = $this->tester->haveCmsSlotTemplate([
             CmsSlotTemplateTransfer::DESCRIPTION => str_repeat('t', 1500),
         ]);
+
+        // Act
         $validationResponse = $this->tester->getFacade()->validateCmsSlotTemplate($cmsSlotTemplateTransfer);
 
+        // Assert
         $this->assertFalse($validationResponse->getIsSuccess());
     }
 
@@ -150,11 +189,15 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testValidateCmsSlotTemplateFailsOnInvalidPath(): void
     {
+        // Arrange
         $cmsSlotTemplateTransfer = $this->tester->haveCmsSlotTemplate([
             CmsSlotTemplateTransfer::PATH => 'invalid path',
         ]);
+
+        // Act
         $validationResponse = $this->tester->getFacade()->validateCmsSlotTemplate($cmsSlotTemplateTransfer);
 
+        // Assert
         $this->assertFalse($validationResponse->getIsSuccess());
     }
 
@@ -163,12 +206,15 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testActivateByIdCmsSlotSuccess(): void
     {
+        // Arrange
         $cmsSlotTransfer = $this->tester->haveCmsSlotInDb([
             CmsSlotTransfer::IS_ACTIVE => false,
         ]);
 
+        // Act
         $this->tester->getFacade()->activateByIdCmsSlot($cmsSlotTransfer->getIdCmsSlot());
 
+        // Assert
         $this->assertTrue($this->tester->isActiveCmsSlotById($cmsSlotTransfer->getIdCmsSlot()));
     }
 
@@ -177,13 +223,56 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testDeactivateByIdCmsSlotSuccess(): void
     {
+        // Arrange
         $cmsSlotTransfer = $this->tester->haveCmsSlotInDb([
             CmsSlotTransfer::IS_ACTIVE => true,
         ]);
 
+        // Act
         $this->tester->getFacade()->deactivateByIdCmsSlot($cmsSlotTransfer->getIdCmsSlot());
 
+        // Assert
         $this->assertFalse($this->tester->isActiveCmsSlotById($cmsSlotTransfer->getIdCmsSlot()));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCmsSlotsByCriteriaReturnsCmsSlotTransfers(): void
+    {
+        // Arrange
+        $this->tester->haveCmsSlotInDb();
+        $filterTransfer = (new FilterTransfer())
+            ->setLimit(10)
+            ->setOffset(0)
+            ->setOrderBy(SpyCmsSlotTableMap::COL_ID_CMS_SLOT);
+
+        // Act
+        $cmsSlotTransfers = $this->tester->getFacade()->getCmsSlotsByCriteria(
+            (new CmsSlotCriteriaTransfer())->setFilter($filterTransfer)
+        );
+
+        // Assert
+        foreach ($cmsSlotTransfers as $cmsSlotTransfer) {
+            $this->assertInstanceOf(CmsSlotTransfer::class, $cmsSlotTransfer);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCmsSlotsByCriteriaReturnsCmsSlotTransfersWithCorrectData(): void
+    {
+        // Arrange
+        $cmsSlotTransfer = $this->tester->haveCmsSlotInDb([CmsSlotTransfer::IS_ACTIVE => true]);
+
+        // Act
+        $cmsSlotTransferFromDb = $this->tester->getFacade()->getCmsSlotsByCriteria(
+            (new CmsSlotCriteriaTransfer())->setCmsSlotIds([$cmsSlotTransfer->getIdCmsSlot()])
+        )[0];
+
+        // Assert
+        $this->assertEquals($cmsSlotTransferFromDb, $cmsSlotTransfer);
     }
 
     /**

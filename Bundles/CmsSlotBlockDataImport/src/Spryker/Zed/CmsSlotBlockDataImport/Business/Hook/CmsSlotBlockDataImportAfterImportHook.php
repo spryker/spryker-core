@@ -7,19 +7,60 @@
 
 namespace Spryker\Zed\CmsSlotBlockDataImport\Business\Hook;
 
+use Generated\Shared\Transfer\EventEntityTransfer;
+use Orm\Zed\CmsSlotBlock\Persistence\Map\SpyCmsSlotBlockTableMap;
+use Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlockQuery;
 use Spryker\Zed\CmsSlotBlock\Dependency\CmsSlotBlockEvents;
 use Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface;
-use Spryker\Zed\DataImport\Business\Model\Publisher\DataImporterPublisher;
+use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface;
 
 class CmsSlotBlockDataImportAfterImportHook implements DataImporterAfterImportInterface
 {
-    public const ID_DEFAULT = 0;
+    /**
+     * @var \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface
+     */
+    protected $eventFacade;
+
+    /**
+     * @param \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface $eventFacade
+     */
+    public function __construct(DataImportToEventFacadeInterface $eventFacade)
+    {
+        $this->eventFacade = $eventFacade;
+    }
 
     /**
      * @return void
      */
     public function afterImport(): void
     {
-        DataImporterPublisher::addEvent(CmsSlotBlockEvents::CMS_SLOT_BLOCK_RELATIONS_PUBLISH, static::ID_DEFAULT);
+        $cmsSlotBlockIds = SpyCmsSlotBlockQuery::create()
+            ->select(SpyCmsSlotBlockTableMap::COL_ID_CMS_SLOT_BLOCK)
+            ->find()
+            ->toArray();
+
+        if (count($cmsSlotBlockIds) === 0) {
+            return;
+        }
+
+        $eventTransfers = $this->mapCmsSlotBlockIdsToEventTransfers($cmsSlotBlockIds);
+        $this->eventFacade->triggerBulk(CmsSlotBlockEvents::CMS_SLOT_BLOCK_PUBLISH, $eventTransfers);
+    }
+
+    /**
+     * @param int[] $cmsSlotBlockIds
+     *
+     * @return \Generated\Shared\Transfer\EventEntityTransfer[]
+     */
+    protected function mapCmsSlotBlockIdsToEventTransfers(array $cmsSlotBlockIds): array
+    {
+        $eventTransfers = [];
+
+        foreach ($cmsSlotBlockIds as $idCmsSlotBlock) {
+            $eventTransfers[] = (new EventEntityTransfer())
+                ->setId($idCmsSlotBlock);
+        }
+
+        return $eventTransfers;
     }
 }

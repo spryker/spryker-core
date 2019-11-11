@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsSlot\Business;
 
+use Generated\Shared\Transfer\CmsSlotCriteriaTransfer;
 use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
@@ -103,5 +104,19 @@ class CmsSlotFacade extends AbstractFacade implements CmsSlotFacadeInterface
         return $this->getFactory()
             ->createCmsSlotTemplateReader()
             ->getTemplateById($idCmsSlotTemplate);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsSlotCriteriaTransfer $cmsSlotCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
+     */
+    public function getCmsSlotsByCriteria(CmsSlotCriteriaTransfer $cmsSlotCriteriaTransfer): array
+    {
+        return $this->getRepository()->getCmsSlotsByCriteria($cmsSlotCriteriaTransfer);
     }
 }
