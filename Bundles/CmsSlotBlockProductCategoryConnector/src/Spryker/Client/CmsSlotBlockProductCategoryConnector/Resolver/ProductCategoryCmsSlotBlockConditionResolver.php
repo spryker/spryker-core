@@ -7,9 +7,8 @@
 
 namespace Spryker\Client\CmsSlotBlockProductCategoryConnector\Resolver;
 
-use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
-use Spryker\Client\CmsSlotBlockProductCategoryConnector\Dependency\Client\CmsSlotBlockProductCategoryConnectorToLocaleClientInterface;
-use Spryker\Client\CmsSlotBlockProductCategoryConnector\Dependency\Client\CmsSlotBlockProductCategoryConnectorToProductCategoryStorageClientInterface;
+use Generated\Shared\Transfer\CmsBlockTransfer;
+use Spryker\Client\CmsSlotBlockProductCategoryConnector\Reader\ProductCategoryReaderInterface;
 
 class ProductCategoryCmsSlotBlockConditionResolver implements ProductCategoryCmsSlotBlockConditionResolverInterface
 {
@@ -17,55 +16,65 @@ class ProductCategoryCmsSlotBlockConditionResolver implements ProductCategoryCms
      * @uses \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Form\ProductCategorySlotBlockConditionForm::FIELD_ALL
      */
     protected const CONDITIONS_DATA_KEY_ALL = 'all';
+
     /**
      * @uses \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Form\ProductCategorySlotBlockConditionForm::FIELD_PRODUCT_IDS
      */
     protected const CONDITIONS_DATA_KEY_PRODUCT_IDS = 'productIds';
+
     /**
      * @uses \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Form\ProductCategorySlotBlockConditionForm::FIELD_CATEGORY_IDS
      */
     protected const CONDITIONS_DATA_KEY_CATEGORIES_IDS = 'categoryIds';
+
+    protected const CONDITION_KEY = 'product';
+
     protected const SLOT_DATA_KEY_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
 
     /**
-     * @var \Spryker\Client\CmsSlotBlockProductCategoryConnector\Dependency\Client\CmsSlotBlockProductCategoryConnectorToLocaleClientInterface
+     * @var \Spryker\Client\CmsSlotBlockProductCategoryConnector\Reader\ProductCategoryReaderInterface
      */
-    protected $localeClient;
+    protected $productCategoryReader;
 
     /**
-     * @var \Spryker\Client\CmsSlotBlockProductCategoryConnector\Dependency\Client\CmsSlotBlockProductCategoryConnectorToProductCategoryStorageClientInterface
+     * @param \Spryker\Client\CmsSlotBlockProductCategoryConnector\Reader\ProductCategoryReaderInterface $productCategoryReader
      */
-    protected $productCategoryStorageClient;
-
-    /**
-     * @param \Spryker\Client\CmsSlotBlockProductCategoryConnector\Dependency\Client\CmsSlotBlockProductCategoryConnectorToLocaleClientInterface $localeClient
-     * @param \Spryker\Client\CmsSlotBlockProductCategoryConnector\Dependency\Client\CmsSlotBlockProductCategoryConnectorToProductCategoryStorageClientInterface $productCategoryStorageClient
-     */
-    public function __construct(
-        CmsSlotBlockProductCategoryConnectorToLocaleClientInterface $localeClient,
-        CmsSlotBlockProductCategoryConnectorToProductCategoryStorageClientInterface $productCategoryStorageClient
-    ) {
-        $this->localeClient = $localeClient;
-        $this->productCategoryStorageClient = $productCategoryStorageClient;
+    public function __construct(ProductCategoryReaderInterface $productCategoryReader)
+    {
+        $this->productCategoryReader = $productCategoryReader;
     }
 
     /**
-     * @param array $conditionData
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return bool
+     */
+    public function resolveIsSlotBlockConditionApplicable(CmsBlockTransfer $cmsBlockTransfer): bool
+    {
+        return isset($cmsBlockTransfer->getCmsSlotBlockConditions()[static::CONDITION_KEY]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      * @param array $cmsSlotData
      *
      * @return bool
      */
-    public function resolveIsCmsBlockVisibleInSlot(array $conditionData, array $cmsSlotData): bool
+    public function resolveIsCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotData): bool
     {
-        if (isset($conditionData[static::CONDITIONS_DATA_KEY_ALL]) && $conditionData[static::CONDITIONS_DATA_KEY_ALL]) {
+        $conditionData = $cmsBlockTransfer->getCmsSlotBlockConditions()[static::CONDITION_KEY];
+
+        if ($conditionData[static::CONDITIONS_DATA_KEY_ALL]) {
             return true;
         }
 
-        $idProductAbstract = (int)$cmsSlotData[static::SLOT_DATA_KEY_ID_PRODUCT_ABSTRACT] ?? null;
+        $idProductAbstract = $cmsSlotData[static::SLOT_DATA_KEY_ID_PRODUCT_ABSTRACT] ?? null;
 
         if (!$idProductAbstract) {
             return false;
         }
+
+        $idProductAbstract = (int)$idProductAbstract;
 
         if ($this->checkProductConditions($conditionData, $idProductAbstract)) {
             return true;
@@ -82,10 +91,6 @@ class ProductCategoryCmsSlotBlockConditionResolver implements ProductCategoryCms
      */
     protected function checkProductConditions(array $conditionData, int $idProductAbstract): bool
     {
-        if (!isset($conditionData[static::CONDITIONS_DATA_KEY_PRODUCT_IDS])) {
-            return false;
-        }
-
         return in_array($idProductAbstract, $conditionData[static::CONDITIONS_DATA_KEY_PRODUCT_IDS]);
     }
 
@@ -97,42 +102,9 @@ class ProductCategoryCmsSlotBlockConditionResolver implements ProductCategoryCms
      */
     protected function checkCategoryConditions(array $conditionData, int $idProductAbstract): bool
     {
-        $conditionsDataCategoryIds = $conditionData[static::CONDITIONS_DATA_KEY_CATEGORIES_IDS] ?? null;
-
-        if (!$conditionsDataCategoryIds) {
-            return false;
-        }
-
-        $localeName = $this->localeClient->getCurrentLocale();
-        $productAbstractCategoryStorageTransfer = $this->productCategoryStorageClient->findProductAbstractCategory(
-            $idProductAbstract,
-            $localeName
-        );
-
-        if (!$productAbstractCategoryStorageTransfer) {
-            return false;
-        }
-
-        $productCategoryIds = $this->getProductCategoryIds($productAbstractCategoryStorageTransfer);
+        $conditionsDataCategoryIds = $conditionData[static::CONDITIONS_DATA_KEY_CATEGORIES_IDS];
+        $productCategoryIds = $this->productCategoryReader->getAbstractProductCategoryIds($idProductAbstract);
 
         return count(array_intersect($conditionsDataCategoryIds, $productCategoryIds)) > 0;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer $abstractCategoryStorageTransfer
-     *
-     * @return int[]
-     */
-    protected function getProductCategoryIds(
-        ProductAbstractCategoryStorageTransfer $abstractCategoryStorageTransfer
-    ): array {
-        $productCategoryStorageTransfers = $abstractCategoryStorageTransfer->getCategories();
-        $categoryIds = [];
-
-        foreach ($productCategoryStorageTransfers as $productCategoryStorageTransfer) {
-            $categoryIds[] = $productCategoryStorageTransfer->getCategoryId();
-        }
-
-        return $categoryIds;
     }
 }

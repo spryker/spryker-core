@@ -9,6 +9,8 @@ namespace Spryker\Client\CmsSlotBlockProductCategoryConnector;
 
 use Spryker\Client\CmsSlotBlockProductCategoryConnector\Dependency\Client\CmsSlotBlockProductCategoryConnectorToLocaleClientInterface;
 use Spryker\Client\CmsSlotBlockProductCategoryConnector\Dependency\Client\CmsSlotBlockProductCategoryConnectorToProductCategoryStorageClientInterface;
+use Spryker\Client\CmsSlotBlockProductCategoryConnector\Reader\ProductCategoryReader;
+use Spryker\Client\CmsSlotBlockProductCategoryConnector\Reader\ProductCategoryReaderInterface;
 use Spryker\Client\CmsSlotBlockProductCategoryConnector\Resolver\ProductCategoryCmsSlotBlockConditionResolver;
 use Spryker\Client\CmsSlotBlockProductCategoryConnector\Resolver\ProductCategoryCmsSlotBlockConditionResolverInterface;
 use Spryker\Client\Kernel\AbstractFactory;
@@ -21,6 +23,16 @@ class CmsSlotBlockProductCategoryConnectorFactory extends AbstractFactory
     public function createProductCategoryCmsSlotBlockConditionResolver(): ProductCategoryCmsSlotBlockConditionResolverInterface
     {
         return new ProductCategoryCmsSlotBlockConditionResolver(
+            $this->createProductCategoryReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\CmsSlotBlockProductCategoryConnector\Reader\ProductCategoryReaderInterface
+     */
+    public function createProductCategoryReader(): ProductCategoryReaderInterface
+    {
+        return new ProductCategoryReader(
             $this->getLocaleClient(),
             $this->getProductCategoryStorageClient()
         );

@@ -21,20 +21,17 @@ class CmsSlotBlockClient extends AbstractClient implements CmsSlotBlockClientInt
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     * @param array $conditions
      * @param array $cmsSlotData
      *
      * @return bool
      */
-    public function isCmsBlockVisibleInSlot(
-        CmsBlockTransfer $cmsBlockTransfer,
-        array $conditions,
-        array $cmsSlotData
-    ): bool {
-        return $this->getFactory()->createCmsSlotBlockVisibilityResolver()->isCmsBlockVisibleInSlot(
-            $cmsBlockTransfer,
-            $conditions,
-            $cmsSlotData
-        );
+    public function isCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotData): bool
+    {
+        return $this->getFactory()
+            ->createCmsSlotBlockVisibilityResolver()
+            ->isCmsBlockVisibleInSlot(
+                $cmsBlockTransfer,
+                $cmsSlotData
+            );
     }
 }

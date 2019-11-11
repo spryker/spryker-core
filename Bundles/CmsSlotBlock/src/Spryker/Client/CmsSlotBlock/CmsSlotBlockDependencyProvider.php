@@ -34,7 +34,7 @@ class CmsSlotBlockDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCmsSlotBlockVisibilityResolverPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_CMS_SLOT_BLOCK_VISIBILITY_RESOLVER, function (Container $container) {
+        $container->set(static::PLUGINS_CMS_SLOT_BLOCK_VISIBILITY_RESOLVER, function () {
             return $this->getCmsSlotBlockVisibilityResolverPlugins();
         });
 

@@ -13,23 +13,22 @@ use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Client\CmsSlotBlockProductCategoryConnector\CmsSlotBlockProductCategoryConnectorFactory getFactory()
+ * @method \Spryker\Client\CmsSlotBlockProductCategoryConnector\CmsSlotBlockProductCategoryConnectorClientInterface getClient()
  */
 class ProductCategoryCmsSlotBlockConditionResolverPlugin extends AbstractPlugin implements CmsSlotBlockVisibilityResolverPluginInterface
 {
-    protected const CONDITION_KEY = 'product';
-
     /**
      * {@inheritDoc}
      *
      * @api
      *
-     * @param array $conditions
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return bool
      */
-    public function isApplicable(array $conditions): bool
+    public function isApplicable(CmsBlockTransfer $cmsBlockTransfer): bool
     {
-        return isset($conditions[static::CONDITION_KEY]);
+        return $this->getClient()->resolveIsSlotBlockConditionApplicable($cmsBlockTransfer);
     }
 
     /**
@@ -38,18 +37,12 @@ class ProductCategoryCmsSlotBlockConditionResolverPlugin extends AbstractPlugin 
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     * @param array $conditions
      * @param array $cmsSlotData
      *
      * @return bool
      */
-    public function isCmsBlockVisibleInSlot(
-        CmsBlockTransfer $cmsBlockTransfer,
-        array $conditions,
-        array $cmsSlotData
-    ): bool {
-        return $this->getFactory()
-            ->createProductCategoryCmsSlotBlockConditionResolver()
-            ->resolveIsCmsBlockVisibleInSlot($conditions[static::CONDITION_KEY], $cmsSlotData);
+    public function isCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotData): bool
+    {
+        return $this->getClient()->resolveIsCmsBlockVisibleInSlot($cmsBlockTransfer, $cmsSlotData);
     }
 }

@@ -19,6 +19,9 @@ use Spryker\Zed\CmsSlotBlockStorage\Dependency\Service\CmsSlotBlockStorageToUtil
 
 class CmsSlotBlockStorageMapper
 {
+    protected const KEY_BLOCK_KEY = 'blockKey';
+    protected const KEY_CONDITIONS = 'conditions';
+
     /**
      * @var \Spryker\Zed\CmsSlotBlockStorage\Dependency\Service\CmsSlotBlockStorageToUtilEncodingServiceInterface
      */
@@ -43,8 +46,8 @@ class CmsSlotBlockStorageMapper
         CmsSlotBlockStorageDataTransfer $cmsSlotBlockStorageDataTransfer
     ): CmsSlotBlockStorageDataTransfer {
         $cmsSlotBlockStorageDataTransfer->addCmsBlock([
-            'blockKey' => $cmsSlotBlockEntity->getCmsBlock()->getKey(),
-            'conditions' => $this->utilEncodingService->decodeJson($cmsSlotBlockEntity->getConditions()),
+            static::KEY_BLOCK_KEY => $cmsSlotBlockEntity->getCmsBlock()->getKey(),
+            static::KEY_CONDITIONS => $this->utilEncodingService->decodeJson($cmsSlotBlockEntity->getConditions()),
         ]);
 
         return $cmsSlotBlockStorageDataTransfer;

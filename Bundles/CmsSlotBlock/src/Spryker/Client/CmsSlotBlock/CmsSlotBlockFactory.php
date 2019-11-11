@@ -11,6 +11,9 @@ use Spryker\Client\CmsSlotBlock\Resolver\CmsSlotBlockVisibilityResolver;
 use Spryker\Client\CmsSlotBlock\Resolver\CmsSlotBlockVisibilityResolverInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
+/**
+ * @method \Spryker\Client\CmsSlotBlock\CmsSlotBlockConfig getConfig()
+ */
 class CmsSlotBlockFactory extends AbstractFactory
 {
     /**
@@ -18,7 +21,10 @@ class CmsSlotBlockFactory extends AbstractFactory
      */
     public function createCmsSlotBlockVisibilityResolver(): CmsSlotBlockVisibilityResolverInterface
     {
-        return new CmsSlotBlockVisibilityResolver($this->getCmsSlotBlockVisibilityResolverPlugins());
+        return new CmsSlotBlockVisibilityResolver(
+            $this->getConfig(),
+            $this->getCmsSlotBlockVisibilityResolverPlugins()
+        );
     }
 
     /**
