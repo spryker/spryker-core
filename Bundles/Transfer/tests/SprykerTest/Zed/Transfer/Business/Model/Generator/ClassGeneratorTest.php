@@ -29,7 +29,7 @@ class ClassGeneratorTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->removeTargetDirectory();
     }
@@ -37,7 +37,7 @@ class ClassGeneratorTest extends Unit
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->removeTargetDirectory();
     }

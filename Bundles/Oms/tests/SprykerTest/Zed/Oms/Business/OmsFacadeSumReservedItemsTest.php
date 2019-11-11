@@ -56,7 +56,7 @@ class OmsFacadeSumReservedItemsTest extends Unit
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->tester->resetReservedStatesCache();

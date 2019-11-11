@@ -51,7 +51,7 @@ class ProductImageTransferMapperTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->queryContainer = new ProductImageQueryContainer();
         $this->localeFacade = new LocaleFacade();

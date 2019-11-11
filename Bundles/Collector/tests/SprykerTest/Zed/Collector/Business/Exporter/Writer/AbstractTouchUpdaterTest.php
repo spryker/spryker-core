@@ -47,7 +47,7 @@ class AbstractTouchUpdaterTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->collectorConfig = $this->createCollectorConfig();
@@ -119,25 +119,23 @@ class AbstractTouchUpdaterTest extends Unit
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Can't resolve bulk touch class name: BulkUpdateTouchKeyByIdQuery
-     *
      * @return void
      */
     public function testBulkUpdateIsFailingWithWrongTouchQueryConfigured()
     {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Can\'t resolve bulk touch class name: BulkUpdateTouchKeyByIdQuery');
         $this->collectorConfig = $this->createWrongCollectorConfig();
         $this->createTouchUpdater();
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Can't resolve bulk touch class name: BulkDeleteTouchByIdQuery
-     *
      * @return void
      */
     public function testBulkDeleteIsFailingWithWrongTouchQueryConfigured()
     {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Can\'t resolve bulk touch class name: BulkDeleteTouchByIdQuery');
         $this->collectorConfig = $this->createWrongCollectorConfig();
         $this->createBulkTouchDeleteQuery();
     }

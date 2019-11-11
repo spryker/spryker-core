@@ -36,4 +36,16 @@
     <transfer name="CmsSlotExternalData">
         <property name="values" type="string[]" associative="true" singular="values"/>
     </transfer>
+
+    <transfer name="Filter">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="orderBy" type="string"/>
+    </transfer>
+
+    <transfer name="CmsSlotCriteria">
+        <property name="cmsSlotIds" type="array" singular="cmsSlotId"/>
+        <property name="filter" type="Filter"/>
+    </transfer>
+
 </transfers>
