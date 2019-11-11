@@ -50,7 +50,7 @@ class ProductListDeleteChecker implements ProductListDeleteCheckerInterface
         $productListTransfer = $configurableBundleTemplateSlotFilterTransfer->getProductList();
 
         $configurableBundleTemplateSlotFilterTransfer = (new ConfigurableBundleTemplateSlotFilterTransfer())
-            ->setIdProductList($productListTransfer->getIdProductList())
+            ->setProductList($configurableBundleTemplateSlotFilterTransfer->getProductList())
             ->setTranslationLocales($configurableBundleTemplateSlotFilterTransfer->getTranslationLocales());
 
         $configurableBundleTemplateSlotCollectionTransfer = $this->configurableBundleTemplateSlotReader

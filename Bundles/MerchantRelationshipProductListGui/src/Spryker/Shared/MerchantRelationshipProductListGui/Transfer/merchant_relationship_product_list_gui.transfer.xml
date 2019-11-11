@@ -22,9 +22,14 @@
         <property name="merchant" type="Merchant"/>
         <property name="ownerCompanyBusinessUnit" type="CompanyBusinessUnit"/>
         <property name="idMerchantRelationship" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="ProductList">
+        <property name="title" type="string"/>
+        <property name="type" type="string"/>
+        <property name="idProductList" type="int"/>
+        <property name="fkMerchantRelationship" type="int"/>
     </transfer>
 
     <transfer name="Merchant">
@@ -33,6 +38,35 @@
 
     <transfer name="CompanyBusinessUnit">
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ProductListCollection">
+        <property name="productLists" type="ProductList[]" singular="productList"/>
+    </transfer>
+
+    <transfer name="ButtonCollection">
+        <property name="buttons" type="Button[]" singular="button"/>
+    </transfer>
+
+    <transfer name="Button">
+        <property name="title" type="string"/>
+        <property name="url" type="string"/>
+        <property name="defaultOptions" type="array" singular="defaultOptions"/>
+    </transfer>
+
+    <transfer name="ProductListUsedByTable">
+        <property name="productList" type="ProductList"/>
+        <property name="rows" type="ProductListUsedByTableRow[]" singular="row"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipFilter">
+        <property name="merchantRelationshipIds" type="int[]" singular="merchantRelationshipId"/>
+    </transfer>
+
+    <transfer name="ProductListUsedByTableRow">
+        <property name="title" type="string"/>
+        <property name="name" type="string"/>
+        <property name="actionButtons" type="ButtonCollection"/>
     </transfer>
 
 </transfers>

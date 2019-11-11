@@ -20,7 +20,7 @@ use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInter
 
 class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateReaderInterface
 {
-    protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_EXISTS = 'configurable-bundle.template.validation.error.not_exists';
+    protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_EXISTS = 'configurable_bundle.template.validation.error.not_exists';
 
     /**
      * @var \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface

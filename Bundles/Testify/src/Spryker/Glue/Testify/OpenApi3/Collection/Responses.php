@@ -7,11 +7,11 @@
 
 namespace Spryker\Glue\Testify\OpenApi3\Collection;
 
-use Spryker\Glue\Testify\OpenApi3\Object\Response;
 use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
+use Spryker\Glue\Testify\OpenApi3\SchemaObject\Response;
 
 /**
- * @property-read \Spryker\Glue\Testify\OpenApi3\Object\Response $default
+ * @property-read \Spryker\Glue\Testify\OpenApi3\SchemaObject\Response $default
  */
 class Responses extends AbstractCollection
 {

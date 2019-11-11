@@ -21,7 +21,7 @@ use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInter
 
 class ConfigurableBundleTemplateSlotReader implements ConfigurableBundleTemplateSlotReaderInterface
 {
-    protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NOT_EXISTS = 'configurable-bundle.slot.validation.error.not_exists';
+    protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NOT_EXISTS = 'configurable_bundle.slot.validation.error.not_exists';
 
     /**
      * @var \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface

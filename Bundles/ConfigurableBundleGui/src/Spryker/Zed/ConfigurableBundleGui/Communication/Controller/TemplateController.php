@@ -37,11 +37,11 @@ class TemplateController extends AbstractController
     protected const ERROR_MESSAGE_TEMPLATE_ACTIVATE_FAIL = 'Template "%template_name%" has not been activated.';
     protected const ERROR_MESSAGE_TEMPLATE_DEACTIVATE_FAIL = 'Template "%template_name%" has not been deactivated.';
 
-    protected const SUCCESS_MESSAGE_TEMPLATE_CREATED = 'Configurable bundle template was successfully created.';
-    protected const SUCCESS_MESSAGE_TEMPLATE_UPDATED = 'Configurable bundle template was successfully updated.';
-    protected const SUCCESS_MESSAGE_TEMPLATE_DELETED = 'Configurable bundle template was successfully deleted.';
-    protected const SUCCESS_MESSAGE_TEMPLATE_ACTIVATED = 'Template "%template_name%" was activated.';
-    protected const SUCCESS_MESSAGE_TEMPLATE_DEACTIVATED = 'Template "%template_name%" was deactivated.';
+    protected const SUCCESS_MESSAGE_TEMPLATE_CREATED = 'Configurable bundle template has been successfully created.';
+    protected const SUCCESS_MESSAGE_TEMPLATE_UPDATED = 'Configurable bundle template has been successfully updated.';
+    protected const SUCCESS_MESSAGE_TEMPLATE_DELETED = 'Configurable bundle template has been successfully deleted.';
+    protected const SUCCESS_MESSAGE_TEMPLATE_ACTIVATED = 'Template "%template_name%" has been activated.';
+    protected const SUCCESS_MESSAGE_TEMPLATE_DEACTIVATED = 'Template "%template_name%" has deactivated.';
 
     protected const MESSAGE_PARAM_TEMPLATE_NAME = '%template_name%';
 

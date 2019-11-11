@@ -55,7 +55,7 @@ class MerchantRelationshipProductListFacadeTest extends Unit
         $this->tester->truncateProductListTableRelations();
         $this->tester->clearProductListTable();
 
-        $this->haveProductList();
+        $this->tester->haveProductList();
         $merchantRelationshipTransfer = $this->tester->createMerchantRelationship();
 
         // Act
@@ -141,7 +141,7 @@ class MerchantRelationshipProductListFacadeTest extends Unit
         $this->tester->clearProductListTable();
 
         $merchantRelationshipTransfer = $this->tester->createMerchantRelationship();
-        $productListTransfer = $this->haveProductList();
+        $productListTransfer = $this->tester->haveProductList();
 
         $merchantRelationshipTransfer->setProductListIds([
             $productListTransfer->getIdProductList(),
@@ -160,13 +160,13 @@ class MerchantRelationshipProductListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckProductListUsageAmongMerchantRelationshipsWillReturnEmptySuccessfulResponse(): void
+    public function testIsProductListDeletableWillReturnEmptySuccessfulResponse(): void
     {
         // Arrange
-        $productListTransfer = $this->haveProductList();
+        $productListTransfer = $this->tester->haveProductList();
 
         // Act
-        $productListResponseTransfer = $this->tester->getFacade()->checkProductListUsageAmongMerchantRelationships($productListTransfer);
+        $productListResponseTransfer = $this->tester->getFacade()->isProductListDeletable($productListTransfer);
 
         // Assert
         $this->assertTrue($productListResponseTransfer->getIsSuccessful());
@@ -176,16 +176,16 @@ class MerchantRelationshipProductListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckProductListUsageAmongMerchantRelationshipsWillReturnUsageMessage(): void
+    public function testIsProductListDeletableWillReturnUsageMessage(): void
     {
         // Arrange
-        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
-        $productListTransfer = $this->haveProductList([
+        $merchantRelationshipTransfer = $this->tester->createMerchantRelationship();
+        $productListTransfer = $this->tester->haveProductList([
             ProductListTransfer::FK_MERCHANT_RELATIONSHIP => $merchantRelationshipTransfer->getIdMerchantRelationship(),
         ]);
 
         // Act
-        $productListResponseTransfer = $this->tester->getFacade()->checkProductListUsageAmongMerchantRelationships($productListTransfer);
+        $productListResponseTransfer = $this->tester->getFacade()->isProductListDeletable($productListTransfer);
 
         // Assert
         $this->assertFalse($productListResponseTransfer->getIsSuccessful());

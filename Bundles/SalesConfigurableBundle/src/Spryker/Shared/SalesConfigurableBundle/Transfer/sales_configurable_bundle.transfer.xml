@@ -73,4 +73,7 @@
     <transfer name="SaveOrder">
     </transfer>
 
+    <transfer name="Locale">
+    </transfer>
+
 </transfers>

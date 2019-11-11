@@ -7,8 +7,8 @@
 
 namespace Spryker\Glue\Testify\OpenApi3\Collection;
 
-use Spryker\Glue\Testify\OpenApi3\Object\PathItem;
 use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
+use Spryker\Glue\Testify\OpenApi3\SchemaObject\PathItem;
 
 class Paths extends AbstractCollection
 {
