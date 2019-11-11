@@ -46,11 +46,19 @@
     </transfer>
 
     <transfer name="Locale">
+        <property name="idLocale" type="int"/>
         <property name="localeName" type="string"/>
     </transfer>
 
     <transfer name="Translation">
         <property name="value" type="string"/>
+        <property name="fkGlossaryKey" type="int"/>
+        <property name="fkLocale" type="int"/>
+    </transfer>
+
+    <transfer name="GlossaryKey">
+        <property name="idGlossaryKey" type="int"/>
+        <property name="key" type="string"/>
     </transfer>
 
     <transfer name="ProductAttributeKey">

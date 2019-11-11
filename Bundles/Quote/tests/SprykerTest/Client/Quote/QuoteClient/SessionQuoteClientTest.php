@@ -30,7 +30,7 @@ class SessionQuoteClientTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $sessionContainer = new Session(new MockArraySessionStorage());
         $sessionClient = new SessionClient();

@@ -39,6 +39,7 @@ use Spryker\Zed\Development\Business\Composer\Updater\LicenseUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\RequireUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\StabilityUpdater;
 use Spryker\Zed\Development\Business\Composer\Updater\TypeUpdater;
+use Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonPackageNameValidator;
 use Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonUnboundRequireConstraintValidator;
 use Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonValidatorComposite;
 use Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonValidatorInterface;
@@ -847,6 +848,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createComposerJsonValidatorComposite(): ComposerJsonValidatorInterface
     {
         return new ComposerJsonValidatorComposite([
+            $this->createComposerJsonPackageNameValidator(),
             $this->createComposerJsonUnboundRequireConstraintValidator(),
         ]);
     }
@@ -857,6 +859,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createComposerJsonUnboundRequireConstraintValidator(): ComposerJsonValidatorInterface
     {
         return new ComposerJsonUnboundRequireConstraintValidator();
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonValidatorInterface
+     */
+    public function createComposerJsonPackageNameValidator(): ComposerJsonValidatorInterface
+    {
+        return new ComposerJsonPackageNameValidator();
     }
 
     /**
