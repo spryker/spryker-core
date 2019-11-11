@@ -36,7 +36,7 @@ class ErrorHandlerFactoryTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $reflectionProperty = $this->getConfigReflectionProperty();
         $this->configCache = $reflectionProperty->getValue();
@@ -45,7 +45,7 @@ class ErrorHandlerFactoryTest extends Unit
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $reflectionProperty = $this->getConfigReflectionProperty();
         $reflectionProperty->setValue($this->configCache);

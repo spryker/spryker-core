@@ -90,7 +90,7 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -177,11 +177,7 @@ class ShoppingListFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($shoppingListResponseTransfer->getIsSuccess(), 'Customer should not be able to have two shopping lists with same name.');
-        $this->assertArraySubset(
-            [static::ERROR_DUPLICATE_NAME_SHOPPING_LIST],
-            $shoppingListResponseTransfer->getErrors(),
-            'Customer should not be able to have two shopping lists with same name.'
-        );
+        $this->assertTrue(array_intersect([static::ERROR_DUPLICATE_NAME_SHOPPING_LIST], $shoppingListResponseTransfer->getErrors()) === [static::ERROR_DUPLICATE_NAME_SHOPPING_LIST]);
     }
 
     /**

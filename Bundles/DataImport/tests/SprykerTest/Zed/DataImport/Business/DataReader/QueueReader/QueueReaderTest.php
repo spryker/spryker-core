@@ -53,7 +53,7 @@ class QueueReaderTest extends Unit
     /**
      * @return void
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
 
@@ -65,7 +65,7 @@ class QueueReaderTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -93,7 +93,7 @@ class QueueReaderTest extends Unit
     public function testKeyReturnsCurrentDataSetPosition()
     {
         $csvReader = $this->getQueueReader();
-        $this->assertInternalType('int', $csvReader->key());
+        $this->assertIsInt($csvReader->key());
     }
 
     /**

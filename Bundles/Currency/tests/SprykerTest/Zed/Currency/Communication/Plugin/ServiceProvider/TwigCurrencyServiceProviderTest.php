@@ -41,7 +41,7 @@ class TwigCurrencyServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
 
