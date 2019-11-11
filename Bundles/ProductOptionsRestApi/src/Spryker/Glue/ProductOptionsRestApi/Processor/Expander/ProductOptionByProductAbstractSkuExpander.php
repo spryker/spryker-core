@@ -7,12 +7,14 @@
 
 namespace Spryker\Glue\ProductOptionsRestApi\Processor\Expander;
 
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionReaderInterface;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Sorter\ProductOptionSorterInterface;
 use Spryker\Glue\ProductOptionsRestApi\ProductOptionsRestApiConfig;
+use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 
 class ProductOptionByProductAbstractSkuExpander implements ProductOptionByProductAbstractSkuExpanderInterface
 {
@@ -73,7 +75,8 @@ class ProductOptionByProductAbstractSkuExpander implements ProductOptionByProduc
                 $restRequest
             );
             $productOptionRestResources = $this->prepareRestResources(
-                $sortedRestProductOptionAttributeTransfers
+                $sortedRestProductOptionAttributeTransfers,
+                $restResource->getId()
             );
 
             foreach ($productOptionRestResources as $productOptionRestResource) {
@@ -86,19 +89,29 @@ class ProductOptionByProductAbstractSkuExpander implements ProductOptionByProduc
 
     /**
      * @param \Generated\Shared\Transfer\RestProductOptionAttributesTransfer[] $restProductOptionAttributesTransfers
+     * @param string $productAbstractSku
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    protected function prepareRestResourceCollection(array $restProductOptionAttributesTransfers): array
+    protected function prepareRestResources(array $restProductOptionAttributesTransfers, string $productAbstractSku): array
     {
         $restResources = [];
 
         foreach ($restProductOptionAttributesTransfers as $restProductOptionAttributesTransfer) {
-            $restResources[] = $this->restResourceBuilder->createRestResource(
+            $restResource = $this->restResourceBuilder->createRestResource(
                 ProductOptionsRestApiConfig::RESOURCE_PRODUCT_OPTIONS,
                 $restProductOptionAttributesTransfer->getSku(),
                 $restProductOptionAttributesTransfer
             );
+            $restResourceSelfLink = sprintf(
+                '%s/%s/%s/%s',
+                ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
+                $productAbstractSku,
+                ProductOptionsRestApiConfig::RESOURCE_PRODUCT_OPTIONS,
+                $restProductOptionAttributesTransfer->getSku()
+            );
+            $restResource->addLink(RestLinkInterface::LINK_SELF, $restResourceSelfLink);
+            $restResources[] = $restResource;
         }
 
         return $restResources;
