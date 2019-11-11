@@ -8,6 +8,7 @@
     "spryker/application-extension": "^1.0.0",
     "spryker/config": "^3.0.0",
     "spryker/event-dispatcher-extension": "^1.0.0",
+    "spryker/health-check-extension":"^1.0.0",
     "spryker/kernel": "^3.33.0",
     "spryker/monitoring": "^1.0.0 || ^2.0.0",
     "spryker/redis": "^2.0.0",

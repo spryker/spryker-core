@@ -16,18 +16,44 @@ use Spryker\Service\Kernel\AbstractService;
  */
 class HealthCheckService extends AbstractService implements HealthCheckServiceInterface
 {
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\HealthCheckRequestTransfer $healthCheckRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
-     */
-    public function checkYvesHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer
-    {
-    }
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * @api
+//     *
+//     * @param \Generated\Shared\Transfer\HealthCheckRequestTransfer $healthCheckRequestTransfer
+//     *
+//     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
+//     */
+//    public function checkYvesHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer
+//    {
+//    }
+//
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * @api
+//     *
+//     * @param \Generated\Shared\Transfer\HealthCheckRequestTransfer $healthCheckRequestTransfer
+//     *
+//     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
+//     */
+//    public function checkZedHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer
+//    {
+//    }
+//
+//    /**
+//     * {@inheritDoc}
+//     *
+//     * @api
+//     *
+//     * @param \Generated\Shared\Transfer\HealthCheckRequestTransfer $healthCheckRequestTransfer
+//     *
+//     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
+//     */
+//    public function checkGlueHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer
+//    {
+//    }
 
     /**
      * {@inheritDoc}
@@ -38,20 +64,8 @@ class HealthCheckService extends AbstractService implements HealthCheckServiceIn
      *
      * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
      */
-    public function checkZedHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer
+    public function processHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer
     {
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\HealthCheckRequestTransfer $healthCheckRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
-     */
-    public function checkGlueHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer
-    {
+         return $this->getFactory()->createHealthCheckServiceProcessor()->process($healthCheckRequestTransfer);
     }
 }

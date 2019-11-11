@@ -7,17 +7,27 @@
 
 namespace Spryker\Service\HealthCheckExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\HealthCheckResponseTransfer;
+use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 
 interface HealthCheckPluginInterface
 {
+    /**
+     * Specification:
+     * - Defines service name.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getName(): string;
+
     /**
      * Specification:
      * - Performs health check for the service.
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
+     * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
      */
-    public function check(): HealthCheckResponseTransfer;
+    public function check(): HealthCheckServiceResponseTransfer;
 }

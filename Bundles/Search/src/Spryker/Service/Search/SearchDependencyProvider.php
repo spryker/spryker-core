@@ -5,14 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\HealthCheck;
+namespace Spryker\Service\Search;
 
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
+use Spryker\Service\Search\Dependency\Client\SearchToSearchClientBridge;
 
-class HealthCheckDependencyProvider extends AbstractBundleDependencyProvider
+class SearchDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PLUGINS_HEALTH_CHECK = 'PLUGINS_HEALTH_CHECK';
+    public const CLIENT_SEARCH = 'CLIENT_SEARCH';
 
     /**
      * @param \Spryker\Service\Kernel\Container $container
@@ -21,7 +22,7 @@ class HealthCheckDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideServiceDependencies(Container $container)
     {
-        $container = $this->addHealthCheckPlugins($container);
+        $container = $this->addStorageClient($container);
 
         return $container;
     }
@@ -31,20 +32,14 @@ class HealthCheckDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Service\Kernel\Container
      */
-    protected function addHealthCheckPlugins(Container $container): Container
+    protected function addStorageClient(Container $container): Container
     {
-        $container->set(static::PLUGINS_HEALTH_CHECK, function () {
-            return $this->getHealthCheckPlugins();
+        $container->set(static::CLIENT_SEARCH, function ($container) {
+            return new SearchToSearchClientBridge(
+                $container->getLocator()->search()->client()
+            );
         });
 
         return $container;
-    }
-
-    /**
-     * @return \Spryker\Service\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[]
-     */
-    protected function getHealthCheckPlugins(): array
-    {
-        return [];
     }
 }

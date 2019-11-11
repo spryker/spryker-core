@@ -1,7 +1,7 @@
 # HealthCheck Module
 [![Build Status](https://travis-ci.org/spryker/health-check.svg)](https://travis-ci.org/spryker/health-check)
 
-{{ADD DESCRIPTION HERE}}
+HealthCheck module provides basic health checks and reporting tools for system availability. It can also be used to assert uptime and proper environment configuration (Storage, Session, Search, Database).
 
 ## Installation
 

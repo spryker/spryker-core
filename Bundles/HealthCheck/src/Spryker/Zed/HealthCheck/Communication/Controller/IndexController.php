@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\HealthCheck\Communication\Controller;
 
+use Generated\Shared\Transfer\HealthCheckRequestTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\HealthCheck\Communication\HealthCheckCommunicationFactory getFactory()
@@ -16,10 +18,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class IndexController extends AbstractController
 {
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function indexAction(): JsonResponse
+    public function indexAction(Request $request): JsonResponse
     {
-        return new JsonResponse(['error' => false]);
+        $healthCheckRequestTransfer = (new HealthCheckRequestTransfer())
+            ->setApplication(APPLICATION);
+        $healthCheckResponseTransfer = $this->getFactory()->getHealthCheckService()->processHealthCheck($healthCheckRequestTransfer);
     }
 }
