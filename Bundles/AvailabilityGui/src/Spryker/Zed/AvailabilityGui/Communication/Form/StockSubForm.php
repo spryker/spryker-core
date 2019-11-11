@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Type;
 
@@ -54,6 +55,9 @@ class StockSubForm extends AbstractType
             'constraints' => [
                 new Required(),
                 new Type('numeric'),
+                new Regex([
+                    'pattern' => '/^\d{0,10}(\.\d{1,10})?$/',
+                ]),
             ],
         ]);
 
