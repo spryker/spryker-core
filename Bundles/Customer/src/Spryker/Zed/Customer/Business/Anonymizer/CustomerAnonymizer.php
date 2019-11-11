@@ -132,9 +132,9 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
         do {
             $randomEmail = sprintf(
                 '%s@%s.%s',
-                strtolower(md5((string)mt_rand())),
-                strtolower(md5((string)mt_rand())),
-                strtolower(md5((string)mt_rand()))
+                strtolower(md5((string)random_int(0, mt_getrandmax()))),
+                strtolower(md5((string)random_int(0, mt_getrandmax()))),
+                strtolower(md5((string)random_int(0, mt_getrandmax())))
             );
         } while ($this->queryContainer->queryCustomerByEmail($randomEmail)->exists());
 

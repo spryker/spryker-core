@@ -74,7 +74,7 @@ class SubscriptionAnonymizer implements SubscriptionAnonymizerInterface
     protected function anonymizeSubscriber(SpyNewsletterSubscriber $spyNewsletterSubscriber)
     {
         do {
-            $randomEmail = md5((string)mt_rand());
+            $randomEmail = md5((string)random_int(0, mt_getrandmax()));
         } while ($this->queryContainer->querySubscriberByEmail($randomEmail)->exists());
 
         $spyNewsletterSubscriber->setEmail($randomEmail);
