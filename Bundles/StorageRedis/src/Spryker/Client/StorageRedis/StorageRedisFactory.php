@@ -9,8 +9,7 @@ namespace Spryker\Client\StorageRedis;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\StorageRedis\Dependency\Client\StorageRedisToRedisClientInterface;
-use Spryker\Client\StorageRedis\Redis\StorageRedisWrapperFactory;
-use Spryker\Client\StorageRedis\Redis\StorageRedisWrapperFactoryInterface;
+use Spryker\Client\StorageRedis\Redis\StorageRedisWrapper;
 use Spryker\Client\StorageRedis\Redis\StorageRedisWrapperInterface;
 
 /**
@@ -19,22 +18,23 @@ use Spryker\Client\StorageRedis\Redis\StorageRedisWrapperInterface;
 class StorageRedisFactory extends AbstractFactory
 {
     /**
+     * @var \Spryker\Client\StorageRedis\Redis\StorageRedisWrapperInterface
+     */
+    protected static $storageRedisWrapper;
+
+    /**
      * @return \Spryker\Client\StorageRedis\Redis\StorageRedisWrapperInterface
      */
     public function createStorageRedisWrapper(): StorageRedisWrapperInterface
     {
-        return $this->createStorageRedisWrapperFactory()->createStorageRedisWrapper();
-    }
+        if (static::$storageRedisWrapper === null) {
+            static::$storageRedisWrapper = new StorageRedisWrapper(
+                $this->getRedisClient(),
+                $this->getConfig()
+            );
+        }
 
-    /**
-     * @return \Spryker\Client\StorageRedis\Redis\StorageRedisWrapperFactoryInterface
-     */
-    public function createStorageRedisWrapperFactory(): StorageRedisWrapperFactoryInterface
-    {
-        return new StorageRedisWrapperFactory(
-            $this->getRedisClient(),
-            $this->getConfig()
-        );
+        return static::$storageRedisWrapper;
     }
 
     /**
