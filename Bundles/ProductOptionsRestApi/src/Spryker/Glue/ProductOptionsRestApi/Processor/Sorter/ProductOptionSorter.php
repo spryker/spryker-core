@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\ProductOptionsRestApi\Processor\Sorter;
 
-use Generated\Shared\Transfer\RestProductOptionsAttributesTransfer;
+use Generated\Shared\Transfer\RestProductOptionAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface;
 use Spryker\Glue\ProductOptionsRestApi\ProductOptionsRestApiConfig;
@@ -17,55 +17,55 @@ class ProductOptionSorter implements ProductOptionSorterInterface
     protected const SORT_VALUE_DELIMITER = '.';
 
     /**
-     * @param \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[] $restProductOptionsAttributesTransfers
+     * @param \Generated\Shared\Transfer\RestProductOptionAttributesTransfer[] $restProductOptionAttributesTransfers
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[]
+     * @return \Generated\Shared\Transfer\RestProductOptionAttributesTransfer[]
      */
-    public function sortRestProductOptionsAttributesTransfers(
-        array $restProductOptionsAttributesTransfers,
+    public function sortRestProductOptionAttributesTransfers(
+        array $restProductOptionAttributesTransfers,
         RestRequestInterface $restRequest
     ): array {
         $sorts = array_values($this->filterSorts($restRequest->getSort()));
 
         if (!$sorts) {
-            return $restProductOptionsAttributesTransfers;
+            return $restProductOptionAttributesTransfers;
         }
 
-        usort($restProductOptionsAttributesTransfers, function (
-            RestProductOptionsAttributesTransfer $currentRestProductOptionsAttributesTransfer,
-            RestProductOptionsAttributesTransfer $nextRestProductOptionsAttributesTransfer
+        usort($restProductOptionAttributesTransfers, function (
+            RestProductOptionAttributesTransfer $currentRestProductOptionAttributesTransfer,
+            RestProductOptionAttributesTransfer $nextRestProductOptionAttributesTransfer
         ) use ($sorts) {
             return $this->compare(
-                $currentRestProductOptionsAttributesTransfer,
-                $nextRestProductOptionsAttributesTransfer,
+                $currentRestProductOptionAttributesTransfer,
+                $nextRestProductOptionAttributesTransfer,
                 $sorts
             );
         });
 
-        return $restProductOptionsAttributesTransfers;
+        return $restProductOptionAttributesTransfers;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer $currentRestProductOptionsAttributesTransfer
-     * @param \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer $nextRestProductOptionsAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestProductOptionAttributesTransfer $currentRestProductOptionAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestProductOptionAttributesTransfer $nextRestProductOptionAttributesTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
      * @param int $index
      *
      * @return int
      */
     protected function compare(
-        RestProductOptionsAttributesTransfer $currentRestProductOptionsAttributesTransfer,
-        RestProductOptionsAttributesTransfer $nextRestProductOptionsAttributesTransfer,
+        RestProductOptionAttributesTransfer $currentRestProductOptionAttributesTransfer,
+        RestProductOptionAttributesTransfer $nextRestProductOptionAttributesTransfer,
         array $sorts,
         int $index = 0
     ) {
         $currentSort = $sorts[$index];
         $field = explode(static::SORT_VALUE_DELIMITER, $currentSort->getField())[1];
-        $currentSortedPropertyValue = $currentRestProductOptionsAttributesTransfer->offsetExists($field)
-            ? $currentRestProductOptionsAttributesTransfer->offsetGet($field) : null;
-        $nextSortedPropertyValue = $nextRestProductOptionsAttributesTransfer->offsetExists($field)
-            ? $nextRestProductOptionsAttributesTransfer->offsetGet($field) : null;
+        $currentSortedPropertyValue = $currentRestProductOptionAttributesTransfer->offsetExists($field)
+            ? $currentRestProductOptionAttributesTransfer->offsetGet($field) : null;
+        $nextSortedPropertyValue = $nextRestProductOptionAttributesTransfer->offsetExists($field)
+            ? $nextRestProductOptionAttributesTransfer->offsetGet($field) : null;
 
         if ($currentSortedPropertyValue === $nextSortedPropertyValue) {
             if (!isset($sorts[$index + 1])) {
@@ -73,8 +73,8 @@ class ProductOptionSorter implements ProductOptionSorterInterface
             }
 
             return $this->compare(
-                $currentRestProductOptionsAttributesTransfer,
-                $nextRestProductOptionsAttributesTransfer,
+                $currentRestProductOptionAttributesTransfer,
+                $nextRestProductOptionAttributesTransfer,
                 $sorts,
                 $index + 1
             );

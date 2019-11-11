@@ -8,7 +8,7 @@
 namespace Spryker\Glue\ProductOptionsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
-use Generated\Shared\Transfer\RestProductOptionsAttributesTransfer;
+use Generated\Shared\Transfer\RestProductOptionAttributesTransfer;
 
 class ProductOptionMapper implements ProductOptionMapperInterface
 {
@@ -16,17 +16,17 @@ class ProductOptionMapper implements ProductOptionMapperInterface
      * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
      * @param string[] $translations
      *
-     * @return \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[]
+     * @return \Generated\Shared\Transfer\RestProductOptionAttributesTransfer[]
      */
-    public function mapProductAbstractOptionStorageTransferToRestProductOptionsAttributesTransfers(
+    public function mapProductAbstractOptionStorageTransferToRestProductOptionAttributesTransfers(
         ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer,
         array $translations
     ): array {
-        $restProductOptionsAttributesTransfers = [];
+        $restProductOptionAttributesTransfers = [];
 
         foreach ($productAbstractOptionStorageTransfer->getProductOptionGroups() as $productOptionGroupStorageTransfer) {
             foreach ($productOptionGroupStorageTransfer->getProductOptionValues() as $productOptionValueStorageTransfer) {
-                $restProductOptionsAttributesTransfers[] = (new RestProductOptionsAttributesTransfer())
+                $restProductOptionAttributesTransfers[] = (new RestProductOptionAttributesTransfer())
                     ->setSku($productOptionValueStorageTransfer->getSku())
                     ->setOptionGroupName($translations[$productOptionGroupStorageTransfer->getName()])
                     ->setOptionName($translations[$productOptionValueStorageTransfer->getValue()])
@@ -35,6 +35,6 @@ class ProductOptionMapper implements ProductOptionMapperInterface
             }
         }
 
-        return $restProductOptionsAttributesTransfers;
+        return $restProductOptionAttributesTransfers;
     }
 }

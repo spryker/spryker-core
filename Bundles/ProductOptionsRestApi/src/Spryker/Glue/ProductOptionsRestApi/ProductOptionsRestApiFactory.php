@@ -28,7 +28,6 @@ class ProductOptionsRestApiFactory extends AbstractFactory
     public function createProductOptionReader(): ProductOptionReaderInterface
     {
         return new ProductOptionReader(
-            $this->getResourceBuilder(),
             $this->getProductStorageClient(),
             $this->getProductOptionStorageClient(),
             $this->getGlossaryStorageClient(),
@@ -82,6 +81,7 @@ class ProductOptionsRestApiFactory extends AbstractFactory
     public function createProductOptionByProductAbstractSkuExpander(): ProductOptionByProductAbstractSkuExpanderInterface
     {
         return new ProductOptionByProductAbstractSkuExpander(
+            $this->getResourceBuilder(),
             $this->createProductOptionReader(),
             $this->createProductOptionSorter()
         );

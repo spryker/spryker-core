@@ -15,9 +15,9 @@ interface ProductOptionMapperInterface
      * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
      * @param string[] $translations
      *
-     * @return \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[]
+     * @return \Generated\Shared\Transfer\RestProductOptionAttributesTransfer[]
      */
-    public function mapProductAbstractOptionStorageTransferToRestProductOptionsAttributesTransfers(
+    public function mapProductAbstractOptionStorageTransferToRestProductOptionAttributesTransfers(
         ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer,
         array $translations
     ): array;

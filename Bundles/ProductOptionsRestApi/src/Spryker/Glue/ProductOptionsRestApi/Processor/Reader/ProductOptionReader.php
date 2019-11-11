@@ -7,22 +7,15 @@
 
 namespace Spryker\Glue\ProductOptionsRestApi\Processor\Reader;
 
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductOptionStorageClientInterface;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Mapper\ProductOptionMapperInterface;
-use Spryker\Glue\ProductOptionsRestApi\ProductOptionsRestApiConfig;
 
 class ProductOptionReader implements ProductOptionReaderInterface
 {
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
-
-    /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
-     */
-    protected $restResourceBuilder;
 
     /**
      * @var \Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductStorageClientInterface
@@ -45,20 +38,17 @@ class ProductOptionReader implements ProductOptionReaderInterface
     protected $productOptionMapper;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductOptionStorageClientInterface $productOptionStorageClient
      * @param \Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToGlossaryStorageClientInterface $glossaryStorageClient
      * @param \Spryker\Glue\ProductOptionsRestApi\Processor\Mapper\ProductOptionMapperInterface $productOptionMapper
      */
     public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder,
         ProductOptionsRestApiToProductStorageClientInterface $productStorageClient,
         ProductOptionsRestApiToProductOptionStorageClientInterface $productOptionStorageClient,
         ProductOptionsRestApiToGlossaryStorageClientInterface $glossaryStorageClient,
         ProductOptionMapperInterface $productOptionMapper
     ) {
-        $this->restResourceBuilder = $restResourceBuilder;
         $this->productStorageClient = $productStorageClient;
         $this->productOptionStorageClient = $productOptionStorageClient;
         $this->glossaryStorageClient = $glossaryStorageClient;
@@ -69,27 +59,19 @@ class ProductOptionReader implements ProductOptionReaderInterface
      * @param string[] $productAbstractSkus
      * @param string $localeName
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
+     * @return \Generated\Shared\Transfer\RestProductOptionAttributesTransfer[][]
      */
-    public function getByProductAbstractSkus(array $productAbstractSkus, string $localeName): array
+    public function getRestProductOptionAttributeTransfersByProductAbstractSkus(array $productAbstractSkus, string $localeName): array
     {
         $productAbstractIds = $this->getProductAbstractIdsByProductAbstractSkus(
             $productAbstractSkus,
             $localeName
         );
-        $restProductOptionsAttributesTransfersByProductAbstractSkus = $this->getRestProductOptionsAttributesTransfersByProductAbstractIds(
+
+        return $this->getRestProductOptionAttributesTransfersByProductAbstractIds(
             $productAbstractIds,
             $localeName
         );
-        $restResources = [];
-
-        foreach ($restProductOptionsAttributesTransfersByProductAbstractSkus as $productAbstractSku => $restProductOptionsAttributesTransfers) {
-            $restResources[$productAbstractSku] = $this->prepareRestResourceCollection(
-                $restProductOptionsAttributesTransfers
-            );
-        }
-
-        return $restResources;
     }
 
     /**
@@ -119,9 +101,9 @@ class ProductOptionReader implements ProductOptionReaderInterface
      * @param int[] $productAbstractIds
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[][]
+     * @return \Generated\Shared\Transfer\RestProductOptionAttributesTransfer[][]
      */
-    protected function getRestProductOptionsAttributesTransfersByProductAbstractIds(
+    protected function getRestProductOptionAttributesTransfersByProductAbstractIds(
         array $productAbstractIds,
         string $localeName
     ): array {
@@ -132,7 +114,7 @@ class ProductOptionReader implements ProductOptionReaderInterface
             $this->getGlossaryStorageKeys($productAbstractOptionStorageTransfers),
             $localeName
         );
-        $restProductOptionsAttributesTransfers = [];
+        $restProductOptionAttributesTransfers = [];
 
         foreach ($productAbstractIds as $productAbstractSku => $idProductAbstract) {
             $productAbstractOptionStorageTransfer = $productAbstractOptionStorageTransfers[$idProductAbstract] ?? null;
@@ -140,14 +122,14 @@ class ProductOptionReader implements ProductOptionReaderInterface
                 continue;
             }
 
-            $restProductOptionsAttributesTransfers[$productAbstractSku] = $this->productOptionMapper
-                ->mapProductAbstractOptionStorageTransferToRestProductOptionsAttributesTransfers(
+            $restProductOptionAttributesTransfers[$productAbstractSku] = $this->productOptionMapper
+                ->mapProductAbstractOptionStorageTransferToRestProductOptionAttributesTransfers(
                     $productAbstractOptionStorageTransfer,
                     $translations
                 );
         }
 
-        return $restProductOptionsAttributesTransfers;
+        return $restProductOptionAttributesTransfers;
     }
 
     /**
@@ -170,25 +152,5 @@ class ProductOptionReader implements ProductOptionReaderInterface
         }
 
         return array_unique($glossaryStorageKeys);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[] $restProductOptionsAttributesTransfers
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
-     */
-    protected function prepareRestResourceCollection(array $restProductOptionsAttributesTransfers): array
-    {
-        $restResources = [];
-
-        foreach ($restProductOptionsAttributesTransfers as $restProductOptionsAttributesTransfer) {
-            $restResources[] = $this->restResourceBuilder->createRestResource(
-                ProductOptionsRestApiConfig::RESOURCE_PRODUCT_OPTIONS,
-                $restProductOptionsAttributesTransfer->getSku(),
-                $restProductOptionsAttributesTransfer
-            );
-        }
-
-        return $restResources;
     }
 }

@@ -12,13 +12,13 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 interface ProductOptionSorterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[] $restProductOptionsAttributesTransfers
+     * @param \Generated\Shared\Transfer\RestProductOptionAttributesTransfer[] $restProductOptionAttributesTransfers
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[]
+     * @return \Generated\Shared\Transfer\RestProductOptionAttributesTransfer[]
      */
-    public function sortRestProductOptionsAttributesTransfers(
-        array $restProductOptionsAttributesTransfers,
+    public function sortRestProductOptionAttributesTransfers(
+        array $restProductOptionAttributesTransfers,
         RestRequestInterface $restRequest
     ): array;
 }

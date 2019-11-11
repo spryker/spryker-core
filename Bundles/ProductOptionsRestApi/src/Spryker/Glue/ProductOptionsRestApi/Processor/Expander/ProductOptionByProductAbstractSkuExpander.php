@@ -7,13 +7,20 @@
 
 namespace Spryker\Glue\ProductOptionsRestApi\Processor\Expander;
 
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionReaderInterface;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Sorter\ProductOptionSorterInterface;
+use Spryker\Glue\ProductOptionsRestApi\ProductOptionsRestApiConfig;
 
 class ProductOptionByProductAbstractSkuExpander implements ProductOptionByProductAbstractSkuExpanderInterface
 {
+    /**
+     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
+     */
+    protected $restResourceBuilder;
+
     /**
      * @var \Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionReaderInterface
      */
@@ -25,13 +32,16 @@ class ProductOptionByProductAbstractSkuExpander implements ProductOptionByProduc
     protected $productOptionSorter;
 
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionReaderInterface $productOptionReader
      * @param \Spryker\Glue\ProductOptionsRestApi\Processor\Sorter\ProductOptionSorterInterface $productOptionSorter
      */
     public function __construct(
+        RestResourceBuilderInterface $restResourceBuilder,
         ProductOptionReaderInterface $productOptionReader,
         ProductOptionSorterInterface $productOptionSorter
     ) {
+        $this->restResourceBuilder = $restResourceBuilder;
         $this->productOptionReader = $productOptionReader;
         $this->productOptionSorter = $productOptionSorter;
     }
@@ -48,24 +58,47 @@ class ProductOptionByProductAbstractSkuExpander implements ProductOptionByProduc
             return $restResource->getId();
         }, $restResources);
 
-        $productOptionRestResources = $this->productOptionReader->getByProductAbstractSkus(
+        $restProductOptionAttributeTransfers = $this->productOptionReader->getRestProductOptionAttributeTransfersByProductAbstractSkus(
             $productAbstractSkus,
             $restRequest->getMetadata()->getLocale()
         );
 
         foreach ($restResources as $restResource) {
-            if (empty($productOptionRestResources[$restResource->getId()])) {
+            if (empty($restProductOptionAttributeTransfers[$restResource->getId()])) {
                 continue;
             }
 
-            $this->productOptionSorter->sortRestProductOptionsAttributesTransfers(
-                $productOptionRestResources[$restResource->getId()],
+            $sortedRestProductOptionAttributeTransfers = $this->productOptionSorter->sortRestProductOptionAttributesTransfers(
+                $restProductOptionAttributeTransfers[$restResource->getId()],
                 $restRequest
             );
+            $productOptionRestResources = $this->prepareRestResources(
+                $sortedRestProductOptionAttributeTransfers
+            );
 
-            foreach ($productOptionRestResources[$restResource->getId()] as $productOptionRestResource) {
+            foreach ($productOptionRestResources as $productOptionRestResource) {
                 $restResource->addRelationship($productOptionRestResource);
             }
+        }
+
+        return $restResources;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestProductOptionAttributesTransfer[] $restProductOptionAttributesTransfers
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    protected function prepareRestResourceCollection(array $restProductOptionAttributesTransfers): array
+    {
+        $restResources = [];
+
+        foreach ($restProductOptionAttributesTransfers as $restProductOptionAttributesTransfer) {
+            $restResources[] = $this->restResourceBuilder->createRestResource(
+                ProductOptionsRestApiConfig::RESOURCE_PRODUCT_OPTIONS,
+                $restProductOptionAttributesTransfer->getSku(),
+                $restProductOptionAttributesTransfer
+            );
         }
 
         return $restResources;
