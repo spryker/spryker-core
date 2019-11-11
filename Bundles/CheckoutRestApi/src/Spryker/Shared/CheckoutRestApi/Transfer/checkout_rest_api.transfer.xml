@@ -153,6 +153,7 @@
     <transfer name="ShipmentMethod">
         <property name="idShipmentMethod" type="int"/>
         <property name="storeCurrencyPrice" type="int"/>
+        <property name="prices" type="MoneyValue[]" singular="price"/>
     </transfer>
 
     <transfer name="ShipmentMethodsCollection">
@@ -220,6 +221,7 @@
         <property name="quote" type="Quote"/>
         <property name="customer" type="Customer"/>
         <property name="errors" type="QuoteError[]" singular="error"/>
+        <property name="quoteTransfer" type="Quote"/>
     </transfer>
 
     <transfer name="QuoteError">
@@ -235,4 +237,11 @@
     <transfer name="Shipment">
     </transfer>
 
+    <transfer name="RestErrorCollection">
+        <property name="restErrors" type="RestErrorMessage[]" singular="restError"/>
+    </transfer>
+
+    <transfer name="CheckoutData">
+        <property name="shipment" type="RestShipment"/>
+    </transfer>
 </transfers>
