@@ -286,6 +286,7 @@
     "spryker/merchant-gui-extension": "*",
     "spryker/merchant-opening-hours": "*",
     "spryker/merchant-opening-hours-data-import": "*",
+    "spryker/merchant-opening-hours-storage": "*",
     "spryker/merchant-profile": "*",
     "spryker/merchant-profile-data-import": "*",
     "spryker/merchant-profile-gui": "*",
