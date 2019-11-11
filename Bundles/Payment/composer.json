@@ -25,8 +25,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Glue\\Payment\\Helper\\": "tests/SprykerTest/Glue/Payment/_support/Helper/"
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {
