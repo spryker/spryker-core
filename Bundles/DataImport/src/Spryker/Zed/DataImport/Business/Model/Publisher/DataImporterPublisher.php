@@ -46,7 +46,7 @@ class DataImporterPublisher implements DataImporterPublisherInterface
 
         static::$importedEntityEvents[$eventName][$entityId] = true;
 
-        $chunkSize = Config::get(DataImportConstants::PUBLISHER_TRIGGER_CHUNK_SIZE, static::DEFAULT_CHUNK_SIZE);
+        $chunkSize = static::getChunkSize();
 
         if (count(static::$importedEntityEvents, COUNT_RECURSIVE) >= $chunkSize) {
             static::triggerEvents();
@@ -87,7 +87,7 @@ class DataImporterPublisher implements DataImporterPublisherInterface
         static::$importedEntityEvents = [];
 
         if ($flushChunkSize === null) {
-            $flushChunkSize = Config::get(DataImportConstants::PUBLISHER_FLUSH_CHUNK_SIZE, static::DEFAULT_FLUSH_CHUNK_SIZE);
+            $flushChunkSize = static::getFlushChunkSize();
         }
 
         if (count(static::$triggeredEventIds, COUNT_RECURSIVE) >= $flushChunkSize) {
@@ -124,5 +124,25 @@ class DataImporterPublisher implements DataImporterPublisherInterface
             $locatorClassName = Locator::class;
             static::$eventFacade = $locatorClassName::getInstance()->event()->facade();
         }
+    }
+
+    /**
+     * Returns chunk size configured for triggering events
+     *
+     * @return int
+     */
+    protected static function getChunkSize()
+    {
+        return Config::get(DataImportConstants::PUBLISHER_TRIGGER_CHUNK_SIZE, static::DEFAULT_CHUNK_SIZE);
+    }
+
+    /**
+     * Returns chunk size configured for flushing internal cache of triggered event ids
+     *
+     * @return int
+     */
+    protected static function getFlushChunkSize()
+    {
+        return Config::get(DataImportConstants::PUBLISHER_FLUSH_CHUNK_SIZE, static::DEFAULT_FLUSH_CHUNK_SIZE);
     }
 }
