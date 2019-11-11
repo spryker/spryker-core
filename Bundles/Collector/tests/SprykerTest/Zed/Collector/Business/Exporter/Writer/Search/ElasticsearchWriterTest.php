@@ -56,12 +56,11 @@ class ElasticsearchWriterTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Collector\Business\Exporter\Exception\InvalidDataSetException
-     *
      * @return void
      */
     public function testWriteCreateDocumentsWithInValidDataSet()
     {
+        $this->expectException('Spryker\Zed\Collector\Business\Exporter\Exception\InvalidDataSetException');
         $dataSet = $this->getInValidTestDataSet();
         $writer = $this->getElasticsearchWriter();
         $writer->write($dataSet);
@@ -72,7 +71,7 @@ class ElasticsearchWriterTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->type = $this->getMockType();
         $this->index = $this->getMockIndex();

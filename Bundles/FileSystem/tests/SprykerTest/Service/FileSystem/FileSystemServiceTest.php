@@ -73,7 +73,7 @@ class FileSystemServiceTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -145,7 +145,7 @@ class FileSystemServiceTest extends Unit
     /**
      * @return void
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->directoryCleanup();
     }
