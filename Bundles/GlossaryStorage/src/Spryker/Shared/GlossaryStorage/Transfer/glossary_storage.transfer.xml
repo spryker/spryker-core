@@ -10,8 +10,8 @@
 
     <transfer name="GlossaryStorage">
         <property name="value" type="string"/>
-        <property name="GlossaryKey" type="GlossaryStorageKey"/>
-        <property name="Locale" type="GlossaryStorageLocale"/>
+        <property name="glossaryKey" type="GlossaryStorageKey"/>
+        <property name="locale" type="GlossaryStorageLocale"/>
     </transfer>
 
     <transfer name="GlossaryStorageKey">
