@@ -29,7 +29,7 @@ class WeekdayScheduleWriterStep implements DataImportStepInterface
     {
         $this->validateDataSet($dataSet);
 
-        $weekdayScheduleEntity = SpyWeekdayScheduleQuery::create()
+        $weekdayScheduleEntity = $this->createWeekdaySchedulePropelQuery()
             ->filterByKey($dataSet[MerchantOpeningHoursWeekdayScheduleDataSetInterface::MERCHANT_OPENING_HOURS_WEEKDAY_KEY])
             ->findOneOrCreate();
 
@@ -70,5 +70,13 @@ class WeekdayScheduleWriterStep implements DataImportStepInterface
         if (!$dataSet[$requiredDataSetKey]) {
             throw new InvalidDataException(sprintf('"%s" is required.', $requiredDataSetKey));
         }
+    }
+
+    /**
+     * @return \Orm\Zed\WeekdaySchedule\Persistence\SpyWeekdayScheduleQuery
+     */
+    protected function createWeekdaySchedulePropelQuery(): SpyWeekdayScheduleQuery
+    {
+        return SpyWeekdayScheduleQuery::create();
     }
 }

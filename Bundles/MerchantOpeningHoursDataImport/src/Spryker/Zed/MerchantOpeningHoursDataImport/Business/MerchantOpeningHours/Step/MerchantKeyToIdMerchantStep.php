@@ -37,11 +37,9 @@ class MerchantKeyToIdMerchantStep implements DataImportStepInterface
             throw new InvalidDataException(sprintf('"%s" is required.', MerchantOpeningHoursDataSetInterface::MERCHANT_KEY));
         }
 
-        if (!isset($this->idMerchantCache[$merchantKey])) {
-            $this->idMerchantCache[$merchantKey] = $this->getIdMerchant($merchantKey);
-        }
+        $idMerchant = $this->getIdMerchant($merchantKey);
 
-        $dataSet[MerchantOpeningHoursDataSetInterface::FK_MERCHANT] = $this->idMerchantCache[$merchantKey];
+        $dataSet[MerchantOpeningHoursDataSetInterface::FK_MERCHANT] = $idMerchant;
     }
 
     /**
@@ -53,6 +51,10 @@ class MerchantKeyToIdMerchantStep implements DataImportStepInterface
      */
     protected function getIdMerchant(string $merchantKey): int
     {
+        if (isset($this->idMerchantCache[$merchantKey])) {
+            return $this->idMerchantCache[$merchantKey];
+        }
+
         /** @var \Orm\Zed\Merchant\Persistence\SpyMerchantQuery $merchantQuery */
         $merchantQuery = SpyMerchantQuery::create()
             ->select(SpyMerchantTableMap::COL_ID_MERCHANT);
@@ -63,6 +65,8 @@ class MerchantKeyToIdMerchantStep implements DataImportStepInterface
             throw new EntityNotFoundException(sprintf('Could not find Merchant by key "%s"', $merchantKey));
         }
 
-        return $idMerchant;
+        $this->idMerchantCache[$merchantKey] = $idMerchant;
+
+        return $this->idMerchantCache[$merchantKey];
     }
 }

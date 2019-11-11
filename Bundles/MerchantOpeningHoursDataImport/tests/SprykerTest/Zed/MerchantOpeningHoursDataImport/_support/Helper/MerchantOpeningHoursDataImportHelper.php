@@ -18,7 +18,7 @@ class MerchantOpeningHoursDataImportHelper extends Module
      */
     public function assertMerchantOpeningHoursDateScheduleDatabaseTablesContainsData(): void
     {
-        $merchantOpeningHoursDateScheduleQuery = $this->getMerchantOpeningHoursDateScheduleQuery();
+        $merchantOpeningHoursDateScheduleQuery = $this->getMerchantOpeningHoursDateSchedulePropelQuery();
 
         $this->assertTrue(
             $merchantOpeningHoursDateScheduleQuery->find()->count() > 0,
@@ -31,7 +31,7 @@ class MerchantOpeningHoursDataImportHelper extends Module
      */
     public function assertMerchantOpeningHoursWeekdayScheduleDatabaseTablesContainsData(): void
     {
-        $merchantOpeningHoursWeekdayScheduleQuery = $this->getMerchantOpeningHoursWeekdayScheduleQuery();
+        $merchantOpeningHoursWeekdayScheduleQuery = $this->getMerchantOpeningHoursWeekdaySchedulePropelQuery();
 
         $this->assertTrue(
             $merchantOpeningHoursWeekdayScheduleQuery->count() > 0,
@@ -42,7 +42,7 @@ class MerchantOpeningHoursDataImportHelper extends Module
     /**
      * @return \Orm\Zed\MerchantOpeningHours\Persistence\SpyMerchantOpeningHoursDateScheduleQuery
      */
-    public function getMerchantOpeningHoursDateScheduleQuery(): SpyMerchantOpeningHoursDateScheduleQuery
+    public function getMerchantOpeningHoursDateSchedulePropelQuery(): SpyMerchantOpeningHoursDateScheduleQuery
     {
         return SpyMerchantOpeningHoursDateScheduleQuery::create();
     }
@@ -50,7 +50,7 @@ class MerchantOpeningHoursDataImportHelper extends Module
     /**
      * @return \Orm\Zed\MerchantOpeningHours\Persistence\SpyMerchantOpeningHoursWeekdayScheduleQuery
      */
-    public function getMerchantOpeningHoursWeekdayScheduleQuery(): SpyMerchantOpeningHoursWeekdayScheduleQuery
+    public function getMerchantOpeningHoursWeekdaySchedulePropelQuery(): SpyMerchantOpeningHoursWeekdayScheduleQuery
     {
         return SpyMerchantOpeningHoursWeekdayScheduleQuery::create();
     }
