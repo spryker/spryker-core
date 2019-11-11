@@ -39,6 +39,7 @@
 
     <transfer name="PaymentProvider">
         <property name="name" type="string"/>
+        <property name="paymentMethods" singular="paymentMethod" type="PaymentMethod[]"/>
     </transfer>
 
     <transfer name="PaymentMethods">
