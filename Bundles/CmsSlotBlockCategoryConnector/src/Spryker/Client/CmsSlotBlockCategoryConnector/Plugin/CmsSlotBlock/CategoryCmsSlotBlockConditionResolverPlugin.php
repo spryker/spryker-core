@@ -1,7 +1,8 @@
 <?php
+
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\CmsSlotBlockCategoryConnector\Plugin\CmsSlotBlock;
@@ -16,7 +17,6 @@ use Spryker\Client\Kernel\AbstractPlugin;
 class CategoryCmsSlotBlockConditionResolverPlugin extends AbstractPlugin implements CmsSlotBlockVisibilityResolverPluginInterface
 {
     protected const CONDITION_KEY = 'category';
-    protected const CMS_SLOT_DATA_CATEGORY_KEY = 'category';
 
     /**
      * {@inheritDoc}
@@ -50,6 +50,6 @@ class CategoryCmsSlotBlockConditionResolverPlugin extends AbstractPlugin impleme
     ): bool {
         return $this->getFactory()
             ->createCategoryCmsSlotBlockConditionResolver()
-            ->isCmsBlockVisibleInSlot($cmsBlockTransfer, $conditions, $cmsSlotData);
+            ->getIsCmsBlockVisibleInSlot($conditions[static::CONDITION_KEY], $cmsSlotData);
     }
 }
