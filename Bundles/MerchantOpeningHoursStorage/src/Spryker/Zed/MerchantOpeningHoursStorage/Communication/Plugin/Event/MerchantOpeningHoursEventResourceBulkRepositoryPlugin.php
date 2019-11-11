@@ -48,7 +48,7 @@ class MerchantOpeningHoursEventResourceBulkRepositoryPlugin extends AbstractPlug
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        return $this->getRepository()->getFilteredMerchantTransfers($filterTransfer);
+        return $this->getRepository()->getFilteredMerchantEntityTransfers($filterTransfer);
     }
 
     /**
