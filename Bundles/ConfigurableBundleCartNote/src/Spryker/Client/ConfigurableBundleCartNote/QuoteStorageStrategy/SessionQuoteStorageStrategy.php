@@ -34,7 +34,7 @@ class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
     ): QuoteResponseTransfer {
         $itemCollectionTransfer = $this->getItemCollectionTransferByConfigurableBundleGroupKey(
             $configuredBundleCartNoteRequestTransfer->getQuote(),
-            $configuredBundleCartNoteRequestTransfer->getConfigurableBundleGroupKey()
+            $configuredBundleCartNoteRequestTransfer->getGroupKey()
         );
 
         if ($itemCollectionTransfer->getItems()->count() === 0) {

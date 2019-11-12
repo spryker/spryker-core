@@ -48,7 +48,7 @@ class ConfigurableBundleCartNoteFacadeTest extends Test
         //Arrange
         $configuredBundleCartNoteRequestTransfer = (new ConfiguredBundleCartNoteRequestTransfer())
             ->setQuote($this->createFakeQuoteTransferWithConfiguredBundle())
-            ->setConfigurableBundleGroupKey(static::FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY)
+            ->setGroupKey(static::FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY)
             ->setCartNote(static::FAKE_CONFIGURABLE_BUNDLE_CART_NOTE);
 
         //Act
@@ -72,7 +72,7 @@ class ConfigurableBundleCartNoteFacadeTest extends Test
         //Arrange
         $configuredBundleCartNoteRequestTransfer = (new ConfiguredBundleCartNoteRequestTransfer())
             ->setQuote($this->createFakeQuoteTransferWithConfiguredBundle())
-            ->setConfigurableBundleGroupKey('not-existing-configurable-bundle-group-key')
+            ->setGroupKey('not-existing-configurable-bundle-group-key')
             ->setCartNote(static::FAKE_CONFIGURABLE_BUNDLE_CART_NOTE);
 
         //Act
@@ -93,7 +93,7 @@ class ConfigurableBundleCartNoteFacadeTest extends Test
         ]);
         $configuredBundleCartNoteRequestTransfer = (new ConfiguredBundleCartNoteRequestTransfer())
             ->setQuote($quoteTransfer)
-            ->setConfigurableBundleGroupKey(static::FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY)
+            ->setGroupKey(static::FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY)
             ->setCartNote(static::FAKE_CONFIGURABLE_BUNDLE_CART_NOTE);
 
         //Act

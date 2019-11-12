@@ -72,7 +72,7 @@ class ConfigurableBundleCartNoteSetter implements ConfigurableBundleCartNoteSett
     ): QuoteResponseTransfer {
         $itemCollectionTransfer = $this->getItemCollectionByConfigurableBundleGroupKey(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $configuredBundleCartNoteRequestTransfer->getConfigurableBundleGroupKey()
+            $configuredBundleCartNoteRequestTransfer->getGroupKey()
         );
 
         if ($itemCollectionTransfer->getItems()->count() === 0) {
