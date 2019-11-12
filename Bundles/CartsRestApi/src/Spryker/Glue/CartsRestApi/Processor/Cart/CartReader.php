@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
-use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
+use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -20,7 +20,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 class CartReader implements CartReaderInterface
 {
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsMapperInterface
      */
     protected $cartsResourceMapper;
 
@@ -41,13 +41,13 @@ class CartReader implements CartReaderInterface
 
     /**
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
-     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
+     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsMapperInterface $cartsResourceMapper
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[] $customerExpanderPlugins
      */
     public function __construct(
         CartRestResponseBuilderInterface $cartRestResponseBuilder,
-        CartsResourceMapperInterface $cartsResourceMapper,
+        CartsMapperInterface $cartsResourceMapper,
         CartsRestApiClientInterface $cartsRestApiClient,
         array $customerExpanderPlugins
     ) {
@@ -80,12 +80,7 @@ class CartReader implements CartReaderInterface
             return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 
-        $cartResource = $this->cartsResourceMapper->mapCartsResource(
-            $quoteResponseTransfer->getQuoteTransfer(),
-            $restRequest
-        );
-
-        return $this->cartRestResponseBuilder->createCartRestResponse($cartResource);
+        return $this->cartRestResponseBuilder->createCartRestResponse($quoteResponseTransfer->getQuoteTransfer(), $restRequest);
     }
 
     /**
@@ -101,7 +96,7 @@ class CartReader implements CartReaderInterface
             return $this->cartRestResponseBuilder->createRestResponse();
         }
 
-        return $this->getRestQuoteCollectionResponse($restRequest, $quoteCollectionTransfer);
+        return $this->cartRestResponseBuilder->createRestQuoteCollectionResponse($quoteCollectionTransfer, $restRequest);
     }
 
     /**
@@ -118,25 +113,6 @@ class CartReader implements CartReaderInterface
         );
 
         return $quoteCollectionTransfer;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function getRestQuoteCollectionResponse(
-        RestRequestInterface $restRequest,
-        QuoteCollectionTransfer $quoteCollectionTransfer
-    ): RestResponseInterface {
-        $restResponse = $this->cartRestResponseBuilder->createRestResponse();
-        foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
-            $cartResource = $this->cartsResourceMapper->mapCartsResource($quoteTransfer, $restRequest);
-            $restResponse->addResource($cartResource);
-        }
-
-        return $restResponse;
     }
 
     /**

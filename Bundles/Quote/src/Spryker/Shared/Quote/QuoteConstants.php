@@ -13,4 +13,6 @@ namespace Spryker\Shared\Quote;
 interface QuoteConstants
 {
     public const GUEST_QUOTE_LIFETIME = 'QUOTE:GUEST_QUOTE_LIFETIME';
+
+    public const FIELDS_ALLOWED_FOR_SAVING = 'QUOTE:FIELDS_ALLOWED_FOR_SAVING';
 }

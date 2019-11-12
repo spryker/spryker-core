@@ -17,16 +17,14 @@ use Generated\Shared\Transfer\RestCartsTotalsTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class CartsResourceMapper implements CartsResourceMapperInterface
+class CartsMapper implements CartsMapperInterface
 {
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemMapperInterface
      */
     protected $cartItemsResourceMapper;
 
@@ -41,43 +39,18 @@ class CartsResourceMapper implements CartsResourceMapperInterface
     protected $config;
 
     /**
-     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface $cartItemsResourceMapper
+     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemMapperInterface $cartItemsResourceMapper
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CartsRestApi\CartsRestApiConfig $config
      */
     public function __construct(
-        CartItemsResourceMapperInterface $cartItemsResourceMapper,
+        CartItemMapperInterface $cartItemsResourceMapper,
         RestResourceBuilderInterface $restResourceBuilder,
         CartsRestApiConfig $config
     ) {
         $this->config = $config;
         $this->cartItemsResourceMapper = $cartItemsResourceMapper;
         $this->restResourceBuilder = $restResourceBuilder;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
-    public function mapCartsResource(QuoteTransfer $quoteTransfer, RestRequestInterface $restRequest): RestResourceInterface
-    {
-        $restCartsAttributesTransfer = new RestCartsAttributesTransfer();
-
-        $this->setBaseCartData($quoteTransfer, $restCartsAttributesTransfer);
-        $this->setTotals($quoteTransfer, $restCartsAttributesTransfer);
-        $this->setDiscounts($quoteTransfer, $restCartsAttributesTransfer);
-
-        $cartResource = $this->restResourceBuilder->createRestResource(
-            $this->getCartResourceName(),
-            $quoteTransfer->getUuid(),
-            $restCartsAttributesTransfer
-        );
-        $cartResource->setPayload($quoteTransfer);
-        $this->mapCartItems($quoteTransfer, $cartResource);
-
-        return $cartResource;
     }
 
     /**
@@ -179,29 +152,6 @@ class CartsResourceMapper implements CartsResourceMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $cartResource
-     *
-     * @return void
-     */
-    protected function mapCartItems(QuoteTransfer $quoteTransfer, RestResourceInterface $cartResource): void
-    {
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $itemResource = $this->restResourceBuilder->createRestResource(
-                $this->getCartItemResourceName(),
-                $itemTransfer->getGroupKey(),
-                $this->cartItemsResourceMapper->mapCartItemAttributes($itemTransfer)
-            );
-            $itemResource->addLink(
-                RestLinkInterface::LINK_SELF,
-                $this->getCartResourceName() . '/' . $cartResource->getId() . '/' . $this->getCartItemResourceName() . '/' . $itemTransfer->getGroupKey()
-            );
-
-            $cartResource->addRelationship($itemResource);
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\RestCartsAttributesTransfer $restCartsAttributesTransfer
      *
      * @return void
@@ -261,21 +211,5 @@ class CartsResourceMapper implements CartsResourceMapperInterface
         $restCartsAttributesTransfer
             ->setCurrency($quoteTransfer->getCurrency()->getCode())
             ->setStore($quoteTransfer->getStore()->getName());
-    }
-
-    /**
-     * @return string
-     */
-    protected function getCartResourceName(): string
-    {
-        return CartsRestApiConfig::RESOURCE_CARTS;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getCartItemResourceName(): string
-    {
-        return CartsRestApiConfig::RESOURCE_CART_ITEMS;
     }
 }

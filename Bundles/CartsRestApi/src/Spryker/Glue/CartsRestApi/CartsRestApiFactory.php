@@ -34,11 +34,10 @@ use Spryker\Glue\CartsRestApi\Processor\GuestCartItem\GuestCartItemDeleter;
 use Spryker\Glue\CartsRestApi\Processor\GuestCartItem\GuestCartItemDeleterInterface;
 use Spryker\Glue\CartsRestApi\Processor\GuestCartItem\GuestCartItemUpdater;
 use Spryker\Glue\CartsRestApi\Processor\GuestCartItem\GuestCartItemUpdaterInterface;
-use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapper;
-use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface;
-use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapper;
-use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
-use Spryker\Glue\CartsRestApi\Processor\Mapper\GuestCartsResourceMapper;
+use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemMapper;
+use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemMapperInterface;
+use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsMapper;
+use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\Quote\QuoteCollectionReader;
 use Spryker\Glue\CartsRestApi\Processor\Quote\QuoteCollectionReaderInterface;
 use Spryker\Glue\CartsRestApi\Processor\Quote\SingleQuoteCreator;
@@ -66,7 +65,7 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new CartReader(
             $this->createCartRestResponseBuilder(),
-            $this->createCartsResourceMapper(),
+            $this->createCartsMapper(),
             $this->getClient(),
             $this->getCustomerExpanderPlugins()
         );
@@ -78,7 +77,7 @@ class CartsRestApiFactory extends AbstractFactory
     public function createCartCreator(): CartCreatorInterface
     {
         return new CartCreator(
-            $this->createCartsResourceMapper(),
+            $this->createCartsMapper(),
             $this->getClient(),
             $this->createCartRestResponseBuilder()
         );
@@ -92,7 +91,7 @@ class CartsRestApiFactory extends AbstractFactory
         return new CartDeleter(
             $this->createCartRestResponseBuilder(),
             $this->getClient(),
-            $this->createCartsResourceMapper(),
+            $this->createCartsMapper(),
             $this->getCustomerExpanderPlugins()
         );
     }
@@ -104,7 +103,7 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new CartUpdater(
             $this->getClient(),
-            $this->createCartsResourceMapper(),
+            $this->createCartsMapper(),
             $this->createCartRestResponseBuilder(),
             $this->getCustomerExpanderPlugins()
         );
@@ -118,8 +117,8 @@ class CartsRestApiFactory extends AbstractFactory
         return new CartItemAdder(
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
-            $this->createCartItemsResourceMapper(),
-            $this->createCartsResourceMapper(),
+            $this->createCartItemsMapper(),
+            $this->createCartsMapper(),
             $this->getCustomerExpanderPlugins()
         );
     }
@@ -132,7 +131,7 @@ class CartsRestApiFactory extends AbstractFactory
         return new CartItemDeleter(
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
-            $this->createCartItemsResourceMapper(),
+            $this->createCartItemsMapper(),
             $this->getCustomerExpanderPlugins()
         );
     }
@@ -145,8 +144,8 @@ class CartsRestApiFactory extends AbstractFactory
         return new CartItemUpdater(
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
-            $this->createCartsResourceMapper(),
-            $this->createCartItemsResourceMapper(),
+            $this->createCartsMapper(),
+            $this->createCartItemsMapper(),
             $this->getCustomerExpanderPlugins()
         );
     }
@@ -183,7 +182,7 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new GuestCartItemAdder(
             $this->getClient(),
-            $this->createCartItemsResourceMapper(),
+            $this->createCartItemsMapper(),
             $this->createGuestCartRestResponseBuilder(),
             $this->createCartRestResponseBuilder()
         );
@@ -196,9 +195,9 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new GuestCartItemUpdater(
             $this->getClient(),
-            $this->createCartRestResponseBuilder(),
-            $this->createGuestCartsResourceMapper(),
-            $this->createCartItemsResourceMapper(),
+            $this->createGuestCartRestResponseBuilder(),
+            $this->createCartsMapper(),
+            $this->createCartItemsMapper(),
             $this->getCustomerExpanderPlugins()
         );
     }
@@ -211,7 +210,7 @@ class CartsRestApiFactory extends AbstractFactory
         return new GuestCartItemDeleter(
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
-            $this->createCartItemsResourceMapper(),
+            $this->createCartItemsMapper(),
             $this->getCustomerExpanderPlugins()
         );
     }
@@ -223,7 +222,8 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new CartRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createCartsResourceMapper()
+            $this->createCartsMapper(),
+            $this->createCartItemsMapper()
         );
     }
 
@@ -234,8 +234,8 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new GuestCartRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createCartsResourceMapper(),
-            $this->createCartItemsResourceMapper()
+            $this->createCartsMapper(),
+            $this->createCartItemsMapper()
         );
     }
 
@@ -275,32 +275,20 @@ class CartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface
+     * @return \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemMapperInterface
      */
-    public function createCartItemsResourceMapper(): CartItemsResourceMapperInterface
+    public function createCartItemsMapper(): CartItemMapperInterface
     {
-        return new CartItemsResourceMapper();
+        return new CartItemMapper();
     }
 
     /**
-     * @return \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface
+     * @return \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsMapperInterface
      */
-    public function createCartsResourceMapper(): CartsResourceMapperInterface
+    public function createCartsMapper(): CartsMapperInterface
     {
-        return new CartsResourceMapper(
-            $this->createCartItemsResourceMapper(),
-            $this->getResourceBuilder(),
-            $this->getConfig()
-        );
-    }
-
-    /**
-     * @return \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface
-     */
-    public function createGuestCartsResourceMapper(): CartsResourceMapperInterface
-    {
-        return new GuestCartsResourceMapper(
-            $this->createCartItemsResourceMapper(),
+        return new CartsMapper(
+            $this->createCartItemsMapper(),
             $this->getResourceBuilder(),
             $this->getConfig()
         );
