@@ -83,9 +83,9 @@ interface AvailabilityRepositoryInterface
     public function getProductConcreteSkuByConcreteId(int $idProductConcrete): ?string;
 
     /**
-     * @param string $abstractSku
+     * @param string $concreteSku
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
-    public function isProductAbstractExists(string $abstractSku): bool;
+    public function getStoresWhereProductAvailabilityIsDefined(string $concreteSku): array;
 }

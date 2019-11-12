@@ -242,16 +242,25 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
     }
 
     /**
-     * @param string $abstractSku
+     * @param string $concreteSku
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
-    public function isProductAbstractExists(string $abstractSku): bool
+    public function getStoresWhereProductAvailabilityIsDefined(string $concreteSku): array
     {
+        $availabilityEntities = $this->getFactory()
+            ->createSpyAvailabilityQuery()
+            ->joinWithStore(Criteria::LEFT_JOIN)
+            ->filterBySku($concreteSku)
+            ->find();
+
+        $storeEntities = [];
+        foreach ($availabilityEntities as $availabilityEntity) {
+            $storeEntities[] = $availabilityEntity->getStore();
+        }
+
         return $this->getFactory()
-            ->getProductQueryContainer()
-            ->queryProductAbstract()
-            ->filterBySku($abstractSku)
-            ->exists();
+            ->createStoreMapper()
+            ->mapStoreEntitiesToStoreTransfers($storeEntities);
     }
 }

@@ -13,6 +13,7 @@ use Spryker\Zed\Availability\AvailabilityDependencyProvider;
 use Spryker\Zed\Availability\Dependency\QueryContainer\AvailabilityToProductQueryContainerInterface;
 use Spryker\Zed\Availability\Persistence\Mapper\AvailabilityMapper;
 use Spryker\Zed\Availability\Persistence\Mapper\AvailabilityMapperInterface;
+use Spryker\Zed\Availability\Persistence\Propel\Mapper\StoreMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -45,6 +46,14 @@ class AvailabilityPersistenceFactory extends AbstractPersistenceFactory
     public function createAvailabilityMapper(): AvailabilityMapperInterface
     {
         return new AvailabilityMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Availability\Persistence\Propel\Mapper\StoreMapper
+     */
+    public function createStoreMapper(): StoreMapper
+    {
+        return new StoreMapper();
     }
 
     /**

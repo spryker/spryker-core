@@ -156,16 +156,25 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     protected function updateBundleProductAvailability(array $bundleItems, string $bundleProductSku): void
     {
         $storeTransfers = $this->stockFacade->getStoresWhereProductStockIsDefined($bundleProductSku);
-        if ($storeTransfers === []) {
-            $storeTransfers = $this->storeFacade->getAllStores();
+        if ($storeTransfers !== []) {
+            foreach ($storeTransfers as $storeTransfer) {
+                $bundleAvailabilityQuantity = $this->calculateBundleQuantity($bundleItems, $storeTransfer);
+
+                $this->availabilityFacade->saveProductAvailabilityForStore(
+                    $bundleProductSku,
+                    $bundleAvailabilityQuantity,
+                    $storeTransfer
+                );
+            }
+
+            return;
         }
 
+        $storeTransfers = $this->availabilityFacade->getStoresWhereProductAvailabilityIsDefined($bundleProductSku);
         foreach ($storeTransfers as $storeTransfer) {
-            $bundleAvailabilityQuantity = $this->calculateBundleQuantity($bundleItems, $storeTransfer);
-
             $this->availabilityFacade->saveProductAvailabilityForStore(
                 $bundleProductSku,
-                $bundleAvailabilityQuantity,
+                new Decimal(0),
                 $storeTransfer
             );
         }

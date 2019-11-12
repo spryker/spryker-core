@@ -10,11 +10,6 @@ namespace Spryker\Zed\Availability\Dependency\Facade;
 interface AvailabilityToStoreFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
-     */
-    public function getAllStores();
-
-    /**
      * @param int $idStore
      *
      * @throws \Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException

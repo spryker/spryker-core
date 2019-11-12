@@ -208,4 +208,16 @@ interface AvailabilityFacadeInterface
      * @return int
      */
     public function saveProductAvailabilityForStore(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): int;
+
+    /**
+     * Specification:
+     *  - Returns all stores where availability of product with given sku is defined.
+     *
+     * @api
+     *
+     * @param string $concreteSku
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresWhereProductAvailabilityIsDefined(string $concreteSku): array;
 }

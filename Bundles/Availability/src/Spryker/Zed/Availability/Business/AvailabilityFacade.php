@@ -253,4 +253,19 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
             ->createAvailabilityHandler()
             ->saveAndTouchAvailability($sku, $quantity, $storeTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $concreteSku
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresWhereProductAvailabilityIsDefined(string $concreteSku): array
+    {
+        return $this->getRepository()
+            ->getStoresWhereProductAvailabilityIsDefined($concreteSku);
+    }
 }
