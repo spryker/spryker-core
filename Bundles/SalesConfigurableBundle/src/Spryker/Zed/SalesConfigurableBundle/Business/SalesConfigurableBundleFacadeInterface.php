@@ -62,10 +62,11 @@ interface SalesConfigurableBundleFacadeInterface
 
     /**
      * Specification:
-     * - Splits items by configurable bundle quantity.
-     * - Applied for items with configurable bundle quantity more that 1.
-     * - Duplicates items for each amount in quantity.
-     * - Duplicated items will have ConfiguredBundleTransfer::$groupKey with amount suffix.
+     * - Splits configurable bundles by configurable bundle quantity.
+     * - Applied for configurable bundles when configurable bundle quantity is more than 1.
+     * - Duplicates items for each split configurable bundle.
+     * - Adjusts items and product options quantity per split.
+     * - Alters groupkey for each split configurable bundle.
      *
      * @api
      *
