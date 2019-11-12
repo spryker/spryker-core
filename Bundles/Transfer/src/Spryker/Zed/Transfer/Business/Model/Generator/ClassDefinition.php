@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
+use ArrayObject;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException;
@@ -19,6 +20,14 @@ class ClassDefinition implements ClassDefinitionInterface
 {
     public const TYPE_FULLY_QUALIFIED = 'type_fully_qualified';
     public const DEFAULT_ASSOCIATIVE_ARRAY_TYPE = 'string|int';
+
+    protected const EXTRA_TYPE_HINTS = 'extra_type_hints';
+    protected const SUPPORTED_VALUE_OBJECTS = [
+        'decimal' => [
+            self::TYPE_FULLY_QUALIFIED => Decimal::class,
+            self::EXTRA_TYPE_HINTS => 'string|int|float',
+        ],
+    ];
 
     /**
      * @var string
@@ -56,14 +65,9 @@ class ClassDefinition implements ClassDefinitionInterface
     protected $deprecationDescription;
 
     /**
-     * @var bool
+     * @var string[]
      */
-    protected $hasArrayObject = false;
-
-    /**
-     * @var bool
-     */
-    protected $hasDecimal = false;
+    protected $useStatements = [];
 
     /**
      * @var array
@@ -162,19 +166,11 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @return bool
+     * @return string[]
      */
-    public function hasArrayObject(): bool
+    public function getUseStatements(): array
     {
-        return $this->hasArrayObject;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasDecimal(): bool
-    {
-        return $this->hasDecimal;
+        return $this->useStatements;
     }
 
     /**
@@ -265,7 +261,7 @@ class ClassDefinition implements ClassDefinitionInterface
         foreach ($properties as $property) {
             $this->assertProperty($property);
 
-            $property[self::TYPE_FULLY_QUALIFIED] = $property['type'];
+            $property[static::TYPE_FULLY_QUALIFIED] = $property['type'];
             $property['is_collection'] = false;
             $property['is_transfer'] = false;
             $property['is_value_object'] = false;
@@ -276,8 +272,8 @@ class ClassDefinition implements ClassDefinitionInterface
                 $property = $this->buildTransferPropertyDefinition($property);
             }
 
-            if ($this->isDecimal($property)) {
-                $property = $this->buildDecimalPropertyDefinition($property);
+            if ($this->isValueObject($property)) {
+                $property = $this->buildValueObjectPropertyDefinition($property);
             }
 
             $property['is_typed_array'] = false;
@@ -303,17 +299,17 @@ class ClassDefinition implements ClassDefinitionInterface
     protected function buildTransferPropertyDefinition(array $property): array
     {
         $property['is_transfer'] = true;
-        $property[self::TYPE_FULLY_QUALIFIED] = 'Generated\\Shared\\Transfer\\';
+        $property[static::TYPE_FULLY_QUALIFIED] = 'Generated\\Shared\\Transfer\\';
 
         if (preg_match('/\[\]$/', $property['type'])) {
             $property['type'] = str_replace('[]', '', $property['type']) . 'Transfer[]';
-            $property[self::TYPE_FULLY_QUALIFIED] = 'Generated\\Shared\\Transfer\\' . str_replace('[]', '', $property['type']);
+            $property[static::TYPE_FULLY_QUALIFIED] = 'Generated\\Shared\\Transfer\\' . str_replace('[]', '', $property['type']);
             $property['is_collection'] = true;
 
             return $property;
         }
         $property['type'] .= 'Transfer';
-        $property[self::TYPE_FULLY_QUALIFIED] .= $property['type'];
+        $property[static::TYPE_FULLY_QUALIFIED] .= $property['type'];
 
         return $property;
     }
@@ -323,10 +319,10 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return array
      */
-    protected function buildDecimalPropertyDefinition(array $property): array
+    protected function buildValueObjectPropertyDefinition(array $property): array
     {
         $property['is_value_object'] = true;
-        $property[self::TYPE_FULLY_QUALIFIED] = Decimal::class;
+        $property[static::TYPE_FULLY_QUALIFIED] = $this->getValueObjectFullyQualifiedClassName($property);
 
         return $property;
     }
@@ -338,7 +334,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function isTransferOrTransferArray($type): bool
     {
-        return (!preg_match('/^int|^integer|^float|^decimal|^string|^array|^\[\]|^bool|^boolean|^callable|^iterable|^iterator|^mixed|^resource|^object/', $type));
+        return preg_match('/^[A-Z].*/', $type);
     }
 
     /**
@@ -346,9 +342,9 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return bool
      */
-    protected function isDecimal(array $property): bool
+    protected function isValueObject(array $property): bool
     {
-        return $property['type'] === 'decimal';
+        return isset(static::SUPPORTED_VALUE_OBJECTS[$property['type']]);
     }
 
     /**
@@ -358,8 +354,8 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function getPropertyType(array $property): string
     {
-        if ($this->isDecimal($property)) {
-            return sprintf('\%s|null', Decimal::class);
+        if ($this->isValueObject($property)) {
+            return sprintf('\%s|null', $this->getValueObjectFullyQualifiedClassName($property));
         }
 
         if ($this->isTypedArray($property)) {
@@ -400,8 +396,16 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function getSetVar(array $property): string
     {
-        if ($this->isDecimal($property)) {
-            return sprintf('string|int|float|\%s', Decimal::class);
+        if ($this->isValueObject($property)) {
+            if (empty(static::SUPPORTED_VALUE_OBJECTS[$property['type']][static::EXTRA_TYPE_HINTS])) {
+                return sprintf('\%s', $this->getValueObjectFullyQualifiedClassName($property));
+            }
+
+            return sprintf(
+                '%s|\%s',
+                static::SUPPORTED_VALUE_OBJECTS[$property['type']][static::EXTRA_TYPE_HINTS],
+                $this->getValueObjectFullyQualifiedClassName($property)
+            );
         }
 
         if ($this->isTypedArray($property)) {
@@ -573,8 +577,8 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     protected function getReturnType(array $property): string
     {
-        if ($this->isDecimal($property)) {
-            return sprintf('\%s|null', Decimal::class);
+        if ($this->isValueObject($property)) {
+            return sprintf('\%s|null', $this->getValueObjectFullyQualifiedClassName($property));
         }
 
         if ($this->isTypedArray($property)) {
@@ -653,8 +657,8 @@ class ClassDefinition implements ClassDefinitionInterface
             return 'array';
         }
 
-        if ($this->isDecimal($property)) {
-            $this->hasDecimal = true;
+        if ($this->isValueObject($property)) {
+            $this->addUseStatement($this->getValueObjectFullyQualifiedClassName($property));
 
             return false;
         }
@@ -664,7 +668,7 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if ($this->isCollection($property)) {
-            $this->hasArrayObject = true;
+            $this->addUseStatement(ArrayObject::class);
 
             return 'ArrayObject';
         }
@@ -720,7 +724,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
             'var' => $this->getSetVar($property),
-            'decimal' => false,
+            'valueObject' => false,
             'bundles' => $property['bundles'],
             'typeHint' => null,
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
@@ -728,8 +732,10 @@ class ClassDefinition implements ClassDefinitionInterface
         $method = $this->addTypeHint($property, $method);
         $method = $this->addDefaultNull($method, $property);
 
-        if ($this->isDecimal($property)) {
-            $method['decimal'] = true;
+        if ($this->isValueObject($property)) {
+            $method['valueObject'] = $this->getShortClassName(
+                $this->getValueObjectFullyQualifiedClassName($property)
+            );
         }
 
         $this->methods[$methodName] = $method;
@@ -802,7 +808,7 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         $method['hasDefaultNull'] = false;
 
-        if ($this->isDecimal($property) || ($method['typeHint'] && (!$this->isCollection($property) || $method['typeHint'] === 'array'))) {
+        if ($this->isValueObject($property) || ($method['typeHint'] && (!$this->isCollection($property) || $method['typeHint'] === 'array'))) {
             $method['hasDefaultNull'] = true;
         }
 
@@ -949,5 +955,40 @@ class ClassDefinition implements ClassDefinitionInterface
                 $name
             ));
         }
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string
+     */
+    public function getValueObjectFullyQualifiedClassName(array $property): string
+    {
+        return static::SUPPORTED_VALUE_OBJECTS[$property['type']][static::TYPE_FULLY_QUALIFIED];
+    }
+
+    /**
+     * @param string $fullyQualifiedClassName
+     *
+     * @return string
+     */
+    protected function getShortClassName(string $fullyQualifiedClassName): string
+    {
+        return substr(strrchr($fullyQualifiedClassName, "\\"), 1);
+    }
+
+    /**
+     * @param string $fullyQualifiedClassName
+     *
+     * @return void
+     */
+    protected function addUseStatement(string $fullyQualifiedClassName): void
+    {
+        if (isset($this->useStatements[$fullyQualifiedClassName])) {
+            return;
+        }
+
+        $this->useStatements[$fullyQualifiedClassName] = $fullyQualifiedClassName;
+        ksort($this->useStatements, SORT_STRING);
     }
 }

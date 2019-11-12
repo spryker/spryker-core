@@ -28,6 +28,10 @@ class AvailabilityTable extends AbstractTable
 
     public const IS_BUNDLE_PRODUCT = 'Is bundle product';
 
+    protected const NEVER_OUT_OF_STOCK_DEFAULT_VALUE = 'false';
+
+    protected const NOT_APPLICABLE = 'N/A';
+
     /**
      * @var int
      */
@@ -141,14 +145,14 @@ class AvailabilityTable extends AbstractTable
         foreach ($queryResult as $productItem) {
             $isBundleProduct = $this->availabilityHelper->isBundleProduct($productItem[AvailabilityQueryContainer::ID_PRODUCT]);
 
-            $isNeverOutOfStock = $this->availabilityHelper->isNeverOutOfStock($productItem[AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET] ?? '');
+            $isNeverOutOfStock = $this->availabilityHelper->isNeverOutOfStock($productItem[AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET] ?? static::NEVER_OUT_OF_STOCK_DEFAULT_VALUE);
 
             $result[] = [
-                AvailabilityHelperInterface::CONCRETE_SKU => $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
-                AvailabilityHelperInterface::CONCRETE_NAME => $productItem[AvailabilityQueryContainer::CONCRETE_NAME],
-                AvailabilityHelperInterface::CONCRETE_AVAILABILITY => (new Decimal($productItem[AvailabilityQueryContainer::CONCRETE_AVAILABILITY] ?? 0))->trim(),
+                AvailabilityHelperInterface::CONCRETE_SKU => $productItem[AvailabilityHelperInterface::CONCRETE_SKU],
+                AvailabilityHelperInterface::CONCRETE_NAME => $productItem[AvailabilityHelperInterface::CONCRETE_NAME],
+                AvailabilityHelperInterface::CONCRETE_AVAILABILITY => $isNeverOutOfStock ? static::NOT_APPLICABLE : (new Decimal($productItem[AvailabilityHelperInterface::CONCRETE_AVAILABILITY] ?? 0))->trim(),
                 AvailabilityHelperInterface::STOCK_QUANTITY => (new Decimal($productItem[AvailabilityHelperInterface::STOCK_QUANTITY] ?? 0))->trim(),
-                AvailabilityHelperInterface::RESERVATION_QUANTITY => ($isBundleProduct) ? 'N/A' : $this->calculateReservation($productItem)->trim(),
+                AvailabilityHelperInterface::RESERVATION_QUANTITY => $isBundleProduct ? static::NOT_APPLICABLE : $this->calculateReservation($productItem)->trim(),
                 static::IS_BUNDLE_PRODUCT => ($isBundleProduct) ? 'Yes' : 'No',
                 AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET => $isNeverOutOfStock ? 'Yes' : 'No',
                 static::TABLE_COL_ACTION => $this->createButtons($productItem, $isBundleProduct),
@@ -168,7 +172,7 @@ class AvailabilityTable extends AbstractTable
         $quantity = new Decimal($productItem[AvailabilityHelperInterface::RESERVATION_QUANTITY] ?? 0);
 
         return $this->availabilityHelper->sumReservationsFromOtherStores(
-            $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
+            $productItem[AvailabilityHelperInterface::CONCRETE_SKU],
             $this->storeFacade->getStoreById($this->idStore),
             $quantity
         );
@@ -202,8 +206,8 @@ class AvailabilityTable extends AbstractTable
         return Url::generate(
             '/availability-gui/index/edit',
             [
-                static::URL_PARAM_ID_PRODUCT => $productAbstract[AvailabilityQueryContainer::ID_PRODUCT],
-                static::URL_PARAM_SKU => $productAbstract[AvailabilityQueryContainer::CONCRETE_SKU],
+                static::URL_PARAM_ID_PRODUCT => $productAbstract[AvailabilityHelperInterface::ID_PRODUCT],
+                static::URL_PARAM_SKU => $productAbstract[AvailabilityHelperInterface::CONCRETE_SKU],
                 static::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idProductAbstract,
                 static::URL_PARAM_ID_STORE => $this->idStore,
             ]
@@ -220,7 +224,7 @@ class AvailabilityTable extends AbstractTable
         return Url::generate(
             '/availability-gui/index/bundled-product-availability-table',
             [
-                BundledProductAvailabilityTable::URL_PARAM_ID_PRODUCT_BUNDLE => $productAbstract[AvailabilityQueryContainer::ID_PRODUCT],
+                BundledProductAvailabilityTable::URL_PARAM_ID_PRODUCT_BUNDLE => $productAbstract[AvailabilityHelperInterface::ID_PRODUCT],
                 BundledProductAvailabilityTable::URL_PARAM_BUNDLE_ID_PRODUCT_ABSTRACT => $this->idProductAbstract,
                 static::URL_PARAM_ID_STORE => $this->idStore,
             ]
