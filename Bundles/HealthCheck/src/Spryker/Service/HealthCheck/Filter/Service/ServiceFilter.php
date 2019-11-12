@@ -36,7 +36,7 @@ class ServiceFilter implements ServiceFilterInterface
 
         $requestedServices = $healthCheckRequestTransfer->getServices();
 
-        if ($requestedServices === [] || $requestedServices === null) {
+        if (strlen($requestedServices) === 0) {
             return $this->healthCheckPlugins;
         }
 
@@ -44,16 +44,17 @@ class ServiceFilter implements ServiceFilterInterface
     }
 
     /**
-     * @param string[] $requestedServices
+     * @param string $requestedServices
      *
      * @return \Spryker\Service\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[]
      */
-    protected function filterServicesByName(array $requestedServices): array
+    protected function filterServicesByName(string $requestedServices): array
     {
+        $requestedServicesArray = explode(',', $requestedServices);
         $filteredServicePlugins = [];
 
         foreach ($this->healthCheckPlugins as $healthCheckPlugin) {
-            if(in_array($healthCheckPlugin->getName(), $requestedServices)) {
+            if(in_array($healthCheckPlugin->getName(), $requestedServicesArray)) {
                 $filteredServicePlugins[] = $healthCheckPlugin;
             }
         }

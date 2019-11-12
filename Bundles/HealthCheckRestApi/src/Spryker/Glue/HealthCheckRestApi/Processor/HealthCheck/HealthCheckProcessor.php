@@ -9,12 +9,13 @@ namespace Spryker\Glue\HealthCheckRestApi\Processor\HealthCheck;
 
 use Generated\Shared\Transfer\HealthCheckRequestTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
+use Generated\Shared\Transfer\RestHealthCheckResponseAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\HealthCheckRestApi\Dependency\Service\HealthCheckRestApiToHealthCheckServiceInterface;
 use Spryker\Glue\HealthCheckRestApi\HealthCheckRestApiConfig;
+use Spryker\Glue\HealthCheckRestApi\Processor\Mapper\HealthCheckMapperInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class HealthCheckProcessor implements HealthCheckProcessorInterface
@@ -32,6 +33,11 @@ class HealthCheckProcessor implements HealthCheckProcessorInterface
     protected $restResourceBuilder;
 
     /**
+     * @var \Spryker\Glue\HealthCheckRestApi\Processor\Mapper\HealthCheckMapperInterface
+     */
+    protected $healthCheckMapper;
+
+    /**
      * @var \Spryker\Glue\HealthCheckRestApi\HealthCheckRestApiConfig
      */
     protected $healthCheckRestApiConfig;
@@ -39,15 +45,18 @@ class HealthCheckProcessor implements HealthCheckProcessorInterface
     /**
      * @param \Spryker\Glue\HealthCheckRestApi\Dependency\Service\HealthCheckRestApiToHealthCheckServiceInterface $healthCheckService
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param \Spryker\Glue\HealthCheckRestApi\Processor\Mapper\HealthCheckMapperInterface $healthCheckMapper
      * @param \Spryker\Glue\HealthCheckRestApi\HealthCheckRestApiConfig $healthCheckRestApiConfig
      */
     public function __construct(
         HealthCheckRestApiToHealthCheckServiceInterface $healthCheckService,
         RestResourceBuilderInterface $restResourceBuilder,
+        HealthCheckMapperInterface $healthCheckMapper,
         HealthCheckRestApiConfig $healthCheckRestApiConfig
     ) {
         $this->healthCheckService = $healthCheckService;
         $this->restResourceBuilder = $restResourceBuilder;
+        $this->healthCheckMapper = $healthCheckMapper;
         $this->healthCheckRestApiConfig = $healthCheckRestApiConfig;
     }
 
@@ -66,7 +75,7 @@ class HealthCheckProcessor implements HealthCheckProcessorInterface
 //            );
 //        }
 
-        $services = $restRequest->getQueryString([static::KEY_SERVICE]);
+        $services = $restRequest->getHttpRequest()->get(static::KEY_SERVICE);
 
         $healthCheckRequestTransfer = (new HealthCheckRequestTransfer())
             ->setApplication(APPLICATION)
@@ -74,10 +83,16 @@ class HealthCheckProcessor implements HealthCheckProcessorInterface
 
         $healthCheckResponseTransfer = $this->healthCheckService->processHealthCheck($healthCheckRequestTransfer);
 
+        $restHealthCheckResponseAttributesTransfer = $this->healthCheckMapper
+            ->mapHealthCheckServiceResponseTransferToRestHealthCheckResponseAttributesTransfer(
+                $healthCheckResponseTransfer,
+                new RestHealthCheckResponseAttributesTransfer()
+        );
+
         $restResource = $this->restResourceBuilder->createRestResource(
             HealthCheckRestApiConfig::RESOURCE_HEALTH_CHECK,
             null,
-            $healthCheckResponseTransfer
+            $restHealthCheckResponseAttributesTransfer
         );
 
         return $restResponse->addResource($restResource);

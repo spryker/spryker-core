@@ -32,6 +32,7 @@ class HealthIndicator implements HealthIndicatorInterface
     {
         try {
             $this->searchClient->checkConnection();
+
         } catch (\Exception $e) {
             return (new HealthCheckServiceResponseTransfer())
                 ->setStatus(false)

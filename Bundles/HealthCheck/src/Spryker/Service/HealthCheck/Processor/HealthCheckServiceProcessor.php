@@ -9,6 +9,7 @@ namespace Spryker\Service\HealthCheck\Processor;
 
 use Generated\Shared\Transfer\HealthCheckRequestTransfer;
 use Generated\Shared\Transfer\HealthCheckResponseTransfer;
+use Spryker\Service\Container\Exception\NotFoundException;
 use Spryker\Service\HealthCheck\Filter\Service\ServiceFilterInterface;
 
 class HealthCheckServiceProcessor implements HealthCheckServiceProcessorInterface

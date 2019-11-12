@@ -31,17 +31,16 @@ class IndexController extends AbstractController
 //            throw new HealthCheckDisabledException();
 //        }
 
-        $healthCheckRequestTransfer = (new HealthCheckRequestTransfer())
-            ->setApplication(APPLICATION);
-
         $requestedServices = $request->get(static::KEY_SERVICE);
 
-        if (strlen($requestedServices) !== 0) {
-            $healthCheckRequestTransfer->setServices(explode(',', $requestedServices));
-        }
+        $healthCheckRequestTransfer = (new HealthCheckRequestTransfer())
+            ->setApplication(APPLICATION)
+            ->setServices($requestedServices);
 
-        $healthCheckResponseTransfer = $this->getFactory()->getHealthCheckService()->processHealthCheck($healthCheckRequestTransfer);
+        $healthCheckResponseTransfer = $this->getFactory()
+            ->getHealthCheckService()
+            ->processHealthCheck($healthCheckRequestTransfer);
 
-        dump($healthCheckResponseTransfer); die;
+        return new JsonResponse($healthCheckResponseTransfer->toArray());
     }
 }
