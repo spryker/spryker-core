@@ -25,8 +25,6 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     public const PRICE_PLUGINS = 'PRICE_PLUGINS';
     public const DELIVERY_TIME_PLUGINS = 'DELIVERY_TIME_PLUGINS';
 
-    public const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
-
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
     public const FACADE_SALES = 'FACADE_SALES';
     public const FACADE_STORE = 'FACADE_STORE';
@@ -184,10 +182,6 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::QUERY_CONTAINER_SALES] = function (Container $container) {
-            return $container->getLocator()->sales()->queryContainer();
-        };
-
         $container[static::FACADE_TAX] = function (Container $container) {
             return new ShipmentToTaxBridge($container->getLocator()->tax()->facade());
         };

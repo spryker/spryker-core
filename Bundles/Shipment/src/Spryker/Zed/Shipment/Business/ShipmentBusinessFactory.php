@@ -25,8 +25,6 @@ use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
 use Spryker\Zed\Shipment\Business\Model\MethodPrice;
 use Spryker\Zed\Shipment\Business\Model\ShipmentCarrierReader;
-use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
-use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
 use Spryker\Zed\Shipment\Business\OrderItem\ShipmentSalesOrderItemReader;
@@ -249,20 +247,6 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createCheckoutShipmentOrderSaver() instead.
-     *
-     * @return \Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaverInterface
-     */
-    public function createShipmentOrderSaver()
-    {
-        return new ShipmentOrderSaver(
-            $this->getEntityManager(),
-            $this->createExpenseSanitizer(),
-            $this->getRepository()
-        );
-    }
-
-    /**
      * @deprecated Use createCheckoutMultiShipmentOrderSaver() instead.
      *
      * @return \Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface
@@ -348,31 +332,11 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createMultipleShipmentOrderHydrate() instead.
-     *
-     * @return \Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrateInterface
-     */
-    public function createShipmentOrderHydrate()
-    {
-        return new ShipmentOrderHydrate($this->getQueryContainer());
-    }
-
-    /**
      * @return \Spryker\Zed\Shipment\Business\Shipment\ShipmentOrderHydrateInterface
      */
     public function createMultipleShipmentOrderHydrate(): ShipmentOrderHydrateInterface
     {
         return new MultipleShipmentOrderHydrate($this->getRepository(), $this->getSalesFacade());
-    }
-
-    /**
-     * @deprecated Use getSalesFacade() instead.
-     *
-     * @return \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
-     */
-    protected function getSalesQueryContainer()
-    {
-        return $this->getProvidedDependency(ShipmentDependencyProvider::QUERY_CONTAINER_SALES);
     }
 
     /**

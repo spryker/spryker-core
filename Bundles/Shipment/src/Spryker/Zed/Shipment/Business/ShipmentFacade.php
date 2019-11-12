@@ -9,7 +9,6 @@ namespace Spryker\Zed\Shipment\Business;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -215,25 +214,6 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
             ->createShipmentTaxCalculatorStrategyResolver()
             ->resolve($quoteTransfer->getItems())
             ->recalculate($quoteTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @deprecated Use saveOrderShipment() instead
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
-     *
-     * @return void
-     */
-    public function saveShipmentForOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
-    {
-        $this->getFactory()
-            ->createShipmentOrderSaver()
-            ->saveShipmentForOrder($quoteTransfer, $checkoutResponse);
     }
 
     /**

@@ -57,18 +57,6 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     /**
      * @api
      *
-     * @deprecated Not used anymore and obsolete.
-     *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
-     */
-    public function queryActiveCarriers()
-    {
-        return $this->queryCarriers()->filterByIsActive(true);
-    }
-
-    /**
-     * @api
-     *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function queryMethods()
@@ -86,23 +74,6 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
     public function queryActiveMethods()
     {
         return $this->queryMethods()->filterByIsActive(true);
-    }
-
-    /**
-     * @api
-     *
-     * @deprecated Use \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::findShipmentMethodById() instead.
-     *
-     * @param int $idMethod
-     *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
-     */
-    public function queryMethodByIdMethod($idMethod)
-    {
-        $query = $this->queryMethods();
-        $query->filterByIdShipmentMethod($idMethod);
-
-        return $query;
     }
 
     /**
@@ -232,19 +203,5 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
         }
 
         return $query;
-    }
-
-    /**
-     * @api
-     *
-     * @deprecated Use \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::findShipmentMethodByIdWithPricesAndCarrier() instead.
-     *
-     * @param int $idShipmentMethod
-     *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
-     */
-    public function queryActiveShipmentMethodByIdShipmentMethod($idShipmentMethod)
-    {
-        return $this->queryActiveMethods()->filterByIdShipmentMethod($idShipmentMethod);
     }
 }

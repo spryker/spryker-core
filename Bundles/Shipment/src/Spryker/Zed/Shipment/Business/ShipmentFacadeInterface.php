@@ -9,7 +9,6 @@ namespace Spryker\Zed\Shipment\Business;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -192,22 +191,6 @@ interface ShipmentFacadeInterface
      * @return void
      */
     public function calculateShipmentTaxRate(QuoteTransfer $quoteTransfer);
-
-    /**
-     * Specification:
-     * - Adds shipment sales expense to sales order.
-     * - Creates sales shipment for sales order.
-     *
-     * @api
-     *
-     * @deprecated Use saveOrderShipment() instead.
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
-     *
-     * @return void
-     */
-    public function saveShipmentForOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
 
     /**
      * Specification:

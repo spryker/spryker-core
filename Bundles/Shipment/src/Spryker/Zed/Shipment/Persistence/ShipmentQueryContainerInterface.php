@@ -21,15 +21,6 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @deprecated Not used anymore and obsolete.
-     *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery
-     */
-    public function queryActiveCarriers();
-
-    /**
-     * @api
-     *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function queryMethods();
@@ -42,17 +33,6 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function queryActiveMethods();
-
-    /**
-     * @api
-     *
-     * @deprecated Use \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::findShipmentMethodById() instead.
-     *
-     * @param int $idMethod
-     *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
-     */
-    public function queryMethodByIdMethod($idMethod);
 
     /**
      * @api
@@ -140,15 +120,4 @@ interface ShipmentQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery
      */
     public function queryMethodPriceByShipmentMethodAndStoreCurrency($idShipmentMethod, $idStore, $idCurrency);
-
-    /**
-     * @api
-     *
-     * @deprecated Use \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::findShipmentMethodByIdWithPricesAndCarrier() instead.
-     *
-     * @param int $idShipmentMethod
-     *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
-     */
-    public function queryActiveShipmentMethodByIdShipmentMethod($idShipmentMethod);
 }
