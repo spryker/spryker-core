@@ -71,7 +71,7 @@ class FileManagerFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -108,7 +108,7 @@ class FileManagerFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->tester->resetDb();
         $this->tester->clearFiles();

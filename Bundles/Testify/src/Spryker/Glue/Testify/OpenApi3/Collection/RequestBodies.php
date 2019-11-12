@@ -7,8 +7,8 @@
 
 namespace Spryker\Glue\Testify\OpenApi3\Collection;
 
-use Spryker\Glue\Testify\OpenApi3\Object\RequestBody;
 use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
+use Spryker\Glue\Testify\OpenApi3\SchemaObject\RequestBody;
 
 class RequestBodies extends AbstractCollection
 {

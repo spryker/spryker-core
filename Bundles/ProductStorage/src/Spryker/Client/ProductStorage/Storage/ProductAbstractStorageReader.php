@@ -219,6 +219,38 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     }
 
     /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function findBulkProductAbstractStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): array
+    {
+        $storageKeys = [];
+        foreach ($identifiers as $identifier) {
+            $storageKeys[] = $this->getStorageKey(
+                sprintf('%s:%s', $mappingType, $identifier),
+                $localeName
+            );
+        }
+
+        $mappingData = $this->storageClient->getMulti($storageKeys);
+
+        if (count($mappingData) === 0) {
+            return [];
+        }
+
+        $productAbstractIds = [];
+        foreach ($mappingData as $item) {
+            $productAbstractStorageData = json_decode($item, true);
+            $productAbstractIds[] = $productAbstractStorageData['id'] ?? null;
+        }
+
+        return $this->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productAbstractIds, $localeName);
+    }
+
+    /**
      * @param string $reference
      * @param string $locale
      *

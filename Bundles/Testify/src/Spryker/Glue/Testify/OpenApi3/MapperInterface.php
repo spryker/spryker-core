@@ -8,13 +8,13 @@
 namespace Spryker\Glue\Testify\OpenApi3;
 
 use Spryker\Glue\Testify\OpenApi3\Collection\CollectionInterface;
-use Spryker\Glue\Testify\OpenApi3\Object\ObjectInterface;
 use Spryker\Glue\Testify\OpenApi3\Primitive\PrimitiveInterface;
+use Spryker\Glue\Testify\OpenApi3\SchemaObject\ObjectInterface;
 
 interface MapperInterface
 {
     /**
-     * @param \Spryker\Glue\Testify\OpenApi3\Object\ObjectInterface $object
+     * @param \Spryker\Glue\Testify\OpenApi3\SchemaObject\ObjectInterface $object
      * @param mixed $payload
      *
      * @return \Spryker\Glue\Testify\OpenApi3\SchemaFieldInterface

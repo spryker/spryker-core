@@ -11,17 +11,18 @@ interface CmsBlockToTouchInterface
 {
     /**
      * @param string $itemType
-     * @param int $idCmsBlock
+     * @param int $idItem
+     * @param bool $keyChange
      *
      * @return bool
      */
-    public function touchActive($itemType, $idCmsBlock);
+    public function touchActive($itemType, $idItem, $keyChange = false);
 
     /**
      * @param string $itemType
-     * @param int $idCmsBlock
+     * @param int $idItem
      *
      * @return bool
      */
-    public function touchDeleted($itemType, $idCmsBlock);
+    public function touchDeleted($itemType, $idItem);
 }
