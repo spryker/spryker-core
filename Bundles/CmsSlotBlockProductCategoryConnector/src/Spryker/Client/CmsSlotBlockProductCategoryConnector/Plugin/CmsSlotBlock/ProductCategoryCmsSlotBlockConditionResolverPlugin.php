@@ -37,12 +37,12 @@ class ProductCategoryCmsSlotBlockConditionResolverPlugin extends AbstractPlugin 
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     * @param array $cmsSlotData
+     * @param array $cmsSlotParams
      *
      * @return bool
      */
-    public function isCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotData): bool
+    public function isCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotParams): bool
     {
-        return $this->getClient()->isCmsBlockVisibleInSlot($cmsBlockTransfer, $cmsSlotData);
+        return $this->getClient()->isCmsBlockVisibleInSlot($cmsBlockTransfer, $cmsSlotParams);
     }
 }

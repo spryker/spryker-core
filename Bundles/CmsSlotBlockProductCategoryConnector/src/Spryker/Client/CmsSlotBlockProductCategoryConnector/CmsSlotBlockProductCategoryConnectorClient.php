@@ -37,14 +37,14 @@ class CmsSlotBlockProductCategoryConnectorClient extends AbstractClient implemen
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     * @param array $cmsSlotData
+     * @param array $cmsSlotParams
      *
      * @return bool
      */
-    public function isCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotData): bool
+    public function isCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotParams): bool
     {
         return $this->getFactory()
             ->createProductCategoryCmsSlotBlockConditionResolver()
-            ->isCmsBlockVisibleInSlot($cmsBlockTransfer, $cmsSlotData);
+            ->isCmsBlockVisibleInSlot($cmsBlockTransfer, $cmsSlotParams);
     }
 }

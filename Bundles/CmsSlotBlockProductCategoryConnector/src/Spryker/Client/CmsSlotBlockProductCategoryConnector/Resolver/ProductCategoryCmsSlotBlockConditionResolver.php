@@ -59,11 +59,11 @@ class ProductCategoryCmsSlotBlockConditionResolver implements ProductCategoryCms
 
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     * @param array $cmsSlotData
+     * @param array $cmsSlotParams
      *
      * @return bool
      */
-    public function isCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotData): bool
+    public function isCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotParams): bool
     {
         $conditionData = $cmsBlockTransfer->getCmsSlotBlockConditions()[static::CONDITION_KEY];
 
@@ -71,7 +71,7 @@ class ProductCategoryCmsSlotBlockConditionResolver implements ProductCategoryCms
             return true;
         }
 
-        $idProductAbstract = $cmsSlotData[static::SLOT_DATA_KEY_ID_PRODUCT_ABSTRACT] ?? null;
+        $idProductAbstract = $cmsSlotParams[static::SLOT_DATA_KEY_ID_PRODUCT_ABSTRACT] ?? null;
 
         if (!$idProductAbstract) {
             return false;

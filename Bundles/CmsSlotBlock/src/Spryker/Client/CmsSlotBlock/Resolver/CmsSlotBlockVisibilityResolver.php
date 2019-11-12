@@ -36,11 +36,11 @@ class CmsSlotBlockVisibilityResolver implements CmsSlotBlockVisibilityResolverIn
 
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     * @param array $cmsSlotData
+     * @param array $cmsSlotParams
      *
      * @return bool
      */
-    public function isCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotData): bool
+    public function isCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotParams): bool
     {
         $cmsBlockTransfer->requireCmsSlotBlockConditions();
 
@@ -51,7 +51,7 @@ class CmsSlotBlockVisibilityResolver implements CmsSlotBlockVisibilityResolverIn
         }
 
         foreach ($cmsSlotBlockVisibilityResolverPlugins as $cmsSlotBlockVisibilityResolverPlugin) {
-            if (!$cmsSlotBlockVisibilityResolverPlugin->isCmsBlockVisibleInSlot($cmsBlockTransfer, $cmsSlotData)) {
+            if (!$cmsSlotBlockVisibilityResolverPlugin->isCmsBlockVisibleInSlot($cmsBlockTransfer, $cmsSlotParams)) {
                 return false;
             }
         }
