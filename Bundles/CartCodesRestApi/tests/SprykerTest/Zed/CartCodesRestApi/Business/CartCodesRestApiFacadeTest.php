@@ -94,7 +94,7 @@ class CartCodesRestApiFacadeTest extends Unit
      */
     protected function setPluginCartCodeCollection(): void
     {
-        $this->tester->setDependency(CartCodeDependencyProvider::PLUGIN_CART_CODE_COLLECTION, [
+        $this->tester->setDependency(CartCodeDependencyProvider::PLUGINS_CART_CODE, [
             new VoucherCartCodePlugin(),
         ]);
     }

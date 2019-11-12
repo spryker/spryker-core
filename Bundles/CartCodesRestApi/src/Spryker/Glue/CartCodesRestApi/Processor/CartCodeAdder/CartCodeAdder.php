@@ -59,20 +59,18 @@ class CartCodeAdder implements CartCodeAdderInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param string $resourceType
+     * @param \Generated\Shared\Transfer\RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createQuoteTransfer(RestRequestInterface $restRequest, string $resourceType): QuoteTransfer
-    {
-        $cartResource = $restRequest->findParentResourceByType($resourceType);
-        $customerReference = $restRequest->getRestUser()->getNaturalIdentifier();
-        $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
+    public function addCandidateToGuestCart(
+        RestRequestInterface $restRequest,
+        RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
+    ): RestResponseInterface {
+        $quoteTransfer = $this->createQuoteTransfer($restRequest, CartsRestApiConfig::RESOURCE_GUEST_CARTS);
+        $cartCodeOperationResultTransfer = $this->addCandidate($restDiscountRequestAttributesTransfer, $quoteTransfer);
 
-        return (new QuoteTransfer())
-            ->setUuid($cartResource->getId())
-            ->setCustomer($customerTransfer)
-            ->setCustomerReference($customerReference);
+        return $this->cartCodeResponseBuilder->buildGuestCartRestResponse($cartCodeOperationResultTransfer);
     }
 
     /**
@@ -89,5 +87,23 @@ class CartCodeAdder implements CartCodeAdderInterface
             $quoteTransfer,
             $restDiscountRequestAttributesTransfer->getCode()
         );
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $resourceType
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function createQuoteTransfer(RestRequestInterface $restRequest, string $resourceType): QuoteTransfer
+    {
+        $cartResource = $restRequest->findParentResourceByType($resourceType);
+        $customerReference = $restRequest->getRestUser()->getNaturalIdentifier();
+        $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
+
+        return (new QuoteTransfer())
+            ->setUuid($cartResource ? $cartResource->getId() : null)
+            ->setCustomer($customerTransfer)
+            ->setCustomerReference($customerReference);
     }
 }

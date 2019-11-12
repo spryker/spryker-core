@@ -15,7 +15,8 @@ use Symfony\Component\HttpFoundation\Response;
 class CartCodesRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_DISCOUNTS = 'discounts';
-    public const CONTROLLER_DISCOUNTS = 'discounts-resource';
+    public const CONTROLLER_CART_DISCOUNTS = 'cart-discounts-resource';
+    public const CONTROLLER_GUEST_CART_DISCOUNTS = 'guest-cart-discounts-resource';
 
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND
@@ -41,11 +42,6 @@ class CartCodesRestApiConfig extends AbstractBundleConfig
                 RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_CART_NOT_FOUND,
                 RestErrorMessageTransfer::STATUS => Response::HTTP_NOT_FOUND,
                 RestErrorMessageTransfer::DETAIL => static::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND,
-            ],
-            CartCodesRestApiSharedConfig::ERROR_IDENTIFIER_CART_CODE_CANT_BE_ADDED => [
-                RestErrorMessageTransfer::CODE => static::RESPONSE_CART_CODE_CANT_BE_ADDED,
-                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
-                RestErrorMessageTransfer::DETAIL => static::EXCEPTION_CART_CODE_CANT_BE_ADDED,
             ],
             CartCodesRestApiSharedConfig::ERROR_IDENTIFIER_CART_CODE_CANT_BE_DELETED => [
                 RestErrorMessageTransfer::CODE => static::RESPONSE_CART_CODE_CANT_BE_DELETED,

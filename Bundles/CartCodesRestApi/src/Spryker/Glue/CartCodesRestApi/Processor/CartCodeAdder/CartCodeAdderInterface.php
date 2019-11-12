@@ -23,4 +23,15 @@ interface CartCodeAdderInterface
         RestRequestInterface $restRequest,
         RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
     ): RestResponseInterface;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function addCandidateToGuestCart(
+        RestRequestInterface $restRequest,
+        RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
+    ): RestResponseInterface;
 }

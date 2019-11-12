@@ -62,6 +62,6 @@ class CartCodeBusinessFactory extends AbstractBusinessFactory
      */
     public function getCartCodePlugins(): array
     {
-        return $this->getProvidedDependency(CartCodeDependencyProvider::PLUGIN_CART_CODE_COLLECTION);
+        return $this->getProvidedDependency(CartCodeDependencyProvider::PLUGINS_CART_CODE);
     }
 }

@@ -55,37 +55,8 @@ class CartCodeAdder implements CartCodeAdderInterface
         }
 
         $cartCodeOperationResultTransfer = $this->cartCodeFacade->addCandidate($quoteResponseTransfer->getQuoteTransfer(), $voucherCode);
-        $quoteTransfer = $cartCodeOperationResultTransfer->getQuote();
-
-        $discountTransfers = array_merge(
-            $quoteTransfer->getCartRuleDiscounts()->getArrayCopy(),
-            $quoteTransfer->getVoucherDiscounts()->getArrayCopy()
-        );
-
-        if (!$this->checkIfCartCodeAdded($discountTransfers, $voucherCode)) {
-            return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
-                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_CANT_BE_ADDED
-            );
-        }
 
         return $cartCodeOperationResultTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discountTransfers
-     * @param string $voucherCode
-     *
-     * @return bool
-     */
-    protected function checkIfCartCodeAdded(array $discountTransfers, string $voucherCode): bool
-    {
-        foreach ($discountTransfers as $discountTransfer) {
-            if ($discountTransfer->getVoucherCode() === $voucherCode) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**

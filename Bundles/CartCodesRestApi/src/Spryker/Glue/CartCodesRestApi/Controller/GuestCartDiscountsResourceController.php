@@ -15,13 +15,13 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 /**
  * @method \Spryker\Glue\CartCodesRestApi\CartCodesRestApiFactory getFactory()
  */
-class DiscountsResourceController extends AbstractController
+class GuestCartDiscountsResourceController extends AbstractController
 {
     /**
      * @Glue({
      *     "post": {
      *          "summary": [
-     *              "Adds a code to cart."
+     *              "Adds a code to guest cart."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
@@ -29,7 +29,6 @@ class DiscountsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "404": "Cart with given uuid not found."
-     *              "422": "Cart code can't be added."
      *          }
      *     }
      * })
@@ -43,6 +42,6 @@ class DiscountsResourceController extends AbstractController
         RestRequestInterface $restRequest,
         RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
     ): RestResponseInterface {
-        return $this->getFactory()->createCartCodeAdder()->addCandidateToCart($restRequest, $restDiscountRequestAttributesTransfer);
+        return $this->getFactory()->createCartCodeAdder()->addCandidateToGuestCart($restRequest, $restDiscountRequestAttributesTransfer);
     }
 }

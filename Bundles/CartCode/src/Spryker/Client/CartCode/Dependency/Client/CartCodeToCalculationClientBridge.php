@@ -29,7 +29,7 @@ class CartCodeToCalculationClientBridge implements CartCodeToCalculationClientIn
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function recalculate(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function recalculate(QuoteTransfer $quoteTransfer)
     {
         return $this->calculationClient->recalculate($quoteTransfer);
     }
