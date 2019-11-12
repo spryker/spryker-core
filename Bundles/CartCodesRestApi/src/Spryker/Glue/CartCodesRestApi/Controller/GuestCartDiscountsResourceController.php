@@ -49,7 +49,7 @@ class GuestCartDiscountsResourceController extends AbstractController
      * @Glue({
      *     "delete": {
      *          "summary": [
-     *              "Deletes cart by id."
+     *              "Deletes a code from guest cart."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
