@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\ShipmentMethodPluginSelectionTransfer;
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToTaxFacadeInterface;
 
@@ -42,29 +41,19 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
-     */
-    public function getData(ShipmentMethodTransfer $shipmentMethodTransfer): ShipmentMethodTransfer
-    {
-        return $shipmentMethodTransfer;
-    }
-
-    /**
      * @param bool $isDeliveryKeyDisabled
      *
      * @return array
      */
     public function getOptions(bool $isDeliveryKeyDisabled = false): array
     {
-        $shipmentMethodPluginSelectionTransfer = $this->shipmentFacade->getShipmentMethodPlugins();
+        $shipmentMethodPluginCollectionTransfer = $this->shipmentFacade->getShipmentMethodPlugins();
 
         $options = [
             static::OPTION_CARRIER_CHOICES => $this->getCarrierOptions(),
-            static::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST => $this->getAvailabilityPluginOptions($shipmentMethodPluginSelectionTransfer),
-            static::OPTION_PRICE_PLUGIN_CHOICE_LIST => $this->getPricePluginOptions($shipmentMethodPluginSelectionTransfer),
-            static::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST => $this->getDeliveryTimePluginOptions($shipmentMethodPluginSelectionTransfer),
+            static::OPTION_AVAILABILITY_PLUGIN_CHOICE_LIST => $this->getAvailabilityPluginOptions($shipmentMethodPluginCollectionTransfer),
+            static::OPTION_PRICE_PLUGIN_CHOICE_LIST => $this->getPricePluginOptions($shipmentMethodPluginCollectionTransfer),
+            static::OPTION_DELIVERY_TIME_PLUGIN_CHOICE_LIST => $this->getDeliveryTimePluginOptions($shipmentMethodPluginCollectionTransfer),
         ];
 
         $options = array_merge(parent::getOptions(), $options);
@@ -92,37 +81,37 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodPluginSelectionTransfer $shipmentMethodPluginSelectionTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer $shipmentMethodPluginCollectionTransfer
      *
      * @return string[]
      */
-    protected function getAvailabilityPluginOptions(ShipmentMethodPluginSelectionTransfer $shipmentMethodPluginSelectionTransfer): array
+    protected function getAvailabilityPluginOptions(ShipmentMethodPluginCollectionTransfer $shipmentMethodPluginCollectionTransfer): array
     {
-        $availabilityPluginOptions = $shipmentMethodPluginSelectionTransfer->getAvailabilityPluginOptions();
+        $availabilityPluginOptions = $shipmentMethodPluginCollectionTransfer->getAvailabilityPluginOptions();
 
         return array_combine($availabilityPluginOptions, $availabilityPluginOptions);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodPluginSelectionTransfer $shipmentMethodPluginSelectionTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer $shipmentMethodPluginCollectionTransfer
      *
      * @return string[]
      */
-    protected function getPricePluginOptions(ShipmentMethodPluginSelectionTransfer $shipmentMethodPluginSelectionTransfer): array
+    protected function getPricePluginOptions(ShipmentMethodPluginCollectionTransfer $shipmentMethodPluginCollectionTransfer): array
     {
-        $pricePluginOptions = $shipmentMethodPluginSelectionTransfer->getPricePluginOptions();
+        $pricePluginOptions = $shipmentMethodPluginCollectionTransfer->getPricePluginOptions();
 
         return array_combine($pricePluginOptions, $pricePluginOptions);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodPluginSelectionTransfer $shipmentMethodPluginSelectionTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer $shipmentMethodPluginCollectionTransfer
      *
      * @return array
      */
-    protected function getDeliveryTimePluginOptions(ShipmentMethodPluginSelectionTransfer $shipmentMethodPluginSelectionTransfer): array
+    protected function getDeliveryTimePluginOptions(ShipmentMethodPluginCollectionTransfer $shipmentMethodPluginCollectionTransfer): array
     {
-        $deliveryTimePluginOptions = $shipmentMethodPluginSelectionTransfer->getDeliveryTimePluginOptions();
+        $deliveryTimePluginOptions = $shipmentMethodPluginCollectionTransfer->getDeliveryTimePluginOptions();
 
         return array_combine($deliveryTimePluginOptions, $deliveryTimePluginOptions);
     }

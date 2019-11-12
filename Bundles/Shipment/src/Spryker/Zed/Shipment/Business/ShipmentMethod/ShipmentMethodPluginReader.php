@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Business\ShipmentMethod;
 
-use Generated\Shared\Transfer\ShipmentMethodPluginSelectionTransfer;
+use Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
 
 class ShipmentMethodPluginReader implements ShipmentMethodPluginReaderInterface
@@ -26,57 +26,57 @@ class ShipmentMethodPluginReader implements ShipmentMethodPluginReaderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ShipmentMethodPluginSelectionTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer
      */
-    public function getShipmentMethodPlugins(): ShipmentMethodPluginSelectionTransfer
+    public function getShipmentMethodPlugins(): ShipmentMethodPluginCollectionTransfer
     {
-        $shipmentMethodPluginSelectionTransfer = new ShipmentMethodPluginSelectionTransfer();
-        $shipmentMethodPluginSelectionTransfer = $this->addAvailabilityPlugins($shipmentMethodPluginSelectionTransfer);
-        $shipmentMethodPluginSelectionTransfer = $this->addPricePlugins($shipmentMethodPluginSelectionTransfer);
-        $shipmentMethodPluginSelectionTransfer = $this->addDeliveryTimePlugins($shipmentMethodPluginSelectionTransfer);
+        $shipmentMethodPluginCollectionTransfer = new ShipmentMethodPluginCollectionTransfer();
+        $shipmentMethodPluginCollectionTransfer = $this->addAvailabilityPlugins($shipmentMethodPluginCollectionTransfer);
+        $shipmentMethodPluginCollectionTransfer = $this->addPricePlugins($shipmentMethodPluginCollectionTransfer);
+        $shipmentMethodPluginCollectionTransfer = $this->addDeliveryTimePlugins($shipmentMethodPluginCollectionTransfer);
 
-        return $shipmentMethodPluginSelectionTransfer;
+        return $shipmentMethodPluginCollectionTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodPluginSelectionTransfer $shipmentMethodPluginSelectionTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer $shipmentMethodPluginCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodPluginSelectionTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer
      */
-    protected function addAvailabilityPlugins(ShipmentMethodPluginSelectionTransfer $shipmentMethodPluginSelectionTransfer): ShipmentMethodPluginSelectionTransfer
+    protected function addAvailabilityPlugins(ShipmentMethodPluginCollectionTransfer $shipmentMethodPluginCollectionTransfer): ShipmentMethodPluginCollectionTransfer
     {
         foreach ($this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS] as $name => $plugin) {
-            $shipmentMethodPluginSelectionTransfer->addAvailabilityPluginOption($name);
+            $shipmentMethodPluginCollectionTransfer->addAvailabilityPluginOption($name);
         }
 
-        return $shipmentMethodPluginSelectionTransfer;
+        return $shipmentMethodPluginCollectionTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodPluginSelectionTransfer $shipmentMethodPluginSelectionTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer $shipmentMethodPluginCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodPluginSelectionTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer
      */
-    protected function addPricePlugins(ShipmentMethodPluginSelectionTransfer $shipmentMethodPluginSelectionTransfer): ShipmentMethodPluginSelectionTransfer
+    protected function addPricePlugins(ShipmentMethodPluginCollectionTransfer $shipmentMethodPluginCollectionTransfer): ShipmentMethodPluginCollectionTransfer
     {
         foreach ($this->plugins[ShipmentDependencyProvider::PRICE_PLUGINS] as $name => $plugin) {
-            $shipmentMethodPluginSelectionTransfer->addPricePluginOption($name);
+            $shipmentMethodPluginCollectionTransfer->addPricePluginOption($name);
         }
 
-        return $shipmentMethodPluginSelectionTransfer;
+        return $shipmentMethodPluginCollectionTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodPluginSelectionTransfer $shipmentMethodPluginSelectionTransfer
+     * @param \Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer $shipmentMethodPluginCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodPluginSelectionTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer
      */
-    protected function addDeliveryTimePlugins(ShipmentMethodPluginSelectionTransfer $shipmentMethodPluginSelectionTransfer): ShipmentMethodPluginSelectionTransfer
+    protected function addDeliveryTimePlugins(ShipmentMethodPluginCollectionTransfer $shipmentMethodPluginCollectionTransfer): ShipmentMethodPluginCollectionTransfer
     {
         foreach ($this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS] as $name => $plugin) {
-            $shipmentMethodPluginSelectionTransfer->addDeliveryTimePluginOption($name);
+            $shipmentMethodPluginCollectionTransfer->addDeliveryTimePluginOption($name);
         }
 
-        return $shipmentMethodPluginSelectionTransfer;
+        return $shipmentMethodPluginCollectionTransfer;
     }
 }

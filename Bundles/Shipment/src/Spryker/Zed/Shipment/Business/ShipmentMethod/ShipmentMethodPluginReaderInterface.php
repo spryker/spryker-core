@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\Shipment\Business\ShipmentMethod;
 
-use Generated\Shared\Transfer\ShipmentMethodPluginSelectionTransfer;
+use Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer;
 
 interface ShipmentMethodPluginReaderInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\ShipmentMethodPluginSelectionTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer
      */
-    public function getShipmentMethodPlugins(): ShipmentMethodPluginSelectionTransfer;
+    public function getShipmentMethodPlugins(): ShipmentMethodPluginCollectionTransfer;
 }

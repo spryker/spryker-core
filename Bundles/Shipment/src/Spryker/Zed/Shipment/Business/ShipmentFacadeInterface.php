@@ -18,7 +18,7 @@ use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
-use Generated\Shared\Transfer\ShipmentMethodPluginSelectionTransfer;
+use Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -433,9 +433,9 @@ interface ShipmentFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodPluginSelectionTransfer
+     * @return \Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer
      */
-    public function getShipmentMethodPlugins(): ShipmentMethodPluginSelectionTransfer;
+    public function getShipmentMethodPlugins(): ShipmentMethodPluginCollectionTransfer;
 
     /**
      * Specification:
