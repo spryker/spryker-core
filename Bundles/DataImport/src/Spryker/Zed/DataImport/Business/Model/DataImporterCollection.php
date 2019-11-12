@@ -42,7 +42,7 @@ class DataImporterCollection implements
     /**
      * @var \Spryker\Zed\DataImport\DataImportConfig|null
      */
-    protected $config = null;
+    protected $config;
 
     /**
      * @param \Spryker\Zed\DataImport\Dependency\Plugin\DataImportBeforeImportHookInterface[] $beforeImportHooks
