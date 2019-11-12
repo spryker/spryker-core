@@ -42,16 +42,19 @@
             data-inactive-label-template="{{ inactiveLabelTemplate | e }}"
             data-store-template="{{ storeTemplate | e }}"
             data-slot-block-item-form-template="{{ form_widget(cmsSlotBlockCollectionForm.cmsSlotBlocks.vars.prototype) | e }}"
-            data-alert-title="{{ 'Unsaved changes' | trans }}"
-            data-alert-text="{{ 'You have unsaved changes! Please save or reset the changes.' | trans }}"
+            data-alert-title="{{ 'There are unsaved changes' | trans }}"
+            data-alert-cancel-button="{{ 'Discard' | trans }}"
         >
             {{ form_start(cmsBlockChoiceForm) }}
                 <div class="row">
-                    <div class="col-sm-5 col-md-4">
+                    <div class="cms-slot-blocks__col col-sm-5 col-md-4">
                         {{ form_widget(cmsBlockChoiceForm.cmsBlocks) }}
                     </div>
-                    <div class="col-sm-2 col-md-1 cms-slot-blocks__button-wrap">
+                    <div class="cms-slot-blocks__col col-sm-2 col-md-1">
                         {{ form_widget(cmsBlockChoiceForm.add) }}
+                    </div>
+                    <div class="cms-slot-blocks__col col-sm-5 col-md-7">
+                        <input type="reset" class="btn btn-xs btn-warning btn-outline js-slot-block-reset-button hidden" value="{{ 'Reset' | trans }}">
                     </div>
                 </div>
             {{ form_end(cmsBlockChoiceForm) }}
@@ -68,8 +71,7 @@
                 {{ form_widget(slotBlockItemForm.position) }}
             {% endfor %}
 
-            <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}">
-            <input type="reset" class="btn btn-danger js-slot-block-reset-button hidden" value="{{ 'Reset' | trans }}">
+            <input type="submit" class="btn btn-primary safe-submit js-slot-block-save-button" value="{{ 'Save' | trans }}">
 
             {{ form_end(cmsSlotBlockCollectionForm) }}
             <div class="cms-slot-blocks__overlay js-cms-slot-blocks__overlay"></div>

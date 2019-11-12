@@ -85,12 +85,23 @@ var SlotBlocks = function (options) {
     };
 
     this.showAlert = function () {
-        var cmsSlotBlock = _self.blocksTable.$cmsSlotBlocks;
+        var $cmsSlotBlock = _self.blocksTable.$cmsSlotBlocks;
+        var $confirmButton = _self.slotBlocksForm.saveButton;
         window.sweetAlert({
-            title: cmsSlotBlock.data('alert-title'),
-            text: cmsSlotBlock.data('alert-text'),
-            type: 'warning',
+            title: $cmsSlotBlock.data('alert-title'),
             html: false,
+            allowEscapeKey: false,
+            showCancelButton: true,
+            customClass: 'cms-slot-blocks-alert',
+            confirmButtonColor: '#1ab394',
+            confirmButtonText: $confirmButton.val(),
+            cancelButtonText: $cmsSlotBlock.data('alert-cancel-button'),
+        }, function (isConfirm) {
+            if (isConfirm) {
+                $confirmButton.click();
+                return;
+            }
+            _self.blocksTable.resetButtonsHandler();
         });
     }
 };
