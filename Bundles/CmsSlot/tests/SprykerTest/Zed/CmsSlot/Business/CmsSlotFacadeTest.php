@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\CmsSlot\Persistence\Map\SpyCmsSlotTableMap;
+use Spryker\Zed\CmsSlot\Business\Exception\MissingCmsSlotTemplateException;
 
 /**
  * Auto-generated group annotations
@@ -27,6 +28,8 @@ use Orm\Zed\CmsSlot\Persistence\Map\SpyCmsSlotTableMap;
  */
 class CmsSlotFacadeTest extends Unit
 {
+    protected const EXCEPTION_ERROR_MESSAGE_MISSING_CMS_SLOT_TEMPLATE = 'CMS Slot Template with id "%d" not found.';
+
     /**
      * @var \SprykerTest\Zed\CmsSlot\CmsSlotBusinessTester
      */
@@ -270,5 +273,44 @@ class CmsSlotFacadeTest extends Unit
 
         // Assert
         $this->assertEquals($cmsSlotTransferFromDb, $cmsSlotTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCmsSlotTemplateByIdIsSuccessful(): void
+    {
+        //Arrange
+        $cmsSlotTemplateTransfer = $this->tester->haveCmsSlotTemplateInDb();
+
+        //Act
+        $foundCmsSlotTemplateTransfer = $this->tester->getFacade()->getCmsSlotTemplateById(
+            $cmsSlotTemplateTransfer->getIdCmsSlotTemplate()
+        );
+
+        // Assert
+        $this->assertEquals($cmsSlotTemplateTransfer, $foundCmsSlotTemplateTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCmsSlotTemplateByIdFailsWithException(): void
+    {
+        //Arrange
+        $this->expectExceptionObject(
+            new MissingCmsSlotTemplateException(
+                sprintf(
+                    static::EXCEPTION_ERROR_MESSAGE_MISSING_CMS_SLOT_TEMPLATE,
+                    0
+                )
+            )
+        );
+
+        //Act
+        $cmsSlotTemplateTransfer = $this->tester->getFacade()->getCmsSlotTemplateById(0);
+
+        // Assert
+        $this->assertNull($cmsSlotTemplateTransfer);
     }
 }

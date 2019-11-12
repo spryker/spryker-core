@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlot;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery;
+use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplate;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CmsSlotHelper extends Module
@@ -54,6 +55,25 @@ class CmsSlotHelper extends Module
         ];
 
         $cmsSlotTemplateTransfer = (new CmsSlotTemplateBuilder(array_merge($data, $override)))->build();
+
+        return $cmsSlotTemplateTransfer;
+    }
+
+    /**
+     * @param array $override
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotTemplateTransfer
+     */
+    public function haveCmsSlotTemplateInDb(array $override = []): CmsSlotTemplateTransfer
+    {
+        $cmsSlotTemplateTransfer = $this->haveCmsSlotTemplate($override);
+
+        $cmsSlotTemplateEntity = new SpyCmsSlotTemplate();
+        $cmsSlotTemplateEntity->fromArray($cmsSlotTemplateTransfer->toArray());
+        $cmsSlotTemplateEntity->setPathHash('path_hash');
+        $cmsSlotTemplateEntity->save();
+
+        $cmsSlotTemplateTransfer->setIdCmsSlotTemplate($cmsSlotTemplateEntity->getIdCmsSlotTemplate());
 
         return $cmsSlotTemplateTransfer;
     }
