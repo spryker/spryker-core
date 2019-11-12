@@ -28,7 +28,7 @@ class StockSubForm extends AbstractType
     public const FIELD_STOCK_TYPE = 'stockType';
     public const FIELD_IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
 
-    protected const DECIMAL_QUANTITY_VALIDATION_PATTERN = '/^\d{1,10}(\.\d{1,10})?$/';
+    protected const DECIMAL_QUANTITY_VALIDATION_PATTERN = '/^\d{1,10}(\.\d{1,20})?$/';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
