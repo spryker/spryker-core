@@ -16,7 +16,14 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class CsrfFormPlugin extends AbstractPlugin implements FormPluginInterface
 {
+    /**
+     * @uses \Spryker\Yves\Form\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
+     */
     protected const SERVICE_CSRF_PROVIDER = 'form.csrf_provider';
+
+    /**
+     * @uses \Spryker\Yves\Translator\Plugin\Application\TranslatorApplicationPlugin::SERVICE_TRANSLATOR
+     */
     protected const SERVICE_TRANSLATOR = 'translator';
 
     /**

@@ -13,6 +13,10 @@ use Symfony\Component\Validator\ValidatorBuilderInterface;
 
 class TranslatorValidatorPlugin implements ValidatorPluginInterface
 {
+    /**
+     * @uses \Spryker\Zed\Translator\Communication\Plugin\Application\TranslatorApplicationPlugin::SERVICE_TRANSLATOR
+     * @uses \Spryker\Yves\Translator\Plugin\Application\TranslatorApplicationPlugin::SERVICE_TRANSLATOR
+     */
     protected const SERVICE_TRANSLATOR = 'translator';
     protected const TRANSLATION_DOMAIN = 'validators';
 

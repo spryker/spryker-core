@@ -22,7 +22,14 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class DoubleSubmitProtectionFormPlugin extends AbstractPlugin implements FormPluginInterface
 {
+    /**
+     * @uses \Spryker\Zed\Session\Communication\Plugin\Application\SessionApplicationPlugin::SERVICE_SESSION
+     */
     protected const SERVICE_SESSION = 'session';
+
+    /**
+     * @uses \Spryker\Zed\Translator\Communication\Plugin\Application\TranslatorApplicationPlugin::SERVICE_TRANSLATOR
+     */
     protected const SERVICE_TRANSLATOR = 'translator';
 
     /**
