@@ -9,7 +9,7 @@ namespace Spryker\Client\CmsSlotBlock;
 
 use Spryker\Client\Kernel\AbstractBundleConfig;
 
-class CmsSLotBlockConfig extends AbstractBundleConfig
+class CmsSlotBlockConfig extends AbstractBundleConfig
 {
     protected const IS_CMS_BLOCK_VISIBLE_IN_SLOT_BY_DEFAULT = true;
 

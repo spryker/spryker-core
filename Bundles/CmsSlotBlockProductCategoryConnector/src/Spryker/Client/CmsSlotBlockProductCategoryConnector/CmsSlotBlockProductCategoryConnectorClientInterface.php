@@ -21,11 +21,11 @@ interface CmsSlotBlockProductCategoryConnectorClientInterface
      *
      * @return bool
      */
-    public function resolveIsSlotBlockConditionApplicable(CmsBlockTransfer $cmsBlockTransfer): bool;
+    public function isSlotBlockConditionApplicable(CmsBlockTransfer $cmsBlockTransfer): bool;
 
     /**
      * Specification:
-     * - Returns true if CMS block should be rendered.
+     * - Returns true if CMS block should be visible in Slot.
      *
      * @api
      *
@@ -34,5 +34,5 @@ interface CmsSlotBlockProductCategoryConnectorClientInterface
      *
      * @return bool
      */
-    public function resolveIsCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotData): bool;
+    public function isCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotData): bool;
 }

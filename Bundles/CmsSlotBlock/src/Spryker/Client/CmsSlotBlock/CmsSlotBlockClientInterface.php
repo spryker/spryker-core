@@ -13,7 +13,7 @@ interface CmsSlotBlockClientInterface
 {
     /**
      * Specification:
-     * - Checks if CMS block should be rendered.
+     * - Checks if CMS block should be visible in Slot.
      * - Executes CmsSlotBlockVisibilityResolverPluginInterface plugins.
      *
      * @api

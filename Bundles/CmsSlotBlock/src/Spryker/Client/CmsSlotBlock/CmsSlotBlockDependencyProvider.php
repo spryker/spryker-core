@@ -24,7 +24,6 @@ class CmsSlotBlockDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container): Container
     {
-        $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addCmsSlotBlockVisibilityResolverPlugins($container);
 
         return $container;

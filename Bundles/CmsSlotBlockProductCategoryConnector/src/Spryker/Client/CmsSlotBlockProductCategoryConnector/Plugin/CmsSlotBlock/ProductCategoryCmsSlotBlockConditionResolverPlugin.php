@@ -28,7 +28,7 @@ class ProductCategoryCmsSlotBlockConditionResolverPlugin extends AbstractPlugin 
      */
     public function isApplicable(CmsBlockTransfer $cmsBlockTransfer): bool
     {
-        return $this->getClient()->resolveIsSlotBlockConditionApplicable($cmsBlockTransfer);
+        return $this->getClient()->isSlotBlockConditionApplicable($cmsBlockTransfer);
     }
 
     /**
@@ -43,6 +43,6 @@ class ProductCategoryCmsSlotBlockConditionResolverPlugin extends AbstractPlugin 
      */
     public function isCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotData): bool
     {
-        return $this->getClient()->resolveIsCmsBlockVisibleInSlot($cmsBlockTransfer, $cmsSlotData);
+        return $this->getClient()->isCmsBlockVisibleInSlot($cmsBlockTransfer, $cmsSlotData);
     }
 }

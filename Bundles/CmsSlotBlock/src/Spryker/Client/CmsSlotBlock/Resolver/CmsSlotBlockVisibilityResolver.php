@@ -8,12 +8,12 @@
 namespace Spryker\Client\CmsSlotBlock\Resolver;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
-use Spryker\Client\CmsSlotBlock\CmsSLotBlockConfig;
+use Spryker\Client\CmsSlotBlock\CmsSlotBlockConfig;
 
 class CmsSlotBlockVisibilityResolver implements CmsSlotBlockVisibilityResolverInterface
 {
     /**
-     * @var \Spryker\Client\CmsSlotBlock\CmsSLotBlockConfig
+     * @var \Spryker\Client\CmsSlotBlock\CmsSlotBlockConfig
      */
     protected $cmsSlotBlockConfig;
 
@@ -23,11 +23,11 @@ class CmsSlotBlockVisibilityResolver implements CmsSlotBlockVisibilityResolverIn
     protected $cmsSlotBlockVisibilityResolverPlugins;
 
     /**
-     * @param \Spryker\Client\CmsSlotBlock\CmsSLotBlockConfig $cmsSlotBlockConfig
+     * @param \Spryker\Client\CmsSlotBlock\CmsSlotBlockConfig $cmsSlotBlockConfig
      * @param \Spryker\Client\CmsSlotBlockExtension\Dependency\Plugin\CmsSlotBlockVisibilityResolverPluginInterface[] $cmsSlotBlockVisibilityResolverPlugins
      */
     public function __construct(
-        CmsSLotBlockConfig $cmsSlotBlockConfig,
+        CmsSlotBlockConfig $cmsSlotBlockConfig,
         array $cmsSlotBlockVisibilityResolverPlugins
     ) {
         $this->cmsSlotBlockVisibilityResolverPlugins = $cmsSlotBlockVisibilityResolverPlugins;

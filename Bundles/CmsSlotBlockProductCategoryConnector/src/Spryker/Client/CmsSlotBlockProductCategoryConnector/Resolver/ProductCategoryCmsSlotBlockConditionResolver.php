@@ -27,7 +27,10 @@ class ProductCategoryCmsSlotBlockConditionResolver implements ProductCategoryCms
      */
     protected const CONDITIONS_DATA_KEY_CATEGORIES_IDS = 'categoryIds';
 
-    protected const CONDITION_KEY = 'product';
+    /**
+     * @uses \Spryker\Shared\CmsSlotBlockProductCategoryConnector\CmsSlotBlockProductCategoryConnectorConfig::CONDITION_KEY
+     */
+    protected const CONDITION_KEY = 'productCategory';
 
     protected const SLOT_DATA_KEY_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
 
@@ -49,7 +52,7 @@ class ProductCategoryCmsSlotBlockConditionResolver implements ProductCategoryCms
      *
      * @return bool
      */
-    public function resolveIsSlotBlockConditionApplicable(CmsBlockTransfer $cmsBlockTransfer): bool
+    public function isSlotBlockConditionApplicable(CmsBlockTransfer $cmsBlockTransfer): bool
     {
         return isset($cmsBlockTransfer->getCmsSlotBlockConditions()[static::CONDITION_KEY]);
     }
@@ -60,7 +63,7 @@ class ProductCategoryCmsSlotBlockConditionResolver implements ProductCategoryCms
      *
      * @return bool
      */
-    public function resolveIsCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotData): bool
+    public function isCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotData): bool
     {
         $conditionData = $cmsBlockTransfer->getCmsSlotBlockConditions()[static::CONDITION_KEY];
 
@@ -76,11 +79,11 @@ class ProductCategoryCmsSlotBlockConditionResolver implements ProductCategoryCms
 
         $idProductAbstract = (int)$idProductAbstract;
 
-        if ($this->checkProductConditions($conditionData, $idProductAbstract)) {
+        if ($this->isIdProductAbstractExistsInConditionData($conditionData, $idProductAbstract)) {
             return true;
         }
 
-        return $this->checkCategoryConditions($conditionData, $idProductAbstract);
+        return $this->isProductCategoryIdsExistInConditionData($conditionData, $idProductAbstract);
     }
 
     /**
@@ -89,7 +92,7 @@ class ProductCategoryCmsSlotBlockConditionResolver implements ProductCategoryCms
      *
      * @return bool
      */
-    protected function checkProductConditions(array $conditionData, int $idProductAbstract): bool
+    protected function isIdProductAbstractExistsInConditionData(array $conditionData, int $idProductAbstract): bool
     {
         return in_array($idProductAbstract, $conditionData[static::CONDITIONS_DATA_KEY_PRODUCT_IDS]);
     }
@@ -100,11 +103,10 @@ class ProductCategoryCmsSlotBlockConditionResolver implements ProductCategoryCms
      *
      * @return bool
      */
-    protected function checkCategoryConditions(array $conditionData, int $idProductAbstract): bool
+    protected function isProductCategoryIdsExistInConditionData(array $conditionData, int $idProductAbstract): bool
     {
-        $conditionDataCategoryIds = $conditionData[static::CONDITIONS_DATA_KEY_CATEGORIES_IDS];
         $productCategoryIds = $this->productCategoryReader->getAbstractProductCategoryIds($idProductAbstract);
 
-        return count(array_intersect($conditionDataCategoryIds, $productCategoryIds)) > 0;
+        return count(array_intersect($conditionData[static::CONDITIONS_DATA_KEY_CATEGORIES_IDS], $productCategoryIds)) > 0;
     }
 }

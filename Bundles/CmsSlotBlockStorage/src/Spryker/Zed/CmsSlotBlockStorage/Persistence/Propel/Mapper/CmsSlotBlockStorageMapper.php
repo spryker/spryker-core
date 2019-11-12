@@ -15,13 +15,11 @@ use Orm\Zed\CmsSlot\Persistence\Map\SpyCmsSlotTemplateTableMap;
 use Orm\Zed\CmsSlotBlock\Persistence\Map\SpyCmsSlotBlockTableMap;
 use Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlock;
 use Orm\Zed\CmsSlotBlockStorage\Persistence\SpyCmsSlotBlockStorage;
+use Spryker\Shared\CmsSlotBlockStorage\CmsSlotBlockStorageConfig;
 use Spryker\Zed\CmsSlotBlockStorage\Dependency\Service\CmsSlotBlockStorageToUtilEncodingServiceInterface;
 
 class CmsSlotBlockStorageMapper
 {
-    protected const KEY_BLOCK_KEY = 'blockKey';
-    protected const KEY_CONDITIONS = 'conditions';
-
     /**
      * @var \Spryker\Zed\CmsSlotBlockStorage\Dependency\Service\CmsSlotBlockStorageToUtilEncodingServiceInterface
      */
@@ -46,8 +44,8 @@ class CmsSlotBlockStorageMapper
         CmsSlotBlockStorageDataTransfer $cmsSlotBlockStorageDataTransfer
     ): CmsSlotBlockStorageDataTransfer {
         $cmsSlotBlockStorageDataTransfer->addCmsBlock([
-            static::KEY_BLOCK_KEY => $cmsSlotBlockEntity->getCmsBlock()->getKey(),
-            static::KEY_CONDITIONS => $this->utilEncodingService->decodeJson($cmsSlotBlockEntity->getConditions()),
+            CmsSlotBlockStorageConfig::BLOCK_DATA_KEY_BLOCK_KEY => $cmsSlotBlockEntity->getCmsBlock()->getKey(),
+            CmsSlotBlockStorageConfig::BLOCK_DATA_KEY_CONDITIONS => $this->utilEncodingService->decodeJson($cmsSlotBlockEntity->getConditions()),
         ]);
 
         return $cmsSlotBlockStorageDataTransfer;
