@@ -43,11 +43,6 @@ class CartCodesRestApiConfig extends AbstractBundleConfig
                 RestErrorMessageTransfer::STATUS => Response::HTTP_NOT_FOUND,
                 RestErrorMessageTransfer::DETAIL => static::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND,
             ],
-            CartCodesRestApiSharedConfig::ERROR_IDENTIFIER_CART_CODE_CANT_BE_ADDED => [
-                RestErrorMessageTransfer::CODE => static::RESPONSE_CART_CODE_CANT_BE_ADDED,
-                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
-                RestErrorMessageTransfer::DETAIL => static::EXCEPTION_CART_CODE_CANT_BE_ADDED,
-            ],
             CartCodesRestApiSharedConfig::ERROR_IDENTIFIER_CART_CODE_CANT_BE_DELETED => [
                 RestErrorMessageTransfer::CODE => static::RESPONSE_CART_CODE_CANT_BE_DELETED,
                 RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,

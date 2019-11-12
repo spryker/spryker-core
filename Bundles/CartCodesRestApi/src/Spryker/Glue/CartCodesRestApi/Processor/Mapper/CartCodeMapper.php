@@ -16,14 +16,14 @@ class CartCodeMapper implements CartCodeMapperInterface
     /**
      * @var \Spryker\Glue\CartCodesRestApi\CartCodesRestApiConfig
      */
-    protected $config;
+    protected $cartCodesRestApiConfig;
 
     /**
-     * @param \Spryker\Glue\CartCodesRestApi\CartCodesRestApiConfig $config
+     * @param \Spryker\Glue\CartCodesRestApi\CartCodesRestApiConfig $cartCodesRestApiConfig
      */
-    public function __construct(CartCodesRestApiConfig $config)
+    public function __construct(CartCodesRestApiConfig $cartCodesRestApiConfig)
     {
-        $this->config = $config;
+        $this->cartCodesRestApiConfig = $cartCodesRestApiConfig;
     }
 
     /**
@@ -37,7 +37,7 @@ class CartCodeMapper implements CartCodeMapperInterface
         RestErrorMessageTransfer $restErrorMessageTransfer
     ): RestErrorMessageTransfer {
         $errorIdentifier = $messageTransfer->getValue();
-        $errorIdentifierToRestErrorMapping = $this->config->getErrorIdentifierToRestErrorMapping();
+        $errorIdentifierToRestErrorMapping = $this->cartCodesRestApiConfig->getErrorIdentifierToRestErrorMapping();
         if ($errorIdentifier && isset($errorIdentifierToRestErrorMapping[$errorIdentifier])) {
             $errorIdentifierMapping = $errorIdentifierToRestErrorMapping[$errorIdentifier];
             $restErrorMessageTransfer->fromArray($errorIdentifierMapping, true);

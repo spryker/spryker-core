@@ -34,8 +34,8 @@ use Spryker\Glue\CartsRestApi\Processor\GuestCartItem\GuestCartItemDeleter;
 use Spryker\Glue\CartsRestApi\Processor\GuestCartItem\GuestCartItemDeleterInterface;
 use Spryker\Glue\CartsRestApi\Processor\GuestCartItem\GuestCartItemUpdater;
 use Spryker\Glue\CartsRestApi\Processor\GuestCartItem\GuestCartItemUpdaterInterface;
-use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsMapper;
-use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsMapperInterface;
+use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemMapper;
+use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsMapper;
 use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\Quote\QuoteCollectionReader;
@@ -275,11 +275,11 @@ class CartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsMapperInterface
+     * @return \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemMapperInterface
      */
-    public function createCartItemsMapper(): CartItemsMapperInterface
+    public function createCartItemsMapper(): CartItemMapperInterface
     {
-        return new CartItemsMapper();
+        return new CartItemMapper();
     }
 
     /**

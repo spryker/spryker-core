@@ -29,7 +29,6 @@ class GuestCartDiscountsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "404": "Cart with given uuid not found."
-     *              "422": "Cart code can't be added."
      *          }
      *     }
      * })
@@ -44,32 +43,5 @@ class GuestCartDiscountsResourceController extends AbstractController
         RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
     ): RestResponseInterface {
         return $this->getFactory()->createCartCodeAdder()->addCandidateToGuestCart($restRequest, $restDiscountRequestAttributesTransfer);
-    }
-
-    /**
-     * @Glue({
-     *     "delete": {
-     *          "summary": [
-     *              "Deletes cart by id."
-     *          ],
-     *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
-     *          }],
-     *          "responses": {
-     *              "404": "Cart with given uuid not found."
-     *              "422": "Cart code can't be deleted."
-     *          }
-     *     }
-     * })
-     *
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function deleteAction(
-        RestRequestInterface $restRequest
-    ): RestResponseInterface {
-        return $this->getFactory()->createCartCodeDeleter()->removeCodeFromGuestCart($restRequest);
     }
 }

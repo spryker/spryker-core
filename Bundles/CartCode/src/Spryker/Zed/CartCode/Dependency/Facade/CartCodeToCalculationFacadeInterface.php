@@ -16,5 +16,5 @@ interface CartCodeToCalculationFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function recalculateQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function recalculateQuote(QuoteTransfer $quoteTransfer);
 }

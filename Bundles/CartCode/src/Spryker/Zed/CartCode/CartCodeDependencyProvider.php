@@ -20,7 +20,7 @@ class CartCodeDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
     public const FACADE_QUOTE = 'FACADE_QUOTE';
 
-    public const PLUGIN_CART_CODE_COLLECTION = 'PLUGIN_CART_CODE_COLLECTION';
+    public const PLUGINS_CART_CODE = 'PLUGINS_CART_CODE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -32,7 +32,7 @@ class CartCodeDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addFacadeCalculation($container);
         $container = $this->addQuoteFacade($container);
-        $container = $this->addCartCodePluginCollection($container);
+        $container = $this->addCartCodePlugins($container);
 
         return $container;
     }
@@ -70,10 +70,10 @@ class CartCodeDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCartCodePluginCollection(Container $container): Container
+    protected function addCartCodePlugins(Container $container): Container
     {
-        $container->set(static::PLUGIN_CART_CODE_COLLECTION, function () {
-            return $this->getCartCodePluginCollection();
+        $container->set(static::PLUGINS_CART_CODE, function () {
+            return $this->getCartCodePlugins();
         });
 
         return $container;
@@ -82,7 +82,7 @@ class CartCodeDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Shared\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[]
      */
-    protected function getCartCodePluginCollection(): array
+    protected function getCartCodePlugins(): array
     {
         return [];
     }
