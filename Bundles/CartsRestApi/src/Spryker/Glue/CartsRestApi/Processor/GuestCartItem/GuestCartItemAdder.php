@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
-use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsMapperInterface;
+use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -26,7 +26,7 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
     protected $cartsRestApiClient;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsMapperInterface
+     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemMapperInterface
      */
     protected $cartItemsResourceMapper;
 
@@ -42,13 +42,13 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
 
     /**
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
-     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsMapperInterface $cartItemsResourceMapper
+     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemMapperInterface $cartItemsResourceMapper
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      */
     public function __construct(
         CartsRestApiClientInterface $cartsRestApiClient,
-        CartItemsMapperInterface $cartItemsResourceMapper,
+        CartItemMapperInterface $cartItemsResourceMapper,
         GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder,
         CartRestResponseBuilderInterface $cartRestResponseBuilder
     ) {

@@ -102,7 +102,7 @@ class CartCodeAdder implements CartCodeAdderInterface
         $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
 
         return (new QuoteTransfer())
-            ->setUuid($cartResource->getId())
+            ->setUuid($cartResource ? $cartResource->getId() : null)
             ->setCustomer($customerTransfer)
             ->setCustomerReference($customerReference);
     }

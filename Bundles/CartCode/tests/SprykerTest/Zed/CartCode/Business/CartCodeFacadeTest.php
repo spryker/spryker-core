@@ -44,7 +44,7 @@ class CartCodeFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddCandidateWillAddCodeWithUnlockedQuote(): void
+    public function testAddCandidateAddsVoucherCodeToUnlockedQuote(): void
     {
         // Arrange
         $quoteTransfer = $this->tester->prepareQuoteTransfer(false);
@@ -63,7 +63,7 @@ class CartCodeFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddCandidateWillNotAddCodeWithLockedQuote(): void
+    public function testAddCandidateDoesNotAddVoucherCodeToLockedQuote(): void
     {
         // Arrange
         $quoteTransfer = $this->tester->prepareQuoteTransfer(true);
@@ -110,7 +110,7 @@ class CartCodeFacadeTest extends Unit
      */
     protected function setPluginCartCodeCollection(): void
     {
-        $this->tester->setDependency(CartCodeDependencyProvider::PLUGIN_CART_CODE_COLLECTION, [
+        $this->tester->setDependency(CartCodeDependencyProvider::PLUGINS_CART_CODE, [
             new VoucherCartCodePlugin(),
         ]);
     }

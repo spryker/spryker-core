@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\RestCartItemCalculationsTransfer;
 use Generated\Shared\Transfer\RestItemsAttributesTransfer;
 
-class CartItemsMapper implements CartItemsMapperInterface
+class CartItemMapper implements CartItemMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer

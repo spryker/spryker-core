@@ -25,18 +25,18 @@ class DiscountByCartResourceRelationshipExpander implements DiscountByCartResour
     /**
      * @var \Spryker\Glue\CartCodesRestApi\Processor\Mapper\DiscountMapperInterface
      */
-    protected $discountMapperInterface;
+    protected $discountMapper;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\CartCodesRestApi\Processor\Mapper\DiscountMapperInterface $discountMapperInterface
+     * @param \Spryker\Glue\CartCodesRestApi\Processor\Mapper\DiscountMapperInterface $discountMapper
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        DiscountMapperInterface $discountMapperInterface
+        DiscountMapperInterface $discountMapper
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->discountMapperInterface = $discountMapperInterface;
+        $this->discountMapper = $discountMapper;
     }
 
     /**
@@ -80,7 +80,7 @@ class DiscountByCartResourceRelationshipExpander implements DiscountByCartResour
         RestResourceInterface $resource
     ): void {
         foreach ($discountTransfers as $discountTransfer) {
-            $restDiscountsAttributesTransfer = $this->discountMapperInterface
+            $restDiscountsAttributesTransfer = $this->discountMapper
                 ->mapDiscountDataToRestDiscountsAttributesTransfer(
                     $discountTransfer,
                     new RestDiscountsAttributesTransfer()

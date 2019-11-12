@@ -10,6 +10,7 @@ namespace Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
@@ -60,9 +61,9 @@ class GuestCartRestResponseBuilder extends AbstractCartRestResponseBuilder imple
         );
 
         $itemResource->addLink(
-            static::KEY_REST_RESOURCE_SELF_LINK,
+            RestLinkInterface::LINK_SELF,
             sprintf(
-                static::PATTERN_GUEST_CART_ITEM_RESOURCE_SELF_LINK,
+                '%s/%s/%s/%s',
                 CartsRestApiConfig::RESOURCE_GUEST_CARTS,
                 $cartResourceId,
                 CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,

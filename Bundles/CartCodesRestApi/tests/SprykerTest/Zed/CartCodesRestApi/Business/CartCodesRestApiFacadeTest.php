@@ -27,6 +27,13 @@ use Spryker\Zed\Discount\Communication\Plugin\CartCode\VoucherCartCodePlugin;
  */
 class CartCodesRestApiFacadeTest extends Unit
 {
+    protected const CODE = 'testCode1';
+
+    /**
+     * @uses \Spryker\Shared\CartsRestApi\CartsRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND
+     */
+    protected const ERROR_IDENTIFIER_CART_NOT_FOUND = 'ERROR_IDENTIFIER_CART_NOT_FOUND';
+
     /**
      * @var \SprykerTest\Zed\CartCodesRestApi\CartCodesRestApiBusinessTester
      */
@@ -140,7 +147,7 @@ class CartCodesRestApiFacadeTest extends Unit
      */
     protected function setPluginCartCodeCollection(): void
     {
-        $this->tester->setDependency(CartCodeDependencyProvider::PLUGIN_CART_CODE_COLLECTION, [
+        $this->tester->setDependency(CartCodeDependencyProvider::PLUGINS_CART_CODE, [
             new VoucherCartCodePlugin(),
         ]);
     }

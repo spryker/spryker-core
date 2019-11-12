@@ -44,7 +44,9 @@ class CartDiscountsResourceController extends AbstractController
         RestRequestInterface $restRequest,
         RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
     ): RestResponseInterface {
-        return $this->getFactory()->createCartCodeAdder()->addCandidateToCart($restRequest, $restDiscountRequestAttributesTransfer);
+        return $this->getFactory()
+            ->createCartCodeAdder()
+            ->addCandidateToCart($restRequest, $restDiscountRequestAttributesTransfer);
     }
 
     /**

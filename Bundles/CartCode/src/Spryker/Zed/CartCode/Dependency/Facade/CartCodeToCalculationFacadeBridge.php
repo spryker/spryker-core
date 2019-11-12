@@ -29,7 +29,7 @@ class CartCodeToCalculationFacadeBridge implements CartCodeToCalculationFacadeIn
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function recalculateQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function recalculateQuote(QuoteTransfer $quoteTransfer)
     {
         return $this->calculationFacade->recalculateQuote($quoteTransfer);
     }

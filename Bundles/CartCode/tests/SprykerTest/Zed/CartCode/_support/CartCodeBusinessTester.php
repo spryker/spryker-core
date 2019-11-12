@@ -41,7 +41,6 @@ class CartCodeBusinessTester extends Actor
         [
             'sku' => 'test sku',
             'quantity' => '666',
-
         ],
     ];
 

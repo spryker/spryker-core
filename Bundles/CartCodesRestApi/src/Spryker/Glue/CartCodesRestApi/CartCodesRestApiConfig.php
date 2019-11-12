@@ -29,7 +29,7 @@ class CartCodesRestApiConfig extends AbstractBundleConfig
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND
      */
     public const EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND = 'Cart with given uuid not found.';
-    public const EXCEPTION_CART_CODE_CANT_BE_DELETED = 'Cart code can\'t be deleted.';
+    public const EXCEPTION_MESSAGE_CART_CODE_CANT_BE_DELETED = 'Cart code can\'t be deleted.';
 
     /**
      * @return array
@@ -45,7 +45,7 @@ class CartCodesRestApiConfig extends AbstractBundleConfig
             CartCodesRestApiSharedConfig::ERROR_IDENTIFIER_CART_CODE_CANT_BE_DELETED => [
                 RestErrorMessageTransfer::CODE => static::RESPONSE_CART_CODE_CANT_BE_DELETED,
                 RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
-                RestErrorMessageTransfer::DETAIL => static::EXCEPTION_CART_CODE_CANT_BE_DELETED,
+                RestErrorMessageTransfer::DETAIL => static::EXCEPTION_MESSAGE_CART_CODE_CANT_BE_DELETED,
             ],
         ];
     }
