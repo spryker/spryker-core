@@ -9,13 +9,12 @@ namespace Spryker\Zed\CmsSlotBlockStorage\Business\Storage;
 
 use Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockStorageTransfer;
+use Spryker\Service\CmsSlotBlockStorage\CmsSlotBlockStorageServiceInterface;
 use Spryker\Zed\CmsSlotBlockStorage\Persistence\CmsSlotBlockStorageEntityManagerInterface;
 use Spryker\Zed\CmsSlotBlockStorage\Persistence\CmsSlotBlockStorageRepositoryInterface;
 
 class CmsSlotBlockStorageWriter implements CmsSlotBlockStorageWriterInterface
 {
-    protected const FORMAT_CMS_SLOT_BLOCK_STORAGE_KEY = '%s:%s';
-
     /**
      * @var \Spryker\Zed\CmsSlotBlockStorage\Persistence\CmsSlotBlockStorageRepositoryInterface
      */
@@ -27,15 +26,23 @@ class CmsSlotBlockStorageWriter implements CmsSlotBlockStorageWriterInterface
     protected $cmsSlotBlockStorageEntityManager;
 
     /**
+     * @var \Spryker\Service\CmsSlotBlockStorage\CmsSlotBlockStorageServiceInterface
+     */
+    protected $cmsSlotBlockStorageService;
+
+    /**
      * @param \Spryker\Zed\CmsSlotBlockStorage\Persistence\CmsSlotBlockStorageRepositoryInterface $cmsSlotBlockStorageRepository
      * @param \Spryker\Zed\CmsSlotBlockStorage\Persistence\CmsSlotBlockStorageEntityManagerInterface $cmsSlotBlockStorageEntityManager
+     * @param \Spryker\Service\CmsSlotBlockStorage\CmsSlotBlockStorageServiceInterface $cmsSlotBlockStorageService
      */
     public function __construct(
         CmsSlotBlockStorageRepositoryInterface $cmsSlotBlockStorageRepository,
-        CmsSlotBlockStorageEntityManagerInterface $cmsSlotBlockStorageEntityManager
+        CmsSlotBlockStorageEntityManagerInterface $cmsSlotBlockStorageEntityManager,
+        CmsSlotBlockStorageServiceInterface $cmsSlotBlockStorageService
     ) {
         $this->cmsSlotBlockStorageRepository = $cmsSlotBlockStorageRepository;
         $this->cmsSlotBlockStorageEntityManager = $cmsSlotBlockStorageEntityManager;
+        $this->cmsSlotBlockStorageService = $cmsSlotBlockStorageService;
     }
 
     /**
@@ -102,8 +109,7 @@ class CmsSlotBlockStorageWriter implements CmsSlotBlockStorageWriterInterface
     protected function getCmsSlotBlockStorageKey(
         CmsSlotBlockStorageTransfer $cmsSlotBlockStorageTransfer
     ): string {
-        return sprintf(
-            static::FORMAT_CMS_SLOT_BLOCK_STORAGE_KEY,
+        return $this->cmsSlotBlockStorageService->generateKey(
             $cmsSlotBlockStorageTransfer->getTemplatePath(),
             $cmsSlotBlockStorageTransfer->getSlotKey()
         );

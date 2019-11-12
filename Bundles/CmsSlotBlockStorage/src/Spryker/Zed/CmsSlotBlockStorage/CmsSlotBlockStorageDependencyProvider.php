@@ -20,6 +20,7 @@ class CmsSlotBlockStorageDependencyProvider extends AbstractBundleDependencyProv
 {
     public const FACADE_CMS_SLOT_BLOCK = 'FACADE_CMS_SLOT_BLOCK';
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const SERVICE_CMS_SLOT_BLOCK_STORAGE = 'SERVICE_CMS_SLOT_BLOCK_STORAGE';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
@@ -42,6 +43,7 @@ class CmsSlotBlockStorageDependencyProvider extends AbstractBundleDependencyProv
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addCmsSlotBlockFacade($container);
+        $container = $this->addCmsSlotBlockStorageService($container);
 
         return $container;
     }
@@ -69,6 +71,20 @@ class CmsSlotBlockStorageDependencyProvider extends AbstractBundleDependencyProv
             return new CmsSlotBlockStorageToCmsSlotBlockFacadeBridge(
                 $container->getLocator()->cmsSlotBlock()->facade()
             );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCmsSlotBlockStorageService(Container $container): Container
+    {
+        $container->set(static::SERVICE_CMS_SLOT_BLOCK_STORAGE, function (Container $container) {
+            return $container->getLocator()->cmsSlotBlockStorage()->service();
         });
 
         return $container;

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotBlockStorage\Business;
 
+use Spryker\Service\CmsSlotBlockStorage\CmsSlotBlockStorageServiceInterface;
 use Spryker\Zed\CmsSlotBlockStorage\Business\Storage\CmsSlotBlockStorageWriter;
 use Spryker\Zed\CmsSlotBlockStorage\Business\Storage\CmsSlotBlockStorageWriterInterface;
 use Spryker\Zed\CmsSlotBlockStorage\CmsSlotBlockStorageDependencyProvider;
@@ -27,7 +28,8 @@ class CmsSlotBlockStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsSlotBlockStorageWriter(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getCmsSlotBlockStorageService()
         );
     }
 
@@ -37,5 +39,13 @@ class CmsSlotBlockStorageBusinessFactory extends AbstractBusinessFactory
     public function getCmsSlotBlockFacade(): CmsSlotBlockStorageToCmsSlotBlockFacadeInterface
     {
         return $this->getProvidedDependency(CmsSlotBlockStorageDependencyProvider::FACADE_CMS_SLOT_BLOCK);
+    }
+
+    /**
+     * @return \Spryker\Service\CmsSlotBlockStorage\CmsSlotBlockStorageServiceInterface
+     */
+    public function getCmsSlotBlockStorageService(): CmsSlotBlockStorageServiceInterface
+    {
+        return $this->getProvidedDependency(CmsSlotBlockStorageDependencyProvider::SERVICE_CMS_SLOT_BLOCK_STORAGE);
     }
 }

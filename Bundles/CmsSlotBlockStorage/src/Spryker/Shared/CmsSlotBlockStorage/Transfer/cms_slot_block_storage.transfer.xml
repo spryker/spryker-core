@@ -7,6 +7,10 @@
         <property name="idCmsSlotBlock" type="string"/>
     </transfer>
 
+    <transfer name="CmsSlotBlockCollection">
+        <property name="cmsSlotBlocks" type="CmsSlotBlock[]" singular="cmsSlotBlock"/>
+    </transfer>
+
     <transfer name="CmsSlotBlockCriteria">
         <property name="filter" type="Filter"/>
         <property name="idCmsSlotTemplate" type="int"/>
@@ -37,6 +41,7 @@
     </transfer>
 
     <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
         <property name="data" type="string"/>
         <property name="key" type="string"/>
     </transfer>
