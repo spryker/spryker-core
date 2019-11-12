@@ -17,7 +17,7 @@ use Spryker\Zed\Publisher\Dependency\Facade\PublisherToEventBehaviorFacadeBridge
 class PublisherDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PUBLISHER_REGISTRY_PLUGINS = 'PUBLISHER_REGISTRY_PLUGINS';
-    public const PUBLISHER_RESOURCE_PLUGIN = 'PUBLISHER_RESOURCE_PLUGIN';
+    public const PUBLISHER_DATA_PLUGIN = 'PUBLISHER_DATA_PLUGIN';
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
 
     /**
@@ -27,7 +27,7 @@ class PublisherDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
-        $this->addPublisherRegistryPlugin($container);
+        $this->addPublisherRegistryPlugins($container);
 
         return $container;
     }
@@ -40,7 +40,7 @@ class PublisherDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $this->addEventBehaviorFacade($container);
-        $this->addPublisherResourcePlugin($container);
+        $this->addPublisherDataPlugins($container);
 
         return $container;
     }
@@ -50,7 +50,7 @@ class PublisherDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPublisherRegistryPlugin(Container $container): Container
+    protected function addPublisherRegistryPlugins(Container $container): Container
     {
         $container->set(static::PUBLISHER_REGISTRY_PLUGINS, function (Container $container) {
             return $this->getPublisherRegistryPlugins();
@@ -80,10 +80,10 @@ class PublisherDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addPublisherResourcePlugin(Container $container): Container
+    protected function addPublisherDataPlugins(Container $container): Container
     {
         $container->set(static::PUBLISHER_REGISTRY_PLUGINS, function (Container $container) {
-            return $this->getPublisherResourcePlugins();
+            return $this->getPublisherDataPlugins();
         });
 
         return $container;
@@ -100,7 +100,7 @@ class PublisherDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherDataPluginInterface[]
      */
-    protected function getPublisherResourcePlugins(): array
+    protected function getPublisherDataPlugins(): array
     {
         return [];
     }
