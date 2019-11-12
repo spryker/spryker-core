@@ -23,6 +23,7 @@
 
     <transfer name="ConfiguredBundleItem">
         <property name="slot" type="ConfigurableBundleTemplateSlot"/>
+        <property name="quantityPerSlot" type="int"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplate">
