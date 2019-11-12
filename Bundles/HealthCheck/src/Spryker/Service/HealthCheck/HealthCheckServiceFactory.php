@@ -12,8 +12,10 @@ use Spryker\Service\HealthCheck\Filter\Service\ServiceFilterInterface;
 use Spryker\Service\HealthCheck\Processor\HealthCheckServiceProcessor;
 use Spryker\Service\HealthCheck\Processor\HealthCheckServiceProcessorInterface;
 use Spryker\Service\Kernel\AbstractServiceFactory;
-use Spryker\Service\Kernel\Container;
 
+/**
+ * @method \Spryker\Service\HealthCheck\HealthCheckConfig getConfig()
+ */
 class HealthCheckServiceFactory extends AbstractServiceFactory
 {
     /**
@@ -22,7 +24,8 @@ class HealthCheckServiceFactory extends AbstractServiceFactory
     public function createYvesHealthCheckServiceProcessor(): HealthCheckServiceProcessorInterface
     {
         return new HealthCheckServiceProcessor(
-            $this->createYvesServiceFilter()
+            $this->createYvesServiceFilter(),
+            $this->getConfig()
         );
     }
 
@@ -42,7 +45,8 @@ class HealthCheckServiceFactory extends AbstractServiceFactory
     public function createZedHealthCheckServiceProcessor(): HealthCheckServiceProcessorInterface
     {
         return new HealthCheckServiceProcessor(
-            $this->createZedServiceFilter()
+            $this->createZedServiceFilter(),
+            $this->getConfig()
         );
     }
 
@@ -62,7 +66,8 @@ class HealthCheckServiceFactory extends AbstractServiceFactory
     public function createGlueHealthCheckServiceProcessor(): HealthCheckServiceProcessorInterface
     {
         return new HealthCheckServiceProcessor(
-            $this->createGlueServiceFilter()
+            $this->createGlueServiceFilter(),
+            $this->getConfig()
         );
     }
 

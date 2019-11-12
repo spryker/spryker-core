@@ -10,6 +10,9 @@ namespace Spryker\Service\HealthCheck;
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
 
+/**
+ * @method \Spryker\Service\HealthCheck\HealthCheckConfig getConfig()
+ */
 class HealthCheckDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGINS_YVES_HEALTH_CHECK = 'PLUGINS_YVES_HEALTH_CHECK';
@@ -21,7 +24,7 @@ class HealthCheckDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Service\Kernel\Container
      */
-    public function provideServiceDependencies(Container $container)
+    public function provideServiceDependencies(Container $container): Container
     {
         $container = $this->addYvesHealthCheckPlugins($container);
         $container = $this->addZedHealthCheckPlugins($container);
@@ -65,7 +68,7 @@ class HealthCheckDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addGlueHealthCheckPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_ZED_HEALTH_CHECK, function () {
+        $container->set(static::PLUGINS_GLUE_HEALTH_CHECK, function () {
             return $this->getGlueHealthCheckPlugins();
         });
 

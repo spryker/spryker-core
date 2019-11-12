@@ -5,8 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared;
+namespace Spryker\Shared\HealthCheck;
 
+/**
+ * Declares global environment configuration keys. Do not use it for other class constants.
+ */
 interface HealthCheckConstants
 {
     /**

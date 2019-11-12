@@ -7,8 +7,8 @@
 
 namespace Spryker\Service\Search;
 
-use Spryker\Service\Kernel\AbstractService;
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
+use Spryker\Service\Kernel\AbstractService;
 
 /**
  * @method \Spryker\Service\Search\SearchServiceFactory getFactory()

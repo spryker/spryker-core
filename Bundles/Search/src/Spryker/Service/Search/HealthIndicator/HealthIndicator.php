@@ -7,6 +7,7 @@
 
 namespace Spryker\Service\Search\HealthIndicator;
 
+use Exception;
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Spryker\Client\Search\SearchClientInterface;
 
@@ -32,8 +33,7 @@ class HealthIndicator implements HealthIndicatorInterface
     {
         try {
             $this->searchClient->checkConnection();
-
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return (new HealthCheckServiceResponseTransfer())
                 ->setStatus(false)
                 ->setMessage($e->getMessage());

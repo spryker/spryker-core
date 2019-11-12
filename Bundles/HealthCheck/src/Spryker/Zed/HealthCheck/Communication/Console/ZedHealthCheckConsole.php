@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\HealthCheck\src\Spryker\Zed\HealthCheck\Console;
+namespace Spryker\Zed\HealthCheck\Communication\Console;
 
 use Generated\Shared\Transfer\HealthCheckRequestTransfer;
+use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Spryker\Zed\Kernel\Communication\Console\Console;
 
 /**
  * @method \Spryker\Zed\HealthCheck\Communication\HealthCheckCommunicationFactory getFactory()
@@ -25,6 +25,12 @@ class ZedHealthCheckConsole extends Console
     protected const SERVICES_OPTION_SHORTCUT = 's';
     protected const SERVICES_OPTION_DESCRIPTION = 'Services to include.';
 
+    protected const OUTPUT_SUCCESS_COLOR = 'green';
+    protected const OUTPUT_ERROR_COLOR = 'red';
+
+    protected const OUTPUT_SUCCESS_MESSAGE = 'Healthy';
+    protected const OUTPUT_ERROR_MESSAGE = 'ERROR';
+
     /**
      * @return void
      */
@@ -36,7 +42,7 @@ class ZedHealthCheckConsole extends Console
         $this->addOption(
             static::SERVICES_OPTION,
             static::SERVICES_OPTION_SHORTCUT,
-            InputOption::VALUE_OPTIONAL,
+            InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
             static::SERVICES_OPTION_DESCRIPTION,
             []
         );
@@ -52,14 +58,27 @@ class ZedHealthCheckConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $services = $input->getOption(static::SERVICES_OPTION);
-
         $healthCheckRequestTransfer = (new HealthCheckRequestTransfer())
-            ->setServices($services);
+            ->setServices(implode(',', $input->getOption(static::SERVICES_OPTION)));
 
         $healthCheckResponseTransfer = $this->getFactory()
             ->getHealthCheckService()
             ->checkZedHealthCheck($healthCheckRequestTransfer);
+
+        foreach ($healthCheckResponseTransfer->getHealthCheckServiceResponses() as $healthCheckServiceResponseTransfer) {
+            $serviceName = $healthCheckServiceResponseTransfer->getName();
+            $serviceStatus = $healthCheckServiceResponseTransfer->getStatus();
+            $outputColor = $serviceStatus ? static::OUTPUT_SUCCESS_COLOR : static::OUTPUT_ERROR_COLOR;
+            $outputStatus = $serviceStatus ? static::OUTPUT_SUCCESS_MESSAGE : static::OUTPUT_ERROR_MESSAGE;
+            $output->writeln(sprintf(
+                "Service $serviceName: <fg=$outputColor;options=bold>%s</>",
+                $outputStatus
+            ));
+
+            if ($serviceStatus === false) {
+                $output->writeln(sprintf("<fg=$outputColor;options=bold>Error Message: %s</>", $healthCheckServiceResponseTransfer->getMessage()));
+            }
+        }
 
         return static::CODE_SUCCESS;
     }

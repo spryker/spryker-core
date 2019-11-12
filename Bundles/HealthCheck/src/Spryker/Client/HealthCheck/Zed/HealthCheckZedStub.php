@@ -28,8 +28,9 @@ class HealthCheckZedStub implements HealthCheckZedStubInterface
     /**
      * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
      */
-    public function doHealthCheck(): HealthCheckServiceResponseTransfer {
-        /** @var \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer $healthCheckServiceResponseTransfers */
+    public function doHealthCheck(): HealthCheckServiceResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer $healthCheckServiceResponseTransfer */
         $healthCheckServiceResponseTransfer = $this->zedRequestClient
             ->call('/health-check/gateway/health-check', new HealthCheckServiceResponseTransfer());
 

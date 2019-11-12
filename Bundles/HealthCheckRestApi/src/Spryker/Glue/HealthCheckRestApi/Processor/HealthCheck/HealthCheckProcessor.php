@@ -8,7 +8,6 @@
 namespace Spryker\Glue\HealthCheckRestApi\Processor\HealthCheck;
 
 use Generated\Shared\Transfer\HealthCheckRequestTransfer;
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\RestHealthCheckResponseAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -16,11 +15,10 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\HealthCheckRestApi\Dependency\Service\HealthCheckRestApiToHealthCheckServiceInterface;
 use Spryker\Glue\HealthCheckRestApi\HealthCheckRestApiConfig;
 use Spryker\Glue\HealthCheckRestApi\Processor\Mapper\HealthCheckMapperInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 class HealthCheckProcessor implements HealthCheckProcessorInterface
 {
-    protected const KEY_SERVICE = 'service';
+    protected const KEY_SERVICES = 'services';
 
     /**
      * @var \Spryker\Glue\HealthCheckRestApi\Dependency\Service\HealthCheckRestApiToHealthCheckServiceInterface
@@ -68,17 +66,9 @@ class HealthCheckProcessor implements HealthCheckProcessorInterface
     public function processHealthCheck(RestRequestInterface $restRequest): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
-
-//        if (!$this->healthCheckRestApiConfig->isHealthCheckEnabled()) {
-//            return $restResponse->addError(
-//                $this->createServicesAreDisable()
-//            );
-//        }
-
-        $services = $restRequest->getHttpRequest()->get(static::KEY_SERVICE);
+        $services = $restRequest->getHttpRequest()->get(static::KEY_SERVICES);
 
         $healthCheckRequestTransfer = (new HealthCheckRequestTransfer())
-            ->setApplication(APPLICATION)
             ->setServices($services);
 
         $healthCheckResponseTransfer = $this->healthCheckService->checkGlueHealthCheck($healthCheckRequestTransfer);
@@ -87,7 +77,7 @@ class HealthCheckProcessor implements HealthCheckProcessorInterface
             ->mapHealthCheckServiceResponseTransferToRestHealthCheckResponseAttributesTransfer(
                 $healthCheckResponseTransfer,
                 new RestHealthCheckResponseAttributesTransfer()
-        );
+            );
 
         $restResource = $this->restResourceBuilder->createRestResource(
             HealthCheckRestApiConfig::RESOURCE_HEALTH_CHECK,
@@ -96,16 +86,5 @@ class HealthCheckProcessor implements HealthCheckProcessorInterface
         );
 
         return $restResponse->addResource($restResource);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
-     */
-    protected function createServicesAreDisable(): RestErrorMessageTransfer
-    {
-        return (new RestErrorMessageTransfer())
-            ->setCode(HealthCheckRestApiConfig::RESPONSE_CODE_SERVICES_ARE_DISABLED)
-            ->setStatus(Response::HTTP_SERVICE_UNAVAILABLE)
-            ->setDetail(HealthCheckRestApiConfig::RESPONSE_DETAILS_SERVICES_ARE_DISABLED);
     }
 }

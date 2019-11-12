@@ -1,7 +1,7 @@
 # HealthCheckExtension Module
 [![Build Status](https://travis-ci.org/spryker/health-check-extension.svg)](https://travis-ci.org/spryker/health-check-extension)
 
-{{ADD DESCRIPTION HERE}}
+Extension module for the HealthCheck module.
 
 ## Installation
 

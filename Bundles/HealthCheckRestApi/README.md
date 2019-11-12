@@ -1,7 +1,7 @@
 # HealthCheckRestApi Module
 [![Build Status](https://travis-ci.org/spryker/health-check-rest-api.svg)](https://travis-ci.org/spryker/health-check-rest-api)
 
-{{ADD DESCRIPTION HERE}}
+HealthCheckRestApi module provides REST API endpoint for retrieving status of the third party services, e.g storage, session, db, etc.
 
 ## Installation
 

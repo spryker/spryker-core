@@ -16,6 +16,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class HealthCheckClient extends AbstractClient implements HealthCheckClientInterface
 {
     /**
+     * @api
      *
      * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
      */

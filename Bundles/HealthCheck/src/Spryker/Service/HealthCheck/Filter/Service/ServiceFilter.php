@@ -31,9 +31,6 @@ class ServiceFilter implements ServiceFilterInterface
      */
     public function filter(HealthCheckRequestTransfer $healthCheckRequestTransfer): array
     {
-        //tmp
-        $this->healthCheckPlugins = $this->healthCheckPlugins[$healthCheckRequestTransfer->getApplication()];
-
         $requestedServices = $healthCheckRequestTransfer->getServices();
 
         if (strlen($requestedServices) === 0) {
@@ -54,7 +51,7 @@ class ServiceFilter implements ServiceFilterInterface
         $filteredServicePlugins = [];
 
         foreach ($this->healthCheckPlugins as $healthCheckPlugin) {
-            if(in_array($healthCheckPlugin->getName(), $requestedServicesArray)) {
+            if (in_array($healthCheckPlugin->getName(), $requestedServicesArray)) {
                 $filteredServicePlugins[] = $healthCheckPlugin;
             }
         }

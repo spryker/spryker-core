@@ -23,7 +23,7 @@ class HealthCheckRestApiDependencyProvider extends AbstractBundleDependencyProvi
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
         $container = $this->addHealthCheckService($container);
 
@@ -45,5 +45,4 @@ class HealthCheckRestApiDependencyProvider extends AbstractBundleDependencyProvi
 
         return $container;
     }
-
 }

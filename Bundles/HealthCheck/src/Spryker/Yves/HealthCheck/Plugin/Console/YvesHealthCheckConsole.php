@@ -25,6 +25,12 @@ class YvesHealthCheckConsole extends Console
     protected const SERVICES_OPTION_SHORTCUT = 's';
     protected const SERVICES_OPTION_DESCRIPTION = 'Services to include.';
 
+    protected const OUTPUT_SUCCESS_COLOR = 'green';
+    protected const OUTPUT_ERROR_COLOR = 'red';
+
+    protected const OUTPUT_SUCCESS_MESSAGE = 'Healthy';
+    protected const OUTPUT_ERROR_MESSAGE = 'ERROR';
+
     /**
      * @return void
      */
@@ -36,7 +42,7 @@ class YvesHealthCheckConsole extends Console
         $this->addOption(
             static::SERVICES_OPTION,
             static::SERVICES_OPTION_SHORTCUT,
-            InputOption::VALUE_OPTIONAL,
+            InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
             static::SERVICES_OPTION_DESCRIPTION,
             []
         );
@@ -52,14 +58,27 @@ class YvesHealthCheckConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $services = $input->getOption(static::SERVICES_OPTION);
-
         $healthCheckRequestTransfer = (new HealthCheckRequestTransfer())
-            ->setServices($services);
+            ->setServices(implode(',', $input->getOption(static::SERVICES_OPTION)));
 
         $healthCheckResponseTransfer = $this->getFactory()
             ->getHealthCheckService()
             ->checkYvesHealthCheck($healthCheckRequestTransfer);
+
+        foreach ($healthCheckResponseTransfer->getHealthCheckServiceResponses() as $healthCheckServiceResponseTransfer) {
+            $serviceName = $healthCheckServiceResponseTransfer->getName();
+            $serviceStatus = $healthCheckServiceResponseTransfer->getStatus();
+            $outputColor = $serviceStatus ? static::OUTPUT_SUCCESS_COLOR : static::OUTPUT_ERROR_COLOR;
+            $outputStatus = $serviceStatus ? static::OUTPUT_SUCCESS_MESSAGE : static::OUTPUT_ERROR_MESSAGE;
+            $output->writeln(sprintf(
+                "Service $serviceName: <fg=$outputColor;options=bold>%s</>",
+                $outputStatus
+            ));
+
+            if ($serviceStatus === false) {
+                $output->writeln(sprintf("<fg=$outputColor;options=bold>Error Message: %s</>", $healthCheckServiceResponseTransfer->getMessage()));
+            }
+        }
 
         return static::CODE_SUCCESS;
     }

@@ -16,7 +16,7 @@ use Spryker\Service\Kernel\AbstractPlugin;
  */
 class YvesSessionHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {
-    protected const SERVICE_NAME = 'YVES_SESSION';
+    protected const SERVICE_NAME = 'session';
 
     /**
      * {@inheritDoc}

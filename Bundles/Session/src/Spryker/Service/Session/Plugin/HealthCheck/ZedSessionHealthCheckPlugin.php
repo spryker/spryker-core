@@ -16,7 +16,7 @@ use Spryker\Service\Kernel\AbstractPlugin;
  */
 class ZedSessionHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {
-    protected const SERVICE_NAME = 'ZED_SESSION';
+    protected const SERVICE_NAME = 'session';
 
     /**
      * {@inheritDoc}

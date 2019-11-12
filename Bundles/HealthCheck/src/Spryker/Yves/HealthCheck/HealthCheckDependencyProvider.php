@@ -10,6 +10,9 @@ namespace Spryker\Yves\HealthCheck;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
+/**
+ * @method \Spryker\Yves\HealthCheck\HealthCheckConfig getConfig()
+ */
 class HealthCheckDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_HEALTH_CHECK = 'SERVICE_HEALTH_CHECK';
@@ -19,7 +22,7 @@ class HealthCheckDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function provideDependencies(Container $container)
+    public function provideDependencies(Container $container): Container
     {
         $container = $this->addHealthCheckService($container);
 
