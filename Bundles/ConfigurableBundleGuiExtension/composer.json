@@ -4,6 +4,7 @@
   "description": "ConfigurableBundleGuiExtension module",
   "license": "proprietary",
   "require": {
+    "php": ">=7.1"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

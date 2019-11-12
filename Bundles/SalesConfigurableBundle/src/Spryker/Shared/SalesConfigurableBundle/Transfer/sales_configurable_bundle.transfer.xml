@@ -52,10 +52,10 @@
         <property name="name" type="string"/>
         <property name="quantity" type="int"/>
         <property name="salesOrderConfiguredBundleItems" type="SalesOrderConfiguredBundleItem[]" singular="salesOrderConfiguredBundleItem"/>
-        <property name="translations" type="SalesOrderConfigurableBundleTemplateTranslation[]" singular="translation"/>
+        <property name="translations" type="SalesOrderConfiguredBundleTranslation[]" singular="translation"/>
     </transfer>
 
-    <transfer name="SalesOrderConfigurableBundleTemplateTranslation">
+    <transfer name="SalesOrderConfiguredBundleTranslation">
         <property name="name" type="string"/>
     </transfer>
 
