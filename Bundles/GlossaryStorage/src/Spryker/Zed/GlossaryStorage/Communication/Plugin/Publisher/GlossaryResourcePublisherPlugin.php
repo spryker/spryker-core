@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
 use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherDataPluginInterface;
+use Spryker\Zed\PublisherExtension\Dependency\Plugin\ResourcePublisherPluginInterface;
 
 /**
  * @method \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface getFacade()
@@ -19,7 +19,7 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherDataPluginInterfac
  * @method \Spryker\Zed\GlossaryStorage\GlossaryStorageConfig getConfig()
  * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
  */
-class GlossaryPublisherDataPlugin extends AbstractPlugin implements PublisherDataPluginInterface
+class GlossaryResourcePublisherPlugin extends AbstractPlugin implements ResourcePublisherPluginInterface
 {
     /**
      * @uses \Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY

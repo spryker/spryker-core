@@ -9,6 +9,6 @@ namespace Spryker\Zed\PublisherExtension\Dependency\Plugin;
 
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceBulkRepositoryPluginInterface;
 
-interface PublisherDataPluginInterface extends EventResourceBulkRepositoryPluginInterface
+interface ResourcePublisherPluginInterface extends EventResourceBulkRepositoryPluginInterface
 {
 }

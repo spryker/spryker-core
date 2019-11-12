@@ -16,10 +16,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\Publisher\Business\PublisherFacadeInterface getFacade()
  * @method \Spryker\Zed\Publisher\Communication\PublisherCommunicationFactory getFactory()
  */
-class PublisherDataConsole extends Console
+class PublisherTriggerEventsConsole extends Console
 {
-    public const COMMAND_NAME = 'publish:data';
-    public const DESCRIPTION = 'This command will publish Zed data to front-end storage and search';
+    public const COMMAND_NAME = 'publish:trigger-events';
+    public const DESCRIPTION = 'This command will publish Zed resource(Product, Price, ...) to frontend storage and search';
     public const RESOURCE_OPTION = 'resource';
     public const RESOURCE_OPTION_SHORTCUT = 'r';
     public const RESOURCE_IDS_OPTION = 'ids';
