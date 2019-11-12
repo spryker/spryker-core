@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Type;
 
@@ -26,6 +27,8 @@ class StockSubForm extends AbstractType
     public const FIELD_QUANTITY = 'quantity';
     public const FIELD_STOCK_TYPE = 'stockType';
     public const FIELD_IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
+
+    protected const DECIMAL_QUANTITY_VALIDATION_PATTERN = '/^\d{1,10}(\.\d{1,20})?$/';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -54,6 +57,9 @@ class StockSubForm extends AbstractType
             'constraints' => [
                 new Required(),
                 new Type('numeric'),
+                new Regex([
+                    'pattern' => static::DECIMAL_QUANTITY_VALIDATION_PATTERN,
+                ]),
             ],
         ]);
 
