@@ -32,10 +32,6 @@ class SalesFacadeTest extends Unit
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
     protected const DEFAULT_ITEM_STATE = 'test';
 
-    protected const ORDER_SEARCH_PARAMS = [
-        'orderReference' => '123',
-        'customerReference' => 'testing-customer',
-    ];
     protected const ORDER_WRONG_SEARCH_PARAMS = [
         'orderReference' => '123_wrong',
         'customerReference' => 'testing-customer-wrong',
@@ -122,14 +118,19 @@ class SalesFacadeTest extends Unit
      */
     public function testGetCustomerOrderByOrderReference(): void
     {
-        $orderEntity = $this->tester->create();
-
+        //Arrange
+        $orderEntity = $this->tester->haveSalesOrderEntity();
         $salesFacade = $this->createSalesFacade();
 
+        //Act
         $order = $salesFacade->getCustomerOrderByOrderReference(
-            $this->createOrderTransferWithParams(static::ORDER_SEARCH_PARAMS)
+            $this->createOrderTransferWithParams([
+                OrderTransfer::ORDER_REFERENCE => $orderEntity->getOrderReference(),
+                OrderTransfer::CUSTOMER_REFERENCE => $orderEntity->getCustomerReference(),
+            ])
         );
 
+        //Assert
         $this->assertNotNull($order);
         $this->assertSame($orderEntity->getIdSalesOrder(), $order->getIdSalesOrder());
     }
