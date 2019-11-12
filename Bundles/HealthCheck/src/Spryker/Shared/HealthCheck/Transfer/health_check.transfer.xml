@@ -5,7 +5,7 @@
 
     <transfer name="HealthCheckRequest">
         <property name="application" type="string"/>
-        <property name="services" type="string[]"/>
+        <property name="services" type="string"/>
     </transfer>
 
     <transfer name="HealthCheckResponse">

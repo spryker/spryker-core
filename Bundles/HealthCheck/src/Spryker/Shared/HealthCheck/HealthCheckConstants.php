@@ -5,14 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Search\Dependency\Client;
+namespace Spryker\Shared;
 
-interface SearchToSearchClientInterface
+interface HealthCheckConstants
 {
     /**
-     * @throws \Exception
+     * Specification:
+     * - Defines is health check is enabled.
      *
-     * @return void
+     * @api
      */
-    public function checkConnection();
+    public const HEALTH_CHECK_ENABLED = 'HEALTH_CHECK:HEALTH_CHECK_ENABLED';
 }

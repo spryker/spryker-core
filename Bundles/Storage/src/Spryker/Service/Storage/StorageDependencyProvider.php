@@ -9,7 +9,6 @@ namespace Spryker\Service\Storage;
 
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
-use Spryker\Service\Storage\Dependency\Client\StorageToStorageClientBridge;
 
 class StorageDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -34,10 +33,8 @@ class StorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStorageClient(Container $container): Container
     {
-        $container->set(static::CLIENT_STORAGE, function ($container) {
-            return new StorageToStorageClientBridge(
-                $container->getLocator()->storage()->client()
-            );
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
+            return $container->getLocator()->storage()->client();
         });
 
         return $container;

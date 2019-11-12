@@ -5,24 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Search\HealthIndicator;
+namespace Spryker\Service\ZedRequest\HealthIndicator;
 
+use Exception;
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
-use Spryker\Client\Search\SearchClientInterface;
+use Spryker\Service\Storage\Dependency\Client\StorageToStorageClientInterface;
+use Spryker\Service\ZedRequest\Dependency\Client\ZedRequestToHealthCheckClientInterface;
 
 class HealthIndicator implements HealthIndicatorInterface
 {
     /**
-     * @var \Spryker\Client\Search\SearchClientInterface
+     * @var \Spryker\Service\ZedRequest\Dependency\Client\ZedRequestToHealthCheckClientInterface
      */
-    protected $searchClient;
+    protected $healthCheckClient;
 
     /**
-     * @param \Spryker\Client\Search\SearchClientInterface $searchClient
+     * @param \Spryker\Service\ZedRequest\Dependency\Client\ZedRequestToHealthCheckClientInterface $healthCheckClient
      */
-    public function __construct(SearchClientInterface $searchClient)
+    public function __construct(ZedRequestToHealthCheckClientInterface $healthCheckClient)
     {
-        $this->searchClient = $searchClient;
+        $this->healthCheckClient = $healthCheckClient;
     }
 
     /**
@@ -31,8 +33,8 @@ class HealthIndicator implements HealthIndicatorInterface
     public function executeHealthCheck(): HealthCheckServiceResponseTransfer
     {
         try {
-            $this->searchClient->checkConnection();
-        } catch (\Exception $e) {
+            $healthCheckServiceResponseTransfer = $this->healthCheckClient->doHealthCheck();
+        } catch (Exception $e) {
             return (new HealthCheckServiceResponseTransfer())
                 ->setStatus(false)
                 ->setMessage($e->getMessage());

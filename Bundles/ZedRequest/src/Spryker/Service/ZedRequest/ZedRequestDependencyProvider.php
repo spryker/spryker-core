@@ -5,14 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Search;
+namespace Spryker\Service\ZedRequest;
 
 use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Service\Kernel\Container;
+use Spryker\Service\ZedRequest\Dependency\Client\ZedRequestToHealthCheckClientBridge;
 
-class SearchDependencyProvider extends AbstractBundleDependencyProvider
+class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CLIENT_SEARCH = 'CLIENT_SEARCH';
+    public const CLIENT_HEALTH_CHECK = 'CLIENT_HEALTH_CHECK';
 
     /**
      * @param \Spryker\Service\Kernel\Container $container
@@ -21,7 +22,7 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideServiceDependencies(Container $container)
     {
-        $container = $this->addStorageClient($container);
+        $container = $this->addHealthCheckClient($container);
 
         return $container;
     }
@@ -31,10 +32,12 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Service\Kernel\Container
      */
-    protected function addStorageClient(Container $container): Container
+    protected function addHealthCheckClient(Container $container): Container
     {
-        $container->set(static::CLIENT_SEARCH, function ($container) {
-            return $container->getLocator()->search()->client();
+        $container->set(static::CLIENT_HEALTH_CHECK, function ($container) {
+            return new ZedRequestToHealthCheckClientBridge(
+                $container->getLocator()->healthCheck()->client()
+            );
         });
 
         return $container;

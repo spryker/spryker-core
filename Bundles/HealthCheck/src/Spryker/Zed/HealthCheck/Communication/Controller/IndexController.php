@@ -8,6 +8,7 @@
 namespace Spryker\Zed\HealthCheck\Communication\Controller;
 
 use Generated\Shared\Transfer\HealthCheckRequestTransfer;
+use Spryker\HealthCheck\src\Spryker\Zed\HealthCheck\Communication\Exception\HealthCheckDisabledException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends AbstractController
 {
+    protected const KEY_SERVICE = 'service';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -24,8 +27,21 @@ class IndexController extends AbstractController
      */
     public function indexAction(Request $request): JsonResponse
     {
+//        if ($this->getFactory()->getConfig()->isHealthCheckEnabled()) {
+//            throw new HealthCheckDisabledException();
+//        }
+
         $healthCheckRequestTransfer = (new HealthCheckRequestTransfer())
             ->setApplication(APPLICATION);
+
+        $requestedServices = $request->get(static::KEY_SERVICE);
+
+        if (strlen($requestedServices) !== 0) {
+            $healthCheckRequestTransfer->setServices(explode(',', $requestedServices));
+        }
+
         $healthCheckResponseTransfer = $this->getFactory()->getHealthCheckService()->processHealthCheck($healthCheckRequestTransfer);
+
+        dump($healthCheckResponseTransfer); die;
     }
 }

@@ -24,11 +24,12 @@ class HealthIndicator implements HealthIndicatorInterface
             $entity->save();
             $entity->delete();
         } catch (PropelException $e) {
-            (new HealthCheckServiceResponseTransfer())
+            return (new HealthCheckServiceResponseTransfer())
                 ->setStatus(false)
                 ->setMessage($e->getMessage());
         }
 
-        return (new HealthCheckServiceResponseTransfer())->setStatus(true);
+        return (new HealthCheckServiceResponseTransfer())
+            ->setStatus(true);
     }
 }

@@ -5,24 +5,27 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\Search\HealthIndicator;
+namespace Spryker\Service\Session\HealthIndicator;
 
+use Exception;
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
-use Spryker\Client\Search\SearchClientInterface;
+use Spryker\Client\Session\SessionClientInterface;
 
-class HealthIndicator implements HealthIndicatorInterface
+class YvesHealthIndicator implements HealthIndicatorInterface
 {
-    /**
-     * @var \Spryker\Client\Search\SearchClientInterface
-     */
-    protected $searchClient;
+    protected const KEY_HEALTH_CHECK = 'YvesHealthCheck';
 
     /**
-     * @param \Spryker\Client\Search\SearchClientInterface $searchClient
+     * @var \Spryker\Client\Session\SessionClientInterface
      */
-    public function __construct(SearchClientInterface $searchClient)
+    protected $sessionClient;
+
+    /**
+     * @param \Spryker\Client\Session\SessionClientInterface $sessionClient
+     */
+    public function __construct(SessionClientInterface $sessionClient)
     {
-        $this->searchClient = $searchClient;
+        $this->sessionClient = $sessionClient;
     }
 
     /**
@@ -31,8 +34,9 @@ class HealthIndicator implements HealthIndicatorInterface
     public function executeHealthCheck(): HealthCheckServiceResponseTransfer
     {
         try {
-            $this->searchClient->checkConnection();
-        } catch (\Exception $e) {
+            $this->sessionClient->set(static::KEY_HEALTH_CHECK, 'ok');
+            $this->sessionClient->get(static::KEY_HEALTH_CHECK);
+        } catch (Exception $e) {
             return (new HealthCheckServiceResponseTransfer())
                 ->setStatus(false)
                 ->setMessage($e->getMessage());

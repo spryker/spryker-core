@@ -7,8 +7,8 @@
 
 namespace Spryker\Service\Search;
 
+use Spryker\Client\Search\SearchClientInterface;
 use Spryker\Service\Kernel\AbstractServiceFactory;
-use Spryker\Service\Search\Dependency\Client\SearchToSearchClientInterface;
 use Spryker\Service\Search\HealthIndicator\HealthIndicator;
 use Spryker\Service\Search\HealthIndicator\HealthIndicatorInterface;
 
@@ -25,9 +25,9 @@ class SearchServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\Search\Dependency\Client\SearchToSearchClientInterface
+     * @return \Spryker\Client\Search\SearchClientInterface
      */
-    public function getSearchClient(): SearchToSearchClientInterface
+    public function getSearchClient(): SearchClientInterface
     {
         return $this->getProvidedDependency(SearchDependencyProvider::CLIENT_SEARCH);
     }

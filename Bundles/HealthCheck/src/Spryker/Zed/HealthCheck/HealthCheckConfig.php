@@ -7,8 +7,16 @@
 
 namespace Spryker\Zed\HealthCheck;
 
+use Spryker\Shared\HealthCheckConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class HealthCheckConfig extends AbstractBundleConfig
 {
+    /**
+     * @return bool
+     */
+    public function isHealthCheckEnabled(): bool
+    {
+        return $this->get(HealthCheckConstants::HEALTH_CHECK_ENABLED, true);
+    }
 }

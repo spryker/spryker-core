@@ -5,10 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\HealthCheckRestApi\Plugin\GlueApplication;
+namespace Spryker\Glue\HealthCheckRestApi\Plugin;
 
-use Generated\Shared\Transfer\RestCustomerPasswordAttributesTransfer;
-use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\HealthCheckRestApi\HealthCheckRestApiConfig;
@@ -31,7 +29,7 @@ class HealthCheckResourceRoutePlugin extends AbstractPlugin implements ResourceR
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         $resourceRouteCollection
-            ->addGet('get', true);
+            ->addGet('get', false);
 
         return $resourceRouteCollection;
     }

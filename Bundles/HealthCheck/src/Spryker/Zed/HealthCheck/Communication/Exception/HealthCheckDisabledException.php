@@ -5,9 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\HealthCheckRestApi\Processor\HealthCheck;
+namespace Spryker\HealthCheck\src\Spryker\Zed\HealthCheck\Communication\Exception;
 
-interface HealthCheckReaderInterface
+use Exception;
+
+class HealthCheckDisabledException extends Exception
 {
-
 }

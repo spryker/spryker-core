@@ -9,21 +9,21 @@ namespace Spryker\Service\Storage\HealthIndicator;
 
 use Exception;
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
-use Spryker\Service\Storage\Dependency\Client\StorageToStorageClientInterface;
+use Spryker\Client\Storage\StorageClientInterface;
 
 class HealthIndicator implements HealthIndicatorInterface
 {
     public const KEY_HEALTH_CHECK = 'healthCheck';
 
     /**
-     * @var \Spryker\Service\Storage\Dependency\Client\StorageToStorageClientInterface
+     * @var \Spryker\Client\Storage\StorageClientInterface $storageClient
      */
     protected $storageClient;
 
     /**
-     * @param \Spryker\Service\Storage\Dependency\Client\StorageToStorageClientInterface $storageClient
+     * @param \Spryker\Client\Storage\StorageClientInterface $storageClient
      */
-    public function __construct(StorageToStorageClientInterface $storageClient)
+    public function __construct(StorageClientInterface $storageClient)
     {
         $this->storageClient = $storageClient;
     }

@@ -7,8 +7,8 @@
 
 namespace Spryker\Service\Storage;
 
+use Spryker\Client\Storage\StorageClientInterface;
 use Spryker\Service\Kernel\AbstractServiceFactory;
-use Spryker\Service\Storage\Dependency\Client\StorageToStorageClientInterface;
 use Spryker\Service\Storage\HealthIndicator\HealthIndicator;
 use Spryker\Service\Storage\HealthIndicator\HealthIndicatorInterface;
 
@@ -25,9 +25,9 @@ class StorageServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\Storage\Dependency\Client\StorageToStorageClientInterface
+     * @return \Spryker\Client\Storage\StorageClientInterface
      */
-    public function getStorageClient(): StorageToStorageClientInterface
+    public function getStorageClient(): StorageClientInterface
     {
         return $this->getProvidedDependency(StorageDependencyProvider::CLIENT_STORAGE);
     }

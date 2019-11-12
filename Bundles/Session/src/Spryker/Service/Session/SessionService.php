@@ -22,4 +22,12 @@ class SessionService extends AbstractService implements SessionServiceInterface
     {
         return $this->getFactory()->createZedHealthCheckIndicator()->executeHealthCheck();
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
+     */
+    public function checkYvesSessionHealthIndicator(): HealthCheckServiceResponseTransfer
+    {
+        return $this->getFactory()->createYvesHealthCheckIndicator()->executeHealthCheck();
+    }
 }

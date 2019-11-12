@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 
 class ZedHealthIndicator implements HealthIndicatorInterface
 {
-    protected const KEY_HEALTH_CHECK = 'healthCheck';
+    protected const KEY_HEALTH_CHECK = 'ZedHealthCheck';
 
     /**
      * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer

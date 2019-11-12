@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\HealthCheckRestApi\src\Spryker\Glue\HealthCheckRestApi\Controller;
+namespace Spryker\Glue\HealthCheckRestApi\Controller;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -17,6 +17,22 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class HealthCheckResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "getResourceById": {
+     *          "summary": [
+     *              "Retrieve services status."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "responses": {
+     *              "403": "Services are disabled.",
+     *              "503": "Services are unavailable.",
+     *          }
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -24,7 +40,7 @@ class HealthCheckResourceController extends AbstractController
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createAddressReader()
-            ->getAddressesByAddressUuid($restRequest);
+            ->createHealthCheckProcessor()
+            ->processHealthCheck($restRequest);
     }
 }

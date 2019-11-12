@@ -25,6 +25,8 @@ class HealthCheckRestApiDependencyProvider extends AbstractBundleDependencyProvi
      */
     public function provideDependencies(Container $container)
     {
+        $container = $this->addHealthCheckService($container);
+
         return $container;
     }
 

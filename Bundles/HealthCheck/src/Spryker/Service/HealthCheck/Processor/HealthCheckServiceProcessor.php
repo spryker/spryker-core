@@ -38,22 +38,10 @@ class HealthCheckServiceProcessor implements HealthCheckServiceProcessorInterfac
 
         foreach ($filteredHealthCheckPlugins as $filteredHealthCheckPlugin) {
             $healthCheckServiceResponseTransfer = $filteredHealthCheckPlugin->check();
-            $healthCheckResponseTransfer
-                ->addHealthCheckServiceResponse($healthCheckServiceResponseTransfer);
+            $healthCheckServiceResponseTransfer->setName($filteredHealthCheckPlugin->getName());
+            $healthCheckResponseTransfer->addHealthCheckServiceResponse($healthCheckServiceResponseTransfer);
         }
 
-        dump($healthCheckResponseTransfer); die;
-
         return $healthCheckResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\HealthCheckRequestTransfer $healthCheckRequestTransfer
-     *
-     * @return \Spryker\Service\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[]
-     */
-    protected function filterHealthCheckPluginsByApplication(HealthCheckRequestTransfer $healthCheckRequestTransfer): array
-    {
-        return $this->healthCheckPlugins[$healthCheckRequestTransfer->getApplication()];
     }
 }
