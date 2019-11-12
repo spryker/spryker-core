@@ -53,7 +53,7 @@ class ProductDiscontinuedStorageListenerTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Tax\Business\Model;
 use Codeception\Test\Unit;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
+use Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use Spryker\Zed\Tax\Business\TaxFacade;
 
 /**
@@ -40,7 +41,7 @@ class ReaderTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -113,7 +114,7 @@ class ReaderTest extends Unit
      */
     public function testExceptionRaisedIfAttemptingToFetchNonExistentTaxRate()
     {
-        $this->expectException('Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException');
+        $this->expectException(ResourceNotFoundException::class);
         $this->taxFacade->getTaxSet(self::NON_EXISTENT_ID);
     }
 
@@ -122,7 +123,7 @@ class ReaderTest extends Unit
      */
     public function testExceptionRaisedIfAttemptingToFetchNonExistentTaxSet()
     {
-        $this->expectException('Spryker\Zed\Tax\Business\Model\Exception\ResourceNotFoundException');
+        $this->expectException(ResourceNotFoundException::class);
         $this->taxFacade->getTaxRate(self::NON_EXISTENT_ID);
     }
 

@@ -122,6 +122,7 @@
     "spryker/cms-slot-extension": "*",
     "spryker/cms-slot-gui": "*",
     "spryker/cms-slot-locale-connector": "*",
+    "spryker/cms-slot-storage": "*",
     "spryker/cms-slot-store-connector": "*",
     "spryker/cms-storage": "*",
     "spryker/cms-user-connector": "*",
