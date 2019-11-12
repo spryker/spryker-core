@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\ProductsRestApi\Processor\Expander;
 
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\AbstractProductsReaderInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
@@ -64,23 +63,6 @@ class AbstractProductsRelationshipExpander implements AbstractProductsRelationsh
         }
 
         return $resources;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $abstractProductsResources
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
-     *
-     * @return void
-     */
-    protected function addRelationships(array $abstractProductsResources, RestResourceInterface $resource): void
-    {
-        foreach ($abstractProductsResources as $idProductAbstract => $abstractProductsResource) {
-            if ($this->findSku($resource->getAttributes()) !== $idProductAbstract) {
-                continue;
-            }
-
-            $resource->addRelationship($abstractProductsResource);
-        }
     }
 
     /**
