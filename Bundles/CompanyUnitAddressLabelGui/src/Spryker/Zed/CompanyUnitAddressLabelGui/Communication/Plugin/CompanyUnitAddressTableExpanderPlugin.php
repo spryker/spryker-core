@@ -77,7 +77,8 @@ class CompanyUnitAddressTableExpanderPlugin extends AbstractPlugin implements
         $labels = (array)$labelCollection->getLabels();
 
         return implode(
-            '', array_map(
+            '',
+            array_map(
                 function (SpyCompanyUnitAddressLabelEntityTransfer $item) {
                     return $this->beautifyLabel($item->getName());
                 },
