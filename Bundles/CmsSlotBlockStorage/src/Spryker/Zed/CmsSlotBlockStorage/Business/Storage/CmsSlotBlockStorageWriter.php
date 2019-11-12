@@ -109,7 +109,7 @@ class CmsSlotBlockStorageWriter implements CmsSlotBlockStorageWriterInterface
     protected function getCmsSlotBlockStorageKey(
         CmsSlotBlockStorageTransfer $cmsSlotBlockStorageTransfer
     ): string {
-        return $this->cmsSlotBlockStorageService->generateKey(
+        return $this->cmsSlotBlockStorageService->generateSlotTemplateKey(
             $cmsSlotBlockStorageTransfer->getTemplatePath(),
             $cmsSlotBlockStorageTransfer->getSlotKey()
         );

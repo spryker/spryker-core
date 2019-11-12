@@ -15,5 +15,5 @@ interface CmsSlotBlockStorageKeyBuilderInterface
      *
      * @return string
      */
-    public function generateKey(string $cmsSlotTemplatePath, string $cmsSlotKey): string;
+    public function generateSlotTemplateKey(string $cmsSlotTemplatePath, string $cmsSlotKey): string;
 }

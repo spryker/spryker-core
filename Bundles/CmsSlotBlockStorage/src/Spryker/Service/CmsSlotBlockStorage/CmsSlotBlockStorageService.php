@@ -24,10 +24,10 @@ class CmsSlotBlockStorageService extends AbstractService implements CmsSlotBlock
      *
      * @return string
      */
-    public function generateKey(string $cmsSlotTemplatePath, string $cmsSlotKey): string
+    public function generateSlotTemplateKey(string $cmsSlotTemplatePath, string $cmsSlotKey): string
     {
         return $this->getFactory()
             ->createCmsSlotBlockStorageKeyBuilder()
-            ->generateKey($cmsSlotTemplatePath, $cmsSlotKey);
+            ->generateSlotTemplateKey($cmsSlotTemplatePath, $cmsSlotKey);
     }
 }

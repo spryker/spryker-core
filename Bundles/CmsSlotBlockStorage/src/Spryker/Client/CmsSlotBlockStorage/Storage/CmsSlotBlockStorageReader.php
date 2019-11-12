@@ -56,7 +56,7 @@ class CmsSlotBlockStorageReader implements CmsSlotBlockStorageReaderInterface
         string $cmsSlotTemplatePath,
         string $cmsSlotKey
     ): ?CmsSlotBlockStorageDataTransfer {
-        $storageKey = $this->generateKey($cmsSlotTemplatePath, $cmsSlotKey);
+        $storageKey = $this->generateStorageKey($cmsSlotTemplatePath, $cmsSlotKey);
         $cmsSlotBlockStorageData = $this->storageClient->get($storageKey);
 
         if (!$cmsSlotBlockStorageData) {
@@ -75,10 +75,9 @@ class CmsSlotBlockStorageReader implements CmsSlotBlockStorageReaderInterface
      *
      * @return string
      */
-    protected function generateKey(string $cmsSlotTemplatePath, string $cmsSlotKey): string
+    protected function generateStorageKey(string $cmsSlotTemplatePath, string $cmsSlotKey): string
     {
-        $reference = $this->cmsSlotBlockStorageService->generateKey($cmsSlotTemplatePath, $cmsSlotKey);
-
+        $reference = $this->cmsSlotBlockStorageService->generateSlotTemplateKey($cmsSlotTemplatePath, $cmsSlotKey);
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
             ->setReference($reference);
 
