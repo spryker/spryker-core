@@ -11,24 +11,10 @@ use Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\ConfigurableBundleCartNote\Dependency\Client\ConfigurableBundleCartNoteToQuoteClientInterface;
 
 class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
 {
     protected const STORAGE_STRATEGY = 'session';
-
-    /**
-     * @var \Spryker\Client\ConfigurableBundleCartNote\Dependency\Client\ConfigurableBundleCartNoteToQuoteClientInterface
-     */
-    protected $quoteClient;
-
-    /**
-     * @param \Spryker\Client\ConfigurableBundleCartNote\Dependency\Client\ConfigurableBundleCartNoteToQuoteClientInterface $quoteClient
-     */
-    public function __construct(ConfigurableBundleCartNoteToQuoteClientInterface $quoteClient)
-    {
-        $this->quoteClient = $quoteClient;
-    }
 
     /**
      * @return string
@@ -46,36 +32,30 @@ class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
     public function setCartNoteToConfigurableBundle(
         ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
     ): QuoteResponseTransfer {
-        $quoteResponseTransfer = $this->storeCartNoteToConfigurableBundle($configuredBundleCartNoteRequestTransfer);
-
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $quoteResponseTransfer;
-        }
-
-        $this->quoteClient->setQuote($quoteResponseTransfer->getQuoteTransfer());
-
-        return $quoteResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    protected function storeCartNoteToConfigurableBundle(
-        ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
-    ): QuoteResponseTransfer {
-        $quoteTransfer = $this->quoteClient->getQuote();
         $itemCollectionTransfer = $this->getItemCollectionTransferByConfigurableBundleGroupKey(
-            $quoteTransfer,
+            $configuredBundleCartNoteRequestTransfer->getQuote(),
             $configuredBundleCartNoteRequestTransfer->getConfigurableBundleGroupKey()
         );
 
         if ($itemCollectionTransfer->getItems()->count() === 0) {
             return (new QuoteResponseTransfer())
+                ->setQuoteTransfer($configuredBundleCartNoteRequestTransfer->getQuote())
                 ->setIsSuccessful(false);
         }
 
+        return $this->updateConfiguredBundlesWithCartNotes($itemCollectionTransfer, $configuredBundleCartNoteRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemCollectionTransfer $itemCollectionTransfer
+     * @param \Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function updateConfiguredBundlesWithCartNotes(
+        ItemCollectionTransfer $itemCollectionTransfer,
+        ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
+    ): QuoteResponseTransfer {
         foreach ($itemCollectionTransfer->getItems() as $itemTransfer) {
             $itemTransfer
                 ->getConfiguredBundle()
@@ -83,7 +63,7 @@ class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
         }
 
         return (new QuoteResponseTransfer())
-            ->setQuoteTransfer($quoteTransfer)
+            ->setQuoteTransfer($configuredBundleCartNoteRequestTransfer->getQuote())
             ->setIsSuccessful(true);
     }
 

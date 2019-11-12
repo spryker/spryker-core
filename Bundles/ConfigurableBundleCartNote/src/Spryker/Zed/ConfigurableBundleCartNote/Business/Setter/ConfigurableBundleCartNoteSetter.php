@@ -36,7 +36,11 @@ class ConfigurableBundleCartNoteSetter implements ConfigurableBundleCartNoteSett
     public function setCartNoteToConfigurableBundle(
         ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
     ): QuoteResponseTransfer {
-        $quoteResponseTransfer = $this->quoteFacade->findQuoteById($configuredBundleCartNoteRequestTransfer->getIdQuote());
+        $quoteResponseTransfer = $this->quoteFacade
+            ->findQuoteById(
+                $configuredBundleCartNoteRequestTransfer->getQuote()->getIdQuote()
+            );
+
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
         }
@@ -51,7 +55,7 @@ class ConfigurableBundleCartNoteSetter implements ConfigurableBundleCartNoteSett
         }
 
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
-        $quoteTransfer->setCustomer($configuredBundleCartNoteRequestTransfer->getCustomer());
+        $quoteTransfer->setCustomer($configuredBundleCartNoteRequestTransfer->getQuote()->getCustomer());
 
         return $this->quoteFacade->updateQuote($quoteTransfer);
     }

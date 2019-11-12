@@ -13,8 +13,7 @@
     </transfer>
 
     <transfer name="ConfiguredBundleCartNoteRequest">
-        <property name="idQuote" type="int"/>
-        <property name="customer" type="Customer"/>
+        <property name="quote" type="Quote"/>
         <property name="configurableBundleGroupKey" type="string"/>
         <property name="cartNote" type="string"/>
     </transfer>

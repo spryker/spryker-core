@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\ConfigurableBundleCartNote\Dependency\Client;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-
 class ConfigurableBundleCartNoteToQuoteClientBridge implements ConfigurableBundleCartNoteToQuoteClientInterface
 {
     /**
@@ -22,24 +20,6 @@ class ConfigurableBundleCartNoteToQuoteClientBridge implements ConfigurableBundl
     public function __construct($quoteClient)
     {
         $this->quoteClient = $quoteClient;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function getQuote()
-    {
-        return $this->quoteClient->getQuote();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return void
-     */
-    public function setQuote(QuoteTransfer $quoteTransfer)
-    {
-        $this->quoteClient->setQuote($quoteTransfer);
     }
 
     /**

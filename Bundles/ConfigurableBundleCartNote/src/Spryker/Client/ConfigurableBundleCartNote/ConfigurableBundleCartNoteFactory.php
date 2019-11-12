@@ -55,7 +55,7 @@ class ConfigurableBundleCartNoteFactory extends AbstractFactory
      */
     public function createSessionQuoteStorageStrategy(): QuoteStorageStrategyInterface
     {
-        return new SessionQuoteStorageStrategy($this->getQuoteClient());
+        return new SessionQuoteStorageStrategy();
     }
 
     /**
@@ -63,10 +63,7 @@ class ConfigurableBundleCartNoteFactory extends AbstractFactory
      */
     public function createDatabaseQuoteStorageStrategy(): QuoteStorageStrategyInterface
     {
-        return new DatabaseQuoteStorageStrategy(
-            $this->getQuoteClient(),
-            $this->createConfigurableBundleCartNoteZedStub()
-        );
+        return new DatabaseQuoteStorageStrategy($this->createConfigurableBundleCartNoteZedStub());
     }
 
     /**
