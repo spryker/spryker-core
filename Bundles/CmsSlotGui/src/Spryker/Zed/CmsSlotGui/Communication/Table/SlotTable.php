@@ -18,14 +18,14 @@ class SlotTable extends AbstractTable
 {
     public const TABLE_CLASS = 'js-cms-slot-list-table';
 
-    protected const COL_KEY = SpyCmsSlotTableMap::COL_KEY;
+    protected const COL_ID_CMS_SLOT = SpyCmsSlotTableMap::COL_ID_CMS_SLOT;
     protected const COL_NAME = SpyCmsSlotTableMap::COL_NAME;
     protected const COL_DESCRIPTION = SpyCmsSlotTableMap::COL_DESCRIPTION;
     protected const COL_OWNERSHIP = SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE;
     protected const COL_STATUS = SpyCmsSlotTableMap::COL_IS_ACTIVE;
     protected const COL_ACTIONS = 'actions';
 
-    protected const VALUE_COL_KEY = 'Slot Key';
+    protected const VALUE_COL_ID_CMS_SLOT = 'ID';
     protected const VALUE_COL_NAME = 'Name';
     protected const VALUE_COL_DESCRIPTION = 'Description';
     protected const VALUE_COL_OWNERSHIP = 'Ownership';
@@ -73,7 +73,7 @@ class SlotTable extends AbstractTable
         $config = $this->setSortable($config);
         $config = $this->setSearchable($config);
 
-        $config->setDefaultSortField(static::COL_KEY, TableConfiguration::SORT_ASC);
+        $config->setDefaultSortField(static::COL_ID_CMS_SLOT, TableConfiguration::SORT_ASC);
 
         $config->addRawColumn(static::COL_ACTIONS);
         $config->addRawColumn(static::COL_STATUS);
@@ -89,7 +89,7 @@ class SlotTable extends AbstractTable
     protected function setHeader(TableConfiguration $config): TableConfiguration
     {
         $header = [
-            static::COL_KEY => static::VALUE_COL_KEY,
+            static::COL_ID_CMS_SLOT => static::VALUE_COL_ID_CMS_SLOT,
             static::COL_NAME => static::VALUE_COL_NAME,
             static::COL_DESCRIPTION => static::VALUE_COL_DESCRIPTION,
             static::COL_OWNERSHIP => static::VALUE_COL_OWNERSHIP,
@@ -114,7 +114,7 @@ class SlotTable extends AbstractTable
     protected function setSortable(TableConfiguration $config): TableConfiguration
     {
         $sortable = [
-            static::COL_KEY,
+            static::COL_ID_CMS_SLOT,
             static::COL_NAME,
             static::COL_STATUS,
         ];
@@ -136,7 +136,7 @@ class SlotTable extends AbstractTable
     protected function setSearchable(TableConfiguration $config): TableConfiguration
     {
         $searchable = [
-            static::COL_KEY,
+            static::COL_ID_CMS_SLOT,
             static::COL_NAME,
             static::COL_DESCRIPTION,
         ];
@@ -187,7 +187,7 @@ class SlotTable extends AbstractTable
 
         foreach ($slotResults as $slot) {
             $results[] = [
-                static::COL_KEY => $slot[SpyCmsSlotTableMap::COL_KEY],
+                static::COL_ID_CMS_SLOT => $slot[SpyCmsSlotTableMap::COL_ID_CMS_SLOT],
                 static::COL_NAME => $slot[SpyCmsSlotTableMap::COL_NAME],
                 static::COL_DESCRIPTION => $slot[SpyCmsSlotTableMap::COL_DESCRIPTION],
                 static::COL_OWNERSHIP => $slot[SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE],

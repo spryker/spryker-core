@@ -15,7 +15,7 @@ interface CmsSlotBlockFacadeInterface
 {
     /**
      * Specification:
-     * - Saves relations between CMS Slots and CMS blocks.
+     * - Creates relations between CMS Slots and CMS Blocks.
      *
      * @api
      *
@@ -23,7 +23,19 @@ interface CmsSlotBlockFacadeInterface
      *
      * @return void
      */
-    public function saveCmsSlotBlockRelations(CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer): void;
+    public function createCmsSlotBlockRelations(CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer): void;
+
+    /**
+     * Specification:
+     * - Removes relations between CMS Slots and CMS blocks by CmsSlotBlockCriteriaTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
+     *
+     * @return void
+     */
+    public function deleteCmsSlotBlockRelationsByCriteria(CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer): void;
 
     /**
      * Specification:

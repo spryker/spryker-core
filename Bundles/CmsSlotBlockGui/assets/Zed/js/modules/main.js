@@ -4,3 +4,48 @@
  */
 
 'use strict';
+
+var SlotBlocks = require('./slot-blocks');
+var BlocksTable = require('./blocks-table');
+var BlocksChoice = require('./blocks-choice');
+var SlotBlocksForm = require('./slot-blocks-form');
+
+$(document).ready(function() {
+    var blocksChoiceFormSelector = '[name=block-choice]';
+    var cmsSlotBlocksSelector = '.js-cms-slot-blocks';
+
+    var slotBlocksForm = new SlotBlocksForm({
+        cmsSlotBlocksSelector: cmsSlotBlocksSelector,
+    });
+
+    var blocksTable = new BlocksTable({
+        tableBaseUrl: '/cms-slot-block-gui/slot-block/table',
+        blocksTableSelector: '.js-cms-slot-block-table',
+        cmsSlotBlocksSelector: cmsSlotBlocksSelector,
+        cmsSlotBlocksOverlaySelector: '.js-cms-slot-blocks__overlay',
+        cmsSlotBlocksOverlayTogglerClass: 'cms-slot-blocks__overlay--hidden',
+        slotBlocksForm: slotBlocksForm,
+        viewBlockUrl: '/cms-block-gui/view-block',
+        blocksChoiceFormSelector: blocksChoiceFormSelector,
+    });
+
+    var blocksChoice = new BlocksChoice({
+        blocksChoiceFormSelector: blocksChoiceFormSelector,
+        blocksTable: blocksTable,
+        blocksChoiceAddSelector: '#block-choice_add',
+    });
+
+    var slotBlocks = new SlotBlocks({
+        slotSelector: '.js-row-list-of-slots',
+        slotTableSelector: '.js-row-list-of-slots table',
+        blockContainerSelector: '.js-row-list-of-blocks-container',
+        baseUrl: '/cms-slot-block-gui/slot-block/index',
+        paramIdCmsSlotTemplate: 'id-cms-slot-template',
+        paramIdCmsSlot: 'id-cms-slot',
+        blocksTable: blocksTable,
+        blocksChoice: blocksChoice,
+        slotBlocksForm: slotBlocksForm,
+    });
+
+    slotBlocks.init();
+});
