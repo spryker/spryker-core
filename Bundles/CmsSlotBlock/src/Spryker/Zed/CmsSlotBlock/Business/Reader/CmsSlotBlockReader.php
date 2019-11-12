@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsSlotBlock\Business\Reader;
 
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 use Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockRepositoryInterface;
 
 class CmsSlotBlockReader implements CmsSlotBlockReaderInterface
@@ -26,13 +27,13 @@ class CmsSlotBlockReader implements CmsSlotBlockReaderInterface
     }
 
     /**
-     * @param int $idCmsSlotTemplate
-     * @param int $idCmsSlot
+     * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer
      */
-    public function getCmsSlotBlockCollection(int $idCmsSlotTemplate, int $idCmsSlot): CmsSlotBlockCollectionTransfer
-    {
-        return $this->cmsSlotBlockRepository->getCmsSlotBlocks($idCmsSlotTemplate, $idCmsSlot);
+    public function getCmsSlotBlockCollection(
+        CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
+    ): CmsSlotBlockCollectionTransfer {
+        return $this->cmsSlotBlockRepository->getCmsSlotBlocks($cmsSlotBlockCriteriaTransfer);
     }
 }

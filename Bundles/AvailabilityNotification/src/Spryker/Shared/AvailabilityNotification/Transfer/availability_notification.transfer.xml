@@ -80,4 +80,18 @@
         <property name="locale" type="Locale"/>
     </transfer>
 
+    <transfer name="Translation">
+    </transfer>
+
+    <transfer name="ProductAbstract">
+    </transfer>
+
+    <transfer name="ProductImageSet">
+        <property name="productImages" type="ProductImage[]" singular="productImage"/>
+    </transfer>
+
+    <transfer name="ProductImage">
+        <property name="externalUrlLarge" type="string"/>
+    </transfer>
+
 </transfers>

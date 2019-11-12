@@ -9,8 +9,10 @@ namespace Spryker\Zed\CmsSlotBlock\Persistence;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -21,17 +23,29 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockRepositoryInterface
 {
     /**
-     * @param int $idCmsSlotTemplate
-     * @param int $idCmsSlot
+     * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer
      */
-    public function getCmsSlotBlocks(int $idCmsSlotTemplate, int $idCmsSlot): CmsSlotBlockCollectionTransfer
-    {
-        $cmsSlotBlockEntities = $this->getFactory()
-            ->getCmsSlotBlockQuery()
-            ->filterByFkCmsSlotTemplate($idCmsSlotTemplate)
-            ->filterByFkCmsSlot($idCmsSlot)
+    public function getCmsSlotBlocks(
+        CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
+    ): CmsSlotBlockCollectionTransfer {
+        $query = $this->getFactory()->getCmsSlotBlockQuery();
+
+        if ($cmsSlotBlockCriteriaTransfer->getIdCmsSlotTemplate()) {
+            $query->filterByFkCmsSlotTemplate($cmsSlotBlockCriteriaTransfer->getIdCmsSlotTemplate());
+        }
+
+        if ($cmsSlotBlockCriteriaTransfer->getIdCmsSlot()) {
+            $query->filterByFkCmsSlot($cmsSlotBlockCriteriaTransfer->getIdCmsSlot());
+        }
+
+        $cmsSlotBlockEntities = $this
+            ->buildQueryFromCriteria(
+                $query,
+                $cmsSlotBlockCriteriaTransfer->getFilter()
+            )
+            ->setFormatter(ModelCriteria::FORMAT_OBJECT)
             ->find();
 
         return $this->getFactory()

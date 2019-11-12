@@ -25,10 +25,10 @@
 
 {% block head_css %}
     {{ parent() }}
-    <link rel="stylesheet" href="/assets/css/spryker-zed-sales-reclamation-main.css">
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-sales-reclamation-main.css') }}">
 {% endblock %}
 
 {% block footer_js %}
     {{ parent() }}
-    <script src="/assets/js/spryker-zed-sales-reclamation-gui-main.js" />
+    <script src="{{ assetsPath('js/spryker-zed-sales-reclamation-gui-main.js') }}" />
 {% endblock %}

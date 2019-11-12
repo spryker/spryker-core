@@ -48,11 +48,11 @@ class YvesFragmentControllerResolverTest extends Unit
     public function getController()
     {
         return [
-            ['index/index/index', 'SprykerTest\Yves\Kernel\ControllerResolver\YvesFragmentControllerResolverTest::indexAction'],
-            ['/index/index/index', 'SprykerTest\Yves\Kernel\ControllerResolver\YvesFragmentControllerResolverTest::indexAction'],
-            ['Index/Index/Index', 'SprykerTest\Yves\Kernel\ControllerResolver\YvesFragmentControllerResolverTest::indexAction'],
-            ['/Index/Index/Index', 'SprykerTest\Yves\Kernel\ControllerResolver\YvesFragmentControllerResolverTest::indexAction'],
-            ['foo-bar/baz-bat/zip-zap', 'SprykerTest\Yves\Kernel\ControllerResolver\YvesFragmentControllerResolverTest::zipZapAction'],
+            ['index/index/index', YvesFragmentControllerResolverTest::class . '::indexAction'],
+            ['/index/index/index', YvesFragmentControllerResolverTest::class . '::indexAction'],
+            ['Index/Index/Index', YvesFragmentControllerResolverTest::class . '::indexAction'],
+            ['/Index/Index/Index', YvesFragmentControllerResolverTest::class . '::indexAction'],
+            ['foo-bar/baz-bat/zip-zap', YvesFragmentControllerResolverTest::class . '::zipZapAction'],
         ];
     }
 

@@ -61,7 +61,7 @@ class ProductOptionStorageListenerTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -203,8 +203,9 @@ class ProductOptionStorageListenerTest extends Unit
 
         $eventTransfers = [];
 
-        if ($productOptionValues) {
-            $productOptionValueTransfer = current($productOptionValues);
+        if ($productOptionValues->count() !== 0) {
+            /** @var \Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer */
+            $productOptionValueTransfer = $productOptionValues[0];
 
             $eventTransfers[] = (new EventEntityTransfer())->setForeignKeys([
                 SpyProductOptionValuePriceTableMap::COL_FK_PRODUCT_OPTION_VALUE => $productOptionValueTransfer->getIdProductOptionValue(),

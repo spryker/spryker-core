@@ -57,7 +57,7 @@ class QueueMessageHelperTest extends Unit
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface;
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface ;
      */
     protected function createSynchronizationToUtilEncodingService()
     {

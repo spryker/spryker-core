@@ -8,4 +8,7 @@
         <property name="customer" type="Customer"/>
     </transfer>
 
+    <transfer name="Customer">
+    </transfer>
+
 </transfers>
