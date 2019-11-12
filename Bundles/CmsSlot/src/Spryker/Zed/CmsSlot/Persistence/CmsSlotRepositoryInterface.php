@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CmsSlot\Persistence;
 
-use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotCriteriaTransfer;
+use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
 
 interface CmsSlotRepositoryInterface
