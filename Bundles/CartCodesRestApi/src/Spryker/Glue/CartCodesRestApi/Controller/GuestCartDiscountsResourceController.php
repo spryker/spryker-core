@@ -56,7 +56,7 @@ class GuestCartDiscountsResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "404": "Cart with given uuid not found.",
+     *              "404": "Cart with given uuid not found."
      *              "422": "Cart code can't be deleted."
      *          }
      *     }
