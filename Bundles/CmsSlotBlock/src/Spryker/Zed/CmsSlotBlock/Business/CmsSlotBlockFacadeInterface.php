@@ -27,7 +27,7 @@ interface CmsSlotBlockFacadeInterface
 
     /**
      * Specification:
-     * - Removes relations between CMS Slots and CMS blocks by CriteriaTransfer.
+     * - Removes relations between CMS Slots and CMS blocks by CmsSlotBlockCriteriaTransfer.
      *
      * @api
      *
