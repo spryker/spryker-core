@@ -45,7 +45,11 @@ class NavigationNodeReader implements NavigationNodeReaderInterface
         foreach ($urlEntities as $url) {
             $navigationNodeEntities = $this->navigationQueryContainer->queryNavigationNodeByFkUrl($url->getIdUrl())->find();
             foreach ($navigationNodeEntities as $navigationNode) {
-                $navigationNodes[] = (new NavigationNodeTransfer())->fromArray($navigationNode->toArray(), true);
+                if (isset($navigationNodes[$navigationNode->getIdNavigationNode()])) {
+                    continue;
+                }
+
+                $navigationNodes[$navigationNode->getIdNavigationNode()] = (new NavigationNodeTransfer())->fromArray($navigationNode->toArray(), true);
             }
         }
 

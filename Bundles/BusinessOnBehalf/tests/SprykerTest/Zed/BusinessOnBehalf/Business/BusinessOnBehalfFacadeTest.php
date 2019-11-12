@@ -50,7 +50,7 @@ class BusinessOnBehalfFacadeTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->customer = $this->tester->haveCustomer([CustomerTransfer::IS_ON_BEHALF => null]);

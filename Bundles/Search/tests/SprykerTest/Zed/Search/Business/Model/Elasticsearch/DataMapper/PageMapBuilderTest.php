@@ -35,7 +35,7 @@ class PageMapBuilderTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -43,12 +43,11 @@ class PageMapBuilderTest extends Unit
     }
 
     /**
-     * @expectedException \InvalidArgumentException
-     *
      * @return void
      */
     public function testAddingInvalidFieldShouldThrowException()
     {
+        $this->expectException('InvalidArgumentException');
         $pageMapTransfer = new PageMapTransfer();
         $this->pageMapBuilder->add($pageMapTransfer, 'non-existing-field', 'foo', 'bar');
     }
