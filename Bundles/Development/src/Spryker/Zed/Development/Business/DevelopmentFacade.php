@@ -43,11 +43,11 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      * @param string|null $module
      * @param array $options
      *
-     * @return void
+     * @return int
      */
-    public function runTest($module, array $options = [])
+    public function runTest($module, array $options = []): int
     {
-        $this->getFactory()->createCodeTester()->runTest($module, $options);
+        return $this->getFactory()->createCodeTester()->runTest($module, $options);
     }
 
     /**
@@ -56,11 +56,11 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      * @param string|null $module
      * @param array $options
      *
-     * @return void
+     * @return int
      */
-    public function runFixtures($module, array $options = [])
+    public function runFixtures($module, array $options = []): int
     {
-        $this->getFactory()->createCodeTester()->runFixtures($module, $options);
+        return $this->getFactory()->createCodeTester()->runFixtures($module, $options);
     }
 
     /**

@@ -36,9 +36,9 @@ interface DevelopmentFacadeInterface
      * @param string|null $module
      * @param array $options
      *
-     * @return void
+     * @return int
      */
-    public function runTest($module, array $options = []);
+    public function runTest(?string $module, array $options = []): int;
 
     /**
      * Specification:
@@ -50,9 +50,9 @@ interface DevelopmentFacadeInterface
      * @param string|null $module
      * @param array $options
      *
-     * @return void
+     * @return int
      */
-    public function runFixtures($module, array $options = []);
+    public function runFixtures(?string $module, array $options = []): int;
 
     /**
      * @api
