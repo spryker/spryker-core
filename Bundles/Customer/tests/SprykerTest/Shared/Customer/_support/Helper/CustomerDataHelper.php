@@ -16,14 +16,13 @@ use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
 use Spryker\Zed\Mail\Business\MailFacadeInterface;
+use SprykerTest\Shared\Testify\Helper\BusinessHelper;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\DependencyHelperTrait;
-use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CustomerDataHelper extends Module
 {
     use DependencyHelperTrait;
-    use LocatorHelperTrait;
     use DataCleanupHelperTrait;
 
     /**
@@ -35,6 +34,7 @@ class CustomerDataHelper extends Module
      */
     public function haveCustomer(array $override = []): CustomerTransfer
     {
+        /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
         $customerTransfer = (new CustomerBuilder($override))
             ->withBillingAddress()
             ->withShippingAddress()
@@ -82,7 +82,21 @@ class CustomerDataHelper extends Module
         $customerToMailBridge = new CustomerToMailBridge($this->getMailFacadeMock());
         $this->getDependencyHelper()->setDependency(CustomerDependencyProvider::FACADE_MAIL, $customerToMailBridge);
 
-        return $this->getLocatorHelper()->getLocator()->customer()->facade();
+        /** @var \Spryker\Zed\Customer\Business\CustomerFacadeInterface $customerFacade */
+        $customerFacade = $this->getBusinessHelper()->getFacade();
+
+        return $customerFacade;
+    }
+
+    /**
+     * @return \SprykerTest\Shared\Testify\Helper\BusinessHelper
+     */
+    protected function getBusinessHelper(): BusinessHelper
+    {
+        /** @var \SprykerTest\Shared\Testify\Helper\BusinessHelper $businessHelper */
+        $businessHelper = $this->getModule('\\' . BusinessHelper::class);
+
+        return $businessHelper;
     }
 
     /**

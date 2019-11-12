@@ -5,29 +5,27 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Application\Business\Model\Request;
+namespace SprykerTest\Zed\Http\Communication\SubRequest;
 
+use Codeception\Test\Unit;
 use Silex\Application;
-use Silex\WebTestCase;
-use Spryker\Zed\Application\Business\Model\Request\SubRequestHandler;
+use Spryker\Zed\Http\Communication\SubRequest\SubRequestHandler;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Client;
 
 /**
- * @deprecated Moved to \SprykerTest\Zed\Http\Communication\SubRequest\SubRequestHandlerTest.
- *
  * Auto-generated group annotations
  *
  * @group SprykerTest
  * @group Zed
- * @group Application
- * @group Business
- * @group Model
- * @group Request
+ * @group Http
+ * @group Communication
+ * @group SubRequest
  * @group SubRequestHandlerTest
  * Add your own group annotations below this line
  */
-class SubRequestHandlerTest extends WebTestCase
+class SubRequestHandlerTest extends Unit
 {
     public const GET_PARAMS = ['banana', 'mango'];
     public const POST_PARAMS = ['apple', 'orange'];
@@ -39,10 +37,10 @@ class SubRequestHandlerTest extends WebTestCase
      */
     public function setUp(): void
     {
+        parent::setUp();
+
         Request::setTrustedHosts([]);
         Request::setTrustedProxies([], Request::HEADER_X_FORWARDED_ALL);
-
-        parent::setUp();
     }
 
     /**
@@ -51,7 +49,7 @@ class SubRequestHandlerTest extends WebTestCase
     public function testHandleSubRequestWithGetParams(): void
     {
         $client = $this->createClient();
-        $client->request('get', self::URL_MASTER_REQUEST, self::GET_PARAMS);
+        $client->request('get', static::URL_MASTER_REQUEST, self::GET_PARAMS);
         $this->assertInstanceOf(RedirectResponse::class, $client->getResponse());
     }
 
@@ -61,11 +59,13 @@ class SubRequestHandlerTest extends WebTestCase
     public function testHandleSubRequestWithPostParams(): void
     {
         $client = $this->createClient();
-        $client->request('post', self::URL_MASTER_REQUEST, self::POST_PARAMS);
+        $client->request('post', static::URL_MASTER_REQUEST, static::POST_PARAMS);
         $this->assertInstanceOf(RedirectResponse::class, $client->getResponse());
     }
 
     /**
+     * @deprecated This can be refactored to use the ApplicationHelper which will be released together with the SecurityApplicationPlugin.
+     *
      * @return \Silex\Application
      */
     public function createApplication(): Application
@@ -79,12 +79,22 @@ class SubRequestHandlerTest extends WebTestCase
             return $subRequestHandler->handleSubRequest(new Request(), self::URL_SUB_REQUEST);
         };
 
-        $app['controllers']->get(self::URL_MASTER_REQUEST, $callback);
-        $app->post(self::URL_MASTER_REQUEST, $callback);
-        $app['controllers']->get(self::URL_SUB_REQUEST, function () {
-            return new RedirectResponse(self::URL_SUB_REQUEST);
+        $app['controllers']->get(static::URL_MASTER_REQUEST, $callback);
+        $app->post(static::URL_MASTER_REQUEST, $callback);
+        $app['controllers']->get(static::URL_SUB_REQUEST, function () {
+            return new RedirectResponse(static::URL_SUB_REQUEST);
         });
 
         return $app;
+    }
+
+    /**
+     * @param array $server
+     *
+     * @return \Symfony\Component\HttpKernel\Client
+     */
+    protected function createClient(array $server = []): Client
+    {
+        return new Client($this->createApplication(), $server);
     }
 }

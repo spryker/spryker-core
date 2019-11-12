@@ -5,13 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Application\Business\Model\Request;
+namespace Spryker\Zed\Http\Communication\SubRequest;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @deprecated Use `\Spryker\Zed\Http\Communication\SubRequest\SubRequestHandlerInterface` instead.
- */
 interface SubRequestHandlerInterface
 {
     /**
@@ -21,5 +19,5 @@ interface SubRequestHandlerInterface
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function handleSubRequest(Request $request, $url, array $additionalSubRequestParameters = []);
+    public function handleSubRequest(Request $request, string $url, array $additionalSubRequestParameters = []): Response;
 }
