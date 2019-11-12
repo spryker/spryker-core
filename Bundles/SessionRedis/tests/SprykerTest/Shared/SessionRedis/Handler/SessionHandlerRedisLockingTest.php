@@ -94,7 +94,7 @@ class SessionHandlerRedisLockingTest extends Unit
             ->expects($this->once())
             ->method('del')
             ->with(['session:session_key'])
-            ->willReturn(true);
+            ->willReturn(1);
 
         $this->spinLockLockerMock
             ->expects($this->once())
