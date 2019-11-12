@@ -39,7 +39,7 @@ class IndexController extends AbstractController
 
         $healthCheckResponseTransfer = $this->getFactory()
             ->getHealthCheckService()
-            ->processHealthCheck($healthCheckRequestTransfer);
+            ->checkZedHealthCheck($healthCheckRequestTransfer);
 
         return new JsonResponse($healthCheckResponseTransfer->toArray());
     }

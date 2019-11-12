@@ -15,7 +15,7 @@ interface HealthCheckRestApiToHealthCheckServiceInterface
     /**
      * @param \Generated\Shared\Transfer\HealthCheckRequestTransfer $healthCheckRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
+     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer $healthCheckResponseTransfer
      */
-    public function processHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer;
+    public function checkGlueHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer;
 }

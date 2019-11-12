@@ -19,28 +19,84 @@ class HealthCheckServiceFactory extends AbstractServiceFactory
     /**
      * @return \Spryker\Service\HealthCheck\Processor\HealthCheckServiceProcessorInterface
      */
-    public function createHealthCheckServiceProcessor(): HealthCheckServiceProcessorInterface
+    public function createYvesHealthCheckServiceProcessor(): HealthCheckServiceProcessorInterface
     {
         return new HealthCheckServiceProcessor(
-            $this->createServiceFilter()
+            $this->createYvesServiceFilter()
         );
     }
 
     /**
      * @return \Spryker\Service\HealthCheck\Filter\Service\ServiceFilterInterface
      */
-    public function createServiceFilter(): ServiceFilterInterface
+    public function createYvesServiceFilter(): ServiceFilterInterface
     {
         return new ServiceFilter(
-            $this->getHealthCheckPlugins()
+            $this->getYvesHealthCheckPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Service\HealthCheck\Processor\HealthCheckServiceProcessorInterface
+     */
+    public function createZedHealthCheckServiceProcessor(): HealthCheckServiceProcessorInterface
+    {
+        return new HealthCheckServiceProcessor(
+            $this->createZedServiceFilter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Service\HealthCheck\Filter\Service\ServiceFilterInterface
+     */
+    public function createZedServiceFilter(): ServiceFilterInterface
+    {
+        return new ServiceFilter(
+            $this->getZedHealthCheckPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Service\HealthCheck\Processor\HealthCheckServiceProcessorInterface
+     */
+    public function createGlueHealthCheckServiceProcessor(): HealthCheckServiceProcessorInterface
+    {
+        return new HealthCheckServiceProcessor(
+            $this->createGlueServiceFilter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Service\HealthCheck\Filter\Service\ServiceFilterInterface
+     */
+    public function createGlueServiceFilter(): ServiceFilterInterface
+    {
+        return new ServiceFilter(
+            $this->getGlueHealthCheckPlugins()
         );
     }
 
     /**
      * @return \Spryker\Service\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[]
      */
-    public function getHealthCheckPlugins(): array
+    public function getYvesHealthCheckPlugins(): array
     {
-        return $this->getProvidedDependency(HealthCheckDependencyProvider::PLUGINS_HEALTH_CHECK);
+        return $this->getProvidedDependency(HealthCheckDependencyProvider::PLUGINS_YVES_HEALTH_CHECK);
+    }
+
+    /**
+     * @return \Spryker\Service\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[]
+     */
+    public function getZedHealthCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(HealthCheckDependencyProvider::PLUGINS_ZED_HEALTH_CHECK);
+    }
+
+    /**
+     * @return \Spryker\Service\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[]
+     */
+    public function getGlueHealthCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(HealthCheckDependencyProvider::PLUGINS_GLUE_HEALTH_CHECK);
     }
 }

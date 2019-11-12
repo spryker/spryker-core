@@ -81,7 +81,7 @@ class HealthCheckProcessor implements HealthCheckProcessorInterface
             ->setApplication(APPLICATION)
             ->setServices($services);
 
-        $healthCheckResponseTransfer = $this->healthCheckService->processHealthCheck($healthCheckRequestTransfer);
+        $healthCheckResponseTransfer = $this->healthCheckService->checkGlueHealthCheck($healthCheckRequestTransfer);
 
         $restHealthCheckResponseAttributesTransfer = $this->healthCheckMapper
             ->mapHealthCheckServiceResponseTransferToRestHealthCheckResponseAttributesTransfer(
