@@ -298,18 +298,17 @@ class CmsSlotFacadeTest extends Unit
     public function testGetCmsSlotTemplateByIdFailsWithException(): void
     {
         //Arrange
-        $this->tester->ensureCmsSlotTemplateTableIsEmpty();
         $this->expectExceptionObject(
             new MissingCmsSlotTemplateException(
                 sprintf(
                     static::EXCEPTION_ERROR_MESSAGE_MISSING_CMS_SLOT_TEMPLATE,
-                    1
+                    0
                 )
             )
         );
 
         //Act
-        $cmsSlotTemplateTransfer = $this->tester->getFacade()->getCmsSlotTemplateById(1);
+        $cmsSlotTemplateTransfer = $this->tester->getFacade()->getCmsSlotTemplateById(0);
 
         // Assert
         $this->assertNull($cmsSlotTemplateTransfer);
