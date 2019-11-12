@@ -8,6 +8,9 @@
 namespace SprykerTest\Zed\Transfer\Business\Model\Generator;
 
 use Codeception\Test\Unit;
+use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException;
+use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException;
+use Spryker\Zed\Transfer\Business\Exception\InvalidNameException;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
 use Spryker\Zed\Transfer\TransferConfig;
 
@@ -430,12 +433,11 @@ class ClassDefinitionTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Transfer\Business\Exception\InvalidNameException
-     *
      * @return void
      */
     public function testInvalidPropertyNameShouldThrowException()
     {
+        $this->expectException(InvalidNameException::class);
         $property = $this->getProperty('invalid_property_name', 'string');
 
         $transferDefinition = [
@@ -556,12 +558,11 @@ class ClassDefinitionTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException
-     *
      * @return void
      */
     public function testInvalidAssociativeTypeException()
     {
+        $this->expectException(InvalidAssociativeTypeException::class);
         $transferDefinition = [
             'name' => 'name',
             'property' => [$this->getPropertyAssociative('property1', 'string', null, null, [], true)],
@@ -572,12 +573,11 @@ class ClassDefinitionTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException
-     *
      * @return void
      */
     public function testInvalidAssociativeValueException()
     {
+        $this->expectException(InvalidAssociativeValueException::class);
         $transferDefinition = [
             'name' => 'name',
             'property' => [$this->getPropertyAssociative('properties', 'string[]', 'property', null, [], 'Yeah')],

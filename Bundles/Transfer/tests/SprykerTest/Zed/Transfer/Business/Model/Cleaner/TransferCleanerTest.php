@@ -29,7 +29,7 @@ class TransferCleanerTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $testDirectory = $this->getTestDirectory();
         if (!is_dir($testDirectory)) {
@@ -50,7 +50,7 @@ class TransferCleanerTest extends Unit
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $testFile1 = $this->getTestDirectory() . static::TEST_FILE_NAME;
         if (file_exists($testFile1)) {
