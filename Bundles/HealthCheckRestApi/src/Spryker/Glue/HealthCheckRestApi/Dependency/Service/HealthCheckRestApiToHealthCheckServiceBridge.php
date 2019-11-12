@@ -9,7 +9,6 @@ namespace Spryker\Glue\HealthCheckRestApi\Dependency\Service;
 
 use Generated\Shared\Transfer\HealthCheckRequestTransfer;
 use Generated\Shared\Transfer\HealthCheckResponseTransfer;
-use Spryker\Service\HealthCheck\HealthCheckServiceInterface;
 
 class HealthCheckRestApiToHealthCheckServiceBridge implements HealthCheckRestApiToHealthCheckServiceInterface
 {
@@ -19,7 +18,7 @@ class HealthCheckRestApiToHealthCheckServiceBridge implements HealthCheckRestApi
     protected $healthCheckService;
 
     /**
-     * @param \Spryker\Service\HealthCheck\HealthCheckServiceInterface
+     * @param \Spryker\Service\HealthCheck\HealthCheckServiceInterface $healthCheckService
      */
     public function __construct($healthCheckService)
     {
@@ -29,10 +28,10 @@ class HealthCheckRestApiToHealthCheckServiceBridge implements HealthCheckRestApi
     /**
      * @param \Generated\Shared\Transfer\HealthCheckRequestTransfer $healthCheckRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
+     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer $healthCheckResponseTransfer
      */
-    public function processHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer
+    public function checkGlueHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer
     {
-        return $this->healthCheckService->processHealthCheck($healthCheckRequestTransfer);
+        return $this->healthCheckService->checkGlueHealthCheck($healthCheckRequestTransfer);
     }
 }

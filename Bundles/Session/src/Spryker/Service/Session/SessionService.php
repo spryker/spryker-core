@@ -7,8 +7,8 @@
 
 namespace Spryker\Service\Session;
 
-use Spryker\Service\Kernel\AbstractService;
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
+use Spryker\Service\Kernel\AbstractService;
 
 /**
  * @method \Spryker\Service\Session\SessionServiceFactory getFactory()

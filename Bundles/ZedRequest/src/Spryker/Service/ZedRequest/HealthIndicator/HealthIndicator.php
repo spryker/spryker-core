@@ -9,7 +9,6 @@ namespace Spryker\Service\ZedRequest\HealthIndicator;
 
 use Exception;
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
-use Spryker\Service\Storage\Dependency\Client\StorageToStorageClientInterface;
 use Spryker\Service\ZedRequest\Dependency\Client\ZedRequestToHealthCheckClientInterface;
 
 class HealthIndicator implements HealthIndicatorInterface

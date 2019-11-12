@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\HealthCheck\src\Spryker\Zed\HealthCheck\Communication\Exception;
+namespace Spryker\Yves\HealthCheck;
 
-use Exception;
+use Spryker\Yves\Kernel\AbstractBundleConfig;
 
-class HealthCheckDisabledException extends Exception
+class HealthCheckConfig extends AbstractBundleConfig
 {
 }

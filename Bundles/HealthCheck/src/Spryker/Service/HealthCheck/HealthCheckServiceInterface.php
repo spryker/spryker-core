@@ -12,44 +12,9 @@ use Generated\Shared\Transfer\HealthCheckResponseTransfer;
 
 interface HealthCheckServiceInterface
 {
-//    /**
-//     * Specification:
-//     * - Performs health checks for Yves services based on plugin stack.
-//     *
-//     * @api
-//     *
-//     * @param \Generated\Shared\Transfer\HealthCheckRequestTransfer $healthCheckRequestTransfer
-//     *
-//     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
-//     */
-//    public function checkYvesHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer;
-//
-//    /**
-//     * Specification:
-//     * - Performs health checks for Zed services based on plugin stack.
-//     *
-//     * @api
-//     *
-//     * @param \Generated\Shared\Transfer\HealthCheckRequestTransfer $healthCheckRequestTransfer
-//     *
-//     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
-//     */
-//    public function checkZedHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer;
-//
-//    /**
-//     * Specification:
-//     * - Performs health checks for Glue application services based on plugin stack.
-//     *
-//     * @api
-//     *
-//     * @param \Generated\Shared\Transfer\HealthCheckRequestTransfer $healthCheckRequestTransfer
-//     *
-//     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer $healthCheckResponseTransfer
-//     */
-//    public function checkGlueHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer;
-
     /**
-     * {@inheritDoc}
+     * Specification:
+     * - Performs health checks for Yves services based on plugin stack.
      *
      * @api
      *
@@ -57,5 +22,29 @@ interface HealthCheckServiceInterface
      *
      * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
      */
-    public function processHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer;
+    public function checkYvesHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer;
+
+    /**
+     * Specification:
+     * - Performs health checks for Zed services based on plugin stack.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\HealthCheckRequestTransfer $healthCheckRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
+     */
+    public function checkZedHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer;
+
+    /**
+     * Specification:
+     * - Performs health checks for Glue application services based on plugin stack.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\HealthCheckRequestTransfer $healthCheckRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer $healthCheckResponseTransfer
+     */
+    public function checkGlueHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer;
 }

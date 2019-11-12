@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\HealthCheckRestApi\Plugin;
 
+use Generated\Shared\Transfer\RestHealthCheckResponseAttributesTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\HealthCheckRestApi\HealthCheckRestApiConfig;
@@ -67,6 +68,6 @@ class HealthCheckResourceRoutePlugin extends AbstractPlugin implements ResourceR
      */
     public function getResourceAttributesClassName(): string
     {
-        return '';
+        return RestHealthCheckResponseAttributesTransfer::class;
     }
 }
