@@ -22,14 +22,12 @@ class CartCodesRestApiConfig extends AbstractBundleConfig
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND
      */
     public const RESPONSE_CODE_CART_NOT_FOUND = '101';
-    public const RESPONSE_CART_CODE_CANT_BE_ADDED = '3301';
     public const RESPONSE_CART_CODE_CANT_BE_DELETED = '3302';
 
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND
      */
     public const EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND = 'Cart with given uuid not found.';
-    public const EXCEPTION_CART_CODE_CANT_BE_ADDED = 'Cart code can\'t be added.';
     public const EXCEPTION_CART_CODE_CANT_BE_DELETED = 'Cart code can\'t be deleted.';
 
     /**
