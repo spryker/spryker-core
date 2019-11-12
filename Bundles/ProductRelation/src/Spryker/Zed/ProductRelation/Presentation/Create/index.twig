@@ -15,10 +15,10 @@
 
 {% block head_css %}
     {{ parent() }}
-    <link rel="stylesheet" href="/assets/css/spryker-zed-product-relation.css" />
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-product-relation.css') }}" />
 {% endblock %}
 
 {% block footer_js %}
     {{ parent() }}
-    <script src="/assets/js/spryker-zed-product-relation.js"></script>
+    <script src="{{ assetsPath('js/spryker-zed-product-relation.js') }}"></script>
 {% endblock %}
