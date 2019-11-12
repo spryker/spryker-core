@@ -10,7 +10,6 @@ namespace Spryker\Client\ConfigurableBundleCartNote\QuoteStorageStrategy;
 use Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 
 class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
 {
@@ -32,10 +31,7 @@ class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
     public function setCartNoteToConfigurableBundle(
         ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
     ): QuoteResponseTransfer {
-        $itemCollectionTransfer = $this->getItemCollectionTransferByConfigurableBundleGroupKey(
-            $configuredBundleCartNoteRequestTransfer->getQuote(),
-            $configuredBundleCartNoteRequestTransfer->getGroupKey()
-        );
+        $itemCollectionTransfer = $this->getItemCollectionTransferByConfigurableBundleGroupKey($configuredBundleCartNoteRequestTransfer);
 
         if ($itemCollectionTransfer->getItems()->count() === 0) {
             return (new QuoteResponseTransfer())
@@ -68,19 +64,17 @@ class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $configurableBundleGroupKey
+     * @param \Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
     protected function getItemCollectionTransferByConfigurableBundleGroupKey(
-        QuoteTransfer $quoteTransfer,
-        string $configurableBundleGroupKey
+        ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
     ): ItemCollectionTransfer {
         $itemCollectionTransfer = new ItemCollectionTransfer();
 
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getConfiguredBundle()->getGroupKey() === $configurableBundleGroupKey) {
+        foreach ($configuredBundleCartNoteRequestTransfer->getQuote()->getItems() as $itemTransfer) {
+            if ($itemTransfer->getConfiguredBundle()->getGroupKey() === $configuredBundleCartNoteRequestTransfer->getGroupKey()) {
                 $itemCollectionTransfer->addItem($itemTransfer);
             }
         }
