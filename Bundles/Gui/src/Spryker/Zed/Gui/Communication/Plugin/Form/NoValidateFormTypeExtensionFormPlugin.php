@@ -19,7 +19,7 @@ use Symfony\Component\Form\FormFactoryBuilderInterface;
 class NoValidateFormTypeExtensionFormPlugin extends AbstractPlugin implements FormPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds `Spryker\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension`.
      *
      * @api

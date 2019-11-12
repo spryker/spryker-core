@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/application-extension": "^1.0.0",
-    "spryker/container": "1.4.0",
+    "spryker/container": "^1.4.0",
     "spryker/event-dispatcher-extension": "^1.0.0",
     "spryker/form-extension": "^1.0.0",
     "spryker/http-extension": "^1.0.0",
