@@ -20,8 +20,11 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBu
  * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
  */
-class GlossarySynchronizationDataBulkRepositoryPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
+class GlossarySynchronizationDataRepositoryPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
+    /**
+     * @uses \Orm\Zed\GlossaryStorage\Persistence\Map\SpyGlossaryStorageTableMap::COL_ID_GLOSSARY_STORAGE
+     */
     protected const COL_ID_GLOSSARY_STORAGE = 'spy_glossary_storage.id_glossary_storage';
 
     /**
@@ -49,8 +52,7 @@ class GlossarySynchronizationDataBulkRepositoryPlugin extends AbstractPlugin imp
     }
 
     /**
-     * Specification:
-     *  - Returns SynchronizationDataTransfer[] according to provided offset, limit and ids.
+     * {@inheritDoc}
      *
      * @api
      *

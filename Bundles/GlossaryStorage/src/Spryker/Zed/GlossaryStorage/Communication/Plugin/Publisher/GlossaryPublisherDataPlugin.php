@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\EventBehaviour;
+namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
-use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceBulkRepositoryPluginInterface;
 use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherDataPluginInterface;
 
 /**
  * @method \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface getFacade()
@@ -19,8 +19,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\GlossaryStorage\GlossaryStorageConfig getConfig()
  * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
  */
-class GlossaryEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
+class GlossaryPublisherDataPlugin extends AbstractPlugin implements PublisherDataPluginInterface
 {
+    /**
+     * @uses \Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY
+     */
     protected const COL_ID_GLOSSARY_KEY = 'spy_glossary_key.id_glossary_key';
 
     /**
@@ -36,8 +39,7 @@ class GlossaryEventResourceBulkRepositoryPlugin extends AbstractPlugin implement
     }
 
     /**
-     * Specification:
-     *  - Returns an array of transfers accordingly to specified offset and limit.
+     * {@inheritDoc}
      *
      * @api
      *

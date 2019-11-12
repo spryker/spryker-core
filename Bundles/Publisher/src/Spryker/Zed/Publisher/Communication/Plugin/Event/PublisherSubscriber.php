@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Publisher\Business\PublisherFacadeInterface getFacade()()
  * @method \Spryker\Zed\Publisher\PublisherConfig getConfig()
+ * @method \Spryker\Zed\Publisher\Communication\PublisherCommunicationFactory getFactory()
  */
 class PublisherSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
