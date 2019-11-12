@@ -18,6 +18,8 @@ use Spryker\Shared\GlossaryStorage\GlossaryStorageConstants;
 
 class GlossaryStorage implements GlossaryStorageInterface
 {
+    protected const KEY_VALUE = 'value';
+
     /**
      * @var \Spryker\Client\GlossaryStorage\Dependency\Client\GlossaryStorageToStorageClientInterface
      */
@@ -39,9 +41,9 @@ class GlossaryStorage implements GlossaryStorageInterface
     protected $glossaryStorageMapper;
 
     /**
-     * @var array
+     * @var string[][]
      */
-    protected $translations = [];
+    protected $translationsCache = [];
 
     /**
      * @param \Spryker\Client\GlossaryStorage\Dependency\Client\GlossaryStorageToStorageClientInterface $storageClient
@@ -81,33 +83,16 @@ class GlossaryStorage implements GlossaryStorageInterface
             return $keyName;
         }
 
-        if (!isset($this->translations[$keyName])) {
-            $this->loadTranslation($keyName, $localeName);
-        }
-
+        $translation = $this->getTranslation($keyName, $localeName);
         if (empty($parameters)) {
-            return $this->translations[$keyName];
+            return $translation;
         }
 
         return str_replace(
             array_keys($parameters),
             array_values($parameters),
-            $this->translations[$keyName]
+            $translation
         );
-    }
-
-    /**
-     * @param string $keyName
-     * @param string $localeName
-     *
-     * @return void
-     */
-    protected function loadTranslation($keyName, $localeName)
-    {
-        $key = $this->generateGlossaryStorageKey($keyName, $localeName);
-        $translation = $this->findTranslation($key);
-
-        $this->addTranslation($keyName, $translation);
     }
 
     /**
@@ -116,7 +101,7 @@ class GlossaryStorage implements GlossaryStorageInterface
      *
      * @return string
      */
-    protected function generateGlossaryStorageKey($keyName, $localeName)
+    protected function generateGlossaryStorageKey(string $keyName, string $localeName): string
     {
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
             ->setReference($keyName)
@@ -128,33 +113,25 @@ class GlossaryStorage implements GlossaryStorageInterface
     }
 
     /**
-     * @param string $key
-     *
-     * @return string|null
-     */
-    protected function findTranslation($key)
-    {
-        /** @var array|null $translation */
-        $translation = $this->storageClient->get($key);
-        if ($translation === null) {
-            return null;
-        }
-
-        return $translation['value'];
-    }
-
-    /**
      * @param string $keyName
-     * @param string|null $translation
+     * @param string $localeName
      *
-     * @return void
+     * @return string
      */
-    protected function addTranslation($keyName, $translation)
+    protected function getTranslation(string $keyName, string $localeName): string
     {
-        if ($translation === null) {
-            $translation = $keyName;
+        if (isset($this->translationsCache[$keyName][$localeName])) {
+            return $this->translationsCache[$keyName][$localeName];
         }
-        $this->translations[$keyName] = $translation;
+
+        $translation = $keyName;
+        $glossaryStorageDataItem = $this->storageClient->get($this->generateGlossaryStorageKey($keyName, $localeName));
+        if ($glossaryStorageDataItem) {
+            $translation = $glossaryStorageDataItem[static::KEY_VALUE];
+        }
+        $this->cacheTranslation($localeName, $keyName, $translation);
+
+        return $translation;
     }
 
     /**
@@ -166,19 +143,16 @@ class GlossaryStorage implements GlossaryStorageInterface
      */
     public function translateBulk(array $keyNames, string $localeName, array $parameters = []): array
     {
-        $this->loadTranslations($keyNames, $localeName);
-        $translations = [];
-
-        foreach ($keyNames as $keyName) {
+        $translations = $this->getTranslations($keyNames, $localeName);
+        foreach ($translations as $keyName => &$translation) {
             if (empty($parameters[$keyName])) {
-                $translations[$keyName] = $this->translations[$keyName];
                 continue;
             }
 
-            $translations[$keyName] = str_replace(
+            $translation = str_replace(
                 array_keys($parameters[$keyName]),
                 array_values($parameters[$keyName]),
-                $this->translations[$keyName]
+                $translation
             );
         }
 
@@ -189,17 +163,38 @@ class GlossaryStorage implements GlossaryStorageInterface
      * @param string[] $keyNames
      * @param string $localeName
      *
-     * @return void
+     * @return string[]
      */
-    protected function loadTranslations(array $keyNames, string $localeName): void
+    protected function getTranslations(array $keyNames, string $localeName): array
     {
-        $keyNames = array_diff_key($keyNames, array_keys($this->translations));
-        $glossaryStorageKeys = $this->generateGlossaryStorageKeys($keyNames, $localeName);
+        $cachedTranslations = $this->getCachedTranslations($keyNames, $localeName);
+        if (count($cachedTranslations) === count($keyNames)) {
+            return $cachedTranslations;
+        }
+
+        $uncachedKeyNames = array_diff($keyNames, array_keys($cachedTranslations));
+        $glossaryStorageKeys = $this->generateGlossaryStorageKeys($uncachedKeyNames, $localeName);
         $glossaryStorageDataItems = $this->getGlossaryStorageDataItemsByGlossaryStorageKeys($glossaryStorageKeys);
         $glossaryStorageTransfers = $this->glossaryStorageMapper->mapGlossaryStorageDataItemsToGlossaryStorageTransfers(
             $glossaryStorageDataItems
         );
-        $this->addTranslations($glossaryStorageTransfers, $keyNames);
+        $this->cacheTranslations($glossaryStorageTransfers, $keyNames, $localeName);
+
+        return $this->getCachedTranslations($keyNames, $localeName);
+    }
+
+    /**
+     * @param string[] $keyNames
+     * @param string $localeName
+     *
+     * @return string[]
+     */
+    protected function getCachedTranslations(array $keyNames, string $localeName): array
+    {
+        return array_intersect_key(
+            $this->translationsCache[$localeName] ?? [],
+            array_flip($keyNames)
+        );
     }
 
     /**
@@ -211,7 +206,6 @@ class GlossaryStorage implements GlossaryStorageInterface
     protected function generateGlossaryStorageKeys(array $keyNames, string $localeName): array
     {
         $glossaryStorageKeys = [];
-
         foreach ($keyNames as $keyName) {
             $glossaryStorageKeys[$keyName] = $this->generateGlossaryStorageKey($keyName, $localeName);
         }
@@ -228,10 +222,9 @@ class GlossaryStorage implements GlossaryStorageInterface
     {
         $glossaryStorageDataItems = [];
         $glossaryStorageEncodedData = $this->storageClient->getMulti($glossaryStorageKeys);
-
         foreach ($glossaryStorageEncodedData as $glossaryStorageKey => $glossaryStorageEncodedDataItem) {
+            $glossaryStorageDataItems[$glossaryStorageKey] = null;
             if (!$glossaryStorageEncodedDataItem) {
-                $glossaryStorageDataItems[$glossaryStorageKey] = null;
                 continue;
             }
 
@@ -247,20 +240,35 @@ class GlossaryStorage implements GlossaryStorageInterface
     /**
      * @param \Generated\Shared\Transfer\GlossaryStorageTransfer[] $glossaryStorageTransfers
      * @param string[] $keyNames
+     * @param string $localeName
      *
      * @return void
      */
-    protected function addTranslations(array $glossaryStorageTransfers, array $keyNames): void
+    protected function cacheTranslations(array $glossaryStorageTransfers, array $keyNames, string $localeName): void
     {
         foreach ($glossaryStorageTransfers as $glossaryStorageTransfer) {
-            $this->addTranslation(
+            $this->cacheTranslation(
+                $localeName,
                 $glossaryStorageTransfer->getGlossaryKey()->getKey(),
                 $glossaryStorageTransfer->getValue()
             );
         }
 
-        foreach (array_diff_key($keyNames, array_keys($this->translations)) as $keyName) {
-            $this->addTranslation($keyName, null);
+        $notFoundKeyNames = array_diff($keyNames, array_keys($this->getCachedTranslations($keyNames, $localeName)));
+        foreach ($notFoundKeyNames as $keyName) {
+            $this->cacheTranslation($localeName, $keyName, $keyName);
         }
+    }
+
+    /**
+     * @param string $localeName
+     * @param string $keyName
+     * @param string $translation
+     *
+     * @return void
+     */
+    protected function cacheTranslation(string $localeName, string $keyName, string $translation): void
+    {
+        $this->translationsCache[$localeName][$keyName] = $translation;
     }
 }

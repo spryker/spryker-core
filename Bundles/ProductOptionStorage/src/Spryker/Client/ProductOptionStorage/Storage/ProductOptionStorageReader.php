@@ -83,7 +83,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
             return null;
         }
 
-        return $this->mapToProductAbstractOptionStorageTransfer($productAbstractOptionStorageData);
+        return $this->mapProductAbstractOptionStorageDataToProductAbstractOptionStorageTransfer($productAbstractOptionStorageData);
     }
 
     /**
@@ -99,7 +99,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
             return null;
         }
 
-        return $this->mapToProductAbstractOptionStorageTransfer($productAbstractOptionStorageData);
+        return $this->mapProductAbstractOptionStorageDataToProductAbstractOptionStorageTransfer($productAbstractOptionStorageData);
     }
 
     /**
@@ -146,8 +146,9 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer
      */
-    protected function mapToProductAbstractOptionStorageTransfer(array $productAbstractOptionStorageData)
-    {
+    protected function mapProductAbstractOptionStorageDataToProductAbstractOptionStorageTransfer(
+        array $productAbstractOptionStorageData
+    ): ProductAbstractOptionStorageTransfer {
         $productAbstractOptionStorageTransfer = new ProductAbstractOptionStorageTransfer();
         $productAbstractOptionStorageTransfer->fromArray($productAbstractOptionStorageData, true);
 
@@ -187,10 +188,11 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     {
         $productOptionStorageDataItems = $this->getProductOptionStorageDataItemsByProductAbstractIds($productAbstractIds);
         $productAbstractOptionStorageTransfers = [];
-
         foreach ($productOptionStorageDataItems as $productOptionStorageDataItem) {
-            $productAbstractOptionStorageTransfer = $this->mapToProductAbstractOptionStorageTransfer($productOptionStorageDataItem);
-            $productAbstractOptionStorageTransfers[$productAbstractOptionStorageTransfer->getIdProductAbstract()] = $productAbstractOptionStorageTransfer;
+            $productAbstractOptionStorageTransfer =
+                $this->mapProductAbstractOptionStorageDataToProductAbstractOptionStorageTransfer($productOptionStorageDataItem);
+            $productAbstractOptionStorageTransfers[$productAbstractOptionStorageTransfer->getIdProductAbstract()] =
+                $productAbstractOptionStorageTransfer;
         }
 
         return $productAbstractOptionStorageTransfers;
@@ -203,9 +205,9 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      */
     protected function getProductOptionStorageDataItemsByProductAbstractIds(array $productAbstractIds): array
     {
-        $productOptionStorageKeys = $this->generateProductOptionStorageKeys($productAbstractIds);
-
-        return $this->getProductOptionStorageDataItemsByProductOptionStorageKeys($productOptionStorageKeys);
+        return $this->getProductOptionStorageDataItemsByProductOptionStorageKeys(
+            $this->generateProductOptionStorageKeys($productAbstractIds)
+        );
     }
 
     /**
@@ -216,7 +218,6 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     protected function generateProductOptionStorageKeys(array $productAbstractIds): array
     {
         $productOptionStorageKeys = [];
-
         foreach ($productAbstractIds as $idProductAbstract) {
             $productOptionStorageKeys[$idProductAbstract] = $this->generateProductOptionStorageKey($idProductAbstract);
         }
@@ -233,13 +234,13 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     {
         $productOptionStorageDataItems = [];
         $productOptionStorageEncodedData = $this->storageClient->getMulti($productOptionStorageKeys);
-
         foreach ($productOptionStorageEncodedData as $productOptionStorageKey => $productOptionStorageEncodedDataItem) {
             if (!$productOptionStorageEncodedDataItem) {
                 continue;
             }
 
-            $productOptionStorageDataItems[$productOptionStorageKey] = $this->utilEncodingService->decodeJson($productOptionStorageEncodedDataItem, true);
+            $productOptionStorageDataItems[$productOptionStorageKey] =
+                $this->utilEncodingService->decodeJson($productOptionStorageEncodedDataItem, true);
         }
 
         return $productOptionStorageDataItems;

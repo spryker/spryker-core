@@ -7,18 +7,16 @@
 
 namespace Spryker\Glue\ProductOptionsRestApi\Processor\Sorter;
 
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-
 interface ProductOptionSorterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\RestProductOptionAttributesTransfer[] $restProductOptionAttributesTransfers
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
      *
      * @return \Generated\Shared\Transfer\RestProductOptionAttributesTransfer[]
      */
     public function sortRestProductOptionAttributesTransfers(
         array $restProductOptionAttributesTransfers,
-        RestRequestInterface $restRequest
+        array $sorts
     ): array;
 }

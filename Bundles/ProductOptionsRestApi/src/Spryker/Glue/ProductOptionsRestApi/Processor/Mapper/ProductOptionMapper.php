@@ -23,7 +23,6 @@ class ProductOptionMapper implements ProductOptionMapperInterface
         array $translations
     ): array {
         $restProductOptionAttributesTransfers = [];
-
         foreach ($productAbstractOptionStorageTransfer->getProductOptionGroups() as $productOptionGroupStorageTransfer) {
             foreach ($productOptionGroupStorageTransfer->getProductOptionValues() as $productOptionValueStorageTransfer) {
                 $restProductOptionAttributesTransfers[] = (new RestProductOptionAttributesTransfer())

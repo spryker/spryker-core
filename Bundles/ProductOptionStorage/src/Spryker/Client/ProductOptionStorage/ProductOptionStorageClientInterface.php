@@ -37,7 +37,7 @@ interface ProductOptionStorageClientInterface
 
     /**
      * Specification:
-     * - Returns an array of ProductAbstractOptionStorageTransfer indexed by idProductAbstract
+     * - Returns an array of ProductAbstractOptionStorageTransfer indexed by idProductAbstract.
      *
      * @api
      *

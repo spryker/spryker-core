@@ -32,7 +32,6 @@ class GlossaryStorageMapper implements GlossaryStorageMapperInterface
     public function mapGlossaryStorageDataItemsToGlossaryStorageTransfers(array $glossaryStorageDataItems): array
     {
         $glossaryStorageTransfers = [];
-
         foreach ($glossaryStorageDataItems as $glossaryStorageDataItem) {
             $glossaryStorageTransfers[] = $this->mapGlossaryStorageDataItemToGlossaryStorageTransfer(
                 $glossaryStorageDataItem,

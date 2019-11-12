@@ -8,7 +8,6 @@
 namespace Spryker\Glue\ProductOptionsRestApi\Processor\Sorter;
 
 use Generated\Shared\Transfer\RestProductOptionAttributesTransfer;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface;
 use Spryker\Glue\ProductOptionsRestApi\ProductOptionsRestApiConfig;
 
@@ -18,15 +17,15 @@ class ProductOptionSorter implements ProductOptionSorterInterface
 
     /**
      * @param \Generated\Shared\Transfer\RestProductOptionAttributesTransfer[] $restProductOptionAttributesTransfers
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
      *
      * @return \Generated\Shared\Transfer\RestProductOptionAttributesTransfer[]
      */
     public function sortRestProductOptionAttributesTransfers(
         array $restProductOptionAttributesTransfers,
-        RestRequestInterface $restRequest
+        array $sorts
     ): array {
-        $sorts = array_values($this->filterSorts($restRequest->getSort()));
+        $sorts = array_values($this->filterSorts($sorts));
 
         if (!$sorts) {
             return $restProductOptionAttributesTransfers;
@@ -59,15 +58,17 @@ class ProductOptionSorter implements ProductOptionSorterInterface
         RestProductOptionAttributesTransfer $nextRestProductOptionAttributesTransfer,
         array $sorts,
         int $index = 0
-    ) {
+    ): int {
         $currentSort = $sorts[$index];
         $field = explode(static::SORT_VALUE_DELIMITER, $currentSort->getField())[1];
-        $currentSortedPropertyValue = $currentRestProductOptionAttributesTransfer->offsetExists($field)
-            ? $currentRestProductOptionAttributesTransfer->offsetGet($field) : null;
-        $nextSortedPropertyValue = $nextRestProductOptionAttributesTransfer->offsetExists($field)
-            ? $nextRestProductOptionAttributesTransfer->offsetGet($field) : null;
+        $currentPropertyValue = $nextPropertyValue = null;
 
-        if ($currentSortedPropertyValue === $nextSortedPropertyValue) {
+        if ($currentRestProductOptionAttributesTransfer->offsetExists($field)) {
+            $currentPropertyValue = $currentRestProductOptionAttributesTransfer->offsetGet($field);
+            $nextPropertyValue = $nextRestProductOptionAttributesTransfer->offsetGet($field);
+        }
+
+        if ($currentPropertyValue === $nextPropertyValue) {
             if (!isset($sorts[$index + 1])) {
                 return 0;
             }
@@ -79,11 +80,12 @@ class ProductOptionSorter implements ProductOptionSorterInterface
                 $index + 1
             );
         }
+
         if ($currentSort->getDirection() === SortInterface::SORT_DESC) {
-            return $currentSortedPropertyValue < $nextSortedPropertyValue ? 1 : -1;
+            return $currentPropertyValue < $nextPropertyValue ? 1 : -1;
         }
 
-        return $currentSortedPropertyValue < $nextSortedPropertyValue ? -1 : 1;
+        return $currentPropertyValue < $nextPropertyValue ? -1 : 1;
     }
 
     /**

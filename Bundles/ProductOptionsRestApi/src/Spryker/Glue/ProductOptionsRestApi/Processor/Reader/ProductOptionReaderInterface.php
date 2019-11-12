@@ -12,8 +12,13 @@ interface ProductOptionReaderInterface
     /**
      * @param string[] $productAbstractSkus
      * @param string $localeName
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
      *
-     * @return \Generated\Shared\Transfer\RestProductOptionAttributesTransfer[][]
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
      */
-    public function getRestProductOptionAttributeTransfersByProductAbstractSkus(array $productAbstractSkus, string $localeName): array;
+    public function getProductOptionsByProductAbstractSkus(
+        array $productAbstractSkus,
+        string $localeName,
+        array $sorts
+    ): array;
 }
