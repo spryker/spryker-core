@@ -35,6 +35,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS = 'PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS';
     public const PLUGINS_CMS_PAGE_DATA_EXPANDER = 'PLUGINS_CMS_PAGE_DATA_EXPANDER';
     public const PLUGINS_CMS_PAGE_POST_ACTIVATOR = 'PLUGINS_CMS_PAGE_POST_ACTIVATOR';
+    public const PLUGINS_CMS_PAGE_BEFORE_DELETE = 'PLUGINS_CMS_PAGE_BEFORE_DELETE';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
@@ -69,6 +70,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
         $this->addCmsPagePostActivatorPlugins($container);
         $this->addUtilEncodingService($container);
         $this->addCmsPageDataExpanderPlugins($container);
+        $this->addCmsPageBeforeDeletePlugins($container);
 
         return $container;
     }
@@ -201,6 +203,18 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return void
      */
+    protected function addCmsPageBeforeDeletePlugins(Container $container): void
+    {
+        $container[self::PLUGINS_CMS_PAGE_BEFORE_DELETE] = function (Container $container) {
+            return $this->getCmsPageBeforeDeletePlugins();
+        };
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return void
+     */
     protected function addCmsPageDataExpanderPlugins(Container $container): void
     {
         $container[static::PLUGINS_CMS_PAGE_DATA_EXPANDER] = function (Container $container) {
@@ -240,6 +254,14 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\Cms\Communication\Plugin\PostCmsPageActivatorPluginInterface[]
      */
     protected function getCmsPagePostActivatorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageBeforeDeletePluginInterface[]
+     */
+    protected function getCmsPageBeforeDeletePlugins(): array
     {
         return [];
     }

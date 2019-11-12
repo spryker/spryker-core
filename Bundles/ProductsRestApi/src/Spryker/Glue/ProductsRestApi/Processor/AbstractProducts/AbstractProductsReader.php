@@ -23,6 +23,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
 {
     protected const PRODUCT_CONCRETE_IDS_KEY = 'product_concrete_ids';
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
+    protected const KEY_SKU = 'sku';
 
     /**
      * @var \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface
@@ -105,6 +106,28 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
     }
 
     /**
+     * @param string[] $skus
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function getProductAbstractsBySkus(array $skus, RestRequestInterface $restRequest): array
+    {
+        $abstractProductCollection = $this->productStorageClient
+            ->findBulkProductAbstractStorageDataByMapping(
+                static::PRODUCT_ABSTRACT_MAPPING_TYPE,
+                $skus,
+                $restRequest->getMetadata()->getLocale()
+            );
+
+        if (!$abstractProductCollection) {
+            return [];
+        }
+
+        return $this->createRestResourcesFromAbstractProductStorageData($abstractProductCollection, $restRequest);
+    }
+
+    /**
      * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
@@ -162,6 +185,24 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
             $restAbstractProductsAttributesTransfer->getSku(),
             $restAbstractProductsAttributesTransfer
         );
+    }
+
+    /**
+     * @param array $abstractProductData
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    protected function createRestResourcesFromAbstractProductStorageData(array $abstractProductData, RestRequestInterface $restRequest): array
+    {
+        $restResources = [];
+
+        foreach ($abstractProductData as $abstractProductDataItem) {
+            $restResources[$abstractProductDataItem[static::KEY_SKU]] =
+                $this->createRestResourceFromAbstractProductStorageData($abstractProductDataItem, $restRequest);
+        }
+
+        return $restResources;
     }
 
     /**

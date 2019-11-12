@@ -18,6 +18,7 @@ use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\CmsSlotBlockProductCategoryGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsSlotBlockProductCategoryGui\Persistence\CmsSlotBlockProductCategoryGuiRepository getRepository()
  */
 class ProductCategorySlotBlockConditionForm extends AbstractType
 {

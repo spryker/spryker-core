@@ -21,7 +21,7 @@ class CmsSlotPositionValidatorStep implements DataImportStepInterface
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $position = $dataSet[CmsSlotBlockDataSetInterface::CMS_SLOT_POSITION];
 

@@ -47,7 +47,7 @@ class CategorySlotBlockConditionFormPlugin extends AbstractPlugin implements Cms
      */
     public function addConditionForm(FormBuilderInterface $builder): void
     {
-        $categorySlotBlockDataProvider = $this->getFactory()->createCategoryDataProvider();
+        $categorySlotBlockDataProvider = $this->getFactory()->createCategorySlotBlockDataProvider();
         $categorySlotBlockConditionForm = $this->getFactory()->createCategorySlotBlockConditionForm();
         $categorySlotBlockConditionForm->buildForm($builder, $categorySlotBlockDataProvider->getOptions());
     }

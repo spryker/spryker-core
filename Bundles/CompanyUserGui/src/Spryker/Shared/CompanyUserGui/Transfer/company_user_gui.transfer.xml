@@ -39,4 +39,10 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="CompanyUserCollection">
+    </transfer>
+
+    <transfer name="CompanyUserCriteriaFilter">
+    </transfer>
+
 </transfers>

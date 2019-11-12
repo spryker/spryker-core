@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 use Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotBlockFacadeInterface;
 use Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotFacadeInterface;
 
@@ -45,7 +46,11 @@ class CmsSlotBlockCollectionFormDataProvider implements CmsSlotBlockCollectionFo
      */
     public function getData(int $idCmsSlotTemplate, int $idCmsSlot): CmsSlotBlockCollectionTransfer
     {
-        return $this->cmsSlotBlockFacade->getCmsSlotBlockCollection($idCmsSlotTemplate, $idCmsSlot);
+        $cmsSlotBlockCriteriaTransfer = (new CmsSlotBlockCriteriaTransfer())
+            ->setIdCmsSlotTemplate($idCmsSlotTemplate)
+            ->setIdCmsSlot($idCmsSlot);
+
+        return $this->cmsSlotBlockFacade->getCmsSlotBlockCollection($cmsSlotBlockCriteriaTransfer);
     }
 
     /**
