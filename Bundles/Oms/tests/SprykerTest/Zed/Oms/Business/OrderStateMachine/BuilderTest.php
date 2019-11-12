@@ -33,7 +33,7 @@ class BuilderTest extends Unit
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $processACopyTarget = $this->getProcessLocationB() . DIRECTORY_SEPARATOR . 'process-a.xml';
         if (file_exists($processACopyTarget)) {

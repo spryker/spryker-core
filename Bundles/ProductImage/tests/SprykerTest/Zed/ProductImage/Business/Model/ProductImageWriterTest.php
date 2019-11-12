@@ -51,7 +51,7 @@ class ProductImageWriterTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->writer = new Writer(
             new ProductImageQueryContainer()

@@ -8,19 +8,19 @@
 namespace Spryker\Glue\Testify\OpenApi3\Reference;
 
 use Spryker\Glue\Testify\OpenApi3\Collection\AbstractCollection;
-use Spryker\Glue\Testify\OpenApi3\Object\AbstractObject;
 use Spryker\Glue\Testify\OpenApi3\Primitive\Any;
 use Spryker\Glue\Testify\OpenApi3\SchemaFieldInterface;
+use Spryker\Glue\Testify\OpenApi3\SchemaObject\AbstractObject;
 
 class ReferenceResolver implements ReferenceResolverInterface
 {
     /**
-     * @var \Spryker\Glue\Testify\OpenApi3\Object\AbstractObject[]
+     * @var \Spryker\Glue\Testify\OpenApi3\SchemaObject\AbstractObject[]
      */
     protected $containers = [];
 
     /**
-     * @param \Spryker\Glue\Testify\OpenApi3\Object\AbstractObject $container
+     * @param \Spryker\Glue\Testify\OpenApi3\SchemaObject\AbstractObject $container
      */
     public function __construct(AbstractObject $container)
     {

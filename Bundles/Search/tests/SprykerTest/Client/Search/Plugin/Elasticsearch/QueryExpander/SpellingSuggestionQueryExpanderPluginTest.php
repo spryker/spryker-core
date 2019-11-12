@@ -28,12 +28,11 @@ use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\SpellingSuggestionQ
 class SpellingSuggestionQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 {
     /**
-     * @expectedException \Spryker\Client\Search\Exception\MissingSuggestionQueryException
-     *
      * @return void
      */
     public function testCompletionQueryExpanderShouldThrowExceptionWhenBaseQueryDoesntSupportSuggest()
     {
+        $this->expectException('Spryker\Client\Search\Exception\MissingSuggestionQueryException');
         $baseQueryPlugin = $this->createBaseQueryPlugin();
 
         $queryExpander = new SpellingSuggestionQueryExpanderPlugin();

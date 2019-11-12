@@ -16,7 +16,7 @@ class SessionClient extends AbstractClient implements SessionClientInterface
     /**
      * @var \Symfony\Component\HttpFoundation\Session\SessionInterface|null
      */
-    protected static $container = null;
+    protected static $container;
 
     /**
      * @api
