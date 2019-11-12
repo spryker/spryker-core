@@ -24,18 +24,18 @@ class PromotionItemByQuoteTransferResourceRelationshipExpander implements Promot
     /**
      * @var \Spryker\Glue\CartCodesRestApi\Processor\Mapper\DiscountMapperInterface
      */
-    protected $discountMapperInterface;
+    protected $discountMapper;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\CartCodesRestApi\Processor\Mapper\DiscountMapperInterface $discountMapperInterface
+     * @param \Spryker\Glue\CartCodesRestApi\Processor\Mapper\DiscountMapperInterface $discountMapper
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        DiscountMapperInterface $discountMapperInterface
+        DiscountMapperInterface $discountMapper
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->discountMapperInterface = $discountMapperInterface;
+        $this->discountMapper = $discountMapper;
     }
 
     /**
@@ -58,7 +58,7 @@ class PromotionItemByQuoteTransferResourceRelationshipExpander implements Promot
             $promotionalItemTransfers = $payload->getPromotionItems();
 
             foreach ($promotionalItemTransfers as $promotionItemTransfer) {
-                $restPromotionalItemsAttributesTransfer = $this->discountMapperInterface
+                $restPromotionalItemsAttributesTransfer = $this->discountMapper
                     ->mapPromotionItemTransferToRestPromotionalItemsAttributesTransfer(
                         $promotionItemTransfer,
                         new RestPromotionalItemsAttributesTransfer()

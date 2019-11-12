@@ -57,7 +57,10 @@ class AbstractProductsRelationshipExpander implements AbstractProductsRelationsh
         }
 
         foreach ($resources as $resource) {
-            $this->addRelationships($abstractProductsResources, $resource);
+            $productAbstractSku = $this->findSku($resource->getAttributes());
+            if (isset($abstractProductsResources[$productAbstractSku])) {
+                $resource->addRelationship($abstractProductsResources[$productAbstractSku]);
+            }
         }
 
         return $resources;
