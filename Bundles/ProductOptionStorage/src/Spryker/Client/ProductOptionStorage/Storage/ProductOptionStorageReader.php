@@ -186,7 +186,9 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      */
     public function getBulkProductOptions(array $productAbstractIds): array
     {
-        $productOptionStorageDataItems = $this->getProductOptionStorageDataItemsByProductAbstractIds($productAbstractIds);
+        $productOptionStorageDataItems = $this->getProductOptionStorageDataItemsByProductOptionStorageKeys(
+            $this->generateProductOptionStorageKeys($productAbstractIds)
+        );
         $productAbstractOptionStorageTransfers = [];
         foreach ($productOptionStorageDataItems as $productOptionStorageDataItem) {
             $productAbstractOptionStorageTransfer =
@@ -196,18 +198,6 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
         }
 
         return $productAbstractOptionStorageTransfers;
-    }
-
-    /**
-     * @param int[] $productAbstractIds
-     *
-     * @return int[][]
-     */
-    protected function getProductOptionStorageDataItemsByProductAbstractIds(array $productAbstractIds): array
-    {
-        return $this->getProductOptionStorageDataItemsByProductOptionStorageKeys(
-            $this->generateProductOptionStorageKeys($productAbstractIds)
-        );
     }
 
     /**

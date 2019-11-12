@@ -11,28 +11,40 @@ use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductOptionStorageClientInterface;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductStorageClientInterface;
+use Spryker\Glue\ProductOptionsRestApi\Processor\Builder\ProductOptionRestResourceBuilder;
+use Spryker\Glue\ProductOptionsRestApi\Processor\Builder\ProductOptionRestResourceBuilderInterface;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Expander\ProductOptionByProductAbstractSkuExpander;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Expander\ProductOptionByProductAbstractSkuExpanderInterface;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Mapper\ProductOptionMapper;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Mapper\ProductOptionMapperInterface;
-use Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionReader;
-use Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionReaderInterface;
+use Spryker\Glue\ProductOptionsRestApi\Processor\Reader\StorageReader;
+use Spryker\Glue\ProductOptionsRestApi\Processor\Reader\StorageReaderInterface;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Sorter\ProductOptionSorter;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Sorter\ProductOptionSorterInterface;
 
 class ProductOptionsRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionReaderInterface
+     * @return \Spryker\Glue\ProductOptionsRestApi\Processor\Reader\StorageReaderInterface
      */
-    public function createProductOptionReader(): ProductOptionReaderInterface
+    public function createStorageReader(): StorageReaderInterface
     {
-        return new ProductOptionReader(
-            $this->getResourceBuilder(),
+        return new StorageReader(
             $this->getProductStorageClient(),
             $this->getProductOptionStorageClient(),
             $this->getGlossaryStorageClient(),
-            $this->createProductOptionMapper(),
+            $this->createProductOptionMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductOptionsRestApi\Processor\Builder\ProductOptionRestResourceBuilderInterface
+     */
+    public function createProductOptionRestResourceBuilder(): ProductOptionRestResourceBuilderInterface
+    {
+        return new ProductOptionRestResourceBuilder(
+            $this->getResourceBuilder(),
+            $this->createStorageReader(),
             $this->createProductOptionSorter()
         );
     }
@@ -82,6 +94,6 @@ class ProductOptionsRestApiFactory extends AbstractFactory
      */
     public function createProductOptionByProductAbstractSkuExpander(): ProductOptionByProductAbstractSkuExpanderInterface
     {
-        return new ProductOptionByProductAbstractSkuExpander($this->createProductOptionReader());
+        return new ProductOptionByProductAbstractSkuExpander($this->createProductOptionRestResourceBuilder());
     }
 }

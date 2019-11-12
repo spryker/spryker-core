@@ -8,6 +8,8 @@
 namespace Spryker\Glue\ProductOptionsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
+use Generated\Shared\Transfer\ProductOptionGroupStorageTransfer;
+use Generated\Shared\Transfer\ProductOptionValueStorageTransfer;
 use Generated\Shared\Transfer\RestProductOptionAttributesTransfer;
 
 class ProductOptionMapper implements ProductOptionMapperInterface
@@ -25,15 +27,34 @@ class ProductOptionMapper implements ProductOptionMapperInterface
         $restProductOptionAttributesTransfers = [];
         foreach ($productAbstractOptionStorageTransfer->getProductOptionGroups() as $productOptionGroupStorageTransfer) {
             foreach ($productOptionGroupStorageTransfer->getProductOptionValues() as $productOptionValueStorageTransfer) {
-                $restProductOptionAttributesTransfers[] = (new RestProductOptionAttributesTransfer())
-                    ->setSku($productOptionValueStorageTransfer->getSku())
-                    ->setOptionGroupName($translations[$productOptionGroupStorageTransfer->getName()])
-                    ->setOptionName($translations[$productOptionValueStorageTransfer->getValue()])
-                    ->setPrice($productOptionValueStorageTransfer->getPrice())
-                    ->setCurrencyIsoCode($productOptionValueStorageTransfer->getCurrencyIsoCode());
+                $restProductOptionAttributesTransfers[] = $this->createRestProductOptionAttributesTransfer(
+                    $productOptionGroupStorageTransfer,
+                    $productOptionValueStorageTransfer,
+                    $translations
+                );
             }
         }
 
         return $restProductOptionAttributesTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionGroupStorageTransfer $productOptionGroupStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductOptionValueStorageTransfer $productOptionValueStorageTransfer
+     * @param string[] $translations
+     *
+     * @return \Generated\Shared\Transfer\RestProductOptionAttributesTransfer
+     */
+    protected function createRestProductOptionAttributesTransfer(
+        ProductOptionGroupStorageTransfer $productOptionGroupStorageTransfer,
+        ProductOptionValueStorageTransfer $productOptionValueStorageTransfer,
+        array $translations
+    ): RestProductOptionAttributesTransfer {
+        return (new RestProductOptionAttributesTransfer())
+            ->setSku($productOptionValueStorageTransfer->getSku())
+            ->setOptionGroupName($translations[$productOptionGroupStorageTransfer->getName()])
+            ->setOptionName($translations[$productOptionValueStorageTransfer->getValue()])
+            ->setPrice($productOptionValueStorageTransfer->getPrice())
+            ->setCurrencyIsoCode($productOptionValueStorageTransfer->getCurrencyIsoCode());
     }
 }

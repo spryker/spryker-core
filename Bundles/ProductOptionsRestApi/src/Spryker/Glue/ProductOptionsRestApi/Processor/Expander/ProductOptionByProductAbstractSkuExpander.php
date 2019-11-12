@@ -8,21 +8,21 @@
 namespace Spryker\Glue\ProductOptionsRestApi\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionReaderInterface;
+use Spryker\Glue\ProductOptionsRestApi\Processor\Builder\ProductOptionRestResourceBuilderInterface;
 
 class ProductOptionByProductAbstractSkuExpander implements ProductOptionByProductAbstractSkuExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionReaderInterface
+     * @var \Spryker\Glue\ProductOptionsRestApi\Processor\Builder\ProductOptionRestResourceBuilderInterface
      */
-    protected $productOptionReader;
+    protected $productOptionRestResourceBuilder;
 
     /**
-     * @param \Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionReaderInterface $productOptionReader
+     * @param \Spryker\Glue\ProductOptionsRestApi\Processor\Builder\ProductOptionRestResourceBuilderInterface $productOptionRestResourceBuilder
      */
-    public function __construct(ProductOptionReaderInterface $productOptionReader)
+    public function __construct(ProductOptionRestResourceBuilderInterface $productOptionRestResourceBuilder)
     {
-        $this->productOptionReader = $productOptionReader;
+        $this->productOptionRestResourceBuilder = $productOptionRestResourceBuilder;
     }
 
     /**
@@ -38,7 +38,7 @@ class ProductOptionByProductAbstractSkuExpander implements ProductOptionByProduc
             $productAbstractSkus[] = $restResource->getId();
         }
 
-        $productOptionRestResources = $this->productOptionReader->getProductOptionsByProductAbstractSkus(
+        $productOptionRestResources = $this->productOptionRestResourceBuilder->getProductOptionsByProductAbstractSkus(
             $productAbstractSkus,
             $restRequest->getMetadata()->getLocale(),
             $restRequest->getSort()
