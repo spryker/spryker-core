@@ -13,4 +13,5 @@ interface MerchantProductOfferDataSetInterface
     public const CONCRETE_SKU = 'concrete_sku';
     public const MERCHANT_KEY = 'merchant_key';
     public const FK_MERCHANT = 'fk_merchant';
+    public const MERCHANT_SKU = 'merchant_sku';
 }
