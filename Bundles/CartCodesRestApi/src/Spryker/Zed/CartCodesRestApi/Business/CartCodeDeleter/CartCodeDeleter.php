@@ -60,6 +60,8 @@ class CartCodeDeleter implements CartCodeDeleterInterface
         foreach ($quoteTransfer->getVoucherDiscounts() as $discountTransfer) {
             if ($discountTransfer->getIdDiscount() === $idDiscount) {
                 $voucherCode = $discountTransfer->getVoucherCode();
+
+                break;
             }
         }
 
