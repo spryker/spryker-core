@@ -29,4 +29,7 @@ class CmsSlotBlockStorageConfig extends AbstractSharedConfig
      * @api
      */
     public const CMS_SLOT_BLOCK_RESOURCE_NAME = 'cms_slot_block';
+
+    public const BLOCK_DATA_KEY_BLOCK_KEY = 'blockKey';
+    public const BLOCK_DATA_KEY_CONDITIONS = 'conditions';
 }

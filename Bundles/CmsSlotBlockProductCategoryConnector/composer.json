@@ -1,18 +1,14 @@
 {
-  "name": "spryker/cms-slot-block",
+  "name": "spryker/cms-slot-block-product-category-connector",
   "type": "library",
-  "description": "CmsSlotBlock module",
+  "description": "CmsSlotBlockProductCategoryConnector module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/cms-block": "^2.0.0",
-    "spryker/cms-slot": "^0.3.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/cms-slot-block-extension": "^0.1.0",
-    "spryker/event": "^2.3.0",
-    "spryker/kernel": "^3.33.0",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/transfer": "^3.8.0",
-    "spryker/util-encoding": "^1.0.0 || ^2.0.0"
+    "spryker/locale": "^1.0.0 || ^2.0.0 || ^3.0.0",
+    "spryker/product-category-storage": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
