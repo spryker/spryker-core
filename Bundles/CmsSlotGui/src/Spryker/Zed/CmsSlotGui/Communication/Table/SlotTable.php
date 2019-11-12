@@ -210,6 +210,7 @@ class SlotTable extends AbstractTable
      */
     protected function buildLinks(array $slot): string
     {
+        $buttons = [];
         $buttons[] = $this->generateEditButton(
             '#',
             'Edit'
