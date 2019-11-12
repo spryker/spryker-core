@@ -15,7 +15,7 @@ interface CmsSlotBlockFacadeInterface
 {
     /**
      * Specification:
-     * - Creates relations between CMS Slots and CMS blocks.
+     * - Creates relations between CMS Slots and CMS Blocks.
      *
      * @api
      *
