@@ -15,10 +15,10 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class CmsSlotBlockConditionsProductStep implements DataImportStepInterface
 {
-    protected const KEY_CONDITION_PRODUCT = 'product';
-    protected const KEY_CONDITION_PRODUCT_SKUS = 'skus';
-    protected const KEY_CONDITION_PRODUCT_IDS = 'productIds';
-    protected const KEY_CONDITION_PRODUCT_ALL = 'all';
+    protected const KEY_CONDITION_PRODUCT_CATEGORY = 'productCategory';
+    protected const KEY_CONDITION_PRODUCT_CATEGORY_SKUS = 'skus';
+    protected const KEY_CONDITION_PRODUCT_CATEGORY_PRODUCT_IDS = 'productIds';
+    protected const KEY_CONDITION_PRODUCT_CATEGORY_ALL = 'all';
 
     /**
      * @var array
@@ -47,8 +47,11 @@ class CmsSlotBlockConditionsProductStep implements DataImportStepInterface
      */
     protected function transformConditionProductAllValueToBoolean($conditions)
     {
-        if (isset($conditions[static::KEY_CONDITION_PRODUCT][static::KEY_CONDITION_PRODUCT_ALL])) {
-            $conditions[static::KEY_CONDITION_PRODUCT][static::KEY_CONDITION_PRODUCT_ALL] = (bool)array_shift($conditions[static::KEY_CONDITION_PRODUCT][static::KEY_CONDITION_PRODUCT_ALL]);
+        if (isset($conditions[static::KEY_CONDITION_PRODUCT_CATEGORY][static::KEY_CONDITION_PRODUCT_CATEGORY_ALL])) {
+            $conditions[static::KEY_CONDITION_PRODUCT_CATEGORY][static::KEY_CONDITION_PRODUCT_CATEGORY_ALL] =
+                (bool)array_shift(
+                    $conditions[static::KEY_CONDITION_PRODUCT_CATEGORY][static::KEY_CONDITION_PRODUCT_CATEGORY_ALL]
+                );
         }
 
         return $conditions;
@@ -61,18 +64,18 @@ class CmsSlotBlockConditionsProductStep implements DataImportStepInterface
      */
     protected function transformProductSkusToIds(array $conditions): array
     {
-        if (!isset($conditions[static::KEY_CONDITION_PRODUCT][static::KEY_CONDITION_PRODUCT_SKUS])) {
+        if (!isset($conditions[static::KEY_CONDITION_PRODUCT_CATEGORY][static::KEY_CONDITION_PRODUCT_CATEGORY_SKUS])) {
             return $conditions;
         }
 
         $productIds = [];
 
-        foreach ($conditions[static::KEY_CONDITION_PRODUCT][static::KEY_CONDITION_PRODUCT_SKUS] as $sku) {
+        foreach ($conditions[static::KEY_CONDITION_PRODUCT_CATEGORY][static::KEY_CONDITION_PRODUCT_CATEGORY_SKUS] as $sku) {
             $productIds[] = $this->getIdProductAbstractBySku($sku);
         }
 
-        $conditions[static::KEY_CONDITION_PRODUCT][static::KEY_CONDITION_PRODUCT_IDS] = $productIds;
-        unset($conditions[static::KEY_CONDITION_PRODUCT][static::KEY_CONDITION_PRODUCT_SKUS]);
+        $conditions[static::KEY_CONDITION_PRODUCT_CATEGORY][static::KEY_CONDITION_PRODUCT_CATEGORY_PRODUCT_IDS] = $productIds;
+        unset($conditions[static::KEY_CONDITION_PRODUCT_CATEGORY][static::KEY_CONDITION_PRODUCT_CATEGORY_SKUS]);
 
         return $conditions;
     }

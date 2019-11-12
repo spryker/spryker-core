@@ -15,7 +15,7 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class CmsSlotBlockConditionsCategoryStep implements DataImportStepInterface
 {
-    protected const KEY_CONDITION_PRODUCT = 'product';
+    protected const KEY_CONDITION_PRODUCT_CATEGORY = 'productCategory';
     protected const KEY_CONDITION_CATEGORY = 'category';
     protected const KEY_CONDITION_CATEGORY_KEYS = 'category_key';
     protected const KEY_CONDITION_CATEGORY_IDS = 'categoryIds';
@@ -36,8 +36,8 @@ class CmsSlotBlockConditionsCategoryStep implements DataImportStepInterface
         $conditions = $dataSet[CmsSlotBlockDataSetInterface::CMS_SLOT_BLOCK_ALL_CONDITIONS];
         $conditions = $this->transformConditionCategoryAllValueToBoolean($conditions);
 
-        if (isset($conditions[static::KEY_CONDITION_PRODUCT])) {
-            $conditions[static::KEY_CONDITION_PRODUCT] = $this->transformCategoryKeysToIds($conditions[static::KEY_CONDITION_PRODUCT]);
+        if (isset($conditions[static::KEY_CONDITION_PRODUCT_CATEGORY])) {
+            $conditions[static::KEY_CONDITION_PRODUCT_CATEGORY] = $this->transformCategoryKeysToIds($conditions[static::KEY_CONDITION_PRODUCT_CATEGORY]);
         }
 
         if (isset($conditions[static::KEY_CONDITION_CATEGORY])) {
@@ -55,7 +55,7 @@ class CmsSlotBlockConditionsCategoryStep implements DataImportStepInterface
     protected function transformConditionCategoryAllValueToBoolean(array $conditions): array
     {
         if (isset($conditions[static::KEY_CONDITION_CATEGORY][static::KEY_CONDITION_ALL])) {
-            $conditions[static::KEY_CONDITION_CATEGORY][static::KEY_CONDITION_ALL] = (bool)array_shift($conditions[static::KEY_CONDITION_PRODUCT][static::KEY_CONDITION_ALL]);
+            $conditions[static::KEY_CONDITION_CATEGORY][static::KEY_CONDITION_ALL] = (bool)array_shift($conditions[static::KEY_CONDITION_CATEGORY][static::KEY_CONDITION_ALL]);
         }
 
         return $conditions;

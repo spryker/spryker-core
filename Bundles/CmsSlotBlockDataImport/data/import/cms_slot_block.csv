@@ -1,4 +1,4 @@
-template_path,slot_key,block_key,position,conditions.product.all,conditions.product.skus,conditions.category.all,conditions.category.category_key
-"@ProductDetailPage/views/pdp/pdp.twig",slt-1,blck-1,1,0,"001,002",1,
-"@ProductDetailPage/views/pdp/pdp.twig",slt-1,blck-2,2,1,,,
-"@ProductDetailPage/views/pdp/pdp.twig",slt-2,blck-3,1,,,0,"tablets,smartphones"
+template_path,slot_key,block_key,position,conditions.productCategory.all,conditions.productCategory.skus,conditions.productCategory.category_key,conditions.category.all,conditions.category.category_key
+"@ProductDetailPage/views/pdp/pdp.twig",slt-1,blck-1,1,0,"001,002","tablets,smartphones",1,
+"@ProductDetailPage/views/pdp/pdp.twig",slt-1,blck-2,2,1,,,,
+"@ProductDetailPage/views/pdp/pdp.twig",slt-2,blck-3,1,,,,0,"tablets,smartphones"
