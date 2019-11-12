@@ -17,7 +17,7 @@ class ZedRequestToHealthCheckClientBridge implements ZedRequestToHealthCheckClie
     protected $healthCheckClient;
 
     /**
-     * @param \Spryker\Client\HealthCheck\HealthCheckClientInterface
+     * @param \Spryker\Client\HealthCheck\HealthCheckClientInterface $healthCheckClient
      */
     public function __construct($healthCheckClient)
     {
