@@ -53,7 +53,7 @@ class CartDiscountsResourceController extends AbstractController
      * @Glue({
      *     "delete": {
      *          "summary": [
-     *              "Deletes cart by id."
+     *              "Deletes a code from cart."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
