@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Stock;
 
-use Exception;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -94,9 +93,6 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
             $this->updateBundleStock($productConcreteTransfer, $bundleTotalStockPerWarehouse);
             $this->productBundleQueryContainer->getConnection()->commit();
-        } catch (Exception $exception) {
-            $this->productBundleQueryContainer->getConnection()->rollBack();
-            throw $exception;
         } catch (Throwable $exception) {
             $this->productBundleQueryContainer->getConnection()->rollBack();
             throw $exception;

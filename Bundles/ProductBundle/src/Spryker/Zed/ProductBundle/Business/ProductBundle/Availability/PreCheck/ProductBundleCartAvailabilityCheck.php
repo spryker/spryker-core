@@ -12,14 +12,9 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Spryker\DecimalObject\Decimal;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
-use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface;
-use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
-use Spryker\Zed\ProductBundle\ProductBundleConfig;
 
 class ProductBundleCartAvailabilityCheck extends BasePreCheck implements ProductBundleCartAvailabilityCheckInterface
 {
@@ -27,30 +22,6 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     public const CART_PRE_CHECK_ITEM_AVAILABILITY_EMPTY = 'cart.pre.check.availability.failed.empty';
     public const STOCK_TRANSLATION_PARAMETER = '%stock%';
     public const SKU_TRANSLATION_PARAMETER = '%sku%';
-
-    /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface
-     */
-    protected $availabilityQueryContainer;
-
-    /**
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface $availabilityFacade
-     * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
-     * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\ProductBundle\ProductBundleConfig $productBundleConfig
-     */
-    public function __construct(
-        ProductBundleToAvailabilityInterface $availabilityFacade,
-        ProductBundleQueryContainerInterface $productBundleQueryContainer,
-        ProductBundleToAvailabilityQueryContainerInterface $availabilityQueryContainer,
-        ProductBundleToStoreFacadeInterface $storeFacade,
-        ProductBundleConfig $productBundleConfig
-    ) {
-        parent::__construct($availabilityFacade, $productBundleQueryContainer, $storeFacade, $productBundleConfig);
-
-        $this->availabilityQueryContainer = $availabilityQueryContainer;
-    }
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
@@ -68,6 +39,10 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         $storeTransfer = $this->storeFacade->getStoreByName($storeTransfer->getName());
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $itemTransfer->requireSku()->requireQuantity();
+
+            if (!$this->isProductBundle($itemTransfer)) {
+                continue;
+            }
 
             $messageTransfers = $this->checkItemAvailability($itemsInCart, $itemTransfer, $storeTransfer);
             $itemsInCart->append($itemTransfer);
@@ -155,13 +130,12 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailability|null
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
-    protected function findAvailabilityEntityBySku($sku, StoreTransfer $storeTransfer)
+    protected function findAvailabilityBySku(string $sku, StoreTransfer $storeTransfer): ?ProductConcreteAvailabilityTransfer
     {
-        return $this->availabilityQueryContainer
-            ->querySpyAvailabilityBySku($sku, $storeTransfer->getIdStore())
-            ->findOne();
+        return $this->availabilityFacade
+            ->findOrCreateProductConcreteAvailabilityBySkuForStore($sku, $storeTransfer);
     }
 
     /**
@@ -252,12 +226,12 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     ) {
         $unavailableBundleItems = $this->getUnavailableBundleItems($itemsInCart, $bundledProducts, $itemTransfer, $storeTransfer);
 
-        $availabilityEntity = $this->findAvailabilityEntityBySku($itemTransfer->getSku(), $storeTransfer);
+        $availabilityTransfer = $this->findAvailabilityBySku($itemTransfer->getSku(), $storeTransfer);
 
-        if ($availabilityEntity && $this->isUserRequestedMoreItemsThanInStock($itemTransfer, $availabilityEntity)
+        if ($availabilityTransfer && $this->isUserRequestedMoreItemsThanInStock($itemTransfer, $availabilityTransfer)
             && $this->isAllBundleItemsUnavailable($unavailableBundleItems, $bundledProducts)) {
             $bundleAvailabilityErrorMessage = $this->createItemIsNotAvailableMessageTransfer(
-                new Decimal($availabilityEntity->getQuantity()),
+                $availabilityTransfer->getAvailability(),
                 $itemTransfer->getSku()
             );
 
@@ -271,13 +245,13 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Orm\Zed\Availability\Persistence\SpyAvailability $availabilityEntity
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer $availabilityTransfer
      *
      * @return bool
      */
-    protected function isUserRequestedMoreItemsThanInStock(ItemTransfer $itemTransfer, SpyAvailability $availabilityEntity): bool
+    protected function isUserRequestedMoreItemsThanInStock(ItemTransfer $itemTransfer, ProductConcreteAvailabilityTransfer $availabilityTransfer): bool
     {
-        return $itemTransfer->getQuantity() > $availabilityEntity->getQuantity();
+        return $availabilityTransfer->getAvailability()->lessThan($itemTransfer->getQuantity());
     }
 
     /**

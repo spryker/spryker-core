@@ -7,19 +7,12 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
 interface ProductPackagingUnitToAvailabilityFacadeInterface
 {
-    /**
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    public function calculateStockForProductWithStore(string $sku, StoreTransfer $storeTransfer): Decimal;
-
     /**
      * @param string $sku
      * @param \Spryker\DecimalObject\Decimal $quantity
@@ -31,10 +24,17 @@ interface ProductPackagingUnitToAvailabilityFacadeInterface
 
     /**
      * @param string $sku
-     * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
-    public function saveProductAvailabilityForStore(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): int;
+    public function findOrCreateProductConcreteAvailabilityBySkuForStore(string $sku, StoreTransfer $storeTransfer): ?ProductConcreteAvailabilityTransfer;
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return void
+     */
+    public function updateAvailabilityForStore($sku, StoreTransfer $storeTransfer);
 }

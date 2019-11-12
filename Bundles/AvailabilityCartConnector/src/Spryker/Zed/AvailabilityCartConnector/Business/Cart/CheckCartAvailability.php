@@ -51,6 +51,10 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
 
         $messages = new ArrayObject();
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getAmount() !== null) {
+                continue;
+            }
+
             $currentItemQuantity = $this->calculateCurrentCartQuantityForGivenSku(
                 $itemsInCart,
                 $itemTransfer->getSku()

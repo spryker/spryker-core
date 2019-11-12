@@ -280,6 +280,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param array $logContext
      *
@@ -297,23 +299,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
-     *
-     * @param string $sku
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    public function getReservedOrderItemsForSku($sku)
-    {
-        return $this->getFactory()
-            ->createOrderStateMachineFinder()
-            ->getReservedOrderItemsForSku($sku);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
+     * @deprecated Not used anymore. Will be removed with next major release.
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
@@ -342,24 +328,6 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
         return $this->getFactory()
             ->createUtilReservation()
             ->getOmsReservedProductQuantityForSku($sku, $storeTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @deprecated Will be removed without replacement.
-     *
-     * @param string $stateName
-     *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
-     */
-    public function getStateEntity($stateName)
-    {
-        return $this->getFactory()
-            ->createOrderStateMachinePersistenceManager()
-            ->getStateEntity($stateName);
     }
 
     /**
@@ -627,6 +595,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return int
      */
     public function getLastExportedReservationVersion()
@@ -638,6 +608,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param string $processName
      * @param string $stateName
@@ -653,6 +625,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
@@ -672,19 +646,23 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `Spryker\Zed\Oms\Business\OmsFacade::getOmsReservedStateCollection()` instead.
+     * @param string $sku
      *
-     * @return string[]
+     * @return void
      */
-    public function getReservedStateNames(): array
+    public function updateReservationQuantity(string $sku): void
     {
-        return $this->getFactory()->createUtilReservation()->getReservedStateNames();
+        $this->getFactory()
+            ->createUtilReservation()
+            ->updateReservationQuantity($sku);
     }
 
     /**
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
      */

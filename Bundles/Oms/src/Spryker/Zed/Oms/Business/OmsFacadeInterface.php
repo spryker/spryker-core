@@ -255,6 +255,8 @@ interface OmsFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param array $logContext
      *
@@ -264,23 +266,11 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
-     *  - Reads all order items having state with reserved attribute for given concrete product
-     *
-     * @api
-     *
-     * @deprecated Will be removed without replacement.
-     *
-     * @param string $sku
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    public function getReservedOrderItemsForSku($sku);
-
-    /**
-     * Specification:
      *  - Count orders with items with given sku which are in state with flag reserved
      *
      * @api
+     *
+     * @deprecated Not used anymore. Will be removed with next major release.
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
@@ -290,8 +280,7 @@ interface OmsFacadeInterface
     public function sumReservedProductQuantitiesForSku(string $sku, ?StoreTransfer $storeTransfer = null): Decimal;
 
     /**
-     * Specification:
-     *  - Returns reserved quantity for the given sku which aggregated in OMS
+     *  - Returns reserved quantity for the given sku which aggregated in OMS.
      *
      * @api
      *
@@ -301,20 +290,6 @@ interface OmsFacadeInterface
      * @return \Spryker\DecimalObject\Decimal
      */
     public function getOmsReservedProductQuantityForSku(string $sku, StoreTransfer $storeTransfer): Decimal;
-
-    /**
-     * Specification:
-     *  - Gets state entity by state name from persistence
-     *
-     * @api
-     *
-     * @deprecated Will be removed without replacement.
-     *
-     * @param string $stateName
-     *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
-     */
-    public function getStateEntity($stateName);
 
     /**
      * Specification:
@@ -567,6 +542,8 @@ interface OmsFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return int
      */
     public function getLastExportedReservationVersion();
@@ -577,6 +554,8 @@ interface OmsFacadeInterface
      *  - Returns a list of state flags
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param string $processName
      * @param string $stateName
@@ -591,6 +570,8 @@ interface OmsFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Spryker\DecimalObject\Decimal $reservationQuantity
@@ -601,16 +582,15 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
-     *  - Reads states from XML definition
-     *  - Returns a list of reserved state names
+     *  - Updates reservation quantity for a given sku.
      *
      * @api
      *
-     * @deprecated Use `Spryker\Zed\Oms\Business\OmsFacadeInterface::getOmsReservedStateCollection()` instead.
+     * @param string $sku
      *
-     * @return string[]
+     * @return void
      */
-    public function getReservedStateNames(): array;
+    public function updateReservationQuantity(string $sku): void;
 
     /**
      * Specification:
@@ -618,6 +598,8 @@ interface OmsFacadeInterface
      *  - Returns a list of reserved state objects in an associative array
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
      */
