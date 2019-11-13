@@ -23,11 +23,8 @@ use Spryker\Zed\Shipment\Business\Mail\ShipmentOrderMailExpanderInterface;
 use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapper;
 use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapperInterface;
 use Spryker\Zed\Shipment\Business\Model\Carrier;
-use Spryker\Zed\Shipment\Business\Model\Method;
 use Spryker\Zed\Shipment\Business\Model\MethodPrice;
 use Spryker\Zed\Shipment\Business\Model\ShipmentCarrierReader;
-use Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrate;
-use Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\Model\Transformer\ShipmentMethodTransformer;
 use Spryker\Zed\Shipment\Business\OrderItem\ShipmentSalesOrderItemReader;
@@ -66,6 +63,12 @@ use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodCreator;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodCreatorInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodDeleter;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodDeleterInterface;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodPluginReader;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodPluginReaderInterface;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodReader;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodReaderInterface;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodStoreRelationUpdater;
+use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodStoreRelationUpdaterInterface;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodUpdater;
 use Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodUpdaterInterface;
 use Spryker\Zed\Shipment\Business\StrategyResolver\OrderSaverStrategyResolver;
@@ -106,31 +109,25 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createShipmentMethod() instead.
-     *
-     * @return \Spryker\Zed\Shipment\Business\Model\MethodInterface
-     */
-    public function createMethod()
-    {
-        return new Method(
-            $this->getQueryContainer(),
-            $this->createMethodPrice(),
-            $this->createShipmentMethodTransformer(),
-            $this->getCurrencyFacade(),
-            $this->getStoreFacade(),
-            $this->getPlugins(),
-            $this->getMethodFilterPlugins()
-        );
-    }
-
-    /**
      * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodCreatorInterface
      */
     public function createShipmentMethodCreator(): ShipmentMethodCreatorInterface
     {
         return new ShipmentMethodCreator(
             $this->getEntityManager(),
-            $this->createMethodPrice()
+            $this->createMethodPrice(),
+            $this->createShipmentMethodStoreRelationUpdater()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodStoreRelationUpdaterInterface
+     */
+    public function createShipmentMethodStoreRelationUpdater(): ShipmentMethodStoreRelationUpdaterInterface
+    {
+        return new ShipmentMethodStoreRelationUpdater(
+            $this->getRepository(),
+            $this->getEntityManager()
         );
     }
 
@@ -142,7 +139,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
         return new ShipmentMethodUpdater(
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->createMethodPrice()
+            $this->createMethodPrice(),
+            $this->createShipmentMethodStoreRelationUpdater()
         );
     }
 
@@ -158,6 +156,17 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodReaderInterface
+     */
+    public function createShipmentMethodReader(): ShipmentMethodReaderInterface
+    {
+        return new ShipmentMethodReader(
+            $this->getRepository(),
+            $this->getCurrencyFacade()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodReaderInterface
      */
     public function createMethodReader(): MethodReaderInterface
@@ -168,7 +177,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createShipmentMethodAvailabilityChecker(),
             $this->createShipmentMethodPriceReader(),
-            $this->createShipmentMethodDeliveryTimeReader()
+            $this->createShipmentMethodDeliveryTimeReader(),
+            $this->getStoreFacade()
         );
     }
 
@@ -221,14 +231,6 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array
-     */
-    protected function getPlugins()
-    {
-        return $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS);
-    }
-
-    /**
      * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodFilterPluginInterface[]
      */
     protected function getMethodFilterPlugins()
@@ -242,20 +244,6 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     protected function getShipmentGroupsSanitizerPlugins(): array
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::SHIPMENT_GROUPS_SANITIZER_PLUGINS);
-    }
-
-    /**
-     * @deprecated Use createCheckoutShipmentOrderSaver() instead.
-     *
-     * @return \Spryker\Zed\Shipment\Business\Model\ShipmentOrderSaverInterface
-     */
-    public function createShipmentOrderSaver()
-    {
-        return new ShipmentOrderSaver(
-            $this->getEntityManager(),
-            $this->createExpenseSanitizer(),
-            $this->getRepository()
-        );
     }
 
     /**
@@ -344,31 +332,11 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createMultipleShipmentOrderHydrate() instead.
-     *
-     * @return \Spryker\Zed\Shipment\Business\Model\ShipmentOrderHydrateInterface
-     */
-    public function createShipmentOrderHydrate()
-    {
-        return new ShipmentOrderHydrate($this->getQueryContainer());
-    }
-
-    /**
      * @return \Spryker\Zed\Shipment\Business\Shipment\ShipmentOrderHydrateInterface
      */
     public function createMultipleShipmentOrderHydrate(): ShipmentOrderHydrateInterface
     {
         return new MultipleShipmentOrderHydrate($this->getRepository(), $this->getSalesFacade());
-    }
-
-    /**
-     * @deprecated Use getSalesFacade() instead.
-     *
-     * @return \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
-     */
-    protected function getSalesQueryContainer()
-    {
-        return $this->getProvidedDependency(ShipmentDependencyProvider::QUERY_CONTAINER_SALES);
     }
 
     /**
@@ -572,6 +540,26 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function getDeliveryTimePlugins(): array
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS);
+    }
+
+    /**
+     * @return array[]
+     */
+    public function getShipmentMethodPlugins(): array
+    {
+        return [
+            ShipmentDependencyProvider::AVAILABILITY_PLUGINS => $this->getAvailabilityPlugins(),
+            ShipmentDependencyProvider::PRICE_PLUGINS => $this->getPricePlugins(),
+            ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS => $this->getDeliveryTimePlugins(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\ShipmentMethod\ShipmentMethodPluginReaderInterface
+     */
+    public function createShipmentMethodPluginReader(): ShipmentMethodPluginReaderInterface
+    {
+        return new ShipmentMethodPluginReader($this->getShipmentMethodPlugins());
     }
 
     /**
