@@ -5,17 +5,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\Translator\Plugin\Validator;
+namespace Spryker\Zed\Translator\Communication\Plugin\Validator;
 
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ValidatorExtension\Dependency\Plugin\ValidatorPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Validator\ValidatorBuilderInterface;
 
-class TranslatorValidatorPlugin implements ValidatorPluginInterface
+/**
+ * @method \Spryker\Zed\Translator\Business\TranslatorFacadeInterface getFacade()
+ * @method \Spryker\Zed\Translator\Communication\TranslatorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Translator\TranslatorConfig getConfig()
+ */
+class TranslatorValidatorPlugin extends AbstractPlugin implements ValidatorPluginInterface
 {
     /**
      * @uses \Spryker\Zed\Translator\Communication\Plugin\Application\TranslatorApplicationPlugin::SERVICE_TRANSLATOR
-     * @uses \Spryker\Yves\Translator\Plugin\Application\TranslatorApplicationPlugin::SERVICE_TRANSLATOR
      */
     protected const SERVICE_TRANSLATOR = 'translator';
     protected const TRANSLATION_DOMAIN = 'validators';
