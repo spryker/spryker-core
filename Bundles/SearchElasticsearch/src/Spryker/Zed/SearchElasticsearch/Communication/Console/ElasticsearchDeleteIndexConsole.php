@@ -15,11 +15,11 @@ use Symfony\Component\Console\Input\InputArgument;
  * @method \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface getFacade()
  * @method \Spryker\Zed\SearchElasticsearch\Communication\SearchElasticsearchCommunicationFactory getFactory()
  */
-class SearchElasticsearchCloseIndexConsole extends AbstractIndexNameAwareSearchIndexConsole
+class ElasticsearchDeleteIndexConsole extends AbstractIndexNameAwareSearchIndexConsole
 {
-    public const COMMAND_NAME = 'elasticsearch:index:close';
-    public const DESCRIPTION = 'This command will close an Elasticsearch index with the specified name. If no index name is passed, all the available indices will be closed.';
-    public const COMMAND_ALIAS = 'search:index:close';
+    public const COMMAND_NAME = 'elasticsearch:index:delete';
+    public const DESCRIPTION = 'This command will delete Elasticsearch index by its name. If no index name is specified, all the available indices will be deleted.';
+    public const COMMAND_ALIAS = 'search:index:delete';
 
     /**
      * @return void
@@ -28,9 +28,8 @@ class SearchElasticsearchCloseIndexConsole extends AbstractIndexNameAwareSearchI
     {
         $this->setName(static::COMMAND_NAME);
         $this->setDescription(static::DESCRIPTION);
+        $this->addArgument(static::ARGUMENT_INDEX_NAME, InputArgument::OPTIONAL, 'Name of an index to be deleted.');
         $this->setAliases([static::COMMAND_ALIAS]);
-
-        $this->addArgument(static::ARGUMENT_INDEX_NAME, InputArgument::OPTIONAL, 'Name of an index to be closed.');
 
         parent::configure();
     }
@@ -44,13 +43,13 @@ class SearchElasticsearchCloseIndexConsole extends AbstractIndexNameAwareSearchI
     {
         $searchContextTransfer = $this->buildSearchContextTransferFromIndexName($indexName);
 
-        if ($this->getFacade()->closeIndex($searchContextTransfer)) {
-            $this->info(sprintf('Search index "%s" is closed.', $indexName));
+        if ($this->getFacade()->deleteIndex($searchContextTransfer)) {
+            $this->info(sprintf('Search index "%s" successfully deleted.', $indexName));
 
             return static::CODE_SUCCESS;
         }
 
-        $this->error(sprintf('Search index "%s" could not be closed.', $indexName));
+        $this->error(sprintf('Search index "%s" could not be deleted.', $indexName));
 
         return static::CODE_ERROR;
     }
@@ -60,13 +59,13 @@ class SearchElasticsearchCloseIndexConsole extends AbstractIndexNameAwareSearchI
      */
     protected function executeForAllIndices(): int
     {
-        if ($this->getFacade()->closeIndices()) {
-            $this->info('Search indices are closed');
+        if ($this->getFacade()->deleteIndices()) {
+            $this->info('Search indices are successfully deleted');
 
             return static::CODE_SUCCESS;
         }
 
-        $this->error('Search indices could not be closed');
+        $this->error('Search indices could not be deleted');
 
         return static::CODE_ERROR;
     }

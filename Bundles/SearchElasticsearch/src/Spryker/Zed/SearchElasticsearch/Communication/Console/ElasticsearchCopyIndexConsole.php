@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface getFacade()
  * @method \Spryker\Zed\SearchElasticsearch\Communication\SearchElasticsearchCommunicationFactory getFactory()
  */
-class SearchElasticsearchCopyIndexConsole extends Console
+class ElasticsearchCopyIndexConsole extends Console
 {
     public const COMMAND_NAME = 'elasticsearch:index:copy';
     public const DESCRIPTION = 'This command will copy one index to another.';

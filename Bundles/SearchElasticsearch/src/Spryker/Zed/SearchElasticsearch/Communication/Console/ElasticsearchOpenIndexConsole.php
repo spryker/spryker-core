@@ -15,10 +15,11 @@ use Symfony\Component\Console\Input\InputArgument;
  * @method \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface getFacade()
  * @method \Spryker\Zed\SearchElasticsearch\Communication\SearchElasticsearchCommunicationFactory getFactory()
  */
-class SearchElasticsearchOpenIndexConsole extends AbstractIndexNameAwareSearchIndexConsole
+class ElasticsearchOpenIndexConsole extends AbstractIndexNameAwareSearchIndexConsole
 {
     protected const COMMAND_NAME = 'elasticsearch:index:open';
     protected const DESCRIPTION = 'This command will open an index.';
+    protected const COMMAND_ALIAS = 'search:index:open';
 
     /**
      * @return void
@@ -28,6 +29,7 @@ class SearchElasticsearchOpenIndexConsole extends AbstractIndexNameAwareSearchIn
         $this->setName(static::COMMAND_NAME);
         $this->setDescription(static::DESCRIPTION);
         $this->addArgument(static::ARGUMENT_INDEX_NAME, InputArgument::OPTIONAL, 'Name of an index to be opened.');
+        $this->setAliases([static::COMMAND_ALIAS]);
 
         parent::configure();
     }
