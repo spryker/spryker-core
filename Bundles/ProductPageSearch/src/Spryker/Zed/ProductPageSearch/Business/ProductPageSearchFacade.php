@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business;
 
+use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -143,5 +144,23 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
         $this->getFactory()
             ->createProductConcretePageSearchPublisher()
             ->publishProductConcretePageSearchesByProductAbstractIds($productAbstractIds);
+    }
+
+    /**
+     * Specification:
+     * - Expands ProductConcretePageSearchTransfer with images data and returns the modified object.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer
+     */
+    public function expandProductConcretePageSearchTransferWithProductImages(
+        ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+    ): ProductConcretePageSearchTransfer {
+        return $this->getFactory()
+            ->createProductConcretePageSearchExpander()
+            ->expandProductConcretePageSearchTransferWithProductImages($productConcretePageSearchTransfer);
     }
 }
