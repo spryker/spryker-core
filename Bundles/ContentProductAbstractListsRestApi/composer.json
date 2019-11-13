@@ -4,7 +4,7 @@
   "description": "ContentProductAbstractListsRestApi module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/content-product": "^1.0.0",
     "spryker/glue-application": "^1.15.0",
     "spryker/glue-application-extension": "^1.2.0",
