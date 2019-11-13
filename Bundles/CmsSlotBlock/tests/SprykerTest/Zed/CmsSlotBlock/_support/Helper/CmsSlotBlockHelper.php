@@ -40,6 +40,8 @@ class CmsSlotBlockHelper extends Module
         $cmsSlotBlockEntity->setConditions(json_encode($cmsSlotBlockTransfer->getConditions()));
         $cmsSlotBlockEntity->save();
 
+        $cmsSlotBlockTransfer->setIdCmsSlotBlock($cmsSlotBlockEntity->getIdCmsSlotBlock());
+
         return $cmsSlotBlockTransfer;
     }
 

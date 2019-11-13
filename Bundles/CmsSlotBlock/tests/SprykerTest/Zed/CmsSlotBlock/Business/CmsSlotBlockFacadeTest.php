@@ -149,9 +149,6 @@ class CmsSlotBlockFacadeTest extends Unit
             $cmsSlotBlockCriteriaTransfer
         )->getCmsSlotBlocks();
 
-        $cmsSlotBlockTransfer1->setIdCmsSlotBlock($cmsSlotBlocks[0]->getIdCmsSlotBlock());
-        $cmsSlotBlockTransfer2->setIdCmsSlotBlock($cmsSlotBlocks[1]->getIdCmsSlotBlock());
-
         // Assert
         $this->assertCount(2, $cmsSlotBlocks);
         $this->assertEquals($cmsSlotBlockTransfer1, $cmsSlotBlocks[0]);
