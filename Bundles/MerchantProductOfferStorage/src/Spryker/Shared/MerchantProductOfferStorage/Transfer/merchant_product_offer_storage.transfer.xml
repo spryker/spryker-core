@@ -13,4 +13,16 @@
         <property name="idMerchant" type="int"/>
     </transfer>
 
+    <transfer name="ProductOfferCriteriaFilter">
+    </transfer>
+
+    <transfer name="ProductOffer">
+    </transfer>
+
+    <transfer name="ProductOfferCollection">
+    </transfer>
+
+    <transfer name="SynchronizationData">
+    </transfer>
+
 </transfers>

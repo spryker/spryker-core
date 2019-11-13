@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\MerchantProductOfferStorage\Communication\Plugin\Event
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
@@ -58,8 +59,8 @@ class ProductOfferStoragePublishListenerTest extends Unit
             ];
         });
 
-        $this->merchantProductOfferTransfer = $this->tester->haveMerchantProductOffer([
-            'fkMerchant' => $this->tester->haveMerchant()->getIdMerchant(),
+        $this->merchantProductOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::FK_MERCHANT => $this->tester->haveMerchant()->getIdMerchant(),
         ]);
 
         $this->productOfferStoragePublishListener = new ProductOfferStoragePublishListener();

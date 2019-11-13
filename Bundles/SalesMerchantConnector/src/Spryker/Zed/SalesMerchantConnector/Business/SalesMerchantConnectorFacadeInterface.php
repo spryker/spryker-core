@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesMerchantConnector\Business;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\SalesOrderMerchantTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
 interface SalesMerchantConnectorFacadeInterface
@@ -28,4 +29,17 @@ interface SalesMerchantConnectorFacadeInterface
         SpySalesOrderItemEntityTransfer $salesOrderItemEntity,
         ItemTransfer $itemTransfer
     ): SpySalesOrderItemEntityTransfer;
+
+    /**
+     * Specification:
+     * - Looks up a relation between an order and a merchant.
+     * - If the relation doesn't exist, the method creates it and saves the data to `spy_sales_order_merchant`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesOrderMerchantTransfer $salesOrderMerchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderMerchantTransfer
+     */
+    public function createSalesOrderMerchant(SalesOrderMerchantTransfer $salesOrderMerchantTransfer): SalesOrderMerchantTransfer;
 }
