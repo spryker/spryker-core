@@ -9,7 +9,6 @@ namespace Spryker\Zed\MerchantProfileStorage\Communication\Plugin\Event\Listener
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 /**
  * @method \Spryker\Zed\MerchantProfileStorage\Communication\MerchantProfileStorageCommunicationFactory getFactory()
@@ -18,8 +17,6 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
  */
 class MerchantProfileStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use TransactionTrait;
-
     /**
      * {@inheritDoc}
      * - Handles merchant create amd update events.
@@ -35,8 +32,6 @@ class MerchantProfileStoragePublishListener extends AbstractPlugin implements Ev
     {
         $merchantProfileIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        $this->getTransactionHandler()->handleTransaction(function () use ($merchantProfileIds): void {
-            $this->getFacade()->publish($merchantProfileIds);
-        });
+        $this->getFacade()->publish($merchantProfileIds);
     }
 }
