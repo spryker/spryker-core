@@ -9,6 +9,12 @@
         <property name="quantity" type="int"/>
     </transfer>
 
+    <transfer name="CreateConfiguredBundleRequest">
+        <property name="quote" type="Quote"/>
+        <property name="groupKey" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
     <transfer name="Quote">
         <property name="items" type="Item[]" singular="item"/>
     </transfer>

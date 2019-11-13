@@ -7,11 +7,24 @@
 
 namespace Spryker\Client\ConfigurableBundleCart;
 
+use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer;
 
 interface ConfigurableBundleCartClientInterface
 {
+    /**
+     * Specification:
+     * - Adds configured bundle to the cart.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addConfiguredBundle(CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer): QuoteResponseTransfer;
+
     /**
      * Specification:
      * - Removes configured bundle from cart.
