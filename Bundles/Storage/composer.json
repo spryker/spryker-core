@@ -8,6 +8,7 @@
     "spryker/config": "^3.0.0",
     "spryker/event-dispatcher-extension": "^1.0.0",
     "spryker/gui": "^3.0.0",
+    "spryker/health-check-extension": "^1.0.0",
     "spryker/kernel": "^3.41.0",
     "spryker/locale": "^3.0.0",
     "spryker/redis": "^2.2.0",

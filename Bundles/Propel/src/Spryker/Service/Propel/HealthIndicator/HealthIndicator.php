@@ -8,7 +8,7 @@
 namespace Spryker\Service\Propel\HealthIndicator;
 
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
-use Orm\Zed\Heartbeat\Persistence\SpyPropelHeartbeat;
+use Orm\Zed\Heartbeat\Persistence\SpyPropelHealthCheck;
 use Propel\Runtime\Exception\PropelException;
 
 class HealthIndicator implements HealthIndicatorInterface
@@ -19,8 +19,8 @@ class HealthIndicator implements HealthIndicatorInterface
     public function executeHealthCheck(): HealthCheckServiceResponseTransfer
     {
         try {
-            $entity = (new SpyPropelHeartbeat())
-                ->setHeartbeatCheck('ok');
+            $entity = (new SpyPropelHealthCheck())
+                ->setHealthCheck('ok');
             $entity->save();
             $entity->delete();
         } catch (PropelException $e) {
