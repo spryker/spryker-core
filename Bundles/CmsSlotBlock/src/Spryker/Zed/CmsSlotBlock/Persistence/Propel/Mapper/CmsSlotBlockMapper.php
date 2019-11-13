@@ -121,6 +121,9 @@ class CmsSlotBlockMapper implements CmsSlotBlockMapperInterface
         $cmsSlotBlockTransfer->setIdSlotTemplate($cmsSlotBlockEntity->getFkCmsSlotTemplate())
             ->setIdSlot($cmsSlotBlockEntity->getFkCmsSlot())
             ->setIdCmsBlock($cmsSlotBlockEntity->getFkCmsBlock());
+        $cmsSlotBlockTransfer->setConditions(
+            $this->utilEncodingService->decodeJson($cmsSlotBlockEntity->getConditions())
+        );
 
         return $cmsSlotBlockTransfer;
     }
