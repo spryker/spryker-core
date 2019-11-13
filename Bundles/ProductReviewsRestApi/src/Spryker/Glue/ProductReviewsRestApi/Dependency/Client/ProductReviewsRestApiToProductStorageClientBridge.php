@@ -64,12 +64,12 @@ class ProductReviewsRestApiToProductStorageClientBridge implements ProductReview
      *
      * @return array
      */
-    public function getProductConcreteStorageDataByMapping(
+    public function getBulkProductConcreteStorageDataByMapping(
         string $mappingType,
         array $identifiers,
         string $localeName
     ): array {
-        return $this->productStorageClient->getProductConcreteStorageDataByMapping(
+        return $this->productStorageClient->getBulkProductConcreteStorageDataByMapping(
             $mappingType,
             $identifiers,
             $localeName

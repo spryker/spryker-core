@@ -61,7 +61,7 @@ class ProductConcreteReviewResourceRelationshipExpander implements ProductConcre
     {
         $productConcreteSkus = $this->getAllSkus($resources);
 
-        $productConcreteDataCollection = $this->productStorageClient->getProductConcreteStorageDataByMapping(
+        $productConcreteDataCollection = $this->productStorageClient->getBulkProductConcreteStorageDataByMapping(
             static::PRODUCT_MAPPING_TYPE,
             $productConcreteSkus,
             $restRequest->getMetadata()->getLocale()

@@ -42,7 +42,7 @@ interface ProductReviewsRestApiToProductStorageClientInterface
      *
      * @return array
      */
-    public function getProductConcreteStorageDataByMapping(
+    public function getBulkProductConcreteStorageDataByMapping(
         string $mappingType,
         array $identifiers,
         string $localeName
