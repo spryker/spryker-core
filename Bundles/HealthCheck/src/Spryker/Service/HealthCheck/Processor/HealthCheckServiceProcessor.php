@@ -10,6 +10,7 @@ namespace Spryker\Service\HealthCheck\Processor;
 use Generated\Shared\Transfer\HealthCheckRequestTransfer;
 use Generated\Shared\Transfer\HealthCheckResponseTransfer;
 use Spryker\Service\HealthCheck\Filter\Service\ServiceFilterInterface;
+use Spryker\Service\HealthCheck\Format\Encoder\FormatEncoderInterface;
 use Spryker\Service\HealthCheck\HealthCheckConfig;
 
 class HealthCheckServiceProcessor implements HealthCheckServiceProcessorInterface
@@ -23,17 +24,27 @@ class HealthCheckServiceProcessor implements HealthCheckServiceProcessorInterfac
     protected $serviceFilter;
 
     /**
+     * @var \Spryker\Service\HealthCheck\Format\Encoder\FormatEncoderInterface
+     */
+    protected $formatEncoder;
+
+    /**
      * @var \Spryker\Service\HealthCheck\HealthCheckConfig
      */
     protected $healthCheckConfig;
 
     /**
      * @param \Spryker\Service\HealthCheck\Filter\Service\ServiceFilterInterface $serviceFilter
+     * @param \Spryker\Service\HealthCheck\Format\Encoder\FormatEncoderInterface $formatEncoder
      * @param \Spryker\Service\HealthCheck\HealthCheckConfig $healthCheckConfig
      */
-    public function __construct(ServiceFilterInterface $serviceFilter, HealthCheckConfig $healthCheckConfig)
-    {
+    public function __construct(
+        ServiceFilterInterface $serviceFilter,
+        FormatEncoderInterface $formatEncoder,
+        HealthCheckConfig $healthCheckConfig
+    ) {
         $this->serviceFilter = $serviceFilter;
+        $this->formatEncoder = $formatEncoder;
         $this->healthCheckConfig = $healthCheckConfig;
     }
 
@@ -44,7 +55,6 @@ class HealthCheckServiceProcessor implements HealthCheckServiceProcessorInterfac
      */
     public function process(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer
     {
-        $filteredHealthCheckPlugins = $this->serviceFilter->filter($healthCheckRequestTransfer);
         $healthCheckResponseTransfer = (new HealthCheckResponseTransfer())
             ->setStatus(static::SUCCESS_STATUS);
 
@@ -53,6 +63,21 @@ class HealthCheckServiceProcessor implements HealthCheckServiceProcessorInterfac
                 ->setStatus(static::FORBIDDEN_STATUS);
         }
 
+        $filteredHealthCheckPlugins = $this->serviceFilter->filter($healthCheckRequestTransfer);
+        $healthCheckResponseTransfer = $this->processFilteredHealthCheckPlugins($filteredHealthCheckPlugins, $healthCheckResponseTransfer);
+        $healthCheckResponseTransfer = $this->processOutputFormat($healthCheckRequestTransfer, $healthCheckResponseTransfer);
+
+        return $healthCheckResponseTransfer;
+    }
+
+    /**
+     * @param \Spryker\Service\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[] $filteredHealthCheckPlugins
+     * @param \Generated\Shared\Transfer\HealthCheckResponseTransfer $healthCheckResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
+     */
+    protected function processFilteredHealthCheckPlugins(array $filteredHealthCheckPlugins, HealthCheckResponseTransfer $healthCheckResponseTransfer): HealthCheckResponseTransfer
+    {
         foreach ($filteredHealthCheckPlugins as $filteredHealthCheckPlugin) {
             $healthCheckServiceResponseTransfer = $filteredHealthCheckPlugin->check();
             $healthCheckServiceResponseTransfer->setName($filteredHealthCheckPlugin->getName());
@@ -60,5 +85,22 @@ class HealthCheckServiceProcessor implements HealthCheckServiceProcessorInterfac
         }
 
         return $healthCheckResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\HealthCheckRequestTransfer $healthCheckRequestTransfer
+     * @param \Generated\Shared\Transfer\HealthCheckResponseTransfer $healthCheckResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
+     */
+    protected function processOutputFormat(HealthCheckRequestTransfer $healthCheckRequestTransfer, HealthCheckResponseTransfer $healthCheckResponseTransfer): HealthCheckResponseTransfer
+    {
+        $outputFormat = $healthCheckRequestTransfer->getFormat();
+
+        if (!$outputFormat) {
+            return $healthCheckResponseTransfer;
+        }
+
+        return $this->formatEncoder->encode($healthCheckResponseTransfer, $outputFormat);
     }
 }

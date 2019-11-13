@@ -9,6 +9,10 @@ namespace Spryker\Service\HealthCheck;
 
 use Spryker\Service\HealthCheck\Filter\Service\ServiceFilter;
 use Spryker\Service\HealthCheck\Filter\Service\ServiceFilterInterface;
+use Spryker\Service\HealthCheck\Format\ConsoleFormatter;
+use Spryker\Service\HealthCheck\Format\Encoder\FormatEncoder;
+use Spryker\Service\HealthCheck\Format\Encoder\FormatEncoderInterface;
+use Spryker\Service\HealthCheck\Format\FormatterInterface;
 use Spryker\Service\HealthCheck\Processor\HealthCheckServiceProcessor;
 use Spryker\Service\HealthCheck\Processor\HealthCheckServiceProcessorInterface;
 use Spryker\Service\Kernel\AbstractServiceFactory;
@@ -25,6 +29,7 @@ class HealthCheckServiceFactory extends AbstractServiceFactory
     {
         return new HealthCheckServiceProcessor(
             $this->createYvesServiceFilter(),
+            $this->createEncoder(),
             $this->getConfig()
         );
     }
@@ -46,6 +51,7 @@ class HealthCheckServiceFactory extends AbstractServiceFactory
     {
         return new HealthCheckServiceProcessor(
             $this->createZedServiceFilter(),
+            $this->createEncoder(),
             $this->getConfig()
         );
     }
@@ -67,6 +73,7 @@ class HealthCheckServiceFactory extends AbstractServiceFactory
     {
         return new HealthCheckServiceProcessor(
             $this->createGlueServiceFilter(),
+            $this->createEncoder(),
             $this->getConfig()
         );
     }
@@ -79,6 +86,34 @@ class HealthCheckServiceFactory extends AbstractServiceFactory
         return new ServiceFilter(
             $this->getGlueHealthCheckPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Service\HealthCheck\Format\Encoder\FormatEncoderInterface
+     */
+    public function createEncoder(): FormatEncoderInterface
+    {
+        return new FormatEncoder(
+            $this->getEncoderFormatters()
+        );
+    }
+
+    /**
+     * @return \Spryker\Service\HealthCheck\Format\FormatterInterface[]
+     */
+    public function getEncoderFormatters(): array
+    {
+        return [
+            $this->createConsoleFormatter(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Service\HealthCheck\Format\FormatterInterface
+     */
+    public function createConsoleFormatter(): FormatterInterface
+    {
+        return new ConsoleFormatter();
     }
 
     /**

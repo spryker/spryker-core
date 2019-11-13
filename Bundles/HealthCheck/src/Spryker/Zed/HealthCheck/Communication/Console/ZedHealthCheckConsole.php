@@ -25,11 +25,10 @@ class ZedHealthCheckConsole extends Console
     protected const SERVICES_OPTION_SHORTCUT = 's';
     protected const SERVICES_OPTION_DESCRIPTION = 'Services to include.';
 
-    protected const OUTPUT_SUCCESS_COLOR = 'green';
-    protected const OUTPUT_ERROR_COLOR = 'red';
-
-    protected const OUTPUT_SUCCESS_MESSAGE = 'Healthy';
-    protected const OUTPUT_ERROR_MESSAGE = 'ERROR';
+    protected const OUTPUT_FORMAT_OPTION = 'format';
+    protected const OUTPUT_FORMAT_OPTION_SHORTCUT = 'f';
+    protected const OUTPUT_FORMAT_OPTION_DESCRIPTION = 'Output format.';
+    protected const OUTPUT_FORMAT_OPTION_DEFAULT = 'console';
 
     /**
      * @return void
@@ -47,6 +46,14 @@ class ZedHealthCheckConsole extends Console
             []
         );
 
+        $this->addOption(
+            static::OUTPUT_FORMAT_OPTION,
+            static::OUTPUT_FORMAT_OPTION_SHORTCUT,
+            InputOption::VALUE_OPTIONAL,
+            static::OUTPUT_FORMAT_OPTION_DESCRIPTION,
+            static::OUTPUT_FORMAT_OPTION_DEFAULT
+        );
+
         parent::configure();
     }
 
@@ -59,26 +66,14 @@ class ZedHealthCheckConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $healthCheckRequestTransfer = (new HealthCheckRequestTransfer())
-            ->setServices(implode(',', $input->getOption(static::SERVICES_OPTION)));
+            ->setServices(implode(',', $input->getOption(static::SERVICES_OPTION)))
+            ->setFormat($input->getOption(static::OUTPUT_FORMAT_OPTION));
 
         $healthCheckResponseTransfer = $this->getFactory()
             ->getHealthCheckService()
             ->checkZedHealthCheck($healthCheckRequestTransfer);
 
-        foreach ($healthCheckResponseTransfer->getHealthCheckServiceResponses() as $healthCheckServiceResponseTransfer) {
-            $serviceName = $healthCheckServiceResponseTransfer->getName();
-            $serviceStatus = $healthCheckServiceResponseTransfer->getStatus();
-            $outputColor = $serviceStatus ? static::OUTPUT_SUCCESS_COLOR : static::OUTPUT_ERROR_COLOR;
-            $outputStatus = $serviceStatus ? static::OUTPUT_SUCCESS_MESSAGE : static::OUTPUT_ERROR_MESSAGE;
-            $output->writeln(sprintf(
-                "Service $serviceName: <fg=$outputColor;options=bold>%s</>",
-                $outputStatus
-            ));
-
-            if ($serviceStatus === false) {
-                $output->writeln(sprintf("<fg=$outputColor;options=bold>Error Message: %s</>", $healthCheckServiceResponseTransfer->getMessage()));
-            }
-        }
+        $output->writeln($healthCheckResponseTransfer->getMessage());
 
         return static::CODE_SUCCESS;
     }

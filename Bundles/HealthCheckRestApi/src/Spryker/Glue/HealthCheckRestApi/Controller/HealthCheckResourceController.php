@@ -28,7 +28,7 @@ class HealthCheckResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "403": "Services are disabled.",
-     *              "503": "Services are unavailable.",
+     *              "503": "Services are unavailable."
      *          }
      *     }
      * })

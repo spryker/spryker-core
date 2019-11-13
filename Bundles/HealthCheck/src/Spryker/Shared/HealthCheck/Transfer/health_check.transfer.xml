@@ -5,10 +5,12 @@
 
     <transfer name="HealthCheckRequest">
         <property name="services" type="string"/>
+        <property name="format" type="string"/>
     </transfer>
 
     <transfer name="HealthCheckResponse">
         <property name="status" type="bool"/>
+        <property name="message" type="string"/>
         <property name="healthCheckServiceResponses" type="HealthCheckServiceResponse[]" singular="healthCheckServiceResponse"/>
     </transfer>
 
