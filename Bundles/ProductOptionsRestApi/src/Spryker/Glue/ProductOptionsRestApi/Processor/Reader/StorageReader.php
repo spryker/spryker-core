@@ -62,7 +62,7 @@ class StorageReader implements StorageReaderInterface
      *
      * @return int[]
      */
-    public function getProductAbstractIdsByProductAbstractSkus(array $productAbstractSkus, string $localeName): array
+    protected function getProductAbstractIdsByProductAbstractSkus(array $productAbstractSkus, string $localeName): array
     {
         $productAbstractIdsByProductAbstractSkus = [];
         $productAbstractStorageDataItems = $this->productStorageClient->findBulkProductAbstractStorageDataByMapping(
@@ -79,15 +79,19 @@ class StorageReader implements StorageReaderInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param string[] $productAbstractSkus
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\RestProductOptionAttributesTransfer[][]
      */
-    public function getRestProductOptionAttributesTransfersByProductAbstractIds(
-        array $productAbstractIds,
+    public function getRestProductOptionAttributesTransfersByProductAbstractSkus(
+        array $productAbstractSkus,
         string $localeName
     ): array {
+        $productAbstractIds = $this->getProductAbstractIdsByProductAbstractSkus(
+            $productAbstractSkus,
+            $localeName
+        );
         $productAbstractOptionStorageTransfers = $this->productOptionStorageClient->getBulkProductOptions(
             $productAbstractIds
         );
