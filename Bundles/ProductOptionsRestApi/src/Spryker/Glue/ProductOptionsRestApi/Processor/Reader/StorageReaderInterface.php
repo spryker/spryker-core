@@ -19,4 +19,15 @@ interface StorageReaderInterface
         array $productAbstractSkus,
         string $localeName
     ): array;
+
+    /**
+     * @param string[] $productConcreteSkus
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\RestProductOptionAttributesTransfer[][]
+     */
+    public function getRestProductOptionAttributesTransfersByProductConcreteSkus(
+        array $productConcreteSkus,
+        string $localeName
+    ): array;
 }

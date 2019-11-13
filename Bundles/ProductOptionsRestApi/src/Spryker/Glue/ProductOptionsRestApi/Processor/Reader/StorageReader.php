@@ -17,6 +17,8 @@ class StorageReader implements StorageReaderInterface
 {
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
+    protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
 
     /**
      * @var \Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductStorageClientInterface
@@ -79,6 +81,28 @@ class StorageReader implements StorageReaderInterface
     }
 
     /**
+     * @param string[] $productConcreteSkus
+     * @param string $localeName
+     *
+     * @return int[]
+     */
+    protected function getProductAbstractIdsByProductConcreteSkus(array $productConcreteSkus, string $localeName): array
+    {
+        $productAbstractIdsByProductConcreteSkus = [];
+        $productConcreteStorageDataItems = $this->productStorageClient->getBulkProductConcreteStorageDataByMapping(
+            static::PRODUCT_CONCRETE_MAPPING_TYPE,
+            $productConcreteSkus,
+            $localeName
+        );
+        foreach ($productConcreteStorageDataItems as $productConcreteStorageDataItem) {
+            $productAbstractIdsByProductConcreteSkus[$productConcreteStorageDataItem[static::PRODUCT_CONCRETE_MAPPING_TYPE]] =
+                $productConcreteStorageDataItem[static::KEY_ID_PRODUCT_ABSTRACT];
+        }
+
+        return $productAbstractIdsByProductConcreteSkus;
+    }
+
+    /**
      * @param string[] $productAbstractSkus
      * @param string $localeName
      *
@@ -92,28 +116,8 @@ class StorageReader implements StorageReaderInterface
             $productAbstractSkus,
             $localeName
         );
-        $productAbstractOptionStorageTransfers = $this->productOptionStorageClient->getBulkProductOptions(
-            $productAbstractIds
-        );
-        $translations = $this->glossaryStorageClient->translateBulk(
-            $this->getGlossaryStorageKeys($productAbstractOptionStorageTransfers),
-            $localeName
-        );
-        $restProductOptionAttributesTransfers = [];
-        foreach ($productAbstractIds as $productAbstractSku => $idProductAbstract) {
-            $productAbstractOptionStorageTransfer = $productAbstractOptionStorageTransfers[$idProductAbstract] ?? null;
-            if (!$productAbstractOptionStorageTransfer) {
-                continue;
-            }
 
-            $restProductOptionAttributesTransfers[$productAbstractSku] = $this->productOptionMapper
-                ->mapProductAbstractOptionStorageTransferToRestProductOptionAttributesTransfers(
-                    $productAbstractOptionStorageTransfer,
-                    $translations
-                );
-        }
-
-        return $restProductOptionAttributesTransfers;
+        return $this->getRestProductOptionAttributesTransfersByProductAbstractIds($productAbstractIds, $localeName);
     }
 
     /**
@@ -153,5 +157,57 @@ class StorageReader implements StorageReaderInterface
         }
 
         return $glossaryStorageKeys;
+    }
+
+    /**
+     * @param string[] $productConcreteSkus
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\RestProductOptionAttributesTransfer[][]
+     */
+    public function getRestProductOptionAttributesTransfersByProductConcreteSkus(
+        array $productConcreteSkus,
+        string $localeName
+    ): array {
+        $productAbstractIds = $this->getProductAbstractIdsByProductConcreteSkus(
+            $productConcreteSkus,
+            $localeName
+        );
+
+        return $this->getRestProductOptionAttributesTransfersByProductAbstractIds($productAbstractIds, $localeName);
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\RestProductOptionAttributesTransfer[][]
+     */
+    protected function getRestProductOptionAttributesTransfersByProductAbstractIds(
+        array $productAbstractIds,
+        string $localeName
+    ): array {
+        $productAbstractOptionStorageTransfers = $this->productOptionStorageClient->getBulkProductOptions(
+            $productAbstractIds
+        );
+        $translations = $this->glossaryStorageClient->translateBulk(
+            $this->getGlossaryStorageKeys($productAbstractOptionStorageTransfers),
+            $localeName
+        );
+        $restProductOptionAttributesTransfers = [];
+        foreach ($productAbstractIds as $productSku => $idProductAbstract) {
+            $productAbstractOptionStorageTransfer = $productAbstractOptionStorageTransfers[$idProductAbstract] ?? null;
+            if (!$productAbstractOptionStorageTransfer) {
+                continue;
+            }
+
+            $restProductOptionAttributesTransfers[$productSku] = $this->productOptionMapper
+                ->mapProductAbstractOptionStorageTransferToRestProductOptionAttributesTransfers(
+                    $productAbstractOptionStorageTransfer,
+                    $translations
+                );
+        }
+
+        return $restProductOptionAttributesTransfers;
     }
 }

@@ -15,6 +15,8 @@ use Spryker\Glue\ProductOptionsRestApi\Processor\Builder\ProductOptionRestResour
 use Spryker\Glue\ProductOptionsRestApi\Processor\Builder\ProductOptionRestResourceBuilderInterface;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Expander\ProductOptionByProductAbstractSkuExpander;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Expander\ProductOptionByProductAbstractSkuExpanderInterface;
+use Spryker\Glue\ProductOptionsRestApi\Processor\Expander\ProductOptionByProductConcreteSkuExpander;
+use Spryker\Glue\ProductOptionsRestApi\Processor\Expander\ProductOptionByProductConcreteSkuExpanderInterface;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Mapper\ProductOptionMapper;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Mapper\ProductOptionMapperInterface;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Reader\StorageReader;
@@ -95,5 +97,13 @@ class ProductOptionsRestApiFactory extends AbstractFactory
     public function createProductOptionByProductAbstractSkuExpander(): ProductOptionByProductAbstractSkuExpanderInterface
     {
         return new ProductOptionByProductAbstractSkuExpander($this->createProductOptionRestResourceBuilder());
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductOptionsRestApi\Processor\Expander\ProductOptionByProductConcreteSkuExpanderInterface
+     */
+    public function createProductOptionByProductConcreteSkuExpander(): ProductOptionByProductConcreteSkuExpanderInterface
+    {
+        return new ProductOptionByProductConcreteSkuExpander($this->createProductOptionRestResourceBuilder());
     }
 }

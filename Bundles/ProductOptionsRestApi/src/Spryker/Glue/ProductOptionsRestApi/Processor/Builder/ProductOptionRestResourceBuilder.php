@@ -58,25 +58,17 @@ class ProductOptionRestResourceBuilder implements ProductOptionRestResourceBuild
         string $localeName,
         array $sorts
     ): array {
-        $productOptionRestResources = [];
-        $restProductOptionAttributesTransfersByProductAbstractIds =
+        $restProductOptionAttributesTransfers =
             $this->storageReader->getRestProductOptionAttributesTransfersByProductAbstractSkus(
                 $productAbstractSkus,
                 $localeName
             );
-        foreach ($restProductOptionAttributesTransfersByProductAbstractIds as $productAbstractSku => $restProductOptionAttributesTransfers) {
-            $restProductOptionAttributesTransfers = $this->productOptionSorter->sortRestProductOptionAttributesTransfers(
-                $restProductOptionAttributesTransfers,
-                $sorts
-            );
-            $productOptionRestResources[$productAbstractSku] = $this->prepareRestResources(
-                $restProductOptionAttributesTransfers,
-                ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-                $productAbstractSku
-            );
-        }
 
-        return $productOptionRestResources;
+        return $this->createProductOptionRestResources(
+            $restProductOptionAttributesTransfers,
+            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
+            $sorts
+        );
     }
 
     /**
@@ -124,5 +116,58 @@ class ProductOptionRestResourceBuilder implements ProductOptionRestResourceBuild
             ProductOptionsRestApiConfig::RESOURCE_PRODUCT_OPTIONS,
             $productOptionSku
         );
+    }
+
+    /**
+     * @param string[] $productConcreteSkus
+     * @param string $localeName
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
+     */
+    public function getProductOptionsByProductConcreteSkus(
+        array $productConcreteSkus,
+        string $localeName,
+        array $sorts
+    ): array {
+        $restProductOptionAttributesTransfers =
+            $this->storageReader->getRestProductOptionAttributesTransfersByProductConcreteSkus(
+                $productConcreteSkus,
+                $localeName
+            );
+
+        return $this->createProductOptionRestResources(
+            $restProductOptionAttributesTransfers,
+            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
+            $sorts
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestProductOptionAttributesTransfer[][] $restProductOptionAttributesTransfersCollection
+     * @param string $parentResourceType
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts $sorts
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
+     */
+    protected function createProductOptionRestResources(
+        array $restProductOptionAttributesTransfersCollection,
+        string $parentResourceType,
+        array $sorts
+    ): array {
+        $productOptionRestResources = [];
+        foreach ($restProductOptionAttributesTransfersCollection as $productSku => $restProductOptionAttributesTransfers) {
+            $restProductOptionAttributesTransfers = $this->productOptionSorter->sortRestProductOptionAttributesTransfers(
+                $restProductOptionAttributesTransfers,
+                $sorts
+            );
+            $productOptionRestResources[$productSku] = $this->prepareRestResources(
+                $restProductOptionAttributesTransfers,
+                $parentResourceType,
+                $productSku
+            );
+        }
+
+        return $productOptionRestResources;
     }
 }
