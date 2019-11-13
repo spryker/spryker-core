@@ -8,6 +8,8 @@
 namespace Spryker\Zed\StockGui\Communication\Controller;
 
 use Generated\Shared\Transfer\StockResponseTransfer;
+use Generated\Shared\Transfer\StockTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -34,8 +36,10 @@ class CreateWarehouseController extends AbstractController
     {
         $stockTabs = $this->getFactory()->createStockTabs();
 
+        $stockTransfer = (new StockTransfer())->setStoreRelation(new StoreRelationTransfer());
+
         $stockForm = $this->getFactory()
-            ->getStockForm()
+            ->getStockForm($stockTransfer)
             ->handleRequest($request);
 
         if ($stockForm->isSubmitted() && $stockForm->isValid()) {
