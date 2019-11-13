@@ -52,12 +52,11 @@ class SearchWriterTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Client\Search\Exception\InvalidDataSetException
-     *
      * @return void
      */
     public function testWriteCreateDocumentsWithInvalidDataSet()
     {
+        $this->expectException('Spryker\Client\Search\Exception\InvalidDataSetException');
         $dataSet = $this->getInvalidTestDataSet();
         $writer = $this->getElasticsearchWriter();
         $writer->write($dataSet);
@@ -68,7 +67,7 @@ class SearchWriterTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->type = $this->getMockType();
         $this->index = $this->getMockIndex();

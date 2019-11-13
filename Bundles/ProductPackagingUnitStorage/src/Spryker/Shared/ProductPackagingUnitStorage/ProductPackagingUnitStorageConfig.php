@@ -33,5 +33,5 @@ class ProductPackagingUnitStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    public const PRODUCT_PACKAGING_UNIT_RESOURCE_NAME = 'product_packaging';
+    public const PRODUCT_PACKAGING_UNIT_RESOURCE_NAME = 'product_packaging_unit';
 }

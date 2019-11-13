@@ -251,7 +251,8 @@ interface ProductPackagingUnitFacadeInterface
     /**
      * Specification:
      * - Checks if item amounts which being added to cart are available.
-     * - Even if same lead product added separately, the lead product availability is checked together.
+     * - Checks the quantity availability of the product packaging unit too, unless if it's a self-lead packaging unit.
+     * - If a lead product is added separately, the lead product total availability amount will be checked.
      * - Sets error message if not available.
      *
      * @api
@@ -282,7 +283,8 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Updates the lead product availability of the provided product pacakaging unit sku.
+     * - Updates the lead product availability of the provided product packaging unit sku.
+     * - Skips updating if the product packaging unit has self as lead product.
      *
      * @api
      *
@@ -295,6 +297,7 @@ interface ProductPackagingUnitFacadeInterface
     /**
      * Specification:
      * - Updates the lead product reservations of the provided product pacakaging unit sku.
+     * - Skips updating if the product packaging unit has self as lead product.
      *
      * @api
      *
@@ -306,17 +309,17 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
-     * - Aggregates sales order items reservation amounts for a given sku, in the given states, and - optionaly - store too.
+     * - Aggregates reservations for provided SKU both with or without packaging unit.
      *
      * @api
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\OmsStateCollectionTransfer $reservedStates
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function aggregateProductPackagingUnitReservationAmount(string $sku, OmsStateCollectionTransfer $reservedStates, StoreTransfer $storeTransfer): array;
+    public function aggregateProductPackagingUnitReservation(string $sku, OmsStateCollectionTransfer $reservedStates, ?StoreTransfer $storeTransfer = null): array;
 
     /**
      * Specification:

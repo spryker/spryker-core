@@ -21,18 +21,18 @@ class ProductPackagingUnitReservationAggregationStrategyPlugin extends AbstractP
 {
     /**
      * {@inheritDoc}
-     * - Aggregates sales order items amount reservations.
+     * - Aggregates reservations for provided SKU both with or without packaging unit.
      *
      * @api
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\OmsStateCollectionTransfer $reservedStates
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function aggregateSalesOrderItemReservations(string $sku, OmsStateCollectionTransfer $reservedStates, StoreTransfer $storeTransfer): array
+    public function aggregateReservations(string $sku, OmsStateCollectionTransfer $reservedStates, ?StoreTransfer $storeTransfer = null): array
     {
-        return $this->getFacade()->aggregateProductPackagingUnitReservationAmount($sku, $reservedStates, $storeTransfer);
+        return $this->getFacade()->aggregateProductPackagingUnitReservation($sku, $reservedStates, $storeTransfer);
     }
 }

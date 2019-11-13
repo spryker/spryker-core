@@ -48,7 +48,7 @@ class ProductOptionTaxRateCalculationWithQuoteLevelShippingAddressTest extends U
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -133,7 +133,7 @@ class ProductOptionTaxRateCalculationWithQuoteLevelShippingAddressTest extends U
      * @param string $defaultCountryIso2Code
      * @param float $defaultTaxRate
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface
      */
     protected function createProductOptionToTaxFacadeBridgeMock(string $defaultCountryIso2Code, float $defaultTaxRate): ProductOptionToTaxFacadeInterface
     {

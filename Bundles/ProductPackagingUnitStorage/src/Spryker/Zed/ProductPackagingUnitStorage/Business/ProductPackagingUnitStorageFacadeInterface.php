@@ -11,7 +11,7 @@ interface ProductPackagingUnitStorageFacadeInterface
 {
     /**
      * Specification:
-     * - Saves the provided product concrete IDs related ProductConcretePackaging objects to storage table.
+     * - Saves the provided product concrete IDs related product packaging unit objects to storage table.
      * - Sends a copy of data to synchronization queue.
      *
      * @api

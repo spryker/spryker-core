@@ -40,7 +40,7 @@ class GatewayControllerListenerPluginTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->unsetLocator();
@@ -63,7 +63,7 @@ class GatewayControllerListenerPluginTest extends Unit
     /**
      * @return void
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
         $this->resetTransferServer();

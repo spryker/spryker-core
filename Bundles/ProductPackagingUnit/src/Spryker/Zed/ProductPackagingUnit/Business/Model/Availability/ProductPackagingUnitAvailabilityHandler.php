@@ -51,7 +51,7 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
     public function updateProductPackagingUnitLeadProductAvailability(string $sku): void
     {
         $productPackagingLeadProductTransfer = $this->productPackagingUnitRepository
-            ->findProductPackagingLeadProductBySiblingProductSku($sku);
+            ->findProductPackagingUnitLeadProductForPackagingUnit($sku);
 
         if (!$productPackagingLeadProductTransfer) {
             return;

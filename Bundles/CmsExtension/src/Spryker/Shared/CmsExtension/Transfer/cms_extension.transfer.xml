@@ -9,4 +9,7 @@
     <transfer name="Locale">
     </transfer>
 
+    <transfer name="CmsPage">
+    </transfer>
+
 </transfers>

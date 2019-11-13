@@ -270,12 +270,14 @@ interface OmsFacadeInterface
      *
      * @api
      *
+     * @deprecated Not used anymore. Will be removed with next major release.
+     *
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function sumReservedProductQuantitiesForSku(string $sku, StoreTransfer $storeTransfer): Decimal;
+    public function sumReservedProductQuantitiesForSku(string $sku, ?StoreTransfer $storeTransfer = null): Decimal;
 
     /**
      *  - Returns reserved quantity for the given sku which aggregated in OMS.
@@ -589,19 +591,6 @@ interface OmsFacadeInterface
      * @return void
      */
     public function updateReservationQuantity(string $sku): void;
-
-    /**
-     * Specification:
-     *  - Reads states from XML definition
-     *  - Returns a list of reserved state names
-     *
-     * @api
-     *
-     * @deprecated Use `Spryker\Zed\Oms\Business\OmsFacadeInterface::getOmsReservedStateCollection()` instead.
-     *
-     * @return string[]
-     */
-    public function getReservedStateNames(): array;
 
     /**
      * Specification:

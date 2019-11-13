@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductPackagingUnitStorage\Storage;
 
-use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer;
 use Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\ProductPackagingUnitStorageToStorageClientInterface;
 use Spryker\Shared\ProductPackagingUnitStorage\ProductPackagingUnitStorageConfig;
 
@@ -38,24 +38,24 @@ class ProductPackagingUnitStorageReader implements ProductPackagingUnitStorageRe
     /**
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer|null
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer|null
      */
-    public function findProductConcretePackagingById(int $idProductConcrete): ?ProductConcretePackagingStorageTransfer
+    public function findProductPackagingUnitById(int $idProductConcrete): ?ProductPackagingUnitStorageTransfer
     {
         $key = $this->productPackagingUnitStorageKeyGenerator->generateKey(
             ProductPackagingUnitStorageConfig::PRODUCT_PACKAGING_UNIT_RESOURCE_NAME,
             $idProductConcrete
         );
 
-        return $this->findProductConcretePackagingStorageTransfer($key);
+        return $this->findProductPackagingUnitStorageTransfer($key);
     }
 
     /**
      * @param string $key
      *
-     * @return \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer|null
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer|null
      */
-    protected function findProductConcretePackagingStorageTransfer(string $key): ?ProductConcretePackagingStorageTransfer
+    protected function findProductPackagingUnitStorageTransfer(string $key): ?ProductPackagingUnitStorageTransfer
     {
         $data = $this->storageClient->get($key);
 
@@ -63,9 +63,9 @@ class ProductPackagingUnitStorageReader implements ProductPackagingUnitStorageRe
             return null;
         }
 
-        $productConcretePackagingStorageTransfer = new ProductConcretePackagingStorageTransfer();
-        $productConcretePackagingStorageTransfer->fromArray($data, true);
+        $productPackagingUnitStorageTransfer = new ProductPackagingUnitStorageTransfer();
+        $productPackagingUnitStorageTransfer->fromArray($data, true);
 
-        return $productConcretePackagingStorageTransfer;
+        return $productPackagingUnitStorageTransfer;
     }
 }

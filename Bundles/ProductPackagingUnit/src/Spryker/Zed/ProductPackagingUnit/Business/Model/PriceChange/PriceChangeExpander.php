@@ -34,7 +34,7 @@ class PriceChangeExpander implements PriceChangeExpanderInterface
                     ->getProductPackagingUnitAmount()
                 || !$itemTransfer->getProductPackagingUnit()
                     ->getProductPackagingUnitAmount()
-                    ->getIsVariable()
+                    ->getIsAmountVariable()
             ) {
                 continue;
             }

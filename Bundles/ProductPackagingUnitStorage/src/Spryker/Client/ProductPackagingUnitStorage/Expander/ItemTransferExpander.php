@@ -45,34 +45,32 @@ class ItemTransferExpander implements ItemTransferExpanderInterface
     {
         $this->assertItemTransfer($itemTransfer);
 
-        $productConcretePackagingStorageTransfer = $this->productPackagingUnitStorageReader->findProductConcretePackagingById(
+        $productPackagingUnitStorageTransfer = $this->productPackagingUnitStorageReader->findProductPackagingUnitById(
             (int)$itemTransfer->getProductConcrete()->getIdProductConcrete()
         );
 
-        if ($productConcretePackagingStorageTransfer === null) {
+        if ($productPackagingUnitStorageTransfer === null) {
             return $itemTransfer;
         }
 
-        if ($productConcretePackagingStorageTransfer->getIdLeadProduct() === null) {
-            return $itemTransfer;
-        }
+        if ($productPackagingUnitStorageTransfer->getIdLeadProduct() !== $productPackagingUnitStorageTransfer->getIdProduct()) {
+            $quantityProductMeasurementSalesUnitTransfer = $this->findDefaultProductMeasurementSalesUnitTransfer(
+                (int)$productPackagingUnitStorageTransfer->getIdProduct()
+            );
 
-        $quantityProductMeasurementSalesUnitTransfer = $this->findDefaultProductMeasurementSalesUnitTransfer(
-            (int)$productConcretePackagingStorageTransfer->getIdProduct()
-        );
+            $itemTransfer->setQuantitySalesUnit($quantityProductMeasurementSalesUnitTransfer);
+        }
 
         $amountProductMeasurementSalesUnitTransfer = $this->findDefaultProductMeasurementSalesUnitTransfer(
-            (int)$productConcretePackagingStorageTransfer->getIdLeadProduct()
+            (int)$productPackagingUnitStorageTransfer->getIdLeadProduct()
         );
 
-        if ($quantityProductMeasurementSalesUnitTransfer === null || $amountProductMeasurementSalesUnitTransfer === null) {
-            return $itemTransfer;
+        if ($amountProductMeasurementSalesUnitTransfer !== null) {
+            $itemTransfer->setAmountSalesUnit($amountProductMeasurementSalesUnitTransfer);
         }
 
-        $itemTransfer->setQuantitySalesUnit($quantityProductMeasurementSalesUnitTransfer);
-        $itemTransfer->setAmountSalesUnit($amountProductMeasurementSalesUnitTransfer);
         $itemTransfer->setAmount(
-            $productConcretePackagingStorageTransfer->getDefaultAmount()->multiply($itemTransfer->getQuantity())
+            $productPackagingUnitStorageTransfer->getDefaultAmount()->multiply($itemTransfer->getQuantity())
         );
 
         return $itemTransfer;

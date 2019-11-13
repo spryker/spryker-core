@@ -58,15 +58,6 @@ class AmountSalesUnitItemExpander implements AmountSalesUnitItemExpanderInterfac
      */
     protected function resetAmountAndQuantitySalesUnits(ItemTransfer $itemTransfer): ItemTransfer
     {
-        if (!$itemTransfer->getAmountSalesUnit() || !$itemTransfer->getAmountSalesUnit()->getIdProductMeasurementSalesUnit()) {
-            $itemTransfer
-                ->requireQuantitySalesUnit()
-                ->getQuantitySalesUnit()
-                    ->requireIdProductMeasurementSalesUnit();
-
-            $itemTransfer->setAmountSalesUnit($itemTransfer->getQuantitySalesUnit());
-        }
-
         $itemTransfer->setQuantitySalesUnit(null);
 
         return $itemTransfer;
