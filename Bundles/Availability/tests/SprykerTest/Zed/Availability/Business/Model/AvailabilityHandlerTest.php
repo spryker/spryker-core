@@ -8,12 +8,14 @@
 namespace SprykerTest\Zed\Availability\Business\Model;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\StoreBuilder;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Business\Model\AvailabilityHandler;
 use Spryker\Zed\Availability\Business\Model\ProductAvailabilityCalculatorInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
+use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityEntityManagerInterface;
@@ -34,6 +36,8 @@ class AvailabilityHandlerTest extends Unit
 {
     public const PRODUCT_ABSTRACT_SKU = 'sku-123';
     public const PRODUCT_SKU = 'sku-123-321';
+
+    protected const STORE_NAME = 'DE';
 
     /**
      * @var \SprykerTest\Zed\Availability\AvailabilityBusinessTester
@@ -59,6 +63,10 @@ class AvailabilityHandlerTest extends Unit
         $availabilityEntityManagerMock->method('saveProductConcreteAvailability')
             ->willReturn(true);
 
+        $stockFacadeMock = $this->createAvailabilityToStockFacadeMock();
+        $stockFacadeMock->method('getStoresWhereProductStockIsDefined')
+            ->willReturn([$this->createStoreTransfer()]);
+
         $touchFacadeMock = $this->createTouchFacadeMock();
         $touchFacadeMock->expects($this->once())->method('touchActive');
 
@@ -66,7 +74,9 @@ class AvailabilityHandlerTest extends Unit
             $availabilityRepositoryMock,
             $availabilityEntityManagerMock,
             $availabilityCalculatorMock,
-            $touchFacadeMock
+            $touchFacadeMock,
+            null,
+            $stockFacadeMock
         );
 
         $availabilityHandler->updateAvailability($productTransfer->getSku());
@@ -90,6 +100,10 @@ class AvailabilityHandlerTest extends Unit
         $availabilityEntityManagerMock->method('saveProductConcreteAvailability')
             ->willReturn(true);
 
+        $stockFacadeMock = $this->createAvailabilityToStockFacadeMock();
+        $stockFacadeMock->method('getStoresWhereProductStockIsDefined')
+            ->willReturn([$this->createStoreTransfer()]);
+
         $touchFacadeMock = $this->createTouchFacadeMock();
         $touchFacadeMock->expects($this->once())->method('touchActive');
 
@@ -97,7 +111,9 @@ class AvailabilityHandlerTest extends Unit
             $availabilityRepositoryMock,
             $availabilityEntityManagerMock,
             $availabilityCalculatorMock,
-            $touchFacadeMock
+            $touchFacadeMock,
+            null,
+            $stockFacadeMock
         );
 
         $availabilityHandler->updateAvailability(static::PRODUCT_SKU);
@@ -109,6 +125,7 @@ class AvailabilityHandlerTest extends Unit
      * @param \Spryker\Zed\Availability\Business\Model\ProductAvailabilityCalculatorInterface $availabilityCalculatorMock
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchFacadeInterface $touchFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface|null $availabilityToStoreFacade
+     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface|null $availabilityToStockFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface|null $availabilityToEventFacade
      *
      * @return \Spryker\Zed\Availability\Business\Model\AvailabilityHandler
@@ -119,12 +136,17 @@ class AvailabilityHandlerTest extends Unit
         ProductAvailabilityCalculatorInterface $availabilityCalculatorMock,
         AvailabilityToTouchFacadeInterface $touchFacade,
         ?AvailabilityToStoreFacadeInterface $availabilityToStoreFacade = null,
+        ?AvailabilityToStockFacadeInterface $availabilityToStockFacade = null,
         ?AvailabilityToEventFacadeInterface $availabilityToEventFacade = null
     ) {
         if ($availabilityToStoreFacade === null) {
             $availabilityToStoreFacade = $this->createStoreFacade();
             $availabilityToStoreFacade->method('getCurrentStore')
                 ->willReturn(new StoreTransfer());
+        }
+
+        if ($availabilityToStockFacade === null) {
+            $availabilityToStockFacade = $this->createAvailabilityToStockFacadeMock();
         }
 
         if ($availabilityToEventFacade === null) {
@@ -137,6 +159,7 @@ class AvailabilityHandlerTest extends Unit
             $availabilityCalculatorMock,
             $touchFacade,
             $availabilityToStoreFacade,
+            $availabilityToStockFacade,
             $availabilityToEventFacade
         );
     }
@@ -202,5 +225,24 @@ class AvailabilityHandlerTest extends Unit
     {
         return $this->getMockBuilder(AvailabilityToEventFacadeInterface::class)
             ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface
+     */
+    protected function createAvailabilityToStockFacadeMock()
+    {
+        return $this->getMockBuilder(AvailabilityToStockFacadeInterface::class)
+            ->getMock();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function createStoreTransfer(): StoreTransfer
+    {
+        return (new StoreBuilder([
+            StoreTransfer::NAME => static::STORE_NAME,
+        ]))->build();
     }
 }

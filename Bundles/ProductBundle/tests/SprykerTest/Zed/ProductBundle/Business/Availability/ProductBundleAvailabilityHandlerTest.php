@@ -17,6 +17,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStockFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
@@ -34,6 +35,7 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 class ProductBundleAvailabilityHandlerTest extends Unit
 {
     public const ID_STORE = 1;
+    protected const STORE_NAME = 'DE';
 
     /**
      * @return void
@@ -115,12 +117,14 @@ class ProductBundleAvailabilityHandlerTest extends Unit
     /**
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface|null $availabilityFacadeMock
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface|null $storeFacadeMock
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStockFacadeInterface|null $stockFacadeMock
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface
      */
     protected function createProductBundleAvailabilityHandler(
         ?ProductBundleToAvailabilityFacadeInterface $availabilityFacadeMock = null,
-        ?ProductBundleToStoreFacadeInterface $storeFacadeMock = null
+        ?ProductBundleToStoreFacadeInterface $storeFacadeMock = null,
+        ?ProductBundleToStockFacadeInterface $stockFacadeMock = null
     ) {
         $productBundleQueryContainerMock = $this->createProductBundleQueryContainerMock();
 
@@ -137,8 +141,18 @@ class ProductBundleAvailabilityHandlerTest extends Unit
             $storeFacadeMock->method('getStoreByName')->willReturn($storeTransfer);
         }
 
+        if ($stockFacadeMock === null) {
+            $stockFacadeMock = $this->createStockFacadeMock();
+            $storeTransfer = (new StoreBuilder([
+                StoreTransfer::ID_STORE => static::ID_STORE,
+                StoreTransfer::NAME => static::STORE_NAME,
+            ]))->build();
+            $stockFacadeMock->method('getStoresWhereProductStockIsDefined')
+                ->willReturn([$storeTransfer]);
+        }
+
         return $this->getMockBuilder(ProductBundleAvailabilityHandler::class)
-            ->setConstructorArgs([$availabilityFacadeMock, $productBundleQueryContainerMock, $storeFacadeMock])
+            ->setConstructorArgs([$availabilityFacadeMock, $productBundleQueryContainerMock, $storeFacadeMock, $stockFacadeMock])
             ->setMethods(['getBundleItemsByIdProduct', 'getBundlesUsingProductBySku', 'findBundleProductEntityBySku', 'findBundledItemAvailabilityEntityBySku'])
             ->getMock();
     }
@@ -165,6 +179,14 @@ class ProductBundleAvailabilityHandlerTest extends Unit
     protected function createStoreFacadeMock()
     {
         return $this->getMockBuilder(ProductBundleToStoreFacadeInterface::class)->getMock();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStockFacadeInterface
+     */
+    protected function createStockFacadeMock()
+    {
+        return $this->getMockBuilder(ProductBundleToStockFacadeInterface::class)->getMock();
     }
 
     /**

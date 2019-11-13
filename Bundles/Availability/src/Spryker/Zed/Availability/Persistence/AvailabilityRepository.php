@@ -168,9 +168,14 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
             ->queryProductAbstract()
             ->filterBySku($abstractSku)
             ->groupByIdProductAbstract()
-            ->useSpyProductQuery(null, Criteria::INNER_JOIN)
-                ->useStockProductQuery(null, Criteria::LEFT_JOIN)
-                    ->leftJoinStock()
+            ->useSpyProductQuery()
+                ->useStockProductQuery()
+                    ->useStockQuery()
+                        ->filterByIsActive(true)
+                        ->useStockStoreQuery()
+                            ->filterByFkStore($storeTransfer->getIdStore())
+                        ->endUse()
+                    ->endUse()
                 ->endUse()
             ->endUse()
             ->withColumn(SpyProductAbstractTableMap::COL_SKU, ProductAbstractAvailabilityTransfer::SKU)
@@ -184,7 +189,7 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
                 SpyOmsProductReservationTableMap::COL_SKU,
                 Criteria::LEFT_JOIN
             )->where(sprintf('(%s = %d OR %s IS NULL)', SpyOmsProductReservationTableMap::COL_FK_STORE, $storeTransfer->getIdStore(), SpyOmsProductReservationTableMap::COL_FK_STORE))
-            ->select([SpyProductAbstractTableMap::COL_SKU])
+            ->select(SpyProductAbstractTableMap::COL_SKU)
             ->findOne();
 
         if ($availabilityAbstractEntityArray === null) {

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Stock;
 
+use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Stock\Dependency\Facade\StockToProductBridge;
@@ -22,6 +23,8 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_STORE = 'FACADE_STORE';
 
+    public const PROPEL_QUERY_STORE = 'PROPEL_QUERY_STORE';
+
     public const PLUGINS_STOCK_UPDATE = 'PLUGINS_STOCK_UPDATE';
 
     /**
@@ -35,6 +38,18 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductFacade($container);
         $container = $this->addStockUpdatePlugins($container);
         $container = $this->addStoreFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = $this->addStorePropelQuery($container);
 
         return $container;
     }
@@ -98,7 +113,21 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface[]
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStorePropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_STORE, $container->factory(function () {
+            return SpyStoreQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface[]
      */
     protected function getStockUpdateHandlerPlugins(Container $container)
     {

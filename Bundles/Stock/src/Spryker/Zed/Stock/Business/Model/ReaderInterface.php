@@ -26,9 +26,21 @@ interface ReaderInterface
     public function getStockTypesForStore(StoreTransfer $storeTransfer): array;
 
     /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer[]
+     */
+    public function getAvailableWarehousesForStore(StoreTransfer $storeTransfer): array;
+
+    /**
      * @return array
      */
     public function getWarehouseToStoreMapping(): array;
+
+    /**
+     * @return array
+     */
+    public function getStoreToWarehouseMapping(): array;
 
     /**
      * @param string $sku

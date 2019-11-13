@@ -11,12 +11,22 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Stock\Business\Model\Calculator;
 use Spryker\Zed\Stock\Business\Model\Reader;
 use Spryker\Zed\Stock\Business\Model\Writer;
+use Spryker\Zed\Stock\Business\Stock\StockCreator;
+use Spryker\Zed\Stock\Business\Stock\StockCreatorInterface;
+use Spryker\Zed\Stock\Business\Stock\StockStoreRelationshipUpdater;
+use Spryker\Zed\Stock\Business\Stock\StockStoreRelationshipUpdaterInterface;
+use Spryker\Zed\Stock\Business\Stock\StockUpdater;
+use Spryker\Zed\Stock\Business\Stock\StockUpdaterInterface;
+use Spryker\Zed\Stock\Business\StockProduct\StockProductUpdater;
+use Spryker\Zed\Stock\Business\StockProduct\StockProductUpdaterInterface;
 use Spryker\Zed\Stock\Business\Transfer\StockProductTransferMapper;
 use Spryker\Zed\Stock\StockDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Stock\StockConfig getConfig()
  * @method \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Stock\Persistence\StockRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Stock\Persistence\StockEntityManagerInterface getEntityManager()
  */
 class StockBusinessFactory extends AbstractBusinessFactory
 {
@@ -40,7 +50,8 @@ class StockBusinessFactory extends AbstractBusinessFactory
             $this->getProductFacade(),
             $this->createStockProductTransferMapper(),
             $this->getConfig(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getRepository()
         );
     }
 
@@ -53,6 +64,52 @@ class StockBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createReaderModel(),
             $this->getTouchFacade(),
+            $this->getStockUpdateHandlerPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Stock\Business\Stock\StockCreatorInterface
+     */
+    public function createStockCreator(): StockCreatorInterface
+    {
+        return new StockCreator(
+            $this->getEntityManager(),
+            $this->getTouchFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Stock\Business\Stock\StockUpdaterInterface
+     */
+    public function createStockUpdater(): StockUpdaterInterface
+    {
+        return new StockUpdater(
+            $this->getEntityManager(),
+            $this->getTouchFacade(),
+            $this->createStockStoreRelationshipUpdater(),
+            $this->createStockProductUpdater()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Stock\Business\Stock\StockStoreRelationshipUpdaterInterface
+     */
+    public function createStockStoreRelationshipUpdater(): StockStoreRelationshipUpdaterInterface
+    {
+        return new StockStoreRelationshipUpdater(
+            $this->getRepository(),
+            $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Stock\Business\StockProduct\StockProductUpdaterInterface
+     */
+    public function createStockProductUpdater(): StockProductUpdaterInterface
+    {
+        return new StockProductUpdater(
+            $this->getRepository(),
             $this->getStockUpdateHandlerPlugins()
         );
     }
@@ -82,7 +139,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface[]
+     * @return \Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface[]
      */
     public function getStockUpdateHandlerPlugins()
     {

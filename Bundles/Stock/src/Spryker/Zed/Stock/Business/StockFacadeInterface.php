@@ -9,6 +9,8 @@ namespace Spryker\Zed\Stock\Business;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StockResponseTransfer;
+use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use Spryker\DecimalObject\Decimal;
@@ -18,6 +20,7 @@ interface StockFacadeInterface
     /**
      * Specification:
      * - Checks if the concrete product with the provided SKU has any stock type that is set as "never out of stock".
+     * - Filters out stocks that are inactive.
      *
      * @api
      *
@@ -42,7 +45,8 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     * - Returns the total stock amount of the concrete product for all its available stock types.
+     *  - Returns the total stock amount of the concrete product for all its available stock types.
+     *  - Filters out stocks that are inactive.
      *
      * @api
      *
@@ -55,6 +59,7 @@ interface StockFacadeInterface
     /**
      * Specification:
      *  - Returns the total stock amount of the concrete product for all its available stock types and store.
+     *  - Filters out stocks that are inactive.
      *
      * @api
      *
@@ -66,12 +71,14 @@ interface StockFacadeInterface
     public function calculateProductStockForStore(string $sku, StoreTransfer $storeTransfer): Decimal;
 
     /**
+     * @api
+     *
+     * @deprecated Use \Spryker\Zed\Stock\Business\StockFacadeInterface::createStock() instead.
+     *
      * Specification:
      * - Persists a new stock type entity to database.
      * - Touches the newly created stock type.
      * - Returns the ID of the new stock type entity.
-     *
-     * @api
      *
      * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
@@ -153,7 +160,7 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     * - Processes all provided stocks of the concrete product transfer
+     * - Processes all provided stocks of the concrete product transfer.
      * - If a stock entry from the collection doesn't exists for the product, then it will be newly created.
      * - If a stock entry from the collection exists for the product, then it will be updated with the provided data.
      *
@@ -167,7 +174,8 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     * - Expands concrete product transfer (by the ID of the product) with it's stock information from the database.
+     *  - Expands concrete product transfer (by the ID of the product) with it's stock information from the database.
+     *  - Filters out stocks that are inactive.
      *
      * @api
      *
@@ -179,7 +187,7 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     *  - Returns all available stock types
+     *  - Returns all available stock types.
      *
      * @api
      *
@@ -189,7 +197,8 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     *  - Returns stock product by givent id product
+     *  - Returns stock product by given id product.
+     *  - Filters out stocks that are inactive.
      *
      * @api
      *
@@ -201,7 +210,7 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     *  - Returns stock product by given id product
+     *  - Returns stock product by given id product.
      *
      * @api
      *
@@ -214,7 +223,7 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     *  - Gets stocks for store
+     *  - Gets stocks for store.
      *
      * @api
      *
@@ -226,7 +235,7 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     *  - Returns stock mapping per store/warehouse pair
+     *  - Returns stock mapping per store/warehouse pair:
      *
      *  [
      *    'Warehouse1' => ['DE', 'US'],
@@ -253,4 +262,84 @@ interface StockFacadeInterface
      * @return array
      */
     public function getStoreToWarehouseMapping();
+
+    /**
+     * Specification:
+     *  - Finds stock by given id.
+     *  - Returns StockTransfer or null if there are no records in database.
+     *
+     * @api
+     *
+     * @param int $idStock
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer|null
+     */
+    public function findStockById(int $idStock): ?StockTransfer;
+
+    /**
+     * Specification:
+     *  - Finds stock by given stock name.
+     *  - Returns StockTransfer or null if there are no records in database.
+     *
+     * @api
+     *
+     * @param string $stockName
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer|null
+     */
+    public function findStockByName(string $stockName): ?StockTransfer;
+
+    /**
+     * Specification:
+     *  - Persists a new stock entity to database.
+     *  - Touches the newly created stock.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockResponseTransfer
+     */
+    public function createStock(StockTransfer $stockTransfer): StockResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Updates stock.
+     *  - Updates stock store relationships.
+     *  - Persists stock entity to database.
+     *  - Touches the newly created stock.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockResponseTransfer
+     */
+    public function updateStock(StockTransfer $stockTransfer): StockResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Returns all stores that have relationship with stock where product with given sku is defined.
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresWhereProductStockIsDefined(string $sku): array;
+
+    /**
+     * Specification:
+     *  - Returns all available stock types for given store.
+     *  - Filters out stocks that are inactive.
+     *  - StoreTransfer.name is required.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer[]
+     */
+    public function getAvailableWarehousesForStore(StoreTransfer $storeTransfer): array;
 }
