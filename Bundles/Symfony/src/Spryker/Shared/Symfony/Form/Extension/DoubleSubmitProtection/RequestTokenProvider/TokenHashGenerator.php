@@ -32,7 +32,7 @@ class TokenHashGenerator implements TokenGeneratorInterface
      */
     public function generateToken()
     {
-        return hash($this->algorithm, microtime() . mt_rand());
+        return hash($this->algorithm, microtime() . random_int(0, PHP_INT_MAX));
     }
 
     /**

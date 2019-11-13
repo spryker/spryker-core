@@ -11,6 +11,10 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\MoneyValueBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
+use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
+use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
+use Orm\Zed\Shipment\Persistence\SpyShipmentMethodStoreQuery;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ShipmentMethodDataHelper extends Module
@@ -44,11 +48,16 @@ class ShipmentMethodDataHelper extends Module
      * @param array $overrideShipmentMethod
      * @param array $overrideCarrier
      * @param array $priceList
+     * @param array $idStoreList
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer
      */
-    public function haveShipmentMethod(array $overrideShipmentMethod = [], array $overrideCarrier = [], array $priceList = self::DEFAULT_PRICE_LIST)
-    {
+    public function haveShipmentMethod(
+        array $overrideShipmentMethod = [],
+        array $overrideCarrier = [],
+        array $priceList = self::DEFAULT_PRICE_LIST,
+        array $idStoreList = []
+    ): ShipmentMethodTransfer {
         $shipmentMethodTransfer = (new ShipmentMethodBuilder($overrideShipmentMethod))->build();
         $shipmentMethodTransfer = $this->assertCarrier($shipmentMethodTransfer, $overrideCarrier);
 
@@ -64,11 +73,23 @@ class ShipmentMethodDataHelper extends Module
             }
         }
         $shipmentMethodTransfer->setPrices($moneyValueTransferCollection);
+        $storeRelationTransfer = (new StoreRelationTransfer())->setIdStores($idStoreList);
+        $shipmentMethodTransfer->setStoreRelation($storeRelationTransfer);
 
         $idShipmentMethod = $this->getShipmentFacade()->createMethod($shipmentMethodTransfer);
         $shipmentMethodTransfer->setIdShipmentMethod($idShipmentMethod);
 
         return $shipmentMethodTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureShipmentMethodTableIsEmpty(): void
+    {
+        SpyShipmentMethodPriceQuery::create()->deleteAll();
+        SpyShipmentMethodStoreQuery::create()->deleteAll();
+        SpyShipmentMethodQuery::create()->deleteAll();
     }
 
     /**
