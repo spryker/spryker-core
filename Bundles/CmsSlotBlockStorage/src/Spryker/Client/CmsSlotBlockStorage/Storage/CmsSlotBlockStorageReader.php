@@ -77,9 +77,9 @@ class CmsSlotBlockStorageReader implements CmsSlotBlockStorageReaderInterface
      */
     protected function generateStorageKey(string $cmsSlotTemplatePath, string $cmsSlotKey): string
     {
-        $reference = $this->cmsSlotBlockStorageService->generateSlotTemplateKey($cmsSlotTemplatePath, $cmsSlotKey);
+        $slotTemplateKey = $this->cmsSlotBlockStorageService->generateSlotTemplateKey($cmsSlotTemplatePath, $cmsSlotKey);
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
-            ->setReference($reference);
+            ->setReference($slotTemplateKey);
 
         return $this->synchronizationService
             ->getStorageKeyBuilder(CmsSlotBlockStorageConfig::CMS_SLOT_BLOCK_RESOURCE_NAME)

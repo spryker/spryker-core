@@ -25,7 +25,6 @@ class CmsSlotBlockStorageDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container): Container
     {
-        $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addStorageClient($container);
         $container = $this->addCmsSlotBlockStorageService($container);
         $container = $this->addSynchronizationService($container);
