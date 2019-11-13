@@ -32,7 +32,7 @@ class TriggerController extends AbstractController
     protected const ERROR_INVALID_FORM = 'Form is invalid';
 
     /**
-     * @deprecated use submitTriggerEventForNewItemAction instead
+     * @deprecated Use submitTriggerEventForNewItemAction instead.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -85,7 +85,7 @@ class TriggerController extends AbstractController
     }
 
     /**
-     * @deprecated use submitTriggerEventAction instead
+     * @deprecated Use submitTriggerEventAction instead.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
