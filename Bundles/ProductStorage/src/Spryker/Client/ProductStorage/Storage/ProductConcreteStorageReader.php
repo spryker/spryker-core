@@ -260,9 +260,10 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     public function getProductConcreteStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): array
     {
         $storageKeys = $this->generateMappingStorageKeys($mappingType, $identifiers, $localeName);
-        $productConcreteIds = array_map(function (string $storageData) {
-            return $this->utilEncodingService->decodeJson($storageData, true)[static::KEY_ID];
-        }, $this->storageClient->getMulti($storageKeys));
+        $productConcreteIds = [];
+        foreach ($this->storageClient->getMulti($storageKeys) as $key => $storageData) {
+            $productConcreteIds[$key] = $this->utilEncodingService->decodeJson($storageData, true)[static::KEY_ID];
+        }
 
         if (!$productConcreteIds) {
             return [];
