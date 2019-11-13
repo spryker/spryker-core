@@ -30,4 +30,20 @@ class ConfigurableBundleStorageClient extends AbstractClient implements Configur
             ->createConfigurableBundleStorageReader()
             ->findConfigurableBundleTemplateStorage($idConfigurableBundleTemplate);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string[] $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcreteStoragesBySkusForCurrentLocale(array $skus): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteStorageReader()
+            ->getProductConcreteStoragesBySkusForCurrentLocale($skus);
+    }
 }
