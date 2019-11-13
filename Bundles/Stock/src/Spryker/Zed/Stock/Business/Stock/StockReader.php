@@ -8,8 +8,6 @@
 namespace Spryker\Zed\Stock\Business\Stock;
 
 use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
-use Generated\Shared\Transfer\StockTransfer;
-use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use InvalidArgumentException;
 use Spryker\Zed\Stock\Dependency\Facade\StockToStoreFacadeInterface;
@@ -26,6 +24,11 @@ class StockReader implements StockReaderInterface
     protected $stockRepository;
 
     /**
+     * @var \Spryker\Zed\Stock\Business\Stock\StockMapperInterface
+     */
+    protected $stockMapper;
+
+    /**
      * @var \Spryker\Zed\Stock\Dependency\Facade\StockToStoreFacadeInterface
      */
     protected $storeFacade;
@@ -37,15 +40,18 @@ class StockReader implements StockReaderInterface
 
     /**
      * @param \Spryker\Zed\Stock\Persistence\StockRepositoryInterface $stockRepository
+     * @param \Spryker\Zed\Stock\Business\Stock\StockMapperInterface $stockMapper
      * @param \Spryker\Zed\Stock\Dependency\Facade\StockToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $queryContainer
      */
     public function __construct(
         StockRepositoryInterface $stockRepository,
+        StockMapperInterface $stockMapper,
         StockToStoreFacadeInterface $storeFacade,
         StockQueryContainerInterface $queryContainer
     ) {
         $this->stockRepository = $stockRepository;
+        $this->stockMapper = $stockMapper;
         $this->storeFacade = $storeFacade;
         $this->queryContainer = $queryContainer;
     }
@@ -90,18 +96,13 @@ class StockReader implements StockReaderInterface
     }
 
     /**
-     * @return array
+     * @return string[][]
      */
     public function getWarehouseToStoreMapping(): array
     {
         $stockTransfers = $this->stockRepository->getStocksWithRelatedStoresByCriteriaFilter(new StockCriteriaFilterTransfer());
 
-        $mapping = [];
-        foreach ($stockTransfers as $stockTransfer) {
-            $mapping[$stockTransfer->getName()] = $this->getStoreNamesFromStoreRelation($stockTransfer->getStoreRelation());
-        }
-
-        return $mapping;
+        return $this->stockMapper->mapStoresToWarehouses($stockTransfers);
     }
 
     /**
@@ -112,12 +113,7 @@ class StockReader implements StockReaderInterface
         $storeTransfers = $this->storeFacade->getAllStores();
         $stockTransfers = $this->stockRepository->getStocksWithRelatedStoresByCriteriaFilter(new StockCriteriaFilterTransfer());
 
-        $mapping = array_fill_keys($this->getStoreNamesFromStoreTransferCollection($storeTransfers), []);
-        foreach ($stockTransfers as $stockTransfer) {
-            $mapping = $this->mapStockToStores($stockTransfer, $storeTransfers, $mapping);
-        }
-
-        return $mapping;
+        return $this->stockMapper->mapWarehousesToStores($stockTransfers, $storeTransfers);
     }
 
     /**
@@ -136,52 +132,5 @@ class StockReader implements StockReaderInterface
         }
 
         return $stockTransfer->getIdStock();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
-     *
-     * @return string[]
-     */
-    protected function getStoreNamesFromStoreRelation(StoreRelationTransfer $storeRelationTransfer): array
-    {
-        $storeNames = [];
-        foreach ($storeRelationTransfer->getStores() as $storeTransfer) {
-            $storeName = $storeTransfer->getName();
-            $storeNames[$storeName] = $storeName;
-        }
-
-        return $storeNames;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
-     *
-     * @return string[]
-     */
-    protected function getStoreNamesFromStoreTransferCollection(array $storeTransfers): array
-    {
-        return array_map(function (StoreTransfer $storeTransfer): string {
-            return $storeTransfer->getName();
-        }, $storeTransfers);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
-     * @param string[][] $storeStockMapping
-     *
-     * @return string[][]
-     */
-    protected function mapStockToStores(StockTransfer $stockTransfer, array $storeTransfers, array $storeStockMapping): array
-    {
-        $relatedStoreNames = $this->getStoreNamesFromStoreRelation($stockTransfer->getStoreRelation());
-        foreach ($storeTransfers as $storeTransfer) {
-            if (in_array($storeTransfer->getName(), $relatedStoreNames, true)) {
-                $storeStockMapping[$storeTransfer->getName()][] = $stockTransfer->getName();
-            }
-        }
-
-        return $storeStockMapping;
     }
 }

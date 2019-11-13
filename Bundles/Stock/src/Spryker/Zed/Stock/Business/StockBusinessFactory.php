@@ -12,6 +12,8 @@ use Spryker\Zed\Stock\Business\Model\Calculator;
 use Spryker\Zed\Stock\Business\Model\Writer;
 use Spryker\Zed\Stock\Business\Stock\StockCreator;
 use Spryker\Zed\Stock\Business\Stock\StockCreatorInterface;
+use Spryker\Zed\Stock\Business\Stock\StockMapper;
+use Spryker\Zed\Stock\Business\Stock\StockMapperInterface;
 use Spryker\Zed\Stock\Business\Stock\StockReader;
 use Spryker\Zed\Stock\Business\Stock\StockReaderInterface;
 use Spryker\Zed\Stock\Business\Stock\StockStoreRelationshipUpdater;
@@ -50,6 +52,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
     {
         return new StockReader(
             $this->getRepository(),
+            $this->createStockMapper(),
             $this->getStoreFacade(),
             $this->getQueryContainer()
         );
@@ -127,6 +130,14 @@ class StockBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getStockUpdateHandlerPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Stock\Business\Stock\StockMapperInterface
+     */
+    public function createStockMapper(): StockMapperInterface
+    {
+        return new StockMapper();
     }
 
     /**

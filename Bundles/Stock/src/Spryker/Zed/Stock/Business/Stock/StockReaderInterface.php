@@ -31,12 +31,12 @@ interface StockReaderInterface
     public function getAvailableWarehousesForStore(StoreTransfer $storeTransfer): array;
 
     /**
-     * @return array
+     * @return string[][]
      */
     public function getWarehouseToStoreMapping(): array;
 
     /**
-     * @return array
+     * @return string[][]
      */
     public function getStoreToWarehouseMapping(): array;
 
