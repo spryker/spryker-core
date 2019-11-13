@@ -57,7 +57,7 @@ class OmsFacadeSumReservedItemsTest extends Unit
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->tester->resetReservedStatesCache();
@@ -68,20 +68,19 @@ class OmsFacadeSumReservedItemsTest extends Unit
      */
     public function testSumReservedItemsShouldSumAllItemsInReservedState(): void
     {
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $this->createTestOrder('123', 'Test01', static::NOT_RESERVED_ITEM_STATE_EXCEPT_PROCESS_3);
         $this->createTestOrder('456', 'Test02', static::NOT_RESERVED_ITEM_STATE_EXCEPT_PROCESS_3);
 
         $this->assertTrue(
             $this->getOmsFacade()
-                ->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU, $storeTransfer)
+                ->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU)
                 ->equals(100)
         );
 
         $order3 = $this->createTestOrder('789', 'Test03', 'new');
         $this->assertTrue(
             $this->getOmsFacade()
-                ->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU, $storeTransfer)
+                ->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU)
                 ->equals(150)
         );
 
@@ -91,7 +90,7 @@ class OmsFacadeSumReservedItemsTest extends Unit
 
         $this->assertTrue(
             $this->getOmsFacade()
-                ->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU, $storeTransfer)
+                ->sumReservedProductQuantitiesForSku(static::ORDER_ITEM_SKU)
                 ->equals(100)
         );
     }

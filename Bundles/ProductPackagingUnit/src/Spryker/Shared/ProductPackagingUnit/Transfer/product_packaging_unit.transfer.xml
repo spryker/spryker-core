@@ -45,6 +45,10 @@
         <property name="idSalesOrderItem" type="int"/>
     </transfer>
 
+    <transfer name="ProductConcreteAvailability">
+        <property name="availability" type="decimal"/>
+    </transfer>
+
     <transfer name="OmsStateCollection">
         <property name="states" type="OmsState[]" associative="true" singular="state"/>
     </transfer>

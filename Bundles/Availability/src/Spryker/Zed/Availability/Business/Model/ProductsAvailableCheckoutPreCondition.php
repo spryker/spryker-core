@@ -9,6 +9,7 @@ namespace Spryker\Zed\Availability\Business\Model;
 
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
@@ -51,7 +52,8 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
         $isPassed = true;
 
         $storeTransfer = $quoteTransfer->getStore();
-        $groupedItemQuantities = $this->groupItemsBySku($quoteTransfer->getItems());
+        $filteredItems = $this->filterItemsWithAmount($quoteTransfer->getItems()->getArrayCopy());
+        $groupedItemQuantities = $this->groupItemsBySku($filteredItems);
 
         foreach ($groupedItemQuantities as $sku => $quantity) {
             if ($this->isProductSellable($sku, $quantity, $storeTransfer) === true) {
@@ -77,15 +79,15 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Spryker\DecimalObject\Decimal[] [string, \Spryker\DecimalObject\Decimal]
      */
-    protected function groupItemsBySku(iterable $items): array
+    protected function groupItemsBySku(array $itemTransfers): array
     {
         /** @var \Spryker\DecimalObject\Decimal[] $result */
         $result = [];
-        foreach ($items as $itemTransfer) {
+        foreach ($itemTransfers as $itemTransfer) {
             $sku = $itemTransfer->getSku();
 
             if (!isset($result[$sku])) {
@@ -96,6 +98,18 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
         }
 
         return $result;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function filterItemsWithAmount(array $itemTransfers): array
+    {
+        return array_filter($itemTransfers, function (ItemTransfer $itemTransfer) {
+            return $itemTransfer->getAmount() === null;
+        });
     }
 
     /**

@@ -60,7 +60,8 @@ interface AvailabilityFacadeInterface
 
     /**
      * Specification:
-     *  - Checkout PreCondition plugin call, check if all items in cart is sellable.
+     *  - Checkout PreCondition plugin call, check if all items in cart are sellable.
+     *  - In case `ItemTransfer.amount` was defined, item availability check will be ignored.
      *  - Writes error message into CheckoutResponseTransfer.
      *
      * @api

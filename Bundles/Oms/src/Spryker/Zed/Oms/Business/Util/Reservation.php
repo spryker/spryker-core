@@ -80,12 +80,12 @@ class Reservation implements ReservationInterface
      */
     public function updateReservationQuantity($sku)
     {
+        $reservationAmount = $this->sumReservedProductQuantitiesForSku($sku);
         $currentStoreTransfer = $this->storeFacade->getCurrentStore();
-        $currentStoreReservationAmount = $this->sumReservedProductQuantitiesForSku($sku, $currentStoreTransfer);
-        $this->saveReservation($sku, $currentStoreTransfer, $currentStoreReservationAmount);
+        $this->saveReservation($sku, $currentStoreTransfer, $reservationAmount);
         foreach ($currentStoreTransfer->getStoresWithSharedPersistence() as $storeName) {
             $storeTransfer = $this->storeFacade->getStoreByName($storeName);
-            $this->saveReservation($sku, $storeTransfer, $currentStoreReservationAmount);
+            $this->saveReservation($sku, $storeTransfer, $reservationAmount);
         }
 
         $this->handleReservationPlugins($sku);
@@ -93,11 +93,11 @@ class Reservation implements ReservationInterface
 
     /**
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function sumReservedProductQuantitiesForSku(string $sku, StoreTransfer $storeTransfer): Decimal
+    public function sumReservedProductQuantitiesForSku(string $sku, ?StoreTransfer $storeTransfer = null): Decimal
     {
         $reservedStates = $this->getOmsReservedStateCollection();
         $salesAggregationTransfers = $this->aggregateSalesOrderItemReservations($reservedStates, $sku, $storeTransfer);
@@ -181,14 +181,14 @@ class Reservation implements ReservationInterface
     /**
      * @param \Generated\Shared\Transfer\OmsStateCollectionTransfer $reservedStates
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
     protected function aggregateSalesOrderItemReservations(
         OmsStateCollectionTransfer $reservedStates,
         string $sku,
-        StoreTransfer $storeTransfer
+        ?StoreTransfer $storeTransfer = null
     ): array {
         foreach ($this->reservationAggregationPlugins as $reservationAggregationPlugin) {
             $salesAggregationTransfers = $reservationAggregationPlugin->aggregateReservations(

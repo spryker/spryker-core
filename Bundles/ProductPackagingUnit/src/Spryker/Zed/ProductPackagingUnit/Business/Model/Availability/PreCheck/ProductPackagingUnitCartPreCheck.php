@@ -18,6 +18,9 @@ use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryI
 class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityPreCheck implements ProductPackagingUnitCartPreCheckInterface
 {
     public const CART_PRE_CHECK_ITEM_AVAILABILITY_LEAD_PRODUCT_FAILED = 'cart.pre.check.availability.failed.lead.product';
+    public const CART_PRE_CHECK_AVAILABILITY_FAILED = 'cart.pre.check.availability.failed';
+    public const STOCK_TRANSLATION_PARAMETER = '%stock%';
+    public const SKU_TRANSLATION_PARAMETER = '%sku%';
 
     /**
      * @var \Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface
@@ -45,30 +48,101 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
     {
         $cartErrorMessages = new ArrayObject();
         $this->assertQuote($cartChangeTransfer);
-        $storeTransfer = $cartChangeTransfer->getQuote()->getStore();
-        $cartItems = clone $cartChangeTransfer->getItems();
-        foreach ($cartItems as $itemTransfer) {
-            if (!$itemTransfer->getAmount()) {
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getAmount() === null || $itemTransfer->getAmount()->lessThan(0)) {
                 continue;
             }
 
             $this->expandItemWithLeadProduct($itemTransfer);
 
-            $isPackagingUnitLeadProductSellable = $this->isPackagingUnitLeadProductSellable(
-                $itemTransfer,
-                $cartItems,
-                $storeTransfer
+            $cartErrorMessages = $this->collectCartErrorMessages(
+                $cartErrorMessages,
+                $this->checkPackagingUnitAvailability($itemTransfer, $cartChangeTransfer)
             );
 
-            if ($itemTransfer->getAmount()->greaterThan(0) && !$isPackagingUnitLeadProductSellable) {
-                $cartErrorMessages[] = $this->createMessageTransfer(
-                    static::CART_PRE_CHECK_ITEM_AVAILABILITY_LEAD_PRODUCT_FAILED,
-                    ['sku' => $itemTransfer->getSku()]
-                );
-            }
+            $cartErrorMessages = $this->collectCartErrorMessages(
+                $cartErrorMessages,
+                $this->checkPackagingUnitLeadProductAvailability($itemTransfer, $cartChangeTransfer)
+            );
         }
 
         return $this->createCartPreCheckResponseTransfer($cartErrorMessages);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer|null
+     */
+    protected function checkPackagingUnitAvailability(
+        ItemTransfer $itemTransfer,
+        CartChangeTransfer $cartChangeTransfer
+    ): ?MessageTransfer {
+        $isPackagingUnitSellable = $this->isPackagingUnitSellable(
+            $itemTransfer,
+            $cartChangeTransfer->getQuote()->getStore()
+        );
+
+        if ($isPackagingUnitSellable) {
+            return null;
+        }
+
+        $productAvailability = $this->findProductConcreteAvailability(
+            $itemTransfer,
+            $cartChangeTransfer->getQuote()->getStore()
+        );
+
+        return $this->createMessageTransfer(
+            static::CART_PRE_CHECK_AVAILABILITY_FAILED,
+            [
+                static::SKU_TRANSLATION_PARAMETER => $itemTransfer->getSku(),
+                static::STOCK_TRANSLATION_PARAMETER => $productAvailability->trim()->toString(),
+            ]
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer|null
+     */
+    protected function checkPackagingUnitLeadProductAvailability(
+        ItemTransfer $itemTransfer,
+        CartChangeTransfer $cartChangeTransfer
+    ): ?MessageTransfer {
+        $isPackagingUnitLeadProductSellable = $this->isPackagingUnitLeadProductSellable(
+            $itemTransfer,
+            clone $cartChangeTransfer->getItems(),
+            $cartChangeTransfer->getQuote()->getStore()
+        );
+
+        if ($isPackagingUnitLeadProductSellable) {
+            return null;
+        }
+
+        return $this->createMessageTransfer(
+            static::CART_PRE_CHECK_ITEM_AVAILABILITY_LEAD_PRODUCT_FAILED,
+            ['sku' => $itemTransfer->getSku()]
+        );
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $cartErrorMessages
+     * @param \Generated\Shared\Transfer\MessageTransfer|null $messageTransfer
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[]
+     */
+    protected function collectCartErrorMessages(
+        ArrayObject $cartErrorMessages,
+        ?MessageTransfer $messageTransfer
+    ): ArrayObject {
+        if ($messageTransfer !== null) {
+            $cartErrorMessages->append($cartErrorMessages);
+        }
+
+        return $cartErrorMessages;
     }
 
     /**

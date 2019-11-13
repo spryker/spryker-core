@@ -148,4 +148,20 @@ class BasePreCheck
 
         return $quantity;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function isProductBundle(ItemTransfer $itemTransfer): bool
+    {
+        if ($itemTransfer->getBundleItemIdentifier() !== null) {
+            return true;
+        }
+
+        return $this->productBundleQueryContainer
+            ->queryBundleProductBySku($itemTransfer->getSku())
+            ->exists();
+    }
 }
