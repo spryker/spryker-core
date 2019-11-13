@@ -10,6 +10,7 @@ namespace Spryker\Zed\CmsSlotDataImport\Business\DataImportStep;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotToCmsSlotTemplate;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotToCmsSlotTemplateQuery;
+use Spryker\Zed\CmsSlot\Dependency\CmsSlotEvents;
 use Spryker\Zed\CmsSlotDataImport\Business\DataSet\CmsSlotDataSetInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
@@ -44,5 +45,7 @@ class CmsSlotWriterStep extends PublishAwareStep implements DataImportStepInterf
             ->setFkCmsSlotTemplate($dataSet[CmsSlotDataSetInterface::CMS_SLOT_TEMPLATE_ID]);
 
         $cmsSlotToCmsSlotTemplateEntity->save();
+
+        $this->addPublishEvents(CmsSlotEvents::CMS_SLOT_PUBLISH, $cmsSlotEntity->getIdCmsSlot());
     }
 }

@@ -29,8 +29,4 @@ use Codeception\Actor;
 class CmsSlotBusinessTester extends Actor
 {
     use _generated\CmsSlotBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

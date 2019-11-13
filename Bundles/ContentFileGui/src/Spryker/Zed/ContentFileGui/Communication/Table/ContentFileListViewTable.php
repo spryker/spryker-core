@@ -139,7 +139,7 @@ class ContentFileListViewTable extends AbstractTable
      */
     public function getAddButtonField(int $idFile): string
     {
-        return $actionButtons[] = $this->generateButton(
+        return $this->generateButton(
             '#',
             'Add to list',
             [
