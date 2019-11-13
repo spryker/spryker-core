@@ -6,6 +6,7 @@
   "require": {
     "php": ">=7.2",
     "spryker/application": "^3.0.0",
+    "spryker/event-dispatcher-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/silex": "^2.0.0",
     "spryker/symfony": "^3.0.0",
@@ -14,10 +15,14 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/container": "*",
+    "spryker/event-dispatcher": "*",
     "spryker/log": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/container": "Add this module when you want to use the Container.",
+    "spryker/event-dispatcher": "Add this module when you want to use the EventDispatcher.",
     "spryker/log": "For logging request and response."
   },
   "autoload": {

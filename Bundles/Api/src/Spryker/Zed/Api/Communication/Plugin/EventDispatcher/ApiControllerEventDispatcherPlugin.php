@@ -5,11 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Api\Communication\Plugin;
+namespace Spryker\Zed\Api\Communication\Plugin\EventDispatcher;
 
-use Exception;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Generated\Shared\Transfer\ApiResponseTransfer;
+use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
+use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Api\ApiConfig;
 use Spryker\Zed\Api\Communication\Controller\AbstractApiController;
@@ -17,40 +19,62 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
 use Throwable;
 
 /**
- * @deprecated Will be removed without replacement.
- *
- * @see \Spryker\Zed\Api\Communication\Plugin\ApiControllerEventDispatcherPlugin
- *
  * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
  * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
  * @method \Spryker\Zed\Api\ApiConfig getConfig()
  * @method \Spryker\Zed\Api\Persistence\ApiQueryContainerInterface getQueryContainer()
  */
-class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControllerListenerInterface
+class ApiControllerEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
     use LoggerTrait;
 
     protected const REQUEST_URI = 'REQUEST_URI';
 
     /**
+     * Specification:
+     * - Adds a listener for the `\Symfony\Component\HttpKernel\KernelEvents::CONTROLLER` event.
+     * - When current request is an API request a ApiController will be executed.
+     *
      * @api
      *
+     * @param \Spryker\Shared\EventDispatcher\EventDispatcherInterface $eventDispatcher
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
+     */
+    public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
+    {
+        $eventDispatcher->addListener(KernelEvents::CONTROLLER, function (FilterControllerEvent $event) {
+            $this->onKernelController($event);
+        });
+
+        return $eventDispatcher;
+    }
+
+    /**
      * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
      *
-     * @return callable|null
+     * @return void
      */
-    public function onKernelController(FilterControllerEvent $event)
+    protected function onKernelController(FilterControllerEvent $event): void
     {
+        $request = $event->getRequest();
+
+        if (!$request->server->has('REQUEST_URI') || strpos($request->server->get('REQUEST_URI'), ApiConfig::ROUTE_PREFIX_API_REST) !== 0) {
+            return;
+        }
+
         /** @var array $currentController */
         $currentController = $event->getController();
         $controller = $currentController[0];
         $action = $currentController[1];
 
         if (!($controller instanceof AbstractApiController)) {
-            return $currentController;
+            return;
         }
 
         $request = $event->getRequest();
@@ -61,11 +85,6 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
 
             try {
                 $responseTransfer = $controller->$action($requestTransfer);
-            } catch (Exception $e) {
-                $responseTransfer = new ApiResponseTransfer();
-                $responseTransfer->setCode($this->resolveStatusCode($e->getCode()));
-                $responseTransfer->setMessage($e->getMessage());
-                $responseTransfer->setStackTrace(get_class($e) . ' (' . $e->getFile() . ', line ' . $e->getLine() . '): ' . $e->getTraceAsString());
             } catch (Throwable $e) {
                 $responseTransfer = new ApiResponseTransfer();
                 $responseTransfer->setCode($this->resolveStatusCode($e->getCode()));
@@ -81,8 +100,6 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
         };
 
         $event->setController($apiController);
-
-        return null;
     }
 
     /**
@@ -92,7 +109,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function transformToResponse(ApiRequestTransfer $requestTransfer, ApiResponseTransfer $responseTransfer, Response $responseObject)
+    protected function transformToResponse(ApiRequestTransfer $requestTransfer, ApiResponseTransfer $responseTransfer, Response $responseObject): Response
     {
         return $this->getFactory()
             ->createTransformer($requestTransfer)
@@ -104,7 +121,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
      *
      * @return int
      */
-    protected function resolveStatusCode($code)
+    protected function resolveStatusCode(int $code): int
     {
         if ($code < ApiConfig::HTTP_CODE_SUCCESS || $code > ApiConfig::HTTP_CODE_INTERNAL_ERROR) {
             return ApiConfig::HTTP_CODE_INTERNAL_ERROR;
@@ -118,7 +135,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
      *
      * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
-    protected function getRequestTransfer(Request $request)
+    protected function getRequestTransfer(Request $request): ApiRequestTransfer
     {
         $requestTransfer = new ApiRequestTransfer();
 
@@ -152,7 +169,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
      *
      * @return void
      */
-    protected function logRequest(ApiRequestTransfer $requestTransfer)
+    protected function logRequest(ApiRequestTransfer $requestTransfer): void
     {
         $filteredApiRequestTransfer = $this->getFacade()->filterApiRequestTransfer($requestTransfer);
 
@@ -169,7 +186,7 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
      *
      * @return void
      */
-    protected function logResponse(ApiResponseTransfer $responseTransfer)
+    protected function logResponse(ApiResponseTransfer $responseTransfer): void
     {
         $array = $responseTransfer->toArray();
         unset($array['request']);
