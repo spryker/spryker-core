@@ -10,7 +10,8 @@
     "spryker/merchant": "^2.0.0",
     "spryker/merchant-product-offer": "^1.0.0",
     "spryker/product": "^6.0.0",
-    "spryker/product-offer": "^1.0.0"
+    "spryker/product-offer": "^1.0.0",
+    "spryker/propel-orm": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

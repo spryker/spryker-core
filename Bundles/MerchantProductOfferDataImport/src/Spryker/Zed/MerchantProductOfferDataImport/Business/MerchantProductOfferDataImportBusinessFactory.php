@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\MerchantProductOfferDataImport\Business;
@@ -12,6 +12,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step\ConcreteSkuValidationStep;
 use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step\MerchantKeyToIdMerchantStep;
 use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step\MerchantProductOfferWriterStep;
+use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step\MerchantSkuValidationStep;
 
 /**
  * @method \Spryker\Zed\MerchantProductOfferDataImport\MerchantProductOfferDataImportConfig getConfig()
@@ -31,6 +32,7 @@ class MerchantProductOfferDataImportBusinessFactory extends DataImportBusinessFa
 
         $dataSetStepBroker->addStep($this->createMerchantKeyToIdMerchantStep());
         $dataSetStepBroker->addStep($this->createConcreteSkuValidationStep());
+        $dataSetStepBroker->addStep($this->createMerchantSkuValidationStep());
         $dataSetStepBroker->addStep($this->createMerchantProductOfferWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
@@ -52,6 +54,14 @@ class MerchantProductOfferDataImportBusinessFactory extends DataImportBusinessFa
     public function createConcreteSkuValidationStep(): DataImportStepInterface
     {
         return new ConcreteSkuValidationStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function createMerchantSkuValidationStep(): DataImportStepInterface
+    {
+        return new MerchantSkuValidationStep();
     }
 
     /**
