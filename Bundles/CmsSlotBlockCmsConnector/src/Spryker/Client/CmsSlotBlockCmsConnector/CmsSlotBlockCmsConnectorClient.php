@@ -5,17 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CmsSlotBlockCmsConnector\Plugin\CmsSlotBlock;
+namespace Spryker\Client\CmsSlotBlockCmsConnector;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
-use Spryker\Client\CmsSlotBlockExtension\Dependency\Plugin\CmsSlotBlockVisibilityResolverPluginInterface;
-use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method \Spryker\Client\CmsSlotBlockCmsConnector\CmsSlotBlockCmsConnectorClientInterface getClient()
  * @method \Spryker\Client\CmsSlotBlockCmsConnector\CmsSlotBlockCmsConnectorFactory getFactory()
  */
-class CmsPageCmsSlotBlockConditionResolverPlugin extends AbstractPlugin implements CmsSlotBlockVisibilityResolverPluginInterface
+class CmsSlotBlockCmsConnectorClient extends AbstractClient implements CmsSlotBlockCmsConnectorClientInterface
 {
     /**
      * {@inheritDoc}
@@ -26,9 +24,11 @@ class CmsPageCmsSlotBlockConditionResolverPlugin extends AbstractPlugin implemen
      *
      * @return bool
      */
-    public function isApplicable(CmsBlockTransfer $cmsBlockTransfer): bool
+    public function isSlotBlockConditionApplicable(CmsBlockTransfer $cmsBlockTransfer): bool
     {
-        return $this->getClient()->isSlotBlockConditionApplicable($cmsBlockTransfer);
+        return $this->getFactory()
+            ->createCmsPageCmsSlotBlockConditionResolver()
+            ->isSlotBlockConditionApplicable($cmsBlockTransfer);
     }
 
     /**
@@ -43,6 +43,8 @@ class CmsPageCmsSlotBlockConditionResolverPlugin extends AbstractPlugin implemen
      */
     public function isCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotParams): bool
     {
-        return $this->getClient()->isCmsBlockVisibleInSlot($cmsBlockTransfer, $cmsSlotParams);
+        return $this->getFactory()
+            ->createCmsPageCmsSlotBlockConditionResolver()
+            ->isCmsBlockVisibleInSlot($cmsBlockTransfer, $cmsSlotParams);
     }
 }
