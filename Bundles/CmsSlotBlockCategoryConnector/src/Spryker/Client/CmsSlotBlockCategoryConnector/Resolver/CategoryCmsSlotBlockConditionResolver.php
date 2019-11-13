@@ -48,7 +48,7 @@ class CategoryCmsSlotBlockConditionResolver implements CategoryCmsSlotBlockCondi
     {
         $conditionData = $cmsBlockTransfer->getCmsSlotBlockConditions()[static::CONDITION_KEY];
 
-        if ($this->getIsConditionDataAllowsAll($conditionData)) {
+        if ($conditionData[static::CONDITIONS_DATA_KEY_ALL]) {
             return true;
         }
 
@@ -58,29 +58,11 @@ class CategoryCmsSlotBlockConditionResolver implements CategoryCmsSlotBlockCondi
             return false;
         }
 
-        if ($this->getIsConditionDataAllowsIdCategory($idCategory, $conditionData)) {
+        if ($this->getIsCategoryFitCondition($idCategory, $conditionData)) {
             return true;
         }
 
         return false;
-    }
-
-    /**
-     * @param array $conditionData
-     *
-     * @return bool
-     */
-    protected function getIsConditionDataAllowsAll(array $conditionData): bool
-    {
-        if (!isset($conditionData[static::CONDITIONS_DATA_KEY_ALL])) {
-            return false;
-        }
-
-        if (!$conditionData[static::CONDITIONS_DATA_KEY_ALL]) {
-            return false;
-        }
-
-        return true;
     }
 
     /**
@@ -99,12 +81,8 @@ class CategoryCmsSlotBlockConditionResolver implements CategoryCmsSlotBlockCondi
      *
      * @return bool
      */
-    protected function getIsConditionDataAllowsIdCategory(int $idCategory, array $conditionData): bool
+    protected function getIsCategoryFitCondition(int $idCategory, array $conditionData): bool
     {
-        if (!isset($conditionData[static::CONDITIONS_DATA_KEY_CATEGORY_IDS])) {
-            return false;
-        }
-
         return in_array($idCategory, $conditionData[static::CONDITIONS_DATA_KEY_CATEGORY_IDS]);
     }
 }
