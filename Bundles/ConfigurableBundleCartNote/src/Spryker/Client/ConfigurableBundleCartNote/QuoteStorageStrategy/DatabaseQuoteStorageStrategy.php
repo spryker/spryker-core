@@ -41,9 +41,9 @@ class DatabaseQuoteStorageStrategy implements QuoteStorageStrategyInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setCartNoteToConfigurableBundle(
+    public function setCartNoteToConfiguredBundle(
         ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
     ): QuoteResponseTransfer {
-        return $this->configurableBundleCartNoteZedStub->setCartNoteToConfigurableBundle($configuredBundleCartNoteRequestTransfer);
+        return $this->configurableBundleCartNoteZedStub->setCartNoteToConfiguredBundle($configuredBundleCartNoteRequestTransfer);
     }
 }

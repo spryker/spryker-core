@@ -17,7 +17,7 @@ interface ConfigurableBundleCartNoteZedStubInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setCartNoteToConfigurableBundle(
+    public function setCartNoteToConfiguredBundle(
         ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
     ): QuoteResponseTransfer;
 }

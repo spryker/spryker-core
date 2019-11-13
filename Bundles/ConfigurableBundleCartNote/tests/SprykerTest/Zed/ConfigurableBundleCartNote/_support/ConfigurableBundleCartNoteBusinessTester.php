@@ -8,6 +8,13 @@
 namespace SprykerTest\Zed\ConfigurableBundleCartNote;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\ConfiguredBundleBuilder;
+use Generated\Shared\DataBuilder\CustomerBuilder;
+use Generated\Shared\DataBuilder\ProductConcreteBuilder;
+use Generated\Shared\Transfer\ConfiguredBundleTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * Inherited Methods
@@ -29,4 +36,71 @@ use Codeception\Actor;
 class ConfigurableBundleCartNoteBusinessTester extends Actor
 {
     use _generated\ConfigurableBundleCartNoteBusinessTesterActions;
+
+    public const FAKE_CUSTOMER_REFERENCE = 'FAKE_CUSTOMER_REFERENCE';
+    public const FAKE_CONFIGURABLE_BUNDLE_CART_NOTE = 'Configurable Bundle Cart Note';
+    public const FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY = 'configurable-bundle-group-key';
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getFakeQuoteTransfer(): QuoteTransfer
+    {
+        return $this->havePersistentQuote([
+            QuoteTransfer::CUSTOMER => $this->buildCustomerTransfer(static::FAKE_CUSTOMER_REFERENCE),
+            QuoteTransfer::ITEMS => [
+                [
+                    ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
+                    ItemTransfer::UNIT_PRICE => 1,
+                    ItemTransfer::QUANTITY => 1,
+                ],
+            ],
+        ]);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getFakeQuoteTransferWithConfiguredBundle(): QuoteTransfer
+    {
+        return $this->havePersistentQuote([
+            QuoteTransfer::CUSTOMER => $this->buildCustomerTransfer(static::FAKE_CUSTOMER_REFERENCE),
+            QuoteTransfer::ITEMS => [
+                [
+                    ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
+                    ItemTransfer::UNIT_PRICE => 1,
+                    ItemTransfer::QUANTITY => 1,
+                    ItemTransfer::CONFIGURED_BUNDLE => $this->buildConfiguredBundleTransfer(static::FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY),
+                ],
+                [
+                    ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
+                    ItemTransfer::UNIT_PRICE => 1,
+                    ItemTransfer::QUANTITY => 1,
+                    ItemTransfer::CONFIGURED_BUNDLE => $this->buildConfiguredBundleTransfer(static::FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY),
+                ],
+            ],
+        ]);
+    }
+
+    /**
+     * @param string|null $customerReference
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function buildCustomerTransfer(?string $customerReference = null): CustomerTransfer
+    {
+        return (new CustomerBuilder())->build()
+            ->setCustomerReference($customerReference);
+    }
+
+    /**
+     * @param string|null $groupKey
+     *
+     * @return \Generated\Shared\Transfer\ConfiguredBundleTransfer
+     */
+    protected function buildConfiguredBundleTransfer(?string $groupKey = null): ConfiguredBundleTransfer
+    {
+        return (new ConfiguredBundleBuilder())->build()
+            ->setGroupKey($groupKey);
+    }
 }

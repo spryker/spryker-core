@@ -25,11 +25,11 @@ class ConfigurableBundleCartNoteFacade extends AbstractFacade implements Configu
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setCartNoteToConfigurableBundle(
+    public function setCartNoteToConfiguredBundle(
         ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
     ): QuoteResponseTransfer {
         return $this->getFactory()
             ->createConfigurableBundleCartNoteSetter()
-            ->setCartNoteToConfigurableBundle($configuredBundleCartNoteRequestTransfer);
+            ->setCartNoteToConfiguredBundle($configuredBundleCartNoteRequestTransfer);
     }
 }

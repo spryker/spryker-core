@@ -14,15 +14,20 @@ interface ConfigurableBundleCartNoteClientInterface
 {
     /**
      * Specification:
-     * - Sets cart note to configurable bundle.
+     * - Resolves quote storage strategy which implements `\Spryker\Client\ConfigurableBundleCartNote\QuoteStorageStrategy\QuoteStorageStrategyInterface`.
+     * - Sets cart note to configured bundle using quote storage strategy.
+     * - Returns success `QuoteResponseTransfer` in case cart note was successfully set.
+     * - Returns failure `QuoteResponseTransfer` otherwise.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
      *
+     * @throws \Spryker\Client\ConfigurableBundleCartNote\Exception\QuoteStorageStrategyNotFound
+     *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setCartNoteToConfigurableBundle(
+    public function setCartNoteToConfiguredBundle(
         ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
     ): QuoteResponseTransfer;
 }

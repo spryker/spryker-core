@@ -21,9 +21,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setCartNoteToConfigurableBundleAction(
+    public function setCartNoteToConfiguredBundleAction(
         ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
     ): QuoteResponseTransfer {
-        return $this->getFacade()->setCartNoteToConfigurableBundle($configuredBundleCartNoteRequestTransfer);
+        return $this->getFacade()->setCartNoteToConfiguredBundle($configuredBundleCartNoteRequestTransfer);
     }
 }

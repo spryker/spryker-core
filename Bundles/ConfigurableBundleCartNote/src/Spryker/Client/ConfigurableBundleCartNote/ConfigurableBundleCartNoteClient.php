@@ -23,13 +23,15 @@ class ConfigurableBundleCartNoteClient extends AbstractClient implements Configu
      *
      * @param \Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
      *
+     * @throws \Spryker\Client\ConfigurableBundleCartNote\Exception\QuoteStorageStrategyNotFound
+     *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setCartNoteToConfigurableBundle(
+    public function setCartNoteToConfiguredBundle(
         ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
     ): QuoteResponseTransfer {
         return $this->getFactory()
             ->getQuoteStorageStrategy()
-            ->setCartNoteToConfigurableBundle($configuredBundleCartNoteRequestTransfer);
+            ->setCartNoteToConfiguredBundle($configuredBundleCartNoteRequestTransfer);
     }
 }
