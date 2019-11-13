@@ -59,13 +59,9 @@ class ProductOptionRestResourceBuilder implements ProductOptionRestResourceBuild
         array $sorts
     ): array {
         $productOptionRestResources = [];
-        $productAbstractIds = $this->storageReader->getProductAbstractIdsByProductAbstractSkus(
-            $productAbstractSkus,
-            $localeName
-        );
         $restProductOptionAttributesTransfersByProductAbstractIds =
-            $this->storageReader->getRestProductOptionAttributesTransfersByProductAbstractIds(
-                $productAbstractIds,
+            $this->storageReader->getRestProductOptionAttributesTransfersByProductAbstractSkus(
+                $productAbstractSkus,
                 $localeName
             );
         foreach ($restProductOptionAttributesTransfersByProductAbstractIds as $productAbstractSku => $restProductOptionAttributesTransfers) {

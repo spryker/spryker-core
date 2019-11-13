@@ -13,18 +13,10 @@ interface StorageReaderInterface
      * @param string[] $productAbstractSkus
      * @param string $localeName
      *
-     * @return int[]
-     */
-    public function getProductAbstractIdsByProductAbstractSkus(array $productAbstractSkus, string $localeName): array;
-
-    /**
-     * @param int[] $productAbstractIds
-     * @param string $localeName
-     *
      * @return \Generated\Shared\Transfer\RestProductOptionAttributesTransfer[][]
      */
-    public function getRestProductOptionAttributesTransfersByProductAbstractIds(
-        array $productAbstractIds,
+    public function getRestProductOptionAttributesTransfersByProductAbstractSkus(
+        array $productAbstractSkus,
         string $localeName
     ): array;
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductOptionsRestApi\Processor\Reader;
 
+use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductOptionStorageClientInterface;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductStorageClientInterface;
@@ -61,7 +62,7 @@ class StorageReader implements StorageReaderInterface
      *
      * @return int[]
      */
-    public function getProductAbstractIdsByProductAbstractSkus(array $productAbstractSkus, string $localeName): array
+    protected function getProductAbstractIdsByProductAbstractSkus(array $productAbstractSkus, string $localeName): array
     {
         $productAbstractIdsByProductAbstractSkus = [];
         $productAbstractStorageDataItems = $this->productStorageClient->findBulkProductAbstractStorageDataByMapping(
@@ -78,15 +79,19 @@ class StorageReader implements StorageReaderInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param string[] $productAbstractSkus
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\RestProductOptionAttributesTransfer[][]
      */
-    public function getRestProductOptionAttributesTransfersByProductAbstractIds(
-        array $productAbstractIds,
+    public function getRestProductOptionAttributesTransfersByProductAbstractSkus(
+        array $productAbstractSkus,
         string $localeName
     ): array {
+        $productAbstractIds = $this->getProductAbstractIdsByProductAbstractSkus(
+            $productAbstractSkus,
+            $localeName
+        );
         $productAbstractOptionStorageTransfers = $this->productOptionStorageClient->getBulkProductOptions(
             $productAbstractIds
         );
@@ -120,15 +125,33 @@ class StorageReader implements StorageReaderInterface
     {
         $glossaryStorageKeys = [];
         foreach ($productAbstractOptionStorageTransfers as $productAbstractOptionStorageTransfer) {
-            foreach ($productAbstractOptionStorageTransfer->getProductOptionGroups() as $productOptionGroupStorageTransfer) {
-                $glossaryStorageKeys[] = $productOptionGroupStorageTransfer->getName();
+            $glossaryStorageKeys += $this->getGlossaryStorageKeysFromProductAbstractOptionStorageTransfer(
+                $productAbstractOptionStorageTransfer
+            );
+        }
 
-                foreach ($productOptionGroupStorageTransfer->getProductOptionValues() as $productOptionValueStorageTransfer) {
-                    $glossaryStorageKeys[] = $productOptionValueStorageTransfer->getValue();
-                }
+        return array_values($glossaryStorageKeys);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
+     *
+     * @return string[]
+     */
+    protected function getGlossaryStorageKeysFromProductAbstractOptionStorageTransfer(
+        ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
+    ): array {
+        $glossaryStorageKeys = [];
+        foreach ($productAbstractOptionStorageTransfer->getProductOptionGroups() as $productOptionGroupStorageTransfer) {
+            $optionGroupName = $productOptionGroupStorageTransfer->getName();
+            $glossaryStorageKeys[$optionGroupName] = $optionGroupName;
+
+            foreach ($productOptionGroupStorageTransfer->getProductOptionValues() as $productOptionValueStorageTransfer) {
+                $optionValueName = $productOptionValueStorageTransfer->getValue();
+                $glossaryStorageKeys[$optionValueName] = $optionValueName;
             }
         }
 
-        return array_unique($glossaryStorageKeys);
+        return $glossaryStorageKeys;
     }
 }
