@@ -5,22 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Delegator;
+namespace Spryker\Client\SearchElasticsearch\Writer;
 
 use Generated\Shared\Transfer\SearchDocumentTransfer;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
-interface SearchDelegatorInterface
+interface DocumentWriterInterface
 {
-    /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface $queryCriteria
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
-     * @param array $requestParameters
-     *
-     * @return mixed
-     */
-    public function search(QueryInterface $queryCriteria, array $resultFormatters = [], array $requestParameters = []);
-
     /**
      * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
      *

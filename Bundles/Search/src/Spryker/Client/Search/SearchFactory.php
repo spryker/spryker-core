@@ -9,6 +9,8 @@ namespace Spryker\Client\Search;
 
 use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Search\Delegator\Adapter\SearchDelegatorAdapter;
+use Spryker\Client\Search\Delegator\Adapter\SearchDelegatorAdapterInterface;
 use Spryker\Client\Search\Delegator\SearchDelegator;
 use Spryker\Client\Search\Delegator\SearchDelegatorInterface;
 use Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilder;
@@ -56,6 +58,16 @@ class SearchFactory extends AbstractFactory
             $this->getClientAdapterPlugins(),
             $this->createSourceIdentifierMapper()
         );
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return \Spryker\Client\Search\Delegator\Adapter\SearchDelegatorAdapterInterface
+     */
+    public function createSearchDelegatorAdapter(): SearchDelegatorAdapterInterface
+    {
+        return new SearchDelegatorAdapter($this->createSearchDelegator());
     }
 
     /**
@@ -334,12 +346,12 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Model\Elasticsearch\Writer\WriterInterface|\Spryker\Client\Search\Delegator\SearchDelegatorInterface
+     * @return \Spryker\Client\Search\Model\Elasticsearch\Writer\WriterInterface|\Spryker\Client\Search\Delegator\Adapter\SearchDelegatorAdapterInterface
      */
     public function createWriter()
     {
         if (count($this->getClientAdapterPlugins()) > 0) {
-            return $this->createSearchDelegator();
+            return $this->createSearchDelegatorAdapter();
         }
 
         return new Writer(
@@ -350,10 +362,14 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Model\Elasticsearch\Reader\ReaderInterface
+     * @return \Spryker\Client\Search\Model\Elasticsearch\Reader\ReaderInterface|\Spryker\Client\Search\Delegator\Adapter\SearchDelegatorAdapterInterface
      */
     public function createReader()
     {
+        if (count($this->getClientAdapterPlugins()) > 0) {
+            return $this->createSearchDelegatorAdapter();
+        }
+
         return new Reader(
             $this->createCachedElasticsearchClient(),
             $this->getConfig()->getSearchIndexName(),

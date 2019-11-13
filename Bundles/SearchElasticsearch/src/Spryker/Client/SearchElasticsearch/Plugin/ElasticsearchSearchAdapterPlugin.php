@@ -8,6 +8,7 @@
 namespace Spryker\Client\SearchElasticsearch\Plugin;
 
 use Generated\Shared\Transfer\SearchContextTransfer;
+use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface;
@@ -18,6 +19,8 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterfac
  */
 class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchAdapterPluginInterface
 {
+    protected const NAME = 'elasticsearch';
+
     /**
      * {@inheritDoc}
      * - Performs search in Elasticsearch.
@@ -65,32 +68,60 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
 
     /**
      * {@inheritDoc}
+     * - Reads a single document from Elasticsearch.
      *
      * @api
      *
-     * @param string $key
-     * @param string $indexName
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
      *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\SearchDocumentTransfer
      */
-    public function read(string $key, string $indexName)
+    public function readDocument(SearchDocumentTransfer $searchDocumentTransfer): SearchDocumentTransfer
     {
-        // TODO add real return value
-        return 'foo';
+        return $this->getClient()->readDocument($searchDocumentTransfer);
     }
 
     /**
      * {@inheritDoc}
+     * - Writes a single document to Elasticsearch.
      *
      * @api
      *
-     * @param string|null $indexName
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
      *
      * @return bool
      */
-    public function delete(?string $indexName = null): bool
+    public function writeDocument(SearchDocumentTransfer $searchDocumentTransfer): bool
     {
-        return $this->getClient()->delete($indexName);
+        return $this->getClient()->writeDocument($searchDocumentTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     * - Writes multiple documents to Elasticsearch.
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchContextTransfers
+     *
+     * @return bool
+     */
+    public function writeDocuments(array $searchContextTransfers): bool
+    {
+        return $this->getClient()->writeDocuments($searchContextTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     * - Deletes a single document from Elasticsearch.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return bool
+     */
+    public function deleteDocument(SearchDocumentTransfer $searchDocumentTransfer): bool
+    {
+        return $this->getClient()->deleteDocument($searchDocumentTransfer);
     }
 
     /**
@@ -104,8 +135,7 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
      */
     public function deleteDocuments(array $searchDocumentTransfers): bool
     {
-        // TODO add real return value
-        return false;
+        return $this->getClient()->deleteDocuments($searchDocumentTransfers);
     }
 
     /**
@@ -122,8 +152,15 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
         return $this->getFactory()->createSourceIdentifierChecker()->isSupported($searchContextTransfer);
     }
 
-    public function write(array $data, SearchContextTransfer $searchContextTransfer): bool
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getName(): string
     {
-        return $this->getFactory()->createWriter()->write($data, $searchContextTransfer);
+        return static::NAME;
     }
 }

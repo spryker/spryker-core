@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Search;
 
+use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 interface SearchClientInterface
@@ -116,9 +117,27 @@ interface SearchClientInterface
 
     /**
      * Specification:
+     * - Returns data from an external search service (e.g Elasticsearch)
+     *
+     * @api
+     *
+     * @deprecated Use `\Spryker\Client\Search\SearchClientInterface::readDocument()` instead.
+     *
+     * @param string $key
+     * @param string|null $typeName
+     * @param string|null $indexName
+     *
+     * @return mixed
+     */
+    public function readDocument($key, $typeName = null, $indexName = null);
+
+    /**
+     * Specification:
      * - Writes data into an external search service (e.g Elasticsearch)
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Client\Search\SearchClientInterface::writeDocument()` instead.
      *
      * @param array $dataSet
      * @param string|null $typeName
@@ -127,6 +146,29 @@ interface SearchClientInterface
      * @return bool
      */
     public function write(array $dataSet, $typeName = null, $indexName = null);
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return bool
+     */
+    public function writeDocument(SearchDocumentTransfer $searchDocumentTransfer): bool;
+
+    /**
+     * Specification:
+     * - Writes data into an external search service in bulk mode.
+     *
+     * @api
+     *
+     * @deprecated Use `\Spryker\Client\Search\SearchClientInterface::writeDocuments()` instead.
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function writeBulk(array $searchDocumentTransfers): bool;
 
     /**
      * Specification:
@@ -138,7 +180,7 @@ interface SearchClientInterface
      *
      * @return bool
      */
-    public function writeBulk(array $searchDocumentTransfers): bool;
+    public function writeDocuments(array $searchDocumentTransfers): bool;
 
     /**
      * Specification:
@@ -165,40 +207,4 @@ interface SearchClientInterface
      * @return bool
      */
     public function deleteBulk(array $searchDocumentTransfers): bool;
-
-    /**
-     * Specification:
-     * - @TODO
-     *
-     * @api
-     *
-     * @param string|null $indexName
-     *
-     * @return int
-     */
-    public function getTotalCount(?string $indexName = null): int;
-
-    /**
-     * Specification:
-     * - @TODO
-     *
-     * @api
-     *
-     * @param string|null $indexName
-     *
-     * @return array
-     */
-    public function getMetaData(?string $indexName = null): array;
-
-    /**
-     * Specification:
-     * - @TODO
-     *
-     * @api
-     *
-     * @param string|null $indexName
-     *
-     * @return bool
-     */
-    public function deleteIndices(?string $indexName = null): bool;
 }

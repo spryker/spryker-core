@@ -8,6 +8,7 @@
 namespace Spryker\Client\SearchExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\SearchContextTransfer;
+use Generated\Shared\Transfer\SearchDocumentTransfer;
 
 interface SearchAdapterPluginInterface
 {
@@ -54,33 +55,32 @@ interface SearchAdapterPluginInterface
     public function getMetaData(?string $indexName = null): array;
 
     /**
-     * {@inheritDoc}
+     * Specification:
+     * - Retrieves a document, stored for search, by document key.
      *
      * @api
      *
-     * @param string $key
-     * @param string $indexName
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
      *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\SearchDocumentTransfer
      */
-    public function read(string $key, string $indexName);
+    public function readDocument(SearchDocumentTransfer $searchDocumentTransfer): SearchDocumentTransfer;
 
     /**
      * Specification:
-     * - Deletes one index available for this Client if indexName is passed.
-     * - Deletes all indices available for this Client if indexName is not passed.
+     * - Deletes a document available for this Client.
      *
      * @api
      *
-     * @param string|null $indexName
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
      *
      * @return bool
      */
-    public function delete(?string $indexName = null): bool;
+    public function deleteDocument(SearchDocumentTransfer $searchDocumentTransfer): bool;
 
     /**
      * Specification:
-     * - Deletes documents available for this Client.
+     * - Deletes multiple documents available for this Client.
      *
      * @api
      *
@@ -102,5 +102,37 @@ interface SearchAdapterPluginInterface
      */
     public function isApplicable(SearchContextTransfer $searchContextTransfer): bool;
 
-    public function write(array $data, SearchContextTransfer $searchContextTransfer): bool;
+    /**
+     * Specification:
+     * - Stores a document available for this Client.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return bool
+     */
+    public function writeDocument(SearchDocumentTransfer $searchDocumentTransfer): bool;
+
+    /**
+     * Specification:
+     * - Stores multiple documents available for this Client.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchContextTransfers
+     *
+     * @return bool
+     */
+    public function writeDocuments(array $searchContextTransfers): bool;
+
+    /**
+     * Specification:
+     * - Returns a unique plugin name.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getName(): string;
 }

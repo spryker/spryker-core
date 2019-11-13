@@ -36,14 +36,16 @@ use Spryker\Client\SearchElasticsearch\Query\QueryBuilder;
 use Spryker\Client\SearchElasticsearch\Query\QueryBuilderInterface;
 use Spryker\Client\SearchElasticsearch\Query\QueryFactory;
 use Spryker\Client\SearchElasticsearch\Query\QueryFactoryInterface;
+use Spryker\Client\SearchElasticsearch\Reader\DocumentReader;
+use Spryker\Client\SearchElasticsearch\Reader\DocumentReaderInterface;
 use Spryker\Client\SearchElasticsearch\Search\Search;
 use Spryker\Client\SearchElasticsearch\Search\SearchInterface;
 use Spryker\Client\SearchElasticsearch\SearchContext\SourceIdentifierMapper;
 use Spryker\Client\SearchElasticsearch\SearchContext\SourceIdentifierMapperInterface;
 use Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilder;
 use Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilderInterface;
-use Spryker\Client\SearchElasticsearch\Writer\Writer;
-use Spryker\Client\SearchElasticsearch\Writer\WriterInterface;
+use Spryker\Client\SearchElasticsearch\Writer\DocumentWriter;
+use Spryker\Client\SearchElasticsearch\Writer\DocumentWriterInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToLocaleClientInterface;
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
@@ -301,10 +303,25 @@ class SearchElasticsearchFactory extends AbstractFactory
         return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::PLUGINS_SEARCH_CONFIG_BUILDER);
     }
 
-    public function createWriter(): WriterInterface
+    /**
+     * @return \Spryker\Client\SearchElasticsearch\Writer\DocumentWriterInterface
+     */
+    public function createDocumentWriter(): DocumentWriterInterface
     {
-        return new Writer(
-            $this->getElasticaClient()
+        return new DocumentWriter(
+            $this->getElasticaClient(),
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\SearchElasticsearch\Reader\DocumentReaderInterface
+     */
+    public function createDocumentReader(): DocumentReaderInterface
+    {
+        return new DocumentReader(
+            $this->getElasticaClient(),
+            $this->getConfig()
         );
     }
 }

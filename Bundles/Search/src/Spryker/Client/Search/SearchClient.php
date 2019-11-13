@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Search;
 
+use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
@@ -161,6 +162,8 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @api
      *
+     * @deprecated Use `Spryker\Client\Search\SearchClient::writeDocument()` instead.
+     *
      * @param array $dataSet
      * @param string|null $typeName
      * @param string|null $indexName
@@ -176,9 +179,23 @@ class SearchClient extends AbstractClient implements SearchClientInterface
     }
 
     /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return bool
+     */
+    public function writeDocument(SearchDocumentTransfer $searchDocumentTransfer): bool
+    {
+        return $this->getFactory()->createSearchDelegator()->writeDocument($searchDocumentTransfer);
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use `Spryker\Client\Search\SearchClient::writeDocuments()` instead.
      *
      * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
      *
@@ -190,6 +207,21 @@ class SearchClient extends AbstractClient implements SearchClientInterface
             ->getFactory()
             ->createWriter()
             ->writeBulk($searchDocumentTransfers);
+    }
+
+    /**
+     * Specification:
+     * - Writes data into an external search service in bulk mode.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function writeDocuments(array $searchDocumentTransfers): bool
+    {
+        return $this->getFactory()->createSearchDelegator()->writeDocuments($searchDocumentTransfers);
     }
 
     /**
@@ -226,47 +258,5 @@ class SearchClient extends AbstractClient implements SearchClientInterface
             ->getFactory()
             ->createWriter()
             ->deleteBulk($searchDocumentTransfers);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string|null $indexName
-     *
-     * @return int
-     */
-    public function getTotalCount(?string $indexName = null): int
-    {
-        return $this->getFactory()->createSearchDelegator()->getTotalCount($indexName);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string|null $indexName
-     *
-     * @return array
-     */
-    public function getMetaData(?string $indexName = null): array
-    {
-        return $this->getFactory()->createSearchDelegator()->getMetaData($indexName);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string|null $indexName
-     *
-     * @return bool
-     */
-    public function deleteIndices(?string $indexName = null): bool
-    {
-        return $this->getFactory()->createSearchDelegator()->delete($indexName);
     }
 }

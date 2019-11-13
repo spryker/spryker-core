@@ -249,6 +249,8 @@ class SearchClientTest extends Unit
 
     /**
      * Checks that a document is stored for searching with the new approach, while passing type name (source identifier) and index name separately.
+     *
+     * @return void
      */
     public function testCanWriteDocument(): void
     {

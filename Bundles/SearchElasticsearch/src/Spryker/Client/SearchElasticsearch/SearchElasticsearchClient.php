@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\SearchElasticsearch;
 
+use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
@@ -66,15 +67,13 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
      *
      * @api
      *
-     * @param string $key
-     * @param string $indexName
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
      *
      * @return mixed
      */
-    public function read(string $key, string $indexName)
+    public function readDocument(SearchDocumentTransfer $searchDocumentTransfer): bool
     {
-        // TODO Provide implementation
-        return '';
+        return $this->getFactory()->createDocumentReader()->readDocument($searchDocumentTransfer);
     }
 
     /**
@@ -82,14 +81,13 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
      *
      * @api
      *
-     * @param string|null $indexName
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
      *
      * @return bool
      */
-    public function delete(?string $indexName = null): bool
+    public function writeDocument(SearchDocumentTransfer $searchDocumentTransfer): bool
     {
-        // TODO Provide implementation
-        return true;
+        return $this->getFactory()->createDocumentWriter()->writeDocument($searchDocumentTransfer);
     }
 
     /**
@@ -97,13 +95,40 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
      *
      * @api
      *
-     * @param array $searchDocumentTransfers
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function writeDocuments(array $searchDocumentTransfers): bool
+    {
+        return $this->getFactory()->createDocumentWriter()->writeDocuments($searchDocumentTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return bool
+     */
+    public function deleteDocument(SearchDocumentTransfer $searchDocumentTransfer): bool
+    {
+        return $this->getFactory()->createDocumentWriter()->deleteDocument($searchDocumentTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
      *
      * @return bool
      */
     public function deleteDocuments(array $searchDocumentTransfers): bool
     {
-        // TODO Provide implementation
-        return true;
+        return $this->getFactory()->createDocumentWriter()->deleteDocuments($searchDocumentTransfers);
     }
 }
