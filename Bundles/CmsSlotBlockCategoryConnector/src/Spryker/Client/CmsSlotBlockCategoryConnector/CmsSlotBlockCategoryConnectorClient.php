@@ -5,17 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CmsSlotBlockCategoryConnector\Plugin\CmsSlotBlock;
+namespace Spryker\Client\CmsSlotBlockCategoryConnector;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
-use Spryker\Client\CmsSlotBlockExtension\Dependency\Plugin\CmsSlotBlockVisibilityResolverPluginInterface;
-use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method \Spryker\Client\CmsSlotBlockCategoryConnector\CmsSlotBlockCategoryConnectorClientInterface getClient()
  * @method \Spryker\Client\CmsSlotBlockCategoryConnector\CmsSlotBlockCategoryConnectorFactory getFactory()
  */
-class CategoryCmsSlotBlockConditionResolverPlugin extends AbstractPlugin implements CmsSlotBlockVisibilityResolverPluginInterface
+class CmsSlotBlockCategoryConnectorClient extends AbstractClient implements CmsSlotBlockCategoryConnectorClientInterface
 {
     /**
      * {@inheritDoc}
@@ -26,9 +24,11 @@ class CategoryCmsSlotBlockConditionResolverPlugin extends AbstractPlugin impleme
      *
      * @return bool
      */
-    public function isApplicable(CmsBlockTransfer $cmsBlockTransfer): bool
+    public function isSlotBlockConditionApplicable(CmsBlockTransfer $cmsBlockTransfer): bool
     {
-        return $this->getClient()->isSlotBlockConditionApplicable($cmsBlockTransfer);
+        return $this->getFactory()
+            ->createCategoryCmsSlotBlockConditionResolver()
+            ->isSlotBlockConditionApplicable($cmsBlockTransfer);
     }
 
     /**
@@ -43,6 +43,8 @@ class CategoryCmsSlotBlockConditionResolverPlugin extends AbstractPlugin impleme
      */
     public function isCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotParams): bool
     {
-        return $this->getClient()->isCmsBlockVisibleInSlot($cmsBlockTransfer, $cmsSlotParams);
+        return $this->getFactory()
+            ->createCategoryCmsSlotBlockConditionResolver()
+            ->isCmsBlockVisibleInSlot($cmsBlockTransfer, $cmsSlotParams);
     }
 }

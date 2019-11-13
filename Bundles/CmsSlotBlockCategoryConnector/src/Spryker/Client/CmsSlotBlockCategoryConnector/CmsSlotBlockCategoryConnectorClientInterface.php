@@ -5,13 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CmsSlotBlockCategoryConnector\Resolver;
+namespace Spryker\Client\CmsSlotBlockCategoryConnector;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 
-interface CategoryCmsSlotBlockConditionResolverInterface
+interface CmsSlotBlockCategoryConnectorClientInterface
 {
     /**
+     * Specification:
+     * - Returns true if CMS slot block condition is applicable.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return bool
@@ -19,6 +24,11 @@ interface CategoryCmsSlotBlockConditionResolverInterface
     public function isSlotBlockConditionApplicable(CmsBlockTransfer $cmsBlockTransfer): bool;
 
     /**
+     * Specification:
+     * - Returns true if CMS block should be visible in Slot.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      * @param array $cmsSlotParams
      *

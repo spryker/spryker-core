@@ -7,35 +7,58 @@
 
 namespace Spryker\Client\CmsSlotBlockCategoryConnector\Resolver;
 
+use Generated\Shared\Transfer\CmsBlockTransfer;
+
 class CategoryCmsSlotBlockConditionResolver implements CategoryCmsSlotBlockConditionResolverInterface
 {
-    // TODO: add @uses
+    /**
+     * @uses \Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\CategorySlotBlockConditionForm::FIELD_ALL
+     */
     protected const CONDITIONS_DATA_KEY_ALL = 'all';
 
-    // TODO: add @uses
+    /**
+     * @uses \Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\CategorySlotBlockConditionForm::FIELD_CATEGORY_IDS
+     */
     protected const CONDITIONS_DATA_KEY_CATEGORY_IDS = 'categoryIds';
 
-    protected const CMS_SLOT_DATA_CATEGORY_KEY = 'idCategory';
+    /**
+     * @uses \Spryker\Shared\CmsSlotBlockCategoryConnector\CmsSlotBlockCategoryConnectorConfig::CONDITION_KEY
+     */
+    protected const CONDITION_KEY = 'category';
+
+    protected const SLOT_DATA_KEY_ID_CATEGORY = 'idCategory';
 
     /**
-     * @param array $conditionData
-     * @param array $cmsSlotData
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return bool
      */
-    public function getIsCmsBlockVisibleInSlot(array $conditionData, array $cmsSlotData): bool
+    public function isSlotBlockConditionApplicable(CmsBlockTransfer $cmsBlockTransfer): bool
     {
-        if ($this->getIsConditionDataKeyAll($conditionData)) {
+        return isset($cmsBlockTransfer->getCmsSlotBlockConditions()[static::CONDITION_KEY]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     * @param array $cmsSlotParams
+     *
+     * @return bool
+     */
+    public function isCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotParams): bool
+    {
+        $conditionData = $cmsBlockTransfer->getCmsSlotBlockConditions()[static::CONDITION_KEY];
+
+        if ($this->getIsConditionDataAllowsAll($conditionData)) {
             return true;
         }
 
-        $idCategory = $this->getIdCategory($cmsSlotData);
+        $idCategory = $this->getIdCategory($cmsSlotParams);
 
         if (!$idCategory) {
             return false;
         }
 
-        if ($this->getIsCategoryMeetConditions($idCategory, $conditionData)) {
+        if ($this->getIsConditionDataAllowsIdCategory($idCategory, $conditionData)) {
             return true;
         }
 
@@ -47,7 +70,7 @@ class CategoryCmsSlotBlockConditionResolver implements CategoryCmsSlotBlockCondi
      *
      * @return bool
      */
-    protected function getIsConditionDataKeyAll(array $conditionData): bool
+    protected function getIsConditionDataAllowsAll(array $conditionData): bool
     {
         if (!isset($conditionData[static::CONDITIONS_DATA_KEY_ALL])) {
             return false;
@@ -61,13 +84,13 @@ class CategoryCmsSlotBlockConditionResolver implements CategoryCmsSlotBlockCondi
     }
 
     /**
-     * @param array $cmsSlotData
+     * @param array $cmsSlotParams
      *
      * @return int|null
      */
-    protected function getIdCategory(array $cmsSlotData): ?int
+    protected function getIdCategory(array $cmsSlotParams): ?int
     {
-        return $cmsSlotData[static::CMS_SLOT_DATA_CATEGORY_KEY] ?? null;
+        return (int)$cmsSlotParams[static::SLOT_DATA_KEY_ID_CATEGORY] ?? null;
     }
 
     /**
@@ -76,14 +99,12 @@ class CategoryCmsSlotBlockConditionResolver implements CategoryCmsSlotBlockCondi
      *
      * @return bool
      */
-    protected function getIsCategoryMeetConditions(int $idCategory, array $conditionData): bool
+    protected function getIsConditionDataAllowsIdCategory(int $idCategory, array $conditionData): bool
     {
         if (!isset($conditionData[static::CONDITIONS_DATA_KEY_CATEGORY_IDS])) {
             return false;
         }
 
-        $conditionCategoryIds = $conditionData[static::CONDITIONS_DATA_KEY_CATEGORY_IDS];
-
-        return in_array($idCategory, $conditionCategoryIds);
+        return in_array($idCategory, $conditionData[static::CONDITIONS_DATA_KEY_CATEGORY_IDS]);
     }
 }

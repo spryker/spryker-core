@@ -5,7 +5,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/cms-slot-block-extension": "^0.1.0",
-    "spryker/kernel": "^3.30.0",
+    "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
