@@ -36,4 +36,19 @@ class ProductOptionsRestApiToProductStorageClientBridge implements ProductOption
     ): array {
         return $this->productStorageClient->findBulkProductAbstractStorageDataByMapping($mappingType, $identifiers, $localeName);
     }
+
+    /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getBulkProductConcreteStorageDataByMapping(
+        string $mappingType,
+        array $identifiers,
+        string $localeName
+    ): array {
+        return $this->productStorageClient->getBulkProductConcreteStorageDataByMapping($mappingType, $identifiers, $localeName);
+    }
 }
