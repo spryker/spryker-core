@@ -32,7 +32,7 @@ class MerchantSkuValidationStep implements DataImportStepInterface
         $productOfferQuery = SpyProductOfferQuery::create();
         $productOfferQuery->filterByMerchantSku($merchantSku)
             ->filterByFkMerchant($fkMerchant)
-            ->filterByProductOfferReference($dataSet[MerchantProductOfferDataSetInterface::PRODUCT_OFFER_REFERENCE], Criteria::NOT_ILIKE);
+            ->filterByProductOfferReference($dataSet[MerchantProductOfferDataSetInterface::PRODUCT_OFFER_REFERENCE], Criteria::ALT_NOT_EQUAL);
 
         if ($productOfferQuery->count() > 0) {
             throw new EntityNotFoundException(sprintf('Product with merchant sku "%s" and merchant id "%d" should be unique.', $merchantSku, $fkMerchant));
