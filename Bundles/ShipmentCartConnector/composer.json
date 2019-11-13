@@ -7,13 +7,14 @@
     "php": ">=7.1",
     "spryker/kernel": "^3.33.0",
     "spryker/price": "^5.0.0",
-    "spryker/shipment": "^7.0.0"
+    "spryker/shipment": "^7.0.0 || ^8.0.0"
   },
   "require-dev": {
     "spryker/cart": "*",
     "spryker/code-sniffer": "*",
     "spryker/currency": "*",
     "spryker/propel": "*",
+    "spryker/store": "*",
     "spryker/testify": "*"
   },
   "suggest": {

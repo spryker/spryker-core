@@ -12,7 +12,6 @@
     "spryker/customer": "^7.25.0",
     "spryker/gui": "^3.17.0",
     "spryker/kernel": "^3.30.0",
-    "spryker/money": "^2.0.0",
     "spryker/oms-extension": "^1.0.0",
     "spryker/price": "^5.5.0",
     "spryker/propel-orm": "^1.0.0",
@@ -22,19 +21,15 @@
     "spryker/store": "^1.4.0",
     "spryker/symfony": "^3.0.0",
     "spryker/tax": "^5.0.0",
-    "spryker/util-text": "^1.1.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
-    "spryker/application": "*",
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
-    "spryker/config": "*",
     "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/tax-product-connector": "*",
-    "spryker/testify": "*",
-    "spryker/zed-navigation": "*"
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/checkout": "If you want to use Checkout plugins."

@@ -9,7 +9,7 @@
     "spryker/quote-approval": "^1.2.0",
     "spryker/quote-approval-extension": "^1.1.0",
     "spryker/quote-extension": "^1.6.0",
-    "spryker/shipment": "^7.0.0"
+    "spryker/shipment": "^7.0.0 || ^8.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
