@@ -15,7 +15,7 @@ class SalesController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return array
      */
     public function listAction(Request $request): array
     {
