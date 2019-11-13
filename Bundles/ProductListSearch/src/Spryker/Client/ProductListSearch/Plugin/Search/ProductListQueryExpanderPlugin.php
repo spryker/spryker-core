@@ -22,13 +22,8 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
  */
 class ProductListQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
-    /**
-     * @uses \SprykerShop\Yves\CatalogPage\CatalogPageConfig::CATALOG_PAGE_LIMIT
-     */
-    protected const CATALOG_PAGE_LIMIT = 10000;
-
     protected const REQUEST_PARAM_ID_PRODUCT_LIST = ProductListTransfer::ID_PRODUCT_LIST;
-    protected const REQUEST_PARAM_IGNORE_PAGINATION = 'ignorePagination';
+    protected const REQUEST_PARAM_ITEMS_PER_PAGE = 'itemsPerPage';
 
     /**
      * {@inheritDoc}
@@ -50,11 +45,11 @@ class ProductListQueryExpanderPlugin extends AbstractPlugin implements QueryExpa
         $query = $searchQuery->getSearchQuery();
         $this->expandQueryWithProductListFilters($query, $requestParameters[static::REQUEST_PARAM_ID_PRODUCT_LIST]);
 
-        $ignorePagination = $requestParameters[static::REQUEST_PARAM_IGNORE_PAGINATION] ?? false;
+        $itemsPerPage = $requestParameters[static::REQUEST_PARAM_ITEMS_PER_PAGE] ?? null;
 
-        if ($ignorePagination) {
+        if ($itemsPerPage) {
             // temporary solution until ProductConcreteSearchGridWidget gets pagination
-            $query->setSize(static::CATALOG_PAGE_LIMIT);
+            $query->setSize($itemsPerPage);
         }
 
         return $searchQuery;
