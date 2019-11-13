@@ -8,13 +8,7 @@
 namespace SprykerTest\Zed\CmsSlotBlock\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CmsBlockTransfer;
-use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
-use Generated\Shared\Transfer\CmsSlotBlockTransfer;
-use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
-use Generated\Shared\Transfer\CmsSlotTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
 use Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockRepository;
@@ -59,58 +53,47 @@ class CmsSlotBlockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSaveCmsSlotBlockRelationsAddsNewRelations(): void
+    public function testCreateCmsSlotBlockRelationsAddsNewRelations(): void
     {
         // Arrange
-        $cmsBlockTransfer1 = $this->tester->haveCmsBlock();
-        $cmsBlockTransfer2 = $this->tester->haveCmsBlock();
-        $cmsSlotTransfer1 = $this->tester->haveCmsSlotInDb([
-            CmsSlotTransfer::KEY => 'slt-1',
-        ]);
-        $cmsSlotTransfer2 = $this->tester->haveCmsSlotInDb([
-            CmsSlotTransfer::KEY => 'slt-2',
-        ]);
-        $cmsSlotTemplateTransfer1 = $this->tester->haveCmsSlotTemplateInDb([
-            CmsSlotTemplateTransfer::PATH => 'path1',
-        ]);
-        $cmsSlotTemplateTransfer2 = $this->tester->haveCmsSlotTemplateInDb([
-            CmsSlotTemplateTransfer::PATH => 'path2',
-        ]);
+        $cmsBlockTransfers = $this->tester->createCmsBlocksInDb(3);
+        $cmsSlotTransfers = $this->tester->createCmsSlotsInDb(2);
+        $cmsSlotTemplateTransfers = $this->tester->createCmsSlotTemplatesInDb(2);
 
-        $cmsSlotBlockCollectionTransfer = new CmsSlotBlockCollectionTransfer();
-        $cmsSlotBlockTransfer1_1 = (new CmsSlotBlockTransfer())->setIdCmsBlock($cmsBlockTransfer1->getIdCmsBlock())
-            ->setIdSlotTemplate($cmsSlotTemplateTransfer1->getIdCmsSlotTemplate())
-            ->setIdSlot($cmsSlotTransfer1->getIdCmsSlot())
-            ->setPosition(1)
-            ->setConditions([]);
-        $cmsSlotBlockTransfer1_2 = (new CmsSlotBlockTransfer())->setIdCmsBlock($cmsBlockTransfer2->getIdCmsBlock())
-            ->setIdSlotTemplate($cmsSlotTemplateTransfer1->getIdCmsSlotTemplate())
-            ->setIdSlot($cmsSlotTransfer1->getIdCmsSlot())
-            ->setPosition(2)
-            ->setConditions([]);
-        $cmsSlotBlockTransfer2 = (new CmsSlotBlockTransfer())->setIdCmsBlock($cmsBlockTransfer2->getIdCmsBlock())
-            ->setIdSlotTemplate($cmsSlotTemplateTransfer2->getIdCmsSlotTemplate())
-            ->setIdSlot($cmsSlotTransfer2->getIdCmsSlot())
-            ->setPosition(1)
-            ->setConditions([]);
-        $cmsSlotBlockCollectionTransfer->addCmsSlotBlock($cmsSlotBlockTransfer1_1);
-        $cmsSlotBlockCollectionTransfer->addCmsSlotBlock($cmsSlotBlockTransfer1_2);
-        $cmsSlotBlockCollectionTransfer->addCmsSlotBlock($cmsSlotBlockTransfer2);
+        $idCmsBlock1 = $cmsBlockTransfers[0]->getIdCmsBlock();
+        $idCmsBlock2 = $cmsBlockTransfers[1]->getIdCmsBlock();
+        $idCmsBlock3 = $cmsBlockTransfers[2]->getIdCmsBlock();
+        $idCmsSlot1 = $cmsSlotTransfers[0]->getIdCmsSlot();
+        $idCmsSlot2 = $cmsSlotTransfers[1]->getIdCmsSlot();
+        $idCmsSlotTemplate1 = $cmsSlotTemplateTransfers[0]->getIdCmsSlotTemplate();
+        $idCmsSlotTemplate2 = $cmsSlotTemplateTransfers[1]->getIdCmsSlotTemplate();
+
+        $cmsSlotBlockTransfer1_1 = $this->tester->createCmsSlotBlockTransfer($idCmsSlotTemplate1, $idCmsSlot1, $idCmsBlock1);
+        $cmsSlotBlockTransfer1_2 = $this->tester->createCmsSlotBlockTransfer($idCmsSlotTemplate1, $idCmsSlot1, $idCmsBlock2);
+        $cmsSlotBlockTransfer2 = $this->tester->createCmsSlotBlockTransfer($idCmsSlotTemplate2, $idCmsSlot2, $idCmsBlock3);
+        $cmsSlotBlockCollectionTransfer = $this->tester->createCmsSlotBlockCollectionTransfer([
+            $cmsSlotBlockTransfer1_1,
+            $cmsSlotBlockTransfer1_2,
+            $cmsSlotBlockTransfer2,
+        ]);
 
         // Act
-        $this->tester->createCmsSlotBlockFacade()->saveCmsSlotBlockRelations($cmsSlotBlockCollectionTransfer);
+        $this->tester->createCmsSlotBlockFacade()->createCmsSlotBlockRelations($cmsSlotBlockCollectionTransfer);
 
         $cmsSlotBlocks1 = $this->cmsSlotBlockRepository->getCmsSlotBlocks(
-            $cmsSlotTemplateTransfer1->getIdCmsSlotTemplate(),
-            $cmsSlotTransfer1->getIdCmsSlot()
+            $this->tester->createCmsSlotBlockCriteriaTransfer($idCmsSlotTemplate1, $idCmsSlot1)
         )->getCmsSlotBlocks();
+        $cmsSlotBlocks2 = $this->cmsSlotBlockRepository->getCmsSlotBlocks(
+            $this->tester->createCmsSlotBlockCriteriaTransfer($idCmsSlotTemplate2, $idCmsSlot2)
+        )->getCmsSlotBlocks();
+
         $cmsSlotBlockTransferFromDb1_1 = $cmsSlotBlocks1[0];
         $cmsSlotBlockTransferFromDb1_2 = $cmsSlotBlocks1[1];
-        $cmsSlotBlocks2 = $this->cmsSlotBlockRepository->getCmsSlotBlocks(
-            $cmsSlotTemplateTransfer2->getIdCmsSlotTemplate(),
-            $cmsSlotTransfer2->getIdCmsSlot()
-        )->getCmsSlotBlocks();
         $cmsSlotBlockTransferFromDb2 = $cmsSlotBlocks2[0];
+
+        $cmsSlotBlockTransfer1_1->setIdCmsSlotBlock($cmsSlotBlockTransferFromDb1_1->getIdCmsSlotBlock());
+        $cmsSlotBlockTransfer1_2->setIdCmsSlotBlock($cmsSlotBlockTransferFromDb1_2->getIdCmsSlotBlock());
+        $cmsSlotBlockTransfer2->setIdCmsSlotBlock($cmsSlotBlockTransferFromDb2->getIdCmsSlotBlock());
 
         // Assert
         $this->assertCount(2, $cmsSlotBlocks1);
@@ -123,43 +106,26 @@ class CmsSlotBlockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSaveCmsSlotBlockRelationsUpdatesRelations(): void
+    public function testDeleteCmsSlotBlockRelationsByCriteriaRemovesRelations(): void
     {
         // Arrange
-        $cmsBlockTransfer1 = $this->tester->haveCmsBlock();
-        $cmsBlockTransfer2 = $this->tester->haveCmsBlock();
-        $cmsSlotTransfer = $this->tester->haveCmsSlotInDb();
-        $cmsSlotTemplateTransfer = $this->tester->haveCmsSlotTemplateInDb();
+        $cmsBlockTransfers = $this->tester->createCmsBlocksInDb(2);
 
-        $this->tester->haveCmsSlotBlockInDb([
-            CmsSlotBlockTransfer::ID_SLOT_TEMPLATE => $cmsSlotTemplateTransfer->getIdCmsSlotTemplate(),
-            CmsSlotBlockTransfer::ID_SLOT => $cmsSlotTransfer->getIdCmsSlot(),
-            CmsSlotBlockTransfer::ID_CMS_BLOCK => $cmsBlockTransfer1->getIdCmsBlock(),
-        ]);
-        $this->tester->haveCmsSlotBlockInDb([
-            CmsSlotBlockTransfer::ID_SLOT_TEMPLATE => $cmsSlotTemplateTransfer->getIdCmsSlotTemplate(),
-            CmsSlotBlockTransfer::ID_SLOT => $cmsSlotTransfer->getIdCmsSlot(),
-            CmsSlotBlockTransfer::ID_CMS_BLOCK => $cmsBlockTransfer2->getIdCmsBlock(),
-        ]);
+        $idCmsBlock1 = $cmsBlockTransfers[0]->getIdCmsBlock();
+        $idCmsBlock2 = $cmsBlockTransfers[1]->getIdCmsBlock();
+        $idCmsSlot = $this->tester->createCmsSlotsInDb()[0]->getIdCmsSlot();
+        $idCmsSlotTemplate = $this->tester->createCmsSlotTemplatesInDb()[0]->getIdCmsSlotTemplate();
 
-        $cmsSlotBlockCollectionTransfer = new CmsSlotBlockCollectionTransfer();
-        $cmsSlotBlockTransfer = (new CmsSlotBlockTransfer())->setIdCmsBlock($cmsBlockTransfer1->getIdCmsBlock())
-            ->setIdSlotTemplate($cmsSlotTemplateTransfer->getIdCmsSlotTemplate())
-            ->setIdSlot($cmsSlotTransfer->getIdCmsSlot())
-            ->setPosition(1)
-            ->setConditions([]);
-        $cmsSlotBlockCollectionTransfer->addCmsSlotBlock($cmsSlotBlockTransfer);
+        $this->tester->createCmsSlotBlockInDb($idCmsSlotTemplate, $idCmsSlot, $idCmsBlock1);
+        $this->tester->createCmsSlotBlockInDb($idCmsSlotTemplate, $idCmsSlot, $idCmsBlock2);
 
         // Act
-        $this->tester->createCmsSlotBlockFacade()->saveCmsSlotBlockRelations($cmsSlotBlockCollectionTransfer);
-        $cmsSlotBlocks = $this->cmsSlotBlockRepository->getCmsSlotBlocks(
-            $cmsSlotTemplateTransfer->getIdCmsSlotTemplate(),
-            $cmsSlotTransfer->getIdCmsSlot()
-        )->getCmsSlotBlocks();
+        $cmsSlotBlockCriteriaTransfer = $this->tester->createCmsSlotBlockCriteriaTransfer($idCmsSlotTemplate, $idCmsSlot);
+        $this->tester->createCmsSlotBlockFacade()->deleteCmsSlotBlockRelationsByCriteria($cmsSlotBlockCriteriaTransfer);
+        $cmsSlotBlocks = $this->cmsSlotBlockRepository->getCmsSlotBlocks($cmsSlotBlockCriteriaTransfer)->getCmsSlotBlocks();
 
         // Assert
-        $this->assertCount(1, $cmsSlotBlocks);
-        $this->assertEquals($cmsSlotBlockTransfer, $cmsSlotBlocks[0]);
+        $this->assertCount(0, $cmsSlotBlocks);
     }
 
     /**
@@ -168,27 +134,23 @@ class CmsSlotBlockFacadeTest extends Unit
     public function testGetCmsSlotBlockCollectionReturnsCorrectData(): void
     {
         // Arrange
-        $cmsBlockTransfer1 = $this->tester->haveCmsBlock();
-        $cmsBlockTransfer2 = $this->tester->haveCmsBlock();
-        $cmsSlotTransfer = $this->tester->haveCmsSlotInDb();
-        $cmsSlotTemplateTransfer = $this->tester->haveCmsSlotTemplateInDb();
+        $cmsBlockTransfers = $this->tester->createCmsBlocksInDb(2);
+        $idCmsBlock1 = $cmsBlockTransfers[0]->getIdCmsBlock();
+        $idCmsBlock2 = $cmsBlockTransfers[1]->getIdCmsBlock();
+        $idCmsSlot = $this->tester->createCmsSlotsInDb()[0]->getIdCmsSlot();
+        $idCmsSlotTemplate = $this->tester->createCmsSlotTemplatesInDb()[0]->getIdCmsSlotTemplate();
 
-        $cmsSlotBlockTransfer1 = $this->tester->haveCmsSlotBlockInDb([
-            CmsSlotBlockTransfer::ID_SLOT_TEMPLATE => $cmsSlotTemplateTransfer->getIdCmsSlotTemplate(),
-            CmsSlotBlockTransfer::ID_SLOT => $cmsSlotTransfer->getIdCmsSlot(),
-            CmsSlotBlockTransfer::ID_CMS_BLOCK => $cmsBlockTransfer1->getIdCmsBlock(),
-        ]);
-        $cmsSlotBlockTransfer2 = $this->tester->haveCmsSlotBlockInDb([
-            CmsSlotBlockTransfer::ID_SLOT_TEMPLATE => $cmsSlotTemplateTransfer->getIdCmsSlotTemplate(),
-            CmsSlotBlockTransfer::ID_SLOT => $cmsSlotTransfer->getIdCmsSlot(),
-            CmsSlotBlockTransfer::ID_CMS_BLOCK => $cmsBlockTransfer2->getIdCmsBlock(),
-        ]);
+        $cmsSlotBlockTransfer1 = $this->tester->createCmsSlotBlockInDb($idCmsSlotTemplate, $idCmsSlot, $idCmsBlock1);
+        $cmsSlotBlockTransfer2 = $this->tester->createCmsSlotBlockInDb($idCmsSlotTemplate, $idCmsSlot, $idCmsBlock2);
+        $cmsSlotBlockCriteriaTransfer = $this->tester->createCmsSlotBlockCriteriaTransfer($idCmsSlotTemplate, $idCmsSlot);
 
         // Act
         $cmsSlotBlocks = $this->tester->createCmsSlotBlockFacade()->getCmsSlotBlockCollection(
-            $cmsSlotTemplateTransfer->getIdCmsSlotTemplate(),
-            $cmsSlotTransfer->getIdCmsSlot()
+            $cmsSlotBlockCriteriaTransfer
         )->getCmsSlotBlocks();
+
+        $cmsSlotBlockTransfer1->setIdCmsSlotBlock($cmsSlotBlocks[0]->getIdCmsSlotBlock());
+        $cmsSlotBlockTransfer2->setIdCmsSlotBlock($cmsSlotBlocks[1]->getIdCmsSlotBlock());
 
         // Assert
         $this->assertCount(2, $cmsSlotBlocks);
@@ -201,9 +163,12 @@ class CmsSlotBlockFacadeTest extends Unit
      */
     public function testGetCmsSlotBlockCollectionReturnsEmptyCollectionIfRelationsDoNotExist(): void
     {
+        // Arrange
+        $cmsSlotBlockCriteriaTransfer = $this->tester->createCmsSlotBlockCriteriaTransfer(1, 1);
+
         // Act
         $cmsSlotBlocks = $this->tester->createCmsSlotBlockFacade()
-            ->getCmsSlotBlockCollection(1, 1)
+            ->getCmsSlotBlockCollection($cmsSlotBlockCriteriaTransfer)
             ->getCmsSlotBlocks();
 
         // Assert
@@ -216,17 +181,7 @@ class CmsSlotBlockFacadeTest extends Unit
     public function testGetCmsBlocksWithSlotRelationsReturnsDataWithCorrectLimit(): void
     {
         // Arrange
-        $storeTransfer = $this->tester->haveStore();
-        $this->tester->haveCmsBlock([
-            CmsBlockTransfer::STORE_RELATION => [StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStore()]],
-        ]);
-        $this->tester->haveCmsBlock([
-            CmsBlockTransfer::STORE_RELATION => [StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStore()]],
-        ]);
-        $this->tester->haveCmsBlock([
-            CmsBlockTransfer::STORE_RELATION => [StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStore()]],
-        ]);
-
+        $this->tester->createCmsBlocksInDb(3);
         $filterTransfer = (new FilterTransfer())->setLimit(2);
 
         // Act
@@ -242,11 +197,8 @@ class CmsSlotBlockFacadeTest extends Unit
     public function testGetCmsBlocksWithSlotRelationsReturnsDataWithCorrectOffset(): void
     {
         // Arrange
-        $storeTransfer = $this->tester->haveStore();
         $countCmsBlocks = SpyCmsBlockQuery::create()->count();
-        $this->tester->haveCmsBlock([
-            CmsBlockTransfer::STORE_RELATION => [StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStore()]],
-        ]);
+        $this->tester->createCmsBlocksInDb();
         $filterTransfer = (new FilterTransfer())->setOffset($countCmsBlocks);
 
         // Act
@@ -262,22 +214,17 @@ class CmsSlotBlockFacadeTest extends Unit
     public function testGetCmsBlocksWithSlotRelationsReturnsDataWithOrderAsc(): void
     {
         // Arrange
-        $storeTransfer = $this->tester->haveStore();
-        $this->tester->haveCmsBlock([
-            CmsBlockTransfer::STORE_RELATION => [StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStore()]],
-        ]);
-        $cmsBlockTransfer = $this->tester->haveCmsBlock([
-            CmsBlockTransfer::STORE_RELATION => [StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStore()]],
-        ]);
+        $cmsBlockTransfer = $this->tester->createCmsBlocksInDb(2)[1];
         $filterTransfer = (new FilterTransfer())
             ->setOrderBy(SpyCmsBlockTableMap::COL_ID_CMS_BLOCK)
             ->setOrderDirection('ASC');
 
         // Act
         $cmsBlockTransfers = $this->tester->createCmsSlotBlockFacade()->getCmsBlocksWithSlotRelations($filterTransfer);
+        $lastCmsBlockTransfer = $cmsBlockTransfers[count($cmsBlockTransfers) - 1];
 
         // Assert
-        $this->assertEquals($cmsBlockTransfer->getIdCmsBlock(), $cmsBlockTransfers[count($cmsBlockTransfers) - 1]->getIdCmsBlock());
+        $this->assertEquals($cmsBlockTransfer->getIdCmsBlock(), $lastCmsBlockTransfer->getIdCmsBlock());
     }
 
     /**
@@ -286,13 +233,7 @@ class CmsSlotBlockFacadeTest extends Unit
     public function testGetCmsBlocksWithSlotRelationsReturnsDataWithOrderDesc(): void
     {
         // Arrange
-        $storeTransfer = $this->tester->haveStore();
-        $this->tester->haveCmsBlock([
-            CmsBlockTransfer::STORE_RELATION => [StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStore()]],
-        ]);
-        $cmsBlockTransfer = $this->tester->haveCmsBlock([
-            CmsBlockTransfer::STORE_RELATION => [StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStore()]],
-        ]);
+        $cmsBlockTransfer = $this->tester->createCmsBlocksInDb(2)[1];
         $filterTransfer = (new FilterTransfer())
             ->setOrderBy(SpyCmsBlockTableMap::COL_ID_CMS_BLOCK)
             ->setOrderDirection('DESC');

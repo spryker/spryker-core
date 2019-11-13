@@ -17,6 +17,7 @@ use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplate;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplateQuery;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotToCmsSlotTemplateQuery;
+use Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlockQuery;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CmsSlotHelper extends Module
@@ -104,6 +105,7 @@ class CmsSlotHelper extends Module
 
         $cmsSlotTemplateEntity = new SpyCmsSlotTemplate();
         $cmsSlotTemplateEntity->fromArray($cmsSlotTemplateTransfer->toArray());
+        $cmsSlotTemplateEntity->setPathHash(md5($cmsSlotTemplateTransfer->getPath()));
         $cmsSlotTemplateEntity->save();
 
         $cmsSlotTemplateTransfer->setIdCmsSlotTemplate($cmsSlotTemplateEntity->getIdCmsSlotTemplate());
@@ -128,10 +130,9 @@ class CmsSlotHelper extends Module
      */
     public function ensureCmsSlotTableIsEmpty(): void
     {
-        $cmsSlotToCmsSlotTemplateQuery = $this->getCmsSlotToCmsSlotTemplateQuery();
-        $cmsSlotQuery = $this->getCmsSlotQuery();
-        $cmsSlotToCmsSlotTemplateQuery->deleteAll();
-        $cmsSlotQuery->deleteAll();
+        $this->getCmsSlotToCmsSlotTemplateQuery()->deleteAll();
+        $this->getCmsSlotBlockQuery()->deleteAll();
+        $this->getCmsSlotQuery()->deleteAll();
     }
 
     /**
@@ -139,10 +140,8 @@ class CmsSlotHelper extends Module
      */
     public function ensureCmsSlotTemplateTableIsEmpty(): void
     {
-        $cmsSlotToCmsSlotTemplateQuery = $this->getCmsSlotToCmsSlotTemplateQuery();
-        $cmsSlotTemplateQuery = $this->getCmsSlotTemplateQuery();
-        $cmsSlotToCmsSlotTemplateQuery->deleteAll();
-        $cmsSlotTemplateQuery->deleteAll();
+        $this->getCmsSlotToCmsSlotTemplateQuery()->deleteAll();
+        $this->getCmsSlotTemplateQuery()->deleteAll();
     }
 
     /**
@@ -167,5 +166,13 @@ class CmsSlotHelper extends Module
     protected function getCmsSlotToCmsSlotTemplateQuery(): SpyCmsSlotToCmsSlotTemplateQuery
     {
         return SpyCmsSlotToCmsSlotTemplateQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlockQuery
+     */
+    protected function getCmsSlotBlockQuery(): SpyCmsSlotBlockQuery
+    {
+        return SpyCmsSlotBlockQuery::create();
     }
 }
