@@ -20,7 +20,7 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 /**
  * @method \Spryker\Client\CustomerCatalog\CustomerCatalogFactory getFactory()
  */
-class ProductListFilterQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
+class ProductListQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**
      * @uses \SprykerShop\Yves\CatalogPage\CatalogPageConfig::CATALOG_PAGE_LIMIT
@@ -31,6 +31,9 @@ class ProductListFilterQueryExpanderPlugin extends AbstractPlugin implements Que
     protected const REQUEST_PARAM_IGNORE_PAGINATION = 'ignorePagination';
 
     /**
+     * {@inheritDoc}
+     * - Expands query with filtering by product list ID.
+     *
      * @api
      *
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
@@ -66,7 +69,39 @@ class ProductListFilterQueryExpanderPlugin extends AbstractPlugin implements Que
     protected function expandQueryWithProductListFilters(Query $query, int $idProductList): void
     {
         $boolQuery = $this->getBoolQuery($query);
-        $boolQuery->addFilter($this->createWhitelistsTerm($idProductList));
+        $boolQuery->addFilter($this->createProductListBoolQuery($idProductList));
+    }
+
+    /**
+     * @param int $idProductList
+     *
+     * @return \Elastica\Query\BoolQuery
+     */
+    protected function createProductListBoolQuery(int $idProductList): BoolQuery
+    {
+        return (new BoolQuery())
+            ->addShould($this->createWhitelistTermQuery($idProductList))
+            ->addShould($this->createBlacklistTermQuery($idProductList));
+    }
+
+    /**
+     * @param int $idProductList
+     *
+     * @return \Elastica\Query\Term
+     */
+    protected function createWhitelistTermQuery(int $idProductList): Term
+    {
+        return (new Term())->setTerm(PageIndexMap::PRODUCT_LISTS_WHITELISTS, (string)$idProductList);
+    }
+
+    /**
+     * @param int $idProductList
+     *
+     * @return \Elastica\Query\Term
+     */
+    protected function createBlacklistTermQuery(int $idProductList): Term
+    {
+        return (new Term())->setTerm(PageIndexMap::PRODUCT_LISTS_BLACKLISTS, (string)$idProductList);
     }
 
     /**
