@@ -85,6 +85,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
         iterable $shipmentTransfers,
         OrderTransfer $orderTransfer
     ): OrderTransfer {
+        $shipmentTransfers = (array)$shipmentTransfers;
         /** @var \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer */
         $shipmentTransfer = current($shipmentTransfers);
         $orderTransfer = $this->addShipmentToOrderItems($orderTransfer, $shipmentTransfer);
@@ -210,7 +211,8 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
      */
     protected function setOrderLevelShipmentMethod(OrderTransfer $orderTransfer): OrderTransfer
     {
-        $firstItemTransfer = current($orderTransfer->getItems());
+        /** @var \Generated\Shared\Transfer\ItemTransfer $firstItemTransfer */
+        $firstItemTransfer = $orderTransfer->getItems()->getIterator()->current();
         $firstItemTransfer->requireShipment()
             ->getShipment()->requireMethod();
 

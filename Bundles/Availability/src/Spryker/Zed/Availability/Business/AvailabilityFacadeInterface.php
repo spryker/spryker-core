@@ -77,10 +77,11 @@ interface AvailabilityFacadeInterface
 
     /**
      * Specification:
-     *  - Calculates current item availability, take into account reserved items
-     *  - Stores new availability for concrete product
-     *  - Stores sum of all concrete product availability for abstract product
-     *  - Touches availability abstract collector if data changed
+     *  - Calculates current item availability, take into account reserved items.
+     *  - Updates availability for stores where product stock and/or availability are defined.
+     *  - Stores new availability for concrete product.
+     *  - Stores sum of all concrete product availability for abstract product.
+     *  - Touches availability abstract collector if data changed.
      *
      * @api
      *

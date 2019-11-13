@@ -48,14 +48,9 @@ interface ClassDefinitionInterface extends DefinitionInterface
     public function getDeprecationDescription(): ?string;
 
     /**
-     * @return bool
+     * @return string[]
      */
-    public function hasArrayObject(): bool;
-
-    /**
-     * @return bool
-     */
-    public function hasDecimal(): bool;
+    public function getUseStatements(): array;
 
     /**
      * @return string|null

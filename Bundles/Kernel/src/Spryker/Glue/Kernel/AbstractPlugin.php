@@ -7,11 +7,18 @@
 
 namespace Spryker\Glue\Kernel;
 
+use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 use Spryker\Glue\Kernel\ClassResolver\Config\BundleConfigResolver;
 use Spryker\Glue\Kernel\ClassResolver\Factory\FactoryResolver;
 
 abstract class AbstractPlugin implements ModuleNameAwareInterface
 {
+    /**
+     * @var \Spryker\Client\Kernel\AbstractClient
+     */
+    private $client;
+
     /**
      * @var \Spryker\Glue\Kernel\AbstractFactory
      */
@@ -87,5 +94,33 @@ abstract class AbstractPlugin implements ModuleNameAwareInterface
     private function getBundleConfigResolver()
     {
         return new BundleConfigResolver();
+    }
+
+    /**
+     * @return \Spryker\Client\Kernel\AbstractClient
+     */
+    protected function getClient(): AbstractClient
+    {
+        if ($this->client === null) {
+            $this->client = $this->resolveClient();
+        }
+
+        return $this->client;
+    }
+
+    /**
+     * @return \Spryker\Client\Kernel\AbstractClient
+     */
+    private function resolveClient(): AbstractClient
+    {
+        return $this->getClientResolver()->resolve($this);
+    }
+
+    /**
+     * @return \Spryker\Client\Kernel\ClassResolver\Client\ClientResolver
+     */
+    private function getClientResolver(): ClientResolver
+    {
+        return new ClientResolver();
     }
 }
