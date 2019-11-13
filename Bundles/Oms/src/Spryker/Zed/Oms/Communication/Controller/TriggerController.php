@@ -34,14 +34,40 @@ class TriggerController extends AbstractController
     protected const ERROR_INVALID_FORM = 'Form is invalid';
 
     /**
+     * @deprecated use submitTriggerEventForOrderItemsAction instead
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function triggerEventForOrderItemsAction(Request $request)
     {
-        $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, static::ROUTE_REDIRECT_DEFAULT);
+        trigger_error(
+            "This action is deprecated, please use submitTriggerEventForOrderItemsAction() instead.",
+            E_USER_DEPRECATED
+        );
 
+        $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, static::ROUTE_REDIRECT_DEFAULT);
+        $idOrderItems = $this->getRequestIdSalesOrderItems($request);
+        if ($idOrderItems === []) {
+            return $this->redirectResponse($redirect);
+        }
+
+        $event = $request->query->get(static::REQUEST_PARAMETER_EVENT);
+        $this->getFacade()->triggerEventForOrderItems($event, $idOrderItems);
+        $this->addInfoMessage(static::MESSAGE_STATUS_CHANGED_SUCCESSFULLY);
+
+        return $this->redirectResponse($redirect);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function submitTriggerEventForOrderItemsAction(Request $request)
+    {
+        $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, static::ROUTE_REDIRECT_DEFAULT);
         if (!$this->isValidPostRequest($request)) {
             $this->addErrorMessage(static::ERROR_INVALID_FORM);
 
@@ -61,15 +87,30 @@ class TriggerController extends AbstractController
     }
 
     /**
-     * @deprecated Use triggerEventForOrderItemsAction instead
+     * @deprecated use submitTriggerEventForOrderAction instead
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function submitTriggerEventForOrderItemsAction(Request $request)
+    public function triggerEventForOrderAction(Request $request)
     {
-        return $this->triggerEventForOrderItemsAction($request);
+        trigger_error(
+            "This action is deprecated, please use submitTriggerEventForOrderAction() instead.",
+            E_USER_DEPRECATED
+        );
+
+        $idOrder = $this->castId($request->query->getInt('id-sales-order'));
+        $event = $request->query->get('event');
+        $redirect = $request->query->get('redirect', '/');
+        $itemsList = $request->query->get('items');
+
+        $orderItems = $this->getOrderItemsToTriggerAction($idOrder, $itemsList);
+
+        $this->getFacade()->triggerEvent($event, $orderItems, []);
+        $this->addInfoMessage('Status change triggered successfully.');
+
+        return $this->redirectResponse($redirect);
     }
 
     /**
@@ -77,9 +118,9 @@ class TriggerController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function triggerEventForOrderAction(Request $request)
+    public function submitTriggerEventForOrderAction(Request $request)
     {
-        $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, static::ROUTE_REDIRECT_DEFAULT);
+        $redirect = $request->query->get('redirect', static::ROUTE_REDIRECT_DEFAULT);
 
         if (!$this->isValidPostRequest($request)) {
             $this->addErrorMessage(static::ERROR_INVALID_FORM);
@@ -89,6 +130,7 @@ class TriggerController extends AbstractController
 
         $idOrder = $this->castId($request->query->getInt(static::REQUEST_PARAMETER_ID_SALES_ORDER));
         $event = $request->query->get(static::REQUEST_PARAMETER_EVENT);
+        $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, '/');
         $itemsList = $request->query->get(static::REQUEST_PARAMETER_ITEMS);
 
         $orderItems = $this->getOrderItemsToTriggerAction($idOrder, $itemsList);
@@ -97,18 +139,6 @@ class TriggerController extends AbstractController
         $this->addInfoMessage(static::MESSAGE_STATUS_CHANGED_SUCCESSFULLY);
 
         return $this->redirectResponse($redirect);
-    }
-
-    /**
-     * @deprecated Use triggerEventForOrderAction instead
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function submitTriggerEventForOrderAction(Request $request)
-    {
-        return $this->triggerEventForOrderAction($request);
     }
 
     /**
@@ -125,7 +155,9 @@ class TriggerController extends AbstractController
             $query->filterByIdSalesOrderItem($itemsList, Criteria::IN);
         }
 
-        return $query->find();
+        $orderItems = $query->find();
+
+        return $orderItems;
     }
 
     /**

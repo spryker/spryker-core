@@ -99,8 +99,8 @@ class EventTriggerForm extends AbstractType
     {
         $resolver->setDefaults([
             static::OPTION_EVENT => null,
-            static::OPTION_ACTION_QUERY_PARAMETERS => null,
             static::OPTION_SUBMIT_BUTTON_CLASS => null,
+            static::OPTION_ACTION_QUERY_PARAMETERS => [],
         ]);
     }
 }
