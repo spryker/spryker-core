@@ -136,4 +136,8 @@
     <transfer name="Locale">
     </transfer>
 
+    <transfer name="HealthCheckServiceResponse">
+        <property name="status" type="bool"/>
+    </transfer>
+
 </transfers>

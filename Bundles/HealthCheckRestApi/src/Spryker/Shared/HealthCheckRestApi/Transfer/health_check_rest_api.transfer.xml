@@ -14,4 +14,11 @@
         <property name="message" type="string"/>
     </transfer>
 
+    <transfer name="HealthCheckRequest">
+        <property name="services" type="string"/>
+    </transfer>
+
+    <transfer name="HealthCheckResponse">
+    </transfer>
+
 </transfers>

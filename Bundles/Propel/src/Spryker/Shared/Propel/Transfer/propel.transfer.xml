@@ -19,6 +19,10 @@
         <property name="message" type="string"/>
     </transfer>
 
+    <transfer name="HealthCheckServiceResponse">
+        <property name="status" type="bool"/>
+    </transfer>
+
 </transfers>
 
 
