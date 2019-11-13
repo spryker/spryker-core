@@ -12,8 +12,8 @@
         <property name="productOfferReference" type="string"/>
         <property name="priceType" type="string"/>
         <property name="currency" type="string"/>
-        <property name="netPrice" type="string"/>
-        <property name="grossPrice" type="string"/>
+        <property name="netPrice" type="int"/>
+        <property name="grossPrice" type="int"/>
     </transfer>
 
     <transfer name="PriceProductOfferData">
@@ -26,5 +26,17 @@
     <transfer name="ProductOfferStorage">
         <property name="idProductOffer" type="int"/>
         <property name="prices" type="PriceProductOfferData[]" singular="price"/>
+    </transfer>
+
+    <transfer name="PriceProductDimension">
+        <property name="productOfferReference" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductFilter">
+        <property name="productOfferReference" type="string"/>
+    </transfer>
+
+    <transfer name="CurrentProductPrice">
+        <property name="priceDimension" type="PriceProductDimension"/>
     </transfer>
 </transfers>

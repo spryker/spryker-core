@@ -5,11 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\MerchantProductOfferStorage\Dependency\Service;
+namespace Spryker\Client\PriceProductOfferStorage\Dependency\Service;
 
-use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
-
-class MerchantProductOfferStorageToSynchronizationServiceBridge implements MerchantProductOfferStorageToSynchronizationServiceInterface
+class PriceProductOfferStorageToSynchronizationServiceBridge implements PriceProductOfferStorageToSynchronizationServiceInterface
 {
     /**
      * @var \Spryker\Service\Synchronization\SynchronizationServiceInterface
@@ -29,7 +27,7 @@ class MerchantProductOfferStorageToSynchronizationServiceBridge implements Merch
      *
      * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
      */
-    public function getStorageKeyBuilder($resourceName): SynchronizationKeyGeneratorPluginInterface
+    public function getStorageKeyBuilder($resourceName)
     {
         return $this->synchronizationService->getStorageKeyBuilder($resourceName);
     }

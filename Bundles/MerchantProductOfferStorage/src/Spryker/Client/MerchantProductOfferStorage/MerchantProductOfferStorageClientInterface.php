@@ -23,4 +23,17 @@ interface MerchantProductOfferStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
     public function getProductOfferStorageCollection(string $concreteSku): ProductOfferStorageCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves content by key through a storage client dependency.
+     * - Returns the product offer references.
+     *
+     * @api
+     *
+     * @param string $concreteSku
+     *
+     * @return string[]
+     */
+    public function getProductOfferReferences(string $concreteSku): array;
 }

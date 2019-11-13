@@ -99,7 +99,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
     /**
      * @return \Spryker\Zed\MerchantProductOfferStorageExtension\Dependency\Plugin\MerchantProductOfferStorageExpanderPluginInterface[]
      */
-    protected function getMerchantProductOfferStorageExpanderPlugins()
+    protected function getMerchantProductOfferStorageExpanderPlugins(): array
     {
         return [];
     }

@@ -14,6 +14,22 @@ class PriceProductOfferStorageConfig
 {
     /**
      * Specification:
+     * - Dimension type as used for product offer price.
+     *
+     * @api
+     */
+    public const DIMENSION_TYPE = 'OFFER';
+
+    /**
+     * Specification:
+     * - Product offer reference attribute as used for selected attributes.
+     *
+     * @api
+     */
+    public const PRODUCT_OFFER_REFERENCE_ATTRIBUTE = 'product_offer_reference';
+
+    /**
+     * Specification:
      * - Queue name as used for processing price product offer messages.
      *
      * @api

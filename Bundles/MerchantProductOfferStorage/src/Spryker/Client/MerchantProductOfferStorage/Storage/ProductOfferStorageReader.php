@@ -50,14 +50,31 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     /**
      * @param string $concreteSku
      *
+     * @return string[]
+     */
+    public function getProductOfferReferences(string $concreteSku): array
+    {
+        $concreteProductOffersKey = $this->generateKey($concreteSku, MerchantProductOfferStorageConfig::RESOURCE_CONCRETE_PRODUCT_PRODUCT_OFFERS_NAME);
+        $concreteProductOffers = $this->storageClient->get($concreteProductOffersKey);
+
+        if (!$concreteProductOffers) {
+            return [];
+        }
+        unset($concreteProductOffers['_timestamp']);
+
+        return $concreteProductOffers;
+    }
+
+    /**
+     * @param string $concreteSku
+     *
      * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
     public function getProductOfferStorageCollection(string $concreteSku): ProductOfferStorageCollectionTransfer
     {
         $productOfferStorageCollection = new ProductOfferStorageCollectionTransfer();
-        $concreteProductOffersKey = $this->generateKey($concreteSku, MerchantProductOfferStorageConfig::RESOURCE_CONCRETE_PRODUCT_PRODUCT_OFFERS_NAME);
 
-        $concreteProductOffers = $this->storageClient->get($concreteProductOffersKey);
+        $concreteProductOffers = $this->getProductOfferReferences($concreteSku);
 
         if ($concreteProductOffers) {
             foreach ($concreteProductOffers as $key => $concreteProductOffer) {

@@ -14,6 +14,13 @@ interface ProductOfferStorageReaderInterface
     /**
      * @param string $concreteSku
      *
+     * @return string[]
+     */
+    public function getProductOfferReferences(string $concreteSku): array;
+
+    /**
+     * @param string $concreteSku
+     *
      * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
     public function getProductOfferStorageCollection(string $concreteSku): ProductOfferStorageCollectionTransfer;
