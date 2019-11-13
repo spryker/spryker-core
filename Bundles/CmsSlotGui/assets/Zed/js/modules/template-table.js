@@ -5,9 +5,6 @@
 
 'use strict';
 
-/**
- * @param {object} options
- */
 var TemplateTable = function (options) {
     var _self = this;
     this.templateTableId = '';
@@ -53,7 +50,4 @@ var TemplateTable = function (options) {
     };
 };
 
-/**
- * Open public methods
- */
 module.exports = TemplateTable;

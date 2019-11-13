@@ -1,28 +1,82 @@
-{% embed '@Gui/Partials/widget.twig' %}
+{% set actionsButtonsTemplate %}
+    <a href="#" class="btn btn-xs btn-outline btn-create" data-direction="up" onclick="return false;">
+        <i class="fa fa-arrow-up"></i>
+        {{ 'Move Up' | trans }}
+    </a>
+    <a href="#" class="btn btn-xs btn-outline btn-create" data-direction="down" onclick="return false;">
+        <i class="fa fa-arrow-down"></i>
+        {{ 'Move Down' | trans }}
+    </a>
+    <a href="" class="btn btn-xs btn-outline btn-view">
+        {{ 'View Block' | trans }}
+    </a>
+    <a href="#" class="btn btn-xs btn-outline btn-danger js-slot-block-remove-button" onclick="return false;">
+        <i class="fa fa-trash"></i>
+        {{ 'Delete' | trans }}
+    </a>
+{% endset %}
+{% set activeLabelTemplate %}
+    <span class="label label-info">{{ 'Active' | trans }}</span>
+{% endset %}
+{% set inactiveLabelTemplate %}
+    <span class="label label-danger">{{ 'Inactive' | trans }}</span>
+{% endset %}
+{% set storeTemplate %}
+    <span class="label label-info"></span>
+{% endset %}
+
+{% embed '@Gui/Partials/widget.twig' with {
+    row_class: 'js-row-list-of-blocks-container',
+} %}
 
     {% block widget_title -%}
         <h5>{{ 'List of Blocks for "%SLOT_NAME%" Slot' | trans({"%SLOT_NAME%": slotName}) }}</h5>
     {%- endblock %}
 
     {% block widget_content %}
-        {{ form_widget(cmsBlockChoiceForm) }}
 
-        {{ slotBlockTable | raw }}
+        <div
+            class="cms-slot-blocks js-cms-slot-blocks"
+            data-actions-buttons-template="{{ actionsButtonsTemplate | e }}"
+            data-active-label-template="{{ activeLabelTemplate | e }}"
+            data-inactive-label-template="{{ inactiveLabelTemplate | e }}"
+            data-store-template="{{ storeTemplate | e }}"
+            data-slot-block-item-form-template="{{ form_widget(cmsSlotBlockCollectionForm.cmsSlotBlocks.vars.prototype) | e }}"
+            data-alert-title="{{ 'There are unsaved changes' | trans }}"
+            data-alert-cancel-button="{{ 'Discard' | trans }}"
+        >
+            {{ form_start(cmsBlockChoiceForm) }}
+                <div class="row">
+                    <div class="cms-slot-blocks__col col-sm-5 col-md-4">
+                        {{ form_widget(cmsBlockChoiceForm.cmsBlocks) }}
+                    </div>
+                    <div class="cms-slot-blocks__col col-sm-2 col-md-1">
+                        {{ form_widget(cmsBlockChoiceForm.add) }}
+                    </div>
+                    <div class="cms-slot-blocks__col col-sm-5 col-md-7">
+                        <input type="reset" class="btn btn-xs btn-warning btn-outline js-slot-block-reset-button hidden" value="{{ 'Reset' | trans }}">
+                    </div>
+                </div>
+            {{ form_end(cmsBlockChoiceForm) }}
 
-    {{ form_start(cmsSlotBlockCollectionForm, {'action': '/cms-slot-block-gui/slot-block'}) }}
 
-        {% for slotBlockItemForm in cmsSlotBlockCollectionForm.cmsSlotBlocks %}
-            {{ form_widget(slotBlockItemForm.idSlotTemplate) }}
-            {{ form_widget(slotBlockItemForm.idSlot) }}
-            {{ form_widget(slotBlockItemForm.idCmsBlock) }}
-            {{ form_widget(slotBlockItemForm.position) }}
-            {{ form_widget(slotBlockItemForm.conditions) }}
-        {% endfor %}
+            {{ slotBlockTable | raw }}
 
-        <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
+            {{ form_start(cmsSlotBlockCollectionForm, {'action': '/cms-slot-block-gui/slot-block?id-cms-slot-template='~idCmsSlotTemplate~'&id-cms-slot='~idCmsSlot}) }}
 
-    {{ form_end(cmsSlotBlockCollectionForm) }}
+            {% for slotBlockItemForm in cmsSlotBlockCollectionForm.cmsSlotBlocks %}
+                {{ form_widget(slotBlockItemForm.idSlotTemplate) }}
+                {{ form_widget(slotBlockItemForm.idSlot) }}
+                {{ form_widget(slotBlockItemForm.idCmsBlock) }}
+                {{ form_widget(slotBlockItemForm.position) }}
+                {{ form_widget(slotBlockItemForm.conditions) }}
+            {% endfor %}
 
+            <input type="submit" class="btn btn-primary safe-submit js-slot-block-save-button" value="{{ 'Save' | trans }}">
+
+            {{ form_end(cmsSlotBlockCollectionForm) }}
+            <div class="cms-slot-blocks__overlay js-cms-slot-blocks__overlay"></div>
+        </div>
     {% endblock %}
 
 {% endembed %}
