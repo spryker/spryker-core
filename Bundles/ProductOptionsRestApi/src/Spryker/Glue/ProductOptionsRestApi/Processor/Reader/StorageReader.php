@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductOptionsRestApi\Processor\Reader;
 
+use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductOptionStorageClientInterface;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductStorageClientInterface;
@@ -120,15 +121,33 @@ class StorageReader implements StorageReaderInterface
     {
         $glossaryStorageKeys = [];
         foreach ($productAbstractOptionStorageTransfers as $productAbstractOptionStorageTransfer) {
-            foreach ($productAbstractOptionStorageTransfer->getProductOptionGroups() as $productOptionGroupStorageTransfer) {
-                $glossaryStorageKeys[] = $productOptionGroupStorageTransfer->getName();
+            $glossaryStorageKeys += $this->getGlossaryStorageKeysFromProductAbstractOptionStorageTransfer(
+                $productAbstractOptionStorageTransfer
+            );
+        }
 
-                foreach ($productOptionGroupStorageTransfer->getProductOptionValues() as $productOptionValueStorageTransfer) {
-                    $glossaryStorageKeys[] = $productOptionValueStorageTransfer->getValue();
-                }
+        return array_values($glossaryStorageKeys);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
+     *
+     * @return string[]
+     */
+    protected function getGlossaryStorageKeysFromProductAbstractOptionStorageTransfer(
+        ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
+    ): array {
+        $glossaryStorageKeys = [];
+        foreach ($productAbstractOptionStorageTransfer->getProductOptionGroups() as $productOptionGroupStorageTransfer) {
+            $optionGroupName = $productOptionGroupStorageTransfer->getName();
+            $glossaryStorageKeys[$optionGroupName] = $optionGroupName;
+
+            foreach ($productOptionGroupStorageTransfer->getProductOptionValues() as $productOptionValueStorageTransfer) {
+                $optionValueName = $productOptionValueStorageTransfer->getValue();
+                $glossaryStorageKeys[$optionValueName] = $optionValueName;
             }
         }
 
-        return array_unique($glossaryStorageKeys);
+        return $glossaryStorageKeys;
     }
 }
