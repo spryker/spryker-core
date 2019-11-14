@@ -33,4 +33,14 @@ class CmsNavigationConnectorToNavigationFacadeBridge implements CmsNavigationCon
     {
         return $this->navigationFacade->updateNavigationNode($navigationNodeTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     *
+     * @return void
+     */
+    public function deleteNavigationNode(NavigationNodeTransfer $navigationNodeTransfer)
+    {
+        $this->navigationFacade->deleteNavigationNode($navigationNodeTransfer);
+    }
 }

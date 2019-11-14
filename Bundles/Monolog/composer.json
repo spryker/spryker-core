@@ -5,7 +5,7 @@
   "license": "proprietary",
   "require": {
     "monolog/monolog": "^1.21.0",
-    "php": ">=7.1"
+    "php": ">=7.2"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,

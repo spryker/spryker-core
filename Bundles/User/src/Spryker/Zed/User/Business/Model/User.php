@@ -240,7 +240,7 @@ class User implements UserInterface
     {
         $passwordInfo = password_get_info($password);
 
-        return $passwordInfo['algo'] === 0;
+        return $passwordInfo['algoName'] === 'unknown';
     }
 
     /**

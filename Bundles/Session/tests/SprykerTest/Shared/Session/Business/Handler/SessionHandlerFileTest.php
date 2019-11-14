@@ -39,7 +39,7 @@ class SessionHandlerFileTest extends Unit
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         if (is_dir($this->getFixtureDirectory())) {
             $filesystem = new Filesystem();
