@@ -7,23 +7,8 @@
 
 namespace Spryker\Zed\PriceProductOfferStorage\Business;
 
-use Generated\Shared\Transfer\ProductOfferStorageTransfer;
-
 interface PriceProductOfferStorageFacadeInterface
 {
-    /**
-     * Specification:
-     * - Gets prices by idProductOffer.
-     * - Expands ProductOfferStorageTransfer with product offer prices.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer $productOfferStorageTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer
-     */
-    public function expandWithProductOfferPrices(ProductOfferStorageTransfer $productOfferStorageTransfer): ProductOfferStorageTransfer;
-
     /**
      * Specification:
      * - Queries all price product offers with the given priceProductOfferIds.

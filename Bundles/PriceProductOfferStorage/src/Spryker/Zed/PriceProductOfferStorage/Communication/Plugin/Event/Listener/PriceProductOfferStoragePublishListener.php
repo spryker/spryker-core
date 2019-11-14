@@ -29,9 +29,6 @@ class PriceProductOfferStoragePublishListener extends AbstractPlugin implements 
     public function handleBulk(array $transfers, $eventName): void
     {
         $priceProductOfferIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($transfers);
-        if (!$priceProductOfferIds) {
-            return;
-        }
 
         $this->getFacade()->publish($priceProductOfferIds);
     }

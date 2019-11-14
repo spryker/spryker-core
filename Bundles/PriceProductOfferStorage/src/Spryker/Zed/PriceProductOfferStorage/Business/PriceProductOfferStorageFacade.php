@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PriceProductOfferStorage\Business;
 
-use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -15,20 +14,6 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class PriceProductOfferStorageFacade extends AbstractFacade implements PriceProductOfferStorageFacadeInterface
 {
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer $productOfferStorageTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer
-     */
-    public function expandWithProductOfferPrices(ProductOfferStorageTransfer $productOfferStorageTransfer): ProductOfferStorageTransfer
-    {
-        return $this->getFactory()->createPriceProductOfferStorageExpander()->expandWithProductOfferPrices($productOfferStorageTransfer);
-    }
-
     /**
      * {@inheritDoc}
      *

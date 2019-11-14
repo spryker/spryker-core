@@ -21,20 +21,11 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     protected $productOfferFacade;
 
     /**
-     * @var \Spryker\Zed\MerchantProductOfferStorageExtension\Dependency\Plugin\MerchantProductOfferStorageExpanderPluginInterface[]
-     */
-    protected $merchantProductOfferStorageExpanderPlugins;
-
-    /**
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade
-     * @param \Spryker\Zed\MerchantProductOfferStorageExtension\Dependency\Plugin\MerchantProductOfferStorageExpanderPluginInterface[] $merchantProductOfferStorageExpanderPlugins
      */
-    public function __construct(
-        MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade,
-        array $merchantProductOfferStorageExpanderPlugins
-    ) {
+    public function __construct(MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade)
+    {
         $this->productOfferFacade = $productOfferFacade;
-        $this->merchantProductOfferStorageExpanderPlugins = $merchantProductOfferStorageExpanderPlugins;
     }
 
     /**
@@ -53,7 +44,6 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
                 ->filterByProductOfferReference($productOfferTransfer->getProductOfferReference())
                 ->findOneOrCreate();
             $productOfferStorageTransfer = $this->createProductOfferStorageTransfer($productOfferTransfer);
-            $productOfferStorageTransfer = $this->expandMerchantProductOfferStoragePlugins($productOfferStorageTransfer);
             
             $productOfferStorageEntity->setData($productOfferStorageTransfer->modifiedToArray());
 
@@ -87,20 +77,6 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
         $productOfferStorageTransfer->setIdProductOffer($productOfferTransfer->getIdProductOffer());
         $productOfferStorageTransfer->setIdMerchant($productOfferTransfer->getFkMerchant());
         $productOfferStorageTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
-
-        return $productOfferStorageTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer $productOfferStorageTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer
-     */
-    protected function expandMerchantProductOfferStoragePlugins(ProductOfferStorageTransfer $productOfferStorageTransfer): ProductOfferStorageTransfer
-    {
-        foreach ($this->merchantProductOfferStorageExpanderPlugins as $merchantProductOfferStorageExpanderPlugin) {
-            $productOfferStorageTransfer = $merchantProductOfferStorageExpanderPlugin->expand($productOfferStorageTransfer);
-        }
 
         return $productOfferStorageTransfer;
     }

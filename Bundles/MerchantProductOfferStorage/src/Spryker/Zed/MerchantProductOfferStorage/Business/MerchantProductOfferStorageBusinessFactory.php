@@ -33,7 +33,7 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductOfferStorageWriter(): ProductOfferStorageWriterInterface
     {
-        return new ProductOfferStorageWriter($this->getProductOfferFacade(), $this->getMerchantProductOfferStorageExpanderPlugins());
+        return new ProductOfferStorageWriter($this->getProductOfferFacade());
     }
 
     /**
@@ -42,13 +42,5 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
     public function getProductOfferFacade(): MerchantProductOfferStorageToProductOfferFacadeInterface
     {
         return $this->getProvidedDependency(MerchantProductOfferStorageDependencyProvider::FACADE_PRODUCT_OFFER);
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantProductOfferStorageExtension\Dependency\Plugin\MerchantProductOfferStorageExpanderPluginInterface[]
-     */
-    public function getMerchantProductOfferStorageExpanderPlugins(): array
-    {
-        return $this->getProvidedDependency(MerchantProductOfferStorageDependencyProvider::PLUGINS_MERCHANT_PRODUCT_OFFER_STORAGE_EXPANDER);
     }
 }

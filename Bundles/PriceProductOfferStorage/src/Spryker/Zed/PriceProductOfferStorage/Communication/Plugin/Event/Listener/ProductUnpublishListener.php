@@ -29,9 +29,6 @@ class ProductUnpublishListener extends AbstractPlugin implements EventBulkHandle
     public function handleBulk(array $transfers, $eventName): void
     {
         $productIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($transfers);
-        if (!$productIds) {
-            return;
-        }
 
         $this->getFacade()->unpublishByProductIds($productIds);
     }

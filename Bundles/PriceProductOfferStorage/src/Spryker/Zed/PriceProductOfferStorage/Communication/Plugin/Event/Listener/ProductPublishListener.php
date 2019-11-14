@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PriceProductOfferStorage\Communication\Plugin\Event\Listener;
 
-use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -29,27 +28,8 @@ class ProductPublishListener extends AbstractPlugin implements EventBulkHandlerI
      */
     public function handleBulk(array $transfers, $eventName): void
     {
-        $transfers = $this->getFactory()->getEventBehaviorFacade()->getEventTransfersByModifiedColumns($transfers, [SpyProductTableMap::COL_IS_ACTIVE]);
-        $publishProductIds = [];
-        $unpublishProductIds = [];
-        foreach ($transfers as $transfer) {
-            $originalValues = $transfer->getOriginalValues();
-            if (!isset($originalValues[SpyProductTableMap::COL_IS_ACTIVE])) {
-                return;
-            }
-            if (!$originalValues[SpyProductTableMap::COL_IS_ACTIVE]) {
-                $publishProductIds[] = $transfer->getId();
+        $productIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($transfers);
 
-                continue;
-            }
-            $unpublishProductIds[] = $transfer->getId();
-        }
-        if ($publishProductIds) {
-            $this->getFacade()->publishByProductIds($publishProductIds);
-        }
-
-        if ($unpublishProductIds) {
-            $this->getFacade()->unpublishByProductIds($unpublishProductIds);
-        }
+        $this->getFacade()->publishByProductIds($productIds);
     }
 }

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PriceProductOfferStorage\Business\PriceProductOfferStorage;
 
-use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\PriceProductOfferStorageTransfer;
 use Orm\Zed\Currency\Persistence\Map\SpyCurrencyTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
@@ -20,11 +19,16 @@ use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\MerchantProductOffer\Dependency\MerchantProductOfferEvents;
 use Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToEventFacadeInterface;
 
 class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterInterface
 {
+    protected const ID_PRICE_PRODUCT_OFFER = 'id_price_product_offer';
+    protected const PRODUCT_OFFER_REFERENCE = 'product_offer_reference';
+
+    protected const COL_ID_PRODUCT_NAME = 'IdProduct';
+    protected const COL_SKU_NAME = 'Sku';
+
     /**
      * @var \Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToEventFacadeInterface
      */
@@ -70,8 +74,8 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
         foreach ($productConcreteProductOfferPriceStorageEntities as $productConcreteProductOfferPriceStorageEntity) {
             $offerPrices = $productConcreteProductOfferPriceStorageEntity->getData();
             foreach ($offerPrices as $key => $offerPrice) {
-                if (in_array($offerPrice['id_price_product_offer'], $priceProductOfferIds)) {
-                    $productOfferReferences[] = $offerPrice['product_offer_reference'];
+                if (in_array($offerPrice[static::ID_PRICE_PRODUCT_OFFER], $priceProductOfferIds)) {
+                    $productOfferReferences[] = $offerPrice[static::PRODUCT_OFFER_REFERENCE];
                     unset($offerPrices[$key]);
                 }
             }
@@ -83,8 +87,6 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
             $productConcreteProductOfferPriceStorageEntity->setData(array_values($offerPrices));
             $productConcreteProductOfferPriceStorageEntity->save();
         }
-
-        $this->triggerProductOffer(array_unique($productOfferReferences));
     }
 
     /**
@@ -94,10 +96,24 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
      */
     public function publishByProductIds(array $productIds): void
     {
-        $productSkuToIdMap = $this->getActiveProductSkuToIdMapByIds($productIds);
-        $priceProductOffers = $this->getProductOfferDataByPriceProductSkus(array_keys($productSkuToIdMap));
+        $productEntities = $this->getProductEntitiesByIds($productIds);
+        $publishData = [];
+        $unpublishData = [];
+        foreach ($productEntities as $productEntity) {
+            if ($productEntity->isActive()) {
+                $publishData[$productEntity->getSku()] = $productEntity->getIdProduct();
 
-        $this->savePriceProductOfferStorage($priceProductOffers, $productSkuToIdMap);
+                continue;
+            }
+            $unpublishData[$productEntity->getSku()] = $productEntity->getIdProduct();
+        }
+        if ($unpublishData) {
+            $this->unpublishByProductIds($unpublishData);
+        }
+        if ($publishData) {
+            $priceProductOffers = $this->getProductOfferDataByPriceProductSkus(array_keys($publishData));
+            $this->savePriceProductOfferStorage($priceProductOffers, $publishData);
+        }
     }
 
     /**
@@ -111,11 +127,6 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
         foreach ($priceProductOfferStorageEntities as $priceProductOfferStorageEntity) {
             $priceProductOfferStorageEntity->delete();
         }
-
-        $productSkus = $this->getProductSkus($productIds);
-        $productOfferReferences = $this->getProductOfferReferencesByConcreteSkus($productSkus);
-
-        $this->triggerProductOffer($productOfferReferences);
     }
 
     /**
@@ -200,7 +211,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
         $productSkuToIdMap = SpyProductQuery::create()
             ->filterBySku_In($concreteSkus)
             ->filterByIsActive(true)
-            ->find()->toKeyValue('Sku', 'IdProduct');
+            ->find()->toKeyValue(static::COL_SKU_NAME, static::COL_ID_PRODUCT_NAME);
 
         return $productSkuToIdMap;
     }
@@ -214,24 +225,23 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
     {
         $productSkus = SpyProductQuery::create()
             ->filterByIdProduct_In($concreteIds)
-            ->find()->toKeyIndex('Sku');
+            ->find()->toKeyIndex(static::COL_SKU_NAME);
 
         return $productSkus;
     }
 
     /**
-     * @param int[] $productIds
+     * @param array $productIds
      *
-     * @return array
+     * @return \Orm\Zed\Product\Persistence\SpyProduct[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function getActiveProductSkuToIdMapByIds(array $productIds): array
+    protected function getProductEntitiesByIds(array $productIds): ObjectCollection
     {
-        $productSkuToIdMap = SpyProductQuery::create()
+        $productEntities = SpyProductQuery::create()
             ->filterByIdProduct_In($productIds)
-            ->filterByIsActive(true)
-            ->find()->toKeyValue('Sku', 'IdProduct');
+            ->find();
 
-        return $productSkuToIdMap;
+        return $productEntities;
     }
 
     /**
@@ -246,15 +256,8 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
         $productOfferReferences = [];
         foreach ($priceProductOffers as $productOffer) {
             $productOfferReferences[] = $productOffer[SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE];
-            $priceProductOfferStorageTransfer = new PriceProductOfferStorageTransfer();
-            $priceProductOfferStorageTransfer->setIdPriceProductOffer($productOffer[SpyPriceProductOfferTableMap::COL_ID_PRICE_PRODUCT_OFFER]);
-            $priceProductOfferStorageTransfer->setProductOfferReference($productOffer[SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE]);
-            $priceProductOfferStorageTransfer->setPriceType($productOffer[SpyPriceTypeTableMap::COL_NAME]);
-            $priceProductOfferStorageTransfer->setCurrency($productOffer[SpyCurrencyTableMap::COL_CODE]);
-            $priceProductOfferStorageTransfer->setNetPrice($productOffer[SpyPriceProductOfferTableMap::COL_NET_PRICE]);
-            $priceProductOfferStorageTransfer->setGrossPrice($productOffer[SpyPriceProductOfferTableMap::COL_GROSS_PRICE]);
-
-            $groupedByStoreAndProductSkuProductOffers[$productOffer[SpyStoreTableMap::COL_NAME]][$productOffer[SpyProductOfferTableMap::COL_CONCRETE_SKU]][] = $priceProductOfferStorageTransfer;
+            $priceProductOfferStorageTransfer = $this->getPriceProductOfferStorageTransfer($productOffer);
+            $groupedByStoreAndProductSkuProductOffers[$productOffer[SpyStoreTableMap::COL_NAME]][$productOffer[SpyProductOfferTableMap::COL_CONCRETE_SKU]][] = $priceProductOfferStorageTransfer->toArray();
         }
 
         foreach ($groupedByStoreAndProductSkuProductOffers as $storeName => $groupedByProductSkuProductOffers) {
@@ -264,21 +267,30 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
                         ->filterByFkProduct($productSkuToIdMap[$productSku])
                         ->filterByStore($storeName)
                         ->findOneOrCreate();
-                    $productConcreteProductOfferPriceStorageEntity->setData(
-                        array_map(
-                            function (PriceProductOfferStorageTransfer $priceProductOffer) {
-                                return $priceProductOffer->toArray();
-                            },
-                            $priceProductOffers
-                        )
-                    );
+                    $productConcreteProductOfferPriceStorageEntity->setData($priceProductOffers);
 
                     $productConcreteProductOfferPriceStorageEntity->save();
                 }
             }
         }
+    }
 
-        $this->triggerProductOffer(array_unique($productOfferReferences));
+    /**
+     * @param array $productOffer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductOfferStorageTransfer
+     */
+    protected function getPriceProductOfferStorageTransfer(array $productOffer): PriceProductOfferStorageTransfer
+    {
+        $priceProductOfferStorageTransfer = new PriceProductOfferStorageTransfer();
+        $priceProductOfferStorageTransfer->setIdPriceProductOffer($productOffer[SpyPriceProductOfferTableMap::COL_ID_PRICE_PRODUCT_OFFER]);
+        $priceProductOfferStorageTransfer->setProductOfferReference($productOffer[SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE]);
+        $priceProductOfferStorageTransfer->setPriceType($productOffer[SpyPriceTypeTableMap::COL_NAME]);
+        $priceProductOfferStorageTransfer->setCurrency($productOffer[SpyCurrencyTableMap::COL_CODE]);
+        $priceProductOfferStorageTransfer->setNetPrice($productOffer[SpyPriceProductOfferTableMap::COL_NET_PRICE]);
+        $priceProductOfferStorageTransfer->setGrossPrice($productOffer[SpyPriceProductOfferTableMap::COL_GROSS_PRICE]);
+
+        return $priceProductOfferStorageTransfer;
     }
 
     /**
@@ -310,23 +322,6 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
             ->filterBySku_In($productSkus)
             ->select(SpyProductTableMap::COL_ID_PRODUCT)
             ->find()->toArray();
-    }
-
-    /**
-     * @param string[] $productOfferReferences
-     *
-     * @return void
-     */
-    protected function triggerProductOffer(array $productOfferReferences): void
-    {
-        foreach ($productOfferReferences as $productOfferReference) {
-            $eventEntityTransfer = new EventEntityTransfer();
-            $eventEntityTransfer->setAdditionalValues([
-                SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => $productOfferReference,
-            ]);
-
-            $this->eventFacade->trigger(MerchantProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_UPDATE, $eventEntityTransfer);
-        }
     }
 
     /**
