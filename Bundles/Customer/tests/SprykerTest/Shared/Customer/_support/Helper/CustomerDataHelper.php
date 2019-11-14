@@ -16,10 +16,10 @@ use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
 use Spryker\Zed\Mail\Business\MailFacadeInterface;
-use SprykerTest\Shared\Testify\Helper\BusinessHelper;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\DependencyHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
+use SprykerTest\Zed\Testify\Helper\BusinessHelper;
 
 class CustomerDataHelper extends Module
 {
@@ -95,11 +95,11 @@ class CustomerDataHelper extends Module
     }
 
     /**
-     * @return \SprykerTest\Shared\Testify\Helper\BusinessHelper
+     * @return \SprykerTest\Zed\Testify\Helper\BusinessHelper
      */
     protected function getBusinessHelper(): BusinessHelper
     {
-        /** @var \SprykerTest\Shared\Testify\Helper\BusinessHelper $businessHelper */
+        /** @var \SprykerTest\Zed\Testify\Helper\BusinessHelper $businessHelper */
         $businessHelper = $this->getModule('\\' . BusinessHelper::class);
 
         return $businessHelper;
