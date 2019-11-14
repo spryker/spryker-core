@@ -1,4 +1,4 @@
-{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Configurable Bundle Cart Notes' } %}
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Configurable Bundle Cart Notes' | trans } %}
     {% block widget_content %}
         {% set configurableBundlesHaveCartNote = false %}
         {% for salesOrderConfiguredBundle in order.salesOrderConfiguredBundles if salesOrderConfiguredBundle.cartNote %}
