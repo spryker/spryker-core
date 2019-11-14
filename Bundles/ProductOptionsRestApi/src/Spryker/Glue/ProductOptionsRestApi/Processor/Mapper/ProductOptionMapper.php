@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupStorageTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorageTransfer;
-use Generated\Shared\Transfer\RestOrderItemProductOptionTransfer;
+use Generated\Shared\Transfer\RestOrderItemProductOptionsAttributesTransfer;
 use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
 use Generated\Shared\Transfer\RestProductOptionAttributesTransfer;
 
@@ -88,12 +88,12 @@ class ProductOptionMapper implements ProductOptionMapperInterface
     /**
      * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
      *
-     * @return \Generated\Shared\Transfer\RestOrderItemProductOptionTransfer
+     * @return \Generated\Shared\Transfer\RestOrderItemProductOptionsAttributesTransfer
      */
     protected function createRestOrderItemProductOptionTransfer(
         ProductOptionTransfer $productOptionTransfer
-    ): RestOrderItemProductOptionTransfer {
-        return (new RestOrderItemProductOptionTransfer())
+    ): RestOrderItemProductOptionsAttributesTransfer {
+        return (new RestOrderItemProductOptionsAttributesTransfer())
             ->setSku($productOptionTransfer->getSku())
             ->setOptionGroupName($productOptionTransfer->getGroupName())
             ->setOptionName($productOptionTransfer->getValue())

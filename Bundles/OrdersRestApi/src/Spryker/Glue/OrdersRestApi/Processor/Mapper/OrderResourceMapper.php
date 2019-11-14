@@ -18,12 +18,12 @@ use Generated\Shared\Transfer\RestOrdersAttributesTransfer;
 class OrderResourceMapper implements OrderResourceMapperInterface
 {
     /**
-     * @var \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\ItemToRestOrderItemsAttributesMapperPluginInterface[]
+     * @var \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface[]
      */
     protected $restItemToRestOrderItemsAttributesMapperPlugins;
 
     /**
-     * @param \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\ItemToRestOrderItemsAttributesMapperPluginInterface[] $restItemToRestOrderItemsAttributesMapperPlugins
+     * @param \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface[] $restItemToRestOrderItemsAttributesMapperPlugins
      */
     public function __construct(array $restItemToRestOrderItemsAttributesMapperPlugins)
     {

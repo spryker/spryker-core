@@ -55,7 +55,7 @@ class OrdersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\ItemToRestOrderItemsAttributesMapperPluginInterface[]
+     * @return \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface[]
      */
     public function getRestOrderItemsAttributesMapperPlugins(): array
     {

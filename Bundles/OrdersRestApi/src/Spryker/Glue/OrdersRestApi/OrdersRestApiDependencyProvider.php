@@ -62,7 +62,7 @@ class OrdersRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\ItemToRestOrderItemsAttributesMapperPluginInterface[]
+     * @return \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface[]
      */
     protected function getItemToRestOrderItemsAttributesMapperPlugins(): array
     {

@@ -10,7 +10,7 @@ namespace Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
 
-interface ItemToRestOrderItemsAttributesMapperPluginInterface
+interface RestOrderItemsAttributesMapperPluginInterface
 {
     /**
      * Specification:

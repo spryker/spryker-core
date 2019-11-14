@@ -10,12 +10,12 @@ namespace Spryker\Glue\ProductOptionsRestApi\Plugin\OrdersRestApi;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
 use Spryker\Glue\Kernel\AbstractPlugin;
-use Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\ItemToRestOrderItemsAttributesMapperPluginInterface;
+use Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface;
 
 /**
  * @method \Spryker\Glue\ProductOptionsRestApi\ProductOptionsRestApiFactory getFactory()
  */
-class ItemOrdersToRestOrderItemsAttributesOptionMapperPlugin extends AbstractPlugin implements ItemToRestOrderItemsAttributesMapperPluginInterface
+class OrderRestOrderItemsAttributesOptionMapperPlugin extends AbstractPlugin implements RestOrderItemsAttributesMapperPluginInterface
 {
     /**
      * {@inheritDoc}
