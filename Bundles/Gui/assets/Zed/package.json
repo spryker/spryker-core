@@ -25,6 +25,7 @@
     "pace": "git+https://git@github.com/hubspot/pace#v1.0.2",
     "select2": "git+https://git@github.com/select2/select2#4.0.2",
     "summernote": "^0.8.11",
-    "sweetalert": "~1.1.3"
+    "sweetalert": "~1.1.3",
+    "@spryker/backoffice-ui": "^0.1.0"
   }
 }
