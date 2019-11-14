@@ -55,18 +55,12 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     public const INDEX_OPEN_STATE = 'open';
     public const INDEX_CLOSE_STATE = 'close';
 
-    public const INDEX_NAME_ALL = '_all';
-
     /**
      * @return string
      */
     public function getReindexUrl(): string
     {
-        return sprintf(
-            '%s:%s/_reindex?pretty=true',
-            $this->get(SearchElasticsearchConstants::HOST),
-            $this->get(SearchElasticsearchConstants::PORT)
-        );
+        return '_reindex?pretty=true';
     }
 
     /**
@@ -146,10 +140,10 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getIndexNameAll(): string
+    public function getSupportedSourceIdentifiers(): array
     {
-        return static::INDEX_NAME_ALL;
+        return $this->getSharedConfig()->getSupportedSourceIdentifiers();
     }
 }

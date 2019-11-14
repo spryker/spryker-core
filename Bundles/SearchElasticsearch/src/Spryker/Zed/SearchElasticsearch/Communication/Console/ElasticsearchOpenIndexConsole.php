@@ -18,7 +18,7 @@ use Symfony\Component\Console\Input\InputArgument;
 class ElasticsearchOpenIndexConsole extends AbstractIndexNameAwareSearchIndexConsole
 {
     protected const COMMAND_NAME = 'elasticsearch:index:open';
-    protected const DESCRIPTION = 'This command will open an index.';
+    protected const DESCRIPTION = 'This command will open an index. If no index name is specified, all available indices for the current store will be opened.';
     protected const COMMAND_ALIAS = 'search:index:open';
 
     /**
@@ -59,7 +59,7 @@ class ElasticsearchOpenIndexConsole extends AbstractIndexNameAwareSearchIndexCon
      */
     protected function executeForAllIndices(): int
     {
-        if ($this->getFacade()->openIndices()) {
+        if ($this->getFacade()->openIndexes()) {
             $this->info('Search indices are successfully opened');
 
             return static::CODE_SUCCESS;

@@ -65,9 +65,9 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
      *
      * @return bool
      */
-    public function openIndices(): bool
+    public function openIndexes(): bool
     {
-        return $this->getFactory()->createIndex()->openIndex();
+        return $this->getFactory()->createIndex()->openIndexes();
     }
 
     /**
@@ -91,9 +91,9 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
      *
      * @return bool
      */
-    public function closeIndices(): bool
+    public function closeIndexes(): bool
     {
-        return $this->getFactory()->createIndex()->closeIndex();
+        return $this->getFactory()->createIndex()->closeIndexes();
     }
 
     /**
@@ -117,9 +117,9 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
      *
      * @return bool
      */
-    public function deleteIndices(): bool
+    public function deleteIndexes(): bool
     {
-        return $this->getFactory()->createIndex()->deleteIndex();
+        return $this->getFactory()->createIndex()->deleteIndexes();
     }
 
     /**
@@ -134,7 +134,7 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
      */
     public function copyIndex(SearchContextTransfer $sourceSearchContextTransfer, SearchContextTransfer $targetSearchContextTransfer): bool
     {
-        return $this->getFactory()->createIndexCopier()->copyIndex($sourceSearchContextTransfer, $targetSearchContextTransfer);
+        return $this->getFactory()->createIndex()->copyIndex($sourceSearchContextTransfer, $targetSearchContextTransfer);
     }
 
     /**

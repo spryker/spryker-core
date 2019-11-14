@@ -59,7 +59,7 @@ interface SearchElasticsearchFacadeInterface
      *
      * @return bool
      */
-    public function openIndices(): bool;
+    public function openIndexes(): bool;
 
     /**
      * Specification:
@@ -82,7 +82,7 @@ interface SearchElasticsearchFacadeInterface
      *
      * @return bool
      */
-    public function closeIndices(): bool;
+    public function closeIndexes(): bool;
 
     /**
      * Specification:
@@ -106,7 +106,7 @@ interface SearchElasticsearchFacadeInterface
      *
      * @return bool
      */
-    public function deleteIndices(): bool;
+    public function deleteIndexes(): bool;
 
     /**
      * Specification:
