@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\PriceProductOfferStorage\Communication\Plugin\Event\Li
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
-use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\PriceProductOffer\Dependency\PriceProductOfferEvents;

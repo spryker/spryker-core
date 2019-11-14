@@ -37,12 +37,10 @@ class PriceProductOfferHelper extends Module
         $priceProductOfferTransfer = new PriceProductOfferTransfer();
         $priceProductOfferTransfer->fromArray($priceProductOfferEntity->toArray());
 
-        $this->getDataCleanupHelper()->_addCleanup(
-            function () use ($priceProductOfferEntity)
-            {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($priceProductOfferEntity) {
                 $priceProductOfferEntity->delete();
-            }
-        );
+        });
+
         return $priceProductOfferTransfer;
     }
 }
