@@ -4,7 +4,7 @@
   "description": "PriceProductMerchantRelationship module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/cart": "^5.1.0 || ^7.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/merchant-relationship": "^1.4.0",
