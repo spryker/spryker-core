@@ -24,8 +24,7 @@ class EntityTagHelper extends Module
     public function haveEntityTag(string $resourceName, string $resourceId, array $attributes): ?string
     {
         $entityTagClient = $this->getLocator()->entityTag()->client();
-        $entityTagClient->write($resourceName, $resourceId, $attributes);
 
-        return $entityTagClient->read($resourceName, $resourceId);
+        return $entityTagClient->write($resourceName, $resourceId, $attributes);
     }
 }

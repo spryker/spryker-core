@@ -27,11 +27,6 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     protected $jsonPathModule;
 
     /**
-     * @var \SprykerTest\Glue\Testify\Helper\OpenApi3|null
-     */
-    protected $openApi3Module;
-
-    /**
      * @var \SprykerTest\Glue\Testify\Helper\JsonConnection|null
      */
     protected $lastConnection;
@@ -252,6 +247,25 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     /**
      * @part json
      *
+     * @param string $resourceName
+     * @param string $identifier
+     *
+     * @return array|mixed
+     */
+    public function grabIncludedByTypeAndId(string $resourceName, string $identifier)
+    {
+        $jsonPath = sprintf(
+            '$..included[?(@.type == \'%s\' and @.id == \'%s\')].attributes',
+            $resourceName,
+            $identifier
+        );
+
+        return $this->grabDataFromResponseByJsonPath($jsonPath)[0];
+    }
+
+    /**
+     * @part json
+     *
      * @param string $id
      *
      * @return void
@@ -451,34 +465,6 @@ class GlueRest extends REST implements LastConnectionProviderInterface
                 $attribute
             )
         );
-    }
-
-    /**
-     * @return \SprykerTest\Glue\Testify\Helper\OpenApi3|null
-     */
-    protected function findOpenApi3Module(): ?OpenApi3
-    {
-        $this->openApi3Module = $this->openApi3Module ?: $this->findModule(OpenApi3::class);
-
-        return $this->openApi3Module;
-    }
-
-    /**
-     * @part json
-     * @part openApi3
-     *
-     * @param int $responseCode
-     *
-     * @return void
-     */
-    public function assertResponse(int $responseCode): void
-    {
-        $this->seeResponseCodeIs($responseCode);
-        $this->seeResponseIsJson();
-
-        if ($this->openApi3Module) {
-            $this->openApi3Module->seeResponseMatchesOpenApiSchema();
-        }
     }
 
     /**
