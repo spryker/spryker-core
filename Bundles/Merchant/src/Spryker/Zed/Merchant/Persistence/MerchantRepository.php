@@ -76,19 +76,6 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
     }
 
     /**
-     * @param string $key
-     *
-     * @return bool
-     */
-    public function hasKey(string $key): bool
-    {
-        return $this->getFactory()
-            ->createMerchantQuery()
-            ->filterByMerchantKey($key)
-            ->exists();
-    }
-
-    /**
      * @param \Orm\Zed\Merchant\Persistence\SpyMerchantQuery $merchantQuery
      * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
      *

@@ -25,7 +25,6 @@ interface MerchantFacadeInterface
      *   - contactPersonLastName
      *   - contactPersonPhone
      *   - email
-     * - Generates merchant key if doesn't exist.
      * - Persists the entity to DB.
      * - Sets ID to the returning transfer.
      * - Returns MerchantResponseTransfer.isSuccessful=false and error messages if merchant status transition is not valid.
@@ -51,7 +50,6 @@ interface MerchantFacadeInterface
      *   - contactPersonLastName
      *   - contactPersonPhone
      *   - email
-     * - Generates merchant key if doesn't exist.
      * - Returns MerchantResponseTransfer.isSuccessful=false and error messages if merchant not found.
      * - Returns MerchantResponseTransfer.isSuccessful=false and error messages if merchant status transition is not valid.
      * - Persists the entity to DB.
