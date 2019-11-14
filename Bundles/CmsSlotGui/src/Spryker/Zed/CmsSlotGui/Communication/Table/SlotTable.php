@@ -11,6 +11,7 @@ use Orm\Zed\CmsSlot\Persistence\Map\SpyCmsSlotTableMap;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CmsSlotGui\Communication\Controller\ActivateSlotController;
+use Spryker\Zed\CmsSlotGui\Dependency\Facade\CmsSlotGuiToTranslatorFacadeInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -46,17 +47,27 @@ class SlotTable extends AbstractTable
     protected $cmsSlotQuery;
 
     /**
+     * @var \Spryker\Zed\CmsSlotGui\Dependency\Facade\CmsSlotGuiToTranslatorFacadeInterface
+     */
+    protected $translatorFacade;
+
+    /**
      * @var int|null
      */
     protected $idCmsSlotTemplate;
 
     /**
      * @param \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery $cmsSlotQuery
+     * @param \Spryker\Zed\CmsSlotGui\Dependency\Facade\CmsSlotGuiToTranslatorFacadeInterface $translatorFacade
      * @param int|null $idCmsSlotTemplate
      */
-    public function __construct(SpyCmsSlotQuery $cmsSlotQuery, ?int $idCmsSlotTemplate = null)
-    {
+    public function __construct(
+        SpyCmsSlotQuery $cmsSlotQuery,
+        CmsSlotGuiToTranslatorFacadeInterface $translatorFacade,
+        ?int $idCmsSlotTemplate = null
+    ) {
         $this->cmsSlotQuery = $cmsSlotQuery;
+        $this->translatorFacade = $translatorFacade;
         $this->idCmsSlotTemplate = $idCmsSlotTemplate;
     }
 
@@ -190,7 +201,7 @@ class SlotTable extends AbstractTable
                 static::COL_ID_CMS_SLOT => $slot[SpyCmsSlotTableMap::COL_ID_CMS_SLOT],
                 static::COL_NAME => $slot[SpyCmsSlotTableMap::COL_NAME],
                 static::COL_DESCRIPTION => $slot[SpyCmsSlotTableMap::COL_DESCRIPTION],
-                static::COL_CONTENT_PROVIDER => $slot[SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE],
+                static::COL_CONTENT_PROVIDER => $this->getContentProvider($slot),
                 static::COL_STATUS => $this->getStatus($slot),
                 static::COL_ACTIONS => $this->buildLinks($slot),
             ];
@@ -241,6 +252,16 @@ class SlotTable extends AbstractTable
         }
 
         return $this->generateLabel('Inactive', 'label-danger');
+    }
+
+    /**
+     * @param array $slot
+     *
+     * @return string
+     */
+    protected function getContentProvider(array $slot): string
+    {
+        return $this->translatorFacade->trans($slot[SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE]);
     }
 
     /**

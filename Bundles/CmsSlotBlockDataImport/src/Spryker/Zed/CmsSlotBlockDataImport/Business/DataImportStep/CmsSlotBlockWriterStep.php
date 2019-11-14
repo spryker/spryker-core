@@ -28,7 +28,7 @@ class CmsSlotBlockWriterStep extends PublishAwareStep implements DataImportStepI
             ->filterByFkCmsSlotTemplate($dataSet[CmsSlotBlockDataSetInterface::CMS_SLOT_TEMPLATE_ID])
             ->findOneOrCreate();
 
-        $cmsSlotBlockEntity->setPosition($dataSet[CmsSlotBlockDataSetInterface::CMS_SLOT_POSITION]);
+        $cmsSlotBlockEntity->setPosition($dataSet[CmsSlotBlockDataSetInterface::CMS_SLOT_BLOCK_POSITION]);
 
         $cmsSlotBlockEntity->save();
     }
