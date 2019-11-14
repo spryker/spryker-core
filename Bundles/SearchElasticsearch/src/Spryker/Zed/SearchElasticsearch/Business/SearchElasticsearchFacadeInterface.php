@@ -68,11 +68,11 @@ interface SearchElasticsearchFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SearchContextTransfer|null $searchContextTransfer
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      *
      * @return bool
      */
-    public function closeIndex(?SearchContextTransfer $searchContextTransfer = null): bool;
+    public function closeIndex(SearchContextTransfer $searchContextTransfer): bool;
 
     /**
      * Specification:
