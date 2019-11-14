@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupStorageTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorageTransfer;
 use Generated\Shared\Transfer\RestOrderItemProductOptionTransfer;
 use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
@@ -74,15 +75,28 @@ class ProductOptionMapper implements ProductOptionMapperInterface
     ): RestOrderItemsAttributesTransfer {
         $restOrderItemsAttributesTransfers = [];
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            $restOrderItemsAttributesTransfers[] = (new RestOrderItemProductOptionTransfer())
-                ->setSku($productOptionTransfer->getSku())
-                ->setOptionGroupName($productOptionTransfer->getGroupName())
-                ->setOptionName($productOptionTransfer->getValue())
-                ->setPrice($productOptionTransfer->getSumPrice());
+            $restOrderItemsAttributesTransfers[] = $this->createRestOrderItemProductOptionTransfer(
+                $productOptionTransfer
+            );
         }
 
         $restOrderItemsAttributesTransfer->setProductOptions(new ArrayObject($restOrderItemsAttributesTransfers));
 
         return $restOrderItemsAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestOrderItemProductOptionTransfer
+     */
+    protected function createRestOrderItemProductOptionTransfer(
+        ProductOptionTransfer $productOptionTransfer
+    ): RestOrderItemProductOptionTransfer {
+        return (new RestOrderItemProductOptionTransfer())
+            ->setSku($productOptionTransfer->getSku())
+            ->setOptionGroupName($productOptionTransfer->getGroupName())
+            ->setOptionName($productOptionTransfer->getValue())
+            ->setPrice($productOptionTransfer->getSumPrice());
     }
 }
