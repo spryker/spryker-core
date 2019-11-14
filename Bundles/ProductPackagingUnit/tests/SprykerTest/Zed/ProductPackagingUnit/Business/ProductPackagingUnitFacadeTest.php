@@ -34,6 +34,7 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeNotFoundException;
 use Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeUniqueViolationException;
 use Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig;
 
@@ -151,8 +152,6 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     /**
      * @dataProvider getProductPackagingUnitTypeData
      *
-     * @expectedException \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeNotFoundException
-     *
      * @param string $name
      *
      * @return void
@@ -168,6 +167,9 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         // Action
         $productPackagingUnitTypeDeleted = $this->getFacade()->deleteProductPackagingUnitType($productPackagingUnitTypeTransfer);
         $this->assertTrue($productPackagingUnitTypeDeleted);
+
+        $this->expectException(ProductPackagingUnitTypeNotFoundException::class);
+
         // Assert exception thrown
         $this->getFacade()->getProductPackagingUnitTypeById($productPackagingUnitTypeTransfer);
     }
