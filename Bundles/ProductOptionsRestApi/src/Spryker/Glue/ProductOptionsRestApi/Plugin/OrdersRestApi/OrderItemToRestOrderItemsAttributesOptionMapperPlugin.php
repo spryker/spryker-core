@@ -15,7 +15,7 @@ use Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttribut
 /**
  * @method \Spryker\Glue\ProductOptionsRestApi\ProductOptionsRestApiFactory getFactory()
  */
-class OrderRestOrderItemsAttributesOptionMapperPlugin extends AbstractPlugin implements RestOrderItemsAttributesMapperPluginInterface
+class OrderItemToRestOrderItemsAttributesOptionMapperPlugin extends AbstractPlugin implements RestOrderItemsAttributesMapperPluginInterface
 {
     /**
      * {@inheritDoc}
