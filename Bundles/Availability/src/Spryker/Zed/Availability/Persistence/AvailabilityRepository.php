@@ -157,12 +157,12 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
      * @param string $abstractSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
     public function getCalculatedProductAbstractAvailabilityBySkuAndStore(
         string $abstractSku,
         StoreTransfer $storeTransfer
-    ): ?ProductAbstractAvailabilityTransfer {
+    ): ProductAbstractAvailabilityTransfer {
         $availabilityAbstractEntityArray = $this->getFactory()
             ->getProductQueryContainer()
             ->queryProductAbstract()

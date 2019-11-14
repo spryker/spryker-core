@@ -97,17 +97,14 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     public function updateAvailability($concreteSku)
     {
         $storeTransfers = $this->stockFacade->getStoresWhereProductStockIsDefined($concreteSku);
-        if ($storeTransfers !== []) {
-            foreach ($storeTransfers as $storeTransfer) {
-                $this->updateAvailabilityForStore($concreteSku, $storeTransfer);
-            }
+        if ($storeTransfers === []) {
+            $this->updateProductAvailabilityForProductWithNotDefinedStock($concreteSku);
 
             return;
         }
 
-        $storeTransfers = $this->availabilityRepository->getStoresWhereProductAvailabilityIsDefined($concreteSku);
         foreach ($storeTransfers as $storeTransfer) {
-            $this->saveAndTouchAvailability($concreteSku, new Decimal(0), $storeTransfer);
+            $this->updateAvailabilityForStore($concreteSku, $storeTransfer);
         }
     }
 
@@ -242,6 +239,19 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         );
 
         return $productAbstractAvailabilityTransfer;
+    }
+
+    /**
+     * @param string $concreteSku
+     *
+     * @return void
+     */
+    protected function updateProductAvailabilityForProductWithNotDefinedStock(string $concreteSku): void
+    {
+        $storeTransfers = $this->availabilityRepository->getStoresWhereProductAvailabilityIsDefined($concreteSku);
+        foreach ($storeTransfers as $storeTransfer) {
+            $this->saveAndTouchAvailability($concreteSku, new Decimal(0), $storeTransfer);
+        }
     }
 
     /**
