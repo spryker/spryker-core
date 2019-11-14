@@ -46,7 +46,8 @@ class FixedPluginTest extends Unit
 
         $result = $plugin->transformFromPersistence(1113);
 
-        $this->assertEquals(11.13, $result, '', 0.001);
+        $this->assertEquals(11.13, $result, '');
+        $this->assertEqualsWithDelta(11.13, $result, 0.001, '');
     }
 
     /**

@@ -16,6 +16,8 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
+ * @deprecated When the deprecated plugin gets removed, remove this test as well.
+ *
  * Auto-generated group annotations
  *
  * @group SprykerTest
@@ -36,7 +38,7 @@ class RedirectAfterLoginProviderTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         Request::setTrustedHosts([]);
         Request::setTrustedProxies([], Request::HEADER_X_FORWARDED_ALL);

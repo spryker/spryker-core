@@ -40,7 +40,7 @@ class SearchClientTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->searchClient = new SearchClient();
     }

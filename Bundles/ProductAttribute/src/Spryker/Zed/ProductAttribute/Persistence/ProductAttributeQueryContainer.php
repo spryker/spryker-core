@@ -312,8 +312,8 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
      */
     protected function appendAttributeValuesCriteria(SpyProductAttributeKeyQuery $query, array $attributes)
     {
-        /** @var \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion $defaultCriterion */
-        /** @var \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion $defaultLocalizedCriterion */
+        /** @var \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion|null $defaultCriterion */
+        /** @var \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion|null $defaultLocalizedCriterion */
         $defaultCriterion = null;
         $defaultLocalizedCriterion = null;
         $criteria = new Criteria();

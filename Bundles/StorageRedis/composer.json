@@ -8,7 +8,8 @@
     "spryker/kernel": "^3.33.0",
     "spryker/redis": "^2.1.0",
     "spryker/storage-extension": "^1.1.0",
-    "spryker/symfony": "^3.0.0"
+    "spryker/symfony": "^3.0.0",
+    "spryker/transfer": "^3.8.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
