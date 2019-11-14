@@ -59,19 +59,7 @@ class CartWriter implements CartWriterInterface
      */
     public function addConfiguredBundle(CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer): QuoteResponseTransfer
     {
-        $cartChangeTransfer = $this->quoteItemUpdater->changeQuantity($createConfiguredBundleRequestTransfer);
-
-        if (!$cartChangeTransfer->getItems()->count()) {
-            return $this->createErrorResponse(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_NOT_FOUND);
-        }
-
-        $quoteResponseTransfer = $this->cartClient->addToCart($cartChangeTransfer);
-
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createErrorResponse(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_ADDED);
-        }
-
-        return $quoteResponseTransfer;
+        return new QuoteResponseTransfer();
     }
 
     /**
