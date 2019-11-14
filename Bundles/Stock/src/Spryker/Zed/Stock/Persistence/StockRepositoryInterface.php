@@ -83,4 +83,21 @@ interface StockRepositoryInterface
      * @return bool
      */
     public function isProductAbstractNeverOutOfStockForStore(string $abstractSku, StoreTransfer $storeTransfer): bool;
+
+    /**
+     * @param string $concreteSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     */
+    public function findProductStocksForStore(string $concreteSku, StoreTransfer $storeTransfer): array;
+
+    /**
+     * @param string $concreteSku
+     *
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     */
+    public function getStockProductsByProductConcreteSku(string $concreteSku): array;
 }

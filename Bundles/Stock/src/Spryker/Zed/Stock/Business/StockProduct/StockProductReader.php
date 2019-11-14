@@ -10,7 +10,6 @@ namespace Spryker\Zed\Stock\Business\StockProduct;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use InvalidArgumentException;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
 use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
@@ -122,46 +121,24 @@ class StockProductReader implements StockProductReaderInterface
     /**
      * @param string $sku
      *
-     * @throws \InvalidArgumentException
-     *
-     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
     public function getStocksProduct(string $sku): array
     {
-        $productId = $this->productFacade->findProductConcreteIdBySku($sku);
-        $stockEntities = $this->queryContainer
-            ->queryStockByProducts($productId)
-            ->useStockQuery()
-                ->filterByIsActive(true)
-            ->endUse()
-            ->find()
-            ->getData();
-
-        if (count($stockEntities) < 1) {
-            throw new InvalidArgumentException(self::MESSAGE_NO_RESULT);
-        }
-
-        return $stockEntities;
+        return $this->stockRepository->getStockProductsByProductConcreteSku($sku);
     }
 
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
     public function findProductStocksForStore(string $sku, StoreTransfer $storeTransfer): array
     {
-        $productId = $this->productFacade->findProductConcreteIdBySku($sku);
-        $storeNames = $this->getStoreWarehouses($storeTransfer->getName());
+        $storeTransfer->requireName();
 
-        return $this->queryContainer
-            ->queryStockByProductsForStockNames($productId, $storeNames)
-            ->useStockQuery()
-                ->filterByIsActive(true)
-            ->endUse()
-            ->find()
-            ->getData();
+        return $this->stockRepository->findProductStocksForStore($sku, $storeTransfer);
     }
 
     /**

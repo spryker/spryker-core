@@ -33,9 +33,9 @@ class Calculator implements CalculatorInterface
      */
     public function calculateStockForProduct(string $sku): Decimal
     {
-        $productEntities = $this->stockProductReader->getStocksProduct($sku);
+        $stockProductTransfers = $this->stockProductReader->getStocksProduct($sku);
 
-        return $this->calculateTotalQuantity($productEntities);
+        return $this->calculateTotalQuantity($stockProductTransfers);
     }
 
     /**
@@ -46,9 +46,9 @@ class Calculator implements CalculatorInterface
      */
     public function calculateProductStockForStore(string $sku, StoreTransfer $storeTransfer): Decimal
     {
-        $productEntities = $this->stockProductReader->findProductStocksForStore($sku, $storeTransfer);
+        $stockProductTransfers = $this->stockProductReader->findProductStocksForStore($sku, $storeTransfer);
 
-        return $this->calculateTotalQuantity($productEntities);
+        return $this->calculateTotalQuantity($stockProductTransfers);
     }
 
     /**
@@ -65,7 +65,7 @@ class Calculator implements CalculatorInterface
     }
 
     /**
-     * @param \Orm\Zed\Stock\Persistence\SpyStockProduct[]|\Generated\Shared\Transfer\StockProductTransfer[] $productEntities
+     * @param \Generated\Shared\Transfer\StockProductTransfer[] $productEntities
      *
      * @return \Spryker\DecimalObject\Decimal
      */

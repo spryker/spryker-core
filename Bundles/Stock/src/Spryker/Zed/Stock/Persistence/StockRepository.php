@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use InvalidArgumentException;
 use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
 use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
@@ -182,6 +183,53 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
     }
 
     /**
+     * @param string $concreteSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     */
+    public function findProductStocksForStore(string $concreteSku, StoreTransfer $storeTransfer): array
+    {
+        $stockProductEntities = $this->queryStockProductByProductConcreteSkuAndStore($concreteSku, $storeTransfer)->find();
+
+        if ($stockProductEntities->count() === 0) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->createStockProductMapper()
+            ->mapStockProductEntitiesToStockProductTransfers($stockProductEntities->getArrayCopy());
+    }
+
+    /**
+     * @param string $concreteSku
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     */
+    public function getStockProductsByProductConcreteSku(string $concreteSku): array
+    {
+        $stockProductEntities = $this->getFactory()
+            ->createStockProductQuery()
+            ->useSpyProductQuery(null, Criteria::LEFT_JOIN)
+                ->filterBySku($concreteSku)
+            ->endUse()
+            ->useStockQuery(null, Criteria::LEFT_JOIN)
+                ->filterByIsActive(true)
+            ->endUse()
+            ->find();
+
+        if ($stockProductEntities->count() === 0) {
+            throw new InvalidArgumentException('No stock set for this sku');
+        }
+
+        return $this->getFactory()
+            ->createStockProductMapper()
+            ->mapStockProductEntitiesToStockProductTransfers($stockProductEntities->getArrayCopy());
+    }
+
+    /**
      * @param string $abstractSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
@@ -195,6 +243,29 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
                 ->useSpyProductAbstractQuery(null, Criteria::LEFT_JOIN)
                     ->filterBySku($abstractSku)
                 ->endUse()
+            ->endUse()
+            ->useStockQuery(null, Criteria::LEFT_JOIN)
+                ->filterByIsActive(true)
+                ->useStockStoreQuery(null, Criteria::LEFT_JOIN)
+                    ->useStoreQuery(null, Criteria::LEFT_JOIN)
+                        ->filterByName($storeTransfer->getName())
+                    ->endUse()
+                ->endUse()
+            ->endUse();
+    }
+
+    /**
+     * @param string $concreteSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
+     */
+    protected function queryStockProductByProductConcreteSkuAndStore(string $concreteSku, StoreTransfer $storeTransfer): SpyStockProductQuery
+    {
+        return $this->getFactory()
+            ->createStockProductQuery()
+            ->useSpyProductQuery(null, Criteria::LEFT_JOIN)
+                ->filterBySku($concreteSku)
             ->endUse()
             ->useStockQuery(null, Criteria::LEFT_JOIN)
                 ->filterByIsActive(true)

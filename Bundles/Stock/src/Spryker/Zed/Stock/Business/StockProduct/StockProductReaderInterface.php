@@ -39,7 +39,7 @@ interface StockProductReaderInterface
     /**
      * @param string $sku
      *
-     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
     public function getStocksProduct(string $sku): array;
 
@@ -47,7 +47,7 @@ interface StockProductReaderInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
     public function findProductStocksForStore(string $sku, StoreTransfer $storeTransfer): array;
 
