@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\MerchantErrorTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface;
 use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface;
 use Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface;
 use Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface;
@@ -35,11 +34,6 @@ class MerchantUpdater implements MerchantUpdaterInterface
     protected $merchantRepository;
 
     /**
-     * @var \Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface
-     */
-    protected $merchantKeyGenerator;
-
-    /**
      * @var \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface
      */
     protected $merchantStatusValidator;
@@ -52,20 +46,17 @@ class MerchantUpdater implements MerchantUpdaterInterface
     /**
      * @param \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface $merchantEntityManager
      * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $merchantRepository
-     * @param \Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface $merchantKeyGenerator
      * @param \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface $merchantStatusValidator
      * @param \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[] $merchantPostSavePlugins
      */
     public function __construct(
         MerchantEntityManagerInterface $merchantEntityManager,
         MerchantRepositoryInterface $merchantRepository,
-        MerchantKeyGeneratorInterface $merchantKeyGenerator,
         MerchantStatusValidatorInterface $merchantStatusValidator,
         array $merchantPostSavePlugins
     ) {
         $this->merchantEntityManager = $merchantEntityManager;
         $this->merchantRepository = $merchantRepository;
-        $this->merchantKeyGenerator = $merchantKeyGenerator;
         $this->merchantStatusValidator = $merchantStatusValidator;
         $this->merchantPostSavePlugins = $merchantPostSavePlugins;
     }
@@ -96,12 +87,6 @@ class MerchantUpdater implements MerchantUpdaterInterface
             $merchantResponseTransfer = $this->addMerchantError($merchantResponseTransfer, static::ERROR_MESSAGE_MERCHANT_STATUS_TRANSITION_NOT_VALID);
 
             return $merchantResponseTransfer;
-        }
-
-        if (empty($merchantTransfer->getMerchantKey())) {
-            $merchantTransfer->setMerchantKey(
-                $this->merchantKeyGenerator->generateMerchantKey($merchantTransfer->getName())
-            );
         }
 
         $merchantTransfer = $this->getTransactionHandler()->handleTransaction(function () use ($merchantTransfer) {

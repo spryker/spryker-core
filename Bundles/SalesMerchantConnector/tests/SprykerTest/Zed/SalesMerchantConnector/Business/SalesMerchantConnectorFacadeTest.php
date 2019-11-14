@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\SalesMerchantConnector\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\SalesOrderMerchantSaveTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
 /**
@@ -24,10 +26,22 @@ use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
  */
 class SalesMerchantConnectorFacadeTest extends Unit
 {
+    protected const TEST_STATE_MACHINE = 'Test01';
+
     /**
      * @var \SprykerTest\Zed\SalesMerchantConnector\SalesMerchantConnectorBusinessTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->configureTestStateMachine([static::TEST_STATE_MACHINE]);
+    }
 
     /**
      * @return void
@@ -82,6 +96,32 @@ class SalesMerchantConnectorFacadeTest extends Unit
         //assert
         $this->assertEquals($merchantReference, $newSalesOrderItemEntityTransfer->getMerchantReference());
         $this->assertEquals($this->getSalesOrderItemReference($idSalesOrderItem), $newSalesOrderItemEntityTransfer->getOrderItemReference());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateSalesOrderMerchant(): void
+    {
+        //Arrange
+        $saveOrderTransfer = $this->tester->haveOrder([
+            ItemTransfer::UNIT_PRICE => 100,
+            ItemTransfer::SUM_PRICE => 100,
+        ], static::TEST_STATE_MACHINE);
+        $merchantTransfer = $this->tester->haveMerchant();
+
+        $salesOrderMerchantSaveTransfer = new SalesOrderMerchantSaveTransfer();
+        $salesOrderMerchantSaveTransfer->setMerchantReference($merchantTransfer->getMerchantKey());
+        $salesOrderMerchantSaveTransfer->setIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
+        $salesOrderMerchantSaveTransfer->setOrderReference($saveOrderTransfer->getOrderReference());
+
+        //Act
+        $salesOrderMerchantTransfer = $this->tester->getLocator()->salesMerchantConnector()->facade()->createSalesOrderMerchant($salesOrderMerchantSaveTransfer);
+
+        //Assert
+        $this->assertIsInt($salesOrderMerchantTransfer->getIdSalesOrderMerchant());
+        $this->assertEquals($salesOrderMerchantTransfer->getMerchantReference(), $merchantTransfer->getMerchantKey());
+        $this->assertEquals($salesOrderMerchantTransfer->getFkSalesOrder(), $saveOrderTransfer->getIdSalesOrder());
     }
 
     /**

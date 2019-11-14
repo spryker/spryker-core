@@ -109,12 +109,12 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     {
         $shipmentMethodsCollectionTransfer = $this->shipmentFacade->getAvailableMethodsByShipment($quoteTransfer);
 
-        /** @var \Generated\Shared\Transfer\ShipmentMethodsTransfer|false $shipmentMethodsTransfer */
-        $shipmentMethodsTransfer = current($shipmentMethodsCollectionTransfer->getShipmentMethods());
-
-        if ($shipmentMethodsTransfer === false) {
+        if ($shipmentMethodsCollectionTransfer->getShipmentMethods()->count() === 0) {
             return new ShipmentMethodsTransfer();
         }
+
+        /** @var \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer */
+        $shipmentMethodsTransfer = $shipmentMethodsCollectionTransfer->getShipmentMethods()->getIterator()->current();
 
         return $shipmentMethodsTransfer;
     }

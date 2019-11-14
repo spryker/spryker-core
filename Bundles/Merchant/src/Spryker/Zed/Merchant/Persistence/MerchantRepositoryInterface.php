@@ -26,11 +26,4 @@ interface MerchantRepositoryInterface
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
     public function findOne(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): ?MerchantTransfer;
-
-    /**
-     * @param string $key
-     *
-     * @return bool
-     */
-    public function hasKey(string $key): bool;
 }

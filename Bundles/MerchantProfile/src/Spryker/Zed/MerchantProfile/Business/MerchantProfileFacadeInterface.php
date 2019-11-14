@@ -10,7 +10,6 @@ namespace Spryker\Zed\MerchantProfile\Business;
 use Generated\Shared\Transfer\MerchantProfileCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
-use Generated\Shared\Transfer\MerchantTransfer;
 
 interface MerchantProfileFacadeInterface
 {
@@ -55,19 +54,6 @@ interface MerchantProfileFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer|null
      */
     public function findOne(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): ?MerchantProfileTransfer;
-
-    /**
-     * Specification:
-     * - Expands MerchantTransfer with merchant profile.
-     * - Returns expanded MerchantTransfer.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
-     */
-    public function expandMerchantWithMerchantProfile(MerchantTransfer $merchantTransfer): MerchantTransfer;
 
     /**
      * Specification:

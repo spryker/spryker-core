@@ -133,6 +133,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated The WhoopsErrorHandler is deprecated and replaced by a new ErrorHandlerApplicationPlugin.
+     *
      * @return bool
      */
     public function isPrettyErrorHandlerEnabled(): bool

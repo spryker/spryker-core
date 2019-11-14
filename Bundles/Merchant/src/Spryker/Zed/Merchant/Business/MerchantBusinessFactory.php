@@ -8,8 +8,6 @@
 namespace Spryker\Zed\Merchant\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGenerator;
-use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface;
 use Spryker\Zed\Merchant\Business\Model\MerchantCreator;
 use Spryker\Zed\Merchant\Business\Model\MerchantCreatorInterface;
 use Spryker\Zed\Merchant\Business\Model\MerchantReader;
@@ -37,7 +35,6 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantCreator(
             $this->getEntityManager(),
-            $this->createMerchantKeyGenerator(),
             $this->getConfig(),
             $this->getMerchantPostSavePlugins()
         );
@@ -51,7 +48,6 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
         return new MerchantUpdater(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->createMerchantKeyGenerator(),
             $this->createMerchantStatusValidator(),
             $this->getMerchantPostSavePlugins()
         );
@@ -85,17 +81,6 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantStatusValidator(
             $this->createMerchantStatusReader()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface
-     */
-    public function createMerchantKeyGenerator(): MerchantKeyGeneratorInterface
-    {
-        return new MerchantKeyGenerator(
-            $this->getRepository(),
-            $this->getUtilTextService()
         );
     }
 

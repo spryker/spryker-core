@@ -11,4 +11,7 @@
         <property name="readerConfiguration" type="DataImporterReaderConfiguration"/>
     </transfer>
 
+    <transfer name="DataImporterReport">
+    </transfer>
+
 </transfers>

@@ -9,6 +9,7 @@
         <column name="id_merchant_profile_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_merchant" type="INTEGER" required="true"/>
         <column name="data" type="LONGVARCHAR" required="false"/>
+        <column name="key" type="VARCHAR" required="true"/>
 
         <index name="spy_merchant_storage-fk_merchant">
             <index-column name="fk_merchant"/>

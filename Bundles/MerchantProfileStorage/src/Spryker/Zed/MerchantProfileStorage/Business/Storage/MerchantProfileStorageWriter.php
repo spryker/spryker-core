@@ -72,7 +72,7 @@ class MerchantProfileStorageWriter implements MerchantProfileStorageWriterInterf
         foreach ($merchantProfileTransfers as $merchantProfileTransfer) {
             if (!$merchantProfileTransfer->getIsActive()) {
                 $this->entityManager->deleteMerchantProfileStorageEntitiesByMerchantIds([
-                    $merchantProfileTransfer->getIdMerchantProfile(),
+                    $merchantProfileTransfer->getFkMerchant(),
                 ]);
 
                 continue;

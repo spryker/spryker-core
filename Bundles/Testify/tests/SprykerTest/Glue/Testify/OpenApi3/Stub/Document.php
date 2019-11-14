@@ -7,9 +7,9 @@
 
 namespace SprykerTest\Glue\Testify\OpenApi3\Stub;
 
-use Spryker\Glue\Testify\OpenApi3\Object\AbstractObject;
-use Spryker\Glue\Testify\OpenApi3\Object\ObjectSpecification;
 use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
+use Spryker\Glue\Testify\OpenApi3\SchemaObject\AbstractObject;
+use Spryker\Glue\Testify\OpenApi3\SchemaObject\ObjectSpecification;
 
 /**
  * @property-read \SprykerTest\Glue\Testify\OpenApi3\Stub\Foo $foo1

@@ -17,6 +17,7 @@ interface ProductOfferFacadeInterface
      * Specification:
      * - Returns collection of product offer by provided criteria.
      * - Pagination is controlled with page, maxPerPage, nbResults, previousPage, nextPage, firstIndex, lastIndex, firstPage and lastPage values.
+     * - Result might be filtered with concreteSku(s), productOfferReference(s) values.
      *
      * @api
      *
@@ -25,6 +26,19 @@ interface ProductOfferFacadeInterface
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
     public function find(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Finds ProductOfferTransfer by provided ProductOfferCriteriaFilterTransfer.
+     * - Result might be filtered with concreteSku(s), productOfferReference(s) values.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer|null $productOfferCriteriaFilter
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
+     */
+    public function findOne(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer;
 
     /**
      * Specification:

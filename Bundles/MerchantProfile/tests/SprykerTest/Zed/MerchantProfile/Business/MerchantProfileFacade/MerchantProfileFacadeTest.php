@@ -147,21 +147,4 @@ class MerchantProfileFacadeTest extends Unit
         $this->assertNotNull($merchantProfileTransfer);
         $this->assertEquals($expectedMerchantProfileTransfer->getIdMerchantProfile(), $merchantProfileTransfer->getIdMerchantProfile());
     }
-
-    /**
-     * @return void
-     */
-    public function testExpandMerchantWithMerchantProfile(): void
-    {
-        // Arrange
-        $merchantTransfer = $this->tester->haveMerchant();
-        $expectedMerchantProfileTransfer = $this->tester->haveMerchantProfile($merchantTransfer);
-
-        // Act
-        $expandedMerchantTransfer = $this->tester->getFacade()->expandMerchantWithMerchantProfile($merchantTransfer);
-        $merchantProfileTransfer = $expandedMerchantTransfer->getMerchantProfile();
-
-        // Assert
-        $this->assertEquals($expectedMerchantProfileTransfer->getIdMerchantProfile(), $merchantProfileTransfer->getIdMerchantProfile());
-    }
 }
