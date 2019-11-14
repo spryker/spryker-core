@@ -76,7 +76,7 @@ class ProductPublishListenerTest extends Unit
         $this->priceProductOfferStoragePublishListener = new PriceProductOfferStoragePublishListener();
         $this->productPublishListener = new ProductPublishListener();
 
-        $this->productConcreteTransfer = $this->tester->haveProduct();
+        $this->productConcreteTransfer = $this->tester->haveProduct(['isActive' => false]);
         $productOfferTransfer = $this->tester->haveProductOffer([
             'fkMerchant' => $this->tester->haveMerchant()->getIdMerchant(),
             'concreteSku' => $this->productConcreteTransfer->getSku(),
@@ -103,11 +103,10 @@ class ProductPublishListenerTest extends Unit
         $eventPriceProductOfferStorageTransfers = [
             (new EventEntityTransfer())->setId($this->priceProductOfferTransfer->getIdPriceProductOffer()),
         ];
+
         $eventProductUnpublishTransfers = [
             (new EventEntityTransfer())
-                ->setId($this->productConcreteTransfer->getIdProductConcrete())
-                ->setOriginalValues([SpyProductTableMap::COL_IS_ACTIVE => true])
-                ->setModifiedColumns([SpyProductTableMap::COL_IS_ACTIVE]),
+                ->setId($this->productConcreteTransfer->getIdProductConcrete()),
         ];
 
         //Act
