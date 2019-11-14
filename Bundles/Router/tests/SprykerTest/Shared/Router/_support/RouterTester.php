@@ -158,7 +158,8 @@ class RouterTester extends Actor
     public function getRequestWithNotInvokableControllerObject(): Request
     {
         $request = $this->getRequest();
-        $controllerMock = new class {
+        $controllerMock = new class
+        {
         };
         $request->attributes->set('_controller', $controllerMock);
 
@@ -174,7 +175,8 @@ class RouterTester extends Actor
     {
         $this->calledControllerMethods = [];
 
-        return new class ($tester) {
+        return new class ($tester)
+        {
 
             /**
              * @var \SprykerTest\Shared\Router\RouterTester
