@@ -7,9 +7,13 @@
 
 namespace Spryker\Glue\ProductOptionsRestApi\Processor\Mapper;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupStorageTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorageTransfer;
+use Generated\Shared\Transfer\RestOrderItemProductOptionTransfer;
+use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
 use Generated\Shared\Transfer\RestProductOptionAttributesTransfer;
 
 class ProductOptionMapper implements ProductOptionMapperInterface
@@ -56,5 +60,29 @@ class ProductOptionMapper implements ProductOptionMapperInterface
             ->setOptionName($translations[$productOptionValueStorageTransfer->getValue()])
             ->setPrice($productOptionValueStorageTransfer->getPrice())
             ->setCurrencyIsoCode($productOptionValueStorageTransfer->getCurrencyIsoCode());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer
+     */
+    public function mapItemTransferToRestOrderItemsAttributesTransfer(
+        ItemTransfer $itemTransfer,
+        RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
+    ): RestOrderItemsAttributesTransfer {
+        $restOrderItemsAttributesTransfers = [];
+        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+            $restOrderItemsAttributesTransfers[] = (new RestOrderItemProductOptionTransfer())
+                ->setSku($productOptionTransfer->getSku())
+                ->setOptionGroupName($productOptionTransfer->getGroupName())
+                ->setOptionName($productOptionTransfer->getValue())
+                ->setPrice($productOptionTransfer->getSumPrice());
+        }
+
+        $restOrderItemsAttributesTransfer->setProductOptions(new ArrayObject($restOrderItemsAttributesTransfers));
+
+        return $restOrderItemsAttributesTransfer;
     }
 }

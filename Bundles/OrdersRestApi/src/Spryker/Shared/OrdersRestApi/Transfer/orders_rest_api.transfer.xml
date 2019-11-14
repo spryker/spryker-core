@@ -54,6 +54,14 @@
         <property name="sumPriceToPayAggregation" type="int"/>
         <property name="taxRateAverageAggregation" type="float"/>
         <property name="taxAmountAfterCancellation" type="int"/>
+        <property name="productOptions" type="RestOrderItemProductOptionAttributes[]" singular="productOption"/>
+    </transfer>
+
+    <transfer name="RestOrderItemProductOptionAttributes">
+        <property name="optionGroupName" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="optionName" type="string"/>
+        <property name="price" type="int"/>
     </transfer>
 
     <transfer name="RestOrderTotalsAttributes">
