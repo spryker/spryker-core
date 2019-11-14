@@ -12,7 +12,13 @@
     {% endblock %}
 
     {% block backoffice_js %}
-        <script src="/assets/js/spryker-zed-gui-backoffice-components.js"></script>
+        <script type="module">
+            import { applyPolyfills, defineCustomElements } from 'https://unpkg.com/@spryker/backoffice-ui@0.1.0/backoffice/loader/index.mjs';
+
+            applyPolyfills().then(() => {
+                defineCustomElements(window);
+            });
+        </script>
     {% endblock %}
 
 </head>
