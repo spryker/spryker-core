@@ -220,4 +220,28 @@ interface ProductImageFacadeInterface
      * @return \Generated\Shared\Transfer\ProductImageTransfer[][]
      */
     public function getProductImagesByProductIdsAndProductImageSetName(array $productIds, string $productImageSetName): array;
+
+    /**
+     * Specification:
+     * - Retrieves product concrete ids by product image ids.
+     *
+     * @api
+     *
+     * @param int[] $productImageIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByProductImageIds(array $productImageIds): array;
+
+    /**
+     * Specification:
+     * - Retrieves product concrete ids by product image set ids.
+     *
+     * @api
+     *
+     * @param int[] $productImageSetIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByProductImageSetIds(array $productImageSetIds): array;
 }

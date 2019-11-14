@@ -183,6 +183,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
         };
 
         $container = $this->addStoreFacade($container);
+        $container = $this->addProductImageFacade($container);
 
         return $container;
     }

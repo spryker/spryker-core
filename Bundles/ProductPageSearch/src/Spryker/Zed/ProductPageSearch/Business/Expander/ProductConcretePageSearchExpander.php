@@ -41,7 +41,7 @@ class ProductConcretePageSearchExpander implements ProductConcretePageSearchExpa
             $images = array_merge($images, $this->mapImageSetTransferToImages($productImageSetTransfer));
         }
 
-        $productConcretePageSearchTransfer->setProductImages($images);
+        $productConcretePageSearchTransfer->setImages($images);
 
         return $productConcretePageSearchTransfer;
     }

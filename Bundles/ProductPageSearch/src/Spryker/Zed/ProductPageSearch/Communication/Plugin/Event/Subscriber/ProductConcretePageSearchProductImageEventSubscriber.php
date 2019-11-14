@@ -1,0 +1,93 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Subscriber;
+
+use Spryker\Zed\Event\Dependency\EventCollectionInterface;
+use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductConcretePageSearchProductImageListener;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductConcretePageSearchProductImageSetListener;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductConcretePageSearchProductImageSetToProductImageListener;
+
+/**
+ * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
+ */
+class ProductConcretePageSearchProductImageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
+{
+    /**
+     * @api
+     *
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
+     */
+    public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
+    {
+        $this->addProductConcretePageProductImageCreateListener($eventCollection);
+        $this->addProductConcretePageProductImageUpdateListener($eventCollection);
+        $this->addProductConcretePageProductImageSetToProductImageUpdateListener($eventCollection);
+        $this->addProductConcretePageProductImageSetToProductImageDeleteListener($eventCollection);
+        $this->addProductConcretePageProductImageSetDeleteListener($eventCollection);
+
+        return $eventCollection;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductConcretePageProductImageCreateListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_CREATE, new ProductConcretePageSearchProductImageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductConcretePageProductImageUpdateListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_UPDATE, new ProductConcretePageSearchProductImageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductConcretePageProductImageSetToProductImageUpdateListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_UPDATE, new ProductConcretePageSearchProductImageSetToProductImageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductConcretePageProductImageSetToProductImageDeleteListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_DELETE, new ProductConcretePageSearchProductImageSetToProductImageListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductConcretePageProductImageSetDeleteListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_DELETE, new ProductConcretePageSearchProductImageSetListener());
+    }
+}

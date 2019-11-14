@@ -1104,4 +1104,80 @@ class ProductImageFacadeTest extends Unit
         $this->assertEquals($productIds, array_keys($productImagesCollection));
         $this->assertNotEmpty($productImagesCollection[$this->productConcreteEntity->getIdProduct()]);
     }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConcreteIdsByProductImageIdsReturnsConcreteIds(): void
+    {
+        //Arrange
+        $productImageSetTransfer = $this->tester->haveProductImageSet([
+            ProductImageSetTransfer::ID_PRODUCT => $this->productConcreteEntity->getIdProduct(),
+        ]);
+
+        //Act
+        $productConcreteIds = $this->productImageFacade->getProductConcreteIdsByProductImageIds([
+            $productImageSetTransfer->getProductImages()->offsetGet(0)->getIdProductImage(),
+        ]);
+
+        //Assert
+        $this->assertCount(1, $productConcreteIds);
+        $this->assertContains($productImageSetTransfer->getIdProduct(), $productConcreteIds);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConcreteIdsByProductImageIdsReturnsEmptyResult(): void
+    {
+        //Arrange
+        $productImageSetTransfer = $this->tester->haveProductImageSet([
+            ProductImageSetTransfer::ID_PRODUCT_ABSTRACT => $this->productAbstractEntity->getIdProductAbstract(),
+        ]);
+
+        //Act
+        $productConcreteIds = $this->productImageFacade->getProductConcreteIdsByProductImageIds([
+            $productImageSetTransfer->getProductImages()->offsetGet(0)->getIdProductImage(),
+        ]);
+
+        //Assert
+        $this->assertEmpty($productConcreteIds);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConcreteIdsByProductImageSetIdsReturnsConcreteIds(): void
+    {
+        //Arrange
+        $productImageSetTransfer = $this->tester->haveProductImageSet([
+            ProductImageSetTransfer::ID_PRODUCT => $this->productConcreteEntity->getIdProduct(),
+        ]);
+
+        //Act
+        $productConcreteIds = $this->productImageFacade
+            ->getProductConcreteIdsByProductImageSetIds([$productImageSetTransfer->getIdProductImageSet()]);
+
+        //Assert
+        $this->assertCount(1, $productConcreteIds);
+        $this->assertContains($productImageSetTransfer->getIdProduct(), $productConcreteIds);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConcreteIdsByProductImageSetIdsReturnsEmptyResult(): void
+    {
+        //Arrange
+        $productImageSetTransfer = $this->tester->haveProductImageSet([
+            ProductImageSetTransfer::ID_PRODUCT_ABSTRACT => $this->productAbstractEntity->getIdProductAbstract(),
+        ]);
+
+        //Act
+        $productConcreteIds = $this->productImageFacade
+            ->getProductConcreteIdsByProductImageSetIds([$productImageSetTransfer->getIdProductImageSet()]);
+
+        //Assert
+        $this->assertEmpty($productConcreteIds);
+    }
 }

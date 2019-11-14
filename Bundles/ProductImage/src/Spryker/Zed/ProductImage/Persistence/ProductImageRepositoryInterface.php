@@ -23,4 +23,18 @@ interface ProductImageRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductImageTransfer[][]
      */
     public function getProductImagesByProductSetIds(array $productSetIds): array;
+
+    /**
+     * @param int[] $productImageIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByProductImageIds(array $productImageIds): array;
+
+    /**
+     * @param int[] $productImageSetIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByProductImageSetIds(array $productImageSetIds): array;
 }

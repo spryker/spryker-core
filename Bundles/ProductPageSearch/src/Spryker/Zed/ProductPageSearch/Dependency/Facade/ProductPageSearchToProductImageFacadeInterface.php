@@ -15,4 +15,18 @@ interface ProductPageSearchToProductImageFacadeInterface
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
     public function getProductImagesSetCollectionByProductId($idProduct);
+
+    /**
+     * @param int[] $productImageIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByProductImageIds(array $productImageIds): array;
+
+    /**
+     * @param int[] $productImageSetIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByProductImageSetIds(array $productImageSetIds): array;
 }

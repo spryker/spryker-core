@@ -31,4 +31,24 @@ class ProductPageSearchToProductImageFacadeBridge implements ProductPageSearchTo
     {
         return $this->productImageFacade->getProductImagesSetCollectionByProductId($idProduct);
     }
+
+    /**
+     * @param int[] $productImageIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByProductImageIds(array $productImageIds): array
+    {
+        return $this->productImageFacade->getProductConcreteIdsByProductImageIds($productImageIds);
+    }
+
+    /**
+     * @param int[] $productImageSetIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByProductImageSetIds(array $productImageSetIds): array
+    {
+        return $this->productImageFacade->getProductConcreteIdsByProductImageSetIds($productImageSetIds);
+    }
 }

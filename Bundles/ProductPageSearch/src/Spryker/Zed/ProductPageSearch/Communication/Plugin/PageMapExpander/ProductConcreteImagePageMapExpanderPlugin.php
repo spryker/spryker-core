@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\PageMapExpander;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
+use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface;
@@ -21,6 +22,8 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePage
  */
 class ProductConcreteImagePageMapExpanderPlugin extends AbstractPlugin implements ProductConcretePageMapExpanderPluginInterface
 {
+    protected const KEY_IMAGES = 'images';
+
     /**
      * {@inheritDoc}
      * - Expands provided PageMapTransfer with images.
@@ -36,7 +39,11 @@ class ProductConcreteImagePageMapExpanderPlugin extends AbstractPlugin implement
      */
     public function expand(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer): PageMapTransfer
     {
-        $pageMapBuilder->addSearchResultData($pageMapTransfer, 'images', $productData['product_images']);
+        $pageMapBuilder->addSearchResultData(
+            $pageMapTransfer,
+            static::KEY_IMAGES,
+            $productData[ProductConcretePageSearchTransfer::IMAGES]
+        );
 
         return $pageMapTransfer;
     }

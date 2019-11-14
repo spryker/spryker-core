@@ -295,4 +295,32 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
             ->createProductImageBulkReader()
             ->getProductImagesByProductIdsAndProductImageSetName($productIds, $productImageSetName);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productImageIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByProductImageIds(array $productImageIds): array
+    {
+        return $this->getRepository()->getProductConcreteIdsByProductImageIds($productImageIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productImageSetIds
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIdsByProductImageSetIds(array $productImageSetIds): array
+    {
+        return $this->getRepository()->getProductConcreteIdsByProductImageSetIds($productImageSetIds);
+    }
 }
