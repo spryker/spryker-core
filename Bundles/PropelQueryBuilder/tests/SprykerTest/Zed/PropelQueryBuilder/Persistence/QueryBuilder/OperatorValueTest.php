@@ -45,7 +45,7 @@ class OperatorValueTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->rule = new PropelQueryBuilderRuleSetTransfer();
         $this->rule->setField('foo');

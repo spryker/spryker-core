@@ -38,7 +38,7 @@ class CategoryTreeStructureTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->input = new CategoryStructureInput();
         $this->expected = new CategoryStructureExpected();

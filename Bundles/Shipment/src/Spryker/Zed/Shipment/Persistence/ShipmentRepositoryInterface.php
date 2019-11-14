@@ -9,9 +9,12 @@ namespace Spryker\Zed\Shipment\Persistence;
 
 use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
+use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentPriceTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 
 interface ShipmentRepositoryInterface
@@ -78,6 +81,13 @@ interface ShipmentRepositoryInterface
     public function findSalesOrderById(int $idSalesOrder): ?OrderTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\ShipmentCarrierRequestTransfer $shipmentCarrierRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer|null
+     */
+    public function findShipmentCarrier(ShipmentCarrierRequestTransfer $shipmentCarrierRequestTransfer): ?ShipmentCarrierTransfer;
+
+    /**
      * @param string $shipmentMethodName
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
@@ -85,11 +95,19 @@ interface ShipmentRepositoryInterface
     public function findShipmentMethodByName(string $shipmentMethodName): ?ShipmentMethodTransfer;
 
     /**
-     * @param int $idShipmentMethod
+     * @param string $shipmentMethodKey
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    public function findShipmentMethodById(int $idShipmentMethod): ?ShipmentMethodTransfer;
+    public function findShipmentMethodByKey(string $shipmentMethodKey): ?ShipmentMethodTransfer;
+
+    /**
+     * @param int $idShipmentMethod
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
+     */
+    public function findShipmentMethodByIdAndIdStore(int $idShipmentMethod, int $idStore): ?ShipmentMethodTransfer;
 
     /**
      * @param int $idShipmentMethod
@@ -109,6 +127,13 @@ interface ShipmentRepositoryInterface
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
     public function getActiveShipmentMethods(): array;
+
+    /**
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     */
+    public function getActiveShipmentMethodsForStore(int $idStore): array;
 
     /**
      * @param int $idShipmentMethod
@@ -133,4 +158,16 @@ interface ShipmentRepositoryInterface
      * @return bool
      */
     public function isShipmentMethodUniqueForCarrier(ShipmentMethodTransfer $shipmentMethodTransfer): bool;
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    public function getStoreRelationByIdShipmentMethod(int $idShipmentMethod): StoreRelationTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     */
+    public function getActiveShipmentCarriers(): array;
 }

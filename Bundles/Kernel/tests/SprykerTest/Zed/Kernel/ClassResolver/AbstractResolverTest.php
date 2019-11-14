@@ -67,7 +67,7 @@ abstract class AbstractResolverTest extends Unit
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 

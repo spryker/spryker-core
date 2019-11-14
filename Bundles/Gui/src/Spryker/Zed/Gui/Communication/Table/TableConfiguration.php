@@ -42,7 +42,7 @@ class TableConfiguration
      *
      * @var array|null
      */
-    protected $searchableFields = null;
+    protected $searchableFields;
 
     /**
      * @var array
@@ -52,7 +52,7 @@ class TableConfiguration
     /**
      * @var array|null
      */
-    protected $defaultSortField = null;
+    protected $defaultSortField;
 
     /**
      * @deprecated Use $defaultSortField instead.
