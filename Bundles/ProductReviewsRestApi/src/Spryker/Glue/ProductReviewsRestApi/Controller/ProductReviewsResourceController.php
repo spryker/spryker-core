@@ -21,7 +21,19 @@ class ProductReviewsResourceController extends AbstractController
      * @Glue({
      *     "getResourceById": {
      *          "summary": [
-     *              "Retrieves abstract product reviews by sku."
+     *              "Retrieves abstract product review by sku."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "responses": {
+     *              "501": "Resource is not available."
+     *          }
+     *     },
+     *      "getCollection": {
+     *          "summary": [
+     *              "Retrieves a collection of abstract product reviews by sku."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
@@ -29,8 +41,7 @@ class ProductReviewsResourceController extends AbstractController
      *          }],
      *          "responses": {
      *              "400": "Abstract product id is not specified.",
-     *              "404": "Abstract product not found.",
-     *              "501": "Resource is not available."
+     *              "404": "Abstract product not found."
      *          }
      *     }
      * })
@@ -46,7 +57,7 @@ class ProductReviewsResourceController extends AbstractController
 
     /**
      * @Glue({
-     *     "getResourceById": {
+     *     "post": {
      *          "summary": [
      *              "Creates a product review."
      *          ],
@@ -55,6 +66,7 @@ class ProductReviewsResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
+     *              "202": "Accepted.",
      *              "400": "Abstract product id is not specified.",
      *              "401": "Invalid access token.",
      *              "403": "Missing access token.",
