@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Shipment\Business\ShipmentMethod;
 
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
 
@@ -15,6 +16,8 @@ use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
  */
 class ShipmentMethodDeleter implements ShipmentMethodDeleterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface
      */
@@ -50,8 +53,22 @@ class ShipmentMethodDeleter implements ShipmentMethodDeleterInterface
             return false;
         }
 
-        $this->shipmentEntityManager->deleteMethodByIdMethod($idShipmentMethod);
+        $this->getTransactionHandler()->handleTransaction(function () use ($idShipmentMethod): void {
+            $this->executeDeleteShipmentMethodTransaction($idShipmentMethod);
+        });
 
         return true;
+    }
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return void
+     */
+    protected function executeDeleteShipmentMethodTransaction(int $idShipmentMethod): void
+    {
+        $this->shipmentEntityManager->deleteShipmentMethodStoreRelationsByIdShipmentMethod($idShipmentMethod);
+        $this->shipmentEntityManager->deleteShipmentMethodPricesByIdShipmentMethod($idShipmentMethod);
+        $this->shipmentEntityManager->deleteMethodByIdMethod($idShipmentMethod);
     }
 }

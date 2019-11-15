@@ -4,7 +4,7 @@
   "description": "DiscountPromotion module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/availability": "^9.0.0",
     "spryker/cart-extension": "^1.0.0 || ^2.0.0 || ^4.0.0",
     "spryker/discount": "^7.2.4 || ^9.0.0",

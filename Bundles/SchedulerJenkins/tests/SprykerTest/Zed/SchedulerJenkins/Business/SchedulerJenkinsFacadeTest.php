@@ -229,7 +229,7 @@ class SchedulerJenkinsFacadeTest extends Unit
 
         $schedulerJenkinsConfigMock
             ->method('getJenkinsConfiguration')
-            ->willReturn('test');
+            ->willReturn(['test']);
 
         return $schedulerJenkinsConfigMock;
     }
