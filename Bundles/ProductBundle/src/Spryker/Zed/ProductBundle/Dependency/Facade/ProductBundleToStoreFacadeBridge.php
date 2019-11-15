@@ -23,6 +23,14 @@ class ProductBundleToStoreFacadeBridge implements ProductBundleToStoreFacadeInte
     }
 
     /**
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getAllStores()
+    {
+        return $this->storeFacade->getAllStores();
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getCurrentStore()

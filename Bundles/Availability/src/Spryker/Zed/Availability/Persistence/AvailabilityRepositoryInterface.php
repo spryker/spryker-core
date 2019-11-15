@@ -61,12 +61,12 @@ interface AvailabilityRepositoryInterface
      * @param string $abstractSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
     public function getCalculatedProductAbstractAvailabilityBySkuAndStore(
         string $abstractSku,
         StoreTransfer $storeTransfer
-    ): ?ProductAbstractAvailabilityTransfer;
+    ): ProductAbstractAvailabilityTransfer;
 
     /**
      * @param string $concreteSku
@@ -81,4 +81,11 @@ interface AvailabilityRepositoryInterface
      * @return string|null
      */
     public function getProductConcreteSkuByConcreteId(int $idProductConcrete): ?string;
+
+    /**
+     * @param string $concreteSku
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresWhereProductAvailabilityIsDefined(string $concreteSku): array;
 }

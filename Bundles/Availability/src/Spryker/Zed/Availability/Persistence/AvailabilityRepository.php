@@ -157,12 +157,12 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
      * @param string $abstractSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
     public function getCalculatedProductAbstractAvailabilityBySkuAndStore(
         string $abstractSku,
         StoreTransfer $storeTransfer
-    ): ?ProductAbstractAvailabilityTransfer {
+    ): ProductAbstractAvailabilityTransfer {
         $availabilityAbstractEntityArray = $this->getFactory()
             ->getProductQueryContainer()
             ->queryProductAbstract()
@@ -193,7 +193,10 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
             ->findOne();
 
         if ($availabilityAbstractEntityArray === null) {
-            return null;
+            return (new ProductAbstractAvailabilityTransfer())
+                ->setSku($abstractSku)
+                ->setAvailability(0)
+                ->setIsNeverOutOfStock(false);
         }
 
         return $this->getFactory()
@@ -236,5 +239,28 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
             ->endUse()
             ->select(SpyProductTableMap::COL_SKU)
             ->findOne();
+    }
+
+    /**
+     * @param string $concreteSku
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresWhereProductAvailabilityIsDefined(string $concreteSku): array
+    {
+        $availabilityEntities = $this->getFactory()
+            ->createSpyAvailabilityQuery()
+            ->joinWithStore(Criteria::LEFT_JOIN)
+            ->filterBySku($concreteSku)
+            ->find();
+
+        $storeEntities = [];
+        foreach ($availabilityEntities as $availabilityEntity) {
+            $storeEntities[] = $availabilityEntity->getStore();
+        }
+
+        return $this->getFactory()
+            ->createStoreMapper()
+            ->mapStoreEntitiesToStoreTransfers($storeEntities);
     }
 }
