@@ -23,7 +23,6 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 class ProductListQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     protected const REQUEST_PARAM_ID_PRODUCT_LIST = ProductListTransfer::ID_PRODUCT_LIST;
-    protected const REQUEST_PARAM_ITEMS_PER_PAGE = 'itemsPerPage';
 
     /**
      * {@inheritDoc}
@@ -44,13 +43,6 @@ class ProductListQueryExpanderPlugin extends AbstractPlugin implements QueryExpa
 
         $query = $searchQuery->getSearchQuery();
         $this->expandQueryWithProductListFilters($query, $requestParameters[static::REQUEST_PARAM_ID_PRODUCT_LIST]);
-
-        $itemsPerPage = $requestParameters[static::REQUEST_PARAM_ITEMS_PER_PAGE] ?? null;
-
-        if ($itemsPerPage) {
-            // temporary solution until ProductConcreteSearchGridWidget gets pagination
-            $query->setSize($itemsPerPage);
-        }
 
         return $searchQuery;
     }
@@ -75,28 +67,8 @@ class ProductListQueryExpanderPlugin extends AbstractPlugin implements QueryExpa
     protected function createProductListBoolQuery(int $idProductList): BoolQuery
     {
         return (new BoolQuery())
-            ->addShould($this->createWhitelistTermQuery($idProductList))
-            ->addShould($this->createBlacklistTermQuery($idProductList));
-    }
-
-    /**
-     * @param int $idProductList
-     *
-     * @return \Elastica\Query\Term
-     */
-    protected function createWhitelistTermQuery(int $idProductList): Term
-    {
-        return (new Term())->setTerm(PageIndexMap::PRODUCT_LISTS_WHITELISTS, (string)$idProductList);
-    }
-
-    /**
-     * @param int $idProductList
-     *
-     * @return \Elastica\Query\Term
-     */
-    protected function createBlacklistTermQuery(int $idProductList): Term
-    {
-        return (new Term())->setTerm(PageIndexMap::PRODUCT_LISTS_BLACKLISTS, (string)$idProductList);
+            ->addShould((new Term())->setTerm(PageIndexMap::PRODUCT_LISTS_WHITELISTS, (string)$idProductList))
+            ->addShould((new Term())->setTerm(PageIndexMap::PRODUCT_LISTS_BLACKLISTS, (string)$idProductList));
     }
 
     /**
