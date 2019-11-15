@@ -27,25 +27,25 @@ interface SecurityConfigurationInterface
     /**
      * @return callable[]
      */
-    public function getAuthenticationSuccessHandler(): array;
+    public function getAuthenticationSuccessHandlers(): array;
 
     /**
      * @return callable[]
      */
-    public function getAuthenticationFailureHandler(): array;
+    public function getAuthenticationFailureHandlers(): array;
 
     /**
      * @return callable[]
      */
-    public function getLogoutHandler(): array;
+    public function getLogoutHandlers(): array;
 
     /**
      * @return callable[]
      */
-    public function getAccessDeniedHandler(): array;
+    public function getAccessDeniedHandlers(): array;
 
     /**
      * @return array
      */
-    public function getEventSubscriber(): array;
+    public function getEventSubscribers(): array;
 }

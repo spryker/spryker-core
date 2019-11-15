@@ -156,7 +156,7 @@ class ConfigHelper extends Module
      *
      * @return \Spryker\Shared\Kernel\AbstractBundleConfig|null
      */
-    public function mockSharedConfigMethod(string $methodName, $return, ?string $moduleName = null)
+    public function mockSharedConfigMethod(string $methodName, $return, ?string $moduleName = null): ?AbstractBundleConfig
     {
         $moduleName = $this->getModuleName($moduleName);
         $className = $this->getSharedConfigClassName($moduleName);
@@ -183,7 +183,7 @@ class ConfigHelper extends Module
      *
      * @return \Spryker\Shared\Kernel\AbstractBundleConfig
      */
-    public function getModuleConfig(?string $moduleName = null)
+    public function getModuleConfig(?string $moduleName = null): AbstractBundleConfig
     {
         $moduleName = $this->getModuleName($moduleName);
 
@@ -236,7 +236,7 @@ class ConfigHelper extends Module
      *
      * @return \Spryker\Shared\Kernel\AbstractBundleConfig
      */
-    protected function injectSharedConfig(AbstractBundleConfig $moduleConfig, string $moduleName)
+    protected function injectSharedConfig(AbstractBundleConfig $moduleConfig, string $moduleName): AbstractBundleConfig
     {
         if (!method_exists($moduleConfig, 'setSharedConfig')) {
             return $moduleConfig;

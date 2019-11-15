@@ -51,11 +51,11 @@ class SecurityConfigurationTest extends Unit
     /**
      * @return void
      */
-    public function testAddFirewallWillMergeRecursiveIfAFirewallIsAlreadyConfigured(): void
+    public function testMergeFirewallWillMergeRecursiveIfAFirewallIsAlreadyConfigured(): void
     {
         $securityConfiguration = new SecurityConfiguration();
         $securityConfiguration->addFirewall(static::FIREWALL_MAIN, ['foo' => 'bar', 'zip' => 'zap']);
-        $securityConfiguration->addFirewall(static::FIREWALL_MAIN, ['trip' => 'trap']);
+        $securityConfiguration->mergeFirewall(static::FIREWALL_MAIN, ['trip' => 'trap']);
 
         $firewalls = $securityConfiguration->getFirewalls();
         $this->assertArrayHasKey(static::FIREWALL_MAIN, $firewalls);
@@ -94,7 +94,7 @@ class SecurityConfigurationTest extends Unit
         $securityConfiguration->addAuthenticationSuccessHandler(static::FIREWALL_MAIN, function () {
         });
 
-        $this->assertCount(1, $securityConfiguration->getAuthenticationSuccessHandler());
+        $this->assertCount(1, $securityConfiguration->getAuthenticationSuccessHandlers());
     }
 
     /**
@@ -106,7 +106,7 @@ class SecurityConfigurationTest extends Unit
         $securityConfiguration->addAuthenticationFailureHandler(static::FIREWALL_MAIN, function () {
         });
 
-        $this->assertCount(1, $securityConfiguration->getAuthenticationFailureHandler());
+        $this->assertCount(1, $securityConfiguration->getAuthenticationFailureHandlers());
     }
 
     /**
@@ -118,7 +118,7 @@ class SecurityConfigurationTest extends Unit
         $securityConfiguration->addAccessDeniedHandler(static::FIREWALL_MAIN, function () {
         });
 
-        $this->assertCount(1, $securityConfiguration->getAccessDeniedHandler());
+        $this->assertCount(1, $securityConfiguration->getAccessDeniedHandlers());
     }
 
     /**
@@ -130,6 +130,6 @@ class SecurityConfigurationTest extends Unit
         $securityConfiguration->addEventSubscriber(function () {
         });
 
-        $this->assertCount(1, $securityConfiguration->getEventSubscriber());
+        $this->assertCount(1, $securityConfiguration->getEventSubscribers());
     }
 }

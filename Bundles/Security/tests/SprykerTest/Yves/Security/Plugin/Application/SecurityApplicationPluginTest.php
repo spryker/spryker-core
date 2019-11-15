@@ -100,7 +100,7 @@ class SecurityApplicationPluginTest extends Unit
         $this->assertEquals('ANONYMOUS', $httpKernelBrowser->getResponse()->getContent());
 
         $httpKernelBrowser->request('post', '/login_check', ['_username' => 'user', '_password' => 'bar']);
-        $this->assertContains('Bad credentials', $container->get('security.last_error')($httpKernelBrowser->getRequest()));
+        $this->assertStringContainsString('Bad credentials', $container->get('security.last_error')($httpKernelBrowser->getRequest()));
         // hack to re-close the session as the previous assertions re-opens it
         $httpKernelBrowser->getRequest()->getSession()->save();
 

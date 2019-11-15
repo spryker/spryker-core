@@ -66,9 +66,9 @@ class DependencyProviderHelper extends Module
      *
      * @throws \Exception
      *
-     * @return object|\Spryker\Yves\Kernel\AbstractBundleDependencyProvider
+     * @return \Spryker\Yves\Kernel\AbstractBundleDependencyProvider
      */
-    public function mockDependencyProviderMethod(string $methodName, $return, ?string $moduleName = null)
+    public function mockDependencyProviderMethod(string $methodName, $return, ?string $moduleName = null): AbstractBundleDependencyProvider
     {
         $moduleName = $this->getModuleName($moduleName);
         $className = $this->getDependencyProviderClassName($moduleName);

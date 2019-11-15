@@ -29,27 +29,27 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
     /**
      * @var callable[]
      */
-    protected $authenticationSuccessHandler = [];
+    protected $authenticationSuccessHandlers = [];
 
     /**
      * @var callable[]
      */
-    protected $authenticationFailureHandler = [];
+    protected $authenticationFailureHandlers = [];
 
     /**
      * @var callable[]
      */
-    protected $logoutHandler = [];
+    protected $logoutHandlers = [];
 
     /**
      * @var callable[]
      */
-    protected $accessDeniedHandler = [];
+    protected $accessDeniedHandlers = [];
 
     /**
      * @var array
      */
-    protected $eventSubscriber = [];
+    protected $eventSubscribers = [];
 
     /**
      * @param string $firewallName
@@ -59,9 +59,20 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      */
     public function addFirewall(string $firewallName, array $configuration)
     {
-        if (isset($this->firewalls[$firewallName])) {
-            $configuration = array_merge_recursive($this->firewalls[$firewallName], $configuration);
-        }
+        $this->firewalls[$firewallName] = $configuration;
+
+        return $this;
+    }
+
+    /**
+     * @param string $firewallName
+     * @param array $configuration
+     *
+     * @return $this
+     */
+    public function mergeFirewall(string $firewallName, array $configuration)
+    {
+        $configuration = array_merge_recursive($this->firewalls[$firewallName], $configuration);
 
         $this->firewalls[$firewallName] = $configuration;
 
@@ -126,7 +137,7 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      */
     public function addAuthenticationSuccessHandler(string $firewallName, callable $authenticationSuccessHandler)
     {
-        $this->authenticationSuccessHandler[$firewallName] = $authenticationSuccessHandler;
+        $this->authenticationSuccessHandlers[$firewallName] = $authenticationSuccessHandler;
 
         return $this;
     }
@@ -134,9 +145,9 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
     /**
      * @return callable[]
      */
-    public function getAuthenticationSuccessHandler(): array
+    public function getAuthenticationSuccessHandlers(): array
     {
-        return $this->authenticationSuccessHandler;
+        return $this->authenticationSuccessHandlers;
     }
 
     /**
@@ -147,7 +158,7 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      */
     public function addAuthenticationFailureHandler(string $firewallName, callable $authenticationFailureHandler)
     {
-        $this->authenticationFailureHandler[$firewallName] = $authenticationFailureHandler;
+        $this->authenticationFailureHandlers[$firewallName] = $authenticationFailureHandler;
 
         return $this;
     }
@@ -155,9 +166,9 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
     /**
      * @return callable[]
      */
-    public function getAuthenticationFailureHandler(): array
+    public function getAuthenticationFailureHandlers(): array
     {
-        return $this->authenticationFailureHandler;
+        return $this->authenticationFailureHandlers;
     }
 
     /**
@@ -168,7 +179,7 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      */
     public function addLogoutHandler(string $firewallName, callable $logoutHandler)
     {
-        $this->logoutHandler[$firewallName] = $logoutHandler;
+        $this->logoutHandlers[$firewallName] = $logoutHandler;
 
         return $this;
     }
@@ -176,9 +187,9 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
     /**
      * @return callable[]
      */
-    public function getLogoutHandler(): array
+    public function getLogoutHandlers(): array
     {
-        return $this->logoutHandler;
+        return $this->logoutHandlers;
     }
 
     /**
@@ -189,7 +200,7 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      */
     public function addAccessDeniedHandler(string $firewallName, callable $accessDeniedHandler)
     {
-        $this->accessDeniedHandler[$firewallName] = $accessDeniedHandler;
+        $this->accessDeniedHandlers[$firewallName] = $accessDeniedHandler;
 
         return $this;
     }
@@ -197,9 +208,9 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
     /**
      * @return callable[]
      */
-    public function getAccessDeniedHandler(): array
+    public function getAccessDeniedHandlers(): array
     {
-        return $this->accessDeniedHandler;
+        return $this->accessDeniedHandlers;
     }
 
     /**
@@ -209,7 +220,7 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      */
     public function addEventSubscriber(callable $eventSubscriber)
     {
-        $this->eventSubscriber[] = $eventSubscriber;
+        $this->eventSubscribers[] = $eventSubscriber;
 
         return $this;
     }
@@ -217,8 +228,8 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
     /**
      * @return array
      */
-    public function getEventSubscriber(): array
+    public function getEventSubscribers(): array
     {
-        return $this->eventSubscriber;
+        return $this->eventSubscribers;
     }
 }

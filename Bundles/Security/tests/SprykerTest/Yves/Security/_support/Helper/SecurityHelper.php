@@ -191,7 +191,7 @@ class SecurityHelper extends Module
      */
     protected function addAccessDeniedHandler(SecurityBuilderInterface $securityBuilder, SecurityConfiguration $securityConfiguration): SecurityBuilderInterface
     {
-        foreach ($securityConfiguration->getAccessDeniedHandler() as $firewallName => $accessDeniedHandler) {
+        foreach ($securityConfiguration->getAccessDeniedHandlers() as $firewallName => $accessDeniedHandler) {
             $securityBuilder->addAccessDeniedHandler($firewallName, $accessDeniedHandler);
         }
 
@@ -206,7 +206,7 @@ class SecurityHelper extends Module
      */
     protected function addAuthenticationSuccessHandler(SecurityBuilderInterface $securityBuilder, SecurityConfiguration $securityConfiguration): SecurityBuilderInterface
     {
-        foreach ($securityConfiguration->getAuthenticationSuccessHandler() as $firewallName => $authenticationSuccessHandler) {
+        foreach ($securityConfiguration->getAuthenticationSuccessHandlers() as $firewallName => $authenticationSuccessHandler) {
             $securityBuilder->addAuthenticationSuccessHandler($firewallName, $authenticationSuccessHandler);
         }
 
@@ -221,7 +221,7 @@ class SecurityHelper extends Module
      */
     protected function addAuthenticationFailureHandler(SecurityBuilderInterface $securityBuilder, SecurityConfiguration $securityConfiguration): SecurityBuilderInterface
     {
-        foreach ($securityConfiguration->getAuthenticationFailureHandler() as $firewallName => $authenticationFailureHandler) {
+        foreach ($securityConfiguration->getAuthenticationFailureHandlers() as $firewallName => $authenticationFailureHandler) {
             $securityBuilder->addAuthenticationFailureHandler($firewallName, $authenticationFailureHandler);
         }
 

@@ -18,6 +18,14 @@ interface SecurityBuilderInterface
     public function addFirewall(string $firewallName, array $configuration);
 
     /**
+     * @param string $firewallName
+     * @param array $configuration
+     *
+     * @return $this
+     */
+    public function mergeFirewall(string $firewallName, array $configuration);
+
+    /**
      * @param array $accessRules
      *
      * @return $this

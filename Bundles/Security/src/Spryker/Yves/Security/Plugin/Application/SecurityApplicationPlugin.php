@@ -500,8 +500,8 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
             }
 
             $securityConfiguration = $this->getSecurityConfiguration($container);
-            if (isset($securityConfiguration->getAccessDeniedHandler()[$firewallName])) {
-                $accessDeniedHandler = call_user_func($securityConfiguration->getAccessDeniedHandler()[$firewallName], $container);
+            if (isset($securityConfiguration->getAccessDeniedHandlers()[$firewallName])) {
+                $accessDeniedHandler = call_user_func($securityConfiguration->getAccessDeniedHandlers()[$firewallName], $container);
             }
 
             $container->set('security.exception_listener.' . $firewallName, $container->get(static::SERVICE_SECURITY_EXCEPTION_LISTENER_PROTO)($entryPoint, $firewallName, $accessDeniedHandler));
@@ -999,8 +999,8 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected function getAuthenticationSuccessHandler(ContainerInterface $container, string $firewallName, array $options): AuthenticationSuccessHandlerInterface
     {
         $securityConfiguration = $this->getSecurityConfiguration($container);
-        if (isset($securityConfiguration->getAuthenticationSuccessHandler()[$firewallName])) {
-            return call_user_func($securityConfiguration->getAuthenticationSuccessHandler()[$firewallName], $container, $options);
+        if (isset($securityConfiguration->getAuthenticationSuccessHandlers()[$firewallName])) {
+            return call_user_func($securityConfiguration->getAuthenticationSuccessHandlers()[$firewallName], $container, $options);
         }
 
         if (!$container->has('security.authentication.success_handler.' . $firewallName)) {
@@ -1020,8 +1020,8 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected function getAuthenticationFailureHandler(ContainerInterface $container, string $firewallName, array $options): AuthenticationFailureHandlerInterface
     {
         $securityConfiguration = $this->getSecurityConfiguration($container);
-        if (isset($securityConfiguration->getAuthenticationFailureHandler()[$firewallName])) {
-            return call_user_func($securityConfiguration->getAuthenticationFailureHandler()[$firewallName], $container, $options);
+        if (isset($securityConfiguration->getAuthenticationFailureHandlers()[$firewallName])) {
+            return call_user_func($securityConfiguration->getAuthenticationFailureHandlers()[$firewallName], $container, $options);
         }
 
         if (!$container->has('security.authentication.failure_handler.' . $firewallName)) {
@@ -1112,8 +1112,8 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected function getLogoutHandler(ContainerInterface $container, string $firewallName, array $options): LogoutSuccessHandlerInterface
     {
         $securityConfiguration = $this->getSecurityConfiguration($container);
-        if (isset($securityConfiguration->getLogoutHandler()[$firewallName])) {
-            return call_user_func($securityConfiguration->getLogoutHandler()[$firewallName], $container, $options);
+        if (isset($securityConfiguration->getLogoutHandlers()[$firewallName])) {
+            return call_user_func($securityConfiguration->getLogoutHandlers()[$firewallName], $container, $options);
         }
 
         if (!$container->has('security.authentication.logout_handler.' . $firewallName)) {
@@ -1357,7 +1357,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         $dispatcher = $this->getDispatcher($container);
         $dispatcher->addSubscriber($container->get(static::SERVICE_SECURITY_FIREWALL));
 
-        foreach ($this->getSecurityConfiguration($container)->getEventSubscriber() as $eventSubscriber) {
+        foreach ($this->getSecurityConfiguration($container)->getEventSubscribers() as $eventSubscriber) {
             $dispatcher->addSubscriber(call_user_func($eventSubscriber, $container));
         }
     }
