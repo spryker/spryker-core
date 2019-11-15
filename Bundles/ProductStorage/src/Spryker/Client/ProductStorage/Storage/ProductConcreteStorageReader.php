@@ -261,8 +261,9 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     {
         $storageKeys = $this->generateMappingStorageKeys($mappingType, $identifiers, $localeName);
         $productConcreteIds = [];
-        foreach ($this->storageClient->getMulti($storageKeys) as $key => $storageData) {
-            $productConcreteIds[$key] = $this->utilEncodingService->decodeJson($storageData, true)[static::KEY_ID];
+        $mappings = $this->storageClient->getMulti($storageKeys);
+        foreach ($mappings as $mapping) {
+            $productConcreteIds[] = $this->utilEncodingService->decodeJson($mapping, true)[static::KEY_ID];
         }
 
         if (!$productConcreteIds) {
