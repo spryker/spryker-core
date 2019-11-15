@@ -156,6 +156,11 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     protected function updateBundleProductAvailability(array $bundleItems, string $bundleProductSku): void
     {
         $storeTransfers = $this->stockFacade->getStoresWhereProductStockIsDefined($bundleProductSku);
+        if ($storeTransfers === []) {
+            $this->updateBundleProductAvailabilityForProductWithNotDefinedStock($bundleProductSku);
+
+            return;
+        }
 
         foreach ($storeTransfers as $storeTransfer) {
             $bundleAvailabilityQuantity = $this->calculateBundleQuantity($bundleItems, $storeTransfer);
@@ -163,6 +168,23 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
             $this->availabilityFacade->saveProductAvailabilityForStore(
                 $bundleProductSku,
                 $bundleAvailabilityQuantity,
+                $storeTransfer
+            );
+        }
+    }
+
+    /**
+     * @param string $bundleProductSku
+     *
+     * @return void
+     */
+    protected function updateBundleProductAvailabilityForProductWithNotDefinedStock(string $bundleProductSku): void
+    {
+        $storeTransfers = $this->availabilityFacade->getStoresWhereProductAvailabilityIsDefined($bundleProductSku);
+        foreach ($storeTransfers as $storeTransfer) {
+            $this->availabilityFacade->saveProductAvailabilityForStore(
+                $bundleProductSku,
+                new Decimal(0),
                 $storeTransfer
             );
         }

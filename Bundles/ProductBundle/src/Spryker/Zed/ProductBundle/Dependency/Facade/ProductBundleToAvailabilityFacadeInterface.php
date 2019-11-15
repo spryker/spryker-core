@@ -14,6 +14,13 @@ use Spryker\DecimalObject\Decimal;
 interface ProductBundleToAvailabilityFacadeInterface
 {
     /**
+     * @param string $concreteSku
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresWhereProductAvailabilityIsDefined(string $concreteSku): array;
+
+    /**
      * @param string $sku
      * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer

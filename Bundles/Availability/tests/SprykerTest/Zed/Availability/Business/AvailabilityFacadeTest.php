@@ -47,7 +47,7 @@ class AvailabilityFacadeTest extends Unit
     public const ABSTRACT_SKU = '123_availability_test';
     public const CONCRETE_SKU = '123_availability_test-concrete';
     public const ID_STORE = 1;
-    public const DE_STORE_NAME = 'DE';
+    public const STORE_NAME_DE = 'DE';
 
     /**
      * @var \SprykerTest\Zed\Availability\AvailabilityBusinessTester
@@ -61,7 +61,7 @@ class AvailabilityFacadeTest extends Unit
     {
         // Arrange
         $this->tester->haveProduct([ProductConcreteTransfer::SKU => static::CONCRETE_SKU]);
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $this->createProductWithStock(
             static::ABSTRACT_SKU,
             static::CONCRETE_SKU,
@@ -83,7 +83,7 @@ class AvailabilityFacadeTest extends Unit
     public function testIsProductSellableWhenStockIsEmptyShouldReturnFailure()
     {
         // Arrange
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $this->createProductWithStock(
             static::ABSTRACT_SKU,
             static::CONCRETE_SKU,
@@ -105,7 +105,7 @@ class AvailabilityFacadeTest extends Unit
     public function testIsProductSellableWhenStockFulfilledShouldReturnSuccess()
     {
         // Arrange
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $this->createProductWithStock(
             static::ABSTRACT_SKU,
             static::CONCRETE_SKU,
@@ -131,7 +131,7 @@ class AvailabilityFacadeTest extends Unit
     public function testCalculateStockForProductShouldReturnPersistedStock(Decimal $quantity)
     {
         // Arrange
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $this->createProductWithStock(
             static::ABSTRACT_SKU,
             static::CONCRETE_SKU,
@@ -210,8 +210,13 @@ class AvailabilityFacadeTest extends Unit
     public function testUpdateAvailabilityShouldStoreNewQuantity()
     {
         // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $stockTransfer = $this->tester->haveStock([
+            StockTransfer::STORE_RELATION => (new StoreRelationTransfer())->setIdStores([$storeTransfer->getIdStore()]),
+        ]);
         $productTransfer = $this->tester->haveProduct();
         $this->tester->haveProductInStock([
+            StockProductTransfer::FK_STOCK => $stockTransfer->getIdStock(),
             StockProductTransfer::SKU => $productTransfer->getSku(),
             StockProductTransfer::QUANTITY => 50,
             StockProductTransfer::IS_NEVER_OUT_OF_STOCK => false,
@@ -235,7 +240,7 @@ class AvailabilityFacadeTest extends Unit
     public function testUpdateAvailabilityWhenItsEmptyShouldStoreNewQuantity()
     {
         // Arrange
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $this->createProductWithStock(
             static::ABSTRACT_SKU,
             static::CONCRETE_SKU,
@@ -258,9 +263,13 @@ class AvailabilityFacadeTest extends Unit
     public function testUpdateAvailabilityWhenSetToEmptyShouldStoreEmptyQuantity()
     {
         // Arrange
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $stockTransfer = $this->tester->haveStock([
+            StockTransfer::STORE_RELATION => (new StoreRelationTransfer())->setIdStores([$storeTransfer->getIdStore()]),
+        ]);
         $productTransfer = $this->tester->haveProduct();
         $this->tester->haveProductInStock([
+            StockProductTransfer::FK_STOCK => $stockTransfer->getIdStock(),
             StockProductTransfer::SKU => $productTransfer->getSku(),
             StockProductTransfer::QUANTITY => 0,
             StockProductTransfer::IS_NEVER_OUT_OF_STOCK => false,
@@ -284,7 +293,7 @@ class AvailabilityFacadeTest extends Unit
     public function testFindProductAbstractAvailabilityForStoreWithCachedAvailability(): void
     {
         // Arrange
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $productTransfer = $this->tester->haveProduct([], ['sku' => static::ABSTRACT_SKU]);
         $this->tester->haveAvailabilityAbstract($productTransfer, new Decimal(2));
 
@@ -306,7 +315,7 @@ class AvailabilityFacadeTest extends Unit
     public function testFindProductAbstractAvailabilityForStoreWithInvalidSku(): void
     {
         // Arrange
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
 
         // Act
         $productAbstractAvailabilityTransfer = $this->getAvailabilityFacade()
@@ -328,7 +337,7 @@ class AvailabilityFacadeTest extends Unit
         $abstractSku = 'testFindProductAbstractAvailabilityForStoreAbstract';
         $concreteSku1 = 'testFindProductAbstractAvailabilityForStore1';
         $concreteSku2 = 'testFindProductAbstractAvailabilityForStore2';
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $productQuantity1 = rand(1, 10);
         $productQuantity2 = rand(1, 10);
         $this->createProductWithStock(
@@ -367,7 +376,7 @@ class AvailabilityFacadeTest extends Unit
     {
         // Arrange
         $productQuantity = 6;
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $productTransfer = $this->tester->haveProduct(['sku' => static::CONCRETE_SKU], ['sku' => static::ABSTRACT_SKU]);
         $this->tester->haveAvailabilityConcrete($productTransfer->getSku(), $storeTransfer, new Decimal($productQuantity));
 
@@ -390,7 +399,7 @@ class AvailabilityFacadeTest extends Unit
     {
         // Arrange
         $productQuantity = 13;
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $stockTransfer = $this->tester->haveStock([
             StockTransfer::STORE_RELATION => (new StoreRelationTransfer())->setIdStores([$storeTransfer->getIdStore()]),
         ]);
@@ -419,7 +428,7 @@ class AvailabilityFacadeTest extends Unit
     public function testFindProductConcreteAvailabilityBySkuForStoreWithInvalidSku(): void
     {
         // Arrange
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
 
         // Act
         $productConcreteAvailabilityTransfer = $this->getAvailabilityFacade()
@@ -438,7 +447,7 @@ class AvailabilityFacadeTest extends Unit
     public function testSaveProductAvailabilityForStoreShouldStoreAvailability()
     {
         // Arrange
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $this->createProductWithStock(
             static::ABSTRACT_SKU,
             static::CONCRETE_SKU,
@@ -468,7 +477,7 @@ class AvailabilityFacadeTest extends Unit
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct();
         $productConcreteTransfer2 = $this->tester->haveProduct();
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
 
         $this->getAvailabilityFacade()->saveProductAvailabilityForStore(
             $productConcreteTransfer->getSku(),
@@ -493,25 +502,20 @@ class AvailabilityFacadeTest extends Unit
      */
     protected function getAvailabilityFacade()
     {
-        /** @var \Spryker\Zed\Availability\Business\AvailabilityFacade $AvailabilityFacade */
-        $AvailabilityFacade = $this->tester->getFacade();
+        /** @var \Spryker\Zed\Availability\Business\AvailabilityFacade $availabilityFacade */
+        $availabilityFacade = $this->tester->getFacade();
 
         $container = new Container();
         $container->set(AvailabilityDependencyProvider::FACADE_STOCK, function () {
-            return $this->getMockBuilder(AvailabilityToStockFacadeInterface::class)
-                ->getMock()
-                ->method('getStoreToWarehouseMapping')
-                ->willReturn([
-                    static::DE_STORE_NAME => ['Warehouse1'],
-                ]);
+            return $this->createStockFacadeMock();
         });
         $availabilityBusinessFactory = new AvailabilityBusinessFactory();
         $dependencyProvider = new AvailabilityDependencyProvider();
         $dependencyProvider->provideBusinessLayerDependencies($container);
         $availabilityBusinessFactory->setContainer($container);
-        $AvailabilityFacade->setFactory($availabilityBusinessFactory);
+        $availabilityFacade->setFactory($availabilityBusinessFactory);
 
-        return $AvailabilityFacade;
+        return $availabilityFacade;
     }
 
     /**
@@ -567,7 +571,7 @@ class AvailabilityFacadeTest extends Unit
      */
     protected function createQuoteTransfer()
     {
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->setStore($storeTransfer);
         $itemTransfer = new ItemTransfer();
@@ -608,5 +612,19 @@ class AvailabilityFacadeTest extends Unit
         $availabilityEntity->setQuantity($quantity)->save();
 
         return $availabilityEntity;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface
+     */
+    protected function createStockFacadeMock(): AvailabilityToStockFacadeInterface
+    {
+        $mock = $this->getMockBuilder(AvailabilityToStockFacadeInterface::class)->getMock();
+        $mock->method('getStoreToWarehouseMapping')
+            ->willReturn([static::STORE_NAME_DE => ['Warehouse1']]);
+        $mock->method('getStoresWhereProductStockIsDefined')
+            ->willReturn((new StoreTransfer())->setName(static::STORE_NAME_DE));
+
+        return $mock;
     }
 }

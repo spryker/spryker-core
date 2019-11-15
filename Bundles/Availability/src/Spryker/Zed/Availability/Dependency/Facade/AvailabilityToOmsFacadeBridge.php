@@ -35,4 +35,15 @@ class AvailabilityToOmsFacadeBridge implements AvailabilityToOmsFacadeInterface
     {
         return $this->omsFacade->getOmsReservedProductQuantityForSku($sku, $storeTransfer);
     }
+
+    /**
+     * @param string[] $skus
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function getOmsReservedProductQuantityForSkus(array $skus, StoreTransfer $storeTransfer): Decimal
+    {
+        return $this->omsFacade->getOmsReservedProductQuantityForSkus($skus, $storeTransfer);
+    }
 }

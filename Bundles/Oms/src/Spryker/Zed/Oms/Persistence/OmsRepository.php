@@ -11,7 +11,9 @@ use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderProcessTableMap;
+use Orm\Zed\Oms\Persistence\Map\SpyOmsProductReservationTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -19,6 +21,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
 {
+    protected const COL_PRODUCT_RESERVATION_TOTAL_QUANTITY = 'productReservationTotalQuantity';
+
     /**
      * @param int[] $processIds
      * @param int[] $stateBlackList
@@ -79,5 +83,24 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
         }
 
         return $salesAggregationTransfers;
+    }
+
+    /**
+     * @param string[] $concreteSkus
+     * @param int $idStore
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function getSumOmsReservedProductQuantityByConcreteProductSkusForStore(array $concreteSkus, int $idStore): Decimal
+    {
+        $productReservationTotalQuantity = $this->getFactory()
+            ->createOmsProductReservationQuery()
+            ->select([static::COL_PRODUCT_RESERVATION_TOTAL_QUANTITY])
+            ->filterByFkStore($idStore)
+            ->filterBySku_In($concreteSkus)
+            ->withColumn(sprintf('SUM(%s)', SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY), static::COL_PRODUCT_RESERVATION_TOTAL_QUANTITY)
+            ->findOne();
+
+        return new Decimal($productReservationTotalQuantity ?? 0);
     }
 }

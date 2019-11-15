@@ -10,6 +10,11 @@ namespace Spryker\Zed\ProductBundle\Dependency\Facade;
 interface ProductBundleToStoreFacadeInterface
 {
     /**
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getAllStores();
+
+    /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getCurrentStore();

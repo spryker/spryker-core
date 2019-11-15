@@ -15,6 +15,8 @@ use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\Stock\Business\Stock\StockReaderInterface;
+use Spryker\Zed\Stock\Business\StockProduct\StockProductReaderInterface;
 use Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
@@ -32,9 +34,14 @@ class Writer implements WriterInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\Stock\Business\Model\ReaderInterface
+     * @var \Spryker\Zed\Stock\Business\Stock\StockReaderInterface
      */
-    protected $reader;
+    protected $stockReader;
+
+    /**
+     * @var \Spryker\Zed\Stock\Business\StockProduct\StockProductReaderInterface
+     */
+    protected $stockProductReader;
 
     /**
      * @var \Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface
@@ -48,18 +55,21 @@ class Writer implements WriterInterface
 
     /**
      * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Stock\Business\Model\ReaderInterface $readerInterface
+     * @param \Spryker\Zed\Stock\Business\Stock\StockReaderInterface $stockReader
+     * @param \Spryker\Zed\Stock\Business\StockProduct\StockProductReaderInterface $stockProductReader
      * @param \Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface $touchFacade
      * @param \Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface[] $stockUpdateHandlerPlugins
      */
     public function __construct(
         StockQueryContainerInterface $queryContainer,
-        ReaderInterface $readerInterface,
+        StockReaderInterface $stockReader,
+        StockProductReaderInterface $stockProductReader,
         StockToTouchInterface $touchFacade,
         array $stockUpdateHandlerPlugins
     ) {
         $this->queryContainer = $queryContainer;
-        $this->reader = $readerInterface;
+        $this->stockReader = $stockReader;
+        $this->stockProductReader = $stockProductReader;
         $this->touchFacade = $touchFacade;
         $this->stockUpdateHandlerPlugins = $stockUpdateHandlerPlugins;
     }
@@ -119,9 +129,9 @@ class Writer implements WriterInterface
      */
     protected function executeCreateStockProductTransaction(StockProductTransfer $transferStockProduct)
     {
-        $idStockType = $this->reader->getStockTypeIdByName($transferStockProduct->getStockType());
-        $idProduct = $this->reader->getProductConcreteIdBySku($transferStockProduct->getSku());
-        $this->reader->checkStockDoesNotExist($idStockType, $idProduct);
+        $idStockType = $this->stockReader->getStockTypeIdByName($transferStockProduct->getStockType());
+        $idProduct = $this->stockProductReader->getProductConcreteIdBySku($transferStockProduct->getSku());
+        $this->stockProductReader->checkStockDoesNotExist($idStockType, $idProduct);
         $idStockProduct = $this->saveStockProduct($transferStockProduct, $idStockType, $idProduct);
 
         $this->handleStockUpdatePlugins($transferStockProduct->getSku());
@@ -150,9 +160,9 @@ class Writer implements WriterInterface
      */
     protected function executeUpdateStockProductTransaction(StockProductTransfer $transferStockProduct)
     {
-        $idProduct = $this->reader->getProductConcreteIdBySku($transferStockProduct->getSku());
-        $idStock = $this->reader->getStockTypeIdByName($transferStockProduct->getStockType());
-        $stockProductEntity = $this->reader->getStockProductById($transferStockProduct->getIdStockProduct());
+        $idProduct = $this->stockProductReader->getProductConcreteIdBySku($transferStockProduct->getSku());
+        $idStock = $this->stockReader->getStockTypeIdByName($transferStockProduct->getStockType());
+        $stockProductEntity = $this->stockProductReader->getStockProductById($transferStockProduct->getIdStockProduct());
 
         $stockProductEntity
             ->setFkStock($idStock)
@@ -190,8 +200,8 @@ class Writer implements WriterInterface
      */
     protected function executeDecrementStockTransaction($sku, $stockType, Decimal $decrementBy): void
     {
-        $idProduct = $this->reader->getProductConcreteIdBySku($sku);
-        $idStock = $this->reader->getStockTypeIdByName($stockType);
+        $idProduct = $this->stockProductReader->getProductConcreteIdBySku($sku);
+        $idStock = $this->stockReader->getStockTypeIdByName($stockType);
         $stockProductEntity = $this->queryContainer
             ->queryStockProductByStockAndProduct($idStock, $idProduct)
             ->findOneOrCreate();
@@ -224,8 +234,8 @@ class Writer implements WriterInterface
      */
     protected function executeIncrementStockTransaction($sku, $stockType, Decimal $incrementBy): void
     {
-        $idProduct = $this->reader->getProductConcreteIdBySku($sku);
-        $idStock = $this->reader->getStockTypeIdByName($stockType);
+        $idProduct = $this->stockProductReader->getProductConcreteIdBySku($sku);
+        $idStock = $this->stockReader->getStockTypeIdByName($stockType);
 
         $stockProductEntity = $this->queryContainer
             ->queryStockProductByStockAndProduct($idStock, $idProduct)
@@ -303,12 +313,12 @@ class Writer implements WriterInterface
     public function persistStockProductCollection(ProductConcreteTransfer $productConcreteTransfer)
     {
         foreach ($productConcreteTransfer->getStocks() as $stockTransfer) {
-            if (!$this->reader->hasStockProduct($stockTransfer->getSku(), $stockTransfer->getStockType())) {
+            if (!$this->stockProductReader->hasStockProduct($stockTransfer->getSku(), $stockTransfer->getStockType())) {
                 $this->createStockProduct($stockTransfer);
             } else {
                 $idStockProduct = $stockTransfer->getIdStockProduct();
                 if (!$idStockProduct) {
-                    $idStockProduct = $this->reader->getIdStockProduct($stockTransfer->getSku(), $stockTransfer->getStockType());
+                    $idStockProduct = $this->stockProductReader->getIdStockProduct($stockTransfer->getSku(), $stockTransfer->getStockType());
                     $stockTransfer->setIdStockProduct($idStockProduct);
                 }
                 $this->updateStockProduct($stockTransfer);

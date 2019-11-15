@@ -335,6 +335,23 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
+     * @param string[] $skus
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function getOmsReservedProductQuantityForSkus(array $skus, StoreTransfer $storeTransfer): Decimal
+    {
+        return $this->getFactory()
+            ->createUtilReservation()
+            ->getOmsReservedProductQuantityForSkus($skus, $storeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param string $processName
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
