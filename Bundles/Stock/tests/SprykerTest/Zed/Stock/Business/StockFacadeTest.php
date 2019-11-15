@@ -149,11 +149,64 @@ class StockFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testIsProductAbstractNeverOutOfStockForStoreShouldReturnTrueWhenOneOfTheConcreteProductsIsNeverOutOfStock(): void
+    {
+        //Arrange
+        $this->productStockEntity1->setIsNeverOutOfStock(true);
+        $this->productStockEntity1->save();
+
+        //Act
+        $isNeverOutOfStock = $this->stockFacade->isProductAbstractNeverOutOfStockForStore(
+            self::ABSTRACT_SKU,
+            $this->storeTransfer
+        );
+
+        //Assert
+        $this->assertTrue($isNeverOutOfStock);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsProductAbstractNeverOutOfStockForStoreShouldReturnFalseWhenNoneOfTheConcreteProductsIsNeverOutOfStock(): void
+    {
+        //Arrange
+        $this->productStockEntity1->setIsNeverOutOfStock(false);
+        $this->productStockEntity1->save();
+
+        //Act
+        $isNeverOutOfStock = $this->stockFacade->isProductAbstractNeverOutOfStockForStore(
+            self::ABSTRACT_SKU,
+            $this->storeTransfer
+        );
+
+        //Assert
+        $this->assertFalse($isNeverOutOfStock);
+    }
+
+    /**
+     * @return void
+     */
     public function testCalculateStockForProductShouldCheckAllStocks()
     {
         $productStock = $this->stockFacade->calculateStockForProduct(self::CONCRETE_SKU);
 
         $this->assertTrue($productStock->equals('100.2'));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateProductAbstractStockForStoreWillCalculateStockOfAllConcreteProductsOfAbstractProduct(): void
+    {
+        //Act
+        $productAbstractStock = $this->stockFacade->calculateProductAbstractStockForStore(
+            self::ABSTRACT_SKU,
+            $this->storeTransfer
+        );
+
+        //Assert
+        $this->assertTrue($productAbstractStock->equals(static::STOCK_QUANTITY_1));
     }
 
     /**

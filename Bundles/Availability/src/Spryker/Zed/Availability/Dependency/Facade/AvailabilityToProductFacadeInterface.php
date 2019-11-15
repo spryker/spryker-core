@@ -15,4 +15,11 @@ interface AvailabilityToProductFacadeInterface
      * @return bool
      */
     public function hasProductAbstract($sku);
+
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasProductConcrete($sku);
 }

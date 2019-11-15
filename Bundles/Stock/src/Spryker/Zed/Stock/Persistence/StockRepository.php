@@ -10,7 +10,10 @@ namespace Spryker\Zed\Stock\Persistence;
 use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use InvalidArgumentException;
 use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
+use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -152,26 +155,126 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
     }
 
     /**
-     * @param \Orm\Zed\Stock\Persistence\SpyStockQuery $stockQuery
-     * @param \Generated\Shared\Transfer\StockCriteriaFilterTransfer $stockCriteriaFilterTransfer
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
-    protected function applyStockQueryFilters(SpyStockQuery $stockQuery, StockCriteriaFilterTransfer $stockCriteriaFilterTransfer): SpyStockQuery
+    public function getStockProductByProductAbstractSkuForStore(string $abstractSku, StoreTransfer $storeTransfer): array
     {
-        if ($stockCriteriaFilterTransfer->getIsActive()) {
-            $stockQuery->filterByIsActive(true);
+        $stockProductEntities = $this->queryStockProductByProductAbstractSkuAndStore($abstractSku, $storeTransfer)->find();
+
+        return $this->getFactory()
+            ->createStockProductMapper()
+            ->mapStockProductEntitiesToStockProductTransfers($stockProductEntities->getData());
+    }
+
+    /**
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    public function isProductAbstractNeverOutOfStockForStore(string $abstractSku, StoreTransfer $storeTransfer): bool
+    {
+        return $this->queryStockProductByProductAbstractSkuAndStore($abstractSku, $storeTransfer)
+            ->filterByIsNeverOutOfStock(true)
+            ->exists();
+    }
+
+    /**
+     * @param string $concreteSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     */
+    public function findProductStocksForStore(string $concreteSku, StoreTransfer $storeTransfer): array
+    {
+        $stockProductEntities = $this->queryStockProductByProductConcreteSkuAndStore($concreteSku, $storeTransfer)->find();
+
+        if ($stockProductEntities->count() === 0) {
+            return [];
         }
 
-        if ($stockCriteriaFilterTransfer->getStoreNames()) {
-            $stockQuery->useStockStoreQuery(null, Criteria::LEFT_JOIN)
-                ->useStoreQuery(null, Criteria::LEFT_JOIN)
-                    ->filterByName_In($stockCriteriaFilterTransfer->getStoreNames())
+        return $this->getFactory()
+            ->createStockProductMapper()
+            ->mapStockProductEntitiesToStockProductTransfers($stockProductEntities->getArrayCopy());
+    }
+
+    /**
+     * @param string $concreteSku
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     */
+    public function getStockProductsByProductConcreteSku(string $concreteSku): array
+    {
+        $stockProductEntities = $this->getFactory()
+            ->createStockProductQuery()
+            ->useSpyProductQuery(null, Criteria::LEFT_JOIN)
+                ->filterBySku($concreteSku)
+            ->endUse()
+            ->useStockQuery(null, Criteria::LEFT_JOIN)
+                ->filterByIsActive(true)
+            ->endUse()
+            ->find();
+
+        if ($stockProductEntities->count() === 0) {
+            throw new InvalidArgumentException('No stock set for this sku');
+        }
+
+        return $this->getFactory()
+            ->createStockProductMapper()
+            ->mapStockProductEntitiesToStockProductTransfers($stockProductEntities->getArrayCopy());
+    }
+
+    /**
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
+     */
+    protected function queryStockProductByProductAbstractSkuAndStore(string $abstractSku, StoreTransfer $storeTransfer): SpyStockProductQuery
+    {
+        return $this->getFactory()
+            ->createStockProductQuery()
+            ->useSpyProductQuery(null, Criteria::LEFT_JOIN)
+                ->useSpyProductAbstractQuery(null, Criteria::LEFT_JOIN)
+                    ->filterBySku($abstractSku)
                 ->endUse()
-                ->endUse();
-        }
+            ->endUse()
+            ->useStockQuery(null, Criteria::LEFT_JOIN)
+                ->filterByIsActive(true)
+                ->useStockStoreQuery(null, Criteria::LEFT_JOIN)
+                    ->useStoreQuery(null, Criteria::LEFT_JOIN)
+                        ->filterByName($storeTransfer->getName())
+                    ->endUse()
+                ->endUse()
+            ->endUse();
+    }
 
-        return $stockQuery;
+    /**
+     * @param string $concreteSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
+     */
+    protected function queryStockProductByProductConcreteSkuAndStore(string $concreteSku, StoreTransfer $storeTransfer): SpyStockProductQuery
+    {
+        return $this->getFactory()
+            ->createStockProductQuery()
+            ->useSpyProductQuery(null, Criteria::LEFT_JOIN)
+                ->filterBySku($concreteSku)
+            ->endUse()
+            ->useStockQuery(null, Criteria::LEFT_JOIN)
+                ->filterByIsActive(true)
+                ->useStockStoreQuery(null, Criteria::LEFT_JOIN)
+                    ->useStoreQuery(null, Criteria::LEFT_JOIN)
+                        ->filterByName($storeTransfer->getName())
+                    ->endUse()
+                ->endUse()
+            ->endUse();
     }
 
     /**
@@ -194,10 +297,34 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
                         ->endUse()
                     ->endUse()
                 ->endUse()
-            ->endUse();
+            ->endUse()
+            ->distinct();
 
         return $this->getFactory()
             ->createStoreMapper()
             ->mapStoreEntitiesToStoreTransfers($query->find()->getArrayCopy());
+    }
+
+    /**
+     * @param \Orm\Zed\Stock\Persistence\SpyStockQuery $stockQuery
+     * @param \Generated\Shared\Transfer\StockCriteriaFilterTransfer $stockCriteriaFilterTransfer
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
+     */
+    protected function applyStockQueryFilters(SpyStockQuery $stockQuery, StockCriteriaFilterTransfer $stockCriteriaFilterTransfer): SpyStockQuery
+    {
+        if ($stockCriteriaFilterTransfer->getIsActive()) {
+            $stockQuery->filterByIsActive(true);
+        }
+
+        if ($stockCriteriaFilterTransfer->getStoreNames()) {
+            $stockQuery->useStockStoreQuery(null, Criteria::LEFT_JOIN)
+                ->useStoreQuery(null, Criteria::LEFT_JOIN)
+                    ->filterByName_In($stockCriteriaFilterTransfer->getStoreNames())
+                ->endUse()
+                ->endUse();
+        }
+
+        return $stockQuery;
     }
 }

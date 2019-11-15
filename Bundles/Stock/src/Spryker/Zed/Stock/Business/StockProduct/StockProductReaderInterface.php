@@ -5,43 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Stock\Business\Model;
+namespace Spryker\Zed\Stock\Business\StockProduct;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 
-interface ReaderInterface
+interface StockProductReaderInterface
 {
-    /**
-     * @return string[]
-     */
-    public function getStockTypes(): array;
-
-    /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return string[]
-     */
-    public function getStockTypesForStore(StoreTransfer $storeTransfer): array;
-
-    /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Generated\Shared\Transfer\StockTransfer[]
-     */
-    public function getAvailableWarehousesForStore(StoreTransfer $storeTransfer): array;
-
-    /**
-     * @return array
-     */
-    public function getWarehouseToStoreMapping(): array;
-
-    /**
-     * @return array
-     */
-    public function getStoreToWarehouseMapping(): array;
-
     /**
      * @param string $sku
      *
@@ -58,9 +29,17 @@ interface ReaderInterface
     public function isNeverOutOfStockForStore(string $sku, StoreTransfer $storeTransfer): bool;
 
     /**
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    public function isProductAbstractNeverOutOfStockForStore(string $abstractSku, StoreTransfer $storeTransfer): bool;
+
+    /**
      * @param string $sku
      *
-     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
     public function getStocksProduct(string $sku): array;
 
@@ -68,9 +47,17 @@ interface ReaderInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Orm\Zed\Stock\Persistence\SpyStockProduct[]
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
      */
     public function findProductStocksForStore(string $sku, StoreTransfer $storeTransfer): array;
+
+    /**
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     */
+    public function getStockProductByProductAbstractSkuForStore(string $abstractSku, StoreTransfer $storeTransfer): array;
 
     /**
      * @param string $sku
@@ -97,13 +84,6 @@ interface ReaderInterface
     public function getIdStockProduct(string $sku, string $stockType): int;
 
     /**
-     * @param string $stockType
-     *
-     * @return int
-     */
-    public function getStockTypeIdByName(string $stockType): int;
-
-    /**
      * @param string $sku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
@@ -120,16 +100,6 @@ interface ReaderInterface
      * @return int
      */
     public function getProductConcreteIdBySku(string $sku): int;
-
-    /**
-     * @param int $idStockType
-     * @param int $idProduct
-     *
-     * @throws \Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException
-     *
-     * @return void
-     */
-    public function checkStockDoesNotExist($idStockType, $idProduct): void;
 
     /**
      * @param int $idStockProduct
@@ -163,4 +133,14 @@ interface ReaderInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function expandProductConcreteWithStocks(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+
+    /**
+     * @param int $idStockType
+     * @param int $idProduct
+     *
+     * @throws \Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException
+     *
+     * @return void
+     */
+    public function checkStockDoesNotExist($idStockType, $idProduct): void;
 }

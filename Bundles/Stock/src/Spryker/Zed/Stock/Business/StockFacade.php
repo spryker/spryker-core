@@ -34,7 +34,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      */
     public function isNeverOutOfStock($sku)
     {
-        return $this->getFactory()->createReaderModel()->isNeverOutOfStock($sku);
+        return $this->getFactory()->createStockProductReader()->isNeverOutOfStock($sku);
     }
 
     /**
@@ -49,7 +49,24 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      */
     public function isNeverOutOfStockForStore($sku, StoreTransfer $storeTransfer)
     {
-        return $this->getFactory()->createReaderModel()->isNeverOutOfStockForStore($sku, $storeTransfer);
+        return $this->getFactory()->createStockProductReader()->isNeverOutOfStockForStore($sku, $storeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    public function isProductAbstractNeverOutOfStockForStore(string $abstractSku, StoreTransfer $storeTransfer): bool
+    {
+        return $this->getFactory()
+            ->createStockProductReader()
+            ->isProductAbstractNeverOutOfStockForStore($abstractSku, $storeTransfer);
     }
 
     /**
@@ -79,6 +96,25 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     public function calculateProductStockForStore(string $sku, StoreTransfer $storeTransfer): Decimal
     {
         return $this->getFactory()->createCalculatorModel()->calculateProductStockForStore($sku, $storeTransfer);
+    }
+
+    /**
+     * Specification:
+     *  - Returns the total stock amount of the abstract product for all its available stock types and store.
+     *  - Filters out stocks that are inactive.
+     *
+     * @api
+     *
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function calculateProductAbstractStockForStore(string $abstractSku, StoreTransfer $storeTransfer): Decimal
+    {
+        return $this->getFactory()
+            ->createCalculatorModel()
+            ->calculateProductAbstractStockForStore($abstractSku, $storeTransfer);
     }
 
     /**
@@ -169,7 +205,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      */
     public function hasStockProduct($sku, $stockType)
     {
-        return $this->getFactory()->createReaderModel()->hasStockProduct($sku, $stockType);
+        return $this->getFactory()->createStockProductReader()->hasStockProduct($sku, $stockType);
     }
 
     /**
@@ -200,7 +236,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     public function expandProductConcreteWithStocks(ProductConcreteTransfer $productConcreteTransfer)
     {
         return $this->getFactory()
-            ->createReaderModel()
+            ->createStockProductReader()
             ->expandProductConcreteWithStocks($productConcreteTransfer);
     }
 
@@ -213,7 +249,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      */
     public function getAvailableStockTypes()
     {
-        return $this->getFactory()->createReaderModel()->getStockTypes();
+        return $this->getFactory()->createStockReader()->getStockTypes();
     }
 
     /**
@@ -228,7 +264,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     public function getStockProductsByIdProduct($idProductConcrete)
     {
         return $this->getFactory()
-            ->createReaderModel()
+            ->createStockProductReader()
             ->getStockProductsByIdProduct($idProductConcrete);
     }
 
@@ -245,7 +281,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     public function findStockProductsByIdProductForStore($idProductConcrete, StoreTransfer $storeTransfer)
     {
         return $this->getFactory()
-            ->createReaderModel()
+            ->createStockProductReader()
             ->findStockProductsByIdProductForStore($idProductConcrete, $storeTransfer);
     }
 
@@ -260,7 +296,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      */
     public function getStockTypesForStore(StoreTransfer $storeTransfer)
     {
-        return $this->getFactory()->createReaderModel()->getStockTypesForStore($storeTransfer);
+        return $this->getFactory()->createStockReader()->getStockTypesForStore($storeTransfer);
     }
 
     /**
@@ -273,7 +309,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     public function getWarehouseToStoreMapping()
     {
         return $this->getFactory()
-            ->createReaderModel()
+            ->createStockReader()
             ->getWarehouseToStoreMapping();
     }
 
@@ -287,7 +323,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     public function getStoreToWarehouseMapping()
     {
         return $this->getFactory()
-            ->createReaderModel()
+            ->createStockReader()
             ->getStoreToWarehouseMapping();
     }
 
@@ -377,7 +413,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     public function getAvailableWarehousesForStore(StoreTransfer $storeTransfer): array
     {
         return $this->getFactory()
-            ->createReaderModel()
+            ->createStockReader()
             ->getAvailableWarehousesForStore($storeTransfer);
     }
 }

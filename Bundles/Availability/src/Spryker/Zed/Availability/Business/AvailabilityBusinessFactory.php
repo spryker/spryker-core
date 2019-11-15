@@ -56,7 +56,8 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
         return new ProductAvailabilityCalculator(
             $this->getRepository(),
             $this->getOmsFacade(),
-            $this->getStockFacade()
+            $this->getStockFacade(),
+            $this->getProductFacade()
         );
     }
 
@@ -84,7 +85,8 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
         return new ProductAvailabilityReader(
             $this->getRepository(),
             $this->createAvailabilityHandler(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getProductFacade()
         );
     }
 

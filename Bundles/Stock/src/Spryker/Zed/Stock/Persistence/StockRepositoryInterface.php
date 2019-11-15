@@ -10,6 +10,7 @@ namespace Spryker\Zed\Stock\Persistence;
 use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface StockRepositoryInterface
 {
@@ -66,4 +67,37 @@ interface StockRepositoryInterface
      * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
     public function getStoresWhereProductStockIsDefined(string $sku): array;
+
+    /**
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     */
+    public function getStockProductByProductAbstractSkuForStore(string $abstractSku, StoreTransfer $storeTransfer): array;
+
+    /**
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    public function isProductAbstractNeverOutOfStockForStore(string $abstractSku, StoreTransfer $storeTransfer): bool;
+
+    /**
+     * @param string $concreteSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     */
+    public function findProductStocksForStore(string $concreteSku, StoreTransfer $storeTransfer): array;
+
+    /**
+     * @param string $concreteSku
+     *
+     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     */
+    public function getStockProductsByProductConcreteSku(string $concreteSku): array;
 }

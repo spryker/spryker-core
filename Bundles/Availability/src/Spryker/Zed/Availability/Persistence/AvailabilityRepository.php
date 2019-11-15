@@ -154,60 +154,6 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
     }
 
     /**
-     * @param string $abstractSku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
-     */
-    public function getCalculatedProductAbstractAvailabilityBySkuAndStore(
-        string $abstractSku,
-        StoreTransfer $storeTransfer
-    ): ProductAbstractAvailabilityTransfer {
-        $availabilityAbstractEntityArray = $this->getFactory()
-            ->getProductQueryContainer()
-            ->queryProductAbstract()
-            ->filterBySku($abstractSku)
-            ->groupByIdProductAbstract()
-            ->useSpyProductQuery()
-                ->useStockProductQuery()
-                    ->useStockQuery()
-                        ->filterByIsActive(true)
-                        ->useStockStoreQuery()
-                            ->filterByFkStore($storeTransfer->getIdStore())
-                        ->endUse()
-                    ->endUse()
-                ->endUse()
-            ->endUse()
-            ->withColumn(SpyProductAbstractTableMap::COL_SKU, ProductAbstractAvailabilityTransfer::SKU)
-            ->withColumn('GROUP_CONCAT(' . SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK . ')', ProductAbstractAvailabilityTransfer::IS_NEVER_OUT_OF_STOCK)
-            ->withColumn('COALESCE(SUM(' . SpyStockProductTableMap::COL_QUANTITY . '), 0)', ProductAbstractAvailabilityTransfer::STOCK_QUANTITY)
-            ->withColumn(
-                sprintf("GROUP_CONCAT(CONCAT(%s, ':',%s))", SpyProductTableMap::COL_SKU, SpyOmsProductReservationTableMap::COL_RESERVATION_QUANTITY),
-                ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY
-            )->addJoin(
-                SpyProductTableMap::COL_SKU,
-                SpyOmsProductReservationTableMap::COL_SKU,
-                Criteria::LEFT_JOIN
-            )->where(sprintf('(%s = %d OR %s IS NULL)', SpyOmsProductReservationTableMap::COL_FK_STORE, $storeTransfer->getIdStore(), SpyOmsProductReservationTableMap::COL_FK_STORE))
-            ->select(SpyProductAbstractTableMap::COL_SKU)
-            ->findOne();
-
-        if ($availabilityAbstractEntityArray === null) {
-            return (new ProductAbstractAvailabilityTransfer())
-                ->setSku($abstractSku)
-                ->setAvailability(0)
-                ->setIsNeverOutOfStock(false);
-        }
-
-        return $this->getFactory()
-            ->createAvailabilityMapper()
-            ->mapAvailabilityEntityToProductAbstractAvailabilityTransfer(
-                $availabilityAbstractEntityArray,
-                new ProductAbstractAvailabilityTransfer()
-            );
-    }
-
-    /**
      * @param string $concreteSku
      *
      * @return string|null
@@ -262,5 +208,22 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
         return $this->getFactory()
             ->createStoreMapper()
             ->mapStoreEntitiesToStoreTransfers($storeEntities);
+    }
+
+    /**
+     * @param string $productAbstractSku
+     *
+     * @return string[]
+     */
+    public function getProductConcreteSkusByAbstractProductSku(string $productAbstractSku): array
+    {
+        return $this->getFactory()
+            ->getProductQueryContainer()
+            ->queryProductAbstract()
+            ->filterBySku($productAbstractSku)
+            ->joinWithSpyProduct(Criteria::LEFT_JOIN)
+            ->select(SpyProductTableMap::COL_SKU)
+            ->find()
+            ->getData();
     }
 }
