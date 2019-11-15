@@ -1,5 +1,0 @@
-{
-  "include": {
-    "spryker/products-rest-api": "Required by module."
-  }
-}
