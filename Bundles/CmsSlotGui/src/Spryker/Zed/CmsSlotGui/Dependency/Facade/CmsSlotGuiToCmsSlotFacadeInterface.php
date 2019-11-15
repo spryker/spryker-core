@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsSlotGui\Communication\Dependency;
+namespace Spryker\Zed\CmsSlotGui\Dependency\Facade;
 
 interface CmsSlotGuiToCmsSlotFacadeInterface
 {
