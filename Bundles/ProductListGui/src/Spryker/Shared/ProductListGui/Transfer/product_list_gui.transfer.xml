@@ -84,4 +84,18 @@
     <transfer name="CategoryCollection">
     </transfer>
 
+    <transfer name="Category">
+        <property name="nodeCollection" type="NodeCollection"/>
+        <property name="name" type="string"/>
+        <property name="idCategory" type="int"/>
+    </transfer>
+
+    <transfer name="NodeCollection">
+        <property name="nodes" type="Node[]" singular="node"/>
+    </transfer>
+
+    <transfer name="Node">
+        <property name="isRoot" type="bool"/>
+        <property name="path" type="string"/>
+    </transfer>
 </transfers>
