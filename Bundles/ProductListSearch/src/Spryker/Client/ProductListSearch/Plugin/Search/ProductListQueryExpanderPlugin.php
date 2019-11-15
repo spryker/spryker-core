@@ -72,16 +72,6 @@ class ProductListQueryExpanderPlugin extends AbstractPlugin implements QueryExpa
     }
 
     /**
-     * @param int $idProductList
-     *
-     * @return \Elastica\Query\Term
-     */
-    protected function createWhitelistsTerm(int $idProductList): Term
-    {
-        return (new Term())->setTerm(PageIndexMap::PRODUCT_LISTS_WHITELISTS, (string)$idProductList);
-    }
-
-    /**
      * @param \Elastica\Query $query
      *
      * @throws \InvalidArgumentException
