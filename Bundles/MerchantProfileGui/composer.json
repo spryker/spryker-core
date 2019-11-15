@@ -9,7 +9,7 @@
     "spryker/glossary": "^3.0.0",
     "spryker/kernel": "^3.33.0",
     "spryker/locale": "^3.0.0",
-    "spryker/merchant-gui-extension": "^0.1.0",
+    "spryker/merchant-gui-extension": "^1.0.0",
     "spryker/merchant-profile": "^0.1.0",
     "spryker/symfony": "^3.0.0",
     "spryker/twig": "^3.0.0",
