@@ -27,7 +27,7 @@ class EventItemTriggerForm extends AbstractType
 
     protected const BUTTON_SUBMIT = 'submit';
 
-    protected const ACTION_ROUTE = '/state-machine/trigger/trigger-event-for-new-item';
+    protected const ACTION_ROUTE = '/state-machine/trigger/submit-trigger-event-for-new-item';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
