@@ -89,14 +89,14 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
      */
     public function prepareRestResourceCollection(array $indexedProductReviewTransfers): array
     {
-        $productReviewTransfersByProductAbstractId = [];
+        $productReviewRestResourceCollection = [];
         foreach ($indexedProductReviewTransfers as $idProductAbstract => $productReviewTransfers) {
             foreach ($productReviewTransfers as $productReviewTransfer) {
-                $productReviewTransfersByProductAbstractId[$idProductAbstract][] = $this->createProductReviewRestResource($productReviewTransfer);
+                $productReviewRestResourceCollection[$idProductAbstract][] = $this->createProductReviewRestResource($productReviewTransfer);
             }
         }
 
-        return $productReviewTransfersByProductAbstractId;
+        return $productReviewRestResourceCollection;
     }
 
     /**
