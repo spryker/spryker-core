@@ -14,10 +14,10 @@
     </transfer>
 
     <transfer name="RestProductReviewsAttributes">
-        <property name="rating" type="int"/>
-        <property name="nickname" type="string"/>
-        <property name="summary" type="string"/>
-        <property name="description" type="string"/>
+        <property name="rating" type="int" restRequestParameter="required"/>
+        <property name="nickname" type="string" restRequestParameter="required"/>
+        <property name="summary" type="string" restRequestParameter="required"/>
+        <property name="description" type="string" restRequestParameter="required"/>
     </transfer>
 
     <transfer name="ProductReviewSearchRequest">
