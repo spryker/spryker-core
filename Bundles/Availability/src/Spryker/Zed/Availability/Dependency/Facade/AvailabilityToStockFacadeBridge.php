@@ -54,4 +54,14 @@ class AvailabilityToStockFacadeBridge implements AvailabilityToStockFacadeInterf
     {
         return $this->stockFacade->getStoreToWarehouseMapping();
     }
+
+    /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresWhereProductStockIsDefined(string $sku): array
+    {
+        return $this->stockFacade->getStoresWhereProductStockIsDefined($sku);
+    }
 }

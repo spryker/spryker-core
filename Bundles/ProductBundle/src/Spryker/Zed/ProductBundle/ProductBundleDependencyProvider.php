@@ -16,6 +16,7 @@ use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceFacadeBridge
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductImageFacadeBridge;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStockFacadeBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeBridge;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToProductQueryContainerBridge;
 use Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToSalesQueryContainerBridge;
@@ -33,11 +34,12 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
     public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_PRICE = 'FACADE_PRICE';
+    public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+    public const FACADE_STOCK = 'FACADE_STOCK';
 
     public const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
     public const QUERY_CONTAINER_STOCK = 'QUERY_CONTAINER_STOCK';
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
-    public const FACADE_MESSENGER = 'FACADE_MESSENGER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -54,6 +56,7 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addFacadePrice($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addMessengerFacade($container);
+        $container = $this->addStockFacade($container);
 
         $container = $this->addQueryContainerSales($container);
         $container = $this->addQueryContainerStock($container);
@@ -211,6 +214,22 @@ class ProductBundleDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_MESSENGER, function (Container $container) {
             return new ProductBundleToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStockFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STOCK, function (Container $container) {
+            return new ProductBundleToStockFacadeBridge(
+                $container->getLocator()->stock()->facade()
+            );
         });
 
         return $container;

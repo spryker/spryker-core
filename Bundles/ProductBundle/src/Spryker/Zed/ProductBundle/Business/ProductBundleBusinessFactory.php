@@ -40,6 +40,7 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundlesSalesOr
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockHandler;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockHandlerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriter;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStockFacadeInterface;
 use Spryker\Zed\ProductBundle\ProductBundleDependencyProvider;
 
 /**
@@ -195,7 +196,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
         return new ProductBundleAvailabilityHandler(
             $this->getAvailabilityFacade(),
             $this->getQueryContainer(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getStockFacade()
         );
     }
 
@@ -376,5 +378,13 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     public function getMessengerFacade()
     {
         return $this->getProvidedDependency(ProductBundleDependencyProvider::FACADE_MESSENGER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStockFacadeInterface
+     */
+    public function getStockFacade(): ProductBundleToStockFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductBundleDependencyProvider::FACADE_STOCK);
     }
 }

@@ -8,7 +8,10 @@
 namespace Spryker\Zed\Stock\Business\Model;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StockTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use InvalidArgumentException;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
@@ -18,11 +21,11 @@ use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Spryker\Zed\Stock\Business\Exception\MissingProductException;
 use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
 use Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException;
-use Spryker\Zed\Stock\Business\Exception\StockWarehouseMappingException;
 use Spryker\Zed\Stock\Business\Transfer\StockProductTransferMapperInterface;
 use Spryker\Zed\Stock\Dependency\Facade\StockToProductInterface;
 use Spryker\Zed\Stock\Dependency\Facade\StockToStoreFacadeInterface;
 use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
+use Spryker\Zed\Stock\Persistence\StockRepositoryInterface;
 use Spryker\Zed\Stock\StockConfig;
 
 class Reader implements ReaderInterface
@@ -56,24 +59,32 @@ class Reader implements ReaderInterface
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\Stock\Persistence\StockRepositoryInterface
+     */
+    protected $stockRepository;
+
+    /**
      * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Stock\Dependency\Facade\StockToProductInterface $productFacade
      * @param \Spryker\Zed\Stock\Business\Transfer\StockProductTransferMapperInterface $transferMapper
      * @param \Spryker\Zed\Stock\StockConfig $stockConfig
      * @param \Spryker\Zed\Stock\Dependency\Facade\StockToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\Stock\Persistence\StockRepositoryInterface $stockRepository
      */
     public function __construct(
         StockQueryContainerInterface $queryContainer,
         StockToProductInterface $productFacade,
         StockProductTransferMapperInterface $transferMapper,
         StockConfig $stockConfig,
-        StockToStoreFacadeInterface $storeFacade
+        StockToStoreFacadeInterface $storeFacade,
+        StockRepositoryInterface $stockRepository
     ) {
         $this->queryContainer = $queryContainer;
         $this->productFacade = $productFacade;
         $this->transferMapper = $transferMapper;
         $this->stockConfig = $stockConfig;
         $this->storeFacade = $storeFacade;
+        $this->stockRepository = $stockRepository;
     }
 
     /**
@@ -81,12 +92,9 @@ class Reader implements ReaderInterface
      */
     public function getStockTypes(): array
     {
-        $stockTypes = $this->queryContainer
-            ->queryAllStockTypes()
-            ->find()
-            ->getData();
+        $stockNames = $this->stockRepository->getStockNames();
 
-        return $this->mapStockNames($stockTypes);
+        return array_combine($stockNames, $stockNames);
     }
 
     /**
@@ -97,15 +105,25 @@ class Reader implements ReaderInterface
     public function getStockTypesForStore(StoreTransfer $storeTransfer): array
     {
         $storeTransfer->requireName();
+        $stockNames = $this->stockRepository->getStockNamesForStore($storeTransfer->getName());
 
-        $warehouses = $this->stockConfig->getStoreToWarehouseMapping()[$storeTransfer->getName()];
+        return array_combine($stockNames, $stockNames);
+    }
 
-        $stockTypes = $this->queryContainer
-            ->queryStockByNames($warehouses)
-            ->find()
-            ->getData();
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer[]
+     */
+    public function getAvailableWarehousesForStore(StoreTransfer $storeTransfer): array
+    {
+        $storeTransfer->requireName();
 
-        return $this->mapStockNames($stockTypes);
+        $stockCriteriaFilterTransfer = (new StockCriteriaFilterTransfer())
+            ->setIsActive(true)
+            ->setStoreNames([$storeTransfer->getName()]);
+
+        return $this->stockRepository->getStocksWithRelatedStoresByCriteriaFilter($stockCriteriaFilterTransfer);
     }
 
     /**
@@ -113,18 +131,27 @@ class Reader implements ReaderInterface
      */
     public function getWarehouseToStoreMapping(): array
     {
-        $currentStoreTransfer = $this->storeFacade->getCurrentStore();
-        $storesWithSharedPersistence = $currentStoreTransfer->getStoresWithSharedPersistence();
-        $storesWithSharedPersistence[] = $currentStoreTransfer->getName();
+        $stockTransfers = $this->stockRepository->getStocksWithRelatedStoresByCriteriaFilter(new StockCriteriaFilterTransfer());
 
         $mapping = [];
-        foreach ($this->stockConfig->getStoreToWarehouseMapping() as $storeName => $warehouses) {
-            if (!in_array($storeName, $storesWithSharedPersistence)) {
-                continue;
-            }
-            foreach ($warehouses as $warehouse) {
-                $mapping[$warehouse][$storeName] = $storeName;
-            }
+        foreach ($stockTransfers as $stockTransfer) {
+            $mapping[$stockTransfer->getName()] = $this->getStoreNamesFromStoreRelation($stockTransfer->getStoreRelation());
+        }
+
+        return $mapping;
+    }
+
+    /**
+     * @return string[][]
+     */
+    public function getStoreToWarehouseMapping(): array
+    {
+        $storeTransfers = $this->storeFacade->getAllStores();
+        $stockTransfers = $this->stockRepository->getStocksWithRelatedStoresByCriteriaFilter(new StockCriteriaFilterTransfer());
+
+        $mapping = array_fill_keys($this->getStoreNamesFromStoreTransferCollection($storeTransfers), []);
+        foreach ($stockTransfers as $stockTransfer) {
+            $mapping = $this->mapStockToStores($stockTransfer, $storeTransfers, $mapping);
         }
 
         return $mapping;
@@ -174,6 +201,9 @@ class Reader implements ReaderInterface
         $productId = $this->productFacade->findProductConcreteIdBySku($sku);
         $stockEntities = $this->queryContainer
             ->queryStockByProducts($productId)
+            ->useStockQuery()
+                ->filterByIsActive(true)
+            ->endUse()
             ->find()
             ->getData();
 
@@ -197,6 +227,9 @@ class Reader implements ReaderInterface
 
         return $this->queryContainer
             ->queryStockByProductsForStockNames($productId, $storeNames)
+            ->useStockQuery()
+                ->filterByIsActive(true)
+            ->endUse()
             ->find()
             ->getData();
     }
@@ -204,23 +237,11 @@ class Reader implements ReaderInterface
     /**
      * @param string $storeName
      *
-     * @throws \Spryker\Zed\Stock\Business\Exception\StockWarehouseMappingException
-     *
      * @return string[]
      */
-    protected function getStoreWarehouses($storeName)
+    protected function getStoreWarehouses(string $storeName): array
     {
-        if (!isset($this->stockConfig->getStoreToWarehouseMapping()[$storeName])) {
-            throw new StockWarehouseMappingException(
-                sprintf(
-                    'Warehouse mapping is not provided for store %s. You can configure it in %s::getStoreToWarehouseMapping',
-                    $storeName,
-                    StockConfig::class
-                )
-            );
-        }
-
-        return $this->stockConfig->getStoreToWarehouseMapping()[$storeName];
+        return $this->stockRepository->getStockNamesForStore($storeName);
     }
 
     /**
@@ -263,11 +284,7 @@ class Reader implements ReaderInterface
      */
     public function hastStockProductInStore(string $sku, StoreTransfer $storeTransfer): bool
     {
-        if (!isset($this->stockConfig->getStoreToWarehouseMapping()[$storeTransfer->getName()])) {
-            return false;
-        }
-
-        $storeWarehouseMapping = $this->stockConfig->getStoreToWarehouseMapping()[$storeTransfer->getName()];
+        $storeWarehouseMapping = $this->getStoreWarehouses($storeTransfer->getName());
 
         return $this->queryContainer
             ->queryStockProductBySkuAndTypes($sku, $storeWarehouseMapping)
@@ -385,6 +402,9 @@ class Reader implements ReaderInterface
     {
         $stockProducts = $this->queryContainer
             ->queryStockByIdProduct($idProductConcrete)
+            ->useStockQuery()
+                ->filterByIsActive(true)
+            ->endUse()
             ->find();
 
         if (count($stockProducts) === 0) {
@@ -409,11 +429,12 @@ class Reader implements ReaderInterface
      */
     public function findStockProductsByIdProductForStore($idProductConcrete, StoreTransfer $storeTransfer): array
     {
-        $types = $this->stockConfig->getStoreToWarehouseMapping()[$storeTransfer->getName()];
+        $storeTransfer->requireName();
+        $stockNames = $this->stockRepository->getStockNamesForStore($storeTransfer->getName());
 
         /** @var \Orm\Zed\Stock\Persistence\SpyStockProduct[] $stockProducts */
         $stockProducts = $this->queryContainer
-            ->queryStockByIdProductAndTypes($idProductConcrete, $types)
+            ->queryStockByIdProductAndTypes($idProductConcrete, $stockNames)
             ->find();
 
         if (!$stockProducts) {
@@ -442,6 +463,9 @@ class Reader implements ReaderInterface
         $stockProductCollection = $this->queryContainer
             ->queryStockByProducts($productConcreteTransfer->requireIdProductConcrete()->getIdProductConcrete())
             ->innerJoinStock()
+            ->useStockQuery()
+                ->filterByIsActive(true)
+            ->endUse()
             ->find();
 
         if (!$stockProductCollection) {
@@ -459,17 +483,49 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param \Orm\Zed\Stock\Persistence\SpyStock[] $stockCollection
+     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
      *
      * @return string[]
      */
-    protected function mapStockNames(array $stockCollection): array
+    protected function getStoreNamesFromStoreTransferCollection(array $storeTransfers): array
     {
-        $types = [];
-        foreach ($stockCollection as $stockEntity) {
-            $types[$stockEntity->getName()] = $stockEntity->getName();
+        return array_map(function (StoreTransfer $storeTransfer): string {
+            return $storeTransfer->getName();
+        }, $storeTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
+     *
+     * @return string[]
+     */
+    protected function getStoreNamesFromStoreRelation(StoreRelationTransfer $storeRelationTransfer): array
+    {
+        $storeNames = [];
+        foreach ($storeRelationTransfer->getStores() as $storeTransfer) {
+            $storeName = $storeTransfer->getName();
+            $storeNames[$storeName] = $storeName;
         }
 
-        return $types;
+        return $storeNames;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
+     * @param string[][] $storeStockMapping
+     *
+     * @return string[][]
+     */
+    protected function mapStockToStores(StockTransfer $stockTransfer, array $storeTransfers, array $storeStockMapping): array
+    {
+        $relatedStoreNames = $this->getStoreNamesFromStoreRelation($stockTransfer->getStoreRelation());
+        foreach ($storeTransfers as $storeTransfer) {
+            if (in_array($storeTransfer->getName(), $relatedStoreNames, true)) {
+                $storeStockMapping[$storeTransfer->getName()][] = $stockTransfer->getName();
+            }
+        }
+
+        return $storeStockMapping;
     }
 }

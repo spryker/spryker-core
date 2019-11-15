@@ -9,6 +9,8 @@ namespace Spryker\Zed\Stock\Business;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StockResponseTransfer;
+use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use Spryker\DecimalObject\Decimal;
@@ -16,6 +18,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Stock\Business\StockBusinessFactory getFactory()
+ * @method \Spryker\Zed\Stock\Persistence\StockRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Stock\Persistence\StockEntityManagerInterface getEntityManager()
  */
 class StockFacade extends AbstractFacade implements StockFacadeInterface
 {
@@ -81,6 +85,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use \Spryker\Zed\Stock\Business\StockFacade::createStock() instead.
      *
      * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
@@ -207,7 +213,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      */
     public function getAvailableStockTypes()
     {
-         return $this->getFactory()->createReaderModel()->getStockTypes();
+        return $this->getFactory()->createReaderModel()->getStockTypes();
     }
 
     /**
@@ -281,7 +287,97 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     public function getStoreToWarehouseMapping()
     {
         return $this->getFactory()
-            ->getConfig()
+            ->createReaderModel()
             ->getStoreToWarehouseMapping();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idStock
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer|null
+     */
+    public function findStockById(int $idStock): ?StockTransfer
+    {
+        return $this->getRepository()->findStockById($idStock);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $stockName
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer|null
+     */
+    public function findStockByName(string $stockName): ?StockTransfer
+    {
+        return $this->getRepository()->findStockByName($stockName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockResponseTransfer
+     */
+    public function createStock(StockTransfer $stockTransfer): StockResponseTransfer
+    {
+        return $this->getFactory()
+            ->createStockCreator()
+            ->createStock($stockTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockResponseTransfer
+     */
+    public function updateStock(StockTransfer $stockTransfer): StockResponseTransfer
+    {
+        return $this->getFactory()
+            ->createStockUpdater()
+            ->updateStock($stockTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresWhereProductStockIsDefined(string $sku): array
+    {
+        return $this->getRepository()->getStoresWhereProductStockIsDefined($sku);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer[]
+     */
+    public function getAvailableWarehousesForStore(StoreTransfer $storeTransfer): array
+    {
+        return $this->getFactory()
+            ->createReaderModel()
+            ->getAvailableWarehousesForStore($storeTransfer);
     }
 }
