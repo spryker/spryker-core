@@ -18,5 +18,5 @@ interface CartItemsResourceMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestItemsAttributesTransfer
      */
-    public function mapCartItemAttributes(ItemTransfer $itemTransfer, string $localeName = ''): RestItemsAttributesTransfer;
+    public function mapCartItemAttributes(ItemTransfer $itemTransfer, string $localeName): RestItemsAttributesTransfer;
 }
