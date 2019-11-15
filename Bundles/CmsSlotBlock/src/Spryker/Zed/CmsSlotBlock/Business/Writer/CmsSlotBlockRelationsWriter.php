@@ -56,7 +56,7 @@ class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterfac
     public function createCmsSlotBlockRelations(CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer): void
     {
         $cmsSlotBlockTransfers = $cmsSlotBlockCollectionTransfer->getCmsSlotBlocks()->getArrayCopy();
-        $this->validateCmsSlotBlockList($cmsSlotBlockTransfers);
+        $this->assureCmsSlotBlockListIsValid($cmsSlotBlockTransfers);
 
         $this->cmsSlotBlockEntityManager->createCmsSlotBlocks($cmsSlotBlockTransfers);
         $this->triggerCmsSlotBlockPublishEvents($cmsSlotBlockTransfers);
@@ -69,13 +69,13 @@ class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterfac
      *
      * @return void
      */
-    protected function validateCmsSlotBlockList(array $cmsSlotBlockTransfers): void
+    protected function assureCmsSlotBlockListIsValid(array $cmsSlotBlockTransfers): void
     {
-        $isCmsSlotBlockListValid = $this->cmsSlotBlockValidator->getIsCmsSlotBlockListValid($cmsSlotBlockTransfers);
+        $validationResponseTransfer = $this->cmsSlotBlockValidator->getIsCmsSlotBlockListValid($cmsSlotBlockTransfers);
 
-        if (!$isCmsSlotBlockListValid) {
+        if (!$validationResponseTransfer->getIsSuccess()) {
             throw new InvalidCmsSlotBlockException(
-                'Some of the CMS slot block are not valid and cannot be saved'
+                $validationResponseTransfer->getErrorMessages()[0]
             );
         }
     }

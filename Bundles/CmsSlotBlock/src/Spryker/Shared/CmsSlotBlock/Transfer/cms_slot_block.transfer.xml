@@ -46,4 +46,13 @@
         <property name="orderDirection" type="string"/>
     </transfer>
 
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="ValidationResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="errorMessages" type="Message[]" singular="errorMessage"/>
+    </transfer>
+
 </transfers>

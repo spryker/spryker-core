@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\CmsSlotBlock\Business\Validator;
 
+use Generated\Shared\Transfer\ValidationResponseTransfer;
+
 interface CmsSlotBlockValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
-    public function getIsCmsSlotBlockListValid(array $cmsSlotBlockTransfers): bool;
+    public function getIsCmsSlotBlockListValid(array $cmsSlotBlockTransfers): ValidationResponseTransfer;
 }
