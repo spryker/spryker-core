@@ -4,7 +4,7 @@
   "description": "AvailabilityGui module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/availability": "^9.0.0",
     "spryker/decimal-object": "^1.0.0",
     "spryker/gui": "^3.17.0",
