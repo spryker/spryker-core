@@ -18,7 +18,7 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePage
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
  */
-class ProductConcreteImagePageDataExpanderPlugin extends AbstractPlugin implements ProductConcretePageDataExpanderPluginInterface
+class ProductImageProductConcretePageDataExpanderPlugin extends AbstractPlugin implements ProductConcretePageDataExpanderPluginInterface
 {
     /**
      * {@inheritDoc}

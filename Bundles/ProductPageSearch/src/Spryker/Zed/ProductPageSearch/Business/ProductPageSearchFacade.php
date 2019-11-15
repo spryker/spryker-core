@@ -147,8 +147,7 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
     }
 
     /**
-     * Specification:
-     * - Expands ProductConcretePageSearchTransfer with images data and returns the modified object.
+     * {@inheritDoc}
      *
      * @api
      *

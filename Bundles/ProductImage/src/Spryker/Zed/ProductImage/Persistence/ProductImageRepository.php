@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -119,8 +118,8 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
             ->useSpyProductImageSetToProductImageQuery()
                 ->filterByFkProductImage_In($productImageIds)
                 ->innerJoinSpyProductImageSet()
-                ->withColumn('DISTINCT ' . SpyProductImageSetTableMap::COL_FK_PRODUCT, static::FK_PRODUCT_CONCRETE)
-                ->addAnd(SpyProductImageSetTableMap::COL_FK_PRODUCT, null, ModelCriteria::NOT_EQUAL)
+                ->withColumn(Criteria::DISTINCT . ' ' . SpyProductImageSetTableMap::COL_FK_PRODUCT, static::FK_PRODUCT_CONCRETE)
+                ->addAnd(SpyProductImageSetTableMap::COL_FK_PRODUCT, null, Criteria::NOT_EQUAL)
             ->endUse()
             ->select([static::FK_PRODUCT_CONCRETE])
             ->find()
@@ -141,8 +140,8 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
         return $this->getFactory()
             ->createProductImageSetQuery()
             ->filterByIdProductImageSet_In($productImageSetIds)
-            ->withColumn('DISTINCT ' . SpyProductImageSetTableMap::COL_FK_PRODUCT, static::FK_PRODUCT_CONCRETE)
-            ->addAnd(SpyProductImageSetTableMap::COL_FK_PRODUCT, null, ModelCriteria::NOT_EQUAL)
+            ->withColumn(Criteria::DISTINCT . ' ' . SpyProductImageSetTableMap::COL_FK_PRODUCT, static::FK_PRODUCT_CONCRETE)
+            ->addAnd(SpyProductImageSetTableMap::COL_FK_PRODUCT, null, Criteria::NOT_EQUAL)
             ->select([static::FK_PRODUCT_CONCRETE])
             ->find()
             ->getData();

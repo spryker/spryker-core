@@ -57,7 +57,7 @@ class ProductConcretePageSearchExpander implements ProductConcretePageSearchExpa
             ->requireFkProduct()
             ->requireLocale();
 
-        $localizedProductImageSets = [];
+        $localizedProductImageSetTransfers = [];
         $productImageSetTransfers = $this->productImageFacade
             ->getProductImagesSetCollectionByProductId($productConcretePageSearchTransfer->getFkProduct());
 
@@ -67,10 +67,10 @@ class ProductConcretePageSearchExpander implements ProductConcretePageSearchExpa
                 continue;
             }
 
-            $localizedProductImageSets[] = $productImageSetTransfer;
+            $localizedProductImageSetTransfers[] = $productImageSetTransfer;
         }
 
-        return $localizedProductImageSets;
+        return $localizedProductImageSetTransfers;
     }
 
     /**

@@ -20,10 +20,8 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePage
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
  */
-class ProductConcreteImagePageMapExpanderPlugin extends AbstractPlugin implements ProductConcretePageMapExpanderPluginInterface
+class ProductImageProductConcretePageMapExpanderPlugin extends AbstractPlugin implements ProductConcretePageMapExpanderPluginInterface
 {
-    protected const KEY_IMAGES = 'images';
-
     /**
      * {@inheritDoc}
      * - Expands provided PageMapTransfer with images.
@@ -41,7 +39,7 @@ class ProductConcreteImagePageMapExpanderPlugin extends AbstractPlugin implement
     {
         $pageMapBuilder->addSearchResultData(
             $pageMapTransfer,
-            static::KEY_IMAGES,
+            ProductConcretePageSearchTransfer::IMAGES,
             $productData[ProductConcretePageSearchTransfer::IMAGES]
         );
 

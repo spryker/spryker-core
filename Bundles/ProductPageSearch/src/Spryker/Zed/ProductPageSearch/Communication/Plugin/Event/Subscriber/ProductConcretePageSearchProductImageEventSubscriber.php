@@ -32,11 +32,11 @@ class ProductConcretePageSearchProductImageEventSubscriber extends AbstractPlugi
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $this->addProductConcretePageProductImageCreateListener($eventCollection);
-        $this->addProductConcretePageProductImageUpdateListener($eventCollection);
-        $this->addProductConcretePageProductImageSetToProductImageUpdateListener($eventCollection);
-        $this->addProductConcretePageProductImageSetToProductImageDeleteListener($eventCollection);
-        $this->addProductConcretePageProductImageSetDeleteListener($eventCollection);
+        $this->addProductConcretePageSearchProductImageCreateListener($eventCollection);
+        $this->addProductConcretePageSearchProductImageUpdateListener($eventCollection);
+        $this->addProductConcretePageSearchProductImageSetToProductImageUpdateListener($eventCollection);
+        $this->addProductConcretePageSearchProductImageSetToProductImageDeleteListener($eventCollection);
+        $this->addProductConcretePageSearchProductImageSetDeleteListener($eventCollection);
 
         return $eventCollection;
     }
@@ -46,7 +46,7 @@ class ProductConcretePageSearchProductImageEventSubscriber extends AbstractPlugi
      *
      * @return void
      */
-    protected function addProductConcretePageProductImageCreateListener(EventCollectionInterface $eventCollection): void
+    protected function addProductConcretePageSearchProductImageCreateListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_CREATE, new ProductConcretePageSearchProductImageListener());
     }
@@ -56,7 +56,7 @@ class ProductConcretePageSearchProductImageEventSubscriber extends AbstractPlugi
      *
      * @return void
      */
-    protected function addProductConcretePageProductImageUpdateListener(EventCollectionInterface $eventCollection): void
+    protected function addProductConcretePageSearchProductImageUpdateListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_UPDATE, new ProductConcretePageSearchProductImageListener());
     }
@@ -66,7 +66,7 @@ class ProductConcretePageSearchProductImageEventSubscriber extends AbstractPlugi
      *
      * @return void
      */
-    protected function addProductConcretePageProductImageSetToProductImageUpdateListener(EventCollectionInterface $eventCollection): void
+    protected function addProductConcretePageSearchProductImageSetToProductImageUpdateListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_UPDATE, new ProductConcretePageSearchProductImageSetToProductImageListener());
     }
@@ -76,7 +76,7 @@ class ProductConcretePageSearchProductImageEventSubscriber extends AbstractPlugi
      *
      * @return void
      */
-    protected function addProductConcretePageProductImageSetToProductImageDeleteListener(EventCollectionInterface $eventCollection): void
+    protected function addProductConcretePageSearchProductImageSetToProductImageDeleteListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_DELETE, new ProductConcretePageSearchProductImageSetToProductImageListener());
     }
@@ -86,7 +86,7 @@ class ProductConcretePageSearchProductImageEventSubscriber extends AbstractPlugi
      *
      * @return void
      */
-    protected function addProductConcretePageProductImageSetDeleteListener(EventCollectionInterface $eventCollection): void
+    protected function addProductConcretePageSearchProductImageSetDeleteListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_DELETE, new ProductConcretePageSearchProductImageSetListener());
     }

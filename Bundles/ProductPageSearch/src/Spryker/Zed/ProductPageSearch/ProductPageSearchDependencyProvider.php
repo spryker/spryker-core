@@ -287,9 +287,9 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductImageFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_IMAGE] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_IMAGE, function (Container $container) {
             return new ProductPageSearchToProductImageFacadeBridge($container->getLocator()->productImage()->facade());
-        };
+        });
 
         return $container;
     }
