@@ -55,7 +55,7 @@ class OmsFacadeReservationsTest extends Unit
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->tester->resetReservedStatesCache();
@@ -118,7 +118,6 @@ class OmsFacadeReservationsTest extends Unit
      */
     public function testSumReservedItemsShouldSumAllItemsInReservedState(): void
     {
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $testSku = 'oms-sku-test-reservation';
 
         $saveOrderTransfer1 = $this->tester->haveOrder(
@@ -173,7 +172,7 @@ class OmsFacadeReservationsTest extends Unit
 
         $this->assertTrue(
             $this->getOmsFacade()
-                ->sumReservedProductQuantitiesForSku($testSku, $storeTransfer)
+                ->sumReservedProductQuantitiesForSku($testSku)
                 ->equals($expectedQuantity)
         );
     }

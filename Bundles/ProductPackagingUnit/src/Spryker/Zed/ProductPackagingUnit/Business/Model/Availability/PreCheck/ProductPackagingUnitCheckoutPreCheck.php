@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck;
 use ArrayObject;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class ProductPackagingUnitCheckoutPreCheck extends ProductPackagingUnitAvailabilityPreCheck implements ProductPackagingUnitCheckoutPreCheckInterface
@@ -26,16 +27,15 @@ class ProductPackagingUnitCheckoutPreCheck extends ProductPackagingUnitAvailabil
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): bool {
-        $checkoutErrorMessages = $this->getCheckoutAvailabilityFailedItems($quoteTransfer);
+        $checkoutErrorMessages = $this->getCheckoutAvailabilityFailedItemsErrorMessages($quoteTransfer);
 
-        if (count($checkoutErrorMessages) === 0) {
+        if ($checkoutErrorMessages->count() === 0) {
             return true;
         }
 
-        $checkoutResponseTransfer->setIsSuccess(false);
-        foreach ($checkoutErrorMessages as $checkoutErrorTransfer) {
-            $checkoutResponseTransfer->addError($checkoutErrorTransfer);
-        }
+        $checkoutResponseTransfer
+            ->setIsSuccess(false)
+            ->setErrors($checkoutErrorMessages);
 
         return false;
     }
@@ -43,29 +43,93 @@ class ProductPackagingUnitCheckoutPreCheck extends ProductPackagingUnitAvailabil
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[]
      */
-    protected function getCheckoutAvailabilityFailedItems(QuoteTransfer $quoteTransfer): ArrayObject
+    protected function getCheckoutAvailabilityFailedItemsErrorMessages(QuoteTransfer $quoteTransfer): ArrayObject
     {
         $checkoutErrorMessages = new ArrayObject();
-
-        $storeTransfer = $quoteTransfer->getStore();
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getAmountLeadProduct() || !$itemTransfer->getAmount()) {
+            if (!$itemTransfer->getAmountLeadProduct() || !$itemTransfer->getAmount() || $itemTransfer->getAmount()->lessThan(0)) {
                 continue;
             }
 
-            $isPackagingUnitLeadProductSellable = $this->isPackagingUnitLeadProductSellable(
-                $itemTransfer,
-                $quoteTransfer->getItems(),
-                $storeTransfer
+            $checkoutErrorMessages = $this->collectCheckoutErrorMessages(
+                $checkoutErrorMessages,
+                $this->checkPackagingUnitAvailability($itemTransfer, $quoteTransfer)
             );
 
-            if ($itemTransfer->getAmount()->greaterThan(0) && !$isPackagingUnitLeadProductSellable) {
-                $checkoutErrorMessages[] = $this->createCheckoutResponseTransfer(
-                    static::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY
-                );
-            }
+            $checkoutErrorMessages = $this->collectCheckoutErrorMessages(
+                $checkoutErrorMessages,
+                $this->checkPackagingUnitLeadProductAvailability($itemTransfer, $quoteTransfer)
+            );
+        }
+
+        return $checkoutErrorMessages;
+    }
+
+    /**
+     * Skip if self-lead PU.
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutErrorTransfer|null
+     */
+    protected function checkPackagingUnitAvailability(
+        ItemTransfer $itemTransfer,
+        QuoteTransfer $quoteTransfer
+    ): ?CheckoutErrorTransfer {
+        $isPackagingUnitSellable = $this->isPackagingUnitSellable(
+            $itemTransfer,
+            $quoteTransfer->getStore()
+        );
+
+        if ($isPackagingUnitSellable) {
+            return null;
+        }
+
+        return $this->createCheckoutResponseTransfer(
+            static::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutErrorTransfer|null
+     */
+    protected function checkPackagingUnitLeadProductAvailability(
+        ItemTransfer $itemTransfer,
+        QuoteTransfer $quoteTransfer
+    ): ?CheckoutErrorTransfer {
+        $isPackagingUnitLeadProductSellable = $this->isPackagingUnitLeadProductSellable(
+            $itemTransfer,
+            clone $quoteTransfer->getItems(),
+            $quoteTransfer->getStore()
+        );
+
+        if ($isPackagingUnitLeadProductSellable) {
+            return null;
+        }
+
+        return $this->createCheckoutResponseTransfer(
+            static::CHECKOUT_PRODUCT_UNAVAILABLE_TRANSLATION_KEY
+        );
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[] $checkoutErrorMessages
+     * @param \Generated\Shared\Transfer\CheckoutErrorTransfer|null $messageTransfer
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[]
+     */
+    protected function collectCheckoutErrorMessages(
+        ArrayObject $checkoutErrorMessages,
+        ?CheckoutErrorTransfer $messageTransfer
+    ): ArrayObject {
+        if ($messageTransfer !== null) {
+            $checkoutErrorMessages->append($checkoutErrorMessages);
         }
 
         return $checkoutErrorMessages;
@@ -78,7 +142,6 @@ class ProductPackagingUnitCheckoutPreCheck extends ProductPackagingUnitAvailabil
      */
     protected function createCheckoutResponseTransfer(string $message): CheckoutErrorTransfer
     {
-        return (new CheckoutErrorTransfer())
-            ->setMessage($message);
+        return (new CheckoutErrorTransfer())->setMessage($message);
     }
 }

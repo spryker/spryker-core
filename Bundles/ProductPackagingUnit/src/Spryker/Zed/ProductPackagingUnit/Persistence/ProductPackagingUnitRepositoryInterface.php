@@ -96,9 +96,9 @@ interface ProductPackagingUnitRepositoryInterface
      *
      * @param string $sku
      * @param string[] $reservedStateNames
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function aggregateProductPackagingUnitReservation(string $sku, array $reservedStateNames, StoreTransfer $storeTransfer): array;
+    public function aggregateProductPackagingUnitReservation(string $sku, array $reservedStateNames, ?StoreTransfer $storeTransfer = null): array;
 }

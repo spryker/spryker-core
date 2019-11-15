@@ -77,4 +77,11 @@ interface AvailabilityRepositoryInterface
      * @return string[]
      */
     public function getProductConcreteSkusByAbstractProductSku(string $productAbstractSku): array;
+
+    /**
+     * @param string $concreteSku
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresWhereProductAvailabilityIsDefined(string $concreteSku): array;
 }

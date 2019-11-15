@@ -20,6 +20,7 @@
     <transfer name="Item">
         <property name="sku" type="string"/>
         <property name="quantity" type="int"/>
+        <property name="amount" type="decimal"/>
     </transfer>
 
     <transfer name="CartPreCheckResponse">

@@ -40,6 +40,10 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $itemTransfer->requireSku()->requireQuantity();
 
+            if (!$this->isProductBundle($itemTransfer)) {
+                continue;
+            }
+
             $messageTransfers = $this->checkItemAvailability($itemsInCart, $itemTransfer, $storeTransfer);
             $itemsInCart->append($itemTransfer);
 

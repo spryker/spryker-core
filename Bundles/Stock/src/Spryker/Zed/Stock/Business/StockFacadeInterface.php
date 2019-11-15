@@ -87,7 +87,7 @@ interface StockFacadeInterface
 
     /**
      * Specification:
-     *  - Returns the total stock amount of the abstract product for all its available stock types and store.
+     *  - Returns the total stock amount of the abstract product's concrete products for all theirs available stocks and store.
      *  - Filters out stocks that are inactive.
      *
      * @api

@@ -302,11 +302,11 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @deprecated Not used anymore. Will be removed with next major release.
      *
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function sumReservedProductQuantitiesForSku(string $sku, StoreTransfer $storeTransfer): Decimal
+    public function sumReservedProductQuantitiesForSku(string $sku, ?StoreTransfer $storeTransfer = null): Decimal
     {
         return $this->getFactory()
             ->createUtilReservation()

@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductBundle\Business\Availability\PreCheck;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
+use Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCartAvailabilityCheck;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface;
@@ -128,7 +129,15 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
             $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         }
 
+        $productBundleQueryMock = $this->getMockBuilder(SpyProductBundleQuery::class)->getMock();
+        $productBundleQueryMock
+            ->method('exists')
+            ->willReturn(true);
+
         $productBundleQueryContainerMock = $this->getMockBuilder(ProductBundleQueryContainerInterface::class)->getMock();
+        $productBundleQueryContainerMock
+            ->method('queryBundleProductBySku')
+            ->willReturn($productBundleQueryMock);
 
         if ($storeFacadeMock === null) {
             $storeFacadeMock = $this->buildStoreFacadeMock();

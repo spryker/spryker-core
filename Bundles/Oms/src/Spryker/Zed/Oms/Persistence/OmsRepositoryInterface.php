@@ -23,11 +23,11 @@ interface OmsRepositoryInterface
     /**
      * @param string[] $stateNames
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function getSalesOrderAggregationBySkuAndStatesNames(array $stateNames, string $sku, StoreTransfer $storeTransfer): array;
+    public function getSalesOrderAggregationBySkuAndStatesNames(array $stateNames, string $sku, ?StoreTransfer $storeTransfer = null): array;
 
     /**
      * @param string[] $concreteSkus

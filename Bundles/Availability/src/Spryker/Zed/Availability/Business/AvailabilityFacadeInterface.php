@@ -60,7 +60,8 @@ interface AvailabilityFacadeInterface
 
     /**
      * Specification:
-     *  - Checkout PreCondition plugin call, check if all items in cart is sellable.
+     *  - Checkout PreCondition plugin call, check if all items in cart are sellable.
+     *  - In case `ItemTransfer.amount` was defined, item availability check will be ignored.
      *  - Writes error message into CheckoutResponseTransfer.
      *
      * @api
@@ -209,4 +210,16 @@ interface AvailabilityFacadeInterface
      * @return int
      */
     public function saveProductAvailabilityForStore(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): int;
+
+    /**
+     * Specification:
+     *  - Returns all stores where availability of product with given sku is defined.
+     *
+     * @api
+     *
+     * @param string $concreteSku
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresWhereProductAvailabilityIsDefined(string $concreteSku): array;
 }

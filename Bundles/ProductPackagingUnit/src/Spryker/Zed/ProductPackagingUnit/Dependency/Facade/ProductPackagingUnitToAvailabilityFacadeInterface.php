@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
@@ -20,6 +21,14 @@ interface ProductPackagingUnitToAvailabilityFacadeInterface
      * @return bool
      */
     public function isProductSellableForStore(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): bool;
+
+    /**
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
+     */
+    public function findOrCreateProductConcreteAvailabilityBySkuForStore(string $sku, StoreTransfer $storeTransfer): ?ProductConcreteAvailabilityTransfer;
 
     /**
      * @param string $sku
