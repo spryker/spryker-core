@@ -159,18 +159,4 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addProductFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_PRODUCT, function (Container $container) {
-            return new AvailabilityToProductFacadeBridge($container->getLocator()->product()->facade());
-        });
-
-        return $container;
-    }
 }
