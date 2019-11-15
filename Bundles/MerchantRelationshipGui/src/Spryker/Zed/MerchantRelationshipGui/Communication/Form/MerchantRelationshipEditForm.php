@@ -42,7 +42,7 @@ class MerchantRelationshipEditForm extends MerchantRelationshipCreateForm
             ->getMerchantRelationshipEditFormExpanderPlugins();
 
         foreach ($merchantRelationshipEditFormExpanderPlugins as $merchantRelationshipEditFormExpanderPlugin) {
-            $merchantRelationshipEditFormExpanderPlugin->expand($builder, $options);
+            $builder = $merchantRelationshipEditFormExpanderPlugin->expand($builder, $options);
         }
     }
 
