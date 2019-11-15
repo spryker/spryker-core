@@ -1,4 +1,7 @@
 {% if breadcrumbs|length > 0 %}
+    <script type="module" src="https://unpkg.com/@spryker/backoffice-ui@0.1.0/backoffice/backoffice-ui/backoffice-ui.esm.js"></script>
+    <script nomodule src="https://unpkg.com/@spryker/backoffice-ui@0.1.0/backoffice/backoffice-ui/backoffice-ui.js"></script>
+
     {% set breadcrumbsList = breadcrumbs | reduce((accumulator, breadcrumb) => (
         accumulator | merge([{
             'label': breadcrumb.label | trans,
