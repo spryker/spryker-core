@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-slot-block-cms-connector",
+  "type": "library",
   "description": "CmsSlotBlockCmsConnector module",
   "license": "proprietary",
   "require": {

@@ -22,7 +22,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\CmsSlotBlock\\Helper\\": "tests/SprykerTest/Zed/CmsSlotBlock/_support/Helper/"
     }
   },
   "autoload-dev": {

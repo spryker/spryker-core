@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-slot-block-storage",
+  "type": "library",
   "description": "CmsSlotBlockStorage module",
   "license": "proprietary",
   "require": {
@@ -25,7 +26,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\CmsSlotBlockStorage\\Helper\\": "tests/SprykerTest/Zed/CmsSlotBlockStorage/_support/Helper/"
     }
   },
   "autoload-dev": {

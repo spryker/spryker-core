@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-slot-block-gui-extension",
+  "type": "library",
   "description": "CmsSlotBlockGuiExtension module",
   "license": "proprietary",
   "require": {
@@ -9,6 +10,9 @@
     "spryker/code-sniffer": "*",
     "spryker/symfony": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/symfony": "ADD SUGGEST DESCRIPTION"
   },
   "autoload": {
     "psr-4": {
@@ -24,8 +28,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "suggest": {
-    "spryker/symfony": "ADD SUGGEST DESCRIPTION"
   }
 }
