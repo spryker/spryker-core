@@ -8,6 +8,10 @@
 namespace Spryker\Client\ConfigurableBundleCart;
 
 use Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface;
+use Spryker\Client\ConfigurableBundleCart\Generator\ConfiguredBundleGroupKeyGenerator;
+use Spryker\Client\ConfigurableBundleCart\Generator\ConfiguredBundleGroupKeyGeneratorInterface;
+use Spryker\Client\ConfigurableBundleCart\Mapper\ConfiguredBundleMapper;
+use Spryker\Client\ConfigurableBundleCart\Mapper\ConfiguredBundleMapperInterface;
 use Spryker\Client\ConfigurableBundleCart\Reader\QuoteItemReader;
 use Spryker\Client\ConfigurableBundleCart\Reader\QuoteItemReaderInterface;
 use Spryker\Client\ConfigurableBundleCart\Updater\QuoteItemUpdater;
@@ -29,7 +33,8 @@ class ConfigurableBundleCartFactory extends AbstractFactory
         return new CartWriter(
             $this->getCartClient(),
             $this->createQuoteItemReader(),
-            $this->createQuoteItemUpdater()
+            $this->createQuoteItemUpdater(),
+            $this->createConfiguredBundleMapper()
         );
     }
 
@@ -49,6 +54,22 @@ class ConfigurableBundleCartFactory extends AbstractFactory
     public function createQuoteItemReader(): QuoteItemReaderInterface
     {
         return new QuoteItemReader();
+    }
+
+    /**
+     * @return \Spryker\Client\ConfigurableBundleCart\Mapper\ConfiguredBundleMapperInterface
+     */
+    public function createConfiguredBundleMapper(): ConfiguredBundleMapperInterface
+    {
+        return new ConfiguredBundleMapper($this->createConfiguredBundleGroupKeyGenerator());
+    }
+
+    /**
+     * @return \Spryker\Client\ConfigurableBundleCart\Generator\ConfiguredBundleGroupKeyGeneratorInterface
+     */
+    public function createConfiguredBundleGroupKeyGenerator(): ConfiguredBundleGroupKeyGeneratorInterface
+    {
+        return new ConfiguredBundleGroupKeyGenerator();
     }
 
     /**

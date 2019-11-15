@@ -7,11 +7,13 @@
 
 namespace Spryker\Client\ConfigurableBundleCart\Writer;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer;
 use Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface;
+use Spryker\Client\ConfigurableBundleCart\Mapper\ConfiguredBundleMapperInterface;
 use Spryker\Client\ConfigurableBundleCart\Reader\QuoteItemReaderInterface;
 use Spryker\Client\ConfigurableBundleCart\Updater\QuoteItemUpdaterInterface;
 
@@ -38,18 +40,26 @@ class CartWriter implements CartWriterInterface
     protected $quoteItemUpdater;
 
     /**
+     * @var \Spryker\Client\ConfigurableBundleCart\Mapper\ConfiguredBundleMapperInterface
+     */
+    protected $configuredBundleMapper;
+
+    /**
      * @param \Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface $cartClient
      * @param \Spryker\Client\ConfigurableBundleCart\Reader\QuoteItemReaderInterface $quoteItemReader
      * @param \Spryker\Client\ConfigurableBundleCart\Updater\QuoteItemUpdaterInterface $quoteItemUpdater
+     * @param \Spryker\Client\ConfigurableBundleCart\Mapper\ConfiguredBundleMapperInterface $configuredBundleMapper
      */
     public function __construct(
         ConfigurableBundleCartToCartClientInterface $cartClient,
         QuoteItemReaderInterface $quoteItemReader,
-        QuoteItemUpdaterInterface $quoteItemUpdater
+        QuoteItemUpdaterInterface $quoteItemUpdater,
+        ConfiguredBundleMapperInterface $configuredBundleMapper
     ) {
         $this->cartClient = $cartClient;
         $this->quoteItemReader = $quoteItemReader;
         $this->quoteItemUpdater = $quoteItemUpdater;
+        $this->configuredBundleMapper = $configuredBundleMapper;
     }
 
     /**
@@ -59,7 +69,12 @@ class CartWriter implements CartWriterInterface
      */
     public function addConfiguredBundle(CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer): QuoteResponseTransfer
     {
-        return new QuoteResponseTransfer();
+        $cartChangeTransfer = $this->configuredBundleMapper->mapCreateConfiguredBundleRequestTransferToCartChangeTransfer(
+            $createConfiguredBundleRequestTransfer,
+            new CartChangeTransfer()
+        );
+
+        return $this->cartClient->addToCart($cartChangeTransfer);
     }
 
     /**

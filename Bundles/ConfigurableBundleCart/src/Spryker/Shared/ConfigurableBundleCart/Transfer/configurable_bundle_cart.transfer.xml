@@ -10,8 +10,19 @@
     </transfer>
 
     <transfer name="CreateConfiguredBundleRequest">
-        <property name="quote" type="Quote"/>
-        <property name="groupKey" type="string"/>
+        <property name="configuredBundleRequest" type="ConfiguredBundleRequest"/>
+        <property name="items" type="ConfiguredBundleItemRequest[]" singular="item"/>
+    </transfer>
+
+    <transfer name="ConfiguredBundleItemRequest">
+        <property name="slotUuid" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="ConfiguredBundleRequest">
+        <property name="templateUuid" type="string"/>
+        <property name="templateName" type="string"/>
         <property name="quantity" type="int"/>
     </transfer>
 
