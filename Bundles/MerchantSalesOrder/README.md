@@ -1,7 +1,7 @@
 # MerchantSalesOrder Module
 [![Build Status](https://travis-ci.org/spryker/merchant-sales-order.svg)](https://travis-ci.org/spryker/merchant-sales-order)
 
-{{ADD DESCRIPTION HERE}}
+Provides functionality to link merchant to sales orders.
 
 ## Installation
 
