@@ -7,9 +7,14 @@
 
 namespace Spryker\Glue\ProductOptionsRestApi\Processor\Mapper;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupStorageTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorageTransfer;
+use Generated\Shared\Transfer\RestItemProductOptionsAttributesTransfer;
+use Generated\Shared\Transfer\RestItemsAttributesTransfer;
 use Generated\Shared\Transfer\RestProductOptionAttributesTransfer;
 
 class ProductOptionMapper implements ProductOptionMapperInterface
@@ -56,5 +61,47 @@ class ProductOptionMapper implements ProductOptionMapperInterface
             ->setOptionName($translations[$productOptionValueStorageTransfer->getValue()])
             ->setPrice($productOptionValueStorageTransfer->getPrice())
             ->setCurrencyIsoCode($productOptionValueStorageTransfer->getCurrencyIsoCode());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\RestItemsAttributesTransfer $restItemsAttributesTransfer
+     * @param string[] $translations
+     *
+     * @return \Generated\Shared\Transfer\RestItemsAttributesTransfer
+     */
+    public function mapItemTransferToRestOrderItemsAttributesTransfer(
+        ItemTransfer $itemTransfer,
+        RestItemsAttributesTransfer $restItemsAttributesTransfer,
+        array $translations
+    ): RestItemsAttributesTransfer {
+        $restCartItemProductOptionsAttributesTransfers = [];
+        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+            $restCartItemProductOptionsAttributesTransfers[] = $this->createRestItemProductOptionsAttributesTransfer(
+                $productOptionTransfer,
+                $translations
+            );
+        }
+
+        $restItemsAttributesTransfer->setSelectedOptions(new ArrayObject($restCartItemProductOptionsAttributesTransfers));
+
+        return $restItemsAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
+     * @param array $translations
+     *
+     * @return \Generated\Shared\Transfer\RestItemProductOptionsAttributesTransfer
+     */
+    protected function createRestItemProductOptionsAttributesTransfer(
+        ProductOptionTransfer $productOptionTransfer,
+        array $translations
+    ): RestItemProductOptionsAttributesTransfer {
+        return (new RestItemProductOptionsAttributesTransfer())
+            ->setSku($productOptionTransfer->getSku())
+            ->setOptionGroupName($translations[$productOptionTransfer->getGroupName()])
+            ->setOptionName($translations[$productOptionTransfer->getValue()])
+            ->setPrice($productOptionTransfer->getSumPrice());
     }
 }

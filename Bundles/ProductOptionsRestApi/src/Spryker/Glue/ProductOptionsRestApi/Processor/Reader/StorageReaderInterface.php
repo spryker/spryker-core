@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\ProductOptionsRestApi\Processor\Reader;
 
+use Generated\Shared\Transfer\ItemTransfer;
+
 interface StorageReaderInterface
 {
     /**
@@ -19,4 +21,12 @@ interface StorageReaderInterface
         array $productAbstractSkus,
         string $localeName
     ): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $localeName
+     *
+     * @return string[]
+     */
+    public function getTranslationsForItemProductOptions(ItemTransfer $itemTransfer, string $localeName): array;
 }

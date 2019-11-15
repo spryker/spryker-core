@@ -279,7 +279,7 @@ class CartsRestApiFactory extends AbstractFactory
      */
     public function createCartItemsResourceMapper(): CartItemsResourceMapperInterface
     {
-        return new CartItemsResourceMapper();
+        return new CartItemsResourceMapper($this->getRestOrderItemsAttributesMapperPlugins());
     }
 
     /**
@@ -320,5 +320,13 @@ class CartsRestApiFactory extends AbstractFactory
     public function getCustomerExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_CUSTOMER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\RestCartItemsAttributesMapperPluginInterface[]
+     */
+    public function getRestOrderItemsAttributesMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_REST_CART_ITEMS_ATTRIBUTES_MAPPER);
     }
 }

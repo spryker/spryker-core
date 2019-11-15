@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductOptionsRestApi\Processor\Reader;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductOptionStorageClientInterface;
@@ -153,5 +154,22 @@ class StorageReader implements StorageReaderInterface
         }
 
         return $glossaryStorageKeys;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $localeName
+     *
+     * @return string[]
+     */
+    public function getTranslationsForItemProductOptions(ItemTransfer $itemTransfer, string $localeName): array
+    {
+        $glossaryStorageKeys = [];
+        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+            $glossaryStorageKeys[] = $productOptionTransfer->getGroupName();
+            $glossaryStorageKeys[] = $productOptionTransfer->getValue();
+        }
+
+        return $this->glossaryStorageClient->translateBulk($glossaryStorageKeys, $localeName);
     }
 }

@@ -18,4 +18,15 @@
     <transfer name="Quote">
     </transfer>
 
+    <transfer name="RestItemsAttributes">
+        <property name="selectedOptions" type="RestItemProductOptionsAttributes[]" singular="selectedOption"/>
+    </transfer>
+
+    <transfer name="RestItemProductOptionsAttributes">
+        <property name="optionGroupName" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="optionName" type="string"/>
+        <property name="price" type="int"/>
+    </transfer>
+
 </transfers>
