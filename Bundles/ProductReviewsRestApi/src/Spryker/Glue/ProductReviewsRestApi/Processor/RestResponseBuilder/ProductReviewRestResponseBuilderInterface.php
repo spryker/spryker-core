@@ -8,32 +8,37 @@
 namespace Spryker\Glue\ProductReviewsRestApi\Processor\RestResponseBuilder;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ProductReviewTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 interface ProductReviewRestResponseBuilderInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createProductReviewRestResponse(ProductReviewTransfer $productReviewTransfer): RestResponseInterface;
+
+    /**
      * @param \Generated\Shared\Transfer\ProductReviewTransfer[] $productReviewTransfers
-     * @param int $responseStatus
      * @param int $totalItems
      * @param int $pageLimit
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createProductReviewRestResponse(
+    public function createProductReviewsCollectionRestResponse(
         array $productReviewTransfers,
-        int $responseStatus = Response::HTTP_CREATED,
         int $totalItems = 0,
         int $pageLimit = 0
     ): RestResponseInterface;
 
     /**
-     * @param array $productReviewsData
+     * @param \Generated\Shared\Transfer\ProductReviewTransfer[][] $indexedProductReviewTransfers
      *
-     * @return array
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
      */
-    public function prepareRestResourceCollection(array $productReviewsData): array;
+    public function prepareRestResourceCollection(array $indexedProductReviewTransfers): array;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

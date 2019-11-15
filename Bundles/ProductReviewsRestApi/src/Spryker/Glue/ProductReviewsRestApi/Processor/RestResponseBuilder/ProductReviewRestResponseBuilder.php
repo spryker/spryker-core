@@ -44,16 +44,27 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createProductReviewRestResponse(ProductReviewTransfer $productReviewTransfer): RestResponseInterface
+    {
+        $restResponse = $this->restResourceBuilder->createRestResponse();
+        $restResponse->addResource($this->createProductReviewRestResource($productReviewTransfer));
+
+        return $restResponse->setStatus(Response::HTTP_ACCEPTED);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductReviewTransfer[] $productReviewTransfers
-     * @param int $responseStatus
      * @param int $totalItems
      * @param int $pageLimit
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createProductReviewRestResponse(
+    public function createProductReviewsCollectionRestResponse(
         array $productReviewTransfers,
-        int $responseStatus = Response::HTTP_CREATED,
         int $totalItems = 0,
         int $pageLimit = 0
     ): RestResponseInterface {
@@ -68,18 +79,18 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
             $restResponse->addResource($restResource);
         }
 
-        return $restResponse->setStatus($responseStatus);
+        return $restResponse;
     }
 
     /**
-     * @param array $productReviewsData
+     * @param \Generated\Shared\Transfer\ProductReviewTransfer[][] $indexedProductReviewTransfers
      *
-     * @return array
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
      */
-    public function prepareRestResourceCollection(array $productReviewsData): array
+    public function prepareRestResourceCollection(array $indexedProductReviewTransfers): array
     {
         $productReviewTransfersByProductAbstractId = [];
-        foreach ($productReviewsData as $idProductAbstract => $productReviewTransfers) {
+        foreach ($indexedProductReviewTransfers as $idProductAbstract => $productReviewTransfers) {
             foreach ($productReviewTransfers as $productReviewTransfer) {
                 $productReviewTransfersByProductAbstractId[$idProductAbstract][] = $this->createProductReviewRestResource($productReviewTransfer);
             }

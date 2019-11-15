@@ -75,7 +75,7 @@ class ProductReviewsRestApiDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addProductReviewClient(Container $container)
+    protected function addProductReviewClient(Container $container): Container
     {
         $container->set(static::CLIENT_PRODUCT_REVIEW, function (Container $container) {
             return new ProductReviewsRestApiToProductReviewClientBridge(

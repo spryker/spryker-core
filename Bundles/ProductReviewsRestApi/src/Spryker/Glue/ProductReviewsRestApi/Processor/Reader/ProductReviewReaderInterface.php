@@ -23,7 +23,7 @@ interface ProductReviewReaderInterface
      * @param int[] $productAbstractIds
      * @param array $requestParams
      *
-     * @return array
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
      */
     public function getProductReviewsResourceCollection(array $productAbstractIds, array $requestParams): array;
 }

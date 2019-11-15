@@ -11,13 +11,13 @@ use Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\Page;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductReviewClientInterface;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductReviewsRestApi\Processor\RestResponseBuilder\ProductReviewRestResponseBuilderInterface;
 use Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig;
-use Symfony\Component\HttpFoundation\Response;
 
 class ProductReviewReader implements ProductReviewReaderInterface
 {
@@ -101,9 +101,8 @@ class ProductReviewReader implements ProductReviewReaderInterface
 
         $productReviews = $this->getProductReviewsInSearch($restRequest, $productAbstractData[static::KEY_ID_PRODUCT_ABSTRACT]);
 
-        return $this->productReviewRestResponseBuilder->createProductReviewRestResponse(
+        return $this->productReviewRestResponseBuilder->createProductReviewsCollectionRestResponse(
             $productReviews[static::PRODUCT_REVIEWS],
-            Response::HTTP_CREATED,
             $productReviews[static::PAGINATION]->getNumFound(),
             $restRequest->getPage()->getLimit()
         );
@@ -113,7 +112,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
      * @param int[] $productAbstractIds
      * @param array $requestParams
      *
-     * @return array
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
      */
     public function getProductReviewsResourceCollection(array $productAbstractIds, array $requestParams): array
     {
@@ -123,12 +122,12 @@ class ProductReviewReader implements ProductReviewReaderInterface
             $productAbstractIds
         )[static::PRODUCT_REVIEWS];
 
-        $indexedProductReviewsData = [];
+        $indexedProductReviewTransfers = [];
         foreach ($productReviewTransfers as $productReviewTransfer) {
-            $indexedProductReviewsData[$productReviewTransfer->getFkProductAbstract()][] = $productReviewTransfer;
+            $indexedProductReviewTransfers[$productReviewTransfer->getFkProductAbstract()][] = $productReviewTransfer;
         }
 
-        return $this->productReviewRestResponseBuilder->prepareRestResourceCollection($indexedProductReviewsData);
+        return $this->productReviewRestResponseBuilder->prepareRestResourceCollection($indexedProductReviewTransfers);
     }
 
     /**
@@ -141,7 +140,13 @@ class ProductReviewReader implements ProductReviewReaderInterface
         RestRequestInterface $restRequest,
         int $idProductAbstract
     ): array {
-        $requestParams = $this->createRequestParamsWithPaginationParameters($restRequest);
+        if (!$restRequest->getPage()) {
+            $restRequest->setPage(new Page(0, $this->productReviewsRestApiConfig->getDefaultReviewsPerPage()));
+        }
+
+        $page = $restRequest->getPage();
+
+        $requestParams = $this->createRequestParamsWithPaginationParameters($page);
 
         $productReviews = $this->productReviewClient->findProductReviewsInSearch(
             (new ProductReviewSearchRequestTransfer())
@@ -172,18 +177,12 @@ class ProductReviewReader implements ProductReviewReaderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface $page
      *
      * @return array
      */
-    protected function createRequestParamsWithPaginationParameters(RestRequestInterface $restRequest): array
+    protected function createRequestParamsWithPaginationParameters(PageInterface $page): array
     {
-        if (!$restRequest->getPage()) {
-            $restRequest->setPage(new Page(0, $this->productReviewsRestApiConfig->getDefaultReviewsPerPage()));
-        }
-
-        $page = $restRequest->getPage();
-
         return [
             RequestConstantsInterface::QUERY_OFFSET => $page->getOffset(),
             RequestConstantsInterface::QUERY_LIMIT => $page->getLimit(),
