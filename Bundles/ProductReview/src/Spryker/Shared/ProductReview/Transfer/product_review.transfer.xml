@@ -48,7 +48,7 @@
 
     <transfer name="BulkProductReviewSearchRequest">
         <property name="productAbstractIds" type="int[]" singular="idProductAbstract"/>
-        <property name="requestParams" type="array" singular="requestParams"/>
+        <property name="requestParams" type="array" singular="requestParam"/>
     </transfer>
 
     <transfer name="ProductAbstractReview">
