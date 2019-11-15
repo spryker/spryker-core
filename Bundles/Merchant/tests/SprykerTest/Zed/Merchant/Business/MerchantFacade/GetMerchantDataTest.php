@@ -84,10 +84,10 @@ class GetMerchantDataTest extends Unit
         $this->tester->haveMerchant();
 
         // Act
-        $merchantCollectionWithoutCriteriaTransfer = $this->tester->getFacade()->find();
+        $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
+        $merchantCollectionWithoutCriteriaTransfer = $this->tester->getFacade()->find($merchantCriteriaFilterTransfer);
 
         // Arrange
-        $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
         $paginationTransfer = new PaginationTransfer();
         $paginationTransfer->setPage(1);
         $paginationTransfer->setMaxPerPage(1);

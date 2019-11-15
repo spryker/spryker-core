@@ -21,11 +21,11 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ProductOfferRepository extends AbstractRepository implements ProductOfferRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer|null $productOfferCriteriaFilter
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function find(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
+    public function find(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
     {
         $productOfferCollectionTransfer = new ProductOfferCollectionTransfer();
         $productOfferQuery = $this->getFactory()->createProductOfferPropelQuery();
@@ -46,17 +46,14 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer|null $productOfferCriteriaFilter
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
-    public function findOne(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer
+    public function findOne(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer
     {
         $productOfferQuery = $this->getFactory()->createProductOfferPropelQuery();
-
-        if ($productOfferCriteriaFilter) {
-            $productOfferQuery = $this->applyFilters($productOfferQuery, $productOfferCriteriaFilter);
-        }
+        $productOfferQuery = $this->applyFilters($productOfferQuery, $productOfferCriteriaFilter);
 
         $productOfferEntity = $productOfferQuery->findOne();
         if (!$productOfferEntity) {

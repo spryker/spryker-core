@@ -73,11 +73,11 @@ interface MerchantFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer|null $merchantCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function find(?MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer = null): MerchantCollectionTransfer;
+    public function find(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer;
 
     /**
      * Specification:

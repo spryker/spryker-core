@@ -61,7 +61,7 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function find(?MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer = null): MerchantCollectionTransfer
+    public function find(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer
     {
         return $this->getFactory()
             ->createMerchantReader()

@@ -24,11 +24,11 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer|null $productOfferCriteriaFilter
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function find(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
+    public function find(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
     {
         return $this->getRepository()->find($productOfferCriteriaFilter);
     }
@@ -38,11 +38,11 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer|null $productOfferCriteriaFilter
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
-    public function findOne(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer
+    public function findOne(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer
     {
         return $this->getRepository()->findOne($productOfferCriteriaFilter);
     }
