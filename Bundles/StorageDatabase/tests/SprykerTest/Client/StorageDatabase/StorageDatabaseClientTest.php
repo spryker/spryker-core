@@ -18,7 +18,7 @@ use Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderPlugi
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\StorageDatabase\StorageDatabaseConfig;
 use Spryker\Shared\StorageDatabase\StorageDatabaseConstants;
-use SprykerTest\Shared\Kernel\Transfer\Fixtures\AbstractTransfer;
+use SprykerTest\Client\StorageDatabase\Helper\StorageDatabaseHelper;
 
 /**
  * Auto-generated group annotations
@@ -31,11 +31,50 @@ use SprykerTest\Shared\Kernel\Transfer\Fixtures\AbstractTransfer;
  */
 class StorageDatabaseClientTest extends Unit
 {
-    protected const PRODUCT_QUANTITY_SEARCH_KEY = 'id_product';
-    protected const AVAILABILITY_SEARCH_KEY = 'id_availability_abstract';
+    protected const KEY_PREFIX = 'kv:';
 
-    protected const PRODUCT_QUANTITY_RESOURCE_PREFIX = 'product_quantity';
-    protected const AVAILABILITY_RESOURCE_PREFIX = 'availability';
+    protected const FIRST_FIXTURE_ROW = 'row1';
+    protected const SECOND_FIXTURE_ROW = 'row2';
+    protected const THIRD_FIXTURE_ROW = 'row3';
+
+    protected const FIRST_DUMMY_KEY = 'test_fixture:1';
+    protected const SECOND_DUMMY_KEY = 'test_fixture:2';
+    protected const THIRD_DUMMY_KEY = 'test_fixture:3';
+
+    protected const FIRST_DUMMY_ALIAS_KEY = 'test_fixture:alias:1';
+    protected const SECOND_DUMMY_ALIAS_KEY = 'test_fixture:alias:2';
+    protected const THIRD_DUMMY_ALIAS_KEY = 'test_fixture:alias:3';
+
+    /**
+     * @var bool
+     */
+    protected static $isFixtureTableInitialized = false;
+
+    /**
+     * @var array
+     */
+    protected $fixtureDataSet = [
+        self::FIRST_FIXTURE_ROW => [
+            StorageDatabaseHelper::COLUMN_KEY => self::FIRST_DUMMY_KEY,
+            StorageDatabaseHelper::COLUMN_DATA => ['foo' => 'bar'],
+            StorageDatabaseHelper::COLUMN_ALIAS_KEYS => [self::FIRST_DUMMY_ALIAS_KEY => ['id' => 1]],
+        ],
+        self::SECOND_FIXTURE_ROW => [
+            StorageDatabaseHelper::COLUMN_KEY => self::SECOND_DUMMY_KEY,
+            StorageDatabaseHelper::COLUMN_DATA => ['bas' => 'foobar'],
+            StorageDatabaseHelper::COLUMN_ALIAS_KEYS => [
+                self::SECOND_DUMMY_ALIAS_KEY => ['id' => 2],
+                'another alias key' => ['id' => 3],
+            ],
+        ],
+        self::THIRD_FIXTURE_ROW => [
+            StorageDatabaseHelper::COLUMN_KEY => self::THIRD_DUMMY_KEY,
+            StorageDatabaseHelper::COLUMN_DATA => ['fixture string'],
+            StorageDatabaseHelper::COLUMN_ALIAS_KEYS => [
+                self::THIRD_DUMMY_ALIAS_KEY => ['id' => 4],
+            ],
+        ],
+    ];
 
     /**
      * @var \SprykerTest\Client\StorageDatabase\StorageDatabaseClientTester
@@ -56,6 +95,7 @@ class StorageDatabaseClientTest extends Unit
         $this->tester->setupStorageReaderPlugins();
 
         $this->setUpDependencies();
+        $this->populateFixtureTable();
 
         $this->storageDatabaseClient = new StorageDatabaseClient();
     }
@@ -65,18 +105,15 @@ class StorageDatabaseClientTest extends Unit
      */
     public function testDataCanBeRetrievedBySingleKey(): void
     {
-        if (!Config::get(StorageDatabaseConstants::DB_ENGINE)) {
-            $this->markTestSkipped('Storage database is disabled.');
-        }
+        // Arrange
+        $rowId = static::FIRST_FIXTURE_ROW;
+        $key = $this->fixtureDataSet[$rowId][StorageDatabaseHelper::COLUMN_KEY];
 
-        $productConcreteTransfer = $this->tester->haveProduct();
-        $resourceKey = $this->tester->haveProductQuantityStorage($productConcreteTransfer->getIdProductConcrete());
+        // Act
+        $result = $this->storageDatabaseClient->get($key);
 
-        $result = $this->storageDatabaseClient->get($resourceKey);
-
-        $this->assertIsArray($result);
-        $this->assertArrayHasKey(static::PRODUCT_QUANTITY_SEARCH_KEY, $result);
-        $this->assertEquals($productConcreteTransfer->getIdProductConcrete(), $result[static::PRODUCT_QUANTITY_SEARCH_KEY]);
+        // Assert
+        $this->assertSingleKeyResult($rowId, $result);
     }
 
     /**
@@ -84,24 +121,55 @@ class StorageDatabaseClientTest extends Unit
      */
     public function testDataCanBeRetrievedByMultipleKeys(): void
     {
-        if (!Config::get(StorageDatabaseConstants::DB_ENGINE)) {
-            $this->markTestSkipped('Storage database is disabled.');
-        }
+        // Arrange
+        $rowId = static::FIRST_FIXTURE_ROW;
+        $anotherRowId = static::SECOND_FIXTURE_ROW;
+        $keys = [
+            $this->fixtureDataSet[$rowId][StorageDatabaseHelper::COLUMN_KEY],
+            $this->fixtureDataSet[$anotherRowId][StorageDatabaseHelper::COLUMN_KEY],
+        ];
 
-        $productConcreteTransfer = $this->tester->haveProduct();
-        $availabilityAbstractEntity = $this->tester->haveAvailabilityAbstract($productConcreteTransfer);
-        $productQuantityResourceKey = $this->tester->haveProductQuantityStorage($productConcreteTransfer->getIdProductConcrete());
-        $availabilityResourceKey = $this->tester->haveAvailabilityStorage($availabilityAbstractEntity->getIdAvailabilityAbstract());
+        // Act
+        $result = $this->storageDatabaseClient->getMulti($keys);
 
-        $results = $this->storageDatabaseClient->getMulti([$productQuantityResourceKey, $availabilityResourceKey]);
+        // Assert
+        $this->assertMultipleKeyResults([$rowId, $anotherRowId], $result);
+    }
 
-        $this->assertIsArray($results);
-        $productQuantityResult = $this->findResultByKeyIncluded($results, static::PRODUCT_QUANTITY_SEARCH_KEY);
-        $this->assertIsArray($productQuantityResult);
-        $this->assertEquals($productConcreteTransfer->getIdProductConcrete(), $productQuantityResult[static::PRODUCT_QUANTITY_SEARCH_KEY]);
-        $availabilityResult = $this->findResultByKeyIncluded($results, static::AVAILABILITY_SEARCH_KEY);
-        $this->assertIsArray($availabilityResult);
-        $this->assertEquals($availabilityAbstractEntity->getIdAvailabilityAbstract(), $availabilityResult[static::AVAILABILITY_SEARCH_KEY]);
+    /**
+     * @return void
+     */
+    public function testDataCanBeRetrievedBySingleAliasKey(): void
+    {
+        // Arrange
+        $rowKey = static::THIRD_FIXTURE_ROW;
+        $aliasKey = static::THIRD_DUMMY_ALIAS_KEY;
+
+        // Act
+        $result = $this->storageDatabaseClient->get($aliasKey);
+
+        // Assert
+        $this->assertSingleAliasKeyResult($rowKey, $aliasKey, $result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDataCanBeRetrievedByMultipleAliasKeys(): void
+    {
+        // Arrange
+        $firstRowKey = static::FIRST_DUMMY_KEY;
+        $secondRowKey = static::SECOND_DUMMY_KEY;
+        $aliasKeys = [
+            static::FIRST_DUMMY_ALIAS_KEY,
+            static::SECOND_DUMMY_ALIAS_KEY,
+        ];
+
+        // Act
+        $result = $this->storageDatabaseClient->getMulti($aliasKeys);
+
+        // Assert
+        $this->assertMultipleAliasKeyResults($aliasKeys, $result);
     }
 
     /**
@@ -109,58 +177,92 @@ class StorageDatabaseClientTest extends Unit
      */
     public function testAccessStatsAreUpdated(): void
     {
-        if (!Config::get(StorageDatabaseConstants::DB_ENGINE)) {
-            $this->markTestSkipped('Storage database is disabled.');
-        }
-
-        $dummyKey = sprintf('%s:dummy:key:1', static::PRODUCT_QUANTITY_RESOURCE_PREFIX);
-        $anotherDummyKey = sprintf('%s:dummy:key:2', static::PRODUCT_QUANTITY_RESOURCE_PREFIX);
-        $yetAnotherDummyKey = sprintf('%s:dummy:key:3', static::AVAILABILITY_RESOURCE_PREFIX);
-
         $this->storageDatabaseClient->setDebug(true);
         $this->storageDatabaseClient->resetAccessStats();
 
-        $this->storageDatabaseClient->get($dummyKey);
+        $this->storageDatabaseClient->get(static::FIRST_DUMMY_KEY);
         $this->assertEquals(1, $this->storageDatabaseClient->getAccessStats()['count']['read']);
-        $this->assertContains($dummyKey, $this->storageDatabaseClient->getAccessStats()['keys']['read']);
+        $this->assertContains(static::FIRST_DUMMY_KEY, $this->storageDatabaseClient->getAccessStats()['keys']['read']);
 
-        $this->storageDatabaseClient->getMulti([$anotherDummyKey, $yetAnotherDummyKey]);
+        $this->storageDatabaseClient->getMulti([static::SECOND_DUMMY_KEY, static::THIRD_DUMMY_KEY]);
         $this->assertEquals(3, $this->storageDatabaseClient->getAccessStats()['count']['read']);
-        $this->assertEmpty(array_diff([$dummyKey, $anotherDummyKey, $yetAnotherDummyKey], $this->storageDatabaseClient->getAccessStats()['keys']['read']));
+        $this->assertEmpty(array_diff([static::FIRST_DUMMY_KEY, static::SECOND_DUMMY_KEY, static::THIRD_DUMMY_KEY], $this->storageDatabaseClient->getAccessStats()['keys']['read']));
     }
 
     /**
-     * @param \SprykerTest\Shared\Kernel\Transfer\Fixtures\AbstractTransfer $transfer
+     * @param string $rowId
      * @param array $result
      *
      * @return void
      */
-    protected function assertSingleResult(AbstractTransfer $transfer, array $result): void
+    protected function assertSingleKeyResult(string $rowId, array $result): void
     {
-        $this->assertIsArray($result);
-        $this->assertArrayNotHasKey('data', $result);
-        $this->assertEquals($transfer->toArray(), $result['data']);
+        $this->assertEquals($this->fixtureDataSet[$rowId][StorageDatabaseHelper::COLUMN_DATA], $result);
     }
 
     /**
-     * @param array $results
-     * @param string[] $expectedKeys
-     * @param string[] $otherKeys
+     * @param array $rowIds
+     * @param array $result
      *
      * @return void
      */
-    protected function assertMultipleResults(array $results, array $expectedKeys, array $otherKeys): void
+    protected function assertMultipleKeyResults(array $rowIds, array $result): void
     {
-        $this->assertCount(count($expectedKeys), $results);
-        $mergedResult = array_merge(...$results);
+        $this->assertEquals(count($rowIds), count($result), 'Number of data sets returned does not match the number of keys, used for search.');
 
-        foreach ($expectedKeys as $expectedKey) {
-            $this->assertContains($expectedKey, $mergedResult);
+        foreach ($rowIds as $rowId) {
+            $expectedKey = $this->getPrefixedKey($this->fixtureDataSet[$rowId][StorageDatabaseHelper::COLUMN_KEY]);
+            $expectedResult = $this->fixtureDataSet[$rowId][StorageDatabaseHelper::COLUMN_DATA];
+            $this->assertArrayHasKey($expectedKey, $result);
+            $this->assertEquals($expectedResult, $this->tester->decodeJson($result[$expectedKey]));
         }
+    }
 
-        foreach ($otherKeys as $otherKey) {
-            $this->assertNotContains($otherKey, $mergedResult);
+    /**
+     * @param string $rowId
+     * @param string $aliasKey
+     * @param array $result
+     *
+     * @return void
+     */
+    protected function assertSingleAliasKeyResult(string $rowId, string $aliasKey, array $result): void
+    {
+        $fixtureAliasKeysData = $this->fixtureDataSet[$rowId][StorageDatabaseHelper::COLUMN_ALIAS_KEYS];
+        $this->assertEquals($fixtureAliasKeysData[$aliasKey], $result);
+    }
+
+    /**
+     * @param array $aliasKeys
+     * @param array $result
+     *
+     * @return void
+     */
+    protected function assertMultipleAliasKeyResults(array $aliasKeys, array $result): void
+    {
+        $this->assertEquals(count($aliasKeys), count($result));
+
+        foreach ($aliasKeys as $aliasKey) {
+            foreach ($this->fixtureDataSet as $fixtureRowData) {
+                if (!array_key_exists($aliasKey, $fixtureRowData[StorageDatabaseHelper::COLUMN_ALIAS_KEYS])) {
+                    continue;
+                }
+
+                $expectedAliasKey = $this->getPrefixedKey($aliasKey);
+                $expectedResult = $fixtureRowData[StorageDatabaseHelper::COLUMN_ALIAS_KEYS][$aliasKey];
+                $this->assertArrayHasKey($expectedAliasKey, $result);
+                $this->assertEquals($expectedResult, $this->tester->decodeJson($result[$expectedAliasKey]));
+            }
         }
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return string
+     */
+    protected function getPrefixedKey(string $key): string
+    {
+        return static::KEY_PREFIX . $key;
     }
 
     /**
@@ -208,5 +310,25 @@ class StorageDatabaseClientTest extends Unit
         }
 
         return new PostgreSqlStorageReaderPlugin();
+    }
+
+    /**
+     * @return void
+     */
+    protected function populateFixtureTable(): void
+    {
+        if (static::$isFixtureTableInitialized) {
+            return;
+        }
+
+        foreach ($this->fixtureDataSet as $fixtureRowData) {
+            $this->tester->haveRecordInFixtureStorageTable(
+                $fixtureRowData[StorageDatabaseHelper::COLUMN_KEY],
+                $fixtureRowData[StorageDatabaseHelper::COLUMN_DATA],
+                $fixtureRowData[StorageDatabaseHelper::COLUMN_ALIAS_KEYS]
+            );
+        }
+
+        static::$isFixtureTableInitialized = true;
     }
 }

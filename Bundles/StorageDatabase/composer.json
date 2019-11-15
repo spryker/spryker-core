@@ -13,13 +13,8 @@
     "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
-    "spryker/availability": "*",
-    "spryker/availability-storage": "*",
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
-    "spryker/product": "*",
-    "spryker/product-quantity": "*",
-    "spryker/product-quantity-storage": "*",
     "spryker/propel": "*",
     "spryker/queue": "*",
     "spryker/testify": "*"
