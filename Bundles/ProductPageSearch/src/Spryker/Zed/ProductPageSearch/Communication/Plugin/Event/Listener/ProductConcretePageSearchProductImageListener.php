@@ -24,7 +24,6 @@ class ProductConcretePageSearchProductImageListener extends AbstractProductConcr
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $this->preventTransaction();
         $productImageIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferIds($eventTransfers);

@@ -26,7 +26,6 @@ class ProductConcretePageSearchProductImageSetListener extends AbstractProductCo
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $this->preventTransaction();
         $productConcreteIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventTransfers, SpyProductImageSetTableMap::COL_FK_PRODUCT);
