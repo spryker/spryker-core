@@ -4,6 +4,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="x-ua-compatible" content="IE=Edge"/>
 
     <title>{% block head_title %}{% if title is defined %}{{ title | trans }}{% endif %}{% endblock %}</title>
 
@@ -19,6 +20,7 @@
                 defineCustomElements(window);
             });
         </script>
+        <script nomodule src="https://unpkg.com/@spryker/backoffice-ui@0.1.0/backoffice/backoffice-ui/backoffice-ui.js"></script>
     {% endblock %}
 
 </head>
