@@ -52,13 +52,13 @@ class CmsPageCmsSlotBlockConditionResolver implements CmsPageCmsSlotBlockConditi
             return true;
         }
 
-        $idCmsPage = $this->getIdCmsPage($cmsSlotParams);
+        $idCmsPage = $this->findIdCmsPage($cmsSlotParams);
 
         if (!$idCmsPage) {
             return false;
         }
 
-        if ($this->getIsCmsPageFitCondition($idCmsPage, $conditionData)) {
+        if ($this->getIsConditionSatisfiedByIdCmsPage($idCmsPage, $conditionData)) {
             return true;
         }
 
@@ -70,7 +70,7 @@ class CmsPageCmsSlotBlockConditionResolver implements CmsPageCmsSlotBlockConditi
      *
      * @return int|null
      */
-    protected function getIdCmsPage(array $cmsSlotParams): ?int
+    protected function findIdCmsPage(array $cmsSlotParams): ?int
     {
         return (int)$cmsSlotParams[static::SLOT_DATA_KEY_ID_CMS_PAGE] ?? null;
     }
@@ -81,7 +81,7 @@ class CmsPageCmsSlotBlockConditionResolver implements CmsPageCmsSlotBlockConditi
      *
      * @return bool
      */
-    protected function getIsCmsPageFitCondition(int $idCmsPage, array $conditionData): bool
+    protected function getIsConditionSatisfiedByIdCmsPage(int $idCmsPage, array $conditionData): bool
     {
         return in_array($idCmsPage, $conditionData[static::CONDITIONS_DATA_KEY_PAGE_IDS]);
     }
