@@ -31,7 +31,7 @@ class ZedNavigationCacheTest extends ZedNavigationBusinessTester
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 

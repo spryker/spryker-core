@@ -1,7 +1,7 @@
 language: php
 
 php:
-    - 7.1
+    - 7.2
     - 7.3
 
 cache:
@@ -15,7 +15,7 @@ env:
         - APPLICATION_STORE=DE
 
 install:
-    - composer install --no-interaction --prefer-dist
+    - COMPOSER_MEMORY_LIMIT=-1 composer install --no-interaction --prefer-dist
 
 script:
     - vendor/bin/phpcs src --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml

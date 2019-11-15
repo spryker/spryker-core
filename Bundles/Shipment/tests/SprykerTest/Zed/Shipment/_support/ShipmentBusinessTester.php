@@ -8,9 +8,12 @@
 namespace SprykerTest\Zed\Shipment;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\AddressBuilder;
 use Generated\Shared\DataBuilder\CalculableObjectBuilder;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
@@ -287,5 +290,32 @@ class ShipmentBusinessTester extends Actor
         return (new CalculableObjectBuilder())
             ->build()
             ->setOriginalQuote($originalQuoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $iso2Code
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addNewItemIntoQuoteTransfer(
+        QuoteTransfer $quoteTransfer,
+        string $iso2Code,
+        ShipmentMethodTransfer $shipmentMethodTransfer
+    ): QuoteTransfer {
+        $addressBuilder = (new AddressBuilder([AddressTransfer::ISO2_CODE => $iso2Code]));
+        $shipmentTransfer = (new ShipmentBuilder())
+            ->withShippingAddress($addressBuilder)
+            ->build();
+
+        $shipmentTransfer->setMethod($shipmentMethodTransfer);
+
+        $itemTransfer = (new ItemBuilder())->build();
+        $itemTransfer->setShipment($shipmentTransfer);
+
+        $quoteTransfer->addItem($itemTransfer);
+
+        return $quoteTransfer;
     }
 }

@@ -67,13 +67,12 @@ class FinderTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Oms\Business\Exception\StateNotFoundException
-     * @expectedExceptionMessage State with name "not existing" not found in any StateMachine processes.
-     *
      * @return void
      */
     public function testGetStateDisplayNameShouldThrowExceptionWhenStateNotFound()
     {
+        $this->expectException('Spryker\Zed\Oms\Business\Exception\StateNotFoundException');
+        $this->expectExceptionMessage('State with name "not existing" not found in any StateMachine processes.');
         $finder = $this->createFinder();
 
         $salesOrderItemEntity = $this->createSalesOrderItemEntity();
