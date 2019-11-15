@@ -12,7 +12,7 @@ abstract class StaticToken
     /**
      * @var string|null
      */
-    protected $rawToken = null;
+    protected $rawToken;
 
     /**
      * @param string $token
