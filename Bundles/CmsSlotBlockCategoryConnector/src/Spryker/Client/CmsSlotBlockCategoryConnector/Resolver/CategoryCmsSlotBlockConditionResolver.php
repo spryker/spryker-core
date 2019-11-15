@@ -58,7 +58,7 @@ class CategoryCmsSlotBlockConditionResolver implements CategoryCmsSlotBlockCondi
             return false;
         }
 
-        if ($this->getIsConditionSatisfiedByCategoryId($idCategory, $conditionData)) {
+        if ($this->getIsConditionSatisfiedByIdCategory($idCategory, $conditionData)) {
             return true;
         }
 
@@ -81,7 +81,7 @@ class CategoryCmsSlotBlockConditionResolver implements CategoryCmsSlotBlockCondi
      *
      * @return bool
      */
-    protected function getIsConditionSatisfiedByCategoryId(int $idCategory, array $conditionData): bool
+    protected function getIsConditionSatisfiedByIdCategory(int $idCategory, array $conditionData): bool
     {
         return in_array($idCategory, $conditionData[static::CONDITIONS_DATA_KEY_CATEGORY_IDS]);
     }
