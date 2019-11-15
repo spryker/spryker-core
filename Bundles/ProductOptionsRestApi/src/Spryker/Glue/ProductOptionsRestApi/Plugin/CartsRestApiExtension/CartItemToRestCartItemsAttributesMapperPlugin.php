@@ -36,7 +36,7 @@ class CartItemToRestCartItemsAttributesMapperPlugin extends AbstractPlugin imple
     ): RestItemsAttributesTransfer {
         $translations = $this->getFactory()
             ->createStorageReader()
-            ->getTranslationsForItemProductOptions($itemTransfer, '$localeName');
+            ->getTranslationsForItemProductOptions($itemTransfer, $localeName);
 
         return $this->getFactory()
             ->createProductOptionMapper()
