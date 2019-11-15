@@ -38,11 +38,28 @@ class SessionHelper extends Module
      */
     public function _before(TestInterface $test): void
     {
+        $this->ensureCleanSessionState();
+
         $this->getApplicationHelper()->addApplicationPlugin(
             $this->getSessionApplicationPluginStub()
         );
 
         $this->getEventDispatcherHelper()->addEventDispatcherPlugin(new SessionEventDispatcherPlugin());
+    }
+
+    /**
+     * When the SessionApplicationPlugin is booted some cookie params are set.
+     * To make sure we have a known session state this method exists.
+     *
+     * @return void
+     */
+    protected function ensureCleanSessionState(): void
+    {
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_write_close();
+        }
+
+        session_set_cookie_params(0, '', '');
     }
 
     /**
