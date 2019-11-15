@@ -225,9 +225,9 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addCategoryNodePropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_CATEGORY_NODE, function () {
+        $container->set(static::PROPEL_QUERY_CATEGORY_NODE, $container->factory(function () {
             return SpyCategoryNodeQuery::create();
-        });
+        }));
 
         return $container;
     }
@@ -239,9 +239,9 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT, function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT, $container->factory(function () {
             return SpyProductQuery::create();
-        });
+        }));
 
         return $container;
     }
@@ -297,9 +297,9 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductSearchPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT_SEARCH, function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_SEARCH, $container->factory(function () {
             return SpyProductSearchQuery::create();
-        });
+        }));
 
         return $container;
     }

@@ -437,11 +437,11 @@ interface PriceProductFacadeInterface
      *
      * @api
      *
-     * @param array $idProductAbstract
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPricesWithoutPriceExtractionByIdProductAbstractIn(array $idProductAbstract): array;
+    public function findProductAbstractPricesWithoutPriceExtractionByIdProductAbstractIn(array $productAbstractIds): array;
 
     /**
      * Specification:
