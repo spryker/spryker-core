@@ -101,6 +101,11 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getServiceProviders(Container $container)
     {
+        trigger_error(
+            '\Spryker\Zed\Application\ApplicationDependencyProvider::getServiceProviders is deprecated, please copy all required ServiceProvider and remove the call to this method',
+            E_USER_DEPRECATED
+        );
+
         $providers = [
             new TwigGlobalVariablesServiceProvider(),
             new RequestServiceProvider(),

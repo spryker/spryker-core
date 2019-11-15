@@ -20,7 +20,7 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
-use Pyz\Shared\Shipment\ShipmentConfig;
+use Spryker\Shared\Shipment\ShipmentConfig;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator;
 use Spryker\Zed\Shipment\Business\ShipmentFacade;

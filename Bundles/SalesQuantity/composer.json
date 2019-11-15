@@ -4,7 +4,7 @@
   "description": "SalesQuantity module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/discount-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/product": "^6.0.0",
