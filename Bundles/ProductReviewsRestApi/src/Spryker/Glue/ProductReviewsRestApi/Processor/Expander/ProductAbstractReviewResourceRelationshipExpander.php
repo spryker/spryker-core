@@ -16,9 +16,7 @@ use Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig;
 class ProductAbstractReviewResourceRelationshipExpander implements ProductAbstractReviewResourceRelationshipExpanderInterface
 {
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
-
     protected const KEY_SKU = 'sku';
-
     protected const PRODUCT_MAPPING_TYPE = 'sku';
 
     /**

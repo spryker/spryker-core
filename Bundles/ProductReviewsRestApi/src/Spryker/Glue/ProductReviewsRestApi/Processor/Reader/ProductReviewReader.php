@@ -118,8 +118,8 @@ class ProductReviewReader implements ProductReviewReaderInterface
     {
         /** @var \Generated\Shared\Transfer\ProductReviewTransfer[] $productReviewTransfers */
         $productReviewTransfers = $this->getBulkProductReviewsInSearch(
-            $requestParams,
-            $productAbstractIds
+            $productAbstractIds,
+            $requestParams
         )[static::PRODUCT_REVIEWS];
 
         $indexedProductReviewTransfers = [];
@@ -127,7 +127,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
             $indexedProductReviewTransfers[$productReviewTransfer->getFkProductAbstract()][] = $productReviewTransfer;
         }
 
-        return $this->productReviewRestResponseBuilder->prepareRestResourceCollection($indexedProductReviewTransfers);
+        return $this->productReviewRestResponseBuilder->createRestResourceCollection($indexedProductReviewTransfers);
     }
 
     /**
@@ -158,14 +158,14 @@ class ProductReviewReader implements ProductReviewReaderInterface
     }
 
     /**
-     * @param array $requestParams
      * @param int[] $productAbstractIds
+     * @param array $requestParams
      *
      * @return array
      */
     protected function getBulkProductReviewsInSearch(
-        array $requestParams,
-        array $productAbstractIds
+        array $productAbstractIds,
+        array $requestParams
     ): array {
         $productReviews = $this->productReviewClient->getBulkProductReviewsFromSearch(
             (new BulkProductReviewSearchRequestTransfer())

@@ -38,7 +38,7 @@ interface ProductReviewRestResponseBuilderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
      */
-    public function prepareRestResourceCollection(array $indexedProductReviewTransfers): array;
+    public function createRestResourceCollection(array $indexedProductReviewTransfers): array;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

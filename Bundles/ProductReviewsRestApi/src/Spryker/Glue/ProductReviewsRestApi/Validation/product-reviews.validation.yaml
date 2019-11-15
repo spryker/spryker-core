@@ -8,10 +8,6 @@ product-reviews:
           value: 1
       - LessThanOrEqual:
           value: 5
-    description:
-          - NotBlank
-          - Length:
-              max: 255
     summary:
           - NotBlank
           - Length:
