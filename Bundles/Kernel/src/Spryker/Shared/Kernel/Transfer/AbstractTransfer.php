@@ -174,8 +174,8 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
                 continue;
             }
 
+            // isAssociativeArray
             if (array_values($arrayElement) !== $arrayElement) {
-// isAssociativeArray
                 /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject */
                 $transferObject = new $elementType();
                 $transferObject->fromArray($arrayElement, $ignoreMissingProperty);

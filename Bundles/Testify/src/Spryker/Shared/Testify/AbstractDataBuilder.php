@@ -223,14 +223,14 @@ abstract class AbstractDataBuilder
         foreach ($this->nestedBuilders as $builderInfo) {
             [$name, $dependencyBuilder, $randomize] = $builderInfo;
 
+            // add currently generated values
             if (!$randomize) {
-// add currently generated values
                 $dependencyBuilder->seed($this->seedData);
             }
             $nestedTransfer = $dependencyBuilder->build();
 
+            // reuse generated values from nested objects
             if (!$randomize) {
-// reuse generated values from nested objects
                 $this->seedData = array_merge($this->seedData, $dependencyBuilder->getSeedData());
             }
 
