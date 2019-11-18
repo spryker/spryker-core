@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundleCart\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -61,5 +62,21 @@ class ConfigurableBundleCartFacade extends AbstractFacade implements Configurabl
         return $this->getFactory()
             ->createConfiguredBundleQuantityChecker()
             ->checkConfiguredBundleQuantity($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandConfiguredBundleItemsWithQuantityPerSlot(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        return $this->getFactory()
+            ->createConfiguredBundleQuantityExpander()
+            ->expandConfiguredBundleItemsWithQuantityPerSlot($cartChangeTransfer);
     }
 }

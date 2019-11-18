@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundleCart\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ConfigurableBundleCartFacadeInterface
@@ -53,4 +54,18 @@ interface ConfigurableBundleCartFacadeInterface
      * @return bool
      */
     public function checkConfiguredBundleQuantityInQuote(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * Specification:
+     * - Applicable to items which have configured bundle properties.
+     * - Updates configured bundle quantity per slot.
+     * - Returns modified CartChangeTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandConfiguredBundleItemsWithQuantityPerSlot(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }

@@ -109,7 +109,8 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
 
         return $configuredBundleTransfer
             ->setTemplate($configurableBundleTemplateTransfer)
-            ->setGroupKey($groupKey);
+            ->setGroupKey($groupKey)
+            ->setQuantity($configuredBundleRequestTransfer->getQuantity());
     }
 
     /**
