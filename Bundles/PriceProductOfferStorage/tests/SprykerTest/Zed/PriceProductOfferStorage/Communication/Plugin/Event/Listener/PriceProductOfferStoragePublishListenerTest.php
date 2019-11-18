@@ -8,7 +8,11 @@
 namespace SprykerTest\Zed\PriceProductOfferStorage\Communication\Plugin\Event\Listener;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\PriceProductOfferTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\PriceProductOffer\Dependency\PriceProductOfferEvents;
@@ -70,18 +74,18 @@ class PriceProductOfferStoragePublishListenerTest extends Unit
 
         $this->productConcreteTransfer = $this->tester->haveProduct();
         $productOfferTransfer = $this->tester->haveProductOffer([
-            'fkMerchant' => $this->tester->haveMerchant()->getIdMerchant(),
-            'concreteSku' => $this->productConcreteTransfer->getSku(),
+            ProductOfferTransfer::FK_MERCHANT => $this->tester->haveMerchant()->getIdMerchant(),
+            ProductOfferTransfer::CONCRETE_SKU => $this->productConcreteTransfer->getSku(),
         ]);
-        $storeTransfer = $this->tester->haveStore(['name' => static::STORE]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE]);
         $priceTypeTransfer = $this->tester->havePriceType();
-        $idCurrency = $this->tester->haveCurrency(['name' => static::CURRENCY]);
+        $idCurrency = $this->tester->haveCurrency([CurrencyTransfer::NAME => static::CURRENCY]);
 
         $this->priceProductOfferTransfer = $this->tester->havePriceProductOffer([
-            'fkProductOffer' => $productOfferTransfer->getIdProductOffer(),
-            'fkPriceType' => $priceTypeTransfer->getIdPriceType(),
-            'fkStore' => $storeTransfer->getIdStore(),
-            'fkCurrency' => $idCurrency,
+            PriceProductOfferTransfer::FK_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
+            PriceProductOfferTransfer::FK_PRICE_TYPE => $priceTypeTransfer->getIdPriceType(),
+            PriceProductOfferTransfer::FK_STORE => $storeTransfer->getIdStore(),
+            PriceProductOfferTransfer::FK_CURRENCY => $idCurrency,
         ]);
     }
 
@@ -91,7 +95,6 @@ class PriceProductOfferStoragePublishListenerTest extends Unit
     public function testProductOfferStoragePublishListener(): void
     {
         //Arrange
-        $expectedCount = 1;
         $eventTransfers = [
             (new EventEntityTransfer())->setId($this->priceProductOfferTransfer->getIdPriceProductOffer()),
         ];
@@ -105,7 +108,7 @@ class PriceProductOfferStoragePublishListenerTest extends Unit
         $countPriceProductOfferStorageEntities = $this->tester->getCountPriceProductOfferStorageEntities($this->productConcreteTransfer->getIdProductConcrete());
 
         //Assert
-        $this->assertSame($expectedCount, $countPriceProductOfferStorageEntities);
+        $this->assertSame(1, $countPriceProductOfferStorageEntities);
     }
 
     /**

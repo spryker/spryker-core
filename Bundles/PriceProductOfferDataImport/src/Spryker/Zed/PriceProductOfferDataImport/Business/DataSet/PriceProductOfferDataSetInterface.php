@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductOfferDataImport\Business\Model\DataSet;
+namespace Spryker\Zed\PriceProductOfferDataImport\Business\DataSet;
 
 interface PriceProductOfferDataSetInterface
 {

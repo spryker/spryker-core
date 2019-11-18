@@ -24,11 +24,11 @@ class PriceProductOfferStorageDimensionPlugin extends AbstractPlugin implements 
      *
      * @param int $idProductConcrete
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function findProductConcretePrices(int $idProductConcrete): array
     {
-        return $this->getClient()->findProductOfferPrices($idProductConcrete);
+        return $this->getClient()->getProductOfferPrices($idProductConcrete);
     }
 
     /**

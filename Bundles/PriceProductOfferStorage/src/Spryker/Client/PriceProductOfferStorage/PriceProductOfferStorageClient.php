@@ -23,10 +23,10 @@ class PriceProductOfferStorageClient extends AbstractClient implements PriceProd
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductOfferPrices(int $idProductConcrete): array
+    public function getProductOfferPrices(int $idProductConcrete): array
     {
         return $this->getFactory()
             ->createPriceProductOfferStorageReader()
-            ->findPriceProductList($idProductConcrete);
+            ->getProductOfferPrices($idProductConcrete);
     }
 }

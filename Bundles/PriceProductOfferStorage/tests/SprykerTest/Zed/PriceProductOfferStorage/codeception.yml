@@ -24,6 +24,7 @@ suites:
       - \SprykerTest\Shared\Testify\Helper\DependencyHelper
       - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
       - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
+      - \SprykerTest\Shared\Testify\Helper\PropelTableRelationSanitizer
       - \SprykerTest\Shared\Product\Helper\ProductDataHelper
       - \SprykerTest\Shared\PriceProductOffer\Helper\PriceProductOfferHelper
       - \SprykerTest\Zed\Merchant\Helper\MerchantHelper

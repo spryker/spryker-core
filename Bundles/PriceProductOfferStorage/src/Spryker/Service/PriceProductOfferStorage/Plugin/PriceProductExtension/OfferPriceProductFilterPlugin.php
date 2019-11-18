@@ -30,28 +30,30 @@ class OfferPriceProductFilterPlugin extends AbstractPlugin implements PriceProdu
      */
     public function filter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
     {
-        if ($priceProductFilterTransfer->getProductOfferReference()) {
-            $priceProductTransfers = array_filter($priceProductTransfers, function (PriceProductTransfer $priceProductTransfer) use ($priceProductFilterTransfer) {
-                return !($priceProductTransfer->getPriceDimension()->getProductOfferReference() && $priceProductTransfer->getPriceDimension()->getProductOfferReference() !== $priceProductFilterTransfer->getProductOfferReference());
-            });
+        if (!$priceProductFilterTransfer->getProductOfferReference()) {
+            return $priceProductTransfers;
+        }
 
-            $selectedOfferHasPrice = false;
-            foreach ($priceProductTransfers as $priceProductTransfer) {
-                if ($priceProductTransfer->getPriceDimension()->getProductOfferReference()) {
-                    $selectedOfferHasPrice = true;
+        $priceProductTransfers = array_filter($priceProductTransfers, function (PriceProductTransfer $priceProductTransfer) use ($priceProductFilterTransfer) {
+            return !($priceProductTransfer->getPriceDimension()->getProductOfferReference() && $priceProductTransfer->getPriceDimension()->getProductOfferReference() !== $priceProductFilterTransfer->getProductOfferReference());
+        });
 
-                    break;
-                }
+        $selectedOfferHasPrice = false;
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            if ($priceProductTransfer->getPriceDimension()->getProductOfferReference()) {
+                $selectedOfferHasPrice = true;
+
+                break;
+            }
+        }
+
+        $priceProductTransfers = array_filter($priceProductTransfers, function (PriceProductTransfer $priceProductTransfer) use ($selectedOfferHasPrice) {
+            if ($selectedOfferHasPrice) {
+                return $priceProductTransfer->getPriceDimension()->getProductOfferReference();
             }
 
-            $priceProductTransfers = array_filter($priceProductTransfers, function (PriceProductTransfer $priceProductTransfer) use ($selectedOfferHasPrice) {
-                if ($selectedOfferHasPrice) {
-                    return $priceProductTransfer->getPriceDimension()->getProductOfferReference();
-                }
-
-                return true;
-            });
-        }
+            return true;
+        });
 
         return $priceProductTransfers;
     }

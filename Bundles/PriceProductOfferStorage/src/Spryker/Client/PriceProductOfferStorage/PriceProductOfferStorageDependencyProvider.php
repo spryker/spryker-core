@@ -12,6 +12,7 @@ use Spryker\Client\Kernel\Container;
 use Spryker\Client\PriceProductOfferStorage\Dependency\Client\PriceProductOfferStorageToMerchantProductOfferStorageClientBridge;
 use Spryker\Client\PriceProductOfferStorage\Dependency\Client\PriceProductOfferStorageToStorageClientBridge;
 use Spryker\Client\PriceProductOfferStorage\Dependency\Client\PriceProductOfferStorageToStoreClientBridge;
+use Spryker\Client\PriceProductOfferStorage\Dependency\Service\PriceProductOfferStorageToPriceProductServiceBridge;
 use Spryker\Client\PriceProductOfferStorage\Dependency\Service\PriceProductOfferStorageToSynchronizationServiceBridge;
 
 class PriceProductOfferStorageDependencyProvider extends AbstractDependencyProvider
@@ -20,6 +21,7 @@ class PriceProductOfferStorageDependencyProvider extends AbstractDependencyProvi
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE = 'CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE';
     public const FACADE_STORE = 'FACADE_STORE';
+    public const FACADE_PRICE_PRODUCT_SERVICE = 'FACADE_PRICE_PRODUCT_SERVICE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -33,6 +35,7 @@ class PriceProductOfferStorageDependencyProvider extends AbstractDependencyProvi
         $container = $this->addStorageClient($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addMerchantProductOfferStorageClient($container);
+        $container = $this->addPriceProductService($container);
 
         return $container;
     }
@@ -88,6 +91,20 @@ class PriceProductOfferStorageDependencyProvider extends AbstractDependencyProvi
     {
         $container->set(static::FACADE_STORE, function (Container $container) {
             return new PriceProductOfferStorageToStoreClientBridge($container->getLocator()->store()->client());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addPriceProductService(Container $container): Container
+    {
+        $container->set(static::FACADE_PRICE_PRODUCT_SERVICE, function (Container $container) {
+            return new PriceProductOfferStorageToPriceProductServiceBridge($container->getLocator()->priceProduct()->service());
         });
 
         return $container;

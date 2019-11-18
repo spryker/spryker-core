@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductOfferDataImport\Business\Model\Step;
+namespace Spryker\Zed\PriceProductOfferDataImport\Business\Step;
 
 use Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOfferQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\PriceProductOffer\Dependency\PriceProductOfferEvents;
-use Spryker\Zed\PriceProductOfferDataImport\Business\Model\DataSet\PriceProductOfferDataSetInterface;
+use Spryker\Zed\PriceProductOfferDataImport\Business\DataSet\PriceProductOfferDataSetInterface;
 
 class PriceProductOfferWriterStep extends PublishAwareStep implements DataImportStepInterface
 {

@@ -14,7 +14,7 @@ interface PriceProductFilterExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands PriceProductFilterTransfer with additional parameters
+     * - Expands PriceProductFilterTransfer with additional parameters.
      *
      * @api
      *

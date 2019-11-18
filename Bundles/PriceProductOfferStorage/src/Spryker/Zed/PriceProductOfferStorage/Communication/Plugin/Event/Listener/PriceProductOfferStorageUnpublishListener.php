@@ -10,7 +10,6 @@ namespace Spryker\Zed\PriceProductOfferStorage\Communication\Plugin\Event\Listen
 use Orm\Zed\PriceProductOffer\Persistence\Map\SpyPriceProductOfferTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 /**
  * @method \Spryker\Zed\PriceProductOfferStorage\PriceProductOfferStorageConfig getConfig()
@@ -19,8 +18,6 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
  */
 class PriceProductOfferStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use TransactionTrait;
-
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
      * @param string $eventName

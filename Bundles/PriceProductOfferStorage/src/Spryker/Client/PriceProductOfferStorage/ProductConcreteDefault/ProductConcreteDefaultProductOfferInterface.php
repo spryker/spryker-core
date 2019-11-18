@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\PriceProductOfferStorage\ProductOfferResolver;
+namespace Spryker\Client\PriceProductOfferStorage\ProductConcreteDefault;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 

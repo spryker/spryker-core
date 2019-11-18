@@ -11,11 +11,12 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\PriceProductOfferStorage\Dependency\Client\PriceProductOfferStorageToMerchantProductOfferStorageClientInterface;
 use Spryker\Client\PriceProductOfferStorage\Dependency\Client\PriceProductOfferStorageToStorageClientInterface;
 use Spryker\Client\PriceProductOfferStorage\Dependency\Client\PriceProductOfferStorageToStoreClientInterface;
+use Spryker\Client\PriceProductOfferStorage\Dependency\Service\PriceProductOfferStorageToPriceProductServiceInterface;
 use Spryker\Client\PriceProductOfferStorage\Dependency\Service\PriceProductOfferStorageToSynchronizationServiceInterface;
 use Spryker\Client\PriceProductOfferStorage\Mapper\PriceProductOfferStorageMapper;
 use Spryker\Client\PriceProductOfferStorage\Mapper\PriceProductOfferStorageMapperInterface;
-use Spryker\Client\PriceProductOfferStorage\ProductOfferResolver\ProductConcreteDefaultProductOffer;
-use Spryker\Client\PriceProductOfferStorage\ProductOfferResolver\ProductConcreteDefaultProductOfferInterface;
+use Spryker\Client\PriceProductOfferStorage\ProductConcreteDefault\ProductConcreteDefaultProductOffer;
+use Spryker\Client\PriceProductOfferStorage\ProductConcreteDefault\ProductConcreteDefaultProductOfferInterface;
 use Spryker\Client\PriceProductOfferStorage\Storage\PriceProductOfferStorageReader;
 use Spryker\Client\PriceProductOfferStorage\Storage\PriceProductOfferStorageReaderInterface;
 
@@ -30,7 +31,8 @@ class PriceProductOfferStorageFactory extends AbstractFactory
             $this->createPriceProductMapper(),
             $this->getSynchronizationService(),
             $this->getStorageClient(),
-            $this->getStoreClient()
+            $this->getStoreClient(),
+            $this->getPriceProductService()
         );
     }
 
@@ -43,16 +45,16 @@ class PriceProductOfferStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PriceProductOfferStorage\ProductOfferResolver\ProductConcreteDefaultProductOfferInterface
+     * @return \Spryker\Client\PriceProductOfferStorage\ProductConcreteDefault\ProductConcreteDefaultProductOfferInterface
      */
     public function createProductConcreteDefaultProductOffer(): ProductConcreteDefaultProductOfferInterface
     {
         return new ProductConcreteDefaultProductOffer($this->getMerchantProductOfferStorageClient());
     }
 
-        /**
-         * @return \Spryker\Client\PriceProductOfferStorage\Dependency\Service\PriceProductOfferStorageToSynchronizationServiceInterface
-         */
+    /**
+     * @return \Spryker\Client\PriceProductOfferStorage\Dependency\Service\PriceProductOfferStorageToSynchronizationServiceInterface
+     */
     public function getSynchronizationService(): PriceProductOfferStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(PriceProductOfferStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
@@ -80,5 +82,13 @@ class PriceProductOfferStorageFactory extends AbstractFactory
     public function getMerchantProductOfferStorageClient(): PriceProductOfferStorageToMerchantProductOfferStorageClientInterface
     {
         return $this->getProvidedDependency(PriceProductOfferStorageDependencyProvider::CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductOfferStorage\Dependency\Service\PriceProductOfferStorageToPriceProductServiceInterface
+     */
+    public function getPriceProductService(): PriceProductOfferStorageToPriceProductServiceInterface
+    {
+        return $this->getProvidedDependency(PriceProductOfferStorageDependencyProvider::FACADE_PRICE_PRODUCT_SERVICE);
     }
 }

@@ -38,6 +38,7 @@ class PriceProductOfferDataImportPluginTest extends Unit
      */
     public function testMerchantProfileDataImportFacade(): void
     {
+        //Arrange
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/price_product_offer.csv');
 
@@ -50,8 +51,7 @@ class PriceProductOfferDataImportPluginTest extends Unit
         $dataImportPlugin->import($dataImportConfigurationTransfer);
 
         // Assert
-
-        $this->assertNotEmpty($this->getPriceProductOffer());
+        $this->assertTrue($this->getPriceProductOffers());
     }
 
     /**
@@ -72,7 +72,7 @@ class PriceProductOfferDataImportPluginTest extends Unit
     /**
      * @return bool
      */
-    protected function getPriceProductOffer(): bool
+    protected function getPriceProductOffers(): bool
     {
         $priceProductOfferQuery = new SpyPriceProductOfferQuery();
 

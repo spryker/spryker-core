@@ -9,11 +9,11 @@ namespace Spryker\Zed\PriceProductOfferDataImport\Business;
 
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
-use Spryker\Zed\PriceProductOfferDataImport\Business\Model\Step\CurrencyToIdCurrencyStep;
-use Spryker\Zed\PriceProductOfferDataImport\Business\Model\Step\PriceProductOfferWriterStep;
-use Spryker\Zed\PriceProductOfferDataImport\Business\Model\Step\PriceTypeToIdPriceType;
-use Spryker\Zed\PriceProductOfferDataImport\Business\Model\Step\ProductOfferReferenceToIdProductOfferStep;
-use Spryker\Zed\PriceProductOfferDataImport\Business\Model\Step\StoreToIdStoreStep;
+use Spryker\Zed\PriceProductOfferDataImport\Business\Step\CurrencyToIdCurrencyStep;
+use Spryker\Zed\PriceProductOfferDataImport\Business\Step\PriceProductOfferWriterStep;
+use Spryker\Zed\PriceProductOfferDataImport\Business\Step\PriceTypeToIdPriceType;
+use Spryker\Zed\PriceProductOfferDataImport\Business\Step\ProductOfferReferenceToIdProductOfferStep;
+use Spryker\Zed\PriceProductOfferDataImport\Business\Step\StoreToIdStoreStep;
 
 /**
  * @method \Spryker\Zed\PriceProductOfferDataImport\PriceProductOfferDataImportConfig getConfig()

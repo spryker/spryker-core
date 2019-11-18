@@ -14,5 +14,5 @@ interface PriceProductOfferStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findPriceProductList(int $idProductConcrete): array;
+    public function getProductOfferPrices(int $idProductConcrete): array;
 }

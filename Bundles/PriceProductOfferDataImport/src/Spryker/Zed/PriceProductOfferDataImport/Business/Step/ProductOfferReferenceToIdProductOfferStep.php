@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductOfferDataImport\Business\Model\Step;
+namespace Spryker\Zed\PriceProductOfferDataImport\Business\Step;
 
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\PriceProductOfferDataImport\Business\Model\DataSet\PriceProductOfferDataSetInterface;
+use Spryker\Zed\PriceProductOfferDataImport\Business\DataSet\PriceProductOfferDataSetInterface;
 
 class ProductOfferReferenceToIdProductOfferStep implements DataImportStepInterface
 {

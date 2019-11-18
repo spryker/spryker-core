@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferStorageTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Service\PriceProduct\PriceProductService;
 use Spryker\Shared\PriceProductOfferStorage\PriceProductOfferStorageConfig;
 
 class PriceProductOfferStorageMapper implements PriceProductOfferStorageMapperInterface
@@ -44,8 +43,6 @@ class PriceProductOfferStorageMapper implements PriceProductOfferStorageMapperIn
                     ->setGrossAmount($priceProductOfferStorageTransfer->getGrossPrice())
             );
 
-        $groupKey = (new PriceProductService())->buildPriceProductGroupKey($priceProductTransfer);
-
-        return $priceProductTransfer->setGroupKey($groupKey);
+        return $priceProductTransfer;
     }
 }

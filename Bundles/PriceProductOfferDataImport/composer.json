@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/currency": "^3.0.0",
-    "spryker/data-import": "^1.2.0",
+    "spryker/data-import": "^1.0.0",
     "spryker/kernel": "^3.33.0",
     "spryker/price-product": "^4.0.0",
     "spryker/price-product-offer": "^1.0.0",

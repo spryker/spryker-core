@@ -112,19 +112,19 @@ class PriceProductOfferSynchronizationDataPlugin extends AbstractPlugin implemen
     }
 
     /**
-     * @param \Orm\Zed\PriceProductOfferStorage\Persistence\SpyProductConcreteProductOfferPriceStorage $productOfferEntity
+     * @param \Orm\Zed\PriceProductOfferStorage\Persistence\SpyProductConcreteProductOfferPriceStorage $productConcreteProductOfferPriceStorageEntity
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer
      */
-    protected function createSynchronizationDataTransfer(SpyProductConcreteProductOfferPriceStorage $productOfferEntity): SynchronizationDataTransfer
+    protected function createSynchronizationDataTransfer(SpyProductConcreteProductOfferPriceStorage $productConcreteProductOfferPriceStorageEntity): SynchronizationDataTransfer
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
 
         /** @var string $data */
-        $data = $productOfferEntity->getData();
+        $data = $productConcreteProductOfferPriceStorageEntity->getData();
 
         $synchronizationDataTransfer->setData($data);
-        $synchronizationDataTransfer->setKey($productOfferEntity->getKey());
+        $synchronizationDataTransfer->setKey($productConcreteProductOfferPriceStorageEntity->getKey());
 
         return $synchronizationDataTransfer;
     }

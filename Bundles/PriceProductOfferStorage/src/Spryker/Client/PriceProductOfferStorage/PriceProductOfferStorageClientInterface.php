@@ -10,7 +10,8 @@ namespace Spryker\Client\PriceProductOfferStorage;
 interface PriceProductOfferStorageClientInterface
 {
     /**
-     * {@inheritDoc}
+     * Specification:
+     * - Gets product offer prices by idProductConcrete.
      *
      * @api
      *
@@ -18,5 +19,5 @@ interface PriceProductOfferStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductOfferPrices(int $idProductConcrete): array;
+    public function getProductOfferPrices(int $idProductConcrete): array;
 }

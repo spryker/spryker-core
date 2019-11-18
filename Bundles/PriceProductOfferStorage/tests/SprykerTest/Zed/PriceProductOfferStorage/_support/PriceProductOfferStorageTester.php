@@ -37,14 +37,24 @@ class PriceProductOfferStorageTester extends Actor
      */
     public function getCountPriceProductOfferStorageEntities(int $productId): int
     {
-        return SpyProductConcreteProductOfferPriceStorageQuery::create()->findByFkProduct($productId)->count();
+        return $this->createProductConcreteProductOfferPriceStorageQuery()->findByFkProduct($productId)->count();
     }
 
     /**
-     * @return int
+     * @return void
      */
-    public function deletePriceProductOfferStorageEntities(): int
+    public function deletePriceProductOfferStorageEntities(): void
     {
-        return SpyProductConcreteProductOfferPriceStorageQuery::create()->deleteAll();
+        $productConcreteProductOfferPriceStorageQuery = $this->createProductConcreteProductOfferPriceStorageQuery();
+
+        $this->truncateTableRelations($productConcreteProductOfferPriceStorageQuery);
+    }
+
+    /**
+     * @return \Orm\Zed\PriceProductOfferStorage\Persistence\SpyProductConcreteProductOfferPriceStorageQuery
+     */
+    protected function createProductConcreteProductOfferPriceStorageQuery(): SpyProductConcreteProductOfferPriceStorageQuery
+    {
+        return SpyProductConcreteProductOfferPriceStorageQuery::create();
     }
 }
