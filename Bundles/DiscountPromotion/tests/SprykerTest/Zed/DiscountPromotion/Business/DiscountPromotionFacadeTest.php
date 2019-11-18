@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -411,11 +412,11 @@ class DiscountPromotionFacadeTest extends Unit
             ]
         );
 
-        $this->tester->haveProductInStockForStore($storeTransfer, [
-            StockProductTransfer::SKU => $productConcreteTransfer->getSku(),
-            StockProductTransfer::QUANTITY => 5,
-        ]);
-        $this->tester->haveAvailabilityConcrete($productConcreteTransfer->getSku(), $storeTransfer, 5);
+        $this->addStockForProduct($productConcreteTransfer);
+
+        $this->getAvailabilityFacade()->updateAvailability($productConcreteTransfer->getSku());
+
+        $abstractSku = $this->getProductFacade()->getAbstractSkuFromProductConcrete($productConcreteTransfer->getSku());
 
         $discountGeneralTransfer = $this->tester->haveDiscount();
 
@@ -455,6 +456,22 @@ class DiscountPromotionFacadeTest extends Unit
     }
 
     /**
+     * @return \Spryker\Zed\Product\Business\ProductFacadeInterface
+     */
+    protected function getProductFacade()
+    {
+        return $this->tester->getLocator()->product()->facade();
+    }
+
+    /**
+     * @return \Spryker\Zed\Stock\Business\StockFacadeInterface
+     */
+    protected function getStockFacade()
+    {
+        return $this->tester->getLocator()->stock()->facade();
+    }
+
+    /**
      * @return \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
     protected function getLocaleFacade()
@@ -473,5 +490,23 @@ class DiscountPromotionFacadeTest extends Unit
         return (new DiscountPromotionTransfer())
             ->setAbstractSku($promotionSku)
             ->setQuantity($quantity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    protected function addStockForProduct(ProductConcreteTransfer $productConcreteTransfer)
+    {
+        $availableStockTypes = $this->getStockFacade()->getAvailableStockTypes();
+        foreach ($availableStockTypes as $stockType) {
+            $stockProductTransfer = (new StockProductTransfer())
+                ->setSku($productConcreteTransfer->getSku())
+                ->setQuantity(5)
+                ->setStockType($stockType);
+
+            $this->getStockFacade()->createStockProduct($stockProductTransfer);
+        }
     }
 }
