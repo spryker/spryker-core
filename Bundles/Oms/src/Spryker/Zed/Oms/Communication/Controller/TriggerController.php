@@ -10,6 +10,7 @@ namespace Spryker\Zed\Oms\Communication\Controller;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
@@ -163,10 +164,16 @@ class TriggerController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+     *
      * @return bool
      */
     protected function isValidPostRequest(Request $request): bool
     {
+        if (!$request->isMethod(Request::METHOD_POST)) {
+            throw new BadRequestHttpException();
+        }
+
         return $request->isMethod(Request::METHOD_POST) && $this->isTriggerFormValid($request);
     }
 

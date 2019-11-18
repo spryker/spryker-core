@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @method \Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface getFacade()
@@ -140,12 +141,14 @@ class TriggerController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+     *
      * @return bool
      */
     protected function isValidTriggerEventPostRequest(Request $request): bool
     {
         if (!$request->isMethod(Request::METHOD_POST)) {
-            return false;
+            throw new BadRequestHttpException();
         }
 
         $form = $this->getFactory()
@@ -158,12 +161,14 @@ class TriggerController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+     *
      * @return bool
      */
     protected function isValidTriggerEventItemPostRequest(Request $request): bool
     {
         if (!$request->isMethod(Request::METHOD_POST)) {
-            return false;
+            throw new BadRequestHttpException();
         }
 
         $form = $this->getFactory()
