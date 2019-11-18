@@ -14,15 +14,24 @@
     </transfer>
 
     <transfer name="ProductOfferCriteriaFilter">
+        <property name="concreteSkus" type="string[]" singular="concreteSku"/>
+        <property name="productOfferReferences" type="string[]" singular="productOfferReference"/>
     </transfer>
 
     <transfer name="ProductOffer">
+        <property name="idProductOffer" type="int"/>
+        <property name="fkMerchant" type="int"/>
+        <property name="productOfferReference" type="string"/>
     </transfer>
 
     <transfer name="ProductOfferCollection">
+        <property name="productOffers" type="ProductOffer[]" singular="productOffer"/>
     </transfer>
 
     <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
     </transfer>
 
 </transfers>

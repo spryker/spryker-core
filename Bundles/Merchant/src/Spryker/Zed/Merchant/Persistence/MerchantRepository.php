@@ -25,15 +25,12 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
     protected const DEFAULT_ORDER_COLUMN = SpyMerchantTableMap::COL_NAME;
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer|null $merchantCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function find(?MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer = null): MerchantCollectionTransfer
+    public function find(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer
     {
-        if ($merchantCriteriaFilterTransfer === null) {
-            $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
-        }
         $merchantQuery = $this->getFactory()
             ->createMerchantQuery();
 
@@ -42,6 +39,7 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
             $filterTransfer = (new FilterTransfer())->setOrderBy(static::DEFAULT_ORDER_COLUMN);
         }
 
+        $merchantQuery = $this->applyFilters($merchantQuery, $merchantCriteriaFilterTransfer);
         $merchantQuery = $this->buildQueryFromCriteria($merchantQuery, $filterTransfer);
 
         /** @var \Generated\Shared\Transfer\SpyMerchantEntityTransfer[] $merchantCollection */
