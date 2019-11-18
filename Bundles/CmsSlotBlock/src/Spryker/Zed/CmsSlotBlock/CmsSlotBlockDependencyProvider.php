@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotBlock;
 
+use Spryker\Zed\CmsSlotBlock\Dependency\Facade\CmsSlotBlockToCmsSlotFacadeBridge;
 use Spryker\Zed\CmsSlotBlock\Dependency\Facade\CmsSlotBlockToEventFacadeBridge;
 use Spryker\Zed\CmsSlotBlock\Dependency\Service\CmsSlotBlockToUtilEncodingServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -18,6 +19,7 @@ use Spryker\Zed\Kernel\Container;
 class CmsSlotBlockDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_EVENT = 'FACADE_EVENT';
+    public const FACADE_CMS_SLOT = 'FACADE_CMS_SLOT';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
@@ -44,6 +46,7 @@ class CmsSlotBlockDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addEventFacade($container);
+        $container = $this->addCmsSlotFacade($container);
 
         return $container;
     }
@@ -73,6 +76,20 @@ class CmsSlotBlockDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_EVENT, function (Container $container) {
             return new CmsSlotBlockToEventFacadeBridge($container->getLocator()->event()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCmsSlotFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_CMS_SLOT, function (Container $container) {
+            return new CmsSlotBlockToCmsSlotFacadeBridge($container->getLocator()->cmsSlot()->facade());
         });
 
         return $container;

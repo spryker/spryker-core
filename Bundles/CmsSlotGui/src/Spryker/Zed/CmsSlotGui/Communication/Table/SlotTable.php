@@ -11,6 +11,7 @@ use Orm\Zed\CmsSlot\Persistence\Map\SpyCmsSlotTableMap;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CmsSlotGui\Communication\Controller\ActivateSlotController;
+use Spryker\Zed\CmsSlotGui\Dependency\Facade\CmsSlotGuiToTranslatorFacadeInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -21,14 +22,14 @@ class SlotTable extends AbstractTable
     protected const COL_ID_CMS_SLOT = SpyCmsSlotTableMap::COL_ID_CMS_SLOT;
     protected const COL_NAME = SpyCmsSlotTableMap::COL_NAME;
     protected const COL_DESCRIPTION = SpyCmsSlotTableMap::COL_DESCRIPTION;
-    protected const COL_OWNERSHIP = SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE;
+    protected const COL_CONTENT_PROVIDER = SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE;
     protected const COL_STATUS = SpyCmsSlotTableMap::COL_IS_ACTIVE;
     protected const COL_ACTIONS = 'actions';
 
     protected const VALUE_COL_ID_CMS_SLOT = 'ID';
     protected const VALUE_COL_NAME = 'Name';
     protected const VALUE_COL_DESCRIPTION = 'Description';
-    protected const VALUE_COL_OWNERSHIP = 'Ownership';
+    protected const VALUE_COL_CONTENT_PROVIDER = 'Content Provider';
     protected const VALUE_COL_STATUS = 'Status';
     protected const VALUE_COL_ACTIONS = 'Actions';
 
@@ -46,17 +47,27 @@ class SlotTable extends AbstractTable
     protected $cmsSlotQuery;
 
     /**
+     * @var \Spryker\Zed\CmsSlotGui\Dependency\Facade\CmsSlotGuiToTranslatorFacadeInterface
+     */
+    protected $translatorFacade;
+
+    /**
      * @var int|null
      */
     protected $idCmsSlotTemplate;
 
     /**
      * @param \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery $cmsSlotQuery
+     * @param \Spryker\Zed\CmsSlotGui\Dependency\Facade\CmsSlotGuiToTranslatorFacadeInterface $translatorFacade
      * @param int|null $idCmsSlotTemplate
      */
-    public function __construct(SpyCmsSlotQuery $cmsSlotQuery, ?int $idCmsSlotTemplate = null)
-    {
+    public function __construct(
+        SpyCmsSlotQuery $cmsSlotQuery,
+        CmsSlotGuiToTranslatorFacadeInterface $translatorFacade,
+        ?int $idCmsSlotTemplate = null
+    ) {
         $this->cmsSlotQuery = $cmsSlotQuery;
+        $this->translatorFacade = $translatorFacade;
         $this->idCmsSlotTemplate = $idCmsSlotTemplate;
     }
 
@@ -92,13 +103,13 @@ class SlotTable extends AbstractTable
             static::COL_ID_CMS_SLOT => static::VALUE_COL_ID_CMS_SLOT,
             static::COL_NAME => static::VALUE_COL_NAME,
             static::COL_DESCRIPTION => static::VALUE_COL_DESCRIPTION,
-            static::COL_OWNERSHIP => static::VALUE_COL_OWNERSHIP,
+            static::COL_CONTENT_PROVIDER => static::VALUE_COL_CONTENT_PROVIDER,
             static::COL_STATUS => static::VALUE_COL_STATUS,
             static::COL_ACTIONS => static::VALUE_COL_ACTIONS,
         ];
 
-        if (!$this->isOwnershipColumnVisible()) {
-            unset($header[static::COL_OWNERSHIP]);
+        if (!$this->isContentProviderColumnVisible()) {
+            unset($header[static::COL_CONTENT_PROVIDER]);
         }
 
         $config->setHeader($header);
@@ -119,8 +130,8 @@ class SlotTable extends AbstractTable
             static::COL_STATUS,
         ];
 
-        if ($this->isOwnershipColumnVisible()) {
-            $sortable[] = static::COL_OWNERSHIP;
+        if ($this->isContentProviderColumnVisible()) {
+            $sortable[] = static::COL_CONTENT_PROVIDER;
         }
 
         $config->setSortable($sortable);
@@ -141,8 +152,8 @@ class SlotTable extends AbstractTable
             static::COL_DESCRIPTION,
         ];
 
-        if ($this->isOwnershipColumnVisible()) {
-            $searchable[] = static::COL_OWNERSHIP;
+        if ($this->isContentProviderColumnVisible()) {
+            $searchable[] = static::COL_CONTENT_PROVIDER;
         }
 
         $config->setSearchable($searchable);
@@ -153,11 +164,11 @@ class SlotTable extends AbstractTable
     /**
      * @return bool
      */
-    protected function isOwnershipColumnVisible(): bool
+    protected function isContentProviderColumnVisible(): bool
     {
         if ($this->contentProviderTypesNumber === null) {
             $this->contentProviderTypesNumber = $this->cmsSlotQuery
-                ->select(static::COL_OWNERSHIP)
+                ->select(static::COL_CONTENT_PROVIDER)
                 ->distinct()
                 ->count();
         }
@@ -190,13 +201,13 @@ class SlotTable extends AbstractTable
                 static::COL_ID_CMS_SLOT => $slot[SpyCmsSlotTableMap::COL_ID_CMS_SLOT],
                 static::COL_NAME => $slot[SpyCmsSlotTableMap::COL_NAME],
                 static::COL_DESCRIPTION => $slot[SpyCmsSlotTableMap::COL_DESCRIPTION],
-                static::COL_OWNERSHIP => $slot[SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE],
+                static::COL_CONTENT_PROVIDER => $this->getContentProvider($slot),
                 static::COL_STATUS => $this->getStatus($slot),
                 static::COL_ACTIONS => $this->buildLinks($slot),
             ];
 
-            if (!$this->isOwnershipColumnVisible()) {
-                unset($results[static::COL_OWNERSHIP]);
+            if (!$this->isContentProviderColumnVisible()) {
+                unset($results[static::COL_CONTENT_PROVIDER]);
             }
         }
 
@@ -241,6 +252,16 @@ class SlotTable extends AbstractTable
         }
 
         return $this->generateLabel('Inactive', 'label-danger');
+    }
+
+    /**
+     * @param array $slot
+     *
+     * @return string
+     */
+    protected function getContentProvider(array $slot): string
+    {
+        return $this->translatorFacade->trans($slot[SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE]);
     }
 
     /**

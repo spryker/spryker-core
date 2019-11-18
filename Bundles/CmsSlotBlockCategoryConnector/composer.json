@@ -1,9 +1,11 @@
 {
   "name": "spryker/cms-slot-block-category-connector",
+  "type": "library",
   "description": "CmsSlotBlockCategoryConnector module",
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "spryker/cms-slot-block-extension": "^0.1.0",
     "spryker/kernel": "^3.30.0"
   },
   "require-dev": {

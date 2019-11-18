@@ -12,6 +12,7 @@
     "spryker/transfer": "^3.8.0"
   },
   "require-dev": {
+    "spryker/cms-slot-block": "*",
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
