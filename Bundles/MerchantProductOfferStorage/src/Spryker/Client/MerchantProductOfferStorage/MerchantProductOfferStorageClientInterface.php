@@ -18,11 +18,11 @@ interface MerchantProductOfferStorageClientInterface
      *
      * @api
      *
-     * @param string $concreteSku
+     * @param string $productSku
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
-    public function getProductOfferStorageCollection(string $concreteSku): ProductOfferStorageCollectionTransfer;
+    public function getProductOfferStorageCollection(string $productSku): ProductOfferStorageCollectionTransfer;
 
     /**
      * Specification:
@@ -31,9 +31,9 @@ interface MerchantProductOfferStorageClientInterface
      *
      * @api
      *
-     * @param string $concreteSku
+     * @param string $productSku
      *
      * @return string[]
      */
-    public function getProductOfferReferences(string $concreteSku): array;
+    public function getProductOfferReferences(string $productSku): array;
 }

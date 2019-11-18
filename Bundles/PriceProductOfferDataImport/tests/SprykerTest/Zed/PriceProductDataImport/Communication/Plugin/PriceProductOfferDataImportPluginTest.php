@@ -51,7 +51,7 @@ class PriceProductOfferDataImportPluginTest extends Unit
         $dataImportPlugin->import($dataImportConfigurationTransfer);
 
         // Assert
-        $this->assertTrue($this->getPriceProductOffers());
+        $this->assertTrue($this->hasPriceProductOffers());
     }
 
     /**
@@ -72,7 +72,7 @@ class PriceProductOfferDataImportPluginTest extends Unit
     /**
      * @return bool
      */
-    protected function getPriceProductOffers(): bool
+    protected function hasPriceProductOffers(): bool
     {
         $priceProductOfferQuery = new SpyPriceProductOfferQuery();
 

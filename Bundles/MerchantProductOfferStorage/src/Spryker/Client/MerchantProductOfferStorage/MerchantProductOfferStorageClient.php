@@ -20,15 +20,15 @@ class MerchantProductOfferStorageClient extends AbstractClient implements Mercha
      *
      * @api
      *
-     * @param string $concreteSku
+     * @param string $productSku
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
-    public function getProductOfferStorageCollection(string $concreteSku): ProductOfferStorageCollectionTransfer
+    public function getProductOfferStorageCollection(string $productSku): ProductOfferStorageCollectionTransfer
     {
         return $this->getFactory()
             ->createProductOfferStorageReader()
-            ->getProductOfferStorageCollection($concreteSku);
+            ->getProductOfferStorageCollection($productSku);
     }
 
     /**
@@ -36,14 +36,14 @@ class MerchantProductOfferStorageClient extends AbstractClient implements Mercha
      *
      * @api
      *
-     * @param string $concreteSku
+     * @param string $productSku
      *
      * @return string[]
      */
-    public function getProductOfferReferences(string $concreteSku): array
+    public function getProductOfferReferences(string $productSku): array
     {
         return $this->getFactory()
             ->createProductOfferStorageReader()
-            ->getProductOfferReferences($concreteSku);
+            ->getProductOfferReferences($productSku);
     }
 }

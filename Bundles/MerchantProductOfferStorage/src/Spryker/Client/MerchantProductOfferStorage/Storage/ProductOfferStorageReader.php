@@ -48,13 +48,13 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     }
 
     /**
-     * @param string $concreteSku
+     * @param string $productSku
      *
      * @return string[]
      */
-    public function getProductOfferReferences(string $concreteSku): array
+    public function getProductOfferReferences(string $productSku): array
     {
-        $concreteProductOffersKey = $this->generateKey($concreteSku, MerchantProductOfferStorageConfig::RESOURCE_CONCRETE_PRODUCT_PRODUCT_OFFERS_NAME);
+        $concreteProductOffersKey = $this->generateKey($productSku, MerchantProductOfferStorageConfig::RESOURCE_CONCRETE_PRODUCT_PRODUCT_OFFERS_NAME);
         $concreteProductOffers = $this->storageClient->get($concreteProductOffersKey);
 
         if (!$concreteProductOffers) {
@@ -66,15 +66,15 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     }
 
     /**
-     * @param string $concreteSku
+     * @param string $productSku
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
-    public function getProductOfferStorageCollection(string $concreteSku): ProductOfferStorageCollectionTransfer
+    public function getProductOfferStorageCollection(string $productSku): ProductOfferStorageCollectionTransfer
     {
         $productOfferStorageCollection = new ProductOfferStorageCollectionTransfer();
 
-        $concreteProductOffers = $this->getProductOfferReferences($concreteSku);
+        $concreteProductOffers = $this->getProductOfferReferences($productSku);
 
         if ($concreteProductOffers) {
             foreach ($concreteProductOffers as $key => $concreteProductOffer) {

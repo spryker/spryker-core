@@ -18,11 +18,11 @@ interface MerchantProductOfferStorageFacadeInterface
      *
      * @api
      *
-     * @param string[] $concreteSkus
+     * @param string[] $productSkus
      *
      * @return void
      */
-    public function publishProductConcreteProductOffersStorage(array $concreteSkus): void;
+    public function publishProductConcreteProductOffersStorage(array $productSkus): void;
 
     /**
      * Specification:
@@ -31,11 +31,11 @@ interface MerchantProductOfferStorageFacadeInterface
      *
      * @api
      *
-     * @param string[] $concreteSkus
+     * @param string[] $productSkus
      *
      * @return void
      */
-    public function unpublishProductConcreteProductOffersStorage(array $concreteSkus): void;
+    public function unpublishProductConcreteProductOffersStorage(array $productSkus): void;
 
     /**
      * Specification:

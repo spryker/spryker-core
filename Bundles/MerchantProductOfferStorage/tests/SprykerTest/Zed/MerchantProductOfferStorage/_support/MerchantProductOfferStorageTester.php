@@ -43,12 +43,12 @@ class MerchantProductOfferStorageTester extends Actor
     }
 
     /**
-     * @param string $concreteSku
+     * @param string $productSku
      *
      * @return \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorage[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    public function getProductConcreteProductOffersEntities(string $concreteSku): ObjectCollection
+    public function getProductConcreteProductOffersEntities(string $productSku): ObjectCollection
     {
-        return SpyProductConcreteProductOffersStorageQuery::create()->findByConcreteSku($concreteSku);
+        return SpyProductConcreteProductOffersStorageQuery::create()->findByConcreteSku($productSku);
     }
 }
