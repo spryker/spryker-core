@@ -48,23 +48,6 @@ class CreateMerchantTest extends Unit
     /**
      * @return void
      */
-    public function testCreateMerchantWithEmptyMerchantKeyStatus(): void
-    {
-        // Arrange
-        $merchantTransfer = $this->tester->createMerchantTransfer();
-        $merchantTransfer->setMerchantKey(null);
-
-        // Act
-        $merchantResponseTransfer = $this->tester->getFacade()->createMerchant($merchantTransfer);
-
-        // Assert
-        $this->assertNotNull($merchantResponseTransfer->getMerchant()->getIdMerchant());
-        $this->assertNotNull($merchantResponseTransfer->getMerchant()->getMerchantKey());
-    }
-
-    /**
-     * @return void
-     */
     public function testCreateMerchantWithEmptyRequiredFieldsThrowsException(): void
     {
         // Arrange
