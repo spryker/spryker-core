@@ -10,7 +10,6 @@ namespace Spryker\Zed\Payment\Business;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesPaymentTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -149,19 +148,5 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
         $this->getFactory()
             ->createSalesPaymentMethodTypeInstaller()
             ->install();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
-     */
-    public function getAvailablePaymentProviders(): PaymentProviderCollectionTransfer
-    {
-        return $this->getFactory()
-            ->createPaymentProviderReader()
-            ->getAvailablePaymentProviders();
     }
 }
