@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-offer-stock",
+  "type": "library",
   "description": "ProductOfferStock module",
   "license": "proprietary",
   "require": {

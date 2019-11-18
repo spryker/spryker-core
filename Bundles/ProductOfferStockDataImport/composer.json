@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-offer-stock-data-import",
+  "type": "library",
   "description": "ProductOfferStockDataImport module",
   "license": "MIT",
   "require": {

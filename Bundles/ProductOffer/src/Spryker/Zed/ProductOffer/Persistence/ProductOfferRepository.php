@@ -30,9 +30,8 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
         $productOfferCollectionTransfer = new ProductOfferCollectionTransfer();
         $productOfferQuery = $this->getFactory()->createProductOfferPropelQuery();
 
-        if ($productOfferCriteriaFilter) {
-            $productOfferQuery = $this->applyFilters($productOfferQuery, $productOfferCriteriaFilter);
-        }
+        $productOfferQuery = $this->applyFilters($productOfferQuery, $productOfferCriteriaFilter);
+
         $productOfferEntities = $productOfferQuery->find();
 
         foreach ($productOfferEntities as $productOfferEntity) {
@@ -56,6 +55,7 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
         $productOfferQuery = $this->applyFilters($productOfferQuery, $productOfferCriteriaFilter);
 
         $productOfferEntity = $productOfferQuery->findOne();
+
         if (!$productOfferEntity) {
             return null;
         }
@@ -77,15 +77,19 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
         if ($productOfferCriteriaFilter->getConcreteSku()) {
             $productOfferQuery->filterByConcreteSku($productOfferCriteriaFilter->getConcreteSku());
         }
+
         if ($productOfferCriteriaFilter->getProductOfferReference()) {
             $productOfferQuery->filterByProductOfferReference($productOfferCriteriaFilter->getProductOfferReference());
         }
+
         if ($productOfferCriteriaFilter->getConcreteSkus()) {
             $productOfferQuery->filterByConcreteSku_In($productOfferCriteriaFilter->getConcreteSkus());
         }
+
         if ($productOfferCriteriaFilter->getProductOfferReferences()) {
             $productOfferQuery->filterByProductOfferReference_In($productOfferCriteriaFilter->getProductOfferReferences());
         }
+
         if ($productOfferCriteriaFilter->getPagination()) {
             $productOfferQuery = $this->getPaginatedCollection($productOfferQuery, $productOfferCriteriaFilter->getPagination());
         }
