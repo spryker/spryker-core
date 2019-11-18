@@ -415,8 +415,7 @@ class DiscountPromotionFacadeTest extends Unit
             StockProductTransfer::SKU => $productConcreteTransfer->getSku(),
             StockProductTransfer::QUANTITY => 5,
         ]);
-
-        $this->getAvailabilityFacade()->updateAvailability($productConcreteTransfer->getSku());
+        $this->tester->haveAvailabilityConcrete($productConcreteTransfer->getSku(), $storeTransfer, 5);
 
         $discountGeneralTransfer = $this->tester->haveDiscount();
 

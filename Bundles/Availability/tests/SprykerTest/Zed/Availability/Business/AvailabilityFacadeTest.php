@@ -209,21 +209,25 @@ class AvailabilityFacadeTest extends Unit
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
-        $productTransfer = $this->tester->haveProduct();
-        $this->tester->haveProductInStockForStore($storeTransfer, [
-            StockProductTransfer::SKU => $productTransfer->getSku(),
-            StockProductTransfer::QUANTITY => 50,
-            StockProductTransfer::IS_NEVER_OUT_OF_STOCK => false,
-        ]);
+        $stockProductEntity = $this->createProductWithStock(
+            static::ABSTRACT_SKU,
+            static::CONCRETE_SKU,
+            ['quantity' => 5],
+            $storeTransfer
+        );
+
+        $stockProductEntity->setQuantity(50);
+        $stockProductEntity->save();
 
         // Act
-        $this->getAvailabilityFacade()->updateAvailability($productTransfer->getSku());
+        $this->getAvailabilityFacade()->updateAvailability(static::CONCRETE_SKU);
 
         // Assert
-        $availabilityEntity = SpyAvailabilityQuery::create()->findOneBySku($productTransfer->getSku());
+        $availabilityEntity = SpyAvailabilityQuery::create()->findOneBySku(static::CONCRETE_SKU);
         $this->assertNotNull($availabilityEntity);
         $this->assertEquals(50, (new Decimal($availabilityEntity->getQuantity()))->toString());
-        $availabilityAbstractEntity = SpyAvailabilityAbstractQuery::create()->findOneByAbstractSku($productTransfer->getAbstractSku());
+
+        $availabilityAbstractEntity = SpyAvailabilityAbstractQuery::create()->findOneByAbstractSku(static::ABSTRACT_SKU);
         $this->assertNotNull($availabilityAbstractEntity);
         $this->assertEquals(50, (new Decimal($availabilityAbstractEntity->getQuantity()))->toString());
     }
@@ -390,16 +394,17 @@ class AvailabilityFacadeTest extends Unit
         // Arrange
         $productQuantity = 13;
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
-        $productTransfer = $this->tester->haveProduct(['sku' => static::CONCRETE_SKU], ['sku' => static::ABSTRACT_SKU]);
-        $this->tester->haveProductInStockForStore($storeTransfer, [
-            StockProductTransfer::SKU => $productTransfer->getSku(),
-            StockProductTransfer::QUANTITY => $productQuantity,
-        ]);
+        $stockProductEntity = $this->createProductWithStock(
+            static::ABSTRACT_SKU,
+            static::CONCRETE_SKU,
+            ['quantity' => $productQuantity],
+            $storeTransfer
+        );
 
         // Act
         $productConcreteAvailabilityTransfer = $this->getAvailabilityFacade()
             ->findOrCreateProductConcreteAvailabilityBySkuForStore(
-                $productTransfer->getSku(),
+                static::CONCRETE_SKU,
                 $storeTransfer
             );
 
