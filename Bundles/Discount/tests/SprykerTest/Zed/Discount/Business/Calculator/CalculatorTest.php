@@ -393,6 +393,7 @@ class CalculatorTest extends Unit
      */
     public function testCalculateShouldTakeHighestAmountExclusiveDiscountWhenThereIsMoreThanOne()
     {
+        $discounts = [];
         $discounts[] = $this->createDiscountTransfer(70)->setIsExclusive(false);
         $discounts[] = $this->createDiscountTransfer(30)->setIsExclusive(true);
         $discounts[] = $this->createDiscountTransfer(20)->setIsExclusive(true);
@@ -424,6 +425,7 @@ class CalculatorTest extends Unit
      */
     public function testCalculateShouldTakeHighestExclusiveWithinGroup()
     {
+        $discounts = [];
         $discounts[] = $this->createDiscountTransfer(70)->setIsExclusive(false);
         $discounts[] = $this->createDiscountTransfer(30)->setIsExclusive(true)->setVoucherCode('aktion30');
         $discounts[] = $this->createDiscountTransfer(20)->setIsExclusive(true);
@@ -462,6 +464,7 @@ class CalculatorTest extends Unit
     {
         $this->expectException(CalculatorException::class);
 
+        $discounts = [];
         $discounts[] = $this->createDiscountTransfer(70)->setIsExclusive(false)->setCalculatorPlugin('non existing');
 
         $quoteTransfer = $this->createQuoteTransfer();
@@ -487,6 +490,7 @@ class CalculatorTest extends Unit
      */
     public function testCalculateWhenQueryBuilderThrowsExceptionShouldLogErrorAndReturnEmptyArray()
     {
+        $discounts = [];
         $discounts[] = $this->createDiscountTransfer(70)->setIsExclusive(false)->setCalculatorPlugin('non existing');
 
         $quoteTransfer = $this->createQuoteTransfer();
