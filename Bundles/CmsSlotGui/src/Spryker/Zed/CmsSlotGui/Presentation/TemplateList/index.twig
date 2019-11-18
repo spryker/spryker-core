@@ -17,7 +17,9 @@
         {% endblock %}
     {% endembed %}
 
-    {% embed '@Gui/Partials/widget.twig' %}
+    {% embed '@Gui/Partials/widget.twig' with {
+        row_class: 'js-row-list-of-slots',
+    } %}
         {% block widget_title -%}
             <h5>{{ 'List of Slots for' | trans }} <span class="js-slot-template-name"></span> {{ 'Template' | trans }}</h5>
         {%- endblock %}

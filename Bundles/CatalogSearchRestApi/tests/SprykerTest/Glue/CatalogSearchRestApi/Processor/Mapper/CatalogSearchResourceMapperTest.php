@@ -113,7 +113,7 @@ class CatalogSearchResourceMapperTest extends Unit
         $this->assertEquals("name_asc", $this->restSearchAttributesTransfer->getSort()->getCurrentSortOrder());
         $this->assertEquals("1", $this->restSearchAttributesTransfer->getSort()->getCurrentSortParam());
         $this->assertArraySubset($this->restSearchAttributesTransfer->getSort()->getSortParamNames(), ["rating", "name_asc", "name_desc", "price_asc", "price_desc"]);
-        $this->assertArraySubset(["rating", "name_asc", "name_desc", "price_asc", "price_desc"], $this->restSearchAttributesTransfer->getSort()->getSortParamNames());
+        $this->assertTrue(array_intersect(["rating", "name_asc", "name_desc", "price_asc", "price_desc"], $this->restSearchAttributesTransfer->getSort()->getSortParamNames()) === ["rating", "name_asc", "name_desc", "price_asc", "price_desc"]);
 
         $this->assertEquals(1, $this->restSearchAttributesTransfer->getPagination()->getCurrentPage());
         $this->assertEquals(12, $this->restSearchAttributesTransfer->getPagination()->getCurrentItemsPerPage());

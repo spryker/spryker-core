@@ -5,9 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsSlotGui\Communication\Dependency;
+namespace Spryker\Zed\CmsSlotBlock\Dependency\Facade;
 
-class CmsSlotGuiToCmsSlotFacadeBridge implements CmsSlotGuiToCmsSlotFacadeInterface
+use Generated\Shared\Transfer\CmsSlotTransfer;
+
+class CmsSlotBlockToCmsSlotFacadeBridge implements CmsSlotBlockToCmsSlotFacadeInterface
 {
     /**
      * @var \Spryker\Zed\CmsSlot\Business\CmsSlotFacadeInterface
@@ -25,20 +27,10 @@ class CmsSlotGuiToCmsSlotFacadeBridge implements CmsSlotGuiToCmsSlotFacadeInterf
     /**
      * @param int $idCmsSlot
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CmsSlotTransfer|null
      */
-    public function activateByIdCmsSlot(int $idCmsSlot): void
+    public function findCmsSlotById(int $idCmsSlot): ?CmsSlotTransfer
     {
-        $this->cmsSlotFacade->activateByIdCmsSlot($idCmsSlot);
-    }
-
-    /**
-     * @param int $idCmsSlot
-     *
-     * @return void
-     */
-    public function deactivateByIdCmsSlot(int $idCmsSlot): void
-    {
-        $this->cmsSlotFacade->deactivateByIdCmsSlot($idCmsSlot);
+        return $this->cmsSlotFacade->findCmsSlotById($idCmsSlot);
     }
 }

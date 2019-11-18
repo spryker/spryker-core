@@ -8,7 +8,10 @@
 namespace Spryker\Zed\CmsSlotBlock\Business\Writer;
 
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Spryker\Zed\CmsSlotBlock\Business\Exception\InvalidCmsSlotBlockException;
+use Spryker\Zed\CmsSlotBlock\Business\Validator\CmsSlotBlockValidatorInterface;
 use Spryker\Zed\CmsSlotBlock\Dependency\CmsSlotBlockEvents;
 use Spryker\Zed\CmsSlotBlock\Dependency\Facade\CmsSlotBlockToEventFacadeInterface;
 use Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockEntityManagerInterface;
@@ -26,15 +29,23 @@ class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterfac
     protected $eventFacade;
 
     /**
+     * @var \Spryker\Zed\CmsSlotBlock\Business\Validator\CmsSlotBlockValidatorInterface
+     */
+    protected $cmsSlotBlockValidator;
+
+    /**
      * @param \Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockEntityManagerInterface $cmsSlotBlockEntityManager
      * @param \Spryker\Zed\CmsSlotBlock\Dependency\Facade\CmsSlotBlockToEventFacadeInterface $eventFacade
+     * @param \Spryker\Zed\CmsSlotBlock\Business\Validator\CmsSlotBlockValidatorInterface $cmsSlotBlockValidator
      */
     public function __construct(
         CmsSlotBlockEntityManagerInterface $cmsSlotBlockEntityManager,
-        CmsSlotBlockToEventFacadeInterface $eventFacade
+        CmsSlotBlockToEventFacadeInterface $eventFacade,
+        CmsSlotBlockValidatorInterface $cmsSlotBlockValidator
     ) {
         $this->cmsSlotBlockEntityManager = $cmsSlotBlockEntityManager;
         $this->eventFacade = $eventFacade;
+        $this->cmsSlotBlockValidator = $cmsSlotBlockValidator;
     }
 
     /**
@@ -42,11 +53,11 @@ class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterfac
      *
      * @return void
      */
-    public function saveCmsSlotBlockRelations(CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer): void
+    public function createCmsSlotBlockRelations(CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer): void
     {
         $cmsSlotBlockTransfers = $cmsSlotBlockCollectionTransfer->getCmsSlotBlocks()->getArrayCopy();
+        $this->assureCmsSlotBlockListIsValid($cmsSlotBlockTransfers);
 
-        $this->deleteCmsSlotBlocks($cmsSlotBlockTransfers);
         $this->cmsSlotBlockEntityManager->createCmsSlotBlocks($cmsSlotBlockTransfers);
         $this->triggerCmsSlotBlockPublishEvents($cmsSlotBlockTransfers);
     }
@@ -54,49 +65,29 @@ class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterfac
     /**
      * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
      *
+     * @throws \Spryker\Zed\CmsSlotBlock\Business\Exception\InvalidCmsSlotBlockException
+     *
      * @return void
      */
-    protected function deleteCmsSlotBlocks(array $cmsSlotBlockTransfers): void
+    protected function assureCmsSlotBlockListIsValid(array $cmsSlotBlockTransfers): void
     {
-        $mappedCmsSlotBlockTransfers = $this->getMappedCmsSlotBlockTransfersByIdSlotTemplate($cmsSlotBlockTransfers);
-        foreach ($mappedCmsSlotBlockTransfers as $idSlotTemplate => $cmsSlotBlockTransfers) {
-            $cmsSlotIds = $this->getUniqueCmsSlotIds($cmsSlotBlockTransfers);
-            $this->cmsSlotBlockEntityManager->deleteCmsSlotBlocks($idSlotTemplate, $cmsSlotIds);
+        $validationResponseTransfer = $this->cmsSlotBlockValidator->getIsCmsSlotBlockListValid($cmsSlotBlockTransfers);
+
+        if (!$validationResponseTransfer->getIsSuccess()) {
+            throw new InvalidCmsSlotBlockException(
+                $validationResponseTransfer->getErrorMessages()[0]
+            );
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
+     * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\CmsSlotBlockTransfer[][]
+     * @return void
      */
-    protected function getMappedCmsSlotBlockTransfersByIdSlotTemplate(array $cmsSlotBlockTransfers): array
+    public function deleteCmsSlotBlockRelationsByCriteria(CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer): void
     {
-        $mappedCmsSlotBlockTransfers = [];
-        foreach ($cmsSlotBlockTransfers as $cmsSlotBlockTransfer) {
-            $mappedCmsSlotBlockTransfers[$cmsSlotBlockTransfer->getIdSlotTemplate()][] = $cmsSlotBlockTransfer;
-        }
-
-        return $mappedCmsSlotBlockTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
-     *
-     * @return int[]
-     */
-    protected function getUniqueCmsSlotIds(array $cmsSlotBlockTransfers): array
-    {
-        $cmsSlotIds = [];
-        foreach ($cmsSlotBlockTransfers as $cmsSlotBlockTransfer) {
-            $idCmsSlot = $cmsSlotBlockTransfer->getIdSlot();
-
-            if (!isset($cmsSlotIds[$idCmsSlot])) {
-                $cmsSlotIds[$idCmsSlot] = $idCmsSlot;
-            }
-        }
-
-        return $cmsSlotIds;
+        $this->cmsSlotBlockEntityManager->deleteCmsSlotBlocksByCriteria($cmsSlotBlockCriteriaTransfer);
     }
 
     /**

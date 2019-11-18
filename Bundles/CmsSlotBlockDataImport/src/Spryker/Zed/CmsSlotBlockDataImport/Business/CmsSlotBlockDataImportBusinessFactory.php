@@ -11,9 +11,9 @@ use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsBlockNameToCms
 use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsSlotBlockConditionsCategoryStep;
 use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsSlotBlockConditionsProductStep;
 use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsSlotBlockMapConditionsStep;
+use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsSlotBlockValidatorStep;
 use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsSlotBlockWriterStep;
 use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsSlotKeyToCmsSlotIdStep;
-use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsSlotPositionValidatorStep;
 use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsSlotTemplatePathToCmsSlotTemplateIdStep;
 use Spryker\Zed\CmsSlotBlockDataImport\Business\Hook\CmsSlotBlockDataImportAfterImportHook;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
@@ -38,7 +38,7 @@ class CmsSlotBlockDataImportBusinessFactory extends DataImportBusinessFactory
         $dataSetStepBroker->addStep($this->createCmsSlotTemplatePathToCmsSlotTemplateIdStep());
         $dataSetStepBroker->addStep($this->createCmsSlotKeyToCmsSlotIdStep());
         $dataSetStepBroker->addStep($this->createCmsBlockNameToCmsBlockIdStep());
-        $dataSetStepBroker->addStep($this->createCmsSlotPositionValidatorStep());
+        $dataSetStepBroker->addStep($this->createCmsSlotBlockValidatorStep());
         $dataSetStepBroker->addStep($this->createCmsSlotBlockMapConditionsStep());
         $dataSetStepBroker->addStep($this->createCmsSlotBlockConditionsCategoryStep());
         $dataSetStepBroker->addStep($this->createCmsSlotBlockConditionsProductStep());
@@ -77,9 +77,9 @@ class CmsSlotBlockDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createCmsSlotPositionValidatorStep(): DataImportStepInterface
+    public function createCmsSlotBlockValidatorStep(): DataImportStepInterface
     {
-        return new CmsSlotPositionValidatorStep();
+        return new CmsSlotBlockValidatorStep();
     }
 
     /**

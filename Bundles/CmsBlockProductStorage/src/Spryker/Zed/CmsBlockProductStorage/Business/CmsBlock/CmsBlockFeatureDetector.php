@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CmsBlockProductStorage\Business\CmsBlock;
 
+use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
+
 class CmsBlockFeatureDetector implements CmsBlockFeatureDetectorInterface
 {
     /**
@@ -14,6 +16,6 @@ class CmsBlockFeatureDetector implements CmsBlockFeatureDetectorInterface
      */
     public function isCmsBlockKeyPresent(): bool
     {
-        return defined('\Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap::COL_KEY');
+        return defined(SpyCmsBlockTableMap::class . '::COL_KEY');
     }
 }

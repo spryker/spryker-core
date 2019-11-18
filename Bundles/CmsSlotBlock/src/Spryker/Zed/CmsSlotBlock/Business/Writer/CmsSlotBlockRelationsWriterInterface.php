@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsSlotBlock\Business\Writer;
 
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 
 interface CmsSlotBlockRelationsWriterInterface
 {
@@ -16,5 +17,12 @@ interface CmsSlotBlockRelationsWriterInterface
      *
      * @return void
      */
-    public function saveCmsSlotBlockRelations(CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer): void;
+    public function createCmsSlotBlockRelations(CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
+     *
+     * @return void
+     */
+    public function deleteCmsSlotBlockRelationsByCriteria(CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer): void;
 }

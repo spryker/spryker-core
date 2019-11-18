@@ -28,11 +28,27 @@ class CmsSlotBlockFacade extends AbstractFacade implements CmsSlotBlockFacadeInt
      *
      * @return void
      */
-    public function saveCmsSlotBlockRelations(CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer): void
+    public function createCmsSlotBlockRelations(CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer): void
     {
         $this->getFactory()
             ->createCmsSlotBlockRelationsWriter()
-            ->saveCmsSlotBlockRelations($cmsSlotBlockCollectionTransfer);
+            ->createCmsSlotBlockRelations($cmsSlotBlockCollectionTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
+     *
+     * @return void
+     */
+    public function deleteCmsSlotBlockRelationsByCriteria(CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer): void
+    {
+        $this->getFactory()
+            ->createCmsSlotBlockRelationsWriter()
+            ->deleteCmsSlotBlockRelationsByCriteria($cmsSlotBlockCriteriaTransfer);
     }
 
     /**
