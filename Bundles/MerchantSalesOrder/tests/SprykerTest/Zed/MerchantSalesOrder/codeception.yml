@@ -1,4 +1,4 @@
-namespace: SprykerTest\Zed\SalesMerchantConnector
+namespace: SprykerTest\Zed\MerchantSalesOrder
 
 paths:
     tests: .
@@ -14,7 +14,7 @@ coverage:
 suites:
     Business:
         path: Business
-        class_name: SalesMerchantConnectorBusinessTester
+        class_name: MerchantSalesOrderBusinessTester
         modules:
             enabled:
                 - Asserts
@@ -23,3 +23,8 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
+                - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
+                - \SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper
+                - \SprykerTest\Zed\Oms\Helper\OmsHelper
