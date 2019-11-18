@@ -188,5 +188,4 @@ class ShipmentMethodDataHelper extends Module
     {
         return $this->getModule(static::NAMESPACE_ROOT . ShipmentCarrierDataHelper::class);
     }
-
 }

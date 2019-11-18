@@ -63,7 +63,7 @@ class CreateShipmentMethodTest extends Unit
             ShipmentMethodTransfer::NAME => 'test1',
             ShipmentMethodTransfer::CARRIER_NAME => 'test2',
             ShipmentMethodTransfer::STORE_RELATION => $storeRelationTransfer,
-            ShipmentMethodTransfer::FK_SHIPMENT_CARRIER => $shipmentCarrierTransfer->getIdShipmentCarrier()
+            ShipmentMethodTransfer::FK_SHIPMENT_CARRIER => $shipmentCarrierTransfer->getIdShipmentCarrier(),
         ])->build();
 
         // Act
