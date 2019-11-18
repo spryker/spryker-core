@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\MerchantProductOfferDataImport;
 
 use Codeception\Actor;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 
 /**
  * Inherited Methods
@@ -32,4 +33,20 @@ class MerchantProductOfferDataImportCommunicationTester extends Actor
    /**
     * Define custom actions here
     */
+
+    /**
+     * @return void
+     */
+    public function truncateProductOffers(): void
+    {
+        $this->truncateTableRelations($this->getProductOfferPropelQuery());
+    }
+
+    /**
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     */
+    protected function getProductOfferPropelQuery(): SpyProductOfferQuery
+    {
+        return SpyProductOfferQuery::create();
+    }
 }

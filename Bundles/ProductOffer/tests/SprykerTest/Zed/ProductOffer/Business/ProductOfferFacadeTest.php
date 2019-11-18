@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\ProductOffer\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductOfferBuilder;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
-use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 
 /**
  * Auto-generated group annotations
@@ -37,7 +36,8 @@ class ProductOfferFacadeTest extends Unit
     public function setUp(): void
     {
         parent::setUp();
-        $this->cleanProductOffer();
+
+        $this->tester->truncateProductOffers();
     }
 
     /**
@@ -71,13 +71,5 @@ class ProductOfferFacadeTest extends Unit
 
         // Assert
         $this->assertNotEmpty($productOfferTransfer->getIdProductOffer());
-    }
-
-    /**
-     * @return void
-     */
-    protected function cleanProductOffer(): void
-    {
-        SpyProductOfferQuery::create()->deleteAll();
     }
 }
