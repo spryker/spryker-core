@@ -21,6 +21,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
     public const PLUGINS_CUSTOMER_EXPANDER = 'PLUGINS_CUSTOMER_EXPANDER';
+    public const PLUGINS_CART_ITEM_EXPANDER = 'PLUGINS_CART_ITEM_EXPANDER';
     public const PLUGINS_REST_CART_ITEMS_ATTRIBUTES_MAPPER = 'PLUGINS_REST_CART_ITEMS_ATTRIBUTES_MAPPER';
 
     /**
@@ -71,6 +72,20 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Glue\Kernel\Container
      */
+    protected function addCartItemExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CART_ITEM_EXPANDER, function () {
+            return $this->getCartItemExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
     protected function addItemToRestOrderItemsAttributesMapperPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_REST_CART_ITEMS_ATTRIBUTES_MAPPER, function () {
@@ -84,6 +99,14 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
      */
     protected function getCustomerExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CartItemExpanderPluginInterface[]
+     */
+    protected function getCartItemExpanderPlugins(): array
     {
         return [];
     }
