@@ -31,7 +31,7 @@ class BundleProxyTest extends Unit
     {
         $bundleProxy = new BundleProxy();
 
-        $this->assertInstanceOf(BundleProxy::class, $bundleProxy->addLocator(new LocatorWithMatcher('Foo')));
+        $this->assertInstanceOf(BundleProxy::class, $bundleProxy->addLocator(new LocatorWithMatcher()));
     }
 
     /**
@@ -61,7 +61,7 @@ class BundleProxyTest extends Unit
     public function testCallShouldReturnLocatedClassIfMatcherMatchesToAGivenLocator()
     {
         $bundleProxy = new BundleProxy();
-        $locator = new LocatorWithMatcher('foo');
+        $locator = new LocatorWithMatcher();
         $bundleProxy->addLocator($locator);
 
         $this->assertSame($locator, $bundleProxy->locatorTest());
@@ -75,7 +75,7 @@ class BundleProxyTest extends Unit
         $this->expectException(LogicException::class);
 
         $bundleProxy = new BundleProxy();
-        $bundleProxy->addLocator(new LocatorWithMatcher('Foo'));
+        $bundleProxy->addLocator(new LocatorWithMatcher());
 
         $bundleProxy->notMatchingTest();
     }

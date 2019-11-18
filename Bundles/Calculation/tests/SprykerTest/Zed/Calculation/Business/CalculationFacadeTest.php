@@ -604,11 +604,11 @@ class CalculationFacadeTest extends Unit
         $calculationBusinessFactory = new CalculationBusinessFactory();
 
         $container = new Container();
-        $container[CalculationDependencyProvider::QUOTE_CALCULATOR_PLUGIN_STACK] = function (Container $container) use ($calculatorPlugins) {
+        $container[CalculationDependencyProvider::QUOTE_CALCULATOR_PLUGIN_STACK] = function () use ($calculatorPlugins) {
             return $calculatorPlugins;
         };
 
-        $container[CalculationDependencyProvider::PLUGINS_QUOTE_POST_RECALCULATE] = function (Container $container) {
+        $container[CalculationDependencyProvider::PLUGINS_QUOTE_POST_RECALCULATE] = function () {
             return [];
         };
 

@@ -102,7 +102,7 @@ class CalculatorTest extends Unit
     public function testOneDiscountShouldNotBeFilteredOut()
     {
         $discountCollection = [];
-        $discountCollection[] = $discount = $this->initializeDiscount(
+        $discountCollection[] = $this->initializeDiscount(
             'name 1',
             DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
@@ -119,7 +119,7 @@ class CalculatorTest extends Unit
             $quoteTransfer
         );
 
-        $this->assertEquals(1, count($result));
+        $this->assertSame(1, count($result));
     }
 
     /**
