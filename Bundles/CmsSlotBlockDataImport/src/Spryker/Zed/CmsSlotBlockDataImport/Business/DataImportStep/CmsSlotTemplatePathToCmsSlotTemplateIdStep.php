@@ -20,7 +20,7 @@ class CmsSlotTemplatePathToCmsSlotTemplateIdStep implements DataImportStepInterf
     /**
      * @var int[]
      */
-    protected $idCmsSlotTemplateCache = [];
+    protected $idCmsSlotTemplateBuffer = [];
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -49,8 +49,8 @@ class CmsSlotTemplatePathToCmsSlotTemplateIdStep implements DataImportStepInterf
      */
     protected function getTemplateIdByPath(string $templatePath): int
     {
-        if (isset($this->idCmsSlotTemplateCache[$templatePath])) {
-            return $this->idCmsSlotTemplateCache[$templatePath];
+        if (isset($this->idCmsSlotTemplateBuffer[$templatePath])) {
+            return $this->idCmsSlotTemplateBuffer[$templatePath];
         }
 
         $idCmsSlotTemplate = SpyCmsSlotTemplateQuery::create()
@@ -62,7 +62,7 @@ class CmsSlotTemplatePathToCmsSlotTemplateIdStep implements DataImportStepInterf
             throw new EntityNotFoundException(sprintf('Could not find CMS slot template ID by path "%s".', $templatePath));
         }
 
-        $this->idCmsSlotTemplateCache[$templatePath] = $idCmsSlotTemplate;
+        $this->idCmsSlotTemplateBuffer[$templatePath] = $idCmsSlotTemplate;
 
         return $idCmsSlotTemplate;
     }

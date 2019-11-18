@@ -19,7 +19,7 @@ class CmsSlotKeyToCmsSlotIdStep implements DataImportStepInterface
     /**
      * @var int[]
      */
-    protected $idCmsSlotCache = [];
+    protected $idCmsSlotBuffer = [];
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -42,8 +42,8 @@ class CmsSlotKeyToCmsSlotIdStep implements DataImportStepInterface
      */
     protected function getIdCmsSlotByKey(string $cmsSlotKey): int
     {
-        if (isset($this->idCmsSlotCache[$cmsSlotKey])) {
-            return $this->idCmsSlotCache[$cmsSlotKey];
+        if (isset($this->idCmsSlotBuffer[$cmsSlotKey])) {
+            return $this->idCmsSlotBuffer[$cmsSlotKey];
         }
 
         $idCmsSlot = SpyCmsSlotQuery::create()
@@ -55,7 +55,7 @@ class CmsSlotKeyToCmsSlotIdStep implements DataImportStepInterface
             throw new EntityNotFoundException(sprintf('Could not find CMS slot ID by key "%s".', $cmsSlotKey));
         }
 
-        $this->idCmsSlotCache[$cmsSlotKey] = $idCmsSlot;
+        $this->idCmsSlotBuffer[$cmsSlotKey] = $idCmsSlot;
 
         return $idCmsSlot;
     }

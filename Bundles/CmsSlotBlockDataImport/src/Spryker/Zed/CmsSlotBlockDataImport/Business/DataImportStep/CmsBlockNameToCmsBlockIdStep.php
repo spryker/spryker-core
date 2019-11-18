@@ -19,7 +19,7 @@ class CmsBlockNameToCmsBlockIdStep implements DataImportStepInterface
     /**
      * @var int[]
      */
-    protected $idCmsBlockCache = [];
+    protected $idCmsBlockBuffer = [];
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -42,8 +42,8 @@ class CmsBlockNameToCmsBlockIdStep implements DataImportStepInterface
      */
     protected function getIdCmsBlockByKey(string $cmsBlockKey): int
     {
-        if (isset($this->idCmsBlockCache[$cmsBlockKey])) {
-            return $this->idCmsBlockCache[$cmsBlockKey];
+        if (isset($this->idCmsBlockBuffer[$cmsBlockKey])) {
+            return $this->idCmsBlockBuffer[$cmsBlockKey];
         }
 
         $idCmsBlock = SpyCmsBlockQuery::create()
@@ -55,7 +55,7 @@ class CmsBlockNameToCmsBlockIdStep implements DataImportStepInterface
             throw new EntityNotFoundException(sprintf('Could not find CMS Block ID by key "%s".', $cmsBlockKey));
         }
 
-        $this->idCmsBlockCache[$cmsBlockKey] = $idCmsBlock;
+        $this->idCmsBlockBuffer[$cmsBlockKey] = $idCmsBlock;
 
         return $idCmsBlock;
     }
