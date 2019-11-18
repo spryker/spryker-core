@@ -122,6 +122,18 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     /**
      * @part json
      *
+     * @param string $jsonPath
+     *
+     * @return array|mixed
+     */
+    public function grabDataFromResponseByJsonPathSmartGet($jsonPath)
+    {
+        return (new JsonObject($this->connectionModule->_getResponseContent(), true))->get($jsonPath);
+    }
+
+    /**
+     * @part json
+     *
      * @param string $link
      *
      * @return void
@@ -510,16 +522,14 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     }
 
     /**
-     * @throws \Codeception\Exception\ModuleException
-     *
      * @return \SprykerTest\Glue\Testify\Helper\JsonPath
      */
     protected function getJsonPathModule(): JsonPath
     {
-        $this->jsonPathModule = $this->jsonPathModule ?: $this->findModule(JsonPath::class);
-
-        if ($this->jsonPathModule === null) {
-            throw new ModuleException('GlueRest', 'The module requires JsonPath');
+        if (!$this->jsonPathModule instanceof JsonPath) {
+            /** @var \SprykerTest\Glue\Testify\Helper\JsonPath $module */
+            $module = $this->locateModule(JsonPath::class);
+            $this->jsonPathModule = $module;
         }
 
         return $this->jsonPathModule;

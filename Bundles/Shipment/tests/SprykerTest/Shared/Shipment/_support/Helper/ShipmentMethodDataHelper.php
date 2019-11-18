@@ -58,18 +58,24 @@ class ShipmentMethodDataHelper extends Module
         array $priceList = self::DEFAULT_PRICE_LIST,
         array $idStoreList = []
     ): ShipmentMethodTransfer {
+        if (empty($idStoreList)) {
+            $idStoreList = [$this->getIdStoreByName(APPLICATION_STORE)];
+        }
+
         $shipmentMethodTransfer = (new ShipmentMethodBuilder($overrideShipmentMethod))->build();
         $shipmentMethodTransfer = $this->assertCarrier($shipmentMethodTransfer, $overrideCarrier);
 
         $moneyValueTransferCollection = new ArrayObject();
         foreach ($priceList as $storeName => $currencies) {
             foreach ($currencies as $currencyIsoCode => $moneyValueOverride) {
-                $moneyValueTransferCollection->append(
-                    (new MoneyValueBuilder($moneyValueOverride))
-                        ->build()
-                        ->setFkCurrency($this->getIdCurrencyByIsoCode($currencyIsoCode))
-                        ->setFkStore($this->getIdStoreByName($storeName))
-                );
+                /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyTransfer */
+                $moneyTransfer = (new MoneyValueBuilder($moneyValueOverride))
+                    ->build();
+                $moneyTransfer
+                    ->setFkCurrency($this->getIdCurrencyByIsoCode($currencyIsoCode))
+                    ->setFkStore($this->getIdStoreByName($storeName));
+
+                $moneyValueTransferCollection->append($moneyTransfer);
             }
         }
         $shipmentMethodTransfer->setPrices($moneyValueTransferCollection);
@@ -108,14 +114,6 @@ class ShipmentMethodDataHelper extends Module
         $shipmentMethodTransfer->setFkShipmentCarrier($shipmentCarrierTransfer->getIdShipmentCarrier());
 
         return $shipmentMethodTransfer;
-    }
-
-    /**
-     * @return \SprykerTest\Shared\Shipment\Helper\ShipmentCarrierDataHelper|\Codeception\Module
-     */
-    protected function getShipmentCarrierDataHelper()
-    {
-        return $this->getModule(static::NAMESPACE_ROOT . ShipmentCarrierDataHelper::class);
     }
 
     /**
@@ -182,4 +180,13 @@ class ShipmentMethodDataHelper extends Module
     {
         return $this->getLocator()->shipment()->facade();
     }
+
+    /**
+     * @return \SprykerTest\Shared\Shipment\Helper\ShipmentCarrierDataHelper|\Codeception\Module
+     */
+    protected function getShipmentCarrierDataHelper()
+    {
+        return $this->getModule(static::NAMESPACE_ROOT . ShipmentCarrierDataHelper::class);
+    }
+
 }
