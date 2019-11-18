@@ -14,8 +14,6 @@ use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
-use Generated\Shared\Transfer\StockTransfer;
-use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;

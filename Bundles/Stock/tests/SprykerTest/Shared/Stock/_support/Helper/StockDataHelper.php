@@ -133,6 +133,8 @@ class StockDataHelper extends Module
 
     /**
      * @param array $seedData
+     *
+     * @return void
      */
     protected function createStockProduct(array $seedData): void
     {
