@@ -20,7 +20,7 @@ class ConfiguredBundleQuantityExpander implements ConfiguredBundleQuantityExpand
     public function expandConfiguredBundleItemsWithQuantityPerSlot(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getConfiguredBundle() || !$itemTransfer->getConfiguredBundleItem()) {
+            if (!$this->isExpandWithQuantityPerSlotNeeded($itemTransfer)) {
                 continue;
             }
 
@@ -28,6 +28,18 @@ class ConfiguredBundleQuantityExpander implements ConfiguredBundleQuantityExpand
         }
 
         return $cartChangeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function isExpandWithQuantityPerSlotNeeded(ItemTransfer $itemTransfer): bool
+    {
+        return $itemTransfer->getConfiguredBundle()
+            && $itemTransfer->getConfiguredBundleItem()
+            && !$itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot();
     }
 
     /**
