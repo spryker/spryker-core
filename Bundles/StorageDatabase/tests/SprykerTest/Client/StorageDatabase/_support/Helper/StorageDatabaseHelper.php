@@ -12,6 +12,7 @@ use PDO;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
+use Spryker\Zed\Propel\PropelConfig;
 
 class StorageDatabaseHelper extends Module
 {
@@ -19,6 +20,11 @@ class StorageDatabaseHelper extends Module
     public const COLUMN_DATA = 'data';
     public const COLUMN_KEY = 'key';
     public const COLUMN_ALIAS_KEYS = 'alias_keys';
+
+    /**
+     * @var \PDO
+     */
+    protected static $pdoConnection;
 
     /**
      * @param array $settings
@@ -40,6 +46,7 @@ class StorageDatabaseHelper extends Module
         parent::_afterSuite();
 
         $this->dropFixtureStorageTable();
+        static::$pdoConnection = null;
     }
 
     /**
@@ -55,7 +62,7 @@ class StorageDatabaseHelper extends Module
             'INSERT INTO %s(%s, %s, %s) VALUES(:data_value, :key_value, :alias_keys_value)',
             static::FIXTURE_TABLE_NAME,
             static::COLUMN_DATA,
-            static::COLUMN_KEY,
+            $this->getEscapedFieldName(static::COLUMN_KEY),
             static::COLUMN_ALIAS_KEYS
         );
         $statement = $this->getConnection()->prepare($query);
@@ -80,7 +87,7 @@ class StorageDatabaseHelper extends Module
             );',
             static::FIXTURE_TABLE_NAME,
             static::COLUMN_DATA,
-            static::COLUMN_KEY,
+            $this->getEscapedFieldName(static::COLUMN_KEY),
             static::COLUMN_ALIAS_KEYS
         );
 
@@ -102,11 +109,15 @@ class StorageDatabaseHelper extends Module
      */
     protected function getConnection(): PDO
     {
-        return new PDO(
-            $this->getDatabaseSourceName(),
-            Config::get(PropelConstants::ZED_DB_USERNAME),
-            Config::get(PropelConstants::ZED_DB_PASSWORD)
-        );
+        if (!static::$pdoConnection) {
+            static::$pdoConnection = new PDO(
+                $this->getDatabaseSourceName(),
+                Config::get(PropelConstants::ZED_DB_USERNAME),
+                Config::get(PropelConstants::ZED_DB_PASSWORD)
+            );
+        }
+
+        return static::$pdoConnection;
     }
 
     /**
@@ -141,5 +152,19 @@ class StorageDatabaseHelper extends Module
     public function decodeJson(string $value)
     {
         return (new UtilEncodingService())->decodeJson($value, true);
+    }
+
+    /**
+     * @param string $fieldName
+     *
+     * @return string
+     */
+    protected function getEscapedFieldName(string $fieldName): string
+    {
+        if (Config::get(PropelConstants::ZED_DB_ENGINE) == PropelConfig::DB_ENGINE_MYSQL) {
+            return sprintf('`%s`', $fieldName);
+        }
+
+        return $fieldName;
     }
 }
