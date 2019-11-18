@@ -17,5 +17,5 @@ interface PriceProductOfferStorageToEventFacadeInterface
      *
      * @return void
      */
-    public function trigger($eventName, TransferInterface $transfer): void;
+    public function trigger($eventName, TransferInterface $transfer);
 }

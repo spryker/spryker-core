@@ -16,5 +16,5 @@ interface ProductConcreteDefaultProductOfferInterface
      *
      * @return string|null
      */
-    public function getProductOfferReference(ProductViewTransfer $productViewTransfer): ?string;
+    public function findProductOfferReference(ProductViewTransfer $productViewTransfer): ?string;
 }

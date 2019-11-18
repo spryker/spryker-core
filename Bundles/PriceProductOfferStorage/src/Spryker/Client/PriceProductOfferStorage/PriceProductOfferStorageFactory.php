@@ -73,7 +73,7 @@ class PriceProductOfferStorageFactory extends AbstractFactory
      */
     public function getStoreClient(): PriceProductOfferStorageToStoreClientInterface
     {
-        return $this->getProvidedDependency(PriceProductOfferStorageDependencyProvider::FACADE_STORE);
+        return $this->getProvidedDependency(PriceProductOfferStorageDependencyProvider::FACADE_STORE_CLIENT);
     }
 
     /**

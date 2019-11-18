@@ -20,7 +20,7 @@ class PriceProductOfferStorageDependencyProvider extends AbstractDependencyProvi
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE = 'CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE';
-    public const FACADE_STORE = 'FACADE_STORE';
+    public const FACADE_STORE_CLIENT = 'FACADE_STORE_CLIENT';
     public const FACADE_PRICE_PRODUCT_SERVICE = 'FACADE_PRICE_PRODUCT_SERVICE';
 
     /**
@@ -89,7 +89,7 @@ class PriceProductOfferStorageDependencyProvider extends AbstractDependencyProvi
      */
     protected function addStoreFacade(Container $container): Container
     {
-        $container->set(static::FACADE_STORE, function (Container $container) {
+        $container->set(static::FACADE_STORE_CLIENT, function (Container $container) {
             return new PriceProductOfferStorageToStoreClientBridge($container->getLocator()->store()->client());
         });
 

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProductOfferDataImport\Business;
 
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
+use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\PriceProductOfferDataImport\Business\Step\CurrencyToIdCurrencyStep;
 use Spryker\Zed\PriceProductOfferDataImport\Business\Step\PriceProductOfferWriterStep;
@@ -21,9 +22,9 @@ use Spryker\Zed\PriceProductOfferDataImport\Business\Step\StoreToIdStoreStep;
 class PriceProductOfferDataImportBusinessFactory extends DataImportBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function createPriceProductOfferDataImport()
+    public function createPriceProductOfferDataImport(): DataImporterInterface
     {
         $dataImporter = $this->getCsvDataImporterFromConfig(
             $this->getConfig()->getPriceProductOfferDataImporterConfiguration()

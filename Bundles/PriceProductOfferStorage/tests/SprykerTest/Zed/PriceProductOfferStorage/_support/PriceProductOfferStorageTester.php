@@ -35,7 +35,7 @@ class PriceProductOfferStorageTester extends Actor
      *
      * @return int
      */
-    public function getCountPriceProductOfferStorageEntities(int $productId): int
+    public function getCountPriceProductOfferStorageCount(int $productId): int
     {
         return $this->createProductConcreteProductOfferPriceStorageQuery()->findByFkProduct($productId)->count();
     }

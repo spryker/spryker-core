@@ -30,7 +30,7 @@ class PriceProductOfferStorageToEventFacadeBridge implements PriceProductOfferSt
      *
      * @return void
      */
-    public function trigger($eventName, TransferInterface $transfer): void
+    public function trigger($eventName, TransferInterface $transfer)
     {
         $this->eventFacade->trigger($eventName, $transfer);
     }

@@ -105,7 +105,7 @@ class PriceProductOfferStoragePublishListenerTest extends Unit
             PriceProductOfferEvents::ENTITY_SPY_PRICE_PRODUCT_OFFER_PUBLISH
         );
 
-        $countPriceProductOfferStorageEntities = $this->tester->getCountPriceProductOfferStorageEntities($this->productConcreteTransfer->getIdProductConcrete());
+        $countPriceProductOfferStorageEntities = $this->tester->getCountPriceProductOfferStorageCount($this->productConcreteTransfer->getIdProductConcrete());
 
         //Assert
         $this->assertSame(1, $countPriceProductOfferStorageEntities);

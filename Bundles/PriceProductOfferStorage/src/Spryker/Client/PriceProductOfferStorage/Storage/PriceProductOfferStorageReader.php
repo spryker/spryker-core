@@ -77,17 +77,17 @@ class PriceProductOfferStorageReader implements PriceProductOfferStorageReaderIn
             return [];
         }
         unset($priceProductOfferData['_timestamp']);
-        $priceProductList = [];
+        $priceProductTransfers = [];
 
         foreach ($priceProductOfferData as $priceProductOffer) {
             $priceProductTransfer = $this->priceProductMapper->mapPriceProductOfferStorageDataToPriceProductTransfer($priceProductOffer, (new PriceProductTransfer()));
             $groupKey = $this->priceProductService->buildPriceProductGroupKey($priceProductTransfer);
             $priceProductTransfer->setGroupKey($groupKey);
 
-            $priceProductList[] = $priceProductTransfer;
+            $priceProductTransfers[] = $priceProductTransfer;
         }
 
-        return $priceProductList;
+        return $priceProductTransfers;
     }
 
     /**

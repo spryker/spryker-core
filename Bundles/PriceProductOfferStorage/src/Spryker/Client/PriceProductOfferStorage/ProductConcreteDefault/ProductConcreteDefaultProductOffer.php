@@ -31,7 +31,7 @@ class ProductConcreteDefaultProductOffer implements ProductConcreteDefaultProduc
      *
      * @return string|null
      */
-    public function getProductOfferReference(ProductViewTransfer $productViewTransfer): ?string
+    public function findProductOfferReference(ProductViewTransfer $productViewTransfer): ?string
     {
         if (!$productViewTransfer->getIdProductConcrete()) {
             return null;
@@ -43,8 +43,10 @@ class ProductConcreteDefaultProductOffer implements ProductConcreteDefaultProduc
         }
 
         $selectedAttributes = $productViewTransfer->getSelectedAttributes();
-        if (isset($selectedAttributes[PriceProductOfferStorageConfig::PRODUCT_OFFER_REFERENCE_ATTRIBUTE]) &&
-            in_array($selectedAttributes[PriceProductOfferStorageConfig::PRODUCT_OFFER_REFERENCE_ATTRIBUTE], $productOfferReferences)) {
+
+        if (isset($selectedAttributes[PriceProductOfferStorageConfig::PRODUCT_OFFER_REFERENCE_ATTRIBUTE])
+            && in_array($selectedAttributes[PriceProductOfferStorageConfig::PRODUCT_OFFER_REFERENCE_ATTRIBUTE], $productOfferReferences)
+        ) {
             return $selectedAttributes[PriceProductOfferStorageConfig::PRODUCT_OFFER_REFERENCE_ATTRIBUTE];
         }
 

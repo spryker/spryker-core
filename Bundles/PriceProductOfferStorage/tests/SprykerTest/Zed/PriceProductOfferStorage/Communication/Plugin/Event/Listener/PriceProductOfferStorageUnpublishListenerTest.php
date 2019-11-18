@@ -38,6 +38,7 @@ class PriceProductOfferStorageUnpublishListenerTest extends Unit
     protected const CURRENCY = 'EUR';
     protected const PRODUCT_SKU = 'PRODUCT_SKU';
     protected const STORE = 'DE';
+
     /**
      * @var \SprykerTest\Zed\PriceProductOfferStorage\PriceProductOfferStorageTester
      */
@@ -122,7 +123,7 @@ class PriceProductOfferStorageUnpublishListenerTest extends Unit
             $eventUnpublishTransfers,
             PriceProductOfferEvents::ENTITY_SPY_PRICE_PRODUCT_OFFER_UNPUBLISH
         );
-        $countPriceProductOfferStorageEntities = $this->tester->getCountPriceProductOfferStorageEntities($this->productConcreteTransfer->getIdProductConcrete());
+        $countPriceProductOfferStorageEntities = $this->tester->getCountPriceProductOfferStorageCount($this->productConcreteTransfer->getIdProductConcrete());
 
         //Assert
         $this->assertSame(0, $countPriceProductOfferStorageEntities);
