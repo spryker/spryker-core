@@ -56,13 +56,12 @@ class GiftCardCodeGenerator implements GiftCardCodeGeneratorInterface
     }
 
     /**
-     * @param string $pattern
+     * @param string $candidate
      *
      * @return string
      */
-    protected function generateGiftCardCodeCandidate($pattern)
+    protected function generateGiftCardCodeCandidate($candidate)
     {
-        $candidate = $pattern;
         $replacements = $this->getReplacements();
 
         foreach ($replacements as $pattern => $replacement) {
@@ -77,7 +76,7 @@ class GiftCardCodeGenerator implements GiftCardCodeGeneratorInterface
      */
     protected function getReplacements()
     {
-        return $replacements = [
+        return [
             '{prefix}' => $this->giftCardConfig->getCodePrefix(),
             '{randomPart}' => $this->getValidRandomString(
                 $this->giftCardConfig->getCodeRandomPartLength()

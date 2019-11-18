@@ -186,8 +186,6 @@ class PhpstanRunner implements PhpstanRunnerInterface
             $processOutputBuffer = '';
         });
 
-        $processOutputBuffer = '';
-
         if ($this->phpstanConfigFileManager->isMergedConfigFile($configFilePath)) {
             $this->phpstanConfigFileManager->deleteConfigFile($configFilePath);
         }

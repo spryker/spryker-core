@@ -137,7 +137,7 @@ class ContainerGlobals implements ArrayAccess
             throw new InvalidArgumentException('Callable is not a Closure or invokable object.');
         }
 
-        return function ($c) use ($callable) {
+        return function () use ($callable) {
             return $callable;
         };
     }

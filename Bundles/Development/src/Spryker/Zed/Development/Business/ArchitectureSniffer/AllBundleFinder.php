@@ -74,15 +74,15 @@ class AllBundleFinder implements AllBundleFinderInterface
      */
     protected function findBundles($path, $namespace, array $allBundles)
     {
-        $directories = [];
-
         try {
+            /** @var \SplFileInfo[] $directories */
             $directories = (new Finder())
                 ->directories()
                 ->in($path)
                 ->depth('== 0');
         } catch (InvalidArgumentException $e) {
             // ~ Directory does not exist. It's not an error.
+            return $allBundles;
         }
 
         foreach ($directories as $dir) {
