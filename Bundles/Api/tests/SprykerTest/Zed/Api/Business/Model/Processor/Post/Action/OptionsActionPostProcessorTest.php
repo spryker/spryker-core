@@ -42,8 +42,7 @@ class OptionsActionPostProcessorTest extends Unit
      */
     public function testProcessWithDefaultsPageOne()
     {
-        $config = new ApiConfig();
-        $processor = new OptionsActionPostProcessor($config);
+        $processor = new OptionsActionPostProcessor();
 
         $apiRequestTransfer = new ApiRequestTransfer();
         $apiRequestTransfer->setResourceAction(ApiConfig::ACTION_OPTIONS);

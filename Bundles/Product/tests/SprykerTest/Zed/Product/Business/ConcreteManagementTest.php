@@ -250,7 +250,7 @@ class ConcreteManagementTest extends FacadeTestAbstract
     {
         $this->expectException(MissingProductException::class);
 
-        $productConcrete = $this->productFacade->getProductConcrete('INVALIDSKU');
+        $this->productFacade->getProductConcrete('INVALIDSKU');
     }
 
     /**
