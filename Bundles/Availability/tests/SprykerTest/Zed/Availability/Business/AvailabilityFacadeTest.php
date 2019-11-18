@@ -211,12 +211,8 @@ class AvailabilityFacadeTest extends Unit
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
-        $stockTransfer = $this->tester->haveStock([
-            StockTransfer::STORE_RELATION => (new StoreRelationTransfer())->setIdStores([$storeTransfer->getIdStore()]),
-        ]);
         $productTransfer = $this->tester->haveProduct();
-        $this->tester->haveProductInStock([
-            StockProductTransfer::FK_STOCK => $stockTransfer->getIdStock(),
+        $this->tester->haveProductInStockForStore($storeTransfer, [
             StockProductTransfer::SKU => $productTransfer->getSku(),
             StockProductTransfer::QUANTITY => 50,
             StockProductTransfer::IS_NEVER_OUT_OF_STOCK => false,
@@ -264,12 +260,8 @@ class AvailabilityFacadeTest extends Unit
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
-        $stockTransfer = $this->tester->haveStock([
-            StockTransfer::STORE_RELATION => (new StoreRelationTransfer())->setIdStores([$storeTransfer->getIdStore()]),
-        ]);
         $productTransfer = $this->tester->haveProduct();
-        $this->tester->haveProductInStock([
-            StockProductTransfer::FK_STOCK => $stockTransfer->getIdStock(),
+        $this->tester->haveProductInStockForStore($storeTransfer, [
             StockProductTransfer::SKU => $productTransfer->getSku(),
             StockProductTransfer::QUANTITY => 0,
             StockProductTransfer::IS_NEVER_OUT_OF_STOCK => false,
@@ -400,12 +392,8 @@ class AvailabilityFacadeTest extends Unit
         // Arrange
         $productQuantity = 13;
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
-        $stockTransfer = $this->tester->haveStock([
-            StockTransfer::STORE_RELATION => (new StoreRelationTransfer())->setIdStores([$storeTransfer->getIdStore()]),
-        ]);
         $productTransfer = $this->tester->haveProduct(['sku' => static::CONCRETE_SKU], ['sku' => static::ABSTRACT_SKU]);
-        $this->tester->haveProductInStock([
-            StockProductTransfer::FK_STOCK => $stockTransfer->getIdStock(),
+        $this->tester->haveProductInStockForStore($storeTransfer, [
             StockProductTransfer::SKU => $productTransfer->getSku(),
             StockProductTransfer::QUANTITY => $productQuantity,
         ]);

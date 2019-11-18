@@ -33,7 +33,7 @@ use Spryker\DecimalObject\Decimal;
  */
 class DiscountPromotionFacadeTest extends Unit
 {
-    protected const DE_STORE_NAME = 'DE';
+    protected const STORE_NAME_DE = 'DE';
 
     /**
      * @var \SprykerTest\Zed\DiscountPromotion\DiscountPromotionBusinessTester
@@ -53,7 +53,7 @@ class DiscountPromotionFacadeTest extends Unit
         $discountTransfer = (new DiscountTransfer())
             ->setIdDiscount($discountGeneralTransfer->getIdDiscount());
 
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $quoteTransfer = (new QuoteTransfer())->setStore($storeTransfer);
 
         $discountPromotionTransfer = $this->createDiscountPromotionTransfer($promotionItemSku, $promotionItemQuantity);
@@ -90,7 +90,7 @@ class DiscountPromotionFacadeTest extends Unit
         $discountTransfer = new DiscountTransfer();
         $discountTransfer->setIdDiscount($discountGeneralTransfer->getIdDiscount());
 
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $quoteTransfer = (new QuoteTransfer())->setStore($storeTransfer);
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setAbstractSku($promotionItemSku);
@@ -128,7 +128,7 @@ class DiscountPromotionFacadeTest extends Unit
         $discountTransfer = new DiscountTransfer();
         $discountTransfer->setIdDiscount($discountGeneralTransfer->getIdDiscount());
 
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $quoteTransfer = (new QuoteTransfer())->setStore($storeTransfer);
 
         $discountPromotionTransfer = $this->createDiscountPromotionTransfer($promotionItemSku, $promotionItemQuantity);
@@ -179,7 +179,7 @@ class DiscountPromotionFacadeTest extends Unit
             ->setUnitGrossPrice($grossPrice)
             ->setUnitPrice($price);
 
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $quoteTransfer = (new QuoteTransfer())->setStore($storeTransfer);
         $quoteTransfer->addItem($itemTransfer);
 
@@ -395,6 +395,7 @@ class DiscountPromotionFacadeTest extends Unit
     {
         // Arrange
         $localeTransfer = $this->getLocaleFacade()->getCurrentLocale();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
 
         $abstractSku = 'DE-SKU';
         $productConcreteTransfer = $this->tester->haveProduct(
@@ -410,7 +411,7 @@ class DiscountPromotionFacadeTest extends Unit
             ]
         );
 
-        $this->tester->haveProductInStock([
+        $this->tester->haveProductInStockForStore($storeTransfer, [
             StockProductTransfer::SKU => $productConcreteTransfer->getSku(),
             StockProductTransfer::QUANTITY => 5,
         ]);
@@ -428,7 +429,6 @@ class DiscountPromotionFacadeTest extends Unit
 
         $this->getDiscountPromotionFacade()->createPromotionDiscount($discountPromotionTransfer);
 
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DE_STORE_NAME]);
         $quoteTransfer = (new QuoteTransfer())->setStore($storeTransfer);
 
         // Act
