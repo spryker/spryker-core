@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductPageSearch\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductImageCriteriaFilterTransfer;
+
 interface ProductPageSearchToProductImageFacadeInterface
 {
     /**
@@ -17,16 +19,9 @@ interface ProductPageSearchToProductImageFacadeInterface
     public function getProductImagesSetCollectionByProductId($idProduct);
 
     /**
-     * @param int[] $productImageIds
+     * @param \Generated\Shared\Transfer\ProductImageCriteriaFilterTransfer $productImageCriteriaFilterTransfer
      *
      * @return int[]
      */
-    public function getProductConcreteIdsByProductImageIds(array $productImageIds): array;
-
-    /**
-     * @param int[] $productImageSetIds
-     *
-     * @return int[]
-     */
-    public function getProductConcreteIdsByProductImageSetIds(array $productImageSetIds): array;
+    public function getProductConcreteIds(ProductImageCriteriaFilterTransfer $productImageCriteriaFilterTransfer): array;
 }

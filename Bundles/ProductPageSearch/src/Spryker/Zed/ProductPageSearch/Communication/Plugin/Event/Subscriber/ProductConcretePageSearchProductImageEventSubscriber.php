@@ -32,8 +32,8 @@ class ProductConcretePageSearchProductImageEventSubscriber extends AbstractPlugi
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $this->addProductConcretePageSearchProductImageCreateListener($eventCollection);
         $this->addProductConcretePageSearchProductImageUpdateListener($eventCollection);
+        $this->addProductConcretePageSearchProductImageSetToProductImageCreateListener($eventCollection);
         $this->addProductConcretePageSearchProductImageSetToProductImageUpdateListener($eventCollection);
         $this->addProductConcretePageSearchProductImageSetToProductImageDeleteListener($eventCollection);
         $this->addProductConcretePageSearchProductImageSetDeleteListener($eventCollection);
@@ -46,9 +46,9 @@ class ProductConcretePageSearchProductImageEventSubscriber extends AbstractPlugi
      *
      * @return void
      */
-    protected function addProductConcretePageSearchProductImageCreateListener(EventCollectionInterface $eventCollection): void
+    protected function addProductConcretePageSearchProductImageUpdateListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_CREATE, new ProductConcretePageSearchProductImageListener());
+        $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_UPDATE, new ProductConcretePageSearchProductImageListener());
     }
 
     /**
@@ -56,9 +56,9 @@ class ProductConcretePageSearchProductImageEventSubscriber extends AbstractPlugi
      *
      * @return void
      */
-    protected function addProductConcretePageSearchProductImageUpdateListener(EventCollectionInterface $eventCollection): void
+    protected function addProductConcretePageSearchProductImageSetToProductImageCreateListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_UPDATE, new ProductConcretePageSearchProductImageListener());
+        $eventCollection->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_CREATE, new ProductConcretePageSearchProductImageSetToProductImageListener());
     }
 
     /**

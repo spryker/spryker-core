@@ -11,6 +11,7 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductImageCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
@@ -1108,17 +1109,18 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductConcreteIdsByProductImageIdsReturnsConcreteIds(): void
+    public function testGetProductConcreteIdsFilteredByProductImageIds(): void
     {
         //Arrange
         $productImageSetTransfer = $this->tester->haveProductImageSet([
             ProductImageSetTransfer::ID_PRODUCT => $this->productConcreteEntity->getIdProduct(),
         ]);
 
+        $productImageCriteriaFilterTransfer = (new ProductImageCriteriaFilterTransfer())
+            ->addProductImageId($productImageSetTransfer->getProductImages()->offsetGet(0)->getIdProductImage());
+
         //Act
-        $productConcreteIds = $this->productImageFacade->getProductConcreteIdsByProductImageIds([
-            $productImageSetTransfer->getProductImages()->offsetGet(0)->getIdProductImage(),
-        ]);
+        $productConcreteIds = $this->productImageFacade->getProductConcreteIds($productImageCriteriaFilterTransfer);
 
         //Assert
         $this->assertCount(1, $productConcreteIds);
@@ -1128,17 +1130,18 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductConcreteIdsByProductImageIdsReturnsEmptyResult(): void
+    public function testGetProductConcreteIdsFilteredByProductImageIdsWithEmptyResult(): void
     {
         //Arrange
         $productImageSetTransfer = $this->tester->haveProductImageSet([
             ProductImageSetTransfer::ID_PRODUCT_ABSTRACT => $this->productAbstractEntity->getIdProductAbstract(),
         ]);
 
+        $productImageCriteriaFilterTransfer = (new ProductImageCriteriaFilterTransfer())
+            ->addProductImageId($productImageSetTransfer->getProductImages()->offsetGet(0)->getIdProductImage());
+
         //Act
-        $productConcreteIds = $this->productImageFacade->getProductConcreteIdsByProductImageIds([
-            $productImageSetTransfer->getProductImages()->offsetGet(0)->getIdProductImage(),
-        ]);
+        $productConcreteIds = $this->productImageFacade->getProductConcreteIds($productImageCriteriaFilterTransfer);
 
         //Assert
         $this->assertEmpty($productConcreteIds);
@@ -1147,16 +1150,18 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductConcreteIdsByProductImageSetIdsReturnsConcreteIds(): void
+    public function testGetProductConcreteIdsFilteredByProductImageSetIds(): void
     {
         //Arrange
         $productImageSetTransfer = $this->tester->haveProductImageSet([
             ProductImageSetTransfer::ID_PRODUCT => $this->productConcreteEntity->getIdProduct(),
         ]);
 
+        $productImageCriteriaFilterTransfer = (new ProductImageCriteriaFilterTransfer())
+            ->addProductImageSetId($productImageSetTransfer->getIdProductImageSet());
+
         //Act
-        $productConcreteIds = $this->productImageFacade
-            ->getProductConcreteIdsByProductImageSetIds([$productImageSetTransfer->getIdProductImageSet()]);
+        $productConcreteIds = $this->productImageFacade->getProductConcreteIds($productImageCriteriaFilterTransfer);
 
         //Assert
         $this->assertCount(1, $productConcreteIds);
@@ -1166,16 +1171,18 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductConcreteIdsByProductImageSetIdsReturnsEmptyResult(): void
+    public function testGetProductConcreteIdsFilteredByProductImageSetIdsWithEmptyResult(): void
     {
         //Arrange
         $productImageSetTransfer = $this->tester->haveProductImageSet([
             ProductImageSetTransfer::ID_PRODUCT_ABSTRACT => $this->productAbstractEntity->getIdProductAbstract(),
         ]);
 
+        $productImageCriteriaFilterTransfer = (new ProductImageCriteriaFilterTransfer())
+            ->addProductImageSetId($productImageSetTransfer->getIdProductImageSet());
+
         //Act
-        $productConcreteIds = $this->productImageFacade
-            ->getProductConcreteIdsByProductImageSetIds([$productImageSetTransfer->getIdProductImageSet()]);
+        $productConcreteIds = $this->productImageFacade->getProductConcreteIds($productImageCriteriaFilterTransfer);
 
         //Assert
         $this->assertEmpty($productConcreteIds);

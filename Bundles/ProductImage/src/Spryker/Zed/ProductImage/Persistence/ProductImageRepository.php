@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductImage\Persistence;
 
+use Generated\Shared\Transfer\ProductImageCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
@@ -103,45 +104,26 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
     }
 
     /**
-     * @param int[] $productImageIds
+     * @param \Generated\Shared\Transfer\ProductImageCriteriaFilterTransfer $productImageCriteriaFilterTransfer
      *
      * @return int[]
      */
-    public function getProductConcreteIdsByProductImageIds(array $productImageIds): array
+    public function getProductConcreteIds(ProductImageCriteriaFilterTransfer $productImageCriteriaFilterTransfer): array
     {
-        if (!$productImageIds) {
-            return [];
+        $productImageSetQuery = $this->getFactory()->createProductImageSetQuery();
+
+        if ($productImageCriteriaFilterTransfer->getProductImageSetIds()) {
+            $productImageSetQuery->filterByIdProductImageSet_In($productImageCriteriaFilterTransfer->getProductImageSetIds());
         }
 
-        return $this->getFactory()
-            ->createProductImageQuery()
-            ->useSpyProductImageSetToProductImageQuery()
-                ->filterByFkProductImage_In($productImageIds)
-                ->innerJoinSpyProductImageSet()
-                ->withColumn(Criteria::DISTINCT . ' ' . SpyProductImageSetTableMap::COL_FK_PRODUCT, static::FK_PRODUCT_CONCRETE)
-                ->useSpyProductImageSetQuery()
-                    ->filterByFkProduct(null, Criteria::ISNOTNULL)
-                ->endUse()
-            ->endUse()
-            ->select([static::FK_PRODUCT_CONCRETE])
-            ->find()
-            ->getData();
-    }
-
-    /**
-     * @param int[] $productImageSetIds
-     *
-     * @return int[]
-     */
-    public function getProductConcreteIdsByProductImageSetIds(array $productImageSetIds): array
-    {
-        if (!$productImageSetIds) {
-            return [];
+        if ($productImageCriteriaFilterTransfer->getProductImageIds()) {
+            $productImageSetQuery
+                ->useSpyProductImageSetToProductImageQuery()
+                    ->filterByFkProductImage_In($productImageCriteriaFilterTransfer->getProductImageIds())
+                ->endUse();
         }
 
-        return $this->getFactory()
-            ->createProductImageSetQuery()
-            ->filterByIdProductImageSet_In($productImageSetIds)
+        return $productImageSetQuery
             ->withColumn(Criteria::DISTINCT . ' ' . SpyProductImageSetTableMap::COL_FK_PRODUCT, static::FK_PRODUCT_CONCRETE)
             ->filterByFkProduct(null, Criteria::ISNOTNULL)
             ->select([static::FK_PRODUCT_CONCRETE])

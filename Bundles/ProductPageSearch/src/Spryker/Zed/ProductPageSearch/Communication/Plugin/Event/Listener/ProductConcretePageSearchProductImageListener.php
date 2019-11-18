@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener;
 
+use Generated\Shared\Transfer\ProductImageCriteriaFilterTransfer;
+
 /**
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  */
@@ -30,7 +32,7 @@ class ProductConcretePageSearchProductImageListener extends AbstractProductConcr
 
         $productConcreteIds = $this->getFactory()
             ->getProductImageFacade()
-            ->getProductConcreteIdsByProductImageIds($productImageIds);
+            ->getProductConcreteIds((new ProductImageCriteriaFilterTransfer())->setProductImageIds($productImageIds));
 
         $this->publish($productConcreteIds);
     }

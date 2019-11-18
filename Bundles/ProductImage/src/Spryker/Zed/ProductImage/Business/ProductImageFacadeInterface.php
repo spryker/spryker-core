@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductImage\Business;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductImageCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 
@@ -223,25 +224,13 @@ interface ProductImageFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves product concrete ids by product image ids.
+     * - Returns product concrete ids by provided filter criteria.
      *
      * @api
      *
-     * @param int[] $productImageIds
+     * @param \Generated\Shared\Transfer\ProductImageCriteriaFilterTransfer $productImageCriteriaFilterTransfer
      *
      * @return int[]
      */
-    public function getProductConcreteIdsByProductImageIds(array $productImageIds): array;
-
-    /**
-     * Specification:
-     * - Retrieves product concrete ids by product image set ids.
-     *
-     * @api
-     *
-     * @param int[] $productImageSetIds
-     *
-     * @return int[]
-     */
-    public function getProductConcreteIdsByProductImageSetIds(array $productImageSetIds): array;
+    public function getProductConcreteIds(ProductImageCriteriaFilterTransfer $productImageCriteriaFilterTransfer): array;
 }
