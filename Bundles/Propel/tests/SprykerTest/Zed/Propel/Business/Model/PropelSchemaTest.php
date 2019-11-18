@@ -31,7 +31,7 @@ class PropelSchemaTest extends Unit
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $filesystem = new Filesystem();
         $filesystem->remove($this->getFixtureTargetDirectory());

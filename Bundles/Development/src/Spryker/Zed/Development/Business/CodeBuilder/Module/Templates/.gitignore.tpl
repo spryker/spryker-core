@@ -13,7 +13,8 @@
 .DS_Store
 
 /vendor
-/composer.lock
+composer.lock
+.phpunit.result.cache
 
 /tests/_output/*
 !/tests/_output/.gitkeep

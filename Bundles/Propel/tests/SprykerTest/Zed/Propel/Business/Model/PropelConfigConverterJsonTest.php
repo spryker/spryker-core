@@ -35,7 +35,7 @@ class PropelConfigConverterJsonTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->fixtureDirectory = $this->getFixtureDirectory();
 

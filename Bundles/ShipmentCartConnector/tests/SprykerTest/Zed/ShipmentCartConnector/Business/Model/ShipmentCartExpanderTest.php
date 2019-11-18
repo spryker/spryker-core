@@ -14,6 +14,7 @@ use Generated\Shared\DataBuilder\MoneyValueBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
+use Generated\Shared\DataBuilder\StoreBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
@@ -298,7 +299,7 @@ class ShipmentCartExpanderTest extends Test
                 ]))
                     ->withItem()
                     ->withAnotherItem()
-                    ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_USD])
+                    ->withCurrency([CurrencyTransfer::CODE => static::CURRENCY_CODE_EUR])
                 ->withExpense(
                     (new ExpenseBuilder([
                         ExpenseTransfer::TYPE => ShipmentCartConnectorConfig::SHIPMENT_EXPENSE_TYPE,
@@ -317,6 +318,10 @@ class ShipmentCartExpanderTest extends Test
             ->build();
 
         $quoteTransfer = $cartChangeTransfer->getQuote();
+        $storeTransfer = (new StoreBuilder([
+            StoreTransfer::NAME => static::DEFAULT_STORE_NAME,
+        ]))->build();
+        $quoteTransfer->setStore($storeTransfer);
         $quoteTransfer->getItems()[0]->setShipment($shipmentTransfer1);
         $quoteTransfer->getExpenses()[0]->setShipment($shipmentTransfer1);
         $quoteTransfer->getItems()[1]->setShipment($shipmentTransfer2);

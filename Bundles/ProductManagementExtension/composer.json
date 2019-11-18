@@ -4,7 +4,7 @@
   "description": "ProductManagementExtension module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.2"
   },
   "require-dev": {
     "spryker/symfony": "^3.0.0"
