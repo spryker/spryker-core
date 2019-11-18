@@ -63,6 +63,7 @@
         <property name="data" type="array" singular="data"/>
         <property name="structuredData" type="string"/>
         <property name="key" type="string"/>
+        <property name="images" type="array" singular="image"/>
     </transfer>
 
     <transfer name="ProductConcreteCriteriaFilter">
@@ -128,6 +129,11 @@
     </transfer>
 
     <transfer name="PriceProductCriteria">
+    </transfer>
+
+    <transfer name="ProductImageCriteriaFilter">
+        <property name="productImageSetIds" type="array" singular="productImageSetId"/>
+        <property name="productImageIds" type="array" singular="productImageId"/>
     </transfer>
 
 </transfers>

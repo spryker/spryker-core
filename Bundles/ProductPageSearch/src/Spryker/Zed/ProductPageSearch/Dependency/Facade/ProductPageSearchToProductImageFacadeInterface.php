@@ -5,26 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductImage\Persistence;
+namespace Spryker\Zed\ProductPageSearch\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductImageCriteriaFilterTransfer;
 
-interface ProductImageRepositoryInterface
+interface ProductPageSearchToProductImageFacadeInterface
 {
     /**
-     * @param int[] $productIds
-     * @param int $idLocale
+     * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
-    public function getProductImagesSetTransfersByProductIdsAndIdLocale(array $productIds, int $idLocale): array;
-
-    /**
-     * @param int[] $productSetIds
-     *
-     * @return \Generated\Shared\Transfer\ProductImageTransfer[][]
-     */
-    public function getProductImagesByProductSetIds(array $productSetIds): array;
+    public function getProductImagesSetCollectionByProductId($idProduct);
 
     /**
      * @param \Generated\Shared\Transfer\ProductImageCriteriaFilterTransfer $productImageCriteriaFilterTransfer
