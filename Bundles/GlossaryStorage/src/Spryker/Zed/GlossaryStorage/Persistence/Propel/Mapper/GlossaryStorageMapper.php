@@ -8,7 +8,6 @@
 namespace Spryker\Zed\GlossaryStorage\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\GlossaryKeyTransfer;
-use Generated\Shared\Transfer\GlossaryStorageTransfer;
 use Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer;
 use Orm\Zed\GlossaryStorage\Persistence\SpyGlossaryStorage;
 
@@ -25,21 +24,6 @@ class GlossaryStorageMapper implements GlossaryStorageMapperInterface
         $glossaryStorage->fromArray($glossaryStorageEntityTransfer->toArray(true));
 
         return $glossaryStorage;
-    }
-
-    /**
-     * @param \Orm\Zed\GlossaryStorage\Persistence\SpyGlossaryStorage[] $glossaryStorageEntities
-     *
-     * @return \Generated\Shared\Transfer\GlossaryStorageTransfer[]
-     */
-    public function hydrateGlossaryStorageTransfer(array $glossaryStorageEntities): array
-    {
-        $glossaryStorageTransfers = [];
-        foreach ($glossaryStorageEntities as $spyGlossaryStorageEntity) {
-            $glossaryStorageTransfers[] = (new GlossaryStorageTransfer())->fromArray($spyGlossaryStorageEntity->toArray(), true);
-        }
-
-        return $glossaryStorageTransfers;
     }
 
     /**

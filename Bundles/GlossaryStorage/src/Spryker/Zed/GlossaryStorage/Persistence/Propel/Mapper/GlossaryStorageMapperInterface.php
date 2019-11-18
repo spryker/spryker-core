@@ -24,15 +24,6 @@ interface GlossaryStorageMapperInterface
     ): SpyGlossaryStorage;
 
     /**
-     * @param \Orm\Zed\GlossaryStorage\Persistence\SpyGlossaryStorage[] $glossaryStorageEntities
-     *
-     * @return \Generated\Shared\Transfer\GlossaryStorageTransfer[]
-     */
-    public function hydrateGlossaryStorageTransfer(
-        array $glossaryStorageEntities
-    ): array;
-
-    /**
      * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryKey[] $glossaryKeyEntities
      *
      * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]

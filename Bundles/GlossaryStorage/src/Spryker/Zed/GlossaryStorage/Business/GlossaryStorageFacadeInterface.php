@@ -104,7 +104,7 @@ interface GlossaryStorageFacadeInterface
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param array $ids
      *
-     * @return \Generated\Shared\Transfer\GlossaryStorageTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findFilteredGlossaryStorageEntities(FilterTransfer $filterTransfer, array $ids): array;
+    public function findFilteredGlossaryStorageDataTransfer(FilterTransfer $filterTransfer, array $ids): array;
 }

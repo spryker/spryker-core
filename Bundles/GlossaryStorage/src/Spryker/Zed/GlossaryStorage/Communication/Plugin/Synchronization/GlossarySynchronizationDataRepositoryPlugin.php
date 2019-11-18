@@ -8,7 +8,6 @@
 namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
@@ -64,19 +63,9 @@ class GlossarySynchronizationDataRepositoryPlugin extends AbstractPlugin impleme
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
-        $synchronizationDataTransfers = [];
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        $glossaryStorageEntities = $this->getFacade()->findFilteredGlossaryStorageEntities($filterTransfer, $ids);
-
-        foreach ($glossaryStorageEntities as $glossaryStorageEntity) {
-            $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData($glossaryStorageEntity->getData());
-            $synchronizationDataTransfer->setKey($glossaryStorageEntity->getKey());
-            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
-        }
-
-        return $synchronizationDataTransfers;
+        return $this->getFacade()->findFilteredGlossaryStorageDataTransfer($filterTransfer, $ids);
     }
 
     /**

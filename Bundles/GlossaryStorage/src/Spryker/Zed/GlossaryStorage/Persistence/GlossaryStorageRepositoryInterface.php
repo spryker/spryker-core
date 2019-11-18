@@ -22,9 +22,9 @@ interface GlossaryStorageRepositoryInterface
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $ids
      *
-     * @return \Generated\Shared\Transfer\GlossaryStorageTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findFilteredGlossaryStorageEntities(FilterTransfer $filterTransfer, array $ids): array;
+    public function findFilteredGlossaryStorageDataTransfer(FilterTransfer $filterTransfer, array $ids): array;
 
     /**
      * @param int[] $glossaryKeyIds

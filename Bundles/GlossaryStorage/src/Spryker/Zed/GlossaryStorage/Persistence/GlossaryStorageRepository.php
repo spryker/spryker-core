@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationDataTransferObjectFormatter;
 
 /**
  * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStoragePersistenceFactory getFactory()
@@ -39,9 +40,9 @@ class GlossaryStorageRepository extends AbstractRepository implements GlossarySt
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $ids
      *
-     * @return \Generated\Shared\Transfer\GlossaryStorageTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findFilteredGlossaryStorageEntities(FilterTransfer $filterTransfer, array $ids): array
+    public function findFilteredGlossaryStorageDataTransfer(FilterTransfer $filterTransfer, array $ids): array
     {
         $query = $this->getFactory()->createGlossaryStorageQuery();
 
@@ -49,12 +50,9 @@ class GlossaryStorageRepository extends AbstractRepository implements GlossarySt
             $query->filterByIdGlossaryStorage_In($ids);
         }
 
-        $glossaryStorageEntities = $this->buildQueryFromCriteria($query, $filterTransfer)
-            ->setFormatter(ModelCriteria::FORMAT_OBJECT)
-            ->find()
-            ->getData();
-
-        return $this->getFactory()->createGlossaryStorageMapper()->hydrateGlossaryStorageTransfer($glossaryStorageEntities);
+        return $this->buildQueryFromCriteria($query, $filterTransfer)
+            ->setFormatter(SynchronizationDataTransferObjectFormatter::class)
+            ->find();
     }
 
     /**
