@@ -54,9 +54,13 @@ class CmsSlotBlockConditionsCategoryStep implements DataImportStepInterface
      */
     protected function transformConditionCategoryAllValueToBoolean(array $conditions): array
     {
-        if (isset($conditions[static::KEY_CONDITION_CATEGORY][static::KEY_CONDITION_ALL])) {
-            $conditions[static::KEY_CONDITION_CATEGORY][static::KEY_CONDITION_ALL] = (bool)array_shift($conditions[static::KEY_CONDITION_CATEGORY][static::KEY_CONDITION_ALL]);
+        if (!isset($conditions[static::KEY_CONDITION_CATEGORY][static::KEY_CONDITION_ALL])) {
+            return $conditions;
         }
+
+        $conditions[static::KEY_CONDITION_CATEGORY][static::KEY_CONDITION_ALL] = (bool)array_shift(
+            $conditions[static::KEY_CONDITION_CATEGORY][static::KEY_CONDITION_ALL]
+        );
 
         return $conditions;
     }

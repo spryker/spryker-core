@@ -40,7 +40,7 @@ class CmsSlotBlockMapConditionsStep implements DataImportStepInterface
         $conditionKeys = [];
 
         foreach ($keys as $key) {
-            if (strpos($key, self::CONDITIONS) !== false) {
+            if (strpos($key, static::CONDITIONS) !== false) {
                 $conditionKeys[] = $key;
             }
         }

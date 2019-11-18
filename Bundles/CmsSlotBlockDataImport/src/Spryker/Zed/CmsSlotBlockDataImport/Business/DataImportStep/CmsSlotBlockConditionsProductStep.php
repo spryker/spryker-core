@@ -45,14 +45,15 @@ class CmsSlotBlockConditionsProductStep implements DataImportStepInterface
      *
      * @return array
      */
-    protected function transformConditionProductAllValueToBoolean($conditions)
+    protected function transformConditionProductAllValueToBoolean($conditions): array
     {
-        if (isset($conditions[static::KEY_CONDITION_PRODUCT_CATEGORY][static::KEY_CONDITION_PRODUCT_CATEGORY_ALL])) {
-            $conditions[static::KEY_CONDITION_PRODUCT_CATEGORY][static::KEY_CONDITION_PRODUCT_CATEGORY_ALL] =
-                (bool)array_shift(
-                    $conditions[static::KEY_CONDITION_PRODUCT_CATEGORY][static::KEY_CONDITION_PRODUCT_CATEGORY_ALL]
-                );
+        if (!isset($conditions[static::KEY_CONDITION_PRODUCT_CATEGORY][static::KEY_CONDITION_PRODUCT_CATEGORY_ALL])) {
+            return $conditions;
         }
+
+        $conditions[static::KEY_CONDITION_PRODUCT_CATEGORY][static::KEY_CONDITION_PRODUCT_CATEGORY_ALL] = (bool)array_shift(
+            $conditions[static::KEY_CONDITION_PRODUCT_CATEGORY][static::KEY_CONDITION_PRODUCT_CATEGORY_ALL]
+        );
 
         return $conditions;
     }
