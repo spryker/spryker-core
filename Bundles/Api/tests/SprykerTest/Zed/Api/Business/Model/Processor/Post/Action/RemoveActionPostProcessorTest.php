@@ -42,8 +42,7 @@ class RemoveActionPostProcessorTest extends Unit
      */
     public function testProcessWithDefaultsPageOne()
     {
-        $config = new ApiConfig();
-        $processor = new RemoveActionPostProcessor($config);
+        $processor = new RemoveActionPostProcessor();
 
         $apiRequestTransfer = new ApiRequestTransfer();
         $apiRequestTransfer->setResourceAction(ApiConfig::ACTION_DELETE);
