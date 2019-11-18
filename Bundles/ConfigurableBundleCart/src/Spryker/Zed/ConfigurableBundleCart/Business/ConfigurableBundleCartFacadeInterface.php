@@ -68,4 +68,18 @@ interface ConfigurableBundleCartFacadeInterface
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function expandConfiguredBundleItemsWithQuantityPerSlot(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+
+    /**
+     * Specification:
+     * - Applicable to items which have configured bundle properties.
+     * - Sets group key for configured bundle items.
+     * - Returns modified CartChangeTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandConfiguredBundleItemsWithGroupKey(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }

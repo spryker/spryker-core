@@ -9,6 +9,8 @@ namespace Spryker\Zed\ConfigurableBundleCart\Business;
 
 use Spryker\Zed\ConfigurableBundleCart\Business\Checker\ConfiguredBundleQuantityChecker;
 use Spryker\Zed\ConfigurableBundleCart\Business\Checker\ConfiguredBundleQuantityCheckerInterface;
+use Spryker\Zed\ConfigurableBundleCart\Business\Expander\ConfiguredBundleGroupKeyExpander;
+use Spryker\Zed\ConfigurableBundleCart\Business\Expander\ConfiguredBundleGroupKeyExpanderInterface;
 use Spryker\Zed\ConfigurableBundleCart\Business\Expander\ConfiguredBundleQuantityExpander;
 use Spryker\Zed\ConfigurableBundleCart\Business\Expander\ConfiguredBundleQuantityExpanderInterface;
 use Spryker\Zed\ConfigurableBundleCart\Business\Updater\ConfiguredBundleQuantityUpdater;
@@ -42,5 +44,13 @@ class ConfigurableBundleCartBusinessFactory extends AbstractBusinessFactory
     public function createConfiguredBundleQuantityExpander(): ConfiguredBundleQuantityExpanderInterface
     {
         return new ConfiguredBundleQuantityExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleCart\Business\Expander\ConfiguredBundleGroupKeyExpanderInterface
+     */
+    public function createConfiguredBundleGroupKeyExpander(): ConfiguredBundleGroupKeyExpanderInterface
+    {
+        return new ConfiguredBundleGroupKeyExpander();
     }
 }
