@@ -31,7 +31,7 @@ class MySqlStorageReader extends AbstractStorageReader
         $selectSqlString = $this->buildSelectQuerySql($tableName);
         $statement = $this->createPreparedStatement($selectSqlString);
         $statement->bindValue(static::DEFAULT_PLACEHOLDER_KEY, $resourceKey);
-        $statement->bindValue(static::DEFAULT_PLACEHOLDER_ALIAS_KEY, $this->formatKeyAsAsMySqlSearchPath($resourceKey));
+        $statement->bindValue(static::DEFAULT_PLACEHOLDER_ALIAS_KEY, $this->formatKeyAsMySqlSearchPath($resourceKey));
 
         return $statement;
     }
@@ -64,7 +64,7 @@ class MySqlStorageReader extends AbstractStorageReader
             $aliasKeyPlaceholder = $this->buildAliasKeysPlaceholder($index);
             $multiTableQueryData[$tableName][] = [
                 $keyPlaceholder => $resourceKey,
-                $aliasKeyPlaceholder => $this->formatKeyAsAsMySqlSearchPath($resourceKey),
+                $aliasKeyPlaceholder => $this->formatKeyAsMySqlSearchPath($resourceKey),
             ];
         }
 
@@ -131,7 +131,7 @@ class MySqlStorageReader extends AbstractStorageReader
      *
      * @return string
      */
-    protected function formatKeyAsAsMySqlSearchPath(string $key): string
+    protected function formatKeyAsMySqlSearchPath(string $key): string
     {
         return sprintf('$."%s"', $key);
     }
