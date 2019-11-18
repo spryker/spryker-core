@@ -14,7 +14,7 @@ use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
-class CmsBlockNameToCmsBlockIdStep implements DataImportStepInterface
+class CmsBlockKeyToCmsBlockIdStep implements DataImportStepInterface
 {
     /**
      * @var int[]

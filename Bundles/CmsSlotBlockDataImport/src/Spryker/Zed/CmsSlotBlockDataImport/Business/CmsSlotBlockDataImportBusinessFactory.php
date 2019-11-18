@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotBlockDataImport\Business;
 
-use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsBlockNameToCmsBlockIdStep;
+use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsBlockKeyToCmsBlockIdStep;
 use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsSlotBlockConditionsCategoryStep;
 use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsSlotBlockConditionsProductStep;
 use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsSlotBlockMapConditionsStep;
@@ -37,7 +37,7 @@ class CmsSlotBlockDataImportBusinessFactory extends DataImportBusinessFactory
         $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
         $dataSetStepBroker->addStep($this->createCmsSlotTemplatePathToCmsSlotTemplateIdStep());
         $dataSetStepBroker->addStep($this->createCmsSlotKeyToCmsSlotIdStep());
-        $dataSetStepBroker->addStep($this->createCmsBlockNameToCmsBlockIdStep());
+        $dataSetStepBroker->addStep($this->createCmsBlockKeyToCmsBlockIdStep());
         $dataSetStepBroker->addStep($this->createCmsSlotBlockValidatorStep());
         $dataSetStepBroker->addStep($this->createCmsSlotBlockMapConditionsStep());
         $dataSetStepBroker->addStep($this->createCmsSlotBlockConditionsCategoryStep());
@@ -69,9 +69,9 @@ class CmsSlotBlockDataImportBusinessFactory extends DataImportBusinessFactory
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
-    public function createCmsBlockNameToCmsBlockIdStep(): DataImportStepInterface
+    public function createCmsBlockKeyToCmsBlockIdStep(): DataImportStepInterface
     {
-        return new CmsBlockNameToCmsBlockIdStep();
+        return new CmsBlockKeyToCmsBlockIdStep();
     }
 
     /**
