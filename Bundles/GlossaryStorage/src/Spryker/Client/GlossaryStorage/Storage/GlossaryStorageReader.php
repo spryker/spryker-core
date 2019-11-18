@@ -12,13 +12,14 @@ use Spryker\Client\GlossaryStorage\Dependency\Client\GlossaryStorageToStorageCli
 use Spryker\Client\GlossaryStorage\Dependency\Service\GlossaryStorageToSynchronizationServiceInterface;
 use Spryker\Client\GlossaryStorage\Dependency\Service\GlossaryStorageToUtilEncodingServiceInterface;
 use Spryker\Client\GlossaryStorage\GlossaryStorageConfig;
-use Spryker\Client\GlossaryStorage\Processor\Mapper\GlossaryStorageMapperInterface;
 use Spryker\Client\Kernel\Locator;
 use Spryker\Shared\GlossaryStorage\GlossaryStorageConstants;
 
-class GlossaryStorage implements GlossaryStorageInterface
+class GlossaryStorageReader implements GlossaryStorageReaderInterface
 {
     protected const KEY_VALUE = 'value';
+    protected const KEY_GLOSSARY_KEY = 'GlossaryKey';
+    protected const KEY_KEY = 'key';
 
     /**
      * @var \Spryker\Client\GlossaryStorage\Dependency\Client\GlossaryStorageToStorageClientInterface
@@ -36,31 +37,23 @@ class GlossaryStorage implements GlossaryStorageInterface
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Client\GlossaryStorage\Processor\Mapper\GlossaryStorageMapperInterface
-     */
-    protected $glossaryStorageMapper;
-
-    /**
      * @var string[][]
      */
-    protected $translationsCache = [];
+    protected static $translationsCache = [];
 
     /**
      * @param \Spryker\Client\GlossaryStorage\Dependency\Client\GlossaryStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\GlossaryStorage\Dependency\Service\GlossaryStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\GlossaryStorage\Dependency\Service\GlossaryStorageToUtilEncodingServiceInterface $utilEncodingService
-     * @param \Spryker\Client\GlossaryStorage\Processor\Mapper\GlossaryStorageMapperInterface $glossaryStorageMapper
      */
     public function __construct(
         GlossaryStorageToStorageClientInterface $storageClient,
         GlossaryStorageToSynchronizationServiceInterface $synchronizationService,
-        GlossaryStorageToUtilEncodingServiceInterface $utilEncodingService,
-        GlossaryStorageMapperInterface $glossaryStorageMapper
+        GlossaryStorageToUtilEncodingServiceInterface $utilEncodingService
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
         $this->utilEncodingService = $utilEncodingService;
-        $this->glossaryStorageMapper = $glossaryStorageMapper;
     }
 
     /**
@@ -96,48 +89,9 @@ class GlossaryStorage implements GlossaryStorageInterface
     }
 
     /**
-     * @param string $keyName
-     * @param string $localeName
-     *
-     * @return string
-     */
-    protected function generateGlossaryStorageKey(string $keyName, string $localeName): string
-    {
-        $synchronizationDataTransfer = (new SynchronizationDataTransfer())
-            ->setReference($keyName)
-            ->setLocale($localeName);
-
-        return $this->synchronizationService
-            ->getStorageKeyBuilder(GlossaryStorageConstants::RESOURCE_NAME)
-            ->generateKey($synchronizationDataTransfer);
-    }
-
-    /**
-     * @param string $keyName
-     * @param string $localeName
-     *
-     * @return string
-     */
-    protected function getTranslation(string $keyName, string $localeName): string
-    {
-        if (isset($this->translationsCache[$keyName][$localeName])) {
-            return $this->translationsCache[$keyName][$localeName];
-        }
-
-        $translation = $keyName;
-        $glossaryStorageDataItem = $this->storageClient->get($this->generateGlossaryStorageKey($keyName, $localeName));
-        if ($glossaryStorageDataItem) {
-            $translation = $glossaryStorageDataItem[static::KEY_VALUE];
-        }
-        $this->cacheTranslation($localeName, $keyName, $translation);
-
-        return $translation;
-    }
-
-    /**
      * @param string[] $keyNames
      * @param string $localeName
-     * @param array $parameters
+     * @param string[][] $parameters
      *
      * @return string[]
      */
@@ -160,41 +114,20 @@ class GlossaryStorage implements GlossaryStorageInterface
     }
 
     /**
-     * @param string[] $keyNames
+     * @param string $keyName
      * @param string $localeName
      *
-     * @return string[]
+     * @return string
      */
-    protected function getTranslations(array $keyNames, string $localeName): array
+    protected function generateGlossaryStorageKey(string $keyName, string $localeName): string
     {
-        $cachedTranslations = $this->getCachedTranslations($keyNames, $localeName);
-        if (count($cachedTranslations) === count($keyNames)) {
-            return $cachedTranslations;
-        }
+        $synchronizationDataTransfer = (new SynchronizationDataTransfer())
+            ->setReference($keyName)
+            ->setLocale($localeName);
 
-        $uncachedKeyNames = array_diff($keyNames, array_keys($cachedTranslations));
-        $glossaryStorageKeys = $this->generateGlossaryStorageKeys($uncachedKeyNames, $localeName);
-        $glossaryStorageDataItems = $this->getGlossaryStorageDataItemsByGlossaryStorageKeys($glossaryStorageKeys);
-        $glossaryStorageTransfers = $this->glossaryStorageMapper->mapGlossaryStorageDataItemsToGlossaryStorageTransfers(
-            $glossaryStorageDataItems
-        );
-        $this->cacheTranslations($glossaryStorageTransfers, $keyNames, $localeName);
-
-        return $this->getCachedTranslations($keyNames, $localeName);
-    }
-
-    /**
-     * @param string[] $keyNames
-     * @param string $localeName
-     *
-     * @return string[]
-     */
-    protected function getCachedTranslations(array $keyNames, string $localeName): array
-    {
-        return array_intersect_key(
-            $this->translationsCache[$localeName] ?? [],
-            array_flip($keyNames)
-        );
+        return $this->synchronizationService
+            ->getStorageKeyBuilder(GlossaryStorageConstants::RESOURCE_NAME)
+            ->generateKey($synchronizationDataTransfer);
     }
 
     /**
@@ -214,50 +147,100 @@ class GlossaryStorage implements GlossaryStorageInterface
     }
 
     /**
-     * @param array $glossaryStorageKeys
+     * @param string $keyName
+     * @param string $localeName
      *
-     * @return array
+     * @return string
      */
-    protected function getGlossaryStorageDataItemsByGlossaryStorageKeys(array $glossaryStorageKeys): array
+    protected function getTranslation(string $keyName, string $localeName): string
     {
-        $glossaryStorageDataItems = [];
+        $translation = $this->findCachedTranslation($keyName, $localeName);
+        if ($translation) {
+            return $translation;
+        }
+
+        $translation = $keyName;
+        $glossaryStorageDataItem = $this->storageClient->get($this->generateGlossaryStorageKey($keyName, $localeName));
+        if ($glossaryStorageDataItem) {
+            $translation = $glossaryStorageDataItem[static::KEY_VALUE];
+        }
+        $this->cacheTranslation($localeName, $keyName, $translation);
+
+        return $translation;
+    }
+
+    /**
+     * @param string[] $keyNames
+     * @param string $localeName
+     *
+     * @return string[]
+     */
+    protected function getTranslations(array $keyNames, string $localeName): array
+    {
+        $cachedTranslations = $this->getCachedTranslations($keyNames, $localeName);
+        if (count($cachedTranslations) === count($keyNames)) {
+            return $cachedTranslations;
+        }
+
+        $uncachedKeyNames = array_diff($keyNames, array_keys($cachedTranslations));
+        $translations = $this->getTranslationsFromStorage($uncachedKeyNames, $localeName);
+        $this->cacheTranslations($translations, $localeName);
+
+        return array_merge($cachedTranslations, $translations);
+    }
+
+    /**
+     * @param string[] $keyNames
+     * @param string $localeName
+     *
+     * @return string[]
+     */
+    protected function getTranslationsFromStorage(array $keyNames, string $localeName): array
+    {
+        $glossaryStorageKeys = $this->generateGlossaryStorageKeys($keyNames, $localeName);
+        $translations = [];
         $glossaryStorageEncodedData = $this->storageClient->getMulti($glossaryStorageKeys);
-        foreach ($glossaryStorageEncodedData as $glossaryStorageKey => $glossaryStorageEncodedDataItem) {
-            $glossaryStorageDataItems[$glossaryStorageKey] = null;
+        foreach ($glossaryStorageEncodedData as $glossaryStorageEncodedDataItem) {
             if (!$glossaryStorageEncodedDataItem) {
                 continue;
             }
 
-            $glossaryStorageDataItems[$glossaryStorageKey] = $this->utilEncodingService->decodeJson(
-                $glossaryStorageEncodedDataItem,
-                true
-            );
+            $glossaryStorageDataItem = $this->utilEncodingService->decodeJson($glossaryStorageEncodedDataItem, true);
+            $keyName = $glossaryStorageDataItem[static::KEY_GLOSSARY_KEY][static::KEY_KEY];
+            $translations[$keyName] = $glossaryStorageDataItem[static::KEY_VALUE];
         }
 
-        return $glossaryStorageDataItems;
+        /**
+         * @var string[]
+         */
+        $notFoundTranslations = array_combine($keyNames, $keyNames);
+
+        return $translations + $notFoundTranslations;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\GlossaryStorageTransfer[] $glossaryStorageTransfers
+     * @param string $keyName
+     * @param string $localeName
+     *
+     * @return string|null
+     */
+    protected function findCachedTranslation(string $keyName, string $localeName): ?string
+    {
+        return static::$translationsCache[$keyName][$localeName] ?? null;
+    }
+
+    /**
      * @param string[] $keyNames
      * @param string $localeName
      *
-     * @return void
+     * @return string[]
      */
-    protected function cacheTranslations(array $glossaryStorageTransfers, array $keyNames, string $localeName): void
+    protected function getCachedTranslations(array $keyNames, string $localeName): array
     {
-        foreach ($glossaryStorageTransfers as $glossaryStorageTransfer) {
-            $this->cacheTranslation(
-                $localeName,
-                $glossaryStorageTransfer->getGlossaryKey()->getKey(),
-                $glossaryStorageTransfer->getValue()
-            );
-        }
-
-        $notFoundKeyNames = array_diff($keyNames, array_keys($this->getCachedTranslations($keyNames, $localeName)));
-        foreach ($notFoundKeyNames as $keyName) {
-            $this->cacheTranslation($localeName, $keyName, $keyName);
-        }
+        return array_intersect_key(
+            static::$translationsCache[$localeName] ?? [],
+            array_flip($keyNames)
+        );
     }
 
     /**
@@ -269,6 +252,23 @@ class GlossaryStorage implements GlossaryStorageInterface
      */
     protected function cacheTranslation(string $localeName, string $keyName, string $translation): void
     {
-        $this->translationsCache[$localeName][$keyName] = $translation;
+        static::$translationsCache[$localeName][$keyName] = $translation;
+    }
+
+    /**
+     * @param string[] $translations
+     * @param string $localeName
+     *
+     * @return void
+     */
+    protected function cacheTranslations(array $translations, string $localeName): void
+    {
+        foreach ($translations as $keyName => $translation) {
+            $this->cacheTranslation(
+                $localeName,
+                $keyName,
+                $translation
+            );
+        }
     }
 }
