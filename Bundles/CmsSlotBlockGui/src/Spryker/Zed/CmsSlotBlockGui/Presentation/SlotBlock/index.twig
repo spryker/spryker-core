@@ -62,15 +62,11 @@
 
             {{ slotBlockTable | raw }}
 
-            {{ form_start(cmsSlotBlockCollectionForm, {'action': '/cms-slot-block-gui/slot-block?id-cms-slot-template='~idCmsSlotTemplate~'&id-cms-slot='~idCmsSlot}) }}
+            {{ form_start(cmsSlotBlockCollectionForm, {'action': '/cms-slot-block-gui/slot-block/submit-form?id-cms-slot-template='~idCmsSlotTemplate~'&id-cms-slot='~idCmsSlot}) }}
 
-            {% for slotBlockItemForm in cmsSlotBlockCollectionForm.cmsSlotBlocks %}
-                {{ form_widget(slotBlockItemForm.idSlotTemplate) }}
-                {{ form_widget(slotBlockItemForm.idSlot) }}
-                {{ form_widget(slotBlockItemForm.idCmsBlock) }}
-                {{ form_widget(slotBlockItemForm.position) }}
-                {{ form_widget(slotBlockItemForm.conditions) }}
-            {% endfor %}
+            <div id="js-cms-slot-block-form-inner-wrapper">
+                {% include '@CmsSlotBlockGui/SlotBlock/submit-form.twig' %}
+            </div>
 
             <input type="submit" class="btn btn-primary safe-submit js-slot-block-save-button" value="{{ 'Save' | trans }}">
 

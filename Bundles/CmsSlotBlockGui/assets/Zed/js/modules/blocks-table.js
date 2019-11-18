@@ -27,11 +27,13 @@ var BlocksTable = function (options) {
     this.changeOrderButtonSelector = '.btn[data-direction]';
     this.removeButtonSelector = '.js-slot-block-remove-button';
     this.resetButtonSelector = '.js-slot-block-reset-button';
+    this.selectedRowIndex = 0;
 
     $.extend(this, options);
 
     this.init = function () {
         _self.$blocksTable = $(_self.blocksTableSelector);
+        _self.initTableState = [];
         _self.$cmsSlotBlocks = $(_self.cmsSlotBlocksSelector);
         _self.$blocksChoiceDropDown = $(_self.blocksChoiceFormSelector).find('select');
         _self.isFirstTableRender = true;
@@ -41,6 +43,7 @@ var BlocksTable = function (options) {
         $(document).on('savedBlocksForm', function () {
             _self.getInitTableState(_self.$blocksTable.data('ajax'));
             _self.toggleResetButton(false);
+            _self.tableRowSelect();
         });
         _self.isFirstInit = false;
         _self.setInitOptionsState();
@@ -64,6 +67,7 @@ var BlocksTable = function (options) {
             info: false,
             drawCallback: function() {
                 _self.initDataTableListeners(idCmsSlotTemplate, idCmsSlot);
+                _self.tableRowSelect();
             },
         });
     };
@@ -79,6 +83,7 @@ var BlocksTable = function (options) {
         }
         _self.isFirstTableRender = false;
         _self.initActionButtonsListeners();
+        $(_self.$blocksTable).find('tbody').on('click', 'tr', _self.tableRowSelect);
     };
 
     this.initActionButtonsListeners = function () {
@@ -90,6 +95,8 @@ var BlocksTable = function (options) {
     this.updateTable = function (tableApi, tableData) {
         tableApi.rows().remove();
         tableApi.rows.add(tableData).draw();
+        tableApi.rows( { selected: true } ).deselect();
+        tableApi.row(_self.selectedRowIndex).select();
     };
 
     this.getInitTableState = function (url) {
@@ -172,17 +179,20 @@ var BlocksTable = function (options) {
 
     this.changeOrderRow = function (rowIndex, direction) {
         var table = _self.getTable();
+        var newRowIndex = rowIndex;
 
         switch (direction) {
             case 'up':
-                var tempRow = table.data[rowIndex - 1];
-                table.data[rowIndex - 1] = table.data[rowIndex];
+                newRowIndex = rowIndex - 1;
+                var tempRow = table.data[newRowIndex];
+                table.data[newRowIndex] = table.data[rowIndex];
                 table.data[rowIndex] = tempRow;
                 break;
 
             case 'down':
-                var tempRow = table.data[rowIndex + 1];
-                table.data[rowIndex + 1] = table.data[rowIndex];
+                newRowIndex = rowIndex + 1;
+                var tempRow = table.data[newRowIndex];
+                table.data[newRowIndex] = table.data[rowIndex];
                 table.data[rowIndex] = tempRow;
                 break;
         }
@@ -219,13 +229,14 @@ var BlocksTable = function (options) {
         _self.$blocksChoiceDropDown.select2();
     };
 
+    this.resetHandlerCallback = function () {};
+
     this.resetButtonsHandler = function () {
         if (!_self.isUnsaved()) {
             return;
         }
-        var table = _self.getTable();
-        _self.updateTable(table.api, _self.initTableState);
-        _self.resetChoiceDropdown();
+
+        _self.resetHandlerCallback();
     };
 
     this.toggleResetButton = function (state = _self.isUnsaved()) {
@@ -241,6 +252,10 @@ var BlocksTable = function (options) {
     };
 
     this.isUnsaved = function () {
+        if (_self.slotBlocksForm.isStateChanged) {
+            return _self.slotBlocksForm.isStateChanged;
+        }
+
         var initTableState = _self.initTableState;
         var currentTableState = _self.getTable().data;
 
@@ -255,6 +270,26 @@ var BlocksTable = function (options) {
 
     this.overlayToggler = function (state) {
         $(_self.cmsSlotBlocksOverlaySelector).toggleClass(_self.cmsSlotBlocksOverlayTogglerClass, state);
+    };
+
+    this.tableRowSelect = function (element) {
+        var cellIndex = _self.selectedRowIndex;
+        if ($(_self.$blocksTable).DataTable().rows().count() < 1) {
+            return;
+        }
+
+        if (element !== undefined && $(element.target).is('td')) {
+            cellIndex = $(this).index();
+            _self.selectedRowIndex = cellIndex;
+        }
+
+        var row = _self.$blocksTable.DataTable().row(cellIndex);
+        _self.$blocksTable.DataTable().rows().deselect();
+        row.select();
+        var idCmsBlock = row.data()[0];
+
+        $('.js-cms-slot-block-form-item').hide();
+        $('#js-cms-slot-block-form-item-' + idCmsBlock).show();
     };
 };
 

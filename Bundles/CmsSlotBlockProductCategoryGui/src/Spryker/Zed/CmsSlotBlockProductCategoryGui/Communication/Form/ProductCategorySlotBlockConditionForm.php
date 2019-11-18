@@ -111,6 +111,9 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
         $builder->add(static::FIELD_ALL, ChoiceType::class, [
             'required' => false,
             'choices' => $options[static::OPTION_ALL_ARRAY],
+            'choice_value' => function ($choice) {
+                return $choice ?? true;
+            },
             'expanded' => true,
             'multiple' => false,
             'placeholder' => false,

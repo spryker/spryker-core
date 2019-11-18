@@ -31,21 +31,7 @@ class SlotBlockController extends AbstractController
         $idCmsSlot = $this->castId($request->query->get(static::PARAM_ID_CMS_SLOT));
 
         $cmsBlockChoiceForm = $this->getFactory()->createCmsBlockChoiceForm($idCmsSlotTemplate, $idCmsSlot);
-        $cmsSlotBlockCollectionForm = $this->getFactory()
-            ->createCmsSlotBlockCollectionForm($idCmsSlotTemplate, $idCmsSlot)
-            ->handleRequest($request);
-
-        if ($cmsSlotBlockCollectionForm->isSubmitted() && $cmsSlotBlockCollectionForm->isValid()) {
-            $cmsSlotBlockFacade = $this->getFactory()->getCmsSlotBlockFacade();
-
-            $cmsSlotBlockCriteriaTransfer = (new CmsSlotBlockCriteriaTransfer())
-                ->setIdCmsSlotTemplate($idCmsSlotTemplate)
-                ->setIdCmsSlot($idCmsSlot);
-            $cmsSlotBlockCollectionTransfer = $cmsSlotBlockCollectionForm->getData();
-
-            $cmsSlotBlockFacade->deleteCmsSlotBlockRelationsByCriteria($cmsSlotBlockCriteriaTransfer);
-            $cmsSlotBlockFacade->createCmsSlotBlockRelations($cmsSlotBlockCollectionTransfer);
-        }
+        $cmsSlotBlockCollectionForm = $this->getSlotBlockCollectionForm($request, $idCmsSlotTemplate, $idCmsSlot);
 
         return $this->viewResponse([
             'slotName' => $this->getFactory()->getCmsSlotFacade()->findCmsSlotById($idCmsSlot)->getName(),
@@ -70,5 +56,51 @@ class SlotBlockController extends AbstractController
         return $this->jsonResponse(
             $this->getFactory()->createSlotBlockTable($idCmsSlotTemplate, $idCmsSlot)->fetchData()
         );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    public function submitFormAction(Request $request)
+    {
+        $idCmsSlotTemplate = $this->castId($request->query->get(static::PARAM_ID_CMS_SLOT_TEMPLATE));
+        $idCmsSlot = $this->castId($request->query->get(static::PARAM_ID_CMS_SLOT));
+        $cmsSlotBlockCollectionForm = $this->getSlotBlockCollectionForm($request, $idCmsSlotTemplate, $idCmsSlot);
+
+        return $this->viewResponse([
+            'cmsSlotBlockCollectionForm' => $cmsSlotBlockCollectionForm->createView(),
+            'idCmsSlotTemplate' => $idCmsSlotTemplate,
+            'idCmsSlot' => $idCmsSlot,
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $idCmsSlotTemplate
+     * @param int $idCmsSlot
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    protected function getSlotBlockCollectionForm(Request $request, int $idCmsSlotTemplate, int $idCmsSlot)
+    {
+        $cmsSlotBlockCollectionForm = $this->getFactory()
+            ->createCmsSlotBlockCollectionForm($idCmsSlotTemplate, $idCmsSlot)
+            ->handleRequest($request);
+
+        if ($cmsSlotBlockCollectionForm->isSubmitted() && $cmsSlotBlockCollectionForm->isValid()) {
+            $cmsSlotBlockFacade = $this->getFactory()->getCmsSlotBlockFacade();
+
+            $cmsSlotBlockCriteriaTransfer = (new CmsSlotBlockCriteriaTransfer())
+                ->setIdCmsSlotTemplate($idCmsSlotTemplate)
+                ->setIdCmsSlot($idCmsSlot);
+            $cmsSlotBlockCollectionTransfer = $cmsSlotBlockCollectionForm->getData();
+
+            $cmsSlotBlockFacade->deleteCmsSlotBlockRelationsByCriteria($cmsSlotBlockCriteriaTransfer);
+            $cmsSlotBlockFacade->createCmsSlotBlockRelations($cmsSlotBlockCollectionTransfer);
+        }
+
+        return $cmsSlotBlockCollectionForm;
     }
 }
