@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\ConfiguredBundleRequestTransfer;
 
 class ConfiguredBundleGroupKeyGenerator implements ConfiguredBundleGroupKeyGeneratorInterface
 {
-    protected const SEPARATOR = '-';
-
     /**
      * @param \Generated\Shared\Transfer\ConfiguredBundleRequestTransfer $configuredBundleRequestTransfer
      *
@@ -32,6 +30,6 @@ class ConfiguredBundleGroupKeyGenerator implements ConfiguredBundleGroupKeyGener
      */
     protected function generateConfiguredBundleGroupKeyByUuid(string $uuid): string
     {
-        return $uuid . static::SEPARATOR . time();
+        return sprintf('%s-%s', $uuid, uniqid());
     }
 }
