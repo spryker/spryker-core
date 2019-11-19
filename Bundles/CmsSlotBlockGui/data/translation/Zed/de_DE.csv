@@ -1,5 +1,6 @@
 Actions,Aktionen
 Active,Aktiv
+Cancel,Stornieren
 Delete,Löschen
 Go Back,Geh zurück
 ID,ID
@@ -7,7 +8,6 @@ Inactive,Inaktiv
 "Move Down",Runter
 "Move Up",Hoch
 Name,Name
-Reset,Zurücksetzen
 Save,Speichern
 SprykerCmsSlotBlock,Spryker
 Status,Status

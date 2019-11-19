@@ -46,7 +46,7 @@
             data-alert-go-back-button="{{ 'Go Back' | trans }}"
         >
             {{ form_start(cmsBlockChoiceForm) }}
-                <div class="row">
+            <div class="row">
                     <div class="cms-slot-blocks__col col-sm-5 col-md-4">
                         {{ form_widget(cmsBlockChoiceForm.cmsBlocks) }}
                     </div>
@@ -54,11 +54,9 @@
                         {{ form_widget(cmsBlockChoiceForm.add) }}
                     </div>
                     <div class="cms-slot-blocks__col col-sm-5 col-md-7">
-                        <input type="reset" class="btn btn-xs btn-warning btn-outline js-slot-block-reset-button hidden" value="{{ 'Reset' | trans }}">
                     </div>
                 </div>
             {{ form_end(cmsBlockChoiceForm) }}
-
 
             {{ slotBlockTable | raw }}
 
@@ -68,7 +66,14 @@
                 {% include '@CmsSlotBlockGui/SlotBlock/submit-form.twig' %}
             </div>
 
-            <input type="submit" class="btn btn-primary safe-submit js-slot-block-save-button" value="{{ 'Save' | trans }}">
+            <div class="row">
+                <div class="cms-slot-blocks__col col-sm-2 col-md-1">
+                    <input type="submit" class="btn btn-primary safe-submit js-slot-block-save-button" value="{{ 'Save' | trans }}">
+                </div>
+                <div class="cms-slot-blocks__col col-sm-10 col-md-11">
+                    <input type="reset" class="btn btn-danger btn-outline js-slot-block-reset-button hidden" value="{{ 'Cancel' | trans }}">
+                </div>
+            </div>
 
             {{ form_end(cmsSlotBlockCollectionForm) }}
             <div class="cms-slot-blocks__overlay js-cms-slot-blocks__overlay"></div>

@@ -27,6 +27,7 @@ var BlocksTable = function (options) {
     this.changeOrderButtonSelector = '.btn[data-direction]';
     this.removeButtonSelector = '.js-slot-block-remove-button';
     this.resetButtonSelector = '.js-slot-block-reset-button';
+    this.rowUnsavedOverlaySelector = '.js-row-unsaved-overlay .ibox-content';
     this.selectedRowIndex = 0;
 
     $.extend(this, options);
@@ -42,6 +43,7 @@ var BlocksTable = function (options) {
         }
         $(document).on('savedBlocksForm', function () {
             _self.getInitTableState(_self.$blocksTable.data('ajax'));
+            _self.toggleRowOverlay(false);
             _self.toggleResetButton(false);
             _self.tableRowSelect();
         });
@@ -78,6 +80,7 @@ var BlocksTable = function (options) {
         });
         _self.slotBlocksForm.rebuildForm(idCmsSlotTemplate, idCmsSlot, _self.$blocksTable.DataTable().rows().data(), _self.isUnsaved());
         if (!_self.isFirstTableRender) {
+            _self.toggleRowOverlay();
             _self.toggleResetButton();
             return;
         }
@@ -239,6 +242,24 @@ var BlocksTable = function (options) {
         _self.resetHandlerCallback();
     };
 
+    this.toggleRowOverlay = function (state = _self.isUnsaved()) {
+        var $rowUnsavedOverlay = $(_self.rowUnsavedOverlaySelector);
+        state = state === undefined ? true : !!state;
+        $rowUnsavedOverlay.each(function(i, element) {
+            var $element = $(element);
+            if (state && $element.find('.js-row-overlay').length === 0) {
+                var $overlay = $("<div/>").addClass('js-row-overlay');
+                $element.append($overlay).addClass('js-row-overlayed');
+                $overlay.on('click', function(){
+                    _self.showAlert();
+                });
+                $overlay.stop().hide().fadeIn(200);
+            } else if(!state) {
+                $element.removeClass('js-row-overlayed').find('.js-row-overlay').remove();
+            }
+        });
+    };
+
     this.toggleResetButton = function (state = _self.isUnsaved()) {
         $(_self.resetButtonSelector).toggleClass('hidden', !state);
     };
@@ -291,6 +312,18 @@ var BlocksTable = function (options) {
         $('.js-cms-slot-block-form-item').hide();
         $('#js-cms-slot-block-form-item-' + idCmsBlock).show();
     };
+
+    this.showAlert = function () {
+        var $cmsSlotBlock = _self.$cmsSlotBlocks;
+        window.sweetAlert({
+            title: $cmsSlotBlock.data('alert-title'),
+            html: false,
+            showCloseButton: true,
+            customClass: 'cms-slot-blocks-alert',
+            confirmButtonColor: '#1ab394',
+            confirmButtonText: $cmsSlotBlock.data('alert-go-back-button'),
+        });
+    }
 };
 
 module.exports = BlocksTable;

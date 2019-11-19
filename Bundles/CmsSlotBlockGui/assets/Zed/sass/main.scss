@@ -12,7 +12,6 @@
         }
 
         &:last-child {
-            padding-top: 5px;
             text-align: right;
         }
     }
@@ -82,4 +81,22 @@
     h2 {
         font-size: 24px;
     }
+}
+
+.js-row-unsaved-overlay {
+    .ibox-content {
+        position: relative;
+    }
+}
+
+.js-row-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: #fff;
+    opacity: 0.5;
+    border-radius: inherit;
 }
