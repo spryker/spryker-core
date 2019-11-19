@@ -52,7 +52,7 @@ class RequestResourceExtractor implements RequestResourceExtractorInterface
         if (!$resource) {
             $resource = $this->restResourceBuilder->createRestResource(
                 $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_TYPE, 'errors'),
-                $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_ID)
+                $this->getResourceId($request, $this->readRequestData($request, $metadata))
             );
         }
 
@@ -91,14 +91,14 @@ class RequestResourceExtractor implements RequestResourceExtractorInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param array $data
+     * @param array|null $requestData
      *
      * @return string|null
      */
-    protected function getResourceId(Request $request, array $data): ?string
+    protected function getResourceId(Request $request, ?array $requestData): ?string
     {
-        if ($request->getMethod() === Request::METHOD_DELETE) {
-            return $data[RestResourceInterface::RESOURCE_ID];
+        if ($request->getMethod() === Request::METHOD_DELETE && $requestData) {
+            return $requestData[RestResourceInterface::RESOURCE_DATA][RestResourceInterface::RESOURCE_ID];
         }
 
         return $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_ID);
