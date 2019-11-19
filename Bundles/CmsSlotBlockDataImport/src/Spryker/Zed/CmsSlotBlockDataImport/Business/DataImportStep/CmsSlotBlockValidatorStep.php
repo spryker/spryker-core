@@ -37,7 +37,7 @@ class CmsSlotBlockValidatorStep implements DataImportStepInterface
      */
     protected function validateCmsSlotBlockPosition(DataSetInterface $dataSet): void
     {
-        $position = $dataSet[CmsSlotBlockDataSetInterface::CMS_SLOT_BLOCK_POSITION];
+        $position = $dataSet[CmsSlotBlockDataSetInterface::COL_POSITION];
 
         if (!filter_var($position, FILTER_VALIDATE_INT)) {
             throw new InvalidDataException(
@@ -57,7 +57,7 @@ class CmsSlotBlockValidatorStep implements DataImportStepInterface
     {
         $contentProviderType = SpyCmsSlotQuery::create()
             ->select([SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE])
-            ->findOneByIdCmsSlot($dataSet[CmsSlotBlockDataSetInterface::CMS_SLOT_ID]);
+            ->findOneByIdCmsSlot($dataSet[CmsSlotBlockDataSetInterface::COL_SLOT_ID]);
 
         if ($contentProviderType !== CmsSlotBlockConfig::CMS_SLOT_CONTENT_PROVIDER_TYPE) {
             throw new InvalidDataException(

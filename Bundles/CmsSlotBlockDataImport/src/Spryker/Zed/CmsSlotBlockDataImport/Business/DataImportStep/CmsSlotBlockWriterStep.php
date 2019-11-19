@@ -37,13 +37,13 @@ class CmsSlotBlockWriterStep extends PublishAwareStep implements DataImportStepI
     public function execute(DataSetInterface $dataSet): void
     {
         $cmsSlotBlockEntity = SpyCmsSlotBlockQuery::create()
-            ->filterByFkCmsSlot($dataSet[CmsSlotBlockDataSetInterface::CMS_SLOT_ID])
-            ->filterByFkCmsBlock($dataSet[CmsSlotBlockDataSetInterface::CMS_BLOCK_ID])
-            ->filterByFkCmsSlotTemplate($dataSet[CmsSlotBlockDataSetInterface::CMS_SLOT_TEMPLATE_ID])
+            ->filterByFkCmsSlot($dataSet[CmsSlotBlockDataSetInterface::COL_SLOT_ID])
+            ->filterByFkCmsBlock($dataSet[CmsSlotBlockDataSetInterface::COL_BLOCK_ID])
+            ->filterByFkCmsSlotTemplate($dataSet[CmsSlotBlockDataSetInterface::COL_SLOT_TEMPLATE_ID])
             ->findOneOrCreate();
 
-        $cmsSlotBlockEntity->setPosition($dataSet[CmsSlotBlockDataSetInterface::CMS_SLOT_BLOCK_POSITION]);
-        $conditions = $this->utilEncodingService->encodeJson($dataSet[CmsSlotBlockDataSetInterface::CMS_SLOT_BLOCK_ALL_CONDITIONS]);
+        $cmsSlotBlockEntity->setPosition($dataSet[CmsSlotBlockDataSetInterface::COL_POSITION]);
+        $conditions = $this->utilEncodingService->encodeJson($dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_ARRAY]);
         $cmsSlotBlockEntity->setConditions($conditions);
 
         $cmsSlotBlockEntity->save();

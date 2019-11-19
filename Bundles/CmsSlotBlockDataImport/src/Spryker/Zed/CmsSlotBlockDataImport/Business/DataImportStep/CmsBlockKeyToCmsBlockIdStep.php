@@ -28,8 +28,8 @@ class CmsBlockKeyToCmsBlockIdStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $dataSet[CmsSlotBlockDataSetInterface::CMS_BLOCK_ID] = $this->getIdCmsBlockByKey(
-            $dataSet[CmsSlotBlockDataSetInterface::CMS_BLOCK_KEY]
+        $dataSet[CmsSlotBlockDataSetInterface::COL_BLOCK_ID] = $this->getIdCmsBlockByKey(
+            $dataSet[CmsSlotBlockDataSetInterface::COL_BLOCK_KEY]
         );
     }
 
