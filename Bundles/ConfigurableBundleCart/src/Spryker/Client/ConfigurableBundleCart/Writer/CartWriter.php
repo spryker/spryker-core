@@ -16,6 +16,7 @@ use Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCa
 use Spryker\Client\ConfigurableBundleCart\Mapper\ConfiguredBundleMapperInterface;
 use Spryker\Client\ConfigurableBundleCart\Reader\QuoteItemReaderInterface;
 use Spryker\Client\ConfigurableBundleCart\Updater\QuoteItemUpdaterInterface;
+use Spryker\Client\ConfigurableBundleCart\Validator\ConfiguredBundleValidatorInterface;
 
 class CartWriter implements CartWriterInterface
 {
@@ -40,6 +41,11 @@ class CartWriter implements CartWriterInterface
     protected $quoteItemUpdater;
 
     /**
+     * @var \Spryker\Client\ConfigurableBundleCart\Validator\ConfiguredBundleValidatorInterface
+     */
+    protected $configuredBundleValidator;
+
+    /**
      * @var \Spryker\Client\ConfigurableBundleCart\Mapper\ConfiguredBundleMapperInterface
      */
     protected $configuredBundleMapper;
@@ -48,18 +54,21 @@ class CartWriter implements CartWriterInterface
      * @param \Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface $cartClient
      * @param \Spryker\Client\ConfigurableBundleCart\Reader\QuoteItemReaderInterface $quoteItemReader
      * @param \Spryker\Client\ConfigurableBundleCart\Updater\QuoteItemUpdaterInterface $quoteItemUpdater
+     * @param \Spryker\Client\ConfigurableBundleCart\Validator\ConfiguredBundleValidatorInterface $configuredBundleValidator
      * @param \Spryker\Client\ConfigurableBundleCart\Mapper\ConfiguredBundleMapperInterface $configuredBundleMapper
      */
     public function __construct(
         ConfigurableBundleCartToCartClientInterface $cartClient,
         QuoteItemReaderInterface $quoteItemReader,
         QuoteItemUpdaterInterface $quoteItemUpdater,
+        ConfiguredBundleValidatorInterface $configuredBundleValidator,
         ConfiguredBundleMapperInterface $configuredBundleMapper
     ) {
         $this->cartClient = $cartClient;
         $this->quoteItemReader = $quoteItemReader;
         $this->quoteItemUpdater = $quoteItemUpdater;
         $this->configuredBundleMapper = $configuredBundleMapper;
+        $this->configuredBundleValidator = $configuredBundleValidator;
     }
 
     /**
@@ -69,6 +78,10 @@ class CartWriter implements CartWriterInterface
      */
     public function addConfiguredBundle(CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer): QuoteResponseTransfer
     {
+        if (!$this->configuredBundleValidator->validateCreateConfiguredBundleRequestTransfer($createConfiguredBundleRequestTransfer)) {
+            return $this->createErrorResponse(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_ADDED);
+        }
+
         $cartChangeTransfer = $this->configuredBundleMapper->mapCreateConfiguredBundleRequestTransferToCartChangeTransfer(
             $createConfiguredBundleRequestTransfer,
             new CartChangeTransfer()
