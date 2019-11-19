@@ -50,7 +50,7 @@ class SchedulerFacadeTest extends Unit
         $this->assertSame(1, $scheduleTransfer->getJobs()->count());
 
         foreach ($scheduleTransfer->getJobs() as $jobTransfer) {
-            $this->assertContains(APPLICATION_STORE, $jobTransfer->getName());
+            $this->assertStringContainsString(APPLICATION_STORE, $jobTransfer->getName());
         }
     }
 

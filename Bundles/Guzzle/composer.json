@@ -5,7 +5,7 @@
   "license": "proprietary",
   "require": {
     "guzzlehttp/guzzle": "~6.3.0",
-    "php": ">=7.1"
+    "php": ">=7.2"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,

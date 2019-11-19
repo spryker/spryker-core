@@ -45,7 +45,7 @@ class ProductBundleCartItemGroupKeyExpanderTest extends Unit
 
         $updateBundledItemTransfer = $updatedCartChangeTransfer->getItems()[0];
 
-        $this->assertContains($itemTransfer->getRelatedBundleItemIdentifier(), $updateBundledItemTransfer->getGroupKey());
+        $this->assertStringContainsString($itemTransfer->getRelatedBundleItemIdentifier(), $updateBundledItemTransfer->getGroupKey());
     }
 
     /**

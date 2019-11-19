@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Generator;
 
 use Codeception\Test\Unit;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generated\Shared\Transfer\AnnotationTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Exception\InvalidTransferClassException;
@@ -29,6 +30,8 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAlternat
  */
 class RestApiDocumentationSchemaGeneratorTest extends Unit
 {
+    use ArraySubsetAsserts;
+
     protected const SCHEMA_REF_REST_ERROR_MESSAGE = '#/components/schemas/RestErrorMessage';
     protected const SCHEMA_NAME_REST_ERROR_MESSAGE = 'RestErrorMessage';
     protected const SCHEMA_NAME_REST_LINKS = 'RestLinks';

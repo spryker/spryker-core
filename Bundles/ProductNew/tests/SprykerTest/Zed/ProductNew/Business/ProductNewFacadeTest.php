@@ -238,6 +238,7 @@ class ProductNewFacadeTest extends Unit
      */
     protected function getFacade()
     {
+        /** @var \Spryker\Zed\ProductNew\ProductNewConfig|\PHPUnit\Framework\MockObject\MockObject $configMock */
         $configMock = $this->getMockBuilder(ProductNewConfig::class)->getMock();
         $configMock->method('getLabelNewName')->willReturn($this->getLabelNewName());
 

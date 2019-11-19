@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductLabelDiscountConnector\Business;
 
 use Codeception\Test\Unit;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 
 /**
@@ -23,6 +24,8 @@ use Generated\Shared\Transfer\ProductLabelTransfer;
  */
 class ProductLabelDiscountConnectorFacadeTest extends Unit
 {
+    use ArraySubsetAsserts;
+
     /**
      * @var \SprykerTest\Zed\ProductLabelDiscountConnector\ProductLabelDiscountConnectorBusinessTester
      */
@@ -49,10 +52,7 @@ class ProductLabelDiscountConnectorFacadeTest extends Unit
             'label 1' => 'label 1',
             'label 2' => 'label 2',
         ];
-        $this->assertArrayHasKey('label 1', $actualLabels);
-        $this->assertArrayHasKey('label 2', $actualLabels);
-        $this->assertSame('label 1', $actualLabels['label 1']);
-        $this->assertSame('label 2', $actualLabels['label 2']);
+        $this->assertArraySubset($expectedLabels, $actualLabels, 'Missing expected list of labels.');
     }
 
     /**
