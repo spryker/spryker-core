@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\ConfigurableBundleStorage\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
-
 class ConfigurableBundleStorageToProductStorageClientBridge implements ConfigurableBundleStorageToProductStorageClientInterface
 {
     /**
@@ -27,21 +25,12 @@ class ConfigurableBundleStorageToProductStorageClientBridge implements Configura
     /**
      * @param string $mappingType
      * @param string $identifier
+     * @param string $localeName
      *
      * @return array|null
      */
-    public function findProductConcreteStorageDataByMappingForCurrentLocale(string $mappingType, string $identifier): ?array
+    public function findProductConcreteStorageDataByMapping(string $mappingType, string $identifier, string $localeName): ?array
     {
         return $this->productStorageClient->findProductConcreteStorageDataByMappingForCurrentLocale($mappingType, $identifier);
-    }
-
-    /**
-     * @param array $productStorageData
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function mapProductStorageDataToProductConcreteTransfer(array $productStorageData): ProductConcreteTransfer
-    {
-        return $this->productStorageClient->mapProductStorageDataToProductConcreteTransfer($productStorageData);
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ConfigurableBundleStorage;
 
+use Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToProductImageStorageClientBridge;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToProductStorageClientBridge;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToStorageClientBridge;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Service\ConfigurableBundleStorageToSynchronizationServiceBridge;
@@ -17,6 +18,7 @@ class ConfigurableBundleStorageDependencyProvider extends AbstractDependencyProv
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    public const CLIENT_PRODUCT_IMAGE_STORAGE = 'CLIENT_PRODUCT_IMAGE_STORAGE';
 
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
@@ -30,6 +32,7 @@ class ConfigurableBundleStorageDependencyProvider extends AbstractDependencyProv
         $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addStorageClient($container);
         $container = $this->addProductStorageClient($container);
+        $container = $this->addProductImageStorageClient($container);
         $container = $this->addSynchronizationService($container);
 
         return $container;
@@ -73,6 +76,22 @@ class ConfigurableBundleStorageDependencyProvider extends AbstractDependencyProv
         $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ConfigurableBundleStorageToProductStorageClientBridge(
                 $container->getLocator()->productStorage()->client()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductImageStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_PRODUCT_IMAGE_STORAGE, function (Container $container) {
+            return new ConfigurableBundleStorageToProductImageStorageClientBridge(
+                $container->getLocator()->productImageStorage()->client()
             );
         });
 

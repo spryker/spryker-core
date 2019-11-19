@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ConfigurableBundleStorage;
 
+use Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToProductImageStorageClientInterface;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToProductStorageClientInterface;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToStorageClientInterface;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Service\ConfigurableBundleStorageToSynchronizationServiceInterface;
@@ -34,7 +35,10 @@ class ConfigurableBundleStorageFactory extends AbstractFactory
      */
     public function createProductConcreteStorageReader(): ProductConcreteStorageReaderInterface
     {
-        return new ProductConcreteStorageReader($this->getProductStorageClient());
+        return new ProductConcreteStorageReader(
+            $this->getProductStorageClient(),
+            $this->getProductImageStorageClient()
+        );
     }
 
     /**
@@ -51,6 +55,14 @@ class ConfigurableBundleStorageFactory extends AbstractFactory
     public function getProductStorageClient(): ConfigurableBundleStorageToProductStorageClientInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleStorageDependencyProvider::CLIENT_PRODUCT_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToProductImageStorageClientInterface
+     */
+    public function getProductImageStorageClient(): ConfigurableBundleStorageToProductImageStorageClientInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleStorageDependencyProvider::CLIENT_PRODUCT_IMAGE_STORAGE);
     }
 
     /**
