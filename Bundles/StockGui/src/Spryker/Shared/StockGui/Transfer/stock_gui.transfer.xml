@@ -5,6 +5,10 @@
 
     <transfer name="Stock">
         <property name="idStock" type="int"/>
+        <property name="storeRelation" type="StoreRelation"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
     </transfer>
 
     <transfer name="StockResponse">

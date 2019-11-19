@@ -28,6 +28,8 @@ class StockDataHelper extends Module
     use DataCleanupHelperTrait;
 
     /**
+     * @deprecated Use StockDataHelper::haveProductInStockForStore() instead.
+     *
      * @param array $seedData
      *
      * @return void
@@ -36,15 +38,13 @@ class StockDataHelper extends Module
     {
         $stockFacade = $this->getStockFacade();
 
-        $stockSeedData = [];
-        if (isset($seedData[StockProductTransfer::FK_STOCK])) {
-            $stockSeedData[StockTransfer::ID_STOCK] = $seedData[StockProductTransfer::FK_STOCK];
+        if (!isset($seedData[StockProductTransfer::FK_STOCK])) {
+            $stockTransfer = $this->haveStock();
+            $seedData[StockProductTransfer::FK_STOCK] = $stockTransfer->getIdStock();
+            $seedData[StockProductTransfer::STOCK_TYPE] = $stockTransfer->getName();
         }
 
-        $stockTransfer = $this->haveStock($stockSeedData);
         $stockProductTransfer = (new StockProductBuilder($seedData))->build();
-        $stockProductTransfer->setStockType($stockTransfer->getName());
-
         $idStockProduct = $stockFacade->createStockProduct($stockProductTransfer);
 
         $this->debug(sprintf(
@@ -53,10 +53,27 @@ class StockDataHelper extends Module
             $stockProductTransfer->getSku()
         ));
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($idStockProduct, $stockTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($idStockProduct) {
             $this->cleanUpStockProduct($idStockProduct);
-            $this->cleanUpStock($stockTransfer->getIdStock());
         });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param array $seedData
+     *
+     * @return void
+     */
+    public function haveProductInStockForStore(StoreTransfer $storeTransfer, array $seedData = []): void
+    {
+        $stockTransfer = $this->haveStock([
+            StockTransfer::STORE_RELATION => (new StoreRelationTransfer())->setIdStores([$storeTransfer->getIdStore()]),
+        ]);
+
+        $seedData[StockProductTransfer::FK_STOCK] = $stockTransfer->getIdStock();
+        $seedData[StockProductTransfer::STOCK_TYPE] = $stockTransfer->getName();
+
+        $this->createStockProduct($seedData);
     }
 
     /**
@@ -112,6 +129,29 @@ class StockDataHelper extends Module
             ->setIdEntity($stockTransfer->getIdStock())
             ->setIdStores([$storeTransfer->getIdStore()])
             ->setStores(new ArrayObject([$storeTransfer]));
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return void
+     */
+    protected function createStockProduct(array $seedData): void
+    {
+        $stockFacade = $this->getStockFacade();
+
+        $stockProductTransfer = (new StockProductBuilder($seedData))->build();
+        $idStockProduct = $stockFacade->createStockProduct($stockProductTransfer);
+
+        $this->debug(sprintf(
+            'Inserted StockProduct: %d of Concrete Product SKU: %s',
+            $idStockProduct,
+            $stockProductTransfer->getSku()
+        ));
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($idStockProduct) {
+            $this->cleanUpStockProduct($idStockProduct);
+        });
     }
 
     /**

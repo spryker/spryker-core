@@ -18,8 +18,6 @@ use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
 
 class ProductAvailabilityCalculator implements ProductAvailabilityCalculatorInterface
 {
-    protected const PRODUCT_SKU_NOT_FOUND_EXCEPTION_MESSAGE_FORMAT = 'The product was not found with this SKU: %s';
-
     /**
      * @var \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface
      */
