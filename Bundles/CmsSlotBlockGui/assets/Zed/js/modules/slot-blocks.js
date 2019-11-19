@@ -78,6 +78,7 @@ var SlotBlocks = function (options) {
         _self.isFirstInit = false;
         _self.$slotTable.on('preDraw', function () {
             if (_self.blocksTable.isUnsaved()) {
+                console.log(_self.$slotTable);
                 _self.showAlert();
                 return false;
             }
@@ -90,22 +91,13 @@ var SlotBlocks = function (options) {
 
     this.showAlert = function () {
         var $cmsSlotBlock = _self.blocksTable.$cmsSlotBlocks;
-        var $confirmButton = _self.slotBlocksForm.saveButton;
         window.sweetAlert({
             title: $cmsSlotBlock.data('alert-title'),
             html: false,
-            allowEscapeKey: false,
-            showCancelButton: true,
+            showCloseButton: true,
             customClass: 'cms-slot-blocks-alert',
             confirmButtonColor: '#1ab394',
-            confirmButtonText: $confirmButton.val(),
-            cancelButtonText: $cmsSlotBlock.data('alert-cancel-button'),
-        }, function (isConfirm) {
-            if (isConfirm) {
-                $confirmButton.click();
-                return;
-            }
-            _self.blocksTable.resetButtonsHandler();
+            confirmButtonText: $cmsSlotBlock.data('alert-go-back-button'),
         });
     }
 };
