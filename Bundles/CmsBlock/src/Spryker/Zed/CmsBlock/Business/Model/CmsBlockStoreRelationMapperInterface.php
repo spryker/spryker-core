@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlock\Business\Model;
 
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
 
 interface CmsBlockStoreRelationMapperInterface
@@ -16,5 +17,5 @@ interface CmsBlockStoreRelationMapperInterface
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function mapStoreRelationToTransfer(SpyCmsBlock $cmsBlockEntity);
+    public function mapStoreRelationToTransfer(SpyCmsBlock $cmsBlockEntity): StoreRelationTransfer;
 }

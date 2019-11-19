@@ -33,14 +33,14 @@ class MetaDataProvider implements MetaDataProviderInterface
     /**
      * @var string[]|null Numerical array of available fields.
      */
-    protected $availableFieldsBuffer = null;
+    protected $availableFieldsBuffer;
 
     /**
      * @see MetaDataProvider::availableFieldsBuffer
      *
      * @var array|null Each key is an available field. Contains the flipped $availableFieldsBuffer variable for performance reason.
      */
-    protected $availableFieldsMapBuffer = null;
+    protected $availableFieldsMapBuffer;
 
     /**
      * @param \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[]|\Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface[] $specificationPlugins

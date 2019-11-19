@@ -84,7 +84,8 @@ class ContainerBackwardsCompatibilityTest extends Unit
         //Arrange
         $container = new Container();
         $container[static::SERVICE] = $container->share(function () {
-            return new class {
+            return new class
+            {
             };
         });
 

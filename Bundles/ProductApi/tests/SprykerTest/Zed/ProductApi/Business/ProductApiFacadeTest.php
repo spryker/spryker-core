@@ -121,14 +121,13 @@ class ProductApiFacadeTest extends Unit
     }
 
     /**
-     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @expectedExceptionCode 404
-     * @expectedExceptionMessage Out of bounds.
-     *
      * @return void
      */
     public function testFindOutOfBounds()
     {
+        $this->expectException('Symfony\Component\HttpKernel\Exception\NotFoundHttpException');
+        $this->expectExceptionCode('404');
+        $this->expectExceptionMessage('Out of bounds.');
         $productApiFacade = new ProductApiFacade();
 
         $apiRequestTransfer = new ApiRequestTransfer();

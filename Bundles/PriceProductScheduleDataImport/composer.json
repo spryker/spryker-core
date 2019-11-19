@@ -4,7 +4,7 @@
   "description": "PriceProductScheduleDataImport module",
   "license": "MIT",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/currency": "^3.6.0",
     "spryker/data-import": "^1.4.3",
     "spryker/kernel": "^3.30.0",

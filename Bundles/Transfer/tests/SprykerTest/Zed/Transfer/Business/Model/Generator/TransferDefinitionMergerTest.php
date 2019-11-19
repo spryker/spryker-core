@@ -43,13 +43,12 @@ class TransferDefinitionMergerTest extends Unit
     }
 
     /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Value mismatch for "Transfer.propertyA" tranfer property. Value1: "int"; Value2: "string". To fix this, search for 'property name="propertyA"' in the code base and fix the wrong one.
-     *
      * @return void
      */
     public function testMergeShouldThrowExceptionIfTwoPropertiesWithSameNameDefineDifferentAttributes()
     {
+        $this->expectException('Exception');
+        $this->expectExceptionMessage('Value mismatch for "Transfer.propertyA" tranfer property. Value1: "int"; Value2: "string". To fix this, search for \'property name="propertyA"\' in the code base and fix the wrong one.');
         $helper = new TransferDefinitionMergerHelper();
         $property1 = $helper->getTransferDefinition1();
 

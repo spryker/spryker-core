@@ -42,6 +42,7 @@ class SkuCollectorTest extends BaseRuleTester
         $itemSkuCollector = $this->createItemSkuCollector($comparatorMock);
 
         $clauseTransfer = $this->createClauseTransfer(100);
+        $items = [];
         $items[] = $this->createItemTransfer(100, 0, 'sku123');
         $items[] = $this->createItemTransfer(120, 0, 'sku321');
         $quoteTransfer = $this->createQuoteTransfer($items);

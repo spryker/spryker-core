@@ -42,6 +42,7 @@ class ItemPriceCollectorTest extends BaseRuleTester
         $itemPriceCollector = $this->createItemPriceCollector($comparatorMock);
 
         $clauseTransfer = $this->createClauseTransfer(100);
+        $items = [];
         $items[] = $this->createItemTransfer(100);
         $items[] = $this->createItemTransfer(120);
         $quoteTransfer = $this->createQuoteTransfer($items);

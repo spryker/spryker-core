@@ -104,6 +104,7 @@
 
     <transfer name="Shipment">
         <property name="method" type="ShipmentMethod"/>
+        <property name="shippingAddress" type="Address"/>
     </transfer>
 
     <transfer name="ShipmentMethods">
@@ -112,6 +113,11 @@
 
     <transfer name="ShipmentMethodsCollection">
         <property name="shipmentMethods" type="ShipmentMethods[]" singular="shipmentMethods"/>
+    </transfer>
+
+    <transfer name="Money">
+        <property name="amount" type="string"/>
+        <property name="currency" type="Currency"/>
     </transfer>
 
     <transfer name="Store">

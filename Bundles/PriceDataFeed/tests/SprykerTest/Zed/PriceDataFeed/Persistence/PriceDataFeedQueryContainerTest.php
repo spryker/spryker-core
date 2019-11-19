@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PriceDataFeedTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Spryker\Zed\PriceDataFeed\Persistence\PriceDataFeedQueryContainer;
-use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainer;
 
 /**
  * Auto-generated group annotations
@@ -38,7 +37,7 @@ class PriceDataFeedQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -86,8 +85,7 @@ class PriceDataFeedQueryContainerTest extends Unit
      */
     protected function createPriceDataFeedQueryContainer()
     {
-        $priceQueryContainer = new PriceProductQueryContainer();
-        $priceDataFeedQueryContainer = new PriceDataFeedQueryContainer($priceQueryContainer);
+        $priceDataFeedQueryContainer = new PriceDataFeedQueryContainer();
 
         return $priceDataFeedQueryContainer;
     }

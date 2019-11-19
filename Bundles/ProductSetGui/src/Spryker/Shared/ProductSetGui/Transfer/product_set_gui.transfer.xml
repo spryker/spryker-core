@@ -60,4 +60,7 @@
         <property name="isNavigable" type="bool"/>
     </transfer>
 
+    <transfer name="Money">
+    </transfer>
+
 </transfers>
