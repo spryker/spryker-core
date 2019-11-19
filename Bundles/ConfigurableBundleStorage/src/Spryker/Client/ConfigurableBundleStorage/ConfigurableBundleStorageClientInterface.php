@@ -23,4 +23,17 @@ interface ConfigurableBundleStorageClientInterface
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
      */
     public function findConfigurableBundleTemplateStorage(int $idConfigurableBundleTemplate): ?ConfigurableBundleTemplateStorageTransfer;
+
+    /**
+     * Specification:
+     * - Finds product concrete Storage records for current locale by skus.
+     * - Returns array of transfers indexed by sku.
+     *
+     * @api
+     *
+     * @param string[] $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcreteStoragesBySkusForCurrentLocale(array $skus): array;
 }
