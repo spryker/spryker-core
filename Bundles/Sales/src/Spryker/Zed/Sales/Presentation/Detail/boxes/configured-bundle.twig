@@ -27,17 +27,17 @@
             {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: bundleSumSubtotalAggregation, priceToPay: bundleSumPriceToPayAggregation} %} {% endembed %}</td>
         <td colspan="2"></td>
     </tr>
-    {% set bundleCurrentAmount = 0 %}
+    {% set partialItemCount = 0 %}
     {% for item in bundle.salesOrderConfiguredBundleItems if mappedItems['_' ~ item.IdSalesOrderItem] is defined %}
         <tr>
             {% set product = mappedItems['_' ~ item.IdSalesOrderItem] %}
             {% embed '@Sales/Detail/boxes/configured-bundle-product.twig' with {orderItem: product, displayImage: true, image: product.metadata.image} %}{% endembed %}
         </tr>
-        {% set bundleCurrentAmount = bundleCurrentAmount + 1 %}
+        {% set partialItemCount = partialItemCount + 1 %}
     {% endfor %}
     <tr>
         <td colspan="8">
-            {{ 'Items' | trans }}: {{ bundleCurrentAmount }} / {{ bundle.salesOrderConfiguredBundleItems | length }}
+            {{ 'Items' | trans }}: {{ partialItemCount }} / {{ bundle.salesOrderConfiguredBundleItems | length }}
         </td>
     </tr>
     <tr>
