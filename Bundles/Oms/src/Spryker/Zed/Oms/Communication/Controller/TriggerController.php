@@ -174,7 +174,7 @@ class TriggerController extends AbstractController
             throw new BadRequestHttpException();
         }
 
-        return $request->isMethod(Request::METHOD_POST) && $this->isTriggerFormValid($request);
+        return $this->isTriggerFormValid($request);
     }
 
     /**
