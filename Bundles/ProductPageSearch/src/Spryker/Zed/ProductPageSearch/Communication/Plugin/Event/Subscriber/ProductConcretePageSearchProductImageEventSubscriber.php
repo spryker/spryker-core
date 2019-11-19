@@ -12,6 +12,7 @@ use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductConcretePageSearchProductImageListener;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductConcretePageSearchProductImageProductConcreteListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductConcretePageSearchProductImageSetListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductConcretePageSearchProductImageSetToProductImageListener;
 
@@ -32,6 +33,7 @@ class ProductConcretePageSearchProductImageEventSubscriber extends AbstractPlugi
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
+        $this->addProductConcretePageSearchProductImageProductConcretePublishListener($eventCollection);
         $this->addProductConcretePageSearchProductImageUpdateListener($eventCollection);
         $this->addProductConcretePageSearchProductImageSetToProductImageCreateListener($eventCollection);
         $this->addProductConcretePageSearchProductImageSetToProductImageUpdateListener($eventCollection);
@@ -39,6 +41,16 @@ class ProductConcretePageSearchProductImageEventSubscriber extends AbstractPlugi
         $this->addProductConcretePageSearchProductImageSetDeleteListener($eventCollection);
 
         return $eventCollection;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductConcretePageSearchProductImageProductConcretePublishListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(ProductImageEvents::PRODUCT_IMAGE_PRODUCT_CONCRETE_PUBLISH, new ProductConcretePageSearchProductImageProductConcreteListener());
     }
 
     /**
