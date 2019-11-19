@@ -84,11 +84,9 @@ class RequestResourceExtractor implements RequestResourceExtractorInterface
             return null;
         }
 
-        $resourceId = $this->getResourceId($request, $data);
-
         return $this->restResourceBuilder->createRestResource(
             $data[RestResourceInterface::RESOURCE_TYPE],
-            $resourceId,
+            $this->getResourceId($request, $data),
             $this->mapEntityTransfer($request, $data)
         );
     }
