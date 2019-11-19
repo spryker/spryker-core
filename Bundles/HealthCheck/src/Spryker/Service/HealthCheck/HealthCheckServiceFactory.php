@@ -113,7 +113,9 @@ class HealthCheckServiceFactory extends AbstractServiceFactory
      */
     public function createConsoleFormatter(): FormatterInterface
     {
-        return new ConsoleFormatter();
+        return new ConsoleFormatter(
+            $this->getConfig()
+        );
     }
 
     /**

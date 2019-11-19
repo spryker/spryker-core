@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 interface HealthCheckClientInterface
 {
     /**
+     * - Specification:
+     * - Checks that zed request is accessible.
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer

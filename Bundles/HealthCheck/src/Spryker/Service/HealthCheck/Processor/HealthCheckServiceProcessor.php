@@ -15,9 +15,6 @@ use Spryker\Service\HealthCheck\HealthCheckConfig;
 
 class HealthCheckServiceProcessor implements HealthCheckServiceProcessorInterface
 {
-    protected const SUCCESS_STATUS = 200;
-    protected const FORBIDDEN_STATUS = 403;
-
     /**
      * @var \Spryker\Service\HealthCheck\Filter\Service\ServiceFilterInterface
      */
@@ -56,11 +53,11 @@ class HealthCheckServiceProcessor implements HealthCheckServiceProcessorInterfac
     public function process(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer
     {
         $healthCheckResponseTransfer = (new HealthCheckResponseTransfer())
-            ->setStatus(static::SUCCESS_STATUS);
+            ->setStatusCode($this->healthCheckConfig->getSuccessHealthCheckStatus());
 
         if ($this->healthCheckConfig->isHealthCheckEnabled() === false) {
             return $healthCheckResponseTransfer
-                ->setStatus(static::FORBIDDEN_STATUS);
+                ->setStatusCode($this->healthCheckConfig->getForbiddenHealthCheckStatus());
         }
 
         $filteredHealthCheckPlugins = $this->serviceFilter->filter($healthCheckRequestTransfer);

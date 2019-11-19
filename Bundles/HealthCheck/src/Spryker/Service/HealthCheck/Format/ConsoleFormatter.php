@@ -8,6 +8,7 @@
 namespace Spryker\Service\HealthCheck\Format;
 
 use Generated\Shared\Transfer\HealthCheckResponseTransfer;
+use Spryker\Service\HealthCheck\HealthCheckConfig;
 
 class ConsoleFormatter implements FormatterInterface
 {
@@ -18,6 +19,19 @@ class ConsoleFormatter implements FormatterInterface
 
     protected const OUTPUT_SUCCESS_MESSAGE = 'Healthy';
     protected const OUTPUT_ERROR_MESSAGE = 'Unhealthy';
+
+    /**
+     * @var \Spryker\Service\HealthCheck\HealthCheckConfig
+     */
+    protected $healthCheckConfig;
+
+    /**
+     * @param \Spryker\Service\HealthCheck\HealthCheckConfig $healthCheckConfig
+     */
+    public function __construct(HealthCheckConfig $healthCheckConfig)
+    {
+        $this->healthCheckConfig = $healthCheckConfig;
+    }
 
     /**
      * @return string
@@ -44,6 +58,8 @@ class ConsoleFormatter implements FormatterInterface
 
             if ($serviceStatus === false) {
                 $message .= sprintf("<fg=$outputColor;options=bold>Error Message: %s</>\n", $healthCheckServiceResponseTransfer->getMessage());
+                $healthCheckResponseTransfer
+                    ->setStatusCode($this->healthCheckConfig->getUnavailableHealthCheckStatus());
             }
         }
 

@@ -8,7 +8,7 @@
 namespace Spryker\Service\Propel\HealthIndicator;
 
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
-use Orm\Zed\Heartbeat\Persistence\SpyPropelHealthCheck;
+use Orm\Zed\HealthCheck\Persistence\SpyPropelHealthCheck;
 use Propel\Runtime\Exception\PropelException;
 
 class HealthIndicator implements HealthIndicatorInterface

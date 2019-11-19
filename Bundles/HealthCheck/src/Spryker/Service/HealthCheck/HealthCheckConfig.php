@@ -10,6 +10,9 @@ namespace Spryker\Service\HealthCheck;
 use Spryker\Service\Kernel\AbstractBundleConfig;
 use Spryker\Shared\HealthCheck\HealthCheckConstants;
 
+/**
+ * @method \Spryker\Shared\HealthCheck\HealthCheckConfig getSharedConfig()
+ */
 class HealthCheckConfig extends AbstractBundleConfig
 {
     /**
@@ -18,5 +21,29 @@ class HealthCheckConfig extends AbstractBundleConfig
     public function isHealthCheckEnabled(): bool
     {
         return $this->get(HealthCheckConstants::HEALTH_CHECK_ENABLED, true);
+    }
+
+    /**
+     * @return int
+     */
+    public function getSuccessHealthCheckStatus(): int
+    {
+        return $this->getSharedConfig()->getSuccessHealthCheckStatus();
+    }
+
+    /**
+     * @return int
+     */
+    public function getForbiddenHealthCheckStatus(): int
+    {
+        return $this->getSharedConfig()->getForbiddenHealthCheckStatus();
+    }
+
+    /**
+     * @return int
+     */
+    public function getUnavailableHealthCheckStatus(): int
+    {
+        return $this->getSharedConfig()->getUnavailableHealthCheckStatus();
     }
 }

@@ -9,7 +9,7 @@
     </transfer>
 
     <transfer name="HealthCheckResponse">
-        <property name="status" type="bool"/>
+        <property name="statusCode" type="int"/>
         <property name="message" type="string"/>
         <property name="healthCheckServiceResponses" type="HealthCheckServiceResponse[]" singular="healthCheckServiceResponse"/>
     </transfer>
