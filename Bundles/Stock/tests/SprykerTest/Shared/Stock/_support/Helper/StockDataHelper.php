@@ -15,15 +15,21 @@ use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
+use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Orm\Zed\Stock\Persistence\SpyStockStore;
 use Spryker\Zed\Stock\Business\StockFacadeInterface;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class StockDataHelper extends Module
 {
     use LocatorHelperTrait;
+    use DataCleanupHelperTrait;
 
     /**
+     * @deprecated Use StockDataHelper::haveProductInStockForStore() instead.
+     *
      * @param array $seedData
      *
      * @return void
@@ -32,20 +38,42 @@ class StockDataHelper extends Module
     {
         $stockFacade = $this->getStockFacade();
 
-        $stockSeedData = [];
-        if (isset($seedData[StockProductTransfer::FK_STOCK])) {
-            $stockSeedData[StockTransfer::ID_STOCK] = $seedData[StockProductTransfer::FK_STOCK];
+        if (!isset($seedData[StockProductTransfer::FK_STOCK])) {
+            $stockTransfer = $this->haveStock();
+            $seedData[StockProductTransfer::FK_STOCK] = $stockTransfer->getIdStock();
+            $seedData[StockProductTransfer::STOCK_TYPE] = $stockTransfer->getName();
         }
 
-        $stockTransfer = $this->haveStock($stockSeedData);
         $stockProductTransfer = (new StockProductBuilder($seedData))->build();
-        $stockProductTransfer->setStockType($stockTransfer->getName());
+        $idStockProduct = $stockFacade->createStockProduct($stockProductTransfer);
 
-        $stockFacade->createStockProduct(
-            (new StockProductBuilder($seedData))
-                ->build()
-                ->setStockType($stockTransfer->getName())
-        );
+        $this->debug(sprintf(
+            'Inserted StockProduct: %d of Concrete Product SKU: %s',
+            $idStockProduct,
+            $stockProductTransfer->getSku()
+        ));
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($idStockProduct) {
+            $this->cleanUpStockProduct($idStockProduct);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param array $seedData
+     *
+     * @return void
+     */
+    public function haveProductInStockForStore(StoreTransfer $storeTransfer, array $seedData = []): void
+    {
+        $stockTransfer = $this->haveStock([
+            StockTransfer::STORE_RELATION => (new StoreRelationTransfer())->setIdStores([$storeTransfer->getIdStore()]),
+        ]);
+
+        $seedData[StockProductTransfer::FK_STOCK] = $stockTransfer->getIdStock();
+        $seedData[StockProductTransfer::STOCK_TYPE] = $stockTransfer->getName();
+
+        $this->createStockProduct($seedData);
     }
 
     /**
@@ -58,7 +86,18 @@ class StockDataHelper extends Module
         $stockTransfer = (new StockBuilder($seedData))->build();
         $stockResponseTransfer = $this->getStockFacade()->createStock($stockTransfer);
 
-        return $stockResponseTransfer->getStock();
+        $stockTransfer = $stockResponseTransfer->getStock();
+
+        $this->debug(sprintf(
+            'Inserted Stock: %d',
+            $stockTransfer->getIdStock()
+        ));
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($stockTransfer) {
+            $this->cleanUpStock($stockTransfer->getIdStock());
+        });
+
+        return $stockTransfer;
     }
 
     /**
@@ -72,10 +111,19 @@ class StockDataHelper extends Module
         $stockTransfer->requireIdStock();
         $storeTransfer->requireIdStore();
 
-        (new SpyStockStore())
+        $stockStoreEntity = (new SpyStockStore())
             ->setFkStore($storeTransfer->getIdStore())
-            ->setFkStock($stockTransfer->getIdStock())
-            ->save();
+            ->setFkStock($stockTransfer->getIdStock());
+        $stockStoreEntity->save();
+
+        $this->debug(sprintf(
+            'Inserted Stock Store Relation: %d',
+            $stockStoreEntity->getIdStockStore()
+        ));
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($stockStoreEntity) {
+            $stockStoreEntity->delete();
+        });
 
         return (new StoreRelationTransfer())
             ->setIdEntity($stockTransfer->getIdStock())
@@ -84,10 +132,57 @@ class StockDataHelper extends Module
     }
 
     /**
+     * @param array $seedData
+     *
+     * @return void
+     */
+    protected function createStockProduct(array $seedData): void
+    {
+        $stockFacade = $this->getStockFacade();
+
+        $stockProductTransfer = (new StockProductBuilder($seedData))->build();
+        $idStockProduct = $stockFacade->createStockProduct($stockProductTransfer);
+
+        $this->debug(sprintf(
+            'Inserted StockProduct: %d of Concrete Product SKU: %s',
+            $idStockProduct,
+            $stockProductTransfer->getSku()
+        ));
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($idStockProduct) {
+            $this->cleanUpStockProduct($idStockProduct);
+        });
+    }
+
+    /**
      * @return \Spryker\Zed\Stock\Business\StockFacadeInterface
      */
-    private function getStockFacade(): StockFacadeInterface
+    protected function getStockFacade(): StockFacadeInterface
     {
         return $this->getLocator()->stock()->facade();
+    }
+
+    /**
+     * @param int $idStockProduct
+     *
+     * @return void
+     */
+    protected function cleanUpStockProduct(int $idStockProduct): void
+    {
+        SpyStockProductQuery::create()
+            ->filterByIdStockProduct($idStockProduct)
+            ->delete();
+    }
+
+    /**
+     * @param int $idStock
+     *
+     * @return void
+     */
+    protected function cleanUpStock(int $idStock): void
+    {
+        SpyStockQuery::create()
+            ->filterByIdStock($idStock)
+            ->delete();
     }
 }

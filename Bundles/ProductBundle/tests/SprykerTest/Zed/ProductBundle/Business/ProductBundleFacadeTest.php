@@ -48,6 +48,7 @@ class ProductBundleFacadeTest extends Unit
     public const BUNDLED_PRODUCT_PRICE_1 = 50;
     public const BUNDLED_PRODUCT_PRICE_2 = 100;
     public const ID_STORE = 1;
+    protected const STORE_NAME_DE = 'DE';
 
     /**
      * @var \SprykerTest\Zed\ProductBundle\ProductBundleBusinessTester
@@ -537,11 +538,13 @@ class ProductBundleFacadeTest extends Unit
             ProductConcreteTransfer::IS_ACTIVE => $isAlwaysAvailable,
         ]);
 
-        $this->tester->haveProductInStock([
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $this->tester->haveProductInStockForStore($storeTransfer, [
             StockProductTransfer::SKU => $productConcreteTransfer->getSku(),
             StockProductTransfer::QUANTITY => 10,
             StockProductTransfer::IS_NEVER_OUT_OF_STOCK => $isAlwaysAvailable,
         ]);
+        $this->tester->haveAvailabilityConcrete($productConcreteTransfer->getSku(), $storeTransfer, 10);
 
         $this->tester->havePriceProduct([
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
@@ -596,7 +599,7 @@ class ProductBundleFacadeTest extends Unit
      */
     protected function createBaseQuoteTransfer(): QuoteTransfer
     {
-        $storeTransfer = (new StoreTransfer())->setName('DE');
+        $storeTransfer = (new StoreTransfer())->setName(static::STORE_NAME_DE);
 
         return (new QuoteTransfer())
             ->setStore($storeTransfer);

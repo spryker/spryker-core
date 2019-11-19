@@ -27,7 +27,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
@@ -93,7 +92,7 @@ class CheckoutFacadeTest extends Unit
         // Arrange
         $productTransfer = $this->tester->haveProduct();
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
-        $this->tester->haveProductInStock([StockProductTransfer::SKU => $productTransfer->getSku()]);
+        $this->tester->haveAvailabilityConcrete($productTransfer->getSku(), $storeTransfer);
 
         $quoteTransfer = (new QuoteBuilder())
             ->withItem([ItemTransfer::SKU => $productTransfer->getSku(), ItemTransfer::UNIT_PRICE => 1])
@@ -120,11 +119,7 @@ class CheckoutFacadeTest extends Unit
         // Arrange
         $productTransfer = $this->tester->haveProduct();
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
-        $this->tester->haveProductInStock([
-            StockProductTransfer::SKU => $productTransfer->getSku(),
-            StockProductTransfer::QUANTITY => 3,
-            StockProductTransfer::IS_NEVER_OUT_OF_STOCK => false,
-        ]);
+        $this->tester->haveAvailabilityConcrete($productTransfer->getSku(), $storeTransfer, 3);
         $email = 'frodo.baggins@gmail.com';
         $itemBuilder = (new ItemBuilder([ItemTransfer::SKU => $productTransfer->getSku(), ItemTransfer::UNIT_PRICE => 1]))->withShipment(
             (new ShipmentBuilder())->withShippingAddress([AddressTransfer::EMAIL => $email])
@@ -156,7 +151,7 @@ class CheckoutFacadeTest extends Unit
         $this->tester->haveCustomer([CustomerTransfer::EMAIL => 'max@mustermann.de']);
         $productTransfer = $this->tester->haveProduct();
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
-        $this->tester->haveProductInStock([StockProductTransfer::SKU => $productTransfer->getSku()]);
+        $this->tester->haveAvailabilityConcrete($productTransfer->getSku(), $storeTransfer);
         $customer = $this->tester->haveCustomer();
 
         $quoteTransfer = (new QuoteBuilder([CustomerTransfer::EMAIL => 'max@mustermann.de']))
@@ -187,7 +182,7 @@ class CheckoutFacadeTest extends Unit
         $this->tester->haveCustomer([CustomerTransfer::EMAIL => 'max@mustermann.de']);
         $productTransfer = $this->tester->haveProduct();
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
-        $this->tester->haveProductInStock([StockProductTransfer::SKU => $productTransfer->getSku()]);
+        $this->tester->haveAvailabilityConcrete($productTransfer->getSku(), $storeTransfer);
         $customer = $this->tester->haveCustomer();
 
         $quoteTransfer = (new QuoteBuilder([CustomerTransfer::EMAIL => 'max@mustermann.de']))
@@ -204,7 +199,7 @@ class CheckoutFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($result->getIsSuccess());
-        $this->assertEquals(1, count($result->getErrors()));
+        $this->assertCount(1, $result->getErrors());
         $this->assertEquals(CheckoutConfig::ERROR_CODE_CUSTOMER_ALREADY_REGISTERED, $result->getErrors()[0]->getErrorCode());
     }
 
@@ -216,9 +211,9 @@ class CheckoutFacadeTest extends Unit
         // Arrange
         $productTransfer1 = $this->tester->haveProduct();
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
-        $this->tester->haveProductInStock([StockProductTransfer::SKU => $productTransfer1->getSku()]);
+        $this->tester->haveAvailabilityConcrete($productTransfer1->getSku(), $storeTransfer);
         $productTransfer2 = $this->tester->haveProduct();
-        $this->tester->haveProductInStock([StockProductTransfer::SKU => $productTransfer2->getSku()]);
+        $this->tester->haveAvailabilityConcrete($productTransfer2->getSku(), $storeTransfer);
 
         $quoteTransfer = (new QuoteBuilder())
             ->withItem([ItemTransfer::SKU => $productTransfer1->getSku(), ItemTransfer::UNIT_PRICE => 1])
@@ -255,9 +250,9 @@ class CheckoutFacadeTest extends Unit
         // Arrange
         $productTransfer1 = $this->tester->haveProduct();
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
-        $this->tester->haveProductInStock([StockProductTransfer::SKU => $productTransfer1->getSku()]);
+        $this->tester->haveAvailabilityConcrete($productTransfer1->getSku(), $storeTransfer);
         $productTransfer2 = $this->tester->haveProduct();
-        $this->tester->haveProductInStock([StockProductTransfer::SKU => $productTransfer2->getSku()]);
+        $this->tester->haveAvailabilityConcrete($productTransfer2->getSku(), $storeTransfer);
         $customer = $this->tester->haveCustomer();
 
         $quoteTransfer = (new QuoteBuilder())
@@ -423,11 +418,8 @@ class CheckoutFacadeTest extends Unit
         $quoteTransfer = $this->getBaseQuoteTransferWithItemLevelShippingAddresses();
         $productConcreteTransfer1 = $this->tester->haveProduct();
 
-        $this->tester->haveProductInStock([
-            StockProductTransfer::SKU => $productConcreteTransfer1->getSku(),
-            StockProductTransfer::QUANTITY => 1,
-            StockProductTransfer::IS_NEVER_OUT_OF_STOCK => false,
-        ]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
+        $this->tester->haveAvailabilityConcrete($productConcreteTransfer1->getSku(), $storeTransfer, 1);
 
         $quoteTransfer->addItem(
             $this->createItemTransfer($productConcreteTransfer1, 2)
@@ -522,17 +514,8 @@ class CheckoutFacadeTest extends Unit
         $productConcreteTransfer1 = $this->tester->haveProduct([ProductConcreteTransfer::SKU => 'OSB1337'], [ProductAbstractTransfer::SKU => 'AOSB1337']);
         $productConcreteTransfer2 = $this->tester->haveProduct([ProductConcreteTransfer::SKU => 'OSB1338'], [ProductAbstractTransfer::SKU => 'AOSB1338']);
 
-        $this->tester->haveProductInStock([
-            StockProductTransfer::SKU => $productConcreteTransfer1->getSku(),
-            StockProductTransfer::QUANTITY => 1,
-            StockProductTransfer::IS_NEVER_OUT_OF_STOCK => false,
-        ]);
-
-        $this->tester->haveProductInStock([
-            StockProductTransfer::SKU => $productConcreteTransfer2->getSku(),
-            StockProductTransfer::QUANTITY => 1,
-            StockProductTransfer::IS_NEVER_OUT_OF_STOCK => false,
-        ]);
+        $this->tester->haveAvailabilityConcrete($productConcreteTransfer1->getSku(), $storeTransfer, 1);
+        $this->tester->haveAvailabilityConcrete($productConcreteTransfer2->getSku(), $storeTransfer, 1);
 
         $itemTransfer1 = $this->createItemTransfer($productConcreteTransfer1, 1);
         $itemTransfer2 = $this->createItemTransfer($productConcreteTransfer2, 1);
@@ -613,12 +596,8 @@ class CheckoutFacadeTest extends Unit
         $productConcreteTransfer1 = $this->tester->haveProduct([ProductConcreteTransfer::SKU => 'OSB1337'], [ProductAbstractTransfer::SKU => 'AOSB1337']);
         $productConcreteTransfer2 = $this->tester->haveProduct([ProductConcreteTransfer::SKU => 'OSB1338'], [ProductAbstractTransfer::SKU => 'AOSB1338']);
 
-        $this->tester->haveProductInStock([StockProductTransfer::SKU => $productConcreteTransfer1->getSku()]);
-        $this->tester->haveProductInStock([
-            StockProductTransfer::SKU => $productConcreteTransfer2->getSku(),
-            StockProductTransfer::QUANTITY => 3,
-            StockProductTransfer::IS_NEVER_OUT_OF_STOCK => false,
-        ]);
+        $this->tester->haveAvailabilityConcrete($productConcreteTransfer1->getSku(), $storeTransfer);
+        $this->tester->haveAvailabilityConcrete($productConcreteTransfer2->getSku(), $storeTransfer, 3);
 
         $shipment = $this->createShipmentTransfer();
 

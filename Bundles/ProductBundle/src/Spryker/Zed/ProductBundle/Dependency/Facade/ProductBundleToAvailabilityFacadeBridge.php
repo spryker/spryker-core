@@ -27,6 +27,16 @@ class ProductBundleToAvailabilityFacadeBridge implements ProductBundleToAvailabi
     }
 
     /**
+     * @param string $concreteSku
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresWhereProductAvailabilityIsDefined(string $concreteSku): array
+    {
+        return $this->availabilityFacade->getStoresWhereProductAvailabilityIsDefined($concreteSku);
+    }
+
+    /**
      * @param string $sku
      * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer

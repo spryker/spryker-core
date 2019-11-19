@@ -26,4 +26,12 @@ interface CalculatorInterface
      * @return \Spryker\DecimalObject\Decimal
      */
     public function calculateProductStockForStore(string $sku, StoreTransfer $storeTransfer): Decimal;
+
+    /**
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function calculateProductAbstractStockForStore(string $abstractSku, StoreTransfer $storeTransfer): Decimal;
 }
