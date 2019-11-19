@@ -33,6 +33,6 @@ class CustomerGroupViewCest
         $customerGroupTransfer = $i->haveCustomerGroup();
         $i->amOnPage(CustomerGroupViewPage::buildUrl($customerGroupTransfer->getIdCustomerGroup()));
 
-        $i->seeBreadcrumbNavigation('Customers / Customer Groups / View customer group');
+        $i->seeBreadcrumbNavigation('Customers / Customer Groups / View Customer Group');
     }
 }
