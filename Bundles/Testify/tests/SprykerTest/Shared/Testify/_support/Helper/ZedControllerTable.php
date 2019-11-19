@@ -26,7 +26,7 @@ class ZedControllerTable extends Module implements DependsOnModule
     /**
      * @return array
      */
-    public function _depends()
+    public function _depends(): array
     {
         return [
             ZedBootstrap::class => 'Should be used with ZedBootstrap only',
@@ -38,7 +38,7 @@ class ZedControllerTable extends Module implements DependsOnModule
      *
      * @return void
      */
-    public function _before(TestInterface $test)
+    public function _before(TestInterface $test): void
     {
         $this->currentData = [];
     }
@@ -48,7 +48,7 @@ class ZedControllerTable extends Module implements DependsOnModule
      *
      * @return void
      */
-    public function _inject(ZedBootstrap $bootstrap)
+    public function _inject(ZedBootstrap $bootstrap): void
     {
         $this->zedBootstrap = $bootstrap;
     }
@@ -59,7 +59,7 @@ class ZedControllerTable extends Module implements DependsOnModule
      *
      * @return void
      */
-    public function listDataTable($uri, array $params = [])
+    public function listDataTable(string $uri, array $params = []): void
     {
         $this->zedBootstrap->client->request('GET', $uri, $params);
         $response = $this->zedBootstrap->client->getInternalResponse();
@@ -70,7 +70,7 @@ class ZedControllerTable extends Module implements DependsOnModule
     /**
      * @return void
      */
-    public function seeDataTable()
+    public function seeDataTable(): void
     {
         if (!isset($this->currentData['recordsTotal'])) {
             $this->fail("recordsTotal value not set; Run successful ->listDataTable before");
@@ -82,7 +82,7 @@ class ZedControllerTable extends Module implements DependsOnModule
      *
      * @return void
      */
-    public function seeNumRecordsInTable($num)
+    public function seeNumRecordsInTable(int $num): void
     {
         if (!isset($this->currentData['recordsTotal'])) {
             $this->fail("recordsTotal value not set; Run successful ->listDataTable before");
@@ -96,7 +96,7 @@ class ZedControllerTable extends Module implements DependsOnModule
      *
      * @return void
      */
-    public function seeInTable($row, array $expectedRow)
+    public function seeInTable(int $row, array $expectedRow): void
     {
         if (!isset($this->currentData['data'])) {
             $this->fail("data for table not set; Run successful ->listDataTable before");
@@ -120,7 +120,7 @@ class ZedControllerTable extends Module implements DependsOnModule
      *
      * @return void
      */
-    public function clickDataTableEditButton($rowPosition = 0)
+    public function clickDataTableEditButton(int $rowPosition = 0): void
     {
         $this->clickDataTableButton('Edit', $rowPosition);
     }
@@ -130,7 +130,7 @@ class ZedControllerTable extends Module implements DependsOnModule
      *
      * @return void
      */
-    public function clickDataTableViewButton($rowPosition = 0)
+    public function clickDataTableViewButton(int $rowPosition = 0): void
     {
         $this->clickDataTableButton('View', $rowPosition);
     }
@@ -140,7 +140,7 @@ class ZedControllerTable extends Module implements DependsOnModule
      *
      * @return void
      */
-    public function clickDataTableDeleteButton($rowPosition = 0)
+    public function clickDataTableDeleteButton(int $rowPosition = 0): void
     {
         $this->clickDataTableButton('Delete', $rowPosition);
     }
@@ -151,7 +151,7 @@ class ZedControllerTable extends Module implements DependsOnModule
      *
      * @return void
      */
-    public function clickDataTableButton($name, $rowPosition = 0)
+    public function clickDataTableButton(string $name, int $rowPosition = 0): void
     {
         if (!isset($this->currentData['data'])) {
             $this->fail('Data for table not set; Run successful ->listDataTable before');
@@ -199,7 +199,7 @@ class ZedControllerTable extends Module implements DependsOnModule
      *
      * @return void
      */
-    public function seeInLastRow(array $expectedRow)
+    public function seeInLastRow(array $expectedRow): void
     {
         if (!isset($this->currentData['data'])) {
             $this->fail("data for table not set; Run successful ->listDataTable before");
@@ -214,7 +214,7 @@ class ZedControllerTable extends Module implements DependsOnModule
      *
      * @return void
      */
-    public function seeInFirstRow(array $expectedRow)
+    public function seeInFirstRow(array $expectedRow): void
     {
         $this->seeInTable(0, $expectedRow);
     }
@@ -225,7 +225,7 @@ class ZedControllerTable extends Module implements DependsOnModule
      *
      * @return void
      */
-    public function dontSeeInTable($row, array $expectedRow)
+    public function dontSeeInTable(int $row, array $expectedRow): void
     {
         if (!isset($this->currentData['data'])) {
             $this->assertTrue(true);
@@ -253,7 +253,7 @@ class ZedControllerTable extends Module implements DependsOnModule
      *
      * @return void
      */
-    public function dontSeeInLastRow(array $expectedRow)
+    public function dontSeeInLastRow(array $expectedRow): void
     {
         if (!isset($this->currentData['data'])) {
             $this->assertTrue(true);
@@ -270,7 +270,7 @@ class ZedControllerTable extends Module implements DependsOnModule
      *
      * @return void
      */
-    public function dontSeeInFirstRow(array $expectedRow)
+    public function dontSeeInFirstRow(array $expectedRow): void
     {
         $this->dontSeeInTable(0, $expectedRow);
     }

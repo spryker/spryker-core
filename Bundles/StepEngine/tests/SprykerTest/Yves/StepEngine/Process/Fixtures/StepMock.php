@@ -34,7 +34,7 @@ class StepMock implements StepInterface
     private $stepRoute;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $escapeRoute;
 
@@ -45,7 +45,7 @@ class StepMock implements StepInterface
      * @param string $stepRoute
      * @param string $escapeRoute
      */
-    public function __construct($preCondition = true, $postCondition = true, $requireInput = true, $stepRoute = '', $escapeRoute = '')
+    public function __construct(bool $preCondition = true, bool $postCondition = true, bool $requireInput = true, string $stepRoute = '', ?string $escapeRoute = null)
     {
         $this->preCondition = $preCondition;
         $this->postCondition = $postCondition;
@@ -59,7 +59,7 @@ class StepMock implements StepInterface
      *
      * @return bool
      */
-    public function preCondition(AbstractTransfer $quoteTransfer)
+    public function preCondition(AbstractTransfer $quoteTransfer): bool
     {
         return $this->preCondition;
     }
@@ -69,7 +69,7 @@ class StepMock implements StepInterface
      *
      * @return bool
      */
-    public function requireInput(AbstractTransfer $dataTransfer)
+    public function requireInput(AbstractTransfer $dataTransfer): bool
     {
         return $this->requireInput;
     }
@@ -80,7 +80,7 @@ class StepMock implements StepInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function execute(Request $request, AbstractTransfer $dataTransfer)
+    public function execute(Request $request, AbstractTransfer $dataTransfer): AbstractTransfer
     {
         return $dataTransfer;
     }
@@ -90,7 +90,7 @@ class StepMock implements StepInterface
      *
      * @return bool
      */
-    public function postCondition(AbstractTransfer $dataTransfer)
+    public function postCondition(AbstractTransfer $dataTransfer): bool
     {
         return $this->postCondition;
     }
@@ -98,15 +98,15 @@ class StepMock implements StepInterface
     /**
      * @return string
      */
-    public function getStepRoute()
+    public function getStepRoute(): string
     {
         return $this->stepRoute;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getEscapeRoute()
+    public function getEscapeRoute(): ?string
     {
         return $this->escapeRoute;
     }
@@ -116,7 +116,7 @@ class StepMock implements StepInterface
      *
      * @return array
      */
-    public function getTemplateVariables(AbstractTransfer $quoteTransfer)
+    public function getTemplateVariables(AbstractTransfer $quoteTransfer): array
     {
         return [];
     }

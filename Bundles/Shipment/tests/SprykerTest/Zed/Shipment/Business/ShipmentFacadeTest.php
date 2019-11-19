@@ -83,7 +83,7 @@ class ShipmentFacadeTest extends Test
     /**
      * @return void
      */
-    public function testTransformShipmentMethodEntityToShipmentMethodTransfer()
+    public function testTransformShipmentMethodEntityToShipmentMethodTransfer(): void
     {
         // Arrange
         $shipmentMethod = [
@@ -166,7 +166,7 @@ class ShipmentFacadeTest extends Test
     /**
      * @return array
      */
-    public function priceModes()
+    public function priceModes(): array
     {
         return [
             [ShipmentConstants::PRICE_MODE_GROSS],
@@ -182,7 +182,7 @@ class ShipmentFacadeTest extends Test
      *
      * @return void
      */
-    public function testFindAvailableMethodByIdShouldReturnShipmentMethodById($currencyCode, $expectedPriceResult): void
+    public function testFindAvailableMethodByIdShouldReturnShipmentMethodById(string $currencyCode, string $expectedPriceResult): void
     {
         $this->tester->ensureShipmentMethodTableIsEmpty();
         // Arrange
@@ -205,7 +205,7 @@ class ShipmentFacadeTest extends Test
     /**
      * @return void
      */
-    public function testIsShipmentMethodActiveShouldReturnTrueWhenActive()
+    public function testIsShipmentMethodActiveShouldReturnTrueWhenActive(): void
     {
         $this->tester->disableAllShipmentMethods();
 
@@ -221,7 +221,7 @@ class ShipmentFacadeTest extends Test
     /**
      * @return void
      */
-    public function testIsShipmentMethodActiveShouldReturnFalseWhenInActive()
+    public function testIsShipmentMethodActiveShouldReturnFalseWhenInActive(): void
     {
         $this->tester->disableAllShipmentMethods();
 
@@ -347,7 +347,7 @@ class ShipmentFacadeTest extends Test
     /**
      * @return void
      */
-    protected function mockCurrencyFacade()
+    protected function mockCurrencyFacade(): void
     {
         $currencyFacadeMock = $this->createMock(ShipmentToCurrencyInterface::class);
         $currencyFacadeMock
@@ -365,7 +365,7 @@ class ShipmentFacadeTest extends Test
     /**
      * @return array
      */
-    protected function createDefaultPriceList()
+    protected function createDefaultPriceList(): array
     {
         $priceList = [
             $this->store->getName() => [

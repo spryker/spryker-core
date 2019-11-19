@@ -38,9 +38,9 @@ class SalesDataHelper extends Module
      */
     public function haveOrder(
         array $override = [],
-        $stateMachineProcessName = null,
+        ?string $stateMachineProcessName = null,
         array $saveOrderStack = []
-    ) {
+    ): SaveOrderTransfer {
         $this->saveOrderStack = $saveOrderStack;
         $quoteTransfer = $this->createQuoteTransfer($override);
 
@@ -100,7 +100,7 @@ class SalesDataHelper extends Module
      *
      * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
      */
-    protected function configureSalesFacadeForTests(SalesFacadeInterface $salesFacade, $stateMachineProcessName)
+    protected function configureSalesFacadeForTests(SalesFacadeInterface $salesFacade, string $stateMachineProcessName): SalesFacadeInterface
     {
         $salesBusinessFactory = new SalesBusinessFactory();
 
@@ -137,7 +137,7 @@ class SalesDataHelper extends Module
     /**
      * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
      */
-    protected function getSalesFacade()
+    protected function getSalesFacade(): SalesFacadeInterface
     {
         return $this->getLocator()->sales()->facade();
     }
@@ -165,7 +165,7 @@ class SalesDataHelper extends Module
      *
      * @return void
      */
-    protected function executeSaveOrderPlugins(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    protected function executeSaveOrderPlugins(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
         foreach ($this->saveOrderStack as $orderSaver) {
             $orderSaver->saveOrder($quoteTransfer, $saveOrderTransfer);

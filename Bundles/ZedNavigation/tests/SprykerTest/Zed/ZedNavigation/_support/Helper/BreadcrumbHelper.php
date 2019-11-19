@@ -22,7 +22,7 @@ class BreadcrumbHelper extends Module
      *
      * @return void
      */
-    public function _beforeSuite($settings = [])
+    public function _beforeSuite($settings = []): void
     {
         $className = $settings['class_name'];
         if (preg_match('/CommunicationTester/', $className)) {
@@ -35,7 +35,7 @@ class BreadcrumbHelper extends Module
      *
      * @return void
      */
-    public function seeBreadcrumbNavigation($breadcrumb)
+    public function seeBreadcrumbNavigation(string $breadcrumb): void
     {
         if ($this->isPresentationSuite) {
             $this->checkWithWebdriver($breadcrumb);
@@ -63,7 +63,7 @@ class BreadcrumbHelper extends Module
      *
      * @return void
      */
-    private function checkWithWebdriver($breadcrumb)
+    private function checkWithWebdriver(string $breadcrumb): void
     {
         $breadcrumb = str_replace('/', ' ', $breadcrumb);
 
@@ -76,7 +76,7 @@ class BreadcrumbHelper extends Module
      *
      * @return void
      */
-    private function checkWithFramework($breadcrumb)
+    private function checkWithFramework(string $breadcrumb): void
     {
         $breadcrumbParts = explode('/', $breadcrumb);
         $breadcrumbParts = array_map('trim', $breadcrumbParts);

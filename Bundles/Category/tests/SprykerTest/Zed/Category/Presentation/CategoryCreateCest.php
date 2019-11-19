@@ -27,7 +27,7 @@ class CategoryCreateCest
      *
      * @return void
      */
-    public function testICanCreateCategory(CategoryPresentationTester $i)
+    public function testICanCreateCategory(CategoryPresentationTester $i): void
     {
         $i->amOnPage(CategoryCreatePage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Category / Create Category');

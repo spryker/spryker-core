@@ -72,7 +72,7 @@ class LockedOrderStateMachineTest extends Unit
      *
      * @return array
      */
-    public function triggerEventsDataProvider()
+    public function triggerEventsDataProvider(): array
     {
         $eventId = 'eventId';
         $orderItems = $this->createOrderItems();
@@ -94,7 +94,7 @@ class LockedOrderStateMachineTest extends Unit
      *
      * @return void
      */
-    public function testTriggerSimilarEventsWhenTriggerIsLocked()
+    public function testTriggerSimilarEventsWhenTriggerIsLocked(): void
     {
         $this->expectException(LockException::class);
         $arguments = func_get_args();
@@ -112,7 +112,7 @@ class LockedOrderStateMachineTest extends Unit
      *
      * @return void
      */
-    public function testTriggerSimilarEventsLockReleasesWhenTriggerSuccess()
+    public function testTriggerSimilarEventsLockReleasesWhenTriggerSuccess(): void
     {
         $arguments = func_get_args();
         $methodToTest = array_shift($arguments);
@@ -131,7 +131,7 @@ class LockedOrderStateMachineTest extends Unit
      *
      * @return void
      */
-    public function testTriggerEventLockReleasesWhenTriggerFails()
+    public function testTriggerEventLockReleasesWhenTriggerFails(): void
     {
         $this->expectException(Exception::class);
         $arguments = func_get_args();
@@ -154,7 +154,7 @@ class LockedOrderStateMachineTest extends Unit
     /**
      * @return void
      */
-    public function testCheckConditionMethodIsDecorated()
+    public function testCheckConditionMethodIsDecorated(): void
     {
         $lockedStateMachine = $this->createLockedStateMachine();
         $logContext = ['some log context'];
@@ -169,7 +169,7 @@ class LockedOrderStateMachineTest extends Unit
     /**
      * @return void
      */
-    public function testIdentifierGeneratedSameForOrderIdsDifferentOrderAndNotUnique()
+    public function testIdentifierGeneratedSameForOrderIdsDifferentOrderAndNotUnique(): void
     {
         $testIdsList1 = ['100', '11', '12', '10', 11, 12];
         $testIdsList2 = [12, 11, 100, '10'];
@@ -190,7 +190,7 @@ class LockedOrderStateMachineTest extends Unit
      *
      * @return string
      */
-    protected function hashIdentifier($identifer)
+    protected function hashIdentifier(string $identifer): string
     {
         return hash('sha512', $identifer);
     }
@@ -200,7 +200,7 @@ class LockedOrderStateMachineTest extends Unit
      *
      * @return void
      */
-    protected function expectStateMachineLockSaveSuccess($expectedIdentifier)
+    protected function expectStateMachineLockSaveSuccess(string $expectedIdentifier): void
     {
         $stateMachineLock = $this->createOmsStateMachineLockEntityMock();
 
@@ -226,7 +226,7 @@ class LockedOrderStateMachineTest extends Unit
      *
      * @return void
      */
-    protected function expectStateMachineLockSaveFails($expectedIdentifier)
+    protected function expectStateMachineLockSaveFails(string $expectedIdentifier): void
     {
         $stateMachineLock = $this->createOmsStateMachineLockEntityMock();
 
@@ -252,7 +252,7 @@ class LockedOrderStateMachineTest extends Unit
      *
      * @return void
      */
-    protected function expectTriggerRelease($identifier)
+    protected function expectTriggerRelease(string $identifier): void
     {
         $queryMock = $this->createOmsQueryMock();
         $queryMock->expects($this->once())
@@ -267,7 +267,7 @@ class LockedOrderStateMachineTest extends Unit
     /**
      * @return \Spryker\Zed\Oms\Business\OrderStateMachine\LockedOrderStateMachine
      */
-    protected function createLockedStateMachine()
+    protected function createLockedStateMachine(): LockedOrderStateMachine
     {
         return new LockedOrderStateMachine(
             $this->createStateMachineMock(),
@@ -307,7 +307,7 @@ class LockedOrderStateMachineTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\Oms\Persistence\OmsQueryContainer|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createOmsQueryContainerMock()
     {
@@ -319,7 +319,7 @@ class LockedOrderStateMachineTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createOmsQueryMock()
     {
@@ -329,7 +329,7 @@ class LockedOrderStateMachineTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createOmsStateMachineLockEntityMock()
     {
@@ -343,7 +343,7 @@ class LockedOrderStateMachineTest extends Unit
     /**
      * @return \Spryker\Zed\Oms\OmsConfig
      */
-    protected function createOmsConfig()
+    protected function createOmsConfig(): OmsConfig
     {
         return new OmsConfig();
     }
@@ -351,7 +351,7 @@ class LockedOrderStateMachineTest extends Unit
     /**
      * @return array
      */
-    protected function createOrderItems()
+    protected function createOrderItems(): array
     {
         $orderItem1 = (new SpySalesOrderItem())
             ->setIdSalesOrderItem(10);
@@ -370,7 +370,7 @@ class LockedOrderStateMachineTest extends Unit
      *
      * @return string
      */
-    protected function getOrderItemsIdentifier($orderItems)
+    protected function getOrderItemsIdentifier(array $orderItems): string
     {
         $orderItemIds = [];
         foreach ($orderItems as $orderItem) {

@@ -53,7 +53,7 @@ class TwigCurrencyServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testIfCurrentCurrencyFunctionProvided()
+    public function testIfCurrentCurrencyFunctionProvided(): void
     {
         $currencyCurrencyFunction = $this->getCurrentCurrencyTwigFunction();
 
@@ -63,7 +63,7 @@ class TwigCurrencyServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testCurrentCurrencyShouldReturnDefaultShopCurrencySymbol()
+    public function testCurrentCurrencyShouldReturnDefaultShopCurrencySymbol(): void
     {
         $currencyCurrencyFunction = $this->getCurrentCurrencyTwigFunction();
 
@@ -75,7 +75,7 @@ class TwigCurrencyServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testCurrentCurrencyWhenIsoCodeProvided()
+    public function testCurrentCurrencyWhenIsoCodeProvided(): void
     {
         $currencyCurrencyFunction = $this->getCurrentCurrencyTwigFunction();
 
@@ -87,7 +87,7 @@ class TwigCurrencyServiceProviderTest extends Unit
     /**
      * @return void
      */
-    protected static function initialiseTwigServiceProviderPlugin()
+    protected static function initialiseTwigServiceProviderPlugin(): void
     {
         $twigCurrencyServiceProvider = static::createTwigCurrencyServiceProvider();
         $application = static::getApplication();
@@ -97,7 +97,7 @@ class TwigCurrencyServiceProviderTest extends Unit
     /**
      * @return \Spryker\Zed\Currency\Communication\Plugin\ServiceProvider\TwigCurrencyServiceProvider
      */
-    protected static function createTwigCurrencyServiceProvider()
+    protected static function createTwigCurrencyServiceProvider(): TwigCurrencyServiceProvider
     {
         return new TwigCurrencyServiceProvider();
     }
@@ -105,7 +105,7 @@ class TwigCurrencyServiceProviderTest extends Unit
     /**
      * @return \Spryker\Shared\Kernel\Communication\Application
      */
-    protected static function getApplication()
+    protected static function getApplication(): Application
     {
         if (!static::$application) {
             $application = new Application();

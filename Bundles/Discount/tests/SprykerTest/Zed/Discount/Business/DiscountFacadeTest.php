@@ -27,6 +27,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
+use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\DiscountBusinessFactory;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
@@ -57,7 +58,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsSatisfiedBySkuShouldReturnTrueWhenGiveSkuIsInQuote()
+    public function testIsSatisfiedBySkuShouldReturnTrueWhenGiveSkuIsInQuote(): void
     {
         $discountFacade = $this->createDiscountFacade();
 
@@ -81,7 +82,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsQuoteGrandTotalSatisfiedByShouldReturnTrueIfGrandTotalMatchesExpected()
+    public function testIsQuoteGrandTotalSatisfiedByShouldReturnTrueIfGrandTotalMatchesExpected(): void
     {
         $discountFacade = $this->createDiscountFacade();
 
@@ -109,7 +110,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsTotalQuantitySatisfiedByShouldReturnTrueWhenQuoteTotalQuantityMatchesExpected()
+    public function testIsTotalQuantitySatisfiedByShouldReturnTrueWhenQuoteTotalQuantityMatchesExpected(): void
     {
         $discountFacade = $this->createDiscountFacade();
 
@@ -141,7 +142,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsSubTotalSatisfiedByShouldReturnTrueWhenSubtotalMatchesExpected()
+    public function testIsSubTotalSatisfiedByShouldReturnTrueWhenSubtotalMatchesExpected(): void
     {
         $discountFacade = $this->createDiscountFacade();
 
@@ -169,7 +170,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCollectBySkuShouldReturnItemMatchingGivenSku()
+    public function testCollectBySkuShouldReturnItemMatchingGivenSku(): void
     {
         $discountFacade = $this->createDiscountFacade();
 
@@ -193,7 +194,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetQueryStringFieldsByTypeForCollectorShouldReturnListOfFieldsForGivenType()
+    public function testGetQueryStringFieldsByTypeForCollectorShouldReturnListOfFieldsForGivenType(): void
     {
         $discountFacade = $this->createDiscountFacade();
         $fields = $discountFacade->getQueryStringFieldsByType(MetaProviderFactory::TYPE_COLLECTOR);
@@ -204,7 +205,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetQueryStringFieldsByTypeForDecisionRuleShouldReturnListOfFieldsForGivenType()
+    public function testGetQueryStringFieldsByTypeForDecisionRuleShouldReturnListOfFieldsForGivenType(): void
     {
         $discountFacade = $this->createDiscountFacade();
         $fields = $discountFacade->getQueryStringFieldsByType(MetaProviderFactory::TYPE_DECISION_RULE);
@@ -215,7 +216,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetQueryStringValueOptionsByTypeForCollectorShouldReturnListOfValueOptionsForGivenType()
+    public function testGetQueryStringValueOptionsByTypeForCollectorShouldReturnListOfValueOptionsForGivenType(): void
     {
         $discountRulePluginMock = $this->createDiscountRuleWithValueOptionsPluginMock();
         $discountRulePluginMock->method('getQueryStringValueOptions')->willReturn(['a' => 'b']);
@@ -234,7 +235,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetQueryStringValueOptionsByTypeForDecisionRuleShouldReturnListOfValueOptionsForGivenType()
+    public function testGetQueryStringValueOptionsByTypeForDecisionRuleShouldReturnListOfValueOptionsForGivenType(): void
     {
         $discountRulePluginMock = $this->createDiscountRuleWithValueOptionsPluginMock();
         $discountRulePluginMock->method('getQueryStringValueOptions')->willReturn(['a' => 'b']);
@@ -253,7 +254,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetQueryStringFieldExpressionsForFieldCollectorShouldReturnListOfExpressions()
+    public function testGetQueryStringFieldExpressionsForFieldCollectorShouldReturnListOfExpressions(): void
     {
         $discountFacade = $this->createDiscountFacade();
         $expressions = $discountFacade->getQueryStringFieldExpressionsForField(MetaProviderFactory::TYPE_COLLECTOR, 'sku');
@@ -264,7 +265,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetQueryStringFieldExpressionsForFieldDecisionRuleShouldReturnListOfExpressions()
+    public function testGetQueryStringFieldExpressionsForFieldDecisionRuleShouldReturnListOfExpressions(): void
     {
         $discountFacade = $this->createDiscountFacade();
         $expressions = $discountFacade->getQueryStringFieldExpressionsForField(MetaProviderFactory::TYPE_DECISION_RULE, 'sku');
@@ -275,7 +276,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetQueryStringComparatorExpressionsForDecisionRuleShouldReturnListOfComparatorExpressions()
+    public function testGetQueryStringComparatorExpressionsForDecisionRuleShouldReturnListOfComparatorExpressions(): void
     {
         $discountFacade = $this->createDiscountFacade();
         $expressions = $discountFacade->getQueryStringComparatorExpressions(MetaProviderFactory::TYPE_DECISION_RULE);
@@ -286,7 +287,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetQueryStringComparatorExpressionsForCollectorShouldReturnListOfComparatorExpressions()
+    public function testGetQueryStringComparatorExpressionsForCollectorShouldReturnListOfComparatorExpressions(): void
     {
         $discountFacade = $this->createDiscountFacade();
         $logicalComparators = $discountFacade->getQueryStringComparatorExpressions(MetaProviderFactory::TYPE_DECISION_RULE);
@@ -297,7 +298,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetQueryStringLogicalComparatorsShouldReturnListOfComparators()
+    public function testGetQueryStringLogicalComparatorsShouldReturnListOfComparators(): void
     {
         $discountFacade = $this->createDiscountFacade();
         $expressions = $discountFacade->getQueryStringLogicalComparators(MetaProviderFactory::TYPE_COLLECTOR);
@@ -308,7 +309,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testQueryStringCompareShouldReturnTrueWhenValuesMatches()
+    public function testQueryStringCompareShouldReturnTrueWhenValuesMatches(): void
     {
         $discountFacade = $this->createDiscountFacade();
         $clauseTransfer = new ClauseTransfer();
@@ -328,7 +329,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testQueryStringCompareShouldReturnFalseWhenValuesNotMatching()
+    public function testQueryStringCompareShouldReturnFalseWhenValuesNotMatching(): void
     {
         $discountFacade = $this->createDiscountFacade();
         $clauseTransfer = new ClauseTransfer();
@@ -348,7 +349,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateQueryStringByTypeShouldReturnListErrorsWhenInvalidQueryString()
+    public function testValidateQueryStringByTypeShouldReturnListErrorsWhenInvalidQueryString(): void
     {
         $discountFacade = $this->createDiscountFacade();
         $clauseTransfer = new ClauseTransfer();
@@ -366,7 +367,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateVoucherDiscountsMaxUsageShouldReturnTrueWhenUsageLimitIsNotReached()
+    public function testValidateVoucherDiscountsMaxUsageShouldReturnTrueWhenUsageLimitIsNotReached(): void
     {
         // Arrange
         $discountVoucherTransfer = $this->getDiscountVoucher([
@@ -389,7 +390,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateVoucherDiscountsMaxUsageShouldReturnFalseWhenUsageLimitIsReached()
+    public function testValidateVoucherDiscountsMaxUsageShouldReturnFalseWhenUsageLimitIsReached(): void
     {
         // Arrange
         $maxNumberOfUses = 5;
@@ -421,7 +422,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateVoucherDiscountsMaxUsageShouldReturnFalseWhenUsageLimitIsReachedForTwoVouchers()
+    public function testValidateVoucherDiscountsMaxUsageShouldReturnFalseWhenUsageLimitIsReachedForTwoVouchers(): void
     {
         // Arrange
         $maxNumberOfUses = 5;
@@ -462,7 +463,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateVoucherDiscountsMaxUsageShouldReturnTrueWhenMaxUsageZeroAndNotUsed()
+    public function testValidateVoucherDiscountsMaxUsageShouldReturnTrueWhenMaxUsageZeroAndNotUsed(): void
     {
         // Arrange
         $discountVoucherTransfer = $this->getDiscountVoucher([
@@ -485,7 +486,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateVoucherDiscountsMaxUsageShouldReturnTrueWhenMaxUsageZeroAndUsed()
+    public function testValidateVoucherDiscountsMaxUsageShouldReturnTrueWhenMaxUsageZeroAndUsed(): void
     {
         // Arrange
         $discountVoucherTransfer = $this->getDiscountVoucher([
@@ -564,7 +565,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSaveDiscountDecisionRuleShouldPersistAllConfiguredData()
+    public function testSaveDiscountDecisionRuleShouldPersistAllConfiguredData(): void
     {
         $discountConfiguratorTransfer = $this->createDiscountConfiguratorTransfer();
 
@@ -595,7 +596,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSaveDiscountVoucherShouldCreateDiscountWithEmptyVoucherPool()
+    public function testSaveDiscountVoucherShouldCreateDiscountWithEmptyVoucherPool(): void
     {
         $discountConfiguratorTransfer = $this->createDiscountConfiguratorTransfer();
         $discountConfiguratorTransfer->getDiscountGeneral()
@@ -617,7 +618,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSaveDiscountPersistsStoreRelation()
+    public function testSaveDiscountPersistsStoreRelation(): void
     {
         // Assign
         $idStores = [2];
@@ -644,7 +645,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateDiscountPersistsStoreRelation()
+    public function testUpdateDiscountPersistsStoreRelation(): void
     {
         // Assign
         $originalIdStores = [2];
@@ -679,7 +680,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateQueryStringByTypeShouldReturnEmptySetWhenQueryStringIsValid()
+    public function testValidateQueryStringByTypeShouldReturnEmptySetWhenQueryStringIsValid(): void
     {
         $discountFacade = $this->createDiscountFacade();
         $clauseTransfer = new ClauseTransfer();
@@ -697,7 +698,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateDiscountShouldUpdateExistingRecordWithNewData()
+    public function testUpdateDiscountShouldUpdateExistingRecordWithNewData(): void
     {
         $discountFacade = $this->createDiscountFacade();
         $discountConfiguratorTransfer = $this->createDiscountConfiguratorTransfer();
@@ -748,7 +749,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetHydratedDiscountConfiguratorByIdDiscountShouldHydrateToSameObjectWhichWasPersisted()
+    public function testGetHydratedDiscountConfiguratorByIdDiscountShouldHydrateToSameObjectWhichWasPersisted(): void
     {
         $discountFacade = $this->createDiscountFacade();
         $discountConfiguratorTransfer = $this->createDiscountConfiguratorTransfer();
@@ -779,7 +780,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testToggleDiscountVisibilityWhenDisableShouldSetToIsActiveToFalse()
+    public function testToggleDiscountVisibilityWhenDisableShouldSetToIsActiveToFalse(): void
     {
         $discountFacade = $this->createDiscountFacade();
         $discountConfiguratorTransfer = $this->createDiscountConfiguratorTransfer();
@@ -796,7 +797,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testToggleDiscountVisibilityWhenDisableShouldSetToIsActiveToTrue()
+    public function testToggleDiscountVisibilityWhenDisableShouldSetToIsActiveToTrue(): void
     {
         $discountFacade = $this->createDiscountFacade();
         $discountConfiguratorTransfer = $this->createDiscountConfiguratorTransfer();
@@ -811,7 +812,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSaveVouchersShouldGenerateVouchers()
+    public function testSaveVouchersShouldGenerateVouchers(): void
     {
         $discountFacade = $this->createDiscountFacade();
         $discountConfiguratorTransfer = $this->createDiscountConfiguratorTransfer();
@@ -839,7 +840,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculatedPercentageShouldCalculatePercentageFromItemTotal()
+    public function testCalculatedPercentageShouldCalculatePercentageFromItemTotal(): void
     {
         $discountableItems = [];
 
@@ -866,7 +867,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculatedFixedShouldUseFixedAmountGiver()
+    public function testCalculatedFixedShouldUseFixedAmountGiver(): void
     {
         $discountFacade = $this->createDiscountFacade();
         $discountTransfer = new DiscountTransfer();
@@ -886,7 +887,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDistributeAmountShouldDistributeDiscountToDiscountableItems()
+    public function testDistributeAmountShouldDistributeDiscountToDiscountableItems(): void
     {
         $collectedDiscountTransfer = new CollectedDiscountTransfer();
 
@@ -925,7 +926,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testReleaseUsedVoucherCodesShouldSetNumberOfUsesCounterBack()
+    public function testReleaseUsedVoucherCodesShouldSetNumberOfUsesCounterBack(): void
     {
         $discountFacade = $this->createDiscountFacade();
         $discountConfiguratorTransfer = $this->createDiscountConfiguratorTransfer();
@@ -960,7 +961,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUseVoucherCodesShouldUpdateVoucherCounterThatItWasAlreadyUsed()
+    public function testUseVoucherCodesShouldUpdateVoucherCounterThatItWasAlreadyUsed(): void
     {
         $discountFacade = $this->createDiscountFacade();
         $discountConfiguratorTransfer = $this->createDiscountConfiguratorTransfer();
@@ -1005,7 +1006,7 @@ class DiscountFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
      */
-    protected function createDiscountConfiguratorTransfer()
+    protected function createDiscountConfiguratorTransfer(): DiscountConfiguratorTransfer
     {
         $discountConfiguratorTransfer = new DiscountConfiguratorTransfer();
 
@@ -1041,7 +1042,7 @@ class DiscountFacadeTest extends Unit
      *
      * @return \Spryker\Zed\Discount\Business\DiscountFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
      */
-    protected function createDiscountFacadeForDiscountRuleWithValueOptionsPlugin($dependencyType, $discountRulePluginMock)
+    protected function createDiscountFacadeForDiscountRuleWithValueOptionsPlugin(string $dependencyType, MockObject $discountRulePluginMock)
     {
         $discountFacade = $this->createDiscountFacade();
         $factory = new DiscountBusinessFactory();
@@ -1058,7 +1059,7 @@ class DiscountFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithValueOptionsPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createDiscountRuleWithValueOptionsPluginMock()
     {

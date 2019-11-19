@@ -48,15 +48,7 @@ class CmsUserConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
-    /**
-     * @return void
-     */
-    public function testUpdateCmsVersionPluginPersistsUserInformation()
+    public function testUpdateCmsVersionPluginPersistsUserInformation(): void
     {
         $container = new Container();
         $container[CmsUserConnectorDependencyProvider::FACADE_USER] = function (Container $container) {
@@ -85,7 +77,7 @@ class CmsUserConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandCmsVersionTransferAddsUserInformationToCmsVersionTransfer()
+    public function testExpandCmsVersionTransferAddsUserInformationToCmsVersionTransfer(): void
     {
         $container = new Container();
         $container[CmsUserConnectorDependencyProvider::FACADE_USER] = function (Container $container) {
@@ -107,7 +99,7 @@ class CmsUserConnectorFacadeTest extends Unit
      *
      * @return void
      */
-    protected function prepareTest($container)
+    protected function prepareTest(Container $container): void
     {
         $container[CmsUserConnectorDependencyProvider::QUERY_CONTAINER_CMS] = function (Container $container) {
             return new CmsUserConnectorToCmsQueryContainer($container->getLocator()
@@ -124,7 +116,7 @@ class CmsUserConnectorFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CmsUserConnector\Dependency\Facade\CmsUserConnectorToUserBridge|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createUserMockBridgeForUpdating()
     {
@@ -134,7 +126,7 @@ class CmsUserConnectorFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CmsUserConnector\Dependency\Facade\CmsUserConnectorToUserBridge|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createUserMockBridgeForExpanding()
     {
@@ -144,9 +136,9 @@ class CmsUserConnectorFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $userBridgeMock
+     * @param \Spryker\Zed\CmsUserConnector\Dependency\Facade\CmsUserConnectorToUserBridge|\PHPUnit\Framework\MockObject\MockObject $userBridgeMock
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CmsUserConnector\Dependency\Facade\CmsUserConnectorToUserBridge|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function mockUserMethodForUpdateUser($userBridgeMock)
     {
@@ -162,9 +154,9 @@ class CmsUserConnectorFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $userBridgeMock
+     * @param \Spryker\Zed\CmsUserConnector\Dependency\Facade\CmsUserConnectorToUserBridge|\PHPUnit\Framework\MockObject\MockObject $userBridgeMock
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CmsUserConnector\Dependency\Facade\CmsUserConnectorToUserBridge|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function mockUserMethodForExpandUser($userBridgeMock)
     {
@@ -178,7 +170,7 @@ class CmsUserConnectorFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    protected function createUserTransfer()
+    protected function createUserTransfer(): UserTransfer
     {
         $userTransfer = new UserTransfer();
         $userTransfer->setIdUser(1);
@@ -189,7 +181,7 @@ class CmsUserConnectorFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CmsUserConnector\Dependency\Facade\CmsUserConnectorToUserBridge|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function mockUserBridge()
     {
@@ -208,7 +200,7 @@ class CmsUserConnectorFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\CmsPageTransfer
      */
-    protected function createCmsPageTransfer(array $fixtures)
+    protected function createCmsPageTransfer(array $fixtures): CmsPageTransfer
     {
         $cmsPageTransfer = new CmsPageTransfer();
         $cmsPageTransfer->fromArray($fixtures, true);
@@ -219,7 +211,7 @@ class CmsUserConnectorFacadeTest extends Unit
     /**
      * @return array
      */
-    protected function createCmsPageTransferFixtures()
+    protected function createCmsPageTransferFixtures(): array
     {
         $fixtures = [
             CmsPageTransfer::IS_ACTIVE => 1,

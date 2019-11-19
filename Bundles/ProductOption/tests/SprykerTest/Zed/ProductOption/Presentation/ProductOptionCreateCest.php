@@ -27,7 +27,7 @@ class ProductOptionCreateCest
      *
      * @return void
      */
-    public function testCreateProductOptionGroupWithOptionValues(ProductOptionPresentationTester $i)
+    public function testCreateProductOptionGroupWithOptionValues(ProductOptionPresentationTester $i): void
     {
         $i->wantTo('Create single option group with one option');
         $i->expect('Option group with options created');

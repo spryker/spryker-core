@@ -28,7 +28,7 @@ class CustomerGroupListCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(CustomerGroupCommunicationTester $i)
+    public function breadcrumbIsVisible(CustomerGroupCommunicationTester $i): void
     {
         $i->amOnPage(CustomerGroupListPage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Customers / Customer Groups');
@@ -39,7 +39,7 @@ class CustomerGroupListCest
      *
      * @return void
      */
-    public function showListOfCustomerGroup(CustomerGroupCommunicationTester $i)
+    public function showListOfCustomerGroup(CustomerGroupCommunicationTester $i): void
     {
         $i->listDataTable(CustomerGroupListPage::URL . '/index/table');
         $i->seeDataTable();

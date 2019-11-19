@@ -28,7 +28,7 @@ class AvailabilityListCest
      *
      * @return void
      */
-    public function testDisplayListPage(AvailabilityGuiCommunicationTester $i)
+    public function testDisplayListPage(AvailabilityGuiCommunicationTester $i): void
     {
         $i->wantTo('Open availability list');
         $i->expect('List of all availability items');

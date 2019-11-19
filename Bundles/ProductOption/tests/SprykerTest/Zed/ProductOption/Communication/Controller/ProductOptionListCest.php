@@ -28,7 +28,7 @@ class ProductOptionListCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(ProductOptionCommunicationTester $i)
+    public function breadcrumbIsVisible(ProductOptionCommunicationTester $i): void
     {
         $i->amOnPage(ProductOptionListPage::URL);
         $i->seeBreadcrumbNavigation('Dashboard / Products / Product Options');

@@ -27,7 +27,7 @@ class CmsProductSearchContentWidgetPluginTest extends Unit
     /**
      * @return void
      */
-    public function testCmsProductSearchContentWidgetPluginCreated()
+    public function testCmsProductSearchContentWidgetPluginCreated(): void
     {
         $plugin = new CmsProductSearchContentWidgetPlugin(
             $this->createCmsContentWidgetConfigurationProviderMock()

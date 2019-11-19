@@ -28,7 +28,7 @@ class TestResourceWithInvalidAnnotationsController
      *
      * @return void
      */
-    public function getAction()
+    public function getAction(): void
     {
     }
 
@@ -44,7 +44,7 @@ class TestResourceWithInvalidAnnotationsController
      *
      * @return void
      */
-    public function postAction()
+    public function postAction(): void
     {
     }
 }

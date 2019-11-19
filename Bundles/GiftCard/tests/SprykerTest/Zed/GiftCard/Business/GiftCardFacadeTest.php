@@ -43,7 +43,7 @@ class GiftCardFacadeTest extends Test
     /**
      * @return void
      */
-    public function testFindByIdShouldReturnTransferObjectForExistingGiftCard()
+    public function testFindByIdShouldReturnTransferObjectForExistingGiftCard(): void
     {
         $giftCardTransfer = $this->tester->haveGiftCard(['attributes' => []]);
 
@@ -56,7 +56,7 @@ class GiftCardFacadeTest extends Test
     /**
      * @return void
      */
-    public function testCreateShouldAssertRequiredTransferObjectFields()
+    public function testCreateShouldAssertRequiredTransferObjectFields(): void
     {
         $giftCardTransfer = (new GiftCardBuilder([
             'attributes' => [],
@@ -71,7 +71,7 @@ class GiftCardFacadeTest extends Test
     /**
      * @return void
      */
-    public function testCreateShouldPersistGiftCard()
+    public function testCreateShouldPersistGiftCard(): void
     {
         $giftCardTransfer = (new GiftCardBuilder([
             'attributes' => [],
@@ -102,7 +102,7 @@ class GiftCardFacadeTest extends Test
         ShipmentGroupTransfer $shipmentGroupTransfer,
         array $expectedAllowedShipmentMethodNames,
         array $expectedDisallowedShipmentMethodNames
-    ) {
+    ): void {
         // Arrange
         $facade = $this->getFacadeWithMockedConfig();
 

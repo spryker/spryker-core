@@ -34,7 +34,7 @@ class ProductOptionGroupReaderTest extends MockProvider
     /**
      * @return void
      */
-    public function testGetProductOptionGroupByIdThrowsExceptionWhenOptionDoesNotExist()
+    public function testGetProductOptionGroupByIdThrowsExceptionWhenOptionDoesNotExist(): void
     {
         // Assign
         $queryContainerMock = $this->getQueryContainerMock();
@@ -63,7 +63,7 @@ class ProductOptionGroupReaderTest extends MockProvider
      *
      * @return void
      */
-    public function testGetProductOptionGroupByIdReturnsProductOptionGroupTransfer()
+    public function testGetProductOptionGroupByIdReturnsProductOptionGroupTransfer(): void
     {
         // Assign
         $localeFacadeMock = $this->createLocaleFacadeMock();

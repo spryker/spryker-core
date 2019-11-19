@@ -27,7 +27,7 @@ class ProductManagementProductViewCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(ProductManagementPresentationTester $i)
+    public function breadcrumbIsVisible(ProductManagementPresentationTester $i): void
     {
         $i->registerMoneyCollectionFormTypePlugin();
 

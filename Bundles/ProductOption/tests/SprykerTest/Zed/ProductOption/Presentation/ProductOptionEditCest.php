@@ -28,7 +28,7 @@ class ProductOptionEditCest
      *
      * @return void
      */
-    public function testEditOptionWithMultipleValues(ProductOptionPresentationTester $i)
+    public function testEditOptionWithMultipleValues(ProductOptionPresentationTester $i): void
     {
         $i->wantTo('Edit existing option group');
         $i->expect('Option group with options created');
@@ -87,7 +87,7 @@ class ProductOptionEditCest
     /**
      * @return \Spryker\Zed\ProductOption\Business\ProductOptionFacade
      */
-    protected function createProductOptionFacade()
+    protected function createProductOptionFacade(): ProductOptionFacade
     {
         return new ProductOptionFacade();
     }

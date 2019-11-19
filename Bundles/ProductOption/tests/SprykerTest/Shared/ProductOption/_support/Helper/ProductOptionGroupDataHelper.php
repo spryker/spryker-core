@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionTranslationTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup;
+use Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ProductOptionGroupDataHelper extends Module
@@ -34,7 +35,7 @@ class ProductOptionGroupDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
      */
-    public function haveProductOptionGroup(array $override = [])
+    public function haveProductOptionGroup(array $override = []): ProductOptionGroupTransfer
     {
         $productOptionGroupTransfer = (new ProductOptionGroupBuilder($override))->build();
 
@@ -50,7 +51,7 @@ class ProductOptionGroupDataHelper extends Module
      *
      * @return int
      */
-    protected function saveGroup(ProductOptionGroupTransfer $productOptionGroupTransfer)
+    protected function saveGroup(ProductOptionGroupTransfer $productOptionGroupTransfer): int
     {
         $entity = new SpyProductOptionGroup();
         $entity->fromArray($productOptionGroupTransfer->toArray());
@@ -81,7 +82,7 @@ class ProductOptionGroupDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
      */
-    public function haveProductOptionGroupWithValues(array $overrideGroup = [], array $overrideValues = [[[], [[]]]])
+    public function haveProductOptionGroupWithValues(array $overrideGroup = [], array $overrideValues = [[[], [[]]]]): ProductOptionGroupTransfer
     {
         $productOptionGroupTransfer = (new ProductOptionGroupBuilder($overrideGroup))->build();
         $productOptionGroupTransfer->addGroupNameTranslation(
@@ -112,7 +113,7 @@ class ProductOptionGroupDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\ProductOptionValueTransfer
      */
-    protected function createProductOptionValueTransfer(array $overrideValue = [], array $overridePrices = [])
+    protected function createProductOptionValueTransfer(array $overrideValue = [], array $overridePrices = []): ProductOptionValueTransfer
     {
         $productOptionValueTransfer = (new ProductOptionValueBuilder($overrideValue))
             ->build()
@@ -145,7 +146,7 @@ class ProductOptionGroupDataHelper extends Module
      *
      * @return int
      */
-    protected function getIdCurrency($currencyCode)
+    protected function getIdCurrency(string $currencyCode): int
     {
         return $this->getLocator()->currency()->facade()->fromIsoCode($currencyCode)->getIdCurrency();
     }
@@ -155,7 +156,7 @@ class ProductOptionGroupDataHelper extends Module
      *
      * @return int
      */
-    protected function getIdStore($storeName)
+    protected function getIdStore(string $storeName): int
     {
         if ($storeName === null) {
             return null;
@@ -169,7 +170,7 @@ class ProductOptionGroupDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\ProductOptionTranslationTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    protected function createProductOptionTranslationTransfer($key)
+    protected function createProductOptionTranslationTransfer(string $key)
     {
         $override = [ ProductOptionTranslationTransfer::KEY => $key ];
 
@@ -179,7 +180,7 @@ class ProductOptionGroupDataHelper extends Module
     /**
      * @return \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface
      */
-    public function getProductOptionFacade()
+    public function getProductOptionFacade(): ProductOptionFacadeInterface
     {
         return $this->getLocator()->productOption()->facade();
     }

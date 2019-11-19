@@ -28,7 +28,7 @@ class CustomerIndexCest
      *
      * @return void
      */
-    public function breadCrumbIsVisible(CustomerCommunicationTester $i)
+    public function breadCrumbIsVisible(CustomerCommunicationTester $i): void
     {
         $i->amOnPage(CustomerIndexPage::URL);
 

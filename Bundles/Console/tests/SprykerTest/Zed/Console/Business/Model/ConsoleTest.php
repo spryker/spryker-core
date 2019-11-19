@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Console\Business\Model;
 
 use Codeception\Test\Unit;
+use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\Console\Business\ConsoleBusinessFactory;
 use Spryker\Zed\Console\Business\ConsoleFacade;
 use Spryker\Zed\Console\ConsoleDependencyProvider;
@@ -36,7 +37,7 @@ class ConsoleTest extends Unit
     /**
      * @return void
      */
-    public function testGetCommunicationFactoryShouldReturnInstanceIfSet()
+    public function testGetCommunicationFactoryShouldReturnInstanceIfSet(): void
     {
         $console = $this->getConsole();
         $console->setFactory($this->getCommunicationFactoryMock());
@@ -50,7 +51,7 @@ class ConsoleTest extends Unit
     /**
      * @return void
      */
-    public function testPreRunPluginsWillExecutesBeforeConsoleCommands()
+    public function testPreRunPluginsWillExecutesBeforeConsoleCommands(): void
     {
         $container = new Container();
         $container[ConsoleDependencyProvider::PLUGINS_CONSOLE_PRE_RUN_HOOK] = function (Container $container) {
@@ -72,7 +73,7 @@ class ConsoleTest extends Unit
     /**
      * @return void
      */
-    public function testPostRunPluginsWillExecutesBeforeConsoleCommands()
+    public function testPostRunPluginsWillExecutesBeforeConsoleCommands(): void
     {
         $container = new Container();
         $container[ConsoleDependencyProvider::PLUGINS_CONSOLE_PRE_RUN_HOOK] = function (Container $container) {
@@ -94,7 +95,7 @@ class ConsoleTest extends Unit
     /**
      * @return void
      */
-    public function testGetQueryContainerShouldReturnNullIfNotSet()
+    public function testGetQueryContainerShouldReturnNullIfNotSet(): void
     {
         $console = $this->getConsole();
 
@@ -104,7 +105,7 @@ class ConsoleTest extends Unit
     /**
      * @return void
      */
-    public function testGetQueryContainerShouldReturnInstanceIfSet()
+    public function testGetQueryContainerShouldReturnInstanceIfSet(): void
     {
         $console = $this->getConsole();
         $console->setQueryContainer($this->getQueryContainerMock());
@@ -118,7 +119,7 @@ class ConsoleTest extends Unit
     /**
      * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
-    private function getCommunicationFactoryMock()
+    private function getCommunicationFactoryMock(): AbstractCommunicationFactory
     {
         return $this->getMockBuilder(AbstractCommunicationFactory::class)->disableOriginalConstructor()->getMock();
     }
@@ -126,7 +127,7 @@ class ConsoleTest extends Unit
     /**
      * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
-    private function getQueryContainerMock()
+    private function getQueryContainerMock(): AbstractQueryContainer
     {
         return $this->getMockBuilder(AbstractQueryContainer::class)->disableOriginalConstructor()->getMock();
     }
@@ -134,7 +135,7 @@ class ConsoleTest extends Unit
     /**
      * @return \SprykerTest\Zed\Console\Business\Model\Fixtures\ConsoleMock
      */
-    private function getConsole()
+    private function getConsole(): ConsoleMock
     {
         return new ConsoleMock('TestCommand');
     }
@@ -142,7 +143,7 @@ class ConsoleTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    private function getPreRunPluginMock()
+    private function getPreRunPluginMock(): MockObject
     {
         $mock = $this->getMockBuilder(ConsolePreRunHookPluginInterface::class)->setMethods(['preRun'])->getMock();
         $mock->expects($this->once())->method('preRun');
@@ -153,7 +154,7 @@ class ConsoleTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    private function getPostRunPluginMock()
+    private function getPostRunPluginMock(): MockObject
     {
         $mock = $this->getMockBuilder(ConsolePostRunHookPluginInterface::class)->setMethods(['postRun'])->getMock();
         $mock->expects($this->once())->method('postRun');
@@ -166,7 +167,7 @@ class ConsoleTest extends Unit
      *
      * @return \Spryker\Zed\Console\Business\ConsoleFacade
      */
-    protected function prepareFacade(Container $container)
+    protected function prepareFacade(Container $container): ConsoleFacade
     {
         $consoleBusinessFactory = new ConsoleBusinessFactory();
         $consoleBusinessFactory->setContainer($container);

@@ -163,7 +163,7 @@ class NavigationStorageListenerTest extends Unit
     /**
      * @return \Spryker\Zed\NavigationStorage\Business\NavigationStorageFacade
      */
-    protected function getNavigationStorageFacade()
+    protected function getNavigationStorageFacade(): NavigationStorageFacade
     {
         $factory = new NavigationStorageBusinessFactory();
         $factory->setConfig(new NavigationStorageConfigMock());

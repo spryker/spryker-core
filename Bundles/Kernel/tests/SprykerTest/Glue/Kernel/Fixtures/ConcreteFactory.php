@@ -16,7 +16,7 @@ class ConcreteFactory extends AbstractFactory
      *
      * @return mixed
      */
-    public function getProvidedDependency($key)
+    public function getProvidedDependency(string $key)
     {
         return parent::getProvidedDependency($key);
     }

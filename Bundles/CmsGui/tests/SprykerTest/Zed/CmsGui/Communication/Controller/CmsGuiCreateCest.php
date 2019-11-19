@@ -28,7 +28,7 @@ class CmsGuiCreateCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(CmsGuiCommunicationTester $i)
+    public function breadcrumbIsVisible(CmsGuiCommunicationTester $i): void
     {
         $i->registerCmsBlockStoreRelationFormTypePlugin();
         $i->amOnPage(CmsGuiCreatePage::URL);

@@ -11,6 +11,7 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\StockProductBuilder;
 use Generated\Shared\DataBuilder\TypeBuilder;
 use Generated\Shared\Transfer\TypeTransfer;
+use Spryker\Zed\Stock\Business\StockFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class StockDataHelper extends Module
@@ -22,7 +23,7 @@ class StockDataHelper extends Module
      *
      * @return void
      */
-    public function haveProductInStock(array $override = [])
+    public function haveProductInStock(array $override = []): void
     {
         $stockFacade = $this->getStockFacade();
         $stockTypeTransfer = (new TypeBuilder([TypeTransfer::NAME => 'Warehouse1']))->build();
@@ -33,7 +34,7 @@ class StockDataHelper extends Module
     /**
      * @return \Spryker\Zed\Stock\Business\StockFacadeInterface
      */
-    private function getStockFacade()
+    private function getStockFacade(): StockFacadeInterface
     {
         return $this->getLocator()->stock()->facade();
     }

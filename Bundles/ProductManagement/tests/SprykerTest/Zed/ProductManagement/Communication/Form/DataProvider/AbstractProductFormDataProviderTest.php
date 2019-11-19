@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductManagement\Communication\Form\DataProvider;
 
 use Codeception\Test\Unit;
+use PHPUnit\Framework\MockObject\MockObject;
 use ReflectionClass;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;
 
@@ -34,7 +35,7 @@ class AbstractProductFormDataProviderTest extends Unit
     /**
      * @return void
      */
-    public function testGetImageUrl()
+    public function testGetImageUrl(): void
     {
         $productFormDataProviderMock = $this->getProductFormDataProviderMock();
 
@@ -56,7 +57,7 @@ class AbstractProductFormDataProviderTest extends Unit
     /**
      * @return array
      */
-    public function prepareTestData()
+    public function prepareTestData(): array
     {
         $data = [
             self::IMAGE_URL_PREFIX . self::PIM_IMAGE_URL => self::PIM_IMAGE_URL,
@@ -71,7 +72,7 @@ class AbstractProductFormDataProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getProductFormDataProviderMock()
+    protected function getProductFormDataProviderMock(): MockObject
     {
         $productFormDataProviderMock = $this->getMockBuilder(AbstractProductFormDataProvider::class)
             ->disableOriginalConstructor()

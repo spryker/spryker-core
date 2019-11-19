@@ -33,7 +33,7 @@ class ProductPackagingUnitHelper extends Module
 
         $productPackagingUnitEntity = $this->storeProductPackagingUnit($productPackagingUnitTransfer);
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($productPackagingUnitEntity) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productPackagingUnitEntity): void {
             $this->cleanupProductPackagingUnit($productPackagingUnitEntity);
         });
 
@@ -44,7 +44,7 @@ class ProductPackagingUnitHelper extends Module
 
             $this->storeProductPackagingUnitAmount($productPackagingUnitAmountEntity);
 
-            $this->getDataCleanupHelper()->_addCleanup(function () use ($productPackagingUnitAmountEntity) {
+            $this->getDataCleanupHelper()->_addCleanup(function () use ($productPackagingUnitAmountEntity): void {
                 $this->cleanupProductPackagingUnitAmount($productPackagingUnitAmountEntity);
             });
         }
@@ -57,7 +57,7 @@ class ProductPackagingUnitHelper extends Module
      *
      * @return \Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer
      */
-    protected function storeProductPackagingUnit(SpyProductPackagingUnitEntityTransfer $productPackagingUnitEntity)
+    protected function storeProductPackagingUnit(SpyProductPackagingUnitEntityTransfer $productPackagingUnitEntity): SpyProductPackagingUnitEntityTransfer
     {
         $spyProductPackagingUnitEntity = $this->getProductPackagingUnitQuery()
             ->filterByIdProductPackagingUnit($productPackagingUnitEntity->getIdProductPackagingUnit())
@@ -79,7 +79,7 @@ class ProductPackagingUnitHelper extends Module
      *
      * @return \Generated\Shared\Transfer\SpyProductPackagingUnitAmountEntityTransfer
      */
-    protected function storeProductPackagingUnitAmount(SpyProductPackagingUnitAmountEntityTransfer $productPackagingUnitAmountEntity)
+    protected function storeProductPackagingUnitAmount(SpyProductPackagingUnitAmountEntityTransfer $productPackagingUnitAmountEntity): SpyProductPackagingUnitAmountEntityTransfer
     {
         $spyProductPackagingUnitAmountEntity = $this->getProductPackagingUnitAmountQuery()
             ->filterByFkProductPackagingUnit($productPackagingUnitAmountEntity->getFkProductPackagingUnit())
@@ -101,7 +101,7 @@ class ProductPackagingUnitHelper extends Module
      *
      * @return void
      */
-    protected function cleanupProductPackagingUnit(SpyProductPackagingUnitEntityTransfer $productPackagingUnitEntity)
+    protected function cleanupProductPackagingUnit(SpyProductPackagingUnitEntityTransfer $productPackagingUnitEntity): void
     {
         $this->debug(sprintf('Deleting product packaging unit with ID: %d', $productPackagingUnitEntity->getIdProductPackagingUnit()));
 
@@ -115,7 +115,7 @@ class ProductPackagingUnitHelper extends Module
      *
      * @return void
      */
-    protected function cleanupProductPackagingUnitAmount(SpyProductPackagingUnitAmountEntityTransfer $productPackagingUnitAmountEntity)
+    protected function cleanupProductPackagingUnitAmount(SpyProductPackagingUnitAmountEntityTransfer $productPackagingUnitAmountEntity): void
     {
         $this->debug(sprintf('Deleting product packaging unit amount with ID: %d', $productPackagingUnitAmountEntity->getIdProductPackagingUnitAmount()));
 
@@ -143,7 +143,7 @@ class ProductPackagingUnitHelper extends Module
     /**
      * @return void
      */
-    public function prepareOrder()
+    public function prepareOrder(): void
     {
     }
 }

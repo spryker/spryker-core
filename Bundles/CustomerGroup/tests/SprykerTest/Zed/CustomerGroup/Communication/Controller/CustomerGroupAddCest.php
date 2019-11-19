@@ -28,7 +28,7 @@ class CustomerGroupAddCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(CustomerGroupCommunicationTester $i)
+    public function breadcrumbIsVisible(CustomerGroupCommunicationTester $i): void
     {
         $i->amOnPage(CustomerGroupAddPage::URL);
 

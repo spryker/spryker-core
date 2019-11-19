@@ -133,7 +133,7 @@ class TranslatorFacadeTest extends Test
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\Translator\Dependency\Facade\TranslatorToLocaleFacadeBridge|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getLocaleFacadeMock(): MockObject
     {

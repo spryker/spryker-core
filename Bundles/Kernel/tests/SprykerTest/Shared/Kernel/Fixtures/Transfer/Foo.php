@@ -20,7 +20,7 @@ class Foo extends AbstractTransfer
     /**
      * @return \SprykerTest\Shared\Kernel\Fixtures\Transfer\Foo\Bar
      */
-    public function getBar()
+    public function getBar(): Bar
     {
         return $this->bar;
     }

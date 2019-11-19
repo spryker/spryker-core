@@ -71,7 +71,7 @@ class ProductOptionValuePriceReaderTest extends Unit
     /**
      * @return void
      */
-    public function testLocalizeGroupPricesRemovesOptionsWhenCurrentCurrencyIsNotDefined()
+    public function testLocalizeGroupPricesRemovesOptionsWhenCurrentCurrencyIsNotDefined(): void
     {
         // Assign
         $productOptionGroupTransfer = new StorageProductOptionGroupTransfer();
@@ -117,7 +117,7 @@ class ProductOptionValuePriceReaderTest extends Unit
     /**
      * @return void
      */
-    public function testLocalizeGroupPricesRemovesOptionsWhenPriceIsNull()
+    public function testLocalizeGroupPricesRemovesOptionsWhenPriceIsNull(): void
     {
         // Assign
         $productOptionGroupTransfer = new StorageProductOptionGroupTransfer();
@@ -168,7 +168,7 @@ class ProductOptionValuePriceReaderTest extends Unit
     /**
      * @return void
      */
-    public function testLocalizeGroupPricesLocalizesAllProductOptionValuePrices()
+    public function testLocalizeGroupPricesLocalizesAllProductOptionValuePrices(): void
     {
         // Assign
         $productOptionGroupTransfer = new StorageProductOptionGroupTransfer();
@@ -222,7 +222,7 @@ class ProductOptionValuePriceReaderTest extends Unit
      *
      * @return void
      */
-    protected function mockCurrentCurrency()
+    protected function mockCurrentCurrency(): void
     {
         $currentCurrencyMock = $this->getMockBuilder(CurrencyTransfer::class)->getMock();
         $currentCurrencyMock
@@ -241,7 +241,7 @@ class ProductOptionValuePriceReaderTest extends Unit
      *
      * @return void
      */
-    protected function mockCurrentPriceMode()
+    protected function mockCurrentPriceMode(): void
     {
         $this->priceClientMock
             ->expects($this->any())
@@ -254,7 +254,7 @@ class ProductOptionValuePriceReaderTest extends Unit
      *
      * @return array
      */
-    protected function filterPrices(StorageProductOptionGroupTransfer $productOptionGroupTransfer)
+    protected function filterPrices(StorageProductOptionGroupTransfer $productOptionGroupTransfer): array
     {
         $filtered = array_map(
             function (StorageProductOptionValueTransfer $productOptionValueTransfer) {

@@ -28,7 +28,7 @@ class AclRoleEditCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(AclCommunicationTester $i)
+    public function breadcrumbIsVisible(AclCommunicationTester $i): void
     {
         $i->listDataTable(AclRoleListPage::URL . '/table');
         $i->clickDataTableEditButton();

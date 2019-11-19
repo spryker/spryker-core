@@ -92,7 +92,7 @@ class CheckoutFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckoutSuccessfully()
+    public function testCheckoutSuccessfully(): void
     {
         $product = $this->tester->haveProduct();
         $this->tester->haveProductInStock([StockProductTransfer::SKU => $product->getSku()]);
@@ -115,7 +115,7 @@ class CheckoutFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckoutSuccessfullyWithItemLevelShippingAddresses()
+    public function testCheckoutSuccessfullyWithItemLevelShippingAddresses(): void
     {
         $product = $this->tester->haveProduct();
         $this->tester->haveProductInStock([StockProductTransfer::SKU => $product->getSku(), StockProductTransfer::QUANTITY => 3]);
@@ -142,7 +142,7 @@ class CheckoutFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckoutResponseContainsErrorIfCustomerAlreadyRegistered()
+    public function testCheckoutResponseContainsErrorIfCustomerAlreadyRegistered(): void
     {
         $this->tester->haveCustomer([CustomerTransfer::EMAIL => 'max@mustermann.de']);
         $product = $this->tester->haveProduct();
@@ -169,7 +169,7 @@ class CheckoutFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckoutResponseContainsErrorIfCustomerAlreadyRegisteredWithItemLevelShippingAddress()
+    public function testCheckoutResponseContainsErrorIfCustomerAlreadyRegisteredWithItemLevelShippingAddress(): void
     {
         $this->tester->haveCustomer([CustomerTransfer::EMAIL => 'max@mustermann.de']);
         $product = $this->tester->haveProduct();
@@ -195,7 +195,7 @@ class CheckoutFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckoutCreatesOrderItems()
+    public function testCheckoutCreatesOrderItems(): void
     {
         $product1 = $this->tester->haveProduct();
         $this->tester->haveProductInStock([StockProductTransfer::SKU => $product1->getSku()]);
@@ -230,7 +230,7 @@ class CheckoutFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckoutCreatesOrderItemsWithItemLevelShippingAddresses()
+    public function testCheckoutCreatesOrderItemsWithItemLevelShippingAddresses(): void
     {
         // Arrange
         $product1 = $this->tester->haveProduct();
@@ -271,7 +271,7 @@ class CheckoutFacadeTest extends Unit
      *
      * @return void
      */
-    public function testRegistrationIsTriggeredOnNewNonGuestCustomer()
+    public function testRegistrationIsTriggeredOnNewNonGuestCustomer(): void
     {
         $quoteTransfer = $this->getBaseQuoteTransfer();
 
@@ -287,7 +287,7 @@ class CheckoutFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRegistrationIsTriggeredOnNewNonGuestCustomerWithItemLevelShippingAddresses()
+    public function testRegistrationIsTriggeredOnNewNonGuestCustomerWithItemLevelShippingAddresses(): void
     {
         $quoteTransfer = $this->getBaseQuoteTransferWithItemLevelShippingAddresses();
 
@@ -306,7 +306,7 @@ class CheckoutFacadeTest extends Unit
      *
      * @return void
      */
-    public function testRegistrationDoesNotCreateACustomerIfGuest()
+    public function testRegistrationDoesNotCreateACustomerIfGuest(): void
     {
         $quoteTransfer = $this->getBaseQuoteTransfer();
         $quoteTransfer->getCustomer()->setIsGuest(true);
@@ -323,7 +323,7 @@ class CheckoutFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRegistrationDoesNotCreateACustomerIfGuestWithItemLevelShippingAddresses()
+    public function testRegistrationDoesNotCreateACustomerIfGuestWithItemLevelShippingAddresses(): void
     {
         $quoteTransfer = $this->getBaseQuoteTransferWithItemLevelShippingAddresses();
         $quoteTransfer->getCustomer()->setIsGuest(true);
@@ -340,7 +340,7 @@ class CheckoutFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckoutResponseContainsErrorIfStockNotSufficient()
+    public function testCheckoutResponseContainsErrorIfStockNotSufficient(): void
     {
         $quoteTransfer = $this->getBaseQuoteTransfer();
         $productAbstract1 = new SpyProductAbstract();
@@ -385,7 +385,7 @@ class CheckoutFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckoutResponseContainsErrorIfStockNotSufficientWithItemLevelShippingAddresses()
+    public function testCheckoutResponseContainsErrorIfStockNotSufficientWithItemLevelShippingAddresses(): void
     {
         $quoteTransfer = $this->getBaseQuoteTransferWithItemLevelShippingAddresses();
         $productAbstract1 = new SpyProductAbstract();
@@ -430,7 +430,7 @@ class CheckoutFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckoutTriggersStateMachine()
+    public function testCheckoutTriggersStateMachine(): void
     {
         $quoteTransfer = $this->getBaseQuoteTransfer();
 
@@ -455,7 +455,7 @@ class CheckoutFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckoutTriggersStateMachineWithItemLevelShippingAddresses()
+    public function testCheckoutTriggersStateMachineWithItemLevelShippingAddresses(): void
     {
         $quoteTransfer = $this->getBaseQuoteTransferWithItemLevelShippingAddresses();
 
@@ -739,7 +739,7 @@ class CheckoutFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Sales\Communication\Plugin\SalesOrderSaverPlugin
      */
-    protected function createSalesOrderSaverPlugin()
+    protected function createSalesOrderSaverPlugin(): SalesOrderSaverPlugin
     {
         $salesOrderSaverPlugin = new SalesOrderSaverPlugin();
         $salesOrderSaverPlugin->setFacade($this->createSalesFacadeMock());
@@ -750,7 +750,7 @@ class CheckoutFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Customer\Communication\Plugin\Checkout\CustomerOrderSavePlugin
      */
-    protected function createCustomerOrderSavePlugin()
+    protected function createCustomerOrderSavePlugin(): CustomerOrderSavePlugin
     {
         $container = new Container();
         $customerDependencyProvider = new CustomerDependencyProvider();
@@ -774,7 +774,7 @@ class CheckoutFacadeTest extends Unit
      *
      * @return \Spryker\Zed\Sales\Business\SalesFacade
      */
-    protected function createSalesFacadeMock($testStateMachineProcessName = 'Test01')
+    protected function createSalesFacadeMock(string $testStateMachineProcessName = 'Test01'): SalesFacade
     {
         $this->tester->configureTestStateMachine([$testStateMachineProcessName]);
 
@@ -804,7 +804,7 @@ class CheckoutFacadeTest extends Unit
      *
      * @return \Generated\Shared\DataBuilder\ItemBuilder
      */
-    protected function createItemWithShipment(array $seed, ?CustomerTransfer $customer = null)
+    protected function createItemWithShipment(array $seed, ?CustomerTransfer $customer = null): ItemBuilder
     {
         $address = (new AddressBuilder([AddressTransfer::EMAIL => $customer->getEmail()]));
 

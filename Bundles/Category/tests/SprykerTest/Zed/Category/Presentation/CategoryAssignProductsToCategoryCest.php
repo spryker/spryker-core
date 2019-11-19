@@ -27,7 +27,7 @@ class CategoryAssignProductsToCategoryCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(CategoryPresentationTester $i)
+    public function breadcrumbIsVisible(CategoryPresentationTester $i): void
     {
         $i->amOnPage(CategoryListPage::URL);
         $i->waitForElement(CategoryListPage::getAssignProductsButtonSelector());

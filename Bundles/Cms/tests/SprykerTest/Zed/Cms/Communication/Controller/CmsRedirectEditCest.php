@@ -28,7 +28,7 @@ class CmsRedirectEditCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(CmsCommunicationTester $i)
+    public function breadcrumbIsVisible(CmsCommunicationTester $i): void
     {
         $i->haveUrlRedirect();
         $i->listDataTable(CmsRedirectListPage::URL . '/table');

@@ -45,7 +45,7 @@ class TokenHashGeneratorTest extends Unit
     /**
      * @return void
      */
-    public function testTokenHashGeneratorGeneratesRandomHashes()
+    public function testTokenHashGeneratorGeneratesRandomHashes(): void
     {
         $hashOne = $this->tokenGenerator->generateToken();
         $hashTwo = $this->tokenGenerator->generateToken();

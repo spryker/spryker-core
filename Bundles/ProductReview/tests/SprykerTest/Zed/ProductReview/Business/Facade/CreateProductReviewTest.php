@@ -35,7 +35,7 @@ class CreateProductReviewTest extends Unit
     /**
      * @return void
      */
-    public function testCreateProductReviewPersistsToDatabase()
+    public function testCreateProductReviewPersistsToDatabase(): void
     {
         // Arrange
         $productReviewTransfer = $this->tester->haveProductReview();
@@ -55,7 +55,7 @@ class CreateProductReviewTest extends Unit
      *
      * @return void
      */
-    public function testCreateProductReviewIsCreatedAlwaysWithPendingStatus($inputStatus)
+    public function testCreateProductReviewIsCreatedAlwaysWithPendingStatus(string $inputStatus): void
     {
         // Arrange
         $productReviewTransfer = $this->tester->haveProductReview([
@@ -73,7 +73,7 @@ class CreateProductReviewTest extends Unit
     /**
      * @return array
      */
-    public function statusDataProvider()
+    public function statusDataProvider(): array
     {
         return [
             'status not defined' => [null],
@@ -86,7 +86,7 @@ class CreateProductReviewTest extends Unit
     /**
      * @return void
      */
-    public function testCreateProductReviewReturnsUpdatedTransfer()
+    public function testCreateProductReviewReturnsUpdatedTransfer(): void
     {
         // Arrange
         $productReviewTransfer = $this->tester->haveProductReview();
@@ -106,7 +106,7 @@ class CreateProductReviewTest extends Unit
     /**
      * @return void
      */
-    public function testCreateProductReviewThrowsExceptionWhenRatingExceedsRange()
+    public function testCreateProductReviewThrowsExceptionWhenRatingExceedsRange(): void
     {
         // Arrange
         $productReviewClientMock = $this->getProductReviewClientMock();

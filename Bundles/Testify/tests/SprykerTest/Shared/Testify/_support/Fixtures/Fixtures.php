@@ -27,7 +27,7 @@ class Fixtures implements LoaderInterface
     /**
      * @param array $settings
      */
-    public function __construct($settings = [])
+    public function __construct(array $settings = [])
     {
         //These are the suite settings
         $this->settings = $settings;
@@ -38,7 +38,7 @@ class Fixtures implements LoaderInterface
      *
      * @return void
      */
-    public function loadTests($filename): void
+    public function loadTests(string $filename): void
     {
         Parser::load($filename);
         $fixtureClasses = Parser::getClassesFromFile($filename);
