@@ -33,6 +33,6 @@ class CmsBlockGuiEditCest
         $i->registerCmsBlockStoreRelationFormTypePlugin();
         $i->listDataTable(CmsBlockGuiListPage::URL . '/table');
         $i->clickDataTableButton('Edit Block');
-        $i->seeBreadcrumbNavigation('Dashboard / Content Management / Blocks / Edit CMS Block');
+        $i->seeBreadcrumbNavigation('Content Management / Blocks / Edit CMS Block');
     }
 }

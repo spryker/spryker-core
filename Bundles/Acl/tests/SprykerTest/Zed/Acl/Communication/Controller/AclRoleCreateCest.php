@@ -31,6 +31,6 @@ class AclRoleCreateCest
     public function breadcrumbIsVisible(AclCommunicationTester $i)
     {
         $i->amOnPage(AclRoleCreatePage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Users Control / Roles / Create new Role');
+        $i->seeBreadcrumbNavigation('Users Control / Roles / Create new Role');
     }
 }
