@@ -17,7 +17,7 @@ class FileManagerDataImportHelper extends Module
      */
     public function ensureDatabaseTableIsEmpty(): void
     {
-        $mimeTypeQuery = $this->getMimeTypeQuery()->deleteAll();
+        $this->getMimeTypeQuery()->deleteAll();
     }
 
     /**

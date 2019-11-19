@@ -4,7 +4,7 @@
   "description": "ContentFileGui module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/content-file": "^1.0.0",
     "spryker/content-gui-extension": "^1.1.0",
     "spryker/file-manager": "^1.1.0",

@@ -109,7 +109,8 @@ class ContainerTest extends Unit
         //Arrange
         $container = new Container();
         $container->set(static::SERVICE, function () {
-            return new class {
+            return new class
+            {
             };
         });
 
@@ -129,7 +130,8 @@ class ContainerTest extends Unit
         //Arrange
         $container = new Container();
         $container->set(static::SERVICE, function () {
-            return new class {
+            return new class
+            {
                 /**
                  * @param \Symfony\Component\HttpKernel\Event\RequestEvent $requestEvent
                  *
@@ -157,7 +159,8 @@ class ContainerTest extends Unit
         //Arrange
         $container = new Container();
         $container->set(static::SERVICE, $container->factory(function () {
-            return new class {
+            return new class
+            {
             };
         }));
 

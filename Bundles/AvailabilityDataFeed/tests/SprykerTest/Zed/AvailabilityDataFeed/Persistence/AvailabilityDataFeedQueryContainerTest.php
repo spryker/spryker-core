@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AvailabilityDataFeedTransfer;
 use Orm\Zed\Locale\Persistence\Base\SpyLocaleQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
 use Spryker\Zed\AvailabilityDataFeed\Persistence\AvailabilityDataFeedQueryContainer;
 
 /**
@@ -124,8 +123,7 @@ class AvailabilityDataFeedQueryContainerTest extends Unit
      */
     protected function createAvailabilityDataFeedQueryContainer()
     {
-        $availabilityQueryContainer = new AvailabilityQueryContainer();
-        $availabilityDataFeedQueryContainer = new AvailabilityDataFeedQueryContainer($availabilityQueryContainer);
+        $availabilityDataFeedQueryContainer = new AvailabilityDataFeedQueryContainer();
 
         return $availabilityDataFeedQueryContainer;
     }
