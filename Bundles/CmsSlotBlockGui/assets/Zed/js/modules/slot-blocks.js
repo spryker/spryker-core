@@ -34,12 +34,7 @@ var SlotBlocks = function (options) {
         }
 
         var cellIndex = $(this).index();
-        if (!_self.blocksTable.isUnsaved()) {
-            _self.updateRow(cellIndex);
-            return;
-        }
-
-        _self.showAlert();
+        _self.updateRow(cellIndex);
     };
 
     this.updateRow = function (index) {
@@ -76,38 +71,13 @@ var SlotBlocks = function (options) {
             return;
         }
         _self.isFirstInit = false;
-        _self.$slotTable.on('preDraw', function () {
-            if (_self.blocksTable.isUnsaved()) {
-                _self.showAlert();
-                return false;
-            }
-        });
     };
 
     this.getDataTableApi = function () {
         return _self.$slotTable;
     };
 
-    this.showAlert = function () {
-        var $cmsSlotBlock = _self.blocksTable.$cmsSlotBlocks;
-        var $confirmButton = _self.slotBlocksForm.saveButton;
-        window.sweetAlert({
-            title: $cmsSlotBlock.data('alert-title'),
-            html: false,
-            allowEscapeKey: false,
-            showCancelButton: true,
-            customClass: 'cms-slot-blocks-alert',
-            confirmButtonColor: '#1ab394',
-            confirmButtonText: $confirmButton.val(),
-            cancelButtonText: $cmsSlotBlock.data('alert-cancel-button'),
-        }, function (isConfirm) {
-            if (isConfirm) {
-                $confirmButton.click();
-                return;
-            }
-            _self.blocksTable.resetButtonsHandler();
-        });
-    }
+
 };
 
 module.exports = SlotBlocks;
