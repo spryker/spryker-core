@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\CartCode\Business;
 
-use Spryker\Zed\CartCode\Business\Operation\CodeAdder;
-use Spryker\Zed\CartCode\Business\Operation\CodeAdderInterface;
-use Spryker\Zed\CartCode\Business\Operation\CodeDeleter;
-use Spryker\Zed\CartCode\Business\Operation\CodeDeleterInterface;
+use Spryker\Zed\CartCode\Business\Operation\CartCodeAdder;
+use Spryker\Zed\CartCode\Business\Operation\CartCodeDeleter;
+use Spryker\Zed\CartCode\Business\Operation\CartCodeAdderInterface;
+use Spryker\Zed\CartCode\Business\Operation\CartCodeDeleterInterface;
 use Spryker\Zed\CartCode\Business\Operation\QuoteOperationChecker;
 use Spryker\Zed\CartCode\Business\Operation\QuoteOperationCheckerInterface;
 use Spryker\Zed\CartCode\CartCodeDependencyProvider;
@@ -24,11 +24,11 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class CartCodeBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\CartCode\Business\Operation\CodeAdderInterface
+     * @return \Spryker\Zed\CartCode\Business\Operation\CartCodeAdderInterface
      */
-    public function createCodeAdder(): CodeAdderInterface
+    public function createCartCodeAdder(): CartCodeAdderInterface
     {
-        return new CodeAdder(
+        return new CartCodeAdder(
             $this->getCalculationFacade(),
             $this->createQuoteOperationChecker(),
             $this->getCartCodePlugins()
@@ -36,11 +36,11 @@ class CartCodeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CartCode\Business\Operation\CodeDeleterInterface
+     * @return \Spryker\Zed\CartCode\Business\Operation\CartCodeDeleterInterface
      */
-    public function createCodeDeleter(): CodeDeleterInterface
+    public function createCartCodeDeleter(): CartCodeDeleterInterface
     {
-        return new CodeDeleter(
+        return new CartCodeDeleter(
             $this->getCalculationFacade(),
             $this->createQuoteOperationChecker(),
             $this->getCartCodePlugins()

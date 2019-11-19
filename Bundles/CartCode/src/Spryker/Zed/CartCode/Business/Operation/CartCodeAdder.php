@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartCode\Dependency\Facade\CartCodeToCalculationFacadeInterface;
 
-class CodeDeleter implements CodeDeleterInterface
+class CartCodeAdder implements CartCodeAdderInterface
 {
     /**
      * @var \Spryker\Zed\CartCode\Dependency\Facade\CartCodeToCalculationFacadeInterface
@@ -45,21 +45,21 @@ class CodeDeleter implements CodeDeleterInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param string $voucherCode
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function removeCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
+    public function addCandidate(QuoteTransfer $quoteTransfer, string $voucherCode): CartCodeOperationResultTransfer
     {
         $lockedCartCodeOperationResultTransfer = $this->quoteOperationChecker->checkLockedQuoteResponse($quoteTransfer);
         if ($lockedCartCodeOperationResultTransfer) {
             return $lockedCartCodeOperationResultTransfer;
         }
 
-        $quoteTransfer = $this->executePlugins($quoteTransfer, $code);
+        $quoteTransfer = $this->executeCartCodePlugins($quoteTransfer, $voucherCode);
         $quoteTransfer = $this->calculationFacade->recalculateQuote($quoteTransfer);
 
-        return $this->processRecalculationResults($quoteTransfer, $code);
+        return $this->processRecalculationResults($quoteTransfer, $voucherCode);
     }
 
     /**
@@ -68,10 +68,10 @@ class CodeDeleter implements CodeDeleterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function executePlugins(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
+    protected function executeCartCodePlugins(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
     {
         foreach ($this->cartCodePlugins as $cartCodePlugin) {
-            $quoteTransfer = $cartCodePlugin->removeCode($quoteTransfer, $code);
+            $quoteTransfer = $cartCodePlugin->addCandidate($quoteTransfer, $code);
         }
 
         return $quoteTransfer;

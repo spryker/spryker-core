@@ -78,15 +78,13 @@ class RequestResourceExtractor implements RequestResourceExtractorInterface
         $request->attributes->set(RestResourceInterface::RESOURCE_DATA, $data);
 
         if (!isset($data[RestResourceInterface::RESOURCE_TYPE]) ||
-            (!isset($data[RestResourceInterface::RESOURCE_ATTRIBUTES])
-                && $request->getMethod() !== Request::METHOD_DELETE)
-        ) {
+            !isset($data[RestResourceInterface::RESOURCE_ATTRIBUTES])) {
             return null;
         }
 
         return $this->restResourceBuilder->createRestResource(
             $data[RestResourceInterface::RESOURCE_TYPE],
-            $this->getResourceId($request, $data),
+            $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_ID),
             $this->mapEntityTransfer($request, $data)
         );
     }

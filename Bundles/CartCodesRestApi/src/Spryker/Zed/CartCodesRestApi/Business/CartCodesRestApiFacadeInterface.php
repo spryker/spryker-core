@@ -28,6 +28,11 @@ interface CartCodesRestApiFacadeInterface
     /**
      * Specification:
      * - Removes code from QuoteTransfer.
+     * - Calls CartCodeFacade.
+     * - Finds QuoteTransfer by UUID.
+     * - Return CartCodeOperationResultTransfer with message and with no QuoteTransfer if Quote is not found.
+     * - Finds Discount by ID.
+     * - Return CartCodeOperationResultTransfer with message and with no QuoteTransfer if discount was not deleted.
      *
      * @api
      *

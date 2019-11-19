@@ -105,7 +105,8 @@ class CartCodesRestApiFacadeTest extends Unit
 
         // Act
         $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCode(
-            $quoteTransfer, $this->tester::ID_DISCOUNT
+            $quoteTransfer,
+            $this->tester::ID_DISCOUNT
         );
 
         // Assert
@@ -144,7 +145,8 @@ class CartCodesRestApiFacadeTest extends Unit
 
         // Act
         $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCode(
-            $quoteTransfer, $this->tester::ID_DISCOUNT
+            $quoteTransfer,
+            $this->tester::ID_DISCOUNT
         );
 
         // Assert

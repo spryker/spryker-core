@@ -48,7 +48,12 @@ class CartCodeDeleter implements CartCodeDeleterInterface
     {
         $quoteTransfer = $this->createQuoteTransfer($restRequest, CartsRestApiConfig::RESOURCE_CARTS);
 
-        return $this->removeCode($quoteTransfer, $restRequest);
+        $cartCodeOperationResultTransfer = $this->cartCodesRestApiClient->removeCode(
+            $quoteTransfer,
+            $restRequest->getResource()->getId()
+        );
+
+        return $this->cartCodeResponseBuilder->buildCartRestResponse($cartCodeOperationResultTransfer, $restRequest);
     }
 
     /**
@@ -60,23 +65,12 @@ class CartCodeDeleter implements CartCodeDeleterInterface
     {
         $quoteTransfer = $this->createQuoteTransfer($restRequest, CartsRestApiConfig::RESOURCE_GUEST_CARTS);
 
-        return $this->removeCode($quoteTransfer, $restRequest);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function removeCode(QuoteTransfer $quoteTransfer, RestRequestInterface $restRequest): RestResponseInterface
-    {
         $cartCodeOperationResultTransfer = $this->cartCodesRestApiClient->removeCode(
             $quoteTransfer,
             $restRequest->getResource()->getId()
         );
 
-        return $this->cartCodeResponseBuilder->buildCartRestResponse($cartCodeOperationResultTransfer, $restRequest);
+        return $this->cartCodeResponseBuilder->buildGuestCartRestResponse($cartCodeOperationResultTransfer);
     }
 
     /**
@@ -87,12 +81,12 @@ class CartCodeDeleter implements CartCodeDeleterInterface
      */
     protected function createQuoteTransfer(RestRequestInterface $restRequest, string $resourceType): QuoteTransfer
     {
-        $cartResource = $restRequest->findParentResourceByType($resourceType);
+        $parentResource = $restRequest->findParentResourceByType($resourceType);
         $customerReference = $restRequest->getRestUser()->getNaturalIdentifier();
         $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
 
         return (new QuoteTransfer())
-            ->setUuid($cartResource->getId())
+            ->setUuid($parentResource->getId())
             ->setCustomer($customerTransfer)
             ->setCustomerReference($customerReference);
     }
