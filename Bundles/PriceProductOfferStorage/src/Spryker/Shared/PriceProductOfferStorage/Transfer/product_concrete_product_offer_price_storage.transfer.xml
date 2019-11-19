@@ -37,5 +37,6 @@
 
     <transfer name="ProductView">
         <property name="selectedAttributes" type="array" singular="selectedAttribute"/>
+        <property name="productOfferReference" type="string"/>
     </transfer>
 </transfers>
