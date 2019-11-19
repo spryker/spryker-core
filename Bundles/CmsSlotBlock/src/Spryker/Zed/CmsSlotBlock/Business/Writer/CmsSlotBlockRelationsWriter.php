@@ -58,8 +58,8 @@ class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterfac
         $cmsSlotBlockTransfers = $cmsSlotBlockCollectionTransfer->getCmsSlotBlocks()->getArrayCopy();
         $this->assureCmsSlotBlockListIsValid($cmsSlotBlockTransfers);
 
-        $this->cmsSlotBlockEntityManager->createCmsSlotBlocks($cmsSlotBlockTransfers);
-        $this->triggerCmsSlotBlockPublishEvents($cmsSlotBlockTransfers);
+        $cmsSlotBlockCollectionTransfer = $this->cmsSlotBlockEntityManager->createCmsSlotBlocks($cmsSlotBlockTransfers);
+        $this->triggerCmsSlotBlockPublishEvents($cmsSlotBlockCollectionTransfer);
     }
 
     /**
@@ -91,28 +91,30 @@ class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterfac
     }
 
     /**
-     * @param array $cmsSlotBlockTransfers
+     * @param \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer
      *
      * @return void
      */
-    protected function triggerCmsSlotBlockPublishEvents(array $cmsSlotBlockTransfers): void
-    {
-        $eventTransfers = $this->mapCmsSlotBlockTransfersToEventTransfers($cmsSlotBlockTransfers);
+    protected function triggerCmsSlotBlockPublishEvents(
+        CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer
+    ): void {
+        $eventTransfers = $this->mapCmsSlotBlockCollectionTransferToEventTransfers($cmsSlotBlockCollectionTransfer);
         $this->eventFacade->triggerBulk(CmsSlotBlockEvents::CMS_SLOT_BLOCK_PUBLISH, $eventTransfers);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
+     * @param \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\EventEntityTransfer[]
      */
-    protected function mapCmsSlotBlockTransfersToEventTransfers(array $cmsSlotBlockTransfers): array
-    {
+    protected function mapCmsSlotBlockCollectionTransferToEventTransfers(
+        CmsSlotBlockCollectionTransfer $cmsSlotBlockCollectionTransfer
+    ): array {
         $eventTransfers = [];
 
-        foreach ($cmsSlotBlockTransfers as $cmsSlotBlockTransfer) {
+        foreach ($cmsSlotBlockCollectionTransfer->getCmsSlotBlocks() as $cmsSlotBlockTransfer) {
             $eventTransfers[] = (new EventEntityTransfer())
-                ->setId($cmsSlotBlockTransfer->getIdCmsBlock());
+                ->setId($cmsSlotBlockTransfer->getIdCmsSlotBlock());
         }
 
         return $eventTransfers;

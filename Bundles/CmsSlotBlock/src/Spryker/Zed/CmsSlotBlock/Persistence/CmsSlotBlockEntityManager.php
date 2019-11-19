@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotBlock\Persistence;
 
+use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 use Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlock;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -20,9 +21,9 @@ class CmsSlotBlockEntityManager extends AbstractEntityManager implements CmsSlot
     /**
      * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer
      */
-    public function createCmsSlotBlocks(array $cmsSlotBlockTransfers): void
+    public function createCmsSlotBlocks(array $cmsSlotBlockTransfers): CmsSlotBlockCollectionTransfer
     {
         $cmsSlotBlockEntityCollection = new ObjectCollection();
         $cmsSlotBlockEntityCollection->setModel(SpyCmsSlotBlock::class);
@@ -44,6 +45,11 @@ class CmsSlotBlockEntityManager extends AbstractEntityManager implements CmsSlot
         }
 
         $cmsSlotBlockEntityCollection->save();
+
+        return $cmsSlotBlockMapper->mapCmsSlotBlockEntityCollectionToTransferCollection(
+            $cmsSlotBlockEntityCollection,
+            new CmsSlotBlockCollectionTransfer()
+        );
     }
 
     /**

@@ -1,2 +1,3 @@
 parameters:
     ignoreErrors:
+         - '#Parameter \#1 \$id of method .+EventEntityTransfer::setId() expects int|null, string|null given.#'
