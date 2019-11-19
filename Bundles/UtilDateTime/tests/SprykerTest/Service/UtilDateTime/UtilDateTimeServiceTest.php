@@ -65,13 +65,13 @@ class UtilDateTimeServiceTest extends Unit
     /**
      * @dataProvider dateTimeFormatDataProvider
      *
-     * @param string $date
+     * @param string|\DateTime $date
      * @param string $format
      * @param string $expectedFormattedDateTime
      *
      * @return void
      */
-    public function testFormatDateTimeReturnsFormattedDateTime(string $date, string $format, string $expectedFormattedDateTime): void
+    public function testFormatDateTimeReturnsFormattedDateTime($date, string $format, string $expectedFormattedDateTime): void
     {
         $utilDateTimeService = $this->getService([
             UtilDateTimeConstants::DATE_TIME_FORMAT_DATE_TIME => $format,
@@ -97,13 +97,13 @@ class UtilDateTimeServiceTest extends Unit
     /**
      * @dataProvider timeFormatDataProvider
      *
-     * @param string $date
+     * @param string|\DateTime $date
      * @param string $format
      * @param string $expectedFormattedTime
      *
      * @return void
      */
-    public function testFormatTimeReturnsFormattedTime(string $date, string $format, string $expectedFormattedTime): void
+    public function testFormatTimeReturnsFormattedTime($date, string $format, string $expectedFormattedTime): void
     {
         $utilDateTimeService = $this->getService([
             UtilDateTimeConstants::DATE_TIME_FORMAT_TIME => $format,
