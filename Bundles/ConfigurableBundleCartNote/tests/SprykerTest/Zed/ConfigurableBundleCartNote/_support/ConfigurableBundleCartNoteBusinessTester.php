@@ -44,7 +44,7 @@ class ConfigurableBundleCartNoteBusinessTester extends Actor
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getFakeQuoteTransfer(): QuoteTransfer
+    public function createQuoteTransfer(): QuoteTransfer
     {
         return $this->havePersistentQuote([
             QuoteTransfer::CUSTOMER => $this->buildCustomerTransfer(static::FAKE_CUSTOMER_REFERENCE),
@@ -61,7 +61,7 @@ class ConfigurableBundleCartNoteBusinessTester extends Actor
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getFakeQuoteTransferWithConfiguredBundle(): QuoteTransfer
+    public function createQuoteTransferWithConfiguredBundle(): QuoteTransfer
     {
         return $this->havePersistentQuote([
             QuoteTransfer::CUSTOMER => $this->buildCustomerTransfer(static::FAKE_CUSTOMER_REFERENCE),

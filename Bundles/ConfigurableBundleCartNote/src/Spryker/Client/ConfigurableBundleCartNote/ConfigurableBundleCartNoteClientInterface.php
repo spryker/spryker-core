@@ -15,9 +15,8 @@ interface ConfigurableBundleCartNoteClientInterface
     /**
      * Specification:
      * - Resolves quote storage strategy which implements `\Spryker\Client\ConfigurableBundleCartNote\QuoteStorageStrategy\QuoteStorageStrategyInterface`.
-     * - Sets cart note to configured bundle using quote storage strategy.
-     * - Returns success `QuoteResponseTransfer` in case cart note was successfully set.
-     * - Returns failure `QuoteResponseTransfer` otherwise.
+     * - Updates configured bundle with cart note using quote storage strategy.
+     * - Returns `isSuccess=true` if cart note was successfully set or `isSuccess=false` otherwise.
      *
      * @api
      *

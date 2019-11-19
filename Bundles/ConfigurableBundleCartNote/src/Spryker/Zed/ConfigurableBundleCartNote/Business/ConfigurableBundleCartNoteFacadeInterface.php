@@ -14,11 +14,10 @@ interface ConfigurableBundleCartNoteFacadeInterface
 {
     /**
      * Specification:
-     * - Retrieves Quote from database by id.
-     * - Sets cart note to configured bundle.
+     * - Retrieves Quote from database by idQuote.
+     * - Updates configured bundle with cart note.
      * - Updates Quote.
-     * - Returns success `QuoteResponseTransfer` in case cart note was successfully set and quote was updated.
-     * - Returns failure `QuoteResponseTransfer` otherwise.
+     * - Returns `isSuccess=true` if cart note was successfully set and quote was updated or `isSuccess=false` otherwise.
      *
      * @api
      *
