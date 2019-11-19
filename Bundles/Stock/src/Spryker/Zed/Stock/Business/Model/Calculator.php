@@ -65,15 +65,15 @@ class Calculator implements CalculatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StockProductTransfer[] $productEntities
+     * @param \Generated\Shared\Transfer\StockProductTransfer[] $stockProductTransfers
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    protected function calculateTotalQuantity(array $productEntities): Decimal
+    protected function calculateTotalQuantity(array $stockProductTransfers): Decimal
     {
         $quantity = new Decimal(0);
-        foreach ($productEntities as $productEntity) {
-            $quantity = $quantity->add($productEntity->getQuantity());
+        foreach ($stockProductTransfers as $stockProductTransfer) {
+            $quantity = $quantity->add($stockProductTransfer->getQuantity());
         }
 
         return $quantity;

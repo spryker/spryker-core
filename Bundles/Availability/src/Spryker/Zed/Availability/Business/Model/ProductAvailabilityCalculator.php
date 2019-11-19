@@ -103,27 +103,6 @@ class ProductAvailabilityCalculator implements ProductAvailabilityCalculatorInte
     }
 
     /**
-     * @param string $abstractSku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return bool
-     */
-    public function isProductAbstractNeverOutOfStockForStore(string $abstractSku, StoreTransfer $storeTransfer): bool
-    {
-        return $this->stockFacade->isProductAbstractNeverOutOfStockForStore($abstractSku, $storeTransfer);
-    }
-
-    /**
-     * @param \Spryker\DecimalObject\Decimal $quantity
-     *
-     * @return \Spryker\DecimalObject\Decimal
-     */
-    protected function normalizeQuantity(Decimal $quantity): Decimal
-    {
-        return $quantity->greatherThanOrEquals(0) ? $quantity : new Decimal(0);
-    }
-
-    /**
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
@@ -149,5 +128,26 @@ class ProductAvailabilityCalculator implements ProductAvailabilityCalculatorInte
             ->setSku($abstractSku)
             ->setAvailability($this->calculateAvailabilityForProductAbstract($abstractSku, $storeTransfer))
             ->setIsNeverOutOfStock($this->isProductAbstractNeverOutOfStockForStore($abstractSku, $storeTransfer));
+    }
+
+    /**
+     * @param string $abstractSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return bool
+     */
+    protected function isProductAbstractNeverOutOfStockForStore(string $abstractSku, StoreTransfer $storeTransfer): bool
+    {
+        return $this->stockFacade->isProductAbstractNeverOutOfStockForStore($abstractSku, $storeTransfer);
+    }
+
+    /**
+     * @param \Spryker\DecimalObject\Decimal $quantity
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    protected function normalizeQuantity(Decimal $quantity): Decimal
+    {
+        return $quantity->greatherThanOrEquals(0) ? $quantity : new Decimal(0);
     }
 }
