@@ -10,6 +10,7 @@ namespace Spryker\Service\HealthCheck;
 use Spryker\Service\HealthCheck\Filter\Service\ServiceFilter;
 use Spryker\Service\HealthCheck\Filter\Service\ServiceFilterInterface;
 use Spryker\Service\HealthCheck\Format\ConsoleFormatter;
+use Spryker\Service\HealthCheck\Format\DefaultFormatter;
 use Spryker\Service\HealthCheck\Format\Encoder\FormatEncoder;
 use Spryker\Service\HealthCheck\Format\Encoder\FormatEncoderInterface;
 use Spryker\Service\HealthCheck\Format\FormatterInterface;
@@ -105,6 +106,7 @@ class HealthCheckServiceFactory extends AbstractServiceFactory
     {
         return [
             $this->createConsoleFormatter(),
+            $this->createDefaultFormatter(),
         ];
     }
 
@@ -114,6 +116,16 @@ class HealthCheckServiceFactory extends AbstractServiceFactory
     public function createConsoleFormatter(): FormatterInterface
     {
         return new ConsoleFormatter(
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \Spryker\Service\HealthCheck\Format\FormatterInterface
+     */
+    public function createDefaultFormatter(): FormatterInterface
+    {
+        return new DefaultFormatter(
             $this->getConfig()
         );
     }
