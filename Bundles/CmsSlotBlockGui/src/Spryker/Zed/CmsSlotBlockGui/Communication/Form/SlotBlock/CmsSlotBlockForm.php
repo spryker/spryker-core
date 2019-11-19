@@ -8,7 +8,9 @@
 namespace Spryker\Zed\CmsSlotBlockGui\Communication\Form\SlotBlock;
 
 use Generated\Shared\Transfer\CmsSlotBlockTransfer;
+use Generated\Shared\Transfer\CmsSlotTemplateConfigurationTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,6 +25,8 @@ class CmsSlotBlockForm extends AbstractType
     protected const FIELD_ID_SLOT = 'idSlot';
     protected const FIELD_ID_CMS_BLOCK = 'idCmsBlock';
     protected const FIELD_POSITION = 'position';
+    protected const FIELD_CONDITIONS = 'conditions';
+    protected const OPTION_CONDITIONS = 'conditions';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -32,6 +36,7 @@ class CmsSlotBlockForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['data_class' => CmsSlotBlockTransfer::class]);
+        $resolver->setRequired([static::OPTION_CONDITIONS]);
     }
 
     /**
@@ -45,7 +50,8 @@ class CmsSlotBlockForm extends AbstractType
         $this->addIdSlotTemplateField($builder)
             ->addIdSlotField($builder)
             ->addIdBlockField($builder)
-            ->addPositionField($builder);
+            ->addPositionField($builder)
+            ->addConditionForm($builder, $options);
     }
 
     /**
@@ -94,5 +100,41 @@ class CmsSlotBlockForm extends AbstractType
         $builder->add(static::FIELD_POSITION, HiddenType::class);
 
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addConditionForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(static::FIELD_CONDITIONS, FormType::class, ['label' => false]);
+
+        $cmsSlotTemplateConfigurationTransfer = (new CmsSlotTemplateConfigurationTransfer())
+            ->setConditions($options[static::OPTION_CONDITIONS]);
+
+        $conditionFormBuilder = $builder->get(static::FIELD_CONDITIONS);
+        $this->runConditionFormPlugins($conditionFormBuilder, $cmsSlotTemplateConfigurationTransfer);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Generated\Shared\Transfer\CmsSlotTemplateConfigurationTransfer $cmsSlotTemplateConfigurationTransfer
+     *
+     * @return void
+     */
+    protected function runConditionFormPlugins(
+        FormBuilderInterface $builder,
+        CmsSlotTemplateConfigurationTransfer $cmsSlotTemplateConfigurationTransfer
+    ): void {
+        foreach ($this->getFactory()->getCmsSlotBlockConditionFormPlugins() as $formPlugin) {
+            if ($formPlugin->isApplicable($cmsSlotTemplateConfigurationTransfer)) {
+                $formPlugin->addConditionForm($builder);
+            }
+        }
     }
 }

@@ -9,6 +9,8 @@ namespace Spryker\Zed\CmsSlot\Business;
 
 use Spryker\Zed\CmsSlot\Business\Activator\CmsSlotActivator;
 use Spryker\Zed\CmsSlot\Business\Activator\CmsSlotActivatorInterface;
+use Spryker\Zed\CmsSlot\Business\CmsSlotTemplate\CmsSlotTemplateReader;
+use Spryker\Zed\CmsSlot\Business\CmsSlotTemplate\CmsSlotTemplateReaderInterface;
 use Spryker\Zed\CmsSlot\Business\ConstraintsProvider\CmsSlotConstraintsProvider;
 use Spryker\Zed\CmsSlot\Business\ConstraintsProvider\CmsSlotTemplateConstraintsProvider;
 use Spryker\Zed\CmsSlot\Business\ConstraintsProvider\ConstraintsProviderInterface;
@@ -66,6 +68,14 @@ class CmsSlotBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsSlot\Business\CmsSlotTemplate\CmsSlotTemplateReaderInterface
+     */
+    public function createCmsSlotTemplateReader(): CmsSlotTemplateReaderInterface
+    {
+        return new CmsSlotTemplateReader($this->getRepository());
     }
 
     /**

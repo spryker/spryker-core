@@ -18,4 +18,11 @@ interface CmsSlotBlockCollectionFormDataProviderInterface
      * @return \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer
      */
     public function getData(int $idCmsSlotTemplate, int $idCmsSlot): CmsSlotBlockCollectionTransfer;
+
+    /**
+     * @param int $idCmsSlotTemplate
+     *
+     * @return array
+     */
+    public function getOptions(int $idCmsSlotTemplate): array;
 }

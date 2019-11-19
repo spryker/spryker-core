@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotBlockGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
 
 class CmsSlotBlockGuiToCmsSlotFacadeBridge implements CmsSlotBlockGuiToCmsSlotFacadeInterface
@@ -32,5 +33,15 @@ class CmsSlotBlockGuiToCmsSlotFacadeBridge implements CmsSlotBlockGuiToCmsSlotFa
     public function findCmsSlotById(int $idCmsSlot): ?CmsSlotTransfer
     {
         return $this->cmsSlotFacade->findCmsSlotById($idCmsSlot);
+    }
+
+    /**
+     * @param int $idCmsSlotTemplate
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotTemplateTransfer
+     */
+    public function getCmsSlotTemplateById(int $idCmsSlotTemplate): CmsSlotTemplateTransfer
+    {
+        return $this->cmsSlotFacade->getCmsSlotTemplateById($idCmsSlotTemplate);
     }
 }

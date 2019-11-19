@@ -66,4 +66,14 @@ class CmsSlotBlockGuiToCmsSlotBlockFacadeBridge implements CmsSlotBlockGuiToCmsS
     {
         return $this->cmsSlotBlockFacade->getCmsBlocksWithSlotRelations($filterTransfer);
     }
+
+    /**
+     * @param string $twigPath
+     *
+     * @return string[]
+     */
+    public function getTemplateConditionsByPath(string $twigPath): array
+    {
+        return $this->cmsSlotBlockFacade->getTemplateConditionsByPath($twigPath);
+    }
 }

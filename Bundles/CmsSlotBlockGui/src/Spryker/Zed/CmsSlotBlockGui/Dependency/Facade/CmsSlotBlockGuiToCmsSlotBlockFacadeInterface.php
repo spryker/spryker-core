@@ -42,4 +42,11 @@ interface CmsSlotBlockGuiToCmsSlotBlockFacadeInterface
      * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
     public function getCmsBlocksWithSlotRelations(FilterTransfer $filterTransfer): array;
+
+    /**
+     * @param string $twigPath
+     *
+     * @return string[]
+     */
+    public function getTemplateConditionsByPath(string $twigPath): array;
 }

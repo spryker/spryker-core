@@ -125,6 +125,10 @@ class CmsSlotBlockMapper implements CmsSlotBlockMapperInterface
             $this->utilEncodingService->decodeJson($cmsSlotBlockEntity->getConditions())
         );
 
+        $cmsSlotBlockTransfer->setConditions(
+            $this->utilEncodingService->decodeJson($cmsSlotBlockEntity->getConditions(), true)
+        );
+
         return $cmsSlotBlockTransfer;
     }
 }

@@ -10,19 +10,31 @@ namespace Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 use Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotBlockFacadeInterface;
+use Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotFacadeInterface;
 
 class CmsSlotBlockCollectionFormDataProvider implements CmsSlotBlockCollectionFormDataProviderInterface
 {
+    protected const OPTION_CONDITIONS = 'conditions';
+
+    /**
+     * @var \Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotFacadeInterface
+     */
+    protected $cmsSlotFacade;
+
     /**
      * @var \Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotBlockFacadeInterface
      */
     protected $cmsSlotBlockFacade;
 
     /**
+     * @param \Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotFacadeInterface $cmsSlotFacade
      * @param \Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotBlockFacadeInterface $cmsSlotBlockFacade
      */
-    public function __construct(CmsSlotBlockGuiToCmsSlotBlockFacadeInterface $cmsSlotBlockFacade)
-    {
+    public function __construct(
+        CmsSlotBlockGuiToCmsSlotFacadeInterface $cmsSlotFacade,
+        CmsSlotBlockGuiToCmsSlotBlockFacadeInterface $cmsSlotBlockFacade
+    ) {
+        $this->cmsSlotFacade = $cmsSlotFacade;
         $this->cmsSlotBlockFacade = $cmsSlotBlockFacade;
     }
 
@@ -39,5 +51,20 @@ class CmsSlotBlockCollectionFormDataProvider implements CmsSlotBlockCollectionFo
             ->setIdCmsSlot($idCmsSlot);
 
         return $this->cmsSlotBlockFacade->getCmsSlotBlockCollection($cmsSlotBlockCriteriaTransfer);
+    }
+
+    /**
+     * @param int $idCmsSlotTemplate
+     *
+     * @return array
+     */
+    public function getOptions(int $idCmsSlotTemplate): array
+    {
+        $cmsSlotTemplateTransfer = $this->cmsSlotFacade->getCmsSlotTemplateById($idCmsSlotTemplate);
+        $templateConditions = $this->cmsSlotBlockFacade->getTemplateConditionsByPath($cmsSlotTemplateTransfer->getPath());
+
+        return [
+            static::OPTION_CONDITIONS => $templateConditions,
+        ];
     }
 }

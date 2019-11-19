@@ -11,7 +11,11 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
+use Spryker\Zed\CmsSlotBlock\Business\CmsSlotBlockBusinessFactory;
+use Spryker\Zed\CmsSlotBlock\Business\CmsSlotBlockFacade;
+use Spryker\Zed\CmsSlotBlock\Business\CmsSlotBlockFacadeInterface;
 use Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockRepository;
+use SprykerTest\Zed\CmsSlotBlock\CmsSlotBlockConfigTest;
 
 /**
  * Auto-generated group annotations
@@ -175,6 +179,34 @@ class CmsSlotBlockFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testGetTemplateConditionsByPathIsSuccessful(): void
+    {
+        //Act
+        $templateConditionsAssignment = $this->createCmsSlotBlockFacade()
+            ->getTemplateConditionsByPath('@Test/test/test/test.twig');
+
+        //Assert
+        $this->assertIsArray($templateConditionsAssignment);
+        $this->assertEquals(['test'], $templateConditionsAssignment);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetTemplateConditionsByPathIsFailed(): void
+    {
+        //Act
+        $templateConditionsAssignment = $this->createCmsSlotBlockFacade()
+            ->getTemplateConditionsByPath('@Test/test/test/test2.twig');
+
+        //Assert
+        $this->assertIsArray($templateConditionsAssignment);
+        $this->assertEmpty($templateConditionsAssignment);
+    }
+
+    /**
+     * @return void
+     */
     public function testGetCmsBlocksWithSlotRelationsReturnsDataWithCorrectLimit(): void
     {
         // Arrange
@@ -240,5 +272,20 @@ class CmsSlotBlockFacadeTest extends Unit
 
         // Assert
         $this->assertEquals($cmsBlockTransfer->getIdCmsBlock(), $cmsBlockTransfers[0]->getIdCmsBlock());
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsSlotBlock\Business\CmsSlotBlockFacadeInterface
+     */
+    protected function createCmsSlotBlockFacade(): CmsSlotBlockFacadeInterface
+    {
+        $factory = new CmsSlotBlockBusinessFactory();
+        $config = new CmsSlotBlockConfigTest();
+        $factory->setConfig($config);
+
+        $facade = new CmsSlotBlockFacade();
+        $facade->setFactory($factory);
+
+        return $facade;
     }
 }

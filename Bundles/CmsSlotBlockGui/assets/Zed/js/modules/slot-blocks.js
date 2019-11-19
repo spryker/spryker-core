@@ -67,6 +67,10 @@ var SlotBlocks = function (options) {
             _self.blocksChoice.init();
             _self.slotBlocksForm.init();
             _self.blocksTable.loadBlocksTable(params, idCmsSlotTemplate, idCmsSlot);
+            _self.blocksTable.resetHandlerCallback = function() {
+                _self.slotBlocksForm.isStateChanged = false;
+                _self.loadBlocksTable(element, api, type, indexes);
+            };
         });
         if (!_self.isFirstInit) {
             return;

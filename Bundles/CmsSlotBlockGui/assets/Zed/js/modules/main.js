@@ -16,6 +16,9 @@ $(document).ready(function() {
 
     var slotBlocksForm = new SlotBlocksForm({
         cmsSlotBlocksSelector: cmsSlotBlocksSelector,
+        slotBlockFormItemClass: '.js-cms-slot-block-form-item',
+        slotBlockFormItemIdPrefix: '#js-cms-slot-block-form-item-',
+        slotBlockFormWrapperId: '#js-cms-slot-block-form-inner-wrapper',
     });
 
     var blocksTable = new BlocksTable({

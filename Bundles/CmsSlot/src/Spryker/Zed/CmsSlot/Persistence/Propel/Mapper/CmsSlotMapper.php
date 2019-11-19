@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\CmsSlot\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
+use Orm\Zed\CmsSlot\Persistence\Base\SpyCmsSlotTemplate;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlot;
 use Propel\Runtime\Collection\Collection;
 
@@ -49,5 +51,15 @@ class CmsSlotMapper
         }
 
         return $cmsSlotTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplate $cmsSlotTemplateEntity
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotTemplateTransfer
+     */
+    public function mapCmsSlotTemplateEntityToTransfer(SpyCmsSlotTemplate $cmsSlotTemplateEntity): CmsSlotTemplateTransfer
+    {
+        return (new CmsSlotTemplateTransfer())->fromArray($cmsSlotTemplateEntity->toArray(), true);
     }
 }

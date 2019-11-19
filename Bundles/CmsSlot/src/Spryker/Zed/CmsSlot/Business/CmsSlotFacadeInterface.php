@@ -88,4 +88,16 @@ interface CmsSlotFacadeInterface
      * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
      */
     public function getCmsSlotsByCriteria(CmsSlotCriteriaTransfer $cmsSlotCriteriaTransfer): array;
+
+    /**
+     * Specification:
+     * - Retrieves CMS slot according to given CMS slot template id.
+     *
+     * @api
+     *
+     * @param int $idCmsSlotTemplate
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotTemplateTransfer
+     */
+    public function getCmsSlotTemplateById(int $idCmsSlotTemplate): CmsSlotTemplateTransfer;
 }

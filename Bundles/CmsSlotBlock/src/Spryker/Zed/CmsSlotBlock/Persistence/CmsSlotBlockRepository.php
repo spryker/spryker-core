@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
+use Orm\Zed\CmsSlotBlock\Persistence\Map\SpyCmsSlotBlockTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -46,6 +47,7 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
                 $cmsSlotBlockCriteriaTransfer->getFilter()
             )
             ->setFormatter(ModelCriteria::FORMAT_OBJECT)
+            ->orderBy(SpyCmsSlotBlockTableMap::COL_POSITION)
             ->find();
 
         return $this->getFactory()

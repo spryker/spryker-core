@@ -56,7 +56,8 @@ class CmsSlotBlockGuiCommunicationFactory extends AbstractCommunicationFactory
 
         return $this->getFormFactory()->create(
             CmsSlotBlockCollectionForm::class,
-            $cmsSlotBlockCollectionDataProvider->getData($idCmsSlotTemplate, $idCmsSlot)
+            $cmsSlotBlockCollectionDataProvider->getData($idCmsSlotTemplate, $idCmsSlot),
+            $cmsSlotBlockCollectionDataProvider->getOptions($idCmsSlotTemplate)
         );
     }
 
@@ -84,7 +85,10 @@ class CmsSlotBlockGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCmsSlotBlockCollectionFormDataProvider(): CmsSlotBlockCollectionFormDataProviderInterface
     {
-        return new CmsSlotBlockCollectionFormDataProvider($this->getCmsSlotBlockFacade());
+        return new CmsSlotBlockCollectionFormDataProvider(
+            $this->getCmsSlotFacade(),
+            $this->getCmsSlotBlockFacade()
+        );
     }
 
     /**
@@ -128,5 +132,13 @@ class CmsSlotBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getCmsBlockPropelQuery(): SpyCmsBlockQuery
     {
         return $this->getProvidedDependency(CmsSlotBlockGuiDependencyProvider::PROPEL_QUERY_CMS_BLOCK);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsSlotBlockGuiExtension\Communication\Plugin\CmsSlotBlockGuiConditionFormPluginInterface[]
+     */
+    public function getCmsSlotBlockConditionFormPlugins(): array
+    {
+        return $this->getProvidedDependency(CmsSlotBlockGuiDependencyProvider::CMS_SLOT_BLOCK_FORM_PLUGINS);
     }
 }
