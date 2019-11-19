@@ -8,21 +8,21 @@
 namespace Spryker\Glue\ProductOptionsRestApi\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ProductOptionsRestApi\Processor\Builder\ProductOptionRestResourceBuilderInterface;
+use Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionStorageReaderInterface;
 
 class ProductOptionByProductAbstractSkuExpander implements ProductOptionByProductAbstractSkuExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\ProductOptionsRestApi\Processor\Builder\ProductOptionRestResourceBuilderInterface
+     * @var \Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionStorageReaderInterface
      */
-    protected $productOptionRestResourceBuilder;
+    protected $productOptionStorageReader;
 
     /**
-     * @param \Spryker\Glue\ProductOptionsRestApi\Processor\Builder\ProductOptionRestResourceBuilderInterface $productOptionRestResourceBuilder
+     * @param \Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionStorageReaderInterface $productOptionStorageReader
      */
-    public function __construct(ProductOptionRestResourceBuilderInterface $productOptionRestResourceBuilder)
+    public function __construct(ProductOptionStorageReaderInterface $productOptionStorageReader)
     {
-        $this->productOptionRestResourceBuilder = $productOptionRestResourceBuilder;
+        $this->productOptionStorageReader = $productOptionStorageReader;
     }
 
     /**
@@ -38,13 +38,13 @@ class ProductOptionByProductAbstractSkuExpander implements ProductOptionByProduc
             $productAbstractSkus[] = $restResource->getId();
         }
 
-        $productOptionRestResources = $this->productOptionRestResourceBuilder->getProductOptionsByProductAbstractSkus(
+        $productOptionRestResources = $this->productOptionStorageReader->getProductOptionsByProductAbstractSkus(
             $productAbstractSkus,
             $restRequest->getMetadata()->getLocale(),
             $restRequest->getSort()
         );
         foreach ($restResources as $restResource) {
-            if (empty($productOptionRestResources[$restResource->getId()])) {
+            if (!isset($productOptionRestResources[$restResource->getId()])) {
                 continue;
             }
 

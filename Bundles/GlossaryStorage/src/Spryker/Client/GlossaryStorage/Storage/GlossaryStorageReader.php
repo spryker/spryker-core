@@ -63,17 +63,13 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
      *
      * @return string
      */
-    public function translate($keyName, $localeName, array $parameters = [])
+    public function translate(string $keyName, string $localeName, array $parameters = []): string
     {
         if (GlossaryStorageConfig::isCollectorCompatibilityMode()) {
             $clientLocatorClass = Locator::class;
             $glossaryClient = $clientLocatorClass::getInstance()->glossary()->client();
 
             return $glossaryClient->translate($keyName, $localeName, $parameters);
-        }
-
-        if ($keyName === '') {
-            return $keyName;
         }
 
         $translation = $this->getTranslation($keyName, $localeName);
@@ -119,7 +115,7 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
      *
      * @return string
      */
-    protected function generateGlossaryStorageKey(string $keyName, string $localeName): string
+    protected function generateStorageKey(string $keyName, string $localeName): string
     {
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
             ->setReference($keyName)
@@ -136,11 +132,11 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
      *
      * @return string[]
      */
-    protected function generateGlossaryStorageKeys(array $keyNames, string $localeName): array
+    protected function generateStorageKeys(array $keyNames, string $localeName): array
     {
         $glossaryStorageKeys = [];
         foreach ($keyNames as $keyName) {
-            $glossaryStorageKeys[$keyName] = $this->generateGlossaryStorageKey($keyName, $localeName);
+            $glossaryStorageKeys[$keyName] = $this->generateStorageKey($keyName, $localeName);
         }
 
         return $glossaryStorageKeys;
@@ -160,7 +156,7 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
         }
 
         $translation = $keyName;
-        $glossaryStorageDataItem = $this->storageClient->get($this->generateGlossaryStorageKey($keyName, $localeName));
+        $glossaryStorageDataItem = $this->storageClient->get($this->generateStorageKey($keyName, $localeName));
         if ($glossaryStorageDataItem) {
             $translation = $glossaryStorageDataItem[static::KEY_VALUE];
         }
@@ -197,7 +193,7 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
      */
     protected function getTranslationsFromStorage(array $keyNames, string $localeName): array
     {
-        $glossaryStorageKeys = $this->generateGlossaryStorageKeys($keyNames, $localeName);
+        $glossaryStorageKeys = $this->generateStorageKeys($keyNames, $localeName);
         $translations = [];
         $glossaryStorageEncodedData = $this->storageClient->getMulti($glossaryStorageKeys);
         foreach ($glossaryStorageEncodedData as $glossaryStorageEncodedDataItem) {

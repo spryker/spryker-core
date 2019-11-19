@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductOptionsRestApi\Processor\Builder;
+namespace Spryker\Glue\ProductOptionsRestApi\Processor\Reader;
 
-interface ProductOptionRestResourceBuilderInterface
+interface ProductOptionStorageReaderInterface
 {
     /**
      * @param string[] $productAbstractSkus

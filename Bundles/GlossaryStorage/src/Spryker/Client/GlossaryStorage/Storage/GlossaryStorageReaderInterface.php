@@ -16,7 +16,7 @@ interface GlossaryStorageReaderInterface
      *
      * @return string
      */
-    public function translate($keyName, $localeName, array $parameters = []);
+    public function translate(string $keyName, string $localeName, array $parameters = []): string;
 
     /**
      * @param string[] $keyNames
