@@ -98,28 +98,29 @@ class CatalogSearchResourceMapperTest extends Unit
 
         $products = $this->getProductsFromRestCatalogSearchAttributesTransfer();
         $this->assertEquals(1, $products->count());
-        $this->assertEquals("cameras", $this->restSearchAttributesTransfer->getSpellingSuggestion());
+        $this->assertEquals('cameras', $this->restSearchAttributesTransfer->getSpellingSuggestion());
 
         $product = $products[0];
-        $this->assertEquals("Toshiba CAMILEO S20", $product->getAbstractName());
+        $this->assertEquals('Toshiba CAMILEO S20', $product->getAbstractName());
         $this->assertEquals(19568, $product->getPrice());
-        $this->assertEquals("209", $product->getAbstractSku());
+        $this->assertEquals('209', $product->getAbstractSku());
         $this->assertEquals(19568, $product->getPrices()[0][static::GROSS_AMOUNT]);
-        $this->assertArrayNotHasKey("id_product_abstract", $product);
-        $this->assertArrayNotHasKey("id_product_labels", $product);
+        $this->assertArrayNotHasKey('id_product_abstract', $product);
+        $this->assertArrayNotHasKey('id_product_labels', $product);
 
-        $this->assertArrayNotHasKey("fk_product_image_set", $product->getImages()[0]);
-        $this->assertArrayNotHasKey("id_product_image", $product->getImages()[0]);
-        $this->assertArrayNotHasKey("id_product_image_set_to_product_image", $product->getImages()[0]);
-        $this->assertArrayNotHasKey("fk_product_image", $product->getImages()[0]);
+        $this->assertArrayNotHasKey('fk_product_image_set', $product->getImages()[0]);
+        $this->assertArrayNotHasKey('id_product_image', $product->getImages()[0]);
+        $this->assertArrayNotHasKey('id_product_image_set_to_product_image', $product->getImages()[0]);
+        $this->assertArrayNotHasKey('fk_product_image', $product->getImages()[0]);
 
-        $this->assertEquals("//images.icecat.biz/img/norm/medium/15743_12554247-9579.jpg", $product->getImages()[0]['externalUrlSmall']);
-        $this->assertEquals("//images.icecat.biz/img/norm/high/15743_12554247-9579.jpg", $product->getImages()[0]['externalUrlLarge']);
+        $this->assertEquals('//images.icecat.biz/img/norm/medium/15743_12554247-9579.jpg', $product->getImages()[0]['externalUrlSmall']);
+        $this->assertEquals('//images.icecat.biz/img/norm/high/15743_12554247-9579.jpg', $product->getImages()[0]['externalUrlLarge']);
 
-        $this->assertEquals("name_asc", $this->restSearchAttributesTransfer->getSort()->getCurrentSortOrder());
-        $this->assertEquals("1", $this->restSearchAttributesTransfer->getSort()->getCurrentSortParam());
-        $this->assertArraySubset($this->restSearchAttributesTransfer->getSort()->getSortParamNames(), ["rating", "name_asc", "name_desc", "price_asc", "price_desc"]);
-        $this->assertTrue(array_intersect(["rating", "name_asc", "name_desc", "price_asc", "price_desc"], $this->restSearchAttributesTransfer->getSort()->getSortParamNames()) === ["rating", "name_asc", "name_desc", "price_asc", "price_desc"]);
+        $this->assertEquals('name_asc', $this->restSearchAttributesTransfer->getSort()->getCurrentSortOrder());
+        $this->assertEquals('1', $this->restSearchAttributesTransfer->getSort()->getCurrentSortParam());
+        $fields = ['rating', 'name_asc', 'name_desc', 'price_asc', 'price_desc'];
+        $this->assertArraySubset($this->restSearchAttributesTransfer->getSort()->getSortParamNames(), $fields);
+        $this->assertTrue(array_intersect($fields, $this->restSearchAttributesTransfer->getSort()->getSortParamNames()) === $fields);
 
         $this->assertEquals(1, $this->restSearchAttributesTransfer->getPagination()->getCurrentPage());
         $this->assertEquals(12, $this->restSearchAttributesTransfer->getPagination()->getCurrentItemsPerPage());
@@ -219,27 +220,27 @@ class CatalogSearchResourceMapperTest extends Unit
     {
         $products = [];
         $products[] = [
-            "images" => [
+            'images' => [
                 [
-                    "fk_product_image_set" => 423,
-                    "id_product_image" => 204,
-                    "external_url_small" => "//images.icecat.biz/img/norm/medium/15743_12554247-9579.jpg",
-                    "external_url_large" => "//images.icecat.biz/img/norm/high/15743_12554247-9579.jpg",
-                    "id_product_image_set_to_product_image" => 423,
-                    "fk_product_image" => 204],
+                    'fk_product_image_set' => 423,
+                    'id_product_image' => 204,
+                    'external_url_small' => '//images.icecat.biz/img/norm/medium/15743_12554247-9579.jpg',
+                    'external_url_large' => '//images.icecat.biz/img/norm/high/15743_12554247-9579.jpg',
+                    'id_product_image_set_to_product_image' => 423,
+                    'fk_product_image' => 204],
             ],
-            "id_product_labels" => [
+            'id_product_labels' => [
                 0 => 2,
             ],
-            "price" => 19568,
-            "abstract_name" => "Toshiba CAMILEO S20",
-            "id_product_abstract" => 209,
-            "type" => "product_abstract",
-            "prices" => [
-                "DEFAULT" => 19568,
+            'price' => 19568,
+            'abstract_name' => 'Toshiba CAMILEO S20',
+            'id_product_abstract' => 209,
+            'type' => 'product_abstract',
+            'prices' => [
+                'DEFAULT' => 19568,
             ],
-            "abstract_sku" => "209",
-            "url" => "/en/toshiba-camileo-s20-209",
+            'abstract_sku' => '209',
+            'url' => '/en/toshiba-camileo-s20-209',
         ];
 
         return $products;
@@ -252,14 +253,14 @@ class CatalogSearchResourceMapperTest extends Unit
     {
         $sort = new SortSearchResultTransfer();
         $sort->setSortParamNames([
-            "rating",
-            "name_asc",
-            "name_desc",
-            "price_asc",
-            "price_desc",
+            'rating',
+            'name_asc',
+            'name_desc',
+            'price_asc',
+            'price_desc',
         ]);
-        $sort->setCurrentSortOrder("name_asc");
-        $sort->setCurrentSortParam("1");
+        $sort->setCurrentSortOrder('name_asc');
+        $sort->setCurrentSortParam('1');
 
         return $sort;
     }
