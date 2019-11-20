@@ -23,20 +23,11 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     protected $productStorageClient;
 
     /**
-     * @var \Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToProductImageStorageClientInterface
-     */
-    protected $productImageStorageClient;
-
-    /**
      * @param \Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToProductStorageClientInterface $productStorageClient
-     * @param \Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToProductImageStorageClientInterface $productImageStorageClient
      */
-    public function __construct(
-        ConfigurableBundleStorageToProductStorageClientInterface $productStorageClient,
-        ConfigurableBundleStorageToProductImageStorageClientInterface $productImageStorageClient
-    ) {
+    public function __construct(ConfigurableBundleStorageToProductStorageClientInterface $productStorageClient)
+    {
         $this->productStorageClient = $productStorageClient;
-        $this->productImageStorageClient = $productImageStorageClient;
     }
 
     /**
@@ -45,7 +36,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function getProductConcretesBySkusForCurrentLocale(array $skus, string $localeName): array
+    public function getProductConcretesBySkusAndLocale(array $skus, string $localeName): array
     {
         $productViewTransfers = [];
 
@@ -74,52 +65,6 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
             return null;
         }
 
-        $productViewTransfer = (new ProductViewTransfer())->fromArray($productStorageConcreteData, true);
-
-        return $this->expandProductViewTransferWithImages($productViewTransfer, $localeName);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
-     */
-    protected function expandProductViewTransferWithImages(ProductViewTransfer $productViewTransfer, string $localeName): ProductViewTransfer
-    {
-        $productConcreteImageStorageTransfer = $this->productImageStorageClient->findProductImageConcreteStorageTransfer(
-            $productViewTransfer->getIdProductConcrete(),
-            $localeName
-        );
-
-        if (!$productConcreteImageStorageTransfer) {
-            return $productViewTransfer;
-        }
-
-        foreach ($productConcreteImageStorageTransfer->getImageSets() as $productImageSetStorageTransfer) {
-            $productViewTransfer = $this->addImagesFromProductImageSetStorageTransferToProductViewTransfer(
-                $productViewTransfer,
-                $productImageSetStorageTransfer
-            );
-        }
-
-        return $productViewTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param \Generated\Shared\Transfer\ProductImageSetStorageTransfer $productImageSetStorageTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
-     */
-    protected function addImagesFromProductImageSetStorageTransferToProductViewTransfer(
-        ProductViewTransfer $productViewTransfer,
-        ProductImageSetStorageTransfer $productImageSetStorageTransfer
-    ): ProductViewTransfer {
-        foreach ($productImageSetStorageTransfer->getImages() as $productImageStorageTransfer) {
-            $productViewTransfer->addImage($productImageStorageTransfer);
-        }
-
-        return $productViewTransfer;
+        return (new ProductViewTransfer())->fromArray($productStorageConcreteData, true);
     }
 }

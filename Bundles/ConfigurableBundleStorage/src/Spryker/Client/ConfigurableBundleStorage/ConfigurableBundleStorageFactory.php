@@ -35,10 +35,7 @@ class ConfigurableBundleStorageFactory extends AbstractFactory
      */
     public function createProductConcreteStorageReader(): ProductConcreteStorageReaderInterface
     {
-        return new ProductConcreteStorageReader(
-            $this->getProductStorageClient(),
-            $this->getProductImageStorageClient()
-        );
+        return new ProductConcreteStorageReader($this->getProductStorageClient());
     }
 
     /**
@@ -55,14 +52,6 @@ class ConfigurableBundleStorageFactory extends AbstractFactory
     public function getProductStorageClient(): ConfigurableBundleStorageToProductStorageClientInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleStorageDependencyProvider::CLIENT_PRODUCT_STORAGE);
-    }
-
-    /**
-     * @return \Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToProductImageStorageClientInterface
-     */
-    public function getProductImageStorageClient(): ConfigurableBundleStorageToProductImageStorageClientInterface
-    {
-        return $this->getProvidedDependency(ConfigurableBundleStorageDependencyProvider::CLIENT_PRODUCT_IMAGE_STORAGE);
     }
 
     /**

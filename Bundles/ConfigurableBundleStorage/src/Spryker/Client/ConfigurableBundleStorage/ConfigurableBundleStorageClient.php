@@ -45,6 +45,6 @@ class ConfigurableBundleStorageClient extends AbstractClient implements Configur
     {
         return $this->getFactory()
             ->createProductConcreteStorageReader()
-            ->getProductConcretesBySkusForCurrentLocale($skus, $localeName);
+            ->getProductConcretesBySkusAndLocale($skus, $localeName);
     }
 }

@@ -15,5 +15,5 @@ interface ProductConcreteStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function getProductConcretesBySkusForCurrentLocale(array $skus, string $localeName): array;
+    public function getProductConcretesBySkusAndLocale(array $skus, string $localeName): array;
 }
