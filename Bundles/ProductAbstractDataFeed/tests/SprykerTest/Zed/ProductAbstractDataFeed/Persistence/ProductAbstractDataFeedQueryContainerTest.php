@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductAbstractDataFeedTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Spryker\Zed\ProductAbstractDataFeed\Persistence\ProductAbstractDataFeedQueryContainer;
 
 /**
@@ -229,8 +228,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
      */
     protected function createProductDataFeedQueryContainer()
     {
-        $productQueryContainer = new ProductQueryContainer();
-        $productDataFeedQueryContainer = new ProductAbstractDataFeedQueryContainer($productQueryContainer);
+        $productDataFeedQueryContainer = new ProductAbstractDataFeedQueryContainer();
 
         return $productDataFeedQueryContainer;
     }

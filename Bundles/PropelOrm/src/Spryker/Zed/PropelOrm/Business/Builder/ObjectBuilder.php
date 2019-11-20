@@ -141,7 +141,7 @@ class ObjectBuilder extends PropelObjectBuilder
         }
 
         // if non auto-increment but using sequence, get the id first
-        if (!$platform->isNativeIdMethodAutoIncrement() && $table->getIdMethod() == "native") {
+        if (!$platform->isNativeIdMethodAutoIncrement() && $table->getIdMethod() === "native") {
             /** @var \Propel\Generator\Model\Column|null $column */
             $column = $table->getFirstPrimaryKeyColumn();
             if (!$column) {
@@ -220,7 +220,7 @@ class ObjectBuilder extends PropelObjectBuilder
         }
 
         // if auto-increment, get the id after
-        if ($platform->isNativeIdMethodAutoIncrement() && $table->getIdMethod() == "native") {
+        if ($platform->isNativeIdMethodAutoIncrement() && $table->getIdMethod() === "native") {
             $script .= "
         try {";
             $script .= $platform->getIdentifierPhp('$pk', '$con', $primaryKeyMethodInfo);
@@ -261,7 +261,6 @@ class ObjectBuilder extends PropelObjectBuilder
         $referrers = $this->getTable()->getReferrers();
         $hasFks = count($fks) > 0 || count($referrers) > 0;
         $objectClassName = $this->getUnqualifiedClassName();
-        $pkGetter = $this->getTable()->hasCompositePrimaryKey() ? 'serialize($this->getPrimaryKey())' : '$this->getPrimaryKey()';
         $defaultKeyType = $this->getDefaultKeyType();
         $script .= "
     /**
@@ -366,8 +365,6 @@ class ObjectBuilder extends PropelObjectBuilder
      */
     protected function addFKAccessor(&$script, ForeignKey $fk)
     {
-        $table = $this->getTable();
-
         $varName = $this->getFKVarName($fk);
 
         $fkQueryBuilder = $this->getNewStubQueryBuilder($fk->getForeignTable());
@@ -398,9 +395,9 @@ class ObjectBuilder extends PropelObjectBuilder
             if ($rightValueOrColumn instanceof Column) {
                 $localColumns[$rightValueOrColumn->getPosition()] = '$this->' . $clo;
 
-                if ($cptype == "int" || $cptype == "float" || $cptype == "double") {
+                if ($cptype === "int" || $cptype === "float" || $cptype === "double") {
                     $conditional .= $and . "\$this->" . $clo . " != 0";
-                } elseif ($cptype == "string") {
+                } elseif ($cptype === "string") {
                     $conditional .= $and . "(\$this->" . $clo . " !== \"\" && \$this->" . $clo . " !== null)";
                 } else {
                     $conditional .= $and . "\$this->" . $clo . " !== null";
