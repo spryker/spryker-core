@@ -20,10 +20,10 @@ use Spryker\Zed\PaymentDataImport\Communication\Plugin\PaymentMethodDataImportPl
  * @group PaymentDataImport
  * @group Communication
  * @group Plugin
- * @group PaymentDataImportPluginTest
+ * @group PaymentMethodDataImportPluginTest
  * Add your own group annotations below this line
  */
-class PaymentDataImportPluginTest extends Unit
+class PaymentMethodDataImportPluginTest extends Unit
 {
     protected const EXPECTED_IMPORT_COUNT = 2;
 
@@ -35,7 +35,7 @@ class PaymentDataImportPluginTest extends Unit
     /**
      * @return void
      */
-    public function testImportImportsShipment(): void
+    public function testImportImportsPaymentMethods(): void
     {
         //Arrange
         $this->tester->ensurePaymentMethodTableIsEmpty();

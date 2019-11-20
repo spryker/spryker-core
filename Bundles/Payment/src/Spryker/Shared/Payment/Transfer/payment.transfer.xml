@@ -50,7 +50,9 @@
     </transfer>
 
     <transfer name="PaymentProvider">
+        <property name="idPaymentProvider" type="int"/>
         <property name="name" type="string"/>
+        <property name="paymentProviderKey" type="string"/>
         <property name="paymentMethods" singular="paymentMethod" type="PaymentMethod[]"/>
     </transfer>
 

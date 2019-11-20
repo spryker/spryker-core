@@ -29,7 +29,24 @@ class PaymentDataImportFacade extends AbstractFacade implements PaymentDataImpor
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer {
         return $this->getFactory()
-            ->getPaymentMethodDataImport()
+            ->getPaymentMethodDataImporter()
+            ->import($dataImporterConfigurationTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importPaymentMethodStore(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterReportTransfer {
+        return $this->getFactory()
+            ->getPaymentMethodStoreDataImporter()
             ->import($dataImporterConfigurationTransfer);
     }
 }

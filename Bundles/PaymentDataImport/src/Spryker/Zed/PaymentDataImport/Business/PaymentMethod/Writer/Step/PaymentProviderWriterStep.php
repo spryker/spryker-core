@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PaymentDataImport\Business\PaymentMethod\Writer;
+namespace Spryker\Zed\PaymentDataImport\Business\PaymentMethod\Writer\Step;
 
 use Orm\Zed\Payment\Persistence\SpyPaymentProviderQuery;
 use Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException;

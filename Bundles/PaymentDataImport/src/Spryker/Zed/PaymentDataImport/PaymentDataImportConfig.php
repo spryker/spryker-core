@@ -13,6 +13,7 @@ use Spryker\Zed\DataImport\DataImportConfig;
 class PaymentDataImportConfig extends DataImportConfig
 {
     public const IMPORT_TYPE_PAYMENT_METHOD = 'payment-method';
+    public const IMPORT_TYPE_PAYMENT_METHOD_STORE = 'payment-method-store';
 
     /**
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
@@ -22,6 +23,16 @@ class PaymentDataImportConfig extends DataImportConfig
         $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
 
         return $this->buildImporterConfiguration($moduleDataImportDirectory . 'payment_method.csv', static::IMPORT_TYPE_PAYMENT_METHOD);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
+     */
+    public function getPaymentMethodStoreDataImporterConfiguration(): DataImporterConfigurationTransfer
+    {
+        $moduleDataImportDirectory = $this->getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
+
+        return $this->buildImporterConfiguration($moduleDataImportDirectory . 'payment_method_store.csv', static::IMPORT_TYPE_PAYMENT_METHOD_STORE);
     }
 
     /**
