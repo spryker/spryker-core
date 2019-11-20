@@ -101,7 +101,7 @@ class CmsSlotBlockDataImportPluginTest extends Unit
     /**
      * @return void
      */
-    public function testCmsSlotBlockDataImportThrowsExceptionWhenBlockDoesNotExist2(): void
+    public function testCmsSlotBlockDataImportThrowsExceptionWhenBlockDoesNotExist(): void
     {
         // Arrange
         $this->tester->haveCmsSlotTemplateInDb([CmsSlotTemplateTransfer::PATH => static::CMS_SLOT_TEMPLATE_PATH]);
