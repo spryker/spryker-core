@@ -155,19 +155,6 @@ class StockDataHelper extends Module
     }
 
     /**
-     * @param array $seed
-     *
-     * @return \Generated\Shared\Transfer\TypeTransfer
-     */
-    public function haveStock(array $seed = []): TypeTransfer
-    {
-        $typeTransfer = (new TypeBuilder($seed))->build();
-        $typeTransfer->setIdStock($this->getStockFacade()->createStockType($typeTransfer));
-
-        return $typeTransfer;
-    }
-
-    /**
      * @return \Spryker\Zed\Stock\Business\StockFacadeInterface
      */
     protected function getStockFacade(): StockFacadeInterface
