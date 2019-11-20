@@ -37,13 +37,14 @@ class ConfigurableBundleStorageClient extends AbstractClient implements Configur
      * @api
      *
      * @param string[] $skus
+     * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function getProductConcreteStoragesBySkusForCurrentLocale(array $skus): array
+    public function getProductConcretesBySkusAndLocale(array $skus, string $localeName): array
     {
         return $this->getFactory()
             ->createProductConcreteStorageReader()
-            ->getProductConcreteStoragesBySkusForCurrentLocale($skus);
+            ->getProductConcretesBySkusAndLocale($skus, $localeName);
     }
 }
