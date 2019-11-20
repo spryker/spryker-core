@@ -42,7 +42,7 @@ class AssertionExtender extends Assertion implements StepDescriptionExtender
      *
      * @return string
      */
-    protected function humanize(string $text): string
+    protected function humanize($text): string
     {
         return $this->getStepDescription() . parent::humanize($text);
     }

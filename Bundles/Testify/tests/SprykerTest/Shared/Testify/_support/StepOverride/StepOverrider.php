@@ -217,7 +217,7 @@ class StepOverrider extends Scenario
      *
      * @return mixed
      */
-    public function __call(string $name, array $arguments)
+    public function __call($name, $arguments)
     {
         return call_user_func_array([$this->scenario, $name], $arguments);
     }
