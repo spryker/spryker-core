@@ -14,11 +14,11 @@ use Generated\Shared\Transfer\MerchantTransfer;
 interface MerchantRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer|null $merchantCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function find(?MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer = null): MerchantCollectionTransfer;
+    public function find(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
@@ -26,11 +26,4 @@ interface MerchantRepositoryInterface
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
     public function findOne(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): ?MerchantTransfer;
-
-    /**
-     * @param string $key
-     *
-     * @return bool
-     */
-    public function hasKey(string $key): bool;
 }

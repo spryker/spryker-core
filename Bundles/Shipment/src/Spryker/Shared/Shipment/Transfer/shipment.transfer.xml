@@ -9,6 +9,18 @@
         <property name="isActive" type="bool"/>
     </transfer>
 
+    <transfer name="ShipmentMethodPluginCollection">
+        <property name="availabilityPluginOptions" type="string[]" singular="availabilityPluginOption"/>
+        <property name="pricePluginOptions" type="string[]" singular="pricePluginOption"/>
+        <property name="deliveryTimePluginOptions" type="string[]" singular="deliveryTimePluginOption"/>
+    </transfer>
+
+    <transfer name="ShipmentCarrierRequest">
+        <property name="idCarrier" type="int"/>
+        <property name="carrierName" type="string"/>
+        <property name="excludedCarrierIds" type="array" singular="excludedCarrierId"/>
+    </transfer>
+
     <transfer name="ShipmentMethods">
         <property name="methods" type="ShipmentMethod[]" singular="method"/>
         <property name="shipmentHash" type="string"/>
@@ -30,6 +42,7 @@
         <property name="prices" type="MoneyValue[]" singular="price"/>
         <property name="storeCurrencyPrice" type="int"/>
         <property name="currencyIsoCode" type="string"/>
+        <property name="storeRelation" type="StoreRelation"/>
     </transfer>
 
     <transfer name="Order">
@@ -70,12 +83,12 @@
     </transfer>
 
     <transfer name="Shipment">
+        <property name="idSalesShipment" type="int"/>
         <property name="carrier" type="ShipmentCarrier"/>
         <property name="method" type="ShipmentMethod"/>
         <property name="shipmentSelection" type="string"/>
         <property name="shippingAddress" type="Address"/>
         <property name="requestedDeliveryDate" type="string"/>
-        <property name="idSalesShipment" type="int"/>
     </transfer>
 
     <transfer name="Quote">
@@ -138,6 +151,7 @@
         <property name="currency" type="Currency"/>
         <property name="netAmount" type="int"/>
         <property name="grossAmount" type="int"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="Money">
@@ -204,6 +218,12 @@
 
     <transfer name="Country">
         <property name="iso2Code" type="string"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idEntity" type="int"/>
+        <property name="idStores" type="int[]" singular="idStores"/>
+        <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
 
 </transfers>

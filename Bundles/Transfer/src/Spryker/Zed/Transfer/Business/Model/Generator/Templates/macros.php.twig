@@ -212,7 +212,12 @@
 {% else %}
             $arrayKey = $this->transferMetadata[$property]['name_underscore'];
 {% endif %}
+
 {% if isRecursive %}
+            if ($value instanceof AbstractTransfer) {
+                $values[$arrayKey] = $value->modifiedToArray({{ isRecursive ?  'true' : 'false' }}, {{ camelCase ?  'true' : 'false' }});
+                continue;
+            }
             switch ($property) {
 {% if primitives is not empty %}
 {% for value in primitives %}
@@ -255,7 +260,11 @@
     {
         return [
 {% for prop in primitives %}
-            '{{ prop[nameKey] }}' => $this->{{ prop.name }},
+            '{{ prop[nameKey] }}' => {% if isRecursive -%}
+                $this->{{ prop.name }} instanceof AbstractTransfer ? $this->{{ prop.name }}->toArray({{ isRecursive ? 'true' : 'false' }}, {{ isCamelCamed ? 'true' : 'false' }}) : $this->{{ prop.name }}
+            {%- else -%}
+                $this->{{ prop.name }}
+            {%- endif -%},
 {% endfor %}
 {% for prop in transfers %}
             '{{ prop[nameKey] }}' => {% if isRecursive -%}
@@ -266,10 +275,10 @@
 {% endfor %}
 {% for prop in transferCollections %}
             '{{ prop[nameKey] }}' => {% if isRecursive -%}
-                    $this->addValuesToCollection($this->{{ prop.name }}, {{ isRecursive ? 'true' : 'false' }}, {{ isCamelCamed ? 'true' : 'false' }})
-                {%- else -%}
-                    $this->{{ prop.name }}
-                {%- endif -%},
+                $this->{{ prop.name }} instanceof AbstractTransfer ? $this->{{ prop.name }}->toArray({{ isRecursive ? 'true' : 'false' }}, {{ isCamelCamed ? 'true' : 'false' }}) : $this->addValuesToCollection($this->{{ prop.name }}, {{ isRecursive ? 'true' : 'false' }}, {{ isCamelCamed ? 'true' : 'false' }})
+            {%- else -%}
+                $this->{{ prop.name }}
+            {%- endif -%},
 {% endfor %}
         ];
     }

@@ -1,0 +1,18 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Create Delivery Method' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block content %}
+
+    {{ form_start(shipmentMethodForm) }}
+
+    {{ tabs(shipmentMethodTabs, {
+        shipmentMethodForm: shipmentMethodForm
+    }) }}
+
+    {{ form_end(shipmentMethodForm) }}
+
+{% endblock %}

@@ -70,7 +70,7 @@ class DiscountTest extends Unit
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -186,9 +186,6 @@ class DiscountTest extends Unit
             ->setDecisionRuleQueryString(
                 'day-of-week = "' . (new DateTime('yesterday'))->format('l') . '"'
             )->setIdDiscount(5);
-
-        $collectedDiscount = (new CollectedDiscountTransfer())
-            ->setDiscount($expectedVoucherDiscount);
 
         $quoteTransfer = (new QuoteTransfer())
             ->setStore($this->getCurrentStore())

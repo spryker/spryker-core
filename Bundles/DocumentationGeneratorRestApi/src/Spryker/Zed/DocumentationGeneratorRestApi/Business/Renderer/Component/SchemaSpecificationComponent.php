@@ -47,6 +47,7 @@ class SchemaSpecificationComponent implements SchemaSpecificationComponentInterf
             ];
         }
 
+        $schemaData = [];
         $schemaData[$this->schemaComponentTransfer->getName()][SchemaComponentTransfer::PROPERTIES] = array_merge(...$this->schemaComponentTransfer->getProperties());
         if ($this->schemaComponentTransfer->getRequired()) {
             $schemaData[$this->schemaComponentTransfer->getName()][SchemaComponentTransfer::REQUIRED] = $this->schemaComponentTransfer->getRequired();

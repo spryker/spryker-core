@@ -73,7 +73,7 @@ class FileSystemServiceTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -99,13 +99,13 @@ class FileSystemServiceTest extends Unit
     protected function setupContainerAndFlysystemService(Container $container)
     {
         $flysystemContainer = new Container();
-        $flysystemContainer[FlysystemDependencyProvider::PLUGIN_COLLECTION_FILESYSTEM_BUILDER] = function (Container $flysystemContainer) {
+        $flysystemContainer[FlysystemDependencyProvider::PLUGIN_COLLECTION_FILESYSTEM_BUILDER] = function () {
             return [
                 new LocalFilesystemBuilderPlugin(),
             ];
         };
 
-        $flysystemContainer[FlysystemDependencyProvider::PLUGIN_COLLECTION_FLYSYSTEM] = function (Container $flysystemContainer) {
+        $flysystemContainer[FlysystemDependencyProvider::PLUGIN_COLLECTION_FLYSYSTEM] = function () {
             return [];
         };
 
@@ -145,7 +145,7 @@ class FileSystemServiceTest extends Unit
     /**
      * @return void
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->directoryCleanup();
     }

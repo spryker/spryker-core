@@ -58,16 +58,19 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
         $quantity = 0;
 
         foreach ($items as $item) {
-            if ($leadProductSku === $item->getSku()) { // Lead product is in cart as an individual item
+            // Lead product is in cart as an individual item
+            if ($leadProductSku === $item->getSku()) {
                 $quantity += $item->getQuantity();
                 continue;
             }
 
-            if (!$item->getAmountLeadProduct()) { // Skip remaining items without lead product
+            // Skip remaining items without lead product
+            if (!$item->getAmountLeadProduct()) {
                 continue;
             }
 
-            if ($item->getAmountLeadProduct()->getProduct()->getSku() === $leadProductSku) { // Item in cart has the searched lead product
+            // Item in cart has the searched lead product
+            if ($item->getAmountLeadProduct()->getProduct()->getSku() === $leadProductSku) {
                 $quantity += $item->getAmount();
             }
         }

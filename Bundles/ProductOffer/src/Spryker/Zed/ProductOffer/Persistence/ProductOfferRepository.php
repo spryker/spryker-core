@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductOffer\Persistence;
@@ -21,18 +21,17 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ProductOfferRepository extends AbstractRepository implements ProductOfferRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer|null $productOfferCriteriaFilter
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function find(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
+    public function find(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
     {
         $productOfferCollectionTransfer = new ProductOfferCollectionTransfer();
         $productOfferQuery = $this->getFactory()->createProductOfferPropelQuery();
 
-        if ($productOfferCriteriaFilter) {
-            $productOfferQuery = $this->applyFilters($productOfferQuery, $productOfferCriteriaFilter);
-        }
+        $productOfferQuery = $this->applyFilters($productOfferQuery, $productOfferCriteriaFilter);
+
         $productOfferEntities = $productOfferQuery->find();
 
         foreach ($productOfferEntities as $productOfferEntity) {
@@ -46,19 +45,17 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer|null $productOfferCriteriaFilter
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
-    public function findOne(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer
+    public function findOne(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer
     {
         $productOfferQuery = $this->getFactory()->createProductOfferPropelQuery();
-
-        if ($productOfferCriteriaFilter) {
-            $productOfferQuery = $this->applyFilters($productOfferQuery, $productOfferCriteriaFilter);
-        }
+        $productOfferQuery = $this->applyFilters($productOfferQuery, $productOfferCriteriaFilter);
 
         $productOfferEntity = $productOfferQuery->findOne();
+
         if (!$productOfferEntity) {
             return null;
         }
@@ -80,15 +77,19 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
         if ($productOfferCriteriaFilter->getConcreteSku()) {
             $productOfferQuery->filterByConcreteSku($productOfferCriteriaFilter->getConcreteSku());
         }
+
         if ($productOfferCriteriaFilter->getProductOfferReference()) {
             $productOfferQuery->filterByProductOfferReference($productOfferCriteriaFilter->getProductOfferReference());
         }
+
         if ($productOfferCriteriaFilter->getConcreteSkus()) {
             $productOfferQuery->filterByConcreteSku_In($productOfferCriteriaFilter->getConcreteSkus());
         }
+
         if ($productOfferCriteriaFilter->getProductOfferReferences()) {
             $productOfferQuery->filterByProductOfferReference_In($productOfferCriteriaFilter->getProductOfferReferences());
         }
+
         if ($productOfferCriteriaFilter->getPagination()) {
             $productOfferQuery = $this->getPaginatedCollection($productOfferQuery, $productOfferCriteriaFilter->getPagination());
         }

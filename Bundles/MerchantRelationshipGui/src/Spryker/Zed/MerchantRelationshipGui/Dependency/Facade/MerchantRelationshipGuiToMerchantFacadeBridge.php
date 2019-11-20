@@ -26,12 +26,19 @@ class MerchantRelationshipGuiToMerchantFacadeBridge implements MerchantRelations
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer|null $merchantCriteriaFilterTransfer
+     * This shim exists for BC reasons, will be removed when this module gets a major.
+     * It will be highlighted because the refactoring of MerchantFacade removed the getMerchants function.
+     *
+     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function find(?MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer = null): MerchantCollectionTransfer
+    public function find(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer
     {
-        return $this->merchantFacade->find($merchantCriteriaFilterTransfer);
+        if (method_exists($this->merchantFacade, 'find')) {
+            return $this->merchantFacade->find($merchantCriteriaFilterTransfer);
+        }
+
+        return $this->merchantFacade->getMerchants($merchantCriteriaFilterTransfer);
     }
 }

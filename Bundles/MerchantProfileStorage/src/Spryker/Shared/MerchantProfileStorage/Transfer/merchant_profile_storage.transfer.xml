@@ -56,6 +56,7 @@
     <transfer name="MerchantProfileCriteriaFilter">
         <property name="merchantIds" type="int[]" singular="idMerchant"/>
         <property name="filter" type="Filter"/>
+        <property name="merchantProfileIds" type="int[]" singular="idMerchantProfile"/>
     </transfer>
 
     <transfer name="Filter">
@@ -64,9 +65,17 @@
     </transfer>
 
     <transfer name="MerchantProfile">
+        <property name="isActive" type="bool"/>
+        <property name="fkMerchant" type="int"/>
     </transfer>
 
     <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="Url">
     </transfer>
 
 </transfers>

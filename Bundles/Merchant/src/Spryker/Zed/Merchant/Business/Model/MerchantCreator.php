@@ -10,7 +10,6 @@ namespace Spryker\Zed\Merchant\Business\Model;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface;
 use Spryker\Zed\Merchant\MerchantConfig;
 use Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface;
 
@@ -24,11 +23,6 @@ class MerchantCreator implements MerchantCreatorInterface
     protected $merchantEntityManager;
 
     /**
-     * @var \Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface
-     */
-    protected $merchantKeyGenerator;
-
-    /**
      * @var \Spryker\Zed\Merchant\MerchantConfig
      */
     protected $merchantConfig;
@@ -40,18 +34,15 @@ class MerchantCreator implements MerchantCreatorInterface
 
     /**
      * @param \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface $merchantEntityManager
-     * @param \Spryker\Zed\Merchant\Business\KeyGenerator\MerchantKeyGeneratorInterface $merchantKeyGenerator
      * @param \Spryker\Zed\Merchant\MerchantConfig $merchantConfig
      * @param \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[] $merchantPostSavePlugins
      */
     public function __construct(
         MerchantEntityManagerInterface $merchantEntityManager,
-        MerchantKeyGeneratorInterface $merchantKeyGenerator,
         MerchantConfig $merchantConfig,
         array $merchantPostSavePlugins
     ) {
         $this->merchantEntityManager = $merchantEntityManager;
-        $this->merchantKeyGenerator = $merchantKeyGenerator;
         $this->merchantConfig = $merchantConfig;
         $this->merchantPostSavePlugins = $merchantPostSavePlugins;
     }
@@ -64,12 +55,6 @@ class MerchantCreator implements MerchantCreatorInterface
     public function create(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
     {
         $this->assertDefaultMerchantRequirements($merchantTransfer);
-
-        if (empty($merchantTransfer->getMerchantKey())) {
-            $merchantTransfer->setMerchantKey(
-                $this->merchantKeyGenerator->generateMerchantKey($merchantTransfer->getName())
-            );
-        }
 
         $merchantTransfer->setStatus($this->merchantConfig->getDefaultMerchantStatus());
 

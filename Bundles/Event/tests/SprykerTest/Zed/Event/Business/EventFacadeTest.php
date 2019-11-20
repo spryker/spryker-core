@@ -149,7 +149,9 @@ class EventFacadeTest extends Unit
 
         $queueReceivedMessageTransfer = $this->createQueueReceiveMessageTransfer($eventListenerMock, $transferObject);
 
-        $messages[] = $queueReceivedMessageTransfer;
+        $messages = [
+            $queueReceivedMessageTransfer,
+        ];
 
         $processedMessages = $eventFacade->processEnqueuedMessages($messages);
 
@@ -172,7 +174,9 @@ class EventFacadeTest extends Unit
 
         $queueReceivedMessageTransfer = $this->createQueueReceiveMessageTransfer();
 
-        $messages[] = $queueReceivedMessageTransfer;
+        $messages = [
+            $queueReceivedMessageTransfer,
+        ];
 
         $processedMessages = $eventFacade->processEnqueuedMessages($messages);
 

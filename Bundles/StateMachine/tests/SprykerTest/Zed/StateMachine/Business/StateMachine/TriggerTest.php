@@ -116,7 +116,9 @@ class TriggerTest extends StateMachineMocks
         );
 
         $stateMachineItemTransfer = $this->createTriggerStateMachineItem();
-        $stateMachineItems[] = $stateMachineItemTransfer;
+        $stateMachineItems = [
+            $stateMachineItemTransfer,
+        ];
 
         $affectedItems = $trigger->triggerEvent(
             'event',
@@ -197,7 +199,9 @@ class TriggerTest extends StateMachineMocks
             $conditionMock
         );
 
-        $stateMachineItems[] = $this->createTriggerStateMachineItem();
+        $stateMachineItems = [
+            $this->createTriggerStateMachineItem(),
+        ];
 
         $trigger->triggerEvent(
             'event',

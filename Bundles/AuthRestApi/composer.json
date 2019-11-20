@@ -4,7 +4,7 @@
   "description": "AuthRestApi module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/auth-rest-api-extension": "^1.1.0",
     "spryker/glue-application": "^1.15.0",
     "spryker/glue-application-extension": "^1.2.0",

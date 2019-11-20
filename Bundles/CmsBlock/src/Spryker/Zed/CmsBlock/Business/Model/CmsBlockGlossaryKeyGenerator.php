@@ -36,8 +36,12 @@ class CmsBlockGlossaryKeyGenerator implements CmsBlockGlossaryKeyGeneratorInterf
      *
      * @return string
      */
-    public function generateGlossaryKeyName($idCmsBlock, $templateName, $placeholder, $autoIncrement = true)
-    {
+    public function generateGlossaryKeyName(
+        int $idCmsBlock,
+        string $templateName,
+        string $placeholder,
+        bool $autoIncrement = true
+    ): string {
         $keyName = static::GENERATED_GLOSSARY_KEY_PREFIX . '.';
         $keyName .= str_replace([' ', '.'], '-', $templateName) . '.';
         $keyName .= str_replace([' ', '.'], '-', $placeholder);

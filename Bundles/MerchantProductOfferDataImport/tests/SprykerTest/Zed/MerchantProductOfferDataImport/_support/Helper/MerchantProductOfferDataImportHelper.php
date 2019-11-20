@@ -33,14 +33,6 @@ class MerchantProductOfferDataImportHelper extends Module
     }
 
     /**
-     * @return void
-     */
-    public function truncateProductOffers(): void
-    {
-        $this->getProductOfferPropelQuery()->deleteAll();
-    }
-
-    /**
      * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
      */
     protected function getProductOfferPropelQuery(): SpyProductOfferQuery

@@ -3,7 +3,7 @@
   "description": "Spryker Framework",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.2"
   },
   "require-dev": {
     "spryker/code-sniffer": "dev-master"
@@ -97,11 +97,13 @@
     "spryker/cms-block-category-connector": "*",
     "spryker/cms-block-category-storage": "*",
     "spryker/cms-block-collector": "*",
+    "spryker/cms-block-extension": "*",
     "spryker/cms-block-gui": "*",
     "spryker/cms-block-gui-extension": "*",
     "spryker/cms-block-product-connector": "*",
     "spryker/cms-block-product-storage": "*",
     "spryker/cms-block-storage": "*",
+    "spryker/cms-block-storage-extension": "*",
     "spryker/cms-collector": "*",
     "spryker/cms-content-widget": "*",
     "spryker/cms-content-widget-cms-block-connector": "*",
@@ -120,6 +122,7 @@
     "spryker/cms-slot-extension": "*",
     "spryker/cms-slot-gui": "*",
     "spryker/cms-slot-locale-connector": "*",
+    "spryker/cms-slot-storage": "*",
     "spryker/cms-slot-store-connector": "*",
     "spryker/cms-storage": "*",
     "spryker/cms-user-connector": "*",
@@ -275,7 +278,6 @@
     "spryker/log": "*",
     "spryker/mail": "*",
     "spryker/maintenance": "*",
-    "spryker/mandrill": "*",
     "spryker/manual-order-entry": "*",
     "spryker/manual-order-entry-gui": "*",
     "spryker/manual-order-entry-gui-extension": "*",

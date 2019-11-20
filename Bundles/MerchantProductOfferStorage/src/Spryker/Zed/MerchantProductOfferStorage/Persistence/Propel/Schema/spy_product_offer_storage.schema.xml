@@ -5,7 +5,7 @@
           xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
           namespace="Orm\Zed\MerchantProductOfferStorage\Persistence" package="src.Orm.Zed.MerchantProductOfferStorage.Persistence">
 
-    <table name="spy_product_offer_storage" phpName="SpyProductOfferStorage">
+    <table name="spy_product_offer_storage" phpName="SpyProductOfferStorage" identifierQuoting="true">
         <column name="id_product_offer_storage" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="product_offer_reference" required="true" type="VARCHAR" size="255"/>
 
