@@ -14,8 +14,6 @@ use Spryker\Zed\SalesConfigurableBundle\Business\Transformer\ConfigurableBundleI
 use Spryker\Zed\SalesConfigurableBundle\Business\Transformer\ConfigurableBundleItemTransformerInterface;
 use Spryker\Zed\SalesConfigurableBundle\Business\Writer\SalesOrderConfiguredBundleWriter;
 use Spryker\Zed\SalesConfigurableBundle\Business\Writer\SalesOrderConfiguredBundleWriterInterface;
-use Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToSalesFacadeInterface;
-use Spryker\Zed\SalesConfigurableBundle\SalesConfigurableBundleDependencyProvider;
 
 /**
  * @method \Spryker\Zed\SalesConfigurableBundle\Persistence\SalesConfigurableBundleEntityManagerInterface getEntityManager()
@@ -49,17 +47,6 @@ class SalesConfigurableBundleBusinessFactory extends AbstractBusinessFactory
      */
     public function createConfigurableBundleItemTransformer(): ConfigurableBundleItemTransformerInterface
     {
-        return new ConfigurableBundleItemTransformer(
-            $this->getSalesFacade(),
-            $this->getConfig()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToSalesFacadeInterface
-     */
-    public function getSalesFacade(): SalesConfigurableBundleToSalesFacadeInterface
-    {
-        return $this->getProvidedDependency(SalesConfigurableBundleDependencyProvider::FACADE_SALES);
+        return new ConfigurableBundleItemTransformer();
     }
 }

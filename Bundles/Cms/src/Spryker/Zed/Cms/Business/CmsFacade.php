@@ -39,7 +39,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
     {
         $templateManager = $this->getFactory()->createTemplateManager();
 
-        return $templateEntity = $templateManager->createTemplate($name, $path);
+        return $templateManager->createTemplate($name, $path);
     }
 
     /**

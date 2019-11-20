@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Analyzer;
 
 use Codeception\Test\Unit;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
 
 /**
@@ -23,6 +24,8 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGenerato
  */
 class ResourcePluginAnalyzerTest extends Unit
 {
+    use ArraySubsetAsserts;
+
     protected const EXPECTED_KEYS = [
         'paths',
         'schemas',

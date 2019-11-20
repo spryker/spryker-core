@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductLabelDiscountConnector\Business;
 
 use Codeception\Test\Unit;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 
 /**
@@ -23,6 +24,8 @@ use Generated\Shared\Transfer\ProductLabelTransfer;
  */
 class ProductLabelDiscountConnectorFacadeTest extends Unit
 {
+    use ArraySubsetAsserts;
+
     /**
      * @var \SprykerTest\Zed\ProductLabelDiscountConnector\ProductLabelDiscountConnectorBusinessTester
      */

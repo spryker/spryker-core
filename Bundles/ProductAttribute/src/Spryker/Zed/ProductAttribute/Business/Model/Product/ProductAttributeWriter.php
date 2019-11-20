@@ -140,7 +140,6 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
     protected function getAttributesDataToSave(array $attributes)
     {
         $attributeData = [];
-        $keysToRemove = [];
 
         foreach ($attributes as $attribute) {
             $key = $attribute[ProductAttributeKeyTransfer::KEY];
@@ -148,7 +147,6 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
             $value = $this->sanitizeString($attribute['value']);
 
             if ($value === '' || $value === false) {
-                $keysToRemove[$localeCode][$key] = $key;
                 continue;
             }
 
@@ -165,8 +163,6 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
      */
     protected function sanitizeString(string $string)
     {
-        $result = trim($string);
-
         return $this->sanitizeService->escapeHtml($string);
     }
 

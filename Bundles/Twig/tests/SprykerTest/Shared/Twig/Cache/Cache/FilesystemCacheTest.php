@@ -38,7 +38,7 @@ class FilesystemCacheTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         if (is_file($this->getCacheFile())) {
             unlink($this->getCacheFile());

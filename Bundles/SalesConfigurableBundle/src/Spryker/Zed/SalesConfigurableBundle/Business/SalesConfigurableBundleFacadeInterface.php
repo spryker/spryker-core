@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\SalesConfigurableBundle\Business;
 
-use Generated\Shared\Transfer\ItemCollectionTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleCollectionTransfer;
@@ -64,14 +62,17 @@ interface SalesConfigurableBundleFacadeInterface
 
     /**
      * Specification:
-     * - Splits configurable bundles.
-     * - Transforms items in configurable bundle depending on configurable bundle item threshold.
+     * - Splits configurable bundles by configurable bundle quantity.
+     * - Applied for configurable bundles when configurable bundle quantity is more than 1.
+     * - Duplicates items for each split configurable bundle.
+     * - Adjusts items and product options quantity per split.
+     * - Alters groupkey for each split configurable bundle.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemCollectionTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function transformConfigurableBundleItem(ItemTransfer $itemTransfer): ItemCollectionTransfer;
+    public function transformConfigurableBundleOrderItems(OrderTransfer $orderTransfer): OrderTransfer;
 }

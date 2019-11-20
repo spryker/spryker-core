@@ -21,31 +21,19 @@ interface CmsBlockStorageClientInterface
      *
      * @return array
      */
-    public function findBlocksByNames($blockNames, $localeName, $storeName);
+    public function findBlocksByNames($blockNames, $localeName, $storeName): array;
 
     /**
      * Specification:
-     * - Find blocs by required options
-     * - Return only block names which fit to all provided options
+     * - Finds blocks by the provided array of options with a single multi request to a storage.
      *
      * @api
      *
      * @param array $options
-     * @param string $localName
+     * @param string $localeName
+     * @param string $storeName
      *
      * @return array
      */
-    public function findBlockNamesByOptions(array $options, $localName);
-
-    /**
-     * Specification:
-     * - Prepare a valid block key by provided name
-     *
-     * @api
-     *
-     * @param string $name
-     *
-     * @return string
-     */
-    public function generateBlockNameKey($name);
+    public function getCmsBlocksByOptions(array $options, string $localeName, string $storeName): array;
 }

@@ -406,4 +406,37 @@ class GlossaryFacade extends AbstractFacade implements GlossaryFacadeInterface
             ->createTranslationReader()
             ->getTranslationsByGlossaryKeyAndLocaleTransfers($glossaryKey, $localeTransfers);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string[] $glossaryKeys
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     */
+    public function getTranslationsByGlossaryKeysAndLocaleTransfers(array $glossaryKeys, array $localeTransfers): array
+    {
+        return $this->getFactory()
+            ->createTranslationReader()
+            ->getTranslationsByGlossaryKeysAndLocaleTransfers($glossaryKeys, $localeTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string[] $glossaryKeys
+     *
+     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
+     */
+    public function getGlossaryKeyTransfersByGlossaryKeys(array $glossaryKeys): array
+    {
+        return $this->getFactory()
+            ->createGlossaryKeyReader()
+            ->getGlossaryKeyTransfersByGlossaryKeys($glossaryKeys);
+    }
 }

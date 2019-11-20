@@ -9,5 +9,8 @@
         <property name="filterData" type="string"/>
     </transfer>
 
+    <transfer name="Locale">
+    </transfer>
+
 </transfers>
 

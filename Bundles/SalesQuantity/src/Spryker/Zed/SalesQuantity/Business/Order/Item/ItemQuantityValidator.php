@@ -32,10 +32,6 @@ class ItemQuantityValidator implements ItemQuantityValidatorInterface
      */
     public function isItemQuantitySplittable(ItemTransfer $itemTransfer): bool
     {
-        if ($this->isConfigurableBundleItem($itemTransfer)) {
-            return true;
-        }
-
         if ($this->isBundledItem($itemTransfer)) {
             return true;
         }
@@ -49,22 +45,6 @@ class ItemQuantityValidator implements ItemQuantityValidatorInterface
         }
 
         return true;
-    }
-
-    /**
-     * @uses ItemTransfer::getConfiguredBundle()
-     *
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return bool
-     */
-    protected function isConfigurableBundleItem(ItemTransfer $itemTransfer): bool
-    {
-        if (!method_exists($itemTransfer, 'getConfiguredBundle')) {
-            return false;
-        }
-
-        return $itemTransfer->getConfiguredBundle() !== null;
     }
 
     /**
