@@ -20,11 +20,13 @@ class ConfiguredBundleQuantityExpander implements ConfiguredBundleQuantityExpand
     public function expandConfiguredBundleItemsWithQuantityPerSlot(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$this->isExpandWithQuantityPerSlotNeeded($itemTransfer)) {
+            if (!$this->isItemConfiguredBundleAndQuantityNotSet($itemTransfer)) {
                 continue;
             }
 
-            $this->expandItemTransferWithQuantityPerSlot($itemTransfer);
+            $itemTransfer->getConfiguredBundleItem()->setQuantityPerSlot(
+                $this->getCalculatedConfiguredBundleItemQuantityPerSlot($itemTransfer)
+            );
         }
 
         return $cartChangeTransfer;
@@ -35,7 +37,7 @@ class ConfiguredBundleQuantityExpander implements ConfiguredBundleQuantityExpand
      *
      * @return bool
      */
-    protected function isExpandWithQuantityPerSlotNeeded(ItemTransfer $itemTransfer): bool
+    protected function isItemConfiguredBundleAndQuantityNotSet(ItemTransfer $itemTransfer): bool
     {
         return $itemTransfer->getConfiguredBundle()
             && $itemTransfer->getConfiguredBundleItem()
@@ -45,18 +47,17 @@ class ConfiguredBundleQuantityExpander implements ConfiguredBundleQuantityExpand
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return void
+     * @return int
      */
-    protected function expandItemTransferWithQuantityPerSlot(ItemTransfer $itemTransfer): void
+    protected function getCalculatedConfiguredBundleItemQuantityPerSlot(ItemTransfer $itemTransfer): int
     {
         $itemTransfer
             ->requireQuantity()
             ->requireConfiguredBundleItem()
             ->requireConfiguredBundle()
             ->getConfiguredBundle()
-                ->requireQuantity();
+            ->requireQuantity();
 
-        $quantityPerSlot = (int)($itemTransfer->getQuantity() / $itemTransfer->getConfiguredBundle()->getQuantity());
-        $itemTransfer->getConfiguredBundleItem()->setQuantityPerSlot($quantityPerSlot);
+        return (int)($itemTransfer->getQuantity() / $itemTransfer->getConfiguredBundle()->getQuantity());
     }
 }

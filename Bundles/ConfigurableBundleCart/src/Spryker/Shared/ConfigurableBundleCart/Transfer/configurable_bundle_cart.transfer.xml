@@ -11,7 +11,7 @@
 
     <transfer name="CreateConfiguredBundleRequest">
         <property name="configuredBundleRequest" type="ConfiguredBundleRequest"/>
-        <property name="items" type="ConfiguredBundleItemRequest[]" singular="item"/>
+        <property name="configuredBundleItemRequests" type="ConfiguredBundleItemRequest[]" singular="configuredBundleItemRequest"/>
     </transfer>
 
     <transfer name="ConfiguredBundleItemRequest">

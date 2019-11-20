@@ -29,8 +29,8 @@ class ConfigurableBundleCartClient extends AbstractClient implements Configurabl
     public function addConfiguredBundle(CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()
-            ->createCartWriter()
-            ->addConfiguredBundle($createConfiguredBundleRequestTransfer);
+            ->createConfiguredBundleCartAdder()
+            ->addConfiguredBundleToCart($createConfiguredBundleRequestTransfer);
     }
 
     /**

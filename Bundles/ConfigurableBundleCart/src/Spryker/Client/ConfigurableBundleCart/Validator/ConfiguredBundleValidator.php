@@ -34,7 +34,7 @@ class ConfiguredBundleValidator implements ConfiguredBundleValidatorInterface
      */
     public function validateCreateConfiguredBundleRequestTransfer(CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer): bool
     {
-        if (!$createConfiguredBundleRequestTransfer->getConfiguredBundleRequest() || !$createConfiguredBundleRequestTransfer->getItems()->count()) {
+        if (!$createConfiguredBundleRequestTransfer->getConfiguredBundleRequest() || !$createConfiguredBundleRequestTransfer->getConfiguredBundleItemRequests()->count()) {
             return false;
         }
 
@@ -48,7 +48,7 @@ class ConfiguredBundleValidator implements ConfiguredBundleValidatorInterface
 
         return $this->validateConfiguredBundleTemplateSlotCombination(
             $configurableBundleTemplateStorageTransfer,
-            $createConfiguredBundleRequestTransfer->getItems()
+            $createConfiguredBundleRequestTransfer->getConfiguredBundleItemRequests()
         );
     }
 

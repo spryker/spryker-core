@@ -7,21 +7,16 @@
 
 namespace Spryker\Client\ConfigurableBundleCart\Writer;
 
-use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer;
 use Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface;
-use Spryker\Client\ConfigurableBundleCart\Mapper\ConfiguredBundleMapperInterface;
 use Spryker\Client\ConfigurableBundleCart\Reader\QuoteItemReaderInterface;
 use Spryker\Client\ConfigurableBundleCart\Updater\QuoteItemUpdaterInterface;
-use Spryker\Client\ConfigurableBundleCart\Validator\ConfiguredBundleValidatorInterface;
 
 class CartWriter implements CartWriterInterface
 {
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_NOT_FOUND = 'configured_bundle_cart.error.configured_bundle_not_found';
-    protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_ADDED = 'configured_bundle_cart.error.configured_bundle_cannot_be_added';
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_REMOVED = 'configured_bundle_cart.error.configured_bundle_cannot_be_removed';
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_UPDATED = 'configured_bundle_cart.error.configured_bundle_cannot_be_updated';
 
@@ -41,53 +36,18 @@ class CartWriter implements CartWriterInterface
     protected $quoteItemUpdater;
 
     /**
-     * @var \Spryker\Client\ConfigurableBundleCart\Validator\ConfiguredBundleValidatorInterface
-     */
-    protected $configuredBundleValidator;
-
-    /**
-     * @var \Spryker\Client\ConfigurableBundleCart\Mapper\ConfiguredBundleMapperInterface
-     */
-    protected $configuredBundleMapper;
-
-    /**
      * @param \Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface $cartClient
      * @param \Spryker\Client\ConfigurableBundleCart\Reader\QuoteItemReaderInterface $quoteItemReader
      * @param \Spryker\Client\ConfigurableBundleCart\Updater\QuoteItemUpdaterInterface $quoteItemUpdater
-     * @param \Spryker\Client\ConfigurableBundleCart\Validator\ConfiguredBundleValidatorInterface $configuredBundleValidator
-     * @param \Spryker\Client\ConfigurableBundleCart\Mapper\ConfiguredBundleMapperInterface $configuredBundleMapper
      */
     public function __construct(
         ConfigurableBundleCartToCartClientInterface $cartClient,
         QuoteItemReaderInterface $quoteItemReader,
-        QuoteItemUpdaterInterface $quoteItemUpdater,
-        ConfiguredBundleValidatorInterface $configuredBundleValidator,
-        ConfiguredBundleMapperInterface $configuredBundleMapper
+        QuoteItemUpdaterInterface $quoteItemUpdater
     ) {
         $this->cartClient = $cartClient;
         $this->quoteItemReader = $quoteItemReader;
         $this->quoteItemUpdater = $quoteItemUpdater;
-        $this->configuredBundleMapper = $configuredBundleMapper;
-        $this->configuredBundleValidator = $configuredBundleValidator;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function addConfiguredBundle(CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer): QuoteResponseTransfer
-    {
-        if (!$this->configuredBundleValidator->validateCreateConfiguredBundleRequestTransfer($createConfiguredBundleRequestTransfer)) {
-            return $this->createErrorResponse(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_ADDED);
-        }
-
-        $cartChangeTransfer = $this->configuredBundleMapper->mapCreateConfiguredBundleRequestTransferToCartChangeTransfer(
-            $createConfiguredBundleRequestTransfer,
-            new CartChangeTransfer()
-        );
-
-        return $this->cartClient->addToCart($cartChangeTransfer);
     }
 
     /**
