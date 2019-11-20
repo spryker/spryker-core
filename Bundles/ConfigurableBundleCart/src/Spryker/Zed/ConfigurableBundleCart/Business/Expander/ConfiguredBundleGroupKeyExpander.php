@@ -20,11 +20,13 @@ class ConfiguredBundleGroupKeyExpander implements ConfiguredBundleGroupKeyExpand
     public function expandConfiguredBundleItemsWithGroupKey(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$this->isExpandWithWithGroupKeyNeeded($itemTransfer)) {
+            if (!$this->isItemConfiguredBunle($itemTransfer)) {
                 continue;
             }
 
-            $this->expandItemTransferWithGroupKey($itemTransfer);
+            $itemTransfer->setGroupKey(
+                $this->getItemTransferConfiguredBunleGroupKey($itemTransfer)
+            );
         }
 
         return $cartChangeTransfer;
@@ -35,7 +37,7 @@ class ConfiguredBundleGroupKeyExpander implements ConfiguredBundleGroupKeyExpand
      *
      * @return bool
      */
-    protected function isExpandWithWithGroupKeyNeeded(ItemTransfer $itemTransfer): bool
+    protected function isItemConfiguredBunle(ItemTransfer $itemTransfer): bool
     {
         return $itemTransfer->getConfiguredBundle() && $itemTransfer->getConfiguredBundleItem();
     }
@@ -43,9 +45,9 @@ class ConfiguredBundleGroupKeyExpander implements ConfiguredBundleGroupKeyExpand
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return void
+     * @return string
      */
-    protected function expandItemTransferWithGroupKey(ItemTransfer $itemTransfer): void
+    protected function getItemTransferConfiguredBunleGroupKey(ItemTransfer $itemTransfer): string
     {
         $itemTransfer
             ->requireGroupKey()
@@ -53,12 +55,10 @@ class ConfiguredBundleGroupKeyExpander implements ConfiguredBundleGroupKeyExpand
             ->getConfiguredBundle()
                 ->requireGroupKey();
 
-        $itemTransfer->setGroupKey(
-            sprintf(
-                '%s-%s',
-                $itemTransfer->getConfiguredBundle()->getGroupKey(),
-                $itemTransfer->getGroupKey()
-            )
+        return sprintf(
+            '%s-%s',
+            $itemTransfer->getConfiguredBundle()->getGroupKey(),
+            $itemTransfer->getGroupKey()
         );
     }
 }
