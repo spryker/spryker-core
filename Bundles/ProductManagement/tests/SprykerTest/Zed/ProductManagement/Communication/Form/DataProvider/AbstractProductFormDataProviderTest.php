@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\ProductManagement\Communication\Form\DataProvider;
 
 use Codeception\Test\Unit;
-use PHPUnit\Framework\MockObject\MockObject;
 use ReflectionClass;
 use Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider;
 
@@ -70,9 +69,9 @@ class AbstractProductFormDataProviderTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\AbstractProductFormDataProvider|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getProductFormDataProviderMock(): MockObject
+    protected function getProductFormDataProviderMock()
     {
         $productFormDataProviderMock = $this->getMockBuilder(AbstractProductFormDataProvider::class)
             ->disableOriginalConstructor()

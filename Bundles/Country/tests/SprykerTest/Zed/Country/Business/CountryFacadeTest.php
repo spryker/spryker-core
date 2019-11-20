@@ -65,7 +65,7 @@ class CountryFacadeTest extends Unit
     }
 
     /**
-     * @return \Psr\Log\LoggerInterface
+     * @return \Psr\Log\LoggerInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getMockLogger(): LoggerInterface
     {

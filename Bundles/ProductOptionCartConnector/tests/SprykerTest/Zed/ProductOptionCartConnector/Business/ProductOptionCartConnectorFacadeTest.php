@@ -412,11 +412,11 @@ class ProductOptionCartConnectorFacadeTest extends Unit
     }
 
     /**
-     * @param string $priceMode
+     * @param string|null $priceMode
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    protected function createCartChangeTransfer(string $priceMode): CartChangeTransfer
+    protected function createCartChangeTransfer(?string $priceMode): CartChangeTransfer
     {
         $quoteTransfer = (new QuoteTransfer())
             ->setPriceMode($priceMode);

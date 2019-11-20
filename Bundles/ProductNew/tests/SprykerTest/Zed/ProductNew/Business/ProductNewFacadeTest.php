@@ -80,12 +80,12 @@ class ProductNewFacadeTest extends Unit
     /**
      * @dataProvider invalidTimeRangeProductsToAssignDataProvider
      *
-     * @param string $newFrom
-     * @param string $newTo
+     * @param string|null $newFrom
+     * @param string|null $newTo
      *
      * @return void
      */
-    public function testFindProductsToAssignShouldNotReturnInvalidTimeRangeResults(string $newFrom, string $newTo): void
+    public function testFindProductsToAssignShouldNotReturnInvalidTimeRangeResults(?string $newFrom, ?string $newTo): void
     {
         // Arrange
         $this->tester->haveProductLabel([
@@ -106,12 +106,12 @@ class ProductNewFacadeTest extends Unit
     /**
      * @dataProvider validTimeRangeProductsToAssignDataProvider
      *
-     * @param string $newFrom
-     * @param string $newTo
+     * @param string|null $newFrom
+     * @param string|null $newTo
      *
      * @return void
      */
-    public function testFindProductsToAssignShouldNotReturnAlreadyAssignedResults(string $newFrom, string $newTo): void
+    public function testFindProductsToAssignShouldNotReturnAlreadyAssignedResults(?string $newFrom, ?string $newTo): void
     {
         // Arrange
         $productLabelTransfer = $this->tester->haveProductLabel([
@@ -136,12 +136,12 @@ class ProductNewFacadeTest extends Unit
     /**
      * @dataProvider invalidTimeRangeProductsToAssignDataProvider
      *
-     * @param string $newFrom
-     * @param string $newTo
+     * @param string|null $newFrom
+     * @param string|null $newTo
      *
      * @return void
      */
-    public function testFindProductsToDeassignShouldReturnValidTimeRangeResults(string $newFrom, string $newTo): void
+    public function testFindProductsToDeassignShouldReturnValidTimeRangeResults(?string $newFrom, ?string $newTo): void
     {
         // Arrange
         $productLabelTransfer = $this->tester->haveProductLabel([
@@ -173,12 +173,12 @@ class ProductNewFacadeTest extends Unit
     /**
      * @dataProvider validTimeRangeProductsToAssignDataProvider
      *
-     * @param string $newFrom
-     * @param string $newTo
+     * @param string|null $newFrom
+     * @param string|null $newTo
      *
      * @return void
      */
-    public function testFindProductsToDeassignShouldNotReturnInvalidTimeRangeResults(string $newFrom, string $newTo): void
+    public function testFindProductsToDeassignShouldNotReturnInvalidTimeRangeResults(?string $newFrom, ?string $newTo): void
     {
         // Arrange
         $productLabelTransfer = $this->tester->haveProductLabel([
@@ -203,12 +203,12 @@ class ProductNewFacadeTest extends Unit
     /**
      * @dataProvider invalidTimeRangeProductsToAssignDataProvider
      *
-     * @param string $newFrom
-     * @param string $newTo
+     * @param string|null $newFrom
+     * @param string|null $newTo
      *
      * @return void
      */
-    public function testFindProductsToDeassignShouldNotReturnNotAssignedResults(string $newFrom, string $newTo): void
+    public function testFindProductsToDeassignShouldNotReturnNotAssignedResults(?string $newFrom, ?string $newTo): void
     {
         // Arrange
         $this->tester->haveProductLabel([

@@ -27,7 +27,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\DiscountBusinessFactory;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
@@ -1038,11 +1037,11 @@ class DiscountFacadeTest extends Unit
 
     /**
      * @param string $dependencyType
-     * @param \PHPUnit\Framework\MockObject\MockObject $discountRulePluginMock
+     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountRuleWithValueOptionsPluginInterface|\PHPUnit\Framework\MockObject\MockObject $discountRulePluginMock
      *
      * @return \Spryker\Zed\Discount\Business\DiscountFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
      */
-    protected function createDiscountFacadeForDiscountRuleWithValueOptionsPlugin(string $dependencyType, MockObject $discountRulePluginMock)
+    protected function createDiscountFacadeForDiscountRuleWithValueOptionsPlugin(string $dependencyType, $discountRulePluginMock)
     {
         $discountFacade = $this->createDiscountFacade();
         $factory = new DiscountBusinessFactory();

@@ -39,7 +39,7 @@ class FileVersionTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface
+     * @return \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createFileManagerRepositoryMock(): FileManagerRepositoryInterface
     {
