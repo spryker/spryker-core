@@ -19,7 +19,7 @@ class ProductAbstractBySkuResourceRelationshipPlugin extends AbstractPlugin impl
 {
     /**
      * {@inheritDoc}
-     * - Adds concrete-products resource as relationship by sku.
+     * - Adds abstract-products resource as relationship by sku.
      *
      * @api
      *

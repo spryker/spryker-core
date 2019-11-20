@@ -8,9 +8,7 @@
 namespace Spryker\Glue\CartCodesRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\DiscountTransfer;
-use Generated\Shared\Transfer\PromotionItemTransfer;
 use Generated\Shared\Transfer\RestDiscountsAttributesTransfer;
-use Generated\Shared\Transfer\RestPromotionalItemsAttributesTransfer;
 
 class DiscountMapper implements DiscountMapperInterface
 {
@@ -25,20 +23,5 @@ class DiscountMapper implements DiscountMapperInterface
         RestDiscountsAttributesTransfer $restDiscountsAttributesTransfer
     ): RestDiscountsAttributesTransfer {
         return $restDiscountsAttributesTransfer->fromArray($discountTransfer->toArray(), true);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PromotionItemTransfer $promotionItemTransfer
-     * @param \Generated\Shared\Transfer\RestPromotionalItemsAttributesTransfer $restPromotionalItemsAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestPromotionalItemsAttributesTransfer
-     */
-    public function mapPromotionItemTransferToRestPromotionalItemsAttributesTransfer(
-        PromotionItemTransfer $promotionItemTransfer,
-        RestPromotionalItemsAttributesTransfer $restPromotionalItemsAttributesTransfer
-    ): RestPromotionalItemsAttributesTransfer {
-        return $restPromotionalItemsAttributesTransfer
-            ->setSku($promotionItemTransfer->getAbstractSku())
-            ->setQuantity($promotionItemTransfer->getMaxQuantity());
     }
 }

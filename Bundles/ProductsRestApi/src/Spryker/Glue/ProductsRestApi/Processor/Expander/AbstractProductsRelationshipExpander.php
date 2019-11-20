@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\ProductsRestApi\Processor\Expander;
 
+use Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\AbstractProductsReaderInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
@@ -36,16 +38,7 @@ class AbstractProductsRelationshipExpander implements AbstractProductsRelationsh
      */
     public function addResourceRelationshipsBySkus(array $resources, RestRequestInterface $restRequest): array
     {
-        $productAbstractSkus = [];
-        foreach ($resources as $resource) {
-            $productAbstractSku = $this->findSku($resource->getAttributes());
-            if (!$productAbstractSku) {
-                continue;
-            }
-
-            $productAbstractSkus[] = $productAbstractSku;
-        }
-
+        $productAbstractSkus = $this->findSkusByResources($resources);
         if (!$productAbstractSkus) {
             return [];
         }
@@ -66,16 +59,33 @@ class AbstractProductsRelationshipExpander implements AbstractProductsRelationsh
     }
 
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     *
+     * @return array
+     */
+    protected function findSkusByResources(array $resources): array
+    {
+        $productAbstractSkus = [];
+        foreach ($resources as $resource) {
+            $productAbstractSku = $this->findSku($resource->getAttributes());
+            if (!$productAbstractSku) {
+                continue;
+            }
+
+            $productAbstractSkus[] = $productAbstractSku;
+        }
+
+        return $productAbstractSkus;
+    }
+
+    /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $attributes
      *
      * @return string|null
      */
     protected function findSku(?AbstractTransfer $attributes): ?string
     {
-        if ($attributes
-            && $attributes->offsetExists(static::KEY_SKU)
-            && $attributes->offsetGet(static::KEY_SKU)
-        ) {
+        if ($attributes && $attributes instanceof AbstractProductsRestAttributesTransfer) {
             return $attributes->offsetGet(static::KEY_SKU);
         }
 

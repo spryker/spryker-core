@@ -8,9 +8,7 @@
 namespace Spryker\Glue\CartCodesRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\DiscountTransfer;
-use Generated\Shared\Transfer\PromotionItemTransfer;
 use Generated\Shared\Transfer\RestDiscountsAttributesTransfer;
-use Generated\Shared\Transfer\RestPromotionalItemsAttributesTransfer;
 
 interface DiscountMapperInterface
 {
@@ -24,15 +22,4 @@ interface DiscountMapperInterface
         DiscountTransfer $discountTransfer,
         RestDiscountsAttributesTransfer $restDiscountsAttributesTransfer
     ): RestDiscountsAttributesTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\PromotionItemTransfer $promotionItemTransfer
-     * @param \Generated\Shared\Transfer\RestPromotionalItemsAttributesTransfer $restPromotionalItemsAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestPromotionalItemsAttributesTransfer
-     */
-    public function mapPromotionItemTransferToRestPromotionalItemsAttributesTransfer(
-        PromotionItemTransfer $promotionItemTransfer,
-        RestPromotionalItemsAttributesTransfer $restPromotionalItemsAttributesTransfer
-    ): RestPromotionalItemsAttributesTransfer;
 }

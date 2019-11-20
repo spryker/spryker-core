@@ -20,7 +20,6 @@ class PromotionItemByQuoteTransferResourceRelationshipPlugin extends AbstractPlu
     /**
      * {@inheritDoc}
      * - Adds promotional-items resource as relationship by cart resource.
-     * - Resource should have order reference field in attributes.
      *
      * @api
      *
