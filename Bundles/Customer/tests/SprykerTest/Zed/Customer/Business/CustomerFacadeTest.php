@@ -918,7 +918,7 @@ class CustomerFacadeTest extends Unit
     public function testFindCustomerByReference(): void
     {
         // Assign
-        $customerTransfer = $this->tester->haveCustomer();
+        $customerTransfer = $this->tester->haveCustomer(['password' => static::VALUE_VALID_PASSWORD]);
 
         // Act
         $customerResponseTransfer = $this->tester->getFacade()->findCustomerByReference($customerTransfer->getCustomerReference());
