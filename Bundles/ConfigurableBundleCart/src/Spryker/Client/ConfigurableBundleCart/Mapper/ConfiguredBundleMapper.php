@@ -68,6 +68,10 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
         ConfiguredBundleRequestTransfer $configuredBundleRequestTransfer,
         ConfiguredBundleItemRequestTransfer $configuredBundleItemRequestTransfer
     ): ItemTransfer {
+        $configuredBundleItemRequestTransfer
+            ->requireSku()
+            ->requireQuantity();
+
         $itemTransfer = (new ItemTransfer())
             ->setSku($configuredBundleItemRequestTransfer->getSku())
             ->setQuantity($configuredBundleItemRequestTransfer->getQuantity());
@@ -98,8 +102,9 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
         ConfiguredBundleTransfer $configuredBundleTransfer
     ): ConfiguredBundleTransfer {
         $configuredBundleRequestTransfer
+            ->requireQuantity()
             ->requireTemplateUuid()
-            ->requireQuantity();
+            ->requireTemplateName();
 
         $groupKey = $this->configuredBundleGroupKeyGenerator->generateConfiguredBundleGroupKey($configuredBundleRequestTransfer);
 
@@ -123,10 +128,7 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
         ConfiguredBundleItemRequestTransfer $configuredBundleItemRequestTransfer,
         ConfiguredBundleItemTransfer $configuredBundleItemTransfer
     ): ConfiguredBundleItemTransfer {
-        $configuredBundleItemRequestTransfer
-            ->requireSku()
-            ->requireSlotUuid()
-            ->requireQuantity();
+        $configuredBundleItemRequestTransfer->requireSlotUuid();
 
         $configurableBundleTemplateSlotTransfer = (new ConfigurableBundleTemplateSlotTransfer())
             ->setUuid($configuredBundleItemRequestTransfer->getSlotUuid());

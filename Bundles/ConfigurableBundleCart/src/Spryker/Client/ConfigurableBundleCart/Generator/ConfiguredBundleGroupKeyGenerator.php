@@ -30,6 +30,6 @@ class ConfiguredBundleGroupKeyGenerator implements ConfiguredBundleGroupKeyGener
      */
     protected function generateConfiguredBundleGroupKeyByUuid(string $uuid): string
     {
-        return sprintf('%s-%s', $uuid, uniqid());
+        return sprintf('%s-%s', $uuid, uniqid('', true));
     }
 }
