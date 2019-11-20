@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\ProductsRestApi\Processor\Expander;
 
-use Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer;
+use Generated\Shared\Transfer\RestPromotionalItemsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\AbstractProductsReaderInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
@@ -84,7 +84,7 @@ class AbstractProductsRelationshipExpander implements AbstractProductsRelationsh
      */
     protected function findSku(?AbstractTransfer $attributes): ?string
     {
-        if ($attributes && $attributes instanceof AbstractProductsRestAttributesTransfer) {
+        if ($attributes && $attributes instanceof RestPromotionalItemsAttributesTransfer) {
             return $attributes->offsetGet(static::KEY_SKU);
         }
 
