@@ -14,12 +14,12 @@ use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
-class CmsBlockNameToCmsBlockIdStep implements DataImportStepInterface
+class CmsBlockKeyToCmsBlockIdStep implements DataImportStepInterface
 {
     /**
      * @var int[]
      */
-    protected $idCmsBlockCache = [];
+    protected $idCmsBlockBuffer = [];
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -28,34 +28,34 @@ class CmsBlockNameToCmsBlockIdStep implements DataImportStepInterface
      */
     public function execute(DataSetInterface $dataSet): void
     {
-        $dataSet[CmsSlotBlockDataSetInterface::CMS_BLOCK_ID] = $this->getIdCmsBlockByName(
-            $dataSet[CmsSlotBlockDataSetInterface::CMS_BLOCK_NAME]
+        $dataSet[CmsSlotBlockDataSetInterface::COL_BLOCK_ID] = $this->getIdCmsBlockByKey(
+            $dataSet[CmsSlotBlockDataSetInterface::COL_BLOCK_KEY]
         );
     }
 
     /**
-     * @param string $cmsBlockName
+     * @param string $cmsBlockKey
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
      *
      * @return int
      */
-    protected function getIdCmsBlockByName(string $cmsBlockName): int
+    protected function getIdCmsBlockByKey(string $cmsBlockKey): int
     {
-        if (isset($this->idCmsBlockCache[$cmsBlockName])) {
-            return $this->idCmsBlockCache[$cmsBlockName];
+        if (isset($this->idCmsBlockBuffer[$cmsBlockKey])) {
+            return $this->idCmsBlockBuffer[$cmsBlockKey];
         }
 
         $idCmsBlock = SpyCmsBlockQuery::create()
-            ->filterByName($cmsBlockName)
+            ->filterByKey($cmsBlockKey)
             ->select([SpyCmsBlockTableMap::COL_ID_CMS_BLOCK])
             ->findOne();
 
         if (!$idCmsBlock) {
-            throw new EntityNotFoundException(sprintf('Could not find CMS Block ID by name "%s".', $cmsBlockName));
+            throw new EntityNotFoundException(sprintf('Could not find CMS Block ID by key "%s".', $cmsBlockKey));
         }
 
-        $this->idCmsBlockCache[$cmsBlockName] = $idCmsBlock;
+        $this->idCmsBlockBuffer[$cmsBlockKey] = $idCmsBlock;
 
         return $idCmsBlock;
     }
