@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use InvalidArgumentException;
 use Spryker\Zed\Stock\Dependency\Facade\StockToStoreFacadeInterface;
-use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 use Spryker\Zed\Stock\Persistence\StockRepositoryInterface;
 
 class StockReader implements StockReaderInterface
@@ -34,26 +33,18 @@ class StockReader implements StockReaderInterface
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface
-     */
-    protected $queryContainer;
-
-    /**
      * @param \Spryker\Zed\Stock\Persistence\StockRepositoryInterface $stockRepository
      * @param \Spryker\Zed\Stock\Business\Stock\StockMapperInterface $stockMapper
      * @param \Spryker\Zed\Stock\Dependency\Facade\StockToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $queryContainer
      */
     public function __construct(
         StockRepositoryInterface $stockRepository,
         StockMapperInterface $stockMapper,
-        StockToStoreFacadeInterface $storeFacade,
-        StockQueryContainerInterface $queryContainer
+        StockToStoreFacadeInterface $storeFacade
     ) {
         $this->stockRepository = $stockRepository;
         $this->stockMapper = $stockMapper;
         $this->storeFacade = $storeFacade;
-        $this->queryContainer = $queryContainer;
     }
 
     /**

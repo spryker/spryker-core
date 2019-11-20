@@ -56,7 +56,6 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     public function createProductBundleWriter()
     {
         return new ProductBundleWriter(
-            $this->getProductFacade(),
             $this->getQueryContainer(),
             $this->createProductBundleStockWriter()
         );
@@ -111,7 +110,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductBundleSalesOrderSaver()
     {
-        return new ProductBundleSalesOrderSaver($this->getSalesQueryContainer(), $this->getQueryContainer());
+        return new ProductBundleSalesOrderSaver($this->getSalesQueryContainer());
     }
 
     /**
@@ -119,10 +118,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductBundleOrderSaver()
     {
-        return new ProductBundleOrderSaver(
-            $this->getSalesQueryContainer(),
-            $this->getQueryContainer()
-        );
+        return new ProductBundleOrderSaver($this->getSalesQueryContainer());
     }
 
     /**
@@ -196,7 +192,6 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
         return new ProductBundleAvailabilityHandler(
             $this->getAvailabilityFacade(),
             $this->getQueryContainer(),
-            $this->getStoreFacade(),
             $this->getStockFacade()
         );
     }
