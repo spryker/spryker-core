@@ -20,12 +20,12 @@ class ConfiguredBundleGroupKeyExpander implements ConfiguredBundleGroupKeyExpand
     public function expandConfiguredBundleItemsWithGroupKey(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$this->isItemConfiguredBunle($itemTransfer)) {
+            if (!$this->isItemConfiguredBundle($itemTransfer)) {
                 continue;
             }
 
             $itemTransfer->setGroupKey(
-                $this->getItemTransferConfiguredBunleGroupKey($itemTransfer)
+                $this->getItemTransferConfiguredBundleGroupKey($itemTransfer)
             );
         }
 
@@ -37,7 +37,7 @@ class ConfiguredBundleGroupKeyExpander implements ConfiguredBundleGroupKeyExpand
      *
      * @return bool
      */
-    protected function isItemConfiguredBunle(ItemTransfer $itemTransfer): bool
+    protected function isItemConfiguredBundle(ItemTransfer $itemTransfer): bool
     {
         return $itemTransfer->getConfiguredBundle() && $itemTransfer->getConfiguredBundleItem();
     }
@@ -47,7 +47,7 @@ class ConfiguredBundleGroupKeyExpander implements ConfiguredBundleGroupKeyExpand
      *
      * @return string
      */
-    protected function getItemTransferConfiguredBunleGroupKey(ItemTransfer $itemTransfer): string
+    protected function getItemTransferConfiguredBundleGroupKey(ItemTransfer $itemTransfer): string
     {
         $itemTransfer
             ->requireGroupKey()
