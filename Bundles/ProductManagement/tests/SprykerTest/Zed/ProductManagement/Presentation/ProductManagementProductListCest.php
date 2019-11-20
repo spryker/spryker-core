@@ -32,6 +32,6 @@ class ProductManagementProductListCest
         $i->registerMoneyCollectionFormTypePlugin();
 
         $i->amOnPage(ProductManagementProductListPage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Products');
+        $i->seeBreadcrumbNavigation('Products / Products');
     }
 }

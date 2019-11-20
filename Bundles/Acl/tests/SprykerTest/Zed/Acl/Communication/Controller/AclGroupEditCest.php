@@ -32,6 +32,6 @@ class AclGroupEditCest
     {
         $i->listDataTable(AclGroupListPage::URL . '/table');
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Dashboard / Users Control / Groups / Edit Group');
+        $i->seeBreadcrumbNavigation('Users Control / Groups / Edit Group');
     }
 }

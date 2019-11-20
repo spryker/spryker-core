@@ -32,6 +32,6 @@ class CategoryAssignProductsToCategoryCest
         $i->amOnPage(CategoryListPage::URL);
         $i->waitForElement(CategoryListPage::getAssignProductsButtonSelector());
         $i->click(CategoryListPage::getAssignProductsButtonSelector());
-        $i->seeBreadcrumbNavigation('Dashboard / Category / Assign Products to Category');
+        $i->seeBreadcrumbNavigation('Category / Assign Products to Category');
     }
 }

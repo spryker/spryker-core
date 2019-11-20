@@ -31,7 +31,7 @@ class CustomerGroupListCest
     public function breadcrumbIsVisible(CustomerGroupCommunicationTester $i): void
     {
         $i->amOnPage(CustomerGroupListPage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Customers / Customer Groups');
+        $i->seeBreadcrumbNavigation('Customers / Customer Groups');
     }
 
     /**

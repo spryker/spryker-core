@@ -32,6 +32,6 @@ class AclRoleEditCest
     {
         $i->listDataTable(AclRoleListPage::URL . '/table');
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Dashboard / Users Control / Roles / Edit Role');
+        $i->seeBreadcrumbNavigation('Users Control / Roles / Edit Role');
     }
 }

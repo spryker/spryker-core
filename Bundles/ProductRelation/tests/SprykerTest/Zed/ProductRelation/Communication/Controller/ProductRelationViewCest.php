@@ -33,6 +33,6 @@ class ProductRelationViewCest
         $i->listDataTable(ProductRelationListPage::URL . '/table');
         $i->clickDataTableViewButton();
 
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Product Relations / View Product Relation');
+        $i->seeBreadcrumbNavigation('Products / Product Relations / View Product Relation');
     }
 }

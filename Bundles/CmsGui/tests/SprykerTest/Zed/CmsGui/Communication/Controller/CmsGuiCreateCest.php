@@ -32,6 +32,6 @@ class CmsGuiCreateCest
     {
         $i->registerCmsBlockStoreRelationFormTypePlugin();
         $i->amOnPage(CmsGuiCreatePage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Content Management / Pages / Create new CMS Page');
+        $i->seeBreadcrumbNavigation('Content Management / Pages / Create new CMS Page');
     }
 }

@@ -178,11 +178,11 @@ class ShipmentFacadeTest extends Test
      * @dataProvider multiCurrencyPricesDataProvider
      *
      * @param string $currencyCode
-     * @param string $expectedPriceResult
+     * @param int $expectedPriceResult
      *
      * @return void
      */
-    public function testFindAvailableMethodByIdShouldReturnShipmentMethodById(string $currencyCode, string $expectedPriceResult): void
+    public function testFindAvailableMethodByIdShouldReturnShipmentMethodById(string $currencyCode, int $expectedPriceResult): void
     {
         $this->tester->ensureShipmentMethodTableIsEmpty();
         // Arrange

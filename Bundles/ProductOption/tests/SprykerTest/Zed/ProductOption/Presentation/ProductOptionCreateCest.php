@@ -34,7 +34,7 @@ class ProductOptionCreateCest
 
         $i->amOnPage(ProductOptionCreatePage::URL);
 
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Product Options / Create new Product Option');
+        $i->seeBreadcrumbNavigation('Products / Product Options / Create new Product Option');
 
         $optionGroupTestData = ProductOptionCreatePage::$productOptionGroupData[ProductOptionCreatePage::VALID_GROUP];
 

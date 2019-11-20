@@ -428,11 +428,11 @@ class ProductOptionCartConnectorFacadeTest extends Unit
     }
 
     /**
-     * @param string $priceMode
+     * @param string|null $priceMode
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    protected function createCartChangeTransferWithDefaultItem(string $priceMode): CartChangeTransfer
+    protected function createCartChangeTransferWithDefaultItem(?string $priceMode): CartChangeTransfer
     {
         $cartChangeTransfer = $this->createCartChangeTransfer($priceMode);
         $this->addItemToCart($cartChangeTransfer, new ArrayObject([

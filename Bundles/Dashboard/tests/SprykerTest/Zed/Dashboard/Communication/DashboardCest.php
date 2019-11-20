@@ -30,7 +30,7 @@ class DashboardCest
     public function isVisibleBreadcrumb(DashboardCommunicationTester $i): void
     {
         $i->amOnPage(DashboardPage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Dashboard');
+        $i->seeBreadcrumbNavigation('Dashboard');
     }
 
     /**

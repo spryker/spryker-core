@@ -172,7 +172,7 @@ class QueryContainerTest extends Unit
 
         $results = $query->find();
         $this->assertCount(static::EXPECTED_COUNT, $results);
-        $this->assertSkuCollection($results->toArray(), static::EXPECTED_SKU_COLLECTION);
+        $this->assertSkuCollection($results, static::EXPECTED_SKU_COLLECTION);
     }
 
     /**
@@ -186,7 +186,7 @@ class QueryContainerTest extends Unit
 
         $results = $query->find();
         $this->assertCount(static::EXPECTED_COUNT, $results);
-        $this->assertSkuCollection($results->toArray(), static::EXPECTED_SKU_COLLECTION);
+        $this->assertSkuCollection($results, static::EXPECTED_SKU_COLLECTION);
     }
 
     /**
@@ -411,12 +411,12 @@ class QueryContainerTest extends Unit
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProduct[] $collection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProduct[] $collection
      * @param array $expectedSkuCollection
      *
      * @return void
      */
-    protected function assertSkuCollection(array $collection, array $expectedSkuCollection): void
+    protected function assertSkuCollection($collection, array $expectedSkuCollection): void
     {
         foreach ($collection as $productEntity) {
             $sku = $productEntity->getSku();
@@ -425,7 +425,7 @@ class QueryContainerTest extends Unit
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProduct[] $collection
+     * @param array $collection
      * @param array $expectedSkuCollection
      *
      * @return void

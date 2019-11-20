@@ -51,11 +51,11 @@ class CreateProductReviewTest extends Unit
     /**
      * @dataProvider statusDataProvider
      *
-     * @param string $inputStatus
+     * @param string|null $inputStatus
      *
      * @return void
      */
-    public function testCreateProductReviewIsCreatedAlwaysWithPendingStatus(string $inputStatus): void
+    public function testCreateProductReviewIsCreatedAlwaysWithPendingStatus(?string $inputStatus): void
     {
         // Arrange
         $productReviewTransfer = $this->tester->haveProductReview([
