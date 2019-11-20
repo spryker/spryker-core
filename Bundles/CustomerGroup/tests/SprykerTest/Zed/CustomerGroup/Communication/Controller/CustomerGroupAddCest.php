@@ -32,6 +32,6 @@ class CustomerGroupAddCest
     {
         $i->amOnPage(CustomerGroupAddPage::URL);
 
-        $i->seeBreadcrumbNavigation('Dashboard / Customers / Customer Groups / Add a customer group');
+        $i->seeBreadcrumbNavigation('Customers / Customer Groups / Add a Customer Group');
     }
 }

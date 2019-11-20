@@ -31,6 +31,6 @@ class AclGroupListCest
     public function breadcrumbIsVisible(AclCommunicationTester $i)
     {
         $i->amOnPage(AclGroupListPage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Users Control / Groups');
+        $i->seeBreadcrumbNavigation('Users Control / Groups');
     }
 }

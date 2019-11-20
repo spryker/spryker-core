@@ -33,6 +33,6 @@ class ProductAttributeGuiAttributeViewCest
         $i->listDataTable(ProductAttributeGuiAttributeListPage::URL . '/table');
         $i->clickDataTableViewButton();
 
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Attributes / View Product Attribute');
+        $i->seeBreadcrumbNavigation('Products / Attributes / View Product Attribute');
     }
 }
