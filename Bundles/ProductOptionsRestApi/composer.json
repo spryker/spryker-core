@@ -4,15 +4,13 @@
   "description": "ProductOptionsRestApi module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker/carts-rest-api-extension": "^1.5.0",
+    "php": ">=7.2",
     "spryker/glue-application": "^1.0.0",
     "spryker/glossary-storage": "^1.5.0",
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/product-option-storage": "^1.6.0",
     "spryker/product-storage": "^1.15.0",
-    "spryker/products-rest-api": "^2.0.0",
     "spryker/synchronization-behavior": "^1.0.0"
   },
   "require-dev": {

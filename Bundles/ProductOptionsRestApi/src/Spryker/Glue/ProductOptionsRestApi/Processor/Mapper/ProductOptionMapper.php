@@ -13,52 +13,48 @@ use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupStorageTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorageTransfer;
-use Generated\Shared\Transfer\RestItemProductOptionsAttributesTransfer;
+use Generated\Shared\Transfer\RestItemProductOptionsTransfer;
 use Generated\Shared\Transfer\RestItemsAttributesTransfer;
-use Generated\Shared\Transfer\RestProductOptionAttributesTransfer;
+use Generated\Shared\Transfer\RestProductOptionsAttributesTransfer;
 
 class ProductOptionMapper implements ProductOptionMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
-     * @param string[] $translations
+     * @param \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[] $restProductOptionsAttributesTransfers
      *
-     * @return \Generated\Shared\Transfer\RestProductOptionAttributesTransfer[]
+     * @return \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[]
      */
-    public function mapProductAbstractOptionStorageTransferToRestProductOptionAttributesTransfers(
+    public function mapProductAbstractOptionStorageTransferToRestProductOptionsAttributesTransfers(
         ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer,
-        array $translations
+        array $restProductOptionsAttributesTransfers = []
     ): array {
-        $restProductOptionAttributesTransfers = [];
         foreach ($productAbstractOptionStorageTransfer->getProductOptionGroups() as $productOptionGroupStorageTransfer) {
             foreach ($productOptionGroupStorageTransfer->getProductOptionValues() as $productOptionValueStorageTransfer) {
-                $restProductOptionAttributesTransfers[] = $this->createRestProductOptionAttributesTransfer(
+                $restProductOptionsAttributesTransfers[] = $this->createRestProductOptionsAttributesTransfer(
                     $productOptionGroupStorageTransfer,
-                    $productOptionValueStorageTransfer,
-                    $translations
+                    $productOptionValueStorageTransfer
                 );
             }
         }
 
-        return $restProductOptionAttributesTransfers;
+        return $restProductOptionsAttributesTransfers;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionGroupStorageTransfer $productOptionGroupStorageTransfer
      * @param \Generated\Shared\Transfer\ProductOptionValueStorageTransfer $productOptionValueStorageTransfer
-     * @param string[] $translations
      *
-     * @return \Generated\Shared\Transfer\RestProductOptionAttributesTransfer
+     * @return \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer
      */
-    protected function createRestProductOptionAttributesTransfer(
+    protected function createRestProductOptionsAttributesTransfer(
         ProductOptionGroupStorageTransfer $productOptionGroupStorageTransfer,
-        ProductOptionValueStorageTransfer $productOptionValueStorageTransfer,
-        array $translations
-    ): RestProductOptionAttributesTransfer {
-        return (new RestProductOptionAttributesTransfer())
+        ProductOptionValueStorageTransfer $productOptionValueStorageTransfer
+    ): RestProductOptionsAttributesTransfer {
+        return (new RestProductOptionsAttributesTransfer())
             ->setSku($productOptionValueStorageTransfer->getSku())
-            ->setOptionGroupName($translations[$productOptionGroupStorageTransfer->getName()])
-            ->setOptionName($translations[$productOptionValueStorageTransfer->getValue()])
+            ->setOptionGroupName($productOptionGroupStorageTransfer->getName())
+            ->setOptionName($productOptionValueStorageTransfer->getValue())
             ->setPrice($productOptionValueStorageTransfer->getPrice())
             ->setCurrencyIsoCode($productOptionValueStorageTransfer->getCurrencyIsoCode());
     }
@@ -72,36 +68,32 @@ class ProductOptionMapper implements ProductOptionMapperInterface
      */
     public function mapItemTransferToRestOrderItemsAttributesTransfer(
         ItemTransfer $itemTransfer,
-        RestItemsAttributesTransfer $restItemsAttributesTransfer,
-        array $translations
+        RestItemsAttributesTransfer $restItemsAttributesTransfer
     ): RestItemsAttributesTransfer {
-        $restCartItemProductOptionsAttributesTransfers = [];
+        $restItemProductOptionsTransfers = [];
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            $restCartItemProductOptionsAttributesTransfers[] = $this->createRestItemProductOptionsAttributesTransfer(
-                $productOptionTransfer,
-                $translations
+            $restItemProductOptionsTransfers[] = $this->createRestItemProductOptionsTransfer(
+                $productOptionTransfer
             );
         }
 
-        $restItemsAttributesTransfer->setSelectedOptions(new ArrayObject($restCartItemProductOptionsAttributesTransfers));
+        $restItemsAttributesTransfer->setSelectedOptions(new ArrayObject($restItemProductOptionsTransfers));
 
         return $restItemsAttributesTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
-     * @param array $translations
      *
-     * @return \Generated\Shared\Transfer\RestItemProductOptionsAttributesTransfer
+     * @return \Generated\Shared\Transfer\RestItemProductOptionsTransfer
      */
-    protected function createRestItemProductOptionsAttributesTransfer(
-        ProductOptionTransfer $productOptionTransfer,
-        array $translations
-    ): RestItemProductOptionsAttributesTransfer {
-        return (new RestItemProductOptionsAttributesTransfer())
+    protected function createRestItemProductOptionsTransfer(
+        ProductOptionTransfer $productOptionTransfer
+    ): RestItemProductOptionsTransfer {
+        return (new RestItemProductOptionsTransfer())
             ->setSku($productOptionTransfer->getSku())
-            ->setOptionGroupName($translations[$productOptionTransfer->getGroupName()])
-            ->setOptionName($translations[$productOptionTransfer->getValue()])
+            ->setOptionGroupName($productOptionTransfer->getGroupName())
+            ->setOptionName($productOptionTransfer->getValue())
             ->setPrice($productOptionTransfer->getSumPrice());
     }
 }

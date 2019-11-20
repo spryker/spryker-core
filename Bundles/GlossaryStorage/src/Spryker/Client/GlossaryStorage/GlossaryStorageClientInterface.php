@@ -35,7 +35,7 @@ interface GlossaryStorageClientInterface
      *
      * @param string[] $keyNames
      * @param string $localeName
-     * @param array $parameters
+     * @param string[][] $parameters
      *
      * @return string[]
      */
