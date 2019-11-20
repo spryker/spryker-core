@@ -8,7 +8,6 @@
 namespace Spryker\Glue\ProductsRestApi\Processor\Expander;
 
 use Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\AbstractProductsReaderInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
