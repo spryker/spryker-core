@@ -61,9 +61,9 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStoreFacade(Container $container)
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new StockToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }
@@ -75,9 +75,9 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStockUpdatePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_STOCK_UPDATE] = function (Container $container) {
+        $container->set(static::PLUGINS_STOCK_UPDATE, function (Container $container) {
             return $this->getStockUpdateHandlerPlugins($container);
-        };
+        });
 
         return $container;
     }
@@ -89,9 +89,9 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new StockToProductBridge($container->getLocator()->product()->facade());
-        };
+        });
 
         return $container;
     }
@@ -103,9 +103,9 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTouchFacade(Container $container): Container
     {
-        $container[static::FACADE_TOUCH] = function (Container $container) {
+        $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new StockToTouchBridge($container->getLocator()->touch()->facade());
-        };
+        });
 
         return $container;
     }
