@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ShoppingList\Business\ShoppingListFacade;
 
 use Codeception\Test\Unit;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generated\Shared\DataBuilder\ShoppingListBuilder;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -42,6 +43,8 @@ use Spryker\Zed\ShoppingList\Communication\Plugin\WriteShoppingListPermissionPlu
  */
 class ShoppingListFacadeTest extends Unit
 {
+    use ArraySubsetAsserts;
+
     protected const ERROR_DUPLICATE_NAME_SHOPPING_LIST = 'customer.account.shopping_list.error.duplicate_name';
 
     protected const FAKE_PERMISSION_READ_ONLY = 'FAKE_READ_ONLY';
@@ -177,7 +180,11 @@ class ShoppingListFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($shoppingListResponseTransfer->getIsSuccess(), 'Customer should not be able to have two shopping lists with same name.');
-        $this->assertTrue(array_intersect([static::ERROR_DUPLICATE_NAME_SHOPPING_LIST], $shoppingListResponseTransfer->getErrors()) === [static::ERROR_DUPLICATE_NAME_SHOPPING_LIST]);
+        $this->assertArraySubset(
+            [static::ERROR_DUPLICATE_NAME_SHOPPING_LIST],
+            $shoppingListResponseTransfer->getErrors(),
+            'Customer should not be able to have two shopping lists with same name.'
+        );
     }
 
     /**

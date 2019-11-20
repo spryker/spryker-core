@@ -26,7 +26,7 @@ class TokenTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateTokenMustReturnString()
+    public function testGenerateTokenMustReturnString(): void
     {
         $tokenService = new Token();
         $token = $tokenService->generate('token');
@@ -37,7 +37,7 @@ class TokenTest extends Unit
     /**
      * @return void
      */
-    public function testCheckTokenMustReturnTrueIfTokenIsValid()
+    public function testCheckTokenMustReturnTrueIfTokenIsValid(): void
     {
         $tokenService = new Token();
         $rawToken = 'token';
@@ -50,7 +50,7 @@ class TokenTest extends Unit
     /**
      * @return void
      */
-    public function testCheckTokenMustReturnFalseIfTokenIsInValid()
+    public function testCheckTokenMustReturnFalseIfTokenIsInValid(): void
     {
         $tokenService = new Token();
         $rawToken = 'token';

@@ -187,9 +187,6 @@ class DiscountTest extends Unit
                 'day-of-week = "' . (new DateTime('yesterday'))->format('l') . '"'
             )->setIdDiscount(5);
 
-        $collectedDiscount = (new CollectedDiscountTransfer())
-            ->setDiscount($expectedVoucherDiscount);
-
         $quoteTransfer = (new QuoteTransfer())
             ->setStore($this->getCurrentStore())
             ->setUsedNotAppliedVoucherCodes([])

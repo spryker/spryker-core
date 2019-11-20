@@ -70,7 +70,7 @@ class AbstractManagementTest extends FacadeTestAbstract
      */
     public function testHasProductAbstractShouldReturnTrue()
     {
-        $idProductAbstract = $this->createNewProductAbstractAndAssertNoTouchExists();
+        $this->createNewProductAbstractAndAssertNoTouchExists();
 
         $this->assertTrue(
             $this->productFacade->hasProductAbstract(self::ABSTRACT_SKU)
