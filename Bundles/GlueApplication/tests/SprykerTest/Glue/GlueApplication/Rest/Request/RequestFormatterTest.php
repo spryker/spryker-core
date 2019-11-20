@@ -7,7 +7,6 @@
 namespace SprykerTest\Glue\GlueApplication\Rest\Request;
 
 use Codeception\Test\Unit;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -209,7 +208,7 @@ class RequestFormatterTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplication\GlueApplicationConfig
      */
-    protected function createGlueApplicationConfigMock(bool $isEagerRelatedResourcesInclusionEnabled = true): MockObject
+    protected function createGlueApplicationConfigMock(bool $isEagerRelatedResourcesInclusionEnabled = true)
     {
         $glueApplicationConfigMock = $this->getMockBuilder(GlueApplicationConfig::class)
             ->setMethods(['isEagerRelationshipsLoadingEnabled'])

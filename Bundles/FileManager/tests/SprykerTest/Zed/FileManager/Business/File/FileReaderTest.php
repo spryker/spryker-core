@@ -30,25 +30,25 @@ use Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface;
 class FileReaderTest extends Unit
 {
     /**
-     * @return \Spryker\Zed\FileManager\Business\FileContent\FileContentInterface
+     * @return \Spryker\Zed\FileManager\Business\FileContent\FileContentInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createFileContentMock(): FileContentInterface
+    protected function createFileContentMock()
     {
         return $this->getMockBuilder(FileContentInterface::class)->getMock();
     }
 
     /**
-     * @return \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface
+     * @return \Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createFileManagerRepositoryMock(): FileManagerRepositoryInterface
+    protected function createFileManagerRepositoryMock()
     {
         return $this->getMockBuilder(FileManagerRepositoryInterface::class)->getMock();
     }
 
     /**
-     * @return \Orm\Zed\FileManager\Persistence\SpyFile
+     * @return \Generated\Shared\Transfer\FileTransfer
      */
-    protected function getMockedFile(): SpyFile
+    protected function getMockedFile(): FileTransfer
     {
         $fileTransfer = new FileTransfer();
         $fileTransfer->setFileName('test.txt');

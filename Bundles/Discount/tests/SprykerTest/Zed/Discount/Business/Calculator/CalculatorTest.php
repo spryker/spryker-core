@@ -321,7 +321,7 @@ class CalculatorTest extends Unit
      *
      * @return array
      */
-    protected function createCalculatorPlugins(?DiscountCalculatorPluginInterface $calculatorPluginMock = null): array
+    protected function createCalculatorPlugins($calculatorPluginMock = null): array
     {
         $calculatorPlugins = [];
 

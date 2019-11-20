@@ -47,12 +47,12 @@ class ProductNewFacadeTest extends Unit
     /**
      * @dataProvider validTimeRangeProductsToAssignDataProvider
      *
-     * @param string $newFrom
-     * @param string $newTo
+     * @param string|null $newFrom
+     * @param string|null $newTo
      *
      * @return void
      */
-    public function testFindProductsToAssignShouldReturnValidTimeRangeResults(string $newFrom, string $newTo): void
+    public function testFindProductsToAssignShouldReturnValidTimeRangeResults(?string $newFrom, ?string $newTo): void
     {
         // Arrange
         $this->tester->haveProductLabel([

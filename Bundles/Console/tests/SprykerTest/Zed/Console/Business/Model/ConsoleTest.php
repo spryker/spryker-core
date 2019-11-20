@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Console\Business\Model;
 
 use Codeception\Test\Unit;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\Console\Business\ConsoleBusinessFactory;
 use Spryker\Zed\Console\Business\ConsoleFacade;
 use Spryker\Zed\Console\ConsoleDependencyProvider;
@@ -117,17 +116,17 @@ class ConsoleTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
+     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    private function getCommunicationFactoryMock(): AbstractCommunicationFactory
+    private function getCommunicationFactoryMock()
     {
         return $this->getMockBuilder(AbstractCommunicationFactory::class)->disableOriginalConstructor()->getMock();
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
+     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer|\PHPUnit\Framework\MockObject\MockObject
      */
-    private function getQueryContainerMock(): AbstractQueryContainer
+    private function getQueryContainerMock()
     {
         return $this->getMockBuilder(AbstractQueryContainer::class)->disableOriginalConstructor()->getMock();
     }
@@ -141,9 +140,9 @@ class ConsoleTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    private function getPreRunPluginMock(): MockObject
+    private function getPreRunPluginMock()
     {
         $mock = $this->getMockBuilder(ConsolePreRunHookPluginInterface::class)->setMethods(['preRun'])->getMock();
         $mock->expects($this->once())->method('preRun');
@@ -152,9 +151,9 @@ class ConsoleTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    private function getPostRunPluginMock(): MockObject
+    private function getPostRunPluginMock()
     {
         $mock = $this->getMockBuilder(ConsolePostRunHookPluginInterface::class)->setMethods(['postRun'])->getMock();
         $mock->expects($this->once())->method('postRun');

@@ -144,19 +144,19 @@ class ProductOptionGroupDataHelper extends Module
     /**
      * @param string $currencyCode
      *
-     * @return int
+     * @return int|null
      */
-    protected function getIdCurrency(string $currencyCode): int
+    protected function getIdCurrency(string $currencyCode): ?int
     {
         return $this->getLocator()->currency()->facade()->fromIsoCode($currencyCode)->getIdCurrency();
     }
 
     /**
-     * @param string $storeName
+     * @param string|null $storeName
      *
-     * @return int
+     * @return int|null
      */
-    protected function getIdStore(string $storeName): int
+    protected function getIdStore(?string $storeName): ?int
     {
         if ($storeName === null) {
             return null;
@@ -172,7 +172,9 @@ class ProductOptionGroupDataHelper extends Module
      */
     protected function createProductOptionTranslationTransfer(string $key)
     {
-        $override = [ ProductOptionTranslationTransfer::KEY => $key ];
+        $override = [
+            ProductOptionTranslationTransfer::KEY => $key,
+        ];
 
         return (new ProductOptionTranslationBuilder($override))->build();
     }

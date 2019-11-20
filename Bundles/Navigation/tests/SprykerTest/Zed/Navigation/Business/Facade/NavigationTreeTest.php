@@ -293,14 +293,14 @@ class NavigationTreeTest extends Unit
 
     /**
      * @param \Orm\Zed\Navigation\Persistence\SpyNavigation $navigationEntity
-     * @param int $position
+     * @param int|null $position
      * @param string $title
      * @param string $externalUrl
      * @param \Orm\Zed\Navigation\Persistence\SpyNavigationNode|null $parentNavigationNodeEntity
      *
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNode
      */
-    protected function createNavigationNodeEntity(SpyNavigation $navigationEntity, int $position, string $title, string $externalUrl, ?SpyNavigationNode $parentNavigationNodeEntity = null): SpyNavigationNode
+    protected function createNavigationNodeEntity(SpyNavigation $navigationEntity, ?int $position, string $title, string $externalUrl, ?SpyNavigationNode $parentNavigationNodeEntity = null): SpyNavigationNode
     {
         $navigationNodeEntity = new SpyNavigationNode();
         if ($parentNavigationNodeEntity) {

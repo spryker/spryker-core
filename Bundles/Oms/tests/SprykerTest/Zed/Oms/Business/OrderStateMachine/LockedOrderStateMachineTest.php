@@ -36,7 +36,7 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
 class LockedOrderStateMachineTest extends Unit
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $stateMachineMock;
 
@@ -46,22 +46,22 @@ class LockedOrderStateMachineTest extends Unit
     protected $lockedStateMachine;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \Spryker\Zed\Oms\Persistence\OmsQueryContainer|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $omsQueryContainerMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $omsQueryMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $omsStateMachineLockMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \Spryker\Zed\Oms\Business\Lock\TriggerLocker|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $triggerLockerMock;
 

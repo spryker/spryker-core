@@ -31,9 +31,9 @@ class ConsoleMock extends Console
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
+     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer|null
      */
-    public function getQueryContainer(): AbstractQueryContainer
+    public function getQueryContainer(): ?AbstractQueryContainer
     {
         return parent::getQueryContainer();
     }

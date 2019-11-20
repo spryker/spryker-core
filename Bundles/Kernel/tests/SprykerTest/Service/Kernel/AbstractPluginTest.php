@@ -9,6 +9,7 @@ namespace SprykerTest\Service\Kernel;
 
 use Codeception\Test\Unit;
 use ReflectionClass;
+use Spryker\Service\Kernel\AbstractService;
 use Spryker\Service\Kernel\AbstractServiceFactory;
 use SprykerTest\Service\Kernel\Fixtures\Plugin\FooPlugin;
 
@@ -51,11 +52,11 @@ class AbstractPluginTest extends Unit
         $pluginReflection = new ReflectionClass($plugin);
         $communicationFactoryProperty = $pluginReflection->getParentClass()->getProperty('service');
         $communicationFactoryProperty->setAccessible(true);
-        $abstractFactoryMock = $this->getMockBuilder(AbstractServiceFactory::class)->disableOriginalConstructor()->getMock();
+        $abstractFactoryMock = $this->getMockBuilder(AbstractService::class)->disableOriginalConstructor()->getMock();
         $communicationFactoryProperty->setValue($plugin, $abstractFactoryMock);
 
         $service = $plugin->getService();
 
-        $this->assertInstanceOf(AbstractServiceFactory::class, $service);
+        $this->assertInstanceOf(AbstractService::class, $service);
     }
 }

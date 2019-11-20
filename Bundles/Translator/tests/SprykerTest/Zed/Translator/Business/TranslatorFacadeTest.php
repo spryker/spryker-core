@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Translator\Business;
 
 use Codeception\TestCase\Test;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Translator\Business\TranslatorBusinessFactory;
 use Spryker\Zed\Translator\Business\TranslatorFacadeInterface;
@@ -135,7 +134,7 @@ class TranslatorFacadeTest extends Test
     /**
      * @return \Spryker\Zed\Translator\Dependency\Facade\TranslatorToLocaleFacadeBridge|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getLocaleFacadeMock(): MockObject
+    protected function getLocaleFacadeMock()
     {
         $localeFacadeMock = $this->getMockBuilder(TranslatorToLocaleFacadeBridge::class)
             ->enableOriginalConstructor()

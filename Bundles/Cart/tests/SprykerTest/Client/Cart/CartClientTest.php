@@ -10,7 +10,6 @@ namespace SprykerTest\Client\Cart;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Client\Cart\CartChangeRequestExpander\CartChangeRequestExpander;
 use Spryker\Client\Cart\CartClient;
 use Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface;
@@ -250,8 +249,6 @@ class CartClientTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $factoryMock
-     *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface
      */
     private function getSessionQuoteStorageStrategyPluginMock()
@@ -263,11 +260,11 @@ class CartClientTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $factoryMock
+     * @param \Spryker\Client\Kernel\AbstractFactory|\PHPUnit\Framework\MockObject\MockObject $factoryMock
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Cart\CartClient
      */
-    private function getCartClientMock(MockObject $factoryMock)
+    private function getCartClientMock($factoryMock)
     {
         $cartClientMock = $this->getMockBuilder(CartClient::class)->setMethods(['getFactory'])->disableOriginalConstructor()->getMock();
 

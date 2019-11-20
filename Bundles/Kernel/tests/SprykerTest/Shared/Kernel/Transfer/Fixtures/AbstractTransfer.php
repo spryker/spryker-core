@@ -294,7 +294,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     /**
      * @return \ArrayObject|\Spryker\Shared\Kernel\Transfer\TransferInterface[]
      */
-    public function getTransferCollection(): array
+    public function getTransferCollection()
     {
         return $this->transferCollection;
     }

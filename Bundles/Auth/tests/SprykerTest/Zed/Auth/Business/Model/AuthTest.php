@@ -227,7 +227,7 @@ class AuthTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $sessionClient
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Session\SessionClient $sessionClient
      *
      * @return void
      */

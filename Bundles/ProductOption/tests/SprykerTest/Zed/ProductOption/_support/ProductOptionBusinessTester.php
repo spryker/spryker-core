@@ -53,14 +53,14 @@ class ProductOptionBusinessTester extends Actor
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer
-     * @param int $idStore
+     * @param int|null $idStore
      * @param int $idCurrency
      * @param int $netPrice
      * @param int $grossPrice
      *
      * @return void
      */
-    public function addPrice(ProductOptionValueTransfer $productOptionValueTransfer, int $idStore, int $idCurrency, int $netPrice, int $grossPrice): void
+    public function addPrice(ProductOptionValueTransfer $productOptionValueTransfer, ?int $idStore, int $idCurrency, int $netPrice, int $grossPrice): void
     {
         $productOptionValueTransfer->addPrice(
             (new MoneyValueTransfer())

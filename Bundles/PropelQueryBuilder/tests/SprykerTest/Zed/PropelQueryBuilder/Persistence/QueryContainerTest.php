@@ -172,7 +172,7 @@ class QueryContainerTest extends Unit
 
         $results = $query->find();
         $this->assertCount(static::EXPECTED_COUNT, $results);
-        $this->assertSkuCollection($results, static::EXPECTED_SKU_COLLECTION);
+        $this->assertSkuCollection($results->toArray(), static::EXPECTED_SKU_COLLECTION);
     }
 
     /**
@@ -186,7 +186,7 @@ class QueryContainerTest extends Unit
 
         $results = $query->find();
         $this->assertCount(static::EXPECTED_COUNT, $results);
-        $this->assertSkuCollection($results, static::EXPECTED_SKU_COLLECTION);
+        $this->assertSkuCollection($results->toArray(), static::EXPECTED_SKU_COLLECTION);
     }
 
     /**

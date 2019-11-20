@@ -24,11 +24,6 @@ use Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenPro
 class TokenHashGeneratorTest extends Unit
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $sessionMock;
-
-    /**
      * @var \Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider\TokenHashGenerator
      */
     protected $tokenGenerator;
