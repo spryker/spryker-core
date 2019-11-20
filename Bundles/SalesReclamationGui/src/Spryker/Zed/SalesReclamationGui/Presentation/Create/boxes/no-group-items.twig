@@ -2,8 +2,8 @@
     <tr>
         {% embed '@SalesReclamationGui/Create/boxes/order-item.twig' with {
             orderItem: reclamationItem,
-            displayImage: true,
-            image: reclamationItem.metadata.image,
+            displayImage: reclamationItem.metadata is not null ? true : false,
+            image: reclamationItem.metadata is not null ? reclamationItem.metadata.image : null,
             displayTotals: true,
             group: false
         } %}{% endembed %}
