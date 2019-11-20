@@ -9,6 +9,8 @@ namespace Spryker\Client\ProductReview;
 
 use Generated\Shared\Transfer\ProductReviewRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
+use Generated\Shared\Transfer\ProductReviewSummaryTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -43,12 +45,9 @@ class ProductReviewClient extends AbstractClient implements ProductReviewClientI
      */
     public function findProductReviewsInSearch(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer)
     {
-        $searchQuery = $this->getFactory()->createProductReviewsQueryPlugin($productReviewSearchRequestTransfer);
-        $resultFormatters = $this->getFactory()->getProductReviewsSearchResultFormatterPlugins();
-
         return $this->getFactory()
-            ->getSearchClient()
-            ->search($searchQuery, $resultFormatters, $productReviewSearchRequestTransfer->getRequestParams());
+            ->createProductReviewSearchReader($productReviewSearchRequestTransfer)
+            ->findProductReviews($productReviewSearchRequestTransfer);
     }
 
     /**
@@ -78,5 +77,37 @@ class ProductReviewClient extends AbstractClient implements ProductReviewClientI
     public function getMaximumRating()
     {
         return $this->getFactory()->getProductReviewConfig()->getMaximumRating();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function expandProductViewWithProductReviewData(ProductViewTransfer $productViewTransfer): ProductViewTransfer
+    {
+        return $this->getFactory()
+            ->createProductViewExpander($productViewTransfer->getIdProductAbstract())
+            ->expandProductViewWithProductReviewData($productViewTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array $ratingAggregation
+     *
+     * @return \Generated\Shared\Transfer\ProductReviewSummaryTransfer
+     */
+    public function calculateProductReviewSummary(array $ratingAggregation): ProductReviewSummaryTransfer
+    {
+        return $this->getFactory()
+            ->createProductReviewSummaryCalculator()
+            ->execute($ratingAggregation);
     }
 }

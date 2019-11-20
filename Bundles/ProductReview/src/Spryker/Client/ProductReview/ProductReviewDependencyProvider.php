@@ -19,6 +19,7 @@ use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\PaginatedP
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\ProductReviewsResultFormatterPlugin;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\RatingAggregationResultFormatterPlugin;
 use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
+use Spryker\Yves\Kernel\Plugin\Pimple;
 
 /**
  * @method \Spryker\Client\ProductReview\ProductReviewConfig getConfig()
@@ -33,6 +34,8 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
     public const PRODUCT_REVIEWS_SEARCH_RESULT_FORMATTER_PLUGINS = 'PRODUCT_REVIEWS_SEARCH_RESULT_FORMATTER_PLUGINS';
     public const PAGINATION_CONFIG_BUILDER_PLUGIN = 'PAGINATION_CONFIG_BUILDER_PLUGIN';
 
+    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
@@ -46,6 +49,7 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
         $container = $this->addProductReviewsQueryExpanderPlugins($container);
         $container = $this->addProductReviewsSearchResultFormatterPlugins($container);
         $container = $this->addPaginationConfigBuilderPlugin($container);
+        $container = $this->addPluginApplication($container);
 
         return $container;
     }
@@ -156,5 +160,19 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
             new PaginatedProductReviewsResultFormatterPlugin(),
             new RatingAggregationResultFormatterPlugin(),
         ];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addPluginApplication(Container $container): Container
+    {
+        $container->set(static::PLUGIN_APPLICATION, function () {
+            return (new Pimple())->getApplication();
+        });
+
+        return $container;
     }
 }
