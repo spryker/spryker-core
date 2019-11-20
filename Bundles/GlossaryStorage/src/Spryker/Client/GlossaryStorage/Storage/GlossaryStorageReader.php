@@ -59,7 +59,7 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
     /**
      * @param string $keyName
      * @param string $localeName
-     * @param array $parameters
+     * @param string[] $parameters
      *
      * @return string
      */
@@ -70,6 +70,10 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
             $glossaryClient = $clientLocatorClass::getInstance()->glossary()->client();
 
             return $glossaryClient->translate($keyName, $localeName, $parameters);
+        }
+
+        if ($keyName === '') {
+            return $keyName;
         }
 
         $translation = $this->getTranslation($keyName, $localeName);

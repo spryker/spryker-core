@@ -47,10 +47,8 @@ class ProductOptionMapper implements ProductOptionMapperInterface
         ProductOptionValueStorageTransfer $productOptionValueStorageTransfer
     ): RestProductOptionsAttributesTransfer {
         return (new RestProductOptionsAttributesTransfer())
-            ->setSku($productOptionValueStorageTransfer->getSku())
+            ->fromArray($productOptionValueStorageTransfer->toArray(), true)
             ->setOptionGroupName($productOptionGroupStorageTransfer->getName())
-            ->setOptionName($productOptionValueStorageTransfer->getValue())
-            ->setPrice($productOptionValueStorageTransfer->getPrice())
-            ->setCurrencyIsoCode($productOptionValueStorageTransfer->getCurrencyIsoCode());
+            ->setOptionName($productOptionValueStorageTransfer->getValue());
     }
 }

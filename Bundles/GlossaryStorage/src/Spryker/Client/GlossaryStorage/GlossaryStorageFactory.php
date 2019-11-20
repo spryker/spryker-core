@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\GlossaryStorage;
 
+use Spryker\Client\GlossaryStorage\Dependency\Client\GlossaryStorageToStorageClientInterface;
+use Spryker\Client\GlossaryStorage\Dependency\Service\GlossaryStorageToSynchronizationServiceInterface;
 use Spryker\Client\GlossaryStorage\Dependency\Service\GlossaryStorageToUtilEncodingServiceInterface;
 use Spryker\Client\GlossaryStorage\Storage\GlossaryStorageReader;
 use Spryker\Client\Kernel\AbstractFactory;
@@ -28,15 +30,15 @@ class GlossaryStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\GlossaryStorage\Dependency\Client\GlossaryStorageToStorageClientInterface
      */
-    public function getStorageClient()
+    public function getStorageClient(): GlossaryStorageToStorageClientInterface
     {
         return $this->getProvidedDependency(GlossaryStorageDependencyProvider::CLIENT_STORAGE);
     }
 
     /**
-     * @return \Spryker\Client\GlossaryStorage\Dependency\Service\GlossaryStorageToSynchronizationServiceBridge
+     * @return \Spryker\Client\GlossaryStorage\Dependency\Service\GlossaryStorageToSynchronizationServiceInterface
      */
-    public function getSynchronizationService()
+    public function getSynchronizationService(): GlossaryStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(GlossaryStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }

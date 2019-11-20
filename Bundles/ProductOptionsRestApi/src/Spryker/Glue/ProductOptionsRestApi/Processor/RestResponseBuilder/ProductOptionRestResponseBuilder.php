@@ -54,7 +54,7 @@ class ProductOptionRestResponseBuilder implements ProductOptionRestResponseBuild
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function buildProductOptionRestResources(
+    public function createProductOptionRestResources(
         ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer,
         string $parentResourceType,
         string $parentResourceId,
