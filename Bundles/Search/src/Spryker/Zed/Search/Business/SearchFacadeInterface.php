@@ -127,7 +127,7 @@ interface SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\Search\Business\SearchFacadeInterface::mapRawDataToSearchData()` instead.
+     * @deprecated Use `::mapRawDataToSearchData()` instead.
      *
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer

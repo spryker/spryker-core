@@ -5,15 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin;
+namespace Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\Elasticsearch;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
-use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
+use Spryker\Zed\SearchElasticsearchExtension\Business\DataMapper\PageMapBuilderInterface;
 
-/**
- * @deprecated Use `Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\Elasticsearch\ProductConcretePageMapExpanderPluginInterface` instead.
- */
 interface ProductConcretePageMapExpanderPluginInterface
 {
     /**
@@ -23,7 +20,7 @@ interface ProductConcretePageMapExpanderPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
+     * @param \Spryker\Zed\SearchElasticsearchExtension\Business\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param array $productData
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *

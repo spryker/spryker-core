@@ -86,7 +86,7 @@ class ProductConcretePageMapPlugin extends AbstractPlugin implements PageMapPlug
     {
         $pageMapTransfer = $this->applyProductPageMapExpanders($pageMapTransfer, $pageMapBuilder, $productData, $localeTransfer);
 
-        foreach ($this->getFactory()->getConcreteProductPageMapExpanderPlugins() as $productConcretePageMapExpanderPlugin) {
+        foreach ($this->getFactory()->getElasticsearchProductConcretePageMapExpanderPlugins() as $productConcretePageMapExpanderPlugin) {
             $pageMapTransfer = $productConcretePageMapExpanderPlugin->expand($pageMapTransfer, $pageMapBuilder, $productData, $localeTransfer);
         }
 

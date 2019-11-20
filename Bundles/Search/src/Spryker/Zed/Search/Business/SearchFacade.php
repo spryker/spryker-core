@@ -152,7 +152,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\Search\Business\SearchFacade::mapRawDataToSearchData()` instead.
+     * @deprecated Use `::mapRawDataToSearchData()` instead.
      *
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper;
 
 use Generated\Shared\Transfer\PageMapTransfer;
-use Spryker\Zed\SearchElasticsearchExtension\Business\DataMapper\PageMapBuilderInterface as SearchElasticsearchPageMapBuilderInterface;
 
 /**
  * @deprecated Use `\Spryker\Zed\SearchElasticsearchExtension\Business\DataMapper\PageMapBuilderInterface` instead.
@@ -112,4 +111,4 @@ interface PageMapBuilderInterface
     public function addCategory(PageMapTransfer $pageMapTransfer, array $allParents, array $directParents);
 }
 
-class_alias(PageMapBuilderInterface::class, SearchElasticsearchPageMapBuilderInterface::class, false);
+class_alias(PageMapBuilderInterface::class, 'Spryker\Zed\SearchElasticsearchExtension\Business\DataMapper\PageMapBuilderInterface', false);

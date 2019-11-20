@@ -5,19 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductListSearch\Communication\Plugin\ProductPageSearch;
+namespace Spryker\Zed\ProductListSearch\Communication\Plugin\ProductPageSearch\Elasticsearch;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Generated\Shared\Transfer\ProductListMapTransfer;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
-use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\Elasticsearch\ProductConcretePageMapExpanderPluginInterface;
+use Spryker\Zed\SearchElasticsearchExtension\Business\DataMapper\PageMapBuilderInterface;
 
 /**
- * @deprecated Use `\Spryker\Zed\ProductListSearch\Communication\Plugin\ProductPageSearch\Elasticsearch\ProductConcreteProductListPageMapExpanderPlugin` instead.
- *
  * @method \Spryker\Zed\ProductListSearch\Business\ProductListSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductListSearch\ProductListSearchConfig getConfig()
  * @method \Spryker\Zed\ProductListSearch\Communication\ProductListSearchCommunicationFactory getFactory()

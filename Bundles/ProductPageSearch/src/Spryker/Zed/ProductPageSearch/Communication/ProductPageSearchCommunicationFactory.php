@@ -151,4 +151,12 @@ class ProductPageSearchCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::FACADE_PRICE);
     }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\Elasticsearch\ProductConcretePageMapExpanderPluginInterface[]
+     */
+    public function getElasticsearchProductConcretePageMapExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_ELASTICSEARCH_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER);
+    }
 }

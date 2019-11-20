@@ -57,6 +57,7 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     protected const RESOURCE_NAME_CATEGORY_NODE = 'category_node';
     protected const RESOURCE_NAME_CMS_PAGE_SEARCH = 'cms_page_search';
     protected const RESOURCE_NAME_PRODUCT_REVIEW = 'product_review';
+    protected const RESOURCE_NAME_PRODUCT_SET = 'product_set';
 
     protected const APPLICABLE_MAPPING_RESOURCE_TYPES = [
         self::RESOURCE_NAME_PRODUCT_ABSTRACT,
@@ -64,6 +65,7 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
         self::RESOURCE_NAME_CATEGORY_NODE,
         self::RESOURCE_NAME_CMS_PAGE_SEARCH,
         self::RESOURCE_NAME_PRODUCT_REVIEW,
+        self::RESOURCE_NAME_PRODUCT_SET,
     ];
 
     protected const PAGE_DATA_MAP_RESOURCE_TYPES = [
@@ -71,6 +73,7 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
         self::RESOURCE_NAME_PRODUCT_CONCRETE,
         self::RESOURCE_NAME_CATEGORY_NODE,
         self::RESOURCE_NAME_CMS_PAGE_SEARCH,
+        self::RESOURCE_NAME_PRODUCT_SET,
     ];
 
     public const INDEX_OPEN_STATE = 'open';

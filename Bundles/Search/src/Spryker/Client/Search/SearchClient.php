@@ -143,7 +143,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @api
      *
-     * @deprecated Use `Spryker\Client\Search\SearchClient::readDocument()` instead.
+     * @deprecated Use `::readDocument()` instead.
      *
      * @param string $key
      * @param string|null $typeName
@@ -178,7 +178,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @api
      *
-     * @deprecated Use `Spryker\Client\Search\SearchClient::writeDocument()` instead.
+     * @deprecated Use `::writeDocument()` instead.
      *
      * @param array $dataSet
      * @param string|null $typeName
@@ -213,7 +213,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @api
      *
-     * @deprecated Use `Spryker\Client\Search\SearchClient::writeDocuments()` instead.
+     * @deprecated Use `::writeDocuments()` instead.
      *
      * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
      *
@@ -246,7 +246,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Client\Search\SearchClient::deleteDocument()` instead.
+     * @deprecated Use `::deleteDocument()` instead.
      *
      * @param array $dataSet
      * @param string|null $typeName
@@ -284,7 +284,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Client\Search\SearchClient::deleteDocuments()` instead.
+     * @deprecated Use `::deleteDocuments()` instead.
      *
      * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
      *
