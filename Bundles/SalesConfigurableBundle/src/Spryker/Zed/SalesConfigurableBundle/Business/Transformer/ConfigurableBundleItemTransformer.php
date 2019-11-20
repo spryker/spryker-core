@@ -110,7 +110,9 @@ class ConfigurableBundleItemTransformer implements ConfigurableBundleItemTransfo
     {
         $transformedProductOptions = new ArrayObject();
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            $transformedProductOptions->append($this->copyProductOptionTransfer($productOptionTransfer));
+            $transformedProductOptions->append(
+                $this->copyProductOptionTransfer($productOptionTransfer, $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot())
+            );
         }
 
         $transformedItemTransfer->setProductOptions($transformedProductOptions);
@@ -120,16 +122,17 @@ class ConfigurableBundleItemTransformer implements ConfigurableBundleItemTransfo
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
+     * @param int $itemQuantity
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    protected function copyProductOptionTransfer(ProductOptionTransfer $productOptionTransfer): ProductOptionTransfer
+    protected function copyProductOptionTransfer(ProductOptionTransfer $productOptionTransfer, int $itemQuantity): ProductOptionTransfer
     {
         $transformedProductOptionTransfer = new ProductOptionTransfer();
         $transformedProductOptionTransfer->fromArray($productOptionTransfer->toArray(), true);
 
         $transformedProductOptionTransfer
-            ->setQuantity(1)
+            ->setQuantity($itemQuantity)
             ->setIdProductOptionValue(null);
 
         return $transformedProductOptionTransfer;
