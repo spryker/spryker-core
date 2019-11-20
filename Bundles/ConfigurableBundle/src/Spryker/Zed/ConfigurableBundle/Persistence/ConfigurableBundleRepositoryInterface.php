@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotCollectionTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Generated\Shared\Transfer\ProductImageSetCollectionTransfer;
 
 interface ConfigurableBundleRepositoryInterface
 {
@@ -58,4 +59,12 @@ interface ConfigurableBundleRepositoryInterface
      * @return string[]
      */
     public function getActiveConfigurableBundleTemplateUuids(array $templateUuid): array;
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     * @param int[] $localeIds
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetCollectionTransfer
+     */
+    public function getConfigurableBundleTemplateImageSetCollection(int $idConfigurableBundleTemplate, array $localeIds): ProductImageSetCollectionTransfer;
 }

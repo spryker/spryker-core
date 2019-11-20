@@ -19,6 +19,8 @@ use Spryker\Zed\ConfigurableBundle\Business\Creator\ConfigurableBundleTemplateCr
 use Spryker\Zed\ConfigurableBundle\Business\Creator\ConfigurableBundleTemplateCreatorInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Creator\ConfigurableBundleTemplateSlotCreator;
 use Spryker\Zed\ConfigurableBundle\Business\Creator\ConfigurableBundleTemplateSlotCreatorInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTemplateImageSetExpander;
+use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTemplateImageSetExpanderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTemplateSlotProductListExpander;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTemplateSlotProductListExpanderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpander;
@@ -216,6 +218,18 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
         return new ConfigurableBundleTemplateReader(
             $this->getRepository(),
             $this->createConfigurableBundleTranslationExpander(),
+            $this->getLocaleFacade(),
+            $this->createConfigurableBundleTemplateImageSetExpander()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTemplateImageSetExpanderInterface
+     */
+    public function createConfigurableBundleTemplateImageSetExpander(): ConfigurableBundleTemplateImageSetExpanderInterface
+    {
+        return new ConfigurableBundleTemplateImageSetExpander(
+            $this->getRepository(),
             $this->getLocaleFacade()
         );
     }

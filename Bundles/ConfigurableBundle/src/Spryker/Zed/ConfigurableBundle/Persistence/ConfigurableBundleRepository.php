@@ -13,9 +13,11 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotCollectionTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Generated\Shared\Transfer\ProductImageSetCollectionTransfer;
 use Orm\Zed\ConfigurableBundle\Persistence\Map\SpyConfigurableBundleTemplateTableMap;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -163,6 +165,15 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
             );
         }
 
+        if ($configurableBundleTemplateFilterTransfer->getFilter()) {
+            $configurableBundleTemplateQuery = $this->buildQueryFromCriteria(
+                $configurableBundleTemplateQuery,
+                $configurableBundleTemplateFilterTransfer->getFilter()
+            );
+
+            $configurableBundleTemplateQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);
+        }
+
         return $configurableBundleTemplateQuery;
     }
 
@@ -190,5 +201,31 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
         }
 
         return $configurableBundleTemplateSlotQuery;
+    }
+
+    /**
+     * @module ProductImage
+     * @module Locale
+     *
+     * @param int $idConfigurableBundleTemplate
+     * @param int[] $localeIds
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetCollectionTransfer
+     */
+    public function getConfigurableBundleTemplateImageSetCollection(int $idConfigurableBundleTemplate, array $localeIds): ProductImageSetCollectionTransfer
+    {
+        $productImageSetQuery = $this->getFactory()
+            ->getProductImageSetQuery()
+            ->filterByFkResourceConfigurableBundleTemplate($idConfigurableBundleTemplate)
+            ->filterByFkLocale_In($localeIds)
+            ->joinWithSpyLocale()
+            ->joinWithSpyProductImageSetToProductImage()
+            ->useSpyProductImageSetToProductImageQuery()
+                ->joinSpyProductImage()
+            ->endUse();
+
+        return $this->getFactory()
+            ->createConfigurableBundleMapper()
+            ->mapProductImageSetEntityCollectionToProductImageSetTransferCollection($productImageSetQuery->find());
     }
 }

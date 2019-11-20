@@ -7,13 +7,21 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Persistence\Propel\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateCollectionTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotCollectionTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductImageSetCollectionTransfer;
+use Generated\Shared\Transfer\ProductImageSetTransfer;
+use Generated\Shared\Transfer\ProductImageTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplate;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlot;
+use Orm\Zed\Locale\Persistence\SpyLocale;
+use Orm\Zed\ProductImage\Persistence\SpyProductImage;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
 use Propel\Runtime\Collection\Collection;
 
 class ConfigurableBundleMapper
@@ -132,5 +140,98 @@ class ConfigurableBundleMapper
         return $configurableBundleTemplateSlotTransfer
             ->setConfigurableBundleTemplate($configurableBundleTemplateTransfer)
             ->setProductList($productListTransfer);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\Collection $productImageSetEntities
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetCollectionTransfer
+     */
+    public function mapProductImageSetEntityCollectionToProductImageSetTransferCollection(
+        Collection $productImageSetEntities
+    ): ProductImageSetCollectionTransfer {
+        $productImageSetCollectionTransfer = new ProductImageSetCollectionTransfer();
+
+        foreach ($productImageSetEntities as $productImageSetEntity) {
+            $productImageSetTransfer = $this->mapProductImageSetEntityToProductImageSetTransfer(
+                $productImageSetEntity,
+                new ProductImageSetTransfer()
+            );
+
+            $productImageSetCollectionTransfer->addProductImageSet($productImageSetTransfer);
+        }
+
+        return $productImageSetCollectionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet $productImageSetEntity
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer
+     */
+    public function mapProductImageSetEntityToProductImageSetTransfer(
+        SpyProductImageSet $productImageSetEntity,
+        ProductImageSetTransfer $productImageSetTransfer
+    ): ProductImageSetTransfer {
+        $productImageSetTransfer = $productImageSetTransfer
+            ->fromArray($productImageSetEntity->toArray(), true);
+
+        return $productImageSetTransfer
+            ->setLocale($this->mapLocalEntityToLocaleTransfer($productImageSetEntity->getSpyLocale(), new LocaleTransfer()))
+            ->setProductImages(new ArrayObject($this->mapProductImageSetEntityToProductImageTransfers($productImageSetEntity)));
+    }
+
+    /**
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet $productImageSetEntity
+     *
+     * @return \Generated\Shared\Transfer\ProductImageTransfer[]
+     */
+    protected function mapProductImageSetEntityToProductImageTransfers(SpyProductImageSet $productImageSetEntity): array
+    {
+        $productImageTransfers = [];
+
+        foreach ($productImageSetEntity->getSpyProductImageSetToProductImages() as $productImageSetToProductImageEntity) {
+            $productImageTransfer = $this->mapProductImageEntityToProductImageTransfer(
+                $productImageSetToProductImageEntity->getSpyProductImage(),
+                new ProductImageTransfer()
+            );
+
+            $productImageTransfer
+                ->setIdProductImageSetToProductImage($productImageSetToProductImageEntity->getIdProductImageSetToProductImage())
+                ->setSortOrder($productImageSetToProductImageEntity->getSortOrder());
+
+            $productImageTransfers[] = $productImageTransfer;
+        }
+
+        return $productImageTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImage $productImageEntity
+     * @param \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductImageTransfer
+     */
+    protected function mapProductImageEntityToProductImageTransfer(
+        SpyProductImage $productImageEntity,
+        ProductImageTransfer $productImageTransfer
+    ): ProductImageTransfer {
+        $productImageTransfer = $productImageTransfer->fromArray($productImageEntity->toArray(), true);
+
+        return $productImageTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Locale\Persistence\SpyLocale $localeEntity
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    protected function mapLocalEntityToLocaleTransfer(SpyLocale $localeEntity, LocaleTransfer $localeTransfer): LocaleTransfer
+    {
+        $localeTransfer = $localeTransfer->fromArray($localeEntity->toArray(), true);
+
+        return $localeTransfer;
     }
 }

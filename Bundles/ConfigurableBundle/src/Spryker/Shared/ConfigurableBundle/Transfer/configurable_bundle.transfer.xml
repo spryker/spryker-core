@@ -28,6 +28,21 @@
         <property name="name" type="string"/>
         <property name="isActive" type="bool"/>
         <property name="translations" type="ConfigurableBundleTemplateTranslation[]" singular="translation"/>
+        <property name="productImageSets" type="ProductImageSet[]" singular="productImageSet"/>
+    </transfer>
+
+    <transfer name="ProductImageSet">
+        <property name="locale" type="Locale"/>
+        <property name="fkResourceConfigurableBundleTemplate" type="int"/>
+        <property name="productImages" type="ProductImage[]" singular="productImage"/>
+    </transfer>
+
+    <transfer name="ProductImage">
+        <property name="idProductImage" type="int"/>
+        <property name="idProductImageSetToProductImage" type="int"/>
+        <property name="sortOrder" type="int"/>
+        <property name="externalUrlSmall" type="string"/>
+        <property name="externalUrlLarge" type="string"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateTranslation">
@@ -68,6 +83,13 @@
         <property name="idConfigurableBundleTemplate" type="int"/>
         <property name="configurableBundleTemplateIds" type="int[]" singular="configurableBundleTemplateId"/>
         <property name="translationLocales" type="Locale[]" singular="translationLocale"/>
+        <property name="filter" type="Filter"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="orderBy" type="string"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateCollection">
@@ -76,6 +98,10 @@
 
     <transfer name="ConfigurableBundleTemplateSlotCollection">
         <property name="configurableBundleTemplateSlots" type="ConfigurableBundleTemplateSlot[]" singular="configurableBundleTemplateSlot"/>
+    </transfer>
+
+    <transfer name="ProductImageSetCollection">
+        <property name="productImageSets" type="ProductImageSet[]" singular="productImageSet"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlotFilter">
