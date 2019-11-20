@@ -33,6 +33,6 @@ class CustomerGroupEditCest
         $customerGroupTransfer = $i->haveCustomerGroup();
         $i->amOnPage(CustomerGroupEditPage::buildUrl($customerGroupTransfer->getIdCustomerGroup()));
 
-        $i->seeBreadcrumbNavigation('Dashboard / Customers / Customer Groups / Edit customer group');
+        $i->seeBreadcrumbNavigation('Customers / Customer Groups / Edit Customer Group');
     }
 }

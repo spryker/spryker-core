@@ -31,6 +31,6 @@ class CmsBlockGuiListCest
     public function breadcrumbIsVisible(CmsBlockGuiCommunicationTester $i)
     {
         $i->amOnPage(CmsBlockGuiListPage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Content Management / Blocks');
+        $i->seeBreadcrumbNavigation('Content Management / Blocks');
     }
 }

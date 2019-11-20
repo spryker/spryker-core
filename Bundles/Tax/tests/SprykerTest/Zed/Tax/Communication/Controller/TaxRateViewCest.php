@@ -33,6 +33,6 @@ class TaxRateViewCest
         $i->listDataTable(TaxRateListPage::TABLE_DATA_URL);
         $i->clickDataTableViewButton();
 
-        $i->seeBreadcrumbNavigation('Dashboard / Taxes / Tax Rates / View Tax Rate');
+        $i->seeBreadcrumbNavigation('Taxes / Tax Rates / View Tax Rate');
     }
 }

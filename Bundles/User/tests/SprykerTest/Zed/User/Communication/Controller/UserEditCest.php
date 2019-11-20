@@ -32,6 +32,6 @@ class UserEditCest
     {
         $i->listDataTable(UserListPage::URL . '/index/table');
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Dashboard / Users Control / User / Edit User');
+        $i->seeBreadcrumbNavigation('Users Control / User / Edit User');
     }
 }
