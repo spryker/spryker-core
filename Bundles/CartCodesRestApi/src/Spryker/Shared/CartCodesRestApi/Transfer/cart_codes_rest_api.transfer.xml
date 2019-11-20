@@ -38,15 +38,12 @@
     </transfer>
 
     <transfer name="Quote">
-        <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
-    </transfer>
-
-    <transfer name="Quote">
         <property name="uuid" type="string"/>
         <property name="customerReference" type="string"/>
         <property name="customer" type="Customer"/>
         <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
         <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
+        <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
     </transfer>
 
     <transfer name="RestUser">
