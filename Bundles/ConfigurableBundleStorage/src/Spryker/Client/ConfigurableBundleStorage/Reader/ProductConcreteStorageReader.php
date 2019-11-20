@@ -8,9 +8,7 @@
 namespace Spryker\Client\ConfigurableBundleStorage\Reader;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductImageSetStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToProductImageStorageClientInterface;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToProductStorageClientInterface;
 
 class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterface
