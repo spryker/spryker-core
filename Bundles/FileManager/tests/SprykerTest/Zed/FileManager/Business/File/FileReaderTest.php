@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\FileTransfer;
-use Orm\Zed\FileManager\Persistence\SpyFile;
 use Spryker\Zed\FileManager\Business\File\FileReader;
 use Spryker\Zed\FileManager\Business\FileContent\FileContentInterface;
 use Spryker\Zed\FileManager\Persistence\FileManagerRepositoryInterface;

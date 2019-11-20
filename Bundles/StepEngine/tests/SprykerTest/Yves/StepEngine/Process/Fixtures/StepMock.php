@@ -43,7 +43,7 @@ class StepMock implements StepInterface
      * @param bool $postCondition
      * @param bool $requireInput
      * @param string $stepRoute
-     * @param string $escapeRoute
+     * @param string|null $escapeRoute
      */
     public function __construct(bool $preCondition = true, bool $postCondition = true, bool $requireInput = true, string $stepRoute = '', ?string $escapeRoute = null)
     {
