@@ -27,7 +27,7 @@ class CmsPageKeysToIdsConditionResolver implements ConditionResolverInterface
      */
     public function getConditions(string $conditionValue, array $conditionsArray = []): array
     {
-        $cmsPageKeys = explode(',', $conditionValue);
+        $cmsPageKeys = $conditionValue ? explode(',', $conditionValue) : [];
         $conditionsArray[static::KEY_CMS_PAGE_IDS] = $this->getCmsPageIdsByKeys($cmsPageKeys);
 
         return $conditionsArray;

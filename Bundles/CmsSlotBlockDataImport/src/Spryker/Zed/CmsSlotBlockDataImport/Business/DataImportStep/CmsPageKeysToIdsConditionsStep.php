@@ -51,14 +51,12 @@ class CmsPageKeysToIdsConditionsStep implements DataImportStepInterface
             $dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_CMS_PAGE_ALL]
         );
 
-        if ($dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_CMS_PAGE_KEYS]) {
-            $conditionsArray[static::KEY_CONDITION_CMS_PAGE] = $this->cmsPageKeysToIdsConditionsResolver->getConditions(
-                $dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_CMS_PAGE_KEYS],
-                $conditionsArray[static::KEY_CONDITION_CMS_PAGE]
-            );
-        }
+        $conditionsArray[static::KEY_CONDITION_CMS_PAGE] = $this->cmsPageKeysToIdsConditionsResolver->getConditions(
+            $dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_CMS_PAGE_KEYS],
+            $conditionsArray[static::KEY_CONDITION_CMS_PAGE]
+        );
 
-        if (!$conditionsArray[static::KEY_CONDITION_CMS_PAGE]) {
+        if (!array_filter($conditionsArray[static::KEY_CONDITION_CMS_PAGE])) {
             return;
         }
 

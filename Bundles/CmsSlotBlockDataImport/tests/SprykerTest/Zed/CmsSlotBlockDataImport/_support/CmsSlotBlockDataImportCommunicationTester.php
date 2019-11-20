@@ -100,6 +100,7 @@ class CmsSlotBlockDataImportCommunicationTester extends Actor
             ],
             'cms_page' => [
                 'all' => true,
+                'pageIds' => [],
             ],
         ];
     }

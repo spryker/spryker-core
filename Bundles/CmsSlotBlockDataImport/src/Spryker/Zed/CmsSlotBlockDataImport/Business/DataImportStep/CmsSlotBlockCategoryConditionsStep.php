@@ -51,14 +51,12 @@ class CmsSlotBlockCategoryConditionsStep implements DataImportStepInterface
             $dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_CATEGORY_ALL]
         );
 
-        if ($dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_CATEGORY_KEYS]) {
-            $conditionsArray[static::KEY_CONDITION_CATEGORY] = $this->categoryKeysToIdsConditionsResolver->getConditions(
-                $dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_CATEGORY_KEYS],
-                $conditionsArray[static::KEY_CONDITION_CATEGORY]
-            );
-        }
+        $conditionsArray[static::KEY_CONDITION_CATEGORY] = $this->categoryKeysToIdsConditionsResolver->getConditions(
+            $dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_CATEGORY_KEYS],
+            $conditionsArray[static::KEY_CONDITION_CATEGORY]
+        );
 
-        if (!$conditionsArray[static::KEY_CONDITION_CATEGORY]) {
+        if (!array_filter($conditionsArray[static::KEY_CONDITION_CATEGORY])) {
             return;
         }
 
