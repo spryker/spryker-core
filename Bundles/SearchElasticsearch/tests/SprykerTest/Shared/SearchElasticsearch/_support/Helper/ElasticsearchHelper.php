@@ -24,7 +24,6 @@ class ElasticsearchHelper extends Module
 {
     public const DEFAULT_MAPPING_TYPE = '_doc';
 
-    protected const INDEX_SUFFIX = '_testing';
     protected const REPOSITORY_LOCATION_FILE_NAME = 'search_test_file';
     protected const REPOSITORY_TYPE_FILESYSTEM = 'fs';
 
@@ -45,7 +44,6 @@ class ElasticsearchHelper extends Module
      */
     public function haveIndex(string $indexName): Index
     {
-        $indexName .= static::INDEX_SUFFIX;
         $client = $this->getClient();
         $index = $client->getIndex($indexName);
 
@@ -124,6 +122,43 @@ class ElasticsearchHelper extends Module
         $index = $client->getIndex($indexName);
 
         $this->assertTrue($index->exists(), sprintf('Index "%s" doesn\'t exist.', $indexName));
+    }
+
+    /**
+     * @param string $documentId
+     * @param string $indexName
+     * @param array|string $expectedData
+     * @param string $typeName
+     *
+     * @return void
+     */
+    public function assertDocumentExists(string $documentId, string $indexName, $expectedData = [], string $typeName = self::DEFAULT_MAPPING_TYPE): void
+    {
+        try {
+            $document = $this->getClient()->getIndex($indexName)->getType($typeName)->getDocument($documentId);
+
+            if ($expectedData) {
+                $this->assertEquals($expectedData, $document->getData(), 'Document with id %s exists, but doesn\'t contain expected data.');
+            }
+        } catch (NotFoundException $e) {
+            $this->fail(sprintf('Document with id %s was not found in index %s.', $documentId, $indexName));
+        }
+    }
+
+    /**
+     * @param string $documentId
+     * @param string $indexName
+     *
+     * @return void
+     */
+    public function assertDocumentDoesNotExist(string $documentId, string $indexName): void
+    {
+        try {
+            $this->getClient()->getIndex($indexName)->getType(static::DEFAULT_MAPPING_TYPE)->getDocument($documentId);
+            $this->fail(sprintf('Document with id %s was found in index %s.', $documentId, $indexName));
+        } catch (NotFoundException $e) {
+            return;
+        }
     }
 
     /**

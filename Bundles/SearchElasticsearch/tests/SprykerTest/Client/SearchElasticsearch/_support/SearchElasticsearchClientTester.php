@@ -22,6 +22,8 @@ use Codeception\Actor;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method void pause()
+ * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchClientInterface getClient()
+ * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory getFactory()
  *
  * @SuppressWarnings(PHPMD)
  */

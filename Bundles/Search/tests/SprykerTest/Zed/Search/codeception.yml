@@ -23,7 +23,7 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper
-                - \SprykerTest\Shared\Search\Helper\ElasticsearchHelper
+                - \SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchHelper
 
     Communication:
         path: Communication
