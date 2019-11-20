@@ -39,6 +39,24 @@ class MerchantProductOfferDataImportBusinessFactory extends DataImportBusinessFa
     }
 
     /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
+     */
+    public function getMerchantProductOfferStoreDataImport()
+    {
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $this->getConfig()->getMerchantProductOfferStoreDataImporterConfiguration()
+        );
+
+        $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
+
+        /** Add needed steps to dataset stepbroker */
+
+        $dataImporter->addDataSetStepBroker($dataSetStepBroker);
+
+        return $dataImporter;
+    }
+
+    /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
      */
     public function createMerchantKeyToIdMerchantStep(): DataImportStepInterface
