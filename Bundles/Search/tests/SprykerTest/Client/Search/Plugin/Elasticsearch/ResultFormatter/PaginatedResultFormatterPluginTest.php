@@ -32,13 +32,13 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
      * @dataProvider resultFormatterDataProvider
      *
      * @param \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface $searchConfig
-     * @param array $totalHits
+     * @param int $totalHits
      * @param array $requestParameters
      * @param \Generated\Shared\Transfer\PaginationSearchResultTransfer $expectedResult
      *
      * @return void
      */
-    public function testFormatResultShouldReturnCorrectFormat(SearchConfigInterface $searchConfig, $totalHits, array $requestParameters, PaginationSearchResultTransfer $expectedResult)
+    public function testFormatResultShouldReturnCorrectFormat(SearchConfigInterface $searchConfig, int $totalHits, array $requestParameters, PaginationSearchResultTransfer $expectedResult): void
     {
         /** @var \Spryker\Client\Search\SearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
         $searchFactoryMock = $this->getMockBuilder(SearchFactory::class)
@@ -68,7 +68,7 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
     /**
      * @return array
      */
-    public function resultFormatterDataProvider()
+    public function resultFormatterDataProvider(): array
     {
         return [
             'first page should shown if there\'s no request parameters' => $this->getDataForFirstPageWithoutRequestParameters(),
@@ -84,7 +84,7 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
     /**
      * @return array
      */
-    protected function getDataForFirstPageWithoutRequestParameters()
+    protected function getDataForFirstPageWithoutRequestParameters(): array
     {
         $totalHits = 100;
 
@@ -105,7 +105,7 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
     /**
      * @return array
      */
-    protected function getZeroResultData()
+    protected function getZeroResultData(): array
     {
         $totalHits = 0;
 
@@ -126,7 +126,7 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
     /**
      * @return array
      */
-    protected function getDataForExplicitFirstPage()
+    protected function getDataForExplicitFirstPage(): array
     {
         $totalHits = 100;
 
@@ -152,7 +152,7 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
      *
      * @return array
      */
-    protected function getInvalidPageData($page, $expectedPage)
+    protected function getInvalidPageData(int $page, int $expectedPage): array
     {
         $totalHits = 100;
 
@@ -175,7 +175,7 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
     /**
      * @return array
      */
-    protected function getDataForValidItemsPerPageParameter()
+    protected function getDataForValidItemsPerPageParameter(): array
     {
         $totalHits = 100;
 
@@ -198,7 +198,7 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
     /**
      * @return array
      */
-    protected function getDataForInvalidItemsPerPageParameter()
+    protected function getDataForInvalidItemsPerPageParameter(): array
     {
         $totalHits = 100;
 
@@ -221,7 +221,7 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
     /**
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
      */
-    protected function createSimpleSearchConfigMock()
+    protected function createSimpleSearchConfigMock(): SearchConfigInterface
     {
         $searchConfig = $this->createSearchConfigMock();
         $searchConfig

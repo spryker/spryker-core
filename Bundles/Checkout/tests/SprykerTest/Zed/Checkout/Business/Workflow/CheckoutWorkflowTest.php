@@ -89,7 +89,7 @@ class CheckoutWorkflowTest extends Unit
     /**
      * @return void
      */
-    public function testWorkflowCallsAllPreConditions()
+    public function testWorkflowCallsAllPreConditions(): void
     {
         $mock1 = $this->getMockBuilder(CheckoutPreConditionInterface::class)->getMock();
         $mock2 = $this->getMockBuilder(CheckoutPreConditionInterface::class)->getMock();
@@ -119,7 +119,7 @@ class CheckoutWorkflowTest extends Unit
     /**
      * @return void
      */
-    public function testWorkflowCallsAllOrderSavers()
+    public function testWorkflowCallsAllOrderSavers(): void
     {
         $mock1 = $this->getMockBuilder(CheckoutDoSaveOrderInterface::class)->getMock();
         $mock2 = $this->getMockBuilder(CheckoutDoSaveOrderInterface::class)->getMock();
@@ -149,7 +149,7 @@ class CheckoutWorkflowTest extends Unit
     /**
      * @return void
      */
-    public function testWorkflowCallsAllDeprecatedOrderSavers()
+    public function testWorkflowCallsAllDeprecatedOrderSavers(): void
     {
         $mock1 = $this->getMockBuilder(CheckoutDoSaveOrderInterface::class)->getMock();
         $mock2 = $this->getMockBuilder(CheckoutSaveOrderInterface::class)->getMock();
@@ -186,7 +186,7 @@ class CheckoutWorkflowTest extends Unit
     /**
      * @return void
      */
-    public function testWorkflowCallsAllPostHooks()
+    public function testWorkflowCallsAllPostHooks(): void
     {
         $mock1 = $this->getMockBuilder(CheckoutPostSaveHookInterface::class)->getMock();
         $mock2 = $this->getMockBuilder(CheckoutPostSaveHookInterface::class)->getMock();
@@ -215,7 +215,7 @@ class CheckoutWorkflowTest extends Unit
     /**
      * @return void
      */
-    public function testWorkflowPassesResponseOn()
+    public function testWorkflowPassesResponseOn(): void
     {
         $checkoutResponse = $this->createBaseCheckoutResponse();
         $checkoutResponse
@@ -245,7 +245,7 @@ class CheckoutWorkflowTest extends Unit
     /**
      * @return void
      */
-    public function testPostHookResultIsReturned()
+    public function testPostHookResultIsReturned(): void
     {
         $checkoutResponse = $this->createBaseCheckoutResponse();
 
@@ -270,7 +270,7 @@ class CheckoutWorkflowTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    protected function createBaseCheckoutResponse()
+    protected function createBaseCheckoutResponse(): CheckoutResponseTransfer
     {
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 

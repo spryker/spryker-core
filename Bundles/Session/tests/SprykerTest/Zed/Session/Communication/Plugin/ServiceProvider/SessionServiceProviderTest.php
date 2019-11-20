@@ -59,7 +59,7 @@ class SessionServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testRegisterShouldSetSessionStorageOptions()
+    public function testRegisterShouldSetSessionStorageOptions(): void
     {
         $application = new Application();
         $sessionServiceProvider = $this->createSessionServiceProviderWithFactoryMock();
@@ -73,7 +73,7 @@ class SessionServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testRegisterShouldSetSessionStorageHandler()
+    public function testRegisterShouldSetSessionStorageHandler(): void
     {
         $application = new Application();
         $sessionServiceProvider = $this->createSessionServiceProviderWithFactoryMock();
@@ -116,7 +116,7 @@ class SessionServiceProviderTest extends Unit
      *
      * @return void
      */
-    public function testCanBeUsedWithSessionHandlerRedis()
+    public function testCanBeUsedWithSessionHandlerRedis(): void
     {
         $this->setConfig(SessionConstants::ZED_SESSION_SAVE_HANDLER, SessionConfig::SESSION_HANDLER_REDIS);
 
@@ -133,7 +133,7 @@ class SessionServiceProviderTest extends Unit
      *
      * @return void
      */
-    public function testCanBeUsedWithSessionHandlerRedisLock()
+    public function testCanBeUsedWithSessionHandlerRedisLock(): void
     {
         $this->setConfig(SessionConstants::ZED_SESSION_SAVE_HANDLER, SessionConfig::SESSION_HANDLER_REDIS_LOCKING);
 
@@ -150,7 +150,7 @@ class SessionServiceProviderTest extends Unit
      *
      * @return void
      */
-    public function testCanBeUsedWithSessionHandlerFile()
+    public function testCanBeUsedWithSessionHandlerFile(): void
     {
         $this->setConfig(SessionConstants::ZED_SESSION_SAVE_HANDLER, SessionConfig::SESSION_HANDLER_FILE);
 

@@ -31,7 +31,7 @@ class YvesFragmentControllerResolverTest extends Unit
      *
      * @return void
      */
-    public function testCreateController($controller, $expectedServiceName)
+    public function testCreateController(string $controller, string $expectedServiceName): void
     {
         $request = $this->getRequest($controller);
         $controllerResolver = $this->getFragmentControllerProvider($request);
@@ -45,7 +45,7 @@ class YvesFragmentControllerResolverTest extends Unit
     /**
      * @return array
      */
-    public function getController()
+    public function getController(): array
     {
         return [
             ['index/index/index', YvesFragmentControllerResolverTest::class . '::indexAction'],
@@ -62,7 +62,7 @@ class YvesFragmentControllerResolverTest extends Unit
      *
      * @return void
      */
-    public function __call($name, $arguments = [])
+    public function __call(string $name, array $arguments = []): void
     {
     }
 
@@ -89,7 +89,7 @@ class YvesFragmentControllerResolverTest extends Unit
      *
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    private function getRequest($controller)
+    private function getRequest(string $controller): Request
     {
         return new Request([], [], ['_controller' => $controller]);
     }

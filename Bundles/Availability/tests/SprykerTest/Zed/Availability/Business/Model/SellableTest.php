@@ -32,7 +32,7 @@ class SellableTest extends Unit
     /**
      * @return void
      */
-    public function testIsProductIsSellableWhenNeverOutOfStockShouldReturnIsSellable()
+    public function testIsProductIsSellableWhenNeverOutOfStockShouldReturnIsSellable(): void
     {
         $stockFacadeMock = $this->createStockFacadeMock();
         $stockFacadeMock->method('isNeverOutOfStockForStore')
@@ -48,7 +48,7 @@ class SellableTest extends Unit
     /**
      * @return void
      */
-    public function testIsProductSellableWhenProductHaveInStockShouldReturnIsSellable()
+    public function testIsProductSellableWhenProductHaveInStockShouldReturnIsSellable(): void
     {
         $reservedItems = 5;
         $existingStock = 10;
@@ -84,8 +84,7 @@ class SellableTest extends Unit
         ?AvailabilityToOmsInterface $omsFacadeMock = null,
         ?AvailabilityToStockInterface $stockFacadeMock = null,
         ?AvailabilityToStoreFacadeInterface $storeFacade = null
-    ) {
-
+    ): Sellable {
         if ($omsFacadeMock === null) {
             $omsFacadeMock = $this->createOmsFacadeMock();
         }
@@ -106,7 +105,7 @@ class SellableTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    protected function createStoreTransfer()
+    protected function createStoreTransfer(): StoreTransfer
     {
         return (new StoreTransfer())->setName('DE');
     }

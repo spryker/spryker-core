@@ -69,7 +69,7 @@ class ProductImageTransferMapperTest extends Unit
     /**
      * @return void
      */
-    public function testConvertProductImageSetEntitiesIntoTransfer()
+    public function testConvertProductImageSetEntitiesIntoTransfer(): void
     {
         $transferCollection = $this->reader
             ->getProductImagesSetCollectionByProductAbstractId(1);

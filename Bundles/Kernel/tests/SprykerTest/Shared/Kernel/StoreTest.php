@@ -48,7 +48,7 @@ class StoreTest extends Unit
     /**
      * @return void
      */
-    public function testInstance()
+    public function testInstance(): void
     {
         $this->assertInstanceOf('\Spryker\Shared\Kernel\Store', $this->Store);
     }
@@ -56,7 +56,7 @@ class StoreTest extends Unit
     /**
      * @return void
      */
-    public function testGetLocales()
+    public function testGetLocales(): void
     {
         $locales = $this->Store->getLocales();
         $this->assertSame($locales['de'], 'de_DE');
@@ -65,7 +65,7 @@ class StoreTest extends Unit
     /**
      * @return void
      */
-    public function testSetCurrentLocale()
+    public function testSetCurrentLocale(): void
     {
         $locale = $this->Store->getCurrentLocale();
         $this->assertSame('de_DE', $locale);
@@ -80,7 +80,7 @@ class StoreTest extends Unit
     /**
      * @return void
      */
-    public function testSetCurrentLocaleInvalid()
+    public function testSetCurrentLocaleInvalid(): void
     {
         $this->expectException('InvalidArgumentException');
         $newLocale = 'xy_XY';
@@ -90,7 +90,7 @@ class StoreTest extends Unit
     /**
      * @return void
      */
-    public function testInitializeSetupWhenMultipleCurrenciesNotDefinedShouldUseDefault()
+    public function testInitializeSetupWhenMultipleCurrenciesNotDefinedShouldUseDefault(): void
     {
         $mockConfig = [
             'DE' => [

@@ -31,7 +31,7 @@ class TransitionLogTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testLoggerPersistsAllProvidedData()
+    public function testLoggerPersistsAllProvidedData(): void
     {
         $stateMachineTransitionLogEntityMock = $this->createTransitionLogEntityMock();
         $stateMachineTransitionLogEntityMock
@@ -75,7 +75,7 @@ class TransitionLogTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testWhenNonCliRequestUsedShouldExtractOutputParamsAndPersist()
+    public function testWhenNonCliRequestUsedShouldExtractOutputParamsAndPersist(): void
     {
         $_SERVER[TransitionLog::QUERY_STRING] = 'one=1&two=2';
         $stateMachineTransitionLogEntityMock = $this->createTransitionLogEntityMock();
@@ -138,7 +138,7 @@ class TransitionLogTest extends StateMachineMocks
     /**
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer
      */
-    protected function createItemTransfer()
+    protected function createItemTransfer(): StateMachineItemTransfer
     {
         $stateMachineItemTransfer = new StateMachineItemTransfer();
         $stateMachineItemTransfer->setIdentifier(1);

@@ -25,7 +25,7 @@ class ProductQuantityDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\ProductQuantityTransfer
      */
-    public function haveProductQuantity($idProduct, array $productQuantityOverride = []): ProductQuantityTransfer
+    public function haveProductQuantity(int $idProduct, array $productQuantityOverride = []): ProductQuantityTransfer
     {
         $productQuantityTransfer = (new ProductQuantityBuilder())
             ->build()
@@ -34,7 +34,7 @@ class ProductQuantityDataHelper extends Module
 
         $productQuantityTransfer = $this->storeProductQuantity($productQuantityTransfer);
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($productQuantityTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productQuantityTransfer): void {
             $this->cleanupProductQuantity($productQuantityTransfer->getIdProductQuantity());
         });
 
@@ -67,7 +67,7 @@ class ProductQuantityDataHelper extends Module
      *
      * @return void
      */
-    protected function cleanupProductQuantity($idProductQuantity): void
+    protected function cleanupProductQuantity(int $idProductQuantity): void
     {
         $this->debug(sprintf('Deleting product quantity: %d', $idProductQuantity));
 

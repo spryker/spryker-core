@@ -26,7 +26,7 @@ class SpySalesOrderItemTest extends Unit
     /**
      * @return void
      */
-    public function testPostSaveShouldNotCreateNewStateMachineHistoryEntryWhenStateNotChanged()
+    public function testPostSaveShouldNotCreateNewStateMachineHistoryEntryWhenStateNotChanged(): void
     {
         $salesOrderItemEntityMock = $this->createMockedSalesOrderItemEntity();
 
@@ -39,7 +39,7 @@ class SpySalesOrderItemTest extends Unit
     /**
      * @return void
      */
-    public function testPostSaveShouldCreateStateMachineHistoryEntryWhenStateChanged()
+    public function testPostSaveShouldCreateStateMachineHistoryEntryWhenStateChanged(): void
     {
         $salesOrderItemEntityMock = $this->createMockedSalesOrderItemEntity();
 

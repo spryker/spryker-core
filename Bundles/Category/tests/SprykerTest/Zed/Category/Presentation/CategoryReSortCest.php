@@ -28,7 +28,7 @@ class CategoryReSortCest
      *
      * @return void
      */
-    public function testThatICanSeeSubCategories(CategoryPresentationTester $i)
+    public function testThatICanSeeSubCategories(CategoryPresentationTester $i): void
     {
         $i->amOnPage(CategoryReSortPage::URL);
         $i->waitForElement(CategoryReSortPage::SELECTOR_CATEGORY_LIST);
@@ -40,7 +40,7 @@ class CategoryReSortCest
      *
      * @return void
      */
-    public function testThatICanMoveCategories(CategoryPresentationTester $i)
+    public function testThatICanMoveCategories(CategoryPresentationTester $i): void
     {
         $i->amOnPage(CategoryReSortPage::URL);
         $i->waitForElement(CategoryReSortPage::SELECTOR_CATEGORY_LIST);
@@ -59,7 +59,7 @@ class CategoryReSortCest
      *
      * @return void
      */
-    public function testThatICanSaveReSortedSubCategories(CategoryPresentationTester $i)
+    public function testThatICanSaveReSortedSubCategories(CategoryPresentationTester $i): void
     {
         $i->createCategory(Category::CATEGORY_A);
 

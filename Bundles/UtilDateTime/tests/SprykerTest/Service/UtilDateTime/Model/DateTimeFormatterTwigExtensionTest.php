@@ -29,7 +29,7 @@ class DateTimeFormatterTwigExtensionTest extends Unit
     /**
      * @return void
      */
-    public function testInstantiationShouldReturnExtension()
+    public function testInstantiationShouldReturnExtension(): void
     {
         $utilDateTimeServiceMock = $this->getUtilDateTimeServiceMock();
         $dateTimeFormatterTwigExtension = new DateTimeFormatterTwigExtension($utilDateTimeServiceMock);
@@ -40,7 +40,7 @@ class DateTimeFormatterTwigExtensionTest extends Unit
     /**
      * @return void
      */
-    public function testGetNameReturnsNameOfExtension()
+    public function testGetNameReturnsNameOfExtension(): void
     {
         $utilDateTimeServiceMock = $this->getUtilDateTimeServiceMock();
         $dateTimeFormatterTwigExtension = new DateTimeFormatterTwigExtension($utilDateTimeServiceMock);
@@ -51,7 +51,7 @@ class DateTimeFormatterTwigExtensionTest extends Unit
     /**
      * @return void
      */
-    public function testGetFiltersShouldReturnArray()
+    public function testGetFiltersShouldReturnArray(): void
     {
         $utilDateTimeServiceMock = $this->getUtilDateTimeServiceMock();
         $dateTimeFormatterTwigExtension = new DateTimeFormatterTwigExtension($utilDateTimeServiceMock);
@@ -62,7 +62,7 @@ class DateTimeFormatterTwigExtensionTest extends Unit
     /**
      * @return void
      */
-    public function testGetFunctionsShouldReturnArray()
+    public function testGetFunctionsShouldReturnArray(): void
     {
         $utilDateTimeServiceMock = $this->getUtilDateTimeServiceMock();
         $dateTimeFormatterTwigExtension = new DateTimeFormatterTwigExtension($utilDateTimeServiceMock);
@@ -73,7 +73,7 @@ class DateTimeFormatterTwigExtensionTest extends Unit
     /**
      * @return void
      */
-    public function testFormatDateDelegatesToDateTimeFormatter()
+    public function testFormatDateDelegatesToDateTimeFormatter(): void
     {
         $utilDateTimeServiceMock = $this->getUtilDateTimeServiceMock();
         $utilDateTimeServiceMock->expects(self::once())->method('formatDate');
@@ -85,7 +85,7 @@ class DateTimeFormatterTwigExtensionTest extends Unit
     /**
      * @return void
      */
-    public function testFormatDateTimeDelegatesToDateTimeFormatter()
+    public function testFormatDateTimeDelegatesToDateTimeFormatter(): void
     {
         $utilDateTimeServiceMock = $this->getUtilDateTimeServiceMock();
         $utilDateTimeServiceMock->expects(self::once())->method('formatDateTime');
@@ -97,7 +97,7 @@ class DateTimeFormatterTwigExtensionTest extends Unit
     /**
      * @return void
      */
-    public function testFormatTimeDelegatesToDateTimeFormatter()
+    public function testFormatTimeDelegatesToDateTimeFormatter(): void
     {
         $utilDateTimeServiceMock = $this->getUtilDateTimeServiceMock();
         $utilDateTimeServiceMock->expects(self::once())->method('formatTime');
