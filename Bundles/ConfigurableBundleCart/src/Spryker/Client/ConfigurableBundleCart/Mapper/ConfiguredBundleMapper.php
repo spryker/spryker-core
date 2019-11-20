@@ -51,7 +51,7 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
 
         foreach ($createConfiguredBundleRequestTransfer->getItems() as $configuredBundleItemRequestTransfer) {
             $cartChangeTransfer->addItem(
-                $this->getMappedItemTransfer($configuredBundleRequestTransfer, $configuredBundleItemRequestTransfer)
+                $this->createItemTransferWithConfiguredBundle($configuredBundleRequestTransfer, $configuredBundleItemRequestTransfer)
             );
         }
 
@@ -64,17 +64,13 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function getMappedItemTransfer(
+    protected function createItemTransferWithConfiguredBundle(
         ConfiguredBundleRequestTransfer $configuredBundleRequestTransfer,
         ConfiguredBundleItemRequestTransfer $configuredBundleItemRequestTransfer
     ): ItemTransfer {
         $configuredBundleItemRequestTransfer
             ->requireSku()
             ->requireQuantity();
-
-        $itemTransfer = (new ItemTransfer())
-            ->setSku($configuredBundleItemRequestTransfer->getSku())
-            ->setQuantity($configuredBundleItemRequestTransfer->getQuantity());
 
         $configuredBundleTransfer = $this->mapConfiguredBundleRequestTransferToConfiguredBundleTransfer(
             $configuredBundleRequestTransfer,
@@ -86,7 +82,8 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
             new ConfiguredBundleItemTransfer()
         );
 
-        return $itemTransfer
+        return (new ItemTransfer())
+            ->fromArray($configuredBundleItemRequestTransfer->toArray(), true)
             ->setConfiguredBundle($configuredBundleTransfer)
             ->setConfiguredBundleItem($configuredBundleItemTransfer);
     }
@@ -106,7 +103,7 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
             ->requireTemplateUuid()
             ->requireTemplateName();
 
-        $groupKey = $this->configuredBundleGroupKeyGenerator->generateConfiguredBundleGroupKey($configuredBundleRequestTransfer);
+        $groupKey = $this->configuredBundleGroupKeyGenerator->generateConfiguredBundleGroupKeyByUuid($configuredBundleRequestTransfer);
 
         $configurableBundleTemplateTransfer = (new ConfigurableBundleTemplateTransfer())
             ->setUuid($configuredBundleRequestTransfer->getTemplateUuid())

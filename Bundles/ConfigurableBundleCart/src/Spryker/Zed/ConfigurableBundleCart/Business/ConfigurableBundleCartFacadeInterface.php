@@ -58,7 +58,7 @@ interface ConfigurableBundleCartFacadeInterface
     /**
      * Specification:
      * - Applicable to items which have configured bundle properties.
-     * - Updates configured bundle quantity per slot.
+     * - Updates configured bundle item quantity per slot.
      * - Returns modified CartChangeTransfer.
      *
      * @api
@@ -72,7 +72,7 @@ interface ConfigurableBundleCartFacadeInterface
     /**
      * Specification:
      * - Applicable to items which have configured bundle properties.
-     * - Sets group key for configured bundle items.
+     * - Sets group key for each item with ItemTransfer::getConfiguredBundle property filled.
      * - Returns modified CartChangeTransfer.
      *
      * @api

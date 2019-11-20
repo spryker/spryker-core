@@ -55,7 +55,7 @@ class ConfiguredBundleGroupKeyExpander implements ConfiguredBundleGroupKeyExpand
 
         $itemTransfer->setGroupKey(
             sprintf(
-                '%s - %s',
+                '%s-%s',
                 $itemTransfer->getConfiguredBundle()->getGroupKey(),
                 $itemTransfer->getGroupKey()
             )

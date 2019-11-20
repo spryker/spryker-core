@@ -16,20 +16,10 @@ class ConfiguredBundleGroupKeyGenerator implements ConfiguredBundleGroupKeyGener
      *
      * @return string
      */
-    public function generateConfiguredBundleGroupKey(ConfiguredBundleRequestTransfer $configuredBundleRequestTransfer): string
+    public function generateConfiguredBundleGroupKeyByUuid(ConfiguredBundleRequestTransfer $configuredBundleRequestTransfer): string
     {
         $configuredBundleRequestTransfer->requireTemplateUuid();
 
-        return $this->generateConfiguredBundleGroupKeyByUuid($configuredBundleRequestTransfer->getTemplateUuid());
-    }
-
-    /**
-     * @param string $uuid
-     *
-     * @return string
-     */
-    protected function generateConfiguredBundleGroupKeyByUuid(string $uuid): string
-    {
-        return sprintf('%s-%s', $uuid, uniqid('', true));
+        return sprintf('%s-%s', $configuredBundleRequestTransfer->getTemplateUuid(), uniqid('', true));
     }
 }

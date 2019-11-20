@@ -16,5 +16,5 @@ interface ConfiguredBundleGroupKeyGeneratorInterface
      *
      * @return string
      */
-    public function generateConfiguredBundleGroupKey(ConfiguredBundleRequestTransfer $configuredBundleRequestTransfer): string;
+    public function generateConfiguredBundleGroupKeyByUuid(ConfiguredBundleRequestTransfer $configuredBundleRequestTransfer): string;
 }

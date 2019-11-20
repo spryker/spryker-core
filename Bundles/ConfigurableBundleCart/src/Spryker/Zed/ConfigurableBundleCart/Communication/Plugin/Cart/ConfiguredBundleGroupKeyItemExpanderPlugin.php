@@ -19,6 +19,7 @@ class ConfiguredBundleGroupKeyItemExpanderPlugin extends AbstractPlugin implemen
 {
     /**
      * {@inheritDoc}
+     * - Expands items with configured bundle property with group key.
      *
      * @api
      *
