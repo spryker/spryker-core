@@ -35,7 +35,7 @@ class ApiControllerEventDispatcherPlugin extends AbstractPlugin implements Event
     protected const REQUEST_URI = 'REQUEST_URI';
 
     /**
-     * Specification:
+     * {@inheritDoc}
      * - Adds a listener for the `\Symfony\Component\HttpKernel\KernelEvents::CONTROLLER` event.
      * - When current request is an API request a ApiController will be executed.
      *
