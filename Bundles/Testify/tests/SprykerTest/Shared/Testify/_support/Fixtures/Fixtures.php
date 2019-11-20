@@ -38,7 +38,7 @@ class Fixtures implements LoaderInterface
      *
      * @return void
      */
-    public function loadTests(string $filename): void
+    public function loadTests($filename): void
     {
         Parser::load($filename);
         $fixtureClasses = Parser::getClassesFromFile($filename);
