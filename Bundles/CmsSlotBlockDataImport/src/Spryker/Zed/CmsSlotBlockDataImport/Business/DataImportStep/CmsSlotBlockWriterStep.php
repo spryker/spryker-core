@@ -43,7 +43,9 @@ class CmsSlotBlockWriterStep extends PublishAwareStep implements DataImportStepI
             ->findOneOrCreate();
 
         $cmsSlotBlockEntity->setPosition($dataSet[CmsSlotBlockDataSetInterface::COL_POSITION]);
-        $conditions = $this->utilEncodingService->encodeJson($dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_ARRAY]);
+        $conditions = $this->utilEncodingService->encodeJson(
+            $dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_ARRAY] ?? []
+        );
         $cmsSlotBlockEntity->setConditions($conditions);
 
         $cmsSlotBlockEntity->save();
