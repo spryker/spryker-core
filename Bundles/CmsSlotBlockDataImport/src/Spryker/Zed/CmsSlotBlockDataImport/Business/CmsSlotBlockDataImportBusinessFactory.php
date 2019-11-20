@@ -16,11 +16,11 @@ use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsSlotBlockWrite
 use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsSlotKeyToCmsSlotIdStep;
 use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsSlotTemplatePathToCmsSlotTemplateIdStep;
 use Spryker\Zed\CmsSlotBlockDataImport\Business\Hook\CmsSlotBlockDataImportAfterImportHook;
-use Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\AllConditionsResolver;
-use Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\CategoryKeysToIdsConditionsResolver;
-use Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\CmsPageKeysToIdsConditionsResolver;
-use Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ConditionsResolverInterface;
-use Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ProductAbstractSkusToIdsConditionsResolver;
+use Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\AllConditionResolver;
+use Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\CategoryKeysToIdsConditionResolver;
+use Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\CmsPageKeysToIdsConditionResolver;
+use Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ConditionResolverInterface;
+use Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ProductAbstractSkusToIdsConditionResolver;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
@@ -122,35 +122,35 @@ class CmsSlotBlockDataImportBusinessFactory extends DataImportBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ConditionsResolverInterface
+     * @return \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ConditionResolverInterface
      */
-    public function createAllConditionsResolver(): ConditionsResolverInterface
+    public function createAllConditionsResolver(): ConditionResolverInterface
     {
-        return new AllConditionsResolver();
+        return new AllConditionResolver();
     }
 
     /**
-     * @return \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ConditionsResolverInterface
+     * @return \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ConditionResolverInterface
      */
-    public function createProductAbstractSkusToIdsConditionsResolver(): ConditionsResolverInterface
+    public function createProductAbstractSkusToIdsConditionsResolver(): ConditionResolverInterface
     {
-        return new ProductAbstractSkusToIdsConditionsResolver();
+        return new ProductAbstractSkusToIdsConditionResolver();
     }
 
     /**
-     * @return \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ConditionsResolverInterface
+     * @return \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ConditionResolverInterface
      */
-    public function createCategoryKeysToIdsConditionsResolver(): ConditionsResolverInterface
+    public function createCategoryKeysToIdsConditionsResolver(): ConditionResolverInterface
     {
-        return new CategoryKeysToIdsConditionsResolver();
+        return new CategoryKeysToIdsConditionResolver();
     }
 
     /**
-     * @return \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ConditionsResolverInterface
+     * @return \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ConditionResolverInterface
      */
-    public function createCmsPageKeysToIdsConditionsResolver(): ConditionsResolverInterface
+    public function createCmsPageKeysToIdsConditionsResolver(): ConditionResolverInterface
     {
-        return new CmsPageKeysToIdsConditionsResolver();
+        return new CmsPageKeysToIdsConditionResolver();
     }
 
     /**

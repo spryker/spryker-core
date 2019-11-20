@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 
-class ProductAbstractSkusToIdsConditionsResolver implements ConditionsResolverInterface
+class ProductAbstractSkusToIdsConditionResolver implements ConditionResolverInterface
 {
     protected const KEY_PRODUCT_ABSTRACT_IDS = 'productIds';
     protected const BULK_SELECT_CHUNK_SIZE = 1000;
@@ -79,7 +79,7 @@ class ProductAbstractSkusToIdsConditionsResolver implements ConditionsResolverIn
             ->filterBySku_In($productAbstractSkus)
             ->find();
 
-        if ($productAbstractEntities->count() < 1) {
+        if ($productAbstractEntities->count() < count($productAbstractSkus)) {
             throw new EntityNotFoundException(
                 sprintf(
                     'Could not find Product Abstract IDs by skus "%s".',

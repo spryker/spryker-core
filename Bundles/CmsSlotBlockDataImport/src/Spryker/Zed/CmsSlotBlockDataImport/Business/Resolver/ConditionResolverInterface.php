@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver;
 
-interface ConditionsResolverInterface
+interface ConditionResolverInterface
 {
     /**
      * @param string $conditionValue

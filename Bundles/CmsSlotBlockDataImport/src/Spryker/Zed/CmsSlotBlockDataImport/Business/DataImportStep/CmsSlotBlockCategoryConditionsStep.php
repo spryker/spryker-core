@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep;
 
 use Spryker\Zed\CmsSlotBlockDataImport\Business\DataSet\CmsSlotBlockDataSetInterface;
-use Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ConditionsResolverInterface;
+use Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ConditionResolverInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
@@ -17,22 +17,22 @@ class CmsSlotBlockCategoryConditionsStep implements DataImportStepInterface
     protected const KEY_CONDITION_CATEGORY = 'category';
 
     /**
-     * @var \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ConditionsResolverInterface
+     * @var \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ConditionResolverInterface
      */
     protected $allConditionsResolver;
 
     /**
-     * @var \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ConditionsResolverInterface
+     * @var \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ConditionResolverInterface
      */
     protected $categoryKeysToIdsConditionsResolver;
 
     /**
-     * @param \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ConditionsResolverInterface $allConditionsResolver
-     * @param \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ConditionsResolverInterface $categoryKeysToIdsConditionsResolver
+     * @param \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ConditionResolverInterface $allConditionsResolver
+     * @param \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ConditionResolverInterface $categoryKeysToIdsConditionsResolver
      */
     public function __construct(
-        ConditionsResolverInterface $allConditionsResolver,
-        ConditionsResolverInterface $categoryKeysToIdsConditionsResolver
+        ConditionResolverInterface $allConditionsResolver,
+        ConditionResolverInterface $categoryKeysToIdsConditionsResolver
     ) {
         $this->allConditionsResolver = $allConditionsResolver;
         $this->categoryKeysToIdsConditionsResolver = $categoryKeysToIdsConditionsResolver;
