@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver;
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 
-class CmsPageKeysToIdsConditionsResolver implements ConditionsResolverInterface
+class CmsPageKeysToIdsConditionResolver implements ConditionResolverInterface
 {
     protected const KEY_CMS_PAGE_IDS = 'pageIds';
 
@@ -61,7 +61,7 @@ class CmsPageKeysToIdsConditionsResolver implements ConditionsResolverInterface
             ->filterByPageKey_In($cmsPageKeys)
             ->find();
 
-        if ($cmsPageEntities->count() < 1) {
+        if ($cmsPageEntities->count() < count($cmsPageKeys)) {
             throw new EntityNotFoundException(
                 sprintf(
                     'Could not find CMS Page IDs by keys "%s".',

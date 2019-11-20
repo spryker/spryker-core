@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 
-class CategoryKeysToIdsConditionsResolver implements ConditionsResolverInterface
+class CategoryKeysToIdsConditionResolver implements ConditionResolverInterface
 {
     protected const KEY_CONDITION_CATEGORY_IDS = 'categoryIds';
 
@@ -61,7 +61,7 @@ class CategoryKeysToIdsConditionsResolver implements ConditionsResolverInterface
             ->filterByCategoryKey_In($categoryKeys)
             ->find();
 
-        if ($categoryEntities->count() < 1) {
+        if ($categoryEntities->count() < count($categoryKeys)) {
             throw new EntityNotFoundException(
                 sprintf(
                     'Could not find Category IDs by Keys "%s".',
