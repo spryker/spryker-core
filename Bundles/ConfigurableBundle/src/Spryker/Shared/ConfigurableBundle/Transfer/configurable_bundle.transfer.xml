@@ -117,4 +117,9 @@
         <property name="fkLocale" type="int"/>
     </transfer>
 
+    <transfer name="ProductImageSet">
+        <property name="productImageSetKey" type="string"/>
+        <property name="fkResourceConfigurableBundleTemplate" type="int"/>
+    </transfer>
+
 </transfers>
