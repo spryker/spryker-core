@@ -260,11 +260,7 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
     protected function cacheTranslations(array $translations, string $localeName): void
     {
         foreach ($translations as $keyName => $translation) {
-            $this->cacheTranslation(
-                $localeName,
-                $keyName,
-                $translation
-            );
+            $this->cacheTranslation($localeName, $keyName, $translation);
         }
     }
 }

@@ -29,9 +29,9 @@ class ProductOptionByProductAbstractSkuExpander implements ProductOptionByProduc
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $restResources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return void
      */
-    public function addResourceRelationships(array $restResources, RestRequestInterface $restRequest): array
+    public function addResourceRelationships(array $restResources, RestRequestInterface $restRequest): void
     {
         $productAbstractSkus = [];
         foreach ($restResources as $restResource) {
@@ -52,7 +52,5 @@ class ProductOptionByProductAbstractSkuExpander implements ProductOptionByProduc
                 $restResource->addRelationship($productOptionRestResource);
             }
         }
-
-        return $restResources;
     }
 }
