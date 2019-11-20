@@ -31,6 +31,6 @@ class ProductRelationListCest
     public function breadcrumbIsVisible(ProductRelationCommunicationTester $i)
     {
         $i->amOnPage(ProductRelationListPage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Product Relations');
+        $i->seeBreadcrumbNavigation('Products / Product Relations');
     }
 }

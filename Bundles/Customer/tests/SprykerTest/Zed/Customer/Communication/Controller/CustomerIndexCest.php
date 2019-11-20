@@ -32,6 +32,6 @@ class CustomerIndexCest
     {
         $i->amOnPage(CustomerIndexPage::URL);
 
-        $i->seeBreadcrumbNavigation('Dashboard / Customers / Customers');
+        $i->seeBreadcrumbNavigation('Customers / Customers');
     }
 }

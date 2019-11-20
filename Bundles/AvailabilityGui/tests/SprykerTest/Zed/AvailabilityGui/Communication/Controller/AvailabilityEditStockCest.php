@@ -49,7 +49,7 @@ class AvailabilityEditStockCest
             )
         );
 
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Availability / Edit Stock');
+        $i->seeBreadcrumbNavigation('Products / Availability / Edit Stock');
 
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_EDIT_HEADER);
 

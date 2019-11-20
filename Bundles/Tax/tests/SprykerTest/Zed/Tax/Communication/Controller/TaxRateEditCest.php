@@ -32,7 +32,7 @@ class TaxRateEditCest
     {
         $i->listDataTable(TaxRateListPage::TABLE_DATA_URL);
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Dashboard / Taxes / Tax Rates / Edit Tax Rate');
+        $i->seeBreadcrumbNavigation('Taxes / Tax Rates / Edit Tax Rate');
     }
 
     /**

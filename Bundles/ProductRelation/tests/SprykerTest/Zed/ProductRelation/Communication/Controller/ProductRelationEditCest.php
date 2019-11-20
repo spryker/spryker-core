@@ -33,6 +33,6 @@ class ProductRelationEditCest
         $i->listDataTable(ProductRelationListPage::URL . '/table');
         $i->clickDataTableEditButton();
 
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Product Relations / Edit Product Relation');
+        $i->seeBreadcrumbNavigation('Products / Product Relations / Edit Product Relation');
     }
 }
