@@ -4,7 +4,7 @@
   "description": "PersistentCart module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/calculation-extension": "^1.1.0",
     "spryker/cart": "^5.11.0 || ^7.3.0",
     "spryker/cart-extension": "^1.9.0 || ^2.5.0 || ^4.1.0",

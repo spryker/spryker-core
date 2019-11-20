@@ -11,8 +11,6 @@ use Generated\Shared\Transfer\RestAbstractProductAvailabilityAttributesTransfer;
 use Generated\Shared\Transfer\RestConcreteProductAvailabilityAttributesTransfer;
 use Generated\Shared\Transfer\SpyAvailabilityAbstractEntityTransfer;
 use Generated\Shared\Transfer\SpyAvailabilityEntityTransfer;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\AbstractProductAvailabilitiesResourceMapper;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\AbstractProductAvailabilitiesResourceMapperInterface;
 use Spryker\Glue\ProductAvailabilitiesRestApi\Processor\Mapper\ConcreteProductAvailabilitiesResourceMapper;
@@ -166,7 +164,7 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
      */
     protected function getAbstractProductsAvailabilityResourceMapper(): AbstractProductAvailabilitiesResourceMapperInterface
     {
-        return new AbstractProductAvailabilitiesResourceMapper($this->getResourceBuilder());
+        return new AbstractProductAvailabilitiesResourceMapper();
     }
 
     /**
@@ -174,16 +172,6 @@ class ProductAvailabilitiesResourceMapperTest extends Unit
      */
     protected function getConcreteProductsAvailabilityResourceMapper(): ConcreteProductAvailabilitiesResourceMapper
     {
-        return new ConcreteProductAvailabilitiesResourceMapper($this->getResourceBuilder());
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
-     */
-    protected function getResourceBuilder(): RestResourceBuilderInterface
-    {
-        return $this->getMockBuilder(RestResourceBuilder::class)
-            ->enableProxyingToOriginalMethods()
-            ->getMock();
+        return new ConcreteProductAvailabilitiesResourceMapper();
     }
 }

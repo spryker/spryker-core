@@ -56,22 +56,33 @@ class CartCodeDeleter implements CartCodeDeleterInterface
 
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
 
-        $voucherCode = '';
-        foreach ($quoteTransfer->getVoucherDiscounts() as $discountTransfer) {
-            if ($discountTransfer->getIdDiscount() === $idDiscount) {
-                $voucherCode = $discountTransfer->getVoucherCode();
-
-                break;
-            }
-        }
-
+        $voucherCode = $this->getVoucherCodeWithDiscount($quoteTransfer->getVoucherDiscounts()->getArrayCopy(), $idDiscount);
         if (!$voucherCode) {
             return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
-                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_CANT_BE_DELETED
+                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_NOT_FOUND
             );
         }
 
-        return $this->cartCodeFacade->removeCode($quoteTransfer, $voucherCode);
+        $cartCodeOperationResultTransfer = $this->cartCodeFacade->removeCode($quoteTransfer, $voucherCode);
+
+        return $cartCodeOperationResultTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discountTransfers
+     * @param int $idDiscount
+     *
+     * @return string|null
+     */
+    protected function getVoucherCodeWithDiscount(array $discountTransfers, int $idDiscount): ?string
+    {
+        foreach ($discountTransfers as $discountTransfer) {
+            if ($discountTransfer->getIdDiscount() === $idDiscount) {
+                return $discountTransfer->getVoucherCode();
+            }
+        }
+
+        return null;
     }
 
     /**

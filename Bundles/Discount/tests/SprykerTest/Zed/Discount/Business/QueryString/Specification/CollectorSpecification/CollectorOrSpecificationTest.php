@@ -35,6 +35,7 @@ class CollectorOrSpecificationTest extends Unit
     {
         $leftMock = $this->createCollectorSpecificationMock();
 
+        $items = [];
         $items[] = new DiscountableItemTransfer();
         $items[] = new DiscountableItemTransfer();
 

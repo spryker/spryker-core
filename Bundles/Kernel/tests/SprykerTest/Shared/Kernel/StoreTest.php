@@ -92,14 +92,16 @@ class StoreTest extends Unit
      */
     public function testInitializeSetupWhenMultipleCurrenciesNotDefinedShouldUseDefault()
     {
-        $mockConfig['DE'] = [
-            'locales' => [
-                'en' => 'en_US',
+        $mockConfig = [
+            'DE' => [
+                'locales' => [
+                    'en' => 'en_US',
+                ],
+                'countries' => [
+                    'DE',
+                ],
+                'currencyIsoCode' => 'EUR',
             ],
-            'countries' => [
-                'DE',
-            ],
-            'currencyIsoCode' => 'EUR',
         ];
 
         $storeMock = $this->createStoreMock();

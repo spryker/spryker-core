@@ -40,6 +40,7 @@ class SecuritySchemeSpecificationComponent implements SecuritySchemeSpecificatio
             return [];
         }
 
+        $securitySchemaData = [];
         $securitySchemaData[$this->securitySchemeComponentTransfer->getName()][SecuritySchemeComponentTransfer::TYPE] = $this->securitySchemeComponentTransfer->getType();
         $securitySchemaData[$this->securitySchemeComponentTransfer->getName()][SecuritySchemeComponentTransfer::SCHEME] = $this->securitySchemeComponentTransfer->getScheme();
 

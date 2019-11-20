@@ -28,6 +28,8 @@ class CartCodesRestApiStub implements CartCodesRestApiStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\CartCodesRestApi\Communication\Controller\GatewayController::addCandidateAction()
+     *
      * @param \Generated\Shared\Transfer\AddCandidateRequestTransfer $addCandidateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
@@ -41,6 +43,8 @@ class CartCodesRestApiStub implements CartCodesRestApiStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\CartCodesRestApi\Communication\Controller\GatewayController::removeCodeAction()
+     *
      * @param \Generated\Shared\Transfer\RemoveCodeRequestTransfer $removeCodeRequestTransfer
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer

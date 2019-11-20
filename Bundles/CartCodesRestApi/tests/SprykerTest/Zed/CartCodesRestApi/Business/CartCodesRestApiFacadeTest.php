@@ -61,7 +61,10 @@ class CartCodesRestApiFacadeTest extends Unit
         $quoteTransfer = $this->tester->havePersistentQuoteWithOutVouchers();
 
         // Act
-        $cartCodeOperationResultTransfer = $this->tester->getFacade()->addCandidate($quoteTransfer, $this->tester::CODE);
+        $cartCodeOperationResultTransfer = $this->tester->getFacade()->addCandidate(
+            $quoteTransfer,
+            $this->tester::CODE
+        );
 
         // Assert
         $this->assertEquals(1, $cartCodeOperationResultTransfer->getQuote()->getVoucherDiscounts()->count());
@@ -80,7 +83,10 @@ class CartCodesRestApiFacadeTest extends Unit
         $quoteTransfer = $this->tester->prepareQuoteTransfer();
 
         // Act
-        $cartCodeOperationResultTransfer = $this->tester->getFacade()->addCandidate($quoteTransfer, $this->tester::CODE);
+        $cartCodeOperationResultTransfer = $this->tester->getFacade()->addCandidate(
+            $quoteTransfer,
+            $this->tester::CODE
+        );
 
         // Assert
         $this->assertEquals(
@@ -98,7 +104,10 @@ class CartCodesRestApiFacadeTest extends Unit
         $quoteTransfer = $this->tester->havePersistentQuoteWithVouchers();
 
         // Act
-        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCode($quoteTransfer, $this->tester::ID_DISCOUNT);
+        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCode(
+            $quoteTransfer,
+            $this->tester::ID_DISCOUNT
+        );
 
         // Assert
         $this->assertEmpty($cartCodeOperationResultTransfer->getQuote()->getVoucherDiscounts());
@@ -113,12 +122,15 @@ class CartCodesRestApiFacadeTest extends Unit
         $quoteTransfer = $this->tester->havePersistentQuoteWithVouchers();
 
         // Act
-        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCode($quoteTransfer, $this->tester::NON_EXISTENT_ID_DISCOUNT);
+        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCode(
+            $quoteTransfer,
+            $this->tester::NON_EXISTENT_ID_DISCOUNT
+        );
 
         // Assert
         $this->assertEmpty($cartCodeOperationResultTransfer->getQuote());
         $this->assertEquals(
-            CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_CANT_BE_DELETED,
+            CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_NOT_FOUND,
             $cartCodeOperationResultTransfer->getMessages()[0]->getValue()
         );
     }
@@ -132,7 +144,10 @@ class CartCodesRestApiFacadeTest extends Unit
         $quoteTransfer = $this->tester->prepareQuoteTransfer();
 
         // Act
-        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCode($quoteTransfer, $this->tester::ID_DISCOUNT);
+        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCode(
+            $quoteTransfer,
+            $this->tester::ID_DISCOUNT
+        );
 
         // Assert
         $this->assertEmpty($cartCodeOperationResultTransfer->getQuote());

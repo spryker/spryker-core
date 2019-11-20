@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\SalesOrderThresholdValueTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig;
 use Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdFacadeInterface;
+use Spryker\Zed\SalesOrderThreshold\Business\Strategy\Exception\SalesOrderThresholdTypeNotFoundException;
 use Spryker\Zed\SalesOrderThreshold\Communication\Plugin\Strategy\HardMinimumThresholdStrategyPlugin;
 use Spryker\Zed\SalesOrderThreshold\Communication\Plugin\Strategy\SoftMinimumThresholdWithFixedFeeStrategyPlugin;
 use Spryker\Zed\SalesOrderThreshold\Communication\Plugin\Strategy\SoftMinimumThresholdWithFlexibleFeeStrategyPlugin;
@@ -152,8 +153,6 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
     }
 
     /**
-     * @expectedException \Spryker\Zed\SalesOrderThreshold\Business\Strategy\Exception\SalesOrderThresholdTypeNotFoundException
-     *
      * @return void
      */
     public function testSaveSalesOrderThresholdWithInvalidKeyThrowsException(): void
@@ -164,6 +163,8 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
         $storeTransferUS = (new StoreTransfer())->setIdStore(2)->setName('US');
         $currencyTransferUSD = (new CurrencyTransfer())->setIdCurrency(2)->setCode('USD');
         $salesOrderThresholdTypeTransferWithWrongKey = (new SalesOrderThresholdTypeTransfer())->setKey('xxxx');
+
+        $this->expectException(SalesOrderThresholdTypeNotFoundException::class);
 
         // Act
         $this->getFacade()->saveSalesOrderThreshold(

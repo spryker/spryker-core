@@ -41,4 +41,37 @@
         <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
     </transfer>
 
+    <transfer name="Quote">
+        <property name="uuid" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="customer" type="Customer"/>
+        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
+        <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
+    </transfer>
+
+    <transfer name="RestUser">
+        <property name="naturalIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="Discount">
+        <property name="idDiscount" type="int"/>
+        <property name="voucherCode" type="string"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+    </transfer>
+
+    <transfer name="QuoteResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="quoteTransfer" type="Quote"/>
+    </transfer>
+
 </transfers>

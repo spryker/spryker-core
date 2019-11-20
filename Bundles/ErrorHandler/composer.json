@@ -5,7 +5,7 @@
   "license": "proprietary",
   "require": {
     "filp/whoops": "^2.1",
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/application-extension": "^1.0.0",
     "spryker/config": "^3.0.0",
     "spryker/kernel": "^3.30.0",

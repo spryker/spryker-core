@@ -16,6 +16,8 @@ use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestAp
 
 class CartCodeAdder implements CartCodeAdderInterface
 {
+    protected const MESSAGE_TYPE_ERROR = 'error';
+
     /**
      * @var \Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeInterface
      */
@@ -55,6 +57,16 @@ class CartCodeAdder implements CartCodeAdderInterface
         }
 
         $cartCodeOperationResultTransfer = $this->cartCodeFacade->addCandidate($quoteResponseTransfer->getQuoteTransfer(), $voucherCode);
+
+        foreach ($cartCodeOperationResultTransfer->getMessages() as $messageTransfer) {
+            if ($messageTransfer->getType() !== static::MESSAGE_TYPE_ERROR) {
+                continue;
+            }
+
+            return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
+                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_CANT_BE_ADDED
+            );
+        }
 
         return $cartCodeOperationResultTransfer;
     }
