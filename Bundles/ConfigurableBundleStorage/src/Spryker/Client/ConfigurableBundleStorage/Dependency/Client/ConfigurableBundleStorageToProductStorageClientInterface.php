@@ -7,22 +7,14 @@
 
 namespace Spryker\Client\ConfigurableBundleStorage\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
-
 interface ConfigurableBundleStorageToProductStorageClientInterface
 {
     /**
      * @param string $mappingType
      * @param string $identifier
+     * @param string $localeName
      *
      * @return array|null
      */
-    public function findProductConcreteStorageDataByMappingForCurrentLocale(string $mappingType, string $identifier): ?array;
-
-    /**
-     * @param array $productStorageData
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    public function mapProductStorageDataToProductConcreteTransfer(array $productStorageData): ProductConcreteTransfer;
+    public function findProductConcreteStorageDataByMapping(string $mappingType, string $identifier, string $localeName): ?array;
 }

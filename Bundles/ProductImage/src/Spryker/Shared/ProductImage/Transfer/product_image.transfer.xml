@@ -33,4 +33,9 @@
         <property name="idLocale" type="int"/>
     </transfer>
 
+    <transfer name="ProductImageCriteriaFilter">
+        <property name="productImageSetIds" type="array" singular="productImageSetId"/>
+        <property name="productImageIds" type="array" singular="productImageId"/>
+    </transfer>
+
 </transfers>

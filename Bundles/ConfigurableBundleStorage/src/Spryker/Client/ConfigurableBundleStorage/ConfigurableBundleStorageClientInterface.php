@@ -39,14 +39,16 @@ interface ConfigurableBundleStorageClientInterface
 
     /**
      * Specification:
-     * - Finds product concrete Storage records for current locale by skus.
-     * - Returns array of transfers indexed by sku.
+     * - Finds product concrete Storage records by skus and locale.
+     * - Expands results with product images data.
+     * - Returns array of ProductViewTransfer indexed by sku.
      *
      * @api
      *
      * @param string[] $skus
+     * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function getProductConcreteStoragesBySkusForCurrentLocale(array $skus): array;
+    public function getProductConcretesBySkusAndLocale(array $skus, string $localeName): array;
 }

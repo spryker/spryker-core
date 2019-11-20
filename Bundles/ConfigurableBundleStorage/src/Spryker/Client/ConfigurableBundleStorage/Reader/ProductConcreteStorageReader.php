@@ -8,6 +8,7 @@
 namespace Spryker\Client\ConfigurableBundleStorage\Reader;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToProductStorageClientInterface;
 
 class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterface
@@ -29,37 +30,39 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
 
     /**
      * @param string[] $skus
+     * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function getProductConcreteStoragesBySkusForCurrentLocale(array $skus): array
+    public function getProductConcretesBySkusAndLocale(array $skus, string $localeName): array
     {
-        $productConcreteTransfers = [];
+        $productViewTransfers = [];
 
         foreach ($skus as $sku) {
-            $productConcreteTransfer = $this->findProductConcreteTransfer($sku);
+            $productViewTransfer = $this->findProductViewTransfer($sku, $localeName);
 
-            if ($productConcreteTransfer) {
-                $productConcreteTransfers[$sku] = $productConcreteTransfer;
+            if ($productViewTransfer) {
+                $productViewTransfers[$sku] = $productViewTransfer;
             }
         }
 
-        return $productConcreteTransfers;
+        return $productViewTransfers;
     }
 
     /**
      * @param string $sku
+     * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     * @return \Generated\Shared\Transfer\ProductViewTransfer|null
      */
-    protected function findProductConcreteTransfer(string $sku): ?ProductConcreteTransfer
+    protected function findProductViewTransfer(string $sku, string $localeName): ?ProductViewTransfer
     {
-        $productConcreteData = $this->productStorageClient->findProductConcreteStorageDataByMappingForCurrentLocale(static::MAPPING_TYPE_SKU, $sku);
+        $productStorageConcreteData = $this->productStorageClient->findProductConcreteStorageDataByMapping(static::MAPPING_TYPE_SKU, $sku, $localeName);
 
-        if (!$productConcreteData) {
+        if (!$productStorageConcreteData) {
             return null;
         }
 
-        return $this->productStorageClient->mapProductStorageDataToProductConcreteTransfer($productConcreteData);
+        return (new ProductViewTransfer())->fromArray($productStorageConcreteData, true);
     }
 }
