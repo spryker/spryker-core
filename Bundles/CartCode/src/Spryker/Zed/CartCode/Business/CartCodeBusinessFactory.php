@@ -8,8 +8,8 @@
 namespace Spryker\Zed\CartCode\Business;
 
 use Spryker\Zed\CartCode\Business\Operation\CartCodeAdder;
-use Spryker\Zed\CartCode\Business\Operation\CartCodeDeleter;
 use Spryker\Zed\CartCode\Business\Operation\CartCodeAdderInterface;
+use Spryker\Zed\CartCode\Business\Operation\CartCodeDeleter;
 use Spryker\Zed\CartCode\Business\Operation\CartCodeDeleterInterface;
 use Spryker\Zed\CartCode\Business\Operation\QuoteOperationChecker;
 use Spryker\Zed\CartCode\Business\Operation\QuoteOperationCheckerInterface;
