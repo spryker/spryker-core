@@ -23,7 +23,7 @@
         <column name="fk_product_offer" required="true" type="INTEGER"/>
         <column name="fk_store" required="true" type="INTEGER"/>
 
-        <unique name="spy_product_abstract_store-fk_product_abstract-fk_store">
+        <unique name="spy_product_offer_store-fk_product_abstract-fk_store">
             <unique-column name="fk_product_offer"/>
             <unique-column name="fk_store"/>
         </unique>

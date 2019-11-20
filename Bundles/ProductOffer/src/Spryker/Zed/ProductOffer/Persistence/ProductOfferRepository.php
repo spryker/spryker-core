@@ -10,8 +10,12 @@ namespace Spryker\Zed\ProductOffer\Persistence;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferStoreCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferStoreCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferStoreTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStoreQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -62,6 +66,34 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
 
         return $this->getFactory()->createPropelProductOfferMapper()
             ->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, new ProductOfferTransfer());
+    }
+
+
+    /**
+     * @param ProductOfferStoreCriteriaFilterTransfer $productOfferCriteriaFilter
+     *
+     * @return ProductOfferStoreCollectionTransfer
+     */
+    public function getProductOfferStores(ProductOfferStoreCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferStoreCollectionTransfer
+    {
+        $collection = new ProductOfferStoreCollectionTransfer();
+
+        $productOfferStoreEntities = SpyProductOfferStoreQuery::create()
+            ->useSpyProductOfferQuery()
+                ->filterByConcreteSku($productOfferCriteriaFilter->getConcreteSku())
+            ->endUse()
+            ->find();
+
+        foreach($productOfferStoreEntities as $productOfferStoreEntity) {
+            $productOfferTransfer = (new ProductOfferStoreTransfer)->fromArray(
+                $productOfferStoreEntity->toArray(),
+                true
+            );
+
+            $collection->addProductOfferStore($productOfferTransfer);
+        }
+
+        return $collection;
     }
 
     /**

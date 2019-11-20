@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductOffer\Business;
 
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferStoreCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferStoreCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 
 interface ProductOfferFacadeInterface
@@ -51,4 +53,11 @@ interface ProductOfferFacadeInterface
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
     public function create(ProductOfferTransfer $productOfferCriteriaFilter): ProductOfferTransfer;
+
+    /**
+     * @param ProductOfferStoreCriteriaFilterTransfer $productOfferCriteriaFilter
+     *
+     * @return ProductOfferStoreCollectionTransfer
+     */
+    public function getProductOfferStores(ProductOfferStoreCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferStoreCollectionTransfer;
 }

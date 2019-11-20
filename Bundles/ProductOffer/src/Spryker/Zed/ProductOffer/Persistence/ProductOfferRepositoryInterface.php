@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductOffer\Persistence;
 
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferStoreCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferStoreCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 
 interface ProductOfferRepositoryInterface
@@ -26,4 +28,11 @@ interface ProductOfferRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
     public function findOne(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer;
+
+    /**
+     * @param ProductOfferStoreCriteriaFilterTransfer $productOfferCriteriaFilter
+     *
+     * @return ProductOfferStoreCollectionTransfer
+     */
+    public function getProductOfferStores(ProductOfferStoreCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferStoreCollectionTransfer;
 }

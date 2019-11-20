@@ -19,6 +19,7 @@
             <parameter name="resource" value="product_offer"/>
             <parameter name="key_suffix_column" value="product_offer_reference"/>
             <parameter name="queue_group" value="sync.storage.merchant_product_offer"/>
+            <parameter name="store" required="true"/>
         </behavior>
         <behavior name="timestampable"/>
     </table>
