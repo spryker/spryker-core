@@ -2,11 +2,12 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\MerchantProfile\Communication\Plugin\Merchant;
 
+use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface;
@@ -30,6 +31,26 @@ class MerchantProfileExpanderPlugin extends AbstractPlugin implements MerchantEx
      */
     public function expand(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        return $this->getFacade()->expandMerchantWithMerchantProfile($merchantTransfer);
+        $merchantProfileCriteriaFilterTransfer = $this->createMerchantProfileCriteriaFilterTransfer($merchantTransfer);
+        $merchantProfileTransfer = $this->getFacade()->findOne($merchantProfileCriteriaFilterTransfer);
+
+        if ($merchantProfileTransfer !== null) {
+            $merchantTransfer->setMerchantProfile($merchantProfileTransfer);
+        }
+
+        return $merchantTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer
+     */
+    protected function createMerchantProfileCriteriaFilterTransfer(MerchantTransfer $merchantTransfer): MerchantProfileCriteriaFilterTransfer
+    {
+        $merchantProfileCriteriaFilterTransfer = new MerchantProfileCriteriaFilterTransfer();
+        $merchantProfileCriteriaFilterTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
+
+        return $merchantProfileCriteriaFilterTransfer;
     }
 }

@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\MerchantProfile\Business;
@@ -10,8 +10,6 @@ namespace Spryker\Zed\MerchantProfile\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MerchantProfile\Business\GlossaryKeyBuilder\MerchantProfileGlossaryKeyBuilder;
 use Spryker\Zed\MerchantProfile\Business\GlossaryKeyBuilder\MerchantProfileGlossaryKeyBuilderInterface;
-use Spryker\Zed\MerchantProfile\Business\MerchantProfile\Expander\MerchantProfileExpander;
-use Spryker\Zed\MerchantProfile\Business\MerchantProfile\Expander\MerchantProfileExpanderInterface;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileReader;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileReaderInterface;
 use Spryker\Zed\MerchantProfile\Business\MerchantProfile\MerchantProfileWriter;
@@ -66,16 +64,6 @@ class MerchantProfileBusinessFactory extends AbstractBusinessFactory
             $this->getGlossaryFacade(),
             $this->getLocaleFacade(),
             $this->createMerchantProfileGlossaryKeyBuilder()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantProfile\Business\MerchantProfile\Expander\MerchantProfileExpanderInterface
-     */
-    public function createMerchantProfileExpander(): MerchantProfileExpanderInterface
-    {
-        return new MerchantProfileExpander(
-            $this->getRepository()
         );
     }
 

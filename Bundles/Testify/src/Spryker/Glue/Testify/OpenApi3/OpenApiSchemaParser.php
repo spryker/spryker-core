@@ -7,15 +7,15 @@
 
 namespace Spryker\Glue\Testify\OpenApi3;
 
-use Spryker\Glue\Testify\OpenApi3\Object\OpenApi;
 use Spryker\Glue\Testify\OpenApi3\Reference\ReferenceResolver;
+use Spryker\Glue\Testify\OpenApi3\SchemaObject\OpenApi;
 
 class OpenApiSchemaParser implements OpenApiSchemaParserInterface
 {
     /**
      * @param \Spryker\Glue\Testify\OpenApi3\ReaderInterface $reader
      *
-     * @return \Spryker\Glue\Testify\OpenApi3\Object\OpenApi
+     * @return \Spryker\Glue\Testify\OpenApi3\SchemaObject\OpenApi
      */
     public function parse(ReaderInterface $reader): OpenApi
     {

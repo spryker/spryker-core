@@ -1,2 +1,47 @@
 "Shipment n° %shipmentNumber%","Shipment n° %shipmentNumber%"
 "New address","New address"
+"Carrier was created successfully.","Carrier was created successfully."
+Name,Name
+Enabled?,Enabled?
+"Carrier with the same name already exists.","Carrier with the same name already exists."
+View,View
+Edit,Edit
+Delete,Delete
+"Delivery Method Key","Delivery Method Key"
+"Carrier Company","Carrier Company"
+Status,Status
+"Method Name",Name
+"Available in Store","Available in Store"
+Actions,Actions
+"Delivery Methods","Delivery Methods"
+"Create new carrier company","Create new carrier company"
+"Create new delivery method","Create new delivery method"
+"Shipment method is not found","Shipment method is not found"
+"View Delivery Method: %s","View Delivery Method: %s"
+"List Shipment Methods","List Shipment Methods"
+Configuration,Configuration
+"Availability plugin","Availability plugin"
+"Price plugin","Price plugin"
+"Delivery Time plugin","Delivery Time plugin"
+"Is this delivery method active?","Is this delivery method active?"
+"Store relation","Store relation"
+"Price & Tax","Price & Tax"
+None,None
+"Delivery method not found.","Delivery method not found."
+"Delivery method was deleted successfully.","Delivery method was deleted successfully."
+"Delete Delivery Method","Delete Delivery Method"
+"Delete Delivery Method: %s","Delete Delivery Method: %s"
+"No, I want to keep this delivery method","No, I want to keep this delivery method"
+"Yes, delete this delivery method","Yes, delete this delivery method"
+"Shipment method has been successfully saved","Shipment method has been successfully saved"
+"Create Delivery Method","Create Delivery Method"
+Save,Save
+Carrier,Carrier
+"Select one","Select one"
+"Shipment method has been successfully updated","Shipment method has been successfully updated"
+"Shipment method not found","Shipment method not found"
+"Edit Delivery Method: %s","Edit Delivery Method: %s"
+"This shipment method key is already in use.","This shipment method key is already in use."
+"This name is already in use.","This name is already in use."
+"Tax set","Tax set"
+"Are you sure about deleting this delivery method?","Are you sure about deleting this delivery method?"

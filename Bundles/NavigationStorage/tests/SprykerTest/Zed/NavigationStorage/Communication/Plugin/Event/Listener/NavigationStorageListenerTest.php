@@ -191,6 +191,6 @@ class NavigationStorageListenerTest extends Unit
 
         $data = $spyNavigationStorage->getData();
         $this->assertSame('MAIN_NAVIGATION', $data['key']);
-        $this->assertSame(7, count($data['nodes']));
+        $this->assertSame(8, count($data['nodes']));
     }
 }

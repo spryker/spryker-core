@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductOffer\Business;
@@ -24,11 +24,11 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer|null $productOfferCriteriaFilter
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function find(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
+    public function find(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
     {
         return $this->getRepository()->find($productOfferCriteriaFilter);
     }
@@ -38,11 +38,11 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer|null $productOfferCriteriaFilter
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
-    public function findOne(?ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer
+    public function findOne(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer
     {
         return $this->getRepository()->findOne($productOfferCriteriaFilter);
     }

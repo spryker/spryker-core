@@ -28,7 +28,7 @@ use Spryker\Zed\MerchantProductOfferDataImport\MerchantProductOfferDataImportCon
 class MerchantProductOfferDataImportPluginTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\MerchantProductOfferDataImport\MerchantProductOfferDataImportCommunicationTester
+     * @var \SprykerTest\Zed\MerchantProductOfferDataImport\Helper\MerchantProductOfferDataImportHelper
      */
     protected $tester;
 
@@ -38,7 +38,7 @@ class MerchantProductOfferDataImportPluginTest extends Unit
     public function testImportImportsData(): void
     {
         // Arrange
-        $this->tester->ensureMerchantProductOfferTableIsEmpty();
+        $this->tester->truncateProductOffers();
         $this->tester->assertDatabaseTableIsEmpty();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
@@ -47,8 +47,9 @@ class MerchantProductOfferDataImportPluginTest extends Unit
         $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
-        // Act
         $dataImportPlugin = new MerchantProductOfferDataImportPlugin();
+
+        // Act
         $dataImporterReportTransfer = $dataImportPlugin->import($dataImportConfigurationTransfer);
 
         // Assert

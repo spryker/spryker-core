@@ -66,10 +66,6 @@ class SalesDataHelper extends Module
      */
     protected function persistOrder(QuoteTransfer $quoteTransfer, string $stateMachineProcessName): SaveOrderTransfer
     {
-        /**
-         * @var \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
-         */
-        $saveOrderTransfer = (new SaveOrderBuilder())->makeEmpty()->build();
         $saveOrderTransfer = $this->createOrder($quoteTransfer, $stateMachineProcessName);
         $this->executeSaveOrderPlugins($quoteTransfer, $saveOrderTransfer);
 

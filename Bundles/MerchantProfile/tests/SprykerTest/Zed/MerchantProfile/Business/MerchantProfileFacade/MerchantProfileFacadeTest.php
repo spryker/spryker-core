@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Zed\MerchantProfile\Business\MerchantProfileFacade;
@@ -145,23 +145,6 @@ class MerchantProfileFacadeTest extends Unit
 
         // Assert
         $this->assertNotNull($merchantProfileTransfer);
-        $this->assertEquals($expectedMerchantProfileTransfer->getIdMerchantProfile(), $merchantProfileTransfer->getIdMerchantProfile());
-    }
-
-    /**
-     * @return void
-     */
-    public function testExpandMerchantWithMerchantProfile(): void
-    {
-        // Arrange
-        $merchantTransfer = $this->tester->haveMerchant();
-        $expectedMerchantProfileTransfer = $this->tester->haveMerchantProfile($merchantTransfer);
-
-        // Act
-        $expandedMerchantTransfer = $this->tester->getFacade()->expandMerchantWithMerchantProfile($merchantTransfer);
-        $merchantProfileTransfer = $expandedMerchantTransfer->getMerchantProfile();
-
-        // Assert
         $this->assertEquals($expectedMerchantProfileTransfer->getIdMerchantProfile(), $merchantProfileTransfer->getIdMerchantProfile());
     }
 }

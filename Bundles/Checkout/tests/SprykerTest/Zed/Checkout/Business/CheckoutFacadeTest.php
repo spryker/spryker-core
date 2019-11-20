@@ -74,7 +74,7 @@ class CheckoutFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -748,7 +748,7 @@ class CheckoutFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Communication\Plugin\OrderCustomerSavePlugin
+     * @return \Spryker\Zed\Customer\Communication\Plugin\Checkout\CustomerOrderSavePlugin
      */
     protected function createCustomerOrderSavePlugin()
     {

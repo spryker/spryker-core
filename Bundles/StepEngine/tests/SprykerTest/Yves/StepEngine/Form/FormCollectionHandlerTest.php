@@ -128,7 +128,9 @@ class FormCollectionHandlerTest extends Unit
         $formMock = $this->getMockForAbstractClass(FormInterface::class, [], '', false, false, false, ['getName', 'handleRequest']);
         $formMock->method('getName')->willReturn('formA');
         $formMock->expects($this->once())->method('handleRequest')->willReturnSelf();
-        $formMocks[] = $formMock;
+        $formMocks = [
+            $formMock,
+        ];
 
         $formCollectionHandlerMock->method('getForms')->willReturn($formMocks);
 
@@ -145,7 +147,9 @@ class FormCollectionHandlerTest extends Unit
 
         $formMock = $this->getMockForAbstractClass(FormInterface::class, [], '', false, false, false, ['setData']);
         $formMock->expects($this->once())->method('setData');
-        $formMocks[] = $formMock;
+        $formMocks = [
+            $formMock,
+        ];
 
         $formCollectionHandlerMock->method('getForms')->willReturn($formMocks);
 

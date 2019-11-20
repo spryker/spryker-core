@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Checkout\Business\Workflow;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -210,9 +209,7 @@ class CheckoutWorkflowTest extends Unit
             [],
             [$mock1, $mock2]
         );
-        $checkoutResponse = new CheckoutResponseTransfer();
-
-        $checkoutWorkflow->placeOrder($quoteTransfer, $checkoutResponse);
+        $checkoutWorkflow->placeOrder($quoteTransfer);
     }
 
     /**
@@ -251,7 +248,6 @@ class CheckoutWorkflowTest extends Unit
     public function testPostHookResultIsReturned()
     {
         $checkoutResponse = $this->createBaseCheckoutResponse();
-        $error = new CheckoutErrorTransfer();
 
         $checkoutResponse
             ->setIsSuccess(true);

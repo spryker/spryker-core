@@ -34,6 +34,7 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeNotFoundException;
 use Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeUniqueViolationException;
 use Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig;
 
@@ -151,8 +152,6 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     /**
      * @dataProvider getProductPackagingUnitTypeData
      *
-     * @expectedException \Spryker\Zed\ProductPackagingUnit\Business\Exception\ProductPackagingUnitTypeNotFoundException
-     *
      * @param string $name
      *
      * @return void
@@ -168,6 +167,9 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         // Action
         $productPackagingUnitTypeDeleted = $this->getFacade()->deleteProductPackagingUnitType($productPackagingUnitTypeTransfer);
         $this->assertTrue($productPackagingUnitTypeDeleted);
+
+        $this->expectException(ProductPackagingUnitTypeNotFoundException::class);
+
         // Assert exception thrown
         $this->getFacade()->getProductPackagingUnitTypeById($productPackagingUnitTypeTransfer);
     }
@@ -475,12 +477,12 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         $boxProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE]);
         $itemProductPackagingUnitType = $this->tester->haveProductPackagingUnitType([SpyProductPackagingUnitTypeEntityTransfer::NAME => static::PACKAGING_TYPE_DEFAULT]);
 
-        $itemProductPackagingUnit = $this->tester->haveProductPackagingUnit([
+        $this->tester->haveProductPackagingUnit([
             SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $itemProductConcreteTransfer->getIdProductConcrete(),
             SpyProductPackagingUnitEntityTransfer::FK_PRODUCT_PACKAGING_UNIT_TYPE => $itemProductPackagingUnitType->getIdProductPackagingUnitType(),
         ]);
 
-        $boxProductPackagingUnit = $this->tester->haveProductPackagingUnit([
+        $this->tester->haveProductPackagingUnit([
             SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $boxProductConcreteTransfer->getIdProductConcrete(),
             SpyProductPackagingUnitEntityTransfer::FK_PRODUCT_PACKAGING_UNIT_TYPE => $boxProductPackagingUnitType->getIdProductPackagingUnitType(),
             SpyProductPackagingUnitEntityTransfer::HAS_LEAD_PRODUCT => true,

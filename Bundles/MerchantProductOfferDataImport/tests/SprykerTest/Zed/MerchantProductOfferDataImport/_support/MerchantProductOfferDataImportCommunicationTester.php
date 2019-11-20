@@ -30,14 +30,16 @@ class MerchantProductOfferDataImportCommunicationTester extends Actor
 {
     use _generated\MerchantProductOfferDataImportCommunicationTesterActions;
 
+   /**
+    * Define custom actions here
+    */
+
     /**
      * @return void
      */
-    public function ensureMerchantProductOfferTableIsEmpty(): void
+    public function truncateProductOffers(): void
     {
-        $query = $this->getProductOfferPropelQuery();
-        $this->ensureDatabaseTableIsEmpty($query);
-        $query->deleteAll();
+        $this->truncateTableRelations($this->getProductOfferPropelQuery());
     }
 
     /**
