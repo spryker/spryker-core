@@ -28,7 +28,7 @@ class ProductRelationEditCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(ProductRelationCommunicationTester $i)
+    public function breadcrumbIsVisible(ProductRelationCommunicationTester $i): void
     {
         $i->listDataTable(ProductRelationListPage::URL . '/table');
         $i->clickDataTableEditButton();

@@ -28,7 +28,7 @@ class CustomerGroupEditCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(CustomerGroupCommunicationTester $i)
+    public function breadcrumbIsVisible(CustomerGroupCommunicationTester $i): void
     {
         $customerGroupTransfer = $i->haveCustomerGroup();
         $i->amOnPage(CustomerGroupEditPage::buildUrl($customerGroupTransfer->getIdCustomerGroup()));

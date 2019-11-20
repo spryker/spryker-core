@@ -27,7 +27,7 @@ class CalculatorTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateAmountLeft()
+    public function testCalculateAmountLeft(): void
     {
         $calculator = new Calculator();
         $spySalesOrderItem = new SpySalesOrderItem();

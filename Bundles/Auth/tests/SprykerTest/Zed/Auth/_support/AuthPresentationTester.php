@@ -47,7 +47,7 @@ class AuthPresentationTester extends Actor
      *
      * @return $this
      */
-    public function doLogin($username, $password)
+    public function doLogin(string $username, string $password)
     {
         $i = $this;
 

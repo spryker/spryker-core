@@ -12,6 +12,9 @@ use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
 use Exception;
+use Spryker\Yves\Kernel\AbstractBundleConfig;
+use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\Kernel\Container;
 use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 
 class FactoryHelper extends Module
@@ -53,7 +56,7 @@ class FactoryHelper extends Module
     /**
      * @return \Spryker\Yves\Kernel\AbstractFactory
      */
-    public function getFactory()
+    public function getFactory(): AbstractFactory
     {
         if ($this->factoryStub !== null) {
             $this->factoryStub = $this->injectConfig($this->factoryStub);
@@ -70,7 +73,7 @@ class FactoryHelper extends Module
     /**
      * @return \Spryker\Yves\Kernel\AbstractFactory
      */
-    protected function createFactory()
+    protected function createFactory(): AbstractFactory
     {
         $moduleFactoryClassName = $this->getFactoryClassName();
 
@@ -93,7 +96,7 @@ class FactoryHelper extends Module
      *
      * @return \Spryker\Yves\Kernel\AbstractFactory
      */
-    protected function injectConfig($factory)
+    protected function injectConfig(AbstractFactory $factory): AbstractFactory
     {
         if ($this->hasModule('\\' . ConfigHelper::class)) {
             $factory->setConfig($this->getConfig());
@@ -105,7 +108,7 @@ class FactoryHelper extends Module
     /**
      * @return \Spryker\Yves\Kernel\AbstractBundleConfig
      */
-    protected function getConfig()
+    protected function getConfig(): AbstractBundleConfig
     {
         return $this->getConfigHelper()->getModuleConfig();
     }
@@ -123,7 +126,7 @@ class FactoryHelper extends Module
      *
      * @return \Spryker\Yves\Kernel\AbstractFactory
      */
-    protected function injectContainer($factory)
+    protected function injectContainer(AbstractFactory $factory): AbstractFactory
     {
         if ($this->hasModule('\\' . DependencyProviderHelper::class)) {
             $factory->setContainer($this->getContainer());
@@ -135,7 +138,7 @@ class FactoryHelper extends Module
     /**
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function getContainer()
+    protected function getContainer(): Container
     {
         return $this->getDependencyProviderHelper()->getContainer();
     }
@@ -153,7 +156,7 @@ class FactoryHelper extends Module
      *
      * @return void
      */
-    public function _before(TestInterface $test)
+    public function _before(TestInterface $test): void
     {
         $this->factoryStub = null;
         $this->mockedFactoryMethods = [];

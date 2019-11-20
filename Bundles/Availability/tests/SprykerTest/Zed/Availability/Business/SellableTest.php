@@ -59,7 +59,7 @@ class SellableTest extends Unit
     /**
      * @return void
      */
-    public function testIsProductSellable()
+    public function testIsProductSellable(): void
     {
         $this->setTestData();
         $stockEntity = SpyStockQuery::create()->findOneByName('Warehouse1');
@@ -78,7 +78,7 @@ class SellableTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateRealStock()
+    public function testCalculateRealStock(): void
     {
         $this->setTestData();
         $stockEntity = SpyStockQuery::create()->findOneByName('Warehouse1');
@@ -98,7 +98,7 @@ class SellableTest extends Unit
     /**
      * @return void
      */
-    public function testProductIsNotSellableIfStockNotSufficient()
+    public function testProductIsNotSellableIfStockNotSufficient(): void
     {
         $this->setTestData();
 
@@ -130,7 +130,7 @@ class SellableTest extends Unit
     /**
      * @return void
      */
-    protected function setTestData()
+    protected function setTestData(): void
     {
         $productAbstract = SpyProductAbstractQuery::create()
             ->filterBySku('test2')

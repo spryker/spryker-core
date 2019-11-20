@@ -28,7 +28,7 @@ class ProductAttributeGuiAttributeViewCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(ProductAttributeGuiCommunicationTester $i)
+    public function breadcrumbIsVisible(ProductAttributeGuiCommunicationTester $i): void
     {
         $i->listDataTable(ProductAttributeGuiAttributeListPage::URL . '/table');
         $i->clickDataTableViewButton();

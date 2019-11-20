@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Shared\Acl\AclConstants;
 use Spryker\Zed\Acl\Business\AclFacade;
 use Spryker\Zed\Acl\Business\Exception\EmptyEntityException;
@@ -62,7 +63,7 @@ class AclTest extends Unit
     /**
      * @return array
      */
-    private function mockGroupData()
+    private function mockGroupData(): array
     {
         $data = [];
 
@@ -74,7 +75,7 @@ class AclTest extends Unit
     /**
      * @return array
      */
-    private function mockRoleData()
+    private function mockRoleData(): array
     {
         $data = [];
 
@@ -89,7 +90,7 @@ class AclTest extends Unit
      *
      * @return array
      */
-    private function mockRuleData($type, $idRole)
+    private function mockRuleData(string $type, int $idRole): array
     {
         $data = [];
 
@@ -105,7 +106,7 @@ class AclTest extends Unit
     /**
      * @return array
      */
-    private function mockUserData()
+    private function mockUserData(): array
     {
         $data = [];
 
@@ -122,7 +123,7 @@ class AclTest extends Unit
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    private function mockAddUser(array $data)
+    private function mockAddUser(array $data): UserTransfer
     {
         return $this->userFacade->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
     }
@@ -130,7 +131,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testAddGroup()
+    public function testAddGroup(): void
     {
         $data = $this->mockGroupData();
 
@@ -144,7 +145,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateGroup()
+    public function testUpdateGroup(): void
     {
         $groupData = $this->mockGroupData();
         $groupData2 = $this->mockGroupData();
@@ -164,7 +165,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testGetGroupById()
+    public function testGetGroupById(): void
     {
         $groupData = $this->mockGroupData();
         $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
@@ -184,7 +185,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveGroup()
+    public function testRemoveGroup(): void
     {
         $groupData = $this->mockGroupData();
         $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
@@ -202,7 +203,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testAddRole()
+    public function testAddRole(): void
     {
         $roleData = $this->mockRoleData();
         $roleDto = $this->facade->addRole($roleData['name']);
@@ -217,7 +218,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testUpdatesRole()
+    public function testUpdatesRole(): void
     {
         $roleData = $this->mockRoleData();
         $roleTransfer = $this->facade->addRole($roleData['name']);
@@ -231,7 +232,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testRoleNameUniquenessCheck()
+    public function testRoleNameUniquenessCheck(): void
     {
         $roleData = $this->mockRoleData();
         $roleName = $roleData['name'];
@@ -246,7 +247,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testRoleNameShouldNotBeEmpty()
+    public function testRoleNameShouldNotBeEmpty(): void
     {
         $this->expectException(RoleNameEmptyException::class);
         $this->expectExceptionMessage('Role name should not be empty!');
@@ -257,7 +258,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testRootRoleIsNotAllowedToEdit()
+    public function testRootRoleIsNotAllowedToEdit(): void
     {
         $roleTransfer = $this->facade->getRoleByName(AclConstants::ROOT_ROLE);
 
@@ -270,7 +271,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveRole()
+    public function testRemoveRole(): void
     {
         $roleData = $this->mockRoleData();
         $roleDto = $this->facade->addRole($roleData['name']);
@@ -290,7 +291,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testAddRoleAndIsPresentInGroup()
+    public function testAddRoleAndIsPresentInGroup(): void
     {
         $groupData = $this->mockGroupData();
         $roleData = $this->mockRoleData();
@@ -305,7 +306,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testAddRuleAndAddToRole()
+    public function testAddRuleAndAddToRole(): void
     {
         $groupData = $this->mockGroupData();
         $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
@@ -335,7 +336,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testGetRulesFromRoles()
+    public function testGetRulesFromRoles(): void
     {
         $roleData = $this->mockRoleData();
         $roleDto = $this->facade->addRole($roleData['name']);
@@ -362,7 +363,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testGetRulesFromGroup()
+    public function testGetRulesFromGroup(): void
     {
         $groupData = $this->mockGroupData();
         $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
@@ -391,7 +392,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveRule()
+    public function testRemoveRule(): void
     {
         $roleData = $this->mockRoleData();
         $roleDto = $this->facade->addRole($roleData['name']);
@@ -419,7 +420,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testAddUserToGroup()
+    public function testAddUserToGroup(): void
     {
         $groupData = $this->mockGroupData();
         $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
@@ -433,7 +434,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testGetUserGroups()
+    public function testGetUserGroups(): void
     {
         $groupData = $this->mockGroupData();
         $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
@@ -462,7 +463,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testCheckPermissionSimple()
+    public function testCheckPermissionSimple(): void
     {
         $groupData = $this->mockGroupData();
 
@@ -498,7 +499,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testCheckPermissionSimpleHasNoAccess()
+    public function testCheckPermissionSimpleHasNoAccess(): void
     {
         $groupData = $this->mockGroupData();
         $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
@@ -530,7 +531,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testCheckPermissionWildcards()
+    public function testCheckPermissionWildcards(): void
     {
         $groupData = $this->mockGroupData();
         $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
@@ -568,7 +569,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testPermissionsWithSystemUser()
+    public function testPermissionsWithSystemUser(): void
     {
         $systemUsers = $this->userFacade->getSystemUsers();
 
@@ -588,7 +589,7 @@ class AclTest extends Unit
     /**
      * @return void
      */
-    public function testPermissionsWithSystemUserShouldNotAllow()
+    public function testPermissionsWithSystemUserShouldNotAllow(): void
     {
         $systemUsers = $this->userFacade->getSystemUsers();
 

@@ -138,7 +138,7 @@ class ContainerGlobalTest extends Unit
     public function testRemoveRemovesAGlobalService(): void
     {
         $container = new Container();
-        $container->setGlobal(static::SERVICE_GLOBAL, function () {
+        $container->setGlobal(static::SERVICE_GLOBAL, function (): void {
         });
 
         $container->remove(static::SERVICE_GLOBAL);
@@ -199,7 +199,7 @@ class ContainerGlobalTest extends Unit
         $container->get(static::SERVICE_GLOBAL);
 
         $this->expectException(FrozenServiceException::class);
-        $container->extend(static::SERVICE_GLOBAL, function () {
+        $container->extend(static::SERVICE_GLOBAL, function (): void {
         });
     }
 
@@ -214,7 +214,7 @@ class ContainerGlobalTest extends Unit
         $container->get(static::SERVICE_GLOBAL);
 
         $this->expectException(ContainerException::class);
-        $container->extend(static::SERVICE_GLOBAL, function () {
+        $container->extend(static::SERVICE_GLOBAL, function (): void {
         });
     }
 

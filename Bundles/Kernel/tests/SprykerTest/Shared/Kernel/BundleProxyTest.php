@@ -27,7 +27,7 @@ class BundleProxyTest extends Unit
     /**
      * @return void
      */
-    public function testAddLocatorShouldAddLocatorCreateMatcherAndReturnBundleProxy()
+    public function testAddLocatorShouldAddLocatorCreateMatcherAndReturnBundleProxy(): void
     {
         $bundleProxy = new BundleProxy();
 
@@ -37,7 +37,7 @@ class BundleProxyTest extends Unit
     /**
      * @return void
      */
-    public function testAddLocatorShouldThrowExceptionIfNoMatcherCanBeCreated()
+    public function testAddLocatorShouldThrowExceptionIfNoMatcherCanBeCreated(): void
     {
         $this->expectException(LogicException::class);
 
@@ -48,7 +48,7 @@ class BundleProxyTest extends Unit
     /**
      * @return void
      */
-    public function testSetBundleShouldReturnBundleProxy()
+    public function testSetBundleShouldReturnBundleProxy(): void
     {
         $bundleProxy = new BundleProxy();
 
@@ -58,7 +58,7 @@ class BundleProxyTest extends Unit
     /**
      * @return void
      */
-    public function testCallShouldReturnLocatedClassIfMatcherMatchesToAGivenLocator()
+    public function testCallShouldReturnLocatedClassIfMatcherMatchesToAGivenLocator(): void
     {
         $bundleProxy = new BundleProxy();
         $locator = new LocatorWithMatcher();
@@ -70,7 +70,7 @@ class BundleProxyTest extends Unit
     /**
      * @return void
      */
-    public function testCallShouldThrowExceptionIfNoLocatorCanBeMatchedToCalledMethod()
+    public function testCallShouldThrowExceptionIfNoLocatorCanBeMatchedToCalledMethod(): void
     {
         $this->expectException(LogicException::class);
 

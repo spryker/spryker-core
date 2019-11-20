@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business;
 
 use Codeception\Test\Unit;
-use PHPUnit\Framework\MockObject\MockObject;
 use SplFileInfo;
 use Spryker\Glue\GlueApplication\Plugin\DocumentationGeneratorRestApi\ResourceRelationshipCollectionProviderPlugin;
 use Spryker\Glue\GlueApplication\Plugin\DocumentationGeneratorRestApi\ResourceRoutePluginsProviderPlugin;
@@ -111,7 +110,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFinderInterface
      */
-    public function createGlueControllerFinderMock(string $controller): MockObject
+    public function createGlueControllerFinderMock(string $controller)
     {
         $mock = $this->getMockBuilder(GlueControllerFinder::class)
             ->setMethods(['getGlueControllerFilesFromPlugin'])
@@ -145,7 +144,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface
      */
-    public function createResourceRelationshipCollectionPluginMock(): MockObject
+    public function createResourceRelationshipCollectionPluginMock()
     {
         $pluginMock = $this->getMockBuilder(ResourceRelationshipCollectionProviderPlugin::class)
             ->setMethods(['getResourceRelationshipCollection'])
@@ -159,7 +158,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface
      */
-    public function createResourceRoutePluginsProviderPluginMock(): MockObject
+    public function createResourceRoutePluginsProviderPluginMock()
     {
         $pluginMock = $this->getMockBuilder(ResourceRoutePluginsProviderPlugin::class)
             ->setMethods(['getResourceRoutePlugins'])

@@ -28,7 +28,7 @@ class TaxRateEditCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(TaxCommunicationTester $i)
+    public function breadcrumbIsVisible(TaxCommunicationTester $i): void
     {
         $i->listDataTable(TaxRateListPage::TABLE_DATA_URL);
         $i->clickDataTableEditButton();
@@ -40,7 +40,7 @@ class TaxRateEditCest
      *
      * @return void
      */
-    public function dataIsProvided(TaxCommunicationTester $i)
+    public function dataIsProvided(TaxCommunicationTester $i): void
     {
         $i->listDataTable(TaxRateListPage::TABLE_DATA_URL);
         $i->clickDataTableEditButton();

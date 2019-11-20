@@ -43,7 +43,7 @@ class ResponseRelationshipTest extends Unit
         $relationshipPluginMock
             ->method('addResourceRelationships')
             ->willReturnCallback(
-                function (array $resources, RestRequestInterface $restRequest) use ($restResponseBuilder) {
+                function (array $resources, RestRequestInterface $restRequest) use ($restResponseBuilder): void {
                     foreach ($resources as $resource) {
                         $resource->addRelationship(
                             $restResponseBuilder->createRestResource('related', 1)

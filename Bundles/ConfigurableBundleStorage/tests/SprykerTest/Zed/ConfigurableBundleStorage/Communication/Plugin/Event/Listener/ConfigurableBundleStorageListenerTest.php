@@ -53,7 +53,7 @@ class ConfigurableBundleStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testConfigurableBundleTemplateStoragePublishListenerStoresData()
+    public function testConfigurableBundleTemplateStoragePublishListenerStoresData(): void
     {
         // Arrange
         $configurableBundleTemplateEntity = $this->tester->createConfigurableBundleTemplate();
@@ -77,7 +77,7 @@ class ConfigurableBundleStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testConfigurableBundleTemplateSlotStoragePublishListenerStoresData()
+    public function testConfigurableBundleTemplateSlotStoragePublishListenerStoresData(): void
     {
         // Arrange
         $configurableBundleTemplateEntity = $this->tester->createConfigurableBundleTemplate();
