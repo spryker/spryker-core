@@ -130,7 +130,7 @@ class CartCodesRestApiFacadeTest extends Unit
         // Assert
         $this->assertEmpty($cartCodeOperationResultTransfer->getQuote());
         $this->assertEquals(
-            CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_CANT_BE_DELETED,
+            CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_NOT_FOUND,
             $cartCodeOperationResultTransfer->getMessages()[0]->getValue()
         );
     }
