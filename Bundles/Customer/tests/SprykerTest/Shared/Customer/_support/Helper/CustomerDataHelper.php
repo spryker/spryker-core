@@ -48,7 +48,7 @@ class CustomerDataHelper extends Module
 
         if (!$customerResponseTransfer->getIsSuccess() || $customerResponseTransfer->getCustomerTransfer() === null) {
             $messageTexts = [];
-            $messageTexts[] = $customerResponseTransfer->getMessage();
+            $messageTexts[] = $customerResponseTransfer->getMessage()->getValue();
             foreach ($customerResponseTransfer->getErrors() as $errorTransfer) {
                 $messageTexts[] = $errorTransfer->getMessage();
             }
