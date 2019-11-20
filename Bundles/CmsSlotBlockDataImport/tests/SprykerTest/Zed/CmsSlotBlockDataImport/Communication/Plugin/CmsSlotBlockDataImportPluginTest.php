@@ -66,7 +66,6 @@ class CmsSlotBlockDataImportPluginTest extends Unit
             CmsSlotTransfer::CONTENT_PROVIDER_TYPE => static::CMS_SLOT_CONTENT_PROVIDER_TYPE,
         ]);
         $this->tester->haveCmsBlock([CmsBlockTransfer::KEY => static::CMS_BLOCK_KEY]);
-        $this->tester->haveProductAbstract([ProductAbstractTransfer::SKU => static::PRODUCT_ABSTRACT_SKU]);
 
         $dataImportConfigurationTransfer = $this->tester->createDataImporterConfigurationTransfer(codecept_data_dir() . 'import/cms_slot_block.csv');
 
@@ -86,7 +85,6 @@ class CmsSlotBlockDataImportPluginTest extends Unit
         // Arrange
         $this->tester->haveCmsSlotTemplateInDb([CmsSlotTemplateTransfer::PATH => static::CMS_SLOT_TEMPLATE_PATH]);
         $this->tester->haveCmsBlock([CmsBlockTransfer::KEY => static::CMS_BLOCK_KEY]);
-        $this->tester->haveProductAbstract([ProductAbstractTransfer::SKU => static::PRODUCT_ABSTRACT_SKU]);
 
         $dataImportConfigurationTransfer = $this->tester->createDataImporterConfigurationTransfer(codecept_data_dir() . 'import/cms_slot_block.csv');
 
@@ -109,7 +107,6 @@ class CmsSlotBlockDataImportPluginTest extends Unit
             CmsSlotTransfer::KEY => static::CMS_SLOT_KEY,
             CmsSlotTransfer::CONTENT_PROVIDER_TYPE => static::CMS_SLOT_CONTENT_PROVIDER_TYPE,
         ]);
-        $this->tester->haveProductAbstract([ProductAbstractTransfer::SKU => static::PRODUCT_ABSTRACT_SKU]);
 
         $dataImportConfigurationTransfer = $this->tester->createDataImporterConfigurationTransfer(codecept_data_dir() . 'import/cms_slot_block.csv');
 
