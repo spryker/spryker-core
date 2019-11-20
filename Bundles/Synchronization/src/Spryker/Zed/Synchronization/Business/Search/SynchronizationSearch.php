@@ -167,7 +167,6 @@ class SynchronizationSearch implements SynchronizationInterface
         foreach ($data as $datum) {
             $typeName = $this->getParam($datum, static::TYPE);
             $indexName = $this->getParam($datum, static::INDEX);
-
             $key = $datum[static::KEY];
             $value = $datum[static::VALUE];
             unset($value['_timestamp']);

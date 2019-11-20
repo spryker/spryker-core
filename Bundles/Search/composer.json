@@ -25,7 +25,7 @@
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/search-elasticsearch": "*",
-    "spryker/testify": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
