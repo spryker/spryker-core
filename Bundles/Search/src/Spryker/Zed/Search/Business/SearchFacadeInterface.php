@@ -127,6 +127,8 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\Search\Business\SearchFacadeInterface::mapRawDataToSearchData()` instead.
+     *
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $mapperName
@@ -138,6 +140,9 @@ interface SearchFacadeInterface
     public function transformPageMapToDocumentByMapperName(array $data, LocaleTransfer $localeTransfer, $mapperName);
 
     /**
+     * Specification:
+     * - Maps raw data to search data within a given context.
+     *
      * @api
      *
      * @param array $data

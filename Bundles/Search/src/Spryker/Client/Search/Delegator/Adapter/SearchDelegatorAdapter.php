@@ -22,7 +22,7 @@ class SearchDelegatorAdapter implements SearchDelegatorAdapterInterface
     /**
      * @var \Spryker\Client\Search\Delegator\SearchDelegatorInterface
      */
-    private $searchDelegator;
+    protected $searchDelegator;
 
     /**
      * @param \Spryker\Client\Search\Delegator\SearchDelegatorInterface $searchDelegator
@@ -43,7 +43,7 @@ class SearchDelegatorAdapter implements SearchDelegatorAdapterInterface
     {
         $searchDocumentTransfer = $this->createSearchDocumentTransfer($key, $typeName);
 
-        return $this->searchDelegator->writeDocument($searchDocumentTransfer);
+        return $this->searchDelegator->readDocument($searchDocumentTransfer);
     }
 
     /**
@@ -68,6 +68,8 @@ class SearchDelegatorAdapter implements SearchDelegatorAdapterInterface
      */
     public function writeBulk(array $searchDocumentTransfers): bool
     {
+        $searchDocumentTransfers = $this->addSearchContextToSearchDocumentTransfers($searchDocumentTransfers);
+
         return $this->searchDelegator->writeDocuments($searchDocumentTransfers);
     }
 
@@ -93,6 +95,8 @@ class SearchDelegatorAdapter implements SearchDelegatorAdapterInterface
      */
     public function deleteBulk(array $searchDocumentTransfers): bool
     {
+        $searchDocumentTransfers = $this->addSearchContextToSearchDocumentTransfers($searchDocumentTransfers);
+
         return $this->searchDelegator->deleteDocuments($searchDocumentTransfers);
     }
 
@@ -105,8 +109,8 @@ class SearchDelegatorAdapter implements SearchDelegatorAdapterInterface
      */
     protected function createSearchDocumentTransfer(string $documentId, ?string $typeName = null, ?array $documentData = null): SearchDocumentTransfer
     {
-        $sourceIdentifier = $typeName ?? static::DEFAULT_SOURCE_IDENTIFIER; // check if valid
-        $searchContextTransfer = $this->createSearchContextTransferForSourceIdentifier($sourceIdentifier);
+        $typeName = $typeName ?? static::DEFAULT_SOURCE_IDENTIFIER;
+        $searchContextTransfer = $this->createSearchContextTransferFromMappingType($typeName);
 
         return (new SearchDocumentTransfer())->setId($documentId)
             ->setData($documentData)
@@ -125,7 +129,7 @@ class SearchDelegatorAdapter implements SearchDelegatorAdapterInterface
         $documentId = array_key_first($documentDataSet);
 
         if (!$documentId) {
-            throw new InvalidDataSetException('No document id is found in data set.');
+            throw new InvalidDataSetException('Document id is not found in data set.');
         }
 
         $documentData = $documentDataSet[$documentId];
@@ -138,8 +142,33 @@ class SearchDelegatorAdapter implements SearchDelegatorAdapterInterface
      *
      * @return \Generated\Shared\Transfer\SearchContextTransfer
      */
-    protected function createSearchContextTransferForSourceIdentifier(string $sourceIdentifier): SearchContextTransfer
+    protected function createSearchContextTransferFromMappingType(string $sourceIdentifier): SearchContextTransfer
     {
         return (new SearchContextTransfer())->setSourceIdentifier($sourceIdentifier);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return \Generated\Shared\Transfer\SearchDocumentTransfer[]
+     */
+    protected function addSearchContextToSearchDocumentTransfers(array $searchDocumentTransfers): array
+    {
+        return array_map(function (SearchDocumentTransfer $searchDocumentTransfer) {
+            return $this->addSearchContextToSearchDocumentTransfer($searchDocumentTransfer);
+        }, $searchDocumentTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return \Generated\Shared\Transfer\SearchDocumentTransfer
+     */
+    protected function addSearchContextToSearchDocumentTransfer(SearchDocumentTransfer $searchDocumentTransfer): SearchDocumentTransfer
+    {
+        $searchContextTransfer = $this->createSearchContextTransferFromMappingType($searchDocumentTransfer->getType());
+        $searchDocumentTransfer->setSearchContext($searchContextTransfer);
+
+        return $searchDocumentTransfer;
     }
 }

@@ -9,7 +9,7 @@ namespace Spryker\Zed\SearchElasticsearch\Business\DataMapper;
 
 use Generated\Shared\Transfer\DataMappingContextTransfer;
 
-interface PageDataMapperInterface
+interface DataMapperInterface
 {
     /**
      * @param array $data

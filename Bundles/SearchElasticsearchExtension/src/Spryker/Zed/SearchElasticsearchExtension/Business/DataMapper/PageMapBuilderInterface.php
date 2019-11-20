@@ -5,13 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SearchExtension\Business\PageMapBuilder;
+namespace Spryker\Zed\SearchElasticsearchExtension\Business\DataMapper;
 
 use Generated\Shared\Transfer\PageMapTransfer;
 
-/**
- * !!!THIS SHOULD GO TO SEARCHELASTICSEARCHEXTENSION MODULE. IT'S HERE ONLY FOR PROTOTYPE!!!
- */
 interface PageMapBuilderInterface
 {
     /**
@@ -22,7 +19,7 @@ interface PageMapBuilderInterface
      *
      * @return $this
      */
-    public function add(PageMapTransfer $pageMapTransfer, $fieldName, $name, $value);
+    public function add(PageMapTransfer $pageMapTransfer, string $fieldName, string $name, $value);
 
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
@@ -31,7 +28,7 @@ interface PageMapBuilderInterface
      *
      * @return $this
      */
-    public function addSearchResultData(PageMapTransfer $pageMapTransfer, $name, $value);
+    public function addSearchResultData(PageMapTransfer $pageMapTransfer, string $name, $value);
 
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
@@ -72,7 +69,7 @@ interface PageMapBuilderInterface
      *
      * @return $this
      */
-    public function addStringFacet(PageMapTransfer $pageMapTransfer, $name, $value);
+    public function addStringFacet(PageMapTransfer $pageMapTransfer, string $name, $value);
 
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
@@ -81,7 +78,7 @@ interface PageMapBuilderInterface
      *
      * @return $this
      */
-    public function addIntegerFacet(PageMapTransfer $pageMapTransfer, $name, $value);
+    public function addIntegerFacet(PageMapTransfer $pageMapTransfer, string $name, $value);
 
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
@@ -90,7 +87,7 @@ interface PageMapBuilderInterface
      *
      * @return $this
      */
-    public function addStringSort(PageMapTransfer $pageMapTransfer, $name, $value);
+    public function addStringSort(PageMapTransfer $pageMapTransfer, string $name, string $value);
 
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
@@ -99,7 +96,7 @@ interface PageMapBuilderInterface
      *
      * @return $this
      */
-    public function addIntegerSort(PageMapTransfer $pageMapTransfer, $name, $value);
+    public function addIntegerSort(PageMapTransfer $pageMapTransfer, string $name, int $value);
 
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer

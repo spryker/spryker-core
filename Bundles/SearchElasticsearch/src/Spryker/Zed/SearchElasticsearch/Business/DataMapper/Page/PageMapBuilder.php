@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SearchElasticsearch\Business\DataMapper;
+namespace Spryker\Zed\SearchElasticsearch\Business\DataMapper\Page;
 
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\CategoryMapTransfer;
@@ -16,10 +16,9 @@ use Generated\Shared\Transfer\SearchResultDataMapTransfer;
 use Generated\Shared\Transfer\StringFacetMapTransfer;
 use Generated\Shared\Transfer\StringSortMapTransfer;
 use InvalidArgumentException;
-use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface as ProductPageSearchPageMapBuilderInterface;
-use Spryker\Zed\SearchExtension\Business\PageMapBuilder\PageMapBuilderInterface;
+use Spryker\Zed\SearchElasticsearchExtension\Business\DataMapper\PageMapBuilderInterface;
 
-class PageMapBuilder implements PageMapBuilderInterface, ProductPageSearchPageMapBuilderInterface
+class PageMapBuilder implements PageMapBuilderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer

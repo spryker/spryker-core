@@ -143,6 +143,8 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @api
      *
+     * @deprecated Use `Spryker\Client\Search\SearchClient::readDocument()` instead.
+     *
      * @param string $key
      * @param string|null $typeName
      * @param string|null $indexName
@@ -155,6 +157,20 @@ class SearchClient extends AbstractClient implements SearchClientInterface
             ->getFactory()
             ->createReader()
             ->read($key, $typeName, $indexName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return mixed
+     */
+    public function readDocument(SearchDocumentTransfer $searchDocumentTransfer)
+    {
+        return $this->getFactory()->createSearchDelegator()->readDocument($searchDocumentTransfer);
     }
 
     /**
@@ -179,6 +195,8 @@ class SearchClient extends AbstractClient implements SearchClientInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
@@ -210,8 +228,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
     }
 
     /**
-     * Specification:
-     * - Writes data into an external search service in bulk mode.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -228,6 +245,8 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Client\Search\SearchClient::deleteDocument()` instead.
      *
      * @param array $dataSet
      * @param string|null $typeName
@@ -248,6 +267,25 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return bool
+     */
+    public function deleteDocument(SearchDocumentTransfer $searchDocumentTransfer): bool
+    {
+        return $this
+            ->getFactory()
+            ->createSearchDelegator()
+            ->deleteDocument($searchDocumentTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Use `\Spryker\Client\Search\SearchClient::deleteDocuments()` instead.
+     *
      * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
      *
      * @return bool
@@ -258,5 +296,22 @@ class SearchClient extends AbstractClient implements SearchClientInterface
             ->getFactory()
             ->createWriter()
             ->deleteBulk($searchDocumentTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function deleteDocuments(array $searchDocumentTransfers): bool
+    {
+        return $this
+            ->getFactory()
+            ->createSearchDelegator()
+            ->deleteDocuments($searchDocumentTransfers);
     }
 }

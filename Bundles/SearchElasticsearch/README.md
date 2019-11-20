@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/search-elasticsearch.svg)](https://travis-ci.org/spryker/search-elasticsearch)
 [![Coverage Status](https://coveralls.io/repos/github/spryker/search-elasticsearch/badge.svg)](https://coveralls.io/github/spryker/search-elasticsearch)
 
-SearchElasticsearch provides Elasticasearch specific implementation of search.
+The module provides plugin interfaces for extending Search module functionality.
 
 ## Installation
 

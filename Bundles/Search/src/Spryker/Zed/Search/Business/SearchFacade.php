@@ -152,6 +152,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\Search\Business\SearchFacade::mapRawDataToSearchData()` instead.
+     *
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $mapperName
@@ -168,6 +170,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $data

@@ -12,20 +12,33 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageDataMapperInterface;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 
-class SearchDataMapperAdapter implements PageDataMapperInterface
+/**
+ * @deprecated Use `\Spryker\Zed\Search\Business\DataMapper\SearchDataMapperInterface` instead.
+ */
+class SearchDataMapperToPageDataMapperAdapter implements PageDataMapperInterface
 {
     /**
      * @var \Spryker\Zed\Search\Business\DataMapper\SearchDataMapperInterface
      */
     protected $searchDataMapper;
 
-    public function __construct(SearchDataMapperInterface $searchDataMapper)
+    /**
+     * @var \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageDataMapperInterface
+     */
+    protected $pageDataMapper;
+
+    /**
+     * @param \Spryker\Zed\Search\Business\DataMapper\SearchDataMapperInterface $searchDataMapper
+     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageDataMapperInterface $pageDataMapper
+     */
+    public function __construct(SearchDataMapperInterface $searchDataMapper, PageDataMapperInterface $pageDataMapper)
     {
         $this->searchDataMapper = $searchDataMapper;
+        $this->pageDataMapper = $pageDataMapper;
     }
 
     /**
-     * @deprecated Use transferDataByMapperName() instead.
+     * @deprecated Use mapRawDataToSearchData() instead.
      *
      * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $pageMap
      * @param array $data
@@ -35,7 +48,7 @@ class SearchDataMapperAdapter implements PageDataMapperInterface
      */
     public function mapData(PageMapInterface $pageMap, array $data, LocaleTransfer $localeTransfer)
     {
-        // TODO: Implement mapData() method.
+        return $this->pageDataMapper->mapData($pageMap, $data, $localeTransfer);
     }
 
     /**
@@ -48,7 +61,7 @@ class SearchDataMapperAdapter implements PageDataMapperInterface
     public function transferDataByMapperName(array $data, LocaleTransfer $localeTransfer, $mapperName)
     {
         $dataMappingContextTransfer = new DataMappingContextTransfer();
-        $dataMappingContextTransfer->setLocale($localeTransfer)->setMapperName($mapperName);
+        $dataMappingContextTransfer->setLocale($localeTransfer)->setResourceName($mapperName);
 
         return $this->searchDataMapper->mapRawDataToSearchData($data, $dataMappingContextTransfer);
     }

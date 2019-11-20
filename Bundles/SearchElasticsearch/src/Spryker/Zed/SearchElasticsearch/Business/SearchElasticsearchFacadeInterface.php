@@ -203,6 +203,9 @@ interface SearchElasticsearchFacadeInterface
     public function restoreSnapshot(string $repositoryName, string $snapshotName, array $options = []): bool;
 
     /**
+     * Specification:
+     * - tba.
+     *
      * @api
      *
      * @param array $data
@@ -211,4 +214,30 @@ interface SearchElasticsearchFacadeInterface
      * @return array
      */
     public function mapRawDataToSearchData(array $data, DataMappingContextTransfer $dataMappingContextTransfer): array;
+
+    /**
+     * Specification:
+     * - tba.
+     *
+     * @api
+     *
+     * @param array $data
+     * @param \Generated\Shared\Transfer\DataMappingContextTransfer $dataMappingContextTransfer
+     *
+     * @return array
+     */
+    public function mapPageDataToSearchData(array $data, DataMappingContextTransfer $dataMappingContextTransfer): array;
+
+    /**
+     * Specification:
+     * - tba.
+     *
+     * @api
+     *
+     * @param array $data
+     * @param \Generated\Shared\Transfer\DataMappingContextTransfer $dataMappingContextTransfer
+     *
+     * @return array
+     */
+    public function mapProductReviewDataToSearchData(array $data, DataMappingContextTransfer $dataMappingContextTransfer): array;
 }

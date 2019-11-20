@@ -69,9 +69,9 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
      *
      * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
      *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\SearchDocumentTransfer
      */
-    public function readDocument(SearchDocumentTransfer $searchDocumentTransfer): bool
+    public function readDocument(SearchDocumentTransfer $searchDocumentTransfer): SearchDocumentTransfer
     {
         return $this->getFactory()->createDocumentReader()->readDocument($searchDocumentTransfer);
     }

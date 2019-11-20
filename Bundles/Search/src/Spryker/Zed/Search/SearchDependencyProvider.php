@@ -11,7 +11,7 @@ use GuzzleHttp\Client;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingBridge;
-use Spryker\Zed\SearchElasticsearch\Communication\Plugin\Search\ElasticsearchSearchDataMapperPlugin;
+use Spryker\Zed\SearchElasticsearch\Communication\Plugin\Search\ElasticsearchDataMapperPlugin;
 
 /**
  * @method \Spryker\Zed\Search\SearchConfig getConfig()
@@ -167,13 +167,12 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\SearchDataMapperPluginInterface[]
+     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\DataMapperPluginInterface[]
      */
     protected function getSearchDataMapperPlugins(): array
     {
-        // WILL BE MOVED TO PROJECT LEVEL
         return [
-            new ElasticsearchSearchDataMapperPlugin(),
+            new ElasticsearchDataMapperPlugin(),
         ];
     }
 }

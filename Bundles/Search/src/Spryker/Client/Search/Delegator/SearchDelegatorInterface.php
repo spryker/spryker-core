@@ -8,7 +8,7 @@
 namespace Spryker\Client\Search\Delegator;
 
 use Generated\Shared\Transfer\SearchDocumentTransfer;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
 interface SearchDelegatorInterface
 {
@@ -20,6 +20,13 @@ interface SearchDelegatorInterface
      * @return mixed
      */
     public function search(QueryInterface $queryCriteria, array $resultFormatters = [], array $requestParameters = []);
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return mixed
+     */
+    public function readDocument(SearchDocumentTransfer $searchDocumentTransfer);
 
     /**
      * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer

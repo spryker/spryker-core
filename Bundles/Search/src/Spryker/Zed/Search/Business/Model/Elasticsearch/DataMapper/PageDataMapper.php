@@ -16,6 +16,9 @@ use Spryker\Zed\Search\Business\Exception\PluginNotFoundException;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 use Zend\Filter\Word\UnderscoreToDash;
 
+/**
+ * @deprecated Use `\Spryker\Zed\Search\Business\DataMapper\SearchDataMapper` instead.
+ */
 class PageDataMapper implements PageDataMapperInterface
 {
     public const FACET_NAME = 'facet-name';

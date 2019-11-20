@@ -5,28 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SearchExtension\Dependency\Plugin;
+namespace Spryker\Zed\SearchElasticsearch\Business\DataMapper\Delegator;
 
 use Generated\Shared\Transfer\DataMappingContextTransfer;
 
-interface SearchDataMapperPluginInterface
+interface DataMapperDelegatorInterface
 {
     /**
-     * @api
-     *
      * @param array $data
      * @param \Generated\Shared\Transfer\DataMappingContextTransfer $dataMappingContextTransfer
+     *
+     * @throws \Exception
      *
      * @return array
      */
     public function mapRawDataToSearchData(array $data, DataMappingContextTransfer $dataMappingContextTransfer): array;
-
-    /**
-     * @api
-     *
-     * @param string $resourceType
-     *
-     * @return bool
-     */
-    public function isApplicable(string $resourceType): bool;
 }

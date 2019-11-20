@@ -10,13 +10,8 @@ namespace Spryker\Zed\SearchElasticsearch;
 use GuzzleHttp\Client;
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientBridge;
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
-use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Search\CategoryNodeDataPageMapBuilder;
-use Spryker\Zed\CmsPageSearch\Communication\Plugin\Search\CmsDataPageMapBuilder;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductPageSearch\Communication\Plugin\Search\ProductConcretePageMapPlugin;
-use Spryker\Zed\ProductPageSearch\Communication\Plugin\Search\ProductPageMapPlugin;
-use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Search\ProductSetPageMapPlugin;
 use Spryker\Zed\SearchElasticsearch\Dependency\Guzzle\SearchElasticsearchToGuzzleClientAdapter;
 use Spryker\Zed\SearchElasticsearch\Dependency\Guzzle\SearchElasticsearchToGuzzleClientInterface;
 use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceBridge;
@@ -32,6 +27,7 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const PLUGINS_PAGE_DATA_MAPPER = 'PLUGINS_PAGE_DATA_MAPPER';
+    public const PLUGINS_RESOURCE_DATA_MAPPER = 'PLUGINS_RESOURCE_DATA_MAPPER';
     public const SEARCH_INSTALLER_PLUGINS = 'SEARCH_INSTALLER_PLUGINS';
     public const CLIENT_GUZZLE = 'CLIENT_GUZZLE';
 
@@ -48,6 +44,7 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addStoreClient($container);
         $container = $this->addUtilSanitizeService($container);
         $container = $this->addPageDataMapperPlugins($container);
+        $container = $this->addResourceDataMapperPlugins($container);
 
         return $container;
     }
@@ -141,17 +138,32 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
-     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\NamedPageMapInterface[]
+     * @return \Spryker\Zed\SearchElasticsearchExtension\Dependency\Plugin\PageMapPluginInterface[]
      */
     protected function getPageDataMapperPlugins(): array
     {
-        // WILL GO TO PROJECT LEVEL
-        return [
-            new ProductPageMapPlugin(),
-            new ProductConcretePageMapPlugin(),
-            new ProductSetPageMapPlugin(),
-            new CmsDataPageMapBuilder(),
-            new CategoryNodeDataPageMapBuilder(),
-        ];
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addResourceDataMapperPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_RESOURCE_DATA_MAPPER, function (Container $container) {
+            return $this->getResourceDataMapperPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchElasticsearchExtension\Dependency\Plugin\ResourceDataMapperPluginInterface[]
+     */
+    protected function getResourceDataMapperPlugins(): array
+    {
+        return [];
     }
 }

@@ -15,9 +15,12 @@ use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactoryInter
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolver;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\SearchElasticsearch\Business\DataMapper\PageDataMapper;
-use Spryker\Zed\SearchElasticsearch\Business\DataMapper\PageDataMapperInterface;
-use Spryker\Zed\SearchElasticsearch\Business\DataMapper\PageMapBuilder;
+use Spryker\Zed\SearchElasticsearch\Business\DataMapper\DataMapperInterface;
+use Spryker\Zed\SearchElasticsearch\Business\DataMapper\Delegator\DataMapperDelegator;
+use Spryker\Zed\SearchElasticsearch\Business\DataMapper\Delegator\DataMapperDelegatorInterface;
+use Spryker\Zed\SearchElasticsearch\Business\DataMapper\Page\PageDataMapper;
+use Spryker\Zed\SearchElasticsearch\Business\DataMapper\Page\PageMapBuilder;
+use Spryker\Zed\SearchElasticsearch\Business\DataMapper\ProductReview\ProductReviewDataMapper;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Builder\IndexDefinitionBuilder;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Builder\IndexDefinitionBuilderInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Finder\SchemaDefinitionFinder;
@@ -54,6 +57,7 @@ use Spryker\Zed\SearchElasticsearch\Dependency\Guzzle\SearchElasticsearchToGuzzl
 use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceInterface;
 use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilSanitizeServiceInterface;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchDependencyProvider;
+use Spryker\Zed\SearchElasticsearchExtension\Business\DataMapper\PageMapBuilderInterface;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -343,18 +347,52 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SearchElasticsearch\Business\DataMapper\PageDataMapperInterface
+     * @return \Spryker\Zed\SearchElasticsearch\Business\DataMapper\DataMapperInterface
      */
-    public function createPageDataMapper(): PageDataMapperInterface
+    public function createPageDataMapper(): DataMapperInterface
     {
-        return new PageDataMapper(new PageMapBuilder(), $this->getPageDataMapperPlugins());
+        return new PageDataMapper($this->createPageMapBuilder(), $this->getPageDataMapperPlugins());
     }
 
     /**
-     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\NamedPageMapInterface[]
+     * @return \Spryker\Zed\SearchElasticsearch\Business\DataMapper\DataMapperInterface
+     */
+    public function createProductReviewDataMapper(): DataMapperInterface
+    {
+        return new ProductReviewDataMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchElasticsearchExtension\Business\DataMapper\PageMapBuilderInterface
+     */
+    public function createPageMapBuilder(): PageMapBuilderInterface
+    {
+        return new PageMapBuilder();
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchElasticsearchExtension\Dependency\Plugin\PageMapPluginInterface[]
      */
     public function getPageDataMapperPlugins(): array
     {
         return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::PLUGINS_PAGE_DATA_MAPPER);
+    }
+
+    /**
+     * @api
+     *
+     * @return \Spryker\Zed\SearchElasticsearch\Business\DataMapper\Delegator\DataMapperDelegatorInterface
+     */
+    public function createDataMapperDelegator(): DataMapperDelegatorInterface
+    {
+        return new DataMapperDelegator($this->getResourceDataMapperPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchElasticsearchExtension\Dependency\Plugin\ResourceDataMapperPluginInterface[]
+     */
+    public function getResourceDataMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::PLUGINS_RESOURCE_DATA_MAPPER);
     }
 }

@@ -8,17 +8,18 @@
 namespace Spryker\Zed\SearchElasticsearch\Communication\Plugin\Search;
 
 use Generated\Shared\Transfer\DataMappingContextTransfer;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SearchExtension\Dependency\Plugin\SearchDataMapperPluginInterface;
+use Spryker\Zed\SearchElasticsearchExtension\Dependency\Plugin\ResourceDataMapperPluginInterface;
 
 /**
  * @method \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface getFacade()
  * @method \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig getConfig()
  * @method \Spryker\Zed\SearchElasticsearch\Communication\SearchElasticsearchCommunicationFactory getFactory()
  */
-class ElasticsearchSearchDataMapperPlugin extends AbstractPlugin implements SearchDataMapperPluginInterface
+class ProductReviewDataMapperPlugin implements ResourceDataMapperPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $data
@@ -28,18 +29,20 @@ class ElasticsearchSearchDataMapperPlugin extends AbstractPlugin implements Sear
      */
     public function mapRawDataToSearchData(array $data, DataMappingContextTransfer $dataMappingContextTransfer): array
     {
-        return $this->getFacade()->mapRawDataToSearchData($data, $dataMappingContextTransfer);
+        return $this->getFacade()->mapProductReviewDataToSearchData($data, $dataMappingContextTransfer);
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @param string $type
+     * @param \Generated\Shared\Transfer\DataMappingContextTransfer $dataMappingContextTransfer
      *
      * @return bool
      */
-    public function isApplicable(string $type): bool
+    public function isApplicable(DataMappingContextTransfer $dataMappingContextTransfer): bool
     {
-        return in_array($type, $this->getConfig()->getApplicableMappingResourceTypes(), true);
+        return $dataMappingContextTransfer->getResourceName() === $this->getConfig()->getProductReviewResourceName();
     }
 }

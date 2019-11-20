@@ -85,7 +85,7 @@ class SearchFactory extends AbstractFactory
      */
     public function getClientAdapterPlugins(): array
     {
-        return $this->getProvidedDependency(SearchDependencyProvider::CLIENT_ADAPTER_PLUGINS);
+        return $this->getProvidedDependency(SearchDependencyProvider::PLUGINS_CLIENT_ADAPTER);
     }
 
     /**

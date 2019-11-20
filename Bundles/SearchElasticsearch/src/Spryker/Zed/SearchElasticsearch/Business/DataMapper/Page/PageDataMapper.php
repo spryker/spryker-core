@@ -5,17 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SearchElasticsearch\Business\DataMapper;
+namespace Spryker\Zed\SearchElasticsearch\Business\DataMapper\Page;
 
 use Exception;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\CategoryMapTransfer;
 use Generated\Shared\Transfer\DataMappingContextTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
-use Spryker\Zed\SearchExtension\Business\PageMapBuilder\PageMapBuilderInterface;
+use Spryker\Zed\SearchElasticsearch\Business\DataMapper\DataMapperInterface;
+use Spryker\Zed\SearchElasticsearch\Business\Exception\PageMapPluginNotFoundException;
+use Spryker\Zed\SearchElasticsearchExtension\Business\DataMapper\PageMapBuilderInterface;
+use Spryker\Zed\SearchElasticsearchExtension\Dependency\Plugin\PageMapPluginInterface;
 use Zend\Filter\Word\UnderscoreToDash;
 
-class PageDataMapper implements PageDataMapperInterface
+class PageDataMapper implements DataMapperInterface
 {
     public const FACET_NAME = 'facet-name';
     public const FACET_VALUE = 'facet-value';
@@ -23,7 +26,7 @@ class PageDataMapper implements PageDataMapperInterface
     public const DIRECT_PARENTS = 'direct-parents';
 
     /**
-     * @var \Spryker\Zed\SearchExtension\Business\PageMapBuilder\PageMapBuilderInterface
+     * @var \Spryker\Zed\SearchElasticsearchExtension\Business\DataMapper\PageMapBuilderInterface
      */
     protected $pageMapBuilder;
 
@@ -38,13 +41,13 @@ class PageDataMapper implements PageDataMapperInterface
     protected $pageIndexMap;
 
     /**
-     * @var \Spryker\Zed\SearchExtension\Dependency\Plugin\NamedPageMapInterface[]
+     * @var \Spryker\Zed\SearchElasticsearchExtension\Dependency\Plugin\PageMapPluginInterface[]
      */
     protected $pageMapPlugins = [];
 
     /**
-     * @param \Spryker\Zed\SearchExtension\Business\PageMapBuilder\PageMapBuilderInterface $pageMapBuilder
-     * @param \Spryker\Zed\SearchExtension\Dependency\Plugin\NamedPageMapInterface[] $pageMapPlugins
+     * @param \Spryker\Zed\SearchElasticsearchExtension\Business\DataMapper\PageMapBuilderInterface $pageMapBuilder
+     * @param \Spryker\Zed\SearchElasticsearchExtension\Dependency\Plugin\PageMapPluginInterface[] $pageMapPlugins
      */
     public function __construct(PageMapBuilderInterface $pageMapBuilder, array $pageMapPlugins = [])
     {
@@ -55,7 +58,7 @@ class PageDataMapper implements PageDataMapperInterface
     }
 
     /**
-     * @param \Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface[] $namedPageMapPlugins
+     * @param \Spryker\Zed\SearchElasticsearchExtension\Dependency\Plugin\PageMapPluginInterface[] $namedPageMapPlugins
      *
      * @return array
      */
@@ -73,21 +76,14 @@ class PageDataMapper implements PageDataMapperInterface
      * @param array $data
      * @param \Generated\Shared\Transfer\DataMappingContextTransfer $dataMappingContextTransfer
      *
-     * @throws \Exception
-     *
      * @return array
      */
     public function mapRawDataToSearchData(array $data, DataMappingContextTransfer $dataMappingContextTransfer): array
     {
         $result = [];
         $localeTransfer = $dataMappingContextTransfer->requireLocale()->getLocale();
-        $mapperName = $dataMappingContextTransfer->requireMapperName()->getMapperName();
-
-        if (!isset($this->pageMapPlugins[$mapperName])) {
-            throw new Exception(sprintf('PageMap plugin with this name: `%s` cannot be found', $mapperName));
-        }
-
-        $pageMapPlugin = $this->pageMapPlugins[$mapperName];
+        $mapperName = $dataMappingContextTransfer->requireResourceName()->getResourceName();
+        $pageMapPlugin = $this->getPageMapPluginByName($mapperName);
         $pageMapTransfer = $pageMapPlugin->buildPageMap($this->pageMapBuilder, $data, $localeTransfer);
 
         foreach ($pageMapTransfer->modifiedToArray() as $key => $value) {
@@ -290,5 +286,23 @@ class PageDataMapper implements PageDataMapperInterface
         $result[$key] = $value;
 
         return $result;
+    }
+
+    /**
+     * @param string $pluginName
+     *
+     * @throws \Spryker\Zed\SearchElasticsearch\Business\Exception\PageMapPluginNotFoundException
+     *
+     * @return \Spryker\Zed\SearchElasticsearchExtension\Dependency\Plugin\PageMapPluginInterface
+     */
+    protected function getPageMapPluginByName(string $pluginName): PageMapPluginInterface
+    {
+        foreach ($this->pageMapPlugins as $pageMapPlugin) {
+            if ($pageMapPlugin->getName() == $pluginName) {
+                return $pageMapPlugin;
+            }
+        }
+
+        throw new PageMapPluginNotFoundException(sprintf('PageMap plugin with this name: `%s` cannot be found', $pluginName));
     }
 }

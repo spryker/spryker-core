@@ -7,18 +7,18 @@
 
 namespace Spryker\Zed\Search\Business\DataMapper;
 
-use Exception;
 use Generated\Shared\Transfer\DataMappingContextTransfer;
+use Spryker\Zed\Search\Business\Exception\SearchDataMapperException;
 
 class SearchDataMapper implements SearchDataMapperInterface
 {
     /**
-     * @var array
+     * @var \Spryker\Zed\SearchExtension\Dependency\Plugin\DataMapperPluginInterface[]
      */
-    private $dataMapperPlugins;
+    protected $dataMapperPlugins;
 
     /**
-     * @param \Spryker\Zed\SearchExtension\Dependency\Plugin\SearchDataMapperPluginInterface[] $dataMapperPlugins
+     * @param \Spryker\Zed\SearchExtension\Dependency\Plugin\DataMapperPluginInterface[] $dataMapperPlugins
      */
     public function __construct(array $dataMapperPlugins)
     {
@@ -33,7 +33,7 @@ class SearchDataMapper implements SearchDataMapperInterface
      */
     public function mapRawDataToSearchData(array $data, DataMappingContextTransfer $dataMappingContextTransfer): array
     {
-        $dataMapperPlugin = $this->getDataMapperPluginByDataResourceType($dataMappingContextTransfer);
+        $dataMapperPlugin = $this->getDataMapperPlugin($dataMappingContextTransfer);
 
         return $dataMapperPlugin->mapRawDataToSearchData($data, $dataMappingContextTransfer);
     }
@@ -41,22 +41,22 @@ class SearchDataMapper implements SearchDataMapperInterface
     /**
      * @param \Generated\Shared\Transfer\DataMappingContextTransfer $dataMappingContextTransfer
      *
-     * @throws \Exception
+     * @throws \Spryker\Zed\Search\Business\Exception\SearchDataMapperException
      *
-     * @return mixed|\Spryker\Zed\SearchExtension\Dependency\Plugin\SearchDataMapperPluginInterface
+     * @return mixed|\Spryker\Zed\SearchExtension\Dependency\Plugin\DataMapperPluginInterface
      */
-    protected function getDataMapperPluginByDataResourceType(DataMappingContextTransfer $dataMappingContextTransfer)
+    protected function getDataMapperPlugin(DataMappingContextTransfer $dataMappingContextTransfer)
     {
-        $dataMappingContextTransfer->requireMapperName();
+        $dataMappingContextTransfer->requireResourceName();
 
         foreach ($this->dataMapperPlugins as $dataMapperPlugin) {
-            if ($dataMapperPlugin->isApplicable($dataMappingContextTransfer->getMapperName())) {
+            if ($dataMapperPlugin->isApplicable($dataMappingContextTransfer)) {
                 return $dataMapperPlugin;
             }
         }
 
-        throw new Exception(
-            sprintf('No applicable mapper plugin found for name "%s"', $dataMappingContextTransfer->getMapperName())
+        throw new SearchDataMapperException(
+            sprintf('No applicable mapper plugin found for name "%s"', $dataMappingContextTransfer->getResourceName())
         );
     }
 }

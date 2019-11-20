@@ -12,7 +12,7 @@
 
     <transfer name="DataMappingContext">
         <property name="locale" type="Locale"/>
-        <property name="mapperName" type="string"/>
+        <property name="resourceName" type="string"/>
     </transfer>
 
 </transfers>
