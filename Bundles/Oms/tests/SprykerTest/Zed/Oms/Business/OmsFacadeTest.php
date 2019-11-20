@@ -75,7 +75,7 @@ class OmsFacadeTest extends Unit
 
         $numberOfItems = SpyOmsStateMachineLockQuery::create()->filterByIdentifier($identifier)->count();
 
-        $this->assertEquals(0, $numberOfItems);
+        $this->assertSame(0, $numberOfItems);
     }
 
     /**
@@ -162,7 +162,6 @@ class OmsFacadeTest extends Unit
      */
     public function testSaveReservation(): void
     {
-        $omsFacade = $this->createOmsFacade();
         $storeTransfer = (new StoreTransfer())->setIdStore(1)->setName('DE');
         $productSku = 'xxx';
         $reservationQuantity = new Decimal(10);

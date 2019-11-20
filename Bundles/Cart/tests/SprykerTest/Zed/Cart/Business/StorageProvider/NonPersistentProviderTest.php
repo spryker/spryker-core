@@ -319,7 +319,6 @@ class NonPersistentProviderTest extends Unit
         $newSecondItemQuantity = 4;
 
         $quoteTransfer = $this->createQuoteWithItem($existingItemId, $existingItemQuantity);
-        $orignalItemTransfer = $quoteTransfer->getItems()->offsetGet(0);
 
         $newFirstItem = $this->createItem($newItemId, $newFirstItemQuantity);
         $newSecondItem = $this->createItem($newItemId, $newSecondItemQuantity);

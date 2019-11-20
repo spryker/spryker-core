@@ -689,7 +689,7 @@ class CheckoutFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Communication\Plugin\OrderCustomerSavePlugin
+     * @return \Spryker\Zed\Customer\Communication\Plugin\Checkout\CustomerOrderSavePlugin
      */
     protected function createCustomerOrderSavePlugin()
     {

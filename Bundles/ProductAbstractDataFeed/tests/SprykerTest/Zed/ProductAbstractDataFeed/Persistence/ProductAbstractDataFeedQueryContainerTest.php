@@ -228,7 +228,9 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
      */
     protected function createProductDataFeedQueryContainer()
     {
-        return new ProductAbstractDataFeedQueryContainer();
+        $productDataFeedQueryContainer = new ProductAbstractDataFeedQueryContainer();
+
+        return $productDataFeedQueryContainer;
     }
 
     /**

@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\Api\Business\Model\Processor\Pre\Filter\Query;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiFilterTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
-use Spryker\Zed\Api\ApiConfig;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\Filter\Query\FieldsByQueryPreProcessor;
 
 /**
@@ -43,8 +42,7 @@ class FieldsByQueryPreProcessorTest extends Unit
      */
     public function testProcessEmpty()
     {
-        $config = new ApiConfig();
-        $processor = new FieldsByQueryPreProcessor($config);
+        $processor = new FieldsByQueryPreProcessor();
 
         $apiRequestTransfer = new ApiRequestTransfer();
         $apiRequestTransfer->setFilter(new ApiFilterTransfer());
@@ -58,8 +56,7 @@ class FieldsByQueryPreProcessorTest extends Unit
      */
     public function testProcess()
     {
-        $config = new ApiConfig();
-        $processor = new FieldsByQueryPreProcessor($config);
+        $processor = new FieldsByQueryPreProcessor();
 
         $apiRequestTransfer = new ApiRequestTransfer();
         $apiRequestTransfer->setFilter(new ApiFilterTransfer());

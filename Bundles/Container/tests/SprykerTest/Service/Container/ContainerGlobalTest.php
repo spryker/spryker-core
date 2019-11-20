@@ -96,7 +96,8 @@ class ContainerGlobalTest extends Unit
     {
         $container = new Container();
         $container->setGlobal(static::SERVICE_GLOBAL, function () {
-            return new class {
+            return new class
+            {
             };
         });
 

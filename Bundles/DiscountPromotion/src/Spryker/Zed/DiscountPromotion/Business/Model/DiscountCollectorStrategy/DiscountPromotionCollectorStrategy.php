@@ -114,7 +114,6 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
      */
     protected function findPromotionItem(QuoteTransfer $quoteTransfer, SpyDiscountPromotion $discountPromotionEntity)
     {
-        $promotionItemTransfer = null;
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if (!$this->isPromotionItem(
                 $discountPromotionEntity->getAbstractSku(),
