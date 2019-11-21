@@ -14,7 +14,6 @@
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
-    "spryker/auth-rest-api": "*",
     "spryker/code-sniffer": "*",
     "spryker/installer": "*",
     "spryker/propel": "*",
@@ -25,8 +24,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\Oauth\\Helper\\": "tests/SprykerTest/Zed/Oauth/_support/Helper/"
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {
