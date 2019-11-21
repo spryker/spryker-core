@@ -90,8 +90,9 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer->setReference($keyName);
+        // StoreClientBridge should be used here.
         $synchronizationDataTransfer->setStore('DE');
-//        $synchronizationDataTransfer->setStore($this->storeClient->getCurrentStore()->getName());
+        // $synchronizationDataTransfer->setStore($this->storeClient->getCurrentStore()->getName());
 
         return $this->synchronizationService
             ->getStorageKeyBuilder($resourceName)
