@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartCode\Dependency\Facade\CartCodeToCalculationFacadeInterface;
 
-class CartCodeDeleter implements CartCodeDeleterInterface
+class CartCodeRemover implements CartCodeRemoverInterface
 {
     /**
      * @var \Spryker\Zed\CartCode\Dependency\Facade\CartCodeToCalculationFacadeInterface
@@ -49,7 +49,7 @@ class CartCodeDeleter implements CartCodeDeleterInterface
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function removeCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
+    public function removeCartCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
     {
         $lockedCartCodeOperationResultTransfer = $this->quoteOperationChecker->checkLockedQuoteResponse($quoteTransfer);
         if ($lockedCartCodeOperationResultTransfer) {
@@ -59,10 +59,7 @@ class CartCodeDeleter implements CartCodeDeleterInterface
         $quoteTransfer = $this->executeCartCodePlugins($quoteTransfer, $code);
         $quoteTransfer = $this->calculationFacade->recalculateQuote($quoteTransfer);
 
-        $cartCodeOperationResultTransfer = new CartCodeOperationResultTransfer();
-        $cartCodeOperationResultTransfer->setQuote($quoteTransfer);
-
-        return $cartCodeOperationResultTransfer;
+        return (new CartCodeOperationResultTransfer())->setQuote($quoteTransfer);
     }
 
     /**

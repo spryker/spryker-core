@@ -99,7 +99,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
     protected function validateResourceIdSpecified(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         $method = $restRequest->getMetadata()->getMethod();
-        if ($restRequest->getHttpRequest()->get(RestResourceInterface::RESOURCE_DATA) && $method === Request::METHOD_DELETE) {
+        if ($restRequest->getHttpRequest()->get(RestResourceInterface::RESOURCE_DATA) && $method !== Request::METHOD_DELETE) {
             return null;
         }
 
@@ -112,6 +112,11 @@ class RestRequestValidator implements RestRequestValidatorInterface
             []
         );
 
+        $request = $restRequest->getHttpRequest();
+        if ($request->getMethod() === Request::METHOD_DELETE) {
+            $allResources = $this->addIdToMainResource($allResources, $request);
+        }
+
         if ($this->checkResourcesHaveId($allResources)) {
             return null;
         }
@@ -121,6 +126,31 @@ class RestRequestValidator implements RestRequestValidatorInterface
             ->setStatus(Response::HTTP_BAD_REQUEST);
 
         return (new RestErrorCollectionTransfer())->addRestError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @param array $allResources
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function addIdToMainResource(array $allResources, Request $request): array
+    {
+        $resources = [];
+        foreach ($allResources as $key => $resource) {
+            $mainResourceId = $request->attributes
+                    ->get(RestResourceInterface::RESOURCE_DATA)[RestResourceInterface::RESOURCE_ID] ?? null;
+
+            if ($key === (count($allResources) - 1) && $mainResourceId) {
+                $resources[][RequestConstantsInterface::ATTRIBUTE_ID] = $mainResourceId;
+
+                continue;
+            }
+
+            $resources[] = $resource;
+        }
+
+        return $resources;
     }
 
     /**

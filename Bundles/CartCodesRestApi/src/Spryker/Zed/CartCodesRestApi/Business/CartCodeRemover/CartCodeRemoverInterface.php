@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CartCode\Business\Operation;
+namespace Spryker\Zed\CartCodesRestApi\Business\CartCodeRemover;
 
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CartCodeDeleterInterface
+interface CartCodeRemoverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param int $idDiscount
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function removeCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer;
+    public function removeCartCode(QuoteTransfer $quoteTransfer, int $idDiscount): CartCodeOperationResultTransfer;
 }
