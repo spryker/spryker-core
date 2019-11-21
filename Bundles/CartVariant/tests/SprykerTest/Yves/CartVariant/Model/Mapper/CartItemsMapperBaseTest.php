@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\StorageAvailabilityTransfer;
 use Spryker\Client\AvailabilityStorage\AvailabilityStorageClient;
 use Spryker\Client\Product\ProductClient;
 use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityStorageClientBridge;
-use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityClientBridgeInterface;
 use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToProductClientBridge;
 
 /**

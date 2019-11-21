@@ -21,6 +21,7 @@
     "spryker/cart": "*",
     "spryker/code-sniffer": "*",
     "spryker/decimal-object": "*",
+    "spryker/locale": "*",
     "spryker/propel": "*",
     "spryker/stock": "*",
     "spryker/store": "*",
