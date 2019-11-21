@@ -8,7 +8,12 @@
 namespace SprykerTest\Zed\Payment\Business\Facade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Payment\Persistence\SpyPaymentMethodQuery;
+use Orm\Zed\Payment\Persistence\SpyPaymentMethodStoreQuery;
 
 /**
  * Auto-generated group annotations
@@ -59,7 +64,7 @@ class PaymentFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($paymentMethodResponseTransfer->getIsSuccessful(), 'Payment method should be found');
-        $this->assertNull($paymentMethodResponseTransfer->getPaymentMethod(), 'Payment method should not be empty');
+        $this->assertNotNull($paymentMethodResponseTransfer->getPaymentMethod(), 'Payment method should not be empty');
     }
 
     /**
@@ -75,5 +80,46 @@ class PaymentFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($paymentMethodResponseTransfer->getIsSuccessful(), 'Payment method should not be found');
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateMethodShouldUpdateShipmentMethodWithStoreRelation(): void
+    {
+        // Arrange
+        $this->tester->ensurePaymentMethodTableIsEmpty();
+        $paymentProviderTransfer = $this->tester->havePaymentProvider();
+        $paymentMethodTransfer = $this->tester->havePaymentMethod([
+            PaymentMethodTransfer::METHOD_NAME => 'test',
+            PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
+        ]);
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
+        $storeRelationTransfer = (new StoreRelationBuilder())->seed([
+            StoreRelationTransfer::ID_ENTITY => $paymentMethodTransfer->getIdPaymentMethod(),
+            StoreRelationTransfer::ID_STORES => [
+                $storeTransfer->getIdStore(),
+            ],
+            StoreRelationTransfer::STORES => [
+                $storeTransfer,
+            ],
+        ])->build();
+        $paymentMethodTransfer->setStoreRelation($storeRelationTransfer);
+        $paymentMethodTransfer->setMethodName('test1');
+
+        // Act
+        $this->paymentFacade->updatePaymentMethod($paymentMethodTransfer);
+
+        // Assert
+        $resultPaymentMethodEntity = SpyPaymentMethodQuery::create()
+            ->filterByIdPaymentMethod($paymentMethodTransfer->getIdPaymentMethod())
+            ->findOne();
+        $storeRelationExist = SpyPaymentMethodStoreQuery::create()
+            ->filterByFkPaymentMethod($paymentMethodTransfer->getIdPaymentMethod())
+            ->exists();
+        $this->assertEquals('test1', $resultPaymentMethodEntity->getName(), 'Payment method name should match to the expected value');
+        $this->assertTrue($storeRelationExist, 'Payment method store relation should exists');
     }
 }

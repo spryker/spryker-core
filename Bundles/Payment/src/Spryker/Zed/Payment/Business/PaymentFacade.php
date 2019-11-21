@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentMethodResponseTransfer;
+use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesPaymentTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -165,5 +166,20 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
         return $this->getFactory()
             ->createPaymentMethodFinder()
             ->findPaymentMethodById($idPaymentMethod);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodResponseTransfer
+     */
+    public function updatePaymentMethod(
+        PaymentMethodTransfer $paymentMethodTransfer
+    ): PaymentMethodResponseTransfer {
+        return new PaymentMethodResponseTransfer();
     }
 }

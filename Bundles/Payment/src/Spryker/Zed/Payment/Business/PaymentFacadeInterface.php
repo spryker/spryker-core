@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentMethodResponseTransfer;
+use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesPaymentTransfer;
 
@@ -128,4 +129,20 @@ interface PaymentFacadeInterface
      * @return \Generated\Shared\Transfer\PaymentMethodResponseTransfer
      */
     public function findPaymentMethodById(int $idPaymentMethod): PaymentMethodResponseTransfer;
+
+    /**
+     * Specification:
+     * - Updates payment method in database using provided PaymentMethod transfer object data.
+     * - Updates/creates payment method store relation collection in the PaymentMethod transfer object.
+     * - Returns PaymentMethodResponseTransfer transfer object.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodResponseTransfer
+     */
+    public function updatePaymentMethod(
+        PaymentMethodTransfer $paymentMethodTransfer
+    ): PaymentMethodResponseTransfer;
 }
