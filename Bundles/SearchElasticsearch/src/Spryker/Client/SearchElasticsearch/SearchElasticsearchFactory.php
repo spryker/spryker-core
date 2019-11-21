@@ -38,8 +38,8 @@ use Spryker\Client\SearchElasticsearch\Query\QueryFactory;
 use Spryker\Client\SearchElasticsearch\Query\QueryFactoryInterface;
 use Spryker\Client\SearchElasticsearch\Search\Search;
 use Spryker\Client\SearchElasticsearch\Search\SearchInterface;
-use Spryker\Client\SearchElasticsearch\SearchContext\SourceIdentifierMapper;
-use Spryker\Client\SearchElasticsearch\SearchContext\SourceIdentifierMapperInterface;
+use Spryker\Client\SearchElasticsearch\SourceIdentifierMapper\SourceIdentifierMapper;
+use Spryker\Client\SearchElasticsearch\SourceIdentifierMapper\SourceIdentifierMapperInterface;
 use Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilder;
 use Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilderInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
@@ -222,7 +222,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\SearchElasticsearch\SearchContext\SourceIdentifierMapperInterface
+     * @return \Spryker\Client\SearchElasticsearch\SourceIdentifierMapper\SourceIdentifierMapperInterface
      */
     public function createSourceIdentifierMapper(): SourceIdentifierMapperInterface
     {

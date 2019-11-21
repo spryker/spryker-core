@@ -219,7 +219,7 @@ class IndexSettingsUpdaterTest extends Unit
             ->setConstructorArgs([
                 $this->clientMock,
                 $this->tester->getModuleConfig(),
-                $this->tester->getFactory()->getUtilSanitizeService()
+                $this->tester->getFactory()->getUtilSanitizeService(),
             ])
             ->setMethods(['getIndexState'])
             ->getMock();

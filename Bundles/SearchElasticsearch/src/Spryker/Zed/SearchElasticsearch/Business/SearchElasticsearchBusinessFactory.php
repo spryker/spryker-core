@@ -25,8 +25,6 @@ use Spryker\Zed\SearchElasticsearch\Business\Definition\Merger\IndexDefinitionMe
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Merger\IndexDefinitionMergerInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Reader\IndexDefinitionReader;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Reader\IndexDefinitionReaderInterface;
-use Spryker\Zed\SearchElasticsearch\Business\Index\Copier\IndexCopier;
-use Spryker\Zed\SearchElasticsearch\Business\Index\Copier\IndexCopierInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Index\Index;
 use Spryker\Zed\SearchElasticsearch\Business\Index\IndexInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\IndexInstallBroker;
@@ -47,7 +45,6 @@ use Spryker\Zed\SearchElasticsearch\Business\Snapshot\Repository;
 use Spryker\Zed\SearchElasticsearch\Business\Snapshot\RepositoryInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Snapshot\Snapshot;
 use Spryker\Zed\SearchElasticsearch\Business\Snapshot\SnapshotInterface;
-use Spryker\Zed\SearchElasticsearch\Dependency\Guzzle\SearchElasticsearchToGuzzleClientInterface;
 use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilEncodingServiceInterface;
 use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilSanitizeServiceInterface;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchDependencyProvider;
@@ -273,7 +270,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactoryInterface
+     * @return \Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilSanitizeServiceInterface
      */
     public function getUtilSanitizeService(): SearchElasticsearchToUtilSanitizeServiceInterface
     {
@@ -287,28 +284,9 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     {
         return new Index(
             $this->getElasticsearchClient(),
+            $this->createIndexNameResolver(),
             $this->getConfig()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\SearchElasticsearch\Business\Index\Copier\IndexCopierInterface
-     */
-    public function createIndexCopier(): IndexCopierInterface
-    {
-        return new IndexCopier(
-            $this->getGuzzleClient(),
-            $this->getConfig(),
-            $this->getUtilEncodingService()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\SearchElasticsearch\Dependency\Guzzle\SearchElasticsearchToGuzzleClientInterface
-     */
-    public function getGuzzleClient(): SearchElasticsearchToGuzzleClientInterface
-    {
-        return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::CLIENT_GUZZLE);
     }
 
     /**

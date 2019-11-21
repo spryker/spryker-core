@@ -13,6 +13,7 @@ use Elastica\Request;
 use Generated\Shared\Transfer\StoreTransfer;
 use Psr\Log\NullLogger;
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
+use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Snapshot\Repository;
 use Spryker\Zed\SearchElasticsearch\Business\Snapshot\RepositoryInterface;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
@@ -35,8 +36,7 @@ use SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchHelper;
 class SearchElasticsearchFacadeTest extends Unit
 {
     protected const CURRENT_STORE = 'DE';
-    protected const SOURCE_IDENTIFIER = 'index-name';
-    protected const INDEX_NAME_ALL = '*_testing';
+    protected const FIXTURE_SOURCE_IDENTIFIER = 'index-name';
     protected const DOCUMENT_CONTENT_KEY = '_source';
     protected const REPOSITORY_LOCATION_FILE_NAME = 'search_test_file';
     protected const REPOSITORY_NAME = 'search_test_repository';
@@ -46,22 +46,12 @@ class SearchElasticsearchFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->tester->mockConfigMethod('getIndexNameAll', static::INDEX_NAME_ALL);
-    }
-
-    /**
-     * @return void
-     */
     public function testInstallsIndices(): void
     {
         // Arrange
         $this->tester->mockConfigMethod('getJsonSchemaDefinitionDirectories', $this->tester->getFixturesSchemaDirectory());
         $this->setupStoreClientDependency();
-        $expectedIndexName = $this->tester->translateSourceIdentifierToIndexName(static::SOURCE_IDENTIFIER);
+        $expectedIndexName = $this->tester->translateSourceIdentifierToIndexName(static::FIXTURE_SOURCE_IDENTIFIER);
         $this->tester->addCleanupForIndexByName($expectedIndexName);
 
         // Act
@@ -84,7 +74,7 @@ class SearchElasticsearchFacadeTest extends Unit
         $this->tester->getFacade()->installMapper(new NullLogger());
 
         // Assert
-        $this->tester->assertIndexMapGenerated(static::SOURCE_IDENTIFIER);
+        $this->tester->assertIndexMapGenerated(static::FIXTURE_SOURCE_IDENTIFIER);
     }
 
     /**
@@ -106,6 +96,8 @@ class SearchElasticsearchFacadeTest extends Unit
     }
 
     /**
+     * @group facadeclose
+     *
      * @return void
      */
     public function testCanCloseAllIndices(): void
@@ -114,9 +106,10 @@ class SearchElasticsearchFacadeTest extends Unit
         /** @var \Elastica\Index $index */
         $index = $this->tester->haveIndex('dummy_index_name');
         $anotherIndex = $this->tester->haveIndex('another_dummy_index_name');
+        $this->arrangeEnvironmentForMultiIndexTest([$index, $anotherIndex]);
 
         // Act
-        $result = $this->tester->getFacade()->closeIndices();
+        $result = $this->tester->getFacade()->closeIndexes();
 
         // Assert
         $this->assertTrue($result);
@@ -151,10 +144,11 @@ class SearchElasticsearchFacadeTest extends Unit
         /** @var \Elastica\Index $index */
         $index = $this->tester->haveIndex('dummy_index_name');
         $anotherIndex = $this->tester->haveIndex('another_dummy_index_name');
-        $this->tester->getFacade()->closeIndices();
+        $this->arrangeEnvironmentForMultiIndexTest([$index, $anotherIndex]);
+        $this->tester->getFacade()->closeIndexes();
 
         // Act
-        $result = $this->tester->getFacade()->openIndices();
+        $result = $this->tester->getFacade()->openIndexes();
 
         // Assert
         $this->assertTrue($result);
@@ -185,9 +179,10 @@ class SearchElasticsearchFacadeTest extends Unit
         // Arrange
         $index = $this->tester->haveIndex('dummy_index_name');
         $anotherIndex = $this->tester->haveIndex('another_dummy_index_name');
+        $this->arrangeEnvironmentForMultiIndexTest([$index, $anotherIndex]);
 
         // Act
-        $this->tester->getFacade()->deleteIndices();
+        $this->tester->getFacade()->deleteIndexes();
 
         // Assert
         $this->assertAllIndicesAreDeleted([$index, $anotherIndex]);
@@ -446,5 +441,24 @@ class SearchElasticsearchFacadeTest extends Unit
         if (getenv('TRAVIS')) {
             $this->markTestSkipped('Travis not set up properly');
         }
+    }
+
+    /**
+     * @param \Elastica\Index[] $indexes
+     *
+     * @return void
+     */
+    protected function arrangeEnvironmentForMultiIndexTest(array $indexes): void
+    {
+        $indexNames = array_map(function (Index $index) {
+            return $index->getName();
+        }, $indexes);
+
+        $indexNameResolverMock = $this->createMock(IndexNameResolverInterface::class);
+        $indexNameResolverMock->method('resolve')->willReturnArgument(0);
+
+        $this->tester->mockConfigMethod('getSupportedSourceIdentifiers', array_unique($indexNames));
+        $this->tester->mockFactoryMethod('createIndexNameResolver', $indexNameResolverMock);
+        $this->tester->mockFactoryMethod('getConfig', $this->tester->getModuleConfig());
     }
 }
