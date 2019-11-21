@@ -14,7 +14,7 @@ use Spryker\Shared\CartCodesRestApi\CartCodesRestApiConfig;
 use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeInterface;
 use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeInterface;
 
-class CartCodeDeleter implements CartCodeDeleterInterface
+class CartCodeRemover implements CartCodeRemoverInterface
 {
     /**
      * @var \Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeInterface
@@ -44,7 +44,7 @@ class CartCodeDeleter implements CartCodeDeleterInterface
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function removeCode(QuoteTransfer $quoteTransfer, int $idDiscount): CartCodeOperationResultTransfer
+    public function removeCartCode(QuoteTransfer $quoteTransfer, int $idDiscount): CartCodeOperationResultTransfer
     {
         $quoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
 
@@ -56,16 +56,14 @@ class CartCodeDeleter implements CartCodeDeleterInterface
 
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
 
-        $voucherCode = $this->getVoucherCodeWithDiscount($quoteTransfer->getVoucherDiscounts()->getArrayCopy(), $idDiscount);
+        $voucherCode = $this->findVoucherCodeById($quoteTransfer->getVoucherDiscounts()->getArrayCopy(), $idDiscount);
         if (!$voucherCode) {
             return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
                 CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_NOT_FOUND
             );
         }
 
-        $cartCodeOperationResultTransfer = $this->cartCodeFacade->removeCode($quoteTransfer, $voucherCode);
-
-        return $cartCodeOperationResultTransfer;
+        return $this->cartCodeFacade->removeCode($quoteTransfer, $voucherCode);
     }
 
     /**
@@ -74,7 +72,7 @@ class CartCodeDeleter implements CartCodeDeleterInterface
      *
      * @return string|null
      */
-    protected function getVoucherCodeWithDiscount(array $discountTransfers, int $idDiscount): ?string
+    protected function findVoucherCodeById(array $discountTransfers, int $idDiscount): ?string
     {
         foreach ($discountTransfers as $discountTransfer) {
             if ($discountTransfer->getIdDiscount() === $idDiscount) {

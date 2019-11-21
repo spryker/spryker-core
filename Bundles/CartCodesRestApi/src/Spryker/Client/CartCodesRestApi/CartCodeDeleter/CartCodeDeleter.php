@@ -35,20 +35,10 @@ class CartCodeDeleter implements CartCodeDeleterInterface
      */
     public function removeCode(QuoteTransfer $quoteTransfer, int $idDiscount): CartCodeOperationResultTransfer
     {
-        return $this->cartCodesRestApiStub
-            ->removeCode($this->prepareRemoveCodeRequestTransfer($quoteTransfer, $idDiscount));
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int $idDiscount
-     *
-     * @return \Generated\Shared\Transfer\RemoveCodeRequestTransfer
-     */
-    protected function prepareRemoveCodeRequestTransfer(QuoteTransfer $quoteTransfer, int $idDiscount): RemoveCodeRequestTransfer
-    {
-        return (new RemoveCodeRequestTransfer())
-            ->setQuote($quoteTransfer)
-            ->setIdDiscount($idDiscount);
+        return $this->cartCodesRestApiStub->removeCode(
+            (new RemoveCodeRequestTransfer())
+                ->setQuote($quoteTransfer)
+                ->setIdDiscount($idDiscount)
+        );
     }
 }

@@ -10,7 +10,7 @@ namespace Spryker\Zed\CartCodesRestApi\Business\CartCodeDeleter;
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CartCodeDeleterInterface
+interface CartCodeRemoverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -18,5 +18,5 @@ interface CartCodeDeleterInterface
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function removeCode(QuoteTransfer $quoteTransfer, int $idDiscount): CartCodeOperationResultTransfer;
+    public function removeCartCode(QuoteTransfer $quoteTransfer, int $idDiscount): CartCodeOperationResultTransfer;
 }

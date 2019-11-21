@@ -46,7 +46,7 @@ class CartCodesRestApiFacade extends AbstractFacade implements CartCodesRestApiF
     public function removeCode(QuoteTransfer $quoteTransfer, int $idDiscount): CartCodeOperationResultTransfer
     {
         return $this->getFactory()
-            ->createCartCodeDeleter()
-            ->removeCode($quoteTransfer, $idDiscount);
+            ->createCartCodeRemover()
+            ->removeCartCode($quoteTransfer, $idDiscount);
     }
 }

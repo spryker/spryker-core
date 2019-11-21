@@ -49,10 +49,13 @@ class RequestResourceExtractor implements RequestResourceExtractorInterface
     {
         $resource = $this->processPostData($request, $metadata);
 
+        $resourceType = $request->attributes->get(RestResourceInterface::RESOURCE_DATA)[RestResourceInterface::RESOURCE_TYPE]
+            ?: $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_TYPE, 'errors');
+
         if (!$resource) {
             $resource = $this->restResourceBuilder->createRestResource(
-                $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_TYPE, 'errors'),
-                $this->getResourceId($request, $this->readRequestData($request, $metadata))
+                $resourceType,
+                $this->findResourceId($request, $this->readRequestData($request, $metadata))
             );
         }
 
@@ -95,10 +98,10 @@ class RequestResourceExtractor implements RequestResourceExtractorInterface
      *
      * @return string|null
      */
-    protected function getResourceId(Request $request, ?array $requestData): ?string
+    protected function findResourceId(Request $request, ?array $requestData): ?string
     {
         if ($request->getMethod() === Request::METHOD_DELETE && $requestData) {
-            return $requestData[RestResourceInterface::RESOURCE_DATA][RestResourceInterface::RESOURCE_ID];
+            return $requestData[RestResourceInterface::RESOURCE_DATA][RestResourceInterface::RESOURCE_ID] ?? null;
         }
 
         return $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_ID);
@@ -112,10 +115,6 @@ class RequestResourceExtractor implements RequestResourceExtractorInterface
      */
     protected function mapEntityTransfer(Request $request, array $data): ?AbstractTransfer
     {
-        if (!isset($data[RestResourceInterface::RESOURCE_ATTRIBUTES])) {
-            return null;
-        }
-
         $className = $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_RESOURCE_FQCN);
 
         if (!$className) {
@@ -169,6 +168,7 @@ class RequestResourceExtractor implements RequestResourceExtractorInterface
         if (count($allResources) === 1) {
             return [];
         }
+
         $resources = [];
         foreach ($allResources as $resource) {
             if (!$resource[RequestConstantsInterface::ATTRIBUTE_ID]) {

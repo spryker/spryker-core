@@ -43,6 +43,6 @@ class CartCodeFacade extends AbstractFacade implements CartCodeFacadeInterface
      */
     public function removeCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
     {
-        return $this->getFactory()->createCartCodeDeleter()->removeCode($quoteTransfer, $code);
+        return $this->getFactory()->createCartCodeRemover()->removeCode($quoteTransfer, $code);
     }
 }
