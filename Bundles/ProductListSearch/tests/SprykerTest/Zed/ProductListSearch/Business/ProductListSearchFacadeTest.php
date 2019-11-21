@@ -36,7 +36,7 @@ class ProductListSearchFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandProductConcretePageSearchTransferWithProductLists()
+    public function testExpandProductConcretePageSearchTransferWithProductLists(): void
     {
         // Arrange
         $productConcretePageSearchTransfer = new ProductConcretePageSearchTransfer();
@@ -55,7 +55,7 @@ class ProductListSearchFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testMapProductDataToProductListMapTransfer()
+    public function testMapProductDataToProductListMapTransfer(): void
     {
         // Arrange
         $productData = [

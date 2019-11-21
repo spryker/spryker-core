@@ -1,0 +1,7 @@
+{{ form_row(merchantForm.merchantProfile.id_merchant_profile) }}
+{{ form_row(merchantForm.merchantProfile.contact_person_role) }}
+{{ form_row(merchantForm.merchantProfile.contact_person_title) }}
+{{ form_row(merchantForm.merchantProfile.contact_person_first_name) }}
+{{ form_row(merchantForm.merchantProfile.contact_person_last_name) }}
+{{ form_row(merchantForm.merchantProfile.contact_person_phone) }}
+{% do merchantForm.merchantProfile.merchantProfileLocalizedGlossaryAttributes.setRendered %}

@@ -15,7 +15,7 @@ class GlueBootstrap extends Framework
     /**
      * @return void
      */
-    public function _initialize()
+    public function _initialize(): void
     {
         $this->boot();
     }
@@ -23,7 +23,7 @@ class GlueBootstrap extends Framework
     /**
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $pimplePlugin = new Pimple();
         $pimplePlugin->setApplication(new Application());

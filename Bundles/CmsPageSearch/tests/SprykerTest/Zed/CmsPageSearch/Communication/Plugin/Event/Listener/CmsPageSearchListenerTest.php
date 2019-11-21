@@ -43,7 +43,7 @@ class CmsPageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testCmsPageVersionSearchListenerStoreData()
+    public function testCmsPageVersionSearchListenerStoreData(): void
     {
         SpyCmsPageSearchQuery::create()->filterByFkCmsPage(1)->delete();
         $beforeCount = SpyCmsPageSearchQuery::create()->count();
@@ -70,7 +70,7 @@ class CmsPageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testCmsPageUrlSearchListenerStoreData()
+    public function testCmsPageUrlSearchListenerStoreData(): void
     {
         SpyCmsPageSearchQuery::create()->filterByFkCmsPage(1)->delete();
         $beforeCount = SpyCmsPageSearchQuery::create()->count();
@@ -97,7 +97,7 @@ class CmsPageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testCmsPageSearchListenerStoreData()
+    public function testCmsPageSearchListenerStoreData(): void
     {
         SpyCmsPageSearchQuery::create()->filterByFkCmsPage(1)->delete();
         $beforeCount = SpyCmsPageSearchQuery::create()->count();
@@ -122,7 +122,7 @@ class CmsPageSearchListenerTest extends Unit
     /**
      * @return \Spryker\Zed\CmsPageSearch\Business\CmsPageSearchFacade
      */
-    protected function getCmsPageSearchFacade()
+    protected function getCmsPageSearchFacade(): CmsPageSearchFacade
     {
         $searchFacadeMock = $this->getMockBuilder(CmsPageSearchToSearchBridge::class)->disableOriginalConstructor()->getMock();
         $searchFacadeMock->method('transformPageMapToDocumentByMapperName')->willReturn([]);
@@ -138,7 +138,7 @@ class CmsPageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    protected function assertCmsPageSearch()
+    protected function assertCmsPageSearch(): void
     {
         $cmsPage = SpyCmsPageSearchQuery::create()->filterByLocale('en_US')->orderByIdCmsPageSearch()->findOneByFkCmsPage(1);
         $this->assertNotNull($cmsPage);

@@ -26,7 +26,7 @@ class TransferConfigTest extends Unit
     /**
      * @return \Spryker\Zed\Transfer\TransferConfig
      */
-    private function getConfig()
+    private function getConfig(): TransferConfig
     {
         return new TransferConfig();
     }
@@ -34,7 +34,7 @@ class TransferConfigTest extends Unit
     /**
      * @return void
      */
-    public function testGetClassTargetDirectoryShouldReturnString()
+    public function testGetClassTargetDirectoryShouldReturnString(): void
     {
         $this->assertTrue(is_string($this->getConfig()->getClassTargetDirectory()));
     }
@@ -42,7 +42,7 @@ class TransferConfigTest extends Unit
     /**
      * @return void
      */
-    public function testGetGeneratedTargetDirectoryShouldReturnString()
+    public function testGetGeneratedTargetDirectoryShouldReturnString(): void
     {
         $this->assertTrue(is_string($this->getConfig()->getClassTargetDirectory()));
     }
@@ -50,7 +50,7 @@ class TransferConfigTest extends Unit
     /**
      * @return void
      */
-    public function testGetSourceDirectoriesShouldReturnArray()
+    public function testGetSourceDirectoriesShouldReturnArray(): void
     {
         $this->assertTrue(is_array($this->getConfig()->getSourceDirectories()));
     }
@@ -58,7 +58,7 @@ class TransferConfigTest extends Unit
     /**
      * @return void
      */
-    public function testGetSourceDirectoriesShouldReturnArrayWithTwoEntriesIfProjectAndVendorTransferExist()
+    public function testGetSourceDirectoriesShouldReturnArrayWithTwoEntriesIfProjectAndVendorTransferExist(): void
     {
         $directory = APPLICATION_SOURCE_DIR . '/Foo/Shared/Bar/Transfer/';
         mkdir($directory, 0775, true);
@@ -72,7 +72,7 @@ class TransferConfigTest extends Unit
     /**
      * @return void
      */
-    public function cleanTestDirectories()
+    public function cleanTestDirectories(): void
     {
         $filesystem = new Filesystem();
         $directory = APPLICATION_SOURCE_DIR . '/Foo';
@@ -82,7 +82,7 @@ class TransferConfigTest extends Unit
     /**
      * @return void
      */
-    public function testGetDataBuilderFileNamePatternReturnsString()
+    public function testGetDataBuilderFileNamePatternReturnsString(): void
     {
         $this->assertIsString($this->getConfig()->getDataBuilderFileNamePattern());
     }

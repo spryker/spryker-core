@@ -40,7 +40,7 @@ class TransferFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteGeneratedTransferObjectsShouldDeleteAllGeneratedTransferObjects()
+    public function testDeleteGeneratedTransferObjectsShouldDeleteAllGeneratedTransferObjects(): void
     {
         $this->generateTransfers();
         $this->tester->getFacade()->deleteGeneratedTransferObjects();
@@ -52,7 +52,7 @@ class TransferFacadeTest extends Unit
      *
      * @return void
      */
-    public function testGenerateTransferObjectsShouldGenerateTransferObjects()
+    public function testGenerateTransferObjectsShouldGenerateTransferObjects(): void
     {
         $this->generateTransfers();
         $this->tester->assertVirtualDirectoryNotEmpty($this->tester->getTransferDestinationDir(), 'Transfers weren\'t generated successfully');
@@ -63,7 +63,7 @@ class TransferFacadeTest extends Unit
      *
      * @return void
      */
-    public function testValidateTransferObjectsShouldValidateTransferObjects()
+    public function testValidateTransferObjectsShouldValidateTransferObjects(): void
     {
         $result = $this->tester->getFacade()->validateTransferObjects($this->getMessenger(), ['bundle' => false, 'verbose' => false]);
         $this->assertTrue($result);
