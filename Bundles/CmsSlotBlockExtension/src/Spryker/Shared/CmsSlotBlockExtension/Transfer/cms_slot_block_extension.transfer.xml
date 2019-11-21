@@ -6,4 +6,7 @@
     <transfer name="CmsBlock">
     </transfer>
 
+    <transfer name="CmsSlotParams">
+    </transfer>
+
 </transfers>

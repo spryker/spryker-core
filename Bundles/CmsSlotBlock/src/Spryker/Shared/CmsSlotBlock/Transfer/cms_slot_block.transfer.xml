@@ -55,4 +55,7 @@
         <property name="errorMessages" type="Message[]" singular="errorMessage"/>
     </transfer>
 
+    <transfer name="CmsSlotParams">
+    </transfer>
+
 </transfers>
