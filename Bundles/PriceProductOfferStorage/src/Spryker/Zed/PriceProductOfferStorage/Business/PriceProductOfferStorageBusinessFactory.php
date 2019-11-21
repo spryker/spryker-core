@@ -8,8 +8,6 @@
 namespace Spryker\Zed\PriceProductOfferStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\PriceProductOfferStorage\Business\PriceProductOfferStorage\PriceProductOfferStorageExpander;
-use Spryker\Zed\PriceProductOfferStorage\Business\PriceProductOfferStorage\PriceProductOfferStorageExpanderInterface;
 use Spryker\Zed\PriceProductOfferStorage\Business\PriceProductOfferStorage\PriceProductOfferStorageWriter;
 use Spryker\Zed\PriceProductOfferStorage\Business\PriceProductOfferStorage\PriceProductOfferStorageWriterInterface;
 use Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToEventFacadeInterface;
@@ -20,14 +18,6 @@ use Spryker\Zed\PriceProductOfferStorage\PriceProductOfferStorageDependencyProvi
  */
 class PriceProductOfferStorageBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return \Spryker\Zed\PriceProductOfferStorage\Business\PriceProductOfferStorage\PriceProductOfferStorageExpanderInterface
-     */
-    public function createPriceProductOfferStorageExpander(): PriceProductOfferStorageExpanderInterface
-    {
-        return new PriceProductOfferStorageExpander();
-    }
-
     /**
      * @return \Spryker\Zed\PriceProductOfferStorage\Business\PriceProductOfferStorage\PriceProductOfferStorageWriterInterface
      */

@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\PriceProductOfferStorage\Persistence\Propel;
 
-use Orm\Zed\PriceProductOfferStorage\Persistence\Base\SpyProductConcreteProductOfferPriceStorageQuery;
+use Orm\Zed\PriceProductOfferStorage\Persistence\Base\SpyProductConcreteProductOfferPriceStorage;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'spy_product_concrete_product_offer_price_storage' table.
+ * Skeleton subclass for representing a row from the 'spy_product_concrete_product_offer_price_storage' table.
  *
  *
  *
@@ -18,6 +18,6 @@ use Orm\Zed\PriceProductOfferStorage\Persistence\Base\SpyProductConcreteProductO
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-class AbstractProductConcreteProductOfferPriceStorageQuery extends SpyProductConcreteProductOfferPriceStorageQuery
+class AbstractSpyProductConcreteProductOfferPriceStorage extends SpyProductConcreteProductOfferPriceStorage
 {
 }

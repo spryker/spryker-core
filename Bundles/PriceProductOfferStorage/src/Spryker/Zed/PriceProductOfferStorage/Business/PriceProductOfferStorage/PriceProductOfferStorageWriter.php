@@ -12,7 +12,7 @@ use Orm\Zed\Currency\Persistence\Map\SpyCurrencyTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
 use Orm\Zed\PriceProductOffer\Persistence\Map\SpyPriceProductOfferTableMap;
 use Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOfferQuery;
-use Orm\Zed\PriceProductOfferStorage\Persistence\SpyProductConcreteProductOfferPriceStorageQuery;
+use Orm\Zed\PriceProductOfferStorage\Persistence\SpySpyProductConcreteProductOfferPriceStorageQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
@@ -120,7 +120,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
      */
     public function unpublishByProductIds(array $productIds): void
     {
-        $priceProductOfferStorageEntities = SpyProductConcreteProductOfferPriceStorageQuery::create()
+        $priceProductOfferStorageEntities = SpySpyProductConcreteProductOfferPriceStorageQuery::create()
             ->filterByFkProduct_In($productIds)
             ->find();
         
@@ -250,7 +250,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
         foreach ($groupedByStoreAndProductSkuProductOffers as $storeName => $groupedByProductSkuProductOffers) {
             foreach ($groupedByProductSkuProductOffers as $productSku => $priceProductOffers) {
                 if (isset($productSkuToIdMap[$productSku])) {
-                    $productConcreteProductOfferPriceStorageEntity = SpyProductConcreteProductOfferPriceStorageQuery::create()
+                    $productConcreteProductOfferPriceStorageEntity = SpySpyProductConcreteProductOfferPriceStorageQuery::create()
                         ->filterByFkProduct($productSkuToIdMap[$productSku])
                         ->filterByStore($storeName)
                         ->findOneOrCreate();
@@ -283,11 +283,11 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
     /**
      * @param int[] $productIds
      *
-     * @return \Orm\Zed\PriceProductOfferStorage\Persistence\SpyProductConcreteProductOfferPriceStorage[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\PriceProductOfferStorage\Persistence\SpySpyProductConcreteProductOfferPriceStorage[]|\Propel\Runtime\Collection\ObjectCollection
      */
     protected function getProductConcreteProductOfferPriceStorageEntities(array $productIds): ObjectCollection
     {
-        return SpyProductConcreteProductOfferPriceStorageQuery::create()
+        return SpySpyProductConcreteProductOfferPriceStorageQuery::create()
             ->filterByFkProduct_In($productIds)
             ->find();
     }

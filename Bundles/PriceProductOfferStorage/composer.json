@@ -5,29 +5,29 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/kernel": "^3.3.0",
     "spryker/currency": "^3.1.0",
     "spryker/event": "^2.0.0",
     "spryker/event-behavior": "^1.14.0",
+    "spryker/kernel": "^3.3.0",
     "spryker/price-product": "^4.0.0",
+    "spryker/price-product-extension": "^1.3.0",
     "spryker/price-product-offer": "^1.0.0",
+    "spryker/price-product-storage-extension": "^1.2.0",
     "spryker/product": "^6.0.0",
     "spryker/product-offer": "^1.0.0",
     "spryker/propel-orm": "^1.5.0",
-    "spryker/store": "^1.10.0",
-    "spryker/synchronization-behavior": "^1.0.0",
-    "spryker/synchronization-extension": "^1.0.0",
-    "spryker/price-product-extension": "^1.3.0",
-    "spryker/price-product-storage-extension": "^1.2.0",
     "spryker/storage": "^3.4.0",
-    "spryker/synchronization": "^1.0.0"
+    "spryker/store": "^1.10.0",
+    "spryker/synchronization": "^1.0.0",
+    "spryker/synchronization-behavior": "^1.0.0",
+    "spryker/synchronization-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
     "spryker/merchant": "*",
     "spryker/propel": "*",
-    "spryker/queue": "*"
+    "spryker/queue": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {

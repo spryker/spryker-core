@@ -8,8 +8,8 @@
 namespace Spryker\Zed\PriceProductOfferStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Orm\Zed\PriceProductOfferStorage\Persistence\SpyProductConcreteProductOfferPriceStorage;
-use Orm\Zed\PriceProductOfferStorage\Persistence\SpyProductConcreteProductOfferPriceStorageQuery;
+use Orm\Zed\PriceProductOfferStorage\Persistence\SpySpyProductConcreteProductOfferPriceStorage;
+use Orm\Zed\PriceProductOfferStorage\Persistence\SpySpyProductConcreteProductOfferPriceStorageQuery;
 use Spryker\Shared\PriceProductOfferStorage\PriceProductOfferStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
@@ -60,7 +60,7 @@ class PriceProductOfferSynchronizationDataPlugin extends AbstractPlugin implemen
     public function getData(int $offset, int $limit, array $ids = []): array
     {
         $synchronizationDataTransfers = [];
-        $productConcreteProductOfferPriceStorageQuery = SpyProductConcreteProductOfferPriceStorageQuery::create();
+        $productConcreteProductOfferPriceStorageQuery = SpySpyProductConcreteProductOfferPriceStorageQuery::create();
         $productConcreteProductOfferPriceStorageQuery->offset($offset)
             ->limit($limit);
         if ($ids) {
@@ -112,11 +112,11 @@ class PriceProductOfferSynchronizationDataPlugin extends AbstractPlugin implemen
     }
 
     /**
-     * @param \Orm\Zed\PriceProductOfferStorage\Persistence\SpyProductConcreteProductOfferPriceStorage $productConcreteProductOfferPriceStorageEntity
+     * @param \Orm\Zed\PriceProductOfferStorage\Persistence\SpySpyProductConcreteProductOfferPriceStorage $productConcreteProductOfferPriceStorageEntity
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer
      */
-    protected function createSynchronizationDataTransfer(SpyProductConcreteProductOfferPriceStorage $productConcreteProductOfferPriceStorageEntity): SynchronizationDataTransfer
+    protected function createSynchronizationDataTransfer(SpySpyProductConcreteProductOfferPriceStorage $productConcreteProductOfferPriceStorageEntity): SynchronizationDataTransfer
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
 

@@ -25,6 +25,7 @@
 
     <transfer name="PriceProductDimension">
         <property name="productOfferReference" type="string"/>
+        <property name="type" type="string"/>
     </transfer>
 
     <transfer name="PriceProductFilter">
@@ -38,5 +39,31 @@
     <transfer name="ProductView">
         <property name="selectedAttributes" type="array" singular="selectedAttribute"/>
         <property name="productOfferReference" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="priceDimension" type="PriceProductDimension"/>
+        <property name="groupKey" type="string"/>
+        <property name="isMergeable" type="bool"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="currency" type="Currency"/>
+        <property name="netAmount" type="int"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+        <property name="store" type="string"/>
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
     </transfer>
 </transfers>
