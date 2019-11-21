@@ -182,8 +182,7 @@ class MerchantRelationshipFacadeTest extends Unit
             ->getMerchantRelationshipById($merchantRelationship);
 
         // Assert
-        $this->assertNotNull($actualMerchantRelationship->getIdMerchantRelationship());
-        $this->assertEquals($expectedMerchantRelationship->toArray(), $actualMerchantRelationship->toArray());
+        $this->assertEquals($expectedMerchantRelationship->getIdMerchantRelationship(), $actualMerchantRelationship->getIdMerchantRelationship());
     }
 
     /**

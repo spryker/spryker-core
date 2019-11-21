@@ -51,7 +51,7 @@ class LocaleTest extends Unit
      *
      * @return void
      */
-    public function testCreateLocaleInsertsSomething()
+    public function testCreateLocaleInsertsSomething(): void
     {
         $localeQuery = $this->localeQueryContainer->queryLocaleByName('xy_ab');
         $this->assertEquals(0, $localeQuery->count());
@@ -66,7 +66,7 @@ class LocaleTest extends Unit
      *
      * @return void
      */
-    public function testDeleteLocaleDeletesSoftly()
+    public function testDeleteLocaleDeletesSoftly(): void
     {
         $localeQuery = $this->localeQueryContainer->queryLocaleByName('ab_xy');
         $this->localeFacade->createLocale('ab_xy');
@@ -79,7 +79,7 @@ class LocaleTest extends Unit
     /**
      * @return void
      */
-    public function testGetLocaleByIdReturnsValidLocaleTransfer()
+    public function testGetLocaleByIdReturnsValidLocaleTransfer(): void
     {
         $localeEntity = new SpyLocale();
         $localeEntity->setLocaleName('aa_AA');

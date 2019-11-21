@@ -55,7 +55,7 @@ class AvailabilityDataFeedQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testGetAvailabilityDataFeedQuery()
+    public function testGetAvailabilityDataFeedQuery(): void
     {
         $this->availabilityDataFeedTransfer->setIdLocale($this->idLocale);
         $query = $this->availabilityDataFeedQueryContainer
@@ -71,7 +71,7 @@ class AvailabilityDataFeedQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testGetAvailabilityDataFeedQueryWithJoinedProducts()
+    public function testGetAvailabilityDataFeedQueryWithJoinedProducts(): void
     {
         $this->availabilityDataFeedTransfer->setIdLocale($this->idLocale);
         $query = $this->availabilityDataFeedQueryContainer
@@ -88,7 +88,7 @@ class AvailabilityDataFeedQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testGetAvailabilityDataFeedQueryWithJoinedProductsAndLocaleFilter()
+    public function testGetAvailabilityDataFeedQueryWithJoinedProductsAndLocaleFilter(): void
     {
         $this->availabilityDataFeedTransfer->setIdLocale($this->idLocale);
         $query = $this->availabilityDataFeedQueryContainer
@@ -101,7 +101,7 @@ class AvailabilityDataFeedQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testGetAvailabilityDataFeedQueryWithFilterByDate()
+    public function testGetAvailabilityDataFeedQueryWithFilterByDate(): void
     {
         $this->availabilityDataFeedTransfer->setUpdatedFrom('2017-01-01');
         $this->availabilityDataFeedTransfer->setUpdatedTo('2017-12-01');
@@ -121,7 +121,7 @@ class AvailabilityDataFeedQueryContainerTest extends Unit
     /**
      * @return \Spryker\Zed\AvailabilityDataFeed\Persistence\AvailabilityDataFeedQueryContainer
      */
-    protected function createAvailabilityDataFeedQueryContainer()
+    protected function createAvailabilityDataFeedQueryContainer(): AvailabilityDataFeedQueryContainer
     {
         $availabilityDataFeedQueryContainer = new AvailabilityDataFeedQueryContainer();
 
@@ -131,7 +131,7 @@ class AvailabilityDataFeedQueryContainerTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\AvailabilityDataFeedTransfer
      */
-    protected function createAvailabilityDataFeedTransfer()
+    protected function createAvailabilityDataFeedTransfer(): AvailabilityDataFeedTransfer
     {
         $availabilityDataFeedTransfer = new AvailabilityDataFeedTransfer();
 
@@ -141,7 +141,7 @@ class AvailabilityDataFeedQueryContainerTest extends Unit
     /**
      * @return int
      */
-    protected function getIdLocale()
+    protected function getIdLocale(): int
     {
         $locale = SpyLocaleQuery::create()
             ->filterByLocaleName('de_DE')
@@ -155,7 +155,7 @@ class AvailabilityDataFeedQueryContainerTest extends Unit
      *
      * @return array
      */
-    protected function getJoinedTablesNames(SpyProductAbstractQuery $query)
+    protected function getJoinedTablesNames(SpyProductAbstractQuery $query): array
     {
         $tablesNames = [];
         $joins = $query->getJoins();
@@ -174,7 +174,7 @@ class AvailabilityDataFeedQueryContainerTest extends Unit
      *
      * @return array
      */
-    protected function getSortedExpectedJoinedTables($tablesArray)
+    protected function getSortedExpectedJoinedTables(array $tablesArray): array
     {
         asort($tablesArray);
         $tablesArray = array_values($tablesArray);
@@ -185,7 +185,7 @@ class AvailabilityDataFeedQueryContainerTest extends Unit
     /**
      * @return array
      */
-    protected function getDefaultJoinedTables()
+    protected function getDefaultJoinedTables(): array
     {
         return [
             'spy_availability',
@@ -201,7 +201,7 @@ class AvailabilityDataFeedQueryContainerTest extends Unit
     /**
      * @return array
      */
-    protected function getParamsForLocaleFilter()
+    protected function getParamsForLocaleFilter(): array
     {
         return [
             [
@@ -220,7 +220,7 @@ class AvailabilityDataFeedQueryContainerTest extends Unit
     /**
      * @return array
      */
-    protected function getParamsForDateFilter()
+    protected function getParamsForDateFilter(): array
     {
         return [
             [

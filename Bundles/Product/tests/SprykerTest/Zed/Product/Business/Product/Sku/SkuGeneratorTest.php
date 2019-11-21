@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Product\Business\Product\Sku;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
+use Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface;
 use Spryker\Zed\Product\Business\Product\Sku\SkuIncrementGenerator;
 use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface;
 use SprykerTest\Zed\Product\Business\FacadeTestAbstract;
@@ -31,7 +32,7 @@ class SkuGeneratorTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testGenerateProductAbstractSkuShouldSanitizeSku()
+    public function testGenerateProductAbstractSkuShouldSanitizeSku(): void
     {
         $skuGenerator = $this->createSkuGenerator();
 
@@ -46,7 +47,7 @@ class SkuGeneratorTest extends FacadeTestAbstract
     /**
      * @return void
      */
-    public function testGenerateProductConcreteSkuShouldSanitizeAndConcatSku()
+    public function testGenerateProductConcreteSkuShouldSanitizeAndConcatSku(): void
     {
         $skuGenerator = $this->createSkuGenerator();
 
@@ -99,7 +100,7 @@ class SkuGeneratorTest extends FacadeTestAbstract
     /**
      * @return \Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface
      */
-    protected function createSkuGenerator()
+    protected function createSkuGenerator(): SkuGeneratorInterface
     {
         return new SkuGenerator($this->createUtilTextServiceMock(), $this->createSkuIncrementGeneratorMock());
     }
@@ -115,7 +116,7 @@ class SkuGeneratorTest extends FacadeTestAbstract
     /**
      * @return \Spryker\Zed\Product\Business\Product\Sku\SkuIncrementGenerator
      */
-    protected function createSkuIncrementGeneratorMock()
+    protected function createSkuIncrementGeneratorMock(): SkuIncrementGenerator
     {
         return new SkuIncrementGenerator($this->productConcreteManager);
     }

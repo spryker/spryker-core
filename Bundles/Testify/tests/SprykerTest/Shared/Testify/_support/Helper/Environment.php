@@ -23,7 +23,7 @@ class Environment extends Module
     /**
      * @return void
      */
-    public function _initialize()
+    public function _initialize(): void
     {
         $rootDirectory = $this->getRootDirectory();
         $store = $this->getStore();

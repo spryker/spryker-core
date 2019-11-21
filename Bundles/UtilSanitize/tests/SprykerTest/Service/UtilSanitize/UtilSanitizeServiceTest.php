@@ -24,7 +24,7 @@ class UtilSanitizeServiceTest extends Unit
     /**
      * @return void
      */
-    public function testSanitizeHtmlShouldEscapeGivenHtmlTags()
+    public function testSanitizeHtmlShouldEscapeGivenHtmlTags(): void
     {
         $utilSanitizeService = $this->createUtilSanitizeService();
 
@@ -36,7 +36,7 @@ class UtilSanitizeServiceTest extends Unit
     /**
      * @return \Spryker\Service\UtilSanitize\UtilSanitizeService
      */
-    protected function createUtilSanitizeService()
+    protected function createUtilSanitizeService(): UtilSanitizeService
     {
         return new UtilSanitizeService();
     }

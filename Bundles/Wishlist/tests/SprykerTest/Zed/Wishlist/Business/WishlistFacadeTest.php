@@ -568,7 +568,7 @@ class WishlistFacadeTest extends Test
      *
      * @return void
      */
-    protected function assertWishlistItemCount($expected, $idWishlist = null)
+    protected function assertWishlistItemCount(int $expected, ?int $idWishlist = null): void
     {
         if (!$idWishlist) {
             $idWishlist = $this->wishlist->getIdWishlist();
@@ -586,7 +586,7 @@ class WishlistFacadeTest extends Test
      *
      * @return void
      */
-    protected function assertWishlistCount($expected)
+    protected function assertWishlistCount(int $expected): void
     {
         $count = $this->wishlistQueryContainer
             ->queryWishlist()

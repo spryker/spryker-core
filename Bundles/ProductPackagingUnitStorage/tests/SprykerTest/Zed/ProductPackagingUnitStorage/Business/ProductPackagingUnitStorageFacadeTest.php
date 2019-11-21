@@ -133,7 +133,7 @@ class ProductPackagingUnitStorageFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacade
      */
-    protected function getProductPackagingUnitStorageFacade()
+    protected function getProductPackagingUnitStorageFacade(): ProductPackagingUnitStorageFacade
     {
         $factory = new ProductPackagingUnitStorageBusinessFactory();
         $factory->setConfig(new ProductPackagingUnitStorageConfigMock());

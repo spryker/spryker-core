@@ -32,7 +32,7 @@ class CategoryNodeDataPageMapBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testBuildPageMapWillReturnCorrectTransfer()
+    public function testBuildPageMapWillReturnCorrectTransfer(): void
     {
         $query = new CategoryPageSearchQueryContainer();
         $categoryNodeDataPageMapBuilder = new CategoryNodeDataPageMapBuilder();

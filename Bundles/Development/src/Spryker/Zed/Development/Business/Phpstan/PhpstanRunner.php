@@ -93,11 +93,13 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
         if ($module) {
             $paths = $this->getPaths($module);
+            if (empty($paths)) {
+                throw new RuntimeException('No path found for module ' . $module);
+            }
         } else {
-            $paths[$this->config->getPathToRoot()] = $this->config->getPathToRoot();
-        }
-        if (empty($paths)) {
-            throw new RuntimeException('No path found for module ' . $module);
+            $paths = [
+                $this->config->getPathToRoot() => $this->config->getPathToRoot(),
+            ];
         }
 
         $resultCode = 0;

@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentSaverInterface;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
+use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPostCheckPluginInterface;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutSaveOrderPluginInterface;
@@ -37,7 +38,7 @@ class PaymentPluginExecutorTest extends Unit
     /**
      * @return void
      */
-    public function testPreCheckShouldTriggerTestPaymentPlugin()
+    public function testPreCheckShouldTriggerTestPaymentPlugin(): void
     {
         $preCheckPluginMock = $this->createPreCheckPluginMock();
         $preCheckPluginMock->expects($this->once())->method('execute');
@@ -52,7 +53,7 @@ class PaymentPluginExecutorTest extends Unit
     /**
      * @return void
      */
-    public function testOrderSaverShouldTriggerTestPaymentPlugin()
+    public function testOrderSaverShouldTriggerTestPaymentPlugin(): void
     {
         $orderSavePluginMock = $this->createSavePluginMock();
         $orderSavePluginMock->expects($this->once())->method('execute');
@@ -67,7 +68,7 @@ class PaymentPluginExecutorTest extends Unit
     /**
      * @return void
      */
-    public function testPostCheckShouldTriggerTestPaymentPlugin()
+    public function testPostCheckShouldTriggerTestPaymentPlugin(): void
     {
         $postCheckoutPluginMock = $this->createPostSavePluginMock();
         $postCheckoutPluginMock->expects($this->once())->method('execute');
@@ -90,7 +91,7 @@ class PaymentPluginExecutorTest extends Unit
         $preCheckPluginMock = null,
         $orderSavePluginMock = null,
         $postCheckPluginMock = null
-    ) {
+    ): PaymentPluginExecutor {
         $salesSaverMock = $this->createSalesSaverMock();
 
         $paymentPluginExecutor = new PaymentPluginExecutor(
@@ -116,7 +117,7 @@ class PaymentPluginExecutorTest extends Unit
         $preCheckPluginMock = null,
         $orderSavePluginMock = null,
         $postCheckPluginMock = null
-    ) {
+    ): CheckoutPluginCollectionInterface {
         $pluginCollection = new CheckoutPluginCollection();
         if ($preCheckPluginMock !== null) {
             $pluginCollection->add($preCheckPluginMock, self::TEST_PROVIDER, PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS);
@@ -166,7 +167,7 @@ class PaymentPluginExecutorTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteTransfer()
+    protected function createQuoteTransfer(): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
         $paymentTransfer = new PaymentTransfer();

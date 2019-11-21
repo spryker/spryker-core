@@ -48,7 +48,7 @@ class CustomerDataHelper extends Module
             throw new TestRuntimeException(sprintf('Could not create customer %s', $customerTransfer->getEmail()));
         }
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($customerResponseTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($customerResponseTransfer): void {
             $this->debug(sprintf('Deleting Customer: %s', $customerResponseTransfer->getCustomerTransfer()->getEmail()));
             $this->getCustomerFacade()->deleteCustomer($customerResponseTransfer->getCustomerTransfer());
         });
@@ -88,7 +88,7 @@ class CustomerDataHelper extends Module
     /**
      * @return \Spryker\Zed\Mail\Business\MailFacadeInterface
      */
-    protected function getMailFacadeMock()
+    protected function getMailFacadeMock(): MailFacadeInterface
     {
         /** @var \Spryker\Zed\Mail\Business\MailFacadeInterface $mailFacadeMock */
         $mailFacadeMock = Stub::makeEmpty(MailFacadeInterface::class);
