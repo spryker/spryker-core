@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ProductLabelSearch\Communication\Plugin\Event\Listener
 
 use Codeception\Test\Unit;
 use Spryker\Zed\ProductLabel\Business\ProductLabelFacade;
+use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
 use Spryker\Zed\ProductLabelSearch\Persistence\ProductLabelSearchQueryContainer;
 
 /**
@@ -29,7 +30,7 @@ class ProductLabelSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryProductLabelByProductLabelIds()
+    public function testQueryProductLabelByProductLabelIds(): void
     {
         $productLabelSearchQueryContainer = new ProductLabelSearchQueryContainer();
         $labelId = $this->createProductLabelFacade()->findLabelByLabelName('Standard label')->getIdProductLabel();
@@ -41,7 +42,7 @@ class ProductLabelSearchListenerTest extends Unit
     /**
      * @return \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
      */
-    protected function createProductLabelFacade()
+    protected function createProductLabelFacade(): ProductLabelFacadeInterface
     {
         return new ProductLabelFacade();
     }

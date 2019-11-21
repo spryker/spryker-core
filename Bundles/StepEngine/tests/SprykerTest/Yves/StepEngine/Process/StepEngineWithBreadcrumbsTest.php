@@ -9,6 +9,7 @@ namespace SprykerTest\Yves\StepEngine\Process;
 
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
+use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
 use Spryker\Yves\StepEngine\Process\StepBreadcrumbGeneratorInterface;
 use Spryker\Yves\StepEngine\Process\StepEngine;
 use SprykerTest\Yves\StepEngine\Process\Fixtures\StepMockWithBreadcrumbs;
@@ -30,7 +31,7 @@ class StepEngineWithBreadcrumbsTest extends AbstractStepEngineTest
     /**
      * @return void
      */
-    public function testProcessReturnViewDataWhenNoFormHandlerGiven()
+    public function testProcessReturnViewDataWhenNoFormHandlerGiven(): void
     {
         $stepCollection = $this->getStepCollection();
         $stepCollection->addStep($this->getStepMock(true, true, true, self::STEP_ROUTE_A));
@@ -77,7 +78,7 @@ class StepEngineWithBreadcrumbsTest extends AbstractStepEngineTest
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface
      */
-    protected function getStepMockWithBreadcrumb($preCondition = true, $postCondition = true, $requireInput = true, $stepRoute = '', $escapeRoute = '')
+    protected function getStepMockWithBreadcrumb(bool $preCondition = true, bool $postCondition = true, bool $requireInput = true, string $stepRoute = '', string $escapeRoute = ''): StepWithBreadcrumbInterface
     {
         return new StepMockWithBreadcrumbs($preCondition, $postCondition, $requireInput, $stepRoute, $escapeRoute);
     }

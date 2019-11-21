@@ -30,7 +30,7 @@ class ProductPackagingLeadProductHelper extends Module
 
         $productPackagingLeadProductEntity = $this->storeProductPackagingLeadProduct($productPackagingLeadProductTransfer);
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($productPackagingLeadProductEntity) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productPackagingLeadProductEntity): void {
             $this->cleanupProductPackagingLeadProduct($productPackagingLeadProductEntity);
         });
 
@@ -42,7 +42,7 @@ class ProductPackagingLeadProductHelper extends Module
      *
      * @return \Generated\Shared\Transfer\SpyProductPackagingLeadProductEntityTransfer
      */
-    protected function storeProductPackagingLeadProduct(SpyProductPackagingLeadProductEntityTransfer $productPackagingLeadProductEntity)
+    protected function storeProductPackagingLeadProduct(SpyProductPackagingLeadProductEntityTransfer $productPackagingLeadProductEntity): SpyProductPackagingLeadProductEntityTransfer
     {
         $spyProductPackagingLeadProductEntity = $this->getProductPackagingLeadProductQuery()
             ->filterByFkProduct($productPackagingLeadProductEntity->getFkProduct())
@@ -63,7 +63,7 @@ class ProductPackagingLeadProductHelper extends Module
      *
      * @return void
      */
-    protected function cleanupProductPackagingLeadProduct(SpyProductPackagingLeadProductEntityTransfer $productPackagingLeadProductEntity)
+    protected function cleanupProductPackagingLeadProduct(SpyProductPackagingLeadProductEntityTransfer $productPackagingLeadProductEntity): void
     {
         $this->debug(sprintf('Deleting product packaging lead product with ID: %d', $productPackagingLeadProductEntity->getIdProductPackagingLeadProduct()));
 

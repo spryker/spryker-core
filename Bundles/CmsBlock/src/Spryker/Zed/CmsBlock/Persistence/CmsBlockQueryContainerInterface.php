@@ -7,6 +7,11 @@
 
 namespace Spryker\Zed\CmsBlock\Persistence;
 
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMappingQuery;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery;
+
 interface CmsBlockQueryContainerInterface
 {
     /**
@@ -16,7 +21,7 @@ interface CmsBlockQueryContainerInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
-    public function queryCmsBlockById($idCmsBlock);
+    public function queryCmsBlockById(int $idCmsBlock): SpyCmsBlockQuery;
 
     /**
      * @api
@@ -25,7 +30,7 @@ interface CmsBlockQueryContainerInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
-    public function queryCmsBlockByIdWithTemplateWithGlossary($idCmsBlock);
+    public function queryCmsBlockByIdWithTemplateWithGlossary(int $idCmsBlock): SpyCmsBlockQuery;
 
     /**
      * @api
@@ -34,7 +39,7 @@ interface CmsBlockQueryContainerInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
-    public function queryCmsBlockByIdWithTemplateWithGlossaryWithStoreRelation($idCmsBlock);
+    public function queryCmsBlockByIdWithTemplateWithGlossaryWithStoreRelation(int $idCmsBlock): SpyCmsBlockQuery;
 
     /**
      * @api
@@ -43,14 +48,14 @@ interface CmsBlockQueryContainerInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
-    public function queryCmsBlockByName($name);
+    public function queryCmsBlockByName(string $name): SpyCmsBlockQuery;
 
     /**
      * @api
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
-    public function queryCmsBlockWithTemplate();
+    public function queryCmsBlockWithTemplate(): SpyCmsBlockQuery;
 
     /**
      * @api
@@ -59,14 +64,14 @@ interface CmsBlockQueryContainerInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMappingQuery
      */
-    public function queryCmsBlockGlossaryKeyMappingByIdCmsBlock($idCmsBlock);
+    public function queryCmsBlockGlossaryKeyMappingByIdCmsBlock(int $idCmsBlock): SpyCmsBlockGlossaryKeyMappingQuery;
 
     /**
      * @api
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery
      */
-    public function queryTemplates();
+    public function queryTemplates(): SpyCmsBlockTemplateQuery;
 
     /**
      * @api
@@ -75,7 +80,7 @@ interface CmsBlockQueryContainerInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery
      */
-    public function queryTemplateByPath($path);
+    public function queryTemplateByPath(string $path): SpyCmsBlockTemplateQuery;
 
     /**
      * @api
@@ -84,7 +89,7 @@ interface CmsBlockQueryContainerInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery
      */
-    public function queryTemplateById($idCmsBlockTemplate);
+    public function queryTemplateById(int $idCmsBlockTemplate): SpyCmsBlockTemplateQuery;
 
     /**
      * @api
@@ -94,7 +99,10 @@ interface CmsBlockQueryContainerInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMappingQuery
      */
-    public function queryGlossaryKeyMappingByPlaceholdersAndIdCmsBlock(array $placeholders, $idCmsBlock);
+    public function queryGlossaryKeyMappingByPlaceholdersAndIdCmsBlock(
+        array $placeholders,
+        int $idCmsBlock
+    ): SpyCmsBlockGlossaryKeyMappingQuery;
 
     /**
      * @api
@@ -103,7 +111,7 @@ interface CmsBlockQueryContainerInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMappingQuery
      */
-    public function queryGlossaryKeyMappingById($idGlossaryKeyMapping);
+    public function queryGlossaryKeyMappingById(int $idGlossaryKeyMapping): SpyCmsBlockGlossaryKeyMappingQuery;
 
     /**
      * @api
@@ -113,7 +121,7 @@ interface CmsBlockQueryContainerInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery
      */
-    public function queryCmsBlockStoreByFkCmsBlockAndFkStores($idCmsBlock, array $idStores);
+    public function queryCmsBlockStoreByFkCmsBlockAndFkStores(int $idCmsBlock, array $idStores): SpyCmsBlockStoreQuery;
 
     /**
      * @api
@@ -122,7 +130,7 @@ interface CmsBlockQueryContainerInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
-    public function queryCmsBlockWithStoreRelationByFkCmsBlock($idCmsBlock);
+    public function queryCmsBlockWithStoreRelationByFkCmsBlock(int $idCmsBlock): SpyCmsBlockQuery;
 
     /**
      * @api
@@ -131,5 +139,5 @@ interface CmsBlockQueryContainerInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery
      */
-    public function queryCmsBlockStoreWithStoreByFkCmsBlock($idCmsBlock);
+    public function queryCmsBlockStoreWithStoreByFkCmsBlock(int $idCmsBlock): SpyCmsBlockStoreQuery;
 }

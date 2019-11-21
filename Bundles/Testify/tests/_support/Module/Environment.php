@@ -24,7 +24,7 @@ class Environment extends Module
      * @param \Codeception\Lib\ModuleContainer $moduleContainer
      * @param array|null $config
      */
-    public function __construct(ModuleContainer $moduleContainer, $config)
+    public function __construct(ModuleContainer $moduleContainer, ?array $config)
     {
         parent::__construct($moduleContainer, $config);
 
@@ -34,7 +34,7 @@ class Environment extends Module
     /**
      * @return void
      */
-    private function initEnvironment()
+    private function initEnvironment(): void
     {
         $path = self::MODE_DEFAULT_ROOT;
 

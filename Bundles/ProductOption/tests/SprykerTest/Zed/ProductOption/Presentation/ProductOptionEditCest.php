@@ -28,7 +28,7 @@ class ProductOptionEditCest
      *
      * @return void
      */
-    public function testEditOptionWithMultipleValues(ProductOptionPresentationTester $i)
+    public function testEditOptionWithMultipleValues(ProductOptionPresentationTester $i): void
     {
         $i->wantTo('Edit existing option group');
         $i->expect('Option group with options created');
@@ -40,7 +40,7 @@ class ProductOptionEditCest
 
         $i->amOnPage(sprintf(ProductOptionEditPage::URL, (int)$idProductOptionGroup));
 
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Product Options / Edit Product Option');
+        $i->seeBreadcrumbNavigation('Products / Product Options / Edit Product Option');
 
         $idTaxSet = 2;
         $i->selectOption('#product_option_general_fkTaxSet', $idTaxSet);
@@ -87,7 +87,7 @@ class ProductOptionEditCest
     /**
      * @return \Spryker\Zed\ProductOption\Business\ProductOptionFacade
      */
-    protected function createProductOptionFacade()
+    protected function createProductOptionFacade(): ProductOptionFacade
     {
         return new ProductOptionFacade();
     }

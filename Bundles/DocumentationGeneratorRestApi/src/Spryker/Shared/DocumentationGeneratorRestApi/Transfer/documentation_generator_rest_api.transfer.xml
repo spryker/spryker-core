@@ -123,4 +123,7 @@
         <property name="isIdNullable" type="bool"/>
     </transfer>
 
+    <transfer name="RestErrorMessage">
+    </transfer>
+
 </transfers>

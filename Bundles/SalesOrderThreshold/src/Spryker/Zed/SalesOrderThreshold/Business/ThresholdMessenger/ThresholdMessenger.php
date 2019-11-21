@@ -99,13 +99,13 @@ class ThresholdMessenger implements ThresholdMessengerInterface
                 continue;
             }
 
-            $thresholdMessages[$salesOrderThresholdValueTransfer->getMessageGlossaryKey()] =
-                $this->createMessageTransfer(
-                    $salesOrderThresholdValueTransfer->getMessageGlossaryKey(),
-                    (string)$salesOrderThresholdValueTransfer->getThreshold(),
-                    (string)$salesOrderThresholdStrategy->calculateFee($salesOrderThresholdValueTransfer),
-                    $quoteTransfer->getCurrency()
-                );
+            $key = $salesOrderThresholdValueTransfer->getMessageGlossaryKey();
+            $thresholdMessages[$key] = $this->createMessageTransfer(
+                $key,
+                (string)$salesOrderThresholdValueTransfer->getThreshold(),
+                (string)$salesOrderThresholdStrategy->calculateFee($salesOrderThresholdValueTransfer),
+                $quoteTransfer->getCurrency()
+            );
         }
 
         return $thresholdMessages;

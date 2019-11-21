@@ -30,7 +30,7 @@ class RefundTest extends Unit
     /**
      * @return void
      */
-    public function testSaveRefundShouldCalledWhenRefundProcessSuccessful()
+    public function testSaveRefundShouldCalledWhenRefundProcessSuccessful(): void
     {
         $refundTransfer = new RefundTransfer();
         $refundTransfer->setAmount(100);
@@ -42,7 +42,7 @@ class RefundTest extends Unit
     /**
      * @return void
      */
-    public function testSaveRefundShouldNotCalledWhenRefundProcessNotSuccessful()
+    public function testSaveRefundShouldNotCalledWhenRefundProcessNotSuccessful(): void
     {
         $refundTransfer = new RefundTransfer();
         $refundTransfer->setAmount(0);

@@ -38,7 +38,7 @@ class ShipmentDataHelper extends Module
             $idSalesOrder
         ));
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($shipmentTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($shipmentTransfer): void {
             $this->cleanupSalesShipment($shipmentTransfer->getIdSalesShipment());
         });
 

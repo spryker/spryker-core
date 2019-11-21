@@ -82,7 +82,7 @@ class JsonPath extends Module
      *
      * @return void
      */
-    public function seeResponseJsonPathMatchesJsonType(array $jsonType, $jsonPath = '$'): void
+    public function seeResponseJsonPathMatchesJsonType(array $jsonType, string $jsonPath = '$'): void
     {
         Assert::assertThat(
             (new JsonObject($this->getJsonLastConnection()->getResponseJson()))->get($jsonPath),
@@ -96,7 +96,7 @@ class JsonPath extends Module
      *
      * @return void
      */
-    public function seeResponseJsonPathContains(array $subArray, $jsonPath = '$'): void
+    public function seeResponseJsonPathContains(array $subArray, string $jsonPath = '$'): void
     {
         $foundSegments = (new JsonObject($this->getJsonLastConnection()->getResponseJson()))->get($jsonPath);
 

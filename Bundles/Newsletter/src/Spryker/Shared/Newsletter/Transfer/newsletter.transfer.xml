@@ -61,4 +61,7 @@
         <property name="email" type="string"/>
     </transfer>
 
+    <transfer name="Locale">
+    </transfer>
+
 </transfers>

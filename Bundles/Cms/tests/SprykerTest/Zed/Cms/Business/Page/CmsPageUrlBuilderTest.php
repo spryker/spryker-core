@@ -28,7 +28,7 @@ class CmsPageUrlBuilderTest extends CmsMocks
     /**
      * @return void
      */
-    public function testBuildPageUrlWithPrefixInUrl()
+    public function testBuildPageUrlWithPrefixInUrl(): void
     {
         $cmsUrlBuilder = $this->createCmsUrlBuilder();
 
@@ -45,7 +45,7 @@ class CmsPageUrlBuilderTest extends CmsMocks
     /**
      * @return void
      */
-    public function testBuildPageUrlWithoutPrefixInUrl()
+    public function testBuildPageUrlWithoutPrefixInUrl(): void
     {
         $cmsUrlBuilder = $this->createCmsUrlBuilder();
 
@@ -62,7 +62,7 @@ class CmsPageUrlBuilderTest extends CmsMocks
     /**
      * @return void
      */
-    public function testGetPageUrlPrefixShouldBuildPrefixFromLanguageCode()
+    public function testGetPageUrlPrefixShouldBuildPrefixFromLanguageCode(): void
     {
         $cmsPageAttributeTransfer = new CmsPageAttributesTransfer();
         $cmsPageAttributeTransfer->setLocaleName('en_US');
@@ -78,7 +78,7 @@ class CmsPageUrlBuilderTest extends CmsMocks
      *
      * @return \Spryker\Zed\Cms\Business\Page\CmsPageUrlBuilder
      */
-    protected function createCmsUrlBuilder(?CmsConfig $cmsConfigMock = null)
+    protected function createCmsUrlBuilder(?CmsConfig $cmsConfigMock = null): CmsPageUrlBuilder
     {
         if ($cmsConfigMock === null) {
             $cmsConfigMock = $this->createCmsConfigMock();

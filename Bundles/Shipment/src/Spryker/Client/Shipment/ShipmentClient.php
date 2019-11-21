@@ -21,22 +21,6 @@ class ShipmentClient extends AbstractClient implements ShipmentClientInterface
      *
      * @api
      *
-     * @deprecated Use getAvailableMethodsByShipment() instead.
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
-     */
-    public function getAvailableMethods(QuoteTransfer $quoteTransfer)
-    {
-        return $this->getFactory()->createZedStub()->getAvailableMethods($quoteTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer

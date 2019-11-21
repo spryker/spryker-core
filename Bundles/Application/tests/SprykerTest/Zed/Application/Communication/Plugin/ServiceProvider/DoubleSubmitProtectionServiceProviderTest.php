@@ -30,7 +30,7 @@ class DoubleSubmitProtectionServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testServiceProviderCanBeRegisteredInTheApplication()
+    public function testServiceProviderCanBeRegisteredInTheApplication(): void
     {
         // Arrange
         $serviceProvider = new DoubleSubmitProtectionServiceProvider();
@@ -54,7 +54,7 @@ class DoubleSubmitProtectionServiceProviderTest extends Unit
     protected function createContainerMock()
     {
         $application = new Application();
-        $application->set('form.extensions', function ($app) {
+        $application->set('form.extensions', function ($app): void {
         });
         $application->set('session', $this->getMockBuilder(SessionInterface::class)->getMock());
 

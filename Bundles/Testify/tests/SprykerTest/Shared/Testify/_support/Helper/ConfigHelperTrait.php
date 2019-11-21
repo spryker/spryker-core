@@ -15,7 +15,7 @@ trait ConfigHelperTrait
      *
      * @return void
      */
-    private function setConfig($key, $value)
+    private function setConfig(string $key, $value): void
     {
         $this->getConfigHelper()->setConfig($key, $value);
     }
@@ -25,7 +25,7 @@ trait ConfigHelperTrait
      *
      * @return void
      */
-    private function removeConfig($key)
+    private function removeConfig(string $key): void
     {
         $this->getConfigHelper()->removeConfig($key);
     }
