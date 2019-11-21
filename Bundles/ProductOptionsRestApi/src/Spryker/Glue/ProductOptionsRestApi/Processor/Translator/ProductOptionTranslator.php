@@ -62,6 +62,17 @@ class ProductOptionTranslator implements ProductOptionTranslatorInterface
         $glossaryStorageKeys = $this->getGlossaryStorageKeysFromItemTransfer($itemTransfer);
         $translations = $this->glossaryStorageClient->translateBulk($glossaryStorageKeys, $localeName);
 
+        return $this->setTranslationsToItemTransfer($itemTransfer, $translations);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string[] $translations
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function setTranslationsToItemTransfer(ItemTransfer $itemTransfer, array $translations): ItemTransfer
+    {
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
             $productOptionTransfer->setGroupName($translations[$productOptionTransfer->getGroupName()]);
             $productOptionTransfer->setValue($translations[$productOptionTransfer->getValue()]);
