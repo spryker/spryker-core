@@ -62,7 +62,7 @@ class EventDispatcherGlueTester extends Actor
     /**
      * @return \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface
      */
-    public function mockEventDispatcherPlugin()
+    public function mockEventDispatcherPlugin(): EventDispatcherPluginInterface
     {
         /** @var \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface $eventDispatcherPluginMock */
         $eventDispatcherPluginMock = Stub::makeEmpty(EventDispatcherPluginInterface::class, [

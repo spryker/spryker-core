@@ -27,7 +27,7 @@ class CmsGuiEditCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(CmsGuiPresentationTester $i)
+    public function breadcrumbIsVisible(CmsGuiPresentationTester $i): void
     {
         $i->amOnPage(CmsGuiListPage::URL);
         $i->clickDataTableLinkInDropDownOfButton('Edit', 'Page');

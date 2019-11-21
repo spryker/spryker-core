@@ -28,7 +28,7 @@ class AvailabilityEditStockCest
      *
      * @return void
      */
-    public function testEditExistingStock(AvailabilityGuiCommunicationTester $i)
+    public function testEditExistingStock(AvailabilityGuiCommunicationTester $i): void
     {
         $i->wantTo('Edit availability stock');
         $i->expect('New stock added.');

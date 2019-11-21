@@ -31,7 +31,7 @@ class LocatorWithMatcher extends AbstractLocator
      *
      * @return object
      */
-    public function locate($bundle)
+    public function locate($bundle): object
     {
         return $this;
     }

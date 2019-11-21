@@ -28,7 +28,7 @@ class TaxRateCreateCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(TaxCommunicationTester $i)
+    public function breadcrumbIsVisible(TaxCommunicationTester $i): void
     {
         $i->amOnPage(TaxRateCreatePage::URL);
         $i->seeBreadcrumbNavigation('Taxes / Tax Rates / Create Tax Rate');

@@ -40,7 +40,7 @@ class ProductOptionGroupSaverTest extends MockProvider
     /**
      * @return void
      */
-    public function testSaveProductOptionGroupShouldSaveGroup()
+    public function testSaveProductOptionGroupShouldSaveGroup(): void
     {
         $translationSaverMock = $this->createTranslationSaverMock();
         $translationSaverMock->expects($this->once())
@@ -56,7 +56,7 @@ class ProductOptionGroupSaverTest extends MockProvider
         );
 
         $optionGroupEntityMock = $this->createProductOptionGroupEntityMock();
-        $optionGroupEntityMock->method('save')->willReturnCallback(function () use ($optionGroupEntityMock) {
+        $optionGroupEntityMock->method('save')->willReturnCallback(function () use ($optionGroupEntityMock): void {
             $optionGroupEntityMock->setIdProductOptionGroup(1);
         });
 

@@ -33,7 +33,7 @@ class StepFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreatePaymentMethodSubForms()
+    public function testCreatePaymentMethodSubForms(): void
     {
         $container = new Container();
         $container[CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER] = self::METHOD_HANDLER;
@@ -47,7 +47,7 @@ class StepFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateStepEngine()
+    public function testCreateStepEngine(): void
     {
         $stepFactory = new StepFactory();
         $stepProcess = $stepFactory->createStepEngine(

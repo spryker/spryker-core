@@ -10,8 +10,10 @@ namespace SprykerTest\Zed\CmsBlock\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CmsBlockBuilder;
 use Generated\Shared\DataBuilder\CmsBlockTemplateBuilder;
+use Generated\Shared\Transfer\CmsBlockTemplateTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Spryker\Zed\CmsBlock\Business\CmsBlockFacadeInterface;
 use Spryker\Zed\CmsBlockProductConnector\Business\CmsBlockProductConnectorFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -24,7 +26,7 @@ class CmsBlockDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
-    public function haveCmsBlock(array $seedData = [])
+    public function haveCmsBlock(array $seedData = []): CmsBlockTransfer
     {
         $cmsBlockTemplateTransfer = $this->haveCmsBlockTemplate();
 
@@ -44,7 +46,7 @@ class CmsBlockDataHelper extends Module
      *
      * @return void
      */
-    protected function setStoreRelation(CmsBlockTransfer $cmsBlockTransfer, array $seedData = [])
+    protected function setStoreRelation(CmsBlockTransfer $cmsBlockTransfer, array $seedData = []): void
     {
         if (!isset($seedData[CmsBlockTransfer::STORE_RELATION])) {
             return;
@@ -61,7 +63,7 @@ class CmsBlockDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CmsBlockTemplateTransfer
      */
-    public function haveCmsBlockTemplate(array $seedData = [])
+    public function haveCmsBlockTemplate(array $seedData = []): CmsBlockTemplateTransfer
     {
         $cmsBlockTemplateTransfer = (new CmsBlockTemplateBuilder($seedData))->build();
         $cmsBlockTemplateTransfer->setIdCmsBlockTemplate(null);
@@ -78,7 +80,7 @@ class CmsBlockDataHelper extends Module
     /**
      * @return \Spryker\Zed\CmsBlock\Business\CmsBlockFacadeInterface
      */
-    protected function getCmsBlockFacade()
+    protected function getCmsBlockFacade(): CmsBlockFacadeInterface
     {
         return $this->getLocator()->cmsBlock()->facade();
     }
