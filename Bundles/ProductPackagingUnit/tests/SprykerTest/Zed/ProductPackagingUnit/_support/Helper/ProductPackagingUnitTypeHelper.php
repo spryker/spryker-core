@@ -42,7 +42,7 @@ class ProductPackagingUnitTypeHelper extends Module
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */
-    protected function storeProductPackagingUnitType(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): SpyProductPackagingUnitTypeEntityTransfer
+    protected function storeProductPackagingUnitType(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): ProductPackagingUnitTypeTransfer
     {
         $spyProductPackagingUnitTypeEntity = $this->getProductPackagingUnitTypeQuery()
             ->filterByName($productPackagingUnitTypeTransfer->getName())

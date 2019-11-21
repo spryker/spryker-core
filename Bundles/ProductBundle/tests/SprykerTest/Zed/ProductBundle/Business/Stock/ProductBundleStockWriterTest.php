@@ -95,7 +95,7 @@ class ProductBundleStockWriterTest extends Unit
         $productStockWriteMock = $this->createProductStockWriterMock($productBundleAvailabilityHandlerMock);
 
         $this->setupFindProductBundleBySku($productStockWriteMock);
-        $this->setupFindProductStock($productStockWriteMock, 0, $idRelatedProductId);
+        $this->setupFindProductStock($productStockWriteMock, new Decimal(0), $idRelatedProductId);
 
         $productConcreteTransfer = new ProductConcreteTransfer();
         $productConcreteTransfer->setSku($relatedProductSku);
@@ -255,14 +255,14 @@ class ProductBundleStockWriterTest extends Unit
 
     /**
      * @param \PHPUnit\Framework\MockObject\MockObject $productStockWriteMock
-     * @param int $stock
+     * @param \Spryker\DecimalObject\Decimal $stock
      * @param int $idRelatedProductId
      *
      * @return void
      */
     protected function setupFindProductStock(
         MockObject $productStockWriteMock,
-        int $stock,
+        Decimal $stock,
         int $idRelatedProductId
     ): void {
         $stockProducts = new ObjectCollection();

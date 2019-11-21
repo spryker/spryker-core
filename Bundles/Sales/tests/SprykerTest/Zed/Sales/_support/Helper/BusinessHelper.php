@@ -11,6 +11,7 @@ use Codeception\Module;
 use DateTime;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;

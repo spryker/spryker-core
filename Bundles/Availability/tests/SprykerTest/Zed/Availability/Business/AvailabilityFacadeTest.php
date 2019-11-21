@@ -26,6 +26,7 @@ use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\AvailabilityDependencyProvider;
 use Spryker\Zed\Availability\Business\AvailabilityBusinessFactory;
+use Spryker\Zed\Availability\Business\AvailabilityFacade;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
 use Spryker\Zed\Kernel\Container;
 
