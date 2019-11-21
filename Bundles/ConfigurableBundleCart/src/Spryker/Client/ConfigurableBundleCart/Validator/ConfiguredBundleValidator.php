@@ -10,23 +10,9 @@ namespace Spryker\Client\ConfigurableBundleCart\Validator;
 use ArrayObject;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
 use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
-use Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToConfigurableBundleStorageClientInterface;
 
 class ConfiguredBundleValidator implements ConfiguredBundleValidatorInterface
 {
-    /**
-     * @var \Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToConfigurableBundleStorageClientInterface
-     */
-    protected $configurableBundleStorageClient;
-
-    /**
-     * @param \Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToConfigurableBundleStorageClientInterface $configurableBundleStorageClient
-     */
-    public function __construct(ConfigurableBundleCartToConfigurableBundleStorageClientInterface $configurableBundleStorageClient)
-    {
-        $this->configurableBundleStorageClient = $configurableBundleStorageClient;
-    }
-
     /**
      * @param \Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
      *
@@ -34,20 +20,11 @@ class ConfiguredBundleValidator implements ConfiguredBundleValidatorInterface
      */
     public function validateCreateConfiguredBundleRequestTransfer(CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer): bool
     {
-        if (!$createConfiguredBundleRequestTransfer->getConfiguredBundleRequest() || !$createConfiguredBundleRequestTransfer->getConfiguredBundleItemRequests()->count()) {
+        if (!$createConfiguredBundleRequestTransfer->getConfiguredBundleRequest() || !$createConfiguredBundleRequestTransfer->getConfiguredBundleRequest()->getTemplateUuid()) {
             return false;
         }
 
-        $configurableBundleTemplateStorageTransfer = $this->configurableBundleStorageClient->findConfigurableBundleTemplateStorageByUuid(
-            $createConfiguredBundleRequestTransfer->getConfiguredBundleRequest()->getTemplateUuid()
-        );
-
-        if (!$configurableBundleTemplateStorageTransfer) {
-            return false;
-        }
-
-        return $this->validateConfiguredBundleTemplateSlotCombination(
-            $configurableBundleTemplateStorageTransfer,
+        return $this->validateConfiguredBundleItemRequestTransfers(
             $createConfiguredBundleRequestTransfer->getConfiguredBundleItemRequests()
         );
     }
@@ -58,7 +35,7 @@ class ConfiguredBundleValidator implements ConfiguredBundleValidatorInterface
      *
      * @return bool
      */
-    protected function validateConfiguredBundleTemplateSlotCombination(
+    public function validateConfiguredBundleTemplateSlotCombination(
         ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer,
         ArrayObject $configuredBundleItemRequestTransfers
     ): bool {
@@ -66,6 +43,26 @@ class ConfiguredBundleValidator implements ConfiguredBundleValidatorInterface
 
         foreach ($configuredBundleItemRequestTransfers as $configuredBundleItemRequestTransfer) {
             if (!in_array($configuredBundleItemRequestTransfer->getSlotUuid(), $configurableBundleTemplateSlotStorageUuids, true)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ConfiguredBundleItemRequestTransfer[] $configuredBundleItemRequestTransfers
+     *
+     * @return bool
+     */
+    protected function validateConfiguredBundleItemRequestTransfers(ArrayObject $configuredBundleItemRequestTransfers): bool
+    {
+        if (!$configuredBundleItemRequestTransfers->count()) {
+            return false;
+        }
+
+        foreach ($configuredBundleItemRequestTransfers as $configuredBundleItemRequestTransfer) {
+            if (!$configuredBundleItemRequestTransfer->getSku() || !$configuredBundleItemRequestTransfer->getSlotUuid()) {
                 return false;
             }
         }

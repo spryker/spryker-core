@@ -19,6 +19,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface;
+use Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToConfigurableBundleStorageClientInterface;
 use Spryker\Client\ConfigurableBundleCart\Generator\ConfiguredBundleGroupKeyGeneratorInterface;
 use Spryker\Client\ConfigurableBundleCart\Validator\ConfiguredBundleValidatorInterface;
 
@@ -42,16 +43,24 @@ class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
     protected $configuredBundleGroupKeyGenerator;
 
     /**
+     * @var \Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToConfigurableBundleStorageClientInterface
+     */
+    protected $configurableBundleStorageClient;
+
+    /**
      * @param \Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface $cartClient
+     * @param \Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToConfigurableBundleStorageClientInterface $configurableBundleStorageClient
      * @param \Spryker\Client\ConfigurableBundleCart\Validator\ConfiguredBundleValidatorInterface $configuredBundleValidator
      * @param \Spryker\Client\ConfigurableBundleCart\Generator\ConfiguredBundleGroupKeyGeneratorInterface $configuredBundleGroupKeyGenerator
      */
     public function __construct(
         ConfigurableBundleCartToCartClientInterface $cartClient,
+        ConfigurableBundleCartToConfigurableBundleStorageClientInterface $configurableBundleStorageClient,
         ConfiguredBundleValidatorInterface $configuredBundleValidator,
         ConfiguredBundleGroupKeyGeneratorInterface $configuredBundleGroupKeyGenerator
     ) {
         $this->cartClient = $cartClient;
+        $this->configurableBundleStorageClient = $configurableBundleStorageClient;
         $this->configuredBundleValidator = $configuredBundleValidator;
         $this->configuredBundleGroupKeyGenerator = $configuredBundleGroupKeyGenerator;
     }
@@ -66,6 +75,27 @@ class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
         if (!$this->configuredBundleValidator->validateCreateConfiguredBundleRequestTransfer($createConfiguredBundleRequestTransfer)) {
             return $this->createErrorResponse(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_ADDED);
         }
+
+        $configurableBundleTemplateStorageTransfer = $this->configurableBundleStorageClient->findConfigurableBundleTemplateStorageByUuid(
+            $createConfiguredBundleRequestTransfer->getConfiguredBundleRequest()->getTemplateUuid()
+        );
+
+        if (!$configurableBundleTemplateStorageTransfer) {
+            return $this->createErrorResponse(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_ADDED);
+        }
+
+        $isTemplateSlotCombinationValid = $this->configuredBundleValidator->validateConfiguredBundleTemplateSlotCombination(
+            $configurableBundleTemplateStorageTransfer,
+            $createConfiguredBundleRequestTransfer->getConfiguredBundleItemRequests()
+        );
+
+        if (!$isTemplateSlotCombinationValid) {
+            return $this->createErrorResponse(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_ADDED);
+        }
+
+        $createConfiguredBundleRequestTransfer->getConfiguredBundleRequest()->setTemplateUuid(
+            $configurableBundleTemplateStorageTransfer->getUuid()
+        );
 
         $cartChangeTransfer = $this->mapCreateConfiguredBundleRequestTransferToCartChangeTransfer(
             $createConfiguredBundleRequestTransfer,
@@ -90,6 +120,9 @@ class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
             ->requireConfiguredBundleItemRequests();
 
         $configuredBundleRequestTransfer = $createConfiguredBundleRequestTransfer->getConfiguredBundleRequest();
+        $configuredBundleRequestTransfer->setGroupKey(
+            $this->configuredBundleGroupKeyGenerator->generateConfiguredBundleGroupKeyByUuid($configuredBundleRequestTransfer)
+        );
 
         foreach ($createConfiguredBundleRequestTransfer->getConfiguredBundleItemRequests() as $configuredBundleItemRequestTransfer) {
             $cartChangeTransfer->addItem(
@@ -142,10 +175,9 @@ class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
     ): ConfiguredBundleTransfer {
         $configuredBundleRequestTransfer
             ->requireQuantity()
+            ->requireGroupKey()
             ->requireTemplateUuid()
             ->requireTemplateName();
-
-        $groupKey = $this->configuredBundleGroupKeyGenerator->generateConfiguredBundleGroupKeyByUuid($configuredBundleRequestTransfer);
 
         $configurableBundleTemplateTransfer = (new ConfigurableBundleTemplateTransfer())
             ->setUuid($configuredBundleRequestTransfer->getTemplateUuid())
@@ -153,7 +185,7 @@ class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
 
         return $configuredBundleTransfer
             ->setTemplate($configurableBundleTemplateTransfer)
-            ->setGroupKey($groupKey)
+            ->setGroupKey($configuredBundleRequestTransfer->getGroupKey())
             ->setQuantity($configuredBundleRequestTransfer->getQuantity());
     }
 

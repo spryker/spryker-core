@@ -73,6 +73,7 @@ class ConfigurableBundleCartFactory extends AbstractFactory
     {
         return new ConfiguredBundleCartAdder(
             $this->getCartClient(),
+            $this->getConfigurableBundleStorageClient(),
             $this->createConfiguredBundleValidator(),
             $this->createConfiguredBundleGroupKeyGenerator()
         );
@@ -83,7 +84,7 @@ class ConfigurableBundleCartFactory extends AbstractFactory
      */
     public function createConfiguredBundleValidator(): ConfiguredBundleValidatorInterface
     {
-        return new ConfiguredBundleValidator($this->getConfigurableBundleStorageClient());
+        return new ConfiguredBundleValidator();
     }
 
     /**

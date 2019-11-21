@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ConfigurableBundleCart\Validator;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
 use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
 
 interface ConfiguredBundleValidatorInterface
@@ -17,4 +19,15 @@ interface ConfiguredBundleValidatorInterface
      * @return bool
      */
     public function validateCreateConfiguredBundleRequestTransfer(CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ConfiguredBundleItemRequestTransfer[] $configuredBundleItemRequestTransfers
+     *
+     * @return bool
+     */
+    public function validateConfiguredBundleTemplateSlotCombination(
+        ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer,
+        ArrayObject $configuredBundleItemRequestTransfers
+    ): bool;
 }

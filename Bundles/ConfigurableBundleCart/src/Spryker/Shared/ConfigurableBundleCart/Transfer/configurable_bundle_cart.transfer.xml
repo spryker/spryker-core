@@ -23,6 +23,7 @@
     <transfer name="ConfiguredBundleRequest">
         <property name="templateUuid" type="string"/>
         <property name="templateName" type="string"/>
+        <property name="groupKey" type="string"/>
         <property name="quantity" type="int"/>
     </transfer>
 
