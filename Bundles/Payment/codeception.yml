@@ -2,7 +2,6 @@ namespace: SprykerTest
 
 include:
     - tests/SprykerTest/Zed/Payment
-    - tests/SprykerTest/Shared/Payment
 
 paths:
     tests: tests

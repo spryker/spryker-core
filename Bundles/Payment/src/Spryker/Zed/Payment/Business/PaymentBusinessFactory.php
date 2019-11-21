@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Payment\Business\Calculation\PaymentCalculator;
 use Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor;
 use Spryker\Zed\Payment\Business\Installer\SalesPaymentMethodTypeInstaller;
+use Spryker\Zed\Payment\Business\Method\PaymentMethodFinder;
+use Spryker\Zed\Payment\Business\Method\PaymentMethodFinderInterface;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodReader;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentHydrator;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentReader;
@@ -106,6 +108,14 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\Method\PaymentMethodFinderInterface
+     */
+    public function createPaymentMethodFinder(): PaymentMethodFinderInterface
+    {
+        return new PaymentMethodFinder($this->getRepository());
     }
 
     /**

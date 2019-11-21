@@ -23,6 +23,7 @@ class PaymentDataHelper extends Module
      */
     public function ensurePaymentMethodTableIsEmpty(): void
     {
+        SpyPaymentMethodStoreQuery::create()->deleteAll();
         SpyPaymentMethodQuery::create()->deleteAll();
     }
 
