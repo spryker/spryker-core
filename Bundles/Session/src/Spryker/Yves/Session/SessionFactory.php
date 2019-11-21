@@ -14,6 +14,9 @@ use Spryker\Shared\Session\Model\SessionStorage\SessionStorageOptions;
 use Spryker\Shared\Session\SessionConfig;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Session\Model\SessionHandlerFactory;
+use Spryker\Yves\Session\Model\Storage\ConsoleMemorySessionStorage;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
@@ -148,5 +151,21 @@ class SessionFactory extends AbstractFactory
         $sessionStorage = $this->createSessionStorage();
 
         return new NativeSessionStorage($sessionStorage->getOptions(), $sessionStorage->getAndRegisterHandler());
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface
+     */
+    public function createConsoleSession(): SessionInterface
+    {
+        return new Session($this->createConsoleMemorySessionStorage());
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface
+     */
+    public function createConsoleMemorySessionStorage(): SessionStorageInterface
+    {
+        return new ConsoleMemorySessionStorage();
     }
 }
