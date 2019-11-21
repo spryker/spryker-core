@@ -11,15 +11,27 @@
         <property name="currencyIsoCode" type="string"/>
     </transfer>
 
-    <transfer name="RestItemsAttributes">
-        <property name="selectedOptions" type="RestItemProductOptions[]" singular="selectedOption"/>
-    </transfer>
-
     <transfer name="RestItemProductOptions">
         <property name="optionGroupName" type="string"/>
         <property name="sku" type="string"/>
         <property name="optionName" type="string"/>
         <property name="price" type="int"/>
+    </transfer>
+
+    <transfer name="RestItemsAttributes">
+        <property name="selectedOptions" type="RestItemProductOptions[]" singular="selectedOption"/>
+    </transfer>
+
+    <transfer name="ProductAbstractOptionStorage">
+        <property name="productOptionGroups" singular="productOptionGroup" type="ProductOptionGroupStorage[]"/>
+    </transfer>
+
+    <transfer name="ProductOptionValueStorage">
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOptionGroupStorage">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

@@ -51,10 +51,14 @@ class ProductOptionTranslator implements ProductOptionTranslatorInterface
         return $productAbstractOptionStorageTransfers;
     }
 
-    public function translateItemTransfer(
-        ItemTransfer $itemTransfer,
-        string $localeName
-    ): ItemTransfer {
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    public function translateItemTransfer(ItemTransfer $itemTransfer, string $localeName): ItemTransfer
+    {
         $glossaryStorageKeys = $this->getGlossaryStorageKeysFromItemTransfer($itemTransfer);
         $translations = $this->glossaryStorageClient->translateBulk($glossaryStorageKeys, $localeName);
 

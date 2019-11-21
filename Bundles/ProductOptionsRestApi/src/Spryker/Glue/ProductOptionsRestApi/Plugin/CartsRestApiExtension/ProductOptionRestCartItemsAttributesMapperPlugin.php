@@ -15,7 +15,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 /**
  * @method \Spryker\Glue\ProductOptionsRestApi\ProductOptionsRestApiFactory getFactory()
  */
-class CartItemToRestCartItemsAttributesMapperPlugin extends AbstractPlugin implements RestCartItemsAttributesMapperPluginInterface
+class ProductOptionRestCartItemsAttributesMapperPlugin extends AbstractPlugin implements RestCartItemsAttributesMapperPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -34,7 +34,7 @@ class CartItemToRestCartItemsAttributesMapperPlugin extends AbstractPlugin imple
         RestItemsAttributesTransfer $restItemsAttributesTransfer,
         string $localeName
     ): RestItemsAttributesTransfer {
-        $translations = $this->getFactory()
+        $itemTransfer = $this->getFactory()
             ->createProductOptionTranslator()
             ->translateItemTransfer($itemTransfer, $localeName);
 

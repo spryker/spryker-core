@@ -83,7 +83,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
             }
 
             $productOptionRestResources[$productAbstractSku] = $this->productOptionRestResponseBuilder
-                ->buildProductOptionRestResources(
+                ->createProductOptionRestResources(
                     $productAbstractOptionStorageTransfers[$idProductAbstract],
                     ProductOptionsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
                     $productAbstractSku,
