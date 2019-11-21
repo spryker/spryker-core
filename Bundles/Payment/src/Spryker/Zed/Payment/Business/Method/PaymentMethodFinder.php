@@ -45,7 +45,12 @@ class PaymentMethodFinder implements PaymentMethodFinderInterface
             return $paymentMethodResponseTransfer;
         }
 
-        return $paymentMethodResponseTransfer->setIsSuccessful(true);
+        $paymentMethodTransfer->requirePaymentProvider();
+
+        $paymentMethodResponseTransfer->setPaymentMethod($paymentMethodTransfer)
+            ->setIsSuccessful(true);
+
+        return $paymentMethodResponseTransfer;
     }
 
     /**
