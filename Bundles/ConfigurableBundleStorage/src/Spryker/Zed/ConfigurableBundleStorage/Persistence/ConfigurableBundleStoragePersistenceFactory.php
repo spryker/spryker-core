@@ -7,9 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundleStorage\Persistence;
 
-use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
 use Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateStorageQuery;
-use Spryker\Zed\ConfigurableBundleStorage\ConfigurableBundleStorageDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -19,14 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class ConfigurableBundleStoragePersistenceFactory extends AbstractPersistenceFactory
 {
-    /**
-     * @return \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery
-     */
-    public function getConfigurableBundleTemplatePropelQuery(): SpyConfigurableBundleTemplateQuery
-    {
-        return $this->getProvidedDependency(ConfigurableBundleStorageDependencyProvider::PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE);
-    }
-
     /**
      * @return \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateStorageQuery
      */

@@ -134,6 +134,8 @@ class ConfigurableBundleDependencyProvider extends AbstractBundleDependencyProvi
     }
 
     /**
+     * @module ProductImage
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container

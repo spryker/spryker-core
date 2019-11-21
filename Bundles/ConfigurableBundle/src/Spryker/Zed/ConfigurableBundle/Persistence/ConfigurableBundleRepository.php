@@ -194,6 +194,12 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
             );
         }
 
+        if ($configurableBundleTemplateSlotFilterTransfer->getIdConfigurableBundleTemplate()) {
+            $configurableBundleTemplateSlotQuery->filterByFkConfigurableBundleTemplate(
+                $configurableBundleTemplateSlotFilterTransfer->getIdConfigurableBundleTemplate()
+            );
+        }
+
         if ($configurableBundleTemplateSlotFilterTransfer->getIdConfigurableBundleTemplateSlot()) {
             $configurableBundleTemplateSlotQuery->filterByIdConfigurableBundleTemplateSlot(
                 $configurableBundleTemplateSlotFilterTransfer->getIdConfigurableBundleTemplateSlot()

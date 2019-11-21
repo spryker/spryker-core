@@ -108,6 +108,7 @@
         <property name="productList" type="ProductList"/>
         <property name="idConfigurableBundleTemplateSlot" type="int"/>
         <property name="translationLocales" type="Locale[]" singular="translationLocale"/>
+        <property name="idConfigurableBundleTemplate" type="int"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateResponse">

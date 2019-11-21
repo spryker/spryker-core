@@ -9,8 +9,12 @@ namespace Spryker\Zed\ConfigurableBundleStorage\Business;
 
 use Spryker\Zed\ConfigurableBundleStorage\Business\Publisher\ConfigurableBundleStoragePublisher;
 use Spryker\Zed\ConfigurableBundleStorage\Business\Publisher\ConfigurableBundleStoragePublisherInterface;
+use Spryker\Zed\ConfigurableBundleStorage\Business\Reader\ConfigurableBundleReader;
+use Spryker\Zed\ConfigurableBundleStorage\Business\Reader\ConfigurableBundleReaderInterface;
 use Spryker\Zed\ConfigurableBundleStorage\Business\Unpublisher\ConfigurableBundleStorageUnpublisher;
 use Spryker\Zed\ConfigurableBundleStorage\Business\Unpublisher\ConfigurableBundleStorageUnpublisherInterface;
+use Spryker\Zed\ConfigurableBundleStorage\ConfigurableBundleStorageDependencyProvider;
+use Spryker\Zed\ConfigurableBundleStorage\Dependency\Facade\ConfigurableBundleStorageToConfigurableBundleFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -27,7 +31,8 @@ class ConfigurableBundleStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ConfigurableBundleStoragePublisher(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->createConfigurableBundleReader()
         );
     }
 
@@ -38,7 +43,26 @@ class ConfigurableBundleStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ConfigurableBundleStorageUnpublisher(
             $this->getRepository(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->createConfigurableBundleReader()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleStorage\Business\Reader\ConfigurableBundleReaderInterface
+     */
+    public function createConfigurableBundleReader(): ConfigurableBundleReaderInterface
+    {
+        return new ConfigurableBundleReader(
+            $this->getConfigurableBundleFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleStorage\Dependency\Facade\ConfigurableBundleStorageToConfigurableBundleFacadeInterface
+     */
+    public function getConfigurableBundleFacade(): ConfigurableBundleStorageToConfigurableBundleFacadeInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleStorageDependencyProvider::FACADE_CONFIGURABLE_BUNDLE);
     }
 }

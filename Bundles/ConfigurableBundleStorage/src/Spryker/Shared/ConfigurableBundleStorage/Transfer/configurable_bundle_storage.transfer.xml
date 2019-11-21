@@ -39,4 +39,13 @@
         <property name="limit" type="int"/>
     </transfer>
 
+    <transfer name="ConfigurableBundleTemplateFilter">
+        <property name="configurableBundleTemplateIds" type="int[]" singular="configurableBundleTemplateId"/>
+        <property name="filter" type="Filter"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateSlotFilter">
+        <property name="idConfigurableBundleTemplate" type="int"/>
+    </transfer>
+
 </transfers>

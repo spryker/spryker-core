@@ -14,13 +14,6 @@ interface ConfigurableBundleStorageRepositoryInterface
     /**
      * @param int[] $configurableBundleTemplateIds
      *
-     * @return \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplate[]
-     */
-    public function getConfigurableBundleTemplateEntityMap(array $configurableBundleTemplateIds): array;
-
-    /**
-     * @param int[] $configurableBundleTemplateIds
-     *
      * @return \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateStorage[]
      */
     public function getConfigurableBundleTemplateStorageEntityMap(array $configurableBundleTemplateIds): array;
@@ -32,11 +25,4 @@ interface ConfigurableBundleStorageRepositoryInterface
      * @return \Generated\Shared\Transfer\SpyConfigurableBundleTemplateStorageEntityTransfer[]
      */
     public function getFilteredConfigurableBundleTemplateStorageEntities(FilterTransfer $filterTransfer, array $configurableBundleTemplateIds): array;
-
-    /**
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer[]
-     */
-    public function getConfigurableBundleTemplatesByFilter(FilterTransfer $filterTransfer): array;
 }
