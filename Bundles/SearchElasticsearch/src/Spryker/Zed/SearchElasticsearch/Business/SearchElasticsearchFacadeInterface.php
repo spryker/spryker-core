@@ -204,7 +204,7 @@ interface SearchElasticsearchFacadeInterface
 
     /**
      * Specification:
-     * - tba.
+     * - Maps raw resource data to Elasticsearch darta.
      *
      * @api
      *
@@ -217,7 +217,7 @@ interface SearchElasticsearchFacadeInterface
 
     /**
      * Specification:
-     * - tba.
+     * - Maps page data (product page, cms page etc.) to search data.
      *
      * @api
      *
@@ -230,7 +230,7 @@ interface SearchElasticsearchFacadeInterface
 
     /**
      * Specification:
-     * - tba.
+     * - Maps product review data to search data.
      *
      * @api
      *
