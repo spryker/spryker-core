@@ -23,7 +23,7 @@
 
     <transfer name="ApiResponse">
         <property name="type" type="string"/>
-        <property name="code" type="string"/>
+        <property name="code" type="int"/>
         <property name="message" type="string"/>
         <property name="stackTrace" type="string"/>
         <property name="headers" type="array" singular="headers"/>
