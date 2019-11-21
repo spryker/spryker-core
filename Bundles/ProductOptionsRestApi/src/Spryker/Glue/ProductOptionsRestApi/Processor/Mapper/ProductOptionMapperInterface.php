@@ -13,12 +13,12 @@ interface ProductOptionMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
-     * @param string[] $translations
+     * @param \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[] $restProductOptionsAttributesTransfers
      *
-     * @return \Generated\Shared\Transfer\RestProductOptionAttributesTransfer[]
+     * @return \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[]
      */
-    public function mapProductAbstractOptionStorageTransferToRestProductOptionAttributesTransfers(
+    public function mapProductAbstractOptionStorageTransferToRestProductOptionsAttributesTransfers(
         ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer,
-        array $translations
+        array $restProductOptionsAttributesTransfers = []
     ): array;
 }

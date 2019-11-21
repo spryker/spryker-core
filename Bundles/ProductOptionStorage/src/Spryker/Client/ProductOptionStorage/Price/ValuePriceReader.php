@@ -57,7 +57,6 @@ class ValuePriceReader implements ValuePriceReaderInterface
 
         foreach ($productOptionGroupStorageTransfer->getProductOptionValues() as $productOptionValue) {
             $this->resolveValuePrice($productOptionValue, $currentCurrencyCode, $currentPriceMode);
-            $productOptionValue->setCurrencyIsoCode($currentCurrencyCode);
         }
 
         return $productOptionGroupStorageTransfer;
@@ -73,12 +72,9 @@ class ValuePriceReader implements ValuePriceReaderInterface
     protected function resolveValuePrice(ProductOptionValueStorageTransfer $productOptionValueStorageTransfer, $currencyCode, $priceMode)
     {
         $prices = $productOptionValueStorageTransfer->getPrices();
-
-        $productOptionValueStorageTransfer->setPrice(
-            isset($prices[$currencyCode]) ?
-                $prices[$currencyCode][$priceMode][ProductOptionConstants::AMOUNT] :
-                null
-        );
+        $price = $prices[$currencyCode][$priceMode][ProductOptionConstants::AMOUNT] ?? null;
+        $productOptionValueStorageTransfer->setCurrencyIsoCode($currencyCode)
+            ->setPrice($price);
     }
 
     /**

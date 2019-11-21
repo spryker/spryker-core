@@ -27,15 +27,23 @@ interface GlossaryStorageClientInterface
 
     /**
      * Specification:
-     * - Read glossary from storage and returns an array of translated strings indexed by key.
+     * - Reads multiple glossary items from key-value storage by the given keys and locale.
+     * - Returns array of translated strings indexed by key.
      * - If there was no translation found, then the key will be used as a translated string.
      * - Parameters passed will be replaced in the translated text.
+     * - Parameters should be provided in the following format:
+     * [
+     *      key => [
+     *          stringToReplace => replaceWithString,
+     *          anotherStringToReplace => anotherReplaceWithString,
+     *      ]
+     * ]
      *
      * @api
      *
      * @param string[] $keyNames
      * @param string $localeName
-     * @param array $parameters
+     * @param string[][] $parameters
      *
      * @return string[]
      */

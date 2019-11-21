@@ -8,43 +8,43 @@
 namespace Spryker\Glue\ProductOptionsRestApi\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\ProductOptionsRestApi\Processor\Builder\ProductOptionRestResourceBuilderInterface;
+use Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionStorageReaderInterface;
 
 class ProductOptionByProductAbstractSkuExpander implements ProductOptionByProductAbstractSkuExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\ProductOptionsRestApi\Processor\Builder\ProductOptionRestResourceBuilderInterface
+     * @var \Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionStorageReaderInterface
      */
-    protected $productOptionRestResourceBuilder;
+    protected $productOptionStorageReader;
 
     /**
-     * @param \Spryker\Glue\ProductOptionsRestApi\Processor\Builder\ProductOptionRestResourceBuilderInterface $productOptionRestResourceBuilder
+     * @param \Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionStorageReaderInterface $productOptionStorageReader
      */
-    public function __construct(ProductOptionRestResourceBuilderInterface $productOptionRestResourceBuilder)
+    public function __construct(ProductOptionStorageReaderInterface $productOptionStorageReader)
     {
-        $this->productOptionRestResourceBuilder = $productOptionRestResourceBuilder;
+        $this->productOptionStorageReader = $productOptionStorageReader;
     }
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $restResources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return void
      */
-    public function addResourceRelationships(array $restResources, RestRequestInterface $restRequest): array
+    public function addResourceRelationships(array $restResources, RestRequestInterface $restRequest): void
     {
         $productAbstractSkus = [];
         foreach ($restResources as $restResource) {
             $productAbstractSkus[] = $restResource->getId();
         }
 
-        $productOptionRestResources = $this->productOptionRestResourceBuilder->getProductOptionsByProductAbstractSkus(
+        $productOptionRestResources = $this->productOptionStorageReader->getProductOptionsByProductAbstractSkus(
             $productAbstractSkus,
             $restRequest->getMetadata()->getLocale(),
             $restRequest->getSort()
         );
         foreach ($restResources as $restResource) {
-            if (empty($productOptionRestResources[$restResource->getId()])) {
+            if (!isset($productOptionRestResources[$restResource->getId()])) {
                 continue;
             }
 
@@ -52,7 +52,5 @@ class ProductOptionByProductAbstractSkuExpander implements ProductOptionByProduc
                 $restResource->addRelationship($productOptionRestResource);
             }
         }
-
-        return $restResources;
     }
 }
