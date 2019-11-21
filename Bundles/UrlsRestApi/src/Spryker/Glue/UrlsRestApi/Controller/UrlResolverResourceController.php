@@ -31,7 +31,7 @@ class UrlResolverResourceController extends AbstractController
      *                  "name": "url",
      *                  "in": "query",
      *                  "required": true,
-     *                  "description": "Slag of the URL to resolve."
+     *                  "description": "URL to resolve."
      *              }
      *          ],
      *          "responses": {
