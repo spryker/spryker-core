@@ -46,7 +46,7 @@ class ProductUrlCartPluginTest extends Unit
     protected $productCartConnectorFacade;
 
     /**
-     * @var \Spryker\Zed\Locale\Business\LocaleFacade
+     * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
     protected $localeFacade;
 

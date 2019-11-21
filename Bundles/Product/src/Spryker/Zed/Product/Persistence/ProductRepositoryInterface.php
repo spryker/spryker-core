@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
+use Generated\Shared\Transfer\UrlFilterTransfer;
 
 interface ProductRepositoryInterface
 {
@@ -124,10 +125,9 @@ interface ProductRepositoryInterface
     public function getProductConcretesByConcreteSkus(array $productConcreteSkus): array;
 
     /**
-     * @param int[] $productAbstractIds
-     * @param int $idLocale
+     * @param \Generated\Shared\Transfer\UrlFilterTransfer $urlFilterTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
-    public function getUrlTransfersByProductAbstractIdsAndIdLocale(array $productAbstractIds, $idLocale): array;
+    public function getUrlTransfers(UrlFilterTransfer $urlFilterTransfer): array;
 }

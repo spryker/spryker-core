@@ -183,23 +183,9 @@ class ProductMapper implements ProductMapperInterface
 
         foreach ($objectCollection as $urlEntity) {
             $idProductAbstract = $urlEntity->getFkResourceProductAbstract();
-            $urlTransfersCollection[$idProductAbstract] = $this->mapUrlEntityToUrlTransfer($urlEntity, new UrlTransfer());
+            $urlTransfersCollection[$idProductAbstract] = (new UrlTransfer())->fromArray($urlEntity->toArray(), true);
         }
 
         return $urlTransfersCollection;
-    }
-
-    /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    public function mapUrlEntityToUrlTransfer(SpyUrl $urlEntity, UrlTransfer $urlTransfer): UrlTransfer
-    {
-        return $urlTransfer->fromArray(
-            $urlEntity->toArray(),
-            true
-        );
     }
 }

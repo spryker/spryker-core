@@ -54,12 +54,4 @@ interface ProductMapperInterface
      * @return \Generated\Shared\Transfer\UrlTransfer[] $urlTransfersCollection
      */
     public function getUrlTransfersCollectionFromUrlEntities(ObjectCollection $objectCollection, array $urlTransfersCollection): array;
-
-    /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrl $urlEntity
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
-    public function mapUrlEntityToUrlTransfer(SpyUrl $urlEntity, UrlTransfer $urlTransfer): UrlTransfer;
 }

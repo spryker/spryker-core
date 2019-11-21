@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
+use Generated\Shared\Transfer\UrlFilterTransfer;
 
 interface ProductFacadeInterface
 {
@@ -927,10 +928,9 @@ interface ProductFacadeInterface
      *
      * @api
      *
-     * @param int[] $productAbstractIds
-     * @param int $idLocale
+     * @param \Generated\Shared\Transfer\UrlFilterTransfer $urlFilterTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
-    public function getUrlTransfersByProductAbstractIdsAndIdLocale(array $productAbstractIds, $idLocale): array;
+    public function getUrlTransfers(UrlFilterTransfer $urlFilterTransfer): array;
 }

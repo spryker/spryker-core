@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductCartConnector\Business\Expander\ProductExpander;
 use Spryker\Zed\ProductCartConnector\Business\Expander\ProductExpanderInterface;
 use Spryker\Zed\ProductCartConnector\Business\Expander\ProductUrlExpander;
+use Spryker\Zed\ProductCartConnector\Business\Expander\ProductUrlExpanderInterface;
 use Spryker\Zed\ProductCartConnector\Business\InactiveItemsFilter\InactiveItemsFilter;
 use Spryker\Zed\ProductCartConnector\Business\InactiveItemsFilter\InactiveItemsFilterInterface;
 use Spryker\Zed\ProductCartConnector\Business\Validator\ProductValidator;
@@ -80,9 +81,9 @@ class ProductCartConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductCartConnector\Business\Expander\ProductExpanderInterface
+     * @return \Spryker\Zed\ProductCartConnector\Business\Expander\ProductUrlExpanderInterface
      */
-    public function createProductUrlExpander(): ProductExpanderInterface
+    public function createProductUrlExpander(): ProductUrlExpanderInterface
     {
         return new ProductUrlExpander(
             $this->getLocaleFacade(),

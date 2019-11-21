@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductCartConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\UrlFilterTransfer;
 
 class ProductCartConnectorToProductBridge implements ProductCartConnectorToProductInterface
 {
@@ -99,13 +100,12 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
     }
 
     /**
-     * @param int[] $productAbstractIds
-     * @param int $idLocale
+     * @param \Generated\Shared\Transfer\UrlFilterTransfer $urlFilterTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
-    public function getUrlTransfersByProductAbstractIdsAndIdLocale(array $productAbstractIds, $idLocale): array
+    public function getUrlTransfers(UrlFilterTransfer $urlFilterTransfer): array
     {
-        return $this->productFacade->getUrlTransfersByProductAbstractIdsAndIdLocale($productAbstractIds, $idLocale);
+        return $this->productFacade->getUrlTransfers($urlFilterTransfer);
     }
 }

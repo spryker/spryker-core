@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
+use Generated\Shared\Transfer\UrlFilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -1075,14 +1076,13 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
-     * @param int[] $productAbstractIds
-     * @param int $idLocale
+     * @param \Generated\Shared\Transfer\UrlFilterTransfer $urlFilterTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
-    public function getUrlTransfersByProductAbstractIdsAndIdLocale(array $productAbstractIds, $idLocale): array
+    public function getUrlTransfers(UrlFilterTransfer $urlFilterTransfer): array
     {
         return $this->getRepository()
-            ->getUrlTransfersByProductAbstractIdsAndIdLocale($productAbstractIds, $idLocale);
+            ->getUrlTransfers($urlFilterTransfer);
     }
 }

@@ -8,10 +8,11 @@
 namespace Spryker\Zed\ProductCartConnector\Business\Expander;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\UrlFilterTransfer;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 
-class ProductUrlExpander implements ProductExpanderInterface
+class ProductUrlExpander implements ProductUrlExpanderInterface
 {
     /**
      * @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface
@@ -40,25 +41,39 @@ class ProductUrlExpander implements ProductExpanderInterface
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    public function expandItemTransfersWithUrl(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         $productAbstractIds = $this->getProductAbstractIds($cartChangeTransfer);
 
-        if (count($productAbstractIds) > 0) {
-            $urlTransfers = $this->productFacade->getUrlTransfersByProductAbstractIdsAndIdLocale(
-                $productAbstractIds,
-                $this->localeFacade->getCurrentLocale()->getIdLocale()
-            );
+        if(!$productAbstractIds) {
+            return $cartChangeTransfer;
+        }
 
-            foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-                if (isset($urlTransfers[$itemTransfer->getIdProductAbstract()])) {
-                    $urlTransfer = $urlTransfers[$itemTransfer->getIdProductAbstract()];
-                    $itemTransfer->setUrl($urlTransfer->getUrl());
-                }
+        $urlTransfers = $this->productFacade->getUrlTransfers($this->getUrlFilterTransfer($productAbstractIds));
+
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            $idProductAbstract = $itemTransfer->getIdProductAbstract();
+
+            if (isset($urlTransfers[$idProductAbstract])) {
+                $itemTransfer->setUrl(
+                    $urlTransfers[$idProductAbstract]->getUrl()
+                );
             }
         }
 
         return $cartChangeTransfer;
+    }
+
+    /**
+     * @param array $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\UrlFilterTransfer
+     */
+    protected function getUrlFilterTransfer(array $productAbstractIds): UrlFilterTransfer
+    {
+        return (new UrlFilterTransfer())
+            ->setIdLocale($this->localeFacade->getCurrentLocale()->getIdLocale())
+            ->setProductAbstractIds($productAbstractIds);
     }
 
     /**
