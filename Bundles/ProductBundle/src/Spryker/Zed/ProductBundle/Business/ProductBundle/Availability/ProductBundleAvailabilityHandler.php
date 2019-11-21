@@ -13,7 +13,6 @@ use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStockFacadeInterface;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandlerInterface
@@ -41,11 +40,6 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     protected static $bundledItemEntityCache = [];
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface
-     */
-    protected $storeFacade;
-
-    /**
      * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStockFacadeInterface
      */
     protected $stockFacade;
@@ -53,18 +47,15 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
     /**
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface $availabilityFacade
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStockFacadeInterface $stockFacade
      */
     public function __construct(
         ProductBundleToAvailabilityFacadeInterface $availabilityFacade,
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
-        ProductBundleToStoreFacadeInterface $storeFacade,
         ProductBundleToStockFacadeInterface $stockFacade
     ) {
         $this->availabilityFacade = $availabilityFacade;
         $this->productBundleQueryContainer = $productBundleQueryContainer;
-        $this->storeFacade = $storeFacade;
         $this->stockFacade = $stockFacade;
     }
 

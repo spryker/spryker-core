@@ -11,17 +11,11 @@ use ArrayObject;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriterInterface;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 use Throwable;
 
 class ProductBundleWriter implements ProductBundleWriterInterface
 {
-    /**
-     * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface
-     */
-    protected $productFacade;
-
     /**
      * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
      */
@@ -33,16 +27,13 @@ class ProductBundleWriter implements ProductBundleWriterInterface
     protected $productBundleStockWriter;
 
     /**
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriterInterface $productBundleStockWriter
      */
     public function __construct(
-        ProductBundleToProductFacadeInterface $productFacade,
         ProductBundleQueryContainerInterface $productBundleQueryContainer,
         ProductBundleStockWriterInterface $productBundleStockWriter
     ) {
-        $this->productFacade = $productFacade;
         $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->productBundleStockWriter = $productBundleStockWriter;
     }
