@@ -35,6 +35,8 @@ class PaymentMethodTable extends AbstractTable
     protected const HEADER_AVAILABLE_IN_STORE = 'Available in Store';
     protected const HEADER_ACTIONS = 'Actions';
 
+    protected const LABEL_PRIMARY = 'label-primary';
+
     /**
      * @var \Orm\Zed\Payment\Persistence\SpyPaymentMethodQuery
      */
@@ -181,7 +183,7 @@ class PaymentMethodTable extends AbstractTable
      */
     protected function generateIsActiveLabel(SpyPaymentMethod $paymentMethodEntity): string
     {
-        return $paymentMethodEntity->isActive() ? $this->generateLabel('Active', 'label-primary')
+        return $paymentMethodEntity->isActive() ? $this->generateLabel('Active', static::LABEL_PRIMARY)
             : $this->generateLabel('Inactive', 'label-light');
     }
 
@@ -237,7 +239,13 @@ class PaymentMethodTable extends AbstractTable
     {
         $storeNames = [];
         foreach ($paymentMethodEntity->getPaymentMethodStores() as $paymentMethodStore) {
-            $storeNames[] = $this->generateLabel($paymentMethodStore->getStore()->getName(), 'label-primary');
+            $storeName = $paymentMethodStore->getStore()->getName();
+
+            if ($storeName === null) {
+                continue;
+            }
+
+            $storeNames[] = $this->generateLabel($storeName, static::LABEL_PRIMARY);
         }
 
         return implode(' ', $storeNames);
