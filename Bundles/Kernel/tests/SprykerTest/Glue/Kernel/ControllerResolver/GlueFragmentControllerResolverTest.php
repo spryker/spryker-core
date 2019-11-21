@@ -31,7 +31,7 @@ class GlueFragmentControllerResolverTest extends Unit
      *
      * @return void
      */
-    public function testCreateController($controller, $expectedServiceName)
+    public function testCreateController(string $controller, string $expectedServiceName): void
     {
         $request = $this->getRequest($controller);
         $controllerResolver = $this->getFragmentControllerProvider($request);
@@ -45,14 +45,14 @@ class GlueFragmentControllerResolverTest extends Unit
     /**
      * @return array
      */
-    public function getController()
+    public function getController(): array
     {
         return [
-            ['index/index/index', 'SprykerTest\Glue\Kernel\ControllerResolver\GlueFragmentControllerResolverTest::indexAction'],
-            ['/index/index/index', 'SprykerTest\Glue\Kernel\ControllerResolver\GlueFragmentControllerResolverTest::indexAction'],
-            ['Index/Index/Index', 'SprykerTest\Glue\Kernel\ControllerResolver\GlueFragmentControllerResolverTest::indexAction'],
-            ['/Index/Index/Index', 'SprykerTest\Glue\Kernel\ControllerResolver\GlueFragmentControllerResolverTest::indexAction'],
-            ['foo-bar/baz-bat/zip-zap', 'SprykerTest\Glue\Kernel\ControllerResolver\GlueFragmentControllerResolverTest::zipZapAction'],
+            ['index/index/index', GlueFragmentControllerResolverTest::class . '::indexAction'],
+            ['/index/index/index', GlueFragmentControllerResolverTest::class . '::indexAction'],
+            ['Index/Index/Index', GlueFragmentControllerResolverTest::class . '::indexAction'],
+            ['/Index/Index/Index', GlueFragmentControllerResolverTest::class . '::indexAction'],
+            ['foo-bar/baz-bat/zip-zap', GlueFragmentControllerResolverTest::class . '::zipZapAction'],
         ];
     }
 
@@ -62,7 +62,7 @@ class GlueFragmentControllerResolverTest extends Unit
      *
      * @return void
      */
-    public function __call($name, $arguments = [])
+    public function __call(string $name, array $arguments = []): void
     {
     }
 
@@ -89,7 +89,7 @@ class GlueFragmentControllerResolverTest extends Unit
      *
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    private function getRequest($controller)
+    private function getRequest(string $controller): Request
     {
         return new Request([], [], ['_controller' => $controller]);
     }

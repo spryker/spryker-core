@@ -20,7 +20,7 @@ class TranslationHelper extends Module
      *
      * @return int
      */
-    public function haveTranslation($override = [])
+    public function haveTranslation(array $override = []): int
     {
         $keyTranslationTransfer = (new KeyTranslationBuilder($override))->build();
 

@@ -46,7 +46,7 @@ class ProductPackagingUnitSynchronizationDataPluginTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -120,7 +120,7 @@ class ProductPackagingUnitSynchronizationDataPluginTest extends Unit
     /**
      * @return \Spryker\Zed\ProductPackagingUnitStorage\Business\ProductPackagingUnitStorageFacade
      */
-    protected function getProductPackagingUnitStorageFacade()
+    protected function getProductPackagingUnitStorageFacade(): ProductPackagingUnitStorageFacade
     {
         $factory = new ProductPackagingUnitStorageBusinessFactory();
         $factory->setConfig(new ProductPackagingUnitStorageConfigMock());

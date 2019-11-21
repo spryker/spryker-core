@@ -20,13 +20,6 @@ interface ManualOrderEntryGuiToShipmentFacadeInterface
     public function getAvailableMethodsByShipment(QuoteTransfer $quoteTransfer): ShipmentMethodsCollectionTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer
-     */
-    public function getAvailableMethods(QuoteTransfer $quoteTransfer);
-
-    /**
      * @param int $idShipmentMethod
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

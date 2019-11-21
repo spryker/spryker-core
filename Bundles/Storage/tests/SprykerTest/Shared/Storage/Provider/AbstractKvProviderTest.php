@@ -25,7 +25,7 @@ class AbstractKvProviderTest extends Unit
     /**
      * @return void
      */
-    public function testGetConfigByKvNameShouldReturnArray()
+    public function testGetConfigByKvNameShouldReturnArray(): void
     {
         $abstractKvProviderMock = $this->getAbstractKvProviderMock();
         $config = $abstractKvProviderMock->getConfigByKvName(AbstractKvProvider::KV_ADAPTER_REDIS);

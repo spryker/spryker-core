@@ -14,7 +14,7 @@ class CustomerGroupEditPage
      *
      * @return string
      */
-    public static function buildUrl($idCustomerGroup)
+    public static function buildUrl(int $idCustomerGroup): string
     {
         return '/customer-group/edit?id-customer-group=' . $idCustomerGroup;
     }

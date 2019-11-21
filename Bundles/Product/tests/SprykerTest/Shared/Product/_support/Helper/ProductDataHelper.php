@@ -21,6 +21,8 @@ use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
+use Spryker\Zed\Product\Business\ProductFacadeInterface;
+use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use SprykerTest\Shared\Stock\Helper\StockDataHelper;
 use SprykerTest\Shared\Tax\Helper\TaxSetDataHelper;
@@ -63,7 +65,7 @@ class ProductDataHelper extends Module
             $productConcreteTransfer->getIdProductConcrete()
         ));
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($productConcreteTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productConcreteTransfer): void {
             $this->cleanupProductConcrete($productConcreteTransfer->getIdProductConcrete());
             $this->cleanupProductAbstract($productConcreteTransfer->getFkProductAbstract());
         });
@@ -89,7 +91,7 @@ class ProductDataHelper extends Module
             $abstractProductId
         ));
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($productAbstractTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productAbstractTransfer): void {
             $this->cleanupProductAbstract($productAbstractTransfer->getIdProductAbstract());
         });
 
@@ -146,7 +148,7 @@ class ProductDataHelper extends Module
             $productConcreteTransfer->getIdProductConcrete()
         ));
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($productConcreteTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productConcreteTransfer): void {
             $this->cleanupProductConcrete($productConcreteTransfer->getIdProductConcrete());
             $this->cleanupProductAbstract($productConcreteTransfer->getFkProductAbstract());
         });
@@ -285,7 +287,7 @@ class ProductDataHelper extends Module
     /**
      * @return \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
-    private function getProductFacade()
+    private function getProductFacade(): ProductFacadeInterface
     {
         return $this->getLocator()->product()->facade();
     }
@@ -293,7 +295,7 @@ class ProductDataHelper extends Module
     /**
      * @return \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
-    private function getProductQuery()
+    private function getProductQuery(): ProductQueryContainerInterface
     {
         return $this->getLocator()->product()->queryContainer();
     }
@@ -303,7 +305,7 @@ class ProductDataHelper extends Module
      *
      * @return void
      */
-    private function cleanupProductConcrete($idProductConcrete)
+    private function cleanupProductConcrete(int $idProductConcrete): void
     {
         $this->debug(sprintf('Deleting Concrete Product: %d', $idProductConcrete));
 
@@ -318,7 +320,7 @@ class ProductDataHelper extends Module
      *
      * @return void
      */
-    private function cleanupProductAbstract($idProductAbstract)
+    private function cleanupProductAbstract(int $idProductAbstract): void
     {
         $this->debug(sprintf('Deleting Abstract Product: %d', $idProductAbstract));
 

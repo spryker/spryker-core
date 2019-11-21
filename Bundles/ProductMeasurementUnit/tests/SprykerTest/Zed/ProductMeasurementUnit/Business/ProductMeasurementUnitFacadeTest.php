@@ -41,7 +41,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -99,7 +99,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
      *
      * @return void
      */
-    public function testCalculateQuantityNormalizedSalesUnitValueCalculatesCorrectValues($quantity, $conversion, $precision, $expectedResult)
+    public function testCalculateQuantityNormalizedSalesUnitValueCalculatesCorrectValues(int $quantity, float $conversion, int $precision, int $expectedResult): void
     {
         // Assign
         $itemTransfer = (new ItemTransfer())
@@ -120,7 +120,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @return array
      */
-    public function calculateQuantityNormalizedSalesUnitValues()
+    public function calculateQuantityNormalizedSalesUnitValues(): array
     {
         // round(1st / 2nd * 3rd) = 4th
         return [
@@ -139,7 +139,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductMeasurementUnitEntitiesReturnsProductMeasurementUnitEntities()
+    public function testFindProductMeasurementUnitEntitiesReturnsProductMeasurementUnitEntities(): void
     {
         // Assign
         $code = 'MYCODE' . random_int(1, 100);
@@ -159,7 +159,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetSalesUnitsByIdProductRetrievesAllProductRelatedSalesUnits()
+    public function testGetSalesUnitsByIdProductRetrievesAllProductRelatedSalesUnits(): void
     {
         // Assign
         $code = 'MYCODE' . random_int(1, 100);
@@ -199,7 +199,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandCartChangeWithQuantitySalesUnitExpandsCartChangeWithQuantitySalesUnit()
+    public function testExpandCartChangeWithQuantitySalesUnitExpandsCartChangeWithQuantitySalesUnit(): void
     {
         // Assign
         $code = 'MYCODE' . random_int(1, 100);

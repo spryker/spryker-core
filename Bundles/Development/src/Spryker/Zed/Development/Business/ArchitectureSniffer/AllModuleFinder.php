@@ -114,16 +114,17 @@ class AllModuleFinder implements AllModuleFinderInterface
      */
     protected function findModules($path, $namespace): array
     {
-        $directories = [];
         $finder = clone $this->finder;
 
         try {
+            /** @var \SplFileInfo[] $directories */
             $directories = $finder
                 ->directories()
                 ->in($path)
                 ->depth('== 0');
         } catch (InvalidArgumentException $e) {
             // ~ Directory does not exist. It's not an error.
+            return [];
         }
 
         if (!$directories) {

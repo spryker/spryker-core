@@ -52,7 +52,7 @@ abstract class AbstractStorageCacheStrategyTest extends Unit
     /**
      * @return void
      */
-    protected function _before()
+    protected function _before(): void
     {
         $this->storageClientMock = $this
             ->getMockBuilder(StorageClient::class)
@@ -93,14 +93,14 @@ abstract class AbstractStorageCacheStrategyTest extends Unit
      *
      * @return void
      */
-    abstract protected function testStrategy($testType);
+    abstract protected function testStrategy(string $testType): void;
 
     /**
      * @param string $testType
      *
      * @return void
      */
-    protected function setCachedKeysByType($testType)
+    protected function setCachedKeysByType(string $testType): void
     {
         $this->storageClientMock->setCachedKeys($this->cacheDataProvider->getTestCacheDataInput($testType));
     }

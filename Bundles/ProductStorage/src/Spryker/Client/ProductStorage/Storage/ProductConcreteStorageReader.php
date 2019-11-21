@@ -396,6 +396,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         }
 
         $productStorageDataCollection = $this->storageClient->getMulti($this->generateStorageKeys($productConcreteIds, $localeName));
+        $productStorageDataCollection = array_filter($productStorageDataCollection);
 
         return $this->mapBulkProductConcreteStorageData($productStorageDataCollection, $localeName);
     }

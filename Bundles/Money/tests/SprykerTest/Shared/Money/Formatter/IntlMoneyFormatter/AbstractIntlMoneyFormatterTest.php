@@ -42,7 +42,7 @@ abstract class AbstractIntlMoneyFormatterTest extends Unit
      *
      * @return \Money\Money
      */
-    public function convert(MoneyTransfer $moneyTransfer)
+    public function convert(MoneyTransfer $moneyTransfer): Money
     {
         $money = new Money($moneyTransfer->getAmount(), new Currency($moneyTransfer->getCurrency()->getCode()));
 

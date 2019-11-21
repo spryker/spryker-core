@@ -47,7 +47,7 @@ class ProductBundleReaderTest extends Unit
     /**
      * @return void
      */
-    public function testFindBundledProductsByIdProductConcreteShouldBuildTransferCollectionFromPersistence()
+    public function testFindBundledProductsByIdProductConcreteShouldBuildTransferCollectionFromPersistence(): void
     {
         $productBundleReaderMock = $this->createProductBundleReader();
 
@@ -65,7 +65,7 @@ class ProductBundleReaderTest extends Unit
     /**
      * @return void
      */
-    public function testAssignBundledProductsToProductConcreteShouldAssignBundledProductsAndAvailability()
+    public function testAssignBundledProductsToProductConcreteShouldAssignBundledProductsAndAvailability(): void
     {
         $bundleAvailability = 5;
 
@@ -97,14 +97,13 @@ class ProductBundleReaderTest extends Unit
      * @param \Spryker\Zed\ProductBundle\Dependency\QueryContainer\ProductBundleToAvailabilityQueryContainerInterface|null $productBundleToAvailabilityQueryContainerMock
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface|null $storeFacadeMock
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createProductBundleReader(
         ?ProductBundleQueryContainerInterface $productBundleQueryContainerMock = null,
         ?ProductBundleToAvailabilityQueryContainerInterface $productBundleToAvailabilityQueryContainerMock = null,
         ?ProductBundleToStoreFacadeInterface $storeFacadeMock = null
     ) {
-
         if ($productBundleQueryContainerMock === null) {
             $productBundleQueryContainerMock = $this->createProductQueryContainerMock();
         }
@@ -161,7 +160,7 @@ class ProductBundleReaderTest extends Unit
      *
      * @return void
      */
-    protected function setupFindBundledProducts(array $fixtures, ProductBundleReader $productBundleReaderMock)
+    protected function setupFindBundledProducts(array $fixtures, ProductBundleReader $productBundleReaderMock): void
     {
         $productBundleEntity = new SpyProductBundle();
         $productBundleEntity->setIdProductBundle($fixtures['idProductConcrete']);

@@ -49,7 +49,7 @@ class ProductRelationDataHelper extends Module
         $productRelationTransfer->setIsRebuildScheduled(true);
         $productRelationFacade->updateProductRelation($productRelationTransfer);
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($productRelationTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productRelationTransfer): void {
             $this->cleanupProductRelation($productRelationTransfer);
         });
 

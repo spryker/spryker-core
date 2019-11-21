@@ -11,7 +11,7 @@ use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductRelationStorageClientBridge;
 use Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductStorageClientBridge;
-use Spryker\Glue\RelatedProductsRestApi\Dependency\Resource\RelatedProductsRestApiToProductsRestApiResourceBridge;
+use Spryker\Glue\RelatedProductsRestApi\Dependency\RestApiResource\RelatedProductsRestApiToProductsRestApiResourceBridge;
 
 /**
  * @method \Spryker\Glue\RelatedProductsRestApi\RelatedProductsRestApiConfig getConfig()
