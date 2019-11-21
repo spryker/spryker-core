@@ -32,7 +32,7 @@ class ZedBootstrapTest extends Unit
     /**
      * @return void
      */
-    public function testDefaultServiceProvidersWillRegister()
+    public function testDefaultServiceProvidersWillRegister(): void
     {
         $zedBootstrapMock = $this->createZedBootstrapMock();
 
@@ -45,7 +45,7 @@ class ZedBootstrapTest extends Unit
     /**
      * @return void
      */
-    public function testInternalRequestServiceProvidersWillRegister()
+    public function testInternalRequestServiceProvidersWillRegister(): void
     {
         $_SERVER[self::HTTP_X_INTERNAL_REQUEST] = 1;
         $zedBootstrapMock = $this->createZedBootstrapMock();

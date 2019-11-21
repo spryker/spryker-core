@@ -28,7 +28,7 @@ class ZedResponseLogPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetNameShouldReturnString()
+    public function testGetNameShouldReturnString(): void
     {
         $zedResponseLogPlugin = new ZedResponseLogPlugin();
 
@@ -38,7 +38,7 @@ class ZedResponseLogPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetCallableShouldReturnCallable()
+    public function testGetCallableShouldReturnCallable(): void
     {
         $zedResponseLogPlugin = new ZedResponseLogPlugin();
 
@@ -48,7 +48,7 @@ class ZedResponseLogPluginTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteCallableShouldCallLogger()
+    public function testExecuteCallableShouldCallLogger(): void
     {
         $this->markTestIncomplete('test response logging incomplete');
         $loggerMock = $this->getLoggerMock();

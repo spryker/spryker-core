@@ -35,7 +35,7 @@ class RequestTest extends Unit
         TransferInterface $transfer,
         ?TransferInterface $metaTransfer1 = null,
         ?TransferInterface $metaTransfer2 = null
-    ) {
+    ): Request {
         $request = new Request();
 
         $request->setPassword('password');
@@ -59,7 +59,7 @@ class RequestTest extends Unit
     /**
      * @return void
      */
-    public function testDefaultTransferIsNull()
+    public function testDefaultTransferIsNull(): void
     {
         $response = new Request();
         $this->assertEquals(null, $response->getTransfer());
@@ -69,7 +69,7 @@ class RequestTest extends Unit
     /**
      * @return void
      */
-    public function testGetterAndSetters()
+    public function testGetterAndSetters(): void
     {
         $transfer = new TestTransfer();
         $transfer->setFoo('bar');
@@ -88,7 +88,7 @@ class RequestTest extends Unit
     /**
      * @return void
      */
-    public function testMetaTransfersAreStoredCorrectly()
+    public function testMetaTransfersAreStoredCorrectly(): void
     {
         $transfer = new TestTransfer();
         $transfer->setFoo('foo');
@@ -110,7 +110,7 @@ class RequestTest extends Unit
     /**
      * @return void
      */
-    public function testToArrayAndFromArray()
+    public function testToArrayAndFromArray(): void
     {
         $transfer = new TestTransfer();
         $transfer->setFoo('foo');

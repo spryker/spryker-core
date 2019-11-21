@@ -32,7 +32,7 @@ class GraphCommunicationFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateGraphAdapterWithObjectFromConfigMustThrowException()
+    public function testCreateGraphAdapterWithObjectFromConfigMustThrowException(): void
     {
         $this->expectException(GraphAdapterNameIsAnObjectException::class);
 
@@ -46,7 +46,7 @@ class GraphCommunicationFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateGraphAdapterWithInvalidAdapterNameFromConfigMustThrowException()
+    public function testCreateGraphAdapterWithInvalidAdapterNameFromConfigMustThrowException(): void
     {
         $this->expectException(InvalidGraphAdapterNameException::class);
 
@@ -60,7 +60,7 @@ class GraphCommunicationFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateGraphAdapterWithInvalidAdapterInstanceMustThrowException()
+    public function testCreateGraphAdapterWithInvalidAdapterInstanceMustThrowException(): void
     {
         $this->expectException(InvalidGraphAdapterException::class);
 
@@ -74,7 +74,7 @@ class GraphCommunicationFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateGraph()
+    public function testCreateGraph(): void
     {
         $factory = new GraphCommunicationFactory();
         $factory->setConfig(new GraphConfig());

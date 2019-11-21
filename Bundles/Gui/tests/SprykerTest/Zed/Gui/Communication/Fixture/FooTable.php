@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Gui\Communication\Fixture;
 
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Symfony\Component\HttpFoundation\Request;
 
 class FooTable extends AbstractTable
 {
@@ -17,7 +18,7 @@ class FooTable extends AbstractTable
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    protected function configure(TableConfiguration $config)
+    protected function configure(TableConfiguration $config): TableConfiguration
     {
         return new TableConfiguration();
     }
@@ -27,7 +28,7 @@ class FooTable extends AbstractTable
      *
      * @return array
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function prepareData(TableConfiguration $config): array
     {
         return [];
     }
@@ -37,7 +38,7 @@ class FooTable extends AbstractTable
      *
      * @return void
      */
-    public function setRequest($request)
+    public function setRequest(Request $request): void
     {
         $this->request = $request;
     }
@@ -45,7 +46,7 @@ class FooTable extends AbstractTable
     /**
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    public function getRequest()
+    public function getRequest(): Request
     {
         return $this->request;
     }

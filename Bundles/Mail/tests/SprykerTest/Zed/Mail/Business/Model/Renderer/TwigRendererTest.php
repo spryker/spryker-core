@@ -36,7 +36,7 @@ class TwigRendererTest extends Unit
     /**
      * @return void
      */
-    public function testHydrateMailCallsTwigsRenderMethodWithTextTemplate()
+    public function testHydrateMailCallsTwigsRenderMethodWithTextTemplate(): void
     {
         $mailTransfer = $this->getMailTransfer();
         $twigRenderer = new TwigRenderer($this->getTwigEnvironmentMock());
@@ -49,7 +49,7 @@ class TwigRendererTest extends Unit
     /**
      * @return void
      */
-    public function testHydrateMailCallsTwigsRenderMethodWithHtmlTemplate()
+    public function testHydrateMailCallsTwigsRenderMethodWithHtmlTemplate(): void
     {
         $mailTransfer = $this->getMailTransfer();
         $twigRenderer = new TwigRenderer($this->getTwigEnvironmentMock());
@@ -86,7 +86,7 @@ class TwigRendererTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\MailTransfer
      */
-    protected function getMailTransfer()
+    protected function getMailTransfer(): MailTransfer
     {
         $mailTransfer = new MailTransfer();
         $mailTransfer->addTemplate($this->getMailTemplateTransferText());
@@ -102,7 +102,7 @@ class TwigRendererTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\MailTemplateTransfer
      */
-    protected function getMailTemplateTransferText()
+    protected function getMailTemplateTransferText(): MailTemplateTransfer
     {
         return $this->getMailTemplateTransfer(false);
     }
@@ -110,7 +110,7 @@ class TwigRendererTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\MailTemplateTransfer
      */
-    protected function getMailTemplateTransferHtml()
+    protected function getMailTemplateTransferHtml(): MailTemplateTransfer
     {
         return $this->getMailTemplateTransfer(true);
     }
@@ -120,7 +120,7 @@ class TwigRendererTest extends Unit
      *
      * @return \Generated\Shared\Transfer\MailTemplateTransfer
      */
-    protected function getMailTemplateTransfer($isHtml)
+    protected function getMailTemplateTransfer(bool $isHtml): MailTemplateTransfer
     {
         $mailTemplateTransfer = new MailTemplateTransfer();
         $mailTemplateTransfer->setIsHtml($isHtml);
