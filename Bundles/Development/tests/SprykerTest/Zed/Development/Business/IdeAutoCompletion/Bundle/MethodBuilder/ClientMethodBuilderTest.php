@@ -34,7 +34,7 @@ class ClientMethodBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testMethodNameIsClient()
+    public function testMethodNameIsClient(): void
     {
         $methodBuilderMock = $this->getClientMethodBuilderMock();
         $methodBuilderMock
@@ -50,7 +50,7 @@ class ClientMethodBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testFileLookupIsPerformedInClientApplication()
+    public function testFileLookupIsPerformedInClientApplication(): void
     {
         $methodBuilderMock = $this->getClientMethodBuilderMock();
         $methodBuilderMock
@@ -93,7 +93,7 @@ class ClientMethodBuilderTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer
      */
-    protected function getBundleTransfer()
+    protected function getBundleTransfer(): IdeAutoCompletionBundleTransfer
     {
         $bundleTransfer = new IdeAutoCompletionBundleTransfer();
         $bundleTransfer->setName('FooBundle');

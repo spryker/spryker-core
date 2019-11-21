@@ -25,7 +25,7 @@ class BundleNameResolverTest extends Unit
     /**
      * @return void
      */
-    public function testResolveShouldRemoveStoreName()
+    public function testResolveShouldRemoveStoreName(): void
     {
         $bundleNameResolver = $this->getBundleNameResolver('DE');
         $resolvedBundleName = $bundleNameResolver->resolve('CartDE');
@@ -38,7 +38,7 @@ class BundleNameResolverTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
      */
-    protected function getBundleNameResolver($storeName)
+    protected function getBundleNameResolver(string $storeName)
     {
         $mock = $this
             ->getMockBuilder(BundleNameResolver::class)

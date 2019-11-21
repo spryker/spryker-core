@@ -32,7 +32,7 @@ class ContainerBackwardsCompatibilityTest extends Unit
         $container = new Container();
 
         //Act
-        $container[static::SERVICE] = function () {
+        $container[static::SERVICE] = function (): void {
         };
 
         //Assert
@@ -116,7 +116,7 @@ class ContainerBackwardsCompatibilityTest extends Unit
     public function testArrayAccessExistsReturnTrueWhenServiceExists(): void
     {
         $container = new Container();
-        $container[static::SERVICE] = function () {
+        $container[static::SERVICE] = function (): void {
         };
 
         $this->assertTrue(isset($container[static::SERVICE]));
@@ -138,7 +138,7 @@ class ContainerBackwardsCompatibilityTest extends Unit
     public function testArrayAccessUnsetRemovesService(): void
     {
         $container = new Container();
-        $container[static::SERVICE] = function () {
+        $container[static::SERVICE] = function (): void {
         };
         unset($container[static::SERVICE]);
 
@@ -151,7 +151,7 @@ class ContainerBackwardsCompatibilityTest extends Unit
     public function testDeprecatedShareReturnsCallable(): void
     {
         $container = new Container();
-        $service = function () {
+        $service = function (): void {
         };
 
         $this->assertSame($service, $container->share($service));

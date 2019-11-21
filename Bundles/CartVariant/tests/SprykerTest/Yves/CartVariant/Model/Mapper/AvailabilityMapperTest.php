@@ -25,7 +25,7 @@ class AvailabilityMapperTest extends CartItemsMapperBaseTest
     /**
      * @return void
      */
-    public function testBuildMap()
+    public function testBuildMap(): void
     {
         $subject = new CartItemsAvailabilityMapper($this->createAvailabilityClientBridge('availability.json'));
         $result = $subject->buildMap($this->getItems());
@@ -43,7 +43,7 @@ class AvailabilityMapperTest extends CartItemsMapperBaseTest
      *
      * @return int
      */
-    protected function countSelectedAttributes(array $attributes)
+    protected function countSelectedAttributes(array $attributes): int
     {
         $total = 0;
 

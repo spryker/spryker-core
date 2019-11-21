@@ -29,7 +29,7 @@ class DummyPaymentSaveOrderPluginTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteShouldReturnCheckoutResponseTransfer()
+    public function testExecuteShouldReturnCheckoutResponseTransfer(): void
     {
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 

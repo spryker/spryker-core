@@ -32,17 +32,17 @@ use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInt
 class QuoteStorageStrategyProxyTest extends Unit
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $quoteClientMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \Spryker\Client\Cart\Dependency\Client\CartToMessengerClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $messengerClientMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $quoteStorageStrategyMock;
 

@@ -29,7 +29,7 @@ class DummyPaymentFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRefundShouldDelegateToRefundModel()
+    public function testRefundShouldDelegateToRefundModel(): void
     {
         $dummyPaymentFactoryMock = $this->getFactoryMock();
         $dummyPaymentFacade = new DummyPaymentFacade();

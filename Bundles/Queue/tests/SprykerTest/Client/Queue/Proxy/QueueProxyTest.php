@@ -41,7 +41,7 @@ class QueueProxyTest extends Unit
     /**
      * @return void
      */
-    protected function _before()
+    protected function _before(): void
     {
         $this->queueAdapterMock = clone $this->getMockBuilder(AdapterInterface::class)->getMock();
         $this->differentQueueAdapterMock = $this->getMockBuilder(AdapterInterface::class)->getMock();
@@ -60,7 +60,7 @@ class QueueProxyTest extends Unit
     /**
      * @return void
      */
-    public function testQueueProxyTriggersCreateAndDeleteAndPurgeQueue()
+    public function testQueueProxyTriggersCreateAndDeleteAndPurgeQueue(): void
     {
         $this->queueAdapterMock->expects($this->once())->method('createQueue');
         $this->queueAdapterMock->expects($this->once())->method('purgeQueue');
@@ -74,7 +74,7 @@ class QueueProxyTest extends Unit
     /**
      * @return void
      */
-    public function testQueueProxyTriggersSendMessageAndReceiveMessage()
+    public function testQueueProxyTriggersSendMessageAndReceiveMessage(): void
     {
         $this->queueAdapterMock->expects($this->once())->method('sendMessage');
         $this->queueAdapterMock->expects($this->once())->method('receiveMessage');
@@ -86,7 +86,7 @@ class QueueProxyTest extends Unit
     /**
      * @return void
      */
-    public function testQueueProxyTriggersSendMessagesAndReceiveMessages()
+    public function testQueueProxyTriggersSendMessagesAndReceiveMessages(): void
     {
         $this->queueAdapterMock->expects($this->once())->method('sendMessages');
         $this->queueAdapterMock->expects($this->once())->method('receiveMessages');
@@ -98,7 +98,7 @@ class QueueProxyTest extends Unit
     /**
      * @return void
      */
-    public function testQueueProxyTriggersAcknowledgeAndRejectAndHandleError()
+    public function testQueueProxyTriggersAcknowledgeAndRejectAndHandleError(): void
     {
         $this->queueAdapterMock->expects($this->once())->method('acknowledge');
         $this->queueAdapterMock->expects($this->once())->method('reject');
@@ -113,7 +113,7 @@ class QueueProxyTest extends Unit
     /**
      * @return void
      */
-    public function testQueueProxyGetsRightAdapter()
+    public function testQueueProxyGetsRightAdapter(): void
     {
         $alphaQueueMessageTransfer = $this->createDummyQueueReceiveMessageTransfer('Alpha', 'alphaQueue');
         $betaQueueMessageTransfer = $this->createDummyQueueReceiveMessageTransfer('Beta', 'betaQueue');
@@ -156,7 +156,7 @@ class QueueProxyTest extends Unit
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer
      */
-    protected function createDummyQueueReceiveMessageTransfer($body, $queueName)
+    protected function createDummyQueueReceiveMessageTransfer(string $body, string $queueName): QueueReceiveMessageTransfer
     {
         $queueSendMessageTransfer = new QueueSendMessageTransfer();
         $queueSendMessageTransfer->setBody($body);

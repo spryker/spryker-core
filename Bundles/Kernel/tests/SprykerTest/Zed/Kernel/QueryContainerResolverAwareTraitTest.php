@@ -25,7 +25,7 @@ class QueryContainerResolverAwareTraitTest extends Unit
     /**
      * @return void
      */
-    public function testSetQueryContainerMustReturnFluentInterface()
+    public function testSetQueryContainerMustReturnFluentInterface(): void
     {
         $queryContainerResolverAwareTraitMock = $this->getQueryContainerResolverAwareTraitMock();
         $returned = $queryContainerResolverAwareTraitMock->setQueryContainer(

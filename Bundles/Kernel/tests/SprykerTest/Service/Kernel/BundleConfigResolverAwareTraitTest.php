@@ -25,7 +25,7 @@ class BundleConfigResolverAwareTraitTest extends Unit
     /**
      * @return void
      */
-    public function testSetConfigMustReturnFluentInterface()
+    public function testSetConfigMustReturnFluentInterface(): void
     {
         $bundleConfigResolverAwareTraitMock = $this->getBundleConfigResolverAwareTraitMock();
         $returned = $bundleConfigResolverAwareTraitMock->setConfig(
