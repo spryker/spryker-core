@@ -4,7 +4,7 @@
   "description": "Quote module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/currency": "^3.4.0",
     "spryker/customer": "^6.0.0 || ^7.0.0",
     "spryker/kernel": "^3.30.0",

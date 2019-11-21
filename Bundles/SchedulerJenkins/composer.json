@@ -4,7 +4,7 @@
   "description": "SchedulerJenkins module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/guzzle": "^2.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/scheduler-extension": "^1.0.0",

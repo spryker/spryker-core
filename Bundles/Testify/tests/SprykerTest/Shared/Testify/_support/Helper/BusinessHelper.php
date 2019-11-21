@@ -23,16 +23,6 @@ class BusinessHelper extends Module
     /**
      * @var array
      */
-    protected $config = [
-        'projectNamespaces' => [],
-        'coreNamespaces' => [
-            'Spryker',
-        ],
-    ];
-
-    /**
-     * @var array
-     */
     protected $dependencies = [];
 
     /**
@@ -50,7 +40,7 @@ class BusinessHelper extends Module
      */
     public function getLocator()
     {
-        return new Locator($this->config['projectNamespaces'], $this->config['coreNamespaces'], $this->createClosure());
+        return new Locator();
     }
 
     /**

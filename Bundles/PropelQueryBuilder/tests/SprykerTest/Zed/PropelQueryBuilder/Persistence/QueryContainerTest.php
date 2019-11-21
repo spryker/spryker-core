@@ -322,6 +322,7 @@ class QueryContainerTest extends Unit
         $columnTransfer->setName(SpyProductTableMap::COL_ID_PRODUCT);
         $columnTransfer->setAlias('id_product');
 
+        $sortItems = [];
         $sortItems[] = (new PropelQueryBuilderSortTransfer())
             ->setColumn($columnTransfer)
             ->setSortDirection(Criteria::DESC);
@@ -354,6 +355,7 @@ class QueryContainerTest extends Unit
         $columnTransfer->setName(SpyProductTableMap::COL_ID_PRODUCT);
         $columnTransfer->setAlias('id_product');
 
+        $sortItems = [];
         $sortItems[] = (new PropelQueryBuilderSortTransfer())
             ->setColumn($columnTransfer)
             ->setSortDirection(Criteria::DESC);

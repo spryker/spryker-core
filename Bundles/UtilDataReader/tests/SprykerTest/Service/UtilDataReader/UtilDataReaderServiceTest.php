@@ -25,7 +25,7 @@ class UtilDataReaderServiceTest extends Unit
     /**
      * @return void
      */
-    public function testGetYamlBatchIteratorReturnsCountableIterator()
+    public function testGetYamlBatchIteratorReturnsCountableIterator(): void
     {
         $utilDataReaderService = new UtilDataReaderService();
         $yamlBatchIterator = $utilDataReaderService->getYamlBatchIterator('fileName');

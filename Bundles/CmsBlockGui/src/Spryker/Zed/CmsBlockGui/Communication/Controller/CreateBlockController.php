@@ -74,8 +74,6 @@ class CreateBlockController extends AbstractController
      */
     protected function createBlock(FormInterface $cmsBlockForm)
     {
-        $cmsBlockTransfer = null;
-
         try {
             $cmsBlockTransfer = $this->getFactory()
                 ->getCmsBlockFacade()
@@ -87,6 +85,8 @@ class CreateBlockController extends AbstractController
 
             $cmsBlockForm->get(CmsBlockForm::FIELD_FK_TEMPLATE)
                 ->addError(new FormError(static::ERROR_MESSAGE_LOST_TEMPLATE));
+
+            return null;
         }
 
         return $cmsBlockTransfer;
