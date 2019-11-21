@@ -68,34 +68,6 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
             ->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, new ProductOfferTransfer());
     }
 
-
-    /**
-     * @param ProductOfferStoreCriteriaFilterTransfer $productOfferCriteriaFilter
-     *
-     * @return ProductOfferStoreCollectionTransfer
-     */
-    public function getProductOfferStores(ProductOfferStoreCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferStoreCollectionTransfer
-    {
-        $collection = new ProductOfferStoreCollectionTransfer();
-
-        $productOfferStoreEntities = SpyProductOfferStoreQuery::create()
-            ->useSpyProductOfferQuery()
-                ->filterByConcreteSku($productOfferCriteriaFilter->getConcreteSku())
-            ->endUse()
-            ->find();
-
-        foreach($productOfferStoreEntities as $productOfferStoreEntity) {
-            $productOfferTransfer = (new ProductOfferStoreTransfer)->fromArray(
-                $productOfferStoreEntity->toArray(),
-                true
-            );
-
-            $collection->addProductOfferStore($productOfferTransfer);
-        }
-
-        return $collection;
-    }
-
     /**
      * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter

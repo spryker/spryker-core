@@ -53,11 +53,4 @@ interface ProductOfferFacadeInterface
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
     public function create(ProductOfferTransfer $productOfferCriteriaFilter): ProductOfferTransfer;
-
-    /**
-     * @param ProductOfferStoreCriteriaFilterTransfer $productOfferCriteriaFilter
-     *
-     * @return ProductOfferStoreCollectionTransfer
-     */
-    public function getProductOfferStores(ProductOfferStoreCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferStoreCollectionTransfer;
 }

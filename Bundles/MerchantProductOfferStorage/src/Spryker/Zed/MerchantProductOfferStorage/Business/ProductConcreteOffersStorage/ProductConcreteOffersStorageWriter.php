@@ -40,6 +40,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
         $productOfferCriteriaFilterTransfer = new ProductOfferCriteriaFilterTransfer();
         $productOfferCriteriaFilterTransfer->setConcreteSkus($concreteSkus);
 
+        //As far as I know we don't have to use facade methods in storage module, don't we?
         //Instead of this you have to get all the needed data + store data
         $productOfferCollectionTransfer = $this->productOfferFacade->find($productOfferCriteriaFilterTransfer);
 

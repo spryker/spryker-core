@@ -62,14 +62,4 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
     {
         return $this->getEntityManager()->createProductOffer($productOfferTransfer);
     }
-
-    /**
-     * @param ProductOfferStoreCriteriaFilterTransfer $productOfferCriteriaFilter
-     *
-     * @return ProductOfferStoreCollectionTransfer
-     */
-    public function getProductOfferStores(ProductOfferStoreCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferStoreCollectionTransfer
-    {
-        return $this->getRepository()->getProductOfferStores($productOfferCriteriaFilter);
-    }
 }

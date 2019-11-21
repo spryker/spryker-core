@@ -19,20 +19,11 @@
         <property name="productOffers" type="ProductOffer[]" singular="productOffer"/>
     </transfer>
 
-    <transfer name="ProductOfferStoreCollection">
-        <property name="productOfferStores" type="ProductOfferStore[]" singular="productOfferStore"/>
-    </transfer>
-
     <transfer name="ProductOfferCriteriaFilter">
         <property name="concreteSku" type="string"/>
         <property name="productOfferReference" type="string"/>
         <property name="concreteSkus" type="string[]" singular="concreteSku"/>
         <property name="productOfferReferences" type="string[]" singular="productOfferReference"/>
-        <property name="pagination" type="Pagination"/>
-    </transfer>
-
-    <transfer name="ProductOfferStoreCriteriaFilter">
-        <property name="concreteSku" type="string"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
 
