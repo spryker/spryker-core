@@ -53,11 +53,14 @@ class HealthCheckServiceProcessor implements HealthCheckServiceProcessorInterfac
     public function process(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer
     {
         $healthCheckResponseTransfer = (new HealthCheckResponseTransfer())
-            ->setStatusCode($this->healthCheckConfig->getSuccessHealthCheckStatus());
+            ->setStatus($this->healthCheckConfig->getSuccessHealthCheckStatusMessage())
+            ->setStatusCode($this->healthCheckConfig->getSuccessHealthCheckStatusCode());
 
         if ($this->healthCheckConfig->isHealthCheckEnabled() === false) {
             return $healthCheckResponseTransfer
-                ->setStatusCode($this->healthCheckConfig->getForbiddenHealthCheckStatus());
+                ->setStatus($this->healthCheckConfig->getUnavailableHealthCheckStatusMessage())
+                ->setStatusCode($this->healthCheckConfig->getForbiddenHealthCheckStatusCode())
+                ->setMessage($this->healthCheckConfig->getForbiddenHealthCheckStatusMessage());
         }
 
         $filteredHealthCheckPlugins = $this->serviceFilter->filter($healthCheckRequestTransfer);
@@ -92,11 +95,7 @@ class HealthCheckServiceProcessor implements HealthCheckServiceProcessorInterfac
      */
     protected function processOutputFormat(HealthCheckRequestTransfer $healthCheckRequestTransfer, HealthCheckResponseTransfer $healthCheckResponseTransfer): HealthCheckResponseTransfer
     {
-        $outputFormat = $healthCheckRequestTransfer->getFormat();
-
-        if (!$outputFormat) {
-            return $healthCheckResponseTransfer;
-        }
+        $outputFormat = $healthCheckRequestTransfer->getFormat() ?? $this->healthCheckConfig->getDefaultFormatterName();
 
         return $this->formatEncoder->encode($healthCheckResponseTransfer, $outputFormat);
     }

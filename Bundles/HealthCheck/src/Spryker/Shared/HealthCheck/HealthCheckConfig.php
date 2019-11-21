@@ -11,31 +11,60 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class HealthCheckConfig extends AbstractSharedConfig
 {
-    protected const HEALTH_CHECK_SUCCESS_STATUS = 200;
-    protected const HEALTH_CHECK_FORBIDDEN_STATUS = 403;
-    protected const HEALTH_CHECK_UNAVAILABLE_STATUS = 500;
+    protected const HEALTH_CHECK_SUCCESS_STATUS_CODE = 200;
+    protected const HEALTH_CHECK_SUCCESS_STATUS_MESSAGE = 'healthy';
+
+    protected const HEALTH_CHECK_UNAVAILABLE_STATUS_CODE = 500;
+    protected const HEALTH_CHECK_UNAVAILABLE_STATUS_MESSAGE = 'unhealthy';
+
+    protected const HEALTH_CHECK_FORBIDDEN_STATUS_CODE = 403;
+    protected const HEALTH_CHECK_FORBIDDEN_STATUS_MESSAGE = 'HealthCheck endpoints are disabled for all applications.';
 
     /**
      * @return int
      */
-    public function getSuccessHealthCheckStatus(): int
+    public function getSuccessHealthCheckStatusCode(): int
     {
-        return static::HEALTH_CHECK_SUCCESS_STATUS;
+        return static::HEALTH_CHECK_SUCCESS_STATUS_CODE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSuccessHealthCheckStatusMessage(): string
+    {
+        return static::HEALTH_CHECK_SUCCESS_STATUS_MESSAGE;
     }
 
     /**
      * @return int
      */
-    public function getForbiddenHealthCheckStatus(): int
+    public function getUnavailableHealthCheckStatusCode(): int
     {
-        return static::HEALTH_CHECK_FORBIDDEN_STATUS;
+        return static::HEALTH_CHECK_UNAVAILABLE_STATUS_CODE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUnavailableHealthCheckStatusMessage(): string
+    {
+        return static::HEALTH_CHECK_UNAVAILABLE_STATUS_MESSAGE;
     }
 
     /**
      * @return int
      */
-    public function getUnavailableHealthCheckStatus(): int
+    public function getForbiddenHealthCheckStatusCode(): int
     {
-        return static::HEALTH_CHECK_UNAVAILABLE_STATUS;
+        return static::HEALTH_CHECK_FORBIDDEN_STATUS_CODE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getForbiddenHealthCheckStatusMessage(): string
+    {
+        return static::HEALTH_CHECK_FORBIDDEN_STATUS_MESSAGE;
     }
 }

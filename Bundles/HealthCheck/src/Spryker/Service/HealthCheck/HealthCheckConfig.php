@@ -15,6 +15,8 @@ use Spryker\Shared\HealthCheck\HealthCheckConstants;
  */
 class HealthCheckConfig extends AbstractBundleConfig
 {
+    protected const DEFAULT_FORMATTER_NAME = 'default';
+
     /**
      * @return bool
      */
@@ -26,24 +28,56 @@ class HealthCheckConfig extends AbstractBundleConfig
     /**
      * @return int
      */
-    public function getSuccessHealthCheckStatus(): int
+    public function getSuccessHealthCheckStatusCode(): int
     {
-        return $this->getSharedConfig()->getSuccessHealthCheckStatus();
+        return $this->getSharedConfig()->getSuccessHealthCheckStatusCode();
     }
 
     /**
      * @return int
      */
-    public function getForbiddenHealthCheckStatus(): int
+    public function getForbiddenHealthCheckStatusCode(): int
     {
-        return $this->getSharedConfig()->getForbiddenHealthCheckStatus();
+        return $this->getSharedConfig()->getForbiddenHealthCheckStatusCode();
+    }
+
+    /**
+     * @return string
+     */
+    public function getForbiddenHealthCheckStatusMessage(): string
+    {
+        return $this->getSharedConfig()->getForbiddenHealthCheckStatusMessage();
     }
 
     /**
      * @return int
      */
-    public function getUnavailableHealthCheckStatus(): int
+    public function getUnavailableHealthCheckStatusCode(): int
     {
-        return $this->getSharedConfig()->getUnavailableHealthCheckStatus();
+        return $this->getSharedConfig()->getUnavailableHealthCheckStatusCode();
+    }
+
+    /**
+     * @return string
+     */
+    public function getSuccessHealthCheckStatusMessage(): string
+    {
+        return $this->getSharedConfig()->getSuccessHealthCheckStatusMessage();
+    }
+
+    /**
+     * @return string
+     */
+    public function getUnavailableHealthCheckStatusMessage(): string
+    {
+        return $this->getSharedConfig()->getUnavailableHealthCheckStatusMessage();
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultFormatterName(): string
+    {
+        return static::DEFAULT_FORMATTER_NAME;
     }
 }
