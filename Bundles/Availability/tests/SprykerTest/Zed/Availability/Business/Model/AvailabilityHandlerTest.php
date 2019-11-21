@@ -12,11 +12,11 @@ use Generated\Shared\DataBuilder\StoreBuilder;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Business\Model\AvailabilityHandler;
+use Spryker\Zed\Availability\Business\Model\AvailabilityHandlerInterface;
 use Spryker\Zed\Availability\Business\Model\ProductAvailabilityCalculatorInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityEntityManagerInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
@@ -75,7 +75,6 @@ class AvailabilityHandlerTest extends Unit
             $availabilityEntityManagerMock,
             $availabilityCalculatorMock,
             $touchFacadeMock,
-            null,
             $stockFacadeMock
         );
 
@@ -112,7 +111,6 @@ class AvailabilityHandlerTest extends Unit
             $availabilityEntityManagerMock,
             $availabilityCalculatorMock,
             $touchFacadeMock,
-            null,
             $stockFacadeMock
         );
 
@@ -124,27 +122,19 @@ class AvailabilityHandlerTest extends Unit
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityEntityManagerInterface $availabilityEntityManagerMock
      * @param \Spryker\Zed\Availability\Business\Model\ProductAvailabilityCalculatorInterface $availabilityCalculatorMock
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchFacadeInterface $touchFacade
-     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface|null $availabilityToStoreFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface|null $availabilityToStockFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface|null $availabilityToEventFacade
      *
-     * @return \Spryker\Zed\Availability\Business\Model\AvailabilityHandler
+     * @return \Spryker\Zed\Availability\Business\Model\AvailabilityHandlerInterface
      */
     protected function createAvailabilityHandler(
         AvailabilityRepositoryInterface $availabilityRepositoryMock,
         AvailabilityEntityManagerInterface $availabilityEntityManagerMock,
         ProductAvailabilityCalculatorInterface $availabilityCalculatorMock,
         AvailabilityToTouchFacadeInterface $touchFacade,
-        ?AvailabilityToStoreFacadeInterface $availabilityToStoreFacade = null,
         ?AvailabilityToStockFacadeInterface $availabilityToStockFacade = null,
         ?AvailabilityToEventFacadeInterface $availabilityToEventFacade = null
-    ): AvailabilityHandler {
-        if ($availabilityToStoreFacade === null) {
-            $availabilityToStoreFacade = $this->createStoreFacadeMock();
-            $availabilityToStoreFacade->method('getCurrentStore')
-                ->willReturn(new StoreTransfer());
-        }
-
+    ): AvailabilityHandlerInterface {
         if ($availabilityToStockFacade === null) {
             $availabilityToStockFacade = $this->createAvailabilityToStockFacadeMock();
         }
@@ -158,7 +148,6 @@ class AvailabilityHandlerTest extends Unit
             $availabilityEntityManagerMock,
             $availabilityCalculatorMock,
             $touchFacade,
-            $availabilityToStoreFacade,
             $availabilityToStockFacade,
             $availabilityToEventFacade
         );
@@ -206,15 +195,6 @@ class AvailabilityHandlerTest extends Unit
     protected function createAvailabilityEntityManagerMock()
     {
         return $this->getMockBuilder(AvailabilityEntityManagerInterface::class)
-            ->getMock();
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface
-     */
-    protected function createStoreFacadeMock()
-    {
-        return $this->getMockBuilder(AvailabilityToStoreFacadeInterface::class)
             ->getMock();
     }
 

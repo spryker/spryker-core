@@ -17,7 +17,6 @@ use Spryker\Zed\Availability\Business\Exception\ProductNotFoundException;
 use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
-use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityEntityManagerInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
@@ -48,11 +47,6 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
     protected $touchFacade;
 
     /**
-     * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface
-     */
-    protected $storeFacade;
-
-    /**
      * @var \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface
      */
     protected $stockFacade;
@@ -67,7 +61,6 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityEntityManagerInterface $availabilityEntityManager
      * @param \Spryker\Zed\Availability\Business\Model\ProductAvailabilityCalculatorInterface $availabilityCalculator
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchFacadeInterface $touchFacade
-     * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface $stockFacade
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface $eventFacade
      */
@@ -76,7 +69,6 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         AvailabilityEntityManagerInterface $availabilityEntityManager,
         ProductAvailabilityCalculatorInterface $availabilityCalculator,
         AvailabilityToTouchFacadeInterface $touchFacade,
-        AvailabilityToStoreFacadeInterface $storeFacade,
         AvailabilityToStockFacadeInterface $stockFacade,
         AvailabilityToEventFacadeInterface $eventFacade
     ) {
@@ -84,7 +76,6 @@ class AvailabilityHandler implements AvailabilityHandlerInterface
         $this->availabilityRepository = $availabilityRepository;
         $this->availabilityEntityManager = $availabilityEntityManager;
         $this->touchFacade = $touchFacade;
-        $this->storeFacade = $storeFacade;
         $this->stockFacade = $stockFacade;
         $this->eventFacade = $eventFacade;
     }

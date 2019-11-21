@@ -53,8 +53,7 @@ class StockBusinessFactory extends AbstractBusinessFactory
         return new StockReader(
             $this->getRepository(),
             $this->createStockMapper(),
-            $this->getStoreFacade(),
-            $this->getQueryContainer()
+            $this->getStoreFacade()
         );
     }
 
