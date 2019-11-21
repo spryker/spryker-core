@@ -34,7 +34,7 @@ class SetupHelper extends Module
      *
      * @return void
      */
-    public function _before(TestInterface $test)
+    public function _before(TestInterface $test): void
     {
         parent::_before($test);
 
@@ -50,7 +50,7 @@ class SetupHelper extends Module
     /**
      * @return bool
      */
-    protected function hasSprykerSetup()
+    protected function hasSprykerSetup(): bool
     {
         if ($this->hasSetupTool === null) {
             $this->hasSetupTool = file_exists(APPLICATION_ROOT_DIR . '/vendor/bin/install');
@@ -82,7 +82,7 @@ class SetupHelper extends Module
      *
      * @return void
      */
-    protected function run($argument)
+    protected function run(string $argument): void
     {
         $command = $this->buildCommandToExecute($argument);
         $process = new Process($command, APPLICATION_ROOT_DIR);
@@ -99,7 +99,7 @@ class SetupHelper extends Module
      *
      * @return array
      */
-    protected function buildCommandToExecute($argument): array
+    protected function buildCommandToExecute(string $argument): array
     {
         if ($this->hasSprykerSetup()) {
             return [sprintf(static::SPRYKER_DEPLOY . ' %s', $argument)];

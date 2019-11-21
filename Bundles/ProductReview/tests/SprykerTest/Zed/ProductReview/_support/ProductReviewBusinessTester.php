@@ -49,7 +49,7 @@ class ProductReviewBusinessTester extends Actor
      *
      * @return array
      */
-    public function removeProductReviewDateFields(array $productReview)
+    public function removeProductReviewDateFields(array $productReview): array
     {
         return array_diff_key($productReview, array_flip(static::DATE_FIELDS));
     }

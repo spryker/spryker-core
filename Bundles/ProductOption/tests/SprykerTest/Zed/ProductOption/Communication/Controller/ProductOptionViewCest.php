@@ -28,7 +28,7 @@ class ProductOptionViewCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(ProductOptionCommunicationTester $i)
+    public function breadcrumbIsVisible(ProductOptionCommunicationTester $i): void
     {
         $i->listDataTable(ProductOptionListPage::URL . '/list-table');
         $i->clickDataTableViewButton();

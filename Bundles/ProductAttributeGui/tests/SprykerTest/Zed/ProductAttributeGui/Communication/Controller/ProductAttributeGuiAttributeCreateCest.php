@@ -28,7 +28,7 @@ class ProductAttributeGuiAttributeCreateCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(ProductAttributeGuiCommunicationTester $i)
+    public function breadcrumbIsVisible(ProductAttributeGuiCommunicationTester $i): void
     {
         $i->amOnPage(ProductAttributeGuiAttributeCreatePage::URL);
         $i->seeBreadcrumbNavigation('Products / Attributes / Create a Product Attribute');

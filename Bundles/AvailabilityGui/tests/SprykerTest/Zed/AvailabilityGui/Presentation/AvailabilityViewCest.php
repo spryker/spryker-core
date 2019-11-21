@@ -27,7 +27,7 @@ class AvailabilityViewCest
      *
      * @return void
      */
-    public function testDisplayViewPage(AvailabilityGuiPresentationTester $i)
+    public function testDisplayViewPage(AvailabilityGuiPresentationTester $i): void
     {
         $i->wantTo('View selected availability item');
         $i->expect('List of all availability items.');

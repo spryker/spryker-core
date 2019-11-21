@@ -51,7 +51,7 @@ class ShipmentTaxRateCalculationTest extends Unit
     /**
      * @return void
      */
-    public function testSetTaxRateWhenExemptTaxRateUsedShouldSetZeroTaxRate()
+    public function testSetTaxRateWhenExemptTaxRateUsedShouldSetZeroTaxRate(): void
     {
         $shipmentMethodEntity = $this->createShipmentMethodWithTaxSet(20, 'DE');
 
@@ -76,7 +76,7 @@ class ShipmentTaxRateCalculationTest extends Unit
     /**
      * @return void
      */
-    public function testSetTaxRateWhenExemptTaxRateUsedAndCountryMatchingShouldUseCountryRate()
+    public function testSetTaxRateWhenExemptTaxRateUsedAndCountryMatchingShouldUseCountryRate(): void
     {
         $shipmentMethodEntity = $this->createShipmentMethodWithTaxSet(20, 'DE');
 
@@ -104,7 +104,7 @@ class ShipmentTaxRateCalculationTest extends Unit
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod
      */
-    protected function createShipmentMethodWithTaxSet($taxRate, $iso2Code)
+    protected function createShipmentMethodWithTaxSet(int $taxRate, string $iso2Code): SpyShipmentMethod
     {
         $countryEntity = SpyCountryQuery::create()->findOneByIso2Code($iso2Code);
 
@@ -160,7 +160,7 @@ class ShipmentTaxRateCalculationTest extends Unit
     /**
      * @return \Spryker\Zed\Shipment\Business\ShipmentFacade
      */
-    protected function createShipmentFacade()
+    protected function createShipmentFacade(): ShipmentFacade
     {
         return new ShipmentFacade();
     }
@@ -168,7 +168,7 @@ class ShipmentTaxRateCalculationTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateTaxRateForDefaultCountry()
+    public function testCalculateTaxRateForDefaultCountry(): void
     {
         // Assign
         $quoteTransfer = $this->createQuoteTransfer();
@@ -184,7 +184,7 @@ class ShipmentTaxRateCalculationTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateTaxRateForDifferentCountry()
+    public function testCalculateTaxRateForDifferentCountry(): void
     {
         // Assign
         $quoteTransfer = $this->createQuoteTransfer();
@@ -203,7 +203,7 @@ class ShipmentTaxRateCalculationTest extends Unit
      *
      * @return float
      */
-    protected function getEffectiveTaxRateByQuoteTransfer(QuoteTransfer $quoteTransfer, $countryTaxRate)
+    protected function getEffectiveTaxRateByQuoteTransfer(QuoteTransfer $quoteTransfer, ?float $countryTaxRate): float
     {
         $productItemTaxRateCalculatorMock = $this->createShipmentTaxRateCalculator($countryTaxRate);
 
@@ -218,7 +218,7 @@ class ShipmentTaxRateCalculationTest extends Unit
      *
      * @return \Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator
      */
-    protected function createShipmentTaxRateCalculator($countryTaxRate)
+    protected function createShipmentTaxRateCalculator(?float $countryTaxRate): ShipmentTaxRateCalculator
     {
         return new ShipmentTaxRateCalculator(
             $this->createQueryContainerMock($countryTaxRate),
@@ -232,7 +232,7 @@ class ShipmentTaxRateCalculationTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer
      */
-    protected function createQueryContainerMock($countryTaxRate)
+    protected function createQueryContainerMock(?float $countryTaxRate)
     {
         $return = $countryTaxRate === null ? null : [ShipmentQueryContainer::COL_MAX_TAX_RATE => $countryTaxRate];
 
@@ -284,7 +284,7 @@ class ShipmentTaxRateCalculationTest extends Unit
      *
      * @return float
      */
-    protected function getExpenseItemsTaxRateAverage(QuoteTransfer $quoteTransfer)
+    protected function getExpenseItemsTaxRateAverage(QuoteTransfer $quoteTransfer): float
     {
         $taxSum = 0;
         foreach ($quoteTransfer->getExpenses() as $expense) {
@@ -299,7 +299,7 @@ class ShipmentTaxRateCalculationTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteTransfer()
+    protected function createQuoteTransfer(): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
 

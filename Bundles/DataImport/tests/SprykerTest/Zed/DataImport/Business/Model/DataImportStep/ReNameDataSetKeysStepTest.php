@@ -32,7 +32,7 @@ class ReNameDataSetKeysStepTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteReNamesKeysInDataSet()
+    public function testExecuteReNamesKeysInDataSet(): void
     {
         $dataSet = $this->tester->getFactory()->createDataSet([
             static::ORIGINAL_KEY_A => static::VALUE_A,
@@ -55,7 +55,7 @@ class ReNameDataSetKeysStepTest extends Unit
      *
      * @return void
      */
-    protected function assertKeyIsReNamed($newKey, $oldKey, $value, DataSet $dataSet)
+    protected function assertKeyIsReNamed(string $newKey, string $oldKey, string $value, DataSet $dataSet): void
     {
         $this->assertArrayNotHasKey($oldKey, $dataSet, sprintf('Expected that "%s" is no longer present in data set but was found in data set.', $oldKey));
         $this->assertArrayHasKey($newKey, $dataSet, sprintf(

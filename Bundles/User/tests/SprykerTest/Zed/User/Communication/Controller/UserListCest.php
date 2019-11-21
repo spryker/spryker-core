@@ -28,7 +28,7 @@ class UserListCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(UserCommunicationTester $i)
+    public function breadcrumbIsVisible(UserCommunicationTester $i): void
     {
         $i->amOnPage(UserListPage::URL);
         $i->seeBreadcrumbNavigation('Users Control / User');

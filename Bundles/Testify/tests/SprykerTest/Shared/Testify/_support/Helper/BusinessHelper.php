@@ -7,12 +7,15 @@
 
 namespace SprykerTest\Shared\Testify\Helper;
 
+use Closure;
 use Codeception\Configuration;
 use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
 use Exception;
 use Spryker\Shared\Testify\Locator\TestifyConfiguratorInterface;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Testify\Locator\Business\BusinessLocator as Locator;
 
@@ -49,7 +52,7 @@ class BusinessHelper extends Module
      *
      * @return $this
      */
-    public function setDependency($key, $value)
+    public function setDependency(string $key, $value)
     {
         $this->dependencies[$key] = $value;
 
@@ -59,7 +62,7 @@ class BusinessHelper extends Module
     /**
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
-    public function getFacade()
+    public function getFacade(): AbstractFacade
     {
         $facade = $this->createFacade();
         $facade->setFactory($this->getFactory());
@@ -104,7 +107,7 @@ class BusinessHelper extends Module
     /**
      * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory
      */
-    public function getFactory()
+    public function getFactory(): AbstractBusinessFactory
     {
         if ($this->factoryStub !== null) {
             return $this->factoryStub;
@@ -121,7 +124,7 @@ class BusinessHelper extends Module
     /**
      * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory
      */
-    protected function createModuleFactory()
+    protected function createModuleFactory(): AbstractBusinessFactory
     {
         $moduleFactoryClassName = $this->getFactoryClassName();
 
@@ -142,7 +145,7 @@ class BusinessHelper extends Module
     /**
      * @return \Spryker\Zed\Kernel\AbstractBundleConfig
      */
-    protected function getConfig()
+    protected function getConfig(): AbstractBundleConfig
     {
         return $this->getConfigHelper()->getModuleConfig();
     }
@@ -158,10 +161,10 @@ class BusinessHelper extends Module
     /**
      * @return \Closure
      */
-    private function createClosure()
+    private function createClosure(): Closure
     {
         $dependencies = $this->getDependencies();
-        $callback = function (TestifyConfiguratorInterface $configurator) use ($dependencies) {
+        $callback = function (TestifyConfiguratorInterface $configurator) use ($dependencies): void {
             foreach ($dependencies as $key => $value) {
                 $configurator->getContainer()->set($key, $value);
             }
@@ -173,7 +176,7 @@ class BusinessHelper extends Module
     /**
      * @return array
      */
-    private function getDependencies()
+    private function getDependencies(): array
     {
         $dependencies = $this->dependencies;
         $this->dependencies = [];
@@ -186,7 +189,7 @@ class BusinessHelper extends Module
      *
      * @return void
      */
-    public function _before(TestInterface $test)
+    public function _before(TestInterface $test): void
     {
         $this->factoryStub = null;
         $this->mockedFactoryMethods = [];

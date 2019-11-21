@@ -28,7 +28,7 @@ class UserEditCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(UserCommunicationTester $i)
+    public function breadcrumbIsVisible(UserCommunicationTester $i): void
     {
         $i->listDataTable(UserListPage::URL . '/index/table');
         $i->clickDataTableEditButton();

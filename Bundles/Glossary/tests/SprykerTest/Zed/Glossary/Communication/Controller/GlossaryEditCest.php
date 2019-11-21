@@ -28,7 +28,7 @@ class GlossaryEditCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(GlossaryCommunicationTester $i)
+    public function breadcrumbIsVisible(GlossaryCommunicationTester $i): void
     {
         $i->listDataTable(GlossaryListPage::URL . '/index/table');
         $i->clickDataTableEditButton();

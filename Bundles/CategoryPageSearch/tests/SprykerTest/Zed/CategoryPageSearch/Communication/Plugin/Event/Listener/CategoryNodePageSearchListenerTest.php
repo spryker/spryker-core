@@ -342,7 +342,7 @@ class CategoryNodePageSearchListenerTest extends Unit
     /**
      * @return \Spryker\Zed\CategoryPageSearch\Business\CategoryPageSearchFacade
      */
-    protected function getCategoryPageSearchFacade()
+    protected function getCategoryPageSearchFacade(): CategoryPageSearchFacade
     {
         $categoryPageSearchToSearchBridgeMock = $this->getMockBuilder(CategoryPageSearchToSearchBridge::class)->disableOriginalConstructor()->getMock();
         $categoryPageSearchToSearchBridgeMock->method('transformPageMapToDocumentByMapperName')->willReturn([]);
