@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\Payment\Persistence;
 
+use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\SalesPaymentMethodTypeTransfer;
+use Orm\Zed\Payment\Persistence\SpyPaymentMethodStore;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
+use Spryker\Zed\Payment\Persistence\Exception\EntityNotFoundException;
 
 /**
  * @method \Spryker\Zed\Payment\Persistence\PaymentPersistenceFactory getFactory()
@@ -30,5 +33,77 @@ class PaymentEntityManager extends AbstractEntityManager implements PaymentEntit
             ->findOneOrCreate();
 
         $salesPaymentMethodTypeEntity->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     *
+     * @throws \Spryker\Zed\Payment\Persistence\Exception\EntityNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodTransfer
+     */
+    public function updatePaymentMethod(
+        PaymentMethodTransfer $paymentMethodTransfer
+    ): PaymentMethodTransfer {
+        $paymentMethodEntity = $this->getFactory()
+            ->createPaymentMethodQuery()
+            ->filterByIdPaymentMethod($paymentMethodTransfer->getIdPaymentMethod())
+            ->findOne();
+
+        if ($paymentMethodEntity === null) {
+            throw new EntityNotFoundException('Payment method not found');
+        }
+
+        $paymentMethodMapper = $this->getFactory()->createPaymentMapper();
+
+        $paymentMethodEntity = $paymentMethodMapper->mapPaymentMethodTransferToPaymentMethodEntity(
+            $paymentMethodTransfer,
+            $paymentMethodEntity
+        );
+        $paymentMethodEntity->save();
+
+        return $paymentMethodMapper->mapPaymentMethodEntityToPaymentMethodTransfer(
+            $paymentMethodEntity,
+            $paymentMethodTransfer
+        );
+    }
+
+    /**
+     * @param array $idStores
+     * @param int $idPaymentMethod
+     *
+     * @return void
+     */
+    public function addPaymentMethodStoreRelationsForStores(
+        array $idStores,
+        int $idPaymentMethod
+    ): void {
+        foreach ($idStores as $idStore) {
+            $shipmentMethodStoreEntity = new SpyPaymentMethodStore();
+            $shipmentMethodStoreEntity->setFkStore($idStore)
+                ->setFkPaymentMethod($idPaymentMethod)
+                ->save();
+        }
+    }
+
+    /**
+     * @param array $idStores
+     * @param int $idPaymentMethod
+     *
+     * @return void
+     */
+    public function removePaymentMethodStoreRelationsForStores(
+        array $idStores,
+        int $idPaymentMethod
+    ): void {
+        if ($idStores === []) {
+            return;
+        }
+
+        $this->getFactory()
+            ->createPaymentMethodStoreQuery()
+            ->filterByFkPaymentMethod($idPaymentMethod)
+            ->filterByFkStore_In($idStores)
+            ->delete();
     }
 }

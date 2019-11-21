@@ -15,12 +15,12 @@ use Propel\Runtime\Collection\ObjectCollection;
 class StoreRelationMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Shipment\Persistence\SpyShipmentMethodStore[] $shipmentMethodStoreEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Payment\Persistence\SpyPaymentMethodStore[] $shipmentMethodStoreEntities
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function mapShipmentMethodStoreEntitiesToStoreRelationTransfer(
+    public function mapPaymentMethodStoreEntitiesToStoreRelationTransfer(
         ObjectCollection $shipmentMethodStoreEntities,
         StoreRelationTransfer $storeRelationTransfer
     ): StoreRelationTransfer {

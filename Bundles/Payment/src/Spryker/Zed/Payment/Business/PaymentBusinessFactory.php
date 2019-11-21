@@ -14,6 +14,10 @@ use Spryker\Zed\Payment\Business\Installer\SalesPaymentMethodTypeInstaller;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodFinder;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodFinderInterface;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodReader;
+use Spryker\Zed\Payment\Business\Method\PaymentMethodStoreRelationUpdater;
+use Spryker\Zed\Payment\Business\Method\PaymentMethodStoreRelationUpdaterInterface;
+use Spryker\Zed\Payment\Business\Method\PaymentMethodUpdater;
+use Spryker\Zed\Payment\Business\Method\PaymentMethodUpdaterInterface;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentHydrator;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentReader;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentSaver;
@@ -116,6 +120,28 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     public function createPaymentMethodFinder(): PaymentMethodFinderInterface
     {
         return new PaymentMethodFinder($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\Method\PaymentMethodStoreRelationUpdaterInterface
+     */
+    public function createPaymentMethodStoreRelationUpdater(): PaymentMethodStoreRelationUpdaterInterface
+    {
+        return new PaymentMethodStoreRelationUpdater(
+            $this->getEntityManager(),
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\Method\PaymentMethodUpdaterInterface
+     */
+    public function createPaymentMethodUpdater(): PaymentMethodUpdaterInterface
+    {
+        return new PaymentMethodUpdater(
+            $this->getEntityManager(),
+            $this->createPaymentMethodStoreRelationUpdater()
+        );
     }
 
     /**

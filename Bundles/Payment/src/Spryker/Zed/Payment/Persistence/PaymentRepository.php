@@ -10,6 +10,7 @@ namespace Spryker\Zed\Payment\Persistence;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\SalesPaymentMethodTypeCollectionTransfer;
 use Generated\Shared\Transfer\SalesPaymentMethodTypeTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -62,5 +63,25 @@ class PaymentRepository extends AbstractRepository implements PaymentRepositoryI
                 $paymentMethodEntity,
                 new PaymentMethodTransfer()
             );
+    }
+
+    /**
+     * @param int $idPaymentMethod
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    public function getStoreRelationByIdPaymentMethod(int $idPaymentMethod): StoreRelationTransfer
+    {
+        $shipmentMethodStoreEntities = $this->getFactory()
+            ->createPaymentMethodStoreQuery()
+            ->filterByFkPaymentMethod($idPaymentMethod)
+            ->leftJoinWithStore()
+            ->find();
+
+        $storeRelationTransfer = (new StoreRelationTransfer())->setIdEntity($idPaymentMethod);
+
+        return $this->getFactory()
+            ->createStoreRelationMapper()
+            ->mapPaymentMethodStoreEntitiesToStoreRelationTransfer($shipmentMethodStoreEntities, $storeRelationTransfer);
     }
 }

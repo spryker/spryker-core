@@ -180,6 +180,8 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
     public function updatePaymentMethod(
         PaymentMethodTransfer $paymentMethodTransfer
     ): PaymentMethodResponseTransfer {
-        return new PaymentMethodResponseTransfer();
+        return $this->getFactory()
+            ->createPaymentMethodUpdater()
+            ->updatePaymentMethod($paymentMethodTransfer);
     }
 }

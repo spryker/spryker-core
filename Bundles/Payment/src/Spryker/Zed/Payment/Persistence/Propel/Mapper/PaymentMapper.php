@@ -83,12 +83,28 @@ class PaymentMapper
         $storeRelationTransfer = (new StoreRelationTransfer())
             ->setIdEntity($paymentMethodEntity->getIdPaymentMethod());
         $paymentMethodTransfer->setStoreRelation(
-            $this->storeRelationMapper->mapShipmentMethodStoreEntitiesToStoreRelationTransfer(
+            $this->storeRelationMapper->mapPaymentMethodStoreEntitiesToStoreRelationTransfer(
                 $paymentMethodEntity->getPaymentMethodStores(),
                 $storeRelationTransfer
             )
         );
 
         return $paymentMethodTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     * @param \Orm\Zed\Payment\Persistence\SpyPaymentMethod $paymentMethodEntity
+     *
+     * @return \Orm\Zed\Payment\Persistence\SpyPaymentMethod
+     */
+    public function mapPaymentMethodTransferToPaymentMethodEntity(
+        PaymentMethodTransfer $paymentMethodTransfer,
+        SpyPaymentMethod $paymentMethodEntity
+    ): SpyPaymentMethod {
+        $paymentMethodEntity->fromArray($paymentMethodTransfer->modifiedToArray());
+        $paymentMethodEntity->setName($paymentMethodTransfer->getMethodName());
+
+        return $paymentMethodEntity;
     }
 }
