@@ -1,4 +1,4 @@
-{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Configurable Bundle Cart Notes' | trans } %}
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Configured Bundle Cart Notes' | trans } %}
     {% block widget_content %}
         {% set configurableBundlesHaveCartNote = false %}
         {% for salesOrderConfiguredBundle in order.salesOrderConfiguredBundles if salesOrderConfiguredBundle.cartNote %}
@@ -24,7 +24,7 @@
                 </div>
             {% else %}
                 <div class="col-md-12">
-                    <span class="text-left">{{ 'Order has no configurable bundle cart notes' | trans }}</span>
+                    <span class="text-left">{{ 'Order has no configured bundle cart notes' | trans }}</span>
                 </div>
             {% endif %}
         </div>
