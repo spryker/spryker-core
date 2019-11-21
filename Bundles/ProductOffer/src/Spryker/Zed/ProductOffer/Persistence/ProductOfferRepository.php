@@ -10,12 +10,8 @@ namespace Spryker\Zed\ProductOffer\Persistence;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
-use Generated\Shared\Transfer\ProductOfferStoreCollectionTransfer;
-use Generated\Shared\Transfer\ProductOfferStoreCriteriaFilterTransfer;
-use Generated\Shared\Transfer\ProductOfferStoreTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
-use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStoreQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
