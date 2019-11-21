@@ -47,7 +47,7 @@ class WriterTest extends Unit
     /**
      * @return void
      */
-    public function testDecrementStock()
+    public function testDecrementStock(): void
     {
         $this->setData();
         $stockProductEntity = SpyStockProductQuery::create()->findOne();
@@ -69,7 +69,7 @@ class WriterTest extends Unit
     /**
      * @return void
      */
-    public function testIncrementStock()
+    public function testIncrementStock(): void
     {
         $this->setData();
         $stockProductEntity = SpyStockProductQuery::create()->findOne();
@@ -89,7 +89,7 @@ class WriterTest extends Unit
     /**
      * @return void
      */
-    protected function setData()
+    protected function setData(): void
     {
         $productAbstract = SpyProductAbstractQuery::create()
             ->filterBySku('test')

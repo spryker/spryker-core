@@ -27,7 +27,7 @@ class ProductManagementProductEditCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(ProductManagementPresentationTester $i)
+    public function breadcrumbIsVisible(ProductManagementPresentationTester $i): void
     {
         $i->registerProductManagementStoreRelationFormTypePlugin();
         $i->registerMoneyCollectionFormTypePlugin();
@@ -45,7 +45,7 @@ class ProductManagementProductEditCest
      *
      * @return void
      */
-    public function canSaveProductWithoutEditing(ProductManagementPresentationTester $i)
+    public function canSaveProductWithoutEditing(ProductManagementPresentationTester $i): void
     {
         $i->registerProductManagementStoreRelationFormTypePlugin();
         $i->registerMoneyCollectionFormTypePlugin();

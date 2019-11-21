@@ -40,7 +40,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateAffectedBundlesAvailabilityShouldUpdateAffectedBundlesAvailability()
+    public function testUpdateAffectedBundlesAvailabilityShouldUpdateAffectedBundlesAvailability(): void
     {
         $bundleSku = 'sku-2';
         $bundledItemSku = 'sku-3';
@@ -82,7 +82,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateBundleAvailabilityShouldUpdateGivenBundleAvailability()
+    public function testUpdateBundleAvailabilityShouldUpdateGivenBundleAvailability(): void
     {
         $bundleSku = 'sku-2';
         $bundledItemSku = 'sku-3';
@@ -196,7 +196,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
      *
      * @return void
      */
-    protected function setupGetBundleItemsByIdProduct($bundleQuantity, $bundledItemSku, MockObject $productBundleAvailabilityHandlerMock)
+    protected function setupGetBundleItemsByIdProduct(int $bundleQuantity, string $bundledItemSku, MockObject $productBundleAvailabilityHandlerMock): void
     {
         $bundleItems = [];
         $productBundleEntity = new SpyProductBundle();

@@ -43,7 +43,7 @@ class ProductBundleStockWriterTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateStockShouldCalculatedStockBasedOnBundledProducts()
+    public function testUpdateStockShouldCalculatedStockBasedOnBundledProducts(): void
     {
         $idProductBundle = 1;
         $bundleQuantity = new Decimal(2);
@@ -83,7 +83,7 @@ class ProductBundleStockWriterTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateStockShouldResetStockWhenThereIsNoBundleItems()
+    public function testUpdateStockShouldResetStockWhenThereIsNoBundleItems(): void
     {
         $idProductBundle = 1;
         $idRelatedProductId = 2;
@@ -235,7 +235,7 @@ class ProductBundleStockWriterTest extends Unit
         int $idRelatedProductId,
         string $relatedProductSku,
         MockObject $productStockWriteMock
-    ) {
+    ): void {
         $productBundleEntity = new SpyProductBundle();
         $productBundleEntity->setIdProductBundle($idProductBundle);
         $productBundleEntity->setQuantity($bundleQuantity);
@@ -262,10 +262,9 @@ class ProductBundleStockWriterTest extends Unit
      */
     protected function setupFindProductStock(
         MockObject $productStockWriteMock,
-        $stock,
-        $idRelatedProductId
-    ) {
-
+        int $stock,
+        int $idRelatedProductId
+    ): void {
         $stockProducts = new ObjectCollection();
 
         $stockProductEntity = $this->createStockProductEntityMock();
@@ -290,7 +289,7 @@ class ProductBundleStockWriterTest extends Unit
      *
      * @return void
      */
-    protected function setupFindOrCreateProductStockEntity(MockObject $productStockWriteMock)
+    protected function setupFindOrCreateProductStockEntity(MockObject $productStockWriteMock): void
     {
         $stockProductEntityMock = $this->createStockProductEntityMock();
 

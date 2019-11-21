@@ -680,7 +680,7 @@ class CheckoutFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Sales\Communication\Plugin\SalesOrderSaverPlugin
      */
-    protected function createSalesOrderSaverPlugin()
+    protected function createSalesOrderSaverPlugin(): SalesOrderSaverPlugin
     {
         $salesOrderSaverPlugin = new SalesOrderSaverPlugin();
         $salesOrderSaverPlugin->setFacade($this->createSalesFacadeMock());
@@ -691,7 +691,7 @@ class CheckoutFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Customer\Communication\Plugin\Checkout\CustomerOrderSavePlugin
      */
-    protected function createCustomerOrderSavePlugin()
+    protected function createCustomerOrderSavePlugin(): CustomerOrderSavePlugin
     {
         $container = new Container();
         $customerDependencyProvider = new CustomerDependencyProvider();
@@ -715,7 +715,7 @@ class CheckoutFacadeTest extends Unit
      *
      * @return \Spryker\Zed\Sales\Business\SalesFacade
      */
-    protected function createSalesFacadeMock($testStateMachineProcessName = 'Test01')
+    protected function createSalesFacadeMock(string $testStateMachineProcessName = 'Test01'): SalesFacade
     {
         $this->tester->configureTestStateMachine([$testStateMachineProcessName]);
 
@@ -745,7 +745,7 @@ class CheckoutFacadeTest extends Unit
      *
      * @return \Generated\Shared\DataBuilder\ItemBuilder
      */
-    protected function createItemWithShipment(array $seed, ?CustomerTransfer $customer = null)
+    protected function createItemWithShipment(array $seed, ?CustomerTransfer $customer = null): ItemBuilder
     {
         $address = (new AddressBuilder([AddressTransfer::EMAIL => $customer->getEmail()]));
 

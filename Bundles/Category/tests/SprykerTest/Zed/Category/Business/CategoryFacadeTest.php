@@ -11,6 +11,7 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
+use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 
 /**
  * Auto-generated group annotations
@@ -32,7 +33,7 @@ class CategoryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testReadWithRootCategoryReturnsCategoryTransfer()
+    public function testReadWithRootCategoryReturnsCategoryTransfer(): void
     {
         $this->assertInstanceOf(CategoryTransfer::class, $this->getFacade()->read($this->getRootCategoryId()));
     }
@@ -40,7 +41,7 @@ class CategoryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testReadWithNonRootCategoryReturnsCategoryTransfer()
+    public function testReadWithNonRootCategoryReturnsCategoryTransfer(): void
     {
         $this->assertInstanceOf(CategoryTransfer::class, $this->getFacade()->read($this->getNonRootCategoryId()));
     }
@@ -48,7 +49,7 @@ class CategoryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteByIdCategory()
+    public function testDeleteByIdCategory(): void
     {
         $rootCategoryNodeTransfer = $this->getFacade()->getNodeById(static::CATEGORY_NODE_ID_ROOT);
 
@@ -87,7 +88,7 @@ class CategoryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetAllCategoryCollectionRetrievesCategoriesWillReturnCategoryRelationTransfer()
+    public function testGetAllCategoryCollectionRetrievesCategoriesWillReturnCategoryRelationTransfer(): void
     {
         $localeTransfer = $this->tester->haveLocale(['localeName' => 'de_DE']);
         /** @var \Generated\Shared\Transfer\CategoryCollectionTransfer $categoryCollectionTransfer */
@@ -98,7 +99,7 @@ class CategoryFacadeTest extends Unit
     /**
      * @return int
      */
-    protected function getRootCategoryId()
+    protected function getRootCategoryId(): int
     {
         return $this->getCategoryNodeQuery()->findOneByIsRoot(true)->getFkCategory();
     }
@@ -106,7 +107,7 @@ class CategoryFacadeTest extends Unit
     /**
      * @return int
      */
-    protected function getNonRootCategoryId()
+    protected function getNonRootCategoryId(): int
     {
         return $this->getCategoryNodeQuery()->findOneByIsRoot(false)->getFkCategory();
     }
@@ -114,7 +115,7 @@ class CategoryFacadeTest extends Unit
     /**
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */
-    protected function getCategoryNodeQuery()
+    protected function getCategoryNodeQuery(): SpyCategoryNodeQuery
     {
         return SpyCategoryNodeQuery::create();
     }
@@ -122,7 +123,7 @@ class CategoryFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Category\Business\CategoryFacadeInterface
      */
-    protected function getFacade()
+    protected function getFacade(): CategoryFacadeInterface
     {
         return $this->tester->getFacade();
     }

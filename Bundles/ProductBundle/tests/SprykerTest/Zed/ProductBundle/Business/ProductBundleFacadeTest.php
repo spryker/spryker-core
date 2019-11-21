@@ -530,7 +530,7 @@ class ProductBundleFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function createProduct($price, $sku, $isAlwaysAvailable = false): ProductConcreteTransfer
+    protected function createProduct(int $price, string $sku, bool $isAlwaysAvailable = false): ProductConcreteTransfer
     {
         $currencyTransfer = $this->tester->haveCurrencyTransfer([CurrencyTransfer::CODE => 'EUR']);
         $productConcreteTransfer = $this->tester->haveProduct([

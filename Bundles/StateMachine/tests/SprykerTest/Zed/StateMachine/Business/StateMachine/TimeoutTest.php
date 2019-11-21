@@ -35,7 +35,7 @@ class TimeoutTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testSetTimeoutShouldStoreNewTimeout()
+    public function testSetTimeoutShouldStoreNewTimeout(): void
     {
         $stateMachinePersistenceMock = $this->createPersistenceMock();
 
@@ -61,7 +61,7 @@ class TimeoutTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testDropOldTimeoutShouldRemoveExpiredTimeoutsFromPersistence()
+    public function testDropOldTimeoutShouldRemoveExpiredTimeoutsFromPersistence(): void
     {
         $stateMachinePersistenceMock = $this->createPersistenceMock();
 
@@ -80,7 +80,7 @@ class TimeoutTest extends StateMachineMocks
     /**
      * @return \Spryker\Zed\StateMachine\Business\Process\Process
      */
-    protected function createProcess()
+    protected function createProcess(): Process
     {
         $process = new Process();
 
@@ -102,7 +102,7 @@ class TimeoutTest extends StateMachineMocks
     /**
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer
      */
-    protected function createStateMachineItemTransfer()
+    protected function createStateMachineItemTransfer(): StateMachineItemTransfer
     {
         $stateMachineItemTransfer = new StateMachineItemTransfer();
         $stateMachineItemTransfer->setStateName(static::STATE_WITH_TIMEOUT);
@@ -115,7 +115,7 @@ class TimeoutTest extends StateMachineMocks
      *
      * @return \Spryker\Zed\StateMachine\Business\StateMachine\Timeout
      */
-    protected function createTimeout(PersistenceInterface $persistenceMock)
+    protected function createTimeout(PersistenceInterface $persistenceMock): Timeout
     {
         if ($persistenceMock === null) {
             $persistenceMock = $this->createPersistenceMock();

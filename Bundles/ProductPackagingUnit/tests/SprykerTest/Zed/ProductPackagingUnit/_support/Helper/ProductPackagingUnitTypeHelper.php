@@ -30,7 +30,7 @@ class ProductPackagingUnitTypeHelper extends Module
 
         $productPackagingUnitTypeTransfer = $this->storeProductPackagingUnitType($productPackagingUnitTypeTransfer);
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($productPackagingUnitTypeTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productPackagingUnitTypeTransfer): void {
             $this->cleanupProductPackagingUnitType($productPackagingUnitTypeTransfer);
         });
 
@@ -42,7 +42,7 @@ class ProductPackagingUnitTypeHelper extends Module
      *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer
      */
-    protected function storeProductPackagingUnitType(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer)
+    protected function storeProductPackagingUnitType(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): SpyProductPackagingUnitTypeEntityTransfer
     {
         $spyProductPackagingUnitTypeEntity = $this->getProductPackagingUnitTypeQuery()
             ->filterByName($productPackagingUnitTypeTransfer->getName())
@@ -62,7 +62,7 @@ class ProductPackagingUnitTypeHelper extends Module
      *
      * @return void
      */
-    protected function cleanupProductPackagingUnitType(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer)
+    protected function cleanupProductPackagingUnitType(ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer): void
     {
         $this->debug(sprintf('Deleting product packaging unit type with name: %s', $productPackagingUnitTypeTransfer->getName()));
 

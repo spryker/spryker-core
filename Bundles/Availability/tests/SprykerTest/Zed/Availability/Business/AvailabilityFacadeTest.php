@@ -55,7 +55,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsProductSellableWhenNeverOutOfStockShouldReturnSuccess()
+    public function testIsProductSellableWhenNeverOutOfStockShouldReturnSuccess(): void
     {
         // Arrange
         $this->tester->haveProduct([ProductConcreteTransfer::SKU => static::CONCRETE_SKU]);
@@ -78,7 +78,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsProductSellableWhenStockIsEmptyShouldReturnFailure()
+    public function testIsProductSellableWhenStockIsEmptyShouldReturnFailure(): void
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
@@ -100,7 +100,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsProductSellableWhenStockFulfilledShouldReturnSuccess()
+    public function testIsProductSellableWhenStockFulfilledShouldReturnSuccess(): void
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
@@ -126,7 +126,7 @@ class AvailabilityFacadeTest extends Unit
      *
      * @return void
      */
-    public function testCalculateStockForProductShouldReturnPersistedStock(Decimal $quantity)
+    public function testCalculateStockForProductShouldReturnPersistedStock(Decimal $quantity): void
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
@@ -159,7 +159,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckAvailabilityPrecoditionShouldNotWriteErrorsWhenAvailabilityIsSatisfied()
+    public function testCheckAvailabilityPrecoditionShouldNotWriteErrorsWhenAvailabilityIsSatisfied(): void
     {
         // Arrange
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
@@ -182,7 +182,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckAvailabilityPrecoditionShouldWriteErrorWhenAvailabilityIsNotSatisfied()
+    public function testCheckAvailabilityPrecoditionShouldWriteErrorWhenAvailabilityIsNotSatisfied(): void
     {
         // Arrange
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
@@ -205,7 +205,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateAvailabilityShouldStoreNewQuantity()
+    public function testUpdateAvailabilityShouldStoreNewQuantity(): void
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
@@ -235,7 +235,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateAvailabilityWhenItsEmptyShouldStoreNewQuantity()
+    public function testUpdateAvailabilityWhenItsEmptyShouldStoreNewQuantity(): void
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
@@ -258,7 +258,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateAvailabilityWhenSetToEmptyShouldStoreEmptyQuantity()
+    public function testUpdateAvailabilityWhenSetToEmptyShouldStoreEmptyQuantity(): void
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
@@ -435,7 +435,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSaveProductAvailabilityForStoreShouldStoreAvailability()
+    public function testSaveProductAvailabilityForStoreShouldStoreAvailability(): void
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
@@ -489,9 +489,9 @@ class AvailabilityFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface
+     * @return \Spryker\Zed\Availability\Business\AvailabilityFacade
      */
-    protected function getAvailabilityFacade()
+    protected function getAvailabilityFacade(): AvailabilityFacade
     {
         /** @var \Spryker\Zed\Availability\Business\AvailabilityFacade $availabilityFacade */
         $availabilityFacade = $this->tester->getFacade();
@@ -560,7 +560,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteTransfer()
+    protected function createQuoteTransfer(): QuoteTransfer
     {
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $quoteTransfer = new QuoteTransfer();

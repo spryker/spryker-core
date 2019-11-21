@@ -34,7 +34,7 @@ class ProductBundleWriterTest extends Unit
     /**
      * @return void
      */
-    public function testSaveBundledProductsShouldPersistGivenBundles()
+    public function testSaveBundledProductsShouldPersistGivenBundles(): void
     {
         $idBundledProductToRemove = 3;
         $idProductBundle = 1;
@@ -134,7 +134,7 @@ class ProductBundleWriterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriterInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createProductBundleStockWriter()
     {

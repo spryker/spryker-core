@@ -31,7 +31,7 @@ class DecisionRuleAndSpecificationTest extends Unit
     /**
      * @return void
      */
-    public function testIsSatisfiedWhenBothReturnTrueShouldEvaluateToTrue()
+    public function testIsSatisfiedWhenBothReturnTrueShouldEvaluateToTrue(): void
     {
         $leftSpecificationMock = $this->createDecisionRuleSpecificationMock();
         $leftSpecificationMock->expects($this->once())
@@ -53,7 +53,7 @@ class DecisionRuleAndSpecificationTest extends Unit
     /**
      * @return void
      */
-    public function testIsSatisfiedWhenAnyOfSpecificationReturnsFalseShouldEvaluateToFalse()
+    public function testIsSatisfiedWhenAnyOfSpecificationReturnsFalseShouldEvaluateToFalse(): void
     {
         $leftSpecificationMock = $this->createDecisionRuleSpecificationMock();
         $leftSpecificationMock->expects($this->once())
@@ -78,7 +78,7 @@ class DecisionRuleAndSpecificationTest extends Unit
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleAndSpecification
      */
-    protected function createDecisionRuleAndSpecification(DecisionRuleSpecificationInterface $leftMock, DecisionRuleSpecificationInterface $rightMock)
+    protected function createDecisionRuleAndSpecification(DecisionRuleSpecificationInterface $leftMock, DecisionRuleSpecificationInterface $rightMock): DecisionRuleAndSpecification
     {
         return new DecisionRuleAndSpecification($leftMock, $rightMock);
     }

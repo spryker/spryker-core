@@ -47,7 +47,7 @@ class AvailabilityHandlerTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateAvailabilityShouldTouchWhenStockUpdated()
+    public function testUpdateAvailabilityShouldTouchWhenStockUpdated(): void
     {
         $productTransfer = $this->tester->haveProduct();
         $availabilityCalculatorMock = $this->createAvailabilityCalculatorMock();
@@ -85,7 +85,7 @@ class AvailabilityHandlerTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateAvailabilityShouldTouchAndUpdate()
+    public function testUpdateAvailabilityShouldTouchAndUpdate(): void
     {
         $availabilityCalculatorMock = $this->createAvailabilityCalculatorMock();
         $availabilityCalculatorMock->method('calculateAvailabilityForProductConcrete')->willReturn(new Decimal(5));
@@ -138,9 +138,9 @@ class AvailabilityHandlerTest extends Unit
         ?AvailabilityToStoreFacadeInterface $availabilityToStoreFacade = null,
         ?AvailabilityToStockFacadeInterface $availabilityToStockFacade = null,
         ?AvailabilityToEventFacadeInterface $availabilityToEventFacade = null
-    ) {
+    ): AvailabilityHandler {
         if ($availabilityToStoreFacade === null) {
-            $availabilityToStoreFacade = $this->createStoreFacade();
+            $availabilityToStoreFacade = $this->createStoreFacadeMock();
             $availabilityToStoreFacade->method('getCurrentStore')
                 ->willReturn(new StoreTransfer());
         }
@@ -212,7 +212,7 @@ class AvailabilityHandlerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface
      */
-    protected function createStoreFacade()
+    protected function createStoreFacadeMock()
     {
         return $this->getMockBuilder(AvailabilityToStoreFacadeInterface::class)
             ->getMock();

@@ -33,7 +33,7 @@ class DataImportBusinessTester extends Actor
     /**
      * @return \Spryker\Zed\DataImport\Business\DataImportBusinessFactory
      */
-    public function getFactory()
+    public function getFactory(): DataImportBusinessFactory
     {
         return new DataImportBusinessFactory();
     }

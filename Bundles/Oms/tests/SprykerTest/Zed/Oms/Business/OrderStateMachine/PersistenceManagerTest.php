@@ -28,7 +28,7 @@ class PersistenceManagerTest extends Unit
     /**
      * @return void
      */
-    public function testGetProcessEntityShouldThrowExceptionIfProcessNotSet()
+    public function testGetProcessEntityShouldThrowExceptionIfProcessNotSet(): void
     {
         $omsConfigMock = $this->createOmsConfigMock();
 
@@ -47,7 +47,7 @@ class PersistenceManagerTest extends Unit
      *
      * @return \Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager
      */
-    protected function createPersistenceManager(OmsConfig $omsConfigMock)
+    protected function createPersistenceManager(OmsConfig $omsConfigMock): PersistenceManager
     {
         return new PersistenceManager($omsConfigMock);
     }

@@ -353,7 +353,7 @@ class CatalogSearchResourceMapperTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\PriceModeConfigurationTransfer
      */
-    protected function getPriceModeInformation()
+    protected function getPriceModeInformation(): PriceModeConfigurationTransfer
     {
         return (new PriceModeConfigurationTransfer())
             ->setCurrentPriceMode(static::GROSS_MODE)

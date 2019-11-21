@@ -27,7 +27,7 @@ class DoctorTest extends Unit
     /**
      * @return void
      */
-    public function testIsPatientAliveMustReturnTrueIfNoHealthIndicatorIsApplied()
+    public function testIsPatientAliveMustReturnTrueIfNoHealthIndicatorIsApplied(): void
     {
         $doctor = new Doctor([]);
 
@@ -37,7 +37,7 @@ class DoctorTest extends Unit
     /**
      * @return void
      */
-    public function testIsPatientAliveMustReturnTrueIfAllHealthIndicatorReturnTrue()
+    public function testIsPatientAliveMustReturnTrueIfAllHealthIndicatorReturnTrue(): void
     {
         $checkerMock = $this->getMockBuilder('Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface')->setMethods(['doHealthCheck'])->getMock();
         $checkerMock->expects($this->once())
@@ -52,7 +52,7 @@ class DoctorTest extends Unit
     /**
      * @return void
      */
-    public function testIsPatientAliveMustReturnFalseIfAllHealthIndicatorReturnFalse()
+    public function testIsPatientAliveMustReturnFalseIfAllHealthIndicatorReturnFalse(): void
     {
         $checkerMock = $this->getMockBuilder('Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface')->setMethods(['doHealthCheck'])->getMock();
         $checkerMock->expects($this->once())
@@ -67,7 +67,7 @@ class DoctorTest extends Unit
     /**
      * @return void
      */
-    public function testIsPatientAliveMustReturnFalseIfNotAllHealthIndicatorReturnTrue()
+    public function testIsPatientAliveMustReturnFalseIfNotAllHealthIndicatorReturnTrue(): void
     {
         $checkerMockTrue = $this->getMockBuilder('Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface')->setMethods(['doHealthCheck'])->getMock();
         $checkerMockTrue->expects($this->once())

@@ -32,7 +32,7 @@ class AvailabilityEditStockCest
      *
      * @return void
      */
-    public function testEditExistingStock(AvailabilityGuiCommunicationTester $i, Example $example)
+    public function testEditExistingStock(AvailabilityGuiCommunicationTester $i, Example $example): void
     {
         $productConcreteTransfer = $i->haveFullProduct();
         $i->haveAvailabilityAbstract($productConcreteTransfer);

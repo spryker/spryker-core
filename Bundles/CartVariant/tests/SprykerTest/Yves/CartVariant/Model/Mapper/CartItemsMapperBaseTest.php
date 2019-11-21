@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\StorageAvailabilityTransfer;
 use Spryker\Client\AvailabilityStorage\AvailabilityStorageClient;
 use Spryker\Client\Product\ProductClient;
 use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityStorageClientBridge;
+use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityClientBridgeInterface;
 use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToProductClientBridge;
 
 /**
@@ -34,7 +35,7 @@ class CartItemsMapperBaseTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Product\ProductClientInterface
      */
-    protected function buildProductClientMock($jsonFileToLoad)
+    protected function buildProductClientMock(string $jsonFileToLoad)
     {
         $mock = $this->getMockBuilder(ProductClient::class)
             ->disableOriginalConstructor()
@@ -51,7 +52,7 @@ class CartItemsMapperBaseTest extends Unit
      *
      * @return \Spryker\Yves\CartVariant\Dependency\Client\CartVariantToProductClientBridge
      */
-    protected function createProductClientBridge($jsonFileToLoad)
+    protected function createProductClientBridge(string $jsonFileToLoad): CartVariantToProductClientBridge
     {
         return new CartVariantToProductClientBridge($this->buildProductClientMock($jsonFileToLoad));
     }
@@ -61,7 +62,7 @@ class CartItemsMapperBaseTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\AvailabilityStorage\AvailabilityStorageClientInterface
      */
-    protected function buildProductAvailabilityClientMock($jsonFileToLoad)
+    protected function buildProductAvailabilityClientMock(string $jsonFileToLoad)
     {
         $mock = $this->getMockBuilder(AvailabilityStorageClient::class)
             ->disableOriginalConstructor()
@@ -78,7 +79,7 @@ class CartItemsMapperBaseTest extends Unit
      *
      * @return \Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityStorageClientBridgeInterface
      */
-    protected function createAvailabilityStorageClientBridge($jsonFileToLoad)
+    protected function createAvailabilityStorageClientBridge(string $jsonFileToLoad): CartVariantToAvailabilityStorageClientBridgeInterface
     {
         return new CartVariantToAvailabilityStorageClientBridge($this->buildProductAvailabilityClientMock($jsonFileToLoad));
     }
@@ -88,7 +89,7 @@ class CartItemsMapperBaseTest extends Unit
      *
      * @return \Generated\Shared\Transfer\StorageAvailabilityTransfer
      */
-    protected function getAvailabilityTransfer($jsonFileToLoad)
+    protected function getAvailabilityTransfer(string $jsonFileToLoad): StorageAvailabilityTransfer
     {
         $transfer = new StorageAvailabilityTransfer();
         $transfer->fromArray(
@@ -102,7 +103,7 @@ class CartItemsMapperBaseTest extends Unit
     /**
      * @return \ArrayObject
      */
-    protected function getItems()
+    protected function getItems(): ArrayObject
     {
         $item = new ItemTransfer();
         $item->setSku('170_28516206');
@@ -118,7 +119,7 @@ class CartItemsMapperBaseTest extends Unit
     /**
      * @return \ArrayObject
      */
-    protected function getNestedItems()
+    protected function getNestedItems(): ArrayObject
     {
         $item = new ItemTransfer();
         $item->setSku('112_312526171');
@@ -136,7 +137,7 @@ class CartItemsMapperBaseTest extends Unit
      *
      * @return int
      */
-    protected function countSelectedAttributes(array $attributes)
+    protected function countSelectedAttributes(array $attributes): int
     {
         $total = 0;
 

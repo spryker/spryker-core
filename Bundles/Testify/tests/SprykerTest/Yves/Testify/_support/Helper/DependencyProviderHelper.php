@@ -12,6 +12,7 @@ use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
 use Exception;
+use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
 class DependencyProviderHelper extends Module
@@ -53,7 +54,7 @@ class DependencyProviderHelper extends Module
     /**
      * @return \Spryker\Yves\Kernel\Container
      */
-    public function getContainer()
+    public function getContainer(): Container
     {
         $container = new Container();
         if ($this->dependencyProviderStub !== null) {
@@ -68,7 +69,7 @@ class DependencyProviderHelper extends Module
     /**
      * @return \Spryker\Yves\Kernel\AbstractBundleDependencyProvider
      */
-    protected function createDependencyProvider()
+    protected function createDependencyProvider(): AbstractBundleDependencyProvider
     {
         $dependencyProviderClassName = $this->getDependencyProviderClassName();
 
@@ -91,7 +92,7 @@ class DependencyProviderHelper extends Module
      *
      * @return void
      */
-    public function _before(TestInterface $test)
+    public function _before(TestInterface $test): void
     {
         $this->dependencyProviderStub = null;
         $this->mockedDependencyProviderMethods = [];

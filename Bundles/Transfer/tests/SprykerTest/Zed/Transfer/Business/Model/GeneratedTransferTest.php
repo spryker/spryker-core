@@ -492,7 +492,7 @@ class GeneratedTransferTest extends Unit
     /**
      * @return array
      */
-    public function toArrayProvider()
+    public function toArrayProvider(): array
     {
         $input = [
             'test_string' => 'string',
@@ -531,7 +531,7 @@ class GeneratedTransferTest extends Unit
                 'camelCase' => false,
                 'input' => $input,
                 'expected' => array_merge($underscoreOut, [
-                    'test_transfer' => function ($value) {
+                    'test_transfer' => function ($value): void {
                         $this->assertInstanceOf(GeneratedTransfer::class, $value);
                     },
                 ]),
@@ -555,7 +555,7 @@ class GeneratedTransferTest extends Unit
                 'camelCase' => true,
                 'input' => $input,
                 'expected' => array_merge($camelCaseOut, [
-                    'testTransfer' => function ($value) {
+                    'testTransfer' => function ($value): void {
                         $this->assertInstanceOf(GeneratedTransfer::class, $value);
                     },
                 ]),
@@ -646,7 +646,7 @@ class GeneratedTransferTest extends Unit
      *
      * @return \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface
      */
-    protected function getDefinitionBuilder($sourceDirectories): DefinitionBuilderInterface
+    protected function getDefinitionBuilder(array $sourceDirectories): DefinitionBuilderInterface
     {
         $finder = new TransferDefinitionFinder($sourceDirectories);
         $normalizer = new DefinitionNormalizer();

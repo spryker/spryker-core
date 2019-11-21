@@ -48,7 +48,7 @@ class ProductBundleReaderTest extends Unit
     /**
      * @return void
      */
-    public function testFindBundledProductsByIdProductConcreteShouldBuildTransferCollectionFromPersistence()
+    public function testFindBundledProductsByIdProductConcreteShouldBuildTransferCollectionFromPersistence(): void
     {
         $productBundleReaderMock = $this->createProductBundleReader();
 
@@ -66,7 +66,7 @@ class ProductBundleReaderTest extends Unit
     /**
      * @return void
      */
-    public function testAssignBundledProductsToProductConcreteShouldAssignBundledProductsAndAvailability()
+    public function testAssignBundledProductsToProductConcreteShouldAssignBundledProductsAndAvailability(): void
     {
         $bundleAvailability = 5;
 
@@ -98,7 +98,7 @@ class ProductBundleReaderTest extends Unit
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface|null $productBundleToAvailabilityFacadeMock
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface|null $storeFacadeMock
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createProductBundleReader(
         ?ProductBundleQueryContainerInterface $productBundleQueryContainerMock = null,

@@ -54,7 +54,7 @@ class ProductBundleCartExpanderTest extends Unit
     /**
      * @return void
      */
-    public function testExpandBundleItemsShouldExtractBundledItemsAndDistributeBundlePrice()
+    public function testExpandBundleItemsShouldExtractBundledItemsAndDistributeBundlePrice(): void
     {
         $productExpanderMock = $this->setupProductExpander();
 
@@ -168,7 +168,7 @@ class ProductBundleCartExpanderTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    protected function createCartChangeTransfer()
+    protected function createCartChangeTransfer(): CartChangeTransfer
     {
         $cartChangeTransfer = new CartChangeTransfer();
 
@@ -207,8 +207,7 @@ class ProductBundleCartExpanderTest extends Unit
     protected function setupFindBundledItemsByIdProductConcrete(
         array $fixtures,
         MockObject $productExpanderMock
-    ) {
-
+    ): void {
         $productBundleEntity = new SpyProductBundle();
         $productBundleEntity->setIdProductBundle($fixtures['idProductConcrete']);
         $productBundleEntity->setQuantity($fixtures['bundledProductQuantity']);
