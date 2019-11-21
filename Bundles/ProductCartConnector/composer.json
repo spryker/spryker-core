@@ -14,7 +14,8 @@
     "spryker/cart": "*",
     "spryker/propel": "*",
     "spryker/tax": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/url": "*"
   },
   "suggest": {
     "spryker/cart": "If you want to use Cart plugins. Must be >= 4.0.2!"

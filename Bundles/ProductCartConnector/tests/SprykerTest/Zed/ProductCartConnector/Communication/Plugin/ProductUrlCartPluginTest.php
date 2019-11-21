@@ -70,13 +70,11 @@ class ProductUrlCartPluginTest extends Unit
         $productAbstractTransfer = $this->tester->haveProductAbstract([
             ProductAbstractTransfer::ID_PRODUCT_ABSTRACT => self::PRODUCT_ABSTRACT_ID,
             ProductAbstractTransfer::SKU => self::SKU_PRODUCT_ABSTRACT,
-            ProductAbstractTransfer::ATTRIBUTES => [],
         ]);
 
         $this->tester->haveProduct([
             ProductConcreteTransfer::SKU => self::SKU_PRODUCT_CONCRETE,
             ProductConcreteTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
-            ProductConcreteTransfer::ATTRIBUTES => [],
         ]);
     }
 
