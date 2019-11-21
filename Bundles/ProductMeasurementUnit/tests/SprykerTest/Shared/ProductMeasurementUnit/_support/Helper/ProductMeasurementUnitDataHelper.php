@@ -187,7 +187,7 @@ class ProductMeasurementUnitDataHelper extends Module
      *
      * @return void
      */
-    protected function cleanupProductMeasurementSalesUnit(int $idProductMeasurementSalesUnit): voif
+    protected function cleanupProductMeasurementSalesUnit(int $idProductMeasurementSalesUnit): void
     {
         $this->debug(sprintf('Deleting product measurement sales unit: %d', $idProductMeasurementSalesUnit));
 
