@@ -75,7 +75,7 @@ class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterfac
 
         if (!$validationResponseTransfer->getIsSuccess()) {
             throw new InvalidCmsSlotBlockException(
-                $validationResponseTransfer->getErrorMessages()[0]
+                $validationResponseTransfer->getErrorMessages()[0]->getValue()
             );
         }
     }
@@ -114,7 +114,7 @@ class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterfac
 
         foreach ($cmsSlotBlockCollectionTransfer->getCmsSlotBlocks() as $cmsSlotBlockTransfer) {
             $eventTransfers[] = (new EventEntityTransfer())
-                ->setId($cmsSlotBlockTransfer->getIdCmsSlotBlock());
+                ->setId((int)$cmsSlotBlockTransfer->getIdCmsSlotBlock());
         }
 
         return $eventTransfers;

@@ -71,7 +71,7 @@ class CmsSlotHelper extends Module
     {
         $data = [
             CmsSlotTransfer::KEY => 'test-center',
-            CmsSlotTransfer::CONTENT_PROVIDER_TYPE => 'SprykerTestBlock',
+            CmsSlotTransfer::CONTENT_PROVIDER_TYPE => 'SprykerCmsSlotBlock',
             CmsSlotTransfer::NAME => 'Test Name',
             CmsSlotTransfer::DESCRIPTION => 'Test description.',
             CmsSlotTransfer::IS_ACTIVE => 1,
