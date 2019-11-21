@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ProductReview\Calculator;
 
+use Generated\Shared\Transfer\ProductReviewSummaryTransfer;
+
 interface ProductReviewSummaryCalculatorInterface
 {
     /**
@@ -14,5 +16,5 @@ interface ProductReviewSummaryCalculatorInterface
      *
      * @return \Generated\Shared\Transfer\ProductReviewSummaryTransfer
      */
-    public function execute(array $ratingAggregation);
+    public function execute(array $ratingAggregation): ProductReviewSummaryTransfer;
 }

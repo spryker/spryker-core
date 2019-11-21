@@ -9,6 +9,7 @@ namespace Spryker\Client\ProductReview;
 
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductReview\Calculator\ProductReviewSummaryCalculator;
 use Spryker\Client\ProductReview\Calculator\ProductReviewSummaryCalculatorInterface;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\Query\ProductReviewsQueryPlugin;
 use Spryker\Client\ProductReview\ProductViewExpander\ProductViewExpander;
@@ -19,7 +20,6 @@ use Spryker\Client\ProductReview\Storage\ProductAbstractReviewStorageReader;
 use Spryker\Client\ProductReview\Zed\ProductReviewStub;
 use Spryker\Shared\ProductReview\KeyBuilder\ProductAbstractReviewResourceKeyBuilder;
 use Spryker\Yves\Kernel\Application;
-use Spryker\Client\ProductReview\Calculator\ProductReviewSummaryCalculator;
 use SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetDependencyProvider;
 use Symfony\Component\HttpFoundation\Request;
 

@@ -33,7 +33,7 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
      *
      * @return \Generated\Shared\Transfer\ProductReviewSummaryTransfer
      */
-    public function execute(array $ratingAggregation)
+    public function execute(array $ratingAggregation): ProductReviewSummaryTransfer
     {
         $totalReview = $this->getTotalReview($ratingAggregation);
 
@@ -52,7 +52,7 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
      *
      * @return float
      */
-    protected function getAverageRating(array $ratingAggregation, $totalReview)
+    protected function getAverageRating(array $ratingAggregation, $totalReview): float
     {
         if ($totalReview === 0) {
             return 0.0;
@@ -68,7 +68,7 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
      *
      * @return array
      */
-    protected function formatRatingAggregation(array $ratingAggregation)
+    protected function formatRatingAggregation(array $ratingAggregation): array
     {
         $ratingAggregation = $this->fillRatings($ratingAggregation);
         $ratingAggregation = $this->sortRatings($ratingAggregation);
@@ -81,7 +81,7 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
      *
      * @return array
      */
-    protected function fillRatings(array $ratingAggregation)
+    protected function fillRatings(array $ratingAggregation): array
     {
         $maximumRating = $this->productReviewConfig->getMaximumRating();
 
@@ -97,7 +97,7 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
      *
      * @return array
      */
-    protected function sortRatings(array $ratingAggregation)
+    protected function sortRatings(array $ratingAggregation): array
     {
         krsort($ratingAggregation);
 
@@ -109,7 +109,7 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
      *
      * @return int
      */
-    protected function getTotalReview(array $ratingAggregation)
+    protected function getTotalReview(array $ratingAggregation): int
     {
         $totalReview = 0;
 
@@ -125,7 +125,7 @@ class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorIn
      *
      * @return int
      */
-    protected function getTotalRating(array $ratingAggregation)
+    protected function getTotalRating(array $ratingAggregation): int
     {
         $totalRating = 0;
 

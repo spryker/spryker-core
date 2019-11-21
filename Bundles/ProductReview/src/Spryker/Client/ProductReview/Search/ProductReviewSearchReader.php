@@ -7,12 +7,9 @@
 
 namespace Spryker\Client\ProductReview\Search;
 
-use Generated\Shared\Transfer\ProductAbstractReviewTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Spryker\Client\ProductReview\Dependency\Client\ProductReviewToSearchInterface;
-use Spryker\Client\ProductReview\Dependency\Client\ProductReviewToStorageInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
-use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
 class ProductReviewSearchReader implements ProductReviewSearchReaderInterface
 {
