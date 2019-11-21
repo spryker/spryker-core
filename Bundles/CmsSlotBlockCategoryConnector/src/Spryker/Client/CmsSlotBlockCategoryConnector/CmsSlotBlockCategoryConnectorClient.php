@@ -8,6 +8,7 @@
 namespace Spryker\Client\CmsSlotBlockCategoryConnector;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\CmsSlotParamsTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -37,14 +38,16 @@ class CmsSlotBlockCategoryConnectorClient extends AbstractClient implements CmsS
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     * @param array $cmsSlotParams
+     * @param \Generated\Shared\Transfer\CmsSlotParamsTransfer $cmsSlotParamsTransfer
      *
      * @return bool
      */
-    public function isCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotParams): bool
-    {
+    public function isCmsBlockVisibleInSlot(
+        CmsBlockTransfer $cmsBlockTransfer,
+        CmsSlotParamsTransfer $cmsSlotParamsTransfer
+    ): bool {
         return $this->getFactory()
             ->createCategoryCmsSlotBlockConditionResolver()
-            ->isCmsBlockVisibleInSlot($cmsBlockTransfer, $cmsSlotParams);
+            ->isCmsBlockVisibleInSlot($cmsBlockTransfer, $cmsSlotParamsTransfer);
     }
 }

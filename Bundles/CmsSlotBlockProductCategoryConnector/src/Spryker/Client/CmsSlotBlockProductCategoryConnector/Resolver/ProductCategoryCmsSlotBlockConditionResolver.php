@@ -8,6 +8,7 @@
 namespace Spryker\Client\CmsSlotBlockProductCategoryConnector\Resolver;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\CmsSlotParamsTransfer;
 use Spryker\Client\CmsSlotBlockProductCategoryConnector\Reader\ProductCategoryReaderInterface;
 
 class ProductCategoryCmsSlotBlockConditionResolver implements ProductCategoryCmsSlotBlockConditionResolverInterface
@@ -31,8 +32,6 @@ class ProductCategoryCmsSlotBlockConditionResolver implements ProductCategoryCms
      * @uses \Spryker\Shared\CmsSlotBlockProductCategoryConnector\CmsSlotBlockProductCategoryConnectorConfig::CONDITION_KEY
      */
     protected const CONDITION_KEY = 'productCategory';
-
-    protected const SLOT_DATA_KEY_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
 
     /**
      * @var \Spryker\Client\CmsSlotBlockProductCategoryConnector\Reader\ProductCategoryReaderInterface
@@ -59,31 +58,29 @@ class ProductCategoryCmsSlotBlockConditionResolver implements ProductCategoryCms
 
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     * @param array $cmsSlotParams
+     * @param \Generated\Shared\Transfer\CmsSlotParamsTransfer $cmsSlotParamsTransfer
      *
      * @return bool
      */
-    public function isCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotParams): bool
-    {
+    public function isCmsBlockVisibleInSlot(
+        CmsBlockTransfer $cmsBlockTransfer,
+        CmsSlotParamsTransfer $cmsSlotParamsTransfer
+    ): bool {
         $conditionData = $cmsBlockTransfer->getCmsSlotBlockConditions()[static::CONDITION_KEY];
 
         if ($conditionData[static::CONDITIONS_DATA_KEY_ALL]) {
             return true;
         }
 
-        $idProductAbstract = $cmsSlotParams[static::SLOT_DATA_KEY_ID_PRODUCT_ABSTRACT] ?? null;
-
-        if (!$idProductAbstract) {
+        if (!$cmsSlotParamsTransfer->getIdProductAbstract()) {
             return false;
         }
 
-        $idProductAbstract = (int)$idProductAbstract;
-
-        if ($this->isIdProductAbstractExistsInConditionData($conditionData, $idProductAbstract)) {
+        if ($this->isIdProductAbstractExistsInConditionData($conditionData, $cmsSlotParamsTransfer->getIdProductAbstract())) {
             return true;
         }
 
-        return $this->isProductCategoryIdsExistInConditionData($conditionData, $idProductAbstract);
+        return $this->isProductCategoryIdsExistInConditionData($conditionData, $cmsSlotParamsTransfer->getIdProductAbstract());
     }
 
     /**

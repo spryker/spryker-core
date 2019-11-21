@@ -15,4 +15,8 @@
         <property name="cmsSlotBlockConditions" type="array" singular="cmsSlotBlockCondition"/>
     </transfer>
 
+    <transfer name="CmsSlotParams">
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
 </transfers>

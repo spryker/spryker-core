@@ -8,6 +8,7 @@
 namespace Spryker\Client\CmsSlotBlockCategoryConnector;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\CmsSlotParamsTransfer;
 
 interface CmsSlotBlockCategoryConnectorClientInterface
 {
@@ -30,9 +31,12 @@ interface CmsSlotBlockCategoryConnectorClientInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     * @param array $cmsSlotParams
+     * @param \Generated\Shared\Transfer\CmsSlotParamsTransfer $cmsSlotParamsTransfer
      *
      * @return bool
      */
-    public function isCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotParams): bool;
+    public function isCmsBlockVisibleInSlot(
+        CmsBlockTransfer $cmsBlockTransfer,
+        CmsSlotParamsTransfer $cmsSlotParamsTransfer
+    ): bool;
 }

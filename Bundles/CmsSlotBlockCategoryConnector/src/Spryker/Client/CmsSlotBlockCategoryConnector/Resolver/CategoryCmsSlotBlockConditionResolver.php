@@ -8,6 +8,7 @@
 namespace Spryker\Client\CmsSlotBlockCategoryConnector\Resolver;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\CmsSlotParamsTransfer;
 
 class CategoryCmsSlotBlockConditionResolver implements CategoryCmsSlotBlockConditionResolverInterface
 {
@@ -26,8 +27,6 @@ class CategoryCmsSlotBlockConditionResolver implements CategoryCmsSlotBlockCondi
      */
     protected const CONDITION_KEY = 'category';
 
-    protected const SLOT_DATA_KEY_ID_CATEGORY = 'idCategory';
-
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
@@ -40,39 +39,29 @@ class CategoryCmsSlotBlockConditionResolver implements CategoryCmsSlotBlockCondi
 
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     * @param array $cmsSlotParams
+     * @param \Generated\Shared\Transfer\CmsSlotParamsTransfer $cmsSlotParamsTransfer
      *
      * @return bool
      */
-    public function isCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotParams): bool
-    {
+    public function isCmsBlockVisibleInSlot(
+        CmsBlockTransfer $cmsBlockTransfer,
+        CmsSlotParamsTransfer $cmsSlotParamsTransfer
+    ): bool {
         $conditionData = $cmsBlockTransfer->getCmsSlotBlockConditions()[static::CONDITION_KEY];
 
         if ($conditionData[static::CONDITIONS_DATA_KEY_ALL]) {
             return true;
         }
 
-        $idCategory = $this->findIdCategory($cmsSlotParams);
-
-        if (!$idCategory) {
+        if (!$cmsSlotParamsTransfer->getIdCategory()) {
             return false;
         }
 
-        if ($this->getIsConditionSatisfiedByIdCategory((int)$idCategory, $conditionData)) {
+        if ($this->getIsConditionSatisfiedByIdCategory($cmsSlotParamsTransfer->getIdCategory(), $conditionData)) {
             return true;
         }
 
         return false;
-    }
-
-    /**
-     * @param array $cmsSlotParams
-     *
-     * @return int|null
-     */
-    protected function findIdCategory(array $cmsSlotParams): ?int
-    {
-        return $cmsSlotParams[static::SLOT_DATA_KEY_ID_CATEGORY] ?? null;
     }
 
     /**

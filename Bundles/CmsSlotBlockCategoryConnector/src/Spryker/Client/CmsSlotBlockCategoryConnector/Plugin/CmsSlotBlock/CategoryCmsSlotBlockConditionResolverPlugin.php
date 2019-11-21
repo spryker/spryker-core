@@ -8,6 +8,7 @@
 namespace Spryker\Client\CmsSlotBlockCategoryConnector\Plugin\CmsSlotBlock;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\CmsSlotParamsTransfer;
 use Spryker\Client\CmsSlotBlockExtension\Dependency\Plugin\CmsSlotBlockVisibilityResolverPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
@@ -37,12 +38,14 @@ class CategoryCmsSlotBlockConditionResolverPlugin extends AbstractPlugin impleme
      * @api
      *
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     * @param array $cmsSlotParams
+     * @param \Generated\Shared\Transfer\CmsSlotParamsTransfer $cmsSlotParamsTransfer
      *
      * @return bool
      */
-    public function isCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotParams): bool
-    {
-        return $this->getClient()->isCmsBlockVisibleInSlot($cmsBlockTransfer, $cmsSlotParams);
+    public function isCmsBlockVisibleInSlot(
+        CmsBlockTransfer $cmsBlockTransfer,
+        CmsSlotParamsTransfer $cmsSlotParamsTransfer
+    ): bool {
+        return $this->getClient()->isCmsBlockVisibleInSlot($cmsBlockTransfer, $cmsSlotParamsTransfer);
     }
 }

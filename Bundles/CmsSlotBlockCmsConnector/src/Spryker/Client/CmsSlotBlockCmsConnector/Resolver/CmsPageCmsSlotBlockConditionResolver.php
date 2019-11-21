@@ -8,6 +8,7 @@
 namespace Spryker\Client\CmsSlotBlockCmsConnector\Resolver;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\CmsSlotParamsTransfer;
 
 class CmsPageCmsSlotBlockConditionResolver implements CmsPageCmsSlotBlockConditionResolverInterface
 {
@@ -26,8 +27,6 @@ class CmsPageCmsSlotBlockConditionResolver implements CmsPageCmsSlotBlockConditi
      */
     protected const CONDITION_KEY = 'cms_page';
 
-    protected const SLOT_DATA_KEY_ID_CMS_PAGE = 'idCmsPage';
-
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
@@ -40,39 +39,28 @@ class CmsPageCmsSlotBlockConditionResolver implements CmsPageCmsSlotBlockConditi
 
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
-     * @param array $cmsSlotParams
+     * @param \Generated\Shared\Transfer\CmsSlotParamsTransfer $cmsSlotParamsTransfer
      *
      * @return bool
      */
-    public function isCmsBlockVisibleInSlot(CmsBlockTransfer $cmsBlockTransfer, array $cmsSlotParams): bool
-    {
+    public function isCmsBlockVisibleInSlot(
+        CmsBlockTransfer $cmsBlockTransfer,
+        CmsSlotParamsTransfer $cmsSlotParamsTransfer
+    ): bool {
         $conditionData = $cmsBlockTransfer->getCmsSlotBlockConditions()[static::CONDITION_KEY];
 
         if ($conditionData[static::CONDITIONS_DATA_KEY_ALL]) {
             return true;
         }
-
-        $idCmsPage = $this->findIdCmsPage($cmsSlotParams);
-
-        if (!$idCmsPage) {
+        if (!$cmsSlotParamsTransfer->getIdCmsPage()) {
             return false;
         }
 
-        if ($this->getIsConditionSatisfiedByIdCmsPage((int)$idCmsPage, $conditionData)) {
+        if ($this->getIsConditionSatisfiedByIdCmsPage($cmsSlotParamsTransfer->getIdCmsPage(), $conditionData)) {
             return true;
         }
 
         return false;
-    }
-
-    /**
-     * @param array $cmsSlotParams
-     *
-     * @return int|null
-     */
-    protected function findIdCmsPage(array $cmsSlotParams): ?int
-    {
-        return $cmsSlotParams[static::SLOT_DATA_KEY_ID_CMS_PAGE] ?? null;
     }
 
     /**

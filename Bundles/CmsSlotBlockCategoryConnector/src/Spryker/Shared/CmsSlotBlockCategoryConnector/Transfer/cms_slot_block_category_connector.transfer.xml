@@ -7,4 +7,8 @@
         <property name="cmsSlotBlockConditions" type="array" singular="cmsSlotBlockCondition"/>
     </transfer>
 
+    <transfer name="CmsSlotParams">
+        <property name="idCategory" type="int"/>
+    </transfer>
+
 </transfers>
