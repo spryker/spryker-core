@@ -45,7 +45,7 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
     {
         $productAbstractIds = $this->getProductAbstractIds($cartChangeTransfer);
 
-        if(!$productAbstractIds) {
+        if (!$productAbstractIds) {
             return $cartChangeTransfer;
         }
 

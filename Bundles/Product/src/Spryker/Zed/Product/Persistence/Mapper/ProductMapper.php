@@ -12,14 +12,11 @@ use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocale;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Orm\Zed\Store\Persistence\SpyStore;
-use Orm\Zed\Url\Persistence\SpyUrl;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface;
 use Spryker\Zed\Product\Persistence\ProductRepository;
 
@@ -169,23 +166,5 @@ class ProductMapper implements ProductMapperInterface
         }
 
         return $productConcreteTransfer;
-    }
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $objectCollection
-     * @param array $urlTransfersCollection
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer[] $urlTransfersCollection
-     */
-    public function getUrlTransfersCollectionFromUrlEntities(ObjectCollection $objectCollection, array $urlTransfersCollection): array
-    {
-        $urlTransfersCollection = [];
-
-        foreach ($objectCollection as $urlEntity) {
-            $idProductAbstract = $urlEntity->getFkResourceProductAbstract();
-            $urlTransfersCollection[$idProductAbstract] = (new UrlTransfer())->fromArray($urlEntity->toArray(), true);
-        }
-
-        return $urlTransfersCollection;
     }
 }

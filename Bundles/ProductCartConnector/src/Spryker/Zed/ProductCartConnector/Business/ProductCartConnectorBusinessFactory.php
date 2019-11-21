@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductCartConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductCartConnector\Business\Expander\ProductExpander;
-use Spryker\Zed\ProductCartConnector\Business\Expander\ProductExpanderInterface;
 use Spryker\Zed\ProductCartConnector\Business\Expander\ProductUrlExpander;
 use Spryker\Zed\ProductCartConnector\Business\Expander\ProductUrlExpanderInterface;
 use Spryker\Zed\ProductCartConnector\Business\InactiveItemsFilter\InactiveItemsFilter;

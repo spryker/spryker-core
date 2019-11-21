@@ -9,11 +9,8 @@ namespace Spryker\Zed\Product\Persistence\Mapper;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
-use Orm\Zed\Url\Persistence\SpyUrl;
-use Propel\Runtime\Collection\ObjectCollection;
 
 interface ProductMapperInterface
 {
@@ -46,12 +43,4 @@ interface ProductMapperInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function mapProductEntityToProductConcreteTransferWithoutStores(SpyProduct $productEntity, ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $objectCollection
-     * @param array $urlTransfersCollection
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer[] $urlTransfersCollection
-     */
-    public function getUrlTransfersCollectionFromUrlEntities(ObjectCollection $objectCollection, array $urlTransfersCollection): array;
 }

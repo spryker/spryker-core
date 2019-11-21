@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
 use Generated\Shared\Transfer\UrlFilterTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
@@ -23,7 +24,6 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Util\PropelModelPager;
-use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -490,9 +490,14 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
 
         $urlEntities = $urlQuery->find();
 
-        return $this->getFactory()
-            ->createProductMapper()
-            ->getUrlTransfersCollectionFromUrlEntities($urlEntities, []);
+        $urlTransfers = [];
+
+        foreach ($urlEntities as $urlEntity) {
+            $idProductAbstract = $urlEntity->getFkResourceProductAbstract();
+            $urlTransfers[$idProductAbstract] = (new UrlTransfer())->fromArray($urlEntity->toArray(), true);
+        }
+
+        return $urlTransfers;
     }
 
     /**

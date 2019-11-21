@@ -120,7 +120,7 @@ class ProductUrlCartPluginTest extends Unit
         // Act
         $this->localeFacade->setCurrentLocale($localeTransfer);
 
-        $this->productCartConnectorFacade->expandItemsUrls($changeTransfer);
+        $this->productCartConnectorFacade->expandItemTransfersWithUrl($changeTransfer);
         $expandedENItemTransfer = $changeTransfer->getItems()[0];
 
         // Assert
