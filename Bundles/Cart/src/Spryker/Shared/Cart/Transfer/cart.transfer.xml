@@ -26,6 +26,7 @@
     <transfer name="Item">
         <property name="id" type="int"/>
         <property name="sku" type="string"/>
+        <property name="url" type="string"/>
         <property name="groupKey" type="string"/>
         <property name="groupKeyPrefix" type="string"/>
         <property name="quantity" type="int"/>

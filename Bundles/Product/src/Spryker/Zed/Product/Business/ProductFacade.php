@@ -1069,4 +1069,20 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
             ->createProductConcreteManager()
             ->getProductConcretesByConcreteSkus($productConcreteSkus);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     */
+    public function getUrlTransfersByProductAbstractIdsAndIdLocale(array $productAbstractIds, $idLocale): array
+    {
+        return $this->getRepository()
+            ->getUrlTransfersByProductAbstractIdsAndIdLocale($productAbstractIds, $idLocale);
+    }
 }

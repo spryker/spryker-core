@@ -68,4 +68,20 @@ class ProductCartConnectorFacade extends AbstractFacade implements ProductCartCo
             ->createInactiveItemsFilter()
             ->filterInactiveItems($quoteTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandItemsUrls(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        return $this->getFactory()
+            ->createProductUrlExpander()
+            ->expandItems($cartChangeTransfer);
+    }
 }

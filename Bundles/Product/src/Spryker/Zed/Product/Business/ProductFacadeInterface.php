@@ -920,4 +920,17 @@ interface ProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getRawProductConcreteTransfersByConcreteSkus(array $productConcreteSkus): array;
+
+    /**
+     * Specification
+     *  - Returns url transfers by abstract product ids and locale id
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     */
+    public function getUrlTransfersByProductAbstractIdsAndIdLocale(array $productAbstractIds, $idLocale): array;
 }

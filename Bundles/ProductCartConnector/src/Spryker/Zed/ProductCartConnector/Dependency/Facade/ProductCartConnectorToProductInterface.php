@@ -63,4 +63,12 @@ interface ProductCartConnectorToProductInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getRawProductConcreteTransfersByConcreteSkus(array $productConcreteSkus): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     */
+    public function getUrlTransfersByProductAbstractIdsAndIdLocale(array $productAbstractIds, $idLocale): array;
 }

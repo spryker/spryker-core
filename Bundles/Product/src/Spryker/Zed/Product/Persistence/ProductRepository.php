@@ -471,4 +471,24 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
 
         return $productAbstractTransfers;
     }
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     */
+    public function getUrlTransfersByProductAbstractIdsAndIdLocale(array $productAbstractIds, $idLocale): array
+    {
+        $urlEntities = $this->getFactory()
+            ->getUrlQueryContainer()
+            ->queryUrls()
+            ->filterByFkLocale($idLocale)
+            ->filterByFkResourceProductAbstract_In($productAbstractIds)
+            ->find();
+
+        return $this->getFactory()
+            ->createProductMapper()
+            ->getUrlTransfersCollectionFromUrlEntities($urlEntities, []);
+    }
 }

@@ -51,4 +51,18 @@ interface ProductCartConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function filterInactiveItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     *  - Reads a persisted urls from database by abstract product ids.
+     *  - Expands the items of the CartChangeTransfer with the abstract product's urls.
+     *  - Returns the expanded CartChangeTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandItemsUrls(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }

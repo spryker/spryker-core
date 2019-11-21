@@ -97,4 +97,15 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
     {
         return $this->productFacade->getRawProductConcreteTransfersByConcreteSkus($productConcreteSkus);
     }
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     */
+    public function getUrlTransfersByProductAbstractIdsAndIdLocale(array $productAbstractIds, $idLocale): array
+    {
+        return $this->productFacade->getUrlTransfersByProductAbstractIdsAndIdLocale($productAbstractIds, $idLocale);
+    }
 }
