@@ -19,7 +19,7 @@ class Index implements IndexInterface
     /**
      * @var \Elastica\Client
      */
-    protected $client;
+    protected $elasticaClient;
 
     /**
      * @var \Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface
@@ -32,16 +32,16 @@ class Index implements IndexInterface
     protected $config;
 
     /**
-     * @param \Elastica\Client $client
+     * @param \Elastica\Client $elasticaClient
      * @param \Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface $indexNameResolver
      * @param \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig $config
      */
     public function __construct(
-        Client $client,
+        Client $elasticaClient,
         IndexNameResolverInterface $indexNameResolver,
         SearchElasticsearchConfig $config
     ) {
-        $this->client = $client;
+        $this->elasticaClient = $elasticaClient;
         $this->indexNameResolver = $indexNameResolver;
         $this->config = $config;
     }
@@ -108,7 +108,7 @@ class Index implements IndexInterface
      */
     public function copyIndex(SearchContextTransfer $sourceSearchContextTransfer, SearchContextTransfer $targetSearchContextTransfer): bool
     {
-        return $this->client->request(
+        return $this->elasticaClient->request(
             $this->config->getReindexUrl(),
             Request::POST,
             $this->buildCopyCommandRequestData($sourceSearchContextTransfer, $targetSearchContextTransfer)
@@ -145,7 +145,7 @@ class Index implements IndexInterface
     {
         $indexName = $this->resolveIndexNameFromSearchContextTransfer($searchContextTransfer);
 
-        return $this->client->getIndex($indexName);
+        return $this->elasticaClient->getIndex($indexName);
     }
 
     /**
@@ -153,7 +153,7 @@ class Index implements IndexInterface
      */
     protected function getAllStoreIndexes(): ElasticaIndex
     {
-        return $this->client->getIndex($this->getAllIndexNamesFormattedString());
+        return $this->elasticaClient->getIndex($this->getAllIndexNamesFormattedString());
     }
 
     /**
@@ -183,13 +183,13 @@ class Index implements IndexInterface
      */
     protected function getAllIndexNamesFormattedString(): string
     {
-        return implode(',', $this->getAllIndexNamesForCurrentStore());
+        return implode(',', $this->getAllIndexNames());
     }
 
     /**
      * @return string[]
      */
-    protected function getAllIndexNamesForCurrentStore(): array
+    protected function getAllIndexNames(): array
     {
         $supportedSourceIdentifiers = $this->config->getSupportedSourceIdentifiers();
 

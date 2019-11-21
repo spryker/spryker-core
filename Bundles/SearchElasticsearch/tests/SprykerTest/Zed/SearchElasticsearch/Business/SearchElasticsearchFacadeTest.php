@@ -106,7 +106,7 @@ class SearchElasticsearchFacadeTest extends Unit
         /** @var \Elastica\Index $index */
         $index = $this->tester->haveIndex('dummy_index_name');
         $anotherIndex = $this->tester->haveIndex('another_dummy_index_name');
-        $this->arrangeEnvironmentForMultiIndexTest($index, $anotherIndex);
+        $this->arrangeEnvironmentForMultiIndexTest([$index, $anotherIndex]);
 
         // Act
         $result = $this->tester->getFacade()->closeIndexes();
@@ -144,7 +144,7 @@ class SearchElasticsearchFacadeTest extends Unit
         /** @var \Elastica\Index $index */
         $index = $this->tester->haveIndex('dummy_index_name');
         $anotherIndex = $this->tester->haveIndex('another_dummy_index_name');
-        $this->arrangeEnvironmentForMultiIndexTest($index, $anotherIndex);
+        $this->arrangeEnvironmentForMultiIndexTest([$index, $anotherIndex]);
         $this->tester->getFacade()->closeIndexes();
 
         // Act
@@ -179,7 +179,7 @@ class SearchElasticsearchFacadeTest extends Unit
         // Arrange
         $index = $this->tester->haveIndex('dummy_index_name');
         $anotherIndex = $this->tester->haveIndex('another_dummy_index_name');
-        $this->arrangeEnvironmentForMultiIndexTest($index, $anotherIndex);
+        $this->arrangeEnvironmentForMultiIndexTest([$index, $anotherIndex]);
 
         // Act
         $this->tester->getFacade()->deleteIndexes();
@@ -444,11 +444,11 @@ class SearchElasticsearchFacadeTest extends Unit
     }
 
     /**
-     * @param \Elastica\Index ...$indexes
+     * @param \Elastica\Index[] $indexes
      *
      * @return void
      */
-    protected function arrangeEnvironmentForMultiIndexTest(...$indexes): void
+    protected function arrangeEnvironmentForMultiIndexTest(array $indexes): void
     {
         $indexNames = array_map(function (Index $index) {
             return $index->getName();
