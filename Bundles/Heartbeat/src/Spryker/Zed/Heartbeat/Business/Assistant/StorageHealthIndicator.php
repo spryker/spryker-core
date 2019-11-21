@@ -9,10 +9,9 @@ namespace Spryker\Zed\Heartbeat\Business\Assistant;
 
 use Exception;
 use Spryker\Shared\Heartbeat\Code\AbstractHealthIndicator;
-use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
 use Spryker\Zed\Heartbeat\Dependency\Client\HeartbeatToStorageClientInterface;
 
-class StorageHealthIndicator extends AbstractHealthIndicator implements HealthIndicatorInterface
+class StorageHealthIndicator extends AbstractHealthIndicator
 {
     public const HEALTH_MESSAGE_UNABLE_TO_WRITE_TO_STORAGE = 'Unable to write to storage';
     public const HEALTH_MESSAGE_UNABLE_TO_READ_FROM_STORAGE = 'Unable to read from storage';

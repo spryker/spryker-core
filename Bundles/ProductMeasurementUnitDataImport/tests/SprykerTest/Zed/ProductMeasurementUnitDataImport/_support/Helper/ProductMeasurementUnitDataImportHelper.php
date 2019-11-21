@@ -56,7 +56,7 @@ class ProductMeasurementUnitDataImportHelper extends Module
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importMeasurementUnitData($dataDir): DataImporterReportTransfer
+    public function importMeasurementUnitData(string $dataDir): DataImporterReportTransfer
     {
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName($dataDir . 'import/product_measurement_unit.csv');

@@ -2,12 +2,13 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Zed\ProductOffer;
 
 use Codeception\Actor;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 
 /**
  * Inherited Methods
@@ -33,4 +34,20 @@ class ProductOfferBusinessTester extends Actor
    /**
     * Define custom actions here
     */
+
+    /**
+     * @return void
+     */
+    public function truncateProductOffers(): void
+    {
+        $this->truncateTableRelations($this->getProductOfferPropelQuery());
+    }
+
+    /**
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     */
+    public function getProductOfferPropelQuery(): SpyProductOfferQuery
+    {
+        return SpyProductOfferQuery::create();
+    }
 }

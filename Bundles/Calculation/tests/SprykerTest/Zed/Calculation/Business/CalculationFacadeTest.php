@@ -53,7 +53,7 @@ class CalculationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculatePriceShouldSetDefaultStorePriceValues()
+    public function testCalculatePriceShouldSetDefaultStorePriceValues(): void
     {
         $calculationFacade = $this->createCalculationFacade(
             [
@@ -109,7 +109,7 @@ class CalculationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateProductOptionPriceAggregationShouldSumAllOptionPrices()
+    public function testCalculateProductOptionPriceAggregationShouldSumAllOptionPrices(): void
     {
         $calculationFacade = $this->createCalculationFacade(
             [
@@ -139,7 +139,7 @@ class CalculationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateSumDiscountAmountShouldSumAllItemDiscounts()
+    public function testCalculateSumDiscountAmountShouldSumAllItemDiscounts(): void
     {
         $calculationFacade = $this->createCalculationFacade(
             [
@@ -208,7 +208,7 @@ class CalculationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateFullDiscountAmountShouldSumAllItemsAndAdditions()
+    public function testCalculateFullDiscountAmountShouldSumAllItemsAndAdditions(): void
     {
         $calculationFacade = $this->createCalculationFacade(
             [
@@ -238,7 +238,7 @@ class CalculationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateTaxAmountFullAggregationShouldSumAllTaxesWithAdditions()
+    public function testCalculateTaxAmountFullAggregationShouldSumAllTaxesWithAdditions(): void
     {
         $calculationFacade = $this->createCalculationFacade(
             [
@@ -267,7 +267,7 @@ class CalculationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateSumAggregationShouldSumItemAndAllAdditionPrices()
+    public function testCalculateSumAggregationShouldSumItemAndAllAdditionPrices(): void
     {
         $calculationFacade = $this->createCalculationFacade(
             [
@@ -303,7 +303,7 @@ class CalculationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculatePriceToPayAggregation()
+    public function testCalculatePriceToPayAggregation(): void
     {
         $calculationFacade = $this->createCalculationFacade(
             [
@@ -329,7 +329,7 @@ class CalculationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateSubtotalShouldSumAllItemsWithAdditions()
+    public function testCalculateSubtotalShouldSumAllItemsWithAdditions(): void
     {
         $calculationFacade = $this->createCalculationFacade(
             [
@@ -359,7 +359,7 @@ class CalculationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateExpenseTotalShouldSumAllOrderExpenses()
+    public function testCalculateExpenseTotalShouldSumAllOrderExpenses(): void
     {
         $calculationFacade = $this->createCalculationFacade(
             [
@@ -389,7 +389,7 @@ class CalculationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateDiscountTotalShouldSumAllDiscounts()
+    public function testCalculateDiscountTotalShouldSumAllDiscounts(): void
     {
         $calculationFacade = $this->createCalculationFacade(
             [
@@ -423,7 +423,7 @@ class CalculationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateTaxTotalShouldSumAllTaxAmounts()
+    public function testCalculateTaxTotalShouldSumAllTaxAmounts(): void
     {
         $calculationFacade = $this->createCalculationFacade(
             [
@@ -458,7 +458,7 @@ class CalculationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateRefundTotalShouldSumAllRefundableAmounts()
+    public function testCalculateRefundTotalShouldSumAllRefundableAmounts(): void
     {
         $calculationFacade = $this->createCalculationFacade(
             [
@@ -498,7 +498,7 @@ class CalculationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateRefundableAmount()
+    public function testCalculateRefundableAmount(): void
     {
         $calculationFacade = $this->createCalculationFacade(
             [
@@ -531,7 +531,7 @@ class CalculationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateGrandTotal()
+    public function testCalculateGrandTotal(): void
     {
         $calculationFacade = $this->createCalculationFacade(
             [
@@ -563,7 +563,7 @@ class CalculationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateInitialGrandTotal()
+    public function testCalculateInitialGrandTotal(): void
     {
         $calculationFacade = $this->createCalculationFacade(
             [
@@ -597,18 +597,18 @@ class CalculationFacadeTest extends Unit
      *
      * @return \Spryker\Zed\Calculation\Business\CalculationFacade
      */
-    protected function createCalculationFacade(array $calculatorPlugins)
+    protected function createCalculationFacade(array $calculatorPlugins): CalculationFacade
     {
         $calculationFacade = new CalculationFacade();
 
         $calculationBusinessFactory = new CalculationBusinessFactory();
 
         $container = new Container();
-        $container[CalculationDependencyProvider::QUOTE_CALCULATOR_PLUGIN_STACK] = function (Container $container) use ($calculatorPlugins) {
+        $container[CalculationDependencyProvider::QUOTE_CALCULATOR_PLUGIN_STACK] = function () use ($calculatorPlugins) {
             return $calculatorPlugins;
         };
 
-        $container[CalculationDependencyProvider::PLUGINS_QUOTE_POST_RECALCULATE] = function (Container $container) {
+        $container[CalculationDependencyProvider::PLUGINS_QUOTE_POST_RECALCULATE] = function () {
             return [];
         };
 
@@ -621,7 +621,7 @@ class CalculationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveCanceledAmountResetsCancelledAmount()
+    public function testRemoveCanceledAmountResetsCancelledAmount(): void
     {
         // Assign
         $calculationFacade = new CalculationFacade();

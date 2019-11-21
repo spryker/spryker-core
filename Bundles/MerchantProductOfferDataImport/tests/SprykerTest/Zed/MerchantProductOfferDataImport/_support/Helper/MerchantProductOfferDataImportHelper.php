@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerTest\Zed\MerchantProductOfferDataImport\Helper;
@@ -30,14 +30,6 @@ class MerchantProductOfferDataImportHelper extends Module
         $query = $this->getProductOfferPropelQuery();
 
         $this->assertTrue($query->count() > 0, 'Expected at least one entry in the database table but database table is empty.');
-    }
-
-    /**
-     * @return void
-     */
-    public function truncateProductOffers(): void
-    {
-        $this->getProductOfferPropelQuery()->deleteAll();
     }
 
     /**

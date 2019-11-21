@@ -64,6 +64,10 @@ class ApiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @see \Spryker\Zed\Api\Communication\Plugin\ApiControllerEventDispatcherPlugin
+     *
      * @return \Spryker\Zed\Api\Communication\Plugin\ApiControllerListenerInterface
      */
     public function createControllerListener()

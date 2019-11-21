@@ -112,7 +112,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function getContainer()
+    protected function getContainer(): Container
     {
         $dependencyProvider = new CustomerDependencyProvider();
         $this->businessLayerDependencies = new Container();
@@ -127,7 +127,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function createTestCustomerTransfer()
+    protected function createTestCustomerTransfer(): CustomerTransfer
     {
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setEmail(self::TESTER_EMAIL);
@@ -139,7 +139,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function createTestCustomer()
+    protected function createTestCustomer(): CustomerTransfer
     {
         $customerTransfer = $this->createTestCustomerTransfer();
         $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
@@ -153,7 +153,7 @@ class CustomerFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function getTestCustomerTransfer(CustomerTransfer $customerTransfer)
+    public function getTestCustomerTransfer(CustomerTransfer $customerTransfer): CustomerTransfer
     {
         $customerTransfer = $this->customerFacade->getCustomer($customerTransfer);
 
@@ -163,7 +163,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCustomer()
+    public function testGetCustomer(): void
     {
         $customerTransfer = $this->createTestCustomerTransfer();
         $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
@@ -175,7 +175,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testHasEmailReturnsFalseWithoutCustomer()
+    public function testHasEmailReturnsFalseWithoutCustomer(): void
     {
         $this->assertFalse($this->customerFacade->hasEmail(self::TESTER_EMAIL));
     }
@@ -183,7 +183,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testHasEmailReturnsTrueWithCustomer()
+    public function testHasEmailReturnsTrueWithCustomer(): void
     {
         $this->createTestCustomer();
         $this->assertTrue($this->customerFacade->hasEmail(self::TESTER_EMAIL));
@@ -192,7 +192,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRegisterCustomer()
+    public function testRegisterCustomer(): void
     {
         $customerTransfer = $this->createTestCustomerTransfer();
         $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
@@ -202,7 +202,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRegisterCustomerWithAlreadyExistingEmail()
+    public function testRegisterCustomerWithAlreadyExistingEmail(): void
     {
         $customerTransfer = $this->createTestCustomerTransfer();
         $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
@@ -216,7 +216,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRegisterCustomerFailsWhenInvalidEmailFormatIsProvided()
+    public function testRegisterCustomerFailsWhenInvalidEmailFormatIsProvided(): void
     {
         // Assign
         $this->mockUtilValidateService(false);
@@ -488,7 +488,7 @@ class CustomerFacadeTest extends Unit
      *
      * @return void
      */
-    protected function mockUtilValidateService($isEmailFormatValid)
+    protected function mockUtilValidateService(bool $isEmailFormatValid): void
     {
         $serviceMock = $this->getMockBuilder(CustomerToUtilValidateServiceInterface::class)
             ->setMethods(['isEmailFormatValid'])
@@ -505,7 +505,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRegisterCustomerRegistersCustomerWithValidEmail()
+    public function testRegisterCustomerRegistersCustomerWithValidEmail(): void
     {
         // Assign
         $customerTransfer = $this->createTestCustomerTransfer();
@@ -521,7 +521,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testConfirmRegistration()
+    public function testConfirmRegistration(): void
     {
         $customerTransfer = $this->createTestCustomerTransfer();
         $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
@@ -532,7 +532,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testForgotPassword()
+    public function testForgotPassword(): void
     {
         $customerTransfer = $this->createTestCustomerTransfer();
         $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
@@ -544,7 +544,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRestorePassword()
+    public function testRestorePassword(): void
     {
         $customerTransfer = $this->createTestCustomerTransfer();
         $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
@@ -558,7 +558,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRestorePasswordNonExistent()
+    public function testRestorePasswordNonExistent(): void
     {
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setEmail(self::TESTER_NON_EXISTING_EMAIL);
@@ -570,7 +570,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateCustomer()
+    public function testUpdateCustomer(): void
     {
         $customerTransfer = $this->createTestCustomer();
         $customerTransfer->setPassword(null);
@@ -585,7 +585,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateCustomerFailsWhenInvalidEmailFormatIsProvided()
+    public function testUpdateCustomerFailsWhenInvalidEmailFormatIsProvided(): void
     {
         // Assign
         $customerTransfer = $this->createTestCustomer();
@@ -601,7 +601,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateCustomerUpdatesValidEmail()
+    public function testUpdateCustomerUpdatesValidEmail(): void
     {
         // Assign
         $customerTransfer = $this->createTestCustomer();
@@ -618,7 +618,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateCustomerWithProvidedPasswordShouldSuccessWhenPasswordAreProvided()
+    public function testUpdateCustomerWithProvidedPasswordShouldSuccessWhenPasswordAreProvided(): void
     {
         $customerTransfer = $this->createTestCustomer();
         $customerTransfer->setNewPassword('new password');
@@ -634,7 +634,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteCustomer()
+    public function testDeleteCustomer(): void
     {
         $customerTransfer = $this->createTestCustomer();
         $isSuccess = $this->customerFacade->deleteCustomer($customerTransfer);
@@ -644,7 +644,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckOrderPreSaveConditionsDoesNotValidateEmailForRegisteredCustomer()
+    public function testCheckOrderPreSaveConditionsDoesNotValidateEmailForRegisteredCustomer(): void
     {
         // Assign
         $dummyIdCustomer = 11111;
@@ -666,7 +666,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckOrderPreSaveConditionsDoesNotCheckUniqueEmailForRegisteredCustomer()
+    public function testCheckOrderPreSaveConditionsDoesNotCheckUniqueEmailForRegisteredCustomer(): void
     {
         // Assign
         $dummyCustomerId = 11111;
@@ -691,7 +691,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckOrderPreSaveConditionsReturnsErrorIfEmailIsInvalidForGuest()
+    public function testCheckOrderPreSaveConditionsReturnsErrorIfEmailIsInvalidForGuest(): void
     {
         // Assign
         $quoteTransfer = (new QuoteTransfer())
@@ -712,7 +712,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckOrderPreSaveConditionsReturnsNoErrorIfEmailIsValidForGuest()
+    public function testCheckOrderPreSaveConditionsReturnsNoErrorIfEmailIsValidForGuest(): void
     {
         // Assign
         $quoteTransfer = (new QuoteTransfer())
@@ -733,7 +733,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckOrderPreSaveConditionsDoesNotCheckUniqueEmailForGuest()
+    public function testCheckOrderPreSaveConditionsDoesNotCheckUniqueEmailForGuest(): void
     {
         // Assign
         $email = 'occupied@spryker.com';
@@ -757,7 +757,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckOrderPreSaveConditionsReturnsErrorIfEmailIsInvalidForNewCustomer()
+    public function testCheckOrderPreSaveConditionsReturnsErrorIfEmailIsInvalidForNewCustomer(): void
     {
         // Assign
         $quoteTransfer = (new QuoteTransfer())
@@ -777,7 +777,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckOrderPreSaveConditionsReturnsErrorIfEmailIsNotUniqueForNewCustomer()
+    public function testCheckOrderPreSaveConditionsReturnsErrorIfEmailIsNotUniqueForNewCustomer(): void
     {
         // Assign
         $email = 'occupied@spryker.com';
@@ -800,7 +800,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckOrderPreSaveConditionsReturnsNoErrorIfEmailIsValidAndUniqueForNewCustomer()
+    public function testCheckOrderPreSaveConditionsReturnsNoErrorIfEmailIsValidAndUniqueForNewCustomer(): void
     {
         // Assign
         $quoteTransfer = (new QuoteTransfer())
@@ -824,7 +824,7 @@ class CustomerFacadeTest extends Unit
      *
      * @return \Spryker\Zed\Customer\Business\CustomerFacade
      */
-    private function getFacade(?TransferInterface $transfer = null, $hasEmail = true)
+    private function getFacade(?TransferInterface $transfer = null, bool $hasEmail = true): CustomerFacade
     {
         $customerFacade = new CustomerFacade();
         $customerFacade->setFactory($this->getFactory($transfer, $hasEmail));
@@ -838,7 +838,7 @@ class CustomerFacadeTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Customer\Business\CustomerBusinessFactory
      */
-    protected function getFactory(?TransferInterface $transfer = null, $hasEmail = true)
+    protected function getFactory(?TransferInterface $transfer = null, bool $hasEmail = true)
     {
         $factoryMock = $this->getMockBuilder(CustomerBusinessFactory::class)
             ->getMock();
@@ -860,7 +860,7 @@ class CustomerFacadeTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Customer\Business\Customer\Customer
      */
-    private function getCustomerMock(?CustomerTransfer $customerTransfer = null, $hasEmail = true)
+    private function getCustomerMock(?CustomerTransfer $customerTransfer = null, bool $hasEmail = true)
     {
         $customerMock = $this->getMockBuilder(Customer::class)
             ->disableOriginalConstructor()
@@ -894,7 +894,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testHasEmail()
+    public function testHasEmail(): void
     {
         $this->assertTrue($this->getFacade()->hasEmail('foo@bar.com'));
     }
@@ -924,7 +924,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSendPasswordRestoreMail()
+    public function testSendPasswordRestoreMail(): void
     {
         $customerTransfer = new CustomerTransfer();
         $facade = $this->getFacade($customerTransfer);
@@ -968,7 +968,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateCustomerPassword()
+    public function testUpdateCustomerPassword(): void
     {
         $customerTransfer = new CustomerTransfer();
         $facade = $this->getFacade($customerTransfer);
@@ -979,7 +979,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAnonymizeCustomer()
+    public function testAnonymizeCustomer(): void
     {
         // Assign
         $customerTransfer = $this->tester->haveCustomer();
@@ -995,7 +995,7 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindCustomerByReference()
+    public function testFindCustomerByReference(): void
     {
         // Assign
         $customerTransfer = $this->tester->haveCustomer();
@@ -1014,7 +1014,7 @@ class CustomerFacadeTest extends Unit
      *
      * @return bool
      */
-    protected function hasCheckoutErrorMessage(CheckoutResponseTransfer $checkoutResponseTransfer, $errorMessage)
+    protected function hasCheckoutErrorMessage(CheckoutResponseTransfer $checkoutResponseTransfer, string $errorMessage): bool
     {
         foreach ($checkoutResponseTransfer->getErrors() as $errorTransfer) {
             if ($errorTransfer->getMessage() === $errorMessage) {

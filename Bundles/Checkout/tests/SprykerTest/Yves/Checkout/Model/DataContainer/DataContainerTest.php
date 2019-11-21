@@ -28,7 +28,7 @@ class DataContainerTest extends Unit
     /**
      * @return void
      */
-    public function testGetShouldCallClientToGetQuoteTransferIfNotSet()
+    public function testGetShouldCallClientToGetQuoteTransferIfNotSet(): void
     {
         $quoteClientMock = $this->getQuoteClientMock();
         $quoteClientMock->expects($this->once())->method('getQuote')->willReturn(new QuoteTransfer());
@@ -41,7 +41,7 @@ class DataContainerTest extends Unit
     /**
      * @return void
      */
-    public function testGetShouldNotCallClientToGetQuoteTransferIfSet()
+    public function testGetShouldNotCallClientToGetQuoteTransferIfSet(): void
     {
         $cartClientMock = $this->getQuoteClientMock();
         $cartClientMock->expects($this->once())->method('getQuote')->willReturn(new QuoteTransfer());
@@ -55,7 +55,7 @@ class DataContainerTest extends Unit
     /**
      * @return void
      */
-    public function testSetShouldCallClientToStoreQuoteTransfer()
+    public function testSetShouldCallClientToStoreQuoteTransfer(): void
     {
         $cartClientMock = $this->getQuoteClientMock();
         $cartClientMock->expects($this->once())->method('setQuote');

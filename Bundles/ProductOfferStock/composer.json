@@ -4,7 +4,7 @@
   "description": "ProductOfferStock module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/kernel": "^3.30.0",
     "spryker/product-offer": "^0.1.0",
     "spryker/stock": "^7.0.0"

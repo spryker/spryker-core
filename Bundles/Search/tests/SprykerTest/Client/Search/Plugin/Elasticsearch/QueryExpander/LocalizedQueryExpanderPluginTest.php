@@ -34,7 +34,7 @@ class LocalizedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
      *
      * @return void
      */
-    public function testLocalizedQueryExpanderShouldExpandTheBaseQueryAccordingToRequestParameters(Query $expectedQuery)
+    public function testLocalizedQueryExpanderShouldExpandTheBaseQueryAccordingToRequestParameters(Query $expectedQuery): void
     {
         $queryExpander = $this->createLocalizedQueryExpanderPluginMock();
 
@@ -48,7 +48,7 @@ class LocalizedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     /**
      * @return array
      */
-    public function localizedQueryExpanderDataProvider()
+    public function localizedQueryExpanderDataProvider(): array
     {
         return [
             'simple locale filtered query' => $this->getDataForSimpleLocaleFilteredQuery(),
@@ -58,7 +58,7 @@ class LocalizedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     /**
      * @return array
      */
-    protected function getDataForSimpleLocaleFilteredQuery()
+    protected function getDataForSimpleLocaleFilteredQuery(): array
     {
         $expectedQuery = (new Query())
             ->setQuery((new BoolQuery())

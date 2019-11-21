@@ -4,7 +4,7 @@
   "description": "MerchantProfileStorage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/event-behavior": "^1.0.0",
     "spryker/kernel": "^3.33.0",
     "spryker/merchant-profile": "^0.1.0",

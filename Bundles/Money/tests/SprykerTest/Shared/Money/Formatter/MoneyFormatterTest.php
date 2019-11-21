@@ -31,7 +31,7 @@ class MoneyFormatterTest extends Unit
     /**
      * @return void
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $moneyFormatter = new MoneyFormatter($this->getMoneyFormatterCollectionMock());
         $this->assertInstanceOf(MoneyFormatterWithTypeInterface::class, $moneyFormatter);
@@ -40,7 +40,7 @@ class MoneyFormatterTest extends Unit
     /**
      * @return void
      */
-    public function testFormatShouldCallCollectionToGetFormatterAndReturnedFormatted()
+    public function testFormatShouldCallCollectionToGetFormatterAndReturnedFormatted(): void
     {
         $moneyFormatter = new MoneyFormatter($this->getMoneyFormatterCollectionMock());
         $moneyTransfer = new MoneyTransfer();
@@ -77,7 +77,7 @@ class MoneyFormatterTest extends Unit
      *
      * @return string
      */
-    public function format(MoneyTransfer $moneyTransfer)
+    public function format(MoneyTransfer $moneyTransfer): string
     {
         return $moneyTransfer->getAmount() . ' Formatted';
     }

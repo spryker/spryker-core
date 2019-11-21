@@ -32,7 +32,7 @@ class DiscountListCest
      *
      * @return void
      */
-    public function showADiscountInList(DiscountPresentationTester $i, DiscountEditPage $editPage, DiscountViewPage $viewPage)
+    public function showADiscountInList(DiscountPresentationTester $i, DiscountEditPage $editPage, DiscountViewPage $viewPage): void
     {
         $name = 'Works as test discount';
         $discount = $i->haveDiscount(['displayName' => $name]);
@@ -62,7 +62,7 @@ class DiscountListCest
      *
      * @return void
      */
-    public function testPageShouldShowList(DiscountPresentationTester $i)
+    public function testPageShouldShowList(DiscountPresentationTester $i): void
     {
         $i->amOnPage(DiscountListPage::URL);
         $i->seeElement(DiscountListPage::SELECTOR_DATA_TABLE);
