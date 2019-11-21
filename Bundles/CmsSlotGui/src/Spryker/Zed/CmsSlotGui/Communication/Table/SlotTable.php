@@ -39,7 +39,7 @@ class SlotTable extends AbstractTable
     /**
      * @var int|null
      */
-    protected $contentProviderTypesNumber = null;
+    protected $contentProviderTypesNumber;
 
     /**
      * @var \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery

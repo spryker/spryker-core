@@ -38,7 +38,7 @@ class CmsSlotStorageBusinessTester extends Actor
      *
      * @return void
      */
-    public function haveCmsSlotStorageInDb(int $idCmsSlotStorage, string $key, $data = []): void
+    public function haveCmsSlotStorageInDb(int $idCmsSlotStorage, string $key, array $data = []): void
     {
         $cmsSlotStorageEntity = SpyCmsSlotStorageQuery::create()
             ->filterByIdCmsSlotStorage($idCmsSlotStorage)

@@ -203,7 +203,7 @@ class ProductListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductConcreteIdsByProductListIds()
+    public function testGetProductConcreteIdsByProductListIds(): void
     {
         // Arrange
         $productTransfer = $this->tester->haveProduct();

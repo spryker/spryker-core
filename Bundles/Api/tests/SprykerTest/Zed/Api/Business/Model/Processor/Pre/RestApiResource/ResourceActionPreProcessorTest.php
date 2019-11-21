@@ -38,7 +38,7 @@ class ResourceActionPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessGet()
+    public function testProcessGet(): void
     {
         $processor = new ResourceActionPreProcessor();
 
@@ -53,7 +53,7 @@ class ResourceActionPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessPost()
+    public function testProcessPost(): void
     {
         $processor = new ResourceActionPreProcessor();
 
@@ -68,7 +68,7 @@ class ResourceActionPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessPostInvalid()
+    public function testProcessPostInvalid(): void
     {
         $this->expectException('Symfony\Component\HttpKernel\Exception\BadRequestHttpException');
         $processor = new ResourceActionPreProcessor();
@@ -83,7 +83,7 @@ class ResourceActionPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessPatch()
+    public function testProcessPatch(): void
     {
         $processor = new ResourceActionPreProcessor();
 
@@ -98,7 +98,7 @@ class ResourceActionPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessDelete()
+    public function testProcessDelete(): void
     {
         $processor = new ResourceActionPreProcessor();
 
@@ -113,7 +113,7 @@ class ResourceActionPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessFind()
+    public function testProcessFind(): void
     {
         $processor = new ResourceActionPreProcessor();
 

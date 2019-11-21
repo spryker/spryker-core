@@ -28,7 +28,7 @@ class EditControllerCest
      *
      * @return void
      */
-    public function editTranslation(GlossaryCommunicationTester $i)
+    public function editTranslation(GlossaryCommunicationTester $i): void
     {
         $formData = [
             KeyTranslationTransfer::GLOSSARY_KEY => 'test.translation.key',

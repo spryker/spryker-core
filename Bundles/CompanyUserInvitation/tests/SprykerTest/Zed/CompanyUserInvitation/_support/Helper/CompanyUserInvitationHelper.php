@@ -48,7 +48,7 @@ class CompanyUserInvitationHelper extends Module
             ->createCompanyUserInvitation($companyUserInvitationCreateRequestTransfer)
             ->getCompanyUserInvitation();
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($companyUserInvitationTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($companyUserInvitationTransfer): void {
             $this->setDependencies();
 
             $companyUserInvitationDeleteRequestTransfer = (new CompanyUserInvitationDeleteRequestTransfer())
@@ -71,7 +71,7 @@ class CompanyUserInvitationHelper extends Module
         $companyUserInvitationTransfer = (new CompanyUserInvitationBuilder($seedData))->build();
         $companyUserInvitationTransfer->requireFkCompanyUser();
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($companyUserInvitationTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($companyUserInvitationTransfer): void {
             $this->setDependencies();
 
             $criteriaFilter = (new CompanyUserInvitationCriteriaFilterTransfer())
@@ -102,7 +102,7 @@ class CompanyUserInvitationHelper extends Module
      *
      * @return void
      */
-    public function addDependency($key, $value): void
+    public function addDependency(string $key, $value): void
     {
         $this->dependencies[$key] = $value;
         $this->setDependencies();
