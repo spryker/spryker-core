@@ -30,4 +30,7 @@
         <property name="name" type="string"/>
         <property name="idCategory" type="int"/>
     </transfer>
+
+    <transfer name="ProductAbstract">
+    </transfer>
 </transfers>

@@ -11,6 +11,12 @@
         <property name="storeRelation" type="StoreRelation"/>
         <property name="storeNames" type="string"/>
         <property name="isAssignedToSlotAndTemplate" type="bool"/>
+        <property name="idCmsBlock" type="int"/>
+        <property name="name" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="validFrom" type="string"/>
+        <property name="validTo" type="string"/>
+        <property name="cmsSlotBlockCollection" type="CmsSlotBlockCollection"/>
     </transfer>
 
     <transfer name="CmsSlotBlockCriteria">
@@ -36,9 +42,12 @@
     </transfer>
 
     <transfer name="CmsSlotBlockCollection">
+        <property name="cmsSlotBlocks" type="CmsSlotBlock[]" singular="cmsSlotBlock"/>
     </transfer>
 
     <transfer name="CmsSlotBlock">
+        <property name="idSlotTemplate" type="int"/>
+        <property name="idSlot" type="int"/>
     </transfer>
 
     <transfer name="CmsSlotTemplateConfiguration">

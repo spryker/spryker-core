@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-slot-block-product-category-gui",
+  "type": "library",
   "description": "CmsSlotBlockProductCategoryGui module",
   "license": "proprietary",
   "require": {
@@ -13,6 +14,10 @@
     "spryker/propel-orm": "^1.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/translator": "^1.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
@@ -28,9 +33,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
   }
 }

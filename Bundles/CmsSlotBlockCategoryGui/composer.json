@@ -1,5 +1,6 @@
 {
   "name": "spryker/cms-slot-block-category-gui",
+  "type": "library",
   "description": "CmsSlotBlockCategoryGui module",
   "license": "proprietary",
   "require": {
