@@ -22,9 +22,8 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
     /**
      * @param \Spryker\Zed\SalesConfigurableBundle\Persistence\SalesConfigurableBundleRepositoryInterface $salesConfigurableBundleRepository
      */
-    public function __construct(
-        SalesConfigurableBundleRepositoryInterface $salesConfigurableBundleRepository
-    ) {
+    public function __construct(SalesConfigurableBundleRepositoryInterface $salesConfigurableBundleRepository)
+    {
         $this->salesConfigurableBundleRepository = $salesConfigurableBundleRepository;
     }
 

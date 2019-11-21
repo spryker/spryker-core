@@ -33,7 +33,7 @@ class OrderExpander implements OrderExpanderInterface
     protected $itemTransformerStrategyPlugins;
 
     /**
-     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\ItemPreTransformerPluginInterface[]
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\ItemPreTransformerPluginInterface[]
      */
     protected $itemPreTransformerPlugins;
 

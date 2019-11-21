@@ -1,0 +1,32 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Configured Bundle Cart Notes' | trans } %}
+    {% block widget_content %}
+        {% set configurableBundlesHaveCartNote = false %}
+        {% for salesOrderConfiguredBundle in order.salesOrderConfiguredBundles if salesOrderConfiguredBundle.cartNote %}
+            {% set configurableBundlesHaveCartNote = true %}
+        {% endfor %}
+
+        <div class="row">
+            {% if configurableBundlesHaveCartNote %}
+                <div class="col-md-6">
+                    <table class="table">
+                        {% for salesOrderConfiguredBundle in order.salesOrderConfiguredBundles if salesOrderConfiguredBundle.cartNote %}
+                            <tr>
+                                <td class="text-left">
+                                    {{ salesOrderConfiguredBundle.name | trans }}
+                                    ({{ 'ID' | trans }}: {{ salesOrderConfiguredBundle.configurableBundleTemplateUuid }})
+                                </td>
+                                <td class="text-left">
+                                    {{ salesOrderConfiguredBundle.cartNote | escape | nl2br }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            {% else %}
+                <div class="col-md-12">
+                    <span class="text-left">{{ 'Order has no configured bundle cart notes' | trans }}</span>
+                </div>
+            {% endif %}
+        </div>
+    {% endblock %}
+{% endembed %}
