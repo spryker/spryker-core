@@ -56,7 +56,7 @@ class ConfiguredBundleQuantityExpander implements ConfiguredBundleQuantityExpand
             ->requireConfiguredBundleItem()
             ->requireConfiguredBundle()
             ->getConfiguredBundle()
-            ->requireQuantity();
+                ->requireQuantity();
 
         return (int)($itemTransfer->getQuantity() / $itemTransfer->getConfiguredBundle()->getQuantity());
     }

@@ -93,8 +93,8 @@ class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
             return $this->createErrorResponse(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_ADDED);
         }
 
-        $createConfiguredBundleRequestTransfer->getConfiguredBundleRequest()->setTemplateUuid(
-            $configurableBundleTemplateStorageTransfer->getUuid()
+        $createConfiguredBundleRequestTransfer->getConfiguredBundleRequest()->setTemplateName(
+            $configurableBundleTemplateStorageTransfer->getName()
         );
 
         $cartChangeTransfer = $this->mapCreateConfiguredBundleRequestTransferToCartChangeTransfer(
