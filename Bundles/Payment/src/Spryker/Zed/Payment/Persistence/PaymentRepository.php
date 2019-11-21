@@ -52,7 +52,7 @@ class PaymentRepository extends AbstractRepository implements PaymentRepositoryI
             ->filterByIdPaymentMethod($idPaymentMethod)
             ->findOne();
 
-        if (!$paymentMethodEntity) {
+        if ($paymentMethodEntity === null) {
             return null;
         }
 
