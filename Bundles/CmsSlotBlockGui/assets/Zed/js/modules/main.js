@@ -50,5 +50,7 @@ $(document).ready(function() {
         slotBlocksForm: slotBlocksForm,
     });
 
-    slotBlocks.init();
+    global.SlotTable.dataTableInitCallback = function() {
+        slotBlocks.init();
+    };
 });

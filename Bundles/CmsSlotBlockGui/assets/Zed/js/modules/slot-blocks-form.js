@@ -13,16 +13,18 @@ var SlotBlocksForm = function (options) {
     this.formItemsCount = 0;
     this.formTemplate = '';
     this.cmsSlotBlocksSelector = '';
+    this.formInitialState = '';
     this.isStateChanged = false;
     this.slotBlockFormItemClass = '';
     this.slotBlockFormItemIdPrefix = '';
     this.slotBlockFormWrapperId = '';
+    this.resolveIsUnsavedCallback = function (state) { return state; };
 
     $.extend(this, options);
 
     this.init = function () {
         _self.$formWrapper = $(_self.cmsSlotBlocksSelector);
-        _self.form = _self.$formWrapper.find('[name=slot_blocks]');
+        _self.form = _self.$formWrapper.find('form[name=slot_blocks]');
         _self.saveButton = _self.form.find('input[type=submit]');
         _self.formItemsCount = parseInt(_self.$formWrapper.data('slot-block-item-count'));
         _self.formTemplate = _self.$formWrapper.data('slot-block-item-form-template');
@@ -32,7 +34,7 @@ var SlotBlocksForm = function (options) {
     this.rebuildForm = function (idCmsSlotTemplate, idCmsSlot, tableData, isChanged) {
         if (isChanged && $(tableData).length < 1) {
             $(_self.slotBlockFormWrapperId).empty();
-            _self.isStateChanged = isChanged;
+            _self.setStateChanged();
 
             return;
         }
@@ -61,8 +63,10 @@ var SlotBlocksForm = function (options) {
 
         $(_self.slotBlockFormItemIdPrefix + prevCmsBlockId).nextAll().remove();
         _self.initFormItems();
-
-        _self.isStateChanged = isChanged;
+        if (!isChanged) {
+            _self.formInitialState = _self.form.serialize();
+        }
+        _self.setStateChanged();
     };
 
     this.save = function (event) {
@@ -84,8 +88,9 @@ var SlotBlocksForm = function (options) {
             });
             $(_self.slotBlockFormWrapperId).html(response);
             _self.initFormItems();
+            _self.formInitialState = _self.form.serialize();
             $(document).trigger('savedBlocksForm');
-            _self.isStateChanged = false;
+            _self.setStateChanged();
         }).fail(function() {
             window.sweetAlert({
                 title: 'Error',
@@ -133,13 +138,15 @@ var SlotBlocksForm = function (options) {
                 };
             }
             selectElement.select2(select2InitOptions);
-            selectElement.on('change', _self.changeState);
-            _self.form.find('input').on('change', _self.setStateChanged);
         });
+
+        _self.form.find(':input').off('change.changedState').on('change.changedState', _self.setStateChanged);
     };
 
     this.setStateChanged = function () {
-        return _self.isStateChanged = true;
+        var isChanged = _self.formInitialState !== _self.form.serialize();
+        isChanged = _self.resolveIsUnsavedCallback(isChanged);
+        _self.isStateChanged = isChanged;
     }
 };
 

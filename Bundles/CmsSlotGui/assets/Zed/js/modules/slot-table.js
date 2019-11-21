@@ -15,13 +15,12 @@ var SlotTable = function (options) {
     this.slotTableClass = '';
     this.slotTable = {};
     this.dataTableInit = false;
+    this.dataTableInitCallback = function () {};
 
     $.extend(this, options);
 
     this.init = function () {
         _self.slotTable = $(_self.slotTableClass);
-
-        $(_self.slotTableClass).on('click', '.js-slot-activation', _self.activationHandler);
     };
 
     this.loadSlotTableByIdTemplate = function (idTemplate) {
@@ -42,31 +41,60 @@ var SlotTable = function (options) {
             });
 
             _self.dataTableInit = true;
+            this.dataTableInitCallback();
+            return;
         }
 
         _self.slotTable.DataTable().ajax.url(ajaxUrl).load();
     };
 
     this.activationHandler = function () {
-        event.preventDefault();
-        var url = $(this).attr('href');
+        _self.slotTable.find('.js-slot-activation').on('click', function (event) {
+            event.preventDefault();
+            var $that = $(this);
 
-        $.get(url, function (response) {
-            if (response.success) {
-                _self.slotTable.DataTable().ajax.reload(null, false);
-
-                return;
+            if ($that.data('processing') === true) {
+                return false;
             }
 
-            window.sweetAlert({
-                title: 'Error',
-                text: response.message,
-                html: true,
-                type: 'error'
-            });
-        });
+            var url = $that.attr('href');
+            $that.data('processing', true);
 
-        return false;
+            $.get(url, function (response) {
+                if (response.success) {
+                    _self.slotTable.DataTable().ajax.reload(null, false);
+
+                    return;
+                }
+
+                $that.data('processing', false);
+                window.sweetAlert({
+                    title: 'Error',
+                    text: response.message,
+                    html: true,
+                    type: 'error'
+                });
+            });
+
+            return false;
+        });
+    };
+
+    this.toggleTableRow = function (state) {
+        if (!state) {
+            _self.slotTable.closest('.wrapper > .row').hide();
+
+            if ($.fn.dataTable.isDataTable(_self.slotTable)) {
+                var ajaxUrl = _self.ajaxBaseUrl + '?' + _self.paramIdCmsSlotTemplate + '=0';
+                _self.slotTable.data('ajax', ajaxUrl);
+                _self.slotTable.attr('data-ajax', ajaxUrl);
+                _self.slotTable.DataTable().ajax.url(ajaxUrl).load();
+            }
+
+            return;
+        }
+
+        _self.slotTable.closest('.wrapper > .row').show();
     }
 };
 

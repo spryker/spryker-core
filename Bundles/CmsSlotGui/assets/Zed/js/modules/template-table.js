@@ -16,7 +16,6 @@ var TemplateTable = function (options) {
 
     this.init = function () {
         _self.templateTable = $(_self.templateTableId).DataTable();
-
         $(_self.templateTableId).find('tbody').on('click', 'tr', _self.tableRowSelect);
         _self.templateTable.on('draw', _self.selectFirstRow);
         _self.templateTable.on('select', _self.loadSlotTable);
@@ -32,6 +31,7 @@ var TemplateTable = function (options) {
     };
 
     this.selectFirstRow = function (element, settings) {
+        _self.slotTable.toggleTableRow(_self.getDataTableApi(settings).rows().count() !== 0);
         _self.getDataTableApi(settings).row(0).select();
     };
 

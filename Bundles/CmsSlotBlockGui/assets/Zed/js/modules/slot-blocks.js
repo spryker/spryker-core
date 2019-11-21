@@ -43,11 +43,19 @@ var SlotBlocks = function (options) {
     };
 
     this.selectFirstRow = function () {
+        var state = _self.$slotTable.rows().count() !== 0 && $(_self.slotTableSelector).is(':visible');
+        _self.blocksTable.toggleTableRow(state);
         _self.$slotTable.row(0).select();
     };
 
     this.loadBlocksTable = function (element, api, type, indexes) {
-        var idCmsSlotTemplate = $('#template-list-table').dataTable().api().rows( { selected: true } ).data()[0][0];
+        var templateTableApi = $('#template-list-table').dataTable().api();
+
+        if (templateTableApi.rows( { selected: true } ).count() === 0) {
+            return;
+        }
+
+        var idCmsSlotTemplate = templateTableApi.rows( { selected: true } ).data()[0][0];
         var idCmsSlot = api.row(indexes[0]).data()[0];
         var paramsCollection = {};
         paramsCollection[_self.paramIdCmsSlotTemplate] = idCmsSlotTemplate;
@@ -63,7 +71,6 @@ var SlotBlocks = function (options) {
             _self.slotBlocksForm.init();
             _self.blocksTable.loadBlocksTable(params, idCmsSlotTemplate, idCmsSlot);
             _self.blocksTable.resetHandlerCallback = function() {
-                _self.slotBlocksForm.isStateChanged = false;
                 _self.loadBlocksTable(element, api, type, indexes);
             };
         });

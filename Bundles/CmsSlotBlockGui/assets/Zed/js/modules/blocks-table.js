@@ -29,6 +29,7 @@ var BlocksTable = function (options) {
     this.resetButtonSelector = '.js-slot-block-reset-button';
     this.rowUnsavedOverlaySelector = '.js-row-unsaved-overlay .ibox-content';
     this.selectedRowIndex = 0;
+    this.tableIsUnsaved = false;
 
     $.extend(this, options);
 
@@ -38,13 +39,12 @@ var BlocksTable = function (options) {
         _self.$cmsSlotBlocks = $(_self.cmsSlotBlocksSelector);
         _self.$blocksChoiceDropDown = $(_self.blocksChoiceFormSelector).find('select');
         _self.isFirstTableRender = true;
+        _self.slotBlocksForm.resolveIsUnsavedCallback = _self.resolveIsUnsaved;
         if (!_self.isFirstInit) {
             return;
         }
         $(document).on('savedBlocksForm', function () {
-            _self.getInitTableState(_self.$blocksTable.data('ajax'));
-            _self.toggleRowOverlay(false);
-            _self.toggleResetButton(false);
+            _self.setInitTableState();
             _self.tableRowSelect();
         });
         _self.isFirstInit = false;
@@ -57,7 +57,6 @@ var BlocksTable = function (options) {
 
         var ajaxUrl = _self.tableBaseUrl + '?' + params;
         _self.$blocksTable.data('ajax', ajaxUrl);
-        _self.getInitTableState(ajaxUrl);
         _self.$blocksTable.DataTable({
             destroy: true,
             ajax: {
@@ -66,11 +65,21 @@ var BlocksTable = function (options) {
             autoWidth: false,
             language: dataTable.defaultConfiguration.language,
             searching: false,
-            info: false,
-            drawCallback: function() {
-                _self.initDataTableListeners(idCmsSlotTemplate, idCmsSlot);
-                _self.tableRowSelect();
-            },
+            info: false
+        });
+        _self.$blocksTable.DataTable().on('draw', function(){
+            if (_self.isFirstTableRender === true) {
+                _self.setInitTableState();
+            }
+            _self.resolveIsUnsaved(_self.isUnsaved());
+            _self.initDataTableListeners(idCmsSlotTemplate, idCmsSlot);
+            _self.tableRowSelect();
+        });
+        _self.$blocksTable.DataTable().on('preInit', function(){
+            _self.isFirstTableRender = true;
+        });
+        _self.$blocksTable.DataTable().on('init', function(){
+            _self.isFirstTableRender = false;
         });
     };
 
@@ -79,20 +88,15 @@ var BlocksTable = function (options) {
             _self.overlayToggler(true);
         });
         _self.slotBlocksForm.rebuildForm(idCmsSlotTemplate, idCmsSlot, _self.$blocksTable.DataTable().rows().data(), _self.isUnsaved());
-        if (!_self.isFirstTableRender) {
-            _self.toggleRowOverlay();
-            _self.toggleResetButton();
-            return;
-        }
         _self.isFirstTableRender = false;
         _self.initActionButtonsListeners();
         $(_self.$blocksTable).find('tbody').on('click', 'tr', _self.tableRowSelect);
     };
 
     this.initActionButtonsListeners = function () {
-        _self.$blocksTable.on('click', _self.changeOrderButtonSelector, _self.changeOrderButtonsHandler.bind(this));
-        _self.$blocksTable.on('click', _self.removeButtonSelector, _self.removeButtonsHandler.bind(this));
-        _self.$cmsSlotBlocks.on('click', _self.resetButtonSelector, _self.resetButtonsHandler.bind(this));
+        _self.$blocksTable.find(_self.changeOrderButtonSelector).on('click', _self.changeOrderButtonsHandler);
+        _self.$blocksTable.find(_self.removeButtonSelector).on('click', _self.removeButtonsHandler);
+        _self.$cmsSlotBlocks.find(_self.resetButtonSelector).off('click.resetSlotBlocks').on('click.resetSlotBlocks', _self.resetButtonsHandler);
     };
 
     this.updateTable = function (tableApi, tableData) {
@@ -102,10 +106,8 @@ var BlocksTable = function (options) {
         tableApi.row(_self.selectedRowIndex).select();
     };
 
-    this.getInitTableState = function (url) {
-        $.get(url).done(function (response) {
-            _self.initTableState = response.data;
-        });
+    this.setInitTableState = function () {
+        _self.initTableState = _self.getTable().data;
     };
 
     this.addRow = function (rowData = {}) {
@@ -164,7 +166,7 @@ var BlocksTable = function (options) {
         return {
             api: _self.$blocksTable.dataTable().api(),
             data: _self.$blocksTable.dataTable().api().data().toArray(),
-        }
+        };
     };
 
     this.changeOrderButtonsHandler = function (event) {
@@ -239,7 +241,10 @@ var BlocksTable = function (options) {
             return;
         }
 
+        _self.tableIsUnsaved = false;
+        _self.slotBlocksForm.isStateChanged = false;
         _self.resetHandlerCallback();
+        _self.resolveIsUnsaved(false);
     };
 
     this.toggleRowOverlay = function (state = _self.isUnsaved()) {
@@ -253,7 +258,7 @@ var BlocksTable = function (options) {
                 $overlay.on('click', function(){
                     _self.showAlert();
                 });
-                $overlay.stop().hide().fadeIn(200);
+                $overlay.show();
             } else if(!state) {
                 $element.removeClass('js-row-overlayed').find('.js-row-overlay').remove();
             }
@@ -273,10 +278,24 @@ var BlocksTable = function (options) {
     };
 
     this.isUnsaved = function () {
-        if (_self.slotBlocksForm.isStateChanged) {
-            return _self.slotBlocksForm.isStateChanged;
+        return _self.tableIsUnsaved;
+    };
+
+    this.resolveIsUnsaved = function (isUnsaved) {
+        if (!isUnsaved) {
+            isUnsaved = _self.checkTableState();
         }
 
+        if (isUnsaved !== _self.tableIsUnsaved) {
+            _self.toggleRowOverlay(isUnsaved);
+            _self.toggleResetButton(isUnsaved);
+        }
+
+        _self.tableIsUnsaved = isUnsaved;
+        return _self.tableIsUnsaved;
+    };
+
+    this.checkTableState = function () {
         var initTableState = _self.initTableState;
         var currentTableState = _self.getTable().data;
 
@@ -295,6 +314,7 @@ var BlocksTable = function (options) {
 
     this.tableRowSelect = function (element) {
         var cellIndex = _self.selectedRowIndex;
+
         if ($(_self.$blocksTable).DataTable().rows().count() < 1) {
             return;
         }
@@ -323,6 +343,20 @@ var BlocksTable = function (options) {
             confirmButtonColor: '#1ab394',
             confirmButtonText: $cmsSlotBlock.data('alert-go-back-button'),
         });
+    };
+
+    this.toggleTableRow = function (state) {
+        var $blocksTable = $(_self.blocksTableSelector);
+
+        if (!state) {
+            $blocksTable.closest('.wrapper > .row').hide();
+            _self.toggleRowOverlay(false);
+            _self.toggleResetButton(false);
+
+            return;
+        }
+
+        $blocksTable.closest('.wrapper > .row').show();
     }
 };
 
