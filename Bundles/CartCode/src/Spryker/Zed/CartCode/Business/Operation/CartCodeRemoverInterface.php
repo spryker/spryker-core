@@ -18,5 +18,5 @@ interface CartCodeRemoverInterface
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function removeCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer;
+    public function removeCartCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer;
 }

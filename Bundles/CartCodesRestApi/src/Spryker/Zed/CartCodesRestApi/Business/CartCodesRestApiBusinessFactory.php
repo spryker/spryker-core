@@ -9,8 +9,8 @@ namespace Spryker\Zed\CartCodesRestApi\Business;
 
 use Spryker\Zed\CartCodesRestApi\Business\CartCodeAdder\CartCodeAdder;
 use Spryker\Zed\CartCodesRestApi\Business\CartCodeAdder\CartCodeAdderInterface;
-use Spryker\Zed\CartCodesRestApi\Business\CartCodeDeleter\CartCodeRemover;
-use Spryker\Zed\CartCodesRestApi\Business\CartCodeDeleter\CartCodeRemoverInterface;
+use Spryker\Zed\CartCodesRestApi\Business\CartCodeRemover\CartCodeRemover;
+use Spryker\Zed\CartCodesRestApi\Business\CartCodeRemover\CartCodeRemoverInterface;
 use Spryker\Zed\CartCodesRestApi\CartCodesRestApiDependencyProvider;
 use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeInterface;
 use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeInterface;
@@ -33,7 +33,7 @@ class CartCodesRestApiBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CartCodesRestApi\Business\CartCodeDeleter\CartCodeRemoverInterface
+     * @return \Spryker\Zed\CartCodesRestApi\Business\CartCodeRemover\CartCodeRemoverInterface
      */
     public function createCartCodeRemover(): CartCodeRemoverInterface
     {

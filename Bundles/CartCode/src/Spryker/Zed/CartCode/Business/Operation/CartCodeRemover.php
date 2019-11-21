@@ -49,7 +49,7 @@ class CartCodeRemover implements CartCodeRemoverInterface
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function removeCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
+    public function removeCartCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
     {
         $lockedCartCodeOperationResultTransfer = $this->quoteOperationChecker->checkLockedQuoteResponse($quoteTransfer);
         if ($lockedCartCodeOperationResultTransfer) {

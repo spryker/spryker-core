@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CartCodesRestApi\Business\CartCodeDeleter;
+namespace Spryker\Zed\CartCodesRestApi\Business\CartCodeRemover;
 
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;

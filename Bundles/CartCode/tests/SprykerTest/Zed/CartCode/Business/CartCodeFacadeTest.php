@@ -84,7 +84,7 @@ class CartCodeFacadeTest extends Unit
         $quoteTransfer = $this->tester->prepareQuoteTransferWithDiscount(false, static::CODE);
 
         // Act
-        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCode($quoteTransfer, static::CODE);
+        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCartCode($quoteTransfer, static::CODE);
 
         // Assert
         $this->assertEquals(0, $cartCodeOperationResultTransfer->getQuote()->getVoucherDiscounts()->count());
@@ -99,7 +99,7 @@ class CartCodeFacadeTest extends Unit
         $quoteTransfer = $this->tester->prepareQuoteTransferWithDiscount(true, static::CODE);
 
         // Act
-        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCode($quoteTransfer, static::CODE);
+        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCartCode($quoteTransfer, static::CODE);
 
         // Assert
         $this->assertEquals(1, $cartCodeOperationResultTransfer->getQuote()->getVoucherDiscounts()->count());
