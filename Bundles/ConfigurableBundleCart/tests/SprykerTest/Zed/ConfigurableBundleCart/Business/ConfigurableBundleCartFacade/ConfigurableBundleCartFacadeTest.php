@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ConfigurableBundleCart\Business\ConfigurableBundleCartFacade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\CartChangeBuilder;
 use Generated\Shared\DataBuilder\ConfigurableBundleTemplateBuilder;
 use Generated\Shared\DataBuilder\ConfiguredBundleBuilder;
 use Generated\Shared\DataBuilder\ProductConcreteBuilder;
@@ -34,12 +35,13 @@ class ConfigurableBundleCartFacadeTest extends Unit
 {
     protected const FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1 = 'FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1';
     protected const FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_2 = 'FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_2';
+    protected const FAKE_ITEM_GROUP_KEY = 'FAKE_ITEM_GROUP_KEY';
 
     /**
      * @var \SprykerTest\Zed\ConfigurableBundleCart\ConfigurableBundleCartBusinessTester
      */
     protected $tester;
-    
+
     /**
      * @return void
      */
@@ -346,6 +348,124 @@ class ConfigurableBundleCartFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($isValid);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandConfiguredBundleItemsWithQuantityPerSlotWillExpandItems(): void
+    {
+        // Arrange
+        $cartChangeTransfer = (new CartChangeBuilder())
+            ->withQuote()
+            ->withItem([
+                ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
+                ItemTransfer::QUANTITY => 2,
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(1),
+            ])
+            ->withItem([
+                ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
+                ItemTransfer::QUANTITY => 2,
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_2),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(1),
+            ])
+            ->build();
+
+        // Act
+        $cartChangeTransfer = $this->tester->getFacade()->expandConfiguredBundleItemsWithQuantityPerSlot($cartChangeTransfer);
+
+        // Assert
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            $this->assertSame(2, $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot());
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandConfiguredBundleItemsWithQuantityPerSlotWillIgnoreRegularItems(): void
+    {
+        // Arrange
+        $cartChangeTransfer = (new CartChangeBuilder())
+            ->withQuote()
+            ->withItem([
+                ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
+                ItemTransfer::QUANTITY => 1,
+            ])
+            ->withItem([
+                ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
+                ItemTransfer::QUANTITY => 1,
+            ])
+            ->build();
+
+        // Act
+        $updatedCartChangeTransfer = $this->tester->getFacade()->expandConfiguredBundleItemsWithQuantityPerSlot($cartChangeTransfer);
+
+        // Assert
+        $this->assertSame($cartChangeTransfer, $updatedCartChangeTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    protected function testExpandConfiguredBundleItemsWithGroupKeyWillExpandItems(): void
+    {
+        // Arrange
+        $cartChangeTransfer = (new CartChangeBuilder())
+            ->withQuote()
+            ->withItem([
+                ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
+                ItemTransfer::QUANTITY => 1,
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(1),
+                ItemTransfer::GROUP_KEY => static::FAKE_ITEM_GROUP_KEY,
+            ])
+            ->withItem([
+                ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
+                ItemTransfer::QUANTITY => 1,
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(1),
+                ItemTransfer::GROUP_KEY => static::FAKE_ITEM_GROUP_KEY,
+            ])
+            ->build();
+
+        // Act
+        $updatedCartChangeTransfer = $this->tester->getFacade()->expandConfiguredBundleItemsWithGroupKey($cartChangeTransfer);
+
+        // Assert
+        foreach ($updatedCartChangeTransfer->getItems() as $itemTransfer) {
+            $this->assertNotSame(static::FAKE_ITEM_GROUP_KEY, $itemTransfer->getGroupKey());
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function testExpandConfiguredBundleItemsWithGroupKeyWillIgnoreRegularItems(): void
+    {
+        // Arrange
+        $cartChangeTransfer = (new CartChangeBuilder())
+            ->withQuote()
+            ->withItem([
+                ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
+                ItemTransfer::QUANTITY => 1,
+                ItemTransfer::GROUP_KEY => static::FAKE_ITEM_GROUP_KEY,
+            ])
+            ->withItem([
+                ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
+                ItemTransfer::QUANTITY => 1,
+                ItemTransfer::GROUP_KEY => static::FAKE_ITEM_GROUP_KEY,
+            ])
+            ->build();
+
+        // Act
+        $updatedCartChangeTransfer = $this->tester->getFacade()->expandConfiguredBundleItemsWithGroupKey($cartChangeTransfer);
+
+        // Assert
+        foreach ($updatedCartChangeTransfer->getItems() as $itemTransfer) {
+            $this->assertSame(static::FAKE_ITEM_GROUP_KEY, $itemTransfer->getGroupKey());
+        }
     }
 
     /**

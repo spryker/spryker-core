@@ -5,19 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ConfigurableBundleStorage\Reader;
+namespace Spryker\Client\ConfigurableBundleCart\Dependency\Client;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
 
-interface ConfigurableBundleStorageReaderInterface
+interface ConfigurableBundleCartToConfigurableBundleStorageClientInterface
 {
-    /**
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
-     */
-    public function findConfigurableBundleTemplateStorage(int $idConfigurableBundleTemplate): ?ConfigurableBundleTemplateStorageTransfer;
-
     /**
      * @param string $configurableBundleTemplateUuid
      *

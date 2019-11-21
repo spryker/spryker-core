@@ -26,6 +26,19 @@ interface ConfigurableBundleStorageClientInterface
 
     /**
      * Specification:
+     * - Finds configurable bundle template within Storage with a given uuid.
+     * - Returns ConfigurableBundleTemplateStorageTransfer if found, null otherwise.
+     *
+     * @api
+     *
+     * @param string $configurableBundleTemplateUuid
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
+     */
+    public function findConfigurableBundleTemplateStorageByUuid(string $configurableBundleTemplateUuid): ?ConfigurableBundleTemplateStorageTransfer;
+
+    /**
+     * Specification:
      * - Finds product concrete Storage records by skus and locale.
      * - Expands results with product images data.
      * - Returns array of ProductViewTransfer indexed by sku.
