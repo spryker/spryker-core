@@ -120,7 +120,7 @@ interface PaymentFacadeInterface
 
     /**
      * Specification:
-     * - Finds payment method by thi provided id.
+     * - Finds payment method by the provided id.
      *
      * @api
      *
