@@ -15,7 +15,7 @@ interface AbstractProductsRelationshipExpanderInterface
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return void
      */
-    public function addResourceRelationshipsBySkus(array $resources, RestRequestInterface $restRequest): array;
+    public function addResourceRelationshipsBySkus(array $resources, RestRequestInterface $restRequest): void;
 }

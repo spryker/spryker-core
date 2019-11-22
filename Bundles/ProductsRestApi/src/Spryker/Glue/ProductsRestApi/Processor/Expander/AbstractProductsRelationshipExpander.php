@@ -8,9 +8,9 @@
 namespace Spryker\Glue\ProductsRestApi\Processor\Expander;
 
 use Generated\Shared\Transfer\RestPromotionalItemsAttributesTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\AbstractProductsReaderInterface;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class AbstractProductsRelationshipExpander implements AbstractProductsRelationshipExpanderInterface
 {
@@ -33,28 +33,28 @@ class AbstractProductsRelationshipExpander implements AbstractProductsRelationsh
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return void
      */
-    public function addResourceRelationshipsBySkus(array $resources, RestRequestInterface $restRequest): array
+    public function addResourceRelationshipsBySkus(array $resources, RestRequestInterface $restRequest): void
     {
         $productAbstractSkus = $this->findSkusByResources($resources);
         if (!$productAbstractSkus) {
-            return [];
+            return;
         }
 
         $abstractProductsResources = $this->abstractProductsReader->getProductAbstractsBySkus($productAbstractSkus, $restRequest);
         if (!$abstractProductsResources) {
-            return [];
+            return;
         }
 
         foreach ($resources as $resource) {
-            $productAbstractSku = $this->findSku($resource->getAttributes());
-            if (isset($abstractProductsResources[$productAbstractSku])) {
-                $resource->addRelationship($abstractProductsResources[$productAbstractSku]);
+            $productAbstractSku = $this->findProductAbstractSkuInRestResourceAttributes($resource);
+            if (!isset($abstractProductsResources[$productAbstractSku])) {
+                continue;
             }
-        }
 
-        return $resources;
+            $resource->addRelationship($abstractProductsResources[$productAbstractSku]);
+        }
     }
 
     /**
@@ -66,7 +66,7 @@ class AbstractProductsRelationshipExpander implements AbstractProductsRelationsh
     {
         $productAbstractSkus = [];
         foreach ($resources as $resource) {
-            $productAbstractSku = $this->findSku($resource->getAttributes());
+            $productAbstractSku = $this->findProductAbstractSkuInRestResourceAttributes($resource);
             if (!$productAbstractSku) {
                 continue;
             }
@@ -78,12 +78,13 @@ class AbstractProductsRelationshipExpander implements AbstractProductsRelationsh
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $attributes
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      *
      * @return string|null
      */
-    protected function findSku(?AbstractTransfer $attributes): ?string
+    protected function findProductAbstractSkuInRestResourceAttributes(RestResourceInterface $resource): ?string
     {
+        $attributes = $resource->getAttributes();
         if ($attributes && $attributes instanceof RestPromotionalItemsAttributesTransfer) {
             return $attributes->offsetGet(static::KEY_SKU);
         }

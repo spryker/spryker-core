@@ -23,6 +23,7 @@ class PromotionItemMapper implements PromotionItemMapperInterface
         RestPromotionalItemsAttributesTransfer $restPromotionalItemsAttributesTransfer
     ): RestPromotionalItemsAttributesTransfer {
         return $restPromotionalItemsAttributesTransfer
+            ->fromArray($promotionItemTransfer->toArray(), true)
             ->setSku($promotionItemTransfer->getAbstractSku())
             ->setQuantity($promotionItemTransfer->getMaxQuantity());
     }

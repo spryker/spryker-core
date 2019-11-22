@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CartCodesRestApi\Processor\Expander;
 
+use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestPromotionalItemsAttributesTransfer;
 use Spryker\Glue\CartCodesRestApi\CartCodesRestApiConfig;
@@ -48,7 +49,7 @@ class PromotionItemByQuoteTransferResourceRelationshipExpander implements Promot
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            $promotionItemTransfers = $this->getPromotionItemsInPayload($resource);
+            $promotionItemTransfers = $this->getPromotionItemsFromPayload($resource);
             foreach ($promotionItemTransfers as $promotionItemTransfer) {
                 $restPromotionalItemsAttributesTransfer = $this->promotionItemMapper
                     ->mapPromotionItemTransferToRestPromotionalItemsAttributesTransfer(
@@ -70,18 +71,18 @@ class PromotionItemByQuoteTransferResourceRelationshipExpander implements Promot
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      *
-     * @return \Generated\Shared\Transfer\PromotionItemTransfer[]
+     * @return \ArrayObject|\Generated\Shared\Transfer\PromotionItemTransfer[]
      */
-    protected function getPromotionItemsInPayload(RestResourceInterface $resource): array
+    protected function getPromotionItemsFromPayload(RestResourceInterface $resource): ArrayObject
     {
         /**
          * @var \Generated\Shared\Transfer\QuoteTransfer|null $payload
          */
         $payload = $resource->getPayload();
         if ($payload === null || !($payload instanceof QuoteTransfer)) {
-            return [];
+            return new ArrayObject();
         }
 
-        return $payload->getPromotionItems()->getArrayCopy();
+        return $payload->getPromotionItems();
     }
 }
