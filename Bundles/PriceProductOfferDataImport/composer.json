@@ -15,9 +15,9 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/merchant": "*",
     "spryker/propel": "*",
-    "spryker/testify": "*",
-    "spryker/merchant": "*"
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
