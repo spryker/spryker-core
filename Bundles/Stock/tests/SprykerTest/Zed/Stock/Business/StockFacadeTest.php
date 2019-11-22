@@ -21,7 +21,6 @@ use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
-use Orm\Zed\Stock\Persistence\SpyStockStoreQuery;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
 use Spryker\Zed\Stock\Business\StockFacade;
@@ -448,10 +447,10 @@ class StockFacadeTest extends Unit
         $stocks = $this->stockFacade->getAvailableStockTypes();
 
         //Assert
-        $this->assertEquals([
-            $this->stockTransfer1->getName() => $this->stockTransfer1->getName(),
-            $this->stockTransfer2->getName() => $this->stockTransfer2->getName(),
-        ], $stocks, 'Available stock types collection does not match expected value.');
+        $this->assertArrayHasKey($this->stockTransfer1->getName(), $stocks, 'Available stock types collection does not match expected value.');
+        $this->assertArrayHasKey($this->stockTransfer2->getName(), $stocks, 'Available stock types collection does not match expected value.');
+        $this->assertContains($this->stockTransfer1->getName(), $stocks, 'Available stock types collection does not match expected value.');
+        $this->assertContains($this->stockTransfer2->getName(), $stocks, 'Available stock types collection does not match expected value.');
     }
 
     /**
@@ -488,9 +487,8 @@ class StockFacadeTest extends Unit
 
         //Assert
         $this->assertIsArray($stockCollection, 'Stock types collection should be an array.');
-        $this->assertEquals([
-            $this->stockTransfer1->getName() => $this->stockTransfer1->getName(),
-        ], $stockCollection, 'Stock types collection does not match expected value.');
+        $this->assertArrayHasKey($this->stockTransfer1->getName(), $stockCollection, 'Stock types collection does not match expected value.');
+        $this->assertContains($this->stockTransfer1->getName(), $stockCollection, 'Stock types collection does not match expected value.');
     }
 
     /**
@@ -510,14 +508,14 @@ class StockFacadeTest extends Unit
         //Assert
         $this->assertIsArray($stockCollection, 'Warehouse to store mapping collection should be an array.');
         $storeName = $this->storeTransfer->getName();
+        $this->assertArrayHasKey($this->stockTransfer1->getName(), $stockCollection, 'Warehouse to store mapping collection does not match expected value.');
+        $this->assertArrayHasKey($this->stockTransfer2->getName(), $stockCollection, 'Warehouse to store mapping collection does not match expected value.');
         $this->assertEquals([
-            $this->stockTransfer1->getName() => [
-                $storeName => $storeName,
-            ],
-            $this->stockTransfer2->getName() => [
-                $storeName => $storeName,
-            ],
-        ], $stockCollection, 'Warehouse to store mapping collection does not match expected value.');
+            $storeName => $storeName,
+        ], $stockCollection[$this->stockTransfer1->getName()], 'Warehouse to store mapping collection does not match expected value.');
+        $this->assertEquals([
+            $storeName => $storeName,
+        ], $stockCollection[$this->stockTransfer2->getName()], 'Warehouse to store mapping collection does not match expected value.');
     }
 
     /**
@@ -540,8 +538,8 @@ class StockFacadeTest extends Unit
             $storeToWarehouseMapping,
             'Store to warehouse mapping collection does not have expected key.'
         );
-        $this->assertEquals(
-            [$this->stockTransfer1->getName()],
+        $this->assertContains(
+            $this->stockTransfer1->getName(),
             $storeToWarehouseMapping[$this->storeTransfer->getName()],
             'Store to warehouse mapping collection does not match expected value.'
         );
@@ -551,11 +549,13 @@ class StockFacadeTest extends Unit
             $storeToWarehouseMapping,
             'Store to warehouse mapping collection does not have expected key.'
         );
-        $this->assertEquals(
-            [
-                $this->stockTransfer1->getName(),
-                $this->stockTransfer2->getName(),
-            ],
+        $this->assertContains(
+            $this->stockTransfer1->getName(),
+            $storeToWarehouseMapping[$storeTransfer2->getName()],
+            'Store to warehouse mapping collection does not match expected value.'
+        );
+        $this->assertContains(
+            $this->stockTransfer2->getName(),
             $storeToWarehouseMapping[$storeTransfer2->getName()],
             'Store to warehouse mapping collection does not match expected value.'
         );
@@ -827,8 +827,6 @@ class StockFacadeTest extends Unit
      */
     protected function setupData(): void
     {
-        $this->cleanUpDatabase();
-
         $this->storeTransfer = $this->tester->haveStore([
             StoreTransfer::NAME => static::STORE_NAME_DE,
         ]);
@@ -899,15 +897,5 @@ class StockFacadeTest extends Unit
     protected function mapStockEntityToStockTransfer(SpyStock $stockEntity, StockTransfer $stockTransfer): StockTransfer
     {
         return $stockTransfer->fromArray($stockEntity->toArray(), true);
-    }
-
-    /**
-     * @return void
-     */
-    protected function cleanUpDatabase(): void
-    {
-        SpyStockStoreQuery::create()->deleteAll();
-        SpyStockProductQuery::create()->deleteAll();
-        SpyStockQuery::create()->deleteAll();
     }
 }

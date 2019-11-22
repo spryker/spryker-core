@@ -454,8 +454,6 @@ class GeneratedTransferTest extends Unit
     /**
      * @dataProvider getTestTransferForTesting
      *
-     * @expectedException \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
-     *
      * @param \Generated\Shared\Transfer\GeneratedTransfer $generatedTransfer
      *
      * @return void
@@ -463,6 +461,7 @@ class GeneratedTransferTest extends Unit
     public function testDecimalPropertyRequire(GeneratedTransfer $generatedTransfer): void
     {
         // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
         $generatedTransfer->requireTestDecimal();
     }
 

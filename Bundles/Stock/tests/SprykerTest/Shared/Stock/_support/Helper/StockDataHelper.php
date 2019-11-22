@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
-use Orm\Zed\Stock\Persistence\SpyStockStore;
+use Orm\Zed\Stock\Persistence\SpyStockStoreQuery;
 use Spryker\Zed\Stock\Business\StockFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -84,17 +84,28 @@ class StockDataHelper extends Module
     public function haveStock(array $seedData = []): StockTransfer
     {
         $stockTransfer = (new StockBuilder($seedData))->build();
-        $stockResponseTransfer = $this->getStockFacade()->createStock($stockTransfer);
 
-        $stockTransfer = $stockResponseTransfer->getStock();
+        $stockEntity = SpyStockQuery::create()
+            ->filterByName($stockTransfer->getName())
+            ->findOneOrCreate();
+        $stockEntity->save();
+
+        if ($stockTransfer->getStoreRelation()) {
+            foreach ($stockTransfer->getStoreRelation()->getIdStores() as $idStore) {
+                $this->haveStockStoreRelation(
+                    $stockTransfer,
+                    (new StoreTransfer())->setIdStore($idStore)
+                );
+            }
+        }
 
         $this->debug(sprintf(
             'Inserted Stock: %d',
             $stockTransfer->getIdStock()
         ));
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($stockTransfer) {
-            $this->cleanUpStock($stockTransfer->getIdStock());
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($stockEntity) {
+            $stockEntity->delete();
         });
 
         return $stockTransfer;
@@ -111,9 +122,11 @@ class StockDataHelper extends Module
         $stockTransfer->requireIdStock();
         $storeTransfer->requireIdStore();
 
-        $stockStoreEntity = (new SpyStockStore())
-            ->setFkStore($storeTransfer->getIdStore())
-            ->setFkStock($stockTransfer->getIdStock());
+        $stockStoreEntity = SpyStockStoreQuery::create()
+            ->filterByFkStock($stockTransfer->getIdStock())
+            ->filterByFkStore($storeTransfer->getIdStore())
+            ->findOneOrCreate();
+
         $stockStoreEntity->save();
 
         $this->debug(sprintf(
@@ -171,18 +184,6 @@ class StockDataHelper extends Module
     {
         SpyStockProductQuery::create()
             ->filterByIdStockProduct($idStockProduct)
-            ->delete();
-    }
-
-    /**
-     * @param int $idStock
-     *
-     * @return void
-     */
-    protected function cleanUpStock(int $idStock): void
-    {
-        SpyStockQuery::create()
-            ->filterByIdStock($idStock)
             ->delete();
     }
 }

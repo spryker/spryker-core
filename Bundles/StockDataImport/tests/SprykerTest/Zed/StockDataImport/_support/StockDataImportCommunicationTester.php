@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\StockDataImport;
 
 use Codeception\Actor;
-use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
 use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use Orm\Zed\Stock\Persistence\SpyStockStoreQuery;
 
@@ -31,24 +30,6 @@ use Orm\Zed\Stock\Persistence\SpyStockStoreQuery;
 class StockDataImportCommunicationTester extends Actor
 {
     use _generated\StockDataImportCommunicationTesterActions;
-
-    /**
-     * @return void
-     */
-    public function ensureStockTableIsEmpty(): void
-    {
-        $this->createStockProductQuery()->deleteAll();
-        $this->createStockStoreQuery()->deleteAll();
-        $this->createStockQuery()->deleteAll();
-    }
-
-    /**
-     * @return void
-     */
-    public function ensureStockStoreTableIsEmpty(): void
-    {
-        $this->createStockStoreQuery()->deleteAll();
-    }
 
     /**
      * @return void
@@ -82,14 +63,6 @@ class StockDataImportCommunicationTester extends Actor
     protected function createStockQuery(): SpyStockQuery
     {
         return SpyStockQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
-     */
-    protected function createStockProductQuery(): SpyStockProductQuery
-    {
-        return SpyStockProductQuery::create();
     }
 
     /**
