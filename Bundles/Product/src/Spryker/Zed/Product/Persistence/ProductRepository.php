@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductUrlFilterTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
 use Generated\Shared\Transfer\UrlFilterTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
@@ -476,25 +477,24 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UrlFilterTransfer $urlFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductUrlFilterTransfer $productUrlFilterTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
-    public function getUrlTransfers(UrlFilterTransfer $urlFilterTransfer): array
+    public function getProductsUrls(ProductUrlFilterTransfer $productUrlFilterTransfer): array
     {
         $urlQuery = $this->getFactory()
             ->getUrlQueryContainer()
             ->queryUrls();
 
-        $urlQuery = $this->setUrlFilters($urlQuery, $urlFilterTransfer);
+        $urlQuery = $this->setUrlFilters($urlQuery, $productUrlFilterTransfer);
 
         $urlEntities = $urlQuery->find();
 
         $urlTransfers = [];
 
         foreach ($urlEntities as $urlEntity) {
-            $idProductAbstract = $urlEntity->getFkResourceProductAbstract();
-            $urlTransfers[$idProductAbstract] = (new UrlTransfer())->fromArray($urlEntity->toArray(), true);
+            $urlTransfers[] = (new UrlTransfer())->fromArray($urlEntity->toArray(), true);
         }
 
         return $urlTransfers;
@@ -502,18 +502,18 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
 
     /**
      * @param \Orm\Zed\Url\Persistence\SpyUrlQuery $urlQuery
-     * @param \Generated\Shared\Transfer\UrlFilterTransfer $urlFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductUrlFilterTransfer $productUrlFilterTransfer
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
-    protected function setUrlFilters(SpyUrlQuery $urlQuery, UrlFilterTransfer $urlFilterTransfer): SpyUrlQuery
+    protected function setUrlFilters(SpyUrlQuery $urlQuery, ProductUrlFilterTransfer $productUrlFilterTransfer): SpyUrlQuery
     {
-        if ($urlFilterTransfer->getIdLocale()) {
-            $urlQuery->filterByFkLocale($urlFilterTransfer->getIdLocale());
+        if ($productUrlFilterTransfer->getIdLocale()) {
+            $urlQuery->filterByFkLocale($productUrlFilterTransfer->getIdLocale());
         }
 
-        if ($urlFilterTransfer->getProductAbstractIds()) {
-            $urlQuery->filterByFkResourceProductAbstract_In($urlFilterTransfer->getProductAbstractIds());
+        if ($productUrlFilterTransfer->getProductAbstractIds()) {
+            $urlQuery->filterByFkResourceProductAbstract_In($productUrlFilterTransfer->getProductAbstractIds());
         }
 
         return $urlQuery;

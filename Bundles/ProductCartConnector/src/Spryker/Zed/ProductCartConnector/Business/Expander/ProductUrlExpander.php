@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductCartConnector\Business\Expander;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\UrlFilterTransfer;
+use Generated\Shared\Transfer\ProductUrlFilterTransfer;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
 
@@ -49,7 +49,7 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
             return $cartChangeTransfer;
         }
 
-        $urlTransfers = $this->productFacade->getUrlTransfers($this->createUrlFilterTransfer($productAbstractIds));
+        $urlTransfers = $this->getMappedProductUrls($productAbstractIds);
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $idProductAbstract = $itemTransfer->getIdProductAbstract();
@@ -67,13 +67,14 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
     /**
      * @param int[] $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\UrlFilterTransfer
+     * @return \Generated\Shared\Transfer\ProductUrlFilterTransfer
      */
-    protected function createUrlFilterTransfer(array $productAbstractIds): UrlFilterTransfer
+    protected function createUrlFilterTransfer(array $productAbstractIds): ProductUrlFilterTransfer
     {
-        return (new UrlFilterTransfer())
+        return (new ProductUrlFilterTransfer())
             ->setIdLocale($this->localeFacade->getCurrentLocale()->getIdLocale())
-            ->setProductAbstractIds($productAbstractIds);
+            ->setProductAbstractIds($productAbstractIds)
+            ->requireProductAbstractIds();
     }
 
     /**
@@ -90,5 +91,23 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
         }
 
         return $productAbstractIds;
+    }
+
+    /**
+     * @param array $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[] $mappedUrls
+     */
+    protected function getMappedProductUrls(array $productAbstractIds): array
+    {
+        $urlTransfers = $this->productFacade->getProductsUrls($this->createUrlFilterTransfer($productAbstractIds));
+
+        $mappedUrls = [];
+
+        foreach ($urlTransfers as $urlTransfer) {
+            $mappedUrls[$urlTransfer->getFkResourceProductAbstract()] = $urlTransfer;
+        }
+
+        return $mappedUrls;
     }
 }

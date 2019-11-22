@@ -45,7 +45,7 @@
     <transfer name="Locale">
     </transfer>
 
-    <transfer name="UrlFilter">
+    <transfer name="ProductUrlFilter">
         <property name="productAbstractIds" type="int[]" singular="productAbstractId"/>
         <property name="idLocale" type="int"/>
     </transfer>

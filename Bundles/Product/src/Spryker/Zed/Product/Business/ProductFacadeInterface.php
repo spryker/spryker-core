@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductUrlFilterTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 use Generated\Shared\Transfer\UrlFilterTransfer;
 
@@ -930,9 +931,9 @@ interface ProductFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\UrlFilterTransfer $urlFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductUrlFilterTransfer $productUrlFilterTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
-    public function getUrlTransfers(UrlFilterTransfer $urlFilterTransfer): array;
+    public function getProductsUrls(ProductUrlFilterTransfer $productUrlFilterTransfer): array;
 }
