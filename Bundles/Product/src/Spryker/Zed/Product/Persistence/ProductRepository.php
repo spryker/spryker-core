@@ -21,7 +21,6 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
-use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -482,11 +481,17 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      */
     public function getProductsUrls(ProductUrlFilterTransfer $productUrlFilterTransfer): array
     {
+        $productUrlFilterTransfer->requireProductAbstractIds();
+
         $urlQuery = $this->getFactory()
             ->getUrlQueryContainer()
             ->queryUrls();
 
-        $urlQuery = $this->setUrlFilters($urlQuery, $productUrlFilterTransfer);
+        $urlQuery->filterByFkResourceProductAbstract_In($productUrlFilterTransfer->getProductAbstractIds());
+
+        if ($productUrlFilterTransfer->getIdLocale()) {
+            $urlQuery->filterByFkLocale($productUrlFilterTransfer->getIdLocale());
+        }
 
         $urlEntities = $urlQuery->find();
 
@@ -497,24 +502,5 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         }
 
         return $urlTransfers;
-    }
-
-    /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrlQuery $urlQuery
-     * @param \Generated\Shared\Transfer\ProductUrlFilterTransfer $productUrlFilterTransfer
-     *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
-     */
-    protected function setUrlFilters(SpyUrlQuery $urlQuery, ProductUrlFilterTransfer $productUrlFilterTransfer): SpyUrlQuery
-    {
-        if ($productUrlFilterTransfer->getIdLocale()) {
-            $urlQuery->filterByFkLocale($productUrlFilterTransfer->getIdLocale());
-        }
-
-        if ($productUrlFilterTransfer->getProductAbstractIds()) {
-            $urlQuery->filterByFkResourceProductAbstract_In($productUrlFilterTransfer->getProductAbstractIds());
-        }
-
-        return $urlQuery;
     }
 }

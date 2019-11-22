@@ -49,14 +49,16 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
             return $cartChangeTransfer;
         }
 
-        $urlTransfers = $this->getMappedProductUrls($productAbstractIds);
+        $urlTransfers = $this->productFacade->getProductsUrls($this->createUrlFilterTransfer($productAbstractIds));
+
+        $mappedUrlTransfers = $this->getMappedProductUrls($urlTransfers);
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $idProductAbstract = $itemTransfer->getIdProductAbstract();
 
-            if (isset($urlTransfers[$idProductAbstract])) {
+            if (isset($mappedUrlTransfers[$idProductAbstract])) {
                 $itemTransfer->setUrl(
-                    $urlTransfers[$idProductAbstract]->getUrl()
+                    $mappedUrlTransfers[$idProductAbstract]->getUrl()
                 );
             }
         }
@@ -73,8 +75,7 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
     {
         return (new ProductUrlFilterTransfer())
             ->setIdLocale($this->localeFacade->getCurrentLocale()->getIdLocale())
-            ->setProductAbstractIds($productAbstractIds)
-            ->requireProductAbstractIds();
+            ->setProductAbstractIds($productAbstractIds);
     }
 
     /**
@@ -94,14 +95,12 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param array $urlTransfers
      *
      * @return \Generated\Shared\Transfer\UrlTransfer[] $mappedUrls
      */
-    protected function getMappedProductUrls(array $productAbstractIds): array
+    protected function getMappedProductUrls(array $urlTransfers): array
     {
-        $urlTransfers = $this->productFacade->getProductsUrls($this->createUrlFilterTransfer($productAbstractIds));
-
         $mappedUrls = [];
 
         foreach ($urlTransfers as $urlTransfer) {

@@ -28,22 +28,17 @@ use Generated\Shared\Transfer\UrlTransfer;
  */
 class ProductUrlCartPluginTest extends Unit
 {
-    public const SKU_PRODUCT_ABSTRACT = 'Product abstract sku';
-    public const PRODUCT_ABSTRACT_ID = 777;
-    public const PRODUCT_URL_EN = '/en/product-1';
-    public const PRODUCT_URL_DE = '/de/product-1';
-    public const SKU_PRODUCT_CONCRETE = 'Product concrete sku';
-    public const PRODUCT_CONCRETE_NAME = 'Product concrete name';
+    protected const SKU_PRODUCT_ABSTRACT = 'Product abstract sku';
+    protected const PRODUCT_ABSTRACT_ID = 777;
+    protected const PRODUCT_URL_EN = '/en/product-1';
+    protected const PRODUCT_URL_DE = '/de/product-1';
+    protected const SKU_PRODUCT_CONCRETE = 'Product concrete sku';
+    protected const PRODUCT_CONCRETE_NAME = 'Product concrete name';
 
     /**
      * @var \SprykerTest\Zed\ProductCartConnector\ProductCartConnectorCommunicationTester
      */
     protected $tester;
-
-    /**
-     * @var \Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacadeInterface
-     */
-    protected $productCartConnectorFacade;
 
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
@@ -58,13 +53,12 @@ class ProductUrlCartPluginTest extends Unit
         parent::setUp();
 
         $this->localeFacade = $this->tester->getLocator()->locale()->facade();
-        $this->productCartConnectorFacade = $this->tester->getFacade();
     }
 
     /**
      * @return void
      */
-    public function _before(): void
+    public function testPluginExpandsCartItemWithExpectedProductUrl(): void
     {
         // Arrange
         $productAbstractTransfer = $this->tester->haveProductAbstract([
@@ -76,14 +70,7 @@ class ProductUrlCartPluginTest extends Unit
             ProductConcreteTransfer::SKU => static::SKU_PRODUCT_CONCRETE,
             ProductConcreteTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
         ]);
-    }
 
-    /**
-     * @return void
-     */
-    public function testPluginExpandsCartItemWithExpectedProductUrl(): void
-    {
-        // Arrange
         $localeTransferEn = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => 'en_US']);
         $localeTransferDE = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => 'de_DE']);
 
@@ -99,31 +86,33 @@ class ProductUrlCartPluginTest extends Unit
             UrlTransfer::URL => static::PRODUCT_URL_DE,
         ]);
 
-        $changeTransfer = new CartChangeTransfer();
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setIdProductAbstract(static::PRODUCT_ABSTRACT_ID);
-        $changeTransfer->addItem($itemTransfer);
+        $emptyChangeTransfer = new CartChangeTransfer();
+        $enChangeTransfer = new CartChangeTransfer();
+        $deChangeTransfer = new CartChangeTransfer();
 
-        $this->checkUrlForLocales($localeTransferEn, $changeTransfer, $enUrlTransfer);
-        $this->checkUrlForLocales($localeTransferDE, $changeTransfer, $deUrlTransfer);
-    }
+        $enItemTransfer = new ItemTransfer();
+        $enItemTransfer->setIdProductAbstract(static::PRODUCT_ABSTRACT_ID);
 
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $changeTransfer
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @return void
-     */
-    protected function checkUrlForLocales(LocaleTransfer $localeTransfer, CartChangeTransfer $changeTransfer, UrlTransfer $urlTransfer): void
-    {
+        $deItemTransfer = new ItemTransfer();
+        $deItemTransfer->setIdProductAbstract(static::PRODUCT_ABSTRACT_ID);
+
+        $enChangeTransfer->addItem($enItemTransfer);
+        $deChangeTransfer->addItem($deItemTransfer);
+
         // Act
-        $this->localeFacade->setCurrentLocale($localeTransfer);
+        $this->localeFacade->setCurrentLocale($localeTransferEn);
+        $enChangeTransfer = $this->tester->getFacade()->expandItemTransfersWithUrl($enChangeTransfer);
+        $expandedEnItemTransfer = $enChangeTransfer->getItems()[0];
 
-        $this->productCartConnectorFacade->expandItemTransfersWithUrl($changeTransfer);
-        $expandedENItemTransfer = $changeTransfer->getItems()[0];
+        $this->localeFacade->setCurrentLocale($localeTransferDE);
+        $deChangeTransfer = $this->tester->getFacade()->expandItemTransfersWithUrl($deChangeTransfer);
+        $expandedDeItemTransfer = $deChangeTransfer->getItems()[0];
 
-        // Assert
-        $this->assertEquals($urlTransfer->getUrl(), $expandedENItemTransfer->getUrl());
+        $expandedEmptyItemTransfer = $this->tester->getFacade()->expandItemTransfersWithUrl($emptyChangeTransfer);
+
+        //Assert
+        $this->assertEquals($enUrlTransfer->getUrl(), $expandedEnItemTransfer->getUrl());
+        $this->assertEquals($deUrlTransfer->getUrl(), $expandedDeItemTransfer->getUrl());
+        $this->assertEquals(0, count($expandedEmptyItemTransfer->getItems()));
     }
 }
