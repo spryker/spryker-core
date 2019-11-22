@@ -48,9 +48,15 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
     public function updatePaymentMethod(
         PaymentMethodTransfer $paymentMethodTransfer
     ): PaymentMethodResponseTransfer {
-        return $this->getTransactionHandler()->handleTransaction(function () use ($paymentMethodTransfer) {
-            return $this->executeUpdatePaymentMethodTransaction($paymentMethodTransfer);
-        });
+        try {
+            return $this->getTransactionHandler()->handleTransaction(function () use ($paymentMethodTransfer) {
+                return $this->executeUpdatePaymentMethodTransaction($paymentMethodTransfer);
+            });
+        } catch (EntityNotFoundException $e) {
+            return (new PaymentMethodResponseTransfer())
+                ->setIsSuccessful(false)
+                ->addMessage($this->getErrorMessageTransfer($e->getMessage()));
+        }
     }
 
     /**
@@ -61,26 +67,20 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
     protected function executeUpdatePaymentMethodTransaction(
         PaymentMethodTransfer $paymentMethodTransfer
     ): PaymentMethodResponseTransfer {
-        try {
-            $paymentMethodTransfer->requireIdPaymentMethod()
-                ->requireStoreRelation();
+        $paymentMethodTransfer->requireIdPaymentMethod()
+            ->requireStoreRelation();
 
-            $storeRelationTransfer = $paymentMethodTransfer->getStoreRelation()
-                ->setIdEntity($paymentMethodTransfer->getIdPaymentMethod());
+        $storeRelationTransfer = $paymentMethodTransfer->getStoreRelation()
+            ->setIdEntity($paymentMethodTransfer->getIdPaymentMethod());
 
-            $paymentMethodTransfer = $this->paymentEntityManager
-                ->updatePaymentMethod($paymentMethodTransfer);
+        $paymentMethodTransfer = $this->paymentEntityManager
+            ->updatePaymentMethod($paymentMethodTransfer);
 
-            $this->storeRelationUpdater->update($storeRelationTransfer);
+        $this->storeRelationUpdater->update($storeRelationTransfer);
 
-            return (new PaymentMethodResponseTransfer())
-                ->setIsSuccessful(true)
-                ->setPaymentMethod($paymentMethodTransfer);
-        } catch (EntityNotFoundException $e) {
-            return (new PaymentMethodResponseTransfer())
-                ->setIsSuccessful(false)
-                ->addMessage($this->getErrorMessageTransfer($e->getMessage()));
-        }
+        return (new PaymentMethodResponseTransfer())
+            ->setIsSuccessful(true)
+            ->setPaymentMethod($paymentMethodTransfer);
     }
 
     /**

@@ -90,9 +90,16 @@ class UpdatePaymentMethodController extends AbstractController
      */
     protected function handlePaymentMethodForm(FormInterface $paymentMethodForm): RedirectResponse
     {
-        $this->getFactory()
+        $paymentMethodResponseTransfer = $this->getFactory()
             ->getPaymentFacade()
             ->updatePaymentMethod($paymentMethodForm->getData());
+
+        if (!$paymentMethodResponseTransfer->getIsSuccessful()) {
+            $this->setErrors($paymentMethodResponseTransfer);
+
+            return $this->redirectResponse(static::REDIRECT_URL);
+        }
+
         $this->addSuccessMessage(static::MESSAGE_SUCCESS);
 
         return $this->redirectResponse(static::REDIRECT_URL);
