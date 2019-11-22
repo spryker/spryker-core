@@ -38,6 +38,27 @@ class ConfigurableBundleStorageRepository extends AbstractRepository implements 
     }
 
     /**
+     * @param int[] $configurableBundleTemplateIds
+     *
+     * @return \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage[][]
+     */
+    public function getConfigurableBundleTemplateImageStorageEntityMap(array $configurableBundleTemplateIds): array
+    {
+        $configurableBundleTemplateImageStorageEntities = $this->getFactory()
+            ->getConfigurableBundleTemplateImageStoragePropelQuery()
+            ->filterByFkConfigurableBundleTemplate_In($configurableBundleTemplateIds)
+            ->find();
+
+        $localizedConfigurableBundleTemplateImageStorageEntityMap = [];
+
+        foreach ($configurableBundleTemplateImageStorageEntities as $configurableBundleTemplateImageStorageEntity) {
+            $localizedConfigurableBundleTemplateImageStorageEntityMap[$configurableBundleTemplateImageStorageEntity->getFkConfigurableBundleTemplate()][$configurableBundleTemplateImageStorageEntity->getLocale()] = $configurableBundleTemplateImageStorageEntity;
+        }
+
+        return $localizedConfigurableBundleTemplateImageStorageEntityMap;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $configurableBundleTemplateIds
      *

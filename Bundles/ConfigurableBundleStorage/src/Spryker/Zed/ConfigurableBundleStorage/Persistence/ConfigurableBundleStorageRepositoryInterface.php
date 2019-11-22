@@ -19,6 +19,13 @@ interface ConfigurableBundleStorageRepositoryInterface
     public function getConfigurableBundleTemplateStorageEntityMap(array $configurableBundleTemplateIds): array;
 
     /**
+     * @param int[] $configurableBundleTemplateIds
+     *
+     * @return \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage[][]
+     */
+    public function getConfigurableBundleTemplateImageStorageEntityMap(array $configurableBundleTemplateIds): array;
+
+    /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $configurableBundleTemplateIds
      *

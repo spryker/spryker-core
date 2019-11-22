@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Subscriber;
 
 use Spryker\Zed\ConfigurableBundle\Dependency\ConfigurableBundleEvents;
+use Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Listener\ConfigurableBundleTemplateImageStoragePublishListener;
 use Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Listener\ConfigurableBundleTemplateSlotStoragePublishListener;
 use Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Listener\ConfigurableBundleTemplateStoragePublishListener;
 use Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Listener\ConfigurableBundleTemplateStorageUnpublishListener;
@@ -37,7 +38,8 @@ class ConfigurableBundleStorageEventSubscriber extends AbstractPlugin implements
             ->addConfigurableBundleTemplateDeleteListener($eventCollection)
             ->addConfigurableBundleTemplateSlotCreateListener($eventCollection)
             ->addConfigurableBundleTemplateSlotUpdateListener($eventCollection)
-            ->addConfigurableBundleTemplateSlotDeleteListener($eventCollection);
+            ->addConfigurableBundleTemplateSlotDeleteListener($eventCollection)
+            ->addConfigurableBundleTemplateImagePublishListener($eventCollection);
 
         return $eventCollection;
     }
@@ -129,6 +131,19 @@ class ConfigurableBundleStorageEventSubscriber extends AbstractPlugin implements
     {
         $eventCollection
             ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_DELETE, new ConfigurableBundleTemplateSlotStoragePublishListener());
+
+        return $this;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return $this
+     */
+    protected function addConfigurableBundleTemplateImagePublishListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection
+            ->addListenerQueued(ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_PUBLISH, new ConfigurableBundleTemplateImageStoragePublishListener());
 
         return $this;
     }

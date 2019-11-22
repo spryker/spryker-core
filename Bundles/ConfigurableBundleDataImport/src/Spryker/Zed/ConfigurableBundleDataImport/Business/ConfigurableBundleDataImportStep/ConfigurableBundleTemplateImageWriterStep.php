@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ConfigurableBundleDataImport\Business\ConfigurableBundleDataImportStep;
 
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
+use Spryker\Zed\ConfigurableBundle\Dependency\ConfigurableBundleEvents;
 use Spryker\Zed\ConfigurableBundleDataImport\Business\DataSet\ConfigurableBundleTemplateImageDataSetInterface;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
@@ -39,7 +40,10 @@ class ConfigurableBundleTemplateImageWriterStep extends PublishAwareStep impleme
             ->setFkResourceConfigurableBundleTemplate($dataSet[ConfigurableBundleTemplateImageDataSetInterface::ID_CONFIGURABLE_BUNDLE_TEMPLATE])
             ->save();
 
-        // TODO: publish event
+        $this->addPublishEvents(
+            ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_PUBLISH,
+            $productImageSetEntity->getFkResourceConfigurableBundleTemplate()
+        );
     }
 
     /**

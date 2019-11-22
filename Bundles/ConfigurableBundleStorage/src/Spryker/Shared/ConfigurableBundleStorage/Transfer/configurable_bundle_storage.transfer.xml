@@ -17,6 +17,22 @@
         <property name="idProductList" type="int"/>
     </transfer>
 
+    <transfer name="ConfigurableBundleTemplateImageStorage">
+        <property name="idConfigurableBundleTemplate" type="int"/>
+        <property name="imageSets" type="ProductImageSetStorage[]" singular="imageSet"/>
+    </transfer>
+
+    <transfer name="ProductImageSetStorage">
+        <property name="name" type="string"/>
+        <property name="images" type="ProductImageStorage[]" singular="image"/>
+    </transfer>
+
+    <transfer name="ProductImageStorage">
+        <property name="idProductImage" type="int"/>
+        <property name="externalUrlLarge" type="string"/>
+        <property name="externalUrlSmall" type="string"/>
+    </transfer>
+
     <transfer name="ConfigurableBundleTemplate">
         <property name="idConfigurableBundleTemplate" type="int"/>
         <property name="uuid" type="string"/>

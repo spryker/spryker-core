@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundleStorage\Persistence;
 
+use Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorageQuery;
 use Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -23,5 +24,13 @@ class ConfigurableBundleStoragePersistenceFactory extends AbstractPersistenceFac
     public function getConfigurableBundleTemplateStoragePropelQuery(): SpyConfigurableBundleTemplateStorageQuery
     {
         return SpyConfigurableBundleTemplateStorageQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorageQuery
+     */
+    public function getConfigurableBundleTemplateImageStoragePropelQuery(): SpyConfigurableBundleTemplateImageStorageQuery
+    {
+        return SpyConfigurableBundleTemplateImageStorageQuery::create();
     }
 }

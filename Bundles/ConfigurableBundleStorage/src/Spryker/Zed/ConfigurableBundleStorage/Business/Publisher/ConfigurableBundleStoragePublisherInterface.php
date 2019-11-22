@@ -15,4 +15,11 @@ interface ConfigurableBundleStoragePublisherInterface
      * @return void
      */
     public function publishConfigurableBundleTemplates(array $configurableBundleTemplateIds): void;
+
+    /**
+     * @param int[] $configurableBundleTemplateIds
+     *
+     * @return void
+     */
+    public function publishConfigurableBundleTemplateImages(array $configurableBundleTemplateIds): void;
 }
