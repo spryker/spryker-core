@@ -24,7 +24,7 @@ interface ConfigurableBundleCartNoteFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setCartNoteToConfiguredBundle(
+    public function setConfiguredBundleCartNote(
         ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
     ): QuoteResponseTransfer;
 }

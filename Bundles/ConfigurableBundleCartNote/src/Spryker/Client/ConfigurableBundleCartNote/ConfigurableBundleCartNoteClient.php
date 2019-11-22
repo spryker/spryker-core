@@ -27,11 +27,11 @@ class ConfigurableBundleCartNoteClient extends AbstractClient implements Configu
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setCartNoteToConfiguredBundle(
+    public function setConfiguredBundleCartNote(
         ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
     ): QuoteResponseTransfer {
         return $this->getFactory()
             ->getQuoteStorageStrategy()
-            ->setCartNoteToConfiguredBundle($configuredBundleCartNoteRequestTransfer);
+            ->setConfiguredBundleCartNote($configuredBundleCartNoteRequestTransfer);
     }
 }

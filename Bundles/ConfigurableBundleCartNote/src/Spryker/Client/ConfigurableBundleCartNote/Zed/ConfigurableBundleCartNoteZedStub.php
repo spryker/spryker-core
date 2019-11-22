@@ -27,18 +27,18 @@ class ConfigurableBundleCartNoteZedStub implements ConfigurableBundleCartNoteZed
     }
 
     /**
-     * @uses \Spryker\Zed\ConfigurableBundleCartNote\Communication\Controller\GatewayController::setCartNoteToConfiguredBundleAction()
+     * @uses \Spryker\Zed\ConfigurableBundleCartNote\Communication\Controller\GatewayController::setConfiguredBundleCartNoteAction()
      *
      * @param \Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setCartNoteToConfiguredBundle(
+    public function setConfiguredBundleCartNote(
         ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
     ): QuoteResponseTransfer {
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
         $quoteResponseTransfer = $this->zedRequestClient->call(
-            '/configurable-bundle-cart-note/gateway/set-cart-note-to-configured-bundle',
+            '/configurable-bundle-cart-note/gateway/set-configured-bundle-cart-note',
             $configuredBundleCartNoteRequestTransfer
         );
 

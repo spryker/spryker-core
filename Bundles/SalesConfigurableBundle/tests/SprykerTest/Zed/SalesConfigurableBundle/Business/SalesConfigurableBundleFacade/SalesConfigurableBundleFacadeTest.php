@@ -506,7 +506,7 @@ class SalesConfigurableBundleFacadeTest extends Unit
         $salesConfigurableBundleFacade = $this->getSalesConfigurableBundleFacadeWithMockedConfig();
 
         //Act
-        $itemCollectionTransfer = $salesConfigurableBundleFacade->transformConfigurableBundleOrderItems(
+        $itemCollectionTransfer = $salesConfigurableBundleFacade->transformConfiguredBundleOrderItems(
             (new OrderTransfer())->addItem($itemTransfer)
         );
 

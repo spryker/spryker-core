@@ -17,7 +17,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\ItemPreTransformerPluginInterfa
  * @method \Spryker\Zed\SalesConfigurableBundle\SalesConfigurableBundleConfig getConfig()
  * @method \Spryker\Zed\SalesConfigurableBundle\Communication\SalesConfigurableBundleCommunicationFactory getFactory()
  */
-class ConfigurableBundleItemPreTransformerPlugin extends AbstractPlugin implements ItemPreTransformerPluginInterface
+class ConfiguredBundleItemPreTransformerPlugin extends AbstractPlugin implements ItemPreTransformerPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -32,6 +32,6 @@ class ConfigurableBundleItemPreTransformerPlugin extends AbstractPlugin implemen
      */
     public function execute(OrderTransfer $orderTransfer, QuoteTransfer $quoteTransfer): OrderTransfer
     {
-        return $this->getFacade()->transformConfigurableBundleOrderItems($orderTransfer);
+        return $this->getFacade()->transformConfiguredBundleOrderItems($orderTransfer);
     }
 }

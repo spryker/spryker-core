@@ -27,7 +27,7 @@ class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setCartNoteToConfiguredBundle(
+    public function setConfiguredBundleCartNote(
         ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
     ): QuoteResponseTransfer {
         $quoteTransfer = $configuredBundleCartNoteRequestTransfer->getQuote();

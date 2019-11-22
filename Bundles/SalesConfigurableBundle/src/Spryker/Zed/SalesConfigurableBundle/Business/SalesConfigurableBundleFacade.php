@@ -77,10 +77,10 @@ class SalesConfigurableBundleFacade extends AbstractFacade implements SalesConfi
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function transformConfigurableBundleOrderItems(OrderTransfer $orderTransfer): OrderTransfer
+    public function transformConfiguredBundleOrderItems(OrderTransfer $orderTransfer): OrderTransfer
     {
         return $this->getFactory()
             ->createConfigurableBundleItemTransformer()
-            ->transformConfigurableBundleOrderItems($orderTransfer);
+            ->transformConfiguredBundleOrderItems($orderTransfer);
     }
 }

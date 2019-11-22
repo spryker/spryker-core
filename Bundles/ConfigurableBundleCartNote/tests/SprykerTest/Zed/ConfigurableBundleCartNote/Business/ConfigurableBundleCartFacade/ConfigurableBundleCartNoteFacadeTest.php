@@ -43,7 +43,7 @@ class ConfigurableBundleCartNoteFacadeTest extends Test
             ->setCartNote(ConfigurableBundleCartNoteBusinessTester::FAKE_CONFIGURABLE_BUNDLE_CART_NOTE);
 
         //Act
-        $quoteResponseTransfer = $this->tester->getFacade()->setCartNoteToConfiguredBundle($configuredBundleCartNoteRequestTransfer);
+        $quoteResponseTransfer = $this->tester->getFacade()->setConfiguredBundleCartNote($configuredBundleCartNoteRequestTransfer);
 
         //Assert
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
@@ -70,7 +70,7 @@ class ConfigurableBundleCartNoteFacadeTest extends Test
             ->setCartNote(ConfigurableBundleCartNoteBusinessTester::FAKE_CONFIGURABLE_BUNDLE_CART_NOTE);
 
         //Act
-        $quoteResponseTransfer = $this->tester->getFacade()->setCartNoteToConfiguredBundle($configuredBundleCartNoteRequestTransfer);
+        $quoteResponseTransfer = $this->tester->getFacade()->setConfiguredBundleCartNote($configuredBundleCartNoteRequestTransfer);
 
         //Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
@@ -88,7 +88,7 @@ class ConfigurableBundleCartNoteFacadeTest extends Test
             ->setCartNote(ConfigurableBundleCartNoteBusinessTester::FAKE_CONFIGURABLE_BUNDLE_CART_NOTE);
 
         //Act
-        $quoteResponseTransfer = $this->tester->getFacade()->setCartNoteToConfiguredBundle($configuredBundleCartNoteRequestTransfer);
+        $quoteResponseTransfer = $this->tester->getFacade()->setConfiguredBundleCartNote($configuredBundleCartNoteRequestTransfer);
 
         //Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());

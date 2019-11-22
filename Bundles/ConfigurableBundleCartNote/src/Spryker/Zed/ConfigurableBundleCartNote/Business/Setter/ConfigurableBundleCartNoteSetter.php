@@ -31,7 +31,7 @@ class ConfigurableBundleCartNoteSetter implements ConfigurableBundleCartNoteSett
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setCartNoteToConfiguredBundle(
+    public function setConfiguredBundleCartNote(
         ConfiguredBundleCartNoteRequestTransfer $configuredBundleCartNoteRequestTransfer
     ): QuoteResponseTransfer {
         $quoteResponseTransfer = $this->quoteFacade
