@@ -90,6 +90,8 @@ class StockDataHelper extends Module
             ->findOneOrCreate();
         $stockEntity->save();
 
+        $stockTransfer->fromArray($stockEntity->toArray());
+
         if ($stockTransfer->getStoreRelation()) {
             foreach ($stockTransfer->getStoreRelation()->getIdStores() as $idStore) {
                 $this->haveStockStoreRelation(
