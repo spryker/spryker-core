@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductUrlFilterTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
-use Generated\Shared\Transfer\UrlFilterTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;

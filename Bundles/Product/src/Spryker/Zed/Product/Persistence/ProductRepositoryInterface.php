@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductUrlFilterTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
-use Generated\Shared\Transfer\UrlFilterTransfer;
 
 interface ProductRepositoryInterface
 {

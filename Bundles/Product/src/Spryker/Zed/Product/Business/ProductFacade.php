@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductUrlFilterTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
-use Generated\Shared\Transfer\UrlFilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**

@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductUrlFilterTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
-use Generated\Shared\Transfer\UrlFilterTransfer;
 
 interface ProductFacadeInterface
 {
@@ -925,9 +924,9 @@ interface ProductFacadeInterface
 
     /**
      * Specification
-     * - Retrieves url records from Persistence.
-     * - Returns array of UrlTransfer.
-     * - Filters by criteria from UrlFilterTransfer.
+     *  - Retrieves url records from Persistence.
+     *  - Filters by criteria from UrlFilterTransfer.
+     *  - Returns array of UrlTransfer.
      *
      * @api
      *
