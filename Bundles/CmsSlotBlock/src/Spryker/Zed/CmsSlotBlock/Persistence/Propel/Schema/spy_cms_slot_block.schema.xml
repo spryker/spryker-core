@@ -15,18 +15,18 @@
             <unique-column name="fk_cms_block"/>
         </unique>
 
-        <foreign-key name="spy_cms_slot_block-fk_cms_slot_template" foreignTable="spy_cms_slot_template" phpName="CmsSlotTemplate">
+        <foreign-key name="spy_cms_slot_block-fk_cms_slot_template" foreignTable="spy_cms_slot_template" onDelete="CASCADE" phpName="CmsSlotTemplate">
             <reference foreign="id_cms_slot_template" local="fk_cms_slot_template"/>
         </foreign-key>
 
-        <foreign-key name="spy_cms_slot_block-fk_cms_slot" foreignTable="spy_cms_slot" phpName="CmsSlot">
+        <foreign-key name="spy_cms_slot_block-fk_cms_slot" foreignTable="spy_cms_slot" onDelete="CASCADE" phpName="CmsSlot">
             <reference foreign="id_cms_slot" local="fk_cms_slot"/>
         </foreign-key>
         <index name="index-spy_cms_slot_block-fk_cms_slot">
             <index-column name="fk_cms_slot"/>
         </index>
 
-        <foreign-key name="spy_cms_slot_block-fk_cms_block" foreignTable="spy_cms_block" phpName="CmsBlock">
+        <foreign-key name="spy_cms_slot_block-fk_cms_block" foreignTable="spy_cms_block" onDelete="CASCADE" phpName="CmsBlock">
             <reference foreign="id_cms_block" local="fk_cms_block"/>
         </foreign-key>
         <index name="index-spy_cms_slot_block-fk_cms_block">
