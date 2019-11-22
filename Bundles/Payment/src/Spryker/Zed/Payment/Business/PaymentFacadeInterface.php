@@ -105,14 +105,4 @@ interface PaymentFacadeInterface
      * @return void
      */
     public function recalculatePayments(CalculableObjectTransfer $calculableObjectTransfer);
-
-    /**
-     * Specification:
-     * - Populates the database with sales payment method types from config.
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function installSalesPaymentMethodType(): void;
 }

@@ -135,18 +135,4 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
             ->createPaymentCalculator()
             ->recalculatePayments($calculableObjectTransfer);
     }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function installSalesPaymentMethodType(): void
-    {
-        $this->getFactory()
-            ->createSalesPaymentMethodTypeInstaller()
-            ->install();
-    }
 }
