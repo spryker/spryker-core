@@ -926,6 +926,7 @@ interface ProductFacadeInterface
      * Specification
      *  - Retrieves url records from Persistence.
      *  - Filters by criteria from UrlFilterTransfer.
+     *  - Expects the ProductUrlFilterTransfer::productAbstractIds to be provided
      *  - Returns array of UrlTransfer.
      *
      * @api
