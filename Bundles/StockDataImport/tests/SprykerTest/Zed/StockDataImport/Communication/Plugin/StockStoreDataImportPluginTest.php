@@ -40,7 +40,6 @@ class StockStoreDataImportPluginTest extends Unit
     public function testImportImportsStock(): void
     {
         // Arrange
-        $this->tester->ensureStockStoreTableIsEmpty();
         $this->tester->haveStock([
             StockTransfer::NAME => 'Warehouse1',
         ]);
