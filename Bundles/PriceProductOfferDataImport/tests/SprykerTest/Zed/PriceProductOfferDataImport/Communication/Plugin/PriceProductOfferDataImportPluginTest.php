@@ -36,7 +36,7 @@ class PriceProductOfferDataImportPluginTest extends Unit
     /**
      * @return void
      */
-    public function testMerchantProfileDataImportFacade(): void
+    public function testPriceProductOfferDataImportFacade(): void
     {
         //Arrange
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
