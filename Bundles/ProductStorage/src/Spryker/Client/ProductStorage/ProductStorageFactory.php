@@ -8,7 +8,10 @@
 namespace Spryker\Client\ProductStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceBridge;
+use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface;
+use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface;
+use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface;
+use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilter;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
 use Spryker\Client\ProductStorage\Finder\ProductAbstractViewTransferFinder;
@@ -16,34 +19,39 @@ use Spryker\Client\ProductStorage\Finder\ProductConcreteViewTransferFinder;
 use Spryker\Client\ProductStorage\Finder\ProductViewTransferFinderInterface;
 use Spryker\Client\ProductStorage\Mapper\ProductAbstractStorageDataMapper;
 use Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapper;
+use Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapperInterface;
 use Spryker\Client\ProductStorage\Mapper\ProductStorageToProductConcreteTransferDataMapper;
 use Spryker\Client\ProductStorage\Mapper\ProductStorageToProductConcreteTransferDataMapperInterface;
 use Spryker\Client\ProductStorage\Mapper\ProductVariantExpander;
+use Spryker\Client\ProductStorage\Mapper\ProductVariantExpanderInterface;
 use Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReader;
+use Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReaderInterface;
 use Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReader;
+use Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface;
+use Spryker\Shared\Kernel\Store;
 
 class ProductStorageFactory extends AbstractFactory
 {
     /**
      * @return \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface
      */
-    protected function getStorageClient()
+    protected function getStorageClient(): ProductStorageToStorageClientInterface
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::CLIENT_STORAGE);
     }
 
     /**
-     * @return \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceBridge
+     * @return \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface
      */
-    public function getSynchronizationService()
+    public function getSynchronizationService(): ProductStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
     }
 
     /**
-     * @return \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceBridge
+     * @return \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface
      */
-    public function getUtilEncodingService(): ProductStorageToUtilEncodingServiceBridge
+    public function getUtilEncodingService(): ProductStorageToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::SERVICE_UTIL_ENCODING);
     }
@@ -51,7 +59,7 @@ class ProductStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface
      */
-    public function getLocaleClient()
+    public function getLocaleClient(): ProductStorageToLocaleInterface
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::CLIENT_LOCALE);
     }
@@ -59,7 +67,7 @@ class ProductStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface
      */
-    public function createProductConcreteStorageReader()
+    public function createProductConcreteStorageReader(): ProductConcreteStorageReaderInterface
     {
         return new ProductConcreteStorageReader(
             $this->getStorageClient(),
@@ -85,7 +93,7 @@ class ProductStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReaderInterface
      */
-    public function createProductAbstractStorageReader()
+    public function createProductAbstractStorageReader(): ProductAbstractStorageReaderInterface
     {
         return new ProductAbstractStorageReader(
             $this->getStorageClient(),
@@ -111,7 +119,7 @@ class ProductStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapperInterface
      */
-    public function createProductStorageDataMapper()
+    public function createProductStorageDataMapper(): ProductStorageDataMapperInterface
     {
         return new ProductStorageDataMapper(
             $this->getStorageProductExpanderPlugins(),
@@ -122,7 +130,7 @@ class ProductStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapperInterface
      */
-    public function createProductAbstractStorageDataMapper()
+    public function createProductAbstractStorageDataMapper(): ProductStorageDataMapperInterface
     {
         return new ProductAbstractStorageDataMapper(
             $this->getStorageProductExpanderPlugins(),
@@ -133,7 +141,7 @@ class ProductStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductStorage\Mapper\ProductVariantExpanderInterface
      */
-    public function createVariantExpander()
+    public function createVariantExpander(): ProductVariantExpanderInterface
     {
         return new ProductVariantExpander($this->createProductConcreteStorageReader());
     }
@@ -159,7 +167,7 @@ class ProductStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
      */
-    protected function getStorageProductExpanderPlugins()
+    protected function getStorageProductExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::PLUGIN_PRODUCT_VIEW_EXPANDERS);
     }
@@ -167,7 +175,7 @@ class ProductStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Kernel\Store
      */
-    public function getStore()
+    public function getStore(): Store
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::STORE);
     }

@@ -255,14 +255,14 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @return array
      */
-    public function getProductConcreteStorageDataByMappingAndIdentifiers(
+    public function getProductConcreteStorageDataByMapping(
         string $mappingType,
         array $identifiers,
         string $localeName
     ): array {
         return $this->getFactory()
             ->createProductConcreteStorageReader()
-            ->getProductConcreteStorageDataByMappingAndIdentifiers($mappingType, $identifiers, $localeName);
+            ->getProductConcreteStorageDataByMapping($mappingType, $identifiers, $localeName);
     }
 
     /**

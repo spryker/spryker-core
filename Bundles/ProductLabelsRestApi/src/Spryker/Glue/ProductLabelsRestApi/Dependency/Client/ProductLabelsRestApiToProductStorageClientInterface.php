@@ -25,7 +25,7 @@ interface ProductLabelsRestApiToProductStorageClientInterface
      *
      * @return array
      */
-    public function getProductConcreteStorageDataByMappingAndIdentifiers(
+    public function getProductConcreteStorageDataByMapping(
         string $mappingType,
         array $identifiers,
         string $localeName

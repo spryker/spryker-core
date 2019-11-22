@@ -17,7 +17,7 @@ interface ProductLabelReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function findById(RestRequestInterface $restRequest): RestResponseInterface;
+    public function getProductLabelById(RestRequestInterface $restRequest): RestResponseInterface;
 
     /**
      * @param string $sku
@@ -25,7 +25,7 @@ interface ProductLabelReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function findByAbstractSku(string $sku, string $localeName): array;
+    public function getProductLabelsByAbstractSku(string $sku, string $localeName): array;
 
     /**
      * @param string[] $productConcreteSkus
@@ -33,5 +33,5 @@ interface ProductLabelReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
      */
-    public function getByProductConcreteSkus(array $productConcreteSkus, string $localeName): array;
+    public function getProductLabelsByProductConcreteSkus(array $productConcreteSkus, string $localeName): array;
 }

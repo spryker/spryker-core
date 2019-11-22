@@ -38,7 +38,7 @@ class ProductLabelByProductConcreteSkuExpander implements ProductLabelByProductC
             return $restResource->getId();
         }, $restResources);
 
-        $productLabelResources = $this->productLabelReader->getByProductConcreteSkus(
+        $productLabelResources = $this->productLabelReader->getProductLabelsByProductConcreteSkus(
             $productConcreteSkus,
             $restRequest->getMetadata()->getLocale()
         );

@@ -13,7 +13,7 @@ use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface;
-use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceBridge;
+use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface;
 use Spryker\Client\ProductStorage\Exception\ProductConcreteDataCacheNotFoundException;
 use Spryker\Client\ProductStorage\ProductStorageConfig;
 use Spryker\Shared\ProductStorage\ProductStorageConstants;
@@ -67,15 +67,15 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface $localeClient
-     * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceBridge $utilEncodingService
-     * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionPluginInterface[] $productConcreteRestrictionPlugins
-     * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionFilterPluginInterface[] $productConcreteRestrictionFilterPlugins
+     * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface $utilEncodingService
+     * @param array $productConcreteRestrictionPlugins
+     * @param array $productConcreteRestrictionFilterPlugins
      */
     public function __construct(
         ProductStorageToStorageClientInterface $storageClient,
         ProductStorageToSynchronizationServiceInterface $synchronizationService,
         ProductStorageToLocaleInterface $localeClient,
-        ProductStorageToUtilEncodingServiceBridge $utilEncodingService,
+        ProductStorageToUtilEncodingServiceInterface $utilEncodingService,
         array $productConcreteRestrictionPlugins = [],
         array $productConcreteRestrictionFilterPlugins = []
     ) {
@@ -257,12 +257,21 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      *
      * @return array
      */
-    public function getProductConcreteStorageDataByMappingAndIdentifiers(string $mappingType, array $identifiers, string $localeName): array
+    public function getProductConcreteStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): array
     {
         $storageKeys = $this->generateMappingStorageKeys($mappingType, $identifiers, $localeName);
-        $productConcreteIds = array_map(function (string $storageData) {
-            return $this->utilEncodingService->decodeJson($storageData, true)[static::KEY_ID];
-        }, $this->storageClient->getMulti($storageKeys));
+        $productConcreteStorageData = $this->storageClient->getMulti($storageKeys);
+
+        $productConcreteIds = [];
+        foreach ($productConcreteStorageData as $productConcreteStorageDataItem) {
+            $decodedProductConcreteStorageDataItem = $this->utilEncodingService->decodeJson($productConcreteStorageDataItem, true);
+
+            if (!$decodedProductConcreteStorageDataItem) {
+                continue;
+            }
+
+            $productConcreteIds[] = $decodedProductConcreteStorageDataItem[static::KEY_ID];
+        }
 
         if (!$productConcreteIds) {
             return [];
@@ -422,9 +431,9 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      * @param string[] $identifiers
      * @param string $localeName
      *
-     * @return array
+     * @return string[]
      */
-    protected function generateMappingStorageKeys(string $mappingType, array $identifiers, string $localeName)
+    protected function generateMappingStorageKeys(string $mappingType, array $identifiers, string $localeName): array
     {
         $mappingKeys = [];
 

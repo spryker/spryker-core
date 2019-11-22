@@ -23,34 +23,24 @@ class ProductAlternativeDataHelper extends Module
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param string $skuProductAlternative
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function haveProductAlternative(
         ProductConcreteTransfer $productConcreteTransfer,
         string $skuProductAlternative
-    ): void {
-        $productAlternativeCreateRequestTransfer = $this->createProductAlternativeCreateRequestTransfer(
-            $productConcreteTransfer->getIdProductConcrete(),
-            $skuProductAlternative
-        );
-        $productConcreteTransfer->addProductAlternativeCreateRequest($productAlternativeCreateRequestTransfer);
-        $this->getProductAlternativeFacade()
-            ->persistProductAlternative($productConcreteTransfer);
-    }
-
-    /**
-     * @param int $idProductConcrete
-     * @param string $skuProductAlternative
-     *
-     * @return \Generated\Shared\Transfer\ProductAlternativeCreateRequestTransfer
-     */
-    protected function createProductAlternativeCreateRequestTransfer(
-        int $idProductConcrete,
-        string $skuProductAlternative
-    ): ProductAlternativeCreateRequestTransfer {
-        return (new ProductAlternativeCreateRequestTransfer())
-            ->setIdProduct($idProductConcrete)
+    ): ProductConcreteTransfer {
+        $productAlternativeCreateRequestTransfer = (new ProductAlternativeCreateRequestTransfer())
+            ->setIdProduct($productConcreteTransfer->getIdProductConcrete())
             ->setAlternativeSku($skuProductAlternative);
+
+        $productConcreteTransfer->addProductAlternativeCreateRequest($productAlternativeCreateRequestTransfer);
+        $this->getProductAlternativeFacade()->persistProductAlternative($productConcreteTransfer);
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productConcreteTransfer): void {
+            $this->cleanupProductAlternative($productConcreteTransfer);
+        });
+
+        return $productConcreteTransfer;
     }
 
     /**
@@ -59,5 +49,19 @@ class ProductAlternativeDataHelper extends Module
     protected function getProductAlternativeFacade(): ProductAlternativeFacadeInterface
     {
         return $this->getLocator()->productAlternative()->facade();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    protected function cleanupProductAlternative(ProductConcreteTransfer $productConcreteTransfer): void
+    {
+        foreach ($productConcreteTransfer->getProductAlternatives() as $productAlternativeTransfer) {
+            $this->getProductAlternativeFacade()->deleteProductAlternativeByIdProductAlternative(
+                $productAlternativeTransfer->getIdProductAlternative()
+            );
+        }
     }
 }

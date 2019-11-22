@@ -42,10 +42,11 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
      */
-    public function getLabelsByProductAbstractIds(array $productAbstractIds, string $localeName): array
+    public function getProductLabelsByProductAbstractIds(array $productAbstractIds, string $localeName): array
     {
-        return $this->getFactory()->createProductAbstractLabelStorageReader()
-            ->getLabelsByProductAbstractIds($productAbstractIds, $localeName);
+        return $this->getFactory()
+            ->createProductAbstractLabelStorageReader()
+            ->getProductLabelsByProductAbstractIds($productAbstractIds, $localeName);
     }
 
     /**

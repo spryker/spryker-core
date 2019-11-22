@@ -9,10 +9,10 @@ namespace SprykerTest\Zed\ProductLabel\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ProductLabelBuilder;
-use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
 use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ProductLabelDataHelper extends Module
@@ -32,15 +32,13 @@ class ProductLabelDataHelper extends Module
                 ProductLabelTransfer::VALID_TO => null,
             ]))->build();
         $productLabelTransfer->setIdProductLabel(null);
-        $this->getProductLabelFacade()->createLabel($productLabelTransfer);
 
         $productLabelLocalizedAttributesTransfer = (new ProductLabelLocalizedAttributesBuilder([
             ProductLabelLocalizedAttributesTransfer::FK_LOCALE => $this->getLocator()->locale()->facade()->getCurrentLocale()->getIdLocale(),
-            ProductLabelLocalizedAttributesTransfer::FK_PRODUCT_LABEL => $productLabelTransfer->getIdProductLabel(),
         ]))->build();
         $productLabelTransfer->addLocalizedAttributes($productLabelLocalizedAttributesTransfer);
 
-        $this->getProductLabelFacade()->updateLabel($productLabelTransfer);
+        $this->getProductLabelFacade()->createLabel($productLabelTransfer);
 
         return $productLabelTransfer;
     }

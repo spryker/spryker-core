@@ -68,7 +68,7 @@ class ProductLabelReader implements ProductLabelReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function findById(RestRequestInterface $restRequest): RestResponseInterface
+    public function getProductLabelById(RestRequestInterface $restRequest): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
@@ -107,7 +107,7 @@ class ProductLabelReader implements ProductLabelReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function findByAbstractSku(string $sku, string $localeName): array
+    public function getProductLabelsByAbstractSku(string $sku, string $localeName): array
     {
         $abstractProductData = $this->productStorageClient->findProductAbstractStorageDataByMapping(
             static::PRODUCT_ABSTRACT_MAPPING_TYPE,
@@ -132,10 +132,10 @@ class ProductLabelReader implements ProductLabelReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
      */
-    public function getByProductConcreteSkus(array $productConcreteSkus, string $localeName): array
+    public function getProductLabelsByProductConcreteSkus(array $productConcreteSkus, string $localeName): array
     {
         $productAbstractIdsByProductConcreteSku = $this->getProductAbstractIdsByProductConcreteSkus($productConcreteSkus, $localeName);
-        $productLabels = $this->productLabelStorageClient->getLabelsByProductAbstractIds(
+        $productLabels = $this->productLabelStorageClient->getProductLabelsByProductAbstractIds(
             array_unique($productAbstractIdsByProductConcreteSku),
             $localeName
         );
@@ -160,7 +160,7 @@ class ProductLabelReader implements ProductLabelReaderInterface
      */
     protected function getProductAbstractIdsByProductConcreteSkus(array $productConcreteSkus, string $localeName): array
     {
-        $productConcreteDataCollection = $this->productStorageClient->getProductConcreteStorageDataByMappingAndIdentifiers(
+        $productConcreteDataCollection = $this->productStorageClient->getProductConcreteStorageDataByMapping(
             static::PRODUCT_CONCRETE_MAPPING_TYPE,
             $productConcreteSkus,
             $localeName

@@ -363,7 +363,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     public function dontSeeIncludesContainResourceOfType(string $type): void
     {
         $this->getJsonPathModule()->dontSeeResponseMatchesJsonPath(
-            sprintf('$.included[?(@.type == %s$s)]', $type)
+            sprintf('$.included[?(@.type == %1$s)]', json_encode($type))
         );
     }
 
@@ -549,24 +549,5 @@ class GlueRest extends REST implements LastConnectionProviderInterface
         }
 
         return $this->jsonPathModule;
-    }
-
-    /**
-     * @part json
-     * @part openApi3
-     *
-     * @param int $responseCode
-     *
-     * @return void
-     */
-    public function assertResponse(int $responseCode): void
-    {
-        $this->seeResponseCodeIs($responseCode);
-        $this->seeResponseIsJson();
-        $openApi3Module = $this->findModule(OpenApi3::class);
-
-        if ($openApi3Module) {
-            $openApi3Module->seeResponseMatchesOpenApiSchema();
-        }
     }
 }

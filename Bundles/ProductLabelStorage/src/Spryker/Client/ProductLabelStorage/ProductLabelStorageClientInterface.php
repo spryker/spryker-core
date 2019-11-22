@@ -25,8 +25,7 @@ interface ProductLabelStorageClientInterface
     /**
      * Specification:
      * - Retrieves product labels by abstract product IDs and by locale.
-     * - Looks up the key-value storage.
-     * - Uses StorageClient::getMulti() to get many records with one storage call.
+     * - Returns array of ProductLabelDictionaryItemTransfers indexed by id of product abstract.
      *
      * @api
      *
@@ -35,7 +34,7 @@ interface ProductLabelStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
      */
-    public function getLabelsByProductAbstractIds(array $productAbstractIds, string $localeName): array;
+    public function getProductLabelsByProductAbstractIds(array $productAbstractIds, string $localeName): array;
 
     /**
      * Specification:

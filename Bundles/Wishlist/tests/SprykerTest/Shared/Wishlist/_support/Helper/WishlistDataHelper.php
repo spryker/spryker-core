@@ -13,10 +13,12 @@ use Generated\Shared\DataBuilder\WishlistItemBuilder;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Zed\Wishlist\Business\WishlistFacadeInterface;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class WishlistDataHelper extends Module
 {
+    use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
     /**
@@ -27,8 +29,13 @@ class WishlistDataHelper extends Module
     public function haveWishlist(array $override): WishlistTransfer
     {
         $wishlistTransfer = (new WishlistBuilder($override))->build();
+        $wishlistTransfer = $this->getWishlistFacade()->createWishlist($wishlistTransfer);
 
-        return $this->getWishlistFacade()->createWishlist($wishlistTransfer);
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($wishlistTransfer): void {
+            $this->cleanupWishlist($wishlistTransfer);
+        });
+
+        return $wishlistTransfer;
     }
 
     /**
@@ -38,10 +45,14 @@ class WishlistDataHelper extends Module
      */
     public function haveItemInWishlist(array $override): WishlistItemTransfer
     {
-        $wishlistItemTransfer = (new WishlistItemBuilder($override))
-            ->build();
+        $wishlistItemTransfer = (new WishlistItemBuilder($override))->build();
+        $wishlistItemTransfer = $this->getWishlistFacade()->addItem($wishlistItemTransfer);
 
-        return $this->getWishlistFacade()->addItem($wishlistItemTransfer);
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($wishlistItemTransfer): void {
+            $this->cleanupWishlistItem($this->getWishlistFacade()->addItem($wishlistItemTransfer));
+        });
+
+        return $wishlistItemTransfer;
     }
 
     /**
@@ -50,5 +61,25 @@ class WishlistDataHelper extends Module
     protected function getWishlistFacade(): WishlistFacadeInterface
     {
         return $this->getLocator()->wishlist()->facade();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
+     *
+     * @return void
+     */
+    protected function cleanupWishlist(WishlistTransfer $wishlistTransfer): void
+    {
+        $this->getWishlistFacade()->removeWishlist($wishlistTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return void
+     */
+    protected function cleanupWishlistItem(WishlistItemTransfer $wishlistItemTransfer): void
+    {
+        $this->getWishlistFacade()->removeItem($wishlistItemTransfer);
     }
 }

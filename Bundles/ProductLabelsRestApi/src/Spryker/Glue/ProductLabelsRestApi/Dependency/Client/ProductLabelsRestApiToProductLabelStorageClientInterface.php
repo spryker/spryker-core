@@ -31,5 +31,5 @@ interface ProductLabelsRestApiToProductLabelStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
      */
-    public function getLabelsByProductAbstractIds(array $productAbstractIds, string $localeName): array;
+    public function getProductLabelsByProductAbstractIds(array $productAbstractIds, string $localeName): array;
 }
