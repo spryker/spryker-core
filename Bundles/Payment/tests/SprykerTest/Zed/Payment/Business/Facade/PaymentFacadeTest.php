@@ -157,7 +157,9 @@ class PaymentFacadeTest extends Unit
             PaymentMethodTransfer::PAYMENT_METHOD_KEY => 'dummyPaymentCreditCard',
             PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
         ]);
-        $quoteTransfer = (new QuoteBuilder())->build();
+        $quoteTransfer = (new QuoteBuilder())->withStore([
+            StoreTransfer::NAME => $storeTransfer->getName(),
+        ])->build();
 
         // Act
         $paymentMethodsTransfer = $this->paymentFacade->getAvailableMethods($quoteTransfer);

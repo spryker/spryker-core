@@ -10,7 +10,9 @@ namespace Spryker\Zed\Payment\Business\Method;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeInterface;
 use Spryker\Zed\Payment\PaymentConfig;
+use Spryker\Zed\Payment\Persistence\PaymentRepositoryInterface;
 
 class PaymentMethodReader implements PaymentMethodReaderInterface
 {
@@ -25,13 +27,31 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
     protected $paymentConfig;
 
     /**
+     * @var \Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
+     * @var \Spryker\Zed\Payment\Persistence\PaymentRepositoryInterface
+     */
+    protected $paymentRepository;
+
+    /**
      * @param \Spryker\Zed\Payment\Dependency\Plugin\Payment\PaymentMethodFilterPluginInterface[] $paymentMethodFilterPlugins
      * @param \Spryker\Zed\Payment\PaymentConfig $paymentConfig
+     * @param \Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\Payment\Persistence\PaymentRepositoryInterface $paymentRepository
      */
-    public function __construct(array $paymentMethodFilterPlugins, PaymentConfig $paymentConfig)
-    {
+    public function __construct(
+        array $paymentMethodFilterPlugins,
+        PaymentConfig $paymentConfig,
+        PaymentToStoreFacadeInterface $storeFacade,
+        PaymentRepositoryInterface $paymentRepository
+    ) {
         $this->paymentMethodFilterPlugins = $paymentMethodFilterPlugins;
         $this->paymentConfig = $paymentConfig;
+        $this->storeFacade = $storeFacade;
+        $this->paymentRepository = $paymentRepository;
     }
 
     /**
@@ -41,23 +61,44 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
      */
     public function getAvailableMethods(QuoteTransfer $quoteTransfer)
     {
-        $paymentMethodsTransfer = $this->findPaymentMethods();
+        $paymentMethodsTransfer = $this->findPaymentMethods($quoteTransfer);
         $paymentMethodsTransfer = $this->applyFilterPlugins($paymentMethodsTransfer, $quoteTransfer);
 
         return $paymentMethodsTransfer;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
      * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
      */
-    protected function findPaymentMethods()
+    protected function findPaymentMethods(QuoteTransfer $quoteTransfer): PaymentMethodsTransfer
     {
+        $paymentMethodsFromPersistence = $this->paymentRepository->getActivePaymentMethodsForStore(
+            $this->getIdStoreFromQuote($quoteTransfer)
+        );
+
+        return $this->collectPaymentMethodsByStateMachineMapping($paymentMethodsFromPersistence);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsFromPersistence
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
+     */
+    protected function collectPaymentMethodsByStateMachineMapping(
+        PaymentMethodsTransfer $paymentMethodsFromPersistence
+    ): PaymentMethodsTransfer {
         $paymentMethodsTransfer = new PaymentMethodsTransfer();
         $paymentStateMachineMappings = $this->paymentConfig->getPaymentStatemachineMappings();
 
         foreach ($paymentStateMachineMappings as $methodKey => $process) {
-            $paymentMethodTransfer = $this->createPaymentMethodTransfer($methodKey);
-            $paymentMethodsTransfer->addMethod($paymentMethodTransfer);
+            foreach ($paymentMethodsFromPersistence->getMethods() as $paymentMethod) {
+                if ($paymentMethod->getPaymentMethodKey() === $methodKey) {
+                    $paymentMethodTransfer = $this->createPaymentMethodTransfer($methodKey);
+                    $paymentMethodsTransfer->addMethod($paymentMethodTransfer);
+                }
+            }
         }
 
         return $paymentMethodsTransfer;
@@ -89,5 +130,23 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
         $paymentMethodTransfer->setMethodName($methodKey);
 
         return $paymentMethodTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return int
+     */
+    protected function getIdStoreFromQuote(QuoteTransfer $quoteTransfer): int
+    {
+        $quoteTransfer->requireStore();
+        $storeTransfer = $quoteTransfer->getStore();
+
+        if ($storeTransfer->getIdStore() === null) {
+            $storeTransfer->requireName();
+            $storeTransfer = $this->storeFacade->getStoreByName($storeTransfer->getName());
+        }
+
+        return $storeTransfer->getIdStore();
     }
 }
