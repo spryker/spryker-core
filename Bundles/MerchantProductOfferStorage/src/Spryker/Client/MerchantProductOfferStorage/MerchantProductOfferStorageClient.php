@@ -8,6 +8,7 @@
 namespace Spryker\Client\MerchantProductOfferStorage;
 
 use Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -36,14 +37,12 @@ class MerchantProductOfferStorageClient extends AbstractClient implements Mercha
      *
      * @api
      *
-     * @param string $productSku
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
-     * @return string[]
+     * @return string|null
      */
-    public function getProductOfferReferences(string $productSku): array
+    public function findProductConcreteDefaultProductOffer(ProductViewTransfer $productViewTransfer): ?string
     {
-        return $this->getFactory()
-            ->createProductOfferStorageReader()
-            ->getProductOfferReferences($productSku);
+        return $this->getFactory()->createProductConcreteDefaultProductOffer()->findProductOfferReference($productViewTransfer);
     }
 }

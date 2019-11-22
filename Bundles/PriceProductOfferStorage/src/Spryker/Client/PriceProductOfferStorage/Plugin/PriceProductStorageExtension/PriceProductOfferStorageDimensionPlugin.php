@@ -54,6 +54,6 @@ class PriceProductOfferStorageDimensionPlugin extends AbstractPlugin implements 
      */
     public function getDimensionName(): string
     {
-        return PriceProductOfferStorageConfig::DIMENSION_TYPE;
+        return PriceProductOfferStorageConfig::DIMENSION_TYPE_PRODUCT_OFFER;
     }
 }

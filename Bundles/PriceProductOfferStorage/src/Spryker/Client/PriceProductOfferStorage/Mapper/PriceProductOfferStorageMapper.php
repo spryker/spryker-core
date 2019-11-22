@@ -29,7 +29,7 @@ class PriceProductOfferStorageMapper implements PriceProductOfferStorageMapperIn
         $priceProductTransfer
             ->setPriceDimension(
                 (new PriceProductDimensionTransfer())
-                    ->setType(PriceProductOfferStorageConfig::DIMENSION_TYPE)
+                    ->setType(PriceProductOfferStorageConfig::DIMENSION_TYPE_PRODUCT_OFFER)
                     ->setProductOfferReference($priceProductOfferStorageTransfer->getProductOfferReference())
             )
             ->setIsMergeable(false)

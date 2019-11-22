@@ -12,7 +12,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderPluginInterface;
 
 /**
- * @method \Spryker\Client\MerchantProductOfferStorage\MerchantProductOfferStorageFactory getFactory()
+ * @method \Spryker\Client\MerchantProductOfferStorage\MerchantProductOfferStorageClientInterface getClient()
  */
 class ProductViewOfferExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface
 {
@@ -29,7 +29,7 @@ class ProductViewOfferExpanderPlugin extends AbstractPlugin implements ProductVi
     public function expandProductViewTransfer(ProductViewTransfer $productViewTransfer, array $productData, $localeName)
     {
         return $productViewTransfer->setProductOfferReference(
-            $this->getFactory()->createProductConcreteDefaultProductOffer()->findProductOfferReference($productViewTransfer)
+            $this->getClient()->findProductConcreteDefaultProductOffer($productViewTransfer)
         );
     }
 }

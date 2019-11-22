@@ -12,8 +12,8 @@ use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProduct
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToSynchronizationServiceInterface;
 use Spryker\Client\MerchantProductOfferStorage\Mapper\MerchantProductOfferMapper;
 use Spryker\Client\MerchantProductOfferStorage\Mapper\MerchantProductOfferMapperInterface;
-use Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefault\ProductConcreteDefaultProductOffer;
-use Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefault\ProductConcreteDefaultProductOfferInterface;
+use Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer\ProductConcreteDefaultProductOffer;
+use Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer\ProductConcreteDefaultProductOfferInterface;
 use Spryker\Client\MerchantProductOfferStorage\Storage\ProductOfferStorageReader;
 use Spryker\Client\MerchantProductOfferStorage\Storage\ProductOfferStorageReaderInterface;
 
@@ -32,7 +32,7 @@ class MerchantProductOfferStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefault\ProductConcreteDefaultProductOfferInterface
+     * @return \Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer\ProductConcreteDefaultProductOfferInterface
      */
     public function createProductConcreteDefaultProductOffer(): ProductConcreteDefaultProductOfferInterface
     {

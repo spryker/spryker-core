@@ -18,7 +18,7 @@ class PriceProductOfferStorageConfig
      *
      * @api
      */
-    public const DIMENSION_TYPE = 'OFFER';
+    public const DIMENSION_TYPE_PRODUCT_OFFER = 'OFFER';
 
     /**
      * Specification:

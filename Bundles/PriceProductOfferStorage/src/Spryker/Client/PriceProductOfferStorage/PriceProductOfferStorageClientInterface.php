@@ -11,7 +11,7 @@ interface PriceProductOfferStorageClientInterface
 {
     /**
      * Specification:
-     * - Gets product offer prices by idProductConcrete.
+     * - Gets product offer prices from storage by idProductConcrete.
      *
      * @api
      *

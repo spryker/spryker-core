@@ -11,18 +11,6 @@
         <property name="grossPrice" type="int"/>
     </transfer>
 
-    <transfer name="PriceProductOfferData">
-        <property name="priceType" type="string"/>
-        <property name="currency" type="string"/>
-        <property name="netPrice" type="string"/>
-        <property name="grossPrice" type="string"/>
-    </transfer>
-
-    <transfer name="ProductOfferStorage">
-        <property name="idProductOffer" type="int"/>
-        <property name="prices" type="PriceProductOfferData[]" singular="price"/>
-    </transfer>
-
     <transfer name="PriceProductDimension">
         <property name="productOfferReference" type="string"/>
         <property name="type" type="string"/>

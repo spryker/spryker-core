@@ -8,6 +8,7 @@
 namespace Spryker\Client\MerchantProductOfferStorage;
 
 use Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 
 interface MerchantProductOfferStorageClientInterface
 {
@@ -27,13 +28,13 @@ interface MerchantProductOfferStorageClientInterface
     /**
      * Specification:
      * - Retrieves content by key through a storage client dependency.
-     * - Returns the product offer references.
+     * - Returns the product offer reference.
      *
      * @api
      *
-     * @param string $productSku
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
-     * @return string[]
+     * @return string|null
      */
-    public function getProductOfferReferences(string $productSku): array;
+    public function findProductConcreteDefaultProductOffer(ProductViewTransfer $productViewTransfer): ?string;
 }

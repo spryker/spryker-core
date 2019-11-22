@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\PriceProductOfferStorage;
 
 use Codeception\Actor;
-use Orm\Zed\PriceProductOfferStorage\Persistence\SpySpyProductConcreteProductOfferPriceStorageQuery;
+use Orm\Zed\PriceProductOfferStorage\Persistence\SpyProductConcreteProductOfferPriceStorageQuery;
 
 /**
  * Inherited Methods
@@ -51,10 +51,10 @@ class PriceProductOfferStorageTester extends Actor
     }
 
     /**
-     * @return \Orm\Zed\PriceProductOfferStorage\Persistence\SpySpyProductConcreteProductOfferPriceStorageQuery
+     * @return \Orm\Zed\PriceProductOfferStorage\Persistence\SpyProductConcreteProductOfferPriceStorageQuery
      */
-    protected function createProductConcreteProductOfferPriceStorageQuery(): SpySpyProductConcreteProductOfferPriceStorageQuery
+    protected function createProductConcreteProductOfferPriceStorageQuery(): SpyProductConcreteProductOfferPriceStorageQuery
     {
-        return SpySpyProductConcreteProductOfferPriceStorageQuery::create();
+        return SpyProductConcreteProductOfferPriceStorageQuery::create();
     }
 }
