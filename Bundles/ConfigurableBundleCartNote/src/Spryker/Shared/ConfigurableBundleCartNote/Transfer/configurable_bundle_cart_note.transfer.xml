@@ -13,9 +13,8 @@
     </transfer>
 
     <transfer name="ConfiguredBundleCartNoteRequest">
+        <property name="configuredBundle" type="ConfiguredBundle"/>
         <property name="quote" type="Quote"/>
-        <property name="groupKey" type="string"/>
-        <property name="cartNote" type="string"/>
     </transfer>
 
     <transfer name="Quote">
@@ -31,10 +30,6 @@
     <transfer name="QuoteResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="quoteTransfer" type="Quote"/>
-    </transfer>
-
-    <transfer name="ItemCollection">
-        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
 </transfers>

@@ -70,16 +70,17 @@ class ConfigurableBundleCartNoteSetter implements ConfigurableBundleCartNoteSett
     ): QuoteResponseTransfer {
         $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
         $isSuccessful = false;
+        $configuredBundleTransfer = $configuredBundleCartNoteRequestTransfer->getConfiguredBundle();
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if (!$itemTransfer->getConfiguredBundle()) {
                 continue;
             }
-            if ($itemTransfer->getConfiguredBundle()->getGroupKey() !== $configuredBundleCartNoteRequestTransfer->getGroupKey()) {
+            if ($itemTransfer->getConfiguredBundle()->getGroupKey() !== $configuredBundleTransfer->getGroupKey()) {
                 continue;
             }
 
-            $itemTransfer->getConfiguredBundle()->setCartNote($configuredBundleCartNoteRequestTransfer->getCartNote());
+            $itemTransfer->getConfiguredBundle()->setCartNote($configuredBundleTransfer->getCartNote());
             $isSuccessful = true;
         }
 

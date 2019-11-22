@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ConfigurableBundleCartNote\Business\ConfigurableBundle
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ConfiguredBundleCartNoteRequestTransfer;
+use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use SprykerTest\Zed\ConfigurableBundleCartNote\ConfigurableBundleCartNoteBusinessTester;
 
@@ -39,8 +40,11 @@ class ConfigurableBundleCartNoteFacadeTest extends Test
         //Arrange
         $configuredBundleCartNoteRequestTransfer = (new ConfiguredBundleCartNoteRequestTransfer())
             ->setQuote($this->tester->createQuoteTransferWithConfiguredBundle())
-            ->setGroupKey(ConfigurableBundleCartNoteBusinessTester::FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY)
-            ->setCartNote(ConfigurableBundleCartNoteBusinessTester::FAKE_CONFIGURABLE_BUNDLE_CART_NOTE);
+            ->setConfiguredBundle(
+                (new ConfiguredBundleTransfer())
+                    ->setGroupKey(ConfigurableBundleCartNoteBusinessTester::FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY)
+                    ->setCartNote(ConfigurableBundleCartNoteBusinessTester::FAKE_CONFIGURABLE_BUNDLE_CART_NOTE)
+            );
 
         //Act
         $quoteResponseTransfer = $this->tester->getFacade()->setConfiguredBundleCartNote($configuredBundleCartNoteRequestTransfer);
@@ -66,8 +70,11 @@ class ConfigurableBundleCartNoteFacadeTest extends Test
         //Arrange
         $configuredBundleCartNoteRequestTransfer = (new ConfiguredBundleCartNoteRequestTransfer())
             ->setQuote($this->tester->createQuoteTransferWithConfiguredBundle())
-            ->setGroupKey('not-existing-configurable-bundle-group-key')
-            ->setCartNote(ConfigurableBundleCartNoteBusinessTester::FAKE_CONFIGURABLE_BUNDLE_CART_NOTE);
+            ->setConfiguredBundle(
+                (new ConfiguredBundleTransfer())
+                    ->setGroupKey('not-existing-configurable-bundle-group-key')
+                    ->setCartNote(ConfigurableBundleCartNoteBusinessTester::FAKE_CONFIGURABLE_BUNDLE_CART_NOTE)
+            );
 
         //Act
         $quoteResponseTransfer = $this->tester->getFacade()->setConfiguredBundleCartNote($configuredBundleCartNoteRequestTransfer);
@@ -84,8 +91,11 @@ class ConfigurableBundleCartNoteFacadeTest extends Test
         //Arrange
         $configuredBundleCartNoteRequestTransfer = (new ConfiguredBundleCartNoteRequestTransfer())
             ->setQuote($this->tester->createQuoteTransfer())
-            ->setGroupKey(ConfigurableBundleCartNoteBusinessTester::FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY)
-            ->setCartNote(ConfigurableBundleCartNoteBusinessTester::FAKE_CONFIGURABLE_BUNDLE_CART_NOTE);
+            ->setConfiguredBundle(
+                (new ConfiguredBundleTransfer())
+                    ->setGroupKey(ConfigurableBundleCartNoteBusinessTester::FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY)
+                    ->setCartNote(ConfigurableBundleCartNoteBusinessTester::FAKE_CONFIGURABLE_BUNDLE_CART_NOTE)
+            );
 
         //Act
         $quoteResponseTransfer = $this->tester->getFacade()->setConfiguredBundleCartNote($configuredBundleCartNoteRequestTransfer);
