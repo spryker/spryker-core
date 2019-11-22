@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ProductLabelStorage\Storage;
 
-use Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToStorageClientInterface;
@@ -111,8 +110,8 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
         $productLabelDictionaryItemTransfers = $this->getProductLabelDictionaryItemTransfersGroupedById(
             $this->findSortedProductLabelsInDictionary($uniqueProductLabelIds, $localeName)
         );
-        $productLabelDictionaryItemTransfersByProductAbstractIds = [];
 
+        $productLabelDictionaryItemTransfersByProductAbstractIds = [];
         foreach ($productLabelIdsByProductAbstractIds as $productAbstractId => $productLabelIds) {
             $productLabelDictionaryItemTransfersByProductAbstractIds[$productAbstractId] = array_intersect_key(
                 $productLabelDictionaryItemTransfers,
@@ -130,14 +129,14 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
      */
     protected function getProductLabelDictionaryItemTransfersGroupedById(array $productLabelDictionaryItemTransfers): array
     {
-        $productLabelIds = array_map(function (ProductLabelDictionaryItemTransfer $productLabelDictionaryItemTransfer) {
-            return $productLabelDictionaryItemTransfer->getIdProductLabel();
-        }, $productLabelDictionaryItemTransfers);
+        $indexedProductLabelDictionaryItemTransfers = [];
 
-        return array_combine(
-            $productLabelIds,
-            $productLabelDictionaryItemTransfers
-        );
+        foreach ($productLabelDictionaryItemTransfers as $productLabelDictionaryItemTransfer) {
+            $indexedProductLabelDictionaryItemTransfers[$productLabelDictionaryItemTransfer->getIdProductLabel()]
+                = $productLabelDictionaryItemTransfer;
+        }
+
+        return $indexedProductLabelDictionaryItemTransfers;
     }
 
     /**
@@ -207,11 +206,20 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
      */
     protected function getProductLabelStorageDataItemsByProductLabelStorageKeys(array $storageKeys): array
     {
-        $storageData = array_filter($this->storageClient->getMulti($storageKeys));
+        $storageData = $this->storageClient->getMulti($storageKeys);
 
-        return array_map(function (string $productLabelStorageEncodedData) {
-            return $this->utilEncodingService->decodeJson($productLabelStorageEncodedData, true);
-        }, $storageData);
+        $decodedStorageData = [];
+        foreach ($storageData as $storageDataItem) {
+            $decodedStorageDataItem = $this->utilEncodingService->decodeJson($storageDataItem, true);
+
+            if (!$decodedStorageDataItem) {
+                continue;
+            }
+
+            $decodedStorageData[] = $decodedStorageDataItem;
+        }
+
+        return $decodedStorageData;
     }
 
     /**
