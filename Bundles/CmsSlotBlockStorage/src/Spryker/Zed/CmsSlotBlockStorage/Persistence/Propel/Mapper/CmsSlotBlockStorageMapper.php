@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CmsSlotBlockStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Orm\Zed\CmsSlot\Persistence\Map\SpyCmsSlotTableMap;
 use Orm\Zed\CmsSlot\Persistence\Map\SpyCmsSlotTemplateTableMap;
-use Orm\Zed\CmsSlotBlock\Persistence\Map\SpyCmsSlotBlockTableMap;
 use Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlock;
 use Orm\Zed\CmsSlotBlockStorage\Persistence\SpyCmsSlotBlockStorage;
 use Spryker\Shared\CmsSlotBlockStorage\CmsSlotBlockStorageConfig;
@@ -94,8 +93,8 @@ class CmsSlotBlockStorageMapper
         array $cmsSlotWithSlotTemplateCombination
     ): CmsSlotBlockStorageTransfer {
         return (new CmsSlotBlockStorageTransfer())
-            ->setIdCmsSlot($cmsSlotWithSlotTemplateCombination[SpyCmsSlotBlockTableMap::COL_FK_CMS_SLOT])
-            ->setIdCmsSlotTemplate($cmsSlotWithSlotTemplateCombination[SpyCmsSlotBlockTableMap::COL_FK_CMS_SLOT_TEMPLATE])
+            ->setIdCmsSlot($cmsSlotWithSlotTemplateCombination[SpyCmsSlotTableMap::COL_ID_CMS_SLOT])
+            ->setIdCmsSlotTemplate($cmsSlotWithSlotTemplateCombination[SpyCmsSlotTemplateTableMap::COL_ID_CMS_SLOT_TEMPLATE])
             ->setSlotKey($cmsSlotWithSlotTemplateCombination[SpyCmsSlotTableMap::COL_KEY])
             ->setTemplatePath($cmsSlotWithSlotTemplateCombination[SpyCmsSlotTemplateTableMap::COL_PATH]);
     }

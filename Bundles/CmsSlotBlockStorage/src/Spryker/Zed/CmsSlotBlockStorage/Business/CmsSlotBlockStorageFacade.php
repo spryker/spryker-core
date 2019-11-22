@@ -24,13 +24,13 @@ class CmsSlotBlockStorageFacade extends AbstractFacade implements CmsSlotBlockSt
      *
      * @api
      *
-     * @param string[] $cmsSlotBlockIds
+     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
      *
      * @return void
      */
-    public function publishByCmsSlotBlockIds(array $cmsSlotBlockIds): void
+    public function publishByCmsSlotBlocks(array $cmsSlotBlockTransfers): void
     {
-        $this->getFactory()->createCmsSlotBlockStorageWriter()->publish($cmsSlotBlockIds);
+        $this->getFactory()->createCmsSlotBlockStorageWriter()->publish($cmsSlotBlockTransfers);
     }
 
     /**

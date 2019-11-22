@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotBlockStorage\Communication\Plugin\Event\Listener;
 
+use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -29,10 +30,30 @@ class CmsSlotBlockStoragePublishListener extends AbstractPlugin implements Event
      */
     public function handleBulk(array $eventTransfers, $eventName)
     {
-        $cmsSlotBlockIds = $this->getFactory()
-            ->getEventBehaviorFacade()
-            ->getEventTransferIds($eventTransfers);
+        $cmsSlotBlockTransfers = $this->mapEventEntityTransfersToCmsSlotBlockTransfers($eventTransfers);
+        $this->getFacade()->publishByCmsSlotBlocks($cmsSlotBlockTransfers);
+    }
 
-        $this->getFacade()->publishByCmsSlotBlockIds($cmsSlotBlockIds);
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotBlockTransfer[]
+     */
+    protected function mapEventEntityTransfersToCmsSlotBlockTransfers(array $eventEntityTransfers): array
+    {
+        $cmsSlotBlockTransfers = [];
+
+        foreach ($eventEntityTransfers as $eventEntityTransfer) {
+            $cmsSlotBlockTransfer = (new CmsSlotBlockTransfer())
+                ->setIdCmsSlotBlock((string)$eventEntityTransfer->getId())
+                ->setIdSlotTemplate(
+                    $eventEntityTransfer->getAdditionalValues()[CmsSlotBlockTransfer::ID_SLOT_TEMPLATE] ?? null
+                )
+                ->setIdSlot($eventEntityTransfer->getAdditionalValues()[CmsSlotBlockTransfer::ID_SLOT] ?? null);
+
+            $cmsSlotBlockTransfers[] = $cmsSlotBlockTransfer;
+        }
+
+        return $cmsSlotBlockTransfers;
     }
 }

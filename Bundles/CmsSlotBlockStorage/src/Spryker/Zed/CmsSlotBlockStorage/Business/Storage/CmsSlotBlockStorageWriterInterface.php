@@ -10,9 +10,9 @@ namespace Spryker\Zed\CmsSlotBlockStorage\Business\Storage;
 interface CmsSlotBlockStorageWriterInterface
 {
     /**
-     * @param string[] $cmsSlotBlockIds
+     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
      *
      * @return void
      */
-    public function publish(array $cmsSlotBlockIds): void;
+    public function publish(array $cmsSlotBlockTransfers): void;
 }

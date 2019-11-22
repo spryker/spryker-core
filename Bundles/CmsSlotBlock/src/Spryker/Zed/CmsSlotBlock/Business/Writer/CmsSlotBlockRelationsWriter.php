@@ -9,12 +9,14 @@ namespace Spryker\Zed\CmsSlotBlock\Business\Writer;
 
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Spryker\Zed\CmsSlotBlock\Business\Exception\InvalidCmsSlotBlockException;
 use Spryker\Zed\CmsSlotBlock\Business\Validator\CmsSlotBlockValidatorInterface;
 use Spryker\Zed\CmsSlotBlock\Dependency\CmsSlotBlockEvents;
 use Spryker\Zed\CmsSlotBlock\Dependency\Facade\CmsSlotBlockToEventFacadeInterface;
 use Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockEntityManagerInterface;
+use Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockRepositoryInterface;
 
 class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterface
 {
@@ -22,6 +24,11 @@ class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterfac
      * @var \Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockEntityManagerInterface
      */
     protected $cmsSlotBlockEntityManager;
+
+    /**
+     * @var \Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockRepositoryInterface
+     */
+    protected $cmsSlotBlockRepository;
 
     /**
      * @var \Spryker\Zed\CmsSlotBlock\Dependency\Facade\CmsSlotBlockToEventFacadeInterface
@@ -35,15 +42,18 @@ class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterfac
 
     /**
      * @param \Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockEntityManagerInterface $cmsSlotBlockEntityManager
+     * @param \Spryker\Zed\CmsSlotBlock\Persistence\CmsSlotBlockRepositoryInterface $cmsSlotBlockRepository
      * @param \Spryker\Zed\CmsSlotBlock\Dependency\Facade\CmsSlotBlockToEventFacadeInterface $eventFacade
      * @param \Spryker\Zed\CmsSlotBlock\Business\Validator\CmsSlotBlockValidatorInterface $cmsSlotBlockValidator
      */
     public function __construct(
         CmsSlotBlockEntityManagerInterface $cmsSlotBlockEntityManager,
+        CmsSlotBlockRepositoryInterface $cmsSlotBlockRepository,
         CmsSlotBlockToEventFacadeInterface $eventFacade,
         CmsSlotBlockValidatorInterface $cmsSlotBlockValidator
     ) {
         $this->cmsSlotBlockEntityManager = $cmsSlotBlockEntityManager;
+        $this->cmsSlotBlockRepository = $cmsSlotBlockRepository;
         $this->eventFacade = $eventFacade;
         $this->cmsSlotBlockValidator = $cmsSlotBlockValidator;
     }
@@ -87,6 +97,9 @@ class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterfac
      */
     public function deleteCmsSlotBlockRelationsByCriteria(CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer): void
     {
+        $cmsSlotBlockCollectionTransfer = $this->cmsSlotBlockRepository
+            ->getCmsSlotBlocks($cmsSlotBlockCriteriaTransfer);
+        $this->triggerCmsSlotBlockPublishEvents($cmsSlotBlockCollectionTransfer);
         $this->cmsSlotBlockEntityManager->deleteCmsSlotBlocksByCriteria($cmsSlotBlockCriteriaTransfer);
     }
 
@@ -114,7 +127,11 @@ class CmsSlotBlockRelationsWriter implements CmsSlotBlockRelationsWriterInterfac
 
         foreach ($cmsSlotBlockCollectionTransfer->getCmsSlotBlocks() as $cmsSlotBlockTransfer) {
             $eventTransfers[] = (new EventEntityTransfer())
-                ->setId((int)$cmsSlotBlockTransfer->getIdCmsSlotBlock());
+                ->setId((int)$cmsSlotBlockTransfer->getIdCmsSlotBlock())
+                ->setAdditionalValues([
+                    CmsSlotBlockTransfer::ID_SLOT_TEMPLATE => $cmsSlotBlockTransfer->getIdSlotTemplate(),
+                    CmsSlotBlockTransfer::ID_SLOT => $cmsSlotBlockTransfer->getIdSlot(),
+                ]);
         }
 
         return $eventTransfers;

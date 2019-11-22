@@ -46,14 +46,14 @@ class CmsSlotBlockStorageWriter implements CmsSlotBlockStorageWriterInterface
     }
 
     /**
-     * @param string[] $cmsSlotBlockIds
+     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
      *
      * @return void
      */
-    public function publish(array $cmsSlotBlockIds): void
+    public function publish(array $cmsSlotBlockTransfers): void
     {
         $cmsSlotBlockStorageTransfers = $this->cmsSlotBlockStorageRepository
-            ->getCmsSlotBlockStorageTransfersByCmsSlotBlockIds($cmsSlotBlockIds);
+            ->getCmsSlotBlockStorageTransfersByCmsSlotBlocks($cmsSlotBlockTransfers);
 
         foreach ($cmsSlotBlockStorageTransfers as $cmsSlotBlockStorageTransfer) {
             $cmsSlotBlockStorageDataTransfer = $this->getCmsSlotBlockStorageDataTransfer($cmsSlotBlockStorageTransfer);

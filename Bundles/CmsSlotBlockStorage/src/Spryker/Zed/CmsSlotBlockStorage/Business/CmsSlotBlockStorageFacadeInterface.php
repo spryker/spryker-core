@@ -15,17 +15,21 @@ interface CmsSlotBlockStorageFacadeInterface
 {
     /**
      * Specification:
-     * - Queries CMS slot blocks for the given cmsSlotBlockIds.
+     * - Goes through the CmsSlotBlockTransfers to obtain the CMS slot blocks to publish.
+     * - Uses CMS slot template ID with CMS slot ID if given in CmsSlotBlockTransfer to query CMS slot block.
+     * - Uses CMS slot block ID if no CMS slot template ID with CMS slot ID are given in CmsSlotBlockTransfer to query CMS slot block.
+     * - Goes through the CMS slot blocks to get CmsBlock data needs to be saved.
      * - Stores data as JSON encoded to storage table.
+     * - Removes the storage entry if no CmsBlock data is provided.
      * - Sends a copy of data to queue based on module config.
      *
      * @api
      *
-     * @param string[] $cmsSlotBlockIds
+     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
      *
      * @return void
      */
-    public function publishByCmsSlotBlockIds(array $cmsSlotBlockIds): void;
+    public function publishByCmsSlotBlocks(array $cmsSlotBlockTransfers): void;
 
     /**
      * Specification:

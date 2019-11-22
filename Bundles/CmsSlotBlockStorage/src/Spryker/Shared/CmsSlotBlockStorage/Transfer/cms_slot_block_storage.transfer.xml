@@ -5,6 +5,8 @@
 
     <transfer name="CmsSlotBlock">
         <property name="idCmsSlotBlock" type="string"/>
+        <property name="idSlotTemplate" type="int"/>
+        <property name="idSlot" type="int"/>
     </transfer>
 
     <transfer name="CmsSlotBlockCollection">

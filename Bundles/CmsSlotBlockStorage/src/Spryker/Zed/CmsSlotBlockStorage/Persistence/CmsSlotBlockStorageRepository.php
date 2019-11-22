@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CmsSlotBlockStorageTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\CmsSlot\Persistence\Map\SpyCmsSlotTableMap;
 use Orm\Zed\CmsSlot\Persistence\Map\SpyCmsSlotTemplateTableMap;
+use Orm\Zed\CmsSlotBlock\Persistence\Base\SpyCmsSlotBlockQuery;
 use Orm\Zed\CmsSlotBlock\Persistence\Map\SpyCmsSlotBlockTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -23,24 +24,33 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class CmsSlotBlockStorageRepository extends AbstractRepository implements CmsSlotBlockStorageRepositoryInterface
 {
     /**
-     * @param string[] $cmsSlotBlockIds
+     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
      *
      * @return \Generated\Shared\Transfer\CmsSlotBlockStorageTransfer[]
      */
-    public function getCmsSlotBlockStorageTransfersByCmsSlotBlockIds(array $cmsSlotBlockIds): array
+    public function getCmsSlotBlockStorageTransfersByCmsSlotBlocks(array $cmsSlotBlockTransfers): array
     {
-        $cmsSlotWithSlotTemplateCombinations = $this->getFactory()
+        $cmsSlotBlockQuery = $this->getFactory()
             ->createCmsSlotBlockQuery()
-            ->joinWithCmsSlot()
-            ->joinWithCmsSlotTemplate()
-            ->filterByIdCmsSlotBlock_In($cmsSlotBlockIds)
+            ->useCmsSlotQuery(null, Criteria::RIGHT_JOIN)
+                ->useSpyCmsSlotToCmsSlotTemplateQuery()
+                    ->joinWithCmsSlotTemplate()
+                ->endUse()
+            ->endUse();
+
+        $cmsSlotBlockQuery = $this->addCmsSlotBlockQueryConditionsByCmsSlotBlockTransfers(
+            $cmsSlotBlockQuery,
+            $cmsSlotBlockTransfers
+        );
+
+        $cmsSlotWithSlotTemplateCombinations = $cmsSlotBlockQuery
             ->groupBy([
-                SpyCmsSlotBlockTableMap::COL_FK_CMS_SLOT,
-                SpyCmsSlotBlockTableMap::COL_FK_CMS_SLOT_TEMPLATE,
+                SpyCmsSlotTableMap::COL_ID_CMS_SLOT,
+                SpyCmsSlotTemplateTableMap::COL_ID_CMS_SLOT_TEMPLATE,
             ])
             ->select([
-                SpyCmsSlotBlockTableMap::COL_FK_CMS_SLOT,
-                SpyCmsSlotBlockTableMap::COL_FK_CMS_SLOT_TEMPLATE,
+                SpyCmsSlotTableMap::COL_ID_CMS_SLOT,
+                SpyCmsSlotTemplateTableMap::COL_ID_CMS_SLOT_TEMPLATE,
                 SpyCmsSlotTableMap::COL_KEY,
                 SpyCmsSlotTemplateTableMap::COL_PATH,
             ])
@@ -56,6 +66,51 @@ class CmsSlotBlockStorageRepository extends AbstractRepository implements CmsSlo
         }
 
         return $cmsSlotBlockStorageTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\CmsSlotBlock\Persistence\Base\SpyCmsSlotBlockQuery $cmsSlotBlockQuery
+     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
+     *
+     * @return \Orm\Zed\CmsSlotBlock\Persistence\Base\SpyCmsSlotBlockQuery
+     */
+    protected function addCmsSlotBlockQueryConditionsByCmsSlotBlockTransfers(
+        SpyCmsSlotBlockQuery $cmsSlotBlockQuery,
+        array $cmsSlotBlockTransfers
+    ): SpyCmsSlotBlockQuery {
+        $criteria = new Criteria();
+        $cmsSlotBlockIds = [];
+
+        foreach ($cmsSlotBlockTransfers as $cmsSlotBlockTransfer) {
+            if ($cmsSlotBlockTransfer->getIdSlotTemplate() && $cmsSlotBlockTransfer->getIdSlot()) {
+                $slotWithTemplateCriterion = $criteria->getNewCriterion(
+                    SpyCmsSlotTableMap::COL_ID_CMS_SLOT,
+                    $cmsSlotBlockTransfer->getIdSlot()
+                );
+                $slotWithTemplateCriterion->addAnd(
+                    $criteria->getNewCriterion(
+                        SpyCmsSlotTemplateTableMap::COL_ID_CMS_SLOT_TEMPLATE,
+                        $cmsSlotBlockTransfer->getIdSlotTemplate()
+                    )
+                );
+                $cmsSlotBlockQuery->addOr($slotWithTemplateCriterion);
+
+                continue;
+            }
+
+            $cmsSlotBlockIds[] = $cmsSlotBlockTransfer->getIdCmsSlotBlock();
+        }
+
+        if ($cmsSlotBlockIds) {
+            $slotBlockCriterion = $criteria->getNewCriterion(
+                SpyCmsSlotBlockTableMap::COL_ID_CMS_SLOT_BLOCK,
+                $cmsSlotBlockIds,
+                Criteria::IN
+            );
+            $cmsSlotBlockQuery->addOr($slotBlockCriterion);
+        }
+
+        return $cmsSlotBlockQuery;
     }
 
     /**

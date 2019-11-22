@@ -14,11 +14,11 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface CmsSlotBlockStorageRepositoryInterface
 {
     /**
-     * @param string[] $cmsSlotBlockIds
+     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
      *
      * @return \Generated\Shared\Transfer\CmsSlotBlockStorageTransfer[]
      */
-    public function getCmsSlotBlockStorageTransfersByCmsSlotBlockIds(array $cmsSlotBlockIds): array;
+    public function getCmsSlotBlockStorageTransfersByCmsSlotBlocks(array $cmsSlotBlockTransfers): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer

@@ -34,6 +34,7 @@ class CmsSlotBlockBusinessFactory extends AbstractBusinessFactory
     {
         return new CmsSlotBlockRelationsWriter(
             $this->getEntityManager(),
+            $this->getRepository(),
             $this->getEventFacade(),
             $this->createCmsSlotBlockValidator()
         );
