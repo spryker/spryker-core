@@ -54,7 +54,7 @@ interface ProductCartConnectorFacadeInterface
 
     /**
      * Specification:
-     *  - Reads a persisted urls from database by abstract product ids.
+     *  - Reads persisted urls from database by abstract product ids.
      *  - Expands the items of the CartChangeTransfer with the abstract product's urls.
      *  - Returns the expanded CartChangeTransfer.
      *

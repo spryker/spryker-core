@@ -49,7 +49,7 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
             return $cartChangeTransfer;
         }
 
-        $urlTransfers = $this->productFacade->getUrlTransfers($this->getUrlFilterTransfer($productAbstractIds));
+        $urlTransfers = $this->productFacade->getUrlTransfers($this->createUrlFilterTransfer($productAbstractIds));
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $idProductAbstract = $itemTransfer->getIdProductAbstract();
@@ -65,11 +65,11 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\UrlFilterTransfer
      */
-    protected function getUrlFilterTransfer(array $productAbstractIds): UrlFilterTransfer
+    protected function createUrlFilterTransfer(array $productAbstractIds): UrlFilterTransfer
     {
         return (new UrlFilterTransfer())
             ->setIdLocale($this->localeFacade->getCurrentLocale()->getIdLocale())

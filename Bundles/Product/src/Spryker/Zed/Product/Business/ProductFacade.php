@@ -1082,7 +1082,6 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      */
     public function getUrlTransfers(UrlFilterTransfer $urlFilterTransfer): array
     {
-        return $this->getRepository()
-            ->getUrlTransfers($urlFilterTransfer);
+        return $this->getRepository()->getUrlTransfers($urlFilterTransfer);
     }
 }

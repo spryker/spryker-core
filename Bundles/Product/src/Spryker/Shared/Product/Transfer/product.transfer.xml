@@ -108,7 +108,7 @@
     </transfer>
 
     <transfer name="UrlFilter">
-        <property name="productAbstractIds" type="int[]" singular="productAbstractIds"/>
+        <property name="productAbstractIds" type="int[]" singular="productAbstractId"/>
         <property name="idLocale" type="int"/>
     </transfer>
 

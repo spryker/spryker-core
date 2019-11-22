@@ -924,7 +924,9 @@ interface ProductFacadeInterface
 
     /**
      * Specification
-     *  - Returns url transfers by abstract product ids and locale id
+     * - Retrieves url records from Persistence.
+     * - Returns array of UrlTransfer.
+     * - Filters by criteria from UrlFilterTransfer.
      *
      * @api
      *

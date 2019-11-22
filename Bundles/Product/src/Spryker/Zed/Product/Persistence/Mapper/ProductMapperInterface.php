@@ -42,5 +42,8 @@ interface ProductMapperInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function mapProductEntityToProductConcreteTransferWithoutStores(SpyProduct $productEntity, ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+    public function mapProductEntityToProductConcreteTransferWithoutStores(
+        SpyProduct $productEntity,
+        ProductConcreteTransfer $productConcreteTransfer
+    ): ProductConcreteTransfer;
 }
