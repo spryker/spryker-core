@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\ProductOptionsRestApi\Processor\RestResponseBuilder;
 
-use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Mapper\ProductOptionMapperInterface;
@@ -47,33 +46,64 @@ class ProductOptionRestResponseBuilder implements ProductOptionRestResponseBuild
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[] $productAbstractOptionStorageTransfers
+     * @param array $resourceMapping
      * @param string $parentResourceType
-     * @param string $parentResourceId
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
      */
     public function createProductOptionRestResources(
-        ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer,
+        array $productAbstractOptionStorageTransfers,
+        array $resourceMapping,
         string $parentResourceType,
-        string $parentResourceId,
         array $sorts
     ): array {
-        $restProductOptionsAttributesTransfers = $this->productOptionMapper
-            ->mapProductAbstractOptionStorageTransferToRestProductOptionsAttributesTransfers(
-                $productAbstractOptionStorageTransfer
-            );
-        $restProductOptionsAttributesTransfers = $this->productOptionSorter->sortRestProductOptionsAttributesTransfers(
-            $restProductOptionsAttributesTransfers,
+        $restProductOptionsAttributesTransfers = $this->prepareRestProductOptionsAttributesTransfers(
+            $productAbstractOptionStorageTransfers,
             $sorts
         );
+        $productOptionRestResources = [];
+        foreach ($resourceMapping as $parentResourceId => $idProductAbstract) {
+            if (!isset($restProductOptionsAttributesTransfers[$idProductAbstract])) {
+                continue;
+            }
 
-        return $this->prepareRestResources(
-            $restProductOptionsAttributesTransfers,
-            $parentResourceType,
-            $parentResourceId
-        );
+            $productOptionRestResources[$parentResourceId] = $this->prepareRestResources(
+                $restProductOptionsAttributesTransfers[$idProductAbstract],
+                $parentResourceType,
+                $parentResourceId
+            );
+        }
+
+        return $productOptionRestResources;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[] $productAbstractOptionStorageTransfers
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
+     *
+     * @return \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[][]
+     */
+    protected function prepareRestProductOptionsAttributesTransfers(
+        array $productAbstractOptionStorageTransfers,
+        array $sorts
+    ): array {
+        $restProductOptionsAttributesTransfers = [];
+        foreach ($productAbstractOptionStorageTransfers as $idProductAbstract => $productAbstractOptionStorageTransfer) {
+            $restProductOptionsAttributesTransfers[$idProductAbstract] = $this->productOptionMapper
+                ->mapProductAbstractOptionStorageTransferToRestProductOptionsAttributesTransfers(
+                    $productAbstractOptionStorageTransfer
+                );
+
+            $restProductOptionsAttributesTransfers[$idProductAbstract] = $this->productOptionSorter
+                ->sortRestProductOptionsAttributesTransfers(
+                    $restProductOptionsAttributesTransfers[$idProductAbstract],
+                    $sorts
+                );
+        }
+
+        return $restProductOptionsAttributesTransfers;
     }
 
     /**

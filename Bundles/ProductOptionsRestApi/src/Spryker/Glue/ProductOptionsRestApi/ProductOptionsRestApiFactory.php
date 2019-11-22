@@ -94,14 +94,6 @@ class ProductOptionsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ProductOptionsRestApi\Processor\Expander\ProductOptionByProductAbstractSkuExpanderInterface
-     */
-    public function createProductOptionByProductAbstractSkuExpander(): ProductOptionByProductAbstractSkuExpanderInterface
-    {
-        return new ProductOptionByProductAbstractSkuExpander($this->createProductOptionStorageReader());
-    }
-
-    /**
      * @return \Spryker\Glue\ProductOptionsRestApi\Processor\Translator\ProductOptionTranslatorInterface
      */
     public function createProductOptionTranslator(): ProductOptionTranslatorInterface
@@ -110,10 +102,18 @@ class ProductOptionsRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\ProductOptionsRestApi\Processor\Expander\ProductOptionByProductAbstractSkuExpanderInterface
+     */
+    public function createProductOptionByProductAbstractSkuExpander(): ProductOptionByProductAbstractSkuExpanderInterface
+    {
+        return new ProductOptionByProductAbstractSkuExpander($this->createProductOptionStorageReader());
+    }
+
+    /**
      * @return \Spryker\Glue\ProductOptionsRestApi\Processor\Expander\ProductOptionByProductConcreteSkuExpanderInterface
      */
     public function createProductOptionByProductConcreteSkuExpander(): ProductOptionByProductConcreteSkuExpanderInterface
     {
-        return new ProductOptionByProductConcreteSkuExpander($this->createProductOptionRestResourceBuilder());
+        return new ProductOptionByProductConcreteSkuExpander($this->createProductOptionStorageReader());
     }
 }
