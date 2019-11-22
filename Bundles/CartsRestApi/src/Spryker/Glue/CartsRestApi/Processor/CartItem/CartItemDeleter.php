@@ -71,8 +71,10 @@ class CartItemDeleter implements CartItemDeleterInterface
 
         if (!$cartItemRequestTransfer->getQuoteUuid()) {
             $quoteResponseTransfer = (new QuoteResponseTransfer())
-                ->addError((new QuoteErrorTransfer())
-                ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_QUOTE_UUID_IS_MISSING));
+                ->addError(
+                    (new QuoteErrorTransfer())
+                        ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_QUOTE_UUID_IS_MISSING)
+                );
 
             return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
