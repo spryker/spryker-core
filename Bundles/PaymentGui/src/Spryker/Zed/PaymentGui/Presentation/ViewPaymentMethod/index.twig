@@ -21,28 +21,10 @@
                     <dl>
                         <dt>{{ 'Payment Method Key' | trans }}</dt>
                         <dd>{{ paymentMethod.paymentMethodKey }}</dd>
-                    </dl>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 col-md-6 col-lg-3">
-                    <dl>
                         <dt>{{ 'Name' | trans }}</dt>
                         <dd>{{ paymentMethod.methodName }}</dd>
-                    </dl>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 col-md-6 col-lg-3">
-                    <dl>
                         <dt>{{ 'Payment Provider' | trans }}</dt>
                         <dd>{{ paymentMethod.paymentProvider.name }}</dd>
-                    </dl>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 col-md-6 col-lg-3">
-                    <dl>
                         <dt>{{ 'Is this payment method active?' | trans }}</dt>
                         <dd><input type="checkbox" disabled {% if paymentMethod.isActive %}checked="checked"{% endif %}</dd>
                     </dl>
