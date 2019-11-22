@@ -32,11 +32,6 @@ class BaseQueryPlugin implements QueryInterface, SearchStringSetterInterface, Se
     }
 
     /**
-     * {@inheritDoc}
-     * - Returns a query object for base search.
-     *
-     * @api
-     *
      * @return \Elastica\Query
      */
     public function getSearchQuery(): Query

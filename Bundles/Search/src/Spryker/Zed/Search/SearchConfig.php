@@ -156,12 +156,4 @@ class SearchConfig extends AbstractBundleConfig
     {
         return $this->get(SearchConstants::SEARCH_INDEX_NAME_SUFFIX, '');
     }
-
-    /**
-     * @return array
-     */
-    public function getIndexNameMap(): array
-    {
-        return $this->getSharedConfig()->getIndexNameNap();
-    }
 }

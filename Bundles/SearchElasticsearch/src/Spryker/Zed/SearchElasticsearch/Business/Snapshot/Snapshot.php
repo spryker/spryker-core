@@ -34,7 +34,7 @@ class Snapshot implements SnapshotInterface
      */
     public function createSnapshot(string $repositoryName, string $snapshotName, array $options = []): bool
     {
-        return $this->elasticaSnapshot->createSnapshot($repositoryName, $snapshotName, $options, 'true')->isOk();
+        return $this->elasticaSnapshot->createSnapshot($repositoryName, $snapshotName, $options, true)->isOk();
     }
 
     /**

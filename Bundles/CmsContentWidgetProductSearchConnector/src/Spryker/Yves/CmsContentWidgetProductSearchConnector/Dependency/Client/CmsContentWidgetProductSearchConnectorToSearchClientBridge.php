@@ -27,7 +27,7 @@ class CmsContentWidgetProductSearchConnectorToSearchClientBridge implements CmsC
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return \Elastica\ResultSet|mixed
+     * @return mixed
      */
     public function searchQueryString($searchString, $limit = null, $offset = null)
     {
