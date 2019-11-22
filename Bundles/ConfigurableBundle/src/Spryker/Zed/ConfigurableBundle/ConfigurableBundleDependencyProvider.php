@@ -142,9 +142,9 @@ class ConfigurableBundleDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addProductImageSetQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT_IMAGE_SET, function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_IMAGE_SET, $container->factory(function () {
             return SpyProductImageSetQuery::create();
-        });
+        }));
 
         return $container;
     }
