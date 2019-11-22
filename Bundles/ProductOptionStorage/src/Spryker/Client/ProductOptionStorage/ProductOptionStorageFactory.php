@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductOptionStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToUtilEncodingServiceInterface;
 use Spryker\Client\ProductOptionStorage\Price\ValuePriceReader;
 use Spryker\Client\ProductOptionStorage\Storage\ProductOptionStorageReader;
 
@@ -22,7 +23,8 @@ class ProductOptionStorageFactory extends AbstractFactory
             $this->getStorage(),
             $this->getStore(),
             $this->getSynchronizationService(),
-            $this->createValuePriceReader()
+            $this->createValuePriceReader(),
+            $this->getUtilEncodingService()
         );
     }
 
@@ -40,6 +42,14 @@ class ProductOptionStorageFactory extends AbstractFactory
     protected function getSynchronizationService()
     {
         return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): ProductOptionStorageToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(ProductOptionStorageDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
     /**
