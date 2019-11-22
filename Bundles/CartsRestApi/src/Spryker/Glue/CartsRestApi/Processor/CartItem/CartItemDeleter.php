@@ -9,6 +9,8 @@ namespace Spryker\Glue\CartsRestApi\Processor\CartItem;
 
 use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteErrorTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
@@ -16,6 +18,7 @@ use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 
 class CartItemDeleter implements CartItemDeleterInterface
 {
@@ -65,6 +68,14 @@ class CartItemDeleter implements CartItemDeleterInterface
     public function deleteItem(RestRequestInterface $restRequest): RestResponseInterface
     {
         $cartItemRequestTransfer = $this->createCartItemRequestTransfer($restRequest);
+
+        if (!$cartItemRequestTransfer->getQuoteUuid()) {
+            $quoteResponseTransfer = (new QuoteResponseTransfer())
+                ->addError((new QuoteErrorTransfer())
+                ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_QUOTE_UUID_IS_MISSING));
+
+            return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
+        }
 
         $quoteResponseTransfer = $this->cartsRestApiClient->removeItem($cartItemRequestTransfer);
         if (!$quoteResponseTransfer->getIsSuccessful()) {

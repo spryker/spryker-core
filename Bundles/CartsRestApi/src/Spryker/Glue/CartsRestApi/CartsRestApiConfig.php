@@ -154,6 +154,11 @@ class CartsRestApiConfig extends AbstractBundleConfig
                 RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
                 RestErrorMessageTransfer::DETAIL => static::EXCEPTION_MESSAGE_PRICE_MODE_DATA_IS_MISSING,
             ],
+            CartsRestApiSharedConfig::ERROR_IDENTIFIER_QUOTE_UUID_IS_MISSING => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_CART_ID_MISSING,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_BAD_REQUEST,
+                RestErrorMessageTransfer::DETAIL => static::EXCEPTION_MESSAGE_CART_ID_MISSING,
+            ],
         ];
     }
 
