@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="col-xs-12 col-md-6 col-lg-3">
+        <dl>
+            <dt>{{ 'Payment Method Key' | trans }}</dt>
+            <dd>{{ paymentMethod.paymentMethodKey }}</dd>
+        </dl>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-md-6 col-lg-3">
+        <dl>
+            <dt>{{ 'Name' | trans }}</dt>
+            <dd>{{ paymentMethod.methodName }}</dd>
+        </dl>
+    </div>
+</div>
+{{ form_row(paymentMethodForm.isActive) }}

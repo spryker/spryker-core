@@ -25,6 +25,14 @@
                                 <action>index</action>
                                 <visible>0</visible>
                             </payment-method-view>
+                            <payment-method-update>
+                                <label>Edit</label>
+                                <title>Edit Payment Method</title>
+                                <bundle>payment-gui</bundle>
+                                <controller>update-payment-method</controller>
+                                <action>index</action>
+                                <visible>0</visible>
+                            </payment-method-update>
                         </pages>
                     </payment-method>
                 </pages>

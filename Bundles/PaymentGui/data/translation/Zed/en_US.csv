@@ -16,3 +16,5 @@ Configuration,Configuration
 "Is this payment method active?","Is this payment method active?"
 "Store relation","Store relation"
 "Payment method not found","Payment method not found"
+Save,Save
+"Available in the following store(s)","Available in the following store(s)"

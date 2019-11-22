@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PaymentGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\PaymentMethodResponseTransfer;
+use Generated\Shared\Transfer\PaymentMethodTransfer;
 
 interface PaymentGuiToPaymentFacadeInterface
 {
@@ -17,4 +18,13 @@ interface PaymentGuiToPaymentFacadeInterface
      * @return \Generated\Shared\Transfer\PaymentMethodResponseTransfer
      */
     public function findPaymentMethodById(int $idPaymentMethod): PaymentMethodResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodResponseTransfer
+     */
+    public function updatePaymentMethod(
+        PaymentMethodTransfer $paymentMethodTransfer
+    ): PaymentMethodResponseTransfer;
 }
