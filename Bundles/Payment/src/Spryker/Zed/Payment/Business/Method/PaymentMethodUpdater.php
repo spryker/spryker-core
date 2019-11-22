@@ -11,12 +11,13 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PaymentMethodResponseTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Spryker\Zed\Payment\Persistence\Exception\EntityNotFoundException;
 use Spryker\Zed\Payment\Persistence\PaymentEntityManagerInterface;
 
 class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
 {
     use TransactionTrait;
+
+    protected const MESSAGE_UPDATE_ERROR = 'It is impossible to update this payment method';
 
     /**
      * @var \Spryker\Zed\Payment\Persistence\PaymentEntityManagerInterface
@@ -48,15 +49,9 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
     public function updatePaymentMethod(
         PaymentMethodTransfer $paymentMethodTransfer
     ): PaymentMethodResponseTransfer {
-        try {
-            return $this->getTransactionHandler()->handleTransaction(function () use ($paymentMethodTransfer) {
-                return $this->executeUpdatePaymentMethodTransaction($paymentMethodTransfer);
-            });
-        } catch (EntityNotFoundException $e) {
-            return (new PaymentMethodResponseTransfer())
-                ->setIsSuccessful(false)
-                ->addMessage($this->getErrorMessageTransfer($e->getMessage()));
-        }
+        return $this->getTransactionHandler()->handleTransaction(function () use ($paymentMethodTransfer) {
+            return $this->executeUpdatePaymentMethodTransaction($paymentMethodTransfer);
+        });
     }
 
     /**
@@ -75,6 +70,12 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
 
         $paymentMethodTransfer = $this->paymentEntityManager
             ->updatePaymentMethod($paymentMethodTransfer);
+
+        if ($paymentMethodTransfer === null) {
+            return (new PaymentMethodResponseTransfer())
+                ->setIsSuccessful(false)
+                ->addMessage($this->getErrorMessageTransfer(static::MESSAGE_UPDATE_ERROR));
+        }
 
         $this->storeRelationUpdater->update($storeRelationTransfer);
 

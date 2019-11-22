@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\SalesPaymentMethodTypeTransfer;
 use Orm\Zed\Payment\Persistence\SpyPaymentMethodStore;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
-use Spryker\Zed\Payment\Persistence\Exception\EntityNotFoundException;
 
 /**
  * @method \Spryker\Zed\Payment\Persistence\PaymentPersistenceFactory getFactory()
@@ -38,20 +37,18 @@ class PaymentEntityManager extends AbstractEntityManager implements PaymentEntit
     /**
      * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
      *
-     * @throws \Spryker\Zed\Payment\Persistence\Exception\EntityNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\PaymentMethodTransfer
+     * @return \Generated\Shared\Transfer\PaymentMethodTransfer|null
      */
     public function updatePaymentMethod(
         PaymentMethodTransfer $paymentMethodTransfer
-    ): PaymentMethodTransfer {
+    ): ?PaymentMethodTransfer {
         $paymentMethodEntity = $this->getFactory()
             ->createPaymentMethodQuery()
             ->filterByIdPaymentMethod($paymentMethodTransfer->getIdPaymentMethod())
             ->findOne();
 
         if ($paymentMethodEntity === null) {
-            throw new EntityNotFoundException('Payment method not found');
+            return null;
         }
 
         $paymentMethodMapper = $this->getFactory()->createPaymentMapper();

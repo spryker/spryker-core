@@ -24,13 +24,11 @@ interface PaymentEntityManagerInterface
     /**
      * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
      *
-     * @throws \Spryker\Zed\Payment\Persistence\Exception\EntityNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\PaymentMethodTransfer
+     * @return \Generated\Shared\Transfer\PaymentMethodTransfer|null
      */
     public function updatePaymentMethod(
         PaymentMethodTransfer $paymentMethodTransfer
-    ): PaymentMethodTransfer;
+    ): ?PaymentMethodTransfer;
 
     /**
      * @param array $idStores
