@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\CmsSlotBlockGui\Communication\CmsSlotBlockGuiCommunicationFactory getFactory()
@@ -23,6 +24,8 @@ class SlotBlockController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return array
      */
     public function indexAction(Request $request): array
@@ -30,11 +33,16 @@ class SlotBlockController extends AbstractController
         $idCmsSlotTemplate = $this->castId($request->query->get(static::PARAM_ID_CMS_SLOT_TEMPLATE));
         $idCmsSlot = $this->castId($request->query->get(static::PARAM_ID_CMS_SLOT));
 
+        $cmsSlotTransfer = $this->getFactory()->getCmsSlotFacade()->findCmsSlotById($idCmsSlot);
+        if (!$cmsSlotTransfer) {
+            throw new NotFoundHttpException(sprintf('The slot ID %s is incorrect.', $idCmsSlot));
+        }
+
         $cmsBlockChoiceForm = $this->getFactory()->createCmsBlockChoiceForm($idCmsSlotTemplate, $idCmsSlot);
         $cmsSlotBlockCollectionForm = $this->getSlotBlockCollectionForm($request, $idCmsSlotTemplate, $idCmsSlot);
 
         return $this->viewResponse([
-            'slotName' => $this->getFactory()->getCmsSlotFacade()->findCmsSlotById($idCmsSlot)->getName(),
+            'slotName' => $cmsSlotTransfer->getName(),
             'slotBlockTable' => $this->getFactory()->createSlotBlockTable($idCmsSlotTemplate, $idCmsSlot)->render(),
             'cmsBlockChoiceForm' => $cmsBlockChoiceForm->createView(),
             'cmsSlotBlockCollectionForm' => $cmsSlotBlockCollectionForm->createView(),
@@ -63,7 +71,7 @@ class SlotBlockController extends AbstractController
      *
      * @return array
      */
-    public function submitFormAction(Request $request)
+    public function formAction(Request $request)
     {
         $idCmsSlotTemplate = $this->castId($request->query->get(static::PARAM_ID_CMS_SLOT_TEMPLATE));
         $idCmsSlot = $this->castId($request->query->get(static::PARAM_ID_CMS_SLOT));

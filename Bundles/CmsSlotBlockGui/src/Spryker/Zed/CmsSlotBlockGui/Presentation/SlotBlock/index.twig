@@ -60,10 +60,10 @@
 
             {{ slotBlockTable | raw }}
 
-            {{ form_start(cmsSlotBlockCollectionForm, {'action': '/cms-slot-block-gui/slot-block/submit-form?id-cms-slot-template='~idCmsSlotTemplate~'&id-cms-slot='~idCmsSlot}) }}
+            {{ form_start(cmsSlotBlockCollectionForm, {'action': '/cms-slot-block-gui/slot-block/form?id-cms-slot-template='~idCmsSlotTemplate~'&id-cms-slot='~idCmsSlot}) }}
 
             <div id="js-cms-slot-block-form-inner-wrapper">
-                {% include '@CmsSlotBlockGui/SlotBlock/submit-form.twig' %}
+                {% include '@CmsSlotBlockGui/SlotBlock/form.twig' %}
             </div>
 
             <div class="row">
