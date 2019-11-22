@@ -13,6 +13,7 @@ use Generated\Shared\DataBuilder\PaymentProviderBuilder;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Orm\Zed\Payment\Persistence\SpyPaymentMethodQuery;
+use Orm\Zed\Payment\Persistence\SpyPaymentMethodStore;
 use Orm\Zed\Payment\Persistence\SpyPaymentMethodStoreQuery;
 use Orm\Zed\Payment\Persistence\SpyPaymentProviderQuery;
 
@@ -33,6 +34,16 @@ class PaymentDataHelper extends Module
     public function ensurePaymentMethodStoreTableIsEmpty(): void
     {
         SpyPaymentMethodStoreQuery::create()->deleteAll();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensurePaymentProviderTableIsEmpty(): void
+    {
+        SpyPaymentMethodStoreQuery::create()->deleteAll();
+        SpyPaymentMethodQuery::create()->deleteAll();
+        SpyPaymentProviderQuery::create()->deleteAll();
     }
 
     /**
@@ -73,6 +84,18 @@ class PaymentDataHelper extends Module
         $paymentMethodEntity->save();
 
         $paymentMethodTransfer->setIdPaymentMethod($paymentMethodEntity->getIdPaymentMethod());
+        $storeRelationTransfer = $paymentMethodTransfer->getStoreRelation();
+
+        if (!$storeRelationTransfer) {
+            return $paymentMethodTransfer;
+        }
+
+        foreach ($storeRelationTransfer->getIdStores() as $idStore) {
+            (new SpyPaymentMethodStore())
+                ->setFkPaymentMethod($paymentMethodTransfer->getIdPaymentMethod())
+                ->setFkStore($idStore)
+                ->save();
+        }
 
         return $paymentMethodTransfer;
     }
