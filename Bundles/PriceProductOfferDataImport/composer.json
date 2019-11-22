@@ -16,7 +16,8 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/merchant": "*"
   },
   "autoload": {
     "psr-4": {
