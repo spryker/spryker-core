@@ -22,6 +22,9 @@ class DiscountMapper implements DiscountMapperInterface
         DiscountTransfer $discountTransfer,
         RestDiscountsAttributesTransfer $restDiscountsAttributesTransfer
     ): RestDiscountsAttributesTransfer {
-        return $restDiscountsAttributesTransfer->fromArray($discountTransfer->toArray(), true);
+        return $restDiscountsAttributesTransfer
+            ->fromArray($discountTransfer->toArray(), true)
+            ->setCode($discountTransfer->getVoucherCode())
+            ->setExpirationDateTime($discountTransfer->getValidTo());
     }
 }
