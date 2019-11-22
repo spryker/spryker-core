@@ -34,6 +34,7 @@
         <property name="groupKey" type="string"/>
         <property name="isMergeable" type="bool"/>
         <property name="priceTypeName" type="string"/>
+        <property name="moneyValue" type="MoneyValue"/>
     </transfer>
 
     <transfer name="MoneyValue">
