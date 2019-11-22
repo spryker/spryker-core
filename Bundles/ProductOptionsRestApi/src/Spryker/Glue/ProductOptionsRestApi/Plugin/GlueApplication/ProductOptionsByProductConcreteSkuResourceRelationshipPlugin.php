@@ -15,11 +15,11 @@ use Spryker\Glue\ProductOptionsRestApi\ProductOptionsRestApiConfig;
 /**
  * @method \Spryker\Glue\ProductOptionsRestApi\ProductOptionsRestApiFactory getFactory()
  */
-class ProductOptionsByProductAbstractResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class ProductOptionsByProductConcreteSkuResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Adds product-options resource as relationship by product abstract sku.
+     * - Adds product-options resource as relationship by product concrete sku.
      *
      * @api
      *
@@ -31,7 +31,7 @@ class ProductOptionsByProductAbstractResourceRelationshipPlugin extends Abstract
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createProductOptionByProductAbstractSkuExpander()
+            ->createProductOptionByProductConcreteSkuExpander()
             ->addResourceRelationships($resources, $restRequest);
     }
 

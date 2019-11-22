@@ -24,8 +24,10 @@ class ProductOptionStorageDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const CLIENT_PRICE = 'CLIENT_PRICE';
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
+
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     public const STORE = 'STORE';
 
     /**

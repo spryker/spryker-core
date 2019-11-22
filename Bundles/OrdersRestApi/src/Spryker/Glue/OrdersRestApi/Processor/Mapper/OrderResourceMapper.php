@@ -20,14 +20,14 @@ class OrderResourceMapper implements OrderResourceMapperInterface
     /**
      * @var \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface[]
      */
-    protected $restItemToRestOrderItemsAttributesMapperPlugins;
+    protected $restOrderItemsAttributesMapperPlugins;
 
     /**
-     * @param \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface[] $restItemToRestOrderItemsAttributesMapperPlugins
+     * @param \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface[] $restOrderItemsAttributesMapperPlugins
      */
-    public function __construct(array $restItemToRestOrderItemsAttributesMapperPlugins)
+    public function __construct(array $restOrderItemsAttributesMapperPlugins)
     {
-        $this->restItemToRestOrderItemsAttributesMapperPlugins = $restItemToRestOrderItemsAttributesMapperPlugins;
+        $this->restOrderItemsAttributesMapperPlugins = $restOrderItemsAttributesMapperPlugins;
     }
 
     /**
@@ -88,7 +88,7 @@ class OrderResourceMapper implements OrderResourceMapperInterface
         RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
     ): RestOrderItemsAttributesTransfer {
         $restOrderItemsAttributesTransfer = $restOrderItemsAttributesTransfer->fromArray($itemTransfer->toArray(), true);
-        foreach ($this->restItemToRestOrderItemsAttributesMapperPlugins as $restOrderItemsAttributesMapperPlugin) {
+        foreach ($this->restOrderItemsAttributesMapperPlugins as $restOrderItemsAttributesMapperPlugin) {
             $restOrderItemsAttributesTransfer = $restOrderItemsAttributesMapperPlugin->mapItemTransferToRestOrderItemsAttributesTransfer(
                 $itemTransfer,
                 $restOrderItemsAttributesTransfer
