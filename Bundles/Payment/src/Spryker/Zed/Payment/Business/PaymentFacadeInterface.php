@@ -133,8 +133,8 @@ interface PaymentFacadeInterface
     /**
      * Specification:
      * - Updates payment method in database using provided PaymentMethod transfer object data.
-     * - Updates/creates payment method store relation collection in the PaymentMethod transfer object.
-     * - Returns PaymentMethodResponseTransfer transfer object.
+     * - Updates or creates payment method store relation collection in the PaymentMethod transfer object.
+     * - Returns PaymentMethodResponse transfer object.
      *
      * @api
      *
