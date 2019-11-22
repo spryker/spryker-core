@@ -76,4 +76,23 @@ class ConfigurableBundleStorageRepository extends AbstractRepository implements 
         return $this->buildQueryFromCriteria($configurableBundleTemplateStoragePropelQuery, $filterTransfer)
             ->find();
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $configurableBundleTemplateIds
+     *
+     * @return \Generated\Shared\Transfer\SpyConfigurableBundleTemplateImageStorageEntityTransfer[]
+     */
+    public function getFilteredConfigurableBundleTemplateImageStorageEntities(FilterTransfer $filterTransfer, array $configurableBundleTemplateIds): array
+    {
+        $configurableBundleTemplateImageStoragePropelQuery = $this->getFactory()
+            ->getConfigurableBundleTemplateImageStoragePropelQuery();
+
+        if ($configurableBundleTemplateIds) {
+            $configurableBundleTemplateImageStoragePropelQuery->filterByFkConfigurableBundleTemplate_In($configurableBundleTemplateIds);
+        }
+
+        return $this->buildQueryFromCriteria($configurableBundleTemplateImageStoragePropelQuery, $filterTransfer)
+            ->find();
+    }
 }
