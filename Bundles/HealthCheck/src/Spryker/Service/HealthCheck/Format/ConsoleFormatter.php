@@ -48,7 +48,7 @@ class ConsoleFormatter implements FormatterInterface
      */
     public function formatMessage(HealthCheckResponseTransfer $healthCheckResponseTransfer): HealthCheckResponseTransfer
     {
-        $message = '';
+        $message = 'Response:' . PHP_EOL;
         foreach ($healthCheckResponseTransfer->getHealthCheckServiceResponses() as $healthCheckServiceResponseTransfer) {
             $serviceName = $healthCheckServiceResponseTransfer->getName();
             $serviceStatus = $healthCheckServiceResponseTransfer->getStatus();
