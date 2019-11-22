@@ -11,6 +11,7 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\Messenger\FlashMessenger\FlashMessenger;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class FlashMessengerApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
@@ -29,9 +30,19 @@ class FlashMessengerApplicationPlugin extends AbstractPlugin implements Applicat
     public function provide(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_FLASH_MESSENGER, function (ContainerInterface $container) {
-            return new FlashMessenger($container->get(static::SERVICE_SESSION)->getFlashBag());
+            return new FlashMessenger($this->getSession($container)->getFlashBag());
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Symfony\Component\HttpFoundation\Session\Session
+     */
+    protected function getSession(ContainerInterface $container): Session
+    {
+        return $container->get(static::SERVICE_SESSION);
     }
 }
