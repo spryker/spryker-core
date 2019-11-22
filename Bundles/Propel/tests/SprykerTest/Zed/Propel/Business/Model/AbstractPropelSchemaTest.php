@@ -47,7 +47,7 @@ abstract class AbstractPropelSchemaTest extends Unit
     /**
      * @return string
      */
-    protected function getFixtureDirectory()
+    protected function getFixtureDirectory(): string
     {
         return __DIR__ . '/TempFixtures';
     }

@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ShoppingList\Business\ShoppingListFacade;
 
 use Codeception\Test\Unit;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generated\Shared\DataBuilder\ShoppingListBuilder;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -42,6 +43,8 @@ use Spryker\Zed\ShoppingList\Communication\Plugin\WriteShoppingListPermissionPlu
  */
 class ShoppingListFacadeTest extends Unit
 {
+    use ArraySubsetAsserts;
+
     protected const ERROR_DUPLICATE_NAME_SHOPPING_LIST = 'customer.account.shopping_list.error.duplicate_name';
 
     protected const FAKE_PERMISSION_READ_ONLY = 'FAKE_READ_ONLY';
@@ -145,7 +148,7 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCustomerCanCreateShoppingList()
+    public function testCustomerCanCreateShoppingList(): void
     {
         // Arrange
         $shoppingListTransfer = (new ShoppingListBuilder())->build()
@@ -163,7 +166,7 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCustomersShoppingListNameShouldBeUnique()
+    public function testCustomersShoppingListNameShouldBeUnique(): void
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
@@ -177,13 +180,17 @@ class ShoppingListFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($shoppingListResponseTransfer->getIsSuccess(), 'Customer should not be able to have two shopping lists with same name.');
-        $this->assertTrue(array_intersect([static::ERROR_DUPLICATE_NAME_SHOPPING_LIST], $shoppingListResponseTransfer->getErrors()) === [static::ERROR_DUPLICATE_NAME_SHOPPING_LIST]);
+        $this->assertArraySubset(
+            [static::ERROR_DUPLICATE_NAME_SHOPPING_LIST],
+            $shoppingListResponseTransfer->getErrors(),
+            'Customer should not be able to have two shopping lists with same name.'
+        );
     }
 
     /**
      * @return void
      */
-    public function testCustomersCanRenameShoppinglist()
+    public function testCustomersCanRenameShoppinglist(): void
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
@@ -201,7 +208,7 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testOwnerCanRemoveShoppingList()
+    public function testOwnerCanRemoveShoppingList(): void
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
@@ -216,7 +223,7 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testOnlyOwnerCanRemoveShoppingList()
+    public function testOnlyOwnerCanRemoveShoppingList(): void
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
@@ -232,7 +239,7 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCustomerCanShareShoppingListWithCompanyUser()
+    public function testCustomerCanShareShoppingListWithCompanyUser(): void
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
@@ -261,7 +268,7 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCustomerCanShareShoppingListWithBusinessUnit()
+    public function testCustomerCanShareShoppingListWithBusinessUnit(): void
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
@@ -290,7 +297,7 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCustomerCanShareShoppingList()
+    public function testCustomerCanShareShoppingList(): void
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
@@ -319,7 +326,7 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCustomerCanNotRemoveSharedShoppingList()
+    public function testCustomerCanNotRemoveSharedShoppingList(): void
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
@@ -343,7 +350,7 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testOwnerCanAddItemToShoppingList()
+    public function testOwnerCanAddItemToShoppingList(): void
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
@@ -364,7 +371,7 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testOwnerCanNotAddItemWithNonPositiveQuantityToShoppingList()
+    public function testOwnerCanNotAddItemWithNonPositiveQuantityToShoppingList(): void
     {
         $quantities = [0, -1];
 
@@ -389,7 +396,7 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCustomerCanNotAddItemToSharedShoppingList()
+    public function testCustomerCanNotAddItemToSharedShoppingList(): void
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
@@ -410,7 +417,7 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testOwnerCanRemoveItemFromShoppingList()
+    public function testOwnerCanRemoveItemFromShoppingList(): void
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
@@ -432,7 +439,7 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCustomerCanCreateShoppingListFromHisQuote()
+    public function testCustomerCanCreateShoppingListFromHisQuote(): void
     {
         // Arrange
         $quoteTransfer = $this->tester->havePersistentQuote([
@@ -456,7 +463,7 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testOwnerCanGetListOfShoppingListItems()
+    public function testOwnerCanGetListOfShoppingListItems(): void
     {
         // Arrange
         $fistShoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
@@ -491,7 +498,7 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCustomerCanGetItemListOfSharedShoppingList()
+    public function testCustomerCanGetItemListOfSharedShoppingList(): void
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
@@ -526,7 +533,7 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testOnlyConcreteProductCanBeAddedToShoppingList()
+    public function testOnlyConcreteProductCanBeAddedToShoppingList(): void
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
@@ -547,7 +554,7 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testShouldReturnShoppingListPermissionGroupCollection()
+    public function testShouldReturnShoppingListPermissionGroupCollection(): void
     {
         // Arrange
         $this->tester->haveShoppingListPermissionGroup(self::FAKE_PERMISSION_READ_ONLY, [
@@ -576,7 +583,7 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSharedCompanyUserWithFullAccessPermissionCanAddItemToShoppingList()
+    public function testSharedCompanyUserWithFullAccessPermissionCanAddItemToShoppingList(): void
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
@@ -609,7 +616,7 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSharedCompanyUserWithReadOnlyPermissionCanNotAddItemToShoppingList()
+    public function testSharedCompanyUserWithReadOnlyPermissionCanNotAddItemToShoppingList(): void
     {
         // Arrange
         $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
@@ -702,7 +709,7 @@ class ShoppingListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCustomerShoppingListCollection()
+    public function testGetCustomerShoppingListCollection(): void
     {
         // Arrange
         $fistShoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);

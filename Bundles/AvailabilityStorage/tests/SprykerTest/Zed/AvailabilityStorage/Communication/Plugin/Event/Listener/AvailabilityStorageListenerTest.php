@@ -65,7 +65,7 @@ class AvailabilityStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testAvailabilityStorageListenerStoreData()
+    public function testAvailabilityStorageListenerStoreData(): void
     {
         SpyAvailabilityStorageQuery::create()->filterByFkProductAbstract($this->productConcreteTransfer->getFkProductAbstract())->delete();
 
@@ -130,7 +130,7 @@ class AvailabilityStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testAvailabilityProductStorageListenerStoreData()
+    public function testAvailabilityProductStorageListenerStoreData(): void
     {
         SpyAvailabilityStorageQuery::create()->filterByFkProductAbstract($this->productConcreteTransfer->getFkProductAbstract())->delete();
         $availabilityStorageCount = SpyAvailabilityStorageQuery::create()->count();
@@ -153,7 +153,7 @@ class AvailabilityStorageListenerTest extends Unit
     /**
      * @return \Spryker\Zed\AvailabilityStorage\Business\AvailabilityStorageFacade
      */
-    protected function getAvailabilityStorageFacade()
+    protected function getAvailabilityStorageFacade(): AvailabilityStorageFacade
     {
         $factory = new AvailabilityStorageBusinessFactory();
         $factory->setConfig(new AvailabilityStorageConfigMock());
@@ -169,7 +169,7 @@ class AvailabilityStorageListenerTest extends Unit
      *
      * @return void
      */
-    protected function assertAvailabilityStorage($previousCount)
+    protected function assertAvailabilityStorage(int $previousCount): void
     {
         $availabilityStorageCount = SpyAvailabilityStorageQuery::create()->count();
         $this->assertGreaterThan($previousCount, $availabilityStorageCount);

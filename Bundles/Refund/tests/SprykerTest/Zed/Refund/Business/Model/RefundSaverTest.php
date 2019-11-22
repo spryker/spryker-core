@@ -44,7 +44,7 @@ class RefundSaverTest extends Unit
     /**
      * @return void
      */
-    public function testSaveRefundShouldReturnTrueIfRefundSaved()
+    public function testSaveRefundShouldReturnTrueIfRefundSaved(): void
     {
         $salesQueryContainerMock = $this->getSalesQueryContainerMock();
         $salesFacadeMock = $this->getSalesFacadeMock();
@@ -60,7 +60,7 @@ class RefundSaverTest extends Unit
     /**
      * @return void
      */
-    public function testSaveRefundShouldReturnFalseIfRefundNotSaved()
+    public function testSaveRefundShouldReturnFalseIfRefundNotSaved(): void
     {
         $salesQueryContainerMock = $this->getSalesQueryContainerMock();
         $salesFacadeMock = $this->getSalesFacadeMock();
@@ -78,7 +78,7 @@ class RefundSaverTest extends Unit
     /**
      * @return void
      */
-    public function testSaveRefundShouldSetCanceledAmountOnOrderItemEntities()
+    public function testSaveRefundShouldSetCanceledAmountOnOrderItemEntities(): void
     {
         $salesOrderItemEntityMock = $this->getSalesOrderItemEntityMock();
 
@@ -107,7 +107,7 @@ class RefundSaverTest extends Unit
     /**
      * @return void
      */
-    public function testSaveRefundShouldSetCanceledAmountOnOrderExpenseEntities()
+    public function testSaveRefundShouldSetCanceledAmountOnOrderExpenseEntities(): void
     {
         $salesExpenseEntityMock = $this->getSalesExpenseEntityMock();
 
@@ -137,7 +137,7 @@ class RefundSaverTest extends Unit
     /**
      * @return void
      */
-    public function testSaveRefundShouldBuildRefundEntity()
+    public function testSaveRefundShouldBuildRefundEntity(): void
     {
         $salesFacadeMock = $this->getSalesFacadeMock();
         $calculationFacadeMock = $this->getCalculationFacadeMock();
@@ -183,7 +183,7 @@ class RefundSaverTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Refund\Persistence\SpyRefund
      */
-    protected function getRefundEntity($affectedColumns)
+    protected function getRefundEntity(int $affectedColumns)
     {
         $refundEntityMock = $this->getMockBuilder(SpyRefund::class)->getMock();
         $refundEntityMock->method('save')->willReturn($affectedColumns);
@@ -262,7 +262,7 @@ class RefundSaverTest extends Unit
     /**
      * @return bool
      */
-    public function commit()
+    public function commit(): bool
     {
         return $this->isCommitSuccessful;
     }

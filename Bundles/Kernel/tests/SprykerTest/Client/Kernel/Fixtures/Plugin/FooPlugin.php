@@ -7,14 +7,16 @@
 
 namespace SprykerTest\Client\Kernel\Fixtures\Plugin;
 
+use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 class FooPlugin extends AbstractPlugin
 {
     /**
-     * @return \Spryker\Client\Kernel\AbstractPlugin
+     * @return \Spryker\Client\Kernel\AbstractFactory
      */
-    public function getFactory()
+    public function getFactory(): AbstractFactory
     {
         return parent::getFactory();
     }
@@ -22,7 +24,7 @@ class FooPlugin extends AbstractPlugin
     /**
      * @return \Spryker\Client\Kernel\AbstractClient
      */
-    public function getClient()
+    public function getClient(): AbstractClient
     {
         return parent::getClient();
     }

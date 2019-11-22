@@ -14,6 +14,7 @@ use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 use Spryker\Zed\Development\Business\DependencyTree\FileInfoExtractor;
 use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Auto-generated group annotations
@@ -34,7 +35,7 @@ class ExternalDependencyTest extends Unit
      *
      * @return \Symfony\Component\Finder\SplFileInfo
      */
-    public function getTestFile()
+    public function getTestFile(): SplFileInfo
     {
         $finder = new Finder();
         $finder->files()->in(__DIR__ . '/test_files');
@@ -49,7 +50,7 @@ class ExternalDependencyTest extends Unit
     /**
      * @return void
      */
-    public function testAddDependency()
+    public function testAddDependency(): void
     {
         $developmentConfig = new DevelopmentConfig();
         $testFile = $this->getTestFile();

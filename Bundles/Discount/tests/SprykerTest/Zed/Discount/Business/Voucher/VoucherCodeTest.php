@@ -29,7 +29,7 @@ class VoucherCodeTest extends Unit
     /**
      * @return void
      */
-    public function testUseCodesShouldPersistIncrementedNumberOfUses()
+    public function testUseCodesShouldPersistIncrementedNumberOfUses(): void
     {
         $discountVoucherEntity = $this->createDiscountVoucherMock();
 
@@ -69,7 +69,7 @@ class VoucherCodeTest extends Unit
     /**
      * @return void
      */
-    public function testUseVoucherCodesWhenThereIsNoVoucherShouldReturnFalse()
+    public function testUseVoucherCodesWhenThereIsNoVoucherShouldReturnFalse(): void
     {
         $discountQueryMock = $this->createDiscountQueryMock();
         $discountQueryMock->method('find')->willReturn([]);
@@ -87,7 +87,7 @@ class VoucherCodeTest extends Unit
     /**
      * @return void
      */
-    public function testUseVoucherWhenVoucherNotActiveShouldNotUpdate()
+    public function testUseVoucherWhenVoucherNotActiveShouldNotUpdate(): void
     {
         $discountVoucherEntity = $this->createDiscountVoucherMock();
 
@@ -111,7 +111,7 @@ class VoucherCodeTest extends Unit
     /**
      * @return void
      */
-    public function testUseVoucherShouldUpdateCounterForUnlimited()
+    public function testUseVoucherShouldUpdateCounterForUnlimited(): void
     {
         $discountVoucherEntity = $this->createDiscountVoucherMock();
 
@@ -147,7 +147,7 @@ class VoucherCodeTest extends Unit
     /**
      * @return void
      */
-    public function testReleaseCodesShouldPersistDecrementedNumberOfUses()
+    public function testReleaseCodesShouldPersistDecrementedNumberOfUses(): void
     {
         $discountVoucherEntity = $this->createDiscountVoucherMock();
 
@@ -183,7 +183,7 @@ class VoucherCodeTest extends Unit
     /**
      * @return void
      */
-    public function testReleaseCodesNotVouchersFoundShouldReturnZeroUpdatedItems()
+    public function testReleaseCodesNotVouchersFoundShouldReturnZeroUpdatedItems(): void
     {
         $discountQueryMock = $this->createDiscountQueryMock();
         $discountQueryMock->method('find')->willReturn([]);
@@ -201,7 +201,7 @@ class VoucherCodeTest extends Unit
     /**
      * @return void
      */
-    public function testReleaseCodeWhenVoucherIsWithoutCounterShouldReturnZeroUpdatedItems()
+    public function testReleaseCodeWhenVoucherIsWithoutCounterShouldReturnZeroUpdatedItems(): void
     {
         $discountVoucherEntity = $this->createDiscountVoucherMock();
 
@@ -229,8 +229,7 @@ class VoucherCodeTest extends Unit
      */
     protected function createVoucherCode(
         ?DiscountQueryContainerInterface $discountQueryContainerMock = null
-    ) {
-
+    ): VoucherCode {
         if (!$discountQueryContainerMock) {
             $discountQueryContainerMock = $this->createDiscountQueryContainerMock();
         }

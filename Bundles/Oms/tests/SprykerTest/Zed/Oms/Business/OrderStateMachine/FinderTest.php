@@ -13,6 +13,7 @@ use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Builder;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Finder;
+use Spryker\Zed\Oms\Business\OrderStateMachine\FinderInterface;
 use Spryker\Zed\Oms\Business\Process\Event;
 use Spryker\Zed\Oms\Business\Process\Process;
 use Spryker\Zed\Oms\Business\Process\State;
@@ -40,7 +41,7 @@ class FinderTest extends Unit
     /**
      * @return void
      */
-    public function testGetStateDisplayNameShouldReturnDisplayName()
+    public function testGetStateDisplayNameShouldReturnDisplayName(): void
     {
         $finder = $this->createFinder();
 
@@ -54,7 +55,7 @@ class FinderTest extends Unit
     /**
      * @return void
      */
-    public function testGetStateDisplayNameWhenSubProcessRequestedShouldReturnDisplayName()
+    public function testGetStateDisplayNameWhenSubProcessRequestedShouldReturnDisplayName(): void
     {
         $finder = $this->createFinder();
 
@@ -69,7 +70,7 @@ class FinderTest extends Unit
     /**
      * @return void
      */
-    public function testGetStateDisplayNameShouldThrowExceptionWhenStateNotFound()
+    public function testGetStateDisplayNameShouldThrowExceptionWhenStateNotFound(): void
     {
         $this->expectException('Spryker\Zed\Oms\Business\Exception\StateNotFoundException');
         $this->expectExceptionMessage('State with name "not existing" not found in any StateMachine processes.');
@@ -85,7 +86,7 @@ class FinderTest extends Unit
     /**
      * @return \Spryker\Zed\Oms\Business\OrderStateMachine\FinderInterface
      */
-    protected function createFinder()
+    protected function createFinder(): FinderInterface
     {
         $omsQueryContainerMock = $this->createOmsQueryContainer();
 
@@ -104,7 +105,7 @@ class FinderTest extends Unit
     /**
      * @return string
      */
-    private function getProcessLocation()
+    private function getProcessLocation(): string
     {
         return __DIR__ . '/Finder/Fixtures';
     }
@@ -130,7 +131,7 @@ class FinderTest extends Unit
      *
      * @return \Spryker\Zed\Oms\Business\OrderStateMachine\Builder
      */
-    protected function createBuilder(DrawerInterface $drawerMock)
+    protected function createBuilder(DrawerInterface $drawerMock): Builder
     {
         return new Builder(
             new Event(),
@@ -144,7 +145,7 @@ class FinderTest extends Unit
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
-    protected function createSalesOrderItemEntity()
+    protected function createSalesOrderItemEntity(): SpySalesOrderItem
     {
         $salesOrderItemEntity = new SpySalesOrderItem();
 

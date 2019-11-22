@@ -28,11 +28,11 @@ class ProductRelationEditCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(ProductRelationCommunicationTester $i)
+    public function breadcrumbIsVisible(ProductRelationCommunicationTester $i): void
     {
         $i->listDataTable(ProductRelationListPage::URL . '/table');
         $i->clickDataTableEditButton();
 
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Product Relations / Edit Product Relation');
+        $i->seeBreadcrumbNavigation('Products / Product Relations / Edit Product Relation');
     }
 }

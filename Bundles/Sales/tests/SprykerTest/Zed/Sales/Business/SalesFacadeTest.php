@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 
 /**
@@ -49,7 +50,7 @@ class SalesFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetOrderByIdSalesOrderShouldReturnOrderTransferWithOrderDataAndTotals()
+    public function testGetOrderByIdSalesOrderShouldReturnOrderTransferWithOrderDataAndTotals(): void
     {
         $productTransfer = $this->tester->haveProduct();
         $this->tester->haveProductInStock([StockProductTransfer::SKU => $productTransfer->getSku()]);
@@ -82,7 +83,7 @@ class SalesFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetOrderByIdSalesOrderWhenGuestCustomerShouldNotCountOrders()
+    public function testGetOrderByIdSalesOrderWhenGuestCustomerShouldNotCountOrders(): void
     {
         $productTransfer = $this->tester->haveProduct();
         $this->tester->haveProductInStock([StockProductTransfer::SKU => $productTransfer->getSku()]);
@@ -102,7 +103,7 @@ class SalesFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCustomerOrderShouldReturnListOfCustomerPlacedOrders()
+    public function testCustomerOrderShouldReturnListOfCustomerPlacedOrders(): void
     {
         $salesOrderEntity = $this->tester->create();
 
@@ -151,7 +152,7 @@ class SalesFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
      */
-    protected function createSalesFacade()
+    protected function createSalesFacade(): SalesFacadeInterface
     {
         return $this->tester->getLocator()->sales()->facade();
     }

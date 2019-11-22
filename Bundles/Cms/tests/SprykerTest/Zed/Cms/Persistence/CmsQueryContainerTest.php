@@ -27,7 +27,7 @@ class CmsQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAllCmsVersionReturnCorrectQuery()
+    public function testQueryAllCmsVersionReturnCorrectQuery(): void
     {
         $cmsQueryContainer = new CmsQueryContainer();
         $cmsQueryContainer->setFactory(new CmsPersistenceFactory());

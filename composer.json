@@ -3,7 +3,7 @@
   "description": "Spryker Framework",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.2"
   },
   "require-dev": {
     "spryker/code-sniffer": "dev-master"
@@ -286,7 +286,16 @@
     "spryker/manual-order-entry-gui-extension": "*",
     "spryker/merchant": "*",
     "spryker/merchant-data-import": "*",
+    "spryker/merchant-extension": "*",
     "spryker/merchant-gui": "*",
+    "spryker/merchant-gui-extension": "*",
+    "spryker/merchant-profile": "*",
+    "spryker/merchant-profile-data-import": "*",
+    "spryker/merchant-profile-gui": "*",
+    "spryker/merchant-profile-storage": "*",
+    "spryker/merchant-product-offer": "*",
+    "spryker/merchant-product-offer-data-import": "*",
+    "spryker/merchant-product-offer-storage": "*",
     "spryker/merchant-relationship": "*",
     "spryker/merchant-relationship-data-import": "*",
     "spryker/merchant-relationship-extension": "*",
@@ -422,6 +431,9 @@
     "spryker/product-measurement-unit-storage": "*",
     "spryker/product-merchant-connector": "*",
     "spryker/product-new": "*",
+    "spryker/product-offer": "*",
+    "spryker/product-offer-stock": "*",
+    "spryker/product-offer-stock-data-import": "*",
     "spryker/product-option": "*",
     "spryker/product-option-cart-connector": "*",
     "spryker/product-option-extension": "*",

@@ -165,7 +165,7 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
      */
     protected function getParameters(?array $constraintParameters = null): ?array
     {
-        if (!reset($constraintParameters)) {
+        if (!$constraintParameters) {
             return null;
         }
 
@@ -174,8 +174,9 @@ class RestRequestValidatorConstraintResolver implements RestRequestValidatorCons
                 continue;
             }
 
-            $constraintParameters[$constraintName] = $constraintParameter = $this->processFieldsParameter($constraintParameter);
-            $constraintParameters[$constraintName] = $constraintParameter = $this->processConstraintsParameter($constraintParameter);
+            $constraintParameter = $this->processFieldsParameter($constraintParameter);
+            $constraintParameter = $this->processConstraintsParameter($constraintParameter);
+            $constraintParameters[$constraintName] = $constraintParameter;
         }
 
         return $constraintParameters;

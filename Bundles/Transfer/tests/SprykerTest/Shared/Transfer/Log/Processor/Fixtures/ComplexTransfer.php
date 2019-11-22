@@ -76,7 +76,7 @@ class ComplexTransfer extends AbstractTransfer implements TransferInterface
     /**
      * @return array
      */
-    public function getArray()
+    public function getArray(): array
     {
         return $this->array;
     }
@@ -86,7 +86,7 @@ class ComplexTransfer extends AbstractTransfer implements TransferInterface
      *
      * @return $this
      */
-    public function setArray($array)
+    public function setArray(array $array)
     {
         $this->array = $array;
 
@@ -96,7 +96,7 @@ class ComplexTransfer extends AbstractTransfer implements TransferInterface
     /**
      * @return \ArrayObject
      */
-    public function getEmptyTransfer()
+    public function getEmptyTransfer(): ArrayObject
     {
         return $this->emptyTransfer;
     }
@@ -106,7 +106,7 @@ class ComplexTransfer extends AbstractTransfer implements TransferInterface
      *
      * @return $this
      */
-    public function setEmptyTransfer($emptyTransfer)
+    public function setEmptyTransfer(ArrayObject $emptyTransfer)
     {
         $this->emptyTransfer = $emptyTransfer;
 
@@ -116,7 +116,7 @@ class ComplexTransfer extends AbstractTransfer implements TransferInterface
     /**
      * @return \SprykerTest\Shared\Transfer\Log\Processor\Fixtures\SimpleTransfer
      */
-    public function getInnerTransfer()
+    public function getInnerTransfer(): SimpleTransfer
     {
         return $this->innerTransfer;
     }
@@ -126,7 +126,7 @@ class ComplexTransfer extends AbstractTransfer implements TransferInterface
      *
      * @return $this
      */
-    public function setInnerTransfer($innerTransfer)
+    public function setInnerTransfer(SimpleTransfer $innerTransfer)
     {
         $this->innerTransfer = $innerTransfer;
 
@@ -136,7 +136,7 @@ class ComplexTransfer extends AbstractTransfer implements TransferInterface
     /**
      * @return \SprykerTest\Shared\Transfer\Log\Processor\Fixtures\SimpleTransfer[]
      */
-    public function getTransferCollection()
+    public function getTransferCollection(): array
     {
         return $this->transferCollection;
     }
@@ -146,7 +146,7 @@ class ComplexTransfer extends AbstractTransfer implements TransferInterface
      *
      * @return $this
      */
-    public function setTransferCollection($transferCollection)
+    public function setTransferCollection(array $transferCollection)
     {
         $this->transferCollection = $transferCollection;
 

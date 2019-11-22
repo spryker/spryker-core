@@ -96,7 +96,7 @@ class StockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsNeverOutOfStockShouldReturnFalse()
+    public function testIsNeverOutOfStockShouldReturnFalse(): void
     {
         $isNeverOutOfStock = $this->stockFacade->isNeverOutOfStock(self::CONCRETE_SKU);
 
@@ -106,7 +106,7 @@ class StockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsNeverOutOfStockShouldReturnTrue()
+    public function testIsNeverOutOfStockShouldReturnTrue(): void
     {
         $this->productStockEntity1->setIsNeverOutOfStock(true);
         $this->productStockEntity1->setQuantity(null);
@@ -120,7 +120,7 @@ class StockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateStockForProductShouldCheckAllStocks()
+    public function testCalculateStockForProductShouldCheckAllStocks(): void
     {
         $productStock = $this->stockFacade->calculateStockForProduct(self::CONCRETE_SKU);
 
@@ -130,7 +130,7 @@ class StockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateStockType()
+    public function testCreateStockType(): void
     {
         $stockTypeTransfer = (new TypeTransfer())
             ->setName('Test-Stock-Type');
@@ -147,7 +147,7 @@ class StockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateStockProduct()
+    public function testCreateStockProduct(): void
     {
         $productAbstractEntity = new SpyProductAbstract();
         $productAbstractEntity
@@ -179,7 +179,7 @@ class StockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateStockProductShouldThrowException()
+    public function testCreateStockProductShouldThrowException(): void
     {
         $this->expectException(StockProductAlreadyExistsException::class);
         $this->expectExceptionMessage('Cannot duplicate entry: this stock type is already set for this product');
@@ -201,7 +201,7 @@ class StockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateStockProduct()
+    public function testUpdateStockProduct(): void
     {
         $stockProductTransfer = (new StockProductTransfer())
             ->setIdStockProduct($this->productStockEntity1->getIdStockProduct())
@@ -221,7 +221,7 @@ class StockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDecrementStockShouldReduceStockSize()
+    public function testDecrementStockShouldReduceStockSize(): void
     {
         $this->stockFacade->decrementStockProduct(
             self::CONCRETE_SKU,
@@ -237,7 +237,7 @@ class StockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIncrementStockShouldIncreaseStockSize()
+    public function testIncrementStockShouldIncreaseStockSize(): void
     {
         $this->stockFacade->incrementStockProduct(
             self::CONCRETE_SKU,
@@ -253,7 +253,7 @@ class StockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testHasStockProductShouldReturnTrue()
+    public function testHasStockProductShouldReturnTrue(): void
     {
         $exists = $this->stockFacade->hasStockProduct(
             self::CONCRETE_SKU,
@@ -266,7 +266,7 @@ class StockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testHasStockProductShouldReturnFalse()
+    public function testHasStockProductShouldReturnFalse(): void
     {
         $exists = $this->stockFacade->hasStockProduct(
             'INVALIDSKU',
@@ -279,7 +279,7 @@ class StockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testPersistStockProductCollection()
+    public function testPersistStockProductCollection(): void
     {
         $increment = 20;
 
@@ -318,7 +318,7 @@ class StockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandProductConcreteWithStocks()
+    public function testExpandProductConcreteWithStocks(): void
     {
         $productConcreteTransfer = (new ProductConcreteTransfer())
             ->setIdProductConcrete($this->productConcreteEntity->getIdProduct())
@@ -336,7 +336,7 @@ class StockFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setupData()
+    protected function setupData(): void
     {
         $this->productAbstractEntity = new SpyProductAbstract();
         $this->productAbstractEntity

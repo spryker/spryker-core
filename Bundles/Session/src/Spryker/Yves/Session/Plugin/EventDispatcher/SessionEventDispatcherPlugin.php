@@ -112,12 +112,12 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
         ContainerInterface $container
     ): EventDispatcherInterface {
         $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) {
-            if (!$event->isMasterRequest()) {
+            if (!$event->isMasterRequest() || !$event->getRequest()->hasSession()) {
                 return;
             }
 
             $session = $event->getRequest()->getSession();
-            if ($session && $session->isStarted()) {
+            if ($session->isStarted()) {
                 $session->save();
 
                 $event->getResponse()->headers->setCookie($this->createSessionCookie($session->getName(), $session->getId(), session_get_cookie_params()));

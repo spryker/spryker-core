@@ -9,6 +9,7 @@ namespace SprykerTest\Shared\ErrorHandler;
 
 use Codeception\Test\Unit;
 use ReflectionClass;
+use ReflectionProperty;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\ErrorHandler\ErrorHandler;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
@@ -54,7 +55,7 @@ class ErrorHandlerFactoryTest extends Unit
     /**
      * @return \ReflectionProperty
      */
-    protected function getConfigReflectionProperty()
+    protected function getConfigReflectionProperty(): ReflectionProperty
     {
         $reflection = new ReflectionClass(Config::class);
         $reflectionProperty = $reflection->getProperty('config');
@@ -66,7 +67,7 @@ class ErrorHandlerFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateErrorHandlerShouldReturnErrorHandlerWithCliErrorRendererWhenSapiIsCli()
+    public function testCreateErrorHandlerShouldReturnErrorHandlerWithCliErrorRendererWhenSapiIsCli(): void
     {
         $errorHandlerFactoryMock = $this->getErrorHandlerFactoryMock('ZED', ['isCliCall', 'createCliRenderer']);
         $errorHandlerFactoryMock->expects($this->once())->method('isCliCall')->willReturn(true);
@@ -79,7 +80,7 @@ class ErrorHandlerFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateErrorHandlerShouldReturnErrorHandlerWithWebHtmlErrorRendererAsDefaultWhenSapiNotCliAndNoConfigGiven()
+    public function testCreateErrorHandlerShouldReturnErrorHandlerWithWebHtmlErrorRendererAsDefaultWhenSapiNotCliAndNoConfigGiven(): void
     {
         $errorHandlerFactoryMock = $this->getErrorHandlerFactoryMock('ZED', ['isCliCall', 'createWebErrorRenderer']);
         $errorHandlerFactoryMock->expects($this->once())->method('isCliCall')->willReturn(false);
@@ -96,7 +97,7 @@ class ErrorHandlerFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateErrorHandlerShouldReturnErrorHandlerWithConfiguredWebExceptionErrorRendererWhenSapiNotCliAndErrorRendererConfigGiven()
+    public function testCreateErrorHandlerShouldReturnErrorHandlerWithConfiguredWebExceptionErrorRendererWhenSapiNotCliAndErrorRendererConfigGiven(): void
     {
         $errorHandlerFactoryMock = $this->getErrorHandlerFactoryMock('ZED', ['isCliCall', 'createWebErrorRenderer']);
         $errorHandlerFactoryMock->expects($this->once())->method('isCliCall')->willReturn(false);
@@ -117,7 +118,7 @@ class ErrorHandlerFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateErrorHandlerShouldReturnErrorHandlerWithConfiguredWebHtmlErrorRendererWhenSapiNotCliAndErrorRendererConfigGiven()
+    public function testCreateErrorHandlerShouldReturnErrorHandlerWithConfiguredWebHtmlErrorRendererWhenSapiNotCliAndErrorRendererConfigGiven(): void
     {
         $errorHandlerFactoryMock = $this->getErrorHandlerFactoryMock('ZED', ['isCliCall', 'createWebErrorRenderer']);
         $errorHandlerFactoryMock->expects($this->once())->method('isCliCall')->willReturn(false);
@@ -141,7 +142,7 @@ class ErrorHandlerFactoryTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\ErrorHandler\ErrorHandlerFactory
      */
-    protected function getErrorHandlerFactoryMock($application, array $methods)
+    protected function getErrorHandlerFactoryMock(string $application, array $methods)
     {
         return $this->getMockBuilder(ErrorHandlerFactory::class)
             ->setMethods($methods)
@@ -152,7 +153,7 @@ class ErrorHandlerFactoryTest extends Unit
     /**
      * @return void
      */
-    protected function unsetAllErrorRelatedConfigs()
+    protected function unsetAllErrorRelatedConfigs(): void
     {
         $configProperty = $this->getConfigReflectionProperty();
         $config = $configProperty->getValue();

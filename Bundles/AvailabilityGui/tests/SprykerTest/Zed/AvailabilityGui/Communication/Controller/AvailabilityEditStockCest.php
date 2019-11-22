@@ -28,7 +28,7 @@ class AvailabilityEditStockCest
      *
      * @return void
      */
-    public function testEditExistingStock(AvailabilityGuiCommunicationTester $i)
+    public function testEditExistingStock(AvailabilityGuiCommunicationTester $i): void
     {
         $i->wantTo('Edit availability stock');
         $i->expect('New stock added.');
@@ -43,7 +43,7 @@ class AvailabilityEditStockCest
             )
         );
 
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Availability / Edit Stock');
+        $i->seeBreadcrumbNavigation('Products / Availability / Edit Stock');
 
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_EDIT_HEADER);
 
