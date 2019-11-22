@@ -95,7 +95,7 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
     }
 
     /**
-     * @param array $urlTransfers
+     * @param \Generated\Shared\Transfer\UrlTransfer[] $urlTransfers
      *
      * @return \Generated\Shared\Transfer\UrlTransfer[] $mappedUrls
      */
