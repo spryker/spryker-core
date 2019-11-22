@@ -11,5 +11,10 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class ProductOptionsRestApiConfig extends AbstractBundleConfig
 {
+    /**
+     * @uses \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS
+     */
+    public const RESOURCE_ABSTRACT_PRODUCTS = 'abstract-products';
+
     public const RESOURCE_PRODUCT_OPTIONS = 'product-options';
 }

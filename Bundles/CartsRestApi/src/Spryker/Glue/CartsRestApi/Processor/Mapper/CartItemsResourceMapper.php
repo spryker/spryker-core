@@ -16,14 +16,14 @@ class CartItemsResourceMapper implements CartItemsResourceMapperInterface
     /**
      * @var \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\RestCartItemsAttributesMapperPluginInterface[]
      */
-    protected $restOrderItemsAttributesMapperPlugins;
+    protected $restCartItemsAttributesMapperPlugins;
 
     /**
-     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\RestCartItemsAttributesMapperPluginInterface[] $restOrderItemsAttributesMapperPlugins
+     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\RestCartItemsAttributesMapperPluginInterface[] $restCartItemsAttributesMapperPlugins
      */
-    public function __construct(array $restOrderItemsAttributesMapperPlugins)
+    public function __construct(array $restCartItemsAttributesMapperPlugins)
     {
-        $this->restOrderItemsAttributesMapperPlugins = $restOrderItemsAttributesMapperPlugins;
+        $this->restCartItemsAttributesMapperPlugins = $restCartItemsAttributesMapperPlugins;
     }
 
     /**
@@ -42,7 +42,7 @@ class CartItemsResourceMapper implements CartItemsResourceMapperInterface
         $calculationsTransfer = (new RestCartItemCalculationsTransfer())->fromArray($itemData, true);
         $restCartItemsAttributesResponseTransfer->setCalculations($calculationsTransfer);
 
-        foreach ($this->restOrderItemsAttributesMapperPlugins as $restOrderItemsAttributesMapperPlugin) {
+        foreach ($this->restCartItemsAttributesMapperPlugins as $restOrderItemsAttributesMapperPlugin) {
             $restCartItemsAttributesResponseTransfer =
                 $restOrderItemsAttributesMapperPlugin->mapItemTransferToRestItemsAttributesTransfer(
                     $itemTransfer,

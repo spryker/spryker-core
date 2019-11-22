@@ -15,25 +15,23 @@ interface ProductOptionMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
-     * @param string[] $translations
+     * @param \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[] $restProductOptionsAttributesTransfers
      *
-     * @return \Generated\Shared\Transfer\RestProductOptionAttributesTransfer[]
+     * @return \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[]
      */
-    public function mapProductAbstractOptionStorageTransferToRestProductOptionAttributesTransfers(
+    public function mapProductAbstractOptionStorageTransferToRestProductOptionsAttributesTransfers(
         ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer,
-        array $translations
+        array $restProductOptionsAttributesTransfers = []
     ): array;
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\RestItemsAttributesTransfer $restItemsAttributesTransfer
-     * @param string[] $translations
      *
      * @return \Generated\Shared\Transfer\RestItemsAttributesTransfer
      */
     public function mapItemTransferToRestOrderItemsAttributesTransfer(
         ItemTransfer $itemTransfer,
-        RestItemsAttributesTransfer $restItemsAttributesTransfer,
-        array $translations
+        RestItemsAttributesTransfer $restItemsAttributesTransfer
     ): RestItemsAttributesTransfer;
 }
