@@ -24,9 +24,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleFilterTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
-use Spryker\Zed\SalesConfigurableBundle\Business\SalesConfigurableBundleBusinessFactory;
-use Spryker\Zed\SalesConfigurableBundle\Business\SalesConfigurableBundleFacadeInterface;
-use Spryker\Zed\SalesConfigurableBundle\SalesConfigurableBundleConfig;
 use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 
 /**
@@ -502,11 +499,8 @@ class SalesConfigurableBundleFacadeTest extends Unit
      */
     public function testTransformConfigurableBundleItem(ItemTransfer $itemTransfer, int $itemQuantity): void
     {
-        //Arrange
-        $salesConfigurableBundleFacade = $this->getSalesConfigurableBundleFacadeWithMockedConfig();
-
         //Act
-        $itemCollectionTransfer = $salesConfigurableBundleFacade->transformConfiguredBundleOrderItems(
+        $itemCollectionTransfer = $this->tester->getFacade()->transformConfiguredBundleOrderItems(
             (new OrderTransfer())->addItem($itemTransfer)
         );
 
@@ -525,23 +519,6 @@ class SalesConfigurableBundleFacadeTest extends Unit
             [$this->createConfigurableBundleItem(20, 2, 10), 2],
             [$this->createConfigurableBundleItem(20, 4, 5), 4],
         ];
-    }
-
-    /**
-     * @return \Spryker\Zed\SalesConfigurableBundle\Business\SalesConfigurableBundleFacadeInterface
-     */
-    protected function getSalesConfigurableBundleFacadeWithMockedConfig(): SalesConfigurableBundleFacadeInterface
-    {
-        $salesConfigurableBundleFacade = $this->tester->getFacade();
-        $salesConfigurableBundleBusinessFactory = new SalesConfigurableBundleBusinessFactory();
-
-        $mockedSalesConfigurableBundleConfig = $this->getMockBuilder(SalesConfigurableBundleConfig::class)->disableOriginalConstructor()->getMock();
-        $mockedSalesConfigurableBundleConfig->method('findConfigurableBundleItemQuantityThreshold')->willReturn(10);
-
-        $salesConfigurableBundleBusinessFactory->setConfig($mockedSalesConfigurableBundleConfig);
-        $salesConfigurableBundleFacade->setFactory($salesConfigurableBundleBusinessFactory);
-
-        return $salesConfigurableBundleFacade;
     }
 
     /**
