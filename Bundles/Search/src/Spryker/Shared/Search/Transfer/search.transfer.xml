@@ -136,4 +136,7 @@
     <transfer name="Locale">
     </transfer>
 
+    <transfer name="SearchContext">
+    </transfer>
+
 </transfers>
