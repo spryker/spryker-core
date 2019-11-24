@@ -32,7 +32,7 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInte
  */
 class SearchElasticsearchClientTest extends Unit
 {
-    protected const INDEX_NAME = 'index_name';
+    protected const INDEX_NAME = 'de_search_devtest';
 
     /**
      * @var \SprykerTest\Client\SearchElasticsearch\SearchElasticsearchClientTester

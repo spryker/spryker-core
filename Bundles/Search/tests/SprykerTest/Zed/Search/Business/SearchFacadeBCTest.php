@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Search\Business;
 
 use Codeception\Test\Unit;
 use Psr\Log\NullLogger;
+use Spryker\Shared\Search\SearchConstants;
 
 /**
  * Auto-generated group annotations
@@ -31,6 +32,16 @@ class SearchFacadeBCTest extends Unit
      * @var \SprykerTest\Zed\Search\SearchBusinessTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    protected function _setUp(): void
+    {
+        parent::_setUp();
+
+        $this->setUpConfiguration();
+    }
 
     /**
      * @return void
@@ -75,5 +86,15 @@ class SearchFacadeBCTest extends Unit
         $this->assertTrue($index->exists(), 'Index was expected to be installed but was not.');
 
         $this->tester->getFacade()->delete(static::INDEX_NAME);
+    }
+
+    /**
+     * @return void
+     */
+    protected function setUpConfiguration(): void
+    {
+        $this->tester->setConfig(SearchConstants::ELASTICA_PARAMETER__HOST, 'localhost');
+        $this->tester->setConfig(SearchConstants::ELASTICA_PARAMETER__PORT, '10005');
+        $this->tester->setConfig(SearchConstants::ELASTICA_PARAMETER__TRANSPORT, 'http');
     }
 }
