@@ -60,7 +60,7 @@ interface SearchElasticsearchFacadeInterface
      *
      * @return bool
      */
-    public function openIndices(): bool;
+    public function openIndexes(): bool;
 
     /**
      * Specification:
@@ -69,11 +69,11 @@ interface SearchElasticsearchFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SearchContextTransfer|null $searchContextTransfer
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      *
      * @return bool
      */
-    public function closeIndex(?SearchContextTransfer $searchContextTransfer = null): bool;
+    public function closeIndex(SearchContextTransfer $searchContextTransfer): bool;
 
     /**
      * Specification:
@@ -83,7 +83,7 @@ interface SearchElasticsearchFacadeInterface
      *
      * @return bool
      */
-    public function closeIndices(): bool;
+    public function closeIndexes(): bool;
 
     /**
      * Specification:
@@ -107,7 +107,7 @@ interface SearchElasticsearchFacadeInterface
      *
      * @return bool
      */
-    public function deleteIndices(): bool;
+    public function deleteIndexes(): bool;
 
     /**
      * Specification:

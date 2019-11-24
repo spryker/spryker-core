@@ -76,7 +76,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateShipmentPriceShouldUpdatePriceBasedOnCurrencyWithItemLevelShipments()
+    public function testUpdateShipmentPriceShouldUpdatePriceBasedOnCurrencyWithItemLevelShipments(): void
     {
         $shipmentCartConnectorFacade = $this->tester->getFacade();
         $storeTransfer = $this->tester->haveStore([
@@ -108,7 +108,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateShipmentShouldReturnFalseWhenSelectedShipmentHaveNoPrice()
+    public function testValidateShipmentShouldReturnFalseWhenSelectedShipmentHaveNoPrice(): void
     {
         $shipmentCartConnectorFacade = $this->tester->getFacade();
         $storeTransfer = $this->tester->haveStore([
@@ -130,7 +130,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateShipmentShouldReturnFalseWhenSelectedShipmentHaveNoPriceWithItemLevelShipments()
+    public function testValidateShipmentShouldReturnFalseWhenSelectedShipmentHaveNoPriceWithItemLevelShipments(): void
     {
         $shipmentCartConnectorFacade = $this->tester->getFacade();
         $storeTransfer = $this->tester->haveStore([
@@ -152,7 +152,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateShipmentShouldReturnTrueWhenSelectedShipmentHavePrice()
+    public function testValidateShipmentShouldReturnTrueWhenSelectedShipmentHavePrice(): void
     {
         $shipmentCartConnectorFacade = $this->tester->getFacade();
         $storeTransfer = $this->tester->haveStore([
@@ -172,7 +172,7 @@ class ShipmentCartConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateShipmentShouldReturnTrueWhenSelectedShipmentHavePriceWithItemLevelShipments()
+    public function testValidateShipmentShouldReturnTrueWhenSelectedShipmentHavePriceWithItemLevelShipments(): void
     {
         $shipmentCartConnectorFacade = $this->tester->getFacade();
         $storeTransfer = $this->tester->haveStore([

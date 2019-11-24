@@ -12,23 +12,46 @@ use Generated\Shared\Transfer\SearchContextTransfer;
 interface IndexInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SearchContextTransfer|null $searchContextTransfer
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      *
      * @return bool
      */
-    public function openIndex(?SearchContextTransfer $searchContextTransfer = null): bool;
+    public function openIndex(SearchContextTransfer $searchContextTransfer): bool;
 
     /**
-     * @param \Generated\Shared\Transfer\SearchContextTransfer|null $searchContextTransfer
-     *
      * @return bool
      */
-    public function closeIndex(?SearchContextTransfer $searchContextTransfer = null): bool;
+    public function openIndexes(): bool;
 
     /**
-     * @param \Generated\Shared\Transfer\SearchContextTransfer|null $searchContextTransfer
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      *
      * @return bool
      */
-    public function deleteIndex(?SearchContextTransfer $searchContextTransfer = null): bool;
+    public function closeIndex(SearchContextTransfer $searchContextTransfer): bool;
+
+    /**
+     * @return bool
+     */
+    public function closeIndexes(): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     *
+     * @return bool
+     */
+    public function deleteIndex(SearchContextTransfer $searchContextTransfer): bool;
+
+    /**
+     * @return bool
+     */
+    public function deleteIndexes(): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $sourceSearchContextTransfer
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $targetSearchContextTransfer
+     *
+     * @return bool
+     */
+    public function copyIndex(SearchContextTransfer $sourceSearchContextTransfer, SearchContextTransfer $targetSearchContextTransfer): bool;
 }

@@ -614,7 +614,7 @@ class ProductPageSearchListenerTest extends Unit
     /**
      * @return \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade
      */
-    protected function getProductPageSearchFacade()
+    protected function getProductPageSearchFacade(): ProductPageSearchFacade
     {
         $productPageSearchToSearchBridgeMock = $this->getMockBuilder(ProductPageSearchToSearchBridge::class)->disableOriginalConstructor()->getMock();
         $productPageSearchToSearchBridgeMock->method('transformPageMapToDocumentByMapperName')->willReturn([]);

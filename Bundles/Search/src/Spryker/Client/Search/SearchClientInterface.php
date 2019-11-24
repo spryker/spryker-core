@@ -8,7 +8,7 @@
 namespace Spryker\Client\Search;
 
 use Generated\Shared\Transfer\SearchDocumentTransfer;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
 interface SearchClientInterface
 {
@@ -34,11 +34,11 @@ interface SearchClientInterface
      *
      * @api
      *
-     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[] $searchQueryExpanders
      * @param array $requestParameters
      *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     public function expandQuery(QueryInterface $searchQuery, array $searchQueryExpanders, array $requestParameters = []);
 
@@ -50,7 +50,7 @@ interface SearchClientInterface
      *
      * @api
      *
-     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param array $requestParameters
      *

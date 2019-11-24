@@ -16,8 +16,8 @@ use Elastica\Query\MultiMatch;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
 
 /**
@@ -59,7 +59,7 @@ class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements 
 
     /**
      * {@inheritDoc}
-     * - Returns a query object for concrete products catalog search.
+     * - Returns query object for concrete products catalog search.
      *
      * @api
      *
@@ -88,7 +88,7 @@ class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements 
 
     /**
      * {@inheritDoc}
-     * - Defines a context for concrete products catalog search.
+     * - Defines context for concrete products catalog search.
      *
      * @api
      *
@@ -105,7 +105,7 @@ class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements 
 
     /**
      * {@inheritDoc}
-     * - Sets a context for concrete products catalog search.
+     * - Sets context for concrete products catalog search.
      *
      * @api
      *

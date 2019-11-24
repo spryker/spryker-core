@@ -19,7 +19,7 @@ class ProductSetFactory extends AbstractFactory
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     public function createProductSetListQuery($limit = null, $offset = null)
     {
@@ -62,7 +62,7 @@ class ProductSetFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[]
      */
     public function createProductSetListResultFormatters()
     {

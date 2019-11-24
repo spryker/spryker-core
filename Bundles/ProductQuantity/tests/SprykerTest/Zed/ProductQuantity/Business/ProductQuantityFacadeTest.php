@@ -55,13 +55,13 @@ class ProductQuantityFacadeTest extends Unit
      * @return void
      */
     public function testValidateItemRemoveProductQuantityRestrictionsValidatesProductsWithProductQuantityRestrictions(
-        $expectedIsSuccess,
-        $quoteQuantity,
-        $changeQuantity,
-        $minRestriction,
-        $maxRestriction,
-        $intervalRestriction
-    ) {
+        bool $expectedIsSuccess,
+        int $quoteQuantity,
+        int $changeQuantity,
+        ?int $minRestriction,
+        ?int $maxRestriction,
+        ?int $intervalRestriction
+    ): void {
         // Assign
         $productTransfer = $this->tester->createProductWithSpecificProductQuantity($minRestriction, $maxRestriction, $intervalRestriction);
 
@@ -82,7 +82,7 @@ class ProductQuantityFacadeTest extends Unit
     /**
      * @return array
      */
-    public function itemRemovalQuantities()
+    public function itemRemovalQuantities(): array
     {
         return [
             [true, 5, 2, 1, null, 1], // general rule
@@ -112,10 +112,10 @@ class ProductQuantityFacadeTest extends Unit
      * @return void
      */
     public function testValidateItemRemoveProductQuantityRestrictionsValidatesProductsWithoutProductQuantityRestrictions(
-        $expectedIsSuccess,
-        $quoteQuantity,
-        $changeQuantity
-    ) {
+        bool $expectedIsSuccess,
+        int $quoteQuantity,
+        int $changeQuantity
+    ): void {
         // Assign
         $productTransfer = $this->tester->haveProduct();
 
@@ -136,7 +136,7 @@ class ProductQuantityFacadeTest extends Unit
     /**
      * @return array
      */
-    public function itemRemovalProductsWithoutProductQuantity()
+    public function itemRemovalProductsWithoutProductQuantity(): array
     {
         return [
             [true,  5, 4],
@@ -159,13 +159,13 @@ class ProductQuantityFacadeTest extends Unit
      * @return void
      */
     public function testValidateItemAddProductQuantityRestrictionsValidatesProductsWithProductQuantityRestrictions(
-        $expectedIsSuccess,
-        $quoteQuantity,
-        $changeQuantity,
-        $minRestriction,
-        $maxRestriction,
-        $intervalRestriction
-    ) {
+        bool $expectedIsSuccess,
+        int $quoteQuantity,
+        int $changeQuantity,
+        ?int $minRestriction,
+        ?int $maxRestriction,
+        ?int $intervalRestriction
+    ): void {
         // Assign
         $productTransfer = $this->tester->createProductWithSpecificProductQuantity($minRestriction, $maxRestriction, $intervalRestriction);
 
@@ -186,7 +186,7 @@ class ProductQuantityFacadeTest extends Unit
     /**
      * @return array
      */
-    public function itemAdditionQuantities()
+    public function itemAdditionQuantities(): array
     {
         return [
             [true, 5, 2, 1, null, 1], // general rule
@@ -216,10 +216,10 @@ class ProductQuantityFacadeTest extends Unit
      * @return void
      */
     public function testValidateItemAddProductQuantityRestrictionsValidatesProductsWithoutProductQuantityRestrictions(
-        $expectedIsSuccess,
-        $quoteQuantity,
-        $changeQuantity
-    ) {
+        bool $expectedIsSuccess,
+        int $quoteQuantity,
+        int $changeQuantity
+    ): void {
         // Assign
         $productTransfer = $this->tester->haveProduct();
 
@@ -240,7 +240,7 @@ class ProductQuantityFacadeTest extends Unit
     /**
      * @return array
      */
-    public function itemAdditionProductsWithoutProductQuantity()
+    public function itemAdditionProductsWithoutProductQuantity(): array
     {
         return [
             [true, 0, 1],
@@ -253,7 +253,7 @@ class ProductQuantityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductQuantityTransfersByProductIdsFindsAllExistingItems()
+    public function testFindProductQuantityTransfersByProductIdsFindsAllExistingItems(): void
     {
         // Assign
         $productIds = [
@@ -273,7 +273,7 @@ class ProductQuantityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductQuantityTransfersByProductIdsReturnsEmptyArrayWhenProductsWereNotFound()
+    public function testFindProductQuantityTransfersByProductIdsReturnsEmptyArrayWhenProductsWereNotFound(): void
     {
         // Assign
         $dummyProductIds = [999999991, 999999992];

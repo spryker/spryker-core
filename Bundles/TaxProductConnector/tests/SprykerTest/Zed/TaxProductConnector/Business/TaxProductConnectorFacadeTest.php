@@ -237,7 +237,7 @@ class TaxProductConnectorFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface[]
      */
-    protected function getProductAbstractReadPlugins()
+    protected function getProductAbstractReadPlugins(): array
     {
         return [
             new TaxSetProductAbstractReadPlugin(),

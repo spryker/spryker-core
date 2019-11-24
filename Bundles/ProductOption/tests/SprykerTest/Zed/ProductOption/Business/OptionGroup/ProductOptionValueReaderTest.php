@@ -34,7 +34,7 @@ class ProductOptionValueReaderTest extends MockProvider
      *
      * @return void
      */
-    public function testGetProductOptionReturnsPersistedValueTransfer()
+    public function testGetProductOptionReturnsPersistedValueTransfer(): void
     {
         // Assign
         $expectedIdProductOptionValue = 5;
@@ -65,7 +65,7 @@ class ProductOptionValueReaderTest extends MockProvider
      *
      * @return void
      */
-    public function testGetProductOptionThrowsExceptionWhenOptionValueWasNotFoundInPersistentStorage()
+    public function testGetProductOptionThrowsExceptionWhenOptionValueWasNotFoundInPersistentStorage(): void
     {
         // Assign
         $dummyIdProductOptionValue = 1;

@@ -40,11 +40,9 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @param string|null $indexName
-     *
      * @return int
      */
-    public function getTotalCount(?string $indexName = null)
+    public function getTotalCount()
     {
         return $this
             ->getFactory()
@@ -57,15 +55,13 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @param string|null $indexName
-     *
      * @return array
      */
-    public function getMetaData(?string $indexName = null)
+    public function getMetaData()
     {
         return $this
             ->getFactory()
-            ->createSearchIndexManager($indexName)
+            ->createSearchIndexManager()
             ->getMetaData();
     }
 
@@ -76,15 +72,13 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::deleteIndex()` instead.
      *
-     * @param string|null $indexName
-     *
      * @return \Elastica\Response
      */
-    public function delete(?string $indexName = null)
+    public function delete()
     {
         return $this
             ->getFactory()
-            ->createSearchIndexManager($indexName)
+            ->createSearchIndexManager()
             ->delete();
     }
 

@@ -14,6 +14,7 @@ use Spryker\Client\Search\Exception\SearchDelegatorException;
 use Spryker\Client\Search\SearchContext\SourceIdentifierMapperInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
 
 class SearchDelegator implements SearchDelegatorInterface
 {
@@ -48,8 +49,8 @@ class SearchDelegator implements SearchDelegatorInterface
      */
     public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
     {
-        if (!method_exists($searchQuery, 'getSearchContext')) {
-            throw new Exception(sprintf('Your query class "%s" must implement a "getSearchContext()" method.', get_class($searchQuery)));
+        if (!$searchQuery instanceof SearchContextAwareQueryInterface) {
+            throw new Exception(sprintf('Your query class "%s" must implement %s interface.', get_class($searchQuery), SearchContextAwareQueryInterface::class));
         }
 
         $searchQuery = $this->mapSearchContextTransferForQuery($searchQuery);

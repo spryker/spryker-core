@@ -49,7 +49,7 @@ class ProductApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGet()
+    public function testGet(): void
     {
         $productApiFacade = new ProductApiFacade();
 
@@ -69,7 +69,7 @@ class ProductApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFind()
+    public function testFind(): void
     {
         $productApiFacade = new ProductApiFacade();
 
@@ -89,7 +89,7 @@ class ProductApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindConditionsAndSortAndLimit()
+    public function testFindConditionsAndSortAndLimit(): void
     {
         $productApiFacade = new ProductApiFacade();
 
@@ -123,7 +123,7 @@ class ProductApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindOutOfBounds()
+    public function testFindOutOfBounds(): void
     {
         $this->expectException('Symfony\Component\HttpKernel\Exception\NotFoundHttpException');
         $this->expectExceptionCode('404');
@@ -143,7 +143,7 @@ class ProductApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAdd()
+    public function testAdd(): void
     {
         $productApiFacade = new ProductApiFacade();
 
@@ -169,7 +169,7 @@ class ProductApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testEdit()
+    public function testEdit(): void
     {
         $productApiFacade = new ProductApiFacade();
 
@@ -198,7 +198,7 @@ class ProductApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdate()
+    public function testUpdate(): void
     {
         $productApiFacade = new ProductApiFacade();
 

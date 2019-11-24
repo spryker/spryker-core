@@ -13,7 +13,7 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 interface SearchDelegatorInterface
 {
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface $queryCriteria
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $queryCriteria
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param array $requestParameters
      *

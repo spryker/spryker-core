@@ -27,7 +27,7 @@ class ProductReviewFactory extends AbstractFactory
     /**
      * @param \Generated\Shared\Transfer\ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer
      *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     public function createProductReviewsQueryPlugin(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer)
     {
@@ -57,7 +57,7 @@ class ProductReviewFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[]
      */
     public function getProductReviewsSearchResultFormatterPlugins()
     {

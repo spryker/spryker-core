@@ -236,6 +236,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
         }
 
         $mappingData = $this->storageClient->getMulti($storageKeys);
+        $mappingData = array_filter($mappingData);
 
         if (count($mappingData) === 0) {
             return [];
@@ -361,6 +362,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
         }
 
         $productStorageDataCollection = $this->storageClient->getMulti($this->generateStorageKeys($productAbstractIds, $localeName));
+        $productStorageDataCollection = array_filter($productStorageDataCollection);
 
         return $this->mapBulkProductStorageData($productStorageDataCollection, $localeName);
     }

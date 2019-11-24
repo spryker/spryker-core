@@ -34,7 +34,7 @@ class CmsPageReaderTest extends CmsMocks
     /**
      * @return void
      */
-    public function testGetCmsPageByIdShouldReturnMappedTransferObjectFromPersistence()
+    public function testGetCmsPageByIdShouldReturnMappedTransferObjectFromPersistence(): void
     {
         $cmsPageReaderMock = $this->createCmsPageReaderMock();
 
@@ -53,7 +53,7 @@ class CmsPageReaderTest extends CmsMocks
     /**
      * @return void
      */
-    public function testGetCmsPageByIdWhenPageNotFoundShouldReturnNull()
+    public function testGetCmsPageByIdWhenPageNotFoundShouldReturnNull(): void
     {
         $cmsPageReaderMock = $this->createCmsPageReaderMock();
 

@@ -50,13 +50,11 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchBusinessFactory::createIndex()` instead.
      *
-     * @param string|null $indexName
-     *
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\SearchIndexManagerInterface
      */
-    public function createSearchIndexManager(?string $indexName = null)
+    public function createSearchIndexManager()
     {
-        return new SearchIndexManager($this->getElasticsearchIndex($indexName), $this->getSearchClient());
+        return new SearchIndexManager($this->getElasticsearchIndex());
     }
 
     /**

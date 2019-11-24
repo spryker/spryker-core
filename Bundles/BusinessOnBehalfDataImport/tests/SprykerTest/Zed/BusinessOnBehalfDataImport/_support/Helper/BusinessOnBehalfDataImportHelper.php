@@ -125,7 +125,7 @@ class BusinessOnBehalfDataImportHelper extends Module
         $customerEntity->save();
         $customerTransfer->fromArray($customerEntity->toArray(), true);
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($customerTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($customerTransfer): void {
             $this->cleanupCustomer($customerTransfer);
         });
 

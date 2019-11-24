@@ -118,7 +118,7 @@ class ProductConcreteRestrictionReaderTest extends Unit
      *
      * @return void
      */
-    public function testProductConcreteRestrictionReader(array $customerData, array $productData, bool $expectedResult)
+    public function testProductConcreteRestrictionReader(array $customerData, array $productData, bool $expectedResult): void
     {
         $customerClientMock = $this->createCustomerClientMock($customerData['whitelist'], $customerData['blacklist']);
         $productListProductConcreteStorageReader = $this->createProductListProductConcreteStorageReader(
