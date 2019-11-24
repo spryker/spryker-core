@@ -28,7 +28,7 @@ class ElasticaClientFactoryTest extends Unit
     /**
      * @return void
      */
-    protected function _setUp()
+    protected function _setUp(): void
     {
         parent::_setUp();
 
