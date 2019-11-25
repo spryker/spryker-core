@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\SearchElasticsearch\Business\Index;
 
 use Codeception\Test\Unit;
 use Elastica\Client;
+use Elastica\Cluster;
 use Elastica\Index as ElasticaIndex;
 use Elastica\Request;
 use Elastica\Response;
@@ -38,7 +39,12 @@ class IndexTest extends Unit
     /**
      * @var \Elastica\Client|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $clientMock;
+    protected $elasticaClientMock;
+
+    /**
+     * @var \Elastica\Cluster|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected $clusterMock;
 
     /**
      * @var \Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface|\PHPUnit\Framework\MockObject\MockObject
@@ -62,38 +68,59 @@ class IndexTest extends Unit
     {
         parent::_setUp();
 
-        $this->clientMock = $this->createMock(Client::class);
+        $this->clusterMock = $this->createMock(Cluster::class);
+        $this->elasticaClientMock = $this->createElasticaClientMock();
         $this->indexNameResolverMock = $this->createMock(IndexNameResolverInterface::class);
         $this->configMock = $this->createMock(SearchElasticsearchConfig::class);
 
         $this->index = new Index(
-            $this->clientMock,
+            $this->elasticaClientMock,
             $this->indexNameResolverMock,
             $this->configMock
         );
     }
 
     /**
+     * @dataProvider canCorrectlyResolveMultiIndexNamesDataProvider
+     *
+     * @param string $expectedAllIndexNamesFormattedString
+     * @param array $supportedIndexNames
+     *
      * @return void
      */
-    public function testCanCorrectlyResolveMultiIndexNames(): void
+    public function testCanCorrectlyResolveMultiIndexNames(string $expectedAllIndexNamesFormattedString, array $supportedIndexNames): void
     {
-        $this->indexNameResolverMock->method('resolve')
+        $this->clusterMock
+            ->method('getIndexNames')
+            ->willReturn($supportedIndexNames);
+        $this->indexNameResolverMock
+            ->method('resolve')
             ->willReturnCallback(function (string $sourceIdentifier) {
                 return sprintf('%s_%s', static::STORE, $sourceIdentifier);
             });
-        $expectedAllIndexNamesFormattedString = 'de_foo,de_bar,de_baz';
         $this->configMock->method('getSupportedSourceIdentifiers')->willReturn([
             'foo',
             'bar',
             'baz',
         ]);
-        $this->clientMock->expects($this->once())
+        $this->elasticaClientMock
             ->method('getIndex')
             ->with($expectedAllIndexNamesFormattedString)
             ->willReturn($this->createElasticaIndexMock());
 
         $this->index->openIndexes();
+    }
+
+    /**
+     * @return array
+     */
+    public function canCorrectlyResolveMultiIndexNamesDataProvider(): array
+    {
+        return [
+            'all indexes supported' => ['de_foo,de_bar,de_baz', ['de_foo', 'de_bar', 'de_baz']],
+            'one index supported' => ['de_bar', ['de_bar']],
+            'no indexes supported' => ['', []],
+        ];
     }
 
     /**
@@ -103,7 +130,7 @@ class IndexTest extends Unit
     {
         $indexName = 'index-name';
         $searchContextTransfer = $this->buildSearchContextTransferForIndexName($indexName);
-        $this->clientMock->expects($this->once())
+        $this->elasticaClientMock->expects($this->once())
             ->method('getIndex')
             ->with($indexName)
             ->willReturn($this->createElasticaIndexMock());
@@ -132,7 +159,7 @@ class IndexTest extends Unit
         ];
         $this->configMock->method('getReindexUrl')->willReturn($reindexUrl);
 
-        $this->clientMock->expects($this->once())
+        $this->elasticaClientMock->expects($this->once())
             ->method('request')
             ->with($reindexUrl, Request::POST, $expectedRequestData)
             ->willReturn(
@@ -174,5 +201,16 @@ class IndexTest extends Unit
         $responseMock->method('isOk')->willReturn(true);
 
         return $responseMock;
+    }
+
+    /**
+     * @return \Elastica\Client|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createElasticaClientMock(): Client
+    {
+        $elasticaClientMock = $this->createMock(Client::class);
+        $elasticaClientMock->method('getCluster')->willReturn($this->clusterMock);
+
+        return $elasticaClientMock;
     }
 }
