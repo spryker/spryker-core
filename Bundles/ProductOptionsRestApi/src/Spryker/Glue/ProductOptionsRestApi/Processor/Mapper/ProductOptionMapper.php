@@ -67,15 +67,17 @@ class ProductOptionMapper implements ProductOptionMapperInterface
         ItemTransfer $itemTransfer,
         RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
     ): RestOrderItemsAttributesTransfer {
-        $restOrderItemsAttributesTransfers = [];
+        $restOrderItemsAttributesTransfers = new ArrayObject();
         foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-            $restOrderItemsAttributesTransfers[] = $this->mapProductOptionTransferToRestOrderItemProductOptionTransfer(
-                $productOptionTransfer,
-                new RestOrderItemProductOptionsTransfer()
+            $restOrderItemsAttributesTransfers->append(
+                $this->mapProductOptionTransferToRestOrderItemProductOptionTransfer(
+                    $productOptionTransfer,
+                    new RestOrderItemProductOptionsTransfer()
+                )
             );
         }
 
-        $restOrderItemsAttributesTransfer->setProductOptions(new ArrayObject($restOrderItemsAttributesTransfers));
+        $restOrderItemsAttributesTransfer->setProductOptions($restOrderItemsAttributesTransfers);
 
         return $restOrderItemsAttributesTransfer;
     }
@@ -90,8 +92,7 @@ class ProductOptionMapper implements ProductOptionMapperInterface
         ProductOptionTransfer $productOptionTransfer,
         RestOrderItemProductOptionsTransfer $restOrderItemProductOptionsTransfer
     ): RestOrderItemProductOptionsTransfer {
-        return $restOrderItemProductOptionsTransfer
-            ->setSku($productOptionTransfer->getSku())
+        return $restOrderItemProductOptionsTransfer->fromArray($productOptionTransfer->toArray(), true)
             ->setOptionGroupName($productOptionTransfer->getGroupName())
             ->setOptionName($productOptionTransfer->getValue())
             ->setPrice($productOptionTransfer->getSumPrice());
