@@ -60,9 +60,9 @@ class CartDiscountsResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "401": "Invalid access token."
-     *              "403": "Missing access token."
-     *              "404": "Cart with given uuid not found."
+     *              "401": "Invalid access token.",
+     *              "403": "Missing access token.",
+     *              "404": "Cart with given uuid not found.",
      *              "422": "Cart code can't be deleted."
      *          }
      *     }

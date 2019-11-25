@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 class CartCodesRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_DISCOUNTS = 'discounts';
+    public const RESOURCE_PROMOTIONAL_ITEMS = 'promotional-items';
     public const CONTROLLER_CART_DISCOUNTS = 'cart-discounts-resource';
     public const CONTROLLER_GUEST_CART_DISCOUNTS = 'guest-cart-discounts-resource';
 
