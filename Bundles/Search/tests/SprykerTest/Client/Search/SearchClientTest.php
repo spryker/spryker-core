@@ -16,8 +16,6 @@ use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
-use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
-use Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface;
 use Spryker\Client\Search\Model\Handler\ElasticsearchSearchHandler;
 use Spryker\Client\Search\Plugin\Config\SearchConfig;
 use Spryker\Client\Search\Plugin\Elasticsearch\Query\SearchKeysQuery;
@@ -27,6 +25,8 @@ use Spryker\Client\Search\SearchContext\SourceIdentifierMapperInterface;
 use Spryker\Client\Search\SearchFactory;
 use Spryker\Client\SearchElasticsearch\Plugin\ElasticsearchSearchAdapterPlugin;
 use Spryker\Client\SearchElasticsearch\SearchElasticsearchClient;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface;
 
 /**
@@ -116,7 +116,7 @@ class SearchClientTest extends Unit
     {
         $this->prepareSearchClientForSearchTest();
 
-        /** @var \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\PHPUnit\Framework\MockObject\MockObject $queryMock */
+        /** @var \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\PHPUnit\Framework\MockObject\MockObject $queryMock */
         $queryMock = $this->getMockBuilder(QueryInterface::class)->getMock();
 
         $result = $this->searchClient->search($queryMock);
@@ -130,7 +130,7 @@ class SearchClientTest extends Unit
     {
         $this->prepareSearchClientForSearchTest();
 
-        /** @var \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface|\PHPUnit\Framework\MockObject\MockObject $resultFormatterMock */
+        /** @var \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface|\PHPUnit\Framework\MockObject\MockObject $resultFormatterMock */
         $resultFormatterMock = $this
             ->getMockBuilder(ResultFormatterPluginInterface::class)
             ->setMethods(['getName', 'formatResult'])
@@ -139,7 +139,7 @@ class SearchClientTest extends Unit
             ->method('getName')
             ->willReturn('fooResultFormatter');
 
-        /** @var \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\PHPUnit\Framework\MockObject\MockObject $queryMock */
+        /** @var \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\PHPUnit\Framework\MockObject\MockObject $queryMock */
         $queryMock = $this->getMockBuilder(QueryInterface::class)->getMock();
         $resultFormatters = [
             $resultFormatterMock,
@@ -159,7 +159,7 @@ class SearchClientTest extends Unit
      */
     public function testExpandQuery(): void
     {
-        /** @var \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\PHPUnit\Framework\MockObject\MockObject $queryMock */
+        /** @var \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\PHPUnit\Framework\MockObject\MockObject $queryMock */
         $queryMock = $this->getMockBuilder(QueryInterface::class)->getMock();
 
         $queryExpanderMock = $this->getMockBuilder(QueryExpanderPluginInterface::class)
