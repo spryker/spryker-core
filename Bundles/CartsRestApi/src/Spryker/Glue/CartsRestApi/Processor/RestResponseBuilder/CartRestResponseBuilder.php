@@ -38,38 +38,13 @@ class CartRestResponseBuilder extends AbstractCartRestResponseBuilder implements
      */
     public function createCartIdMissingErrorResponse(): RestResponseInterface
     {
-        return $this->createRestErrorResponse(
-            Response::HTTP_BAD_REQUEST,
-            CartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING,
-            CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING
-        );
-    }
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setStatus(Response::HTTP_BAD_REQUEST)
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING)
+            ->setDetail(CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING);
 
-    /**
-     * @param int $status
-     * @param string $code
-     * @param string $detail
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createRestErrorResponse(int $status, string $code, string $detail): RestResponseInterface
-    {
-        $restErrorMessageTransfer = $this->createRestErrorMessageFromErrorData([
-            RestErrorMessageTransfer::STATUS => $status,
-            RestErrorMessageTransfer::CODE => $code,
-            RestErrorMessageTransfer::DETAIL => $detail,
-        ]);
-
-        return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
-    }
-
-    /**
-     * @param array $errorData
-     *
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
-     */
-    protected function createRestErrorMessageFromErrorData(array $errorData): RestErrorMessageTransfer
-    {
-        return (new RestErrorMessageTransfer())->fromArray($errorData);
+        return $this->restResourceBuilder
+            ->createRestResponse()
+            ->addError($restErrorMessageTransfer);
     }
 }
