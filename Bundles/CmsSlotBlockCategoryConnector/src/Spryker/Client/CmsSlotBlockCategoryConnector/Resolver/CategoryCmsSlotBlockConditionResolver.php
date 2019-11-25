@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\CmsSlotBlockCategoryConnector\Resolver;
 
-use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Generated\Shared\Transfer\CmsSlotParamsTransfer;
 
 class CategoryCmsSlotBlockConditionResolver implements CategoryCmsSlotBlockConditionResolverInterface
@@ -28,26 +28,26 @@ class CategoryCmsSlotBlockConditionResolver implements CategoryCmsSlotBlockCondi
     protected const CONDITION_KEY = 'category';
 
     /**
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer $cmsSlotBlockTransfer
      *
      * @return bool
      */
-    public function isSlotBlockConditionApplicable(CmsBlockTransfer $cmsBlockTransfer): bool
+    public function isSlotBlockConditionApplicable(CmsSlotBlockTransfer $cmsSlotBlockTransfer): bool
     {
-        return isset($cmsBlockTransfer->getCmsSlotBlockConditions()[static::CONDITION_KEY]);
+        return isset($cmsSlotBlockTransfer->getConditions()[static::CONDITION_KEY]);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer $cmsSlotBlockTransfer
      * @param \Generated\Shared\Transfer\CmsSlotParamsTransfer $cmsSlotParamsTransfer
      *
      * @return bool
      */
     public function isCmsBlockVisibleInSlot(
-        CmsBlockTransfer $cmsBlockTransfer,
+        CmsSlotBlockTransfer $cmsSlotBlockTransfer,
         CmsSlotParamsTransfer $cmsSlotParamsTransfer
     ): bool {
-        $conditionData = $cmsBlockTransfer->getCmsSlotBlockConditions()[static::CONDITION_KEY];
+        $conditionData = $cmsSlotBlockTransfer->getConditions()[static::CONDITION_KEY];
 
         if ($conditionData[static::CONDITIONS_DATA_KEY_ALL]) {
             return true;

@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\CmsSlotBlockStorage;
 
-use Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -23,14 +23,14 @@ class CmsSlotBlockStorageClient extends AbstractClient implements CmsSlotBlockSt
      * @param string $cmsSlotTemplatePath
      * @param string $cmsSlotKey
      *
-     * @return \Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer|null
+     * @return \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer
      */
-    public function findCmsSlotBlockStorageData(
+    public function getCmsSlotBlockCollection(
         string $cmsSlotTemplatePath,
         string $cmsSlotKey
-    ): ?CmsSlotBlockStorageDataTransfer {
+    ): CmsSlotBlockCollectionTransfer {
         return $this->getFactory()
             ->createCmsSlotBlockStorageReader()
-            ->findCmsSlotBlockStorageData($cmsSlotTemplatePath, $cmsSlotKey);
+            ->getCmsSlotBlockCollection($cmsSlotTemplatePath, $cmsSlotKey);
     }
 }

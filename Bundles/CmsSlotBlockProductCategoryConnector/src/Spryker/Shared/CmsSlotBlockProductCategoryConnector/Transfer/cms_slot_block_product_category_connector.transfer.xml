@@ -11,8 +11,8 @@
         <property name="categoryId" type="int"/>
     </transfer>
 
-    <transfer name="CmsBlock">
-        <property name="cmsSlotBlockConditions" type="array" singular="cmsSlotBlockCondition"/>
+    <transfer name="CmsSlotBlock">
+        <property name="conditions" type="array" singular="condition" associative="true"/>
     </transfer>
 
     <transfer name="CmsSlotParams">

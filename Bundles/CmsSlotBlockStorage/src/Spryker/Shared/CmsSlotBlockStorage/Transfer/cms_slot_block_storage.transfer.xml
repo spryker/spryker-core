@@ -7,6 +7,8 @@
         <property name="idCmsSlotBlock" type="string"/>
         <property name="idSlotTemplate" type="int"/>
         <property name="idSlot" type="int"/>
+        <property name="cmsBlockKey" type="string"/>
+        <property name="conditions" type="array" singular="condition" associative="true"/>
     </transfer>
 
     <transfer name="CmsSlotBlockCollection">
@@ -25,11 +27,7 @@
         <property name="slotKey" type="string"/>
         <property name="templatePath" type="string"/>
         <property name="slotTemplateKey" type="string"/>
-        <property name="data" type="CmsSlotBlockStorageData"/>
-    </transfer>
-
-    <transfer name="CmsSlotBlockStorageData">
-        <property name="cmsBlocks" type="array" singular="cmsBlock"/>
+        <property name="data" type="CmsSlotBlockCollection"/>
     </transfer>
 
     <transfer name="EventEntity">

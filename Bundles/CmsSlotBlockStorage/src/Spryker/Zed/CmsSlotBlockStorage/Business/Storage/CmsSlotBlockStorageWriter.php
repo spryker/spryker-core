@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CmsSlotBlockStorage\Business\Storage;
 
-use Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockStorageTransfer;
 use Spryker\Service\CmsSlotBlockStorage\CmsSlotBlockStorageServiceInterface;
 use Spryker\Zed\CmsSlotBlockStorage\Persistence\CmsSlotBlockStorageEntityManagerInterface;
@@ -56,9 +55,12 @@ class CmsSlotBlockStorageWriter implements CmsSlotBlockStorageWriterInterface
             ->getCmsSlotBlockStorageTransfersByCmsSlotBlocks($cmsSlotBlockTransfers);
 
         foreach ($cmsSlotBlockStorageTransfers as $cmsSlotBlockStorageTransfer) {
-            $cmsSlotBlockStorageDataTransfer = $this->getCmsSlotBlockStorageDataTransfer($cmsSlotBlockStorageTransfer);
+            $cmsSlotBlockCollectionTransfer = $this->cmsSlotBlockStorageRepository
+                ->getCmsSlotBlockCollectionByCmsSlotBlockStorageTransfer(
+                    $cmsSlotBlockStorageTransfer
+                );
 
-            if (!$cmsSlotBlockStorageDataTransfer->getCmsBlocks()) {
+            if ($cmsSlotBlockCollectionTransfer->getCmsSlotBlocks()->count() === 0) {
                 $this->cmsSlotBlockStorageEntityManager->deleteCmsSlotBlockStorage(
                     $cmsSlotBlockStorageTransfer
                 );
@@ -66,39 +68,13 @@ class CmsSlotBlockStorageWriter implements CmsSlotBlockStorageWriterInterface
                 continue;
             }
 
-            $this->storeDataSet($cmsSlotBlockStorageTransfer, $cmsSlotBlockStorageDataTransfer);
+            $cmsSlotBlockStorageTransfer->setData($cmsSlotBlockCollectionTransfer)
+                ->setSlotTemplateKey(
+                    $this->getCmsSlotBlockStorageKey($cmsSlotBlockStorageTransfer)
+                );
+
+            $this->cmsSlotBlockStorageEntityManager->saveCmsSlotBlockStorage($cmsSlotBlockStorageTransfer);
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockStorageTransfer $cmsSlotBlockStorageTransfer
-     * @param \Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer $cmsSlotBlockStorageDataTransfer
-     *
-     * @return void
-     */
-    protected function storeDataSet(
-        CmsSlotBlockStorageTransfer $cmsSlotBlockStorageTransfer,
-        CmsSlotBlockStorageDataTransfer $cmsSlotBlockStorageDataTransfer
-    ): void {
-        $cmsSlotBlockStorageTransfer->setSlotTemplateKey(
-            $this->getCmsSlotBlockStorageKey($cmsSlotBlockStorageTransfer)
-        );
-        $cmsSlotBlockStorageTransfer->setData($cmsSlotBlockStorageDataTransfer);
-        $this->cmsSlotBlockStorageEntityManager->saveCmsSlotBlockStorage($cmsSlotBlockStorageTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockStorageTransfer $cmsSlotBlockStorageTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer
-     */
-    protected function getCmsSlotBlockStorageDataTransfer(
-        CmsSlotBlockStorageTransfer $cmsSlotBlockStorageTransfer
-    ): CmsSlotBlockStorageDataTransfer {
-        return $this->cmsSlotBlockStorageRepository
-            ->getCmsSlotBlockStorageDataTransferByCmsSlotBlockStorageTransfer(
-                $cmsSlotBlockStorageTransfer
-            );
     }
 
     /**

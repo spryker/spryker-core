@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\CmsSlotBlock\Resolver;
 
-use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Generated\Shared\Transfer\CmsSlotParamsTransfer;
 use Spryker\Client\CmsSlotBlock\CmsSlotBlockConfig;
 
@@ -36,25 +36,25 @@ class CmsSlotBlockVisibilityResolver implements CmsSlotBlockVisibilityResolverIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer $cmsSlotBlockTransfer
      * @param \Generated\Shared\Transfer\CmsSlotParamsTransfer $cmsSlotParamsTransfer
      *
      * @return bool
      */
     public function isCmsBlockVisibleInSlot(
-        CmsBlockTransfer $cmsBlockTransfer,
+        CmsSlotBlockTransfer $cmsSlotBlockTransfer,
         CmsSlotParamsTransfer $cmsSlotParamsTransfer
     ): bool {
-        $cmsBlockTransfer->requireCmsSlotBlockConditions();
+        $cmsSlotBlockTransfer->requireConditions();
 
-        $cmsSlotBlockVisibilityResolverPlugins = $this->getApplicablePlugins($cmsBlockTransfer);
+        $cmsSlotBlockVisibilityResolverPlugins = $this->getApplicablePlugins($cmsSlotBlockTransfer);
 
         if (!$cmsSlotBlockVisibilityResolverPlugins) {
             return $this->cmsSlotBlockConfig->getIsCmsBlockVisibleInSlotByDefault();
         }
 
         foreach ($cmsSlotBlockVisibilityResolverPlugins as $cmsSlotBlockVisibilityResolverPlugin) {
-            if (!$cmsSlotBlockVisibilityResolverPlugin->isCmsBlockVisibleInSlot($cmsBlockTransfer, $cmsSlotParamsTransfer)) {
+            if (!$cmsSlotBlockVisibilityResolverPlugin->isCmsBlockVisibleInSlot($cmsSlotBlockTransfer, $cmsSlotParamsTransfer)) {
                 return false;
             }
         }
@@ -63,15 +63,15 @@ class CmsSlotBlockVisibilityResolver implements CmsSlotBlockVisibilityResolverIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer $cmsSlotBlockTransfer
      *
      * @return \Spryker\Client\CmsSlotBlockExtension\Dependency\Plugin\CmsSlotBlockVisibilityResolverPluginInterface[]
      */
-    protected function getApplicablePlugins(CmsBlockTransfer $cmsBlockTransfer): array
+    protected function getApplicablePlugins(CmsSlotBlockTransfer $cmsSlotBlockTransfer): array
     {
         $applicablePlugins = [];
         foreach ($this->cmsSlotBlockVisibilityResolverPlugins as $cmsSlotBlockVisibilityResolverPlugin) {
-            if ($cmsSlotBlockVisibilityResolverPlugin->isApplicable($cmsBlockTransfer)) {
+            if ($cmsSlotBlockVisibilityResolverPlugin->isApplicable($cmsSlotBlockTransfer)) {
                 $applicablePlugins[] = $cmsSlotBlockVisibilityResolverPlugin;
             }
         }

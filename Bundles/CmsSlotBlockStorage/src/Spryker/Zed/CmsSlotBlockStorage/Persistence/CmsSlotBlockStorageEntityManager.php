@@ -36,9 +36,6 @@ class CmsSlotBlockStorageEntityManager extends AbstractEntityManager implements 
             );
 
         $cmsSlotBlockStorageEntity->setIsSendingToQueue($this->getFactory()->getConfig()->isSendingToQueue());
-        $cmsSlotBlockStorageEntity->setData(
-            $cmsSlotBlockStorageTransfer->getData()->toArray(true, true)
-        );
 
         $cmsSlotBlockStorageEntity->save();
     }

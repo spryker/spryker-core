@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\CmsSlotBlockProductCategoryConnector;
 
-use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Generated\Shared\Transfer\CmsSlotParamsTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -21,15 +21,15 @@ class CmsSlotBlockProductCategoryConnectorClient extends AbstractClient implemen
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer $cmsSlotBlockTransfer
      *
      * @return bool
      */
-    public function isSlotBlockConditionApplicable(CmsBlockTransfer $cmsBlockTransfer): bool
+    public function isSlotBlockConditionApplicable(CmsSlotBlockTransfer $cmsSlotBlockTransfer): bool
     {
         return $this->getFactory()
             ->createProductCategoryCmsSlotBlockConditionResolver()
-            ->isSlotBlockConditionApplicable($cmsBlockTransfer);
+            ->isSlotBlockConditionApplicable($cmsSlotBlockTransfer);
     }
 
     /**
@@ -37,13 +37,13 @@ class CmsSlotBlockProductCategoryConnectorClient extends AbstractClient implemen
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer $cmsBlockTransfer
      * @param \Generated\Shared\Transfer\CmsSlotParamsTransfer $cmsSlotParamsTransfer
      *
      * @return bool
      */
     public function isCmsBlockVisibleInSlot(
-        CmsBlockTransfer $cmsBlockTransfer,
+        CmsSlotBlockTransfer $cmsBlockTransfer,
         CmsSlotParamsTransfer $cmsSlotParamsTransfer
     ): bool {
         return $this->getFactory()

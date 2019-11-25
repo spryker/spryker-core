@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\CmsSlotBlockStorage\Persistence;
 
-use Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockStorageTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\CmsSlot\Persistence\Map\SpyCmsSlotTableMap;
 use Orm\Zed\CmsSlot\Persistence\Map\SpyCmsSlotTemplateTableMap;
@@ -147,11 +148,11 @@ class CmsSlotBlockStorageRepository extends AbstractRepository implements CmsSlo
     /**
      * @param \Generated\Shared\Transfer\CmsSlotBlockStorageTransfer $cmsSlotBlockStorageTransfer
      *
-     * @return \Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer
+     * @return \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer
      */
-    public function getCmsSlotBlockStorageDataTransferByCmsSlotBlockStorageTransfer(
+    public function getCmsSlotBlockCollectionByCmsSlotBlockStorageTransfer(
         CmsSlotBlockStorageTransfer $cmsSlotBlockStorageTransfer
-    ): CmsSlotBlockStorageDataTransfer {
+    ): CmsSlotBlockCollectionTransfer {
         $cmsSlotBlockStorageTransfer->requireIdCmsSlot();
         $cmsSlotBlockStorageTransfer->requireIdCmsSlotTemplate();
 
@@ -164,17 +165,17 @@ class CmsSlotBlockStorageRepository extends AbstractRepository implements CmsSlo
             ->find()
             ->getData();
 
-        $cmsSlotBlockStorageDataTransfer = new CmsSlotBlockStorageDataTransfer();
+        $cmsSlotBlockCollectionTransfer = new CmsSlotBlockCollectionTransfer();
         $cmsSlotBlockStorageMapper = $this->getFactory()->createCmsSlotBlockStorageMapper();
 
         foreach ($cmsSlotBlockEntities as $cmsSlotBlockEntity) {
-            $cmsSlotBlockTransfers[] = $cmsSlotBlockStorageMapper
-                ->mapCmsSlotBlockEntityToCmsSlotBlockStorageDataTransfer(
-                    $cmsSlotBlockEntity,
-                    $cmsSlotBlockStorageDataTransfer
-                );
+            $cmsSlotBlockTransfer = $cmsSlotBlockStorageMapper->mapCmsSlotBlockEntityToCmsSlotBlockTransfer(
+                $cmsSlotBlockEntity,
+                new CmsSlotBlockTransfer()
+            );
+            $cmsSlotBlockCollectionTransfer->addCmsSlotBlock($cmsSlotBlockTransfer);
         }
 
-        return $cmsSlotBlockStorageDataTransfer;
+        return $cmsSlotBlockCollectionTransfer;
     }
 }

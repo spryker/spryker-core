@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotBlockStorage\Persistence;
 
-use Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockStorageTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 
@@ -34,9 +34,9 @@ interface CmsSlotBlockStorageRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\CmsSlotBlockStorageTransfer $cmsSlotBlockStorageTransfer
      *
-     * @return \Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer
+     * @return \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer
      */
-    public function getCmsSlotBlockStorageDataTransferByCmsSlotBlockStorageTransfer(
+    public function getCmsSlotBlockCollectionByCmsSlotBlockStorageTransfer(
         CmsSlotBlockStorageTransfer $cmsSlotBlockStorageTransfer
-    ): CmsSlotBlockStorageDataTransfer;
+    ): CmsSlotBlockCollectionTransfer;
 }

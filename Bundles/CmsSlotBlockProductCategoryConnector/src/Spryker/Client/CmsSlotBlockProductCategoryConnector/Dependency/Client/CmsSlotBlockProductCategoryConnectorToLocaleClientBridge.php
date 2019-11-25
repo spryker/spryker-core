@@ -25,7 +25,7 @@ class CmsSlotBlockProductCategoryConnectorToLocaleClientBridge implements CmsSlo
     /**
      * @return string
      */
-    public function getCurrentLocale(): string
+    public function getCurrentLocale()
     {
         return $this->localeClient->getCurrentLocale();
     }

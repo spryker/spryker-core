@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\CmsSlotBlockStorage\Storage;
 
-use Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\CmsSlotBlockStorage\Dependency\Client\CmsSlotBlockStorageToStorageClientInterface;
 use Spryker\Client\CmsSlotBlockStorage\Dependency\Service\CmsSlotBlockStorageToSynchronizationServiceInterface;
@@ -50,23 +50,19 @@ class CmsSlotBlockStorageReader implements CmsSlotBlockStorageReaderInterface
      * @param string $cmsSlotTemplatePath
      * @param string $cmsSlotKey
      *
-     * @return \Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer|null
+     * @return \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer
      */
-    public function findCmsSlotBlockStorageData(
+    public function getCmsSlotBlockCollection(
         string $cmsSlotTemplatePath,
         string $cmsSlotKey
-    ): ?CmsSlotBlockStorageDataTransfer {
+    ): CmsSlotBlockCollectionTransfer {
         $storageKey = $this->generateStorageKey($cmsSlotTemplatePath, $cmsSlotKey);
         $cmsSlotBlockStorageData = $this->storageClient->get($storageKey);
 
-        if (!$cmsSlotBlockStorageData) {
-            return null;
-        }
+        $cmsSlotBlockCollectionTransfer = new CmsSlotBlockCollectionTransfer();
+        $cmsSlotBlockCollectionTransfer->fromArray($cmsSlotBlockStorageData, true);
 
-        $cmsSlotBlockStorageDataTransfer = new CmsSlotBlockStorageDataTransfer();
-        $cmsSlotBlockStorageDataTransfer->fromArray($cmsSlotBlockStorageData, true);
-
-        return $cmsSlotBlockStorageDataTransfer;
+        return $cmsSlotBlockCollectionTransfer;
     }
 
     /**

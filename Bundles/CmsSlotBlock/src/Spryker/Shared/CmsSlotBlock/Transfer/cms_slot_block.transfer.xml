@@ -32,7 +32,6 @@
 
     <transfer name="CmsBlock">
         <property name="cmsSlotBlockCollection" type="CmsSlotBlockCollection"/>
-        <property name="cmsSlotBlockConditions" type="array" singular="cmsSlotBlockCondition"/>
     </transfer>
 
     <transfer name="EventEntity">

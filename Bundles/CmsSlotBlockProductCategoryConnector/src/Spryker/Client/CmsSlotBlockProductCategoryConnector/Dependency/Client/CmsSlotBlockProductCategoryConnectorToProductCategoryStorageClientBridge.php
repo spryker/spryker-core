@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\CmsSlotBlockProductCategoryConnector\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
-
 class CmsSlotBlockProductCategoryConnectorToProductCategoryStorageClientBridge implements CmsSlotBlockProductCategoryConnectorToProductCategoryStorageClientInterface
 {
     /**
@@ -30,7 +28,7 @@ class CmsSlotBlockProductCategoryConnectorToProductCategoryStorageClientBridge i
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer|null
      */
-    public function findProductAbstractCategory(int $idProductAbstract, string $locale): ?ProductAbstractCategoryStorageTransfer
+    public function findProductAbstractCategory($idProductAbstract, $locale)
     {
         return $this->productCategoryStorageClient->findProductAbstractCategory($idProductAbstract, $locale);
     }

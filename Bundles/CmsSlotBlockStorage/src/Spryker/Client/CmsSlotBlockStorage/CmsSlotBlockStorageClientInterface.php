@@ -7,24 +7,23 @@
 
 namespace Spryker\Client\CmsSlotBlockStorage;
 
-use Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 
 interface CmsSlotBlockStorageClientInterface
 {
     /**
      * Specification:
-     * - Finds a CMS slot block within storage with a given concrete CMS slot template path and CMS slot key.
-     * - Returns null if a CMS slot block was not found.
+     * - Returns CMS slot blocks within storage with a given concrete CMS slot template path and CMS slot key.
      *
      * @api
      *
      * @param string $cmsSlotTemplatePath
      * @param string $cmsSlotKey
      *
-     * @return \Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer|null
+     * @return \Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer
      */
-    public function findCmsSlotBlockStorageData(
+    public function getCmsSlotBlockCollection(
         string $cmsSlotTemplatePath,
         string $cmsSlotKey
-    ): ?CmsSlotBlockStorageDataTransfer;
+    ): CmsSlotBlockCollectionTransfer;
 }

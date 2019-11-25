@@ -7,14 +7,13 @@
 
 namespace Spryker\Zed\CmsSlotBlockStorage\Persistence\Propel\Mapper;
 
-use Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockStorageTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Orm\Zed\CmsSlot\Persistence\Map\SpyCmsSlotTableMap;
 use Orm\Zed\CmsSlot\Persistence\Map\SpyCmsSlotTemplateTableMap;
 use Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlock;
 use Orm\Zed\CmsSlotBlockStorage\Persistence\SpyCmsSlotBlockStorage;
-use Spryker\Shared\CmsSlotBlockStorage\CmsSlotBlockStorageConfig;
 use Spryker\Zed\CmsSlotBlockStorage\Dependency\Service\CmsSlotBlockStorageToUtilEncodingServiceInterface;
 
 class CmsSlotBlockStorageMapper
@@ -34,20 +33,20 @@ class CmsSlotBlockStorageMapper
 
     /**
      * @param \Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlock $cmsSlotBlockEntity
-     * @param \Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer $cmsSlotBlockStorageDataTransfer
+     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer $cmsSlotBlockTransfer
      *
-     * @return \Generated\Shared\Transfer\CmsSlotBlockStorageDataTransfer
+     * @return \Generated\Shared\Transfer\CmsSlotBlockTransfer
      */
-    public function mapCmsSlotBlockEntityToCmsSlotBlockStorageDataTransfer(
+    public function mapCmsSlotBlockEntityToCmsSlotBlockTransfer(
         SpyCmsSlotBlock $cmsSlotBlockEntity,
-        CmsSlotBlockStorageDataTransfer $cmsSlotBlockStorageDataTransfer
-    ): CmsSlotBlockStorageDataTransfer {
-        $cmsSlotBlockStorageDataTransfer->addCmsBlock([
-            CmsSlotBlockStorageConfig::BLOCK_DATA_KEY_BLOCK_KEY => $cmsSlotBlockEntity->getCmsBlock()->getKey(),
-            CmsSlotBlockStorageConfig::BLOCK_DATA_KEY_CONDITIONS => $this->utilEncodingService->decodeJson($cmsSlotBlockEntity->getConditions()),
-        ]);
+        CmsSlotBlockTransfer $cmsSlotBlockTransfer
+    ): CmsSlotBlockTransfer {
+        $cmsSlotBlockTransfer->setCmsBlockKey($cmsSlotBlockEntity->getCmsBlock()->getKey());
+        $cmsSlotBlockTransfer->setConditions(
+            $this->utilEncodingService->decodeJson($cmsSlotBlockEntity->getConditions())
+        );
 
-        return $cmsSlotBlockStorageDataTransfer;
+        return $cmsSlotBlockTransfer;
     }
 
     /**
@@ -63,6 +62,9 @@ class CmsSlotBlockStorageMapper
         $cmsSlotBlockStorageEntity->setFkCmsSlot($cmsSlotBlockStorageTransfer->getIdCmsSlot());
         $cmsSlotBlockStorageEntity->setFkCmsSlotTemplate($cmsSlotBlockStorageTransfer->getIdCmsSlotTemplate());
         $cmsSlotBlockStorageEntity->setSlotTemplateKey($cmsSlotBlockStorageTransfer->getSlotTemplateKey());
+        $cmsSlotBlockStorageEntity->setData(
+            $cmsSlotBlockStorageTransfer->getData()->modifiedToArray(true, true)
+        );
 
         return $cmsSlotBlockStorageEntity;
     }
