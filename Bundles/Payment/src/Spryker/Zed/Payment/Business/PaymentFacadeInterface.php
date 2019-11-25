@@ -96,16 +96,6 @@ interface PaymentFacadeInterface
 
     /**
      * Specification:
-     * - Finds available payment providers.
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
-     */
-    public function getAvailablePaymentProviders(): PaymentProviderCollectionTransfer;
-
-    /**
-     * Specification:
      * - Distributes total price to payment methods
      * - Calculates price to pay
      *
@@ -119,11 +109,13 @@ interface PaymentFacadeInterface
 
     /**
      * Specification:
-     * - Populates the database with sales payment method types from config.
+     * - Finds available payment providers for the given store.
      *
      * @api
      *
-     * @return void
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
      */
-    public function installSalesPaymentMethodType(): void;
+    public function getAvailablePaymentProvidersForStore(string $storeName): PaymentProviderCollectionTransfer;
 }

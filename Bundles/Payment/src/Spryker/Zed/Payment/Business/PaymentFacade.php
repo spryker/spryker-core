@@ -142,26 +142,12 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
      *
      * @api
      *
-     * @return void
-     */
-    public function installSalesPaymentMethodType(): void
-    {
-        $this->getFactory()
-            ->createSalesPaymentMethodTypeInstaller()
-            ->install();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
      */
-    public function getAvailablePaymentProviders(): PaymentProviderCollectionTransfer
+    public function getAvailablePaymentProvidersForStore(string $storeName): PaymentProviderCollectionTransfer
     {
-        return $this->getFactory()
-            ->createPaymentProviderReader()
-            ->getAvailablePaymentProviders();
+        return $this->getRepository()->getAvailablePaymentProvidersForStore($storeName);
     }
 }
