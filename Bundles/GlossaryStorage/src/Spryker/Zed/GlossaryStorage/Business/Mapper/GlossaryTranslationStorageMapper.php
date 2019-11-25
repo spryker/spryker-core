@@ -14,7 +14,7 @@ class GlossaryTranslationStorageMapper implements GlossaryTranslationStorageMapp
      *
      * @return array
      */
-    public function mapGlossaryStorageEntityTransferByGlossaryIdAndLocale(array $glossaryStorageEntityTransfers)
+    public function mapGlossaryStorageEntityTransferByGlossaryIdAndLocale(array $glossaryStorageEntityTransfers): array
     {
         $glossaryStorageTransfersByIdAndLocale = [];
         foreach ($glossaryStorageEntityTransfers as $glossaryStorageEntityTransfer) {

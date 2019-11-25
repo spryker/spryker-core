@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Synchronization;
 
-use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
@@ -21,11 +20,6 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBu
  */
 class GlossarySynchronizationDataRepositoryPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
-    /**
-     * @uses \Orm\Zed\GlossaryStorage\Persistence\Map\SpyGlossaryStorageTableMap::COL_ID_GLOSSARY_STORAGE
-     */
-    protected const COL_ID_GLOSSARY_STORAGE = 'spy_glossary_storage.id_glossary_storage';
-
     /**
      * {@inheritDoc}
      *
@@ -63,9 +57,7 @@ class GlossarySynchronizationDataRepositoryPlugin extends AbstractPlugin impleme
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
-        $filterTransfer = $this->createFilterTransfer($offset, $limit);
-
-        return $this->getFacade()->findFilteredGlossaryStorageDataTransfer($filterTransfer, $ids);
+        return $this->getFacade()->findGlossaryStorageDataTransferByIds($offset, $limit, $ids);
     }
 
     /**
@@ -89,7 +81,7 @@ class GlossarySynchronizationDataRepositoryPlugin extends AbstractPlugin impleme
      */
     public function getQueueName(): string
     {
-        return GlossaryStorageConfig::SYNC_QUEUE;
+        return GlossaryStorageConfig::SYNC_QUEUE_NAME;
     }
 
     /**
@@ -102,19 +94,5 @@ class GlossarySynchronizationDataRepositoryPlugin extends AbstractPlugin impleme
     public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getGlossarySynchronizationPoolName();
-    }
-
-    /**
-     * @param int $offset
-     * @param int $limit
-     *
-     * @return \Generated\Shared\Transfer\FilterTransfer
-     */
-    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
-    {
-        return (new FilterTransfer())
-            ->setOrderBy(static::COL_ID_GLOSSARY_STORAGE)
-            ->setOffset($offset)
-            ->setLimit($limit);
     }
 }

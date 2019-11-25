@@ -5,13 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher;
+namespace Spryker\Zed\GlossaryStorage\Communication\Plugin\Publisher\GlossaryKey;
 
-use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig;
 use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PublisherExtension\Dependency\Plugin\ResourcePublisherPluginInterface;
+use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherTriggerPluginInterface;
 
 /**
  * @method \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface getFacade()
@@ -19,7 +18,7 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\ResourcePublisherPluginInte
  * @method \Spryker\Zed\GlossaryStorage\GlossaryStorageConfig getConfig()
  * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
  */
-class GlossaryResourcePublisherPlugin extends AbstractPlugin implements ResourcePublisherPluginInterface
+class GlossaryPublisherTriggerPlugin extends AbstractPlugin implements PublisherTriggerPluginInterface
 {
     /**
      * @uses \Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY
@@ -50,9 +49,7 @@ class GlossaryResourcePublisherPlugin extends AbstractPlugin implements Resource
      */
     public function getData(int $offset, int $limit): array
     {
-        $filterTransfer = $this->createFilterTransfer($offset, $limit);
-
-        return $this->getFacade()->findFilteredGlossaryKeyEntities($filterTransfer);
+        return $this->getFacade()->findFilteredGlossaryKeyEntities($offset, $limit);
     }
 
     /**
@@ -77,19 +74,5 @@ class GlossaryResourcePublisherPlugin extends AbstractPlugin implements Resource
     public function getIdColumnName(): ?string
     {
         return static::COL_ID_GLOSSARY_KEY;
-    }
-
-    /**
-     * @param int $offset
-     * @param int $limit
-     *
-     * @return \Generated\Shared\Transfer\FilterTransfer
-     */
-    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
-    {
-        return (new FilterTransfer())
-            ->setOrderBy($this->getIdColumnName())
-            ->setOffset($offset)
-            ->setLimit($limit);
     }
 }

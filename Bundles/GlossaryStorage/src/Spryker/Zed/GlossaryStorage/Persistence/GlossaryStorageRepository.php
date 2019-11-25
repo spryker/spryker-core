@@ -19,6 +19,11 @@ use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationData
 class GlossaryStorageRepository extends AbstractRepository implements GlossaryStorageRepositoryInterface
 {
     /**
+     * @uses \Orm\Zed\GlossaryStorage\Persistence\Map\SpyGlossaryStorageTableMap::COL_ID_GLOSSARY_STORAGE
+     */
+    protected const COL_ID_GLOSSARY_STORAGE = 'spy_glossary_storage.id_glossary_storage';
+
+    /**
      * @param int[] $glossaryKeyIds
      *
      * @return \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer[]
@@ -37,13 +42,15 @@ class GlossaryStorageRepository extends AbstractRepository implements GlossarySt
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int $offset
+     * @param int $limit
      * @param int[] $ids
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findFilteredGlossaryStorageDataTransfer(FilterTransfer $filterTransfer, array $ids): array
+    public function findGlossaryStorageDataTransferByIds(int $offset, int $limit, array $ids): array
     {
+        $filterTransfer = $this->createFilterTransfer($offset, $limit);
         $query = $this->getFactory()->createGlossaryStorageQuery();
 
         if ($ids) {
@@ -77,12 +84,15 @@ class GlossaryStorageRepository extends AbstractRepository implements GlossarySt
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int $offset
+     * @param int $limit
      *
      * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
      */
-    public function findFilteredGlossaryKeyEntities(FilterTransfer $filterTransfer): array
+    public function findFilteredGlossaryKeyEntities(int $offset, int $limit): array
     {
+        $filterTransfer = $this->createFilterTransfer($offset, $limit);
+
         /** @var \Propel\Runtime\ActiveQuery\ModelCriteria $query */
         $query = $this->getFactory()
             ->getGlossaryKeyQuery()
@@ -95,5 +105,19 @@ class GlossaryStorageRepository extends AbstractRepository implements GlossarySt
             ->getData();
 
         return $this->getFactory()->createGlossaryStorageMapper()->hydrateGlossaryKeyTransfer($glossaryKeyEntityTransfers);
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\FilterTransfer
+     */
+    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
+    {
+        return (new FilterTransfer())
+            ->setOrderBy(static::COL_ID_GLOSSARY_STORAGE)
+            ->setOffset($offset)
+            ->setLimit($limit);
     }
 }

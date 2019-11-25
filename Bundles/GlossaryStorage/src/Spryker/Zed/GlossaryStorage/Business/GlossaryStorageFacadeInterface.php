@@ -7,19 +7,17 @@
 
 namespace Spryker\Zed\GlossaryStorage\Business;
 
-use Generated\Shared\Transfer\FilterTransfer;
-
 interface GlossaryStorageFacadeInterface
 {
     /**
-     * @api
-     *
-     * @deprecated Use `\Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface::writeGlossaryStorageCollection()` instead.
-     *
      * Specification:
      * - Queries all glossary keys with the given glossaryKeyIds
      * - Stores data as json encoded to storage table
      * - Sends a copy of data to queue based on module config
+     *
+     * @api
+     *
+     * @deprecated Use `\Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface::writeGlossaryStorageCollection()` instead.
      *
      * @param array $glossaryKeyIds
      *
@@ -28,13 +26,13 @@ interface GlossaryStorageFacadeInterface
     public function publish(array $glossaryKeyIds);
 
     /**
-     * @api
-     *
-     * @deprecated Use `\Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface::deleteGlossaryStorageCollection()` instead.
-     *
      * Specification:
      * - Finds and deletes glossary storage entities with the given glossaryKeyIds
      * - Sends delete message to queue based on module config
+     *
+     * @api
+     *
+     * @deprecated Use `\Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface::deleteGlossaryStorageCollection()` instead.
      *
      * @param array $glossaryKeyIds
      *
@@ -89,11 +87,12 @@ interface GlossaryStorageFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int $offset
+     * @param int $limit
      *
      * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
      */
-    public function findFilteredGlossaryKeyEntities(FilterTransfer $filterTransfer): array;
+    public function findFilteredGlossaryKeyEntities(int $offset, int $limit): array;
 
     /**
      * Specification
@@ -101,10 +100,11 @@ interface GlossaryStorageFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param array $ids
+     * @param int $offset
+     * @param int $limit
+     * @param int[] $ids
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findFilteredGlossaryStorageDataTransfer(FilterTransfer $filterTransfer, array $ids): array;
+    public function findGlossaryStorageDataTransferByIds(int $offset, int $limit, array $ids): array;
 }

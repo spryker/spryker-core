@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\GlossaryStorage\Business;
 
-use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -92,13 +91,14 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int $offset
+     * @param int $limit
      *
      * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
      */
-    public function findFilteredGlossaryKeyEntities(FilterTransfer $filterTransfer): array
+    public function findFilteredGlossaryKeyEntities(int $offset, int $limit): array
     {
-        return $this->getRepository()->findFilteredGlossaryKeyEntities($filterTransfer);
+        return $this->getRepository()->findFilteredGlossaryKeyEntities($offset, $limit);
     }
 
     /**
@@ -106,13 +106,14 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int $offset
+     * @param int $limit
      * @param int[] $ids
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findFilteredGlossaryStorageDataTransfer(FilterTransfer $filterTransfer, array $ids): array
+    public function findGlossaryStorageDataTransferByIds(int $offset, int $limit, array $ids): array
     {
-        return $this->getRepository()->findFilteredGlossaryStorageDataTransfer($filterTransfer, $ids);
+        return $this->getRepository()->findGlossaryStorageDataTransferByIds($offset, $limit, $ids);
     }
 }

@@ -11,7 +11,6 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class GlossaryStorageConfig extends AbstractBundleConfig
 {
-    public const SYNC_QUEUE = 'sync.storage.translation';
-    public const SYNC_ERROR_QUEUE = 'sync.storage.translation.error';
+    public const SYNC_QUEUE_NAME = 'sync.storage.translation';
     public const RESOURCE_NAME = 'translation';
 }

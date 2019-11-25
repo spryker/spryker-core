@@ -14,5 +14,5 @@ interface GlossaryTranslationStorageMapperInterface
      *
      * @return array
      */
-    public function mapGlossaryStorageEntityTransferByGlossaryIdAndLocale(array $glossaryStorageEntityEntityTransfers);
+    public function mapGlossaryStorageEntityTransferByGlossaryIdAndLocale(array $glossaryStorageEntityEntityTransfers): array;
 }
