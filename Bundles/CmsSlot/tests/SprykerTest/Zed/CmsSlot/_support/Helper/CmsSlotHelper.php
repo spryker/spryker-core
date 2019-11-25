@@ -30,7 +30,7 @@ class CmsSlotHelper extends Module
      */
     public function haveCmsSlot(array $override = []): CmsSlotTransfer
     {
-        $data = [
+        $cmsSlotData = [
             CmsSlotTransfer::KEY => 'test-center',
             CmsSlotTransfer::CONTENT_PROVIDER_TYPE => 'SprykerTestBlock',
             CmsSlotTransfer::NAME => 'Test Name',
@@ -38,7 +38,7 @@ class CmsSlotHelper extends Module
             CmsSlotTransfer::IS_ACTIVE => true,
         ];
 
-        $cmsSlotTransfer = (new CmsSlotBuilder(array_merge($data, $override)))->build();
+        $cmsSlotTransfer = (new CmsSlotBuilder(array_merge($cmsSlotData, $override)))->build();
 
         return $cmsSlotTransfer;
     }
@@ -50,13 +50,13 @@ class CmsSlotHelper extends Module
      */
     public function haveCmsSlotTemplate(array $override = []): CmsSlotTemplateTransfer
     {
-        $data = [
+        $cmsSlotTemplateData = [
             CmsSlotTemplateTransfer::PATH => '@TestModule/views/test/test.twig',
             CmsSlotTemplateTransfer::NAME => 'Test Name',
             CmsSlotTemplateTransfer::DESCRIPTION => 'Test description.',
         ];
 
-        $cmsSlotTemplateTransfer = (new CmsSlotTemplateBuilder(array_merge($data, $override)))->build();
+        $cmsSlotTemplateTransfer = (new CmsSlotTemplateBuilder(array_merge($cmsSlotTemplateData, $override)))->build();
 
         return $cmsSlotTemplateTransfer;
     }
@@ -68,15 +68,7 @@ class CmsSlotHelper extends Module
      */
     public function haveCmsSlotInDb(array $override = []): CmsSlotTransfer
     {
-        $data = [
-            CmsSlotTransfer::KEY => 'test-center',
-            CmsSlotTransfer::CONTENT_PROVIDER_TYPE => 'SprykerCmsSlotBlock',
-            CmsSlotTransfer::NAME => 'Test Name',
-            CmsSlotTransfer::DESCRIPTION => 'Test description.',
-            CmsSlotTransfer::IS_ACTIVE => 1,
-        ];
-
-        $cmsSlotTransfer = (new CmsSlotBuilder(array_merge($data, $override)))->build();
+        $cmsSlotTransfer = $this->haveCmsSlot();
 
         $cmsSlotEntity = new SpyCmsSlot();
         $cmsSlotEntity->fromArray($cmsSlotTransfer->toArray());
@@ -94,13 +86,7 @@ class CmsSlotHelper extends Module
      */
     public function haveCmsSlotTemplateInDb(array $override = []): CmsSlotTemplateTransfer
     {
-        $data = [
-            CmsSlotTemplateTransfer::PATH => '@TestModule/views/test/test.twig',
-            CmsSlotTemplateTransfer::NAME => 'Test Name',
-            CmsSlotTemplateTransfer::DESCRIPTION => 'Test description.',
-        ];
-
-        $cmsSlotTemplateTransfer = (new CmsSlotTemplateBuilder(array_merge($data, $override)))->build();
+        $cmsSlotTemplateTransfer = $this->haveCmsSlotTemplate();
 
         $cmsSlotTemplateEntity = new SpyCmsSlotTemplate();
         $cmsSlotTemplateEntity->fromArray($cmsSlotTemplateTransfer->toArray());

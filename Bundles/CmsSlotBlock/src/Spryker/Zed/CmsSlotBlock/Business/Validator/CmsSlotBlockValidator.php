@@ -10,6 +10,7 @@ namespace Spryker\Zed\CmsSlotBlock\Business\Validator;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Shared\CmsSlotBlock\CmsSlotBlockConfig;
+use Spryker\Zed\CmsSlot\Business\Exception\MissingCmsSlotException;
 use Spryker\Zed\CmsSlotBlock\Dependency\Facade\CmsSlotBlockToCmsSlotFacadeInterface;
 
 class CmsSlotBlockValidator implements CmsSlotBlockValidatorInterface
@@ -22,7 +23,7 @@ class CmsSlotBlockValidator implements CmsSlotBlockValidatorInterface
     /**
      * @var bool[]
      */
-    protected $cmsSlotValidationCache = [];
+    protected $cmsSlotValidationBuffer = [];
 
     /**
      * @param \Spryker\Zed\CmsSlotBlock\Dependency\Facade\CmsSlotBlockToCmsSlotFacadeInterface $cmsSlotFacade
@@ -45,7 +46,7 @@ class CmsSlotBlockValidator implements CmsSlotBlockValidatorInterface
         foreach ($cmsSlotBlockTransfers as $cmsSlotBlockTransfer) {
             $idCmsSlot = $cmsSlotBlockTransfer->getIdSlot();
 
-            if (isset($this->cmsSlotValidationCache[$idCmsSlot])) {
+            if (isset($this->cmsSlotValidationBuffer[$idCmsSlot])) {
                 continue;
             }
 
@@ -73,14 +74,14 @@ class CmsSlotBlockValidator implements CmsSlotBlockValidatorInterface
      */
     protected function validateCmsSlotById(int $idCmsSlot): bool
     {
-        $cmsSlotTransfer = $this->cmsSlotFacade->findCmsSlotById($idCmsSlot);
-
-        if (!$cmsSlotTransfer) {
+        try {
+            $cmsSlotTransfer = $this->cmsSlotFacade->getCmsSlotById($idCmsSlot);
+        } catch (MissingCmsSlotException $cmsSlotException) {
             return false;
         }
 
         $isCmsSlotValid = $cmsSlotTransfer->getContentProviderType() === CmsSlotBlockConfig::CMS_SLOT_CONTENT_PROVIDER_TYPE;
-        $this->cmsSlotValidationCache[$idCmsSlot] = $isCmsSlotValid;
+        $this->cmsSlotValidationBuffer[$idCmsSlot] = $isCmsSlotValid;
 
         return $isCmsSlotValid;
     }

@@ -5,12 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsSlotBlockGui\Dependency\Facade;
+namespace Spryker\Zed\CmsSlot\Business\CmsSlot;
 
-use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
 
-interface CmsSlotBlockGuiToCmsSlotFacadeInterface
+interface CmsSlotReaderInterface
 {
     /**
      * @param int $idCmsSlot
@@ -18,11 +17,4 @@ interface CmsSlotBlockGuiToCmsSlotFacadeInterface
      * @return \Generated\Shared\Transfer\CmsSlotTransfer
      */
     public function getCmsSlotById(int $idCmsSlot): CmsSlotTransfer;
-
-    /**
-     * @param int $idCmsSlotTemplate
-     *
-     * @return \Generated\Shared\Transfer\CmsSlotTemplateTransfer
-     */
-    public function getCmsSlotTemplateById(int $idCmsSlotTemplate): CmsSlotTemplateTransfer;
 }

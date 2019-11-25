@@ -4,7 +4,7 @@
   "description": "CmsSlotBlockStorage module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/cms-slot": "^0.5.0",
     "spryker/cms-slot-block": "^0.1.0",
     "spryker/event-behavior": "^1.8.0",
@@ -14,7 +14,7 @@
     "spryker/synchronization": "^1.0.0",
     "spryker/synchronization-behavior": "^1.0.0",
     "spryker/synchronization-extension": "^1.1.0",
-    "spryker/util-encoding": "^2.0.3"
+    "spryker/util-encoding": "^1.0.0 || ^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

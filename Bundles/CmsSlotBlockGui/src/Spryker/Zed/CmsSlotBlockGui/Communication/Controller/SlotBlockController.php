@@ -24,8 +24,6 @@ class SlotBlockController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
      * @return array
      */
     public function indexAction(Request $request): array
@@ -33,16 +31,11 @@ class SlotBlockController extends AbstractController
         $idCmsSlotTemplate = $this->castId($request->query->get(static::PARAM_ID_CMS_SLOT_TEMPLATE));
         $idCmsSlot = $this->castId($request->query->get(static::PARAM_ID_CMS_SLOT));
 
-        $cmsSlotTransfer = $this->getFactory()->getCmsSlotFacade()->findCmsSlotById($idCmsSlot);
-        if (!$cmsSlotTransfer) {
-            throw new NotFoundHttpException(sprintf('The slot ID %s is incorrect.', $idCmsSlot));
-        }
-
         $cmsBlockChoiceForm = $this->getFactory()->createCmsBlockChoiceForm($idCmsSlotTemplate, $idCmsSlot);
         $cmsSlotBlockCollectionForm = $this->getSlotBlockCollectionForm($request, $idCmsSlotTemplate, $idCmsSlot);
 
         return $this->viewResponse([
-            'slotName' => $cmsSlotTransfer->getName(),
+            'slotName' => $this->getFactory()->getCmsSlotFacade()->getCmsSlotById($idCmsSlot)->getName(),
             'slotBlockTable' => $this->getFactory()->createSlotBlockTable($idCmsSlotTemplate, $idCmsSlot)->render(),
             'cmsBlockChoiceForm' => $cmsBlockChoiceForm->createView(),
             'cmsSlotBlockCollectionForm' => $cmsSlotBlockCollectionForm->createView(),

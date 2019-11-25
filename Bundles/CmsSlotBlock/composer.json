@@ -4,8 +4,8 @@
   "description": "CmsSlotBlock module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
-    "spryker/cms-block": "^2.0.0",
+    "php": ">=7.2",
+    "spryker/cms-block": "^2.0.0 || ^3.0.0",
     "spryker/cms-slot": "^0.6.0",
     "spryker/cms-slot-block-extension": "^0.1.0",
     "spryker/event": "^2.3.0",

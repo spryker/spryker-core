@@ -14,7 +14,7 @@ interface CmsSlotBlockToCmsSlotFacadeInterface
     /**
      * @param int $idCmsSlot
      *
-     * @return \Generated\Shared\Transfer\CmsSlotTransfer|null
+     * @return \Generated\Shared\Transfer\CmsSlotTransfer
      */
-    public function findCmsSlotById(int $idCmsSlot): ?CmsSlotTransfer;
+    public function getCmsSlotById(int $idCmsSlot): CmsSlotTransfer;
 }

@@ -13,6 +13,7 @@
             <unique-column name="fk_cms_slot_template"/>
             <unique-column name="fk_cms_slot"/>
             <unique-column name="fk_cms_block"/>
+            <unique-column name="position"/>
         </unique>
 
         <foreign-key name="spy_cms_slot_block-fk_cms_slot_template" foreignTable="spy_cms_slot_template" onDelete="CASCADE" phpName="CmsSlotTemplate">
