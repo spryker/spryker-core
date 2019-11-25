@@ -138,14 +138,16 @@ class ProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductsUrlsForOneProduct(): void
+    public function testGetProductsUrlsByOneProductAbstractIdAndLocale(): void
     {
         //Arrange
+        $this->tester->createProductsUrls();
+
         $productAbstractId = $this->tester->getProductAbstractIds()[0];
 
-        $productUrlFilterTransfer = new ProductUrlFilterTransfer();
-        $productUrlFilterTransfer->setProductAbstractIds([$productAbstractId]);
-        $productUrlFilterTransfer->setIdLocale($this->tester->getLocaleFacade()->getCurrentLocale()->getIdLocale());
+        $productUrlFilterTransfer = (new ProductUrlFilterTransfer())
+            ->setProductAbstractIds([$productAbstractId])
+            ->setIdLocale($this->tester->getLocaleFacade()->getCurrentLocale()->getIdLocale());
 
         $correctUrl = $this->tester->getProductUrl($productAbstractId, $this->tester->getLocaleFacade()->getCurrentLocale()->getLocaleName());
 
@@ -155,19 +157,19 @@ class ProductFacadeTest extends Unit
         // Assert
         $this->assertCount(1, $productsUrls);
 
-        foreach ($productsUrls as $productUrl) {
-            $this->assertEquals($correctUrl, $productUrl->getUrl());
-        }
+        $this->assertSame($correctUrl, $productsUrls[0]->getUrl());
     }
 
     /**
      * @return void
      */
-    public function testGetProductsUrlsWithoutProductIds(): void
+    public function testGetProductsUrlsByLocaleAndWithoutProductAbstractIds(): void
     {
         //Arrange
-        $productUrlFilterTransfer = new ProductUrlFilterTransfer();
-        $productUrlFilterTransfer->setIdLocale($this->tester->getLocaleFacade()->getCurrentLocale()->getIdLocale());
+        $this->tester->createProductsUrls();
+
+        $productUrlFilterTransfer = (new ProductUrlFilterTransfer())
+            ->setIdLocale($this->tester->getLocaleFacade()->getCurrentLocale()->getIdLocale());
 
         // Act
         $productUrls = $this->tester->getProductFacade()->getProductsUrls($productUrlFilterTransfer);
@@ -179,22 +181,18 @@ class ProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductsUrlsWithoutLocale(): void
+    public function testGetProductsUrlsByProductAbstractIdAndWithoutLocale(): void
     {
         //Arrange
-        $productAbstractId = $this->tester->getProductAbstractIds()[0];
+        $this->tester->createProductsUrls();
 
-        $productUrlFilterTransfer = new ProductUrlFilterTransfer();
-        $productUrlFilterTransfer->setProductAbstractIds([$productAbstractId]);
+        $productUrlFilterTransfer = (new ProductUrlFilterTransfer())
+            ->setProductAbstractIds([$this->tester->getProductAbstractIds()[0]]);
 
         // Act
         $productsUrls = $this->tester->getProductFacade()->getProductsUrls($productUrlFilterTransfer);
 
         // Assert
         $this->assertCount(2, $productsUrls);
-
-        foreach ($productsUrls as $productUrl) {
-            $this->assertEquals($productAbstractId, $productUrl->getFkResourceProductAbstract());
-        }
     }
 }

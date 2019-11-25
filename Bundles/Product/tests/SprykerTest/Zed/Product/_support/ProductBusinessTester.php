@@ -61,8 +61,6 @@ class ProductBusinessTester extends Actor
 
         $this->haveLocale([LocaleTransfer::LOCALE_NAME => 'en_US']);
         $this->haveLocale([LocaleTransfer::LOCALE_NAME => 'de_DE']);
-
-        $this->createProductsUrls();
     }
 
     /**
