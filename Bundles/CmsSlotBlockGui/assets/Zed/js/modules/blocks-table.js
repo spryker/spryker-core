@@ -330,7 +330,10 @@ var BlocksTable = function (options) {
         var idCmsBlock = row.data()[0];
 
         $('.js-cms-slot-block-form-item').hide();
-        $('#js-cms-slot-block-form-item-' + idCmsBlock).show();
+
+        var cmsSlotBlockFormItem = $('#js-cms-slot-block-form-item-' + idCmsBlock);
+        _self.slotBlocksForm.toggleEnablementFromBlocksTable(cmsSlotBlockFormItem);
+        cmsSlotBlockFormItem.show();
     };
 
     this.showAlert = function () {

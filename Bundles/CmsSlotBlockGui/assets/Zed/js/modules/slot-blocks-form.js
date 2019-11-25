@@ -29,6 +29,7 @@ var SlotBlocksForm = function (options) {
         _self.formItemsCount = parseInt(_self.$formWrapper.data('slot-block-item-count'));
         _self.formTemplate = _self.$formWrapper.data('slot-block-item-form-template');
         _self.form.on('submit', _self.save);
+        _self.form.on('change', 'input[data-disable]:visible', _self.toggleEnablementFromRadioInput);
     };
 
     this.rebuildForm = function (idCmsSlotTemplate, idCmsSlot, tableData, isChanged) {
@@ -147,7 +148,32 @@ var SlotBlocksForm = function (options) {
         var isChanged = _self.formInitialState !== _self.form.serialize();
         isChanged = _self.resolveIsUnsavedCallback(isChanged);
         _self.isStateChanged = isChanged;
-    }
+    };
+
+    this.toggleEnablementFromRadioInput = function () {
+        _self.toggleEnablement($(this));
+    };
+
+    this.toggleEnablementFromBlocksTable = function (cmsSlotBlockFormItem) {
+        $('input[data-disable]', cmsSlotBlockFormItem).each(function(index) {
+            _self.toggleEnablement($(this));
+        });
+    };
+
+    this.toggleEnablement = function (radioInput) {
+        if (! radioInput.is(':checked')) {
+            return;
+        }
+
+        var inputs = radioInput.data('inputs');
+        var disabled = radioInput.data('disable');
+
+        $.each(inputs, function(index, value) {
+            radioInput.closest(_self.slotBlockFormItemClass)
+                .find("select[name*='" + value + "']")
+                .prop('disabled', disabled);
+        });
+    };
 };
 
 module.exports = SlotBlocksForm;
