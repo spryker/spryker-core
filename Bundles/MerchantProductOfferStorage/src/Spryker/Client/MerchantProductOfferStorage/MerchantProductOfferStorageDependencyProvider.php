@@ -60,7 +60,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
         throw new ProductOfferProviderPluginException(
             sprintf(
                 'Missing instance of %s! You need to configure ProductOfferDefaultPlugin ' .
-                'in your own MerchantProductOfferStorageDependencyProvider::createMoneyFormTypePlugin() ' .
+                'in your own MerchantProductOfferStorageDependencyProvider::createProductOfferPlugin() ' .
                 'to be able to get default offer reference.',
                 ProductOfferProviderPluginInterface::class
             )
