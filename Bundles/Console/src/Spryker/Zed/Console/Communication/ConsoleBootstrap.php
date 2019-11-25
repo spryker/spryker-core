@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Console\Communication;
 
+use Spryker\Service\Kernel\Container;
+use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface;
 use Spryker\Shared\Kernel\Communication\Application as SprykerApplication;
 use Spryker\Zed\Console\Business\Model\Environment;
 use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
@@ -36,6 +38,21 @@ class ConsoleBootstrap extends Application
     protected $application;
 
     /**
+     * @var \Spryker\Service\Container\ContainerInterface
+     */
+    protected $container;
+
+    /**
+     * @var \Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface[]
+     */
+    protected $bootablePlugins = [];
+
+    /**
+     * @var bool
+     */
+    protected $booted = false;
+
+    /**
      * @param string $name
      * @param string $version
      */
@@ -48,6 +65,7 @@ class ConsoleBootstrap extends Application
         $this->addEventDispatcher();
 
         $this->application = new SprykerApplication();
+        $this->container = new Container();
 
         $this->registerServiceProviders();
         $this->provideApplicationPlugins();
@@ -76,7 +94,11 @@ class ConsoleBootstrap extends Application
         $applicationPlugins = $this->getFacade()->getApplicationPlugins();
 
         foreach ($applicationPlugins as $applicationPlugin) {
-            $applicationPlugin->provide($this->application);
+            $applicationPlugin->provide($this->container);
+
+            if ($applicationPlugin instanceof BootableApplicationPluginInterface) {
+                $this->bootablePlugins[] = $applicationPlugin;
+            }
         }
     }
 
@@ -171,6 +193,11 @@ class ConsoleBootstrap extends Application
 
         $this->application->boot();
 
+        if (!$this->booted) {
+            $this->booted = true;
+            $this->bootPlugins();
+        }
+
         if (!$input->hasParameterOption(['--no-pre'], true)) {
             $this->getFacade()->preRun($input, $output);
         }
@@ -182,6 +209,16 @@ class ConsoleBootstrap extends Application
         }
 
         return $response;
+    }
+
+    /**
+     * @return void
+     */
+    protected function bootPlugins(): void
+    {
+        foreach ($this->bootablePlugins as $bootablePlugin) {
+            $this->container = $bootablePlugin->boot($this->container);
+        }
     }
 
     /**
