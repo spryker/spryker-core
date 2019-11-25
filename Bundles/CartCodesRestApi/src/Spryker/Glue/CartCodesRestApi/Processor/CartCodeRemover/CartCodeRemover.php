@@ -48,7 +48,7 @@ class CartCodeRemover implements CartCodeRemoverInterface
     {
         $quoteTransfer = $this->createQuoteTransfer($restRequest, CartsRestApiConfig::RESOURCE_CARTS);
 
-        $cartCodeOperationResultTransfer = $this->cartCodesRestApiClient->removeCode(
+        $cartCodeOperationResultTransfer = $this->cartCodesRestApiClient->removeCartCode(
             $quoteTransfer,
             (int)$restRequest->getResource()->getId()
         );
@@ -65,7 +65,7 @@ class CartCodeRemover implements CartCodeRemoverInterface
     {
         $quoteTransfer = $this->createQuoteTransfer($restRequest, CartsRestApiConfig::RESOURCE_GUEST_CARTS);
 
-        $cartCodeOperationResultTransfer = $this->cartCodesRestApiClient->removeCode(
+        $cartCodeOperationResultTransfer = $this->cartCodesRestApiClient->removeCartCode(
             $quoteTransfer,
             (int)$restRequest->getResource()->getId()
         );

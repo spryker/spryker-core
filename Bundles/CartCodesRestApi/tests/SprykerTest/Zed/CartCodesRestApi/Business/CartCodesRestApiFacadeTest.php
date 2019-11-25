@@ -98,13 +98,13 @@ class CartCodesRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveCodeWillRemoveDiscountWithExistingQuote(): void
+    public function testRemoveCartCodeWillRemoveDiscountWithExistingQuote(): void
     {
         // Arrange
         $quoteTransfer = $this->tester->havePersistentQuoteWithVouchers();
 
         // Act
-        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCode(
+        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCartCode(
             $quoteTransfer,
             $this->tester::ID_DISCOUNT
         );
@@ -116,13 +116,13 @@ class CartCodesRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveCodeWillNotRemoveDiscountWithNonExistentIdDiscount(): void
+    public function testRemoveCartCodeWillNotRemoveDiscountWithNonExistentIdDiscount(): void
     {
         // Arrange
         $quoteTransfer = $this->tester->havePersistentQuoteWithVouchers();
 
         // Act
-        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCode(
+        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCartCode(
             $quoteTransfer,
             $this->tester::NON_EXISTENT_ID_DISCOUNT
         );
@@ -138,13 +138,13 @@ class CartCodesRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveCodeWillNotRemoveDiscountWithNonExistentQuote(): void
+    public function testRemoveCartCodeWillNotRemoveDiscountWithNonExistentQuote(): void
     {
         // Arrange
         $quoteTransfer = $this->tester->prepareQuoteTransfer();
 
         // Act
-        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCode(
+        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCartCode(
             $quoteTransfer,
             $this->tester::ID_DISCOUNT
         );

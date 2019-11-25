@@ -33,9 +33,9 @@ class CartCodeRemover implements CartCodeRemoverInterface
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function removeCode(QuoteTransfer $quoteTransfer, int $idDiscount): CartCodeOperationResultTransfer
+    public function removeCartCode(QuoteTransfer $quoteTransfer, int $idDiscount): CartCodeOperationResultTransfer
     {
-        return $this->cartCodesRestApiStub->removeCode(
+        return $this->cartCodesRestApiStub->removeCartCode(
             (new RemoveCodeRequestTransfer())
                 ->setQuote($quoteTransfer)
                 ->setIdDiscount($idDiscount)

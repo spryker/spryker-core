@@ -43,16 +43,16 @@ class CartCodesRestApiStub implements CartCodesRestApiStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\CartCodesRestApi\Communication\Controller\GatewayController::removeCodeAction()
+     * @uses \Spryker\Zed\CartCodesRestApi\Communication\Controller\GatewayController::removeCartCodeAction()
      *
      * @param \Generated\Shared\Transfer\RemoveCodeRequestTransfer $removeCodeRequestTransfer
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function removeCode(RemoveCodeRequestTransfer $removeCodeRequestTransfer): CartCodeOperationResultTransfer
+    public function removeCartCode(RemoveCodeRequestTransfer $removeCodeRequestTransfer): CartCodeOperationResultTransfer
     {
         /** @var \Generated\Shared\Transfer\CartCodeOperationResultTransfer $cartCodeOperationResultTransfer */
-        $cartCodeOperationResultTransfer = $this->zedStubClient->call('/cart-codes-rest-api/gateway/remove-code', $removeCodeRequestTransfer);
+        $cartCodeOperationResultTransfer = $this->zedStubClient->call('/cart-codes-rest-api/gateway/remove-cart-code', $removeCodeRequestTransfer);
 
         return $cartCodeOperationResultTransfer;
     }
