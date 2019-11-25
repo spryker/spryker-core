@@ -59,7 +59,7 @@ class ProductOptionRestResponseBuilder implements ProductOptionRestResponseBuild
         string $parentResourceType,
         array $sorts
     ): array {
-        $restProductOptionsAttributesTransfers = $this->prepareRestProductOptionsAttributesTransfers(
+        $restProductOptionsAttributesTransfers = $this->getSortedRestProductOptionsAttributesTransfers(
             $productAbstractOptionStorageTransfers,
             $sorts
         );
@@ -85,7 +85,7 @@ class ProductOptionRestResponseBuilder implements ProductOptionRestResponseBuild
      *
      * @return \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[][]
      */
-    protected function prepareRestProductOptionsAttributesTransfers(
+    protected function getSortedRestProductOptionsAttributesTransfers(
         array $productAbstractOptionStorageTransfers,
         array $sorts
     ): array {

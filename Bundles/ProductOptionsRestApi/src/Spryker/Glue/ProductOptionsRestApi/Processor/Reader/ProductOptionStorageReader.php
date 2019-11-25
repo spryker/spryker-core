@@ -18,7 +18,11 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
 
+    /**
+     * @uses \Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReader::KEY_ID_PRODUCT_ABSTRACT
+     */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+
     protected const KEY_PRODUCT_ABSTRACT_SKU = 'sku';
     protected const KEY_PRODUCT_CONCRETE_SKU = 'sku';
 

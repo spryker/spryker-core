@@ -260,10 +260,16 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     public function getBulkProductConcreteStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): array
     {
         $storageKeys = $this->generateMappingStorageKeys($mappingType, $identifiers, $localeName);
+        $productConcreteStorageDataItems = $this->storageClient->getMulti($storageKeys);
         $productConcreteIds = [];
-        foreach ($this->storageClient->getMulti($storageKeys) as $key => $storageData) {
-            $productConcreteIds[$key] = $this->utilEncodingService->decodeJson($storageData, true)[static::KEY_ID];
+        foreach ($productConcreteStorageDataItems as $key => $productConcreteStorageDataItem) {
+            $decodedProductConcreteStorageDataItem =
+                $this->utilEncodingService->decodeJson($productConcreteStorageDataItem, true);
+            if ($decodedProductConcreteStorageDataItem) {
+                $productConcreteIds[$key] = $decodedProductConcreteStorageDataItem[static::KEY_ID];
+            }
         }
+
         if (!$productConcreteIds) {
             return [];
         }
@@ -421,9 +427,9 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      * @param string[] $identifiers
      * @param string $localeName
      *
-     * @return array
+     * @return string[]
      */
-    protected function generateMappingStorageKeys(string $mappingType, array $identifiers, string $localeName)
+    protected function generateMappingStorageKeys(string $mappingType, array $identifiers, string $localeName): array
     {
         $mappingKeys = [];
         foreach ($identifiers as $identifier) {
