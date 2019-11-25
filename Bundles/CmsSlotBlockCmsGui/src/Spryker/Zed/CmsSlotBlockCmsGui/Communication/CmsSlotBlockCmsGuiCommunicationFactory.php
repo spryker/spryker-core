@@ -15,7 +15,7 @@ use Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\DataProvider\CmsPageCondit
 use Spryker\Zed\CmsSlotBlockCmsGui\Dependency\Facade\CmsSlotBlockCmsGuiToLocaleFacadeInterface;
 use Spryker\Zed\CmsSlotBlockCmsGui\Dependency\Facade\CmsSlotBlockCmsGuiToTranslatorFacadeInterface;
 use Spryker\Zed\CmsSlotBlockCmsGui\Dependency\QueryContainer\CmsSlotBlockCmsGuiToCmsQueryContainerInterface;
-use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilEncodingInterface;
+use Spryker\Zed\CmsSlotBlockCmsGui\Dependency\Service\CmsSlotBlockCmsGuiToUtilEncodingInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 class CmsSlotBlockCmsGuiCommunicationFactory extends AbstractCommunicationFactory
@@ -73,9 +73,9 @@ class CmsSlotBlockCmsGuiCommunicationFactory extends AbstractCommunicationFactor
     }
 
     /**
-     * @return \Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilEncodingInterface
+     * @return \Spryker\Zed\CmsSlotBlockCmsGui\Dependency\Service\CmsSlotBlockCmsGuiToUtilEncodingInterface
      */
-    public function getUtilEncoding(): ContentGuiToUtilEncodingInterface
+    public function getUtilEncoding(): CmsSlotBlockCmsGuiToUtilEncodingInterface
     {
         return $this->getProvidedDependency(CmsSlotBlockCmsGuiDependencyProvider::SERVICE_UTIL_ENCODING);
     }

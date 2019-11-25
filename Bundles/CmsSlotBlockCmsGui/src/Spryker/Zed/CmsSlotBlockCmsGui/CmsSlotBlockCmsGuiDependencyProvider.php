@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsSlotBlockCmsGui;
 use Spryker\Zed\CmsSlotBlockCmsGui\Dependency\Facade\CmsSlotBlockCmsGuiToLocaleFacadeBridge;
 use Spryker\Zed\CmsSlotBlockCmsGui\Dependency\Facade\CmsSlotBlockCmsGuiToTranslatorFacadeBridge;
 use Spryker\Zed\CmsSlotBlockCmsGui\Dependency\QueryContainer\CmsSlotBlockCmsGuiToCmsQueryContainerBridge;
-use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilEncodingBridge;
+use Spryker\Zed\CmsSlotBlockCmsGui\Dependency\Service\CmsSlotBlockCmsGuiToUtilEncodingBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -90,7 +90,7 @@ class CmsSlotBlockCmsGuiDependencyProvider extends AbstractBundleDependencyProvi
     protected function addUtilEncoding(Container $container): Container
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
-            return new ContentGuiToUtilEncodingBridge(
+            return new CmsSlotBlockCmsGuiToUtilEncodingBridge(
                 $container->getLocator()->utilEncoding()->service()
             );
         });

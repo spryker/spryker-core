@@ -22,7 +22,7 @@ use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockPro
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToLocaleFacadeInterface;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToProductFacadeInterface;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToTranslatorFacadeInterface;
-use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilEncodingInterface;
+use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Service\CmsSlotBlockProductCategoryGuiToUtilEncodingInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -122,9 +122,9 @@ class CmsSlotBlockProductCategoryGuiCommunicationFactory extends AbstractCommuni
     }
 
     /**
-     * @return \Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilEncodingInterface
+     * @return \Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Service\CmsSlotBlockProductCategoryGuiToUtilEncodingInterface
      */
-    public function getUtilEncoding(): ContentGuiToUtilEncodingInterface
+    public function getUtilEncoding(): CmsSlotBlockProductCategoryGuiToUtilEncodingInterface
     {
         return $this->getProvidedDependency(CmsSlotBlockProductCategoryGuiDependencyProvider::SERVICE_UTIL_ENCODING);
     }
