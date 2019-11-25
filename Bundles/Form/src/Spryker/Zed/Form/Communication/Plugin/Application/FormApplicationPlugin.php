@@ -117,18 +117,10 @@ class FormApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
      */
     protected function extendForm(FormFactoryBuilderInterface $formFactoryBuilder, ContainerInterface $container): FormFactoryBuilderInterface
     {
-        foreach ($this->getFormPlugins() as $formPlugin) {
+        foreach ($this->getFactory()->getFormPlugins() as $formPlugin) {
             $formFactoryBuilder = $formPlugin->extend($formFactoryBuilder, $container);
         }
 
         return $formFactoryBuilder;
-    }
-
-    /**
-     * @return \Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface[]
-     */
-    protected function getFormPlugins(): array
-    {
-        return array_merge($this->getFactory()->getCoreFormPlugins(), $this->getFactory()->getFormPlugins());
     }
 }

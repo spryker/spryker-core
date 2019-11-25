@@ -44,14 +44,6 @@ class ConstraintValidatorFactoryValidatorPlugin extends AbstractPlugin implement
      */
     protected function createConstraintValidationFactory(ContainerInterface $container): ConstraintValidatorFactoryInterface
     {
-        return new ConstraintValidatorFactory($container, $this->getConstraintPlugins());
-    }
-
-    /**
-     * @return \Spryker\Shared\ValidatorExtension\Dependency\Plugin\ConstraintPluginInterface[]
-     */
-    protected function getConstraintPlugins(): array
-    {
-        return array_merge($this->getFactory()->getCoreConstraintPlugins(), $this->getFactory()->getConstraintPlugins());
+        return new ConstraintValidatorFactory($container, $this->getFactory()->getConstraintPlugins());
     }
 }

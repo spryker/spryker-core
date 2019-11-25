@@ -55,14 +55,6 @@ class ValidatorApplicationPlugin extends AbstractPlugin implements ApplicationPl
     }
 
     /**
-     * @return \Spryker\Shared\ValidatorExtension\Dependency\Plugin\ValidatorPluginInterface[]
-     */
-    protected function getValidatorPlugins(): array
-    {
-        return array_merge($this->getFactory()->getCoreValidatorPlugins(), $this->getFactory()->getValidatorPlugins());
-    }
-
-    /**
      * @param \Symfony\Component\Validator\ValidatorBuilderInterface $validatorBuilder
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
@@ -70,7 +62,7 @@ class ValidatorApplicationPlugin extends AbstractPlugin implements ApplicationPl
      */
     protected function extendValidator(ValidatorBuilderInterface $validatorBuilder, ContainerInterface $container): ValidatorBuilderInterface
     {
-        foreach ($this->getValidatorPlugins() as $validatorPlugin) {
+        foreach ($this->getFactory()->getValidatorPlugins() as $validatorPlugin) {
             $validatorBuilder = $validatorPlugin->extend($validatorBuilder, $container);
         }
 

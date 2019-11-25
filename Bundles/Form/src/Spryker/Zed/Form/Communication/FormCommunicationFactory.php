@@ -52,12 +52,4 @@ class FormCommunicationFactory extends AbstractCommunicationFactory
     {
         return $this->getProvidedDependency(FormDependencyProvider::PLUGINS_FORM);
     }
-
-    /**
-     * @return \Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface[]
-     */
-    public function getCoreFormPlugins(): array
-    {
-        return $this->getProvidedDependency(FormDependencyProvider::PLUGINS_CORE_FORM);
-    }
 }
