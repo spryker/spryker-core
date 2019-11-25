@@ -57,6 +57,7 @@
         <property name="idDiscount" type="int"/>
         <property name="voucherCode" type="string"/>
         <property name="discountType" type="string"/>
+        <property name="validTo" type="string"/>
     </transfer>
 
     <transfer name="Message">
@@ -70,6 +71,12 @@
     <transfer name="QuoteResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="quoteTransfer" type="Quote"/>
+    </transfer>
+
+    <transfer name="PromotionItem">
+        <property name="idDiscountPromotion" type="int"/>
+        <property name="abstractSku" type="string"/>
+        <property name="maxQuantity" type="int"/>
     </transfer>
 
 </transfers>
