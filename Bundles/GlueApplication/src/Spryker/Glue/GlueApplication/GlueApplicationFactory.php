@@ -67,7 +67,7 @@ use Spryker\Glue\GlueApplication\Serialize\Encoder\EncoderInterface;
 use Spryker\Glue\GlueApplication\Serialize\Encoder\JsonEncoder;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\Kernel\Application;
+use Spryker\Shared\Kernel\Communication\Application;
 
 /**
  * @method \Spryker\Glue\GlueApplication\GlueApplicationConfig getConfig()
@@ -370,7 +370,7 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\Kernel\Application
+     * @return \Spryker\Shared\Kernel\Communication\Application
      */
     public function getGlueApplication(): Application
     {

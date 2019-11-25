@@ -12,11 +12,12 @@ use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\GlueApplicationDependencyProvider;
 use Spryker\Glue\GlueApplication\Session\Storage\MockArraySessionStorage;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Glue\Kernel\Application as SilexApplication;
 use Spryker\Glue\Kernel\BundleDependencyProviderResolverAwareTrait;
 use Spryker\Glue\Kernel\Container;
+use Spryker\Glue\Kernel\Plugin\Pimple;
 use Spryker\Service\Container\ContainerInterface;
-use Spryker\Shared\Application\Application;
+use Spryker\Shared\Application\Application as SprykerApplication;
+use Spryker\Shared\Kernel\Communication\Application;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 abstract class AbstractGlueBootstrap
@@ -24,7 +25,7 @@ abstract class AbstractGlueBootstrap
     use BundleDependencyProviderResolverAwareTrait;
 
     /**
-     * @var \Spryker\Glue\Kernel\Application
+     * @var \Spryker\Shared\Kernel\Communication\Application
      */
     protected $application;
 
@@ -40,10 +41,10 @@ abstract class AbstractGlueBootstrap
 
     public function __construct()
     {
-        $this->application = new SilexApplication();
+        $this->application = $this->getBaseApplication();
 
         if ($this->application instanceof ContainerInterface) {
-            $this->sprykerApplication = new Application($this->application);
+            $this->sprykerApplication = new SprykerApplication($this->application);
         }
 
         $this->config = new GlueApplicationConfig();
@@ -52,7 +53,31 @@ abstract class AbstractGlueBootstrap
     }
 
     /**
-     * @return \Spryker\Shared\Application\Application|\Spryker\Glue\Kernel\Application
+     * @return \Spryker\Shared\Kernel\Communication\Application
+     */
+    protected function getBaseApplication(): Application
+    {
+        $application = new Application();
+
+        $this->unsetSilexExceptionHandler($application);
+
+        Pimple::setApplication($application);
+
+        return $application;
+    }
+
+    /**
+     * @param \Spryker\Shared\Kernel\Communication\Application $application
+     *
+     * @return void
+     */
+    protected function unsetSilexExceptionHandler(Application $application): void
+    {
+        unset($application['exception_handler']);
+    }
+
+    /**
+     * @return \Spryker\Shared\Application\Application|\Spryker\Shared\Kernel\Communication\Application
      */
     public function boot()
     {
@@ -74,9 +99,13 @@ abstract class AbstractGlueBootstrap
     }
 
     /**
+     * @deprecated Use `\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface`'s instead.
+     *
      * @return void
      */
-    abstract protected function registerServiceProviders(): void;
+    protected function registerServiceProviders(): void
+    {
+    }
 
     /**
      * @return void
