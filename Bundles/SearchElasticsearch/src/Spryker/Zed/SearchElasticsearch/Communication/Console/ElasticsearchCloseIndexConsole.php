@@ -66,7 +66,7 @@ class ElasticsearchCloseIndexConsole extends AbstractIndexNameAwareSearchIndexCo
             return static::CODE_SUCCESS;
         }
 
-        $this->error('Search indices could not be closed');
+        $this->error('Search indexes could not be closed');
 
         return static::CODE_ERROR;
     }
