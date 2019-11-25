@@ -49,17 +49,14 @@ class RequestResourceExtractor implements RequestResourceExtractorInterface
     {
         $resource = $this->processPostData($request, $metadata);
 
-        $resourceType = $request->attributes->get(RestResourceInterface::RESOURCE_DATA)[RestResourceInterface::RESOURCE_TYPE]
-            ?: $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_TYPE, 'errors');
-
-        if (!$resource) {
-            $resource = $this->restResourceBuilder->createRestResource(
-                $resourceType,
-                $this->findResourceId($request, $this->readRequestData($request, $metadata))
-            );
+        if ($resource) {
+            return $resource;
         }
 
-        return $resource;
+        return $this->restResourceBuilder->createRestResource(
+            $this->findResourceType($request),
+            $this->findResourceId($request)
+        );
     }
 
     /**
@@ -87,24 +84,31 @@ class RequestResourceExtractor implements RequestResourceExtractorInterface
 
         return $this->restResourceBuilder->createRestResource(
             $data[RestResourceInterface::RESOURCE_TYPE],
-            $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_ID),
+            $this->findResourceId($request),
             $this->mapEntityTransfer($request, $data)
         );
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param array|null $requestData
      *
      * @return string|null
      */
-    protected function findResourceId(Request $request, ?array $requestData): ?string
+    protected function findResourceId(Request $request): ?string
     {
-        if ($request->getMethod() === Request::METHOD_DELETE && $requestData) {
-            return $requestData[RestResourceInterface::RESOURCE_DATA][RestResourceInterface::RESOURCE_ID] ?? null;
-        }
+        return $request->attributes->get(RestResourceInterface::RESOURCE_DATA)[RestResourceInterface::RESOURCE_ID]
+            ?? $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_ID);
+    }
 
-        return $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_ID);
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return string|null
+     */
+    protected function findResourceType(Request $request): ?string
+    {
+        return $request->attributes->get(RestResourceInterface::RESOURCE_DATA)[RestResourceInterface::RESOURCE_TYPE]
+            ?? $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_TYPE, 'errors');
     }
 
     /**
