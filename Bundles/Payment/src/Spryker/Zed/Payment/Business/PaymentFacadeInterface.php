@@ -9,6 +9,7 @@ namespace Spryker\Zed\Payment\Business;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesPaymentTransfer;
 
@@ -105,4 +106,16 @@ interface PaymentFacadeInterface
      * @return void
      */
     public function recalculatePayments(CalculableObjectTransfer $calculableObjectTransfer);
+
+    /**
+     * Specification:
+     * - Finds available payment providers for the given store.
+     *
+     * @api
+     *
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
+     */
+    public function getAvailablePaymentProvidersForStore(string $storeName): PaymentProviderCollectionTransfer;
 }
