@@ -97,24 +97,10 @@ class ConfigurableBundleStoragePublisher implements ConfigurableBundleStoragePub
                 continue;
             }
 
-            $idConfigurableBundleTemplate = $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate();
-            $localizedProductImageSetTransfers = $this->mapProductImageSetsByLocaleName($configurableBundleTemplateTransfer->getProductImageSets());
-
-            foreach ($localizedProductImageSetTransfers as $localeName => $productImageSetTransfers) {
-                $configurableBundleTemplateImageStorageEntity = $localizedConfigurableBundleTemplateImageStorageEntityMap[$idConfigurableBundleTemplate][$localeName]
-                    ?? new SpyConfigurableBundleTemplateImageStorage();
-
-                $this->saveConfigurableBundleTemplateImageStorageEntity(
-                    $localeName,
-                    $productImageSetTransfers,
-                    $configurableBundleTemplateTransfer,
-                    $configurableBundleTemplateImageStorageEntity
-                );
-
-                if (!$configurableBundleTemplateImageStorageEntity->isNew()) {
-                    unset($localizedConfigurableBundleTemplateImageStorageEntityMap[$idConfigurableBundleTemplate][$localeName]);
-                }
-            }
+            $localizedConfigurableBundleTemplateImageStorageEntityMap = $this->saveConfigurableBundleTemplateImages(
+                $configurableBundleTemplateTransfer,
+                $localizedConfigurableBundleTemplateImageStorageEntityMap
+            );
         }
 
         $this->sanitizeConfigurableBundleTemplateImageStorageEntities($localizedConfigurableBundleTemplateImageStorageEntityMap);
@@ -152,6 +138,38 @@ class ConfigurableBundleStoragePublisher implements ConfigurableBundleStoragePub
             ->setData($configurableBundleTemplateStorageTransfer->toArray());
 
         return $configurableBundleTemplateStorageEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+     * @param \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage[][] $localizedConfigurableBundleTemplateImageStorageEntityMap
+     *
+     * @return \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage[][]
+     */
+    protected function saveConfigurableBundleTemplateImages(
+        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer,
+        array $localizedConfigurableBundleTemplateImageStorageEntityMap
+    ): array {
+        $idConfigurableBundleTemplate = $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate();
+        $localizedProductImageSetTransfers = $this->mapProductImageSetsByLocaleName($configurableBundleTemplateTransfer->getProductImageSets());
+
+        foreach ($localizedProductImageSetTransfers as $localeName => $productImageSetTransfers) {
+            $configurableBundleTemplateImageStorageEntity = $localizedConfigurableBundleTemplateImageStorageEntityMap[$idConfigurableBundleTemplate][$localeName]
+                ?? new SpyConfigurableBundleTemplateImageStorage();
+
+            $this->saveConfigurableBundleTemplateImageStorageEntity(
+                $localeName,
+                $productImageSetTransfers,
+                $configurableBundleTemplateTransfer,
+                $configurableBundleTemplateImageStorageEntity
+            );
+
+            if (!$configurableBundleTemplateImageStorageEntity->isNew()) {
+                unset($localizedConfigurableBundleTemplateImageStorageEntityMap[$idConfigurableBundleTemplate][$localeName]);
+            }
+        }
+
+        return $localizedConfigurableBundleTemplateImageStorageEntityMap;
     }
 
     /**

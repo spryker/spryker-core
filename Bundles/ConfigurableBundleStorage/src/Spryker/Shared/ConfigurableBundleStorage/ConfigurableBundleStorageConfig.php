@@ -37,7 +37,7 @@ class ConfigurableBundleStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Resource name, this will use for key generating
+     * - Resource name, will be used for key generating.
      *
      * @api
      */

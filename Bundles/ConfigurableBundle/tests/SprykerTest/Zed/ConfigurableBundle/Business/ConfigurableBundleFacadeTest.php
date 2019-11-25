@@ -1067,7 +1067,7 @@ class ConfigurableBundleFacadeTest extends Unit
 
         $this->assertTrue($configurableBundleTemplateResponseTransfer->getIsSuccessful());
         $this->assertCount(1, $productImageSetTransfers);
-        $this->assertEquals($productImageSetTransfer->toArray(), $productImageSetTransfers->offsetGet(0)->toArray());
+        $this->assertSame($productImageSetTransfer->toArray(), $productImageSetTransfers->offsetGet(0)->toArray());
     }
 
     /**
@@ -1092,11 +1092,11 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getFacade()
             ->getConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
 
-        // Assert
         $productImageSetTransfers = $configurableBundleTemplateResponseTransfer
             ->getConfigurableBundleTemplate()
             ->getProductImageSets();
 
+        // Assert
         $this->assertTrue($configurableBundleTemplateResponseTransfer->getIsSuccessful());
         $this->assertCount(2, $productImageSetTransfers);
     }
@@ -1120,11 +1120,11 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getFacade()
             ->getConfigurableBundleTemplateCollection($configurableBundleTemplateFilterTransfer);
 
-        // Assert
         $configurableBundleTemplateTransfer = $configurableBundleTemplateCollectionTransfer
             ->getConfigurableBundleTemplates()
             ->offsetGet(0);
 
+        // Assert
         $this->assertCount(1, $configurableBundleTemplateCollectionTransfer->getConfigurableBundleTemplates());
         $this->assertEquals(
             $productImageSetTransfer->toArray(),

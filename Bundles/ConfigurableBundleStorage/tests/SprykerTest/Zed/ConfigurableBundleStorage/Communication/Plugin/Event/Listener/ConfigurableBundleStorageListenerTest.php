@@ -60,15 +60,15 @@ class ConfigurableBundleStorageListenerTest extends Unit
         // Arrange
         $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
 
-        $configurableBundleTemplateStorageListener = new ConfigurableBundleTemplateStoragePublishListener();
-        $configurableBundleTemplateStorageListener->setFacade($this->tester->getFacade());
+        $configurableBundleTemplateStoragePublishListener = new ConfigurableBundleTemplateStoragePublishListener();
+        $configurableBundleTemplateStoragePublishListener->setFacade($this->tester->getFacade());
 
-        $eventTransfers = [
+        $eventEntityTransfers = [
             (new EventEntityTransfer())->setId($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()),
         ];
 
         // Act
-        $configurableBundleTemplateStorageListener->handleBulk($eventTransfers, ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_CREATE);
+        $configurableBundleTemplateStoragePublishListener->handleBulk($eventEntityTransfers, ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_CREATE);
 
         // Assert
         $this->assertNotNull(
@@ -84,15 +84,15 @@ class ConfigurableBundleStorageListenerTest extends Unit
         // Arrange
         $configurableBundleTemplateTransfer = $this->tester->createDeactivatedConfigurableBundleTemplate();
 
-        $configurableBundleTemplateStorageListener = new ConfigurableBundleTemplateStoragePublishListener();
-        $configurableBundleTemplateStorageListener->setFacade($this->tester->getFacade());
+        $configurableBundleTemplateStoragePublishListener = new ConfigurableBundleTemplateStoragePublishListener();
+        $configurableBundleTemplateStoragePublishListener->setFacade($this->tester->getFacade());
 
-        $eventTransfers = [
+        $eventEntityTransfers = [
             (new EventEntityTransfer())->setId($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()),
         ];
 
         // Act
-        $configurableBundleTemplateStorageListener->handleBulk($eventTransfers, ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_CREATE);
+        $configurableBundleTemplateStoragePublishListener->handleBulk($eventEntityTransfers, ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_CREATE);
 
         // Assert
         $this->assertNotNull(
@@ -108,17 +108,17 @@ class ConfigurableBundleStorageListenerTest extends Unit
         // Arrange
         $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
 
-        $configurableBundleTemplateStorageListener = new ConfigurableBundleTemplateSlotStoragePublishListener();
-        $configurableBundleTemplateStorageListener->setFacade($this->tester->getFacade());
+        $configurableBundleTemplateStoragePublishListener = new ConfigurableBundleTemplateSlotStoragePublishListener();
+        $configurableBundleTemplateStoragePublishListener->setFacade($this->tester->getFacade());
 
-        $eventTransfers = [
+        $eventEntityTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
                 SpyConfigurableBundleTemplateSlotTableMap::COL_FK_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
             ]),
         ];
 
         // Act
-        $configurableBundleTemplateStorageListener->handleBulk($eventTransfers, ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_CREATE);
+        $configurableBundleTemplateStoragePublishListener->handleBulk($eventEntityTransfers, ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_CREATE);
 
         // Assert
         $this->assertNotNull(
@@ -138,15 +138,15 @@ class ConfigurableBundleStorageListenerTest extends Unit
             ProductImageSetTransfer::FK_RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
         ]);
 
-        $configurableBundleTemplateImageStorageListener = new ConfigurableBundleTemplateImageStoragePublishListener();
-        $configurableBundleTemplateImageStorageListener->setFacade($this->tester->getFacade());
+        $configurableBundleTemplateImageStoragePublishListener = new ConfigurableBundleTemplateImageStoragePublishListener();
+        $configurableBundleTemplateImageStoragePublishListener->setFacade($this->tester->getFacade());
 
-        $eventTransfers = [
+        $eventEntityTransfers = [
             (new EventEntityTransfer())->setId($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()),
         ];
 
         // Act
-        $configurableBundleTemplateImageStorageListener->handleBulk($eventTransfers, ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_PUBLISH);
+        $configurableBundleTemplateImageStoragePublishListener->handleBulk($eventEntityTransfers, ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_PUBLISH);
 
         // Assert
         $this->assertNotNull(
@@ -166,15 +166,15 @@ class ConfigurableBundleStorageListenerTest extends Unit
             ProductImageSetTransfer::FK_RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
         ]);
 
-        $configurableBundleTemplateImageStorageListener = new ConfigurableBundleTemplateImageStoragePublishListener();
-        $configurableBundleTemplateImageStorageListener->setFacade($this->tester->getFacade());
+        $configurableBundleTemplateImageStoragePublishListener = new ConfigurableBundleTemplateImageStoragePublishListener();
+        $configurableBundleTemplateImageStoragePublishListener->setFacade($this->tester->getFacade());
 
-        $eventTransfers = [
+        $eventEntityTransfers = [
             (new EventEntityTransfer())->setId($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()),
         ];
 
         // Act
-        $configurableBundleTemplateImageStorageListener->handleBulk($eventTransfers, ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_PUBLISH);
+        $configurableBundleTemplateImageStoragePublishListener->handleBulk($eventEntityTransfers, ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_PUBLISH);
 
         // Assert
         $this->assertNull(
@@ -190,15 +190,15 @@ class ConfigurableBundleStorageListenerTest extends Unit
         // Arrange
         $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
 
-        $configurableBundleTemplateImageStorageListener = new ConfigurableBundleTemplateImageStoragePublishListener();
-        $configurableBundleTemplateImageStorageListener->setFacade($this->tester->getFacade());
+        $configurableBundleTemplateImageStoragePublishListener = new ConfigurableBundleTemplateImageStoragePublishListener();
+        $configurableBundleTemplateImageStoragePublishListener->setFacade($this->tester->getFacade());
 
-        $eventTransfers = [
+        $eventEntityTransfers = [
             (new EventEntityTransfer())->setId($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()),
         ];
 
         // Act
-        $configurableBundleTemplateImageStorageListener->handleBulk($eventTransfers, ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_PUBLISH);
+        $configurableBundleTemplateImageStoragePublishListener->handleBulk($eventEntityTransfers, ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_PUBLISH);
 
         // Assert
         $this->assertNull(

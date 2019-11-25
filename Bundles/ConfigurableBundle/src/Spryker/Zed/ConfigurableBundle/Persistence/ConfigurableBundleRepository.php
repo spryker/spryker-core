@@ -227,7 +227,7 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
             ->joinWithSpyLocale()
             ->joinWithSpyProductImageSetToProductImage()
             ->useSpyProductImageSetToProductImageQuery()
-                ->joinSpyProductImage()
+                ->joinWithSpyProductImage()
             ->endUse();
 
         return $this->getFactory()
