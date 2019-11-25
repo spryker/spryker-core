@@ -10,6 +10,7 @@ namespace Spryker\Zed\CmsSlotBlockCategoryGui;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToCategoryFacadeBridge;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToLocaleFacadeBridge;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToTranslatorFacadeBridge;
+use Spryker\Zed\ContentGui\Dependency\Service\ContentGuiToUtilEncodingBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -18,6 +19,7 @@ class CmsSlotBlockCategoryGuiDependencyProvider extends AbstractBundleDependency
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -29,6 +31,7 @@ class CmsSlotBlockCategoryGuiDependencyProvider extends AbstractBundleDependency
         $container = $this->addCategoryFacade($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addTranslatorFacade($container);
+        $container = $this->addUtilEncoding($container);
 
         return $container;
     }
@@ -75,6 +78,22 @@ class CmsSlotBlockCategoryGuiDependencyProvider extends AbstractBundleDependency
         $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
             return new CmsSlotBlockCategoryGuiToTranslatorFacadeBridge(
                 $container->getLocator()->translator()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncoding(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new ContentGuiToUtilEncodingBridge(
+                $container->getLocator()->utilEncoding()->service()
             );
         });
 

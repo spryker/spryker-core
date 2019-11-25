@@ -117,7 +117,7 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
             'choice_attr' => function ($choice, $key, $value) {
                 return [
                     'data-disable' => $value,
-                    'data-inputs' => json_encode([static::FIELD_PRODUCT_IDS, static::FIELD_CATEGORY_IDS]),
+                    'data-inputs' => $this->getFactory()->getUtilEncoding()->encodeJson([static::FIELD_PRODUCT_IDS, static::FIELD_CATEGORY_IDS]),
                 ];
             },
             'expanded' => true,
