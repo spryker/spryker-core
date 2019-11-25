@@ -210,7 +210,7 @@ class ConsoleBootstrap extends Application
     protected function bootPlugins(): void
     {
         foreach ($this->bootablePlugins as $bootablePlugin) {
-            $this->application = $bootablePlugin->boot($this->application);
+            $bootablePlugin->boot($this->application);
         }
     }
 
