@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Payment\Persistence;
 
 use Generated\Shared\Transfer\PaymentMethodTransfer;
+use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\SalesPaymentMethodTypeCollectionTransfer;
 use Generated\Shared\Transfer\SalesPaymentMethodTypeTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -58,9 +59,38 @@ class PaymentRepository extends AbstractRepository implements PaymentRepositoryI
 
         return $this->getFactory()
             ->createPaymentMapper()
-            ->mapPaymentMethodEntityToPaymentMethodTransfer(
-                $paymentMethodEntity,
-                new PaymentMethodTransfer()
+            ->mapPaymentMethodEntityToPaymentMethodTransfer($paymentMethodEntity, new PaymentMethodTransfer());
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
+     */
+    public function getAvailablePaymentProvidersForStore(string $storeName): PaymentProviderCollectionTransfer
+    {
+        $paymentProviderCollectionTransfer = new PaymentProviderCollectionTransfer();
+        $paymentProviderEntities = $this->getFactory()
+            ->createPaymentProviderQuery()
+            ->usePaymentMethodsQuery()
+                ->filterByIsActive(true)
+                ->usePaymentMethodStoreQuery()
+                    ->useStoreQuery()
+                        ->filterByName($storeName)
+                    ->endUse()
+                ->endUse()
+            ->endUse()
+            ->groupByIdPaymentProvider()
+            ->find();
+
+        if (!$paymentProviderEntities->getData()) {
+            return $paymentProviderCollectionTransfer;
+        }
+
+        return $this->getFactory()
+            ->createPaymentProviderMapper()->mapPaymentProviderEntityCollectionToPaymentProviderCollectionTransfer(
+                $paymentProviderEntities,
+                $paymentProviderCollectionTransfer
             );
     }
 }

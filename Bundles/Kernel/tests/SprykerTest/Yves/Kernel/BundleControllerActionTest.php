@@ -25,7 +25,7 @@ class BundleControllerActionTest extends Unit
     /**
      * @return void
      */
-    public function testGetBundleShouldReturnBundleName()
+    public function testGetBundleShouldReturnBundleName(): void
     {
         $bundleControllerAction = new BundleControllerAction('foo', 'bar', 'baz');
 
@@ -35,7 +35,7 @@ class BundleControllerActionTest extends Unit
     /**
      * @return void
      */
-    public function testGetBundleShouldStripStoreName()
+    public function testGetBundleShouldStripStoreName(): void
     {
         $bundleControllerAction = $this->getBundleControllerAction('fooDE', 'bar', 'baz', 'DE');
 
@@ -50,7 +50,7 @@ class BundleControllerActionTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\Kernel\BundleControllerAction
      */
-    protected function getBundleControllerAction($bundle, $controller, $action, $storeName)
+    protected function getBundleControllerAction(string $bundle, string $controller, string $action, string $storeName)
     {
         $mock = $this
             ->getMockBuilder(BundleControllerAction::class)
@@ -70,7 +70,7 @@ class BundleControllerActionTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
      */
-    protected function getBundleNameResolverMock($storeName)
+    protected function getBundleNameResolverMock(string $storeName)
     {
         $mock = $this
             ->getMockBuilder(BundleNameResolver::class)
@@ -87,7 +87,7 @@ class BundleControllerActionTest extends Unit
     /**
      * @return void
      */
-    public function testGetControllerShouldReturnControllerName()
+    public function testGetControllerShouldReturnControllerName(): void
     {
         $bundleControllerAction = new BundleControllerAction('foo', 'bar', 'baz');
 
@@ -97,7 +97,7 @@ class BundleControllerActionTest extends Unit
     /**
      * @return void
      */
-    public function testGetActionShouldReturnActionName()
+    public function testGetActionShouldReturnActionName(): void
     {
         $bundleControllerAction = new BundleControllerAction('foo', 'bar', 'baz');
 

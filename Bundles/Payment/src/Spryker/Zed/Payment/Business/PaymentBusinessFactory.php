@@ -10,7 +10,6 @@ namespace Spryker\Zed\Payment\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Payment\Business\Calculation\PaymentCalculator;
 use Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor;
-use Spryker\Zed\Payment\Business\Installer\SalesPaymentMethodTypeInstaller;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodFinder;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodFinderInterface;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodReader;
@@ -97,17 +96,6 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     public function createPaymentCalculator()
     {
         return new PaymentCalculator();
-    }
-
-    /**
-     * @return \Spryker\Zed\Payment\Business\Installer\SalesPaymentMethodTypeInstallerInterface
-     */
-    public function createSalesPaymentMethodTypeInstaller()
-    {
-        return new SalesPaymentMethodTypeInstaller(
-            $this->getEntityManager(),
-            $this->getConfig()
-        );
     }
 
     /**

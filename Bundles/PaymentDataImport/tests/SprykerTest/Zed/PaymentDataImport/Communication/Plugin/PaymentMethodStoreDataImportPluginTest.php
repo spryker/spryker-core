@@ -40,6 +40,7 @@ class PaymentMethodStoreDataImportPluginTest extends Unit
     public function testImportImportsPaymentMethodStores(): void
     {
         //Arrange
+        $this->tester->ensurePaymentMethodStoreTableIsEmpty();
         $this->tester->haveStore([
             StoreTransfer::NAME => 'DE',
         ]);
@@ -51,7 +52,6 @@ class PaymentMethodStoreDataImportPluginTest extends Unit
             PaymentMethodTransfer::PAYMENT_METHOD_KEY => 'method-1',
             PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
         ]);
-        $this->tester->ensurePaymentMethodStoreTableIsEmpty();
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/payment_method_store.csv');
         $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();

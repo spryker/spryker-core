@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Payment\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Orm\Zed\Payment\Persistence\SpyPaymentProvider;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class PaymentProviderMapper
 {
@@ -23,5 +25,27 @@ class PaymentProviderMapper
         PaymentProviderTransfer $paymentProviderTransfer
     ): PaymentProviderTransfer {
         return $paymentProviderTransfer->fromArray($paymentProviderEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Payment\Persistence\SpyPaymentProvider[] $paymentProviderEntityCollection
+     * @param \Generated\Shared\Transfer\PaymentProviderCollectionTransfer $paymentProviderCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
+     */
+    public function mapPaymentProviderEntityCollectionToPaymentProviderCollectionTransfer(
+        ObjectCollection $paymentProviderEntityCollection,
+        PaymentProviderCollectionTransfer $paymentProviderCollectionTransfer
+    ): PaymentProviderCollectionTransfer {
+        foreach ($paymentProviderEntityCollection as $paymentProviderEntity) {
+            $paymentProviderCollectionTransfer->addPaymentProvider(
+                $this->mapPaymentProviderEntityToPaymentProviderTransfer(
+                    $paymentProviderEntity,
+                    new PaymentProviderTransfer()
+                )
+            );
+        }
+
+        return $paymentProviderCollectionTransfer;
     }
 }

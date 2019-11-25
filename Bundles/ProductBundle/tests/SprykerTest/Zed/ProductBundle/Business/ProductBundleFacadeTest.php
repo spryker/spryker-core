@@ -515,7 +515,7 @@ class ProductBundleFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function createProduct($price, $sku, $isAlwaysAvailable = false): ProductConcreteTransfer
+    protected function createProduct(int $price, string $sku, bool $isAlwaysAvailable = false): ProductConcreteTransfer
     {
         $productFacade = $this->createProductFacade();
         $productAbstractTransfer = new ProductAbstractTransfer();
@@ -570,7 +570,7 @@ class ProductBundleFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function createProductBundle($bundlePrice, $isAlwaysAvailable = false): ProductConcreteTransfer
+    protected function createProductBundle(int $bundlePrice, bool $isAlwaysAvailable = false): ProductConcreteTransfer
     {
         $productConcreteTransferToAssign1 = $this->createProduct(static::BUNDLED_PRODUCT_PRICE_1, static::SKU_BUNDLED_1, $isAlwaysAvailable);
         $productConcreteTransferToAssign2 = $this->createProduct(static::BUNDLED_PRODUCT_PRICE_2, static::SKU_BUNDLED_2, $isAlwaysAvailable);

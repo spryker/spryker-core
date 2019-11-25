@@ -38,7 +38,7 @@ class ResourceIdPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessGet()
+    public function testProcessGet(): void
     {
         $processor = new ResourceIdPreProcessor();
 
@@ -53,7 +53,7 @@ class ResourceIdPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessPost()
+    public function testProcessPost(): void
     {
         $processor = new ResourceIdPreProcessor();
 
@@ -68,7 +68,7 @@ class ResourceIdPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessPostWithAdditionalParameters()
+    public function testProcessPostWithAdditionalParameters(): void
     {
         $processor = new ResourceIdPreProcessor();
 

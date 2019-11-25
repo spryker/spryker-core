@@ -106,7 +106,7 @@ class RouterConfig extends AbstractBundleConfig
      *
      * @see \Spryker\Yves\Router\Plugin\RouterEnhancer\LanguagePrefixRouterEnhancerPlugin
      *
-     * @return array
+     * @return string[]
      */
     public function getAllowedLanguages(): array
     {

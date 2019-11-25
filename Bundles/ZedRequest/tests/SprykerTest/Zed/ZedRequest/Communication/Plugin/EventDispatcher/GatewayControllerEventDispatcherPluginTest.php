@@ -22,7 +22,6 @@ use SprykerTest\Zed\ZedRequest\Communication\Plugin\Fixture\GatewayController;
 use SprykerTest\Zed\ZedRequest\Communication\Plugin\Fixture\NotGatewayController;
 use SprykerTest\Zed\ZedRequest\Communication\Plugin\Fixture\Request;
 use SprykerTest\Zed\ZedRequest\Communication\Plugin\Fixture\TransferServer;
-use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\KernelEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -159,7 +158,49 @@ class GatewayControllerEventDispatcherPluginTest extends Unit
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('Only transfer classes are allowed in yves action as parameter');
 
-        $transfer = new stdClass();
+        $transfer = new class () implements TransferInterface
+        {
+            /**
+             * @param bool $isRecursive
+             *
+             * @return array
+             */
+            public function toArray($isRecursive = true)
+            {
+                return [];
+            }
+
+            /**
+             * @param bool $isRecursive
+             *
+             * @return array
+             */
+            public function modifiedToArray($isRecursive = true)
+            {
+                return [];
+            }
+
+            /**
+             * @param array $values
+             * @param bool $fuzzyMatch
+             *
+             * @return $this
+             */
+            public function fromArray(array $values, $fuzzyMatch = false)
+            {
+                return $this;
+            }
+
+            /**
+             * @param string $propertyName
+             *
+             * @return bool
+             */
+            public function isPropertyModified($propertyName)
+            {
+                return (bool)$propertyName;
+            }
+        };
         $controllerCallable = $this->executeMockedListenerTest('notTransferAction', $transfer);
         call_user_func($controllerCallable);
     }
@@ -212,7 +253,7 @@ class GatewayControllerEventDispatcherPluginTest extends Unit
      *
      * @return void
      */
-    private function initTransferServer($transferObject): void
+    private function initTransferServer(TransferInterface $transferObject): void
     {
         $oldTransferServer = CoreTransferServer::getInstance();
         $this->resetSingleton($oldTransferServer);
@@ -253,7 +294,7 @@ class GatewayControllerEventDispatcherPluginTest extends Unit
      *
      * @return callable
      */
-    private function executeMockedListenerTest($action, $transfer = null): callable
+    private function executeMockedListenerTest(string $action, $transfer = null): callable
     {
         $controller = new GatewayController();
 

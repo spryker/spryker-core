@@ -69,7 +69,8 @@ class PaymentMapper
     public function mapPaymentMethodEntityToPaymentMethodTransfer(
         SpyPaymentMethod $paymentMethodEntity,
         PaymentMethodTransfer $paymentMethodTransfer
-    ): PaymentMethodTransfer {
+    ): PaymentMethodTransfer
+    {
         $paymentMethodTransfer->fromArray($paymentMethodEntity->toArray(), true);
         $paymentMethodTransfer->setMethodName($paymentMethodEntity->getName());
 

@@ -40,7 +40,7 @@ class UtilTextFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateSlug()
+    public function testGenerateSlug(): void
     {
         $slug = $this->utilTextFacade->generateSlug('A #value#, [to] Slug 8 times.');
 

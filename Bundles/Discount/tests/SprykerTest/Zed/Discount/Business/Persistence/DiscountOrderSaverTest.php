@@ -42,7 +42,7 @@ class DiscountOrderSaverTest extends Unit
     /**
      * @return void
      */
-    public function testSaveDiscountMustSaveSalesItemsDiscount()
+    public function testSaveDiscountMustSaveSalesItemsDiscount(): void
     {
         $discountSaver = $this->getDiscountOrderSaverMock(['persistSalesDiscount']);
         $discountSaver->expects($this->once())
@@ -70,7 +70,7 @@ class DiscountOrderSaverTest extends Unit
     /**
      * @return void
      */
-    public function testSaveDiscountMustNotSaveSalesDiscountCodeIfUsedCodesCanNotBeFound()
+    public function testSaveDiscountMustNotSaveSalesDiscountCodeIfUsedCodesCanNotBeFound(): void
     {
         $discountSaver = $this->getDiscountOrderSaverMock(['persistSalesDiscount', 'saveUsedCodes']);
         $discountSaver->expects($this->once())
@@ -98,7 +98,7 @@ class DiscountOrderSaverTest extends Unit
     /**
      * @return void
      */
-    public function testSaveDiscountMustSaveSalesDiscountCodesIfUsedCodesPresent()
+    public function testSaveDiscountMustSaveSalesDiscountCodesIfUsedCodesPresent(): void
     {
         $discountSaver = $this->getDiscountOrderSaverMock(['persistSalesDiscount', 'persistSalesDiscountCode', 'getDiscountVoucherEntityByCode']);
         $discountSaver->expects($this->once())
@@ -129,7 +129,7 @@ class DiscountOrderSaverTest extends Unit
     /**
      * @return void
      */
-    public function testSaveDiscountMustNotSaveSalesDiscountCodesIfUsedCodeCanNotBeFound()
+    public function testSaveDiscountMustNotSaveSalesDiscountCodesIfUsedCodeCanNotBeFound(): void
     {
         $discountSaver = $this->getDiscountOrderSaverMock(['persistSalesDiscount', 'persistSalesDiscountCode', 'getDiscountVoucherEntityByCode']);
         $discountSaver->expects($this->once())
@@ -160,7 +160,7 @@ class DiscountOrderSaverTest extends Unit
     /**
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
-    public function getDiscountVoucherEntityByCode()
+    public function getDiscountVoucherEntityByCode(): SpyDiscountVoucher
     {
         $discountVoucherEntity = new SpyDiscountVoucher();
         $discountVoucherPoolEntity = new SpyDiscountVoucherPool();
@@ -211,7 +211,7 @@ class DiscountOrderSaverTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    protected function getCurrentStore()
+    protected function getCurrentStore(): StoreTransfer
     {
         return (new StoreTransfer())
             ->setIdStore(1)
