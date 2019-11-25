@@ -90,7 +90,7 @@ class ProductOptionMapper implements ProductOptionMapperInterface
         ProductOptionTransfer $productOptionTransfer,
         RestItemProductOptionsTransfer $restItemProductOptionsTransfer
     ): RestItemProductOptionsTransfer {
-        return $restItemProductOptionsTransfer->setSku($productOptionTransfer->getSku())
+        return $restItemProductOptionsTransfer->fromArray($productOptionTransfer->toArray(), true)
             ->setOptionGroupName($productOptionTransfer->getGroupName())
             ->setOptionName($productOptionTransfer->getValue())
             ->setPrice($productOptionTransfer->getSumPrice());
