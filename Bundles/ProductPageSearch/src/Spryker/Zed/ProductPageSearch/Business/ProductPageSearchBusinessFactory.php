@@ -141,7 +141,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductInterface
      */
-    protected function getProductFacade()
+    public function getProductFacade()
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::FACADE_PRODUCT);
     }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -143,5 +144,21 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
         $this->getFactory()
             ->createProductConcretePageSearchPublisher()
             ->publishProductConcretePageSearchesByProductAbstractIds($productAbstractIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcreteTransfersByFilter(FilterTransfer $filterTransfer): array
+    {
+        return $this->getFactory()
+            ->getProductFacade()
+            ->getProductConcreteTransfersByFilter($filterTransfer);
     }
 }

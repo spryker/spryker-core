@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Product\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
@@ -920,4 +921,16 @@ interface ProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getRawProductConcreteTransfersByConcreteSkus(array $productConcreteSkus): array;
+
+    /**
+     * Specification:
+     *  - Retrieves product concrete transfers according to given offset and limit.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcreteTransfersByFilter(FilterTransfer $filterTransfer): array;
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Product\Persistence;
 
 use ArrayObject;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
@@ -370,6 +371,28 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->setProductAbstracts(
                 $this->getProductAbstractTransfersMappedFromProductAbstractEntities($productAbstractEntities)
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcreteTransfersByFilter(FilterTransfer $filterTransfer): array
+    {
+        $productEntityTransfers = $this->buildQueryFromCriteria(
+            $this->getFactory()->createProductQuery(),
+            $filterTransfer
+        );
+
+        $res = $this->getFactory()
+            ->createProductQuery()
+            ->limit(10)
+            ->find();
+
+        $productEntityTransfers = $productEntityTransfers->find();
+
+        return $this->getProductConcreteTransfersMappedFromProductConcreteEntities($productEntityTransfers);
     }
 
     /**
