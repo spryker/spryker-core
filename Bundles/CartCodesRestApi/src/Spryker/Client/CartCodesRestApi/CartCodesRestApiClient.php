@@ -43,6 +43,6 @@ class CartCodesRestApiClient extends AbstractClient implements CartCodesRestApiC
      */
     public function removeCode(QuoteTransfer $quoteTransfer, int $idDiscount): CartCodeOperationResultTransfer
     {
-        return $this->getFactory()->createCartCodeDeleter()->removeCode($quoteTransfer, $idDiscount);
+        return $this->getFactory()->createCartCodeRemover()->removeCode($quoteTransfer, $idDiscount);
     }
 }

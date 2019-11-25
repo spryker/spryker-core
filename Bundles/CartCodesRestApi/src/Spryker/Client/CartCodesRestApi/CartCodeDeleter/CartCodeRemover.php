@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RemoveCodeRequestTransfer;
 use Spryker\Client\CartCodesRestApi\Zed\CartCodesRestApiStubInterface;
 
-class CartCodeDeleter implements CartCodeDeleterInterface
+class CartCodeRemover implements CartCodeDeleterInterface
 {
     /**
      * @var \Spryker\Client\CartCodesRestApi\Zed\CartCodesRestApiStubInterface
