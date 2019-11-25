@@ -11,9 +11,11 @@ use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface;
@@ -97,6 +99,10 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
 
         $customerQuotes = $guestQuoteCollection->getQuotes();
 
+        if (!$customerQuotes->count() && $cartItemRequestTransfer->getQuoteUuid()) {
+            return $this->createCartNotFoundError();
+        }
+
         if (!$customerQuotes->count()) {
             return $this->createGuestQuote($cartItemRequestTransfer);
         }
@@ -152,5 +158,17 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
             ->setStore($currentStore)
             ->setCurrency((new CurrencyTransfer())
                 ->setCode($currentStore->getDefaultCurrencyIsoCode()));
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function createCartNotFoundError(): QuoteResponseTransfer
+    {
+        return $quoteResponseTransfer = (new QuoteResponseTransfer())
+            ->addError(
+                (new QuoteErrorTransfer())
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_NOT_FOUND)
+            );
     }
 }
