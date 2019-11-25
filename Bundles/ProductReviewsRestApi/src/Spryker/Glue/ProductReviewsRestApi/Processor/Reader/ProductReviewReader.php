@@ -8,6 +8,7 @@
 namespace Spryker\Glue\ProductReviewsRestApi\Processor\Reader;
 
 use Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\Page;
@@ -110,16 +111,16 @@ class ProductReviewReader implements ProductReviewReaderInterface
 
     /**
      * @param int[] $productAbstractIds
-     * @param array $requestParams
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
      */
-    public function getProductReviewsResourceCollection(array $productAbstractIds, array $requestParams): array
+    public function getProductReviewsResourceCollection(array $productAbstractIds, FilterTransfer $filterTransfer): array
     {
         /** @var \Generated\Shared\Transfer\ProductReviewTransfer[] $productReviewTransfers */
         $productReviewTransfers = $this->getBulkProductReviewsInSearch(
             $productAbstractIds,
-            $requestParams
+            $filterTransfer
         )[static::PRODUCT_REVIEWS];
 
         $indexedProductReviewTransfers = [];
@@ -159,17 +160,17 @@ class ProductReviewReader implements ProductReviewReaderInterface
 
     /**
      * @param int[] $productAbstractIds
-     * @param array $requestParams
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return array
      */
     protected function getBulkProductReviewsInSearch(
         array $productAbstractIds,
-        array $requestParams
+        FilterTransfer $filterTransfer
     ): array {
         $productReviews = $this->productReviewClient->getBulkProductReviewsFromSearch(
             (new BulkProductReviewSearchRequestTransfer())
-                ->setRequestParams($requestParams)
+                ->setFilter($filterTransfer)
                 ->setProductAbstractIds($productAbstractIds)
         );
 

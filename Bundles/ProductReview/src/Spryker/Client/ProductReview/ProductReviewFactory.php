@@ -56,7 +56,7 @@ class ProductReviewFactory extends AbstractFactory
         return $this->getSearchClient()->expandQuery(
             $bulkProductReviewsQueryPlugin,
             $this->getProductReviewsQueryExpanderPlugins(),
-            $bulkProductReviewSearchRequestTransfer->getRequestParams()
+            $bulkProductReviewSearchRequestTransfer->getFilter()->toArray()
         );
     }
 

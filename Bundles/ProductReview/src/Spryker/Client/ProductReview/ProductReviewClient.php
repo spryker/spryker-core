@@ -68,7 +68,7 @@ class ProductReviewClient extends AbstractClient implements ProductReviewClientI
 
         return $this->getFactory()
             ->getSearchClient()
-            ->search($searchQuery, $resultFormatters, $bulkProductReviewSearchRequestTransfer->getRequestParams());
+            ->search($searchQuery, $resultFormatters, $bulkProductReviewSearchRequestTransfer->getFilter()->toArray());
     }
 
     /**

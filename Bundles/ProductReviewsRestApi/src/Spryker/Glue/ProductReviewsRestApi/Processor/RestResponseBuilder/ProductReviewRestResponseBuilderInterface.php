@@ -43,11 +43,6 @@ interface ProductReviewRestResponseBuilderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createRestUserMissingErrorResponse(): RestResponseInterface;
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function createProductAbstractSkuMissingErrorResponse(): RestResponseInterface;
 
     /**

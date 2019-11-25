@@ -102,19 +102,6 @@ class ProductReviewRestResponseBuilder implements ProductReviewRestResponseBuild
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createRestUserMissingErrorResponse(): RestResponseInterface
-    {
-        $restErrorTransfer = (new RestErrorMessageTransfer())
-            ->setCode(ProductReviewsRestApiConfig::RESPONSE_CODE_INVALID_OR_MISSING_ACCESS_TOKEN)
-            ->setStatus(Response::HTTP_FORBIDDEN)
-            ->setDetail(ProductReviewsRestApiConfig::RESPONSE_DETAIL_INVALID_OR_MISSING_ACCESS_TOKEN);
-
-        return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function createProductAbstractSkuMissingErrorResponse(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())

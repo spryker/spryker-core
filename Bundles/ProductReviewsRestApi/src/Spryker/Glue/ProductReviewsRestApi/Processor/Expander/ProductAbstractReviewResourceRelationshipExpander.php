@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductReviewsRestApi\Processor\Expander;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiToProductStorageClientInterface;
@@ -15,6 +16,9 @@ use Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig;
 
 class ProductAbstractReviewResourceRelationshipExpander implements ProductAbstractReviewResourceRelationshipExpanderInterface
 {
+    /**
+     * @uses \Spryker\Client\ProductStorage\Mapper\ProductStorageToProductConcreteTransferDataMapper::ID_PRODUCT_ABSTRACT
+     */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     protected const KEY_SKU = 'sku';
     protected const PRODUCT_MAPPING_TYPE = 'sku';
@@ -77,7 +81,7 @@ class ProductAbstractReviewResourceRelationshipExpander implements ProductAbstra
         $productReviewsRestResourcesCollection = $this->productReviewReader
             ->getProductReviewsResourceCollection(
                 $productAbstractIds,
-                $this->createRequestParams()
+                $this->createFilterTransfer()
             );
 
         foreach ($resources as $resource) {
@@ -90,7 +94,7 @@ class ProductAbstractReviewResourceRelationshipExpander implements ProductAbstra
     }
 
     /**
-     * @param array $productReviewsRestResourcesCollection
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][] $productReviewsRestResourcesCollection
      * @param array $productAbstractData
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      *
@@ -133,16 +137,13 @@ class ProductAbstractReviewResourceRelationshipExpander implements ProductAbstra
     }
 
     /**
-     * (
-     *
-     * @return array
+     * @return \Generated\Shared\Transfer\FilterTransfer
      */
-    protected function createRequestParams(): array
+    protected function createFilterTransfer(): FilterTransfer
     {
-        return [
-            'offset' => 0,
-            'limit' => $this->productReviewsRestApiConfig->getMaximumNumberOfResults(),
-        ];
+        return (new FilterTransfer())
+            ->setOffset(0)
+            ->setLimit($this->productReviewsRestApiConfig->getMaximumNumberOfResults());
     }
 
     /**

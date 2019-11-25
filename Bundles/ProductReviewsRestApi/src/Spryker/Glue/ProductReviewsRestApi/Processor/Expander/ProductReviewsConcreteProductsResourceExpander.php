@@ -14,6 +14,9 @@ use Spryker\Glue\ProductReviewsRestApi\Dependency\Client\ProductReviewsRestApiTo
 
 class ProductReviewsConcreteProductsResourceExpander implements ProductReviewsConcreteProductsResourceExpanderInterface
 {
+    /**
+     * @uses \Spryker\Client\ProductStorage\Mapper\ProductStorageToProductConcreteTransferDataMapper::ID_PRODUCT_ABSTRACT
+     */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     /**

@@ -19,6 +19,10 @@ use Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig;
 class ProductReviewCreator implements ProductReviewCreatorInterface
 {
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
+
+    /**
+     * @uses \Spryker\Client\ProductStorage\Mapper\ProductStorageToProductConcreteTransferDataMapper::ID_PRODUCT_ABSTRACT
+     */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     /**
@@ -61,10 +65,6 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
         RestRequestInterface $restRequest,
         RestProductReviewsAttributesTransfer $restProductReviewsAttributesTransfer
     ): RestResponseInterface {
-        if (!$this->validateRestUser($restRequest)) {
-            return $this->productReviewRestResponseBuilder->createRestUserMissingErrorResponse();
-        }
-
         $parentResource = $restRequest->findParentResourceByType(ProductReviewsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS);
         if (!$parentResource || !$parentResource->getId()) {
             return $this->productReviewRestResponseBuilder->createProductAbstractSkuMissingErrorResponse();
@@ -95,20 +95,6 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
 
         return $this->productReviewRestResponseBuilder
             ->createProductReviewRestResponse($productReviewResponseTransfer->getProductReview());
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return bool
-     */
-    protected function validateRestUser(RestRequestInterface $restRequest): bool
-    {
-        if (!$restRequest->getRestUser() || !$restRequest->getRestUser()->getNaturalIdentifier()) {
-            return false;
-        }
-
-        return true;
     }
 
     /**

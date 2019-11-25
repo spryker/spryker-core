@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductReviewsRestApi\Processor\Reader;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -21,9 +22,9 @@ interface ProductReviewReaderInterface
 
     /**
      * @param int[] $productAbstractIds
-     * @param array $requestParams
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
      */
-    public function getProductReviewsResourceCollection(array $productAbstractIds, array $requestParams): array;
+    public function getProductReviewsResourceCollection(array $productAbstractIds, FilterTransfer $filterTransfer): array;
 }
