@@ -61,7 +61,13 @@ class Index implements IndexInterface
      */
     public function openIndexes(): bool
     {
-        return $this->getAllStoreIndexes()->open()->isOk();
+        $allIndexes = $this->getAllIndexes();
+
+        if ($allIndexes) {
+            return $allIndexes->open()->isOk();
+        }
+
+        return true;
     }
 
     /**
@@ -79,7 +85,13 @@ class Index implements IndexInterface
      */
     public function closeIndexes(): bool
     {
-        return $this->getAllStoreIndexes()->close()->isOk();
+        $allIndexes = $this->getAllIndexes();
+
+        if ($allIndexes) {
+            return $allIndexes->close()->isOk();
+        }
+
+        return true;
     }
 
     /**
@@ -97,7 +109,13 @@ class Index implements IndexInterface
      */
     public function deleteIndexes(): bool
     {
-        return $this->getAllStoreIndexes()->delete()->isOk();
+        $allIndexes = $this->getAllIndexes();
+
+        if ($allIndexes) {
+            return $allIndexes->delete()->isOk();
+        }
+
+        return true;
     }
 
     /**
@@ -149,11 +167,17 @@ class Index implements IndexInterface
     }
 
     /**
-     * @return \Elastica\Index
+     * @return \Elastica\Index|null
      */
-    protected function getAllStoreIndexes(): ElasticaIndex
+    protected function getAllIndexes(): ?ElasticaIndex
     {
-        return $this->elasticaClient->getIndex($this->getAllIndexNamesFormattedString());
+        $availableIndexNamesFormattedString = $this->getAvailableIndexNamesFormattedString();
+
+        if (!$availableIndexNamesFormattedString) {
+            return null;
+        }
+
+        return $this->elasticaClient->getIndex($availableIndexNamesFormattedString);
     }
 
     /**
@@ -181,20 +205,22 @@ class Index implements IndexInterface
     /**
      * @return string
      */
-    protected function getAllIndexNamesFormattedString(): string
+    protected function getAvailableIndexNamesFormattedString(): string
     {
-        return implode(',', $this->getAllIndexNames());
+        return implode(',', $this->getAvailableIndexNames());
     }
 
     /**
      * @return string[]
      */
-    protected function getAllIndexNames(): array
+    protected function getAvailableIndexNames(): array
     {
         $supportedSourceIdentifiers = $this->config->getSupportedSourceIdentifiers();
 
-        return array_map(function (string $sourceIdentifier) {
+        $supportedIndexNames = array_map(function (string $sourceIdentifier) {
             return $this->indexNameResolver->resolve($sourceIdentifier);
         }, $supportedSourceIdentifiers);
+
+        return array_intersect($supportedIndexNames, $this->elasticaClient->getCluster()->getIndexNames());
     }
 }

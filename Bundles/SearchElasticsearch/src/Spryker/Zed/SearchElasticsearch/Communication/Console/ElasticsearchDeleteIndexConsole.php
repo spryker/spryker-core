@@ -65,7 +65,7 @@ class ElasticsearchDeleteIndexConsole extends AbstractIndexNameAwareSearchIndexC
             return static::CODE_SUCCESS;
         }
 
-        $this->error('Search indices could not be deleted');
+        $this->error('Search indexes could not be deleted');
 
         return static::CODE_ERROR;
     }

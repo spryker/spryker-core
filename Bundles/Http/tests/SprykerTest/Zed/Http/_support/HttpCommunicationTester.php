@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Customer;
+namespace SprykerTest\Zed\Http;
 
 use Codeception\Actor;
 
@@ -21,13 +21,11 @@ use Codeception\Actor;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method void pause()
  *
  * @SuppressWarnings(PHPMD)
- *
- * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
  */
-class CustomerBusinessTester extends Actor
+class HttpCommunicationTester extends Actor
 {
-    use _generated\CustomerBusinessTesterActions;
+    use _generated\HttpCommunicationTesterActions;
 }

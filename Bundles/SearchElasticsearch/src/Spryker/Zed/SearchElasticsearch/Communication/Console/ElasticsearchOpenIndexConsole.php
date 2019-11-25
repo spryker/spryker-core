@@ -65,7 +65,7 @@ class ElasticsearchOpenIndexConsole extends AbstractIndexNameAwareSearchIndexCon
             return static::CODE_SUCCESS;
         }
 
-        $this->error('Search indices could not be opened');
+        $this->error('Search indexes could not be opened');
 
         return static::CODE_ERROR;
     }
