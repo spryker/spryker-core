@@ -25,11 +25,9 @@
     </transfer>
 
     <transfer name="CartItemRequest">
-        <property name="productOptions" type="CartItemRequestProductOptions[]" singular="CartItemRequestProductOption"/>
     </transfer>
 
     <transfer name="CartItemRequestProductOption">
-        <property name="sku" type="string"/>
     </transfer>
 
 </transfers>

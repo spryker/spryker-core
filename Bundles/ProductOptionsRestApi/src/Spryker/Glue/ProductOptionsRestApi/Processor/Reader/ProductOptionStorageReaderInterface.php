@@ -21,4 +21,11 @@ interface ProductOptionStorageReaderInterface
         string $localeName,
         array $sorts
     ): array;
+
+    /**
+     * @param string $productConcreteSku
+     *
+     * @return int[]
+     */
+    public function getProductOptionIdsByProductConcreteSku(string $productConcreteSku): array;
 }

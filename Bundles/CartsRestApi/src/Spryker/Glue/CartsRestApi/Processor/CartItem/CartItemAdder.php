@@ -131,16 +131,19 @@ class CartItemAdder implements CartItemAdderInterface
 
     /**
      * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\CartItemRequestTransfer
      */
     protected function executeCartItemExpanderPlugins(
         CartItemRequestTransfer $cartItemRequestTransfer,
-        RestRequestInterface $restRequest
+        RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): CartItemRequestTransfer {
         foreach ($this->cartItemExpanderPlugins as $cartItemExpanderPlugin) {
-            $cartItemRequestTransfer = $cartItemExpanderPlugin->expand($cartItemRequestTransfer, $restRequest);
+            $cartItemRequestTransfer = $cartItemExpanderPlugin->expand(
+                $cartItemRequestTransfer,
+                $restCartItemsAttributesTransfer
+            );
         }
 
         return $cartItemRequestTransfer;
@@ -166,7 +169,7 @@ class CartItemAdder implements CartItemAdderInterface
             ->setQuantity($restCartItemsAttributesTransfer->getQuantity())
             ->setSku($restCartItemsAttributesTransfer->getSku())
             ->setCustomer($customerTransfer);
-        $this->executeCartItemExpanderPlugins($cartItemRequestTransfer, $restRequest);
+        $this->executeCartItemExpanderPlugins($cartItemRequestTransfer, $restCartItemsAttributesTransfer);
 
         return $cartItemRequestTransfer;
     }

@@ -11,6 +11,8 @@ use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductOptionStorageClientInterface;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductStorageClientInterface;
+use Spryker\Glue\ProductOptionsRestApi\Processor\Expander\CartItemExpander;
+use Spryker\Glue\ProductOptionsRestApi\Processor\Expander\CartItemExpanderInterface;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Expander\ProductOptionByProductAbstractSkuExpander;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Expander\ProductOptionByProductAbstractSkuExpanderInterface;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Mapper\ProductOptionMapper;
@@ -89,6 +91,14 @@ class ProductOptionsRestApiFactory extends AbstractFactory
     public function createProductOptionSorter(): ProductOptionSorterInterface
     {
         return new ProductOptionSorter();
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductOptionsRestApi\Processor\Expander\CartItemExpanderInterface
+     */
+    public function createCartItemExpander(): CartItemExpanderInterface
+    {
+        return new CartItemExpander($this->createProductOptionStorageReader());
     }
 
     /**

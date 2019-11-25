@@ -7,21 +7,50 @@
 
 namespace Spryker\Glue\ProductOptionsRestApi\Processor\Expander;
 
+use Generated\Shared\Transfer\CartItemRequestProductOptionTransfer;
 use Generated\Shared\Transfer\CartItemRequestTransfer;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
+use Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionStorageReaderInterface;
 
 class CartItemExpander implements CartItemExpanderInterface
 {
     /**
+     * @var \Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionStorageReaderInterface
+     */
+    protected $productOptionStorageReader;
+
+    /**
+     * @param \Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionStorageReaderInterface $productOptionStorageReader
+     */
+    public function __construct(ProductOptionStorageReaderInterface $productOptionStorageReader)
+    {
+        $this->productOptionStorageReader = $productOptionStorageReader;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer
+     * @return \Generated\Shared\Transfer\CartItemRequestTransfer
      */
     public function expand(
         CartItemRequestTransfer $cartItemRequestTransfer,
-        RestRequestInterface $restRequest
+        RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): CartItemRequestTransfer {
-        // TODO: Implement expand() method.
+        $productOptionIds = $this->productOptionStorageReader->getProductOptionIdsByProductConcreteSku(
+            $restCartItemsAttributesTransfer->getSku()
+        );
+        foreach ($restCartItemsAttributesTransfer->getProductOptions() as $restCartItemsProductOptionTransfer) {
+            if (!isset($productOptionIds[$restCartItemsProductOptionTransfer->getSku()])) {
+                continue;
+            }
+
+            $cartItemRequestTransfer->addCartItemRequestProductOption(
+                (new CartItemRequestProductOptionTransfer())
+                    ->setIdProductOption($productOptionIds[$restCartItemsProductOptionTransfer->getSku()])
+            );
+        }
+
+        return $cartItemRequestTransfer;
     }
 }

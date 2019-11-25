@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductOptionsRestApi\Processor\Reader;
 
+use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductOptionStorageClientInterface;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductOptionsRestApi\Processor\RestResponseBuilder\ProductOptionRestResponseBuilderInterface;
@@ -16,6 +17,7 @@ use Spryker\Glue\ProductOptionsRestApi\ProductOptionsRestApiConfig;
 class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
 {
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
+    protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
 
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     protected const KEY_PRODUCT_ABSTRACT_SKU = 'sku';
@@ -95,6 +97,25 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     }
 
     /**
+     * @param string $productConcreteSku
+     *
+     * @return int[]
+     */
+    public function getProductOptionIdsByProductConcreteSku(string $productConcreteSku): array
+    {
+        $idProductAbstract = $this->findIdProductAbstractByProductAbstractSku($productConcreteSku);
+        if (!$idProductAbstract) {
+            return [];
+        }
+
+        $productAbstractOptionStorageTransfer = $this->productOptionStorageClient->getProductOptionsForCurrentStore(
+            $idProductAbstract
+        );
+
+        return $this->getProductOptionIdsFromProductAbstractOptionStorageTransfer($productAbstractOptionStorageTransfer);
+    }
+
+    /**
      * @param string[] $productAbstractSkus
      * @param string $localeName
      *
@@ -114,5 +135,39 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
         }
 
         return $productAbstractIdsByProductAbstractSkus;
+    }
+
+    /**
+     * @param string $productConcreteSku
+     *
+     * @return int|null
+     */
+    protected function findIdProductAbstractByProductAbstractSku(string $productConcreteSku): ?int
+    {
+        $productConcreteStorageDataItem = $this->productStorageClient->findProductConcreteStorageDataByMappingForCurrentLocale(
+            static::PRODUCT_CONCRETE_MAPPING_TYPE,
+            $productConcreteSku
+        );
+
+        return $productConcreteStorageDataItem[static::KEY_ID_PRODUCT_ABSTRACT] ?? null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
+     *
+     * @return int[]
+     */
+    protected function getProductOptionIdsFromProductAbstractOptionStorageTransfer(
+        ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
+    ): array {
+        $productOptionIds = [];
+        foreach ($productAbstractOptionStorageTransfer->getProductOptionGroups() as $productOptionGroupStorageTransfer) {
+            foreach ($productOptionGroupStorageTransfer->getProductOptionValues() as $productOptionValueStorageTransfer) {
+                $productOptionIds[$productOptionValueStorageTransfer->getSku()] =
+                    $productOptionValueStorageTransfer->getIdProductOptionValue();
+            }
+        }
+
+        return $productOptionIds;
     }
 }

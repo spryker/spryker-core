@@ -8,18 +8,18 @@
 namespace Spryker\Glue\ProductOptionsRestApi\Processor\Expander;
 
 use Generated\Shared\Transfer\CartItemRequestTransfer;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 
 interface CartItemExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer
+     * @return \Generated\Shared\Transfer\CartItemRequestTransfer
      */
     public function expand(
         CartItemRequestTransfer $cartItemRequestTransfer,
-        RestRequestInterface $restRequest
+        RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): CartItemRequestTransfer;
 }

@@ -8,10 +8,13 @@
 namespace Spryker\Glue\ProductOptionsRestApi\Plugin\CartsRestApi;
 
 use Generated\Shared\Transfer\CartItemRequestTransfer;
+use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CartItemExpanderPluginInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
+/**
+ * @method \Spryker\Glue\ProductOptionsRestApi\ProductOptionsRestApiFactory getFactory()
+ */
 class CartItemProductOptionExpanderPlugin extends AbstractPlugin implements CartItemExpanderPluginInterface
 {
     /**
@@ -21,14 +24,16 @@ class CartItemProductOptionExpanderPlugin extends AbstractPlugin implements Cart
      * @api
      *
      * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer
+     * @return \Generated\Shared\Transfer\CartItemRequestTransfer
      */
     public function expand(
         CartItemRequestTransfer $cartItemRequestTransfer,
-        RestRequestInterface $restRequest
+        RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): CartItemRequestTransfer {
-        // TODO: Implement expand() method.
+        return $this->getFactory()
+            ->createCartItemExpander()
+            ->expand($cartItemRequestTransfer, $restCartItemsAttributesTransfer);
     }
 }

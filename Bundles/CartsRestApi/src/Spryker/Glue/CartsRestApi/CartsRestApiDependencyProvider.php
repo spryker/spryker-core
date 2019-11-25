@@ -36,6 +36,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPersistentCartClient($container);
         $container = $this->addCustomerExpanderPlugins($container);
         $container = $this->addRestCartItemsAttributesMapperPlugins($container);
+        $container = $this->addCartItemExpanderPlugins($container);
 
         return $container;
     }
@@ -47,9 +48,9 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPersistentCartClient(Container $container): Container
     {
-        $container[static::CLIENT_PERSISTENT_CART] = function (Container $container) {
+        $container->set(static::CLIENT_PERSISTENT_CART, function (Container $container) {
             return new CartsRestApiToPersistentCartClientBridge($container->getLocator()->persistentCart()->client());
-        };
+        });
 
         return $container;
     }
@@ -61,9 +62,9 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CUSTOMER_EXPANDER] = function () {
+        $container->set(static::PLUGINS_CUSTOMER_EXPANDER, function () {
             return $this->getCustomerExpanderPlugins();
-        };
+        });
 
         return $container;
     }
