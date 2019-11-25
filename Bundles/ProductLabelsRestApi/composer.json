@@ -11,7 +11,7 @@
     "spryker/product-label-storage": "^1.5.0",
     "spryker/product-storage": "^1.16.0",
     "spryker/symfony": "^3.0.0",
-    "spryker/synchronization-behavior": "^1.2.0"
+    "spryker/synchronization-behavior": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
