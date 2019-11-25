@@ -62,7 +62,7 @@ class PageDataMapper implements DataMapperInterface
      *
      * @return array
      */
-    protected function mapPluginClassesByName(array $namedPageMapPlugins)
+    protected function mapPluginClassesByName(array $namedPageMapPlugins): array
     {
         $pageMapPlugins = [];
         foreach ($namedPageMapPlugins as $namedPageMapPlugin) {
@@ -102,7 +102,7 @@ class PageDataMapper implements DataMapperInterface
      *
      * @return string
      */
-    protected function normalizeKey($key)
+    protected function normalizeKey($key): string
     {
         if (in_array($key, $this->pageIndexMap->getProperties())) {
             return $key;
@@ -125,7 +125,7 @@ class PageDataMapper implements DataMapperInterface
      *
      * @return array
      */
-    protected function mapValue(PageMapTransfer $pageMapTransfer, $normalizedKey, $value, array $result)
+    protected function mapValue(PageMapTransfer $pageMapTransfer, $normalizedKey, $value, array $result): array
     {
         switch ($normalizedKey) {
             case PageIndexMap::SEARCH_RESULT_DATA:
@@ -159,7 +159,7 @@ class PageDataMapper implements DataMapperInterface
      *
      * @return array
      */
-    protected function transformSearchResultData(array $result, $searchResultData)
+    protected function transformSearchResultData(array $result, $searchResultData): array
     {
         foreach ($searchResultData as $searchResultDataMapTransfer) {
             $searchResultDataMapTransfer
@@ -178,7 +178,7 @@ class PageDataMapper implements DataMapperInterface
      *
      * @return array
      */
-    protected function transformStringFacet(array $result, $stringFacetMap)
+    protected function transformStringFacet(array $result, $stringFacetMap): array
     {
         foreach ($stringFacetMap as $stringFacetMapTransfer) {
             $stringFacetMapTransfer
@@ -200,7 +200,7 @@ class PageDataMapper implements DataMapperInterface
      *
      * @return array
      */
-    protected function transformIntegerFacet(array $result, $integerFacet)
+    protected function transformIntegerFacet(array $result, $integerFacet): array
     {
         foreach ($integerFacet as $integerFacetMapTransfer) {
             $integerFacetMapTransfer
@@ -222,7 +222,7 @@ class PageDataMapper implements DataMapperInterface
      *
      * @return array
      */
-    protected function transformStringSort(array $result, $stringSortMap)
+    protected function transformStringSort(array $result, $stringSortMap): array
     {
         foreach ($stringSortMap as $stringSortMapTransfer) {
             $stringSortMapTransfer
@@ -241,7 +241,7 @@ class PageDataMapper implements DataMapperInterface
      *
      * @return array
      */
-    protected function transformIntegerSort(array $result, $integerSortMap)
+    protected function transformIntegerSort(array $result, $integerSortMap): array
     {
         foreach ($integerSortMap as $stringSortMapTransfer) {
             $stringSortMapTransfer
@@ -260,7 +260,7 @@ class PageDataMapper implements DataMapperInterface
      *
      * @return array
      */
-    protected function transformCategory(array $result, CategoryMapTransfer $categoryMap)
+    protected function transformCategory(array $result, CategoryMapTransfer $categoryMap): array
     {
         $categoryMap
             ->requireAllParents()
@@ -281,7 +281,7 @@ class PageDataMapper implements DataMapperInterface
      *
      * @return array
      */
-    protected function transformOther(array $result, $key, $value)
+    protected function transformOther(array $result, $key, $value): array
     {
         $result[$key] = $value;
 

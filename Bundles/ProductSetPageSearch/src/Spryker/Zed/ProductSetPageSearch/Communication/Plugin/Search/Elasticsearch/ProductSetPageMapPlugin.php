@@ -22,7 +22,7 @@ use Spryker\Zed\SearchElasticsearchExtension\Dependency\Plugin\PageMapPluginInte
  */
 class ProductSetPageMapPlugin extends AbstractPlugin implements PageMapPluginInterface
 {
-    public const FILTERED_KEYS = [
+    protected const FILTERED_KEYS = [
         'locale',
         'store',
         'type',

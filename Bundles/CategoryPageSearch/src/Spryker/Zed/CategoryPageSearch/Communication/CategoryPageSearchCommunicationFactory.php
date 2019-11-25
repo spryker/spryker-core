@@ -24,4 +24,12 @@ class CategoryPageSearchCommunicationFactory extends AbstractCommunicationFactor
     {
         return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::FACADE_EVENT_BEHAVIOR);
     }
+
+    /**
+     * @return \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeInterface
+     */
+    public function getStoreFacade()
+    {
+        return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::FACADE_STORE);
+    }
 }

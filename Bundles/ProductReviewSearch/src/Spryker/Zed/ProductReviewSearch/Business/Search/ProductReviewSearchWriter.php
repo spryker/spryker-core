@@ -8,11 +8,13 @@
 namespace Spryker\Zed\ProductReviewSearch\Business\Search;
 
 use Generated\Shared\Search\ProductReviewIndexMap;
+use Generated\Shared\Transfer\DataMappingContextTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchTransfer;
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 use Orm\Zed\ProductReview\Persistence\SpyProductReview;
 use Orm\Zed\ProductReviewSearch\Persistence\SpyProductReviewSearch;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToSearchFacadeInterface;
 use Spryker\Zed\ProductReviewSearch\Dependency\Service\ProductReviewSearchToUtilEncodingInterface;
 use Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchQueryContainerInterface;
 
@@ -39,20 +41,28 @@ class ProductReviewSearchWriter implements ProductReviewSearchWriterInterface
     protected $isSendingToQueue = true;
 
     /**
+     * @var \Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToSearchFacadeInterface
+     */
+    protected $searchFacade;
+
+    /**
      * @param \Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductReviewSearch\Dependency\Service\ProductReviewSearchToUtilEncodingInterface $utilEncodingService
      * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToSearchFacadeInterface $searchFacade
      * @param bool $isSendingToQueue
      */
     public function __construct(
         ProductReviewSearchQueryContainerInterface $queryContainer,
         ProductReviewSearchToUtilEncodingInterface $utilEncodingService,
         Store $store,
+        ProductReviewSearchToSearchFacadeInterface $searchFacade,
         $isSendingToQueue
     ) {
         $this->queryContainer = $queryContainer;
         $this->utilEncodingService = $utilEncodingService;
         $this->store = $store;
+        $this->searchFacade = $searchFacade;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
@@ -154,6 +164,10 @@ class ProductReviewSearchWriter implements ProductReviewSearchWriterInterface
      */
     protected function mapToSearchData(SpyProductReview $productReviewEntity)
     {
+        if (method_exists($this->searchFacade, 'mapRawDataToSearchData')) {
+            return $this->mapRawDataToSearchData($productReviewEntity);
+        }
+
         return [
             ProductReviewIndexMap::STORE => $this->store->getStoreName(),
             ProductReviewIndexMap::ID_PRODUCT_ABSTRACT => $productReviewEntity->getFkProductAbstract(),
@@ -190,5 +204,18 @@ class ProductReviewSearchWriter implements ProductReviewSearchWriterInterface
         $productReviewTransfer->fromArray($spyProductReview->toArray(), true);
 
         return $productReviewTransfer->modifiedToArray();
+    }
+
+    /**
+     * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview $productReviewEntity
+     *
+     * @return array
+     */
+    protected function mapRawDataToSearchData(SpyProductReview $productReviewEntity)
+    {
+        $dataMappingContextTransfer = new DataMappingContextTransfer();
+        $dataMappingContextTransfer->setResourceName('product_review');
+
+        return $this->searchFacade->mapRawDataToSearchData($productReviewEntity->toArray(), $dataMappingContextTransfer);
     }
 }

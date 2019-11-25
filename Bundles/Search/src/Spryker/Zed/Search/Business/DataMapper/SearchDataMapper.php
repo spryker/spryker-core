@@ -9,6 +9,7 @@ namespace Spryker\Zed\Search\Business\DataMapper;
 
 use Generated\Shared\Transfer\DataMappingContextTransfer;
 use Spryker\Zed\Search\Business\Exception\SearchDataMapperException;
+use Spryker\Zed\SearchExtension\Dependency\Plugin\DataMapperPluginInterface;
 
 class SearchDataMapper implements SearchDataMapperInterface
 {
@@ -43,9 +44,9 @@ class SearchDataMapper implements SearchDataMapperInterface
      *
      * @throws \Spryker\Zed\Search\Business\Exception\SearchDataMapperException
      *
-     * @return mixed|\Spryker\Zed\SearchExtension\Dependency\Plugin\DataMapperPluginInterface
+     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\DataMapperPluginInterface
      */
-    protected function getDataMapperPlugin(DataMappingContextTransfer $dataMappingContextTransfer)
+    protected function getDataMapperPlugin(DataMappingContextTransfer $dataMappingContextTransfer): DataMapperPluginInterface
     {
         $dataMappingContextTransfer->requireResourceName();
 

@@ -97,6 +97,8 @@ class ProductPageSearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory::getElasticsearchProductConcretePageMapExpanderPlugins()` instead.
+     *
      * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface[]
      */
     public function getConcreteProductPageMapExpanderPlugins(): array

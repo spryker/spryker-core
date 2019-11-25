@@ -20,16 +20,13 @@ use Spryker\Zed\SearchElasticsearchExtension\Dependency\Plugin\PageMapPluginInte
  */
 class CmsDataPageMapBuilder implements PageMapPluginInterface
 {
-    public const COL_URL = 'url';
-    public const COL_IS_ACTIVE = 'is_active';
-    public const COL_DATA = 'data';
-    public const COL_VALID_FROM = 'valid_from';
-    public const COL_VALID_TO = 'valid_to';
-    public const COL_IS_SEARCHABLE = 'is_searchable';
-    public const TYPE_CMS_PAGE = 'cms_page';
-    public const TYPE = 'type';
-    public const ID_CMS_PAGE = 'id_cms_page';
-    public const NAME = 'name';
+    protected const COL_URL = 'url';
+    protected const COL_VALID_FROM = 'valid_from';
+    protected const COL_VALID_TO = 'valid_to';
+    protected const TYPE_CMS_PAGE = 'cms_page';
+    protected const TYPE = 'type';
+    protected const ID_CMS_PAGE = 'id_cms_page';
+    protected const NAME = 'name';
     protected const COL_NAME = 'name';
 
     /**

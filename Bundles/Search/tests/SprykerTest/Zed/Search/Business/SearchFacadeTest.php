@@ -136,8 +136,6 @@ class SearchFacadeTest extends Unit
     }
 
     /**
-     * @group foobar
-     *
      * @dataProvider canMapRawDataToSearchDataProvider
      *
      * @param array $inputData

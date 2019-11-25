@@ -12,8 +12,8 @@ use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearch;
 use Propel\Runtime\Map\TableMap;
 use Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchInterface;
+use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeInterface;
 use Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingInterface;
 use Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -38,9 +38,9 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeInterface
      */
-    protected $store;
+    protected $storeFacade;
 
     /**
      * @var bool
@@ -51,20 +51,20 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
      * @param \Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingInterface $utilEncoding
      * @param \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchInterface $searchFacade
      * @param \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface $queryContainer
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeInterface $storeFacade
      * @param bool $isSendingToQueue
      */
     public function __construct(
         CategoryPageSearchToUtilEncodingInterface $utilEncoding,
         CategoryPageSearchToSearchInterface $searchFacade,
         CategoryPageSearchQueryContainerInterface $queryContainer,
-        Store $store,
+        CategoryPageSearchToStoreFacadeInterface $storeFacade,
         $isSendingToQueue
     ) {
         $this->utilEncoding = $utilEncoding;
         $this->searchFacade = $searchFacade;
         $this->queryContainer = $queryContainer;
-        $this->store = $store;
+        $this->storeFacade = $storeFacade;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
@@ -226,9 +226,10 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
      */
     protected function getSharedPersistenceLocaleNames(): array
     {
-        $localeNames = $this->store->getLocales();
-        foreach ($this->store->getStoresWithSharedPersistence() as $storeName) {
-            foreach ($this->store->getLocalesPerStore($storeName) as $localeName) {
+        $localeNames = $this->storeFacade->getLocales();
+        $storesWithSharedPersistence = $this->storeFacade->getStoresWithSharedPersistence($this->storeFacade->getCurrentStore());
+        foreach ($storesWithSharedPersistence as $storeName) {
+            foreach ($this->storeFacade->getLocalesPerStore($storeName) as $localeName) {
                 $localeNames[] = $localeName;
             }
         }

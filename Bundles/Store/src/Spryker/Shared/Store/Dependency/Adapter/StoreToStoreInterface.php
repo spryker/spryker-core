@@ -85,4 +85,16 @@ interface StoreToStoreInterface
      * @return string
      */
     public function getTimezone();
+
+    /**
+     * @return string[]
+     */
+    public function getLocales(): array;
+
+    /**
+     * @param string $storeName
+     *
+     * @return string[]
+     */
+    public function getLocalesPerStore(string $storeName): array;
 }

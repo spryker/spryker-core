@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToEventBehaviorFacadeBridge;
 use Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToProductPageSearchFacadeBridge;
+use Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToSearchFacadeBridge;
 use Spryker\Zed\ProductReviewSearch\Dependency\QueryContainer\ProductReviewSearchToProductReviewQueryContainerBridge;
 use Spryker\Zed\ProductReviewSearch\Dependency\Service\ProductReviewSearchToUtilEncodingBridge;
 
@@ -24,6 +25,7 @@ class ProductReviewSearchDependencyProvider extends AbstractBundleDependencyProv
     public const QUERY_CONTAINER_PRODUCT_REVIEW = 'QUERY_CONTAINER_PRODUCT_REVIEW';
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_PRODUCT_PAGE_SEARCH = 'FACADE_PRODUCT_PAGE_SEARCH';
+    public const FACADE_SEARCH = 'FACADE_SEARCH';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const STORE = 'STORE';
     public const PROPEL_QUERY_PRODUCT_REVIEW = 'PROPEL_QUERY_PRODUCT_REVIEW';
@@ -60,6 +62,7 @@ class ProductReviewSearchDependencyProvider extends AbstractBundleDependencyProv
         $container[static::STORE] = function (Container $container) {
             return Store::getInstance();
         };
+        $container = $this->addSearchFacade($container);
 
         return $container;
     }
@@ -90,6 +93,22 @@ class ProductReviewSearchDependencyProvider extends AbstractBundleDependencyProv
         $container[static::PROPEL_QUERY_PRODUCT_REVIEW] = function (): SpyProductReviewQuery {
             return SpyProductReviewQuery::create();
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSearchFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_SEARCH, function (Container $container) {
+            return new ProductReviewSearchToSearchFacadeBridge(
+                $container->getLocator()->search()->facade()
+            );
+        });
 
         return $container;
     }

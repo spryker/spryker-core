@@ -23,6 +23,8 @@ use Spryker\Zed\SearchElasticsearchExtension\Dependency\Plugin\PageMapPluginInte
 class ProductPageMapPlugin extends AbstractPlugin implements PageMapPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Zed\SearchElasticsearchExtension\Business\DataMapper\PageMapBuilderInterface $pageMapBuilder

@@ -26,7 +26,7 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->getUtilEncoding(),
             $this->getSearchFacade(),
             $this->getQueryContainer(),
-            $this->getStore(),
+            $this->getStoreFacade(),
             $this->getConfig()->isSendingToQueue()
         );
     }
@@ -48,10 +48,10 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeInterface
      */
-    public function getStore()
+    public function getStoreFacade()
     {
-        return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::STORE);
+        return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::FACADE_STORE);
     }
 }

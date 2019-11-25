@@ -12,11 +12,6 @@ use Generated\Shared\Transfer\DataMappingContextTransfer;
 interface ProductReviewSearchToSearchFacadeInterface
 {
     /**
-     * Specification:
-     * - Maps raw data to search data within a given context.
-     *
-     * @api
-     *
      * @param array $data
      * @param \Generated\Shared\Transfer\DataMappingContextTransfer $dataMappingContextTransfer
      *

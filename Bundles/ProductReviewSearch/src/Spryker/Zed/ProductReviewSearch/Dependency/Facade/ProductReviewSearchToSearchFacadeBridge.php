@@ -25,11 +25,6 @@ class ProductReviewSearchToSearchFacadeBridge implements ProductReviewSearchToSe
     }
 
     /**
-     * Specification:
-     * - Maps raw data to search data within a given context.
-     *
-     * @api
-     *
      * @param array $data
      * @param \Generated\Shared\Transfer\DataMappingContextTransfer $dataMappingContextTransfer
      *

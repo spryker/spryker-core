@@ -17,7 +17,7 @@ class DocumentReader implements DocumentReaderInterface
     /**
      * @var \Elastica\Client
      */
-    protected $client;
+    protected $elasticaClient;
 
     /**
      * @var \Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig
@@ -25,12 +25,12 @@ class DocumentReader implements DocumentReaderInterface
     protected $config;
 
     /**
-     * @param \Elastica\Client $client
+     * @param \Elastica\Client $elasticaClient
      * @param \Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig $config
      */
-    public function __construct(Client $client, SearchElasticsearchConfig $config)
+    public function __construct(Client $elasticaClient, SearchElasticsearchConfig $config)
     {
-        $this->client = $client;
+        $this->elasticaClient = $elasticaClient;
         $this->config = $config;
     }
 
@@ -42,7 +42,7 @@ class DocumentReader implements DocumentReaderInterface
     public function readDocument(SearchDocumentTransfer $searchDocumentTransfer): SearchDocumentTransfer
     {
         $indexName = $this->getIndexNameFromSearchDocumentTransfer($searchDocumentTransfer);
-        $index = $this->client->getIndex($indexName);
+        $index = $this->elasticaClient->getIndex($indexName);
 
         $document = $index->getType($this->config->getDefaultMappingType())->getDocument($searchDocumentTransfer->getId());
 

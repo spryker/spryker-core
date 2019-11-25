@@ -23,9 +23,11 @@ use Spryker\Zed\SearchElasticsearchExtension\Dependency\Plugin\PageMapPluginInte
  */
 class ProductConcretePageMapPlugin extends AbstractPlugin implements PageMapPluginInterface
 {
-    public const KEY_ID_PRODUCT = 'id_product';
+    protected const KEY_ID_PRODUCT = 'id_product';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Zed\SearchElasticsearchExtension\Business\DataMapper\PageMapBuilderInterface $pageMapBuilder
@@ -76,7 +78,7 @@ class ProductConcretePageMapPlugin extends AbstractPlugin implements PageMapPlug
 
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
+     * @param \Spryker\Zed\SearchElasticsearchExtension\Business\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param array $productData
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
@@ -84,29 +86,8 @@ class ProductConcretePageMapPlugin extends AbstractPlugin implements PageMapPlug
      */
     protected function expandProductPageMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer): PageMapTransfer
     {
-        $pageMapTransfer = $this->applyProductPageMapExpanders($pageMapTransfer, $pageMapBuilder, $productData, $localeTransfer);
-
         foreach ($this->getFactory()->getElasticsearchProductConcretePageMapExpanderPlugins() as $productConcretePageMapExpanderPlugin) {
             $pageMapTransfer = $productConcretePageMapExpanderPlugin->expand($pageMapTransfer, $pageMapBuilder, $productData, $localeTransfer);
-        }
-
-        return $pageMapTransfer;
-    }
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
-     * @param array $productData
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Generated\Shared\Transfer\PageMapTransfer
-     */
-    protected function applyProductPageMapExpanders($pageMapTransfer, $pageMapBuilder, $productData, $localeTransfer): PageMapTransfer
-    {
-        foreach ($this->getFactory()->getProductConcretePageMapExpanderPlugins() as $productConcretePageMapExpanderPlugin) {
-            $pageMapTransfer = $productConcretePageMapExpanderPlugin->expandProductPageMap($pageMapTransfer, $pageMapBuilder, $productData, $localeTransfer);
         }
 
         return $pageMapTransfer;

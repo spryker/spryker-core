@@ -10,7 +10,6 @@ namespace Spryker\Zed\CategoryPageSearch\Communication\Plugin\Search\Elasticsear
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SearchElasticsearchExtension\Business\DataMapper\PageMapBuilderInterface;
 use Spryker\Zed\SearchElasticsearchExtension\Dependency\Plugin\PageMapPluginInterface;
@@ -23,9 +22,13 @@ use Spryker\Zed\SearchElasticsearchExtension\Dependency\Plugin\PageMapPluginInte
  */
 class CategoryNodeDataPageMapBuilder extends AbstractPlugin implements PageMapPluginInterface
 {
-    public const TYPE_CATEGORY = 'category';
+    protected const TYPE_CATEGORY = 'category';
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Spryker\Zed\SearchElasticsearchExtension\Business\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param array $categoryData
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -34,8 +37,9 @@ class CategoryNodeDataPageMapBuilder extends AbstractPlugin implements PageMapPl
      */
     public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $categoryData, LocaleTransfer $localeTransfer): PageMapTransfer
     {
+        $currentStoreTransfer = $this->getFactory()->getStoreFacade()->getCurrentStore();
         $pageMapTransfer = (new PageMapTransfer())
-            ->setStore(Store::getInstance()->getStoreName())
+            ->setStore($currentStoreTransfer->requireName()->getName())
             ->setLocale($localeTransfer->getLocaleName())
             ->setType(static::TYPE_CATEGORY)
             ->setIsActive($categoryData['spy_category']['is_active'] && $categoryData['spy_category']['is_searchable']);
@@ -51,9 +55,9 @@ class CategoryNodeDataPageMapBuilder extends AbstractPlugin implements PageMapPl
             ->addSearchResultData($pageMapTransfer, 'url', $categoryData['spy_urls'][0]['url'])
             ->addSearchResultData($pageMapTransfer, 'type', static::TYPE_CATEGORY)
             ->addFullTextBoosted($pageMapTransfer, $categoryAttribute['name'])
-            ->addFullText($pageMapTransfer, isset($categoryAttribute['meta_title']) ? $categoryAttribute['meta_title'] : '')
-            ->addFullText($pageMapTransfer, isset($categoryAttribute['meta_keywords']) ? $categoryAttribute['meta_keywords'] : '')
-            ->addFullText($pageMapTransfer, isset($categoryAttribute['meta_description']) ? $categoryAttribute['meta_description'] : '')
+            ->addFullText($pageMapTransfer, $categoryAttribute['meta_title'] ?? '')
+            ->addFullText($pageMapTransfer, $categoryAttribute['meta_keywords'] ?? '')
+            ->addFullText($pageMapTransfer, $categoryAttribute['meta_description'] ?? '')
             ->addSuggestionTerms($pageMapTransfer, $categoryAttribute['name'])
             ->addCompletionTerms($pageMapTransfer, $categoryAttribute['name']);
 
