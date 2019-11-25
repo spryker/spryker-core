@@ -56,7 +56,7 @@ var SlotBlocks = function (options) {
             return;
         }
 
-        if (! _self.isSprykerCmsSlotProvider(api, indexes)) {
+        if (! _self.isCmsSlotBlockContentProvider(api, indexes)) {
             _self.blocksTable.toggleTableRow(false);
             return;
         }
@@ -90,11 +90,11 @@ var SlotBlocks = function (options) {
         return _self.$slotTable;
     };
 
-    this.isSprykerCmsSlotProvider = function (api, indexes) {
+    this.isCmsSlotBlockContentProvider = function (api, indexes) {
         return api.row(indexes[0])
             .nodes()
             .to$()
-            .find("[" + _self.contentProviderAttribute + "='" + sprykerCmsSlotProvider + "']")
+            .find("[" + _self.contentProviderAttribute + "='" + cmsSlotBlockContentProvider + "']")
             .length;
     };
 };

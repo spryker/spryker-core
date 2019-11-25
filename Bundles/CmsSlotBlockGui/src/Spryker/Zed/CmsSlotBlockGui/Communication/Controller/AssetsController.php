@@ -21,7 +21,7 @@ class AssetsController extends AbstractController
     public function indexAction(): array
     {
         return $this->viewResponse([
-            'sprykerCmsSlotProvider' => CmsSlotBlockConfig::CMS_SLOT_CONTENT_PROVIDER_TYPE,
+            'cmsSlotBlockContentProvider' => CmsSlotBlockConfig::CMS_SLOT_CONTENT_PROVIDER_TYPE,
         ]);
     }
 }
