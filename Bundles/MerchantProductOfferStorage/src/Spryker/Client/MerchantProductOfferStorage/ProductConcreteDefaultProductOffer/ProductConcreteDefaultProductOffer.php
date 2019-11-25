@@ -8,6 +8,7 @@
 namespace Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
+use Spryker\Client\MerchantProductOfferStorage\Plugin\ProductOfferProviderPluginInterface;
 use Spryker\Client\MerchantProductOfferStorage\Storage\ProductOfferStorageReaderInterface;
 use Spryker\Shared\MerchantProductOfferStorage\MerchantProductOfferStorageConfig;
 
@@ -19,11 +20,18 @@ class ProductConcreteDefaultProductOffer implements ProductConcreteDefaultProduc
     protected $productOfferStorageReader;
 
     /**
-     * @param \Spryker\Client\MerchantProductOfferStorage\Storage\ProductOfferStorageReaderInterface $productOfferStorageReader
+     * @var \Spryker\Client\MerchantProductOfferStorage\Plugin\ProductOfferProviderPluginInterface
      */
-    public function __construct(ProductOfferStorageReaderInterface $productOfferStorageReader)
+    protected $defaultProductOfferPlugin;
+
+    /**
+     * @param \Spryker\Client\MerchantProductOfferStorage\Storage\ProductOfferStorageReaderInterface $productOfferStorageReader
+     * @param \Spryker\Client\MerchantProductOfferStorage\Plugin\ProductOfferProviderPluginInterface $defaultProductOfferPlugin
+     */
+    public function __construct(ProductOfferStorageReaderInterface $productOfferStorageReader, ProductOfferProviderPluginInterface $defaultProductOfferPlugin)
     {
         $this->productOfferStorageReader = $productOfferStorageReader;
+        $this->defaultProductOfferPlugin = $defaultProductOfferPlugin;
     }
 
     /**
@@ -50,6 +58,6 @@ class ProductConcreteDefaultProductOffer implements ProductConcreteDefaultProduc
             return $selectedAttributes[MerchantProductOfferStorageConfig::PRODUCT_OFFER_REFERENCE_ATTRIBUTE];
         }
 
-        return reset($productOfferReferences);
+        return $this->defaultProductOfferPlugin->provideDefaultProductOfferReference($productOfferReferences);
     }
 }

@@ -16,7 +16,7 @@ use Spryker\Shared\PriceProductOfferStorage\PriceProductOfferStorageConfig;
 /**
  * @method \Spryker\Service\PriceProductOfferStorage\PriceProductOfferStorageConfig getConfig()
  */
-class OfferPriceProductFilterPlugin extends AbstractPlugin implements PriceProductFilterPluginInterface
+class ProductOfferPriceProductFilterPlugin extends AbstractPlugin implements PriceProductFilterPluginInterface
 {
     /**
      * {@inheritDoc}
