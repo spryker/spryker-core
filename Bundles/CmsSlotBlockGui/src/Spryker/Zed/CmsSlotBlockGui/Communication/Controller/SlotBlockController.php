@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\CmsSlotBlockGui\Communication\CmsSlotBlockGuiCommunicationFactory getFactory()
