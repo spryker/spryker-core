@@ -5,15 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Application\Business\Model\Request;
+namespace Spryker\Zed\Http\Communication\SubRequest;
 
-use Spryker\Zed\Application\Business\Exception\UrlInvalidException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-/**
- * @deprecated Use `\Spryker\Zed\Http\Communication\SubRequest\SubRequestHandler` instead.
- */
 class SubRequestHandler implements SubRequestHandlerInterface
 {
     /**
@@ -36,7 +33,7 @@ class SubRequestHandler implements SubRequestHandlerInterface
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function handleSubRequest(Request $request, $url, array $additionalSubRequestParameters = [])
+    public function handleSubRequest(Request $request, string $url, array $additionalSubRequestParameters = []): Response
     {
         $subRequest = $this->createSubRequest($request, $url, $additionalSubRequestParameters);
         $subRequestResponse = $this->httpKernel->handle($subRequest, HttpKernelInterface::SUB_REQUEST, true);
@@ -51,14 +48,13 @@ class SubRequestHandler implements SubRequestHandlerInterface
      *
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    protected function createSubRequest(Request $request, $url, array $additionalSubRequestParameters)
+    protected function createSubRequest(Request $request, string $url, array $additionalSubRequestParameters): Request
     {
         $subRequest = $this->createRequestObject($request, $url, $additionalSubRequestParameters);
         $subRequest->query->add($request->query->all());
         $subRequest->request->add($request->request->all());
 
         $urlParts = $this->extractUrlParts($url);
-        $this->validateUrlParts($urlParts);
         $this->setRouteAttributes($subRequest, $urlParts);
 
         return $subRequest;
@@ -69,25 +65,9 @@ class SubRequestHandler implements SubRequestHandlerInterface
      *
      * @return string[]
      */
-    protected function extractUrlParts($url)
+    protected function extractUrlParts(string $url): array
     {
         return explode('/', trim($url, '/'));
-    }
-
-    /**
-     * @param string[] $urlParts
-     *
-     * @throws \Spryker\Zed\Application\Business\Exception\UrlInvalidException
-     *
-     * @return bool
-     */
-    protected function validateUrlParts(array $urlParts)
-    {
-        if (empty($urlParts[0]) || empty($urlParts[1]) || empty($urlParts[2])) {
-            throw new UrlInvalidException('Invalid subrequest url');
-        }
-
-        return true;
     }
 
     /**
@@ -96,11 +76,11 @@ class SubRequestHandler implements SubRequestHandlerInterface
      *
      * @return void
      */
-    protected function setRouteAttributes(Request $subRequest, array $urlParts)
+    protected function setRouteAttributes(Request $subRequest, array $urlParts): void
     {
-        $subRequest->attributes->set('module', $urlParts[0]);
-        $subRequest->attributes->set('controller', $urlParts[1]);
-        $subRequest->attributes->set('action', $urlParts[2]);
+        $subRequest->attributes->set('module', $urlParts[0] ?? 'index');
+        $subRequest->attributes->set('controller', $urlParts[1] ?? 'index');
+        $subRequest->attributes->set('action', $urlParts[2] ?? 'index');
     }
 
     /**
@@ -110,7 +90,7 @@ class SubRequestHandler implements SubRequestHandlerInterface
      *
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    protected function createRequestObject(Request $request, $url, array $additionalSubRequestParameters)
+    protected function createRequestObject(Request $request, string $url, array $additionalSubRequestParameters)
     {
         return Request::create(
             $url,
