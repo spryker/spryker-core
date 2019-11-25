@@ -30,9 +30,14 @@ class PaymentProviderWriterStep implements DataImportStepInterface
     public function execute(DataSetInterface $dataSet): void
     {
         $paymentProviderKey = $dataSet[PaymentMethodDataSetInterface::COL_PAYMENT_PROVIDER_KEY];
+        $paymentProviderName = $dataSet[PaymentMethodDataSetInterface::COL_PAYMENT_PROVIDER_NAME];
 
         if (!$paymentProviderKey) {
             throw new DataKeyNotFoundInDataSetException('Payment provider key is missing');
+        }
+
+        if (!$paymentProviderName) {
+            throw new DataKeyNotFoundInDataSetException('Payment provider name is missing');
         }
 
         if (!isset(static::$idPaymentProviderCache[$paymentProviderKey])) {
