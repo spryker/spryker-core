@@ -9,6 +9,7 @@ namespace Spryker\Zed\CartCodesRestApi\Communication\Controller;
 
 use Generated\Shared\Transfer\AddCandidateRequestTransfer;
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
+use Generated\Shared\Transfer\RemoveCodeRequestTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -27,5 +28,18 @@ class GatewayController extends AbstractGatewayController
         $voucherCode = $addCandidateRequestTransfer->getVoucherCode();
 
         return $this->getFacade()->addCandidate($quoteTransfer, $voucherCode);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RemoveCodeRequestTransfer $removeCodeRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     */
+    public function removeCartCodeAction(RemoveCodeRequestTransfer $removeCodeRequestTransfer): CartCodeOperationResultTransfer
+    {
+        $quoteTransfer = $removeCodeRequestTransfer->getQuote();
+        $idDiscount = $removeCodeRequestTransfer->getIdDiscount();
+
+        return $this->getFacade()->removeCartCode($quoteTransfer, $idDiscount);
     }
 }

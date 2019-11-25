@@ -15,7 +15,7 @@ interface CartCodesRestApiClientInterface
     /**
      * Specification:
      * - Extends QuoteTransfer with $code and its relevant data when the $code is applicable.
-     * - Sends Zed Request
+     * - Sends Zed Request.
      *
      * @api
      *
@@ -25,4 +25,18 @@ interface CartCodesRestApiClientInterface
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
     public function addCandidate(QuoteTransfer $quoteTransfer, string $voucherCode): CartCodeOperationResultTransfer;
+
+    /**
+     * Specification:
+     * - Removes code from QuoteTransfer.
+     * - Sends Zed Request.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idDiscount
+     *
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     */
+    public function removeCartCode(QuoteTransfer $quoteTransfer, int $idDiscount): CartCodeOperationResultTransfer;
 }

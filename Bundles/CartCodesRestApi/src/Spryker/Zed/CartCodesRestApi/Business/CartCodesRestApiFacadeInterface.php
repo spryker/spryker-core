@@ -24,4 +24,22 @@ interface CartCodesRestApiFacadeInterface
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
     public function addCandidate(QuoteTransfer $quoteTransfer, string $voucherCode): CartCodeOperationResultTransfer;
+
+    /**
+     * Specification:
+     * - Removes code from QuoteTransfer.
+     * - Calls CartCodeFacade.
+     * - Finds QuoteTransfer by UUID.
+     * - Return CartCodeOperationResultTransfer with message and with no QuoteTransfer if Quote is not found.
+     * - Finds Discount by ID.
+     * - Return CartCodeOperationResultTransfer with message and with no QuoteTransfer if discount was not deleted.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idDiscount
+     *
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     */
+    public function removeCartCode(QuoteTransfer $quoteTransfer, int $idDiscount): CartCodeOperationResultTransfer;
 }

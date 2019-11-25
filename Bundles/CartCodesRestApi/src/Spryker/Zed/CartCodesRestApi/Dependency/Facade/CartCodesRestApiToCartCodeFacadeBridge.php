@@ -35,4 +35,15 @@ class CartCodesRestApiToCartCodeFacadeBridge implements CartCodesRestApiToCartCo
     {
         return $this->cartCodeFacade->addCandidate($quoteTransfer, $code);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $code
+     *
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     */
+    public function removeCartCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
+    {
+        return $this->cartCodeFacade->removeCartCode($quoteTransfer, $code);
+    }
 }

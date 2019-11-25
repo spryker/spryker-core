@@ -28,7 +28,7 @@ class CartCodeFacade extends AbstractFacade implements CartCodeFacadeInterface
      */
     public function addCandidate(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
     {
-        return $this->getFactory()->createCodeAdder()->addCandidate($quoteTransfer, $code);
+        return $this->getFactory()->createCartCodeAdder()->addCandidate($quoteTransfer, $code);
     }
 
     /**
@@ -41,24 +41,8 @@ class CartCodeFacade extends AbstractFacade implements CartCodeFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function removeCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
+    public function removeCartCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
     {
-        // TODO: Implement removeCode() method.
-        return new CartCodeOperationResultTransfer();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
-     */
-    public function clearAllCodes(QuoteTransfer $quoteTransfer): CartCodeOperationResultTransfer
-    {
-        // TODO: Implement clearAllCodes() method.
-        return new CartCodeOperationResultTransfer();
+        return $this->getFactory()->createCartCodeRemover()->removeCartCode($quoteTransfer, $code);
     }
 }

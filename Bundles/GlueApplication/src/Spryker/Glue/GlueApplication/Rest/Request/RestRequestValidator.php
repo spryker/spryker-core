@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -50,15 +49,18 @@ class RestRequestValidator implements RestRequestValidatorInterface
     public function validate(Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         $restErrorCollectionTransfer = $this->validateRequest($restRequest);
-        if (!$restErrorCollectionTransfer) {
-            $restErrorCollectionTransfer = $this->validateResourceIdSpecified($restRequest);
+
+        if ($restErrorCollectionTransfer) {
+            return $restErrorCollectionTransfer;
         }
 
-        if (!$restErrorCollectionTransfer) {
-            $restErrorCollectionTransfer = $this->executeRestRequestValidatorPlugins($httpRequest, $restRequest);
+        $restErrorCollectionTransfer = $this->validateResourceIdSpecified($restRequest);
+
+        if ($restErrorCollectionTransfer) {
+            return $restErrorCollectionTransfer;
         }
 
-        return $restErrorCollectionTransfer;
+        return $this->executeRestRequestValidatorPlugins($httpRequest, $restRequest);
     }
 
     /**
@@ -69,7 +71,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
     protected function validateRequest(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         $method = $restRequest->getMetadata()->getMethod();
-        if (!in_array($method, [Request::METHOD_POST, Request::METHOD_PATCH], true)) {
+        if (!in_array($method, [Request::METHOD_POST, Request::METHOD_PATCH, Request::METHOD_DELETE], true)) {
             return null;
         }
 
@@ -81,7 +83,7 @@ class RestRequestValidator implements RestRequestValidatorInterface
         }
 
         $restResource = $restRequest->getResource();
-        if (!$restResource->getAttributes()) {
+        if (!$restResource->getAttributes() && $method !== Request::METHOD_DELETE) {
             $restErrorMessageTransfer = new RestErrorMessageTransfer();
             $restErrorMessageTransfer->setDetail(static::EXCEPTION_MESSAGE_POST_DATA_IS_INVALID);
 
@@ -99,40 +101,22 @@ class RestRequestValidator implements RestRequestValidatorInterface
     protected function validateResourceIdSpecified(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         $method = $restRequest->getMetadata()->getMethod();
+
         if (!in_array($method, [Request::METHOD_DELETE, Request::METHOD_PATCH], true)) {
             return null;
         }
 
-        $allResources = $restRequest->getHttpRequest()->attributes->get(
-            RequestConstantsInterface::ATTRIBUTE_ALL_RESOURCES,
-            []
-        );
-
-        if ($this->checkResourcesHaveId($allResources)) {
-            return null;
-        }
-
-        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setDetail(static::EXCEPTION_MESSAGE_RESOURCE_ID_IS_NOT_SPECIFIED)
-            ->setStatus(Response::HTTP_BAD_REQUEST);
-
-        return (new RestErrorCollectionTransfer())->addRestError($restErrorMessageTransfer);
-    }
-
-    /**
-     * @param array $resources
-     *
-     * @return bool
-     */
-    protected function checkResourcesHaveId(array $resources): bool
-    {
-        foreach ($resources as $resource) {
-            if (!$resource[RequestConstantsInterface::ATTRIBUTE_ID]) {
-                return false;
+        foreach ($restRequest->getParentResources() as $restResource) {
+            if (!$restResource->getId()) {
+                return $this->createResourceIdIsNotSpecifiedError();
             }
         }
 
-        return true;
+        if ($restRequest->getResource()->getId()) {
+            return null;
+        }
+
+        return $this->createResourceIdIsNotSpecifiedError();
     }
 
     /**
@@ -170,5 +154,17 @@ class RestRequestValidator implements RestRequestValidatorInterface
     protected function isResourceTypeValid(RestRequestInterface $restRequest): bool
     {
         return $restRequest->getResource()->getType() === $restRequest->getHttpRequest()->attributes->get(RestResourceInterface::RESOURCE_TYPE);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
+     */
+    protected function createResourceIdIsNotSpecifiedError(): RestErrorCollectionTransfer
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setDetail(static::EXCEPTION_MESSAGE_RESOURCE_ID_IS_NOT_SPECIFIED)
+            ->setStatus(Response::HTTP_BAD_REQUEST);
+
+        return (new RestErrorCollectionTransfer())->addRestError($restErrorMessageTransfer);
     }
 }

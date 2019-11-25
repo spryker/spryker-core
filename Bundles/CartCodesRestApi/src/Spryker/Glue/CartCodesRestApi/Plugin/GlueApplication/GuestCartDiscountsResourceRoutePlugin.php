@@ -29,7 +29,9 @@ class GuestCartDiscountsResourceRoutePlugin extends AbstractPlugin implements Re
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        $resourceRouteCollection->addPost('post', false);
+        $resourceRouteCollection
+            ->addPost('post', false)
+            ->addDelete('delete', false);
 
         return $resourceRouteCollection;
     }

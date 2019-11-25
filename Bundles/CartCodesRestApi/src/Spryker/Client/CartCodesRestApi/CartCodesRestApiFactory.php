@@ -9,6 +9,8 @@ namespace Spryker\Client\CartCodesRestApi;
 
 use Spryker\Client\CartCodesRestApi\CartCodeAdder\CartCodeAdder;
 use Spryker\Client\CartCodesRestApi\CartCodeAdder\CartCodeAdderInterface;
+use Spryker\Client\CartCodesRestApi\CartCodeRemover\CartCodeRemover;
+use Spryker\Client\CartCodesRestApi\CartCodeRemover\CartCodeRemoverInterface;
 use Spryker\Client\CartCodesRestApi\Dependency\Client\CartCodesRestApiToZedRequestClientInterface;
 use Spryker\Client\CartCodesRestApi\Zed\CartCodesRestApiStub;
 use Spryker\Client\CartCodesRestApi\Zed\CartCodesRestApiStubInterface;
@@ -22,6 +24,14 @@ class CartCodesRestApiFactory extends AbstractFactory
     public function createCartCodeAdder(): CartCodeAdderInterface
     {
         return new CartCodeAdder($this->createCartCodesRestApiStub());
+    }
+
+    /**
+     * @return \Spryker\Client\CartCodesRestApi\CartCodeRemover\CartCodeRemoverInterface
+     */
+    public function createCartCodeRemover(): CartCodeRemoverInterface
+    {
+        return new CartCodeRemover($this->createCartCodesRestApiStub());
     }
 
     /**

@@ -9,6 +9,7 @@ namespace Spryker\Client\CartCodesRestApi\Zed;
 
 use Generated\Shared\Transfer\AddCandidateRequestTransfer;
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
+use Generated\Shared\Transfer\RemoveCodeRequestTransfer;
 use Spryker\Client\CartCodesRestApi\Dependency\Client\CartCodesRestApiToZedRequestClientInterface;
 
 class CartCodesRestApiStub implements CartCodesRestApiStubInterface
@@ -27,6 +28,8 @@ class CartCodesRestApiStub implements CartCodesRestApiStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\CartCodesRestApi\Communication\Controller\GatewayController::addCandidateAction()
+     *
      * @param \Generated\Shared\Transfer\AddCandidateRequestTransfer $addCandidateRequestTransfer
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
@@ -35,6 +38,21 @@ class CartCodesRestApiStub implements CartCodesRestApiStubInterface
     {
         /** @var \Generated\Shared\Transfer\CartCodeOperationResultTransfer $cartCodeOperationResultTransfer */
         $cartCodeOperationResultTransfer = $this->zedStubClient->call('/cart-codes-rest-api/gateway/add-candidate', $addCandidateRequestTransfer);
+
+        return $cartCodeOperationResultTransfer;
+    }
+
+    /**
+     * @uses \Spryker\Zed\CartCodesRestApi\Communication\Controller\GatewayController::removeCartCodeAction()
+     *
+     * @param \Generated\Shared\Transfer\RemoveCodeRequestTransfer $removeCodeRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     */
+    public function removeCartCode(RemoveCodeRequestTransfer $removeCodeRequestTransfer): CartCodeOperationResultTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CartCodeOperationResultTransfer $cartCodeOperationResultTransfer */
+        $cartCodeOperationResultTransfer = $this->zedStubClient->call('/cart-codes-rest-api/gateway/remove-cart-code', $removeCodeRequestTransfer);
 
         return $cartCodeOperationResultTransfer;
     }

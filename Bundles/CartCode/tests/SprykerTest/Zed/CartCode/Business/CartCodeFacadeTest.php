@@ -78,6 +78,36 @@ class CartCodeFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testRemoveCodeWillRemoveDiscountFromCartWithUnlockedQuote(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->prepareQuoteTransferWithDiscount(false, static::CODE);
+
+        // Act
+        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCartCode($quoteTransfer, static::CODE);
+
+        // Assert
+        $this->assertEquals(0, $cartCodeOperationResultTransfer->getQuote()->getVoucherDiscounts()->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveCodeWillNotRemoveDiscountFromCartWithLockedQuote(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->prepareQuoteTransferWithDiscount(true, static::CODE);
+
+        // Act
+        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCartCode($quoteTransfer, static::CODE);
+
+        // Assert
+        $this->assertEquals(1, $cartCodeOperationResultTransfer->getQuote()->getVoucherDiscounts()->count());
+    }
+
+    /**
+     * @return void
+     */
     protected function setPluginCartCodeCollection(): void
     {
         $this->tester->setDependency(CartCodeDependencyProvider::PLUGINS_CART_CODE, [

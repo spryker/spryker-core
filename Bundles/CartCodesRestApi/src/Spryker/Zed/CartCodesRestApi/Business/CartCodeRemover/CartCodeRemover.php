@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CartCodesRestApi\Business\CartCodeAdder;
+namespace Spryker\Zed\CartCodesRestApi\Business\CartCodeRemover;
 
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
@@ -14,10 +14,8 @@ use Spryker\Shared\CartCodesRestApi\CartCodesRestApiConfig;
 use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeInterface;
 use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeInterface;
 
-class CartCodeAdder implements CartCodeAdderInterface
+class CartCodeRemover implements CartCodeRemoverInterface
 {
-    protected const MESSAGE_TYPE_ERROR = 'error';
-
     /**
      * @var \Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeInterface
      */
@@ -42,11 +40,11 @@ class CartCodeAdder implements CartCodeAdderInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $voucherCode
+     * @param int $idDiscount
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */
-    public function addCandidate(QuoteTransfer $quoteTransfer, string $voucherCode): CartCodeOperationResultTransfer
+    public function removeCartCode(QuoteTransfer $quoteTransfer, int $idDiscount): CartCodeOperationResultTransfer
     {
         $quoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
 
@@ -56,19 +54,33 @@ class CartCodeAdder implements CartCodeAdderInterface
             );
         }
 
-        $cartCodeOperationResultTransfer = $this->cartCodeFacade->addCandidate($quoteResponseTransfer->getQuoteTransfer(), $voucherCode);
+        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
 
-        foreach ($cartCodeOperationResultTransfer->getMessages() as $messageTransfer) {
-            if ($messageTransfer->getType() !== static::MESSAGE_TYPE_ERROR) {
-                continue;
-            }
-
+        $voucherCode = $this->findVoucherCodeById($quoteTransfer->getVoucherDiscounts()->getArrayCopy(), $idDiscount);
+        if (!$voucherCode) {
             return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
-                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_CANT_BE_ADDED
+                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_NOT_FOUND
             );
         }
 
-        return $cartCodeOperationResultTransfer;
+        return $this->cartCodeFacade->removeCartCode($quoteTransfer, $voucherCode);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discountTransfers
+     * @param int $idDiscount
+     *
+     * @return string|null
+     */
+    protected function findVoucherCodeById(array $discountTransfers, int $idDiscount): ?string
+    {
+        foreach ($discountTransfers as $discountTransfer) {
+            if ($discountTransfer->getIdDiscount() === $idDiscount) {
+                return $discountTransfer->getVoucherCode();
+            }
+        }
+
+        return null;
     }
 
     /**

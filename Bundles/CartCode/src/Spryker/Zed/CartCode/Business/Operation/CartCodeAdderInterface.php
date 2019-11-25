@@ -10,7 +10,7 @@ namespace Spryker\Zed\CartCode\Business\Operation;
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface CodeAdderInterface
+interface CartCodeAdderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

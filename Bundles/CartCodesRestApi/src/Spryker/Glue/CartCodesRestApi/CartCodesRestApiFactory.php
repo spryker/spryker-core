@@ -9,12 +9,18 @@ namespace Spryker\Glue\CartCodesRestApi;
 
 use Spryker\Glue\CartCodesRestApi\Processor\CartCodeAdder\CartCodeAdder;
 use Spryker\Glue\CartCodesRestApi\Processor\CartCodeAdder\CartCodeAdderInterface;
+use Spryker\Glue\CartCodesRestApi\Processor\CartCodeRemover\CartCodeRemover;
+use Spryker\Glue\CartCodesRestApi\Processor\CartCodeRemover\CartCodeRemoverInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\Expander\DiscountByCartResourceRelationshipExpander;
 use Spryker\Glue\CartCodesRestApi\Processor\Expander\DiscountByCartResourceRelationshipExpanderInterface;
+use Spryker\Glue\CartCodesRestApi\Processor\Expander\PromotionItemByQuoteTransferResourceRelationshipExpander;
+use Spryker\Glue\CartCodesRestApi\Processor\Expander\PromotionItemByQuoteTransferResourceRelationshipExpanderInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\CartCodeMapper;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\CartCodeMapperInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\DiscountMapper;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\DiscountMapperInterface;
+use Spryker\Glue\CartCodesRestApi\Processor\Mapper\PromotionItemMapper;
+use Spryker\Glue\CartCodesRestApi\Processor\Mapper\PromotionItemMapperInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\RestResponseBuilder\CartCodeRestResponseBuilder;
 use Spryker\Glue\CartCodesRestApi\Processor\RestResponseBuilder\CartCodeRestResponseBuilderInterface;
 use Spryker\Glue\CartsRestApi\CartsRestApiResourceInterface;
@@ -32,6 +38,17 @@ class CartCodesRestApiFactory extends AbstractFactory
     public function createCartCodeAdder(): CartCodeAdderInterface
     {
         return new CartCodeAdder(
+            $this->getClient(),
+            $this->createCartCodeRestResponseBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CartCodesRestApi\Processor\CartCodeRemover\CartCodeRemoverInterface
+     */
+    public function createCartCodeRemover(): CartCodeRemoverInterface
+    {
+        return new CartCodeRemover(
             $this->getClient(),
             $this->createCartCodeRestResponseBuilder()
         );
@@ -66,6 +83,14 @@ class CartCodesRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\CartCodesRestApi\Processor\Mapper\PromotionItemMapperInterface
+     */
+    public function createPromotionItemMapper(): PromotionItemMapperInterface
+    {
+        return new PromotionItemMapper();
+    }
+
+    /**
      * @return \Spryker\Glue\CartCodesRestApi\Processor\Expander\DiscountByCartResourceRelationshipExpanderInterface
      */
     public function createDiscountByCartResourceRelationshipExpander(): DiscountByCartResourceRelationshipExpanderInterface
@@ -73,6 +98,17 @@ class CartCodesRestApiFactory extends AbstractFactory
         return new DiscountByCartResourceRelationshipExpander(
             $this->getResourceBuilder(),
             $this->createDiscountMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CartCodesRestApi\Processor\Expander\PromotionItemByQuoteTransferResourceRelationshipExpanderInterface
+     */
+    public function createPromotionItemByQuoteTransferResourceRelationshipExpander(): PromotionItemByQuoteTransferResourceRelationshipExpanderInterface
+    {
+        return new PromotionItemByQuoteTransferResourceRelationshipExpander(
+            $this->getResourceBuilder(),
+            $this->createPromotionItemMapper()
         );
     }
 

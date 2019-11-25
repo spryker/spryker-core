@@ -48,4 +48,33 @@ class CartDiscountsResourceController extends AbstractController
             ->createCartCodeAdder()
             ->addCandidateToCart($restRequest, $restDiscountRequestAttributesTransfer);
     }
+
+    /**
+     * @Glue({
+     *     "delete": {
+     *          "summary": [
+     *              "Deletes a code from cart."
+     *          ],
+     *          "parameters": [{
+     *              "name": "Accept-Language",
+     *              "in": "header"
+     *          }],
+     *          "responses": {
+     *              "401": "Invalid access token.",
+     *              "403": "Missing access token.",
+     *              "404": "Cart with given uuid not found.",
+     *              "422": "Cart code can't be deleted."
+     *          }
+     *     }
+     * })
+     *
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function deleteAction(
+        RestRequestInterface $restRequest
+    ): RestResponseInterface {
+        return $this->getFactory()->createCartCodeRemover()->removeCodeFromCart($restRequest);
+    }
 }

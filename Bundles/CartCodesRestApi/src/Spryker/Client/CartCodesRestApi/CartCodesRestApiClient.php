@@ -30,4 +30,19 @@ class CartCodesRestApiClient extends AbstractClient implements CartCodesRestApiC
     {
         return $this->getFactory()->createCartCodeAdder()->addCandidate($quoteTransfer, $voucherCode);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $idDiscount
+     *
+     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     */
+    public function removeCartCode(QuoteTransfer $quoteTransfer, int $idDiscount): CartCodeOperationResultTransfer
+    {
+        return $this->getFactory()->createCartCodeRemover()->removeCartCode($quoteTransfer, $idDiscount);
+    }
 }
