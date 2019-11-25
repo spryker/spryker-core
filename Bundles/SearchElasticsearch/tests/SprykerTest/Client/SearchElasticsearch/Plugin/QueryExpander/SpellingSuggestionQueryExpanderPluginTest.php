@@ -11,6 +11,7 @@ use Elastica\Query;
 use Elastica\Suggest;
 use Elastica\Suggest\Term;
 use Generated\Shared\Search\PageIndexMap;
+use Spryker\Client\SearchElasticsearch\Exception\MissingSuggestionQueryException;
 use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\SpellingSuggestionQueryExpanderPlugin;
 
 /**
@@ -27,12 +28,12 @@ use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\SpellingSuggestionQu
 class SpellingSuggestionQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 {
     /**
-     * @expectedException \Spryker\Client\SearchElasticsearch\Exception\MissingSuggestionQueryException
-     *
      * @return void
      */
     public function testCompletionQueryExpanderShouldThrowExceptionWhenBaseQueryDoesntSupportSuggest(): void
     {
+        $this->expectException(MissingSuggestionQueryException::class);
+
         $baseQueryPlugin = $this->createBaseQueryPlugin();
         $queryExpander = new SpellingSuggestionQueryExpanderPlugin();
         $queryExpander->expandQuery($baseQueryPlugin);

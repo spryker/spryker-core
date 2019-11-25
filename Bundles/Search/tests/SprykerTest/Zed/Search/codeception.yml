@@ -24,6 +24,7 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper
                 - \SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchHelper
+                - \SprykerTest\Zed\Testify\Helper\BusinessHelper
 
     Communication:
         path: Communication

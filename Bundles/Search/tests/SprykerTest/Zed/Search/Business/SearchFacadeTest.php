@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Elastica\Snapshot;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Client\Search\Provider\SearchClientProvider;
+use Spryker\Shared\Search\SearchConstants;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\SnapshotHandler;
 use Spryker\Zed\Search\Business\SearchBusinessFactory;
 use Spryker\Zed\Search\Business\SearchFacadeInterface;
@@ -42,6 +43,9 @@ class SearchFacadeTest extends Unit
     public function testCreateSnapshotRepository(): void
     {
         $this->skipIfCi();
+        $this->tester->setConfig(SearchConstants::ELASTICA_PARAMETER__HOST, 'localhost');
+        $this->tester->setConfig(SearchConstants::ELASTICA_PARAMETER__PORT, '10005');
+        $this->tester->setConfig(SearchConstants::ELASTICA_PARAMETER__TRANSPORT, 'http');
 
         //Arrange
         $searchFactory = $this->createSearchFactoryMock();
