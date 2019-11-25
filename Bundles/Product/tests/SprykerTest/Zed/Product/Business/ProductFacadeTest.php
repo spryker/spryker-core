@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Product\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductUrlFilterTransfer;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Business\ProductFacade;
 
@@ -132,5 +133,68 @@ class ProductFacadeTest extends Unit
             'processor_cache' .
             SkuGenerator::SKU_TYPE_SEPARATOR .
             '12MB';
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductsUrlsForOneProduct(): void
+    {
+        //Arrange
+        $productAbstractId = $this->tester->getProductAbstractIds()[0];
+
+        $productUrlFilterTransfer = new ProductUrlFilterTransfer();
+        $productUrlFilterTransfer->setProductAbstractIds([$productAbstractId]);
+        $productUrlFilterTransfer->setIdLocale($this->tester->getLocaleFacade()->getCurrentLocale()->getIdLocale());
+
+        $correctUrl = $this->tester->getProductUrl($productAbstractId, $this->tester->getLocaleFacade()->getCurrentLocale()->getLocaleName());
+
+        // Act
+        $productsUrls = $this->tester->getProductFacade()->getProductsUrls($productUrlFilterTransfer);
+
+        // Assert
+        $this->assertCount(1, $productsUrls);
+
+        foreach ($productsUrls as $productUrl) {
+            $this->assertEquals($correctUrl, $productUrl->getUrl());
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductsUrlsWithoutProductIds(): void
+    {
+        //Arrange
+        $productUrlFilterTransfer = new ProductUrlFilterTransfer();
+        $productUrlFilterTransfer->setIdLocale($this->tester->getLocaleFacade()->getCurrentLocale()->getIdLocale());
+
+        // Act
+        $productUrls = $this->tester->getProductFacade()->getProductsUrls($productUrlFilterTransfer);
+
+        // Assert
+        $this->assertCount(0, $productUrls);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductsUrlsWithoutLocale(): void
+    {
+        //Arrange
+        $productAbstractId = $this->tester->getProductAbstractIds()[0];
+
+        $productUrlFilterTransfer = new ProductUrlFilterTransfer();
+        $productUrlFilterTransfer->setProductAbstractIds([$productAbstractId]);
+
+        // Act
+        $productsUrls = $this->tester->getProductFacade()->getProductsUrls($productUrlFilterTransfer);
+
+        // Assert
+        $this->assertCount(2, $productsUrls);
+
+        foreach ($productsUrls as $productUrl) {
+            $this->assertEquals($productAbstractId, $productUrl->getFkResourceProductAbstract());
+        }
     }
 }

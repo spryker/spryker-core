@@ -481,13 +481,14 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      */
     public function getProductsUrls(ProductUrlFilterTransfer $productUrlFilterTransfer): array
     {
-        $productUrlFilterTransfer->requireProductAbstractIds();
+        if (!count($productUrlFilterTransfer->getProductAbstractIds())) {
+            return [];
+        }
 
         $urlQuery = $this->getFactory()
             ->getUrlQueryContainer()
-            ->queryUrls();
-
-        $urlQuery->filterByFkResourceProductAbstract_In($productUrlFilterTransfer->getProductAbstractIds());
+            ->queryUrls()
+            ->filterByFkResourceProductAbstract_In($productUrlFilterTransfer->getProductAbstractIds());
 
         if ($productUrlFilterTransfer->getIdLocale()) {
             $urlQuery->filterByFkLocale($productUrlFilterTransfer->getIdLocale());

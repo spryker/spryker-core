@@ -9,10 +9,12 @@ namespace SprykerTest\Zed\Product;
 
 use ArrayObject;
 use Codeception\Actor;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 use Spryker\Zed\Product\Business\ProductFacadeInterface;
@@ -38,6 +40,8 @@ class ProductBusinessTester extends Actor
 {
     use _generated\ProductBusinessTesterActions;
 
+    protected const PRODUCT_URL = '/%s/product-';
+
     /**
      * @var int[]
      */
@@ -54,6 +58,11 @@ class ProductBusinessTester extends Actor
     public function setUpDatabase(): void
     {
         $this->insertProducts();
+
+        $this->haveLocale([LocaleTransfer::LOCALE_NAME => 'en_US']);
+        $this->haveLocale([LocaleTransfer::LOCALE_NAME => 'de_DE']);
+
+        $this->createProductsUrls();
     }
 
     /**
@@ -119,6 +128,36 @@ class ProductBusinessTester extends Actor
 
         $this->productAbstractIds = $productAbstractIds;
         $this->productConcreteIds = $productConcreteIds;
+    }
+
+    /**
+     * @return void
+     */
+    public function createProductsUrls()
+    {
+        foreach ($this->productAbstractIds as $productAbstractId) {
+            foreach ($this->getLocaleFacade()->getAvailableLocales() as $localeId => $leLocaleName) {
+                $this->haveUrl([
+                    UrlTransfer::FK_LOCALE => $localeId,
+                    UrlTransfer::FK_RESOURCE_PRODUCT_ABSTRACT => $productAbstractId,
+                    UrlTransfer::URL => $this->getProductUrl($productAbstractId, $leLocaleName),
+                ]);
+            }
+        }
+    }
+
+    /**
+     * @param int $productAbstractId
+     * @param string $localeName
+     *
+     * @return string
+     */
+    public function getProductUrl(int $productAbstractId, string $localeName): string
+    {
+        return sprintf(
+            static::PRODUCT_URL . $productAbstractId,
+            $localeName
+        );
     }
 
     /**
