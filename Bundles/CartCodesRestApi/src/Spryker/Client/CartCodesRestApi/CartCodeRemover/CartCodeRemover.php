@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CartCodesRestApi\CartCodeDeleter;
+namespace Spryker\Client\CartCodesRestApi\CartCodeRemover;
 
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RemoveCodeRequestTransfer;
 use Spryker\Client\CartCodesRestApi\Zed\CartCodesRestApiStubInterface;
 
-class CartCodeRemover implements CartCodeDeleterInterface
+class CartCodeRemover implements CartCodeRemoverInterface
 {
     /**
      * @var \Spryker\Client\CartCodesRestApi\Zed\CartCodesRestApiStubInterface

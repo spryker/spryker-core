@@ -9,8 +9,8 @@ namespace Spryker\Glue\CartCodesRestApi;
 
 use Spryker\Glue\CartCodesRestApi\Processor\CartCodeAdder\CartCodeAdder;
 use Spryker\Glue\CartCodesRestApi\Processor\CartCodeAdder\CartCodeAdderInterface;
-use Spryker\Glue\CartCodesRestApi\Processor\CartCodeDeleter\CartCodeDeleter;
-use Spryker\Glue\CartCodesRestApi\Processor\CartCodeDeleter\CartCodeDeleterInterface;
+use Spryker\Glue\CartCodesRestApi\Processor\CartCodeRemover\CartCodeRemover;
+use Spryker\Glue\CartCodesRestApi\Processor\CartCodeRemover\CartCodeRemoverInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\Expander\DiscountByCartResourceRelationshipExpander;
 use Spryker\Glue\CartCodesRestApi\Processor\Expander\DiscountByCartResourceRelationshipExpanderInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\CartCodeMapper;
@@ -40,11 +40,11 @@ class CartCodesRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CartCodesRestApi\Processor\CartCodeDeleter\CartCodeDeleterInterface
+     * @return \Spryker\Glue\CartCodesRestApi\Processor\CartCodeRemover\CartCodeRemoverInterface
      */
-    public function createCartCodeDeleter(): CartCodeDeleterInterface
+    public function createCartCodeRemover(): CartCodeRemoverInterface
     {
-        return new CartCodeDeleter(
+        return new CartCodeRemover(
             $this->getClient(),
             $this->createCartCodeRestResponseBuilder()
         );

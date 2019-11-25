@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartCodesRestApi\Processor\CartCodeDeleter;
+namespace Spryker\Glue\CartCodesRestApi\Processor\CartCodeRemover;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -15,7 +15,7 @@ use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-class CartCodeDeleter implements CartCodeDeleterInterface
+class CartCodeRemover implements CartCodeRemoverInterface
 {
     /**
      * @var \Spryker\Client\CartCodesRestApi\CartCodesRestApiClientInterface
