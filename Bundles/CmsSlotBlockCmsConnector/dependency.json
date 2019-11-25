@@ -1,0 +1,5 @@
+{
+  "include": {
+    "spryker/cms": "Provides using of parameters from the database."
+  }
+}

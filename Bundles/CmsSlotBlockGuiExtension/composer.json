@@ -12,7 +12,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/symfony": "ADD SUGGEST DESCRIPTION"
+    "spryker/symfony": "If you want to use symfony forms"
   },
   "autoload": {
     "psr-4": {

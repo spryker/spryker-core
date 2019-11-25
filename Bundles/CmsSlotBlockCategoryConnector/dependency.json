@@ -1,0 +1,5 @@
+{
+  "include": {
+    "spryker/category": "Provides using of parameters from the database."
+  }
+}

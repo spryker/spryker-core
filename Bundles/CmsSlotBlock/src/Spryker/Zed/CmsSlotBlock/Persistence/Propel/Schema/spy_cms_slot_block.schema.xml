@@ -34,6 +34,10 @@
             <index-column name="fk_cms_block"/>
         </index>
 
+        <index name="index-spy_cms_slot_block-position">
+            <index-column name="position"/>
+        </index>
+
         <id-method-parameter value="spy_cms_slot_block_pk_seq"/>
     </table>
 

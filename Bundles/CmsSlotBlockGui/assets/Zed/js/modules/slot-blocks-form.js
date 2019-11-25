@@ -72,9 +72,8 @@ var SlotBlocksForm = function (options) {
     this.save = function (event) {
         event.preventDefault();
         if (!_self.isStateChanged) {
-            setTimeout(function() {
-                _self.activateButton();
-            }, 0);
+            _self.activateButton();
+
             return;
         }
         var url = $(this).attr('action');
