@@ -23,4 +23,9 @@ interface CartRestResponseBuilderInterface extends BaseCartRestResponseBuilderIn
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createRestResponse(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCartIdMissingErrorResponse(): RestResponseInterface;
 }
