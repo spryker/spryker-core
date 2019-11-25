@@ -95,24 +95,24 @@ class ProductAbstractReviewResourceRelationshipExpander implements ProductAbstra
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][] $productReviewsRestResourcesCollection
-     * @param array $productAbstractData
+     * @param array $productAbstractDataCollection
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      *
      * @return void
      */
     protected function addProductReviewsRelationships(
         array $productReviewsRestResourcesCollection,
-        array $productAbstractData,
+        array $productAbstractDataCollection,
         RestResourceInterface $resource
     ): void {
         foreach ($productReviewsRestResourcesCollection as $idProductAbstract => $productReviewsRestResources) {
-            if (!array_key_exists($idProductAbstract, $productAbstractData)) {
+            if (!array_key_exists($idProductAbstract, $productAbstractDataCollection)) {
                 continue;
             }
 
-            $productAbstract = $productAbstractData[$idProductAbstract];
-            if ($resource->getId() !== $productAbstract[static::KEY_SKU]
-                || $productAbstract[static::KEY_ID_PRODUCT_ABSTRACT] !== $idProductAbstract
+            $productAbstractData = $productAbstractDataCollection[$idProductAbstract];
+            if ($resource->getId() !== $productAbstractData[static::KEY_SKU]
+                || $productAbstractData[static::KEY_ID_PRODUCT_ABSTRACT] !== $idProductAbstract
             ) {
                 continue;
             }
