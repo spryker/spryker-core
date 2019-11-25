@@ -243,8 +243,9 @@ var BlocksTable = function (options) {
 
         _self.tableIsUnsaved = false;
         _self.slotBlocksForm.isStateChanged = false;
+        _self.toggleRowOverlay(false);
+        _self.toggleResetButton(false);
         _self.resetHandlerCallback();
-        _self.resolveIsUnsaved(false);
     };
 
     this.toggleRowOverlay = function (state = _self.isUnsaved()) {
