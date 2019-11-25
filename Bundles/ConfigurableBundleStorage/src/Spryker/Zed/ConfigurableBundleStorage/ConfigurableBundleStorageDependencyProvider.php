@@ -9,6 +9,7 @@ namespace Spryker\Zed\ConfigurableBundleStorage;
 
 use Spryker\Zed\ConfigurableBundleStorage\Dependency\Facade\ConfigurableBundleStorageToConfigurableBundleFacadeBridge;
 use Spryker\Zed\ConfigurableBundleStorage\Dependency\Facade\ConfigurableBundleStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\ConfigurableBundleStorage\Dependency\Facade\ConfigurableBundleStorageToLocaleFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -19,6 +20,7 @@ class ConfigurableBundleStorageDependencyProvider extends AbstractBundleDependen
 {
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_CONFIGURABLE_BUNDLE = 'FACADE_CONFIGURABLE_BUNDLE';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -29,6 +31,7 @@ class ConfigurableBundleStorageDependencyProvider extends AbstractBundleDependen
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addConfigurableBundleFacade($container);
+        $container = $this->addLocaleFacade($container);
 
         return $container;
     }
@@ -73,6 +76,22 @@ class ConfigurableBundleStorageDependencyProvider extends AbstractBundleDependen
         $container->set(static::FACADE_CONFIGURABLE_BUNDLE, function (Container $container) {
             return new ConfigurableBundleStorageToConfigurableBundleFacadeBridge(
                 $container->getLocator()->configurableBundle()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
+            return new ConfigurableBundleStorageToLocaleFacadeBridge(
+                $container->getLocator()->locale()->facade()
             );
         });
 

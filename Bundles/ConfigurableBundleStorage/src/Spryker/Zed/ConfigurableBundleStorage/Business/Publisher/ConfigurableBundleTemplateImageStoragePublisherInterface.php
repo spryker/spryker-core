@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\ConfigurableBundleStorage\Business\Publisher;
 
-interface ConfigurableBundleStoragePublisherInterface
+interface ConfigurableBundleTemplateImageStoragePublisherInterface
 {
     /**
      * @param int[] $configurableBundleTemplateIds
      *
      * @return void
      */
-    public function publishConfigurableBundleTemplates(array $configurableBundleTemplateIds): void;
+    public function publish(array $configurableBundleTemplateIds): void;
 }

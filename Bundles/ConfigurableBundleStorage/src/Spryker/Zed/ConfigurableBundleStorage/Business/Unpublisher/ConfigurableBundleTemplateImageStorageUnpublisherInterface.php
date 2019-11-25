@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ConfigurableBundleStorage\Business\Publisher;
+namespace Spryker\Zed\ConfigurableBundleStorage\Business\Unpublisher;
 
-interface ConfigurableBundleStoragePublisherInterface
+interface ConfigurableBundleTemplateImageStorageUnpublisherInterface
 {
     /**
      * @param int[] $configurableBundleTemplateIds
      *
      * @return void
      */
-    public function publishConfigurableBundleTemplates(array $configurableBundleTemplateIds): void;
+    public function unpublish(array $configurableBundleTemplateIds): void;
 }

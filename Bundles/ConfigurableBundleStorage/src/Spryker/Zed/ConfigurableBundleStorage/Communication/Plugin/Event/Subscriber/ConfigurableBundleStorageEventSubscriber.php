@@ -8,15 +8,12 @@
 namespace Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Subscriber;
 
 use Spryker\Zed\ConfigurableBundle\Dependency\ConfigurableBundleEvents;
-use Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Listener\ConfigurableBundleTemplateImageProductImageSetStoragePublishListener;
-use Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Listener\ConfigurableBundleTemplateImageStoragePublishListener;
 use Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Listener\ConfigurableBundleTemplateSlotStoragePublishListener;
 use Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Listener\ConfigurableBundleTemplateStoragePublishListener;
 use Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Listener\ConfigurableBundleTemplateStorageUnpublishListener;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
 
 /**
  * @method \Spryker\Zed\ConfigurableBundleStorage\Communication\ConfigurableBundleStorageCommunicationFactory getFactory()
@@ -40,11 +37,7 @@ class ConfigurableBundleStorageEventSubscriber extends AbstractPlugin implements
             ->addConfigurableBundleTemplateDeleteListener($eventCollection)
             ->addConfigurableBundleTemplateSlotCreateListener($eventCollection)
             ->addConfigurableBundleTemplateSlotUpdateListener($eventCollection)
-            ->addConfigurableBundleTemplateSlotDeleteListener($eventCollection)
-            ->addConfigurableBundleTemplateImagePublishListener($eventCollection)
-            ->addConfigurableBundleTemplateImageProductImageSetCreateListener($eventCollection)
-            ->addConfigurableBundleTemplateImageProductImageSetUpdateListener($eventCollection)
-            ->addConfigurableBundleTemplateImageProductImageSetDeleteListener($eventCollection);
+            ->addConfigurableBundleTemplateSlotDeleteListener($eventCollection);
 
         return $eventCollection;
     }
@@ -136,58 +129,6 @@ class ConfigurableBundleStorageEventSubscriber extends AbstractPlugin implements
     {
         $eventCollection
             ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_DELETE, new ConfigurableBundleTemplateSlotStoragePublishListener());
-
-        return $this;
-    }
-
-    /**
-     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
-     *
-     * @return $this
-     */
-    protected function addConfigurableBundleTemplateImagePublishListener(EventCollectionInterface $eventCollection)
-    {
-        $eventCollection
-            ->addListenerQueued(ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_PUBLISH, new ConfigurableBundleTemplateImageStoragePublishListener());
-
-        return $this;
-    }
-
-    /**
-     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
-     *
-     * @return $this
-     */
-    protected function addConfigurableBundleTemplateImageProductImageSetCreateListener(EventCollectionInterface $eventCollection)
-    {
-        $eventCollection
-            ->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_CREATE, new ConfigurableBundleTemplateImageProductImageSetStoragePublishListener());
-
-        return $this;
-    }
-
-    /**
-     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
-     *
-     * @return $this
-     */
-    protected function addConfigurableBundleTemplateImageProductImageSetUpdateListener(EventCollectionInterface $eventCollection)
-    {
-        $eventCollection
-            ->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_UPDATE, new ConfigurableBundleTemplateImageProductImageSetStoragePublishListener());
-
-        return $this;
-    }
-
-    /**
-     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
-     *
-     * @return $this
-     */
-    protected function addConfigurableBundleTemplateImageProductImageSetDeleteListener(EventCollectionInterface $eventCollection)
-    {
-        $eventCollection
-            ->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_DELETE, new ConfigurableBundleTemplateImageProductImageSetStoragePublishListener());
 
         return $this;
     }

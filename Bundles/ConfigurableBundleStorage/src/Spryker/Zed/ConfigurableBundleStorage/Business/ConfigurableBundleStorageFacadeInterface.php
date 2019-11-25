@@ -44,4 +44,16 @@ interface ConfigurableBundleStorageFacadeInterface
      * @return void
      */
     public function publishConfigurableBundleTemplateImage(array $configurableBundleTemplateIds): void;
+
+    /**
+     * Specification:
+     * - Unpublishes removed configurable bundle template images from the Storage.
+     *
+     * @api
+     *
+     * @param int[] $configurableBundleTemplateIds
+     *
+     * @return void
+     */
+    public function unpublishConfigurableBundleTemplateImage(array $configurableBundleTemplateIds): void;
 }

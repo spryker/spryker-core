@@ -8,15 +8,12 @@
 namespace Spryker\Zed\ConfigurableBundleStorage\Business\Publisher;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ConfigurableBundleTemplateImageStorageTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotStorageTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
-use Generated\Shared\Transfer\ProductImageSetStorageTransfer;
-use Generated\Shared\Transfer\ProductImageStorageTransfer;
-use Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage;
 use Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateStorage;
 use Spryker\Zed\ConfigurableBundleStorage\Business\Reader\ConfigurableBundleReaderInterface;
+use Spryker\Zed\ConfigurableBundleStorage\ConfigurableBundleStorageConfig;
 use Spryker\Zed\ConfigurableBundleStorage\Persistence\ConfigurableBundleStorageEntityManagerInterface;
 use Spryker\Zed\ConfigurableBundleStorage\Persistence\ConfigurableBundleStorageRepositoryInterface;
 
@@ -38,18 +35,26 @@ class ConfigurableBundleStoragePublisher implements ConfigurableBundleStoragePub
     protected $configurableBundleReader;
 
     /**
+     * @var \Spryker\Zed\ConfigurableBundleStorage\ConfigurableBundleStorageConfig
+     */
+    protected $configurableBundleStorageConfig;
+
+    /**
      * @param \Spryker\Zed\ConfigurableBundleStorage\Persistence\ConfigurableBundleStorageRepositoryInterface $configurableBundleStorageRepository
      * @param \Spryker\Zed\ConfigurableBundleStorage\Persistence\ConfigurableBundleStorageEntityManagerInterface $configurableBundleStorageEntityManager
      * @param \Spryker\Zed\ConfigurableBundleStorage\Business\Reader\ConfigurableBundleReaderInterface $configurableBundleReader
+     * @param \Spryker\Zed\ConfigurableBundleStorage\ConfigurableBundleStorageConfig $configurableBundleStorageConfig
      */
     public function __construct(
         ConfigurableBundleStorageRepositoryInterface $configurableBundleStorageRepository,
         ConfigurableBundleStorageEntityManagerInterface $configurableBundleStorageEntityManager,
-        ConfigurableBundleReaderInterface $configurableBundleReader
+        ConfigurableBundleReaderInterface $configurableBundleReader,
+        ConfigurableBundleStorageConfig $configurableBundleStorageConfig
     ) {
         $this->configurableBundleStorageRepository = $configurableBundleStorageRepository;
         $this->configurableBundleStorageEntityManager = $configurableBundleStorageEntityManager;
         $this->configurableBundleReader = $configurableBundleReader;
+        $this->configurableBundleStorageConfig = $configurableBundleStorageConfig;
     }
 
     /**
@@ -83,30 +88,6 @@ class ConfigurableBundleStoragePublisher implements ConfigurableBundleStoragePub
     }
 
     /**
-     * @param int[] $configurableBundleTemplateIds
-     *
-     * @return void
-     */
-    public function publishConfigurableBundleTemplateImages(array $configurableBundleTemplateIds): void
-    {
-        $configurableBundleTemplateTransfers = $this->configurableBundleReader->getConfigurableBundleTemplates($configurableBundleTemplateIds);
-        $localizedConfigurableBundleTemplateImageStorageEntityMap = $this->configurableBundleStorageRepository->getConfigurableBundleTemplateImageStorageEntityMap($configurableBundleTemplateIds);
-
-        foreach ($configurableBundleTemplateTransfers as $configurableBundleTemplateTransfer) {
-            if (!$configurableBundleTemplateTransfer->getIsActive()) {
-                continue;
-            }
-
-            $localizedConfigurableBundleTemplateImageStorageEntityMap = $this->saveConfigurableBundleTemplateImages(
-                $configurableBundleTemplateTransfer,
-                $localizedConfigurableBundleTemplateImageStorageEntityMap
-            );
-        }
-
-        $this->sanitizeConfigurableBundleTemplateImageStorageEntities($localizedConfigurableBundleTemplateImageStorageEntityMap);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      * @param \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateStorage $configurableBundleTemplateStorageEntity
      *
@@ -135,137 +116,9 @@ class ConfigurableBundleStoragePublisher implements ConfigurableBundleStoragePub
 
         $configurableBundleTemplateStorageEntity
             ->setFkConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
-            ->setData($configurableBundleTemplateStorageTransfer->toArray());
+            ->setData($configurableBundleTemplateStorageTransfer->toArray())
+            ->setIsSendingToQueue($this->configurableBundleStorageConfig->isSendingToQueue());
 
         return $configurableBundleTemplateStorageEntity;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-     * @param \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage[][] $localizedConfigurableBundleTemplateImageStorageEntityMap
-     *
-     * @return \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage[][]
-     */
-    protected function saveConfigurableBundleTemplateImages(
-        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer,
-        array $localizedConfigurableBundleTemplateImageStorageEntityMap
-    ): array {
-        $idConfigurableBundleTemplate = $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate();
-        $localizedProductImageSetTransfers = $this->mapProductImageSetsByLocaleName($configurableBundleTemplateTransfer->getProductImageSets());
-
-        foreach ($localizedProductImageSetTransfers as $localeName => $productImageSetTransfers) {
-            $configurableBundleTemplateImageStorageEntity = $localizedConfigurableBundleTemplateImageStorageEntityMap[$idConfigurableBundleTemplate][$localeName]
-                ?? new SpyConfigurableBundleTemplateImageStorage();
-
-            $this->saveConfigurableBundleTemplateImageStorageEntity(
-                $localeName,
-                $productImageSetTransfers,
-                $configurableBundleTemplateTransfer,
-                $configurableBundleTemplateImageStorageEntity
-            );
-
-            if (!$configurableBundleTemplateImageStorageEntity->isNew()) {
-                unset($localizedConfigurableBundleTemplateImageStorageEntityMap[$idConfigurableBundleTemplate][$localeName]);
-            }
-        }
-
-        return $localizedConfigurableBundleTemplateImageStorageEntityMap;
-    }
-
-    /**
-     * @param string $localeName
-     * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-     * @param \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage $configurableBundleTemplateImageStorageEntity
-     *
-     * @return void
-     */
-    protected function saveConfigurableBundleTemplateImageStorageEntity(
-        string $localeName,
-        array $productImageSetTransfers,
-        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer,
-        SpyConfigurableBundleTemplateImageStorage $configurableBundleTemplateImageStorageEntity
-    ): void {
-        $productImageSetStorageTransfers = $this->mapProductImageSetTransfersToProductImageSetStorageTransfers($productImageSetTransfers);
-
-        $configurableBundleTemplateImageStorageTransfer = (new ConfigurableBundleTemplateImageStorageTransfer())
-            ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
-            ->setImageSets(new ArrayObject($productImageSetStorageTransfers));
-
-        $configurableBundleTemplateImageStorageEntity
-            ->setLocale($localeName)
-            ->setFkConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
-            ->setData($configurableBundleTemplateImageStorageTransfer->toArray());
-
-        $this->configurableBundleStorageEntityManager->saveConfigurableBundleTemplateImageStorageEntity($configurableBundleTemplateImageStorageEntity);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
-     *
-     * @return \Generated\Shared\Transfer\ProductImageSetStorageTransfer[]
-     */
-    protected function mapProductImageSetTransfersToProductImageSetStorageTransfers(array $productImageSetTransfers): array
-    {
-        $productImageSetStorageTransfers = [];
-
-        foreach ($productImageSetTransfers as $productImageSetTransfer) {
-            $productImageStorageTransfers = $this->mapProductImageTransfersToProductImageStorageTransfers($productImageSetTransfer->getProductImages());
-
-            $productImageSetStorageTransfers[] = (new ProductImageSetStorageTransfer())
-                ->setName($productImageSetTransfer->getName())
-                ->setImages(new ArrayObject($productImageStorageTransfers));
-        }
-
-        return $productImageSetStorageTransfers;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageTransfer[] $productImageTransfers
-     *
-     * @return \Generated\Shared\Transfer\ProductImageStorageTransfer[]
-     */
-    protected function mapProductImageTransfersToProductImageStorageTransfers(ArrayObject $productImageTransfers): array
-    {
-        $productImageStorageTransfers = [];
-
-        foreach ($productImageTransfers as $productImageTransfer) {
-            $productImageStorageTransfers[] = (new ProductImageStorageTransfer())
-                ->setIdProductImage($productImageTransfer->getIdProductImage())
-                ->setExternalUrlLarge($productImageTransfer->getExternalUrlLarge())
-                ->setExternalUrlSmall($productImageTransfer->getExternalUrlSmall());
-        }
-
-        return $productImageStorageTransfers;
-    }
-
-    /**
-     * @param \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage[][] $localizedConfigurableBundleTemplateImageStorageEntityMap
-     *
-     * @return void
-     */
-    protected function sanitizeConfigurableBundleTemplateImageStorageEntities(array $localizedConfigurableBundleTemplateImageStorageEntityMap): void
-    {
-        foreach ($localizedConfigurableBundleTemplateImageStorageEntityMap as $configurableBundleTemplateImageStorageEntities) {
-            foreach ($configurableBundleTemplateImageStorageEntities as $configurableBundleTemplateImageStorageEntity) {
-                $this->configurableBundleStorageEntityManager->deleteConfigurableBundleTemplateImageStorageEntity($configurableBundleTemplateImageStorageEntity);
-            }
-        }
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
-     *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[][]
-     */
-    protected function mapProductImageSetsByLocaleName(ArrayObject $productImageSetTransfers): array
-    {
-        $localizedProductImageSetTransfers = [];
-
-        foreach ($productImageSetTransfers as $productImageSetTransfer) {
-            $localizedProductImageSetTransfers[$productImageSetTransfer->getLocale()->getLocaleName()][] = $productImageSetTransfer;
-        }
-
-        return $localizedProductImageSetTransfers;
     }
 }

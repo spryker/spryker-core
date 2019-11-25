@@ -9,14 +9,13 @@ namespace SprykerTest\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\L
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
-use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Orm\Zed\ConfigurableBundle\Persistence\Map\SpyConfigurableBundleTemplateSlotTableMap;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\ConfigurableBundle\Dependency\ConfigurableBundleEvents;
-use Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Listener\ConfigurableBundleTemplateImageStoragePublishListener;
 use Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Listener\ConfigurableBundleTemplateSlotStoragePublishListener;
 use Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Listener\ConfigurableBundleTemplateStoragePublishListener;
+use Spryker\Zed\ConfigurableBundleStorage\Persistence\ConfigurableBundleStorageRepository;
 
 /**
  * Auto-generated group annotations
@@ -39,12 +38,18 @@ class ConfigurableBundleStorageListenerTest extends Unit
     protected $tester;
 
     /**
+     * @var \Spryker\Zed\ConfigurableBundleStorage\Persistence\ConfigurableBundleStorageRepository
+     */
+    protected $configurableBundleStorageRepository;
+
+    /**
      * @return void
      */
     public function setUp(): void
     {
         parent::setUp();
 
+        $this->configurableBundleStorageRepository = new ConfigurableBundleStorageRepository();
         $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
             return [
                 $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
@@ -123,86 +128,6 @@ class ConfigurableBundleStorageListenerTest extends Unit
         // Assert
         $this->assertNotNull(
             $this->tester->findConfigurableBundleTemplateStorageById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testConfigurableBundleTemplateImageStoragePublishListenerStoresDataForActiveTemplate(): void
-    {
-        // Arrange
-        $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
-
-        $this->tester->haveProductImageSet([
-            ProductImageSetTransfer::FK_RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
-        ]);
-
-        $configurableBundleTemplateImageStoragePublishListener = new ConfigurableBundleTemplateImageStoragePublishListener();
-        $configurableBundleTemplateImageStoragePublishListener->setFacade($this->tester->getFacade());
-
-        $eventEntityTransfers = [
-            (new EventEntityTransfer())->setId($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()),
-        ];
-
-        // Act
-        $configurableBundleTemplateImageStoragePublishListener->handleBulk($eventEntityTransfers, ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_PUBLISH);
-
-        // Assert
-        $this->assertNotNull(
-            $this->tester->findConfigurableBundleTemplateImageStorageById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testConfigurableBundleTemplateImageStoragePublishListenerStoresDataForDeactivatedTemplate(): void
-    {
-        // Arrange
-        $configurableBundleTemplateTransfer = $this->tester->createDeactivatedConfigurableBundleTemplate();
-
-        $this->tester->haveProductImageSet([
-            ProductImageSetTransfer::FK_RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
-        ]);
-
-        $configurableBundleTemplateImageStoragePublishListener = new ConfigurableBundleTemplateImageStoragePublishListener();
-        $configurableBundleTemplateImageStoragePublishListener->setFacade($this->tester->getFacade());
-
-        $eventEntityTransfers = [
-            (new EventEntityTransfer())->setId($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()),
-        ];
-
-        // Act
-        $configurableBundleTemplateImageStoragePublishListener->handleBulk($eventEntityTransfers, ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_PUBLISH);
-
-        // Assert
-        $this->assertNull(
-            $this->tester->findConfigurableBundleTemplateImageStorageById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testConfigurableBundleTemplateImageStoragePublishListenerStoresDataForTemplateWithoutImageSets(): void
-    {
-        // Arrange
-        $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
-
-        $configurableBundleTemplateImageStoragePublishListener = new ConfigurableBundleTemplateImageStoragePublishListener();
-        $configurableBundleTemplateImageStoragePublishListener->setFacade($this->tester->getFacade());
-
-        $eventEntityTransfers = [
-            (new EventEntityTransfer())->setId($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()),
-        ];
-
-        // Act
-        $configurableBundleTemplateImageStoragePublishListener->handleBulk($eventEntityTransfers, ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_PUBLISH);
-
-        // Assert
-        $this->assertNull(
-            $this->tester->findConfigurableBundleTemplateImageStorageById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
         );
     }
 }

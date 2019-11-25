@@ -177,8 +177,11 @@ class ConfigurableBundleMapper
         $productImageSetTransfer = $productImageSetTransfer
             ->fromArray($productImageSetEntity->toArray(), true);
 
+        if ($productImageSetEntity->getSpyLocale()) {
+            $productImageSetTransfer->setLocale($this->mapLocalEntityToLocaleTransfer($productImageSetEntity->getSpyLocale(), new LocaleTransfer()));
+        }
+
         return $productImageSetTransfer
-            ->setLocale($this->mapLocalEntityToLocaleTransfer($productImageSetEntity->getSpyLocale(), new LocaleTransfer()))
             ->setProductImages(new ArrayObject($this->mapProductImageSetEntityToProductImageTransfers($productImageSetEntity)));
     }
 

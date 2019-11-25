@@ -48,16 +48,18 @@ class ConfigurableBundleTemplateImageSetExpander implements ConfigurableBundleTe
     ): ConfigurableBundleTemplateTransfer {
         $configurableBundleTemplateTransfer->requireIdConfigurableBundleTemplate();
 
-        if (!$localeTransfers->count()) {
-            $localeTransfers->exchangeArray($this->localeFacade->getLocaleCollection());
-        }
-
         $idConfigurableBundleTemplate = $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate();
         $localeIds = $this->extractLocaleIds($localeTransfers);
 
         $productImageSetTransfers = $this->configurableBundleRepository
             ->getConfigurableBundleTemplateImageSetCollection($idConfigurableBundleTemplate, $localeIds)
             ->getProductImageSets();
+
+        if (!$productImageSetTransfers->count()) {
+            $productImageSetTransfers = $this->configurableBundleRepository
+                ->getDefaultConfigurableBundleTemplateImageSetCollection($idConfigurableBundleTemplate)
+                ->getProductImageSets();
+        }
 
         $configurableBundleTemplateTransfer->setProductImageSets($productImageSetTransfers);
 

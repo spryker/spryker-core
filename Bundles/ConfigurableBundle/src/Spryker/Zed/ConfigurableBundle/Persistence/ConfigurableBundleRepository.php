@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\ProductImageSetCollectionTransfer;
 use Orm\Zed\ConfigurableBundle\Persistence\Map\SpyConfigurableBundleTemplateTableMap;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -223,11 +224,39 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
         $productImageSetQuery = $this->getFactory()
             ->getProductImageSetQuery()
             ->filterByFkResourceConfigurableBundleTemplate($idConfigurableBundleTemplate)
-            ->filterByFkLocale_In($localeIds)
             ->joinWithSpyLocale()
             ->joinWithSpyProductImageSetToProductImage()
             ->useSpyProductImageSetToProductImageQuery()
                 ->joinWithSpyProductImage()
+                ->orderBySortOrder(Criteria::DESC)
+                ->orderByIdProductImageSetToProductImage()
+            ->endUse();
+
+        if ($localeIds) {
+            $productImageSetQuery->filterByFkLocale_In($localeIds);
+        }
+
+        return $this->getFactory()
+            ->createConfigurableBundleMapper()
+            ->mapProductImageSetEntityCollectionToProductImageSetTransferCollection($productImageSetQuery->find());
+    }
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetCollectionTransfer
+     */
+    public function getDefaultConfigurableBundleTemplateImageSetCollection(int $idConfigurableBundleTemplate): ProductImageSetCollectionTransfer
+    {
+        $productImageSetQuery = $this->getFactory()
+            ->getProductImageSetQuery()
+            ->filterByFkResourceConfigurableBundleTemplate($idConfigurableBundleTemplate)
+            ->filterByFkLocale(null, Criteria::ISNULL)
+            ->joinWithSpyProductImageSetToProductImage()
+            ->useSpyProductImageSetToProductImageQuery()
+                ->joinWithSpyProductImage()
+                ->orderBySortOrder(Criteria::DESC)
+                ->orderByIdProductImageSetToProductImage()
             ->endUse();
 
         return $this->getFactory()

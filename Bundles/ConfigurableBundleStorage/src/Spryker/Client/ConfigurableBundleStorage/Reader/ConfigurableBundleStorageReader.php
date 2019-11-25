@@ -26,15 +26,23 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
     protected $synchronizationService;
 
     /**
+     * @var \Spryker\Client\ConfigurableBundleStorage\Reader\ConfigurableBundleTemplateImageStorageReaderInterface
+     */
+    protected $configurableBundleTemplateImageStorageReader;
+
+    /**
      * @param \Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ConfigurableBundleStorage\Dependency\Service\ConfigurableBundleStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Client\ConfigurableBundleStorage\Reader\ConfigurableBundleTemplateImageStorageReaderInterface $configurableBundleTemplateImageStorageReader
      */
     public function __construct(
         ConfigurableBundleStorageToStorageClientInterface $storageClient,
-        ConfigurableBundleStorageToSynchronizationServiceInterface $synchronizationService
+        ConfigurableBundleStorageToSynchronizationServiceInterface $synchronizationService,
+        ConfigurableBundleTemplateImageStorageReaderInterface $configurableBundleTemplateImageStorageReader
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
+        $this->configurableBundleTemplateImageStorageReader = $configurableBundleTemplateImageStorageReader;
     }
 
     /**
@@ -52,7 +60,10 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
             return null;
         }
 
-        return $this->mapToConfigurableBundleStorage($configurableBundleTemplateStorageTransferData);
+        $configurableBundleTemplateStorageTransfer = $this->mapToConfigurableBundleStorage($configurableBundleTemplateStorageTransferData);
+        $configurableBundleTemplateStorageTransfer = $this->expandConfigurableBundleTemplateStorage($configurableBundleTemplateStorageTransfer);
+
+        return $configurableBundleTemplateStorageTransfer;
     }
 
     /**
@@ -79,5 +90,23 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
         return $this->synchronizationService
             ->getStorageKeyBuilder(ConfigurableBundleStorageConfig::CONFIGURABLE_BUNDLE_TEMPLATE_RESOURCE_NAME)
             ->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer
+     */
+    protected function expandConfigurableBundleTemplateStorage(
+        ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
+    ): ConfigurableBundleTemplateStorageTransfer {
+        $configurableBundleTemplateImageStorageTransfer = $this->configurableBundleTemplateImageStorageReader
+            ->findConfigurableBundleTemplateImageStorage($configurableBundleTemplateStorageTransfer->getIdConfigurableBundleTemplate());
+
+        if ($configurableBundleTemplateImageStorageTransfer) {
+            $configurableBundleTemplateStorageTransfer->setImageSets($configurableBundleTemplateImageStorageTransfer->getImageSets());
+        }
+
+        return $configurableBundleTemplateStorageTransfer;
     }
 }

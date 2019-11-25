@@ -15,6 +15,7 @@ interface ConfigurableBundleStorageClientInterface
      * Specification:
      * - Finds a configurable bundle template within Storage with a given ID.
      * - Returns null if configurable bundle template was not found.
+     * - Populates ConfigurableBundleTemplateStorageTransfer::imageSets using current locale.
      *
      * @api
      *

@@ -35,7 +35,6 @@ class ConfigurableBundleTemplateImageProductImageSetStoragePublishListener exten
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventTransfers, SpyProductImageSetTableMap::COL_FK_RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE);
 
-        $this->getFacade()
-            ->publishConfigurableBundleTemplateImage($configurableBundleTemplateIds);
+        $this->getFacade()->publishConfigurableBundleTemplateImage($configurableBundleTemplateIds);
     }
 }

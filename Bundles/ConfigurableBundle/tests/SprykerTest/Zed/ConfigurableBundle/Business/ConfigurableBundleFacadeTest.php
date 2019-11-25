@@ -1104,6 +1104,46 @@ class ConfigurableBundleFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testGetConfigurableBundleTemplateRetrievesTemplateWithOrderedImages(): void
+    {
+        // Arrange
+        $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
+
+        $this->tester->haveProductImageSet([
+            ProductImageSetTransfer::FK_RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
+            ProductImageSetTransfer::PRODUCT_IMAGES => [
+                $this->tester->createProductImageTransferWithSortOrder(12),
+                $this->tester->createProductImageTransferWithSortOrder(5),
+                $this->tester->createProductImageTransferWithSortOrder(8),
+            ],
+        ]);
+
+        $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())
+            ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+
+        // Act
+        $configurableBundleTemplateResponseTransfer = $this->tester
+            ->getFacade()
+            ->getConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
+
+        $productImageSetTransfers = $configurableBundleTemplateResponseTransfer
+            ->getConfigurableBundleTemplate()
+            ->getProductImageSets();
+
+        /** @var \ArrayObject|\Generated\Shared\Transfer\ProductImageTransfer[] $productImageTransfers */
+        $productImageTransfers = $productImageSetTransfers->offsetGet(0)->getProductImages();
+
+        // Assert
+        $this->assertTrue($configurableBundleTemplateResponseTransfer->getIsSuccessful());
+        $this->assertCount(3, $productImageTransfers);
+        $this->assertSame(12, $productImageTransfers->offsetGet(0)->getSortorder());
+        $this->assertSame(8, $productImageTransfers->offsetGet(1)->getSortorder());
+        $this->assertSame(5, $productImageTransfers->offsetGet(2)->getSortorder());
+    }
+
+    /**
+     * @return void
+     */
     public function testGetConfigurableBundleTemplateCollectionRetrievesTemplatesWithImageSets(): void
     {
         // Arrange

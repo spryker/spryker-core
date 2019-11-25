@@ -60,7 +60,23 @@ class ConfigurableBundleStorageFacade extends AbstractFacade implements Configur
     public function publishConfigurableBundleTemplateImage(array $configurableBundleTemplateIds): void
     {
         $this->getFactory()
-            ->createConfigurableBundleStoragePublisher()
-            ->publishConfigurableBundleTemplateImages($configurableBundleTemplateIds);
+            ->createConfigurableBundleTemplateImageStoragePublisher()
+            ->publish($configurableBundleTemplateIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $configurableBundleTemplateIds
+     *
+     * @return void
+     */
+    public function unpublishConfigurableBundleTemplateImage(array $configurableBundleTemplateIds): void
+    {
+        $this->getFactory()
+            ->createConfigurableBundleTemplateImageStorageUnpublisher()
+            ->unpublish($configurableBundleTemplateIds);
     }
 }

@@ -3,7 +3,7 @@
           name="zed" namespace="Orm\Zed\ProductImage\Persistence"
           package="src.Orm.Zed.ProductImage.Persistence">
 
-    <table name="spy_product_image_set" idMethod="native" allowPkInsert="true">
+    <table name="spy_product_image_set">
         <column name="fk_resource_configurable_bundle_template" type="INTEGER" required="false"/>
 
         <foreign-key name="spy_product_image_set-fk_resource_c_b_t" foreignTable="spy_configurable_bundle_template">
