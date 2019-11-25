@@ -28,6 +28,8 @@ class CatalogSearchRestApiConfig extends AbstractBundleConfig
         return [
             'rating.min',
             'rating.max',
+            'page.limit',
+            'page.offset',
             'category',
         ];
     }
