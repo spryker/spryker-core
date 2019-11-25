@@ -11,15 +11,11 @@ use Spryker\Client\Cart\CartChangeRequestExpander\CartChangeRequestExpander;
 use Spryker\Client\Cart\Dependency\Client\CartToMessengerClientInterface;
 use Spryker\Client\Cart\Operation\CartOperation;
 use Spryker\Client\Cart\Operation\CartOperationInterface;
-use Spryker\Client\Cart\ProductViewExpander\ProductViewExpander;
-use Spryker\Client\Cart\ProductViewExpander\ProductViewExpanderInterface;
 use Spryker\Client\Cart\QuoteStorageStrategy\QuoteStorageStrategyProvider;
 use Spryker\Client\Cart\QuoteStorageStrategy\QuoteStorageStrategyProxy;
 use Spryker\Client\Cart\QuoteStorageStrategy\QuoteStorageStrategyProxyInterface;
 use Spryker\Client\Cart\Zed\CartStub;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Yves\Kernel\Application;
-use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 
 class CartFactory extends AbstractFactory
 {
@@ -148,29 +144,5 @@ class CartFactory extends AbstractFactory
     protected function getRemoveItemsRequestExpanderPlugins()
     {
         return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER);
-    }
-
-    /**
-     * @return \Spryker\Client\Cart\ProductViewExpander\ProductViewExpanderInterface
-     */
-    public function createProductViewExpander(): ProductViewExpanderInterface
-    {
-        return new ProductViewExpander($this->getRouter());
-    }
-
-    /**
-     * @return \Symfony\Cmf\Component\Routing\ChainRouterInterface
-     */
-    public function getRouter(): ChainRouterInterface
-    {
-        return $this->getApplication()->get(CartDependencyProvider::SERVICE_ROUTER);
-    }
-
-    /**
-     * @return \Spryker\Yves\Kernel\Application
-     */
-    public function getApplication(): Application
-    {
-        return $this->getProvidedDependency(CartDependencyProvider::PLUGIN_APPLICATION);
     }
 }

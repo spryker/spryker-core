@@ -14,7 +14,6 @@ use Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin;
 use Spryker\Client\Cart\Plugin\SimpleProductQuoteItemFinderPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Yves\Kernel\Plugin\Pimple;
 
 class CartDependencyProvider extends AbstractDependencyProvider
 {
@@ -26,12 +25,6 @@ class CartDependencyProvider extends AbstractDependencyProvider
     public const PLUGINS_ADD_ITEMS_REQUEST_EXPANDER = 'PLUGINS_ADD_ITEMS_REQUEST_EXPANDER';
     public const PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER = 'PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER';
     public const PLUGIN_QUOTE_ITEM_FINDER = 'PLUGIN_QUOTE_ITEMS_FINDER';
-    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
-
-    /**
-     * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
-     */
-    public const SERVICE_ROUTER = 'routers';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -48,7 +41,6 @@ class CartDependencyProvider extends AbstractDependencyProvider
         $container = $this->addQuoteItemFinderPlugin($container);
         $container = $this->addAddItemsRequestExpanderPlugins($container);
         $container = $this->addRemoveItemsRequestExpanderPlugins($container);
-        $container = $this->addApplication($container);
 
         return $container;
     }
@@ -205,19 +197,5 @@ class CartDependencyProvider extends AbstractDependencyProvider
     protected function getRemoveItemsRequestExpanderPlugins()
     {
         return [];
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addApplication(Container $container): Container
-    {
-        $container->set(static::PLUGIN_APPLICATION, function () {
-            return (new Pimple())->getApplication();
-        });
-
-        return $container;
     }
 }

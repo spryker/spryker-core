@@ -72,9 +72,5 @@
     <transfer name="Customer">
     </transfer>
 
-    <transfer name="ProductView">
-        <property name="addToCartUrl" type="string"/>
-    </transfer>
-
 </transfers>
 

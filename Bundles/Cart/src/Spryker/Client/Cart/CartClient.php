@@ -11,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -378,21 +377,5 @@ class CartClient extends AbstractClient implements CartClientInterface
         return $this->getFactory()
             ->getQuoteClient()
             ->lockQuote($quoteTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
-     */
-    public function expandProductViewWithCartData(ProductViewTransfer $productViewTransfer): ProductViewTransfer
-    {
-        return $this->getFactory()
-            ->createProductViewExpander()
-            ->expandProductViewWithCartData($productViewTransfer);
     }
 }
