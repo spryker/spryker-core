@@ -49,6 +49,7 @@ class GlueControllerFilterPluginTest extends Unit
     protected $attributes = [
         RequestConstantsInterface::ATTRIBUTE_RESOURCE_FQCN => RestTestAttributesTransfer::class,
         RequestConstantsInterface::ATTRIBUTE_TYPE => 'tests',
+        RequestConstantsInterface::ATTRIBUTE_ID => '1',
     ];
 
     /**

@@ -49,15 +49,18 @@ class RestRequestValidator implements RestRequestValidatorInterface
     public function validate(Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         $restErrorCollectionTransfer = $this->validateRequest($restRequest);
-        if (!$restErrorCollectionTransfer) {
-            $restErrorCollectionTransfer = $this->validateResourceIdSpecified($restRequest);
+
+        if ($restErrorCollectionTransfer) {
+            return $restErrorCollectionTransfer;
         }
 
-        if (!$restErrorCollectionTransfer) {
-            $restErrorCollectionTransfer = $this->executeRestRequestValidatorPlugins($httpRequest, $restRequest);
+        $restErrorCollectionTransfer = $this->validateResourceIdSpecified($restRequest);
+
+        if ($restErrorCollectionTransfer) {
+            return $restErrorCollectionTransfer;
         }
 
-        return $restErrorCollectionTransfer;
+        return $this->executeRestRequestValidatorPlugins($httpRequest, $restRequest);
     }
 
     /**
