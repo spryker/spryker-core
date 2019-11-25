@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CheckoutRestApi\Dependency\Facade;
 
+use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CheckoutRestApiToPaymentFacadeInterface
@@ -17,4 +18,11 @@ interface CheckoutRestApiToPaymentFacadeInterface
      * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
      */
     public function getAvailableMethods(QuoteTransfer $quoteTransfer);
+
+    /**
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
+     */
+    public function getAvailablePaymentProvidersForStore(string $storeName): PaymentProviderCollectionTransfer;
 }
