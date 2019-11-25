@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductReviewSearch\Business\Search;
 
+use Exception;
 use Generated\Shared\Search\ProductReviewIndexMap;
 use Generated\Shared\Transfer\DataMappingContextTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchTransfer;
@@ -20,6 +21,8 @@ use Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchQueryContaine
 
 class ProductReviewSearchWriter implements ProductReviewSearchWriterInterface
 {
+    protected const PRODUCT_REVIEW_RESOURCE_NAME = 'product_review';
+
     /**
      * @var \Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchQueryContainerInterface
      */
@@ -158,16 +161,32 @@ class ProductReviewSearchWriter implements ProductReviewSearchWriterInterface
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\ProductReviewSearch\Business\Search\ProductReviewSearchWriter::mapRawDataToSearchData()` instead.
+     *
      * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview $productReviewEntity
      *
      * @return array
      */
     protected function mapToSearchData(SpyProductReview $productReviewEntity)
     {
-        if (method_exists($this->searchFacade, 'mapRawDataToSearchData')) {
+        /**
+         * For BC reasons only. In case search is not configured to work with mapper plugins (legacy mode) an exception will be thrown.
+         * In this case data mapping will be done in the old way.
+         */
+        try {
             return $this->mapRawDataToSearchData($productReviewEntity);
+        } catch (Exception $exception) {
+            return $this->mapTosSearchFallback($productReviewEntity);
         }
+    }
 
+    /**
+     * @deprecated Use `\Spryker\Zed\ProductReviewSearch\Business\Search\ProductReviewSearchWriter::mapRawDataToSearchData()` instead.
+     *
+     * @return array
+     */
+    protected function mapTosSearchFallback(SpyProductReview $productReviewEntity): array
+    {
         return [
             ProductReviewIndexMap::STORE => $this->store->getStoreName(),
             ProductReviewIndexMap::ID_PRODUCT_ABSTRACT => $productReviewEntity->getFkProductAbstract(),
@@ -214,7 +233,7 @@ class ProductReviewSearchWriter implements ProductReviewSearchWriterInterface
     protected function mapRawDataToSearchData(SpyProductReview $productReviewEntity)
     {
         $dataMappingContextTransfer = new DataMappingContextTransfer();
-        $dataMappingContextTransfer->setResourceName('product_review');
+        $dataMappingContextTransfer->setResourceName(static::PRODUCT_REVIEW_RESOURCE_NAME);
 
         return $this->searchFacade->mapRawDataToSearchData($productReviewEntity->toArray(), $dataMappingContextTransfer);
     }
