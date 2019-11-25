@@ -25,7 +25,7 @@ class AbstractObjectTest extends Unit
     /**
      * @return void
      */
-    public function testConstructorWithoutParameters()
+    public function testConstructorWithoutParameters(): void
     {
         $object = new CommunicationObject();
 
@@ -40,7 +40,7 @@ class AbstractObjectTest extends Unit
     /**
      * @return void
      */
-    public function testConstructorWithParameters()
+    public function testConstructorWithParameters(): void
     {
         $data = ['test1' => 1];
 
@@ -57,7 +57,7 @@ class AbstractObjectTest extends Unit
     /**
      * @return void
      */
-    public function testFromArray()
+    public function testFromArray(): void
     {
         $data = ['test1' => 1, 'test2' => 'hund'];
 
@@ -75,7 +75,7 @@ class AbstractObjectTest extends Unit
     /**
      * @return void
      */
-    public function testInvalidData()
+    public function testInvalidData(): void
     {
         $data = ['test6' => 4, 'test5' => 'data'];
 
@@ -93,7 +93,7 @@ class AbstractObjectTest extends Unit
     /**
      * @return void
      */
-    public function testInvalidAndValidData()
+    public function testInvalidAndValidData(): void
     {
         $data = ['test6' => 4, 'test5' => 'data', 'test2' => 3];
 

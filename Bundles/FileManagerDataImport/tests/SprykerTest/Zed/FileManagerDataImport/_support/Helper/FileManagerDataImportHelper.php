@@ -17,7 +17,7 @@ class FileManagerDataImportHelper extends Module
      */
     public function ensureDatabaseTableIsEmpty(): void
     {
-        $mimeTypeQuery = $this->getMimeTypeQuery()->deleteAll();
+        $this->getMimeTypeQuery()->deleteAll();
     }
 
     /**
@@ -32,7 +32,7 @@ class FileManagerDataImportHelper extends Module
     /**
      * @return \Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery
      */
-    protected function getMimeTypeQuery()
+    protected function getMimeTypeQuery(): SpyMimeTypeQuery
     {
         return SpyMimeTypeQuery::create();
     }

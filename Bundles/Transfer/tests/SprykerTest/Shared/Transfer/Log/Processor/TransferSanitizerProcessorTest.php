@@ -32,7 +32,7 @@ class TransferSanitizerProcessorTest extends Unit
      *
      * @return void
      */
-    public function testInvokeShouldAddSanitizedTransferToRecordsExtra(array $context)
+    public function testInvokeShouldAddSanitizedTransferToRecordsExtra(array $context): void
     {
         $record = ['message' => 'message', 'context' => $context];
         $filterFields = [
@@ -49,7 +49,7 @@ class TransferSanitizerProcessorTest extends Unit
     /**
      * @return array
      */
-    public function getContext()
+    public function getContext(): array
     {
         $transfer = new ComplexTransfer();
 
@@ -62,7 +62,7 @@ class TransferSanitizerProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testIfContextDoesNotContainTransferDoNothing()
+    public function testIfContextDoesNotContainTransferDoNothing(): void
     {
         $record = ['message' => 'message', 'context' => ''];
         $sanitizer = new Sanitizer([], '***');

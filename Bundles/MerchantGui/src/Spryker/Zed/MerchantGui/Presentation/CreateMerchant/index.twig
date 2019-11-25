@@ -15,10 +15,10 @@
 
         {% block widget_content %}
 
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
-            <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
+            {{ tabs(merchantFormTabs, {'merchantForm': form}) }}
+
             {{ form_end(form) }}
 
         {% endblock %}

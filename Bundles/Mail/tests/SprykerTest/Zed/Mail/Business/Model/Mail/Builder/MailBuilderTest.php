@@ -42,7 +42,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testInstantiation()
+    public function testInstantiation(): void
     {
         $mailBuilder = $this->getMailBuilder();
 
@@ -52,7 +52,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSetMailTransferWillReturnFluentInterface()
+    public function testSetMailTransferWillReturnFluentInterface(): void
     {
         $mailTransfer = new MailTransfer();
         $mailBuilder = $this->getMailBuilder();
@@ -63,7 +63,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testGetMailTransferWillReturnMailTransfer()
+    public function testGetMailTransferWillReturnMailTransfer(): void
     {
         $mailTransfer = new MailTransfer();
         $mailBuilder = $this->getMailBuilder();
@@ -75,7 +75,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testGetMailTransferWillThrowExceptionWhenMailTransferNotSet()
+    public function testGetMailTransferWillThrowExceptionWhenMailTransferNotSet(): void
     {
         $this->expectException(MissingMailTransferException::class);
 
@@ -86,7 +86,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSetSubjectWillSetSubjectOnMailTransfer()
+    public function testSetSubjectWillSetSubjectOnMailTransfer(): void
     {
         $mailBuilder = $this->getMailBuilder();
         $mailBuilder->setSubject(static::SUBJECT);
@@ -97,7 +97,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSetSubjectWillReturnFluentInterface()
+    public function testSetSubjectWillReturnFluentInterface(): void
     {
         $mailBuilder = $this->getMailBuilder();
         $this->assertInstanceOf(MailBuilderInterface::class, $mailBuilder->setSubject(static::SUBJECT));
@@ -106,7 +106,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSetHtmlTemplateWillReturnFluentInterface()
+    public function testSetHtmlTemplateWillReturnFluentInterface(): void
     {
         $mailBuilder = $this->getMailBuilder();
         $this->assertInstanceOf(MailBuilderInterface::class, $mailBuilder->setHtmlTemplate(static::TEMPLATE_NAME_HTML));
@@ -115,7 +115,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSetHtmlTemplateWillAddMailTemplateTransferToMailTransfer()
+    public function testSetHtmlTemplateWillAddMailTemplateTransferToMailTransfer(): void
     {
         $mailBuilder = $this->getMailBuilder();
         $mailBuilder->setHtmlTemplate(static::TEMPLATE_NAME_HTML);
@@ -126,7 +126,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSetTextTemplateWillReturnFluentInterface()
+    public function testSetTextTemplateWillReturnFluentInterface(): void
     {
         $mailBuilder = $this->getMailBuilder();
         $this->assertInstanceOf(MailBuilderInterface::class, $mailBuilder->setTextTemplate(static::TEMPLATE_NAME_TEXT));
@@ -135,7 +135,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSetTextTemplateWillAddMailTemplateTransferToMailTransfer()
+    public function testSetTextTemplateWillAddMailTemplateTransferToMailTransfer(): void
     {
         $mailBuilder = $this->getMailBuilder();
         $mailBuilder->setTextTemplate(static::TEMPLATE_NAME_TEXT);
@@ -146,7 +146,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSetSenderWillReturnFluentInterface()
+    public function testSetSenderWillReturnFluentInterface(): void
     {
         $mailBuilder = $this->getMailBuilder();
         $this->assertInstanceOf(MailBuilderInterface::class, $mailBuilder->setSender(static::EMAIL, static::NAME));
@@ -155,7 +155,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testSetSenderWillSetSenderTransferToMailTransfer()
+    public function testSetSenderWillSetSenderTransferToMailTransfer(): void
     {
         $mailBuilder = $this->getMailBuilder();
         $mailBuilder->setSender(static::EMAIL, static::NAME);
@@ -166,7 +166,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testAddRecipientWillReturnFluentInterface()
+    public function testAddRecipientWillReturnFluentInterface(): void
     {
         $mailBuilder = $this->getMailBuilder();
         $this->assertInstanceOf(MailBuilderInterface::class, $mailBuilder->addRecipient(static::EMAIL, static::NAME));
@@ -175,7 +175,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testAddRecipientWillAddMailRecipientTransferToMailTransfer()
+    public function testAddRecipientWillAddMailRecipientTransferToMailTransfer(): void
     {
         $mailBuilder = $this->getMailBuilder();
         $mailBuilder->addRecipient(static::EMAIL, static::NAME);
@@ -186,7 +186,7 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testBuildWillReturnMailTransfer()
+    public function testBuildWillReturnMailTransfer(): void
     {
         $mailBuilder = $this->getMailBuilder();
 
@@ -196,7 +196,7 @@ class MailBuilderTest extends Unit
     /**
      * @return \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilder
      */
-    protected function getMailBuilderWithoutMailTransfer()
+    protected function getMailBuilderWithoutMailTransfer(): MailBuilder
     {
         $glossaryFacadeMock = $this->getGlossaryFacadeMock();
         $mailBuilder = new MailBuilder($glossaryFacadeMock);
@@ -207,7 +207,7 @@ class MailBuilderTest extends Unit
     /**
      * @return \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilder
      */
-    protected function getMailBuilder()
+    protected function getMailBuilder(): MailBuilder
     {
         $glossaryFacadeMock = $this->getGlossaryFacadeMock();
         $mailBuilder = new MailBuilder($glossaryFacadeMock);

@@ -27,7 +27,7 @@ class AbstractTransferTest extends Unit
     /**
      * @return void
      */
-    public function testFromArrayShouldReturnInstanceWithSetDefaultTypes()
+    public function testFromArrayShouldReturnInstanceWithSetDefaultTypes(): void
     {
         $data = [
             'string' => 'string',
@@ -48,7 +48,7 @@ class AbstractTransferTest extends Unit
     /**
      * @return void
      */
-    public function testFromArrayShouldReturnInstanceWithSetTransferObject()
+    public function testFromArrayShouldReturnInstanceWithSetTransferObject(): void
     {
         $data = [
             'transfer' => new AbstractTransfer(),
@@ -68,7 +68,7 @@ class AbstractTransferTest extends Unit
     /**
      * @return void
      */
-    public function testFromArrayShouldWorkForGivenTransferAndInnerTransfers()
+    public function testFromArrayShouldWorkForGivenTransferAndInnerTransfers(): void
     {
         $data = [
             'string' => 'foo',
@@ -88,7 +88,7 @@ class AbstractTransferTest extends Unit
     /**
      * @return void
      */
-    public function testFromArrayWithIgnoreMissingPropertyFalseShouldThrowExceptionIfPropertyIsInArrayButNotInObject()
+    public function testFromArrayWithIgnoreMissingPropertyFalseShouldThrowExceptionIfPropertyIsInArrayButNotInObject(): void
     {
         $this->expectException('InvalidArgumentException');
         $data = [
@@ -102,7 +102,7 @@ class AbstractTransferTest extends Unit
     /**
      * @return void
      */
-    public function testFromArrayWithIgnoreMissingPropertyTrueShouldNotThrowExceptionIfPropertyIsInArrayButNotInObject()
+    public function testFromArrayWithIgnoreMissingPropertyTrueShouldNotThrowExceptionIfPropertyIsInArrayButNotInObject(): void
     {
         $data = [
             'not existing property key' => '',
@@ -115,7 +115,7 @@ class AbstractTransferTest extends Unit
     /**
      * @return void
      */
-    public function testFromArrayWithNestedTransferCollectionShouldReturnValidDataFromEmbeddedTransferObjects()
+    public function testFromArrayWithNestedTransferCollectionShouldReturnValidDataFromEmbeddedTransferObjects(): void
     {
         $data = [
             'string' => 'level1',
@@ -151,7 +151,7 @@ class AbstractTransferTest extends Unit
     /**
      * @return void
      */
-    public function testToArrayShouldReturnArrayWithAllPropertyNamesAsKeysAndNullValuesWhenNoPropertyWasSet()
+    public function testToArrayShouldReturnArrayWithAllPropertyNamesAsKeysAndNullValuesWhenNoPropertyWasSet(): void
     {
         $transfer = new AbstractTransfer();
         $given = $transfer->toArray();
@@ -170,7 +170,7 @@ class AbstractTransferTest extends Unit
     /**
      * @return void
      */
-    public function testToArrayShouldReturnArrayWithAllPropertyNamesAsKeysAndNullValuesWhenNoPropertyWasSetCamelCased()
+    public function testToArrayShouldReturnArrayWithAllPropertyNamesAsKeysAndNullValuesWhenNoPropertyWasSetCamelCased(): void
     {
         $transfer = new AbstractTransfer();
         $given = $transfer->toArray(true, true);
@@ -189,7 +189,7 @@ class AbstractTransferTest extends Unit
     /**
      * @return void
      */
-    public function testToArrayShouldReturnArrayWithAllPropertyNamesAsKeysAndFilledValuesCamelCasedAndRecursived()
+    public function testToArrayShouldReturnArrayWithAllPropertyNamesAsKeysAndFilledValuesCamelCasedAndRecursived(): void
     {
         $transfer = (new AbstractTransfer())
             ->setInt(100)
@@ -234,7 +234,7 @@ class AbstractTransferTest extends Unit
     /**
      * @return void
      */
-    public function testManyWaysToAccessAProperty()
+    public function testManyWaysToAccessAProperty(): void
     {
         $transfer = (new AbstractTransfer())
             ->setInt(100)
@@ -260,7 +260,7 @@ class AbstractTransferTest extends Unit
     /**
      * @return void
      */
-    public function testToArrayShouldReturnArrayWithAllPropertyNamesAsKeysAndFilledValues()
+    public function testToArrayShouldReturnArrayWithAllPropertyNamesAsKeysAndFilledValues(): void
     {
         $transfer = new AbstractTransfer();
         $transfer->setString('foo');
@@ -282,7 +282,7 @@ class AbstractTransferTest extends Unit
     /**
      * @return void
      */
-    public function testToArrayWithRecursiveTrueShouldReturnArrayWithAllPropertyNamesAsKeysAndFilledValuesAndRecursiveFilledInnerObjects()
+    public function testToArrayWithRecursiveTrueShouldReturnArrayWithAllPropertyNamesAsKeysAndFilledValuesAndRecursiveFilledInnerObjects(): void
     {
         $transfer = new AbstractTransfer();
         $transfer->setString('foo');
@@ -317,7 +317,7 @@ class AbstractTransferTest extends Unit
     /**
      * @return void
      */
-    public function testToArrayWithRecursiveFalseShouldReturnArrayWithAllPropertyNamesAsKeysAndWithoutRecursiveFilledInnerObjects()
+    public function testToArrayWithRecursiveFalseShouldReturnArrayWithAllPropertyNamesAsKeysAndWithoutRecursiveFilledInnerObjects(): void
     {
         $transfer = new AbstractTransfer();
         $transfer->setString('foo');
@@ -345,7 +345,7 @@ class AbstractTransferTest extends Unit
     /**
      * @return void
      */
-    public function testModifiedToArrayShouldReturnArrayOnlyWithModifiedProperty()
+    public function testModifiedToArrayShouldReturnArrayOnlyWithModifiedProperty(): void
     {
         $transfer = new AbstractTransfer();
         $transfer->setString('foo');
@@ -363,7 +363,7 @@ class AbstractTransferTest extends Unit
     /**
      * @return void
      */
-    public function testModifiedToArrayWithRecursiveTrueShouldReturnArrayWithAllPropertyNamesAsKeysAndFilledValuesAndRecursiveFilledInnerObjectsWhichWhereModified()
+    public function testModifiedToArrayWithRecursiveTrueShouldReturnArrayWithAllPropertyNamesAsKeysAndFilledValuesAndRecursiveFilledInnerObjectsWhichWhereModified(): void
     {
         $transfer = new AbstractTransfer();
         $transfer->setString('foo');
@@ -393,7 +393,7 @@ class AbstractTransferTest extends Unit
     /**
      * @return void
      */
-    public function testSerializeAndUnSerializeShouldReturnUnSerializedInstance()
+    public function testSerializeAndUnSerializeShouldReturnUnSerializedInstance(): void
     {
         $transfer = new AbstractTransfer();
         $transfer->setString('foo');
@@ -418,7 +418,7 @@ class AbstractTransferTest extends Unit
     /**
      * @return void
      */
-    public function testSerializeTransferAffectsModifiedDataOnly()
+    public function testSerializeTransferAffectsModifiedDataOnly(): void
     {
         $transfer = new AbstractTransfer();
         $transfer->setString('foo');
@@ -436,7 +436,7 @@ class AbstractTransferTest extends Unit
     /**
      * @return void
      */
-    public function testTransferUnserializationIsIdempotent()
+    public function testTransferUnserializationIsIdempotent(): void
     {
         $transfer = new AbstractTransfer();
         $transfer
@@ -457,7 +457,7 @@ class AbstractTransferTest extends Unit
     /**
      * @return void
      */
-    public function testCloneShouldReturnFullClonedObject()
+    public function testCloneShouldReturnFullClonedObject(): void
     {
         $transfer = new AbstractTransfer();
         $transfer->setString('foo');
@@ -472,7 +472,7 @@ class AbstractTransferTest extends Unit
     /**
      * @return void
      */
-    public function testFromArrayShouldWorkWithCyclicReferences()
+    public function testFromArrayShouldWorkWithCyclicReferences(): void
     {
         $transfer = new AbstractTransfer();
 
@@ -495,7 +495,7 @@ class AbstractTransferTest extends Unit
     /**
      * @return void
      */
-    public function testFromArrayToArrayConversionShouldWorkWithEmptyDataForTheSameTransferType()
+    public function testFromArrayToArrayConversionShouldWorkWithEmptyDataForTheSameTransferType(): void
     {
         $transfer1 = new AbstractTransfer();
         $transfer2 = new AbstractTransfer();
@@ -506,7 +506,7 @@ class AbstractTransferTest extends Unit
     /**
      * @return void
      */
-    public function testFromArrayToArrayConversionShouldWorkForTheSameTransferType()
+    public function testFromArrayToArrayConversionShouldWorkForTheSameTransferType(): void
     {
         $transfer1 = new AbstractTransfer();
         $data = [
@@ -527,7 +527,7 @@ class AbstractTransferTest extends Unit
     /**
      * @return void
      */
-    public function testSetTransferCollectionWithArrayObject()
+    public function testSetTransferCollectionWithArrayObject(): void
     {
         $transfer = new AbstractTransfer();
         $collection = new ArrayObject([

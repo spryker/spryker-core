@@ -13,7 +13,6 @@
     "spryker/price-product": "^1.3.0 || ^2.3.0 || ^4.1.0"
   },
   "require-dev": {
-    "spryker/calculation": "*",
     "spryker/cart": "*",
     "spryker/code-sniffer": "*",
     "spryker/product": "*",

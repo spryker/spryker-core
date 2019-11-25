@@ -68,7 +68,7 @@ class ProductImageReaderTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductImagesByProductAbstractId()
+    public function testGetProductImagesByProductAbstractId(): void
     {
         $imageCollection = $this->reader
             ->getProductImagesSetCollectionByProductAbstractId(1);

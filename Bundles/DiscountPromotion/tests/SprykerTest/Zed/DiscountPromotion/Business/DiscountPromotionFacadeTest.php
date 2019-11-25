@@ -18,6 +18,10 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Spryker\Zed\Availability\Business\AvailabilityFacadeInterface;
+use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
+use Spryker\Zed\Product\Business\ProductFacadeInterface;
+use Spryker\Zed\Stock\Business\StockFacadeInterface;
 
 /**
  * Auto-generated group annotations
@@ -40,7 +44,7 @@ class DiscountPromotionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCollectWhenPromotionItemIsNotInCartShouldAddItToQuote()
+    public function testCollectWhenPromotionItemIsNotInCartShouldAddItToQuote(): void
     {
         $discountPromotionFacade = $this->getDiscountPromotionFacade();
 
@@ -68,7 +72,7 @@ class DiscountPromotionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCollectWhenPromotionItemIsAlreadyInCartShouldCollectIt()
+    public function testCollectWhenPromotionItemIsAlreadyInCartShouldCollectIt(): void
     {
         $discountPromotionFacade = $this->getDiscountPromotionFacade();
 
@@ -108,7 +112,7 @@ class DiscountPromotionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCollectWhenItemIsNotAvailableShouldSkipPromotion()
+    public function testCollectWhenItemIsNotAvailableShouldSkipPromotion(): void
     {
         $discountPromotionFacade = $this->getDiscountPromotionFacade();
 
@@ -138,7 +142,7 @@ class DiscountPromotionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCollectAdjustsQuantityBasedOnAvailability()
+    public function testCollectAdjustsQuantityBasedOnAvailability(): void
     {
         $discountPromotionFacade = $this->getDiscountPromotionFacade();
 
@@ -179,7 +183,7 @@ class DiscountPromotionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSavePromotionDiscountShouldHavePersistedPromotionDiscount()
+    public function testSavePromotionDiscountShouldHavePersistedPromotionDiscount(): void
     {
         $discountPromotionFacade = $this->getDiscountPromotionFacade();
 
@@ -205,7 +209,7 @@ class DiscountPromotionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateDiscountPromotionShouldUpdateExistingPromotion()
+    public function testUpdateDiscountPromotionShouldUpdateExistingPromotion(): void
     {
         $discountPromotionFacade = $this->getDiscountPromotionFacade();
 
@@ -233,7 +237,7 @@ class DiscountPromotionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeletePromotionDiscountShouldDeleteAnyExistingPromotions()
+    public function testDeletePromotionDiscountShouldDeleteAnyExistingPromotions(): void
     {
         // Arrange
         $discountPromotionFacade = $this->getDiscountPromotionFacade();
@@ -261,7 +265,7 @@ class DiscountPromotionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeletePromotionDiscountShouldNotFailIfThereWasNoExistingPromotion()
+    public function testDeletePromotionDiscountShouldNotFailIfThereWasNoExistingPromotion(): void
     {
         // Arrange
         $discountPromotionFacade = $this->getDiscountPromotionFacade();
@@ -287,7 +291,7 @@ class DiscountPromotionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindDiscountPromotionByIdDiscountPromotionShouldReturnPersistedPromotion()
+    public function testFindDiscountPromotionByIdDiscountPromotionShouldReturnPersistedPromotion(): void
     {
         $discountPromotionFacade = $this->getDiscountPromotionFacade();
 
@@ -310,7 +314,7 @@ class DiscountPromotionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandDiscountConfigurationWithPromotionShouldPopulateConfigurationObjectWithPromotion()
+    public function testExpandDiscountConfigurationWithPromotionShouldPopulateConfigurationObjectWithPromotion(): void
     {
         $discountPromotionFacade = $this->getDiscountPromotionFacade();
 
@@ -337,7 +341,7 @@ class DiscountPromotionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsDiscountWithPromotionShouldReturnTrueIfDiscountHavePromo()
+    public function testIsDiscountWithPromotionShouldReturnTrueIfDiscountHavePromo(): void
     {
         $discountPromotionFacade = $this->getDiscountPromotionFacade();
 
@@ -358,7 +362,7 @@ class DiscountPromotionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsDiscountWithPromotionShouldReturnFalseIfDiscountDoesNotHavePromo()
+    public function testIsDiscountWithPromotionShouldReturnFalseIfDiscountDoesNotHavePromo(): void
     {
         $discountPromotionFacade = $this->getDiscountPromotionFacade();
 
@@ -370,7 +374,7 @@ class DiscountPromotionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDiscountPromotionCollectWhenNonNumericProductSkuUsed()
+    public function testDiscountPromotionCollectWhenNonNumericProductSkuUsed(): void
     {
         $localeTransfer = $this->getLocaleFacade()->getCurrentLocale();
 
@@ -423,7 +427,7 @@ class DiscountPromotionFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface
      */
-    protected function getAvailabilityFacade()
+    protected function getAvailabilityFacade(): AvailabilityFacadeInterface
     {
         return $this->tester->getLocator()->availability()->facade();
     }
@@ -431,7 +435,7 @@ class DiscountPromotionFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
-    protected function getProductFacade()
+    protected function getProductFacade(): ProductFacadeInterface
     {
         return $this->tester->getLocator()->product()->facade();
     }
@@ -439,7 +443,7 @@ class DiscountPromotionFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Stock\Business\StockFacadeInterface
      */
-    protected function getStockFacade()
+    protected function getStockFacade(): StockFacadeInterface
     {
         return $this->tester->getLocator()->stock()->facade();
     }
@@ -447,7 +451,7 @@ class DiscountPromotionFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
-    protected function getLocaleFacade()
+    protected function getLocaleFacade(): LocaleFacadeInterface
     {
         return $this->tester->getLocator()->locale()->facade();
     }
@@ -458,7 +462,7 @@ class DiscountPromotionFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\DiscountPromotionTransfer
      */
-    protected function createDiscountPromotionTransfer($promotionSku, $quantity)
+    protected function createDiscountPromotionTransfer(string $promotionSku, int $quantity): DiscountPromotionTransfer
     {
         return (new DiscountPromotionTransfer())
             ->setAbstractSku($promotionSku)
@@ -470,7 +474,7 @@ class DiscountPromotionFacadeTest extends Unit
      *
      * @return void
      */
-    protected function addStockForProduct(ProductConcreteTransfer $productConcreteTransfer)
+    protected function addStockForProduct(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $availableStockTypes = $this->getStockFacade()->getAvailableStockTypes();
         foreach ($availableStockTypes as $stockType) {

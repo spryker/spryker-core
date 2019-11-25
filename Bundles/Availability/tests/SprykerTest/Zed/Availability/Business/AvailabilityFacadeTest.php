@@ -44,7 +44,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsProductSellableWhenNeverOutOfStockShouldReturnSuccess()
+    public function testIsProductSellableWhenNeverOutOfStockShouldReturnSuccess(): void
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
@@ -58,7 +58,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsProductSellableWhenStockIsEmptyShouldReturnFailure()
+    public function testIsProductSellableWhenStockIsEmptyShouldReturnFailure(): void
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
@@ -72,7 +72,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsProductSellableWhenStockFulfilledShouldReturnSuccess()
+    public function testIsProductSellableWhenStockFulfilledShouldReturnSuccess(): void
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
@@ -86,7 +86,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateStockForProductShouldReturnPersistedStock()
+    public function testCalculateStockForProductShouldReturnPersistedStock(): void
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
@@ -102,7 +102,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckAvailabilityPrecoditionShouldNotWriteErrorsWhenAvailabilityIsSatisfied()
+    public function testCheckAvailabilityPrecoditionShouldNotWriteErrorsWhenAvailabilityIsSatisfied(): void
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
@@ -120,7 +120,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckAvailabilityPrecoditionShouldWriteErrorWhenAvailabilityIsNotSatisfied()
+    public function testCheckAvailabilityPrecoditionShouldWriteErrorWhenAvailabilityIsNotSatisfied(): void
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
@@ -138,7 +138,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateAvailabilityShouldStoreNewQuantity()
+    public function testUpdateAvailabilityShouldStoreNewQuantity(): void
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
@@ -157,7 +157,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateAvailabilityWhenItsEmptyShouldStoreNewQuantity()
+    public function testUpdateAvailabilityWhenItsEmptyShouldStoreNewQuantity(): void
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
@@ -175,7 +175,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateAvailabilityWhenSetToEmptyShouldStoreEmptyQuantity()
+    public function testUpdateAvailabilityWhenSetToEmptyShouldStoreEmptyQuantity(): void
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
@@ -196,7 +196,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSaveProductAvailabilityForStoreShouldStoreAvailability()
+    public function testSaveProductAvailabilityForStoreShouldStoreAvailability(): void
     {
         $availabilityFacade = $this->createAvailabilityFacade();
 
@@ -218,7 +218,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Availability\Business\AvailabilityFacade
      */
-    protected function createAvailabilityFacade()
+    protected function createAvailabilityFacade(): AvailabilityFacade
     {
         return new AvailabilityFacade();
     }
@@ -230,7 +230,7 @@ class AvailabilityFacadeTest extends Unit
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProduct
      */
-    protected function createProductWithStock($abstractSku, $concreteSku, array $stockData)
+    protected function createProductWithStock(string $abstractSku, string $concreteSku, array $stockData): SpyStockProduct
     {
         $productAbstractEntity = new SpyProductAbstract();
         $productAbstractEntity->setSku($abstractSku);
@@ -262,7 +262,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteTransfer()
+    protected function createQuoteTransfer(): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->setStore((new StoreTransfer())->setName('DE'));
@@ -279,7 +279,7 @@ class AvailabilityFacadeTest extends Unit
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailability
      */
-    protected function createProductAvailability($quantity = 0)
+    protected function createProductAvailability(int $quantity = 0): SpyAvailability
     {
         $availabilityAbstractEntity = new SpyAvailabilityAbstract();
         $availabilityAbstractEntity->setAbstractSku(self::ABSTRACT_SKU);

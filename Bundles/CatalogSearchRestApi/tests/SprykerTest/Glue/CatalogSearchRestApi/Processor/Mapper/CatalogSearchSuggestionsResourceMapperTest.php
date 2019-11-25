@@ -10,10 +10,8 @@ namespace SprykerTest\Glue\CatalogSearchRestApi\Processor\Mapper;
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapper;
 use Spryker\Glue\CatalogSearchRestApi\Processor\Mapper\CatalogSearchSuggestionsResourceMapperInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 
 /**
  * Auto-generated group annotations
@@ -143,16 +141,6 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
     protected function getMapper(): CatalogSearchSuggestionsResourceMapperInterface
     {
         return $this->catalogSearchSuggestionsResourceMapper;
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function getResourceBuilder(): MockObject
-    {
-        return $this->getMockBuilder(RestResourceBuilder::class)
-            ->enableProxyingToOriginalMethods()
-            ->getMock();
     }
 
     /**

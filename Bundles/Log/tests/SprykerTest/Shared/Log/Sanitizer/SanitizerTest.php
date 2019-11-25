@@ -28,7 +28,7 @@ class SanitizerTest extends Unit
     /**
      * @return void
      */
-    public function testInstantiateWithArguments()
+    public function testInstantiateWithArguments(): void
     {
         $sanitizer = new Sanitizer([], self::SANITIZED_VALUE);
 
@@ -38,7 +38,7 @@ class SanitizerTest extends Unit
     /**
      * @return void
      */
-    public function testSanitizeValueValueShouldNotSanitizeWhenKeysNotMatching()
+    public function testSanitizeValueValueShouldNotSanitizeWhenKeysNotMatching(): void
     {
         $sanitizer = new Sanitizer(['foo'], self::SANITIZED_VALUE);
 
@@ -48,7 +48,7 @@ class SanitizerTest extends Unit
     /**
      * @return void
      */
-    public function testSanitizeValueShouldReturnSanitizedWhenKeyMatches()
+    public function testSanitizeValueShouldReturnSanitizedWhenKeyMatches(): void
     {
         $sanitizer = new Sanitizer(['sanitize'], self::SANITIZED_VALUE);
 
@@ -58,7 +58,7 @@ class SanitizerTest extends Unit
     /**
      * @return void
      */
-    public function testSanitizeShouldReturnNotSanitizedWhenKeysNotMatching()
+    public function testSanitizeShouldReturnNotSanitizedWhenKeysNotMatching(): void
     {
         $sanitizer = new Sanitizer(['sanitize'], self::SANITIZED_VALUE);
 
@@ -71,7 +71,7 @@ class SanitizerTest extends Unit
     /**
      * @return void
      */
-    public function testSanitizeShouldReturnSanitizedWhenKeyMatches()
+    public function testSanitizeShouldReturnSanitizedWhenKeyMatches(): void
     {
         $sanitizer = new Sanitizer(['sanitize'], self::SANITIZED_VALUE);
 
@@ -84,7 +84,7 @@ class SanitizerTest extends Unit
     /**
      * @return void
      */
-    public function testSanitizeWithInnerArrayShouldReturnSanitizedWhenKeyMatches()
+    public function testSanitizeWithInnerArrayShouldReturnSanitizedWhenKeyMatches(): void
     {
         $sanitizer = new Sanitizer(['sanitize', 'password'], self::SANITIZED_VALUE);
 
@@ -108,7 +108,7 @@ class SanitizerTest extends Unit
     /**
      * @return void
      */
-    public function testSanitizeWithIndexedArrayShouldReturnSanitizedWhenKeyMatches()
+    public function testSanitizeWithIndexedArrayShouldReturnSanitizedWhenKeyMatches(): void
     {
         $sanitizer = new Sanitizer(['sanitize'], self::SANITIZED_VALUE);
 

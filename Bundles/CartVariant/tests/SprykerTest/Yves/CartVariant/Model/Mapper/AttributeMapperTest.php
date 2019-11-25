@@ -26,7 +26,7 @@ class AttributeMapperTest extends CartItemsMapperBaseTest
     /**
      * @return void
      */
-    public function testBuildMap()
+    public function testBuildMap(): void
     {
         $subject = new CartItemsAttributeMapper(
             $this->createProductClientBridge('attribute.json'),
@@ -52,7 +52,7 @@ class AttributeMapperTest extends CartItemsMapperBaseTest
     /**
      * @return void
      */
-    public function testBuildNestedMap()
+    public function testBuildNestedMap(): void
     {
         $subject = new CartItemsAttributeMapper(
             $this->createProductClientBridge('attributeNested.json'),

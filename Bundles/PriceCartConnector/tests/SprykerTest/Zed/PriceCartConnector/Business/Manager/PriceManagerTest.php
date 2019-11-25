@@ -37,7 +37,7 @@ class PriceManagerTest extends Unit
     /**
      * @return void
      */
-    public function testAddPriceToItems()
+    public function testAddPriceToItems(): void
     {
         $priceProductFacadeStub = $this->createPriceProductFacadeStub();
         $priceProductFacadeStub->addPriceStub('123', 1000);
@@ -59,7 +59,7 @@ class PriceManagerTest extends Unit
     /**
      * @return void
      */
-    public function testSourceUnitPriceHasHighestPriority()
+    public function testSourceUnitPriceHasHighestPriority(): void
     {
         $priceProductFacadeStub = $this->createPriceProductFacadeStub();
         $priceProductFacadeStub->addPriceStub('123', 1000);
@@ -116,7 +116,7 @@ class PriceManagerTest extends Unit
     /**
      * @return void
      */
-    public function testIsNotPriceAbleWithInvalidPrice()
+    public function testIsNotPriceAbleWithInvalidPrice(): void
     {
         $this->expectException('Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException');
         $priceProductFacadeStub = $this->createPriceProductFacadeStub();
@@ -177,7 +177,7 @@ class PriceManagerTest extends Unit
      *
      * @return \Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager
      */
-    protected function createPriceManager(PriceProductFacadeStub $priceProductFacadeStub)
+    protected function createPriceManager(PriceProductFacadeStub $priceProductFacadeStub): PriceManager
     {
         $priceProductCartToPriceAdapter = new PriceCartConnectorToPriceProductAdapter($priceProductFacadeStub);
 
@@ -200,7 +200,7 @@ class PriceManagerTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    protected function createCartChangeTransfer()
+    protected function createCartChangeTransfer(): CartChangeTransfer
     {
         $itemCollection = new CartChangeTransfer();
 
@@ -223,7 +223,7 @@ class PriceManagerTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    protected function createCartChangeTransferWithItem()
+    protected function createCartChangeTransferWithItem(): CartChangeTransfer
     {
         $itemCollection = $this->createCartChangeTransfer();
 

@@ -58,13 +58,13 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
      */
     public function extendCookieLifetime(FilterResponseEvent $event): void
     {
-        if ($event->isMasterRequest() === false) {
+        if ($event->isMasterRequest() === false || !$event->getRequest()->hasSession()) {
             return;
         }
 
         $session = $event->getRequest()->getSession();
 
-        if ($session === null || $session->isStarted() === false) {
+        if ($session->isStarted() === false) {
             return;
         }
 

@@ -27,7 +27,7 @@ class ErrorLoggerTest extends Unit
     /**
      * @return void
      */
-    public function testLogShouldAddCriticalLogAndNoticeErrorToMonitoring()
+    public function testLogShouldAddCriticalLogAndNoticeErrorToMonitoring(): void
     {
         $loggerMock = $this->getLoggerMock();
         $loggerMock->expects($this->once())->method('critical');
@@ -44,7 +44,7 @@ class ErrorLoggerTest extends Unit
     /**
      * @return void
      */
-    public function testWhenLoggerThrowsExceptionLogShouldNoticeErrorToMonitoring()
+    public function testWhenLoggerThrowsExceptionLogShouldNoticeErrorToMonitoring(): void
     {
         $exception = new Exception('TestException');
         $loggerMock = $this->getLoggerMock();
