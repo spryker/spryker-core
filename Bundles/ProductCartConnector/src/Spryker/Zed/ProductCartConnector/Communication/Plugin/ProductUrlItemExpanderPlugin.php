@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\ProductCartConnector\Communication\ProductCartConnectorCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductCartConnector\ProductCartConnectorConfig getConfig()
  */
-class ProductUrlCartPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
+class ProductUrlItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
