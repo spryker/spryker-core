@@ -20,7 +20,7 @@ class CartNoteEntityManager extends AbstractEntityManager implements CartNoteEnt
      *
      * @return void
      */
-    public function updateOrderNote($idSalesOrder, $note)
+    public function updateOrderNote($idSalesOrder, $note): void
     {
         $salesOrderEntity = $this->getFactory()->getSalesOrderQuery()
             ->findOneByIdSalesOrder($idSalesOrder);
