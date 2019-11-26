@@ -36,6 +36,8 @@ class SlotTable extends AbstractTable
     protected const URL_ACTIVATE_BUTTON = '/cms-slot-gui/activate-slot/activate';
     protected const URL_DEACTIVATE_BUTTON = '/cms-slot-gui/activate-slot/deactivate';
 
+    protected const COL_NAME_WRAPPER = '<span data-content-provider="%s"/>%s</span>';
+
     /**
      * @var int|null
      */
@@ -88,6 +90,7 @@ class SlotTable extends AbstractTable
 
         $config->addRawColumn(static::COL_ACTIONS);
         $config->addRawColumn(static::COL_STATUS);
+        $config->addRawColumn(static::COL_NAME);
 
         return $config;
     }
@@ -199,7 +202,7 @@ class SlotTable extends AbstractTable
         foreach ($slotResults as $slot) {
             $results[] = [
                 static::COL_ID_CMS_SLOT => $slot[SpyCmsSlotTableMap::COL_ID_CMS_SLOT],
-                static::COL_NAME => $slot[SpyCmsSlotTableMap::COL_NAME],
+                static::COL_NAME => $this->getName($slot),
                 static::COL_DESCRIPTION => $slot[SpyCmsSlotTableMap::COL_DESCRIPTION],
                 static::COL_CONTENT_PROVIDER => $this->getContentProvider($slot),
                 static::COL_STATUS => $this->getStatus($slot),
@@ -219,6 +222,20 @@ class SlotTable extends AbstractTable
      *
      * @return string
      */
+    protected function getName(array $slot): string
+    {
+        return  sprintf(
+            static::COL_NAME_WRAPPER,
+            $slot[static::COL_CONTENT_PROVIDER],
+            $slot[SpyCmsSlotTableMap::COL_NAME]
+        );
+    }
+
+    /**
+     * @param array $slot
+     *
+     * @return string
+     */
     protected function buildLinks(array $slot): string
     {
         $statusToggleButton = $this->generateButton(
@@ -231,10 +248,7 @@ class SlotTable extends AbstractTable
             $statusToggleButton = $this->generateButton(
                 $this->getUrlDeactivate($slot[SpyCmsSlotTableMap::COL_ID_CMS_SLOT]),
                 'Deactivate',
-                [
-                    'class' => 'btn-danger js-slot-activation',
-                    'data-content-provider' => $slot[static::COL_CONTENT_PROVIDER],
-                ]
+                ['class' => 'btn-danger js-slot-activation']
             );
         }
 
