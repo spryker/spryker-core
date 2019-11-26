@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Payment\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Orm\Zed\Payment\Persistence\SpyPaymentProvider;
@@ -42,11 +43,33 @@ class PaymentProviderMapper
                 $paymentProviderEntity,
                 new PaymentProviderTransfer()
             );
-            foreach ($paymentProviderEntity->getPaymentMethodss() as $paymentMethodss) {
-            }
+            $paymentProviderTransfer = $this->addPaymentMethodsToPaymentProvider(
+                $paymentProviderEntity,
+                $paymentProviderTransfer
+            );
             $paymentProviderCollectionTransfer->addPaymentProvider($paymentProviderTransfer);
         }
 
         return $paymentProviderCollectionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Payment\Persistence\SpyPaymentProvider $paymentProviderEntity
+     * @param \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentProviderTransfer
+     */
+    protected function addPaymentMethodsToPaymentProvider(
+        SpyPaymentProvider $paymentProviderEntity,
+        PaymentProviderTransfer $paymentProviderTransfer
+    ): PaymentProviderTransfer {
+        foreach ($paymentProviderEntity->getPaymentMethods() as $paymentMethodEntity) {
+            $paymentMethodTransfer = (new PaymentMethodTransfer())
+                ->fromArray($paymentMethodEntity->toArray(), true)
+                ->setMethodName($paymentMethodEntity->getName());
+            $paymentProviderTransfer->addPaymentMethod($paymentMethodTransfer);
+        }
+
+        return $paymentProviderTransfer;
     }
 }
