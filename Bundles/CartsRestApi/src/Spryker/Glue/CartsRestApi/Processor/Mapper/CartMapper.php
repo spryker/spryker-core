@@ -21,7 +21,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class CartsMapper implements CartsMapperInterface
+class CartMapper implements CartMapperInterface
 {
     /**
      * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemMapperInterface
