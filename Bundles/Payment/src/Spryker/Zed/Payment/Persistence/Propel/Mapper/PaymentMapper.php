@@ -79,7 +79,7 @@ class PaymentMapper
         SpyPaymentMethod $paymentMethodEntity
     ): SpyPaymentMethod {
         $paymentMethodEntity->fromArray($paymentMethodTransfer->modifiedToArray());
-        $paymentMethodEntity->setName($paymentMethodTransfer->getMethodName());
+        $paymentMethodEntity->setPaymentMethodKey($paymentMethodTransfer->getMethodName());
 
         return $paymentMethodEntity;
     }
