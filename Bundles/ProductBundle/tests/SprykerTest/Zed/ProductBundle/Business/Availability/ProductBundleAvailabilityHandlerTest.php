@@ -38,7 +38,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateAffectedBundlesAvailabilityShouldUpdateAffectedBundlesAvailability()
+    public function testUpdateAffectedBundlesAvailabilityShouldUpdateAffectedBundlesAvailability(): void
     {
         $bundleSku = 'sku-2';
         $bundledItemSku = 'sku-3';
@@ -73,7 +73,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateBundleAvailabilityShouldUpdateGivenBundleAvailability()
+    public function testUpdateBundleAvailabilityShouldUpdateGivenBundleAvailability(): void
     {
         $bundleSku = 'sku-2';
         $bundledItemSku = 'sku-3';
@@ -170,7 +170,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
      *
      * @return void
      */
-    protected function setupGetBundleItemsByIdProduct($bundleQuantity, $bundledItemSku, ProductBundleAvailabilityHandler $productBundleAvailabilityHandlerMock)
+    protected function setupGetBundleItemsByIdProduct(int $bundleQuantity, string $bundledItemSku, ProductBundleAvailabilityHandler $productBundleAvailabilityHandlerMock): void
     {
         $bundleItems = new ObjectCollection();
         $productBundleEntity = new SpyProductBundle();
@@ -191,7 +191,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
      *
      * @return void
      */
-    protected function setupProductBundleAvailability($bundledItemAvailability, ProductBundleAvailabilityHandler $productBundleAvailabilityHandlerMock)
+    protected function setupProductBundleAvailability(int $bundledItemAvailability, ProductBundleAvailabilityHandler $productBundleAvailabilityHandlerMock): void
     {
         $availabilityEntity = new SpyAvailability();
         $availabilityEntity->setQuantity($bundledItemAvailability);

@@ -52,7 +52,7 @@ class CalculatorTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateStock()
+    public function testCalculateStock(): void
     {
         $stock = $this->stockFacade->calculateStockForProduct($this->productEntity->getSku());
         $this->assertSame(30, $stock);
@@ -61,7 +61,7 @@ class CalculatorTest extends Unit
     /**
      * @return void
      */
-    protected function setupProductEntity()
+    protected function setupProductEntity(): void
     {
         $productAbstract = SpyProductAbstractQuery::create()
             ->filterBySku('test')
@@ -115,7 +115,7 @@ class CalculatorTest extends Unit
     /**
      * @return void
      */
-    protected function setupStockProductEntity()
+    protected function setupStockProductEntity(): void
     {
         $stockType1 = SpyStockQuery::create()
             ->filterByName('warehouse1')

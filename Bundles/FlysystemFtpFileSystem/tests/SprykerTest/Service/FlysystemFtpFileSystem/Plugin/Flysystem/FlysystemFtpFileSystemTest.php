@@ -29,7 +29,7 @@ class FlysystemFtpFileSystemTest extends Unit
     /**
      * @return void
      */
-    public function testFtpFilesystemBuilderPlugin()
+    public function testFtpFilesystemBuilderPlugin(): void
     {
         $localFilesystemBuilderPlugin = new FtpFilesystemBuilderPlugin();
 
@@ -51,7 +51,7 @@ class FlysystemFtpFileSystemTest extends Unit
     /**
      * @return void
      */
-    public function testFtpFilesystemBuilderPluginShouldAcceptType()
+    public function testFtpFilesystemBuilderPluginShouldAcceptType(): void
     {
         $localFilesystemBuilderPlugin = new FtpFilesystemBuilderPlugin();
 

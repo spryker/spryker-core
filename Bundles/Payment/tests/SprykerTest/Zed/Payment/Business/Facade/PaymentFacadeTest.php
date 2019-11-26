@@ -72,7 +72,7 @@ class PaymentFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindPaymentMethodByIdShouldNotFindPaymentMethod(): void
+    public function testFindPaymentMethodByIdWithNotExistingIdShouldNotFindPaymentMethod(): void
     {
         // Arrange
         $this->tester->ensurePaymentMethodTableIsEmpty();
@@ -87,7 +87,7 @@ class PaymentFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateMethodShouldUpdateShipmentMethodWithStoreRelation(): void
+    public function testUpdatePaymentMethodShouldUpdatePaymentMethodWithStoreRelation(): void
     {
         // Arrange
         $this->tester->ensurePaymentMethodTableIsEmpty();

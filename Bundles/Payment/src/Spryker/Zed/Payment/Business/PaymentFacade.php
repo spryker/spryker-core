@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentMethodResponseTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
+use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesPaymentTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -143,13 +144,13 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
      *
      * @api
      *
-     * @return void
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
      */
-    public function installSalesPaymentMethodType(): void
+    public function getAvailablePaymentProvidersForStore(string $storeName): PaymentProviderCollectionTransfer
     {
-        $this->getFactory()
-            ->createSalesPaymentMethodTypeInstaller()
-            ->install();
+        return $this->getRepository()->getAvailablePaymentProvidersForStore($storeName);
     }
 
     /**

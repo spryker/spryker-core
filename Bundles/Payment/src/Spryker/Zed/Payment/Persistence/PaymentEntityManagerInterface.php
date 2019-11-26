@@ -8,19 +8,9 @@
 namespace Spryker\Zed\Payment\Persistence;
 
 use Generated\Shared\Transfer\PaymentMethodTransfer;
-use Generated\Shared\Transfer\SalesPaymentMethodTypeTransfer;
 
 interface PaymentEntityManagerInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\SalesPaymentMethodTypeTransfer $salesPaymentMethodTypeTransfer
-     *
-     * @return void
-     */
-    public function saveSalesPaymentMethodTypeByPaymentProviderAndMethod(
-        SalesPaymentMethodTypeTransfer $salesPaymentMethodTypeTransfer
-    ): void;
-
     /**
      * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
      *
@@ -31,7 +21,7 @@ interface PaymentEntityManagerInterface
     ): ?PaymentMethodTransfer;
 
     /**
-     * @param array $idStores
+     * @param int[] $idStores
      * @param int $idPaymentMethod
      *
      * @return void
@@ -42,7 +32,7 @@ interface PaymentEntityManagerInterface
     ): void;
 
     /**
-     * @param array $idStores
+     * @param int[] $idStores
      * @param int $idPaymentMethod
      *
      * @return void

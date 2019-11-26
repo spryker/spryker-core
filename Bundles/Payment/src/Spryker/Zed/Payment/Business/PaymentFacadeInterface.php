@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentMethodResponseTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
+use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesPaymentTransfer;
 
@@ -110,13 +111,15 @@ interface PaymentFacadeInterface
 
     /**
      * Specification:
-     * - Populates the database with sales payment method types from config.
+     * - Finds available payment providers for the given store.
      *
      * @api
      *
-     * @return void
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
      */
-    public function installSalesPaymentMethodType(): void;
+    public function getAvailablePaymentProvidersForStore(string $storeName): PaymentProviderCollectionTransfer;
 
     /**
      * Specification:
@@ -133,7 +136,7 @@ interface PaymentFacadeInterface
     /**
      * Specification:
      * - Updates payment method in database using provided PaymentMethod transfer object data.
-     * - Updates or creates payment method store relation collection in the PaymentMethod transfer object.
+     * - Updates or creates payment method store relations using 'storeRelation' collection in the PaymentMethod transfer object.
      * - Returns PaymentMethodResponse transfer object.
      *
      * @api

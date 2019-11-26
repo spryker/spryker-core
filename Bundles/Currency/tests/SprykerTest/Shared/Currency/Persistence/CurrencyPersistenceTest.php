@@ -27,7 +27,7 @@ class CurrencyPersistenceTest extends Unit
     /**
      * @return void
      */
-    public function testGetCurrentIsoCodeShouldReadFromStoreClassIfNotPersisted()
+    public function testGetCurrentIsoCodeShouldReadFromStoreClassIfNotPersisted(): void
     {
         $defaultCurrency = 'EUR';
 
@@ -45,7 +45,7 @@ class CurrencyPersistenceTest extends Unit
     /**
      * @return void
      */
-    public function testGetCurrentIsoCodeShouldReadFromPersistenceFirst()
+    public function testGetCurrentIsoCodeShouldReadFromPersistenceFirst(): void
     {
         $storeCurrency = 'EUR';
         $sessionCurrency = 'USD';
@@ -67,7 +67,7 @@ class CurrencyPersistenceTest extends Unit
      *
      * @return \Spryker\Shared\Currency\Persistence\CurrencyPersistence
      */
-    protected function createCurrencyPersistence(CurrencyToSessionInterface $sessionClientMock, Store $storeMock)
+    protected function createCurrencyPersistence(CurrencyToSessionInterface $sessionClientMock, Store $storeMock): CurrencyPersistence
     {
         return new CurrencyPersistence($sessionClientMock, $storeMock);
     }

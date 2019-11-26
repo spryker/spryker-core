@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Payment\Persistence;
 
 use Generated\Shared\Transfer\PaymentMethodTransfer;
-use Generated\Shared\Transfer\SalesPaymentMethodTypeTransfer;
 use Orm\Zed\Payment\Persistence\SpyPaymentMethodStore;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -18,23 +17,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class PaymentEntityManager extends AbstractEntityManager implements PaymentEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SalesPaymentMethodTypeTransfer $salesPaymentMethodTypeTransfer
-     *
-     * @return void
-     */
-    public function saveSalesPaymentMethodTypeByPaymentProviderAndMethod(
-        SalesPaymentMethodTypeTransfer $salesPaymentMethodTypeTransfer
-    ): void {
-        $salesPaymentMethodTypeEntity = $this->getFactory()
-            ->createSalesPaymentMethodTypeQuery()
-            ->filterByPaymentProvider($salesPaymentMethodTypeTransfer->getPaymentProvider()->getName())
-            ->filterByPaymentMethod($salesPaymentMethodTypeTransfer->getPaymentMethod()->getMethodName())
-            ->findOneOrCreate();
-
-        $salesPaymentMethodTypeEntity->save();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer|null
@@ -42,6 +24,8 @@ class PaymentEntityManager extends AbstractEntityManager implements PaymentEntit
     public function updatePaymentMethod(
         PaymentMethodTransfer $paymentMethodTransfer
     ): ?PaymentMethodTransfer {
+        $paymentMethodTransfer->requireIdPaymentMethod();
+
         $paymentMethodEntity = $this->getFactory()
             ->createPaymentMethodQuery()
             ->filterByIdPaymentMethod($paymentMethodTransfer->getIdPaymentMethod())
@@ -66,7 +50,7 @@ class PaymentEntityManager extends AbstractEntityManager implements PaymentEntit
     }
 
     /**
-     * @param array $idStores
+     * @param int[] $idStores
      * @param int $idPaymentMethod
      *
      * @return void
@@ -84,7 +68,7 @@ class PaymentEntityManager extends AbstractEntityManager implements PaymentEntit
     }
 
     /**
-     * @param array $idStores
+     * @param int[] $idStores
      * @param int $idPaymentMethod
      *
      * @return void
