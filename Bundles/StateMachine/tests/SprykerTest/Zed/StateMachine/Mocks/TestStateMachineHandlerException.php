@@ -14,7 +14,7 @@ class TestStateMachineHandlerException extends TestStateMachineHandler
      *
      * @return array
      */
-    public function getCommandPlugins()
+    public function getCommandPlugins(): array
     {
         return [
             'Test/CreateInvoice' => new TestCommandPlugin(),
@@ -27,7 +27,7 @@ class TestStateMachineHandlerException extends TestStateMachineHandler
      *
      * @return array
      */
-    public function getConditionPlugins()
+    public function getConditionPlugins(): array
     {
         return [
             'Test/IsInvoiceSent' => new TestConditionPlugin(),

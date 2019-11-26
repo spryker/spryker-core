@@ -198,7 +198,7 @@ class ContainerTest extends Unit
     public function testHasReturnsTrueWhenServiceWasAdded(): void
     {
         $container = new Container();
-        $container->set(static::SERVICE, function () {
+        $container->set(static::SERVICE, function (): void {
         });
 
         $this->assertTrue($container->has(static::SERVICE));
@@ -211,7 +211,7 @@ class ContainerTest extends Unit
     {
         //Arrange
         $container = new Container();
-        $container->set(static::SERVICE, function () {
+        $container->set(static::SERVICE, function (): void {
         });
 
         //Act
@@ -299,7 +299,7 @@ class ContainerTest extends Unit
         $container->get(static::SERVICE);
 
         $this->expectException(FrozenServiceException::class);
-        $container->extend(static::SERVICE, function () {
+        $container->extend(static::SERVICE, function (): void {
         });
     }
 
@@ -312,7 +312,7 @@ class ContainerTest extends Unit
         $container->set(static::SERVICE, 'not an object and not invokable');
 
         $this->expectException(ContainerException::class);
-        $container->extend(static::SERVICE, function () {
+        $container->extend(static::SERVICE, function (): void {
         });
     }
 
@@ -322,11 +322,11 @@ class ContainerTest extends Unit
     public function testExtendThrowsExceptionWhenTheServiceToBeExtendedIsProtected(): void
     {
         $container = new Container();
-        $container->set(static::SERVICE, $container->protect(function () {
+        $container->set(static::SERVICE, $container->protect(function (): void {
         }));
 
         $this->expectException(ContainerException::class);
-        $container->extend(static::SERVICE, function () {
+        $container->extend(static::SERVICE, function (): void {
         });
     }
 

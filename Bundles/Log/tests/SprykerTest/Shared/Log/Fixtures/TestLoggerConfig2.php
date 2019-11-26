@@ -14,7 +14,7 @@ class TestLoggerConfig2 implements LoggerConfigInterface
     /**
      * @return string
      */
-    public function getChannelName()
+    public function getChannelName(): string
     {
         return 'test2';
     }
@@ -22,7 +22,7 @@ class TestLoggerConfig2 implements LoggerConfigInterface
     /**
      * @return \Monolog\Handler\HandlerInterface[]
      */
-    public function getHandlers()
+    public function getHandlers(): array
     {
         return [];
     }
@@ -30,7 +30,7 @@ class TestLoggerConfig2 implements LoggerConfigInterface
     /**
      * @return callable[]
      */
-    public function getProcessors()
+    public function getProcessors(): array
     {
         return [];
     }

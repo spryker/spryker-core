@@ -28,7 +28,7 @@ class TaxSetViewCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(TaxCommunicationTester $i)
+    public function breadcrumbIsVisible(TaxCommunicationTester $i): void
     {
         $i->listDataTable(TaxSetListPage::DATA_TABLE_URL);
         $i->clickDataTableViewButton();

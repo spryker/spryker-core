@@ -40,7 +40,7 @@ class RemoveActionPostProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessWithDefaultsPageOne()
+    public function testProcessWithDefaultsPageOne(): void
     {
         $processor = new RemoveActionPostProcessor();
 

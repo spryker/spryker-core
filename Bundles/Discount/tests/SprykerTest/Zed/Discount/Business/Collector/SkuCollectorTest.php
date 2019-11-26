@@ -28,7 +28,7 @@ class SkuCollectorTest extends BaseRuleTester
     /**
      * @return void
      */
-    public function testCollectWhenSkuMatchesShouldCollectMatchingItems()
+    public function testCollectWhenSkuMatchesShouldCollectMatchingItems(): void
     {
         $comparatorMock = $this->createComparatorMock();
         $comparatorMock->expects($this->at(0))
@@ -58,7 +58,7 @@ class SkuCollectorTest extends BaseRuleTester
      *
      * @return \Spryker\Zed\Discount\Business\Collector\SkuCollector
      */
-    protected function createItemSkuCollector(?ComparatorOperatorsInterface $comparatorMock = null)
+    protected function createItemSkuCollector(?ComparatorOperatorsInterface $comparatorMock = null): SkuCollector
     {
         if (!$comparatorMock) {
             $comparatorMock = $this->createComparatorMock();

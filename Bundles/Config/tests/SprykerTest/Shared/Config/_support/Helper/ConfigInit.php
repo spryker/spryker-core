@@ -16,7 +16,7 @@ class ConfigInit extends Module
     /**
      * @return void
      */
-    public function _initialize()
+    public function _initialize(): void
     {
         if (isset($this->config['enabled']) && $this->config['enabled']) {
             $this->copyBundleConfigurationFiles();
@@ -157,7 +157,7 @@ class ConfigInit extends Module
      *
      * @return void
      */
-    private function writeConfigFile($fileContent): void
+    private function writeConfigFile(string $fileContent): void
     {
         file_put_contents($this->getConfigFilePath(), $fileContent);
     }
