@@ -63,16 +63,7 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
             $responseSchemaDataTransfer = new PathSchemaDataTransfer();
         }
 
-        $isShouldToAddDefaultSuccessfulResponse = true;
-
-        foreach ($pathMethodDataTransfer->getResponseSchemas() as $responseSchema) {
-            if (strpos($responseSchema->getCode(), "20") === 0) {
-                $isShouldToAddDefaultSuccessfulResponse = false;
-                break;
-            }
-        }
-
-        if ($isShouldToAddDefaultSuccessfulResponse) {
+        if (!$this->isResponseSuccessful($pathMethodDataTransfer)) {
             $responseSchemaDataTransfer->setCode(
                 $this->getResponseStatusCode($pathMethodDataTransfer, (string)Response::HTTP_OK)
             );
@@ -201,5 +192,22 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
     protected function getResponseStatusCode(PathMethodDataTransfer $pathMethodDataTransfer, string $defaultMethodStatusCode): string
     {
         return $pathMethodDataTransfer->getIsEmptyResponse() ? (string)Response::HTTP_NO_CONTENT : $defaultMethodStatusCode;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PathMethodDataTransfer $pathMethodDataTransfer
+     *
+     * @return bool
+     */
+    protected function isResponseSuccessful(PathMethodDataTransfer $pathMethodDataTransfer): bool
+    {
+        foreach ($pathMethodDataTransfer->getResponseSchemas() as $responseSchema) {
+            $responseSchemaCode = (int)$responseSchema->getCode();
+            if ($responseSchemaCode >= 200 && $responseSchemaCode < 300) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
