@@ -14,9 +14,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \Spryker\Zed\CmsSlotBlockCmsGui\Communication\CmsSlotBlockCmsGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\CmsSlotBlockCmsGui\CmsSlotBlockCmsGuiConfig getConfig()
  */
-class CmsPageConditionForm extends AbstractType
+class CmsPageSlotBlockConditionForm extends AbstractType
 {
     public const OPTION_PAGE_ARRAY = 'option-page-array';
     public const OPTION_ALL_ARRAY = 'option-all-array';
@@ -76,6 +75,12 @@ class CmsPageConditionForm extends AbstractType
             'choices' => $options[static::OPTION_ALL_ARRAY],
             'choice_value' => function ($choice) {
                 return $choice ?? true;
+            },
+            'choice_attr' => function ($choice, $key, $value) {
+                return [
+                    'data-disable' => $value,
+                    'data-inputs' => $this->getFactory()->getUtilEncoding()->encodeJson([static::FIELD_PAGE_IDS]),
+                ];
             },
             'expanded' => true,
             'multiple' => false,

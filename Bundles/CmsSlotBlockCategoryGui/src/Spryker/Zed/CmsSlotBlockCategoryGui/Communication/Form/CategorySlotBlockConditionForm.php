@@ -77,6 +77,12 @@ class CategorySlotBlockConditionForm extends AbstractType
             'choice_value' => function ($choice) {
                 return $choice ?? true;
             },
+            'choice_attr' => function ($choice, $key, $value) {
+                return [
+                    'data-disable' => $value,
+                    'data-inputs' => $this->getFactory()->getUtilEncoding()->encodeJson([static::FIELD_CATEGORY_IDS]),
+                ];
+            },
             'expanded' => true,
             'multiple' => false,
             'placeholder' => false,

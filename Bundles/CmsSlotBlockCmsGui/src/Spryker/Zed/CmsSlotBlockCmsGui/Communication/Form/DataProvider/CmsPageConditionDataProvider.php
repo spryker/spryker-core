@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\DataProvider;
 
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\CmsPageConditionForm;
+use Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\CmsPageSlotBlockConditionForm;
 use Spryker\Zed\CmsSlotBlockCmsGui\Dependency\Facade\CmsSlotBlockCmsGuiToLocaleFacadeInterface;
 use Spryker\Zed\CmsSlotBlockCmsGui\Dependency\Facade\CmsSlotBlockCmsGuiToTranslatorFacadeInterface;
 use Spryker\Zed\CmsSlotBlockCmsGui\Dependency\QueryContainer\CmsSlotBlockCmsGuiToCmsQueryContainerInterface;
@@ -54,8 +54,8 @@ class CmsPageConditionDataProvider implements CmsPageConditionDataProviderInterf
     public function getOptions(): array
     {
         return [
-            CmsPageConditionForm::OPTION_ALL_ARRAY => $this->getAllOptions(),
-            CmsPageConditionForm::OPTION_PAGE_ARRAY => $this->getPages(),
+            CmsPageSlotBlockConditionForm::OPTION_ALL_ARRAY => $this->getAllOptions(),
+            CmsPageSlotBlockConditionForm::OPTION_PAGE_ARRAY => $this->getPages(),
         ];
     }
 

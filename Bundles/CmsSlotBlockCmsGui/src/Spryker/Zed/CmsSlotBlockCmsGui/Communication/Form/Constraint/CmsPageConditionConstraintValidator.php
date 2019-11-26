@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\Constraint;
 
 use InvalidArgumentException;
-use Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\CmsPageConditionForm;
+use Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\CmsPageSlotBlockConditionForm;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -32,11 +32,11 @@ class CmsPageConditionConstraintValidator extends ConstraintValidator
             ));
         }
 
-        if ($value[CmsPageConditionForm::FIELD_ALL]) {
+        if ($value[CmsPageSlotBlockConditionForm::FIELD_ALL]) {
             return;
         }
 
-        if (!$value[CmsPageConditionForm::FIELD_PAGE_IDS]) {
+        if (!$value[CmsPageSlotBlockConditionForm::FIELD_PAGE_IDS]) {
             $this->context->buildViolation($constraint->getMessage())
                 ->addViolation();
         }

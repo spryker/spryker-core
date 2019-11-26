@@ -15,6 +15,7 @@ use Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\Validator\Constraints
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToCategoryFacadeInterface;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToLocaleFacadeInterface;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToTranslatorFacadeInterface;
+use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Service\CmsSlotBlockCategoryGuiToUtilEncodingInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 class CmsSlotBlockCategoryGuiCommunicationFactory extends AbstractCommunicationFactory
@@ -69,5 +70,13 @@ class CmsSlotBlockCategoryGuiCommunicationFactory extends AbstractCommunicationF
     public function getTranslatorFacade(): CmsSlotBlockCategoryGuiToTranslatorFacadeInterface
     {
         return $this->getProvidedDependency(CmsSlotBlockCategoryGuiDependencyProvider::FACADE_TRANSLATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Service\CmsSlotBlockCategoryGuiToUtilEncodingInterface
+     */
+    public function getUtilEncoding(): CmsSlotBlockCategoryGuiToUtilEncodingInterface
+    {
+        return $this->getProvidedDependency(CmsSlotBlockCategoryGuiDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

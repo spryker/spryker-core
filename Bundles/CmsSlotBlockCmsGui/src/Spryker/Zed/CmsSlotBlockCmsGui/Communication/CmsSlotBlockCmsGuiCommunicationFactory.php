@@ -8,23 +8,24 @@
 namespace Spryker\Zed\CmsSlotBlockCmsGui\Communication;
 
 use Spryker\Zed\CmsSlotBlockCmsGui\CmsSlotBlockCmsGuiDependencyProvider;
-use Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\CmsPageConditionForm;
+use Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\CmsPageSlotBlockConditionForm;
 use Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\Constraint\CmsPageConditionConstraint;
 use Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\DataProvider\CmsPageConditionDataProvider;
 use Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\DataProvider\CmsPageConditionDataProviderInterface;
 use Spryker\Zed\CmsSlotBlockCmsGui\Dependency\Facade\CmsSlotBlockCmsGuiToLocaleFacadeInterface;
 use Spryker\Zed\CmsSlotBlockCmsGui\Dependency\Facade\CmsSlotBlockCmsGuiToTranslatorFacadeInterface;
 use Spryker\Zed\CmsSlotBlockCmsGui\Dependency\QueryContainer\CmsSlotBlockCmsGuiToCmsQueryContainerInterface;
+use Spryker\Zed\CmsSlotBlockCmsGui\Dependency\Service\CmsSlotBlockCmsGuiToUtilEncodingInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 class CmsSlotBlockCmsGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\CmsPageConditionForm
+     * @return \Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\CmsPageSlotBlockConditionForm
      */
-    public function createCmsPageConditionForm(): CmsPageConditionForm
+    public function createCmsPageConditionForm(): CmsPageSlotBlockConditionForm
     {
-        return new CmsPageConditionForm();
+        return new CmsPageSlotBlockConditionForm();
     }
 
     /**
@@ -69,5 +70,13 @@ class CmsSlotBlockCmsGuiCommunicationFactory extends AbstractCommunicationFactor
     public function getLocaleFacade(): CmsSlotBlockCmsGuiToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(CmsSlotBlockCmsGuiDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsSlotBlockCmsGui\Dependency\Service\CmsSlotBlockCmsGuiToUtilEncodingInterface
+     */
+    public function getUtilEncoding(): CmsSlotBlockCmsGuiToUtilEncodingInterface
+    {
+        return $this->getProvidedDependency(CmsSlotBlockCmsGuiDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

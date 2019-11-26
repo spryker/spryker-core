@@ -12,6 +12,7 @@ use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockPro
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToProductFacadeBridge;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Facade\CmsSlotBlockProductCategoryGuiToTranslatorFacadeBridge;
 use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\QueryContainer\CmsSlotBlockProductCategoryGuiToProductQueryContainerBridge;
+use Spryker\Zed\CmsSlotBlockProductCategoryGui\Dependency\Service\CmsSlotBlockProductCategoryGuiToUtilEncodingBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -22,6 +23,7 @@ class CmsSlotBlockProductCategoryGuiDependencyProvider extends AbstractBundleDep
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -34,6 +36,7 @@ class CmsSlotBlockProductCategoryGuiDependencyProvider extends AbstractBundleDep
         $container = $this->addCategoryFacade($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addTranslatorFacade($container);
+        $container = $this->addUtilEncoding($container);
 
         return $container;
     }
@@ -125,6 +128,22 @@ class CmsSlotBlockProductCategoryGuiDependencyProvider extends AbstractBundleDep
         $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
             return new CmsSlotBlockProductCategoryGuiToTranslatorFacadeBridge(
                 $container->getLocator()->translator()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncoding(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new CmsSlotBlockProductCategoryGuiToUtilEncodingBridge(
+                $container->getLocator()->utilEncoding()->service()
             );
         });
 
