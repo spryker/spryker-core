@@ -31,6 +31,10 @@ class ProductAbstractSkusToIdsConditionResolver implements ConditionResolverInte
         $productAbstractSkus = $conditionValue ? explode(',', $conditionValue) : [];
         $conditionsArray[static::KEY_PRODUCT_ABSTRACT_IDS] = $this->getProductAbstractIdsFromSkus($productAbstractSkus);
 
+        if ($conditionsArray[static::KEY_PRODUCT_ABSTRACT_IDS]) {
+            $conditionsArray[AllConditionResolver::KEY_ALL] = false;
+        }
+
         return $conditionsArray;
     }
 

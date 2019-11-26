@@ -30,6 +30,10 @@ class CategoryKeysToIdsConditionResolver implements ConditionResolverInterface
         $categoryKeys = $conditionValue ? explode(',', $conditionValue) : [];
         $conditionsArray[static::KEY_CONDITION_CATEGORY_IDS] = $this->getCategoryIdsFromKeys($categoryKeys);
 
+        if ($conditionsArray[static::KEY_CONDITION_CATEGORY_IDS]) {
+            $conditionsArray[AllConditionResolver::KEY_ALL] = false;
+        }
+
         return $conditionsArray;
     }
 
