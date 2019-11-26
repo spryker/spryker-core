@@ -23,7 +23,7 @@ class CmsSlotBlockValidator implements CmsSlotBlockValidatorInterface
     /**
      * @var bool[]
      */
-    protected $cmsSlotValidationBuffer = [];
+    protected $validCmsSlotBuffer = [];
 
     /**
      * @param \Spryker\Zed\CmsSlotBlock\Dependency\Facade\CmsSlotBlockToCmsSlotFacadeInterface $cmsSlotFacade
@@ -46,21 +46,11 @@ class CmsSlotBlockValidator implements CmsSlotBlockValidatorInterface
         foreach ($cmsSlotBlockTransfers as $cmsSlotBlockTransfer) {
             $idCmsSlot = $cmsSlotBlockTransfer->getIdSlot();
 
-            if (isset($this->cmsSlotValidationBuffer[$idCmsSlot])) {
-                continue;
-            }
-
-            $isCmsSlotValid = $this->validateCmsSlotById($idCmsSlot);
-
-            if (!$isCmsSlotValid) {
-                $messageTransfer = (new MessageTransfer())
-                    ->setValue(sprintf(
-                        'CMS slot with ID %s is not valid for saving in CMS slot block relation.',
-                        $idCmsSlot
-                    ));
-
+            if (!$this->isValidCmsSlot($idCmsSlot)) {
                 $validationResponseTransfer->setIsSuccess(false);
-                $validationResponseTransfer->addErrorMessage($messageTransfer);
+                $validationResponseTransfer->addErrorMessage(
+                    $this->createMessageTransfer($idCmsSlot)
+                );
             }
         }
 
@@ -72,17 +62,38 @@ class CmsSlotBlockValidator implements CmsSlotBlockValidatorInterface
      *
      * @return bool
      */
-    protected function validateCmsSlotById(int $idCmsSlot): bool
+    protected function isValidCmsSlot(int $idCmsSlot): bool
     {
+        if (in_array($idCmsSlot, $this->validCmsSlotBuffer, true)) {
+            return true;
+        }
+
         try {
             $cmsSlotTransfer = $this->cmsSlotFacade->getCmsSlotById($idCmsSlot);
         } catch (MissingCmsSlotException $cmsSlotException) {
             return false;
         }
 
-        $isCmsSlotValid = $cmsSlotTransfer->getContentProviderType() === CmsSlotBlockConfig::CMS_SLOT_CONTENT_PROVIDER_TYPE;
-        $this->cmsSlotValidationBuffer[$idCmsSlot] = $isCmsSlotValid;
+        $isValidCmsSlot = $cmsSlotTransfer->getContentProviderType() === CmsSlotBlockConfig::CMS_SLOT_CONTENT_PROVIDER_TYPE;
 
-        return $isCmsSlotValid;
+        if ($isValidCmsSlot) {
+            $this->validCmsSlotBuffer[] = $idCmsSlot;
+        }
+
+        return $isValidCmsSlot;
+    }
+
+    /**
+     * @param int $idCmsSlot
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function createMessageTransfer(int $idCmsSlot): MessageTransfer
+    {
+        return (new MessageTransfer())
+            ->setValue(sprintf(
+                'CMS slot with ID %s is not valid for saving in CMS slot block relation.',
+                $idCmsSlot
+            ));
     }
 }

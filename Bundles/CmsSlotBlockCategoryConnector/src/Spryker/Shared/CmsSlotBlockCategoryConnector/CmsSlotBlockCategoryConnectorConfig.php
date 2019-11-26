@@ -13,7 +13,7 @@ class CmsSlotBlockCategoryConnectorConfig extends AbstractBundleConfig
 {
     /**
      * Specification:
-     * - Defines the key for CMS block condition.
+     * - Defines the key for visibility condition CMS Block in Slot.
      *
      * @api
      */

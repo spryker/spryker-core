@@ -12,7 +12,8 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 class CmsSlotBlockProductCategoryConnectorConfig extends AbstractBundleConfig
 {
     /**
-     * Defines the key for CMS block condition.
+     * Specification:
+     * - Defines the key for visibility condition CMS Block in Slot.
      *
      * @api
      */
