@@ -51,7 +51,7 @@ class CmsSlotBlockProductCategoryConditionsStep implements DataImportStepInterfa
      *
      * @return void
      */
-    public function execute(DataSetInterface $dataSet)
+    public function execute(DataSetInterface $dataSet): void
     {
         $conditionsArray = $dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_ARRAY] ?? [];
 

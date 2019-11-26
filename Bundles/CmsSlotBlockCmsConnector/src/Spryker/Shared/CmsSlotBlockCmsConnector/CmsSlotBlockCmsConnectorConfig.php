@@ -13,7 +13,7 @@ class CmsSlotBlockCmsConnectorConfig extends AbstractSharedConfig
 {
     /**
      * Specification:
-     * - Defines the key for CMS slot block condition.
+     * - Defines the key for visibility condition CMS Block in Slot.
      *
      * @api
      */
