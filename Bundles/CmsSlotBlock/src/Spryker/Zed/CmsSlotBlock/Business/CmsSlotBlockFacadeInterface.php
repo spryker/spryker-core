@@ -39,7 +39,10 @@ interface CmsSlotBlockFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves collection of CmsSlotBlockTransfers according to given CMS slot template id and CMS slot id.
+     * - Retrieves collection of CmsSlotBlockTransfers according provided criteria.
+     * - Filters by idCmsSlotTemplate if provided via criteria transfer.
+     * - Filters by idCmsSlot if provided via criteria transfer.
+     * - Applies FilterTransfer provided by CmsSlotBlockCriteriaTransfer::getFilter().
      *
      * @api
      *
