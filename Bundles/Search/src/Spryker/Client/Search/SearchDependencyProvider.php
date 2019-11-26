@@ -142,7 +142,7 @@ class SearchDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SourceIdentifierMapperPluginInterface[]
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextExpanderPluginInterface[]
      */
     protected function getSourceIdentifierMapperPlugins(): array
     {

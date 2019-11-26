@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
 
-class SourceIdentifierMapper implements SourceIdentifierMapperInterface
+class SearchContextExpander implements SearchContextExpanderInterface
 {
     /**
      * @var \Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface
@@ -31,11 +31,10 @@ class SourceIdentifierMapper implements SourceIdentifierMapperInterface
      *
      * @return \Generated\Shared\Transfer\SearchContextTransfer
      */
-    public function mapSourceIdentifier(SearchContextTransfer $searchContextTransfer): SearchContextTransfer
+    public function expandSearchContext(SearchContextTransfer $searchContextTransfer): SearchContextTransfer
     {
-        $sourceIdentifier = $this->getSourceIdentifierFromSearchContextTransfer($searchContextTransfer);
-        $indexName = $this->indexNameResolver->resolve($sourceIdentifier);
-        $searchContextTransfer = $this->setIndexName($searchContextTransfer, $indexName);
+        $searchContextTransfer = $this->expandSearchContextWithElasticsearchContext($searchContextTransfer);
+        $searchContextTransfer = $this->addIndexNameToElasticsearchContext($searchContextTransfer);
 
         return $searchContextTransfer;
     }
@@ -43,30 +42,26 @@ class SourceIdentifierMapper implements SourceIdentifierMapperInterface
     /**
      * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\SearchContextTransfer
      */
-    protected function getSourceIdentifierFromSearchContextTransfer(SearchContextTransfer $searchContextTransfer): string
+    protected function expandSearchContextWithElasticsearchContext(SearchContextTransfer $searchContextTransfer): SearchContextTransfer
     {
-        return $searchContextTransfer->requireSourceIdentifier()
-            ->getSourceIdentifier();
+        $elasticsearchSearchContextTransfer = new ElasticsearchSearchContextTransfer();
+        $searchContextTransfer->setElasticsearchContext($elasticsearchSearchContextTransfer);
+
+        return $searchContextTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
-     * @param string $indexName
      *
      * @return \Generated\Shared\Transfer\SearchContextTransfer
      */
-    protected function setIndexName(SearchContextTransfer $searchContextTransfer, string $indexName): SearchContextTransfer
+    protected function addIndexNameToElasticsearchContext(SearchContextTransfer $searchContextTransfer): SearchContextTransfer
     {
-        $elasticsearchSearchContextTransfer = $searchContextTransfer->getElasticsearchContext();
-
-        if (!$elasticsearchSearchContextTransfer) {
-            $elasticsearchSearchContextTransfer = new ElasticsearchSearchContextTransfer();
-        }
-
-        $elasticsearchSearchContextTransfer->setIndexName($indexName);
-        $searchContextTransfer->setElasticsearchContext($elasticsearchSearchContextTransfer);
+        $sourceIdentifier = $searchContextTransfer->requireSourceIdentifier()->getSourceIdentifier();
+        $indexName = $this->indexNameResolver->resolve($sourceIdentifier);
+        $searchContextTransfer->getElasticsearchContext()->setIndexName($indexName);
 
         return $searchContextTransfer;
     }

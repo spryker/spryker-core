@@ -9,12 +9,12 @@ namespace Spryker\Client\Search\SearchContext;
 
 use Generated\Shared\Transfer\SearchContextTransfer;
 
-interface SourceIdentifierMapperInterface
+interface SearchContextExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
      *
      * @return \Generated\Shared\Transfer\SearchContextTransfer
      */
-    public function mapSourceIdentifier(SearchContextTransfer $searchContextTransfer): SearchContextTransfer;
+    public function expandSearchContext(SearchContextTransfer $searchContextTransfer): SearchContextTransfer;
 }

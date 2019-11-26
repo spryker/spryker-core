@@ -9,16 +9,17 @@ namespace Spryker\Client\SearchElasticsearch\Plugin;
 
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\SearchExtension\Dependency\Plugin\SourceIdentifierMapperPluginInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextExpanderPluginInterface;
 
 /**
  * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory getFactory()
  */
-class ElasticsearchSourceIdentifierMapperPlugin extends AbstractPlugin implements SourceIdentifierMapperPluginInterface
+class ElasticsearchSearchContextExpanderPlugin extends AbstractPlugin implements SearchContextExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Maps source identifier to Elasticsearch index name.
+     * - Adds ElasticsearchSearchContextTransfer as a property to SearchContextTransfer.
+     * - ElasticsearchSearchContextTransfer holds metadata/settings needed for search (index name etc.)
      *
      * @api
      *
@@ -26,8 +27,8 @@ class ElasticsearchSourceIdentifierMapperPlugin extends AbstractPlugin implement
      *
      * @return \Generated\Shared\Transfer\SearchContextTransfer
      */
-    public function mapSourceIdentifier(SearchContextTransfer $searchContextTransfer): SearchContextTransfer
+    public function expandSearchContext(SearchContextTransfer $searchContextTransfer): SearchContextTransfer
     {
-        return $this->getFactory()->createSourceIdentifierMapper()->mapSourceIdentifier($searchContextTransfer);
+        return $this->getFactory()->createSearchContextExpander()->expandSearchContext($searchContextTransfer);
     }
 }

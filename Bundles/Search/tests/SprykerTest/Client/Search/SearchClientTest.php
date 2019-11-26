@@ -21,7 +21,7 @@ use Spryker\Client\Search\Plugin\Config\SearchConfig;
 use Spryker\Client\Search\Plugin\Elasticsearch\Query\SearchKeysQuery;
 use Spryker\Client\Search\Plugin\Elasticsearch\Query\SearchStringQuery;
 use Spryker\Client\Search\SearchClient;
-use Spryker\Client\Search\SearchContext\SourceIdentifierMapperInterface;
+use Spryker\Client\Search\SearchContext\SearchContextExpanderInterface;
 use Spryker\Client\Search\SearchFactory;
 use Spryker\Client\SearchElasticsearch\Plugin\ElasticsearchSearchAdapterPlugin;
 use Spryker\Client\SearchElasticsearch\SearchElasticsearchClient;
@@ -428,17 +428,17 @@ class SearchClientTest extends Unit
      */
     protected function setupEnvironmentForSearchTesting(): void
     {
-        $this->tester->mockFactoryMethod('createSourceIdentifierMapper', $this->getSourceIdentifierMapperMock());
+        $this->tester->mockFactoryMethod('createSearchContextExpander', $this->getSearchContextExpanderMock());
         $this->tester->mockFactoryMethod('getClientAdapterPlugins', [$this->createElasticsearchSearchAdapterPluginMock()]);
     }
 
     /**
-     * @return \Spryker\Client\Search\SearchContext\SourceIdentifierMapperInterface|\PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Client\Search\SearchContext\SearchContextExpanderInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getSourceIdentifierMapperMock(): SourceIdentifierMapperInterface
+    protected function getSearchContextExpanderMock(): SearchContextExpanderInterface
     {
-        $sourceIdentifierMapperMock = $this->createMock(SourceIdentifierMapperInterface::class);
-        $sourceIdentifierMapperMock->method('mapSourceIdentifier')
+        $sourceIdentifierMapperMock = $this->createMock(SearchContextExpanderInterface::class);
+        $sourceIdentifierMapperMock->method('expandSearchContext')
             ->willReturnCallback(function (SearchContextTransfer $searchContextTransfer) {
                 $searchContextTransfer->setElasticsearchContext(
                     (new ElasticsearchSearchContextTransfer())->setIndexName($searchContextTransfer->getSourceIdentifier())
