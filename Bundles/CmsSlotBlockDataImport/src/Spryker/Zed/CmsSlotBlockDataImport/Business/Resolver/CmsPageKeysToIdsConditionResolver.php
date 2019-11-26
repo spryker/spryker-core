@@ -30,10 +30,6 @@ class CmsPageKeysToIdsConditionResolver implements ConditionResolverInterface
         $cmsPageKeys = $conditionValue ? explode(',', $conditionValue) : [];
         $conditionsArray[static::KEY_CMS_PAGE_IDS] = $this->getCmsPageIdsByKeys($cmsPageKeys);
 
-        if ($conditionsArray[static::KEY_CMS_PAGE_IDS]) {
-            $conditionsArray[AllConditionResolver::KEY_ALL] = false;
-        }
-
         return $conditionsArray;
     }
 

@@ -9,7 +9,7 @@ namespace Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver;
 
 class AllConditionResolver implements ConditionResolverInterface
 {
-    public const KEY_ALL = 'all';
+    protected const KEY_ALL = 'all';
 
     /**
      * @param string $conditionValue
