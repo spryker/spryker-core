@@ -54,7 +54,7 @@ class CodeTestConsole extends Console
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $module = $this->input->getOption(static::OPTION_MODULE);
-        $this->displayRunInfo($input);
+        $this->displayRunInfo($input, $module);
 
         if (!$this->input->getOption(static::OPTION_INITIALIZE) && !$input->getOption(static::OPTION_DRY_RUN)) {
             $this->warning('Make sure you ran `codecept build` already.');

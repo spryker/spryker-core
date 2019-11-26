@@ -62,6 +62,9 @@ class CodeTester
     }
 
     /**
+     * Runs `vendor/bin/codecept run`.
+     * If module is given, it will run over this (core) module. Otherwise runs over project level.
+     *
      * @param string|null $moduleName
      * @param array $options
      *
@@ -98,6 +101,9 @@ class CodeTester
     }
 
     /**
+     * Runs `vendor/bin/codecept fixtures`.
+     * If module is given, it will run over this (core) module. Otherwise runs over project level.
+     *
      * @param string|null $moduleName
      * @param array $options
      *
@@ -141,6 +147,10 @@ class CodeTester
     protected function buildModuleFilterTransfer(?string $moduleName): ModuleFilterTransfer
     {
         $moduleFilterTransfer = new ModuleFilterTransfer();
+        if ($moduleName === null) {
+            return $moduleFilterTransfer;
+        }
+
         if (strpos($moduleName, '.') === false) {
             $moduleTransfer = new ModuleTransfer();
             $moduleTransfer->setName($moduleName);
@@ -193,6 +203,10 @@ class CodeTester
 
         $commandLine[] = 'vendor/bin/codecept';
         $commandLine[] = 'run';
+
+        if ($path) {
+            $options['config'] = $path;
+        }
 
         $commandLine = array_merge(
             $commandLine,
