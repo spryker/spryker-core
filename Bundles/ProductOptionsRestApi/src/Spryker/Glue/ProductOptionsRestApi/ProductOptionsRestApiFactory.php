@@ -13,6 +13,8 @@ use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiTo
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductStorageClientInterface;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Expander\ProductOptionByProductAbstractSkuExpander;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Expander\ProductOptionByProductAbstractSkuExpanderInterface;
+use Spryker\Glue\ProductOptionsRestApi\Processor\Expander\ProductOptionByProductConcreteSkuExpander;
+use Spryker\Glue\ProductOptionsRestApi\Processor\Expander\ProductOptionByProductConcreteSkuExpanderInterface;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Mapper\ProductOptionMapper;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Mapper\ProductOptionMapperInterface;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionStorageReader;
@@ -92,6 +94,14 @@ class ProductOptionsRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\ProductOptionsRestApi\Processor\Translator\ProductOptionTranslatorInterface
+     */
+    public function createProductOptionTranslator(): ProductOptionTranslatorInterface
+    {
+        return new ProductOptionTranslator($this->getGlossaryStorageClient());
+    }
+
+    /**
      * @return \Spryker\Glue\ProductOptionsRestApi\Processor\Expander\ProductOptionByProductAbstractSkuExpanderInterface
      */
     public function createProductOptionByProductAbstractSkuExpander(): ProductOptionByProductAbstractSkuExpanderInterface
@@ -100,10 +110,10 @@ class ProductOptionsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ProductOptionsRestApi\Processor\Translator\ProductOptionTranslatorInterface
+     * @return \Spryker\Glue\ProductOptionsRestApi\Processor\Expander\ProductOptionByProductConcreteSkuExpanderInterface
      */
-    public function createProductOptionTranslator(): ProductOptionTranslatorInterface
+    public function createProductOptionByProductConcreteSkuExpander(): ProductOptionByProductConcreteSkuExpanderInterface
     {
-        return new ProductOptionTranslator($this->getGlossaryStorageClient());
+        return new ProductOptionByProductConcreteSkuExpander($this->createProductOptionStorageReader());
     }
 }

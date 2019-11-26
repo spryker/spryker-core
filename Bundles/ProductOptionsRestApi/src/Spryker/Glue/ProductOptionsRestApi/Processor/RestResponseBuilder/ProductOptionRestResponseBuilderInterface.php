@@ -7,22 +7,20 @@
 
 namespace Spryker\Glue\ProductOptionsRestApi\Processor\RestResponseBuilder;
 
-use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
-
 interface ProductOptionRestResponseBuilderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[] $productAbstractOptionStorageTransfers
+     * @param array $resourceMapping
      * @param string $parentResourceType
-     * @param string $parentResourceId
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
      */
     public function createProductOptionRestResources(
-        ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer,
+        array $productAbstractOptionStorageTransfers,
+        array $resourceMapping,
         string $parentResourceType,
-        string $parentResourceId,
         array $sorts
     ): array;
 }

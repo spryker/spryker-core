@@ -40,6 +40,6 @@ class ProductOptionRestCartItemsAttributesMapperPlugin extends AbstractPlugin im
 
         return $this->getFactory()
             ->createProductOptionMapper()
-            ->mapItemTransferToRestOrderItemsAttributesTransfer($itemTransfer, $restItemsAttributesTransfer);
+            ->mapItemTransferToRestItemsAttributesTransfer($itemTransfer, $restItemsAttributesTransfer);
     }
 }
