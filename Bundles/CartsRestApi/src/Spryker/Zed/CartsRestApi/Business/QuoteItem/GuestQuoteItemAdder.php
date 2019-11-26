@@ -165,10 +165,11 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
      */
     protected function createCartNotFoundError(): QuoteResponseTransfer
     {
-        return $quoteResponseTransfer = (new QuoteResponseTransfer())
+        return (new QuoteResponseTransfer())
             ->addError(
                 (new QuoteErrorTransfer())
                     ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_NOT_FOUND)
-            );
+            )
+            ->setIsSuccessful(false);
     }
 }
