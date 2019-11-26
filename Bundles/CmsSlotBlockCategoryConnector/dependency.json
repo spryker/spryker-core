@@ -1,6 +1,6 @@
 {
   "include": {
-    "spryker/category": "Provides using of parameters from the database.",
+    "spryker/category": "Provides Category data from database.",
     "spryker/transfer": "Provides transfer objects definition with associative functionality."
   }
 }
