@@ -8,6 +8,8 @@
 namespace Spryker\Client\CmsSlotBlockStorage\Storage;
 
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockConditionTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\CmsSlotBlockStorage\Dependency\Client\CmsSlotBlockStorageToStorageClientInterface;
 use Spryker\Client\CmsSlotBlockStorage\Dependency\Service\CmsSlotBlockStorageToSynchronizationServiceInterface;
@@ -60,7 +62,21 @@ class CmsSlotBlockStorageReader implements CmsSlotBlockStorageReaderInterface
         $cmsSlotBlockStorageData = $this->storageClient->get($storageKey);
 
         $cmsSlotBlockCollectionTransfer = new CmsSlotBlockCollectionTransfer();
-        $cmsSlotBlockCollectionTransfer->fromArray($cmsSlotBlockStorageData, true);
+        foreach ($cmsSlotBlockStorageData[CmsSlotBlockCollectionTransfer::CMS_SLOT_BLOCKS] as $cmsSlotBlock) {
+            $cmsSlotBlockTransfer = (new CmsSlotBlockTransfer())
+                ->setCmsBlockKey($cmsSlotBlock[CmsSlotBlockTransfer::CMS_BLOCK_KEY]);
+
+            if ($cmsSlotBlock[CmsSlotBlockTransfer::CONDITIONS]) {
+                foreach ($cmsSlotBlock[CmsSlotBlockTransfer::CONDITIONS] as $conditionKey => $condition) {
+                    $cmsSlotBlockTransfer->addCondition(
+                        $conditionKey,
+                        (new CmsSlotBlockConditionTransfer())->fromArray($condition, true)
+                    );
+                }
+            }
+
+            $cmsSlotBlockCollectionTransfer->addCmsSlotBlock($cmsSlotBlockTransfer);
+        }
 
         return $cmsSlotBlockCollectionTransfer;
     }

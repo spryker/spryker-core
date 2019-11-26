@@ -36,7 +36,7 @@ class CmsPageConditionConstraintValidator extends ConstraintValidator
             return;
         }
 
-        if (!$value[CmsPageSlotBlockConditionForm::FIELD_PAGE_IDS]) {
+        if (!$value[CmsPageSlotBlockConditionForm::FIELD_CMS_PAGE_IDS]) {
             $this->context->buildViolation($constraint->getMessage())
                 ->addViolation();
         }

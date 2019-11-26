@@ -7,6 +7,14 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="CmsSlotTemplate">
+        <property name="path" type="string"/>
+    </transfer>
+
+    <transfer name="CmsSlotTemplateConfiguration">
+        <property name="conditions" type="string[]" singular="condition"/>
+    </transfer>
+
     <transfer name="CmsBlock">
         <property name="storeRelation" type="StoreRelation"/>
         <property name="storeNames" type="string"/>
@@ -17,6 +25,19 @@
         <property name="validFrom" type="string"/>
         <property name="validTo" type="string"/>
         <property name="cmsSlotBlockCollection" type="CmsSlotBlockCollection"/>
+    </transfer>
+
+    <transfer name="CmsSlotBlockCollection">
+        <property name="cmsSlotBlocks" type="CmsSlotBlock[]" singular="cmsSlotBlock"/>
+    </transfer>
+
+    <transfer name="CmsSlotBlock">
+        <property name="idSlotTemplate" type="int"/>
+        <property name="idSlot" type="int"/>
+        <property name="conditions" type="CmsSlotBlockCondition[]" singular="condition" associative="true"/>
+    </transfer>
+
+    <transfer name="CmsSlotBlockCondition">
     </transfer>
 
     <transfer name="CmsSlotBlockCriteria">
@@ -35,23 +56,6 @@
     <transfer name="Filter">
         <property name="limit" type="int"/>
         <property name="orderBy" type="string"/>
-    </transfer>
-
-    <transfer name="CmsSlotTemplate">
-        <property name="path" type="string"/>
-    </transfer>
-
-    <transfer name="CmsSlotBlockCollection">
-        <property name="cmsSlotBlocks" type="CmsSlotBlock[]" singular="cmsSlotBlock"/>
-    </transfer>
-
-    <transfer name="CmsSlotBlock">
-        <property name="idSlotTemplate" type="int"/>
-        <property name="idSlot" type="int"/>
-    </transfer>
-
-    <transfer name="CmsSlotTemplateConfiguration">
-        <property name="conditions" type="array" singular="condition"/>
     </transfer>
 
 </transfers>

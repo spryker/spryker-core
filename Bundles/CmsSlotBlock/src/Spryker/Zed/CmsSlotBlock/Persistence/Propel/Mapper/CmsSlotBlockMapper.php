@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsSlotBlock\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockConditionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
 use Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlock;
@@ -45,8 +46,12 @@ class CmsSlotBlockMapper implements CmsSlotBlockMapperInterface
         $cmsSlotBlockEntity->setFkCmsSlotTemplate($cmsSlotBlockTransfer->getIdSlotTemplate());
         $cmsSlotBlockEntity->setPosition($cmsSlotBlockTransfer->getPosition());
 
+        $conditions = [];
+        foreach ($cmsSlotBlockTransfer->getConditions() as $conditionKey => $cmsSlotBlockConditionTransfer) {
+            $conditions[$conditionKey] = $cmsSlotBlockConditionTransfer->modifiedToArray(true, true);
+        }
         $cmsSlotBlockEntity->setConditions(
-            $this->utilEncodingService->encodeJson($cmsSlotBlockTransfer->getConditions())
+            $this->utilEncodingService->encodeJson($conditions)
         );
 
         return $cmsSlotBlockEntity;
@@ -117,17 +122,21 @@ class CmsSlotBlockMapper implements CmsSlotBlockMapperInterface
         SpyCmsSlotBlock $cmsSlotBlockEntity,
         CmsSlotBlockTransfer $cmsSlotBlockTransfer
     ): CmsSlotBlockTransfer {
-        $cmsSlotBlockTransfer->fromArray($cmsSlotBlockEntity->toArray(), true);
+        $cmsSlotBlock = $cmsSlotBlockEntity->toArray();
+        unset($cmsSlotBlock[CmsSlotBlockTransfer::CONDITIONS]);
+
+        $cmsSlotBlockTransfer->fromArray($cmsSlotBlock, true);
         $cmsSlotBlockTransfer->setIdSlotTemplate($cmsSlotBlockEntity->getFkCmsSlotTemplate())
             ->setIdSlot($cmsSlotBlockEntity->getFkCmsSlot())
             ->setIdCmsBlock($cmsSlotBlockEntity->getFkCmsBlock());
-        $cmsSlotBlockTransfer->setConditions(
-            $this->utilEncodingService->decodeJson($cmsSlotBlockEntity->getConditions())
-        );
 
-        $cmsSlotBlockTransfer->setConditions(
-            $this->utilEncodingService->decodeJson($cmsSlotBlockEntity->getConditions(), true)
-        );
+        $conditions = $this->utilEncodingService->decodeJson($cmsSlotBlockEntity->getConditions(), true);
+        foreach ($conditions as $conditionKey => $condition) {
+            $cmsSlotBlockTransfer->addCondition(
+                $conditionKey,
+                (new CmsSlotBlockConditionTransfer())->fromArray($condition, true)
+            );
+        }
 
         return $cmsSlotBlockTransfer;
     }

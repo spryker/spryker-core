@@ -4,7 +4,12 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="CmsSlotTemplateConfiguration">
-        <property name="conditions" type="array" singular="condition"/>
+        <property name="conditions" type="string[]" singular="condition"/>
+    </transfer>
+
+    <transfer name="CmsSlotBlockCondition">
+        <property name="all" type="bool"/>
+        <property name="cmsPageIds" type="int[]" singular="idCmsPage"/>
     </transfer>
 
     <transfer name="Locale">

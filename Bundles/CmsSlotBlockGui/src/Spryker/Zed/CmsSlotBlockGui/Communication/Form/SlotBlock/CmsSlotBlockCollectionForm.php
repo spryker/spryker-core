@@ -19,8 +19,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CmsSlotBlockCollectionForm extends AbstractType
 {
+    public const OPTION_TEMPLATE_CONDITIONS = 'template_conditions';
+
     protected const FIELD_CMS_SLOT_BLOCKS = 'cmsSlotBlocks';
-    protected const OPTION_CONDITIONS = 'conditions';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -32,7 +33,7 @@ class CmsSlotBlockCollectionForm extends AbstractType
         $resolver->setDefaults([
             'data_class' => CmsSlotBlockCollectionTransfer::class,
         ]);
-        $resolver->setRequired([static::OPTION_CONDITIONS]);
+        $resolver->setRequired([static::OPTION_TEMPLATE_CONDITIONS]);
     }
 
     /**
@@ -62,7 +63,7 @@ class CmsSlotBlockCollectionForm extends AbstractType
             'allow_delete' => true,
             'entry_options' => [
                 'label' => false,
-                static::OPTION_CONDITIONS => $options[static::OPTION_CONDITIONS],
+                static::OPTION_TEMPLATE_CONDITIONS => $options[static::OPTION_TEMPLATE_CONDITIONS],
             ],
         ]);
 

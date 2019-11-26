@@ -8,7 +8,10 @@
         <property name="idSlotTemplate" type="int"/>
         <property name="idSlot" type="int"/>
         <property name="cmsBlockKey" type="string"/>
-        <property name="conditions" type="array" singular="condition" associative="true"/>
+        <property name="conditions" type="CmsSlotBlockCondition[]" singular="condition" associative="true"/>
+    </transfer>
+
+    <transfer name="CmsSlotBlockCondition">
     </transfer>
 
     <transfer name="CmsSlotBlockCollection">

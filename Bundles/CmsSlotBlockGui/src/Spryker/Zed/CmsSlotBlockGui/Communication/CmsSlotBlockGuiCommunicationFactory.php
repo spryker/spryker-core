@@ -15,11 +15,13 @@ use Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\CmsBlockChoiceFo
 use Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\CmsSlotBlockCollectionFormDataProvider;
 use Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\CmsSlotBlockCollectionFormDataProviderInterface;
 use Spryker\Zed\CmsSlotBlockGui\Communication\Form\SlotBlock\CmsSlotBlockCollectionForm;
+use Spryker\Zed\CmsSlotBlockGui\Communication\Form\Transformer\CmsSlotBlockTransformer;
 use Spryker\Zed\CmsSlotBlockGui\Communication\Table\CmsSlotBlockTable;
 use Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsBlockFacadeInterface;
 use Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotBlockFacadeInterface;
 use Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
@@ -140,5 +142,13 @@ class CmsSlotBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getCmsSlotBlockConditionFormPlugins(): array
     {
         return $this->getProvidedDependency(CmsSlotBlockGuiDependencyProvider::CMS_SLOT_BLOCK_FORM_PLUGINS);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    public function createCmsSlotBlockTransformer(): DataTransformerInterface
+    {
+        return new CmsSlotBlockTransformer();
     }
 }

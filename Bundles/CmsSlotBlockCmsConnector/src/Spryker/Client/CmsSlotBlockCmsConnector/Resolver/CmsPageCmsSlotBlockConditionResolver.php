@@ -9,24 +9,10 @@ namespace Spryker\Client\CmsSlotBlockCmsConnector\Resolver;
 
 use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Generated\Shared\Transfer\CmsSlotParamsTransfer;
+use Spryker\Shared\CmsSlotBlockCmsConnector\CmsSlotBlockCmsConnectorConfig;
 
 class CmsPageCmsSlotBlockConditionResolver implements CmsPageCmsSlotBlockConditionResolverInterface
 {
-    /**
-     * @uses \Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\CmsPageBlockConditionForm::FIELD_ALL
-     */
-    protected const CONDITIONS_DATA_KEY_ALL = 'all';
-
-    /**
-     * @uses \Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\CmsPageBlockConditionForm::FIELD_PAGE_IDS
-     */
-    protected const CONDITIONS_DATA_KEY_PAGE_IDS = 'pageIds';
-
-    /**
-     * @uses \Spryker\Shared\CmsSlotBlockCmsConnector\CmsSlotBlockCmsConnectorConfig::CONDITION_KEY
-     */
-    protected const CONDITION_KEY = 'cms_page';
-
     /**
      * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer $cmsSlotBlockTransfer
      *
@@ -34,7 +20,8 @@ class CmsPageCmsSlotBlockConditionResolver implements CmsPageCmsSlotBlockConditi
      */
     public function isSlotBlockConditionApplicable(CmsSlotBlockTransfer $cmsSlotBlockTransfer): bool
     {
-        return isset($cmsSlotBlockTransfer->getConditions()[static::CONDITION_KEY]);
+        return $cmsSlotBlockTransfer->getConditions()
+            ->offsetExists(CmsSlotBlockCmsConnectorConfig::CONDITION_KEY);
     }
 
     /**
@@ -47,30 +34,15 @@ class CmsPageCmsSlotBlockConditionResolver implements CmsPageCmsSlotBlockConditi
         CmsSlotBlockTransfer $cmsSlotBlockTransfer,
         CmsSlotParamsTransfer $cmsSlotParamsTransfer
     ): bool {
-        $conditionData = $cmsSlotBlockTransfer->getConditions()[static::CONDITION_KEY];
+        /** @var \Generated\Shared\Transfer\CmsSlotBlockConditionTransfer $cmsSlotBlockConditionTransfer */
+        $cmsSlotBlockConditionTransfer = $cmsSlotBlockTransfer->getConditions()
+            ->offsetGet(CmsSlotBlockCmsConnectorConfig::CONDITION_KEY);
 
-        if ($conditionData[static::CONDITIONS_DATA_KEY_ALL]) {
-            return true;
-        }
-        if (!$cmsSlotParamsTransfer->getIdCmsPage()) {
-            return false;
-        }
-
-        if ($this->getIsConditionSatisfiedByIdCmsPage($cmsSlotParamsTransfer->getIdCmsPage(), $conditionData)) {
+        if ($cmsSlotBlockConditionTransfer->getAll()) {
             return true;
         }
 
-        return false;
-    }
-
-    /**
-     * @param int $idCmsPage
-     * @param array $conditionData
-     *
-     * @return bool
-     */
-    protected function getIsConditionSatisfiedByIdCmsPage(int $idCmsPage, array $conditionData): bool
-    {
-        return in_array($idCmsPage, $conditionData[static::CONDITIONS_DATA_KEY_PAGE_IDS]);
+        return $cmsSlotParamsTransfer->getIdCmsPage()
+            && in_array($cmsSlotParamsTransfer->getIdCmsPage(), $cmsSlotBlockConditionTransfer->getCmsPageIds());
     }
 }

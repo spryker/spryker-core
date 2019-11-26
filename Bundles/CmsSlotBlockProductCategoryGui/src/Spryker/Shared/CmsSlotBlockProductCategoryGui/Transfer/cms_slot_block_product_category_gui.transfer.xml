@@ -8,7 +8,13 @@
     </transfer>
 
     <transfer name="CmsSlotTemplateConfiguration">
-        <property name="conditions" type="array" singular="condition"/>
+        <property name="conditions" type="string[]" singular="condition"/>
+    </transfer>
+
+    <transfer name="CmsSlotBlockCondition">
+        <property name="all" type="bool"/>
+        <property name="productIds" type="int[]" singular="idProduct"/>
+        <property name="categoryIds" type="int[]" singular="idCategory"/>
     </transfer>
 
     <transfer name="Pagination">

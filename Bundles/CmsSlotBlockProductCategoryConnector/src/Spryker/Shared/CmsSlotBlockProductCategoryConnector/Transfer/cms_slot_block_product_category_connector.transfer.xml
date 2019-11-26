@@ -12,7 +12,13 @@
     </transfer>
 
     <transfer name="CmsSlotBlock">
-        <property name="conditions" type="array" singular="condition" associative="true"/>
+        <property name="conditions" type="CmsSlotBlockCondition[]" singular="condition" associative="true"/>
+    </transfer>
+
+    <transfer name="CmsSlotBlockCondition">
+        <property name="all" type="bool"/>
+        <property name="productIds" type="int[]" singular="idProduct"/>
+        <property name="categoryIds" type="int[]" singular="idCategory"/>
     </transfer>
 
     <transfer name="CmsSlotParams">

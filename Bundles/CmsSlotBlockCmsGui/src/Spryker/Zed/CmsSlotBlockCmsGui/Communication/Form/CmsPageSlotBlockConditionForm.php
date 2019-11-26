@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form;
 
+use Generated\Shared\Transfer\CmsSlotBlockConditionTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -20,8 +21,9 @@ class CmsPageSlotBlockConditionForm extends AbstractType
     public const OPTION_PAGE_ARRAY = 'option-page-array';
     public const OPTION_ALL_ARRAY = 'option-all-array';
 
-    public const FIELD_ALL = 'all';
-    public const FIELD_PAGE_IDS = 'pageIds';
+    public const FIELD_ALL = CmsSlotBlockConditionTransfer::ALL;
+    public const FIELD_CMS_PAGE_IDS = CmsSlotBlockConditionTransfer::CMS_PAGE_IDS;
+
     /**
      * @uses \Spryker\Shared\CmsSlotBlockCmsConnector\CmsSlotBlockCmsConnectorConfig::CONDITION_KEY
      */
@@ -52,7 +54,7 @@ class CmsPageSlotBlockConditionForm extends AbstractType
         $builder->add(static::FIELD_CMS_PAGE, FormType::class, [
             'label' => false,
             'error_mapping' => [
-                '.' => static::FIELD_PAGE_IDS,
+                '.' => static::FIELD_CMS_PAGE_IDS,
             ],
             'constraints' => [
                 $this->getFactory()->createCmsPageConditionsConstraint(),
@@ -79,7 +81,7 @@ class CmsPageSlotBlockConditionForm extends AbstractType
             'choice_attr' => function ($choice, $key, $value) {
                 return [
                     'data-disable' => $value,
-                    'data-inputs' => $this->getFactory()->getUtilEncoding()->encodeJson([static::FIELD_PAGE_IDS]),
+                    'data-inputs' => $this->getFactory()->getUtilEncoding()->encodeJson([static::FIELD_CMS_PAGE_IDS]),
                 ];
             },
             'expanded' => true,
@@ -99,7 +101,7 @@ class CmsPageSlotBlockConditionForm extends AbstractType
      */
     protected function addPageIdsField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_PAGE_IDS, ChoiceType::class, [
+        $builder->add(static::FIELD_CMS_PAGE_IDS, ChoiceType::class, [
             'choices' => $options[static::OPTION_PAGE_ARRAY],
             'required' => false,
             'multiple' => true,

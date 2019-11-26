@@ -10,29 +10,10 @@ namespace Spryker\Client\CmsSlotBlockProductCategoryConnector\Resolver;
 use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Generated\Shared\Transfer\CmsSlotParamsTransfer;
 use Spryker\Client\CmsSlotBlockProductCategoryConnector\Reader\ProductCategoryReaderInterface;
+use Spryker\Shared\CmsSlotBlockProductCategoryConnector\CmsSlotBlockProductCategoryConnectorConfig;
 
 class ProductCategoryCmsSlotBlockConditionResolver implements ProductCategoryCmsSlotBlockConditionResolverInterface
 {
-    /**
-     * @uses \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Form\ProductCategorySlotBlockConditionForm::FIELD_ALL
-     */
-    protected const CONDITIONS_DATA_KEY_ALL = 'all';
-
-    /**
-     * @uses \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Form\ProductCategorySlotBlockConditionForm::FIELD_PRODUCT_IDS
-     */
-    protected const CONDITIONS_DATA_KEY_PRODUCT_IDS = 'productIds';
-
-    /**
-     * @uses \Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Form\ProductCategorySlotBlockConditionForm::FIELD_CATEGORY_IDS
-     */
-    protected const CONDITIONS_DATA_KEY_CATEGORIES_IDS = 'categoryIds';
-
-    /**
-     * @uses \Spryker\Shared\CmsSlotBlockProductCategoryConnector\CmsSlotBlockProductCategoryConnectorConfig::CONDITION_KEY
-     */
-    protected const CONDITION_KEY = 'productCategory';
-
     /**
      * @var \Spryker\Client\CmsSlotBlockProductCategoryConnector\Reader\ProductCategoryReaderInterface
      */
@@ -53,7 +34,8 @@ class ProductCategoryCmsSlotBlockConditionResolver implements ProductCategoryCms
      */
     public function isSlotBlockConditionApplicable(CmsSlotBlockTransfer $cmsSlotBlockTransfer): bool
     {
-        return isset($cmsSlotBlockTransfer->getConditions()[static::CONDITION_KEY]);
+        return $cmsSlotBlockTransfer->getConditions()
+            ->offsetExists(CmsSlotBlockProductCategoryConnectorConfig::CONDITION_KEY);
     }
 
     /**
@@ -66,44 +48,34 @@ class ProductCategoryCmsSlotBlockConditionResolver implements ProductCategoryCms
         CmsSlotBlockTransfer $cmsSlotBlockTransfer,
         CmsSlotParamsTransfer $cmsSlotParamsTransfer
     ): bool {
-        $conditionData = $cmsSlotBlockTransfer->getConditions()[static::CONDITION_KEY];
+        /** @var \Generated\Shared\Transfer\CmsSlotBlockConditionTransfer $cmsSlotBlockConditionTransfer */
+        $cmsSlotBlockConditionTransfer = $cmsSlotBlockTransfer->getConditions()
+            ->offsetGet(CmsSlotBlockProductCategoryConnectorConfig::CONDITION_KEY);
 
-        if ($conditionData[static::CONDITIONS_DATA_KEY_ALL]) {
+        if ($cmsSlotBlockConditionTransfer->getAll()) {
             return true;
         }
 
-        if (!$cmsSlotParamsTransfer->getIdProductAbstract()) {
-            return false;
-        }
-
-        if ($this->isIdProductAbstractExistsInConditionData($conditionData, $cmsSlotParamsTransfer->getIdProductAbstract())) {
-            return true;
-        }
-
-        return $this->isProductCategoryIdsExistInConditionData($conditionData, $cmsSlotParamsTransfer->getIdProductAbstract());
+        return $cmsSlotParamsTransfer->getIdProductAbstract()
+            && (
+                in_array($cmsSlotParamsTransfer->getIdProductAbstract(), $cmsSlotBlockConditionTransfer->getProductIds())
+                || $this->getIsProductInCategoryIds(
+                    $cmsSlotParamsTransfer->getIdProductAbstract(),
+                    $cmsSlotBlockConditionTransfer->getCategoryIds()
+                )
+            );
     }
 
     /**
-     * @param array $conditionData
      * @param int $idProductAbstract
+     * @param int[] $conditionCategoryIds
      *
      * @return bool
      */
-    protected function isIdProductAbstractExistsInConditionData(array $conditionData, int $idProductAbstract): bool
-    {
-        return in_array($idProductAbstract, $conditionData[static::CONDITIONS_DATA_KEY_PRODUCT_IDS]);
-    }
-
-    /**
-     * @param array $conditionData
-     * @param int $idProductAbstract
-     *
-     * @return bool
-     */
-    protected function isProductCategoryIdsExistInConditionData(array $conditionData, int $idProductAbstract): bool
+    protected function getIsProductInCategoryIds(int $idProductAbstract, array $conditionCategoryIds): bool
     {
         $productCategoryIds = $this->productCategoryReader->getAbstractProductCategoryIds($idProductAbstract);
 
-        return count(array_intersect($conditionData[static::CONDITIONS_DATA_KEY_CATEGORIES_IDS], $productCategoryIds)) > 0;
+        return count(array_intersect($conditionCategoryIds, $productCategoryIds)) > 0;
     }
 }

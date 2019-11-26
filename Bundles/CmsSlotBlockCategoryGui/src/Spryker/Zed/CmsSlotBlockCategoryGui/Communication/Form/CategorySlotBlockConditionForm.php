@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form;
 
+use Generated\Shared\Transfer\CmsSlotBlockConditionTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -20,8 +21,8 @@ class CategorySlotBlockConditionForm extends AbstractType
     public const OPTION_CATEGORY_ARRAY = 'option-category-array';
     public const OPTION_ALL_ARRAY = 'option-all-array';
 
-    public const FIELD_CATEGORY_IDS = 'categoryIds';
-    public const FIELD_ALL = 'all';
+    public const FIELD_ALL = CmsSlotBlockConditionTransfer::ALL;
+    public const FIELD_CATEGORY_IDS = CmsSlotBlockConditionTransfer::CATEGORY_IDS;
 
     /**
      * @uses \Spryker\Shared\CmsSlotBlockCategoryConnector\CmsSlotBlockCategoryConnectorConfig::CONDITION_KEY

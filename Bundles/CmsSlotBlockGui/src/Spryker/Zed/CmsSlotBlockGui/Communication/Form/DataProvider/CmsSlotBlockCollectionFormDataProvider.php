@@ -9,13 +9,12 @@ namespace Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
+use Spryker\Zed\CmsSlotBlockGui\Communication\Form\SlotBlock\CmsSlotBlockCollectionForm;
 use Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotBlockFacadeInterface;
 use Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotFacadeInterface;
 
 class CmsSlotBlockCollectionFormDataProvider implements CmsSlotBlockCollectionFormDataProviderInterface
 {
-    protected const OPTION_CONDITIONS = 'conditions';
-
     /**
      * @var \Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotFacadeInterface
      */
@@ -64,7 +63,7 @@ class CmsSlotBlockCollectionFormDataProvider implements CmsSlotBlockCollectionFo
         $templateConditions = $this->cmsSlotBlockFacade->getTemplateConditionsByPath($cmsSlotTemplateTransfer->getPath());
 
         return [
-            static::OPTION_CONDITIONS => $templateConditions,
+            CmsSlotBlockCollectionForm::OPTION_TEMPLATE_CONDITIONS => $templateConditions,
         ];
     }
 }
