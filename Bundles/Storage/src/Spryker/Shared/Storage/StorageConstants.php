@@ -72,12 +72,4 @@ interface StorageConstants
      * @deprecated Use `Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_CONNECTION_OPTIONS` instead.
      */
     public const STORAGE_PREDIS_CLIENT_OPTIONS = 'STORAGE_PREDIS_CLIENT_OPTIONS';
-
-    /**
-     * Specification:
-     * - Enables/disables storage caching.
-     *
-     * @api
-     */
-    public const STORAGE_CACHE_ENABLED = 'STORAGE:STORAGE_CACHE_ENABLED';
 }

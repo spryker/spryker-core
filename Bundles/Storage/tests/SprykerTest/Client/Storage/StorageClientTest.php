@@ -229,7 +229,7 @@ class StorageClientTest extends Unit
      */
     public function testCacheIsDisabled(): void
     {
-        $this->tester->setConfig(StorageConstants::STORAGE_CACHE_ENABLED, false);
+        $this->tester->mockConfigMethod('isStorageCachingEnabled', false);
 
         $this->storageClientMock->expects($this->never())
             ->method('updateCache');
@@ -245,7 +245,7 @@ class StorageClientTest extends Unit
      */
     public function testCacheIsEnabled(): void
     {
-        $this->tester->setConfig(StorageConstants::STORAGE_CACHE_ENABLED, true);
+        $this->tester->mockConfigMethod('isStorageCachingEnabled', true);
         $this->storageClientMock->setCachedKeys([]);
         $request = new Request();
         $request->server->set('SERVER_NAME', 'localhost');

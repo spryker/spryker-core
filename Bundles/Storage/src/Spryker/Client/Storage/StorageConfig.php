@@ -8,13 +8,11 @@
 namespace Spryker\Client\Storage;
 
 use Spryker\Client\Kernel\AbstractBundleConfig;
-use Spryker\Shared\Storage\StorageConstants;
 
-/**
- * @method \Spryker\Shared\Storage\StorageConfig getSharedConfig()
- */
 class StorageConfig extends AbstractBundleConfig
 {
+    protected const STORAGE_CACHE_ENABLED = true;
+
     /**
      * @return int
      */
@@ -48,6 +46,6 @@ class StorageConfig extends AbstractBundleConfig
      */
     public function isStorageCachingEnabled(): bool
     {
-        return $this->get(StorageConstants::STORAGE_CACHE_ENABLED, true);
+        return static::STORAGE_CACHE_ENABLED;
     }
 }

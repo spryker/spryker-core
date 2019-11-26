@@ -160,7 +160,7 @@ class ServiceTest extends Unit
      */
     public function testGet()
     {
-        if (!Config::get(StorageConstants::STORAGE_CACHE_ENABLED, true)) {
+        if (!$this->tester->getModuleConfig()->isStorageCachingEnabled()) {
             $this->markTestSkipped('Cache is disabled.');
         }
 
@@ -178,7 +178,7 @@ class ServiceTest extends Unit
      */
     public function testGetMultiCached()
     {
-        if (!Config::get(StorageConstants::STORAGE_CACHE_ENABLED, true)) {
+        if (!$this->tester->getModuleConfig()->isStorageCachingEnabled()) {
             $this->markTestSkipped('Cache is disabled.');
         }
 
@@ -214,7 +214,7 @@ class ServiceTest extends Unit
      */
     public function testGetMultiReplaceStrategy()
     {
-        if (!Config::get(StorageConstants::STORAGE_CACHE_ENABLED, true)) {
+        if (!$this->tester->getModuleConfig()->isStorageCachingEnabled()) {
             $this->markTestSkipped('Cache is disabled.');
         }
 
@@ -230,7 +230,7 @@ class ServiceTest extends Unit
      */
     public function testGetMultiIncrementalStrategy()
     {
-        if (!Config::get(StorageConstants::STORAGE_CACHE_ENABLED, true)) {
+        if (!$this->tester->getModuleConfig()->isStorageCachingEnabled()) {
             $this->markTestSkipped('Cache is disabled.');
         }
 
@@ -246,7 +246,7 @@ class ServiceTest extends Unit
      */
     public function testGetSingleReplaceStrategy()
     {
-        if (!Config::get(StorageConstants::STORAGE_CACHE_ENABLED, true)) {
+        if (!$this->tester->getModuleConfig()->isStorageCachingEnabled()) {
             $this->markTestSkipped('Cache is disabled.');
         }
 
@@ -262,7 +262,7 @@ class ServiceTest extends Unit
      */
     public function testGetSingleIncrementalStrategy()
     {
-        if (!Config::get(StorageConstants::STORAGE_CACHE_ENABLED, true)) {
+        if (!$this->tester->getModuleConfig()->isStorageCachingEnabled()) {
             $this->markTestSkipped('Cache is disabled.');
         }
 
