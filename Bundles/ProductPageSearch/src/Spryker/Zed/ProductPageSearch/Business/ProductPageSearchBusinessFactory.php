@@ -9,6 +9,10 @@ namespace Spryker\Zed\ProductPageSearch\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductPageSearch\Business\Attribute\ProductPageAttribute;
+use Spryker\Zed\ProductPageSearch\Business\DataMapper\Elasticsearch\AbstractProductSearchDataMapper;
+use Spryker\Zed\ProductPageSearch\Business\DataMapper\Elasticsearch\PageMapBuilder;
+use Spryker\Zed\ProductPageSearch\Business\DataMapper\Elasticsearch\ProductAbstractSearchDataMapper;
+use Spryker\Zed\ProductPageSearch\Business\DataMapper\Elasticsearch\ProductConcreteSearchDataMapper;
 use Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapper;
 use Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriter;
 use Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader\ProductConcretePageSearchReader;
@@ -22,6 +26,7 @@ use Spryker\Zed\ProductPageSearch\Business\Unpublisher\ProductConcretePageSearch
 use Spryker\Zed\ProductPageSearch\Business\Unpublisher\ProductConcretePageSearchUnpublisherInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
@@ -56,7 +61,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->createProductConcretePageSearchWriter(),
             $this->getProductFacade(),
             $this->getUtilEncoding(),
-            $this->getSearchFacade(),
+            $this->createProductConcreteSearchDataMapper(),
             $this->getStoreFacade(),
             $this->getProductConcretePageDataExpanderPlugins()
         );
@@ -104,7 +109,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductPageSearchMapper(
             $this->createProductPageAttribute(),
-            $this->getSearchFacade(),
+            $this->createProductAbstractSearchDataMapper(),
             $this->getUtilEncoding()
         );
     }
@@ -147,14 +152,6 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface
-     */
-    protected function getSearchFacade()
-    {
-        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::FACADE_SEARCH);
-    }
-
-    /**
      * @return \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface
      */
     public function getStoreFacade(): ProductPageSearchToStoreFacadeInterface
@@ -176,5 +173,60 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     protected function getProductPageDataLoaderPlugins()
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGIN_PRODUCT_PAGE_DATA_LOADER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Business\DataMapper\Elasticsearch\AbstractProductSearchDataMapper
+     */
+    public function createProductAbstractSearchDataMapper(): AbstractProductSearchDataMapper
+    {
+        return new ProductAbstractSearchDataMapper(
+            $this->createPageMapBuilder(),
+            $this->getProductSearchFacade(),
+            $this->getProductAbstractPageMapExpanderPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Business\DataMapper\Elasticsearch\AbstractProductSearchDataMapper
+     */
+    public function createProductConcreteSearchDataMapper(): AbstractProductSearchDataMapper
+    {
+        return new ProductConcreteSearchDataMapper(
+            $this->createPageMapBuilder(),
+            $this->getProductConcretePageMapExpanderPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface
+     */
+    public function createPageMapBuilder(): PageMapBuilderInterface
+    {
+        return new PageMapBuilder();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchInterface
+     */
+    public function getProductSearchFacade()
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::FACADE_PRODUCT_SEARCH);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface[]
+     */
+    public function getProductConcretePageMapExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_CONCRETE_PRODUCT_PAGE_MAP_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface[]
+     */
+    public function getProductAbstractPageMapExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_PAGE_MAP_EXPANDER);
     }
 }

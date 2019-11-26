@@ -5,20 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CmsPageSearch\Dependency\Facade;
+namespace Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 
-interface CmsPageSearchToSearchInterface
+interface CategoryNodePageSearchDataMapperInterface
 {
     /**
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param string $mapperName
-     *
-     * @throws \Spryker\Zed\Search\Business\Exception\InvalidPropertyNameException
      *
      * @return array
      */
-    public function transformPageMapToDocumentByMapperName(array $data, LocaleTransfer $localeTransfer, $mapperName);
+    public function mapCategoryNodeDataToSearchData(array $data, LocaleTransfer $localeTransfer): array;
 }

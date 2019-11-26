@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductSetPageSearch\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 interface ProductSetPageSearchFacadeInterface
 {
     /**
@@ -35,4 +37,14 @@ interface ProductSetPageSearchFacadeInterface
      * @return void
      */
     public function unpublish(array $productSetIds);
+
+    /**
+     * @api
+     *
+     * @param array $data
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    public function mapProductSetDataToSearchData(array $data, LocaleTransfer $localeTransfer): array;
 }

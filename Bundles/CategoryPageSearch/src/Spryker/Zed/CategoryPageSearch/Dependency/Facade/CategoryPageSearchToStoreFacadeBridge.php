@@ -49,7 +49,7 @@ class CategoryPageSearchToStoreFacadeBridge implements CategoryPageSearchToStore
      */
     public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer)
     {
-        return $this->storeFacade->getLocalesPerStore($storeTransfer);
+        return $this->storeFacade->getStoresWithSharedPersistence($storeTransfer);
     }
 
     /**

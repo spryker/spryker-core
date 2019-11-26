@@ -5,38 +5,57 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Search\Elasticsearch;
+namespace Spryker\Zed\ProductPageSearch\Business\DataMapper\Elasticsearch;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
-use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SearchElasticsearchExtension\Business\DataMapper\PageMapBuilderInterface;
-use Spryker\Zed\SearchElasticsearchExtension\Dependency\Plugin\PageMapPluginInterface;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 
-/**
- * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
- * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
- * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
- */
-class ProductConcretePageMapPlugin extends AbstractPlugin implements PageMapPluginInterface
+class ProductConcreteSearchDataMapper extends AbstractProductSearchDataMapper
 {
     protected const KEY_ID_PRODUCT = 'id_product';
+
+    /**
+     * @var \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface
+     */
+    protected $pageMapBuilder;
+
+    /**
+     * @var \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchInterface
+     */
+    protected $productSearchFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractPageMapExpanderPluginInterface[]
+     */
+    protected $productConcretePageMapExpanderPlugins;
+
+    /**
+     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
+     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface[] $productConcretePageMapExpanderPlugins
+     */
+    public function __construct(
+        PageMapBuilderInterface $pageMapBuilder,
+        array $productConcretePageMapExpanderPlugins
+    ) {
+        parent::__construct();
+
+        $this->pageMapBuilder = $pageMapBuilder;
+        $this->productConcretePageMapExpanderPlugins = $productConcretePageMapExpanderPlugins;
+    }
 
     /**
      * {@inheritDoc}
      *
      * @api
      *
-     * @param \Spryker\Zed\SearchElasticsearchExtension\Business\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $data, LocaleTransfer $locale): PageMapTransfer
+    public function buildPageMap(array $data, LocaleTransfer $locale): PageMapTransfer
     {
         $pageMapTransfer = (new PageMapTransfer())
             ->setStore($data[ProductConcretePageSearchTransfer::STORE])
@@ -44,7 +63,7 @@ class ProductConcretePageMapPlugin extends AbstractPlugin implements PageMapPlug
             ->setType($data[ProductConcretePageSearchTransfer::TYPE])
             ->setIsActive($data[ProductConcretePageSearchTransfer::IS_ACTIVE]);
 
-        $pageMapBuilder
+        $this->pageMapBuilder
             ->addSearchResultData($pageMapTransfer, static::KEY_ID_PRODUCT, $data[ProductConcretePageSearchTransfer::FK_PRODUCT])
             ->addSearchResultData($pageMapTransfer, ProductConcretePageSearchTransfer::FK_PRODUCT_ABSTRACT, $data[ProductConcretePageSearchTransfer::FK_PRODUCT_ABSTRACT])
             ->addSearchResultData($pageMapTransfer, ProductConcretePageSearchTransfer::ABSTRACT_SKU, $data[ProductConcretePageSearchTransfer::ABSTRACT_SKU])
@@ -59,35 +78,22 @@ class ProductConcretePageMapPlugin extends AbstractPlugin implements PageMapPlug
             ->addCompletionTerms($pageMapTransfer, $data[ProductConcretePageSearchTransfer::SKU])
             ->addStringSort($pageMapTransfer, ProductConcretePageSearchTransfer::NAME, $data[ProductConcretePageSearchTransfer::NAME]);
 
-        $pageMapTransfer = $this->expandProductPageMap($pageMapTransfer, $pageMapBuilder, $data, $locale);
+        $pageMapTransfer = $this->expandProductPageMap($pageMapTransfer, $data, $locale);
 
         return $pageMapTransfer;
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getName(): string
-    {
-        return ProductPageSearchConstants::PRODUCT_CONCRETE_RESOURCE_NAME;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param \Spryker\Zed\SearchElasticsearchExtension\Business\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param array $productData
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    protected function expandProductPageMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer): PageMapTransfer
+    protected function expandProductPageMap(PageMapTransfer $pageMapTransfer, array $productData, LocaleTransfer $localeTransfer): PageMapTransfer
     {
-        foreach ($this->getFactory()->getElasticsearchProductConcretePageMapExpanderPlugins() as $productConcretePageMapExpanderPlugin) {
-            $pageMapTransfer = $productConcretePageMapExpanderPlugin->expand($pageMapTransfer, $pageMapBuilder, $productData, $localeTransfer);
+        foreach ($this->productConcretePageMapExpanderPlugins as $productConcretePageMapExpanderPlugin) {
+            $pageMapTransfer = $productConcretePageMapExpanderPlugin->expand($pageMapTransfer, $this->pageMapBuilder, $productData, $localeTransfer);
         }
 
         return $pageMapTransfer;

@@ -15,7 +15,7 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
 use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
 
 /**
- * @deprecated Use `\Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Search\Elasticsearch\ProductSetPageMapPlugin` instead.
+ * @deprecated Will be removed without replacement.
  *
  * @method \Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductSetPageSearch\Communication\ProductSetPageSearchCommunicationFactory getFactory()

@@ -11,8 +11,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearch;
 use Propel\Runtime\Map\TableMap;
-use Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants;
-use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchInterface;
+use Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapperInterface;
 use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeInterface;
 use Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingInterface;
 use Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface;
@@ -28,9 +27,9 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
     protected $utilEncoding;
 
     /**
-     * @var \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchInterface
+     * @var \Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapperInterface
      */
-    protected $searchFacade;
+    protected $categoryNodePageSearchDataMapper;
 
     /**
      * @var \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface
@@ -49,20 +48,20 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
 
     /**
      * @param \Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingInterface $utilEncoding
-     * @param \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchInterface $searchFacade
+     * @param \Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapperInterface $categoryNodePageSearchDataMapper
      * @param \Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeInterface $storeFacade
      * @param bool $isSendingToQueue
      */
     public function __construct(
         CategoryPageSearchToUtilEncodingInterface $utilEncoding,
-        CategoryPageSearchToSearchInterface $searchFacade,
+        CategoryNodePageSearchDataMapperInterface $categoryNodePageSearchDataMapper,
         CategoryPageSearchQueryContainerInterface $queryContainer,
         CategoryPageSearchToStoreFacadeInterface $storeFacade,
         $isSendingToQueue
     ) {
         $this->utilEncoding = $utilEncoding;
-        $this->searchFacade = $searchFacade;
+        $this->categoryNodePageSearchDataMapper = $categoryNodePageSearchDataMapper;
         $this->queryContainer = $queryContainer;
         $this->storeFacade = $storeFacade;
         $this->isSendingToQueue = $isSendingToQueue;
@@ -171,11 +170,10 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
      */
     public function mapToSearchData(array $categoryNodeData, $localeName)
     {
-        return $this->searchFacade
-            ->transformPageMapToDocumentByMapperName(
+        return $this->categoryNodePageSearchDataMapper
+            ->mapCategoryNodeDataToSearchData(
                 $categoryNodeData,
-                (new LocaleTransfer())->setLocaleName($localeName),
-                CategoryPageSearchConstants::CATEGORY_NODE_RESOURCE_NAME
+                (new LocaleTransfer())->setLocaleName($localeName)
             );
     }
 
@@ -227,9 +225,10 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
     protected function getSharedPersistenceLocaleNames(): array
     {
         $localeNames = $this->storeFacade->getLocales();
-        $storesWithSharedPersistence = $this->storeFacade->getStoresWithSharedPersistence($this->storeFacade->getCurrentStore());
-        foreach ($storesWithSharedPersistence as $storeName) {
-            foreach ($this->storeFacade->getLocalesPerStore($storeName) as $localeName) {
+        $storeWithSharedPersistenceTransfers = $this->storeFacade->getStoresWithSharedPersistence($this->storeFacade->getCurrentStore());
+
+        foreach ($storeWithSharedPersistenceTransfers as $storeTransfer) {
+            foreach ($this->storeFacade->getLocalesPerStore($storeTransfer->getName()) as $localeName) {
                 $localeNames[] = $localeName;
             }
         }

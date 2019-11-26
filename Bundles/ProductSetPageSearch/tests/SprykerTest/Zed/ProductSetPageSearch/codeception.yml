@@ -27,3 +27,4 @@ suites:
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
                 - \SprykerTest\Zed\ProductSet\Helper\ProductSetDataHelper
+                - \SprykerTest\Shared\Testify\Helper\BusinessHelper

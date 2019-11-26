@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
 use Spryker\Zed\ProductPageSearch\Business\Attribute\ProductPageAttributeInterface;
+use Spryker\Zed\ProductPageSearch\Business\DataMapper\Elasticsearch\AbstractProductSearchDataMapper;
 use Spryker\Zed\ProductPageSearch\Business\Exception\EncodedDataNotValidException;
-use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface;
 
 class ProductPageSearchMapper implements ProductPageSearchMapperInterface
@@ -23,9 +23,9 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
     protected $productPageAttributes;
 
     /**
-     * @var \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface
+     * @var \Spryker\Zed\ProductPageSearch\Business\DataMapper\Elasticsearch\AbstractProductSearchDataMapper
      */
-    protected $searchFacade;
+    protected $productAbstractSearchDataMapper;
 
     /**
      * @var \Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface
@@ -34,13 +34,16 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
 
     /**
      * @param \Spryker\Zed\ProductPageSearch\Business\Attribute\ProductPageAttributeInterface $productPageAttributes
-     * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface $searchFacade
+     * @param \Spryker\Zed\ProductPageSearch\Business\DataMapper\Elasticsearch\AbstractProductSearchDataMapper $productAbstractSearchDataMapper
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface $utilEncoding
      */
-    public function __construct(ProductPageAttributeInterface $productPageAttributes, ProductPageSearchToSearchInterface $searchFacade, ProductPageSearchToUtilEncodingInterface $utilEncoding)
-    {
+    public function __construct(
+        ProductPageAttributeInterface $productPageAttributes,
+        AbstractProductSearchDataMapper $productAbstractSearchDataMapper,
+        ProductPageSearchToUtilEncodingInterface $utilEncoding
+    ) {
         $this->productPageAttributes = $productPageAttributes;
-        $this->searchFacade = $searchFacade;
+        $this->productAbstractSearchDataMapper = $productAbstractSearchDataMapper;
         $this->utilEncoding = $utilEncoding;
     }
 
@@ -102,12 +105,10 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
      */
     public function mapToSearchData(ProductPageSearchTransfer $productPageSearchTransfer)
     {
-        return $this->searchFacade
-            ->transformPageMapToDocumentByMapperName(
-                $productPageSearchTransfer->toArray(),
-                (new LocaleTransfer())->setLocaleName($productPageSearchTransfer->getLocale()),
-                ProductPageSearchConstants::PRODUCT_ABSTRACT_RESOURCE_NAME
-            );
+        return $this->productAbstractSearchDataMapper->mapProductDataToSearchData(
+            $productPageSearchTransfer->toArray(),
+            (new LocaleTransfer())->setLocaleName($productPageSearchTransfer->getLocale())
+        );
     }
 
     /**

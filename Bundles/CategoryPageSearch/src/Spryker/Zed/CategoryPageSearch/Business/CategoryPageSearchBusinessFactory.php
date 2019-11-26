@@ -8,6 +8,8 @@
 namespace Spryker\Zed\CategoryPageSearch\Business;
 
 use Spryker\Zed\CategoryPageSearch\Business\Search\CategoryNodePageSearch;
+use Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapper;
+use Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapperInterface;
 use Spryker\Zed\CategoryPageSearch\CategoryPageSearchDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -24,7 +26,7 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryNodePageSearch(
             $this->getUtilEncoding(),
-            $this->getSearchFacade(),
+            $this->createCategoryNodePageSearchDataMapper(),
             $this->getQueryContainer(),
             $this->getStoreFacade(),
             $this->getConfig()->isSendingToQueue()
@@ -40,18 +42,18 @@ class CategoryPageSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchInterface
-     */
-    public function getSearchFacade()
-    {
-        return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::FACADE_SEARCH);
-    }
-
-    /**
      * @return \Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeInterface
      */
     public function getStoreFacade()
     {
         return $this->getProvidedDependency(CategoryPageSearchDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSearchDataMapperInterface
+     */
+    public function createCategoryNodePageSearchDataMapper(): CategoryNodePageSearchDataMapperInterface
+    {
+        return new CategoryNodePageSearchDataMapper();
     }
 }

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CategoryPageSearch;
 
 use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToEventBehaviorFacadeBridge;
-use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchBridge;
 use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeBridge;
 use Spryker\Zed\CategoryPageSearch\Dependency\QueryContainer\CategoryPageSearchToCategoryQueryContainerBridge;
 use Spryker\Zed\CategoryPageSearch\Dependency\QueryContainer\CategoryPageSearchToLocaleQueryContainerBridge;
@@ -26,7 +25,6 @@ class CategoryPageSearchDependencyProvider extends AbstractBundleDependencyProvi
     public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    public const FACADE_SEARCH = 'FACADE_SEARCH';
     public const FACADE_STORE = 'FACADE_STORE';
 
     /**
@@ -56,10 +54,6 @@ class CategoryPageSearchDependencyProvider extends AbstractBundleDependencyProvi
 
         $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
             return new CategoryPageSearchToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
-
-        $container[self::FACADE_SEARCH] = function (Container $container) {
-            return new CategoryPageSearchToSearchBridge($container->getLocator()->search()->facade());
         };
 
         return $container;
