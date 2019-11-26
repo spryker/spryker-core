@@ -5,8 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Payment\Persistence;
+namespace Spryker\Zed\PaymentGui\Communication\Exception;
 
-interface PaymentEntityManagerInterface
+use Exception;
+
+class MissingStoreRelationFormTypePluginException extends Exception
 {
 }

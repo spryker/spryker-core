@@ -9,6 +9,7 @@ namespace Spryker\Zed\Payment\Business;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PaymentMethodResponseTransfer;
 use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesPaymentTransfer;
@@ -118,4 +119,16 @@ interface PaymentFacadeInterface
      * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
      */
     public function getAvailablePaymentProvidersForStore(string $storeName): PaymentProviderCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Finds payment method by the provided id.
+     *
+     * @api
+     *
+     * @param int $idPaymentMethod
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodResponseTransfer
+     */
+    public function findPaymentMethodById(int $idPaymentMethod): PaymentMethodResponseTransfer;
 }

@@ -7,15 +7,17 @@
 
 namespace Spryker\Zed\Payment\Persistence;
 
+use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
-use Generated\Shared\Transfer\SalesPaymentMethodTypeCollectionTransfer;
 
 interface PaymentRepositoryInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\SalesPaymentMethodTypeCollectionTransfer
+     * @param int $idPaymentMethod
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodTransfer|null
      */
-    public function getSalesPaymentMethodTypesCollection(): SalesPaymentMethodTypeCollectionTransfer;
+    public function findPaymentMethodById(int $idPaymentMethod): ?PaymentMethodTransfer;
 
     /**
      * @param string $storeName

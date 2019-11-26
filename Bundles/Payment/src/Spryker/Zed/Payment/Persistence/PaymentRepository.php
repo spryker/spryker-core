@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\Payment\Persistence;
 
+use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
-use Generated\Shared\Transfer\SalesPaymentMethodTypeCollectionTransfer;
-use Generated\Shared\Transfer\SalesPaymentMethodTypeTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -18,26 +17,24 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class PaymentRepository extends AbstractRepository implements PaymentRepositoryInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\SalesPaymentMethodTypeCollectionTransfer
+     * @param int $idPaymentMethod
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodTransfer|null
      */
-    public function getSalesPaymentMethodTypesCollection(): SalesPaymentMethodTypeCollectionTransfer
+    public function findPaymentMethodById(int $idPaymentMethod): ?PaymentMethodTransfer
     {
-        $salesPaymentMethodTypeEntities = $this->getFactory()
-            ->createSalesPaymentMethodTypeQuery()
-            ->find();
+        $paymentMethodEntity = $this->getFactory()
+            ->createPaymentMethodQuery()
+            ->filterByIdPaymentMethod($idPaymentMethod)
+            ->findOne();
 
-        $salesPaymentMethodTypeCollectionTransfer = new SalesPaymentMethodTypeCollectionTransfer();
-
-        $paymentMapper = $this->getFactory()->createPaymentMapper();
-        foreach ($salesPaymentMethodTypeEntities as $salesPaymentMethodTypeEntity) {
-            $salesPaymentMethodTypeTransfer = $paymentMapper->mapSalesPaymentMethodTypeTransfer(
-                $salesPaymentMethodTypeEntity,
-                new SalesPaymentMethodTypeTransfer()
-            );
-            $salesPaymentMethodTypeCollectionTransfer->addSalesPaymentMethodType($salesPaymentMethodTypeTransfer);
+        if ($paymentMethodEntity === null) {
+            return null;
         }
 
-        return $salesPaymentMethodTypeCollectionTransfer;
+        return $this->getFactory()
+            ->createPaymentMapper()
+            ->mapPaymentMethodEntityToPaymentMethodTransfer($paymentMethodEntity, new PaymentMethodTransfer());
     }
 
     /**
@@ -50,7 +47,7 @@ class PaymentRepository extends AbstractRepository implements PaymentRepositoryI
         $paymentProviderCollectionTransfer = new PaymentProviderCollectionTransfer();
         $paymentProviderEntities = $this->getFactory()
             ->createPaymentProviderQuery()
-            ->usePaymentMethodsQuery()
+            ->usePaymentMethodQuery()
                 ->filterByIsActive(true)
                 ->usePaymentMethodStoreQuery()
                     ->useStoreQuery()
@@ -66,8 +63,7 @@ class PaymentRepository extends AbstractRepository implements PaymentRepositoryI
         }
 
         return $this->getFactory()
-            ->createPaymentMapper()
-            ->mapPaymentProviderEntityCollectionToPaymentProviderCollectionTransfer(
+            ->createPaymentProviderMapper()->mapPaymentProviderEntityCollectionToPaymentProviderCollectionTransfer(
                 $paymentProviderEntities,
                 $paymentProviderCollectionTransfer
             );
