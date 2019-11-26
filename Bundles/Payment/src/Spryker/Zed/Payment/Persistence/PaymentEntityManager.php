@@ -24,6 +24,8 @@ class PaymentEntityManager extends AbstractEntityManager implements PaymentEntit
     public function updatePaymentMethod(
         PaymentMethodTransfer $paymentMethodTransfer
     ): ?PaymentMethodTransfer {
+        $paymentMethodTransfer->requireIdPaymentMethod();
+
         $paymentMethodEntity = $this->getFactory()
             ->createPaymentMethodQuery()
             ->filterByIdPaymentMethod($paymentMethodTransfer->getIdPaymentMethod())
@@ -48,7 +50,7 @@ class PaymentEntityManager extends AbstractEntityManager implements PaymentEntit
     }
 
     /**
-     * @param array $idStores
+     * @param int[] $idStores
      * @param int $idPaymentMethod
      *
      * @return void
@@ -66,7 +68,7 @@ class PaymentEntityManager extends AbstractEntityManager implements PaymentEntit
     }
 
     /**
-     * @param array $idStores
+     * @param int[] $idStores
      * @param int $idPaymentMethod
      *
      * @return void

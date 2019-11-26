@@ -21,7 +21,7 @@ interface PaymentEntityManagerInterface
     ): ?PaymentMethodTransfer;
 
     /**
-     * @param array $idStores
+     * @param int[] $idStores
      * @param int $idPaymentMethod
      *
      * @return void
@@ -32,7 +32,7 @@ interface PaymentEntityManagerInterface
     ): void;
 
     /**
-     * @param array $idStores
+     * @param int[] $idStores
      * @param int $idPaymentMethod
      *
      * @return void

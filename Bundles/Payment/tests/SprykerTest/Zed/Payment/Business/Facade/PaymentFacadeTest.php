@@ -85,7 +85,7 @@ class PaymentFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateMethodShouldUpdateShipmentMethodWithStoreRelation(): void
+    public function testUpdatePaymentMethodShouldUpdatePaymentMethodWithStoreRelation(): void
     {
         // Arrange
         $this->tester->ensurePaymentMethodTableIsEmpty();
