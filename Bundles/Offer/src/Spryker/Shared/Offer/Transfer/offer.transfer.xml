@@ -23,12 +23,14 @@
 
         <property name="offerDiscount" type="int"/>
         <property name="offerFee" type="int"/>
-        <property name="stock" type="int"/>
         <property name="savingAmount" type="int"/>
+
         <property name="originUnitGrossPrice" type="int"/>
         <property name="originUnitNetPrice" type="int"/>
+
         <property name="unitSubtotalAggregation" type="int"/>
         <property name="sumSubtotalAggregation" type="int"/>
+
         <property name="sku" type="string"/>
         <property name="quantity" type="int"/>
     </transfer>
