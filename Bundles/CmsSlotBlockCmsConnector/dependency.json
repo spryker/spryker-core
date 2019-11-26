@@ -1,5 +1,6 @@
 {
   "include": {
-    "spryker/cms": "Provides using of parameters from the database."
+    "spryker/cms": "Provides using of parameters from the database.",
+    "spryker/transfer": "Provides transfer objects definition with associative functionality."
   }
 }
