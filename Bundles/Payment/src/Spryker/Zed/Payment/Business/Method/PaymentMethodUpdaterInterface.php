@@ -5,26 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PaymentGui\Dependency\Facade;
+namespace Spryker\Zed\Payment\Business\Method;
 
 use Generated\Shared\Transfer\PaymentMethodResponseTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 
-interface PaymentGuiToPaymentFacadeInterface
+interface PaymentMethodUpdaterInterface
 {
-    /**
-     * @param int $idPaymentMethod
-     *
-     * @return \Generated\Shared\Transfer\PaymentMethodResponseTransfer
-     */
-    public function findPaymentMethodById(int $idPaymentMethod): PaymentMethodResponseTransfer;
-
     /**
      * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodResponseTransfer
      */
-    public function updatePaymentMethod(
-        PaymentMethodTransfer $paymentMethodTransfer
-    ): PaymentMethodResponseTransfer;
+    public function updatePaymentMethod(PaymentMethodTransfer $paymentMethodTransfer): PaymentMethodResponseTransfer;
 }

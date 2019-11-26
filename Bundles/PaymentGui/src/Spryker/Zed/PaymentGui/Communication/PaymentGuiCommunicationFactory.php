@@ -11,9 +11,12 @@ use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Orm\Zed\Payment\Persistence\SpyPaymentMethodQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
+use Spryker\Zed\PaymentGui\Communication\Form\DataProvider\PaymentMethodFormDataProvider;
 use Spryker\Zed\PaymentGui\Communication\Form\DataProvider\ViewPaymentMethodFormDataProvider;
+use Spryker\Zed\PaymentGui\Communication\Form\PaymentMethod\PaymentMethodForm;
 use Spryker\Zed\PaymentGui\Communication\Form\PaymentMethod\ViewPaymentMethodForm;
 use Spryker\Zed\PaymentGui\Communication\Table\PaymentMethodTable;
+use Spryker\Zed\PaymentGui\Communication\Tabs\PaymentMethodTabs;
 use Spryker\Zed\PaymentGui\Dependency\Facade\PaymentGuiToPaymentFacadeInterface;
 use Spryker\Zed\PaymentGui\PaymentGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
@@ -45,6 +48,33 @@ class PaymentGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createViewPaymentMethodFormDataProvider(): ViewPaymentMethodFormDataProvider
     {
         return new ViewPaymentMethodFormDataProvider();
+    }
+
+    /**
+     * @return \Spryker\Zed\PaymentGui\Communication\Form\DataProvider\PaymentMethodFormDataProvider
+     */
+    public function createPaymentMethodFormDataProvider(): PaymentMethodFormDataProvider
+    {
+        return new PaymentMethodFormDataProvider();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer|null $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createPaymentMethodForm(?PaymentMethodTransfer $data, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(PaymentMethodForm::class, $data, $options);
+    }
+
+    /**
+     * @return \Spryker\Zed\PaymentGui\Communication\Tabs\PaymentMethodTabs
+     */
+    public function createPaymentMethodTabs(): PaymentMethodTabs
+    {
+        return new PaymentMethodTabs();
     }
 
     /**
