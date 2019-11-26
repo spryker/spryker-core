@@ -130,14 +130,15 @@ class ViewController extends AddController
             ->getProductFacade()
             ->findProductConcreteById($idProduct);
 
-        $stockTypes = $this->getFactory()->getStockQueryContainer()->queryAllStockTypes()->find()->getData();
-        $this->getFactory()->createProductStockHelper()->addMissingStockTypes($productTransfer, $stockTypes);
-
-        if (!$productTransfer) {
+        if ($productTransfer === null) {
             $this->addErrorMessage('The product [%s] you are trying to edit, does not exist.', ['%s' => $idProduct]);
 
             return new RedirectResponse('/product-management/edit?id-product-abstract=' . $idProductAbstract);
         }
+
+        $stockTypes = $this->getFactory()->getStockQueryContainer()->queryAllStockTypes()->find()->getData();
+        $productTransfer = $this->getFactory()->createProductStockHelper()->addMissingStockTypes($productTransfer, $stockTypes);
+        $productTransfer = $this->getFactory()->createProductStockHelper()->trimStockQuantities($productTransfer);
 
         $localeProvider = $this->getFactory()->createLocaleProvider();
 

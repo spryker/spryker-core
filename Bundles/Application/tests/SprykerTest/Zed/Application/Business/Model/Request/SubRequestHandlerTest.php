@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated Moved to \SprykerTest\Zed\Http\Communication\SubRequest\SubRequestHandlerTest.
+ *
  * Auto-generated group annotations
  *
  * @group SprykerTest
