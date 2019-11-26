@@ -16,6 +16,8 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
 use Spryker\Zed\Search\Dependency\Plugin\NamedPageMapInterface;
 
 /**
+ * @deprecated Use `\Spryker\Zed\CmsPageSearch\Communication\Plugin\Search\Elasticsearch\CmsDataPageMapBuilder` instead.
+ *
  * @method \Spryker\Zed\Collector\Communication\CollectorCommunicationFactory getFactory()
  */
 class CmsDataPageMapBuilder implements NamedPageMapInterface
