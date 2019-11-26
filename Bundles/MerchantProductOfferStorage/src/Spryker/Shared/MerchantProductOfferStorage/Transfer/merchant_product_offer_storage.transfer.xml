@@ -24,6 +24,7 @@
         <property name="fkMerchant" type="int"/>
         <property name="productOfferReference" type="string"/>
         <property name="concreteSku" type="string"/>
+        <property name="merchantSku" type="string"/>
     </transfer>
 
     <transfer name="ProductOfferCollection">
