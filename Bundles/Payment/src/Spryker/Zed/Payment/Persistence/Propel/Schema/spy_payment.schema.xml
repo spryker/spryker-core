@@ -23,7 +23,7 @@
             <unique-column name="payment_method_key"/>
         </unique>
 
-        <foreign-key name="spy_payment_method-fk_payment_provider" foreignTable="spy_payment_provider" phpName="PaymentProvider" refPhpName="PaymentMethods">
+        <foreign-key name="spy_payment_method-fk_payment_provider" foreignTable="spy_payment_provider" phpName="PaymentProvider" refPhpName="PaymentMethod">
             <reference local="fk_payment_provider" foreign="id_payment_provider"/>
         </foreign-key>
 

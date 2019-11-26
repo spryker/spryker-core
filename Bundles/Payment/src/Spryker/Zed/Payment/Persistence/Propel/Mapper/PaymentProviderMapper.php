@@ -38,12 +38,13 @@ class PaymentProviderMapper
         PaymentProviderCollectionTransfer $paymentProviderCollectionTransfer
     ): PaymentProviderCollectionTransfer {
         foreach ($paymentProviderEntityCollection as $paymentProviderEntity) {
-            $paymentProviderCollectionTransfer->addPaymentProvider(
-                $this->mapPaymentProviderEntityToPaymentProviderTransfer(
-                    $paymentProviderEntity,
-                    new PaymentProviderTransfer()
-                )
+            $paymentProviderTransfer = $this->mapPaymentProviderEntityToPaymentProviderTransfer(
+                $paymentProviderEntity,
+                new PaymentProviderTransfer()
             );
+            foreach ($paymentProviderEntity->getPaymentMethodss() as $paymentMethodss) {
+            }
+            $paymentProviderCollectionTransfer->addPaymentProvider($paymentProviderTransfer);
         }
 
         return $paymentProviderCollectionTransfer;
