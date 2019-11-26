@@ -224,7 +224,7 @@ class SlotTable extends AbstractTable
      */
     protected function getName(array $slot): string
     {
-        return  sprintf(
+        return sprintf(
             static::COL_NAME_WRAPPER,
             $slot[static::COL_CONTENT_PROVIDER],
             $slot[SpyCmsSlotTableMap::COL_NAME]
