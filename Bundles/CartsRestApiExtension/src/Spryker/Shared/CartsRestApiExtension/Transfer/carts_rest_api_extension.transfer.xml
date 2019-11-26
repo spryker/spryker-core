@@ -30,4 +30,7 @@
     <transfer name="CartItemRequestProductOption">
     </transfer>
 
+    <transfer name="PersistentCartChange">
+    </transfer>
+
 </transfers>
