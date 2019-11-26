@@ -33,7 +33,7 @@ class CommandCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testAddShouldReturnInstance()
+    public function testAddShouldReturnInstance(): void
     {
         $commandCollection = new CommandCollection();
         $result = $commandCollection->add($this->getCommandMock(), self::COMMAND_NAME);
@@ -44,7 +44,7 @@ class CommandCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testHasShouldReturnFalse()
+    public function testHasShouldReturnFalse(): void
     {
         $commandCollection = new CommandCollection();
 
@@ -54,7 +54,7 @@ class CommandCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testHasShouldReturnTrue()
+    public function testHasShouldReturnTrue(): void
     {
         $commandCollection = new CommandCollection();
         $command = $this->getCommandMock();
@@ -66,7 +66,7 @@ class CommandCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testGetShouldReturnCommand()
+    public function testGetShouldReturnCommand(): void
     {
         $commandCollection = new CommandCollection();
         $command = $this->getCommandMock();
@@ -78,7 +78,7 @@ class CommandCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testGetShouldThrowException()
+    public function testGetShouldThrowException(): void
     {
         $commandCollection = new CommandCollection();
 
@@ -90,7 +90,7 @@ class CommandCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testArrayAccess()
+    public function testArrayAccess(): void
     {
         $commandCollection = new CommandCollection();
         $this->assertFalse(isset($commandCollection[self::COMMAND_NAME]));

@@ -25,10 +25,16 @@ class PaymentMethodWriterStep implements DataImportStepInterface
     public function execute(DataSetInterface $dataSet): void
     {
         $paymentMethodKey = $dataSet[PaymentMethodDataSetInterface::COL_PAYMENT_METHOD_KEY];
+        $paymentMethodName = $dataSet[PaymentMethodDataSetInterface::COL_PAYMENT_METHOD_NAME];
 
         if (!$paymentMethodKey) {
             throw new DataKeyNotFoundInDataSetException('Payment method key is missing');
         }
+
+        if (!$paymentMethodName) {
+            throw new DataKeyNotFoundInDataSetException('Payment method name is missing');
+        }
+
         $paymentMethodEntity = SpyPaymentMethodQuery::create()
             ->filterByPaymentMethodKey($paymentMethodKey)
             ->findOneOrCreate();

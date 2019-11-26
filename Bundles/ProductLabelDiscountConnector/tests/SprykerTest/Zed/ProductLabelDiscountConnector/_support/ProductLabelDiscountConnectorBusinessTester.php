@@ -39,7 +39,7 @@ class ProductLabelDiscountConnectorBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function createQuoteTransfer(array $productConcreteTransfers)
+    public function createQuoteTransfer(array $productConcreteTransfers): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
 
@@ -60,7 +60,7 @@ class ProductLabelDiscountConnectorBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\ClauseTransfer
      */
-    public function createClauseTransfer($value)
+    public function createClauseTransfer(string $value): ClauseTransfer
     {
         $clauseTransfer = new ClauseTransfer();
         $clauseTransfer->setOperator('=');

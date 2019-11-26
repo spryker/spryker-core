@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Yves\StepEngine\Process;
 
+use Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface;
 use Spryker\Yves\StepEngine\Process\StepBreadcrumbGenerator;
 use SprykerTest\Yves\StepEngine\Process\Fixtures\StepMockWithBreadcrumbs;
 
@@ -25,7 +26,7 @@ class StepBreadcrumbGeneratorTest extends AbstractStepEngineTest
     /**
      * @return void
      */
-    public function testGenerateStepBreadcrumbReturnExpectedNumberOfItems()
+    public function testGenerateStepBreadcrumbReturnExpectedNumberOfItems(): void
     {
         $stepCollection = $this->getStepCollection();
         $stepCollection->addStep($this->getStepMock());
@@ -44,7 +45,7 @@ class StepBreadcrumbGeneratorTest extends AbstractStepEngineTest
     /**
      * @return void
      */
-    public function testGenerateStepBreadcrumbReturnExpectedNumberOfVisibleItems()
+    public function testGenerateStepBreadcrumbReturnExpectedNumberOfVisibleItems(): void
     {
         $stepCollection = $this->getStepCollection();
         $stepCollection->addStep($this->getStepMockWithBreadcrumbs(true, true, false));
@@ -64,7 +65,7 @@ class StepBreadcrumbGeneratorTest extends AbstractStepEngineTest
     /**
      * @return void
      */
-    public function testGenerateStepBreadcrumbReturnItemsInExpectedOrder()
+    public function testGenerateStepBreadcrumbReturnItemsInExpectedOrder(): void
     {
         $stepCollection = $this->getStepCollection();
         $stepCollection->addStep($this->getStepMock());
@@ -86,7 +87,7 @@ class StepBreadcrumbGeneratorTest extends AbstractStepEngineTest
     /**
      * @return void
      */
-    public function testGenerateStepBreadcrumbReturnItemsWithExpectedEnabledStatus()
+    public function testGenerateStepBreadcrumbReturnItemsWithExpectedEnabledStatus(): void
     {
         $stepCollection = $this->getStepCollection();
         $stepCollection->addStep($this->getStepMock());
@@ -108,7 +109,7 @@ class StepBreadcrumbGeneratorTest extends AbstractStepEngineTest
     /**
      * @return void
      */
-    public function testGenerateStepBreadcrumbReturnItemsWithExpectedActiveStatus()
+    public function testGenerateStepBreadcrumbReturnItemsWithExpectedActiveStatus(): void
     {
         $stepCollection = $this->getStepCollection();
         $stepCollection->addStep($this->getStepMock());
@@ -138,7 +139,7 @@ class StepBreadcrumbGeneratorTest extends AbstractStepEngineTest
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface
      */
-    protected function getStepMockWithBreadcrumbs($preCondition = true, $postCondition = true, $requireInput = true, $stepRoute = '', $escapeRoute = '')
+    protected function getStepMockWithBreadcrumbs(bool $preCondition = true, bool $postCondition = true, bool $requireInput = true, string $stepRoute = '', string $escapeRoute = ''): StepWithBreadcrumbInterface
     {
         return new StepMockWithBreadcrumbs($preCondition, $postCondition, $requireInput, $stepRoute, $escapeRoute);
     }

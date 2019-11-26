@@ -67,7 +67,7 @@ class CartFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddToCart()
+    public function testAddToCart(): void
     {
         $quoteTransfer = new QuoteTransfer();
         $cartItem = new ItemTransfer();
@@ -105,7 +105,7 @@ class CartFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveFromCart()
+    public function testRemoveFromCart(): void
     {
         $quoteTransfer = new QuoteTransfer();
         $cartItem = new ItemTransfer();
@@ -181,7 +181,7 @@ class CartFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setTestData()
+    protected function setTestData(): void
     {
         $defaultPriceType = SpyPriceTypeQuery::create()->filterByName(self::PRICE_TYPE_DEFAULT)->findOneOrCreate();
         $defaultPriceType->setName(self::PRICE_TYPE_DEFAULT)->save();

@@ -9,10 +9,8 @@ namespace Spryker\Zed\Payment\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
-use Generated\Shared\Transfer\SalesPaymentMethodTypeTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Payment\Persistence\SpyPaymentMethod;
-use Orm\Zed\Payment\Persistence\SpySalesPaymentMethodType;
 
 class PaymentMapper
 {
@@ -39,28 +37,6 @@ class PaymentMapper
     }
 
     /**
-     * @param \Orm\Zed\Payment\Persistence\SpySalesPaymentMethodType $productPackagingUnitEntity
-     * @param \Generated\Shared\Transfer\SalesPaymentMethodTypeTransfer $salesPaymentMethodTypeTransfer
-     *
-     * @return \Generated\Shared\Transfer\SalesPaymentMethodTypeTransfer
-     */
-    public function mapSalesPaymentMethodTypeTransfer(
-        SpySalesPaymentMethodType $productPackagingUnitEntity,
-        SalesPaymentMethodTypeTransfer $salesPaymentMethodTypeTransfer
-    ): SalesPaymentMethodTypeTransfer {
-        $salesPaymentMethodTypeTransfer->fromArray($productPackagingUnitEntity->toArray(), true);
-        $paymentProviderTransfer = (new PaymentProviderTransfer())
-            ->setName($productPackagingUnitEntity->getPaymentProvider());
-        $salesPaymentMethodTypeTransfer->setPaymentProvider($paymentProviderTransfer);
-
-        $paymentMethodTransfer = (new PaymentMethodTransfer())
-            ->setMethodName($productPackagingUnitEntity->getPaymentMethod());
-        $salesPaymentMethodTypeTransfer->setPaymentMethod($paymentMethodTransfer);
-
-        return $salesPaymentMethodTypeTransfer;
-    }
-
-    /**
      * @param \Orm\Zed\Payment\Persistence\SpyPaymentMethod $paymentMethodEntity
      * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
      *
@@ -71,7 +47,7 @@ class PaymentMapper
         PaymentMethodTransfer $paymentMethodTransfer
     ): PaymentMethodTransfer {
         $paymentMethodTransfer->fromArray($paymentMethodEntity->toArray(), true);
-        $paymentMethodTransfer->setMethodName($paymentMethodEntity->getName());
+        $paymentMethodTransfer->setMethodName($paymentMethodEntity->getPaymentMethodKey());
 
         $paymentMethodTransfer->setPaymentProvider(
             $this->paymentProviderMapper->mapPaymentProviderEntityToPaymentProviderTransfer(

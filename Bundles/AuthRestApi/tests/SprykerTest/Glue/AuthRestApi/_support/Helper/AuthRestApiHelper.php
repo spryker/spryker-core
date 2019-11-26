@@ -21,7 +21,7 @@ class AuthRestApiHelper extends Module
     /**
      * Specification:
      * - Authorizes customer and returns OauthResponseTransfer.
-     * - Returns OauthResponseTransfer with error if authorization failed.
+     * - Fails test in case oauth request was not successful.
      *
      * @part json
      *
@@ -43,9 +43,13 @@ class AuthRestApiHelper extends Module
             $oauthRequestTransfer->setCustomerReference($anonymousCustomerReference);
         }
 
-        return $this->getLocator()
+        $oauthResponseTransfer = $this->getLocator()
             ->authRestApi()
             ->facade()
             ->createAccessToken($oauthRequestTransfer);
+
+        $this->assertTrue($oauthResponseTransfer->getIsValid(), 'OAuth token request failed');
+
+        return $oauthResponseTransfer;
     }
 }

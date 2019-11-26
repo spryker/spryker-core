@@ -37,7 +37,7 @@ class BusinessOnBehalfBusinessTester extends Actor
      *
      * @return void
      */
-    public function assertTransferEquals(AbstractTransfer $expected, AbstractTransfer $actual, string $message = '')
+    public function assertTransferEquals(AbstractTransfer $expected, AbstractTransfer $actual, string $message = ''): void
     {
         $expectedArray = $expected->toArray();
         $actualArray = $actual->toArray();

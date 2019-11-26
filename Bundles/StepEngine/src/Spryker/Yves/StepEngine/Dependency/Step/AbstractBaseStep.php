@@ -17,13 +17,13 @@ abstract class AbstractBaseStep implements StepInterface
     protected $stepRoute;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $escapeRoute;
 
     /**
      * @param string $stepRoute
-     * @param string $escapeRoute
+     * @param string|null $escapeRoute
      */
     public function __construct($stepRoute, $escapeRoute)
     {
@@ -40,7 +40,7 @@ abstract class AbstractBaseStep implements StepInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getEscapeRoute()
     {

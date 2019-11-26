@@ -38,7 +38,7 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
      *
      * @return void
      */
-    public function testCheckCartAvailabilityWhenBundledItemsAvailableShouldReturnEmptyMessageContainer()
+    public function testCheckCartAvailabilityWhenBundledItemsAvailableShouldReturnEmptyMessageContainer(): void
     {
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $availabilityFacadeMock
@@ -74,7 +74,7 @@ class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
      *
      * @return void
      */
-    public function testCheckCartAvailabilityWhenBundledItemsNotAvailableShouldStoreErrorMessages()
+    public function testCheckCartAvailabilityWhenBundledItemsNotAvailableShouldStoreErrorMessages(): void
     {
         $availabilityFacadeMock = $this->createAvailabilityFacadeMock();
         $availabilityFacadeMock->expects($this->once())

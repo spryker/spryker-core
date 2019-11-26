@@ -44,7 +44,7 @@ class SearchWriterTest extends Unit
     /**
      * @return void
      */
-    public function testWriteCreateDocumentsWithValidDataSet()
+    public function testWriteCreateDocumentsWithValidDataSet(): void
     {
         $dataSet = $this->getValidTestDataSet();
         $writer = $this->getElasticsearchWriter();
@@ -54,7 +54,7 @@ class SearchWriterTest extends Unit
     /**
      * @return void
      */
-    public function testWriteCreateDocumentsWithInvalidDataSet()
+    public function testWriteCreateDocumentsWithInvalidDataSet(): void
     {
         $this->expectException('Spryker\Client\Search\Exception\InvalidDataSetException');
         $dataSet = $this->getInvalidTestDataSet();
@@ -82,7 +82,7 @@ class SearchWriterTest extends Unit
      *
      * @return array
      */
-    protected function getValidTestDataSet()
+    protected function getValidTestDataSet(): array
     {
         return [
             'key1' => 'value1',
@@ -95,7 +95,7 @@ class SearchWriterTest extends Unit
      *
      * @return array
      */
-    protected function getInvalidTestDataSet()
+    protected function getInvalidTestDataSet(): array
     {
         return ['value1', 'value2'];
     }
@@ -103,7 +103,7 @@ class SearchWriterTest extends Unit
     /**
      * @return \Spryker\Client\Search\Model\Elasticsearch\Writer\Writer
      */
-    protected function getElasticsearchWriter()
+    protected function getElasticsearchWriter(): Writer
     {
         return new Writer($this->client, '', '');
     }

@@ -42,7 +42,7 @@ class ProductRelationDataHelper extends Module
             $productRelationTransfer->getIdProductRelation()
         ));
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($productRelationTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productRelationTransfer): void {
             $this->cleanupProductRelation($productRelationTransfer);
         });
 

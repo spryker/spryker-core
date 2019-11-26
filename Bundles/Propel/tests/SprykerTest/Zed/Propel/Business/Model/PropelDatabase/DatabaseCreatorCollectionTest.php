@@ -30,7 +30,7 @@ class DatabaseCreatorCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testAdd()
+    public function testAdd(): void
     {
         $databaseCreatorMock = $this->getDatabaseCreatorMock();
         $databaseCreatorCollection = new DatabaseCreatorCollection();
@@ -41,7 +41,7 @@ class DatabaseCreatorCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testHasReturnTrue()
+    public function testHasReturnTrue(): void
     {
         $databaseCreatorMock = $this->getDatabaseCreatorMock();
         $databaseCreatorCollection = new DatabaseCreatorCollection();
@@ -53,7 +53,7 @@ class DatabaseCreatorCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testHasReturnFalse()
+    public function testHasReturnFalse(): void
     {
         $databaseCreatorMock = $this->getDatabaseCreatorMock();
         $databaseCreatorCollection = new DatabaseCreatorCollection();
@@ -65,7 +65,7 @@ class DatabaseCreatorCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testGet()
+    public function testGet(): void
     {
         $databaseCreatorMock = $this->getDatabaseCreatorMock();
         $databaseCreatorCollection = new DatabaseCreatorCollection();

@@ -21,7 +21,7 @@ class StoreDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\StoreTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    public function haveStore($storeOverride = [])
+    public function haveStore(array $storeOverride = [])
     {
         $storeTransfer = (new StoreBuilder($storeOverride))->build();
         $storeEntity = SpyStoreQuery::create()

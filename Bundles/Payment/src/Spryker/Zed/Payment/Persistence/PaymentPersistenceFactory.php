@@ -9,6 +9,7 @@ namespace Spryker\Zed\Payment\Persistence;
 
 use Orm\Zed\Payment\Persistence\SpyPaymentMethodQuery;
 use Orm\Zed\Payment\Persistence\SpyPaymentMethodStoreQuery;
+use Orm\Zed\Payment\Persistence\SpyPaymentProviderQuery;
 use Orm\Zed\Payment\Persistence\SpySalesPaymentMethodTypeQuery;
 use Orm\Zed\Payment\Persistence\SpySalesPaymentQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -81,5 +82,13 @@ class PaymentPersistenceFactory extends AbstractPersistenceFactory
     public function createStoreRelationMapper(): StoreRelationMapper
     {
         return new StoreRelationMapper();
+    }
+
+    /**
+     * @return \Orm\Zed\Payment\Persistence\SpyPaymentProviderQuery
+     */
+    public function createPaymentProviderQuery(): SpyPaymentProviderQuery
+    {
+        return SpyPaymentProviderQuery::create();
     }
 }
