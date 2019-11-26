@@ -5,9 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Security\Configuration;
-
-use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
+namespace Spryker\Shared\SecurityExtension\Configuration;
 
 class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigurationInterface
 {
@@ -231,5 +229,13 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
     public function getEventSubscribers(): array
     {
         return $this->eventSubscribers;
+    }
+
+    /**
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface
+     */
+    public function getConfiguration(): SecurityConfigurationInterface
+    {
+        return $this;
     }
 }

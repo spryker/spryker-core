@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Security\Configuration;
+namespace Spryker\Shared\SecurityExtension\Configuration;
 
 interface SecurityConfigurationInterface
 {

@@ -12,10 +12,9 @@ use Psr\Log\LoggerInterface;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface;
-use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
+use Spryker\Shared\SecurityExtension\Configuration\SecurityConfiguration;
+use Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Spryker\Yves\Security\Configuration\SecurityConfiguration;
-use Spryker\Yves\Security\Configuration\SecurityConfigurationInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestMatcher;
@@ -145,7 +144,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected $securityRoutes = [];
 
     /**
-     * @var \Spryker\Yves\Security\Configuration\SecurityConfigurationInterface|null
+     * @var \Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface|null
      */
     protected $securityConfiguration;
 
@@ -185,14 +184,12 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return \Spryker\Yves\Security\Configuration\SecurityConfigurationInterface
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface
      */
     protected function getSecurityConfiguration(ContainerInterface $container): SecurityConfigurationInterface
     {
         if ($this->securityConfiguration === null) {
-            /** @var \Spryker\Yves\Security\Configuration\SecurityConfigurationInterface $securityConfiguration */
-            $securityConfiguration = $this->getSecurityConfigurationFromPlugins($container);
-            $this->securityConfiguration = $securityConfiguration;
+            $this->securityConfiguration = $this->getSecurityConfigurationFromPlugins($container);
         }
 
         return $this->securityConfiguration;
@@ -201,16 +198,16 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface
      */
-    protected function getSecurityConfigurationFromPlugins(ContainerInterface $container): SecurityBuilderInterface
+    protected function getSecurityConfigurationFromPlugins(ContainerInterface $container): SecurityConfigurationInterface
     {
         $securityConfiguration = new SecurityConfiguration();
         foreach ($this->getFactory()->getSecurityPlugins() as $securityPlugin) {
             $securityConfiguration = $securityPlugin->extend($securityConfiguration, $container);
         }
 
-        return $securityConfiguration;
+        return $securityConfiguration->getConfiguration();
     }
 
     /**
@@ -741,9 +738,13 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 return $request->attributes->get(Security::AUTHENTICATION_ERROR)->getMessage();
             }
 
+            if (!$request->hasSession()) {
+                return null;
+            }
+
             $session = $request->getSession();
 
-            if ($session && $session->has(Security::AUTHENTICATION_ERROR)) {
+            if ($session->has(Security::AUTHENTICATION_ERROR)) {
                 $message = $session->get(Security::AUTHENTICATION_ERROR)->getMessage();
                 $session->remove(Security::AUTHENTICATION_ERROR);
 

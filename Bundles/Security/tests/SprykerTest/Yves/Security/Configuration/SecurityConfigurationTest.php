@@ -8,7 +8,7 @@
 namespace SprykerTest\Yves\Security\Configuration;
 
 use Codeception\Test\Unit;
-use Spryker\Yves\Security\Configuration\SecurityConfiguration;
+use Spryker\Shared\SecurityExtension\Configuration\SecurityConfiguration;
 
 /**
  * Auto-generated group annotations

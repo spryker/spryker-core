@@ -11,9 +11,9 @@ use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
 use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
+use Spryker\Shared\SecurityExtension\Configuration\SecurityConfiguration;
 use Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface;
 use Spryker\Yves\Router\Plugin\EventDispatcher\RouterListenerEventDispatcherPlugin;
-use Spryker\Yves\Security\Configuration\SecurityConfiguration;
 use Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin;
 use Spryker\Yves\Security\Plugin\Security\RememberMeSecurityPlugin;
 use Spryker\Yves\Security\SecurityConfig;
@@ -111,7 +111,7 @@ class SecurityHelper extends Module
     }
 
     /**
-     * @param \Spryker\Yves\Security\Configuration\SecurityConfiguration $securityConfiguration
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityConfiguration $securityConfiguration
      *
      * @return $this
      */
@@ -139,7 +139,7 @@ class SecurityHelper extends Module
 
     /**
      * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
-     * @param \Spryker\Yves\Security\Configuration\SecurityConfiguration $securityConfiguration
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityConfiguration $securityConfiguration
      *
      * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
@@ -154,7 +154,7 @@ class SecurityHelper extends Module
 
     /**
      * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
-     * @param \Spryker\Yves\Security\Configuration\SecurityConfiguration $securityConfiguration
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityConfiguration $securityConfiguration
      *
      * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
@@ -169,7 +169,7 @@ class SecurityHelper extends Module
 
     /**
      * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
-     * @param \Spryker\Yves\Security\Configuration\SecurityConfiguration $securityConfiguration
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityConfiguration $securityConfiguration
      *
      * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
@@ -185,7 +185,7 @@ class SecurityHelper extends Module
 
     /**
      * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
-     * @param \Spryker\Yves\Security\Configuration\SecurityConfiguration $securityConfiguration
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityConfiguration $securityConfiguration
      *
      * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
@@ -200,7 +200,7 @@ class SecurityHelper extends Module
 
     /**
      * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
-     * @param \Spryker\Yves\Security\Configuration\SecurityConfiguration $securityConfiguration
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityConfiguration $securityConfiguration
      *
      * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
@@ -215,7 +215,7 @@ class SecurityHelper extends Module
 
     /**
      * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
-     * @param \Spryker\Yves\Security\Configuration\SecurityConfiguration $securityConfiguration
+     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityConfiguration $securityConfiguration
      *
      * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
