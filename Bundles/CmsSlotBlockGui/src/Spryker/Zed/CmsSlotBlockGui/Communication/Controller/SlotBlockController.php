@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsSlotBlockGui\Communication\Controller;
 
 use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -63,7 +64,7 @@ class SlotBlockController extends AbstractController
      *
      * @return array
      */
-    public function formAction(Request $request)
+    public function formAction(Request $request): array
     {
         $idCmsSlotTemplate = $this->castId($request->query->get(static::PARAM_ID_CMS_SLOT_TEMPLATE));
         $idCmsSlot = $this->castId($request->query->get(static::PARAM_ID_CMS_SLOT));
@@ -83,7 +84,7 @@ class SlotBlockController extends AbstractController
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function getSlotBlockCollectionForm(Request $request, int $idCmsSlotTemplate, int $idCmsSlot)
+    protected function getSlotBlockCollectionForm(Request $request, int $idCmsSlotTemplate, int $idCmsSlot): FormInterface
     {
         $cmsSlotBlockCollectionForm = $this->getFactory()
             ->createCmsSlotBlockCollectionForm($idCmsSlotTemplate, $idCmsSlot)
