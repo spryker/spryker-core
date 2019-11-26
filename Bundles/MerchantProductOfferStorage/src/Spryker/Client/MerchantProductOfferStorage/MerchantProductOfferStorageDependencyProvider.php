@@ -12,7 +12,7 @@ use Spryker\Client\Kernel\Container;
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToStorageClientBridge;
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToSynchronizationServiceBridge;
 use Spryker\Client\MerchantProductOfferStorage\Exception\ProductOfferProviderPluginException;
-use Spryker\Client\MerchantProductOfferStorage\Plugin\ProductOfferProviderPluginInterface;
+use Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferProviderPluginInterface;
 
 class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyProvider
 {
@@ -53,7 +53,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
     /**
      * @throws \Spryker\Client\MerchantProductOfferStorage\Exception\ProductOfferProviderPluginException
      *
-     * @return \Spryker\Client\MerchantProductOfferStorage\Plugin\ProductOfferProviderPluginInterface
+     * @return \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferProviderPluginInterface
      */
     protected function createProductOfferPlugin(): ProductOfferProviderPluginInterface
     {

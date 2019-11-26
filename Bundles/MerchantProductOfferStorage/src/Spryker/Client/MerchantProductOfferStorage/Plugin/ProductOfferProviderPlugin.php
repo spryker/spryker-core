@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\MerchantProductOfferStorage\Plugin;
 
+use Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferProviderPluginInterface;
+
 class ProductOfferProviderPlugin implements ProductOfferProviderPluginInterface
 {
     /**
