@@ -20,7 +20,6 @@ class DiscountByCartResourceRelationshipPlugin extends AbstractPlugin implements
     /**
      * {@inheritDoc}
      * - Adds discounts resource as relationship by cart resource.
-     * - Resource should have order reference field in attributes.
      *
      * @api
      *
