@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\PriceProductOfferStorage\Plugin\PriceProductExtension;
+namespace Spryker\Service\PriceProductOfferStorage\Plugin\PriceProduct;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
