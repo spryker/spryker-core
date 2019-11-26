@@ -353,6 +353,7 @@ class ProductAbstractDataFeedQueryContainerTest extends Unit
         return [
             'spy_product',
             'spy_product_localized_attributes',
+            'spy_stock',
             'spy_stock_product',
         ];
     }

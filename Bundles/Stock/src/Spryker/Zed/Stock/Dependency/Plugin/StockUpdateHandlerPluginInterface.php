@@ -7,16 +7,11 @@
 
 namespace Spryker\Zed\Stock\Dependency\Plugin;
 
-interface StockUpdateHandlerPluginInterface
+use Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface as ExtensionStockUpdateHandlerPluginInterface;
+
+/**
+ * @deprecated Use \Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface instead.
+ */
+interface StockUpdateHandlerPluginInterface extends ExtensionStockUpdateHandlerPluginInterface
 {
-    /**
-     * @api
-     *
-     * This plugin handles all necessary events related to stock updates, like Availability.
-     *
-     * @param string $sku
-     *
-     * @return void
-     */
-    public function handle($sku);
 }

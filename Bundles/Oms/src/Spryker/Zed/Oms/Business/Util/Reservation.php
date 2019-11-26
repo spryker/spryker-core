@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\Oms\Business\Util;
 
-use ArrayObject;
 use Generated\Shared\Transfer\OmsProcessTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\OmsStateTransfer;
 use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 use Spryker\Zed\Oms\Persistence\OmsRepositoryInterface;
@@ -45,24 +45,32 @@ class Reservation implements ReservationInterface
     protected $omsRepository;
 
     /**
+     * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[]
+     */
+    protected $reservationAggregationPlugins;
+
+    /**
      * @param \Spryker\Zed\Oms\Business\Util\ActiveProcessFetcherInterface $activeProcessFetcher
      * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface[] $reservationHandlerPlugins
      * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface $omsRepository
+     * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[] $reservationAggregationPlugins
      */
     public function __construct(
         ActiveProcessFetcherInterface $activeProcessFetcher,
         OmsQueryContainerInterface $queryContainer,
         array $reservationHandlerPlugins,
         OmsToStoreFacadeInterface $storeFacade,
-        OmsRepositoryInterface $omsRepository
+        OmsRepositoryInterface $omsRepository,
+        array $reservationAggregationPlugins = []
     ) {
         $this->activeProcessFetcher = $activeProcessFetcher;
         $this->queryContainer = $queryContainer;
         $this->reservationHandlerPlugins = $reservationHandlerPlugins;
         $this->storeFacade = $storeFacade;
         $this->omsRepository = $omsRepository;
+        $this->reservationAggregationPlugins = $reservationAggregationPlugins;
     }
 
     /**
@@ -72,13 +80,12 @@ class Reservation implements ReservationInterface
      */
     public function updateReservationQuantity($sku)
     {
-        $currentStoreReservationAmount = $this->sumReservedProductQuantitiesForSku($sku);
-
+        $reservationAmount = $this->sumReservedProductQuantitiesForSku($sku);
         $currentStoreTransfer = $this->storeFacade->getCurrentStore();
-        $this->saveReservation($sku, $currentStoreTransfer, $currentStoreReservationAmount);
+        $this->saveReservation($sku, $currentStoreTransfer, $reservationAmount);
         foreach ($currentStoreTransfer->getStoresWithSharedPersistence() as $storeName) {
             $storeTransfer = $this->storeFacade->getStoreByName($storeName);
-            $this->saveReservation($sku, $storeTransfer, $currentStoreReservationAmount);
+            $this->saveReservation($sku, $storeTransfer, $reservationAmount);
         }
 
         $this->handleReservationPlugins($sku);
@@ -88,14 +95,16 @@ class Reservation implements ReservationInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function sumReservedProductQuantitiesForSku($sku, ?StoreTransfer $storeTransfer = null)
+    public function sumReservedProductQuantitiesForSku(string $sku, ?StoreTransfer $storeTransfer = null): Decimal
     {
-        return $this->sumProductQuantitiesForSku(
-            $this->getOmsReservedStateCollection()->getStates(),
-            $sku,
-            $storeTransfer
+        $reservedStates = $this->getOmsReservedStateCollection();
+        $salesAggregationTransfers = $this->aggregateSalesOrderItemReservations($reservedStates, $sku, $storeTransfer);
+
+        return $this->calculateReservationQuantity(
+            $reservedStates,
+            $salesAggregationTransfers
         );
     }
 
@@ -103,37 +112,48 @@ class Reservation implements ReservationInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function getOmsReservedProductQuantityForSku($sku, StoreTransfer $storeTransfer)
+    public function getOmsReservedProductQuantityForSku(string $sku, StoreTransfer $storeTransfer): Decimal
     {
-        $storeTransfer->requireName();
-
         $idStore = $this->getIdStore($storeTransfer);
 
         $reservationEntity = $this->queryContainer
             ->queryProductReservationBySkuAndStore($sku, $idStore)
             ->findOne();
 
-        $reservationQuantity = 0;
+        $reservationQuantity = new Decimal(0);
         if ($reservationEntity !== null) {
-            $reservationQuantity = $reservationEntity->getReservationQuantity();
+            $reservationQuantity = new Decimal($reservationEntity->getReservationQuantity());
         }
 
-        $reservationQuantity += $this->getReservationsFromOtherStores($sku, $storeTransfer);
+        $reservationQuantity = $reservationQuantity->add($this->getReservationsFromOtherStores($sku, $storeTransfer));
 
         return $reservationQuantity;
+    }
+
+    /**
+     * @param string[] $skus
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function getOmsReservedProductQuantityForSkus(array $skus, StoreTransfer $storeTransfer): Decimal
+    {
+        $idStore = $this->getIdStore($storeTransfer);
+
+        return $this->omsRepository->getSumOmsReservedProductQuantityByConcreteProductSkusForStore($skus, $idStore);
     }
 
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $currentStoreTransfer
      *
-     * @return int
+     * @return \Spryker\DecimalObject\Decimal
      */
-    public function getReservationsFromOtherStores($sku, StoreTransfer $currentStoreTransfer)
+    public function getReservationsFromOtherStores(string $sku, StoreTransfer $currentStoreTransfer): Decimal
     {
-        $reservationQuantity = 0;
+        $reservationQuantity = new Decimal(0);
         $reservationStores = $this->queryContainer
             ->queryOmsProductReservationStoreBySku($sku)
             ->find();
@@ -142,23 +162,10 @@ class Reservation implements ReservationInterface
             if ($omsProductReservationStoreEntity->getStore() === $currentStoreTransfer->getName()) {
                 continue;
             }
-            $reservationQuantity += $omsProductReservationStoreEntity->getReservationQuantity();
+            $reservationQuantity = $reservationQuantity->add($omsProductReservationStoreEntity->getReservationQuantity());
         }
 
         return $reservationQuantity;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getReservedStateNames(): array
-    {
-        $stateNames = [];
-        foreach ($this->activeProcessFetcher->getReservedStatesFromAllActiveProcesses() as $reservedState) {
-            $stateNames[] = $reservedState->getName();
-        }
-
-        return $stateNames;
     }
 
     /**
@@ -185,35 +192,69 @@ class Reservation implements ReservationInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\OmsStateTransfer[] $reservedStates
+     * @param \Generated\Shared\Transfer\OmsStateCollectionTransfer $reservedStates
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    protected function sumProductQuantitiesForSku(ArrayObject $reservedStates, string $sku, ?StoreTransfer $storeTransfer = null): int
-    {
-        $sumQuantity = 0;
-        $salesAggregationTransfers = $this->omsRepository->getSalesOrderAggregationBySkuAndStatesNames(
-            array_keys($reservedStates->getArrayCopy()),
+    protected function aggregateSalesOrderItemReservations(
+        OmsStateCollectionTransfer $reservedStates,
+        string $sku,
+        ?StoreTransfer $storeTransfer = null
+    ): array {
+        foreach ($this->reservationAggregationPlugins as $reservationAggregationPlugin) {
+            $salesAggregationTransfers = $reservationAggregationPlugin->aggregateReservations(
+                $sku,
+                $reservedStates,
+                $storeTransfer
+            );
+
+            if ($salesAggregationTransfers !== []) {
+                return $salesAggregationTransfers;
+            }
+        }
+
+        return $this->omsRepository->getSalesOrderAggregationBySkuAndStatesNames(
+            array_keys($reservedStates->getStates()->getArrayCopy()),
             $sku,
             $storeTransfer
         );
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\OmsStateCollectionTransfer $reservedStates
+     * @param \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[] $salesAggregationTransfers
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    protected function calculateReservationQuantity(OmsStateCollectionTransfer $reservedStates, array $salesAggregationTransfers): Decimal
+    {
+        $sumQuantity = new Decimal(0);
         foreach ($salesAggregationTransfers as $salesAggregationTransfer) {
             $this->assertAggregationTransfer($salesAggregationTransfer);
-
-            $stateName = $salesAggregationTransfer->getStateName();
-            $processName = $salesAggregationTransfer->getProcessName();
-            if (!$reservedStates->offsetExists($stateName) || !$reservedStates[$stateName]->getProcesses()->offsetExists($processName)) {
+            if (!$this->assertStateAndProcessExists($reservedStates, $salesAggregationTransfer->getStateName(), $salesAggregationTransfer->getProcessName())) {
                 continue;
             }
 
             $salesAggregationTransfer->requireSumAmount();
-            $sumQuantity += $salesAggregationTransfer->getSumAmount();
+            $sumQuantity = $sumQuantity->add($salesAggregationTransfer->getSumAmount());
         }
 
         return $sumQuantity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OmsStateCollectionTransfer $statesCollection
+     * @param string $stateName
+     * @param string $processName
+     *
+     * @return bool
+     */
+    protected function assertStateAndProcessExists(OmsStateCollectionTransfer $statesCollection, string $stateName, string $processName): bool
+    {
+        return $statesCollection->getStates()->offsetExists($stateName) &&
+            $statesCollection->getStates()[$stateName]->getProcesses()->offsetExists($processName);
     }
 
     /**
@@ -232,11 +273,11 @@ class Reservation implements ReservationInterface
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param int $reservationQuantity
+     * @param \Spryker\DecimalObject\Decimal $reservationQuantity
      *
      * @return void
      */
-    public function saveReservation(string $sku, StoreTransfer $storeTransfer, int $reservationQuantity): void
+    public function saveReservation(string $sku, StoreTransfer $storeTransfer, Decimal $reservationQuantity): void
     {
         $storeTransfer->requireIdStore();
 
@@ -270,6 +311,8 @@ class Reservation implements ReservationInterface
         if ($storeTransfer->getIdStore()) {
             return $storeTransfer->getIdStore();
         }
+
+        $storeTransfer->requireName();
 
         return $this->storeFacade
             ->getStoreByName($storeTransfer->getName())

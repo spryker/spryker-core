@@ -11,7 +11,7 @@ use Spryker\Service\Kernel\AbstractBundleConfig;
 
 class UtilEncryptionConfig extends AbstractBundleConfig
 {
-    protected const OPEN_SSL_ENCRYPTION_METHOD = 'AES256';
+    protected const OPEN_SSL_ENCRYPTION_METHOD = 'aes256';
 
     /**
      * @return string
