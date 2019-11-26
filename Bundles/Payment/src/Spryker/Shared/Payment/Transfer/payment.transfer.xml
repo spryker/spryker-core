@@ -60,7 +60,7 @@
         <property name="methodName" type="string"/>
         <property name="idPaymentMethod" type="int"/>
         <property name="idPaymentProvider" type="int"/>
-        <property name="paymentMethodKey" type="string"/>
+        <property name="name" type="string"/>
         <property name="isActive" type="bool"/>
         <property name="paymentProvider" type="PaymentProvider"/>
         <property name="storeRelation" type="StoreRelation"/>

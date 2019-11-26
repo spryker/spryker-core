@@ -47,7 +47,7 @@ class PaymentMapper
         PaymentMethodTransfer $paymentMethodTransfer
     ): PaymentMethodTransfer {
         $paymentMethodTransfer->fromArray($paymentMethodEntity->toArray(), true);
-        $paymentMethodTransfer->setMethodName($paymentMethodEntity->getName());
+        $paymentMethodTransfer->setMethodName($paymentMethodEntity->getPaymentMethodKey());
 
         $paymentMethodTransfer->setPaymentProvider(
             $this->paymentProviderMapper->mapPaymentProviderEntityToPaymentProviderTransfer(
@@ -59,7 +59,7 @@ class PaymentMapper
         $storeRelationTransfer = (new StoreRelationTransfer())
             ->setIdEntity($paymentMethodEntity->getIdPaymentMethod());
         $paymentMethodTransfer->setStoreRelation(
-            $this->storeRelationMapper->mapShipmentMethodStoreEntitiesToStoreRelationTransfer(
+            $this->storeRelationMapper->mapPaymentMethodStoreEntitiesToStoreRelationTransfer(
                 $paymentMethodEntity->getPaymentMethodStores(),
                 $storeRelationTransfer
             )

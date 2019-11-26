@@ -66,7 +66,7 @@ class PaymentProviderMapper
         foreach ($paymentProviderEntity->getPaymentMethods() as $paymentMethodEntity) {
             $paymentMethodTransfer = (new PaymentMethodTransfer())
                 ->fromArray($paymentMethodEntity->toArray(), true)
-                ->setMethodName($paymentMethodEntity->getName());
+                ->setMethodName($paymentMethodEntity->getPaymentMethodKey());
             $paymentProviderTransfer->addPaymentMethod($paymentMethodTransfer);
         }
 
