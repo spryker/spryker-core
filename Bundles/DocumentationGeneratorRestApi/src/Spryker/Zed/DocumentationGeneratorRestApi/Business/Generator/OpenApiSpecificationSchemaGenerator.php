@@ -199,7 +199,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
 
         $transferMetadata = $this->resourceTransferAnalyzer->getTransferMetadata($transfer);
         foreach ($transferMetadata as $key => $value) {
-            if (class_exists($value[static::KEY_TYPE])) {
+            if ($value[static::KEY_IS_TRANSFER] && class_exists($value[static::KEY_TYPE])) {
                 $schemaName = $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName($value[static::KEY_TYPE]);
                 $this->addResponseDataAttributesSchemaFromTransfer(new $value[static::KEY_TYPE](), $schemaName);
             }

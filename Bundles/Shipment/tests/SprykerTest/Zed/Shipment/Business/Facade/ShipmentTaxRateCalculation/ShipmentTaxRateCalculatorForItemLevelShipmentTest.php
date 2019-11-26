@@ -211,7 +211,7 @@ class ShipmentTaxRateCalculatorForItemLevelShipmentTest extends Test
      * @param string $defaultCountryIso2Code
      * @param float $defaultTaxRate
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface
      */
     protected function createShipmentToTaxFacadeBridgeMock(string $defaultCountryIso2Code, float $defaultTaxRate): ShipmentToTaxInterface
     {
@@ -235,7 +235,7 @@ class ShipmentTaxRateCalculatorForItemLevelShipmentTest extends Test
     /**
      * @param string $defaultCountryIso2Code
      *
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Shared\Kernel\Store
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\Store
      */
     protected function createTaxStoreMock(string $defaultCountryIso2Code): Store
     {

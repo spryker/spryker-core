@@ -41,11 +41,4 @@ interface ProductPackagingUnitTypeReaderInterface
     public function countProductPackagingUnitsByTypeId(
         ProductPackagingUnitTypeTransfer $productPackagingUnitTypeTransfer
     ): int;
-
-    /**
-     * @param array $productPackagingUnitTypeIds
-     *
-     * @return array
-     */
-    public function findProductAbstractIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array;
 }
