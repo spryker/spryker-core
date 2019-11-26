@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductOptionsRestApi\Processor\Translator;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToGlossaryStorageClientInterface;
 
@@ -48,6 +49,36 @@ class ProductOptionTranslator implements ProductOptionTranslatorInterface
         }
 
         return $productAbstractOptionStorageTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    public function translateItemTransfer(ItemTransfer $itemTransfer, string $localeName): ItemTransfer
+    {
+        $glossaryStorageKeys = $this->getGlossaryStorageKeysFromItemTransfer($itemTransfer);
+        $translations = $this->glossaryStorageClient->translateBulk($glossaryStorageKeys, $localeName);
+
+        return $this->setTranslationsToItemTransfer($itemTransfer, $translations);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string[] $translations
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function setTranslationsToItemTransfer(ItemTransfer $itemTransfer, array $translations): ItemTransfer
+    {
+        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+            $productOptionTransfer->setGroupName($translations[$productOptionTransfer->getGroupName()]);
+            $productOptionTransfer->setValue($translations[$productOptionTransfer->getValue()]);
+        }
+
+        return $itemTransfer;
     }
 
     /**
@@ -105,6 +136,22 @@ class ProductOptionTranslator implements ProductOptionTranslatorInterface
                 $optionValueName = $productOptionValueStorageTransfer->getValue();
                 $glossaryStorageKeys[$optionValueName] = $optionValueName;
             }
+        }
+
+        return $glossaryStorageKeys;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return string[]
+     */
+    protected function getGlossaryStorageKeysFromItemTransfer(ItemTransfer $itemTransfer): array
+    {
+        $glossaryStorageKeys = [];
+        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+            $glossaryStorageKeys[] = $productOptionTransfer->getGroupName();
+            $glossaryStorageKeys[] = $productOptionTransfer->getValue();
         }
 
         return $glossaryStorageKeys;

@@ -18,4 +18,10 @@
     <transfer name="Quote">
     </transfer>
 
+    <transfer name="RestItemsAttributes">
+    </transfer>
+
+    <transfer name="RestItemProductOptions">
+    </transfer>
+
 </transfers>

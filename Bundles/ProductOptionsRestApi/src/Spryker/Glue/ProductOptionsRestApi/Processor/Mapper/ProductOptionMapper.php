@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupStorageTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorageTransfer;
+use Generated\Shared\Transfer\RestItemProductOptionsTransfer;
+use Generated\Shared\Transfer\RestItemsAttributesTransfer;
 use Generated\Shared\Transfer\RestOrderItemProductOptionsTransfer;
 use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
 use Generated\Shared\Transfer\RestProductOptionsAttributesTransfer;
@@ -55,6 +57,45 @@ class ProductOptionMapper implements ProductOptionMapperInterface
             ->fromArray($productOptionValueStorageTransfer->toArray(), true)
             ->setOptionGroupName($productOptionGroupStorageTransfer->getName())
             ->setOptionName($productOptionValueStorageTransfer->getValue());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\RestItemsAttributesTransfer $restItemsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestItemsAttributesTransfer
+     */
+    public function mapItemTransferToRestItemsAttributesTransfer(
+        ItemTransfer $itemTransfer,
+        RestItemsAttributesTransfer $restItemsAttributesTransfer
+    ): RestItemsAttributesTransfer {
+        $restItemProductOptionsTransfers = [];
+        foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
+            $restItemProductOptionsTransfers[] = $this->mapProductOptionTransferToRestItemProductOptionsTransfer(
+                $productOptionTransfer,
+                new RestItemProductOptionsTransfer()
+            );
+        }
+
+        $restItemsAttributesTransfer->setSelectedOptions(new ArrayObject($restItemProductOptionsTransfers));
+
+        return $restItemsAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
+     * @param \Generated\Shared\Transfer\RestItemProductOptionsTransfer $restItemProductOptionsTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestItemProductOptionsTransfer
+     */
+    protected function mapProductOptionTransferToRestItemProductOptionsTransfer(
+        ProductOptionTransfer $productOptionTransfer,
+        RestItemProductOptionsTransfer $restItemProductOptionsTransfer
+    ): RestItemProductOptionsTransfer {
+        return $restItemProductOptionsTransfer->fromArray($productOptionTransfer->toArray(), true)
+            ->setOptionGroupName($productOptionTransfer->getGroupName())
+            ->setOptionName($productOptionTransfer->getValue())
+            ->setPrice($productOptionTransfer->getSumPrice());
     }
 
     /**
