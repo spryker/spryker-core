@@ -15,6 +15,7 @@ var SlotBlocks = function (options) {
     this.blocksTable = {};
     this.blocksChoice = {};
     this.slotBlocksForm = {};
+    this.contentProviderAttribute = '';
     this.paramIdCmsSlotTemplate = '';
     this.paramIdCmsSlot = '';
     this.isFirstInit = true;
@@ -55,6 +56,11 @@ var SlotBlocks = function (options) {
             return;
         }
 
+        if (! _self.isCmsSlotBlockContentProvider(api, indexes)) {
+            _self.blocksTable.toggleTableRow(false);
+            return;
+        }
+
         var idCmsSlotTemplate = templateTableApi.rows( { selected: true } ).data()[0][0];
         var idCmsSlot = api.row(indexes[0]).data()[0];
         var paramsCollection = {};
@@ -84,7 +90,13 @@ var SlotBlocks = function (options) {
         return _self.$slotTable;
     };
 
-
+    this.isCmsSlotBlockContentProvider = function (api, indexes) {
+        return api.row(indexes[0])
+            .nodes()
+            .to$()
+            .find("[" + _self.contentProviderAttribute + "='" + cmsSlotBlockContentProvider + "']")
+            .length;
+    };
 };
 
 module.exports = SlotBlocks;

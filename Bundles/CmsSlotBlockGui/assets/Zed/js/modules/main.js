@@ -48,6 +48,7 @@ $(document).ready(function() {
         blocksTable: blocksTable,
         blocksChoice: blocksChoice,
         slotBlocksForm: slotBlocksForm,
+        contentProviderAttribute: 'data-content-provider',
     });
 
     global.SlotTable.dataTableInitCallback = function() {
