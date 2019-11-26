@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Auth\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Shared\Auth\AuthConstants;
 use Spryker\Shared\Config\Config;
@@ -57,7 +58,7 @@ class AuthTest extends Unit
     /**
      * @return string[]
      */
-    private function mockUserData()
+    private function mockUserData(): array
     {
         $data = [];
 
@@ -74,7 +75,7 @@ class AuthTest extends Unit
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    private function mockAddUser($data)
+    private function mockAddUser(array $data): UserTransfer
     {
         return $this->userFacade->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
     }
@@ -82,7 +83,7 @@ class AuthTest extends Unit
     /**
      * @return void
      */
-    public function testUserToken()
+    public function testUserToken(): void
     {
         $userData = $this->mockUserData();
         $userDto = $this->mockAddUser($userData);
@@ -108,7 +109,7 @@ class AuthTest extends Unit
     /**
      * @return void
      */
-    public function testIgnorablePath()
+    public function testIgnorablePath(): void
     {
         $ignorable = $this->authFacade->isIgnorable('auth', 'login', 'index');
         $this->assertTrue($ignorable);
@@ -120,7 +121,7 @@ class AuthTest extends Unit
     /**
      * @return void
      */
-    public function testDoLogin()
+    public function testDoLogin(): void
     {
         $userData = $this->mockUserData();
         $userDto = $this->mockAddUser($userData);
@@ -135,7 +136,7 @@ class AuthTest extends Unit
     /**
      * @return void
      */
-    public function testLoginNotAllowed()
+    public function testLoginNotAllowed(): void
     {
         $userData = $this->mockUserData();
         $userDto = $this->mockAddUser($userData);
@@ -162,7 +163,7 @@ class AuthTest extends Unit
     /**
      * @return void
      */
-    public function testDoLoginWithToken()
+    public function testDoLoginWithToken(): void
     {
         $settings = new AuthConfig();
         $token = new StaticToken();
@@ -179,7 +180,7 @@ class AuthTest extends Unit
     /**
      * @return void
      */
-    public function testDenyLoginWithWrongToken()
+    public function testDenyLoginWithWrongToken(): void
     {
         $token = new StaticToken();
 
@@ -192,7 +193,7 @@ class AuthTest extends Unit
     /**
      * @return void
      */
-    public function testCheckDoLoginAndCurrentUserIsTheSame()
+    public function testCheckDoLoginAndCurrentUserIsTheSame(): void
     {
         $userData = $this->mockUserData();
         $userDto = $this->mockAddUser($userData);
@@ -215,7 +216,7 @@ class AuthTest extends Unit
     /**
      * @return void
      */
-    public function testIsAuthorizedWithYvesCredentialsFromConfigMustReturnTrue()
+    public function testIsAuthorizedWithYvesCredentialsFromConfigMustReturnTrue(): void
     {
         $token = new StaticToken();
 

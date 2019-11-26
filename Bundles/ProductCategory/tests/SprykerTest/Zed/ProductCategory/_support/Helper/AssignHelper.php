@@ -17,11 +17,11 @@ class AssignHelper extends Module
 {
     /**
      * @param \Codeception\TestInterface $test
-     * @param bool $fail
+     * @param \Exception $fail
      *
      * @return void
      */
-    public function _failed(TestInterface $test, $fail)
+    public function _failed(TestInterface $test, $fail): void
     {
         parent::_failed($test, $fail);
 
@@ -31,7 +31,7 @@ class AssignHelper extends Module
     /**
      * @return void
      */
-    protected function removeRelations()
+    protected function removeRelations(): void
     {
         $idCategory = ProductCategoryAssignPage::CATEGORY[ProductCategoryAssignPage::CATEGORY_ID];
         $query = new SpyProductCategoryQuery();
@@ -46,7 +46,7 @@ class AssignHelper extends Module
      *
      * @return void
      */
-    public function assignProductToCategory($idCategory, $idProductAbstract)
+    public function assignProductToCategory(int $idCategory, int $idProductAbstract): void
     {
         $spyProductCategory = new SpyProductCategory();
         $spyProductCategory

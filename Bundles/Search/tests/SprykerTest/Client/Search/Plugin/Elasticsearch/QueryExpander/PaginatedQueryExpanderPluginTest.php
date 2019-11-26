@@ -36,7 +36,7 @@ class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
      *
      * @return void
      */
-    public function testPaginatedQueryExpanderShouldExpandTheBaseQueryAccordingToRequestParameters(SearchConfigInterface $searchConfig, Query $expectedQuery, array $params = [])
+    public function testPaginatedQueryExpanderShouldExpandTheBaseQueryAccordingToRequestParameters(SearchConfigInterface $searchConfig, Query $expectedQuery, array $params = []): void
     {
         $searchFactoryMock = $this->createSearchFactoryMockedWithSearchConfig($searchConfig);
 
@@ -53,7 +53,7 @@ class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     /**
      * @return array
      */
-    public function paginatedQueryExpanderDataProvider()
+    public function paginatedQueryExpanderDataProvider(): array
     {
         return [
             'first page should be queried if there\'s no any request parameter' => $this->getDataForFirstPageWithEmptyParameters(),
@@ -66,7 +66,7 @@ class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     /**
      * @return array
      */
-    protected function getDataForFirstPageWithEmptyParameters()
+    protected function getDataForFirstPageWithEmptyParameters(): array
     {
         $searchConfig = $this->createSearchConfigMock();
         $searchConfig->getPaginationConfigBuilder()
@@ -90,7 +90,7 @@ class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     /**
      * @return array
      */
-    protected function getDataForExplicitFirstPage()
+    protected function getDataForExplicitFirstPage(): array
     {
         $searchConfig = $this->createSearchConfigMock();
         $searchConfig->getPaginationConfigBuilder()
@@ -116,7 +116,7 @@ class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     /**
      * @return array
      */
-    protected function getDataForNonDefaultItemCount()
+    protected function getDataForNonDefaultItemCount(): array
     {
         $searchConfig = $this->createSearchConfigMock();
         $searchConfig->getPaginationConfigBuilder()
@@ -143,7 +143,7 @@ class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     /**
      * @return array
      */
-    protected function getDataForNonDefaultInvalidItemCount()
+    protected function getDataForNonDefaultInvalidItemCount(): array
     {
         $searchConfig = $this->createSearchConfigMock();
         $searchConfig->getPaginationConfigBuilder()

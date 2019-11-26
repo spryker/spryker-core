@@ -23,7 +23,7 @@ class CustomerAccessHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CustomerAccessTransfer
      */
-    public function haveCustomerAccess(array $override = [])
+    public function haveCustomerAccess(array $override = []): CustomerAccessTransfer
     {
         $data = [
             CustomerAccessTransfer::CONTENT_TYPE_ACCESS => [

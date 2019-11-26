@@ -46,7 +46,7 @@ class RedirectChainTest extends Unit
     /**
      * @return void
      */
-    public function testAvoidRedirectChainByUpdatingExistingRedirectTargets()
+    public function testAvoidRedirectChainByUpdatingExistingRedirectTargets(): void
     {
         [$urlTransfer, $modifiedUrlTransfer] = $this->prepareTestData();
 
@@ -59,7 +59,7 @@ class RedirectChainTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
-    protected function prepareTestData()
+    protected function prepareTestData(): array
     {
         $localeEntity = $this->createLocaleEntity();
         $urlEntity = $this->createUrlEntity($localeEntity, '/test-foo');
@@ -74,7 +74,7 @@ class RedirectChainTest extends Unit
     /**
      * @return \Orm\Zed\Locale\Persistence\SpyLocale
      */
-    protected function createLocaleEntity()
+    protected function createLocaleEntity(): SpyLocale
     {
         $localeEntity = new SpyLocale();
         $localeEntity
@@ -90,7 +90,7 @@ class RedirectChainTest extends Unit
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrl
      */
-    protected function createUrlEntity(SpyLocale $localeEntity, $url)
+    protected function createUrlEntity(SpyLocale $localeEntity, string $url): SpyUrl
     {
         $urlEntity = new SpyUrl();
         $urlEntity
@@ -106,7 +106,7 @@ class RedirectChainTest extends Unit
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    protected function mapEntityToTransfer(SpyUrl $urlEntity)
+    protected function mapEntityToTransfer(SpyUrl $urlEntity): UrlTransfer
     {
         $urlTransfer = new UrlTransfer();
         $urlTransfer->fromArray($urlEntity->toArray(), true);
@@ -120,7 +120,7 @@ class RedirectChainTest extends Unit
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    protected function changeUrl(UrlTransfer $urlTransfer, $url)
+    protected function changeUrl(UrlTransfer $urlTransfer, string $url): UrlTransfer
     {
         $urlTransfer->setUrl($url);
 
@@ -133,7 +133,7 @@ class RedirectChainTest extends Unit
      *
      * @return void
      */
-    protected function assertUrlRedirectCreated(UrlTransfer $urlTransfer, UrlTransfer $updatedUrlTransfer)
+    protected function assertUrlRedirectCreated(UrlTransfer $urlTransfer, UrlTransfer $updatedUrlTransfer): void
     {
         $urlEntity = SpyUrlQuery::create()
             ->filterByUrl($urlTransfer->getUrl())

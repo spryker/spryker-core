@@ -23,7 +23,7 @@ class TransferGenerateHelper extends Module
      * @param \Codeception\Lib\ModuleContainer $moduleContainer
      * @param array|null $config
      */
-    public function __construct(ModuleContainer $moduleContainer, $config = null)
+    public function __construct(ModuleContainer $moduleContainer, ?array $config = null)
     {
         parent::__construct($moduleContainer, $config);
 
@@ -35,7 +35,7 @@ class TransferGenerateHelper extends Module
     /**
      * @return void
      */
-    protected function generateTransferObjects()
+    protected function generateTransferObjects(): void
     {
         $transferFacade = $this->getFacade();
 
@@ -51,7 +51,7 @@ class TransferGenerateHelper extends Module
     /**
      * @return \Spryker\Zed\Transfer\Business\TransferFacade
      */
-    protected function getFacade()
+    protected function getFacade(): TransferFacade
     {
         return new TransferFacade();
     }
@@ -59,7 +59,7 @@ class TransferGenerateHelper extends Module
     /**
      * @return void
      */
-    protected function copyFromTestBundle()
+    protected function copyFromTestBundle(): void
     {
         $finder = $this->getBundleTransferSchemas();
 
@@ -88,7 +88,7 @@ class TransferGenerateHelper extends Module
     /**
      * @return string
      */
-    protected function getTargetSchemaDirectory()
+    protected function getTargetSchemaDirectory(): string
     {
         $pathForTransferSchemas = APPLICATION_ROOT_DIR . '/src/Spryker/Shared/Testify/';
 

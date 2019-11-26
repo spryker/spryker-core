@@ -14,7 +14,7 @@ class Entity implements ActiveRecordInterface
     /**
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'first_name' => 'firstName',

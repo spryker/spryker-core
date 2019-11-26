@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductPackagingLeadProductTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
@@ -83,9 +82,7 @@ class AmountLeadProductHydrateOrder implements AmountLeadProductHydrateOrderInte
             return;
         }
 
-        $itemTransfer->setAmountLeadProduct(
-            $this->createProductPackagingLeadProductTransfer($leadProductConcreteTransfer)
-        );
+        $itemTransfer->setAmountLeadProduct($leadProductConcreteTransfer);
     }
 
     /**
@@ -102,18 +99,6 @@ class AmountLeadProductHydrateOrder implements AmountLeadProductHydrateOrderInte
         }
 
         return $this->productFacade->findProductConcreteById($idProductConcrete);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductPackagingLeadProductTransfer
-     */
-    protected function createProductPackagingLeadProductTransfer(ProductConcreteTransfer $productConcreteTransfer): ProductPackagingLeadProductTransfer
-    {
-        return (new ProductPackagingLeadProductTransfer())
-            ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
-            ->setProduct($productConcreteTransfer);
     }
 
     /**

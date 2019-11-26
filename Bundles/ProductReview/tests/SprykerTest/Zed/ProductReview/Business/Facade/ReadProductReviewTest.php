@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductReview\Business\Facade;
 
 use Codeception\TestCase\Test;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generated\Shared\DataBuilder\ProductReviewBuilder;
 
 /**
@@ -23,6 +24,8 @@ use Generated\Shared\DataBuilder\ProductReviewBuilder;
  */
 class ReadProductReviewTest extends Test
 {
+    use ArraySubsetAsserts;
+
     /**
      * @var \SprykerTest\Zed\ProductReview\ProductReviewBusinessTester
      */
@@ -31,7 +34,7 @@ class ReadProductReviewTest extends Test
     /**
      * @return void
      */
-    public function testFindProductReviewDoesntFindNonExistingEntities()
+    public function testFindProductReviewDoesntFindNonExistingEntities(): void
     {
         // Arrange
         $productReviewTransfer = (new ProductReviewBuilder())->makeEmpty()->build();
@@ -47,7 +50,7 @@ class ReadProductReviewTest extends Test
     /**
      * @return void
      */
-    public function testFindProductReviewFindsExistingEntities()
+    public function testFindProductReviewFindsExistingEntities(): void
     {
         // Arrange
         $productReviewTransfer = $this->tester->haveProductReview();

@@ -24,7 +24,7 @@ class ClientLocatorMatcherTest extends Unit
     /**
      * @return void
      */
-    public function testMatchShouldReturnTrueIfMethodStartsWithClient()
+    public function testMatchShouldReturnTrueIfMethodStartsWithClient(): void
     {
         $this->assertTrue((new ClientLocatorMatcher())->match('client'));
     }
@@ -32,7 +32,7 @@ class ClientLocatorMatcherTest extends Unit
     /**
      * @return void
      */
-    public function testMatchShouldReturnFalseIfMethodNotStartsWithClient()
+    public function testMatchShouldReturnFalseIfMethodNotStartsWithClient(): void
     {
         $this->assertFalse((new ClientLocatorMatcher())->match('locatorFoo'));
     }
@@ -40,7 +40,7 @@ class ClientLocatorMatcherTest extends Unit
     /**
      * @return void
      */
-    public function testMatchShouldReturnFalseIfMethodNotStartsWithClientButClientInString()
+    public function testMatchShouldReturnFalseIfMethodNotStartsWithClientButClientInString(): void
     {
         $this->assertFalse((new ClientLocatorMatcher())->match('locatorClient'));
     }
