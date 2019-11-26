@@ -18,7 +18,7 @@ class BundleProductQuoteItemFinderPlugin extends AbstractPlugin implements Quote
 {
     /**
      * Specification:
-     * - Find item in a quote
+     * - Finds item in a quote.
      *
      * @api
      *
