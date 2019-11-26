@@ -9,7 +9,6 @@ namespace Spryker\Client\ConfigurableBundleStorage\Reader;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateImageStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToLocaleClientInterface;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToStorageClientInterface;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Service\ConfigurableBundleStorageToSynchronizationServiceInterface;
 use Spryker\Shared\ConfigurableBundleStorage\ConfigurableBundleStorageConfig;
@@ -27,41 +26,34 @@ class ConfigurableBundleTemplateImageStorageReader implements ConfigurableBundle
     protected $synchronizationService;
 
     /**
-     * @var \Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToLocaleClientInterface
-     */
-    protected $localeClient;
-
-    /**
      * @param \Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ConfigurableBundleStorage\Dependency\Service\ConfigurableBundleStorageToSynchronizationServiceInterface $synchronizationService
-     * @param \Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToLocaleClientInterface $localeClient
      */
     public function __construct(
         ConfigurableBundleStorageToStorageClientInterface $storageClient,
-        ConfigurableBundleStorageToSynchronizationServiceInterface $synchronizationService,
-        ConfigurableBundleStorageToLocaleClientInterface $localeClient
+        ConfigurableBundleStorageToSynchronizationServiceInterface $synchronizationService
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
-        $this->localeClient = $localeClient;
     }
 
     /**
      * @param int $idConfigurableBundleTemplate
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateImageStorageTransfer|null
      */
-    public function findConfigurableBundleTemplateImageStorage(int $idConfigurableBundleTemplate): ?ConfigurableBundleTemplateImageStorageTransfer
+    public function findConfigurableBundleTemplateImageStorage(int $idConfigurableBundleTemplate, string $localeName): ?ConfigurableBundleTemplateImageStorageTransfer
     {
         $configurableBundleTemplateImageStorageData = $this->storageClient->get(
-            $this->generateKey($idConfigurableBundleTemplate, $this->localeClient->getCurrentLocale())
+            $this->generateKey($idConfigurableBundleTemplate, $localeName)
         );
 
         if (!$configurableBundleTemplateImageStorageData) {
             return null;
         }
 
-        return $this->mapToConfigurableBundleImageStorage($configurableBundleTemplateImageStorageData);
+        return $this->mapStorageDataToConfigurableBundleImageStorageTransfer($configurableBundleTemplateImageStorageData);
     }
 
     /**
@@ -69,7 +61,7 @@ class ConfigurableBundleTemplateImageStorageReader implements ConfigurableBundle
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateImageStorageTransfer
      */
-    protected function mapToConfigurableBundleImageStorage(array $configurableBundleTemplateImageStorageData): ConfigurableBundleTemplateImageStorageTransfer
+    protected function mapStorageDataToConfigurableBundleImageStorageTransfer(array $configurableBundleTemplateImageStorageData): ConfigurableBundleTemplateImageStorageTransfer
     {
         return (new ConfigurableBundleTemplateImageStorageTransfer())
             ->fromArray($configurableBundleTemplateImageStorageData, true);
@@ -77,14 +69,14 @@ class ConfigurableBundleTemplateImageStorageReader implements ConfigurableBundle
 
     /**
      * @param int $idConfigurableBundleTemplate
-     * @param string $locale
+     * @param string $localeName
      *
      * @return string
      */
-    protected function generateKey(int $idConfigurableBundleTemplate, string $locale): string
+    protected function generateKey(int $idConfigurableBundleTemplate, string $localeName): string
     {
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
-            ->setLocale($locale)
+            ->setLocale($localeName)
             ->setReference((string)$idConfigurableBundleTemplate);
 
         return $this->synchronizationService

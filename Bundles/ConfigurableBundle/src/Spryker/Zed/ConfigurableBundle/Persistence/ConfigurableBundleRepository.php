@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotCollectionTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
-use Generated\Shared\Transfer\ProductImageSetCollectionTransfer;
 use Orm\Zed\ConfigurableBundle\Persistence\Map\SpyConfigurableBundleTemplateTableMap;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery;
@@ -217,9 +216,9 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
      * @param int $idConfigurableBundleTemplate
      * @param int[] $localeIds
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetCollectionTransfer
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
-    public function getConfigurableBundleTemplateImageSetCollection(int $idConfigurableBundleTemplate, array $localeIds): ProductImageSetCollectionTransfer
+    public function getConfigurableBundleTemplateImageSets(int $idConfigurableBundleTemplate, array $localeIds): array
     {
         $productImageSetQuery = $this->getFactory()
             ->getProductImageSetQuery()
@@ -228,8 +227,8 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
             ->joinWithSpyProductImageSetToProductImage()
             ->useSpyProductImageSetToProductImageQuery()
                 ->joinWithSpyProductImage()
-                ->orderBySortOrder(Criteria::DESC)
-                ->orderByIdProductImageSetToProductImage()
+                ->orderBySortOrder(Criteria::ASC)
+                ->orderByIdProductImageSetToProductImage(Criteria::ASC)
             ->endUse();
 
         if ($localeIds) {
@@ -238,15 +237,15 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
 
         return $this->getFactory()
             ->createConfigurableBundleMapper()
-            ->mapProductImageSetEntityCollectionToProductImageSetTransferCollection($productImageSetQuery->find());
+            ->mapProductImageSetEntityCollectionToProductImageSetTransfers($productImageSetQuery->find());
     }
 
     /**
      * @param int $idConfigurableBundleTemplate
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetCollectionTransfer
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
-    public function getDefaultConfigurableBundleTemplateImageSetCollection(int $idConfigurableBundleTemplate): ProductImageSetCollectionTransfer
+    public function getDefaultConfigurableBundleTemplateImageSets(int $idConfigurableBundleTemplate): array
     {
         $productImageSetQuery = $this->getFactory()
             ->getProductImageSetQuery()
@@ -255,12 +254,12 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
             ->joinWithSpyProductImageSetToProductImage()
             ->useSpyProductImageSetToProductImageQuery()
                 ->joinWithSpyProductImage()
-                ->orderBySortOrder(Criteria::DESC)
-                ->orderByIdProductImageSetToProductImage()
+                ->orderBySortOrder(Criteria::ASC)
+                ->orderByIdProductImageSetToProductImage(Criteria::ASC)
             ->endUse();
 
         return $this->getFactory()
             ->createConfigurableBundleMapper()
-            ->mapProductImageSetEntityCollectionToProductImageSetTransferCollection($productImageSetQuery->find());
+            ->mapProductImageSetEntityCollectionToProductImageSetTransfers($productImageSetQuery->find());
     }
 }

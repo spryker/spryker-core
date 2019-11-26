@@ -19,6 +19,8 @@ use Spryker\Zed\ConfigurableBundleStorage\Persistence\ConfigurableBundleStorageR
 
 class ConfigurableBundleStoragePublisher implements ConfigurableBundleStoragePublisherInterface
 {
+    protected const KEY_IMAGE_SET = 'image_sets';
+
     /**
      * @var \Spryker\Zed\ConfigurableBundleStorage\Persistence\ConfigurableBundleStorageRepositoryInterface
      */
@@ -64,6 +66,12 @@ class ConfigurableBundleStoragePublisher implements ConfigurableBundleStoragePub
      */
     public function publishConfigurableBundleTemplates(array $configurableBundleTemplateIds): void
     {
+        $configurableBundleTemplateIds = array_unique(array_filter($configurableBundleTemplateIds));
+
+        if (!$configurableBundleTemplateIds) {
+            return;
+        }
+
         $configurableBundleTemplateTransfers = $this->configurableBundleReader->getConfigurableBundleTemplates($configurableBundleTemplateIds);
         $configurableBundleTemplateStorageEntityMap = $this->configurableBundleStorageRepository->getConfigurableBundleTemplateStorageEntityMap($configurableBundleTemplateIds);
 
@@ -114,9 +122,12 @@ class ConfigurableBundleStoragePublisher implements ConfigurableBundleStoragePub
             ->setUuid($configurableBundleTemplateTransfer->getUuid())
             ->setSlots(new ArrayObject($configurableBundleTemplateSlotStorageTransfers));
 
+        $configurableBundleTemplateStorageData = $configurableBundleTemplateStorageTransfer->toArray();
+        unset($configurableBundleTemplateStorageData[static::KEY_IMAGE_SET]);
+
         $configurableBundleTemplateStorageEntity
             ->setFkConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
-            ->setData($configurableBundleTemplateStorageTransfer->toArray())
+            ->setData($configurableBundleTemplateStorageData)
             ->setIsSendingToQueue($this->configurableBundleStorageConfig->isSendingToQueue());
 
         return $configurableBundleTemplateStorageEntity;

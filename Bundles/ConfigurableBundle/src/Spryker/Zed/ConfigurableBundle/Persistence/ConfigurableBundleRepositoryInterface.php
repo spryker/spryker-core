@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotCollectionTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
-use Generated\Shared\Transfer\ProductImageSetCollectionTransfer;
 
 interface ConfigurableBundleRepositoryInterface
 {
@@ -64,14 +63,14 @@ interface ConfigurableBundleRepositoryInterface
      * @param int $idConfigurableBundleTemplate
      * @param int[] $localeIds
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetCollectionTransfer
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
-    public function getConfigurableBundleTemplateImageSetCollection(int $idConfigurableBundleTemplate, array $localeIds): ProductImageSetCollectionTransfer;
+    public function getConfigurableBundleTemplateImageSets(int $idConfigurableBundleTemplate, array $localeIds): array;
 
     /**
      * @param int $idConfigurableBundleTemplate
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetCollectionTransfer
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
-    public function getDefaultConfigurableBundleTemplateImageSetCollection(int $idConfigurableBundleTemplate): ProductImageSetCollectionTransfer;
+    public function getDefaultConfigurableBundleTemplateImageSets(int $idConfigurableBundleTemplate): array;
 }

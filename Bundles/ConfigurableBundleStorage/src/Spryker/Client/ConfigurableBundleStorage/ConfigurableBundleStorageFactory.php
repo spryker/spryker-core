@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ConfigurableBundleStorage;
 
-use Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToLocaleClientInterface;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToStorageClientInterface;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Service\ConfigurableBundleStorageToSynchronizationServiceInterface;
 use Spryker\Client\ConfigurableBundleStorage\Reader\ConfigurableBundleStorageReader;
@@ -37,8 +36,7 @@ class ConfigurableBundleStorageFactory extends AbstractFactory
     {
         return new ConfigurableBundleTemplateImageStorageReader(
             $this->getStorageClient(),
-            $this->getSynchronizationService(),
-            $this->getLocaleClient()
+            $this->getSynchronizationService()
         );
     }
 
@@ -56,13 +54,5 @@ class ConfigurableBundleStorageFactory extends AbstractFactory
     public function getSynchronizationService(): ConfigurableBundleStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
-    }
-
-    /**
-     * @return \Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToLocaleClientInterface
-     */
-    public function getLocaleClient(): ConfigurableBundleStorageToLocaleClientInterface
-    {
-        return $this->getProvidedDependency(ConfigurableBundleStorageDependencyProvider::CLIENT_LOCALE);
     }
 }

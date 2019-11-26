@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ConfigurableBundleStorage\Business\Unpublisher;
 
-use Spryker\Zed\ConfigurableBundleStorage\Business\Reader\ConfigurableBundleReaderInterface;
 use Spryker\Zed\ConfigurableBundleStorage\Persistence\ConfigurableBundleStorageEntityManagerInterface;
 use Spryker\Zed\ConfigurableBundleStorage\Persistence\ConfigurableBundleStorageRepositoryInterface;
 
@@ -24,23 +23,15 @@ class ConfigurableBundleTemplateImageStorageUnpublisher implements ConfigurableB
     protected $configurableBundleStorageEntityManager;
 
     /**
-     * @var \Spryker\Zed\ConfigurableBundleStorage\Business\Reader\ConfigurableBundleReaderInterface
-     */
-    protected $configurableBundleReader;
-
-    /**
      * @param \Spryker\Zed\ConfigurableBundleStorage\Persistence\ConfigurableBundleStorageRepositoryInterface $configurableBundleStorageRepository
      * @param \Spryker\Zed\ConfigurableBundleStorage\Persistence\ConfigurableBundleStorageEntityManagerInterface $configurableBundleStorageEntityManager
-     * @param \Spryker\Zed\ConfigurableBundleStorage\Business\Reader\ConfigurableBundleReaderInterface $configurableBundleReader
      */
     public function __construct(
         ConfigurableBundleStorageRepositoryInterface $configurableBundleStorageRepository,
-        ConfigurableBundleStorageEntityManagerInterface $configurableBundleStorageEntityManager,
-        ConfigurableBundleReaderInterface $configurableBundleReader
+        ConfigurableBundleStorageEntityManagerInterface $configurableBundleStorageEntityManager
     ) {
         $this->configurableBundleStorageRepository = $configurableBundleStorageRepository;
         $this->configurableBundleStorageEntityManager = $configurableBundleStorageEntityManager;
-        $this->configurableBundleReader = $configurableBundleReader;
     }
 
     /**
@@ -50,16 +41,15 @@ class ConfigurableBundleTemplateImageStorageUnpublisher implements ConfigurableB
      */
     public function unpublish(array $configurableBundleTemplateIds): void
     {
+        $configurableBundleTemplateIds = array_unique(array_filter($configurableBundleTemplateIds));
+
+        if (!$configurableBundleTemplateIds) {
+            return;
+        }
+
         $configurableBundleTemplateImageStorageEntityMap = $this->configurableBundleStorageRepository->getConfigurableBundleTemplateImageStorageEntityMap($configurableBundleTemplateIds);
 
-        $configurableBundleTemplateTransfers = $this->configurableBundleReader->getConfigurableBundleTemplates($configurableBundleTemplateIds);
-        $configurableBundleTemplateIds = $this->extractConfigurableBundleTemplateIds($configurableBundleTemplateTransfers);
-
-        foreach ($configurableBundleTemplateImageStorageEntityMap as $idConfigurableBundleTemplate => $configurableBundleTemplateImageStorageEntities) {
-            if (!in_array($idConfigurableBundleTemplate, $configurableBundleTemplateIds, true)) {
-                continue;
-            }
-
+        foreach ($configurableBundleTemplateImageStorageEntityMap as $configurableBundleTemplateImageStorageEntities) {
             $this->deleteConfigurableBundleTemplateImageStorageEntities($configurableBundleTemplateImageStorageEntities);
         }
     }
@@ -74,21 +64,5 @@ class ConfigurableBundleTemplateImageStorageUnpublisher implements ConfigurableB
         foreach ($configurableBundleTemplateImageStorageEntities as $configurableBundleTemplateImageStorageEntity) {
             $this->configurableBundleStorageEntityManager->deleteConfigurableBundleTemplateImageStorageEntity($configurableBundleTemplateImageStorageEntity);
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer[] $configurableBundleTemplateTransfers
-     *
-     * @return int[]
-     */
-    protected function extractConfigurableBundleTemplateIds(array $configurableBundleTemplateTransfers): array
-    {
-        $configurableBundleTemplateIds = [];
-
-        foreach ($configurableBundleTemplateTransfers as $configurableBundleTemplateTransfer) {
-            $configurableBundleTemplateIds[] = $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate();
-        }
-
-        return $configurableBundleTemplateIds;
     }
 }

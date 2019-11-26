@@ -47,10 +47,11 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
 
     /**
      * @param int $idConfigurableBundleTemplate
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
      */
-    public function findConfigurableBundleTemplateStorage(int $idConfigurableBundleTemplate): ?ConfigurableBundleTemplateStorageTransfer
+    public function findConfigurableBundleTemplateStorage(int $idConfigurableBundleTemplate, string $localeName): ?ConfigurableBundleTemplateStorageTransfer
     {
         $configurableBundleTemplateStorageTransferData = $this->storageClient->get(
             $this->generateKey($idConfigurableBundleTemplate)
@@ -61,7 +62,7 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
         }
 
         $configurableBundleTemplateStorageTransfer = $this->mapToConfigurableBundleStorage($configurableBundleTemplateStorageTransferData);
-        $configurableBundleTemplateStorageTransfer = $this->expandConfigurableBundleTemplateStorage($configurableBundleTemplateStorageTransfer);
+        $configurableBundleTemplateStorageTransfer = $this->expandConfigurableBundleTemplateStorage($configurableBundleTemplateStorageTransfer, $localeName);
 
         return $configurableBundleTemplateStorageTransfer;
     }
@@ -94,14 +95,16 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer
      */
     protected function expandConfigurableBundleTemplateStorage(
-        ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
+        ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer,
+        string $localeName
     ): ConfigurableBundleTemplateStorageTransfer {
         $configurableBundleTemplateImageStorageTransfer = $this->configurableBundleTemplateImageStorageReader
-            ->findConfigurableBundleTemplateImageStorage($configurableBundleTemplateStorageTransfer->getIdConfigurableBundleTemplate());
+            ->findConfigurableBundleTemplateImageStorage($configurableBundleTemplateStorageTransfer->getIdConfigurableBundleTemplate(), $localeName);
 
         if ($configurableBundleTemplateImageStorageTransfer) {
             $configurableBundleTemplateStorageTransfer->setImageSets($configurableBundleTemplateImageStorageTransfer->getImageSets());

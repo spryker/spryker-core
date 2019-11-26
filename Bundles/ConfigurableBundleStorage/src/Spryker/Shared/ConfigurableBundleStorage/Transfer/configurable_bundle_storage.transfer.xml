@@ -8,7 +8,7 @@
         <property name="uuid" type="string"/>
         <property name="name" type="string"/>
         <property name="slots" singular="slot" type="ConfigurableBundleTemplateSlotStorage[]"/>
-        <property name="imageSets" singular="imageSet" type="ProductImageSetStorage[]"/>
+        <property name="imageSets" type="ProductImageSetStorage[]" singular="imageSet"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlotStorage">

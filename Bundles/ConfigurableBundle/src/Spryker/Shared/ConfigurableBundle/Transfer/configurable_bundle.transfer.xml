@@ -100,10 +100,6 @@
         <property name="configurableBundleTemplateSlots" type="ConfigurableBundleTemplateSlot[]" singular="configurableBundleTemplateSlot"/>
     </transfer>
 
-    <transfer name="ProductImageSetCollection">
-        <property name="productImageSets" type="ProductImageSet[]" singular="productImageSet"/>
-    </transfer>
-
     <transfer name="ConfigurableBundleTemplateSlotFilter">
         <property name="productList" type="ProductList"/>
         <property name="idConfigurableBundleTemplateSlot" type="int"/>

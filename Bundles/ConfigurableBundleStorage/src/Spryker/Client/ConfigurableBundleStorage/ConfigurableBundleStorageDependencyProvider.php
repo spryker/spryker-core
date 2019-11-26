@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ConfigurableBundleStorage;
 
-use Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToLocaleClientBridge;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToStorageClientBridge;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Service\ConfigurableBundleStorageToSynchronizationServiceBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
@@ -17,7 +16,6 @@ class ConfigurableBundleStorageDependencyProvider extends AbstractDependencyProv
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
-    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -29,7 +27,6 @@ class ConfigurableBundleStorageDependencyProvider extends AbstractDependencyProv
         $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
-        $container = $this->addLocaleClient($container);
 
         return $container;
     }
@@ -57,20 +54,6 @@ class ConfigurableBundleStorageDependencyProvider extends AbstractDependencyProv
     {
         $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new ConfigurableBundleStorageToStorageClientBridge($container->getLocator()->storage()->client());
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addLocaleClient(Container $container): Container
-    {
-        $container->set(static::CLIENT_LOCALE, function (Container $container) {
-            return new ConfigurableBundleStorageToLocaleClientBridge($container->getLocator()->locale()->client());
         });
 
         return $container;

@@ -49,8 +49,7 @@ class ConfigurableBundleStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ConfigurableBundleStorageUnpublisher(
             $this->getRepository(),
-            $this->getEntityManager(),
-            $this->createConfigurableBundleReader()
+            $this->getEntityManager()
         );
     }
 
@@ -75,8 +74,7 @@ class ConfigurableBundleStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ConfigurableBundleTemplateImageStorageUnpublisher(
             $this->getRepository(),
-            $this->getEntityManager(),
-            $this->createConfigurableBundleReader()
+            $this->getEntityManager()
         );
     }
 

@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotCollectionTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\ProductImageSetCollectionTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
@@ -145,12 +144,11 @@ class ConfigurableBundleMapper
     /**
      * @param \Propel\Runtime\Collection\Collection $productImageSetEntities
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetCollectionTransfer
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
-    public function mapProductImageSetEntityCollectionToProductImageSetTransferCollection(
-        Collection $productImageSetEntities
-    ): ProductImageSetCollectionTransfer {
-        $productImageSetCollectionTransfer = new ProductImageSetCollectionTransfer();
+    public function mapProductImageSetEntityCollectionToProductImageSetTransfers(Collection $productImageSetEntities): array
+    {
+        $productImageSetTransfers = [];
 
         foreach ($productImageSetEntities as $productImageSetEntity) {
             $productImageSetTransfer = $this->mapProductImageSetEntityToProductImageSetTransfer(
@@ -158,10 +156,10 @@ class ConfigurableBundleMapper
                 new ProductImageSetTransfer()
             );
 
-            $productImageSetCollectionTransfer->addProductImageSet($productImageSetTransfer);
+            $productImageSetTransfers[] = $productImageSetTransfer;
         }
 
-        return $productImageSetCollectionTransfer;
+        return $productImageSetTransfers;
     }
 
     /**
@@ -178,7 +176,7 @@ class ConfigurableBundleMapper
             ->fromArray($productImageSetEntity->toArray(), true);
 
         if ($productImageSetEntity->getSpyLocale()) {
-            $productImageSetTransfer->setLocale($this->mapLocalEntityToLocaleTransfer($productImageSetEntity->getSpyLocale(), new LocaleTransfer()));
+            $productImageSetTransfer->setLocale($this->mapLocaleEntityToLocaleTransfer($productImageSetEntity->getSpyLocale(), new LocaleTransfer()));
         }
 
         return $productImageSetTransfer
@@ -231,7 +229,7 @@ class ConfigurableBundleMapper
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    protected function mapLocalEntityToLocaleTransfer(SpyLocale $localeEntity, LocaleTransfer $localeTransfer): LocaleTransfer
+    protected function mapLocaleEntityToLocaleTransfer(SpyLocale $localeEntity, LocaleTransfer $localeTransfer): LocaleTransfer
     {
         $localeTransfer = $localeTransfer->fromArray($localeEntity->toArray(), true);
 

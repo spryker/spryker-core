@@ -15,6 +15,8 @@ use Spryker\Zed\ConfigurableBundle\Business\Cleaner\ConfigurableBundleTemplateSl
 use Spryker\Zed\ConfigurableBundle\Business\Cleaner\ConfigurableBundleTemplateSlotCleanerInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Cleaner\ConfiguredBundleItemCleaner;
 use Spryker\Zed\ConfigurableBundle\Business\Cleaner\ConfiguredBundleItemCleanerInterface;
+use Spryker\Zed\ConfigurableBundle\Business\Combiner\ProductImageSetCombiner;
+use Spryker\Zed\ConfigurableBundle\Business\Combiner\ProductImageSetCombinerInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Creator\ConfigurableBundleTemplateCreator;
 use Spryker\Zed\ConfigurableBundle\Business\Creator\ConfigurableBundleTemplateCreatorInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Creator\ConfigurableBundleTemplateSlotCreator;
@@ -230,7 +232,8 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ConfigurableBundleTemplateImageSetExpander(
             $this->getRepository(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
+            $this->createProductImageSetCombiner()
         );
     }
 
@@ -245,6 +248,14 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
             $this->createConfigurableBundleTemplateSlotProductListExpander(),
             $this->getLocaleFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Business\Combiner\ProductImageSetCombinerInterface
+     */
+    public function createProductImageSetCombiner(): ProductImageSetCombinerInterface
+    {
+        return new ProductImageSetCombiner();
     }
 
     /**

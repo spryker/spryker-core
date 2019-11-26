@@ -9,6 +9,7 @@ namespace Spryker\Zed\ConfigurableBundle\Business\Expander;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Spryker\Zed\ConfigurableBundle\Business\Combiner\ProductImageSetCombinerInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface;
 
@@ -25,15 +26,23 @@ class ConfigurableBundleTemplateImageSetExpander implements ConfigurableBundleTe
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\ConfigurableBundle\Business\Combiner\ProductImageSetCombinerInterface
+     */
+    protected $productImageSetCombiner;
+
+    /**
      * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface $configurableBundleRepository
      * @param \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\ConfigurableBundle\Business\Combiner\ProductImageSetCombinerInterface $productImageSetCombiner
      */
     public function __construct(
         ConfigurableBundleRepositoryInterface $configurableBundleRepository,
-        ConfigurableBundleToLocaleFacadeInterface $localeFacade
+        ConfigurableBundleToLocaleFacadeInterface $localeFacade,
+        ProductImageSetCombinerInterface $productImageSetCombiner
     ) {
         $this->configurableBundleRepository = $configurableBundleRepository;
         $this->localeFacade = $localeFacade;
+        $this->productImageSetCombiner = $productImageSetCombiner;
     }
 
     /**
@@ -51,17 +60,15 @@ class ConfigurableBundleTemplateImageSetExpander implements ConfigurableBundleTe
         $idConfigurableBundleTemplate = $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate();
         $localeIds = $this->extractLocaleIds($localeTransfers);
 
-        $productImageSetTransfers = $this->configurableBundleRepository
-            ->getConfigurableBundleTemplateImageSetCollection($idConfigurableBundleTemplate, $localeIds)
-            ->getProductImageSets();
+        $localizedProductImageSetTransfers = $this->configurableBundleRepository->getConfigurableBundleTemplateImageSets($idConfigurableBundleTemplate, $localeIds);
+        $productImageSetTransfers = $this->configurableBundleRepository->getDefaultConfigurableBundleTemplateImageSets($idConfigurableBundleTemplate);
 
-        if (!$productImageSetTransfers->count()) {
-            $productImageSetTransfers = $this->configurableBundleRepository
-                ->getDefaultConfigurableBundleTemplateImageSetCollection($idConfigurableBundleTemplate)
-                ->getProductImageSets();
-        }
+        $productImageSetTransfers = $this->productImageSetCombiner->combineProductImageSets(
+            $localizedProductImageSetTransfers,
+            $productImageSetTransfers
+        );
 
-        $configurableBundleTemplateTransfer->setProductImageSets($productImageSetTransfers);
+        $configurableBundleTemplateTransfer->setProductImageSets(new ArrayObject($productImageSetTransfers));
 
         return $configurableBundleTemplateTransfer;
     }

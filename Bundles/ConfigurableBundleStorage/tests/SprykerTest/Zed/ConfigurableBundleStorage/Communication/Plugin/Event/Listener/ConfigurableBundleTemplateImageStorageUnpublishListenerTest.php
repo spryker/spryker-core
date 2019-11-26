@@ -38,7 +38,7 @@ class ConfigurableBundleTemplateImageStorageUnpublishListenerTest extends Unit
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\ConfigurableBundleStorage\Persistence\ConfigurableBundleStorageRepository
+     * @var \Spryker\Zed\ConfigurableBundleStorage\Persistence\ConfigurableBundleStorageRepositoryInterface
      */
     protected $configurableBundleStorageRepository;
 

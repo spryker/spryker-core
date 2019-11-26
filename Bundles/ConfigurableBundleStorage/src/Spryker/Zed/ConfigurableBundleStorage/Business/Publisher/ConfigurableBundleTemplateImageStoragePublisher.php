@@ -74,6 +74,12 @@ class ConfigurableBundleTemplateImageStoragePublisher implements ConfigurableBun
      */
     public function publish(array $configurableBundleTemplateIds): void
     {
+        $configurableBundleTemplateIds = array_unique(array_filter($configurableBundleTemplateIds));
+
+        if (!$configurableBundleTemplateIds) {
+            return;
+        }
+
         $configurableBundleTemplateTransfers = $this->configurableBundleReader->getConfigurableBundleTemplates($configurableBundleTemplateIds);
         $localizedConfigurableBundleTemplateImageStorageEntityMap = $this->configurableBundleStorageRepository->getConfigurableBundleTemplateImageStorageEntityMap($configurableBundleTemplateIds);
 
@@ -119,9 +125,12 @@ class ConfigurableBundleTemplateImageStoragePublisher implements ConfigurableBun
             $configurableBundleTemplateImageStorageEntity = $localizedConfigurableBundleTemplateImageStorageEntityMap[$idConfigurableBundleTemplate][$localeName]
                 ?? new SpyConfigurableBundleTemplateImageStorage();
 
+            $productImageSetTransfers = isset($localizedProductImageSetTransfers[$localeName])
+                ? array_merge($localizedProductImageSetTransfers[$localeName], $defaultProductImageSetTransfers) : $defaultProductImageSetTransfers;
+
             $this->saveConfigurableBundleTemplateImageStorageEntity(
                 $localeName,
-                $localizedProductImageSetTransfers[$localeName] ?? $defaultProductImageSetTransfers,
+                $productImageSetTransfers,
                 $configurableBundleTemplateTransfer,
                 $configurableBundleTemplateImageStorageEntity
             );
