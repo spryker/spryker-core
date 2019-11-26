@@ -300,6 +300,8 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\Search\Business\SearchBusinessFactory::getSearchDataMapperPlugins()` instead.
+     *
      * @return \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface[]
      */
     public function getSearchPageMapPlugins()

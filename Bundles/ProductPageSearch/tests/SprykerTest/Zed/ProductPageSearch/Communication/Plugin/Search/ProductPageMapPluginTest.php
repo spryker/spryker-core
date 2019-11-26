@@ -1,52 +1,36 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * This file is part of the Spryker Suite.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace SprykerTest\Zed\CategoryPageSearch\Communication\Plugin\Event\Listener;
+namespace Spryker\ProductPageSearch\tests\SprykerTest\Zed\ProductPageSearch\Communication\Plugin\Search;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Propel\Runtime\Map\TableMap;
-use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Search\CategoryNodeDataPageMapBuilder;
-use Spryker\Zed\CategoryPageSearch\Persistence\CategoryPageSearchQueryContainer;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Search\ProductPageMapPlugin;
 use Spryker\Zed\Search\Business\SearchFacadeInterface;
 use Spryker\Zed\Search\SearchDependencyProvider;
 
 /**
  * Auto-generated group annotations
  *
+ * @group Spryker
+ * @group ProductPageSearch
+ * @group tests
  * @group SprykerTest
  * @group Zed
- * @group CategoryPageSearch
+ * @group ProductPageSearch
  * @group Communication
  * @group Plugin
- * @group Event
- * @group Listener
- * @group CategoryNodeDataPageMapBuilderTest
+ * @group Search
+ * @group ProductPageMapPluginTest
  * Add your own group annotations below this line
- *
- * @property \SprykerTest\Zed\CategoryPageSearch\CategoryPageSearchCommunicationTester $tester
+ * @property \SprykerTest\Zed\ProductPageSearch\ProductPageSearchCommunicationTester $tester
  */
-class CategoryNodeDataPageMapBuilderTest extends Unit
+class ProductPageMapPluginTest extends Unit
 {
-    /**
-     * @return void
-     */
-    public function testBuildPageMapWillReturnCorrectTransfer(): void
-    {
-        $query = new CategoryPageSearchQueryContainer();
-        $categoryNodeDataPageMapBuilder = new CategoryNodeDataPageMapBuilder();
-        $categoryNode = $query->queryCategoryNodeTree([1], 46)->orderByIdCategoryNode()->find()->getFirst();
-        $pageMapTransfer = $categoryNodeDataPageMapBuilder->buildPageMap(new PageMapBuilder(), $categoryNode->toArray(TableMap::TYPE_FIELDNAME, true, [], true), (new LocaleTransfer())->setIdLocale(46));
-
-        $this->assertSame(3, count($pageMapTransfer->getFullText()));
-        $this->assertSame('Demoshop', $pageMapTransfer->getFullTextBoosted()[0]);
-    }
-
     /**
      * @dataProvider canMapRawDataToSearchDataProvider
      *
@@ -61,7 +45,7 @@ class CategoryNodeDataPageMapBuilderTest extends Unit
     {
         // Arrange
         $this->tester->setDependency(SearchDependencyProvider::PLUGIN_SEARCH_PAGE_MAPS, [
-            new CategoryNodeDataPageMapBuilder(),
+            new ProductPageMapPlugin(),
         ]);
         $localeTransfer = new LocaleTransfer();
         $localeTransfer->setLocaleName($localeName);
