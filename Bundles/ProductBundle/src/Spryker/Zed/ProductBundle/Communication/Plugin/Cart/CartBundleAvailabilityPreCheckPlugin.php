@@ -22,6 +22,7 @@ class CartBundleAvailabilityPreCheckPlugin extends AbstractPlugin implements Car
     /**
      * {@inheritDoc}
      * - Checks if bundled items in CartChangeTransfer are available.
+     * - Only checks bundle products and bundled items.
      * - Sets error message if they were not.
      *
      * @api

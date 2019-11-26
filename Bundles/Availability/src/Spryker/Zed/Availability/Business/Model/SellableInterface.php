@@ -8,32 +8,18 @@
 namespace Spryker\Zed\Availability\Business\Model;
 
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 
 interface SellableInterface
 {
     /**
-     * @param string $sku
-     * @param int $quantity
-     *
-     * @return bool
-     */
-    public function isProductSellable($sku, $quantity);
-
-    /**
-     * @param string $sku
-     *
-     * @return int
-     */
-    public function calculateStockForProduct($sku);
-
-    /**
-     * @param string $sku
-     * @param int $quantity
+     * @param string $concreteSku
+     * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    public function isProductSellableForStore($sku, $quantity, StoreTransfer $storeTransfer);
+    public function isProductSellableForStore(string $concreteSku, Decimal $quantity, StoreTransfer $storeTransfer): bool;
 
     /**
      * @param int $idProductConcrete
@@ -41,12 +27,4 @@ interface SellableInterface
      * @return bool
      */
     public function isProductConcreteAvailable(int $idProductConcrete): bool;
-
-    /**
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return int
-     */
-    public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer);
 }
