@@ -19,7 +19,7 @@ class ConfigurableBundleTemplateListProductListTopButtonsExpanderPlugin extends 
 {
     /**
      * {@inheritDoc}
-     * - Expands buttons list with button leads to a Cofigurable Bundle Template list page.
+     * - Expands buttons list with button leads to a Configurable Bundle Template list page.
      *
      * @api
      *
