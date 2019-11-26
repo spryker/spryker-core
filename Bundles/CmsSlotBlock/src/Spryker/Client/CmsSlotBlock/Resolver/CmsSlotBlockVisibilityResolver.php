@@ -45,8 +45,6 @@ class CmsSlotBlockVisibilityResolver implements CmsSlotBlockVisibilityResolverIn
         CmsSlotBlockTransfer $cmsSlotBlockTransfer,
         CmsSlotParamsTransfer $cmsSlotParamsTransfer
     ): bool {
-        $cmsSlotBlockTransfer->requireConditions();
-
         $cmsSlotBlockVisibilityResolverPlugins = $this->getApplicablePlugins($cmsSlotBlockTransfer);
 
         if (!$cmsSlotBlockVisibilityResolverPlugins) {
