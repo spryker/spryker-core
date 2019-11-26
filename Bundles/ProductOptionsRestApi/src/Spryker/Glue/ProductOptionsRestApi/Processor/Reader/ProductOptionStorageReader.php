@@ -21,6 +21,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
 
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
     protected const KEY_PRODUCT_ABSTRACT_SKU = 'sku';
+    protected const KEY_PRODUCT_CONCRETE_SKU = 'sku';
 
     /**
      * @var \Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductStorageClientInterface
@@ -78,22 +79,42 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
         );
         $productAbstractOptionStorageTransfers = $this->productOptionTranslator
             ->translateProductAbstractOptionStorageTransfers($productAbstractOptionStorageTransfers, $localeName);
-        $productOptionRestResources = [];
-        foreach ($productAbstractIds as $productAbstractSku => $idProductAbstract) {
-            if (!isset($productAbstractOptionStorageTransfers[$idProductAbstract])) {
-                continue;
-            }
 
-            $productOptionRestResources[$productAbstractSku] = $this->productOptionRestResponseBuilder
-                ->createProductOptionRestResources(
-                    $productAbstractOptionStorageTransfers[$idProductAbstract],
-                    ProductOptionsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
-                    $productAbstractSku,
-                    $sorts
-                );
-        }
+        return $this->productOptionRestResponseBuilder
+            ->createProductOptionRestResources(
+                $productAbstractOptionStorageTransfers,
+                $productAbstractIds,
+                ProductOptionsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
+                $sorts
+            );
+    }
 
-        return $productOptionRestResources;
+    /**
+     * @param string[] $productConcreteSkus
+     * @param string $localeName
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
+     */
+    public function getProductOptionsByProductConcreteSkus(
+        array $productConcreteSkus,
+        string $localeName,
+        array $sorts
+    ): array {
+        $productAbstractIds = $this->getProductAbstractIdsByProductConcreteSkus($productConcreteSkus, $localeName);
+        $productAbstractOptionStorageTransfers = $this->productOptionStorageClient->getBulkProductOptions(
+            array_unique($productAbstractIds)
+        );
+        $productAbstractOptionStorageTransfers = $this->productOptionTranslator
+            ->translateProductAbstractOptionStorageTransfers($productAbstractOptionStorageTransfers, $localeName);
+
+        return $this->productOptionRestResponseBuilder
+            ->createProductOptionRestResources(
+                $productAbstractOptionStorageTransfers,
+                $productAbstractIds,
+                ProductOptionsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
+                $sorts
+            );
     }
 
     /**
@@ -169,5 +190,27 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
         }
 
         return $productOptionIds;
+    }
+
+    /**
+     * @param string[] $productConcreteSkus
+     * @param string $localeName
+     *
+     * @return int[]
+     */
+    protected function getProductAbstractIdsByProductConcreteSkus(array $productConcreteSkus, string $localeName): array
+    {
+        $productAbstractIdsByProductConcreteSkus = [];
+        $productConcreteStorageDataItems = $this->productStorageClient->getBulkProductConcreteStorageDataByMapping(
+            static::PRODUCT_CONCRETE_MAPPING_TYPE,
+            $productConcreteSkus,
+            $localeName
+        );
+        foreach ($productConcreteStorageDataItems as $productConcreteStorageDataItem) {
+            $productAbstractIdsByProductConcreteSkus[$productConcreteStorageDataItem[static::KEY_PRODUCT_CONCRETE_SKU]] =
+                $productConcreteStorageDataItem[static::KEY_ID_PRODUCT_ABSTRACT];
+        }
+
+        return $productAbstractIdsByProductConcreteSkus;
     }
 }

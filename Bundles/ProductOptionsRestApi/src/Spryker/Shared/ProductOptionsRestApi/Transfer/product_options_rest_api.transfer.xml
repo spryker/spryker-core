@@ -36,7 +36,7 @@
     </transfer>
 
     <transfer name="CartItemRequest">
-        <property name="productOptions" type="CartItemRequestProductOption[]" singular="CartItemRequestProductOption"/>
+        <property name="productOptions" type="CartItemRequestProductOption[]" singular="productOption"/>
     </transfer>
 
     <transfer name="CartItemRequestProductOption">
@@ -50,6 +50,17 @@
 
     <transfer name="RestCartItemsProductOption">
         <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="RestOrderItemsAttributes">
+        <property name="productOptions" type="RestOrderItemProductOptions[]" singular="productOption"/>
+    </transfer>
+
+    <transfer name="RestOrderItemProductOptions">
+        <property name="optionGroupName" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="optionName" type="string"/>
+        <property name="price" type="int"/>
     </transfer>
 
     <transfer name="Item">

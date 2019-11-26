@@ -45,7 +45,7 @@ class CartItemExpander implements CartItemExpanderInterface
                 continue;
             }
 
-            $cartItemRequestTransfer->addCartItemRequestProductOption(
+            $cartItemRequestTransfer->addProductOption(
                 (new CartItemRequestProductOptionTransfer())
                     ->setIdProductOption($productOptionIds[$restCartItemsProductOptionTransfer->getSku()])
             );
