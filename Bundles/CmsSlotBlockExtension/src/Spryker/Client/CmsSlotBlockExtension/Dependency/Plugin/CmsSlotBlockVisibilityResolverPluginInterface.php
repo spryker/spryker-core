@@ -14,7 +14,8 @@ interface CmsSlotBlockVisibilityResolverPluginInterface
 {
     /**
      * Specification:
-     * - Returns true if this plugin is applicable with provided conditions.
+     * - Used to determine if a plugin will be able to provide matching blocks based on the condition.
+     * - Returns true when a plugin satisfies the conditions provided by a CmsSlotBlockTransfer.
      *
      * @api
      *
@@ -26,7 +27,7 @@ interface CmsSlotBlockVisibilityResolverPluginInterface
 
     /**
      * Specification:
-     * - Returns true if CMS block should be rendered.
+     * - Returns true if CMS block should be rendered in a specific slot.
      *
      * @api
      *

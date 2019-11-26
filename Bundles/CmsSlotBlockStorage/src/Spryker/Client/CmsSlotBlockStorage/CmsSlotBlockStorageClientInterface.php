@@ -13,7 +13,7 @@ interface CmsSlotBlockStorageClientInterface
 {
     /**
      * Specification:
-     * - Returns CMS slot blocks within storage with a given concrete CMS slot template path and CMS slot key.
+     * - Returns CMS blocks assigned to a slot in storage based on template path and slot key.
      *
      * @api
      *

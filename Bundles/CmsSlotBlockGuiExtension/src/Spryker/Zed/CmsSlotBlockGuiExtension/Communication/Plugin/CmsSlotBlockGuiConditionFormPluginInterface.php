@@ -14,7 +14,7 @@ interface CmsSlotBlockGuiConditionFormPluginInterface
 {
     /**
      * Specification:
-     * - Returns true if this plugin is applicable with provided CmsSlotTemplateConfigurationTransfer.
+     * - Returns true if the plugin will provide the condition editor for a given CmsSlotTemplateConfigurationTransfer criteria.
      *
      * @api
      *
