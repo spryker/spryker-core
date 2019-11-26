@@ -183,6 +183,8 @@ class ProductReviewSearchWriter implements ProductReviewSearchWriterInterface
     /**
      * @deprecated Use `\Spryker\Zed\ProductReviewSearch\Business\Search\ProductReviewSearchWriter::mapRawDataToSearchData()` instead.
      *
+     * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview $productReviewEntity
+     *
      * @return array
      */
     protected function mapTosSearchFallback(SpyProductReview $productReviewEntity): array
