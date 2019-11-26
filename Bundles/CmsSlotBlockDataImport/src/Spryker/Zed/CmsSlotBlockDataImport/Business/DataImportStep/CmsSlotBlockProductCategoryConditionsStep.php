@@ -17,6 +17,21 @@ class CmsSlotBlockProductCategoryConditionsStep implements DataImportStepInterfa
     protected const KEY_CONDITION_PRODUCT_CATEGORY = 'productCategory';
 
     /**
+     * @uses \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\AllConditionResolver::KEY_ALL
+     */
+    protected const KEY_ALL = 'all';
+
+    /**
+     * @uses \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\CategoryKeysToIdsConditionResolver::KEY_CONDITION_CATEGORY_IDS
+     */
+    protected const KEY_CONDITION_CATEGORY_IDS = 'categoryIds';
+
+    /**
+     * @uses \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ProductAbstractSkusToIdsConditionResolver::KEY_PRODUCT_ABSTRACT_IDS
+     */
+    protected const KEY_PRODUCT_ABSTRACT_IDS = 'productIds';
+
+    /**
      * @var \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ConditionResolverInterface
      */
     protected $allConditionsResolver;
@@ -71,6 +86,11 @@ class CmsSlotBlockProductCategoryConditionsStep implements DataImportStepInterfa
 
         if (!array_filter($conditionsArray[static::KEY_CONDITION_PRODUCT_CATEGORY])) {
             return;
+        }
+
+        if ($conditionsArray[static::KEY_CONDITION_PRODUCT_CATEGORY][static::KEY_CONDITION_CATEGORY_IDS]
+            || $conditionsArray[static::KEY_CONDITION_PRODUCT_CATEGORY][static::KEY_PRODUCT_ABSTRACT_IDS]) {
+            $conditionsArray[static::KEY_CONDITION_PRODUCT_CATEGORY][static::KEY_ALL] = false;
         }
 
         $dataSet[CmsSlotBlockDataSetInterface::COL_CONDITIONS_ARRAY] = $conditionsArray;
