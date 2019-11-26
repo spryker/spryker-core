@@ -5,26 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductOptionsRestApi\Processor\Mapper;
+namespace Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
 
-interface ProductOptionMapperInterface
+interface RestOrderItemsAttributesMapperPluginInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
-     * @param \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[] $restProductOptionsAttributesTransfers
+     * Specification:
+     * - Maps ItemTransfer to RestOrderItemsAttributesTransfer.
      *
-     * @return \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[]
-     */
-    public function mapProductAbstractOptionStorageTransferToRestProductOptionsAttributesTransfers(
-        ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer,
-        array $restProductOptionsAttributesTransfers = []
-    ): array;
-
-    /**
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
      *

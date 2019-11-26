@@ -21,6 +21,29 @@
 
     <transfer name="ProductOptionGroupStorage">
         <property name="name" type="string"/>
+        <property name="productOptionValues" singular="productOptionValue" type="ProductOptionValueStorage[]"/>
+    </transfer>
+
+    <transfer name="RestOrderItemsAttributes">
+        <property name="productOptions" type="RestOrderItemProductOptions[]" singular="productOption"/>
+    </transfer>
+
+    <transfer name="RestOrderItemProductOptions">
+        <property name="optionGroupName" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="optionName" type="string"/>
+        <property name="price" type="int"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="productOptions" type="ProductOption[]" singular="productOption"/>
+    </transfer>
+
+    <transfer name="ProductOption">
+        <property name="sku" type="string"/>
+        <property name="groupName" type="string"/>
+        <property name="value" type="string"/>
+        <property name="sumPrice" type="int"/>
     </transfer>
 
 </transfers>
