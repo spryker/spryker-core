@@ -70,6 +70,6 @@ class CartCreator implements CartCreatorInterface
             return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 
-        return $this->cartRestResponseBuilder->createCartRestResponse($quoteResponseTransfer->getQuoteTransfer(), $restRequest);
+        return $this->cartRestResponseBuilder->createCartRestResponse($quoteResponseTransfer->getQuoteTransfer());
     }
 }

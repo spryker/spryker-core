@@ -19,7 +19,7 @@ class CartDiscountsResourceRoutePlugin extends AbstractPlugin implements Resourc
 {
     /**
      * {@inheritDoc}
-     * - Configures available actions for cartcodes resource.
+     * - Configures available actions for discounts resource.
      *
      * @api
      *
@@ -57,7 +57,7 @@ class CartDiscountsResourceRoutePlugin extends AbstractPlugin implements Resourc
      */
     public function getController(): string
     {
-        return CartCodesRestApiConfig::CONTROLLER_CART_DISCOUNTS;
+        return 'cart-discounts-resource';
     }
 
     /**

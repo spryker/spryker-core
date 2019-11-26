@@ -16,7 +16,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-class PromotionItemByQuoteTransferResourceRelationshipExpander implements PromotionItemByQuoteTransferResourceRelationshipExpanderInterface
+class PromotionItemByQuoteResourceRelationshipExpander implements PromotionItemByQuoteResourceRelationshipExpanderInterface
 {
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface

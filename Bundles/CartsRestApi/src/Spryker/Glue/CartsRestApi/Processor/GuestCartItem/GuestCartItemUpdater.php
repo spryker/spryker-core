@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
-use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemMapperInterface;
-use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -31,16 +29,6 @@ class GuestCartItemUpdater implements GuestCartItemUpdaterInterface
     protected $guestCartRestResponseBuilderInterface;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsMapperInterface
-     */
-    protected $cartsResourceMapper;
-
-    /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemMapperInterface
-     */
-    protected $cartItemsResourceMapper;
-
-    /**
      * @var \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
      */
     protected $customerExpanderPlugins;
@@ -48,21 +36,15 @@ class GuestCartItemUpdater implements GuestCartItemUpdaterInterface
     /**
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder
-     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsMapperInterface $cartsResourceMapper
-     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemMapperInterface $cartItemsResourceMapper
      * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[] $customerExpanderPlugins
      */
     public function __construct(
         CartsRestApiClientInterface $cartsRestApiClient,
         GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder,
-        CartsMapperInterface $cartsResourceMapper,
-        CartItemMapperInterface $cartItemsResourceMapper,
         array $customerExpanderPlugins
     ) {
         $this->cartsRestApiClient = $cartsRestApiClient;
         $this->guestCartRestResponseBuilderInterface = $guestCartRestResponseBuilder;
-        $this->cartsResourceMapper = $cartsResourceMapper;
-        $this->cartItemsResourceMapper = $cartItemsResourceMapper;
         $this->customerExpanderPlugins = $customerExpanderPlugins;
     }
 

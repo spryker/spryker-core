@@ -3,7 +3,7 @@
   "description": "CartCodesRestApi module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/cart-code": "^1.1.0",
     "spryker/carts-rest-api": "^5.5.0",
     "spryker/glue-application": "^1.9.0",

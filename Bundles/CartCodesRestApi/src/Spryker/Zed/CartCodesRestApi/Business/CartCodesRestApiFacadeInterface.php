@@ -14,7 +14,7 @@ interface CartCodesRestApiFacadeInterface
 {
     /**
      * Specification:
-     * - Extends QuoteTransfer with $code and its relevant data when the $code is applicable.
+     * - Extends QuoteTransfer with $voucherCode and its relevant data when the $code is applicable.
      *
      * @api
      *

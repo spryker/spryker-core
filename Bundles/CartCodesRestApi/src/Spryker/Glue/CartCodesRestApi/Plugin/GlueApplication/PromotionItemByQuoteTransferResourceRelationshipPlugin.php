@@ -31,7 +31,7 @@ class PromotionItemByQuoteTransferResourceRelationshipPlugin extends AbstractPlu
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createPromotionItemByQuoteTransferResourceRelationshipExpander()
+            ->createPromotionItemByQuoteResourceRelationshipExpander()
             ->addResourceRelationships($resources, $restRequest);
     }
 

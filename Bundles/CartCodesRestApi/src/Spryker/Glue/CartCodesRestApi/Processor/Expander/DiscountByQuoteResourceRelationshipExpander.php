@@ -15,7 +15,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-class DiscountByCartResourceRelationshipExpander implements DiscountByCartResourceRelationshipExpanderInterface
+class DiscountByQuoteResourceRelationshipExpander implements DiscountByQuoteResourceRelationshipExpanderInterface
 {
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface

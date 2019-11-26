@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CartCodesRestApi;
 
+use Spryker\Glue\CartCodesRestApi\Dependency\RestApiResource\CartCodesRestApiToCartsRestApiResourceBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
@@ -15,7 +16,7 @@ use Spryker\Glue\Kernel\Container;
  */
 class CartCodesRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const CARTS_RESOURCE = 'CARTS_RESOURCE';
+    public const CARTS_REST_API_RESOURCE = 'CARTS_REST_API_RESOURCE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -24,6 +25,7 @@ class CartCodesRestApiDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function provideDependencies(Container $container): Container
     {
+        $container = parent::provideDependencies($container);
         $container = $this->addCartsResource($container);
 
         return $container;
@@ -36,8 +38,10 @@ class CartCodesRestApiDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addCartsResource(Container $container): Container
     {
-        $container->set(static::CARTS_RESOURCE, function (Container $container) {
-            return $container->getLocator()->cartsRestApi()->resource();
+        $container->set(static::CARTS_REST_API_RESOURCE, function (Container $container) {
+            return new CartCodesRestApiToCartsRestApiResourceBridge(
+                $container->getLocator()->cartsRestApi()->resource()
+            );
         });
 
         return $container;

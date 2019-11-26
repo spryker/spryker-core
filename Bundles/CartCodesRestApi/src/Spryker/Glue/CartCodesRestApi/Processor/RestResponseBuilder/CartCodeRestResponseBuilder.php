@@ -10,8 +10,8 @@ namespace Spryker\Glue\CartCodesRestApi\Processor\RestResponseBuilder;
 use ArrayObject;
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Glue\CartCodesRestApi\Dependency\RestApiResource\CartCodesRestApiToCartsRestApiResourceInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\CartCodeMapperInterface;
-use Spryker\Glue\CartsRestApi\CartsRestApiResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -29,19 +29,19 @@ class CartCodeRestResponseBuilder implements CartCodeRestResponseBuilderInterfac
     protected $cartCodeMapper;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\CartsRestApiResourceInterface
+     * @var \Spryker\Glue\CartCodesRestApi\Dependency\RestApiResource\CartCodesRestApiToCartsRestApiResourceInterface
      */
     protected $cartsRestApiResource;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CartCodesRestApi\Processor\Mapper\CartCodeMapperInterface $cartCodeMapper
-     * @param \Spryker\Glue\CartsRestApi\CartsRestApiResourceInterface $cartsRestApiResource
+     * @param \Spryker\Glue\CartCodesRestApi\Dependency\RestApiResource\CartCodesRestApiToCartsRestApiResourceInterface $cartsRestApiResource
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         CartCodeMapperInterface $cartCodeMapper,
-        CartsRestApiResourceInterface $cartsRestApiResource
+        CartCodesRestApiToCartsRestApiResourceInterface $cartsRestApiResource
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->cartCodeMapper = $cartCodeMapper;

@@ -32,7 +32,7 @@ class DiscountByCartResourceRelationshipPlugin extends AbstractPlugin implements
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createDiscountByCartResourceRelationshipExpander()
+            ->createDiscountByQuoteResourceRelationshipExpander()
             ->addResourceRelationships($resources, $restRequest);
     }
 

@@ -65,7 +65,6 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new CartReader(
             $this->createCartRestResponseBuilder(),
-            $this->createCartsMapper(),
             $this->getClient(),
             $this->getCustomerExpanderPlugins()
         );
@@ -117,8 +116,6 @@ class CartsRestApiFactory extends AbstractFactory
         return new CartItemAdder(
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
-            $this->createCartItemsMapper(),
-            $this->createCartsMapper(),
             $this->getCustomerExpanderPlugins()
         );
     }
@@ -131,7 +128,6 @@ class CartsRestApiFactory extends AbstractFactory
         return new CartItemDeleter(
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
-            $this->createCartItemsMapper(),
             $this->getCustomerExpanderPlugins()
         );
     }
@@ -144,8 +140,6 @@ class CartsRestApiFactory extends AbstractFactory
         return new CartItemUpdater(
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
-            $this->createCartsMapper(),
-            $this->createCartItemsMapper(),
             $this->getCustomerExpanderPlugins()
         );
     }
@@ -182,7 +176,6 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new GuestCartItemAdder(
             $this->getClient(),
-            $this->createCartItemsMapper(),
             $this->createGuestCartRestResponseBuilder(),
             $this->createCartRestResponseBuilder()
         );
@@ -196,8 +189,6 @@ class CartsRestApiFactory extends AbstractFactory
         return new GuestCartItemUpdater(
             $this->getClient(),
             $this->createGuestCartRestResponseBuilder(),
-            $this->createCartsMapper(),
-            $this->createCartItemsMapper(),
             $this->getCustomerExpanderPlugins()
         );
     }
@@ -210,7 +201,6 @@ class CartsRestApiFactory extends AbstractFactory
         return new GuestCartItemDeleter(
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
-            $this->createCartItemsMapper(),
             $this->getCustomerExpanderPlugins()
         );
     }

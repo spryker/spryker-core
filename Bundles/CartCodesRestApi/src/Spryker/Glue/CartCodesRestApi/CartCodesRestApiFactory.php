@@ -7,14 +7,15 @@
 
 namespace Spryker\Glue\CartCodesRestApi;
 
+use Spryker\Glue\CartCodesRestApi\Dependency\RestApiResource\CartCodesRestApiToCartsRestApiResourceInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\CartCodeAdder\CartCodeAdder;
 use Spryker\Glue\CartCodesRestApi\Processor\CartCodeAdder\CartCodeAdderInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\CartCodeRemover\CartCodeRemover;
 use Spryker\Glue\CartCodesRestApi\Processor\CartCodeRemover\CartCodeRemoverInterface;
-use Spryker\Glue\CartCodesRestApi\Processor\Expander\DiscountByCartResourceRelationshipExpander;
-use Spryker\Glue\CartCodesRestApi\Processor\Expander\DiscountByCartResourceRelationshipExpanderInterface;
-use Spryker\Glue\CartCodesRestApi\Processor\Expander\PromotionItemByQuoteTransferResourceRelationshipExpander;
-use Spryker\Glue\CartCodesRestApi\Processor\Expander\PromotionItemByQuoteTransferResourceRelationshipExpanderInterface;
+use Spryker\Glue\CartCodesRestApi\Processor\Expander\DiscountByQuoteResourceRelationshipExpander;
+use Spryker\Glue\CartCodesRestApi\Processor\Expander\DiscountByQuoteResourceRelationshipExpanderInterface;
+use Spryker\Glue\CartCodesRestApi\Processor\Expander\PromotionItemByQuoteResourceRelationshipExpander;
+use Spryker\Glue\CartCodesRestApi\Processor\Expander\PromotionItemByQuoteResourceRelationshipExpanderInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\CartCodeMapper;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\CartCodeMapperInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\DiscountMapper;
@@ -23,7 +24,6 @@ use Spryker\Glue\CartCodesRestApi\Processor\Mapper\PromotionItemMapper;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\PromotionItemMapperInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\RestResponseBuilder\CartCodeRestResponseBuilder;
 use Spryker\Glue\CartCodesRestApi\Processor\RestResponseBuilder\CartCodeRestResponseBuilderInterface;
-use Spryker\Glue\CartsRestApi\CartsRestApiResourceInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
@@ -91,32 +91,32 @@ class CartCodesRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CartCodesRestApi\Processor\Expander\DiscountByCartResourceRelationshipExpanderInterface
+     * @return \Spryker\Glue\CartCodesRestApi\Processor\Expander\DiscountByQuoteResourceRelationshipExpanderInterface
      */
-    public function createDiscountByCartResourceRelationshipExpander(): DiscountByCartResourceRelationshipExpanderInterface
+    public function createDiscountByQuoteResourceRelationshipExpander(): DiscountByQuoteResourceRelationshipExpanderInterface
     {
-        return new DiscountByCartResourceRelationshipExpander(
+        return new DiscountByQuoteResourceRelationshipExpander(
             $this->getResourceBuilder(),
             $this->createDiscountMapper()
         );
     }
 
     /**
-     * @return \Spryker\Glue\CartCodesRestApi\Processor\Expander\PromotionItemByQuoteTransferResourceRelationshipExpanderInterface
+     * @return \Spryker\Glue\CartCodesRestApi\Processor\Expander\PromotionItemByQuoteResourceRelationshipExpanderInterface
      */
-    public function createPromotionItemByQuoteTransferResourceRelationshipExpander(): PromotionItemByQuoteTransferResourceRelationshipExpanderInterface
+    public function createPromotionItemByQuoteResourceRelationshipExpander(): PromotionItemByQuoteResourceRelationshipExpanderInterface
     {
-        return new PromotionItemByQuoteTransferResourceRelationshipExpander(
+        return new PromotionItemByQuoteResourceRelationshipExpander(
             $this->getResourceBuilder(),
             $this->createPromotionItemMapper()
         );
     }
 
     /**
-     * @return \Spryker\Glue\CartsRestApi\CartsRestApiResourceInterface
+     * @return \Spryker\Glue\CartCodesRestApi\Dependency\RestApiResource\CartCodesRestApiToCartsRestApiResourceInterface
      */
-    public function getCartsRestApiResource(): CartsRestApiResourceInterface
+    public function getCartsRestApiResource(): CartCodesRestApiToCartsRestApiResourceInterface
     {
-        return $this->getProvidedDependency(CartCodesRestApiDependencyProvider::CARTS_RESOURCE);
+        return $this->getProvidedDependency(CartCodesRestApiDependencyProvider::CARTS_REST_API_RESOURCE);
     }
 }

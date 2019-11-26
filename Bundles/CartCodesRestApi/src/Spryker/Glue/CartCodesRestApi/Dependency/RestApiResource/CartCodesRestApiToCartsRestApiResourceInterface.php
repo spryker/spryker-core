@@ -5,35 +5,29 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder;
+namespace Spryker\Glue\CartCodesRestApi\Dependency\RestApiResource;
 
-use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface CartRestResponseBuilderInterface extends BaseCartRestResponseBuilderInterface
+interface CartCodesRestApiToCartsRestApiResourceInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createCartRestResponse(QuoteTransfer $quoteTransfer): RestResponseInterface;
+    public function createGuestCartRestResponse(QuoteTransfer $quoteTransfer): RestResponseInterface;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createRestQuoteCollectionResponse(
-        QuoteCollectionTransfer $quoteCollectionTransfer,
+    public function createCartRestResponse(
+        QuoteTransfer $quoteTransfer,
         RestRequestInterface $restRequest
     ): RestResponseInterface;
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createRestResponse(): RestResponseInterface;
 }
