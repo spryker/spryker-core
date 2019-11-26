@@ -12,6 +12,8 @@ use Spryker\Zed\Discount\Business\Calculator\Discount;
 use Spryker\Zed\Discount\Business\Calculator\FilteredCalculator;
 use Spryker\Zed\Discount\Business\Calculator\Type\FixedType;
 use Spryker\Zed\Discount\Business\Calculator\Type\PercentageType;
+use Spryker\Zed\Discount\Business\CartCode\VoucherCartCode;
+use Spryker\Zed\Discount\Business\CartCode\VoucherCartCodeInterface;
 use Spryker\Zed\Discount\Business\Checkout\DiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Collector\ItemPriceCollector;
 use Spryker\Zed\Discount\Business\Collector\ItemQuantityCollector;
@@ -95,6 +97,14 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getMessengerFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\CartCode\VoucherCartCodeInterface
+     */
+    public function createVoucherCartCode(): VoucherCartCodeInterface
+    {
+        return new VoucherCartCode();
     }
 
     /**

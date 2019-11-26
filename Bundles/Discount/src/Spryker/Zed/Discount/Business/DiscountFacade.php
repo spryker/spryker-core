@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -713,5 +714,72 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
         return $this->getFactory()
             ->createQuoteVoucherDiscountMaxUsageValidator()
             ->validate($quoteTransfer, $checkoutResponseTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $code
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addCandidate(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createVoucherCartCode()
+            ->addCandidate($quoteTransfer, $code);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $code
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function removeCode(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createVoucherCartCode()
+            ->removeCode($quoteTransfer, $code);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $code
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer|null
+     */
+    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
+    {
+        return $this->getFactory()
+            ->createVoucherCartCode()
+            ->getOperationResponseMessage($quoteTransfer, $code);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function clearAllCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createVoucherCartCode()
+            ->clearAllCodes($quoteTransfer);
     }
 }

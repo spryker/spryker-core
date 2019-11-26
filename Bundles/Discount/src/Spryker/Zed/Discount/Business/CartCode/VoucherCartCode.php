@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Discount\Communication\CartCode;
+namespace Spryker\Zed\Discount\Business\CartCode;
 
 use ArrayObject;
 use Generated\Shared\Transfer\DiscountTransfer;

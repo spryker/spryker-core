@@ -33,9 +33,7 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
      */
     public function addCandidate(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
     {
-        return $this->getFactory()
-            ->createVoucherCartCode()
-            ->addCandidate($quoteTransfer, $code);
+        return $this->getFacade()->addCandidate($quoteTransfer, $code);
     }
 
     /**
@@ -51,9 +49,7 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
      */
     public function removeCode(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
     {
-        return $this->getFactory()
-            ->createVoucherCartCode()
-            ->removeCode($quoteTransfer, $code);
+        return $this->getFacade()->removeCode($quoteTransfer, $code);
     }
 
     /**
@@ -71,9 +67,7 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
      */
     public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
     {
-        return $this->getFactory()
-            ->createVoucherCartCode()
-            ->getOperationResponseMessage($quoteTransfer, $code);
+        return $this->getFacade()->getOperationResponseMessage($quoteTransfer, $code);
     }
 
     /**
@@ -88,8 +82,6 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
      */
     public function clearAllCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        return $this->getFactory()
-            ->createVoucherCartCode()
-            ->clearAllCodes($quoteTransfer);
+        return $this->getFacade()->clearAllCodes($quoteTransfer);
     }
 }
