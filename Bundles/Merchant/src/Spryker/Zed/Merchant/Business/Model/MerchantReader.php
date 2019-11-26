@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Merchant\Business\Model;
 
+use ArrayObject;
+use Generated\Shared\Transfer\MerchantCollectionTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
-use Spryker\Zed\Merchant\Business\Exception\MerchantNotFoundException;
 use Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface;
 
 class MerchantReader implements MerchantReaderInterface
@@ -16,44 +18,81 @@ class MerchantReader implements MerchantReaderInterface
     /**
      * @var \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface
      */
-    protected $repository;
+    protected $merchantRepository;
 
     /**
-     * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $repository
+     * @var \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface[]
      */
-    public function __construct(MerchantRepositoryInterface $repository)
-    {
-        $this->repository = $repository;
+    protected $merchantExpanderPlugins;
+
+    /**
+     * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $merchantRepository
+     * @param \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface[] $merchantExpanderPlugins
+     */
+    public function __construct(
+        MerchantRepositoryInterface $merchantRepository,
+        array $merchantExpanderPlugins
+    ) {
+        $this->merchantRepository = $merchantRepository;
+        $this->merchantExpanderPlugins = $merchantExpanderPlugins;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
      *
-     * @throws \Spryker\Zed\Merchant\Business\Exception\MerchantNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
+     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function getMerchantById(MerchantTransfer $merchantTransfer): MerchantTransfer
+    public function find(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer
     {
-        $merchantTransfer->requireIdMerchant();
+        $merchantCollectionTransfer = $this->merchantRepository->find($merchantCriteriaFilterTransfer);
+        $merchantCollectionTransfer = $this->expandMerchantCollection($merchantCollectionTransfer);
 
-        $merchantTransfer = $this->repository->getMerchantById($merchantTransfer->getIdMerchant());
-        if (!$merchantTransfer) {
-            throw new MerchantNotFoundException();
-        }
-
-        return $merchantTransfer;
+        return $merchantCollectionTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function findMerchantById(MerchantTransfer $merchantTransfer): ?MerchantTransfer
+    public function findOne(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): ?MerchantTransfer
     {
-        $merchantTransfer->requireIdMerchant();
+        $merchantTransfer = $this->merchantRepository->findOne($merchantCriteriaFilterTransfer);
+        if ($merchantTransfer === null) {
+            return null;
+        }
 
-        return $this->repository->getMerchantById($merchantTransfer->getIdMerchant());
+        return $this->executeMerchantExpanderPlugins($merchantTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantCollectionTransfer $merchantCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
+     */
+    protected function expandMerchantCollection(MerchantCollectionTransfer $merchantCollectionTransfer): MerchantCollectionTransfer
+    {
+        $merchantTransfers = new ArrayObject();
+        foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
+            $merchantTransfer = $this->executeMerchantExpanderPlugins($merchantTransfer);
+            $merchantTransfers->append($merchantTransfer);
+        }
+        $merchantCollectionTransfer->setMerchants($merchantTransfers);
+
+        return $merchantCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantTransfer
+     */
+    protected function executeMerchantExpanderPlugins(MerchantTransfer $merchantTransfer): MerchantTransfer
+    {
+        foreach ($this->merchantExpanderPlugins as $merchantExpanderPlugin) {
+            $merchantTransfer = $merchantExpanderPlugin->expand($merchantTransfer);
+        }
+
+        return $merchantTransfer;
     }
 }

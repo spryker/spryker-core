@@ -34,7 +34,7 @@ class ReadProductReviewTest extends Test
     /**
      * @return void
      */
-    public function testFindProductReviewDoesntFindNonExistingEntities()
+    public function testFindProductReviewDoesntFindNonExistingEntities(): void
     {
         // Arrange
         $productReviewTransfer = (new ProductReviewBuilder())->makeEmpty()->build();
@@ -50,7 +50,7 @@ class ReadProductReviewTest extends Test
     /**
      * @return void
      */
-    public function testFindProductReviewFindsExistingEntities()
+    public function testFindProductReviewFindsExistingEntities(): void
     {
         // Arrange
         $productReviewTransfer = $this->tester->haveProductReview();

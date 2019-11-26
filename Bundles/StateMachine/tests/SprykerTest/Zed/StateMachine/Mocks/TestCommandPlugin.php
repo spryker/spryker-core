@@ -17,7 +17,7 @@ class TestCommandPlugin implements CommandPluginInterface
      *
      * @return bool
      */
-    public function run(StateMachineItemTransfer $stateMachineItemTransfer)
+    public function run(StateMachineItemTransfer $stateMachineItemTransfer): bool
     {
         return true;
     }

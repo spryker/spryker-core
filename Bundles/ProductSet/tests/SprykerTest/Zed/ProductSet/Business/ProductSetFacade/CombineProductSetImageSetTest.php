@@ -31,7 +31,7 @@ class CombineProductSetImageSetTest extends Unit
     /**
      * @return void
      */
-    public function testGetCombinedAbstractImageSets()
+    public function testGetCombinedAbstractImageSets(): void
     {
         $localeTransfer = $this->tester->haveLocale();
 

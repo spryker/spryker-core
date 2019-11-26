@@ -46,7 +46,7 @@ class PreCheckMocks extends Unit
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createTestQuoteTransfer()
+    protected function createTestQuoteTransfer(): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
 
@@ -80,7 +80,7 @@ class PreCheckMocks extends Unit
      *
      * @return void
      */
-    protected function setupFindBundledProducts(array $fixtures, BasePreCheck $productBundleAvailabilityCheckMock)
+    protected function setupFindBundledProducts(array $fixtures, BasePreCheck $productBundleAvailabilityCheckMock): void
     {
         $productBundleEntity = new SpyProductBundle();
         $productBundleEntity->setIdProductBundle($fixtures['idProductConcrete']);

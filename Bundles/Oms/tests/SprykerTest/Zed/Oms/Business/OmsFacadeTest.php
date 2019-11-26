@@ -207,7 +207,7 @@ class OmsFacadeTest extends Unit
      *
      * @return \Spryker\Zed\Oms\Business\OmsFacadeInterface
      */
-    protected function createOmsFacadeWithTestStateMachine(array $activeProcesses = [], $xmlFolder = null): OmsFacadeInterface
+    protected function createOmsFacadeWithTestStateMachine(array $activeProcesses = [], ?string $xmlFolder = null): OmsFacadeInterface
     {
         $this->tester->configureTestStateMachine($activeProcesses, $xmlFolder);
 

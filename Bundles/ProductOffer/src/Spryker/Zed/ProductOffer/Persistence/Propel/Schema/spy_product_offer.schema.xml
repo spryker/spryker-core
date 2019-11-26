@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          name="zed"
+          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+          namespace="Orm\Zed\ProductOffer\Persistence" package="src.Orm.Zed.ProductOffer.Persistence">
+
+    <table name="spy_product_offer" phpName="SpyProductOffer">
+        <column name="id_product_offer" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="concrete_sku" required="true" type="VARCHAR" size="255"/>
+        <column name="product_offer_reference" required="true" type="VARCHAR" size="255"/>
+
+        <unique name="spy_product_offer-product_offer_reference">
+            <unique-column name="product_offer_reference"/>
+        </unique>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="spy_product_offer_pk_seq"/>
+    </table>
+
+</database>

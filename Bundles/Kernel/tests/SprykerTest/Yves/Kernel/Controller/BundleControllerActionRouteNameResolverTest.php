@@ -26,7 +26,7 @@ class BundleControllerActionRouteNameResolverTest extends Unit
     /**
      * @return void
      */
-    public function testResolveShouldReturnResolvedRouteName()
+    public function testResolveShouldReturnResolvedRouteName(): void
     {
         $bundleControllerAction = new BundleControllerAction('Foo', 'Bar', 'baz');
         $resolver = new BundleControllerActionRouteNameResolver($bundleControllerAction);

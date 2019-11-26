@@ -35,7 +35,7 @@ class ResponseTest extends Unit
      *
      * @return \Spryker\Client\ZedRequest\Client\Response
      */
-    protected function createFullResponse(TransferInterface $transfer)
+    protected function createFullResponse(TransferInterface $transfer): Response
     {
         $response = new Response();
 
@@ -54,7 +54,7 @@ class ResponseTest extends Unit
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function getMessageTransfer($value)
+    protected function getMessageTransfer(string $value): MessageTransfer
     {
         $errorMessage = new MessageTransfer();
         $errorMessage->setValue($value)
@@ -66,7 +66,7 @@ class ResponseTest extends Unit
     /**
      * @return void
      */
-    public function testDefaultSuccessIsTrue()
+    public function testDefaultSuccessIsTrue(): void
     {
         $response = new Response();
         $this->assertEquals(true, $response->isSuccess());
@@ -75,7 +75,7 @@ class ResponseTest extends Unit
     /**
      * @return void
      */
-    public function testDefaultTransferThrowsException()
+    public function testDefaultTransferThrowsException(): void
     {
         $response = new Response();
 
@@ -87,7 +87,7 @@ class ResponseTest extends Unit
     /**
      * @return void
      */
-    public function testGetterAndSetters()
+    public function testGetterAndSetters(): void
     {
         $transfer = new TestTransfer();
         $transfer->setFoo('foo');
@@ -106,7 +106,7 @@ class ResponseTest extends Unit
     /**
      * @return void
      */
-    public function testToArrayAndFromArray()
+    public function testToArrayAndFromArray(): void
     {
         $transfer = new TestTransfer();
         $transfer->setFoo('foo');
@@ -125,7 +125,7 @@ class ResponseTest extends Unit
     /**
      * @return void
      */
-    public function testHasMethods()
+    public function testHasMethods(): void
     {
         $response = new Response();
 

@@ -80,7 +80,7 @@ class ActiveProcessFetcherTest extends Unit
     /**
      * @return void
      */
-    protected function clearReservedStatesCache()
+    protected function clearReservedStatesCache(): void
     {
         $reflectionResolver = new ReflectionClass(ActiveProcessFetcher::class);
         $reflectionProperty = $reflectionResolver->getProperty('reservedStatesCache');
@@ -131,7 +131,7 @@ class ActiveProcessFetcherTest extends Unit
     /**
      * @return string
      */
-    protected function getProcessLocation()
+    protected function getProcessLocation(): string
     {
         return __DIR__ . '/ActiveProcessFetcher/Fixtures';
     }

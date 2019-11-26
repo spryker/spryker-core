@@ -27,7 +27,7 @@ class CreateControllerCest
      *
      * @return void
      */
-    public function openCreatePage(CategoryCommunicationTester $i)
+    public function openCreatePage(CategoryCommunicationTester $i): void
     {
         $i->amOnPage('/category/create');
         $i->seeResponseCodeIs(200);
@@ -39,7 +39,7 @@ class CreateControllerCest
      *
      * @return void
      */
-    public function createCategoryWithAlreadyExistingKeyShowsValidationMessage(CategoryCommunicationTester $i)
+    public function createCategoryWithAlreadyExistingKeyShowsValidationMessage(CategoryCommunicationTester $i): void
     {
         $categoryTransfer = $i->haveCategory();
 
