@@ -41,5 +41,4 @@ interface PaymentRepositoryInterface
      * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
      */
     public function getAvailablePaymentProvidersForStore(string $storeName): PaymentProviderCollectionTransfer;
->>>>>>> edac79c22ea640118fdb082d5be15e9df1d07bfe
 }
