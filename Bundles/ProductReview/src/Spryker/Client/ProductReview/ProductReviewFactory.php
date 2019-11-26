@@ -20,7 +20,6 @@ use Spryker\Client\ProductReview\Storage\ProductAbstractReviewStorageReader;
 use Spryker\Client\ProductReview\Zed\ProductReviewStub;
 use Spryker\Shared\ProductReview\KeyBuilder\ProductAbstractReviewResourceKeyBuilder;
 use Spryker\Yves\Kernel\Application;
-use SprykerShop\Yves\ProductReviewWidget\ProductReviewWidgetDependencyProvider;
 use Symfony\Component\HttpFoundation\Request;
 
 class ProductReviewFactory extends AbstractFactory
@@ -179,7 +178,7 @@ class ProductReviewFactory extends AbstractFactory
      */
     public function getApplication(): Application
     {
-        return $this->getProvidedDependency(ProductReviewWidgetDependencyProvider::PLUGIN_APPLICATION);
+        return $this->getProvidedDependency(ProductReviewDependencyProvider::PLUGIN_APPLICATION);
     }
 
     /**
