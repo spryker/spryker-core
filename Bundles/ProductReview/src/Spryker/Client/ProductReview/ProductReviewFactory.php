@@ -19,8 +19,6 @@ use Spryker\Client\ProductReview\Search\ProductReviewSearchReaderInterface;
 use Spryker\Client\ProductReview\Storage\ProductAbstractReviewStorageReader;
 use Spryker\Client\ProductReview\Zed\ProductReviewStub;
 use Spryker\Shared\ProductReview\KeyBuilder\ProductAbstractReviewResourceKeyBuilder;
-use Spryker\Yves\Kernel\Application;
-use Symfony\Component\HttpFoundation\Request;
 
 class ProductReviewFactory extends AbstractFactory
 {
@@ -150,35 +148,16 @@ class ProductReviewFactory extends AbstractFactory
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer
      *
      * @return \Spryker\Client\ProductReview\ProductViewExpander\ProductViewExpanderInterface
      */
-    public function createProductViewExpander(int $idProductAbstract): ProductViewExpanderInterface
+    public function createProductViewExpander(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer): ProductViewExpanderInterface
     {
-        $productReviewSearchRequestTransfer = $this->createProductReviewSearchRequestTransfer($idProductAbstract);
-
         return new ProductViewExpander(
             $this->createProductReviewSummaryCalculator(),
-            $this->createProductReviewSearchReader($productReviewSearchRequestTransfer),
-            $productReviewSearchRequestTransfer
+            $this->createProductReviewSearchReader($productReviewSearchRequestTransfer)
         );
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Request
-     */
-    public function getApplicationRequest(): Request
-    {
-        return $this->getApplication()['request'];
-    }
-
-    /**
-     * @return \Spryker\Yves\Kernel\Application
-     */
-    public function getApplication(): Application
-    {
-        return $this->getProvidedDependency(ProductReviewDependencyProvider::PLUGIN_APPLICATION);
     }
 
     /**
@@ -193,19 +172,5 @@ class ProductReviewFactory extends AbstractFactory
             $this->getSearchClient(),
             $this->getProductReviewsSearchResultFormatterPlugins()
         );
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\ProductReviewSearchRequestTransfer
-     */
-    public function createProductReviewSearchRequestTransfer(int $idProductAbstract): ProductReviewSearchRequestTransfer
-    {
-        $productReviewSearchRequestTransfer = new ProductReviewSearchRequestTransfer();
-        $productReviewSearchRequestTransfer->setIdProductAbstract($idProductAbstract);
-        $productReviewSearchRequestTransfer->setRequestParams($this->getApplicationRequest()->query->all());
-
-        return $productReviewSearchRequestTransfer;
     }
 }

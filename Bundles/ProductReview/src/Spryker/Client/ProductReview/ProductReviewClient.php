@@ -85,14 +85,17 @@ class ProductReviewClient extends AbstractClient implements ProductReviewClientI
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandProductViewWithProductReviewData(ProductViewTransfer $productViewTransfer): ProductViewTransfer
-    {
+    public function expandProductViewWithProductReviewData(
+        ProductViewTransfer $productViewTransfer,
+        ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer
+    ): ProductViewTransfer {
         return $this->getFactory()
-            ->createProductViewExpander($productViewTransfer->getIdProductAbstract())
-            ->expandProductViewWithProductReviewData($productViewTransfer);
+            ->createProductViewExpander($productReviewSearchRequestTransfer)
+            ->expandProductViewWithProductReviewData($productViewTransfer, $productReviewSearchRequestTransfer);
     }
 
     /**

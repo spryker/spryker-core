@@ -69,10 +69,14 @@ interface ProductReviewClientInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandProductViewWithProductReviewData(ProductViewTransfer $productViewTransfer): ProductViewTransfer;
+    public function expandProductViewWithProductReviewData(
+        ProductViewTransfer $productViewTransfer,
+        ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer
+    ): ProductViewTransfer;
 
     /**
      * Specification:
