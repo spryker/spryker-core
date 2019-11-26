@@ -169,8 +169,7 @@ class CartItemAdder implements CartItemAdderInterface
             ->setQuantity($restCartItemsAttributesTransfer->getQuantity())
             ->setSku($restCartItemsAttributesTransfer->getSku())
             ->setCustomer($customerTransfer);
-        $this->executeCartItemExpanderPlugins($cartItemRequestTransfer, $restCartItemsAttributesTransfer);
 
-        return $cartItemRequestTransfer;
+        return $this->executeCartItemExpanderPlugins($cartItemRequestTransfer, $restCartItemsAttributesTransfer);
     }
 }
