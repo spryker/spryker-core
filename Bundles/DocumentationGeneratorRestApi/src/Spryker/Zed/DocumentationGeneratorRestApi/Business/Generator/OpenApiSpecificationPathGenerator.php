@@ -62,13 +62,27 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
         if (!$responseSchemaDataTransfer) {
             $responseSchemaDataTransfer = new PathSchemaDataTransfer();
         }
-        $responseSchemaDataTransfer->setCode($this->getResponseStatusCode($pathMethodDataTransfer, (string)Response::HTTP_OK));
-        $responseSchemaDataTransfer->setDescription(static::DESCRIPTION_SUCCESSFUL_RESPONSE);
+
+        $isShouldToAddDefaultSuccessfulResponse = true;
+
+        foreach ($pathMethodDataTransfer->getResponseSchemas() as $responseSchema) {
+            if (strpos($responseSchema->getCode(), "20") === 0) {
+                $isShouldToAddDefaultSuccessfulResponse = false;
+                break;
+            }
+        }
+
+        if ($isShouldToAddDefaultSuccessfulResponse) {
+            $responseSchemaDataTransfer->setCode(
+                $this->getResponseStatusCode($pathMethodDataTransfer, (string)Response::HTTP_OK)
+            );
+            $responseSchemaDataTransfer->setDescription(static::DESCRIPTION_SUCCESSFUL_RESPONSE);
+            $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
+        }
 
         $errorSchemaDataTransfer->setCode(static::KEY_DEFAULT);
         $errorSchemaDataTransfer->setDescription(static::DESCRIPTION_DEFAULT_RESPONSE);
 
-        $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
         $pathMethodDataTransfer->addResponseSchema($errorSchemaDataTransfer);
         $pathMethodDataTransfer->setMethod(strtolower(Request::METHOD_GET));
 
