@@ -63,7 +63,7 @@ class CartCodeRestResponseBuilder implements CartCodeRestResponseBuilderInterfac
             return $this->createFailedErrorResponse($cartCodeOperationResultTransfer->getMessages());
         }
 
-        return $this->cartsRestApiResource->createCartRestResponse($quoteTransfer, $restRequest);
+        return $this->cartsRestApiResource->createCartRestResponse($quoteTransfer);
     }
 
     /**
