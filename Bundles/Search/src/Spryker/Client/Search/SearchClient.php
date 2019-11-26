@@ -143,7 +143,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @api
      *
-     * @deprecated Use `::readDocument()` instead.
+     * @deprecated Use `\Spryker\Client\Search\SearchClient::readDocument()` instead.
      *
      * @param string $key
      * @param string|null $typeName

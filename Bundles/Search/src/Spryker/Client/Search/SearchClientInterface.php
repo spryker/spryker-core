@@ -107,7 +107,7 @@ interface SearchClientInterface
      *
      * @api
      *
-     * @deprecated Use `::readDocument()` instead.
+     * @deprecated Use `\Spryker\Client\Search\SearchClientInterface::readDocument()` instead.
      *
      * @param string $key
      * @param string|null $typeName
