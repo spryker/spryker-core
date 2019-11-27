@@ -19,6 +19,7 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
     protected const SEARCH_RESPONSE_CMS_PAGE_KEY = 'cms_page';
 
     protected const SEARCH_RESPONSE_NAME_KEY = 'name';
+    protected const SEARCH_RESPONSE_URL_KEY = 'url';
 
     /**
      * @return array
@@ -94,7 +95,7 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
         array $restSearchResponse
     ): RestCatalogSearchSuggestionsAttributesTransfer {
         $suggestionName = static::SEARCH_RESPONSE_CATEGORY_KEY;
-        $suggestionKeysRequired = [static::SEARCH_RESPONSE_NAME_KEY];
+        $suggestionKeysRequired = [static::SEARCH_RESPONSE_NAME_KEY, static::SEARCH_RESPONSE_URL_KEY];
         $categoriesSuggestions = $this->mapSuggestions($restSearchResponse, $suggestionName, $suggestionKeysRequired);
         $restSearchSuggestionsAttributesTransfer->setCategories($categoriesSuggestions);
 
@@ -112,7 +113,7 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
         array $restSearchResponse
     ): RestCatalogSearchSuggestionsAttributesTransfer {
         $suggestionName = static::SEARCH_RESPONSE_CMS_PAGE_KEY;
-        $suggestionKeysRequired = [static::SEARCH_RESPONSE_NAME_KEY];
+        $suggestionKeysRequired = [static::SEARCH_RESPONSE_NAME_KEY, static::SEARCH_RESPONSE_URL_KEY];
         $cmsPagesSuggestions = $this->mapSuggestions($restSearchResponse, $suggestionName, $suggestionKeysRequired);
         $restSearchSuggestionsAttributesTransfer->setCmsPages($cmsPagesSuggestions);
 
