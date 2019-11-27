@@ -1078,8 +1078,8 @@ class ConfigurableBundleFacadeTest extends Unit
 
         $this->assertTrue($configurableBundleTemplateResponseTransfer->getIsSuccessful());
         $this->assertCount(2, $productImageSetTransfers);
-        $this->assertSame($productImageSetTransfer->toArray(), $productImageSetTransfers->offsetGet(0)->toArray());
-        $this->assertSame($localizedProductImageSetTransfer->toArray(), $productImageSetTransfers->offsetGet(1)->toArray());
+        $this->assertSame($localizedProductImageSetTransfer->toArray(), $productImageSetTransfers->offsetGet(0)->toArray());
+        $this->assertSame($productImageSetTransfer->toArray(), $productImageSetTransfers->offsetGet(1)->toArray());
     }
 
     /**

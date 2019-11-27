@@ -125,7 +125,10 @@ class ConfigurableBundleTemplateImageStoragePublisher implements ConfigurableBun
             $configurableBundleTemplateImageStorageEntity = $localizedConfigurableBundleTemplateImageStorageEntityMap[$idConfigurableBundleTemplate][$localeName]
                 ?? new SpyConfigurableBundleTemplateImageStorage();
 
-            $productImageSetTransfers = array_merge($localizedProductImageSetTransfers[$localeName] ?? [], $defaultProductImageSetTransfers);
+            $productImageSetTransfers = $this->combineProductImageSetsByName(
+                $localizedProductImageSetTransfers[$localeName] ?? [],
+                $defaultProductImageSetTransfers
+            );
 
             $this->saveConfigurableBundleTemplateImageStorageEntity(
                 $localeName,
@@ -208,6 +211,35 @@ class ConfigurableBundleTemplateImageStoragePublisher implements ConfigurableBun
         }
 
         return $productImageStorageTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $localizedProductImageSetTransfers
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $defaultProductImageSetTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    protected function combineProductImageSetsByName(array $localizedProductImageSetTransfers, array $defaultProductImageSetTransfers): array
+    {
+        $combinedProductImageSetTransfers = $this->getProductImageSetsIndexedByName($defaultProductImageSetTransfers) + $this->getProductImageSetsIndexedByName($localizedProductImageSetTransfers);
+
+        return array_values($combinedProductImageSetTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    protected function getProductImageSetsIndexedByName(array $productImageSetTransfers): array
+    {
+        $indexedProductImageSetTransfers = [];
+
+        foreach ($productImageSetTransfers as $productImageSetTransfer) {
+            $indexedProductImageSetTransfers[$productImageSetTransfer->getName()] = $productImageSetTransfer;
+        }
+
+        return $indexedProductImageSetTransfers;
     }
 
     /**
