@@ -6,7 +6,7 @@
           namespace="Orm\Zed\ProductOffer\Persistence" package="src.Orm.Zed.ProductOffer.Persistence">
     <table name="spy_product_offer" phpName="SpyProductOffer">
         <column name="fk_merchant" required="true" type="INTEGER"/>
-        <column name="merchant_sku" type="VARCHAR" size="255" />
+        <column name="merchant_sku" type="VARCHAR" size="255"/>
 
         <index name="spy_product_offer-merchant_sku">
             <index-column name="merchant_sku"/>
