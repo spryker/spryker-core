@@ -41,8 +41,8 @@ class ProductOptionsRestApiFacadeTest extends Unit
     public function testMapCartItemRequestTransferToPersistentCartChangeTransferWithOptions(): void
     {
         // Arrange
-        $cartItemRequestTransfer = $this->tester->haveCartItemRequestTransferWithOptions();
-        $persistentCartChangeTransfer = $this->tester->havePersistentCartChangeTransfer();
+        $cartItemRequestTransfer = $this->tester->buildCartItemRequestTransferWithOptions();
+        $persistentCartChangeTransfer = $this->tester->buildPersistentCartChangeTransfer();
 
         // Act
         $persistentCartChangeTransfer = $this->tester
@@ -54,12 +54,19 @@ class ProductOptionsRestApiFacadeTest extends Unit
 
         // Assert
         $this->tester->assertNotEmpty(
-            $persistentCartChangeTransfer->getItems()->offsetGet(0)->getProductOptions()
+            $persistentCartChangeTransfer->getItems()
+                ->offsetGet(0)
+                ->getProductOptions()
         );
 
+        $IdProductOption = $persistentCartChangeTransfer->getItems()
+            ->offsetGet(0)
+            ->getProductOptions()
+            ->offsetGet(0)
+            ->getIdProductOptionValue();
         $this->tester->assertEquals(
             $this->tester::ID_PRODUCT_OPTION,
-            $persistentCartChangeTransfer->getItems()->offsetGet(0)->getProductOptions()->offsetGet(0)->getIdProductOptionValue()
+            $IdProductOption
         );
     }
 
@@ -69,8 +76,8 @@ class ProductOptionsRestApiFacadeTest extends Unit
     public function testMapCartItemRequestTransferToPersistentCartChangeTransferWithoutOptions(): void
     {
         // Arrange
-        $cartItemRequestTransfer = $this->tester->haveCartItemRequestTransferWithoutOptions();
-        $persistentCartChangeTransfer = $this->tester->havePersistentCartChangeTransfer();
+        $cartItemRequestTransfer = $this->tester->buildCartItemRequestTransferWithoutOptions();
+        $persistentCartChangeTransfer = $this->tester->buildPersistentCartChangeTransfer();
 
         // Act
         $persistentCartChangeTransfer = $this->tester
@@ -82,7 +89,9 @@ class ProductOptionsRestApiFacadeTest extends Unit
 
         // Assert
         $this->tester->assertEmpty(
-            $persistentCartChangeTransfer->getItems()->offsetGet(0)->getProductOptions()
+            $persistentCartChangeTransfer->getItems()
+                ->offsetGet(0)
+                ->getProductOptions()
         );
     }
 
@@ -92,8 +101,8 @@ class ProductOptionsRestApiFacadeTest extends Unit
     public function testMapCartItemRequestTransferToPersistentCartChangeTransferWithDifferentSku(): void
     {
         // Arrange
-        $cartItemRequestTransfer = $this->tester->haveCartItemRequestTransferWithOptions();
-        $persistentCartChangeTransfer = $this->tester->havePersistentCartChangeTransferWithDifferentSku();
+        $cartItemRequestTransfer = $this->tester->buildCartItemRequestTransferWithOptions();
+        $persistentCartChangeTransfer = $this->tester->buildPersistentCartChangeTransferWithDifferentSku();
 
         // Act
         $persistentCartChangeTransfer = $this->tester
@@ -105,7 +114,9 @@ class ProductOptionsRestApiFacadeTest extends Unit
 
         // Assert
         $this->tester->assertEmpty(
-            $persistentCartChangeTransfer->getItems()->offsetGet(0)->getProductOptions()
+            $persistentCartChangeTransfer->getItems()
+                ->offsetGet(0)
+                ->getProductOptions()
         );
     }
 }

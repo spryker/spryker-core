@@ -43,7 +43,7 @@ class ProductOptionsRestApiBusinessTester extends Actor
     /**
      * @return \Generated\Shared\Transfer\CartItemRequestTransfer
      */
-    public function haveCartItemRequestTransferWithOptions(): CartItemRequestTransfer
+    public function buildCartItemRequestTransferWithOptions(): CartItemRequestTransfer
     {
         $productOptionBuilder = new CartItemRequestProductOptionBuilder(['idProductOption' => static::ID_PRODUCT_OPTION]);
 
@@ -55,7 +55,7 @@ class ProductOptionsRestApiBusinessTester extends Actor
     /**
      * @return \Generated\Shared\Transfer\CartItemRequestTransfer
      */
-    public function haveCartItemRequestTransferWithoutOptions(): CartItemRequestTransfer
+    public function buildCartItemRequestTransferWithoutOptions(): CartItemRequestTransfer
     {
         return (new CartItemRequestBuilder(['sku' => static::PRODUCT_CONCRETE_SKU]))->build();
     }
@@ -63,7 +63,7 @@ class ProductOptionsRestApiBusinessTester extends Actor
     /**
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
-    public function havePersistentCartChangeTransfer(): PersistentCartChangeTransfer
+    public function buildPersistentCartChangeTransfer(): PersistentCartChangeTransfer
     {
         $itemBuilder = new ItemBuilder(['sku' => static::PRODUCT_CONCRETE_SKU]);
 
@@ -75,7 +75,7 @@ class ProductOptionsRestApiBusinessTester extends Actor
     /**
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
-    public function havePersistentCartChangeTransferWithDifferentSku(): PersistentCartChangeTransfer
+    public function buildPersistentCartChangeTransferWithDifferentSku(): PersistentCartChangeTransfer
     {
         $itemBuilder = new ItemBuilder(['sku' => static::DIFFERENT_PRODUCT_CONCRETE_SKU]);
 
