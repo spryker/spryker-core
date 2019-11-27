@@ -74,6 +74,7 @@ class GuestCartRestResponseBuilder extends AbstractCartRestResponseBuilder imple
                 $cartResource->getId(),
                 $localeName
             );
+
             $cartResource->addRelationship($guestCartItemResource);
         }
 
