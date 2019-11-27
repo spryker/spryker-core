@@ -14,7 +14,7 @@ interface CartItemExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands cart item request transfer with additional data.
+     * - Expands CartItemRequestTransfer with additional data.
      *
      * @api
      *

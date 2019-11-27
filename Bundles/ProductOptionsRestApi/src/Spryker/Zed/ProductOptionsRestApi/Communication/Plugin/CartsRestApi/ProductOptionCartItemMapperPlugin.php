@@ -20,7 +20,7 @@ class ProductOptionCartItemMapperPlugin extends AbstractPlugin implements CartIt
 {
     /**
      * {@inheritDoc}
-     * - Maps CartItemRequestTransfer product options to PersistentCartChangeTransfer product options.
+     * - Maps CartItemRequestTransfer:ProductOptions to PersistentCartChangeTransfer:ProductOptions.
      *
      * @api
      *

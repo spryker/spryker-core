@@ -19,7 +19,7 @@ class CartItemProductOptionExpanderPlugin extends AbstractPlugin implements Cart
 {
     /**
      * {@inheritDoc}
-     * - Expands cart item request transfer with product options.
+     * - Expands CartItemRequestTransfer with product options.
      *
      * @api
      *

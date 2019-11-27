@@ -17,8 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductOptionsRestApiFacade extends AbstractFacade implements ProductOptionsRestApiFacadeInterface
 {
     /**
-     * Specification:
-     * - Maps CartItemRequestTransfer product options to PersistentCartChangeTransfer product options.
+     * {@inheritDoc}
      *
      * @api
      *
