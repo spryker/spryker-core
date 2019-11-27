@@ -52,12 +52,10 @@ class CmsSlotBlockStorageFacadeTest extends Unit
             $cmsSlotBlockStorageIds[] = $this->tester->hasCmsSlotBlockStorage($seedData)->getIdCmsSlotBlockStorage();
         }
 
-        $filterTransfer = new FilterTransfer();
-
         // Act
         $synchronizationDataTransfers = $this->tester
             ->getFacade()
-            ->getSynchronizationDataTransfersByCmsSlotBlockStorageIds($filterTransfer, $cmsSlotBlockStorageIds);
+            ->getSynchronizationDataTransfersByCmsSlotBlockStorageIds(new FilterTransfer(), $cmsSlotBlockStorageIds);
 
         // Assert
         $this->assertCount($expectedCount, $synchronizationDataTransfers);

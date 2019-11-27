@@ -8,7 +8,13 @@
 namespace SprykerTest\Zed\CmsSlotBlockStorage\Communication\Plugin\Event\Listener;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CmsSlotBlockTransfer;
+use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\SpyCmsSlotToCmsSlotTemplateEntityTransfer;
+use Orm\Zed\CmsSlotBlockStorage\Persistence\SpyCmsSlotBlockStorageQuery;
+use Spryker\Zed\CmsSlotBlock\Dependency\CmsSlotBlockEvents;
 use Spryker\Zed\CmsSlotBlockStorage\Business\CmsSlotBlockStorageBusinessFactory;
+use Spryker\Zed\CmsSlotBlockStorage\Communication\Plugin\Event\Listener\CmsSlotBlockStoragePublishListener;
 use Spryker\Zed\CmsSlotBlockStorage\Persistence\CmsSlotBlockStorageEntityManager;
 use Spryker\Zed\CmsSlotBlockStorage\Persistence\CmsSlotBlockStoragePersistenceFactory;
 
@@ -27,6 +33,8 @@ use Spryker\Zed\CmsSlotBlockStorage\Persistence\CmsSlotBlockStoragePersistenceFa
  */
 class CmsSlotBlockStorageListenerTest extends Unit
 {
+    protected const COUNT_CMS_SLOT_BLOCK_STORAGE_ROWS = 1;
+
     /**
      * @var \SprykerTest\Zed\CmsSlotBlockStorage\CmsSlotBlockStorageCommunicationTester
      */
@@ -37,7 +45,46 @@ class CmsSlotBlockStorageListenerTest extends Unit
      */
     public function testCmsSlotBlockStoragePublishListener(): void
     {
-        // TODO: add test
+        // Assign
+        $this->tester->ensureCmsSlotTableIsEmpty();
+        $this->tester->ensureCmsSlotTemplateTableIsEmpty();
+        $this->tester->ensureCmsSlotBlockTableIsEmpty();
+        $this->tester->ensureCmsSlotBlockStorageTableIsEmpty();
+
+        $cmsSlotTransfer = $this->tester->haveCmsSlotInDb();
+        $cmsSlotTemplateTransfer = $this->tester->haveCmsSlotTemplateInDb();
+        $cmsSlotToCmsSlotTemplateEntityTransfer = (new SpyCmsSlotToCmsSlotTemplateEntityTransfer())
+            ->setFkCmsSlotTemplate($cmsSlotTemplateTransfer->getIdCmsSlotTemplate())
+            ->setFkCmsSlot($cmsSlotTransfer->getIdCmsSlot());
+        $this->tester->haveCmsSlotToCmsSlotTemplateInDb($cmsSlotToCmsSlotTemplateEntityTransfer);
+        $cmsBlockTransfer = $this->tester->haveCmsBlock();
+
+        $cmsSlotBlockTransfer = $this->tester->haveCmsSlotBlockInDb([
+            CmsSlotBlockTransfer::ID_SLOT_TEMPLATE => $cmsSlotTemplateTransfer->getIdCmsSlotTemplate(),
+            CmsSlotBlockTransfer::ID_SLOT => $cmsSlotTransfer->getIdCmsSlot(),
+            CmsSlotBlockTransfer::ID_CMS_BLOCK => $cmsBlockTransfer->getIdCmsBlock(),
+        ]);
+
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($cmsSlotBlockTransfer->getIdCmsSlotBlock()),
+        ];
+        $cmsSlotBlockStoragePublishListenerMock = new CmsSlotBlockStoragePublishListener();
+        $cmsSlotBlockStoragePublishListenerMock->setFacade($this->getCmsSlotBlockStorageFacade());
+
+        // Act
+        $cmsSlotBlockStoragePublishListenerMock->handleBulk(
+            $eventTransfers,
+            CmsSlotBlockEvents::CMS_SLOT_BLOCK_PUBLISH
+        );
+        $cmsSlotBlockStorageEntity = SpyCmsSlotBlockStorageQuery::create()
+            ->filterByFkCmsSlotTemplate($cmsSlotBlockTransfer->getIdSlotTemplate())
+            ->filterByFkCmsSlot($cmsSlotBlockTransfer->getIdSlot())
+            ->findOne();
+
+        // Assert
+        $count = SpyCmsSlotBlockStorageQuery::create()->count();
+        $this->assertSame(static::COUNT_CMS_SLOT_BLOCK_STORAGE_ROWS, $count);
+        $this->assertNotNull($cmsSlotBlockStorageEntity);
     }
 
     /**
@@ -52,7 +99,7 @@ class CmsSlotBlockStorageListenerTest extends Unit
 
         $cmsSlotBlockStorageEntityManagerMock = $this
             ->getMockBuilder(CmsSlotBlockStorageEntityManager::class)
-            ->setMethods(['getFactory'])
+            ->onlyMethods(['getFactory'])
             ->getMock();
         $cmsSlotBlockStorageEntityManagerMock->method('getFactory')
             ->willReturn($cmsSlotBlockStoragePersistenceFactoryMock);
