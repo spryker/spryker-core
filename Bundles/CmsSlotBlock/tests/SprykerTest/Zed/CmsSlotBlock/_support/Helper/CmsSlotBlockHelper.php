@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\CmsSlotBlock\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CmsSlotBlockBuilder;
+use Generated\Shared\Transfer\CmsSlotBlockConditionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlock;
 use Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlockQuery;
@@ -26,7 +27,7 @@ class CmsSlotBlockHelper extends Module
             CmsSlotBlockTransfer::ID_SLOT_TEMPLATE => 1,
             CmsSlotBlockTransfer::ID_SLOT => 1,
             CmsSlotBlockTransfer::ID_CMS_BLOCK => 1,
-            CmsSlotBlockTransfer::CONDITIONS => [],
+            CmsSlotBlockTransfer::CONDITIONS => new CmsSlotBlockConditionTransfer(),
             CmsSlotBlockTransfer::POSITION => 1,
         ];
 
@@ -37,10 +38,17 @@ class CmsSlotBlockHelper extends Module
         $cmsSlotBlockEntity->setFkCmsSlot($cmsSlotBlockTransfer->getIdSlot());
         $cmsSlotBlockEntity->setFkCmsBlock($cmsSlotBlockTransfer->getIdCmsBlock());
         $cmsSlotBlockEntity->setPosition($cmsSlotBlockTransfer->getPosition());
-        $cmsSlotBlockEntity->setConditions(json_encode($cmsSlotBlockTransfer->getConditions()));
+
+        $conditions = [];
+
+        foreach ($cmsSlotBlockTransfer->getConditions() as $conditionKey => $cmsSlotBlockConditionTransfer) {
+            $conditions[$conditionKey] = $cmsSlotBlockConditionTransfer->modifiedToArray(true, true);
+        }
+
+        $cmsSlotBlockEntity->setConditions(json_encode($conditions));
         $cmsSlotBlockEntity->save();
 
-        $cmsSlotBlockTransfer->setIdCmsSlotBlock($cmsSlotBlockEntity->getIdCmsSlotBlock());
+        $cmsSlotBlockTransfer->setIdCmsSlotBlock((string)$cmsSlotBlockEntity->getIdCmsSlotBlock());
 
         return $cmsSlotBlockTransfer;
     }

@@ -32,7 +32,7 @@ class CmsSlotHelper extends Module
     {
         $cmsSlotData = [
             CmsSlotTransfer::KEY => 'test-center',
-            CmsSlotTransfer::CONTENT_PROVIDER_TYPE => 'SprykerTestBlock',
+            CmsSlotTransfer::CONTENT_PROVIDER_TYPE => 'SprykerCmsSlotBlock',
             CmsSlotTransfer::NAME => 'Test Name',
             CmsSlotTransfer::DESCRIPTION => 'Test description.',
             CmsSlotTransfer::IS_ACTIVE => true,
@@ -68,7 +68,7 @@ class CmsSlotHelper extends Module
      */
     public function haveCmsSlotInDb(array $override = []): CmsSlotTransfer
     {
-        $cmsSlotTransfer = $this->haveCmsSlot();
+        $cmsSlotTransfer = $this->haveCmsSlot($override);
 
         $cmsSlotEntity = new SpyCmsSlot();
         $cmsSlotEntity->fromArray($cmsSlotTransfer->toArray());
@@ -86,7 +86,7 @@ class CmsSlotHelper extends Module
      */
     public function haveCmsSlotTemplateInDb(array $override = []): CmsSlotTemplateTransfer
     {
-        $cmsSlotTemplateTransfer = $this->haveCmsSlotTemplate();
+        $cmsSlotTemplateTransfer = $this->haveCmsSlotTemplate($override);
 
         $cmsSlotTemplateEntity = new SpyCmsSlotTemplate();
         $cmsSlotTemplateEntity->fromArray($cmsSlotTemplateTransfer->toArray());

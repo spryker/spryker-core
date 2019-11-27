@@ -26,7 +26,7 @@ interface CmsSlotBlockCategoryConnectorClientInterface
 
     /**
      * Specification:
-     * - Returns true if CMS block should be visible in Slot.
+     * - Returns true if the CMS block matches the visibility conditions in the Slot.
      *
      * @api
      *

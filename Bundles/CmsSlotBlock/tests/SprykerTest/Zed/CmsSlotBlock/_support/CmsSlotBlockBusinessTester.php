@@ -133,8 +133,7 @@ class CmsSlotBlockBusinessTester extends Actor
         return (new CmsSlotBlockTransfer())->setIdCmsBlock($idCmsBlock)
             ->setIdSlotTemplate($idCmsSlotTemplate)
             ->setIdSlot($idCmsSlot)
-            ->setPosition(1)
-            ->setConditions([]);
+            ->setPosition(1);
     }
 
     /**
