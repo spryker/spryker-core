@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CmsSlotBlockStorage\Persistence\Propel\Mapper;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CmsSlotBlockConditionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockStorageTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
@@ -42,9 +44,15 @@ class CmsSlotBlockStorageMapper
         CmsSlotBlockTransfer $cmsSlotBlockTransfer
     ): CmsSlotBlockTransfer {
         $cmsSlotBlockTransfer->setCmsBlockKey($cmsSlotBlockEntity->getCmsBlock()->getKey());
-        $cmsSlotBlockTransfer->setConditions(
-            $this->utilEncodingService->decodeJson($cmsSlotBlockEntity->getConditions())
-        );
+        $conditions = $this->utilEncodingService->decodeJson($cmsSlotBlockEntity->getConditions(), true);
+
+        $cmsSlotBlockTransfer->setConditions(new ArrayObject());
+        foreach ($conditions as $conditionKey => $condition) {
+            $cmsSlotBlockTransfer->addCondition(
+                $conditionKey,
+                (new CmsSlotBlockConditionTransfer())->fromArray($condition, true)
+            );
+        }
 
         return $cmsSlotBlockTransfer;
     }
