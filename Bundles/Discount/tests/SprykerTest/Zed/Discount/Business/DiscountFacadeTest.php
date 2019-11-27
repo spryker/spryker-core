@@ -507,61 +507,6 @@ class DiscountFacadeTest extends Unit
     }
 
     /**
-     * @param array $override
-     *
-     * @return \Generated\Shared\Transfer\DiscountVoucherTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
-     */
-    protected function getDiscountVoucher(array $override = [])
-    {
-        $discountGeneralTransfer = $this->tester->haveDiscount([
-            'discountType' => DiscountConstants::TYPE_VOUCHER,
-        ]);
-        $override['idDiscount'] = $discountGeneralTransfer->getIdDiscount();
-        $discountVoucherTransfer = $this->tester->haveGeneratedVoucherCodes($override);
-
-        return $discountVoucherTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function getQuoteWithVoucherDiscount(DiscountVoucherTransfer $discountVoucherTransfer): QuoteTransfer
-    {
-        $quoteTransfer = new QuoteTransfer();
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setSku('123');
-        $quoteTransfer->addItem($itemTransfer);
-
-        $discountTransfer = new DiscountTransfer();
-        $discountTransfer->setVoucherCode($discountVoucherTransfer->getCode());
-        $quoteTransfer->addVoucherDiscount($discountTransfer);
-
-        return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
-     * @param int $numberOfUses
-     *
-     * @return void
-     */
-    protected function updateVoucherCodesWithNumberOfUses(DiscountVoucherTransfer $discountVoucherTransfer, int $numberOfUses): void
-    {
-        $voucherCodeEntities = SpyDiscountQuery::create()
-            ->findOneByIdDiscount($discountVoucherTransfer->getIdDiscount())
-            ->getVoucherPool()
-            ->getDiscountVouchers();
-
-        foreach ($voucherCodeEntities as $voucherCodeEntity) {
-            $voucherCodeEntity
-                ->setNumberOfUses($numberOfUses)
-                ->save();
-        }
-    }
-
-    /**
      * @return void
      */
     public function testSaveDiscountDecisionRuleShouldPersistAllConfiguredData(): void
@@ -992,6 +937,141 @@ class DiscountFacadeTest extends Unit
         $voucherCodeEntity = $voucherCodes[0];
 
         $this->assertEquals(1, $voucherCodeEntity->getNumberOfUses());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddCandidateAddsVoucherDiscountToQuote(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->createQuoteTransferWithoutVoucherDiscount();
+
+        // Act
+        $resultQuoteTransfer = $this->createDiscountFacade()->addCandidate($quoteTransfer, $this->tester::VOUCHER_CODE);
+
+        // Assert
+        $this->assertCount(1, $quoteTransfer->getVoucherDiscounts());
+        $this->assertEquals(
+            $this->tester::VOUCHER_CODE,
+            $resultQuoteTransfer->getVoucherDiscounts()[0]->getVoucherCode()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddCandidateCantAddVoucherDiscountToQuoteWithVoucherCodeAlreadyAddedToQuote(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->createQuoteTransferWithVoucherDiscount();
+
+        // Act
+        $resultQuoteTransfer = $this->createDiscountFacade()->addCandidate($quoteTransfer, $this->tester::VOUCHER_CODE);
+
+        // Assert
+        $this->assertCount(1, $resultQuoteTransfer->getVoucherDiscounts());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveCodeRemovesVoucherDiscountFromQuote(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->createQuoteTransferWithVoucherDiscount();
+
+        // Act
+        $resultQuoteTransfer = $this->createDiscountFacade()->removeCode($quoteTransfer, $this->tester::VOUCHER_CODE);
+
+        // Assert
+        $this->assertCount(0, $resultQuoteTransfer->getVoucherDiscounts());
+    }
+
+    /**
+     * @return void
+     */
+    public function testClearAllCodesRemovesVoucherDiscountsFromQuote(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->createQuoteTransferWithVoucherDiscount();
+
+        // Act
+        $resultQuoteTransfer = $this->createDiscountFacade()->clearAllCodes($quoteTransfer);
+
+        // Assert
+        $this->assertCount(0, $resultQuoteTransfer->getVoucherDiscounts());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetOperationResponseMessageReturnsMessageTransfer(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->createQuoteTransferWithVoucherDiscount();
+
+        // Act
+        $messageTransfer = $this->createDiscountFacade()
+            ->getOperationResponseMessage($quoteTransfer, $this->tester::VOUCHER_CODE);
+
+        // Assert
+        $this->assertNotNull($messageTransfer);
+    }
+
+    /**
+     * @param array $override
+     *
+     * @return \Generated\Shared\Transfer\DiscountVoucherTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     */
+    protected function getDiscountVoucher(array $override = [])
+    {
+        $discountGeneralTransfer = $this->tester->haveDiscount([
+            'discountType' => DiscountConstants::TYPE_VOUCHER,
+        ]);
+        $override['idDiscount'] = $discountGeneralTransfer->getIdDiscount();
+        $discountVoucherTransfer = $this->tester->haveGeneratedVoucherCodes($override);
+
+        return $discountVoucherTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function getQuoteWithVoucherDiscount(DiscountVoucherTransfer $discountVoucherTransfer): QuoteTransfer
+    {
+        $quoteTransfer = new QuoteTransfer();
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setSku('123');
+        $quoteTransfer->addItem($itemTransfer);
+
+        $discountTransfer = new DiscountTransfer();
+        $discountTransfer->setVoucherCode($discountVoucherTransfer->getCode());
+        $quoteTransfer->addVoucherDiscount($discountTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
+     * @param int $numberOfUses
+     *
+     * @return void
+     */
+    protected function updateVoucherCodesWithNumberOfUses(DiscountVoucherTransfer $discountVoucherTransfer, int $numberOfUses): void
+    {
+        $voucherCodeEntities = SpyDiscountQuery::create()
+            ->findOneByIdDiscount($discountVoucherTransfer->getIdDiscount())
+            ->getVoucherPool()
+            ->getDiscountVouchers();
+
+        foreach ($voucherCodeEntities as $voucherCodeEntity) {
+            $voucherCodeEntity
+                ->setNumberOfUses($numberOfUses)
+                ->save();
+        }
     }
 
     /**

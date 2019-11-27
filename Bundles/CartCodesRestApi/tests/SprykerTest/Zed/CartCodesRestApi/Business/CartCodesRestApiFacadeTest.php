@@ -58,7 +58,7 @@ class CartCodesRestApiFacadeTest extends Unit
     public function testAddCandidateWillAddCodeWithExistingQuote(): void
     {
         // Arrange
-        $quoteTransfer = $this->tester->havePersistentQuoteWithOutVouchers();
+        $quoteTransfer = $this->tester->havePersistentQuoteWithoutVouchers();
 
         // Act
         $cartCodeOperationResultTransfer = $this->tester->getFacade()->addCandidate(

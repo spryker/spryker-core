@@ -82,7 +82,7 @@ class CartCodesRestApiBusinessTester extends Actor
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function havePersistentQuoteWithOutVouchers(): QuoteTransfer
+    public function havePersistentQuoteWithoutVouchers(): QuoteTransfer
     {
         return $this->havePersistentQuote([
             QuoteTransfer::UUID => uniqid('uuid', true),
