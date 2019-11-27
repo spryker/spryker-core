@@ -1,0 +1,20 @@
+namespace: SprykerTest\Yves\Validator
+
+paths:
+  tests: .
+  data: ../../../_data
+  support: _support
+  log: ../../../_output
+
+coverage:
+  enabled: true
+  remote: false
+  whitelist: { include: ['../../../../src/*'] }
+
+suites:
+  Yves:
+    path: .
+    class_name: ValidatorYvesTester
+    modules:
+      enabled:
+        - Asserts

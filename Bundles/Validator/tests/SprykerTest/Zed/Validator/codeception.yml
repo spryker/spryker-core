@@ -1,0 +1,20 @@
+namespace: SprykerTest\Zed\Validator
+
+paths:
+  tests: .
+  data: ../../../_data
+  support: _support
+  log: ../../../_output
+
+coverage:
+  enabled: true
+  remote: false
+  whitelist: { include: ['../../../../src/*'] }
+
+suites:
+  Communication:
+    path: .
+    class_name: ValidatorCommunicationTester
+    modules:
+      enabled:
+        - Asserts
