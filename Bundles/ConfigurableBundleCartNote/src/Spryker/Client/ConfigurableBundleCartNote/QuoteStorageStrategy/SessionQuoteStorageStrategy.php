@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 
 class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
 {
+    /**
+     * @uses \Spryker\Shared\Quote\QuoteConfig::STORAGE_STRATEGY_SESSION
+     */
     protected const STORAGE_STRATEGY = 'session';
 
     /**
