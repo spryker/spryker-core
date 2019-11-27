@@ -19,7 +19,7 @@ class UserPasswordValidatorConstraintPlugin extends AbstractPlugin implements Co
 {
     protected const CONSTRAINT_NAME = 'security.validator.user_password';
     protected const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
-    protected const SERVICE_SECURITY_ENCODER_FACTORY = 'security.token_storage';
+    protected const SERVICE_SECURITY_ENCODER_FACTORY = 'security.encoder_factory';
 
     /**
      * {@inheritDoc}
