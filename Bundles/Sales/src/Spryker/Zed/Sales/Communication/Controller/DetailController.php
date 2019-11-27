@@ -26,6 +26,11 @@ class DetailController extends AbstractController
     public const ROUTE_REDIRECT = '/sales/detail';
 
     /**
+     * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_SUB_REQUEST
+     */
+    protected const SERVICE_SUB_REQUEST = 'sub_request';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -154,6 +159,6 @@ class DetailController extends AbstractController
      */
     protected function getSubRequestHandler()
     {
-        return $this->getApplication()->get('sub_request');
+        return $this->getApplication()->get(static::SERVICE_SUB_REQUEST);
     }
 }

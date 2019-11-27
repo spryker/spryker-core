@@ -77,8 +77,8 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
-     * - Checks if items which being added to cart is available, for bundle it checks bundled items.
-     * - Even if same item added separately from bundle availability is checked together.
+     * - Checks if bundle product bundled items are available.
+     * - If bundled products are added separately, it gets checked together with bundled products.
      * - Sets error message if not available.
      *
      * @api

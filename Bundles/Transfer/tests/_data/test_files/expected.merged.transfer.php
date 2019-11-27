@@ -7,6 +7,7 @@
 namespace Generated\Shared\Transfer;
 
 use ArrayObject;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 /**
@@ -18,6 +19,8 @@ class FooBarTransfer extends AbstractTransfer
     public const NAME = 'name';
 
     public const BLA = 'bla';
+
+    public const STOCK = 'stock';
 
     public const SELF_REFERENCE = 'selfReference';
 
@@ -32,6 +35,11 @@ class FooBarTransfer extends AbstractTransfer
     protected $bla;
 
     /**
+     * @var \Spryker\DecimalObject\Decimal|null
+     */
+    protected $stock;
+
+    /**
      * @var \ArrayObject|\Generated\Shared\Transfer\FooBarTransfer[]
      */
     protected $selfReference;
@@ -44,6 +52,8 @@ class FooBarTransfer extends AbstractTransfer
         'Name' => 'name',
         'bla' => 'bla',
         'Bla' => 'bla',
+        'stock' => 'stock',
+        'Stock' => 'stock',
         'self_reference' => 'selfReference',
         'selfReference' => 'selfReference',
         'SelfReference' => 'selfReference',
@@ -58,6 +68,7 @@ class FooBarTransfer extends AbstractTransfer
             'name_underscore' => 'name',
             'is_collection' => false,
             'is_transfer' => false,
+            'is_value_object' => false,
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
@@ -67,6 +78,17 @@ class FooBarTransfer extends AbstractTransfer
             'name_underscore' => 'bla',
             'is_collection' => false,
             'is_transfer' => false,
+            'is_value_object' => false,
+            'rest_request_parameter' => 'no',
+            'is_associative' => false,
+            'is_nullable' => false,
+        ],
+        self::STOCK => [
+            'type' => 'Spryker\DecimalObject\Decimal',
+            'name_underscore' => 'stock',
+            'is_collection' => false,
+            'is_transfer' => false,
+            'is_value_object' => true,
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
@@ -76,6 +98,7 @@ class FooBarTransfer extends AbstractTransfer
             'name_underscore' => 'self_reference',
             'is_collection' => true,
             'is_transfer' => true,
+            'is_value_object' => false,
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
@@ -157,6 +180,47 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
+     * @module Test
+     *
+     * @param string|int|float|\Spryker\DecimalObject\Decimal|null $stock
+     *
+     * @return $this
+     */
+    public function setStock($stock = null)
+    {
+        if ($stock !== null && !$stock instanceof Decimal) {
+            $stock = new Decimal($stock);
+        }
+
+        $this->stock = $stock;
+        $this->modifiedProperties[self::STOCK] = true;
+
+        return $this;
+    }
+
+    /**
+     * @module Test
+     *
+     * @return \Spryker\DecimalObject\Decimal|null
+     */
+    public function getStock()
+    {
+        return $this->stock;
+    }
+
+    /**
+     * @module Test
+     *
+     * @return $this
+     */
+    public function requireStock()
+    {
+        $this->assertPropertyIsSet(self::STOCK);
+
+        return $this;
+    }
+
+    /**
      * @module Test2
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\FooBarTransfer[] $selfReference
@@ -228,6 +292,9 @@ class FooBarTransfer extends AbstractTransfer
                     $elementType = $this->transferMetadata[$normalizedPropertyName]['type'];
                     $this->$normalizedPropertyName = $this->processArrayObject($elementType, $value, $ignoreMissingProperty);
                     $this->modifiedProperties[$normalizedPropertyName] = true;
+                    break;
+                case 'stock':
+                    $this->assignValueObject($normalizedPropertyName, $value);
                     break;
                 default:
                     if (!$ignoreMissingProperty) {
@@ -339,6 +406,7 @@ class FooBarTransfer extends AbstractTransfer
             switch ($property) {
                 case 'name':
                 case 'bla':
+                case 'stock':
                     $values[$arrayKey] = $value;
                     break;
                 case 'selfReference':
@@ -368,6 +436,7 @@ class FooBarTransfer extends AbstractTransfer
             switch ($property) {
                 case 'name':
                 case 'bla':
+                case 'stock':
                     $values[$arrayKey] = $value;
                     break;
                 case 'selfReference':
@@ -430,6 +499,7 @@ class FooBarTransfer extends AbstractTransfer
             'name' => $this->name,
             'bla' => $this->bla,
             'selfReference' => $this->selfReference,
+            'stock' => $this->stock,
         ];
     }
 
@@ -442,6 +512,7 @@ class FooBarTransfer extends AbstractTransfer
             'name' => $this->name,
             'bla' => $this->bla,
             'self_reference' => $this->selfReference,
+            'stock' => $this->stock,
         ];
     }
 
@@ -454,6 +525,7 @@ class FooBarTransfer extends AbstractTransfer
             'name' => $this->name instanceof AbstractTransfer ? $this->name->toArray(true, false) : $this->name,
             'bla' => $this->bla instanceof AbstractTransfer ? $this->bla->toArray(true, false) : $this->bla,
             'self_reference' => $this->selfReference instanceof AbstractTransfer ? $this->selfReference->toArray(true, false) : $this->addValuesToCollection($this->selfReference, true, false),
+            'stock' => $this->stock,
         ];
     }
 
@@ -466,6 +538,7 @@ class FooBarTransfer extends AbstractTransfer
             'name' => $this->name instanceof AbstractTransfer ? $this->name->toArray(true, true) : $this->name,
             'bla' => $this->bla instanceof AbstractTransfer ? $this->bla->toArray(true, true) : $this->bla,
             'selfReference' => $this->selfReference instanceof AbstractTransfer ? $this->selfReference->toArray(true, true) : $this->addValuesToCollection($this->selfReference, true, true),
+            'stock' => $this->stock,
         ];
     }
 }

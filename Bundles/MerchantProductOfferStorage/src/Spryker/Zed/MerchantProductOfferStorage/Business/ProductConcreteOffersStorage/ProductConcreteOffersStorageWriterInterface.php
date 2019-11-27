@@ -10,16 +10,16 @@ namespace Spryker\Zed\MerchantProductOfferStorage\Business\ProductConcreteOffers
 interface ProductConcreteOffersStorageWriterInterface
 {
     /**
-     * @param string[] $concreteSkus
+     * @param string[] $productSkus
      *
      * @return void
      */
-    public function publish(array $concreteSkus): void;
+    public function publish(array $productSkus): void;
 
     /**
-     * @param string[] $concreteSkus
+     * @param string[] $productSkus
      *
      * @return void
      */
-    public function unpublish(array $concreteSkus): void;
+    public function unpublish(array $productSkus): void;
 }

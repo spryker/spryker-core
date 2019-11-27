@@ -24,12 +24,10 @@ use Codeception\Actor;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
+ *
+ * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
  */
 class CustomerBusinessTester extends Actor
 {
     use _generated\CustomerBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }
