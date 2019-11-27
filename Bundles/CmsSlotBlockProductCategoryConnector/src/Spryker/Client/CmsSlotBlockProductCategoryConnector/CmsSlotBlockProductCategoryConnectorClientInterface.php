@@ -14,7 +14,7 @@ interface CmsSlotBlockProductCategoryConnectorClientInterface
 {
     /**
      * Specification:
-     * - Returns true if CmsSlotBlockTransfer.conditions has specific key.
+     * - Returns true if this plugin matches the conditions in CmsSlotBlockTransfer.
      *
      * @api
      *
