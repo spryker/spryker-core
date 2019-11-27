@@ -36,11 +36,11 @@
     </transfer>
 
     <transfer name="CartItemRequest">
-        <property name="productOptionValues" type="CartItemRequestProductOptionValue[]" singular="productOptionValue"/>
+        <property name="productOptionValues" type="CartItemRequestProductOption[]" singular="productOptionValue"/>
     </transfer>
 
-    <transfer name="CartItemRequestProductOptionValue">
-        <property name="idProductOptionValue" type="int"/>
+    <transfer name="CartItemRequestProductOption">
+        <property name="idProductOption" type="int"/>
     </transfer>
 
     <transfer name="RestCartItemsAttributes">

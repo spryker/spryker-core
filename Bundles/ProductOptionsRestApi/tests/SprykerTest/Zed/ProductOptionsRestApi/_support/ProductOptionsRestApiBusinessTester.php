@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\ProductOptionsRestApi;
 
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\CartItemRequestBuilder;
-use Generated\Shared\DataBuilder\CartItemRequestProductOptionValueBuilder;
+use Generated\Shared\DataBuilder\CartItemRequestProductOptionBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\PersistentCartChangeBuilder;
 use Generated\Shared\Transfer\CartItemRequestTransfer;
@@ -45,12 +45,10 @@ class ProductOptionsRestApiBusinessTester extends Actor
      */
     public function buildCartItemRequestTransferWithOptions(): CartItemRequestTransfer
     {
-        $productOptionValueBuilder = new CartItemRequestProductOptionValueBuilder([
-                'idProductOptionValue' => static::ID_PRODUCT_OPTION,
-        ]);
+        $productOptionBuilder = new CartItemRequestProductOptionBuilder(['idProductOption' => static::ID_PRODUCT_OPTION]);
 
         return (new CartItemRequestBuilder(['sku' => static::PRODUCT_CONCRETE_SKU]))
-            ->withProductOptionValue($productOptionValueBuilder)
+            ->withProductOptionValue($productOptionBuilder)
             ->build();
     }
 

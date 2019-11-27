@@ -45,9 +45,9 @@ class ProductOptionMapper implements ProductOptionMapperInterface
         CartItemRequestTransfer $cartItemRequestTransfer,
         ItemTransfer $itemTransfer
     ): ItemTransfer {
-        foreach ($cartItemRequestTransfer->getProductOptionValues() as $cartItemRequestProductOptionValueTransfer) {
+        foreach ($cartItemRequestTransfer->getProductOptionValues() as $cartItemRequestProductOptionTransfer) {
             $productOptionTransfer = (new ProductOptionTransfer())
-                ->fromArray($cartItemRequestProductOptionValueTransfer->toArray(), true);
+                ->setIdProductOptionValue($cartItemRequestProductOptionTransfer->getIdProductOption());
             $itemTransfer->addProductOption($productOptionTransfer);
         }
 
