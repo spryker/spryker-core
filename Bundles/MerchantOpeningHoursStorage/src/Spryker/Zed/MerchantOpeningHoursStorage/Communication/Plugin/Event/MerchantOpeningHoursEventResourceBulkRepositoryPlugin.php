@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Event;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Spryker\Shared\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceBulkRepositoryPluginInterface;
@@ -47,8 +48,13 @@ class MerchantOpeningHoursEventResourceBulkRepositoryPlugin extends AbstractPlug
     public function getData(int $offset, int $limit): array
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
+        $merchantCriteriaFilterTransfer = $this->createMerchantCriteriaFilterTransfer($filterTransfer);
+        $merchantCollectionTransfer = $this->getFactory()
+            ->getMerchantFacade()
+            ->find($merchantCriteriaFilterTransfer);
 
-        return $this->getRepository()->getFilteredMerchantEntityTransfers($filterTransfer);
+        return $merchantCollectionTransfer->getMerchants()
+            ->getArrayCopy();
     }
 
     /**
@@ -87,5 +93,16 @@ class MerchantOpeningHoursEventResourceBulkRepositoryPlugin extends AbstractPlug
             ->setOrderBy(SpyMerchantTableMap::COL_ID_MERCHANT)
             ->setOffset($offset)
             ->setLimit($limit);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer
+     */
+    protected function createMerchantCriteriaFilterTransfer(FilterTransfer $filterTransfer): MerchantCriteriaFilterTransfer
+    {
+        return (new MerchantCriteriaFilterTransfer())
+            ->setFilter($filterTransfer);
     }
 }

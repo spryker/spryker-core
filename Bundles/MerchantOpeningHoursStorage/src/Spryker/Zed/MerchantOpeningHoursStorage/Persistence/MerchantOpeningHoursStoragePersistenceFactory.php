@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantOpeningHoursStorage\Persistence;
 
-use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Orm\Zed\MerchantOpeningHours\Persistence\SpyMerchantOpeningHoursDateScheduleQuery;
 use Orm\Zed\MerchantOpeningHours\Persistence\SpyMerchantOpeningHoursWeekdayScheduleQuery;
 use Orm\Zed\MerchantOpeningHoursStorage\Persistence\SpyMerchantOpeningHoursStorageQuery;
@@ -53,13 +52,5 @@ class MerchantOpeningHoursStoragePersistenceFactory extends AbstractPersistenceF
     public function getMerchantOpeningHoursDateSchedulePropelQuery(): SpyMerchantOpeningHoursDateScheduleQuery
     {
         return $this->getProvidedDependency(MerchantOpeningHoursStorageDependencyProvider::PROPEL_QUERY_MERCHANT_OPENING_HOURS_DATE_SCHEDULE);
-    }
-
-    /**
-     * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
-     */
-    public function getMerchantPropelQuery(): SpyMerchantQuery
-    {
-        return $this->getProvidedDependency(MerchantOpeningHoursStorageDependencyProvider::PROPEL_QUERY_MERCHANT);
     }
 }

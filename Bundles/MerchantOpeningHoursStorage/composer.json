@@ -8,13 +8,13 @@
     "spryker/event-behavior": "^1.0.0",
     "spryker/kernel": "^3.33.0",
     "spryker/merchant": "^2.0.0",
-    "spryker/merchant-opening-hours": "^1.0.0",
+    "spryker/merchant-opening-hours": "^0.1.0",
     "spryker/propel-orm": "^1.5.0",
     "spryker/storage": "^3.0.0",
     "spryker/synchronization": "^1.0.0",
     "spryker/synchronization-behavior": "^1.0.0",
     "spryker/synchronization-extension": "^1.0.0",
-    "spryker/weekday-schedule": "^1.0.0"
+    "spryker/weekday-schedule": "^0.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

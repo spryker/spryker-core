@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\MerchantOpeningHoursDataImport\Business\MerchantOpeningHours\Step;
 
-use Orm\Zed\WeekdaySchedule\Persistence\SpyDateScheduleQuery;
+use Orm\Zed\MerchantOpeningHours\Persistence\SpyMerchantOpeningHoursDateScheduleQuery;
+use Orm\Zed\WeekdaySchedule\Persistence\SpyDateSchedule;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
@@ -17,7 +18,6 @@ class DateScheduleWriterStep implements DataImportStepInterface
 {
     protected const REQUIRED_DATA_SET_KEYS = [
         MerchantOpeningHoursDateScheduleDataSetInterface::DATE,
-        MerchantOpeningHoursDateScheduleDataSetInterface::MERCHANT_OPENING_HOURS_DATE_KEY,
     ];
 
     /**
@@ -29,19 +29,29 @@ class DateScheduleWriterStep implements DataImportStepInterface
     {
         $this->validateDataSet($dataSet);
 
-        $dateScheduleEntity = SpyDateScheduleQuery::create()
-            ->filterByKey($dataSet[MerchantOpeningHoursDateScheduleDataSetInterface::MERCHANT_OPENING_HOURS_DATE_KEY])
-            ->findOneOrCreate();
+        $merchantOpeningHoursDateScheduleEntity = $this->createMerchantOpeningHoursDateSchedulePropelQuery()
+            ->filterByFkMerchant($dataSet[MerchantOpeningHoursDateScheduleDataSetInterface::FK_MERCHANT])
+            ->useSpyDateScheduleQuery()
+                ->filterByDate($dataSet[MerchantOpeningHoursDateScheduleDataSetInterface::DATE])
+                ->filterByTimeFrom($dataSet[MerchantOpeningHoursDateScheduleDataSetInterface::TIME_FROM] ?: null)
+            ->endUse()
+            ->findOne();
 
-        $dateScheduleEntity
+        if ($merchantOpeningHoursDateScheduleEntity !== null) {
+            $dataSet[MerchantOpeningHoursDateScheduleDataSetInterface::FK_DATE_SCHEDULE] = $merchantOpeningHoursDateScheduleEntity
+                ->getSpyDateSchedule()
+                ->getIdDateSchedule();
+
+            return;
+        }
+
+        $dateScheduleEntity = $this->createDateScheduleEntity()
             ->setDate($dataSet[MerchantOpeningHoursDateScheduleDataSetInterface::DATE])
             ->setTimeFrom($dataSet[MerchantOpeningHoursDateScheduleDataSetInterface::TIME_FROM])
             ->setTimeTo($dataSet[MerchantOpeningHoursDateScheduleDataSetInterface::TIME_TO])
             ->setNote($dataSet[MerchantOpeningHoursDateScheduleDataSetInterface::NOTE]);
 
-        if ($dateScheduleEntity->isNew() || $dateScheduleEntity->isModified()) {
-            $dateScheduleEntity->save();
-        }
+        $dateScheduleEntity->save();
 
         $dataSet[MerchantOpeningHoursDateScheduleDataSetInterface::FK_DATE_SCHEDULE] = $dateScheduleEntity->getIdDateSchedule();
     }
@@ -71,5 +81,21 @@ class DateScheduleWriterStep implements DataImportStepInterface
         if (!$dataSet[$requiredDataSetKey]) {
             throw new InvalidDataException(sprintf('"%s" is required.', $requiredDataSetKey));
         }
+    }
+
+    /**
+     * @return \Orm\Zed\MerchantOpeningHours\Persistence\SpyMerchantOpeningHoursDateScheduleQuery
+     */
+    protected function createMerchantOpeningHoursDateSchedulePropelQuery(): SpyMerchantOpeningHoursDateScheduleQuery
+    {
+        return SpyMerchantOpeningHoursDateScheduleQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\WeekdaySchedule\Persistence\SpyDateSchedule
+     */
+    protected function createDateScheduleEntity(): SpyDateSchedule
+    {
+        return new SpyDateSchedule();
     }
 }

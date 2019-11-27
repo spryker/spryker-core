@@ -1,8 +1,8 @@
-merchant_key,merchant_opening_hours_weekday_key,week_day_key,time_from,time_to
-merchant-profile-data-import-test-key,m-o-h-w-d-test-1,MONDAY,7:00:00,20:00:00
-merchant-profile-data-import-test-key,m-o-h-w-d-test-2,TUESDAY,7:00:00,20:00:00
-merchant-profile-data-import-test-key,m-o-h-w-d-test-3,WEDNESDAY,7:00:00,20:00:00
-merchant-profile-data-import-test-key,m-o-h-w-d-test-4,THURSDAY,7:00:00,20:00:00
-merchant-profile-data-import-test-key,m-o-h-w-d-test-5,FRIDAY,7:00:00,20:00:00
-merchant-profile-data-import-test-key,m-o-h-w-d-test-6,SATURDAY,7:00:00,20:00:00
-merchant-profile-data-import-test-key,m-o-h-w-d-test-7,SUNDAY,,
+merchant_key,week_day_key,time_from,time_to
+merchant-profile-data-import-test-key,MONDAY,7:00:00,20:00:00
+merchant-profile-data-import-test-key,TUESDAY,7:00:00,20:00:00
+merchant-profile-data-import-test-key,WEDNESDAY,7:00:00,20:00:00
+merchant-profile-data-import-test-key,THURSDAY,7:00:00,20:00:00
+merchant-profile-data-import-test-key,FRIDAY,7:00:00,20:00:00
+merchant-profile-data-import-test-key,SATURDAY,7:00:00,20:00:00
+merchant-profile-data-import-test-key,SUNDAY,,

@@ -10,7 +10,6 @@ namespace Spryker\Zed\MerchantOpeningHoursDataImport\Business\MerchantOpeningHou
 interface MerchantOpeningHoursDateScheduleDataSetInterface extends MerchantOpeningHoursDataSetInterface
 {
     public const FK_DATE_SCHEDULE = 'fk_date_schedule';
-    public const MERCHANT_OPENING_HOURS_DATE_KEY = 'merchant_opening_hours_date_key';
     public const DATE = 'date';
     public const TIME_FROM = 'time_from';
     public const TIME_TO = 'time_to';

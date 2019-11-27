@@ -10,6 +10,8 @@ namespace Spryker\Client\MerchantOpeningHoursStorage;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\MerchantOpeningHoursStorage\Dependency\Client\MerchantOpeningHoursStorageToStorageClientInterface;
 use Spryker\Client\MerchantOpeningHoursStorage\Dependency\Service\MerchantOpeningHoursStorageToSynchronizationServiceInterface;
+use Spryker\Client\MerchantOpeningHoursStorage\Mapper\MerchantOpeningHoursMapper;
+use Spryker\Client\MerchantOpeningHoursStorage\Mapper\MerchantOpeningHoursMapperInterface;
 use Spryker\Client\MerchantOpeningHoursStorage\Reader\MerchantOpeningHoursStorageReader;
 use Spryker\Client\MerchantOpeningHoursStorage\Reader\MerchantOpeningHoursStorageReaderInterface;
 
@@ -22,8 +24,17 @@ class MerchantOpeningHoursStorageFactory extends AbstractFactory
     {
         return new MerchantOpeningHoursStorageReader(
             $this->getStorageClient(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
+            $this->createMerchantOpeningHoursMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\MerchantOpeningHoursStorage\Mapper\MerchantOpeningHoursMapperInterface
+     */
+    public function createMerchantOpeningHoursMapper(): MerchantOpeningHoursMapperInterface
+    {
+        return new MerchantOpeningHoursMapper();
     }
 
     /**

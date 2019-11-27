@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\MerchantOpeningHoursStorage\Dependency\Client\MerchantOpeningHoursStorageToStorageClientInterface;
 use Spryker\Client\MerchantOpeningHoursStorage\Dependency\Service\MerchantOpeningHoursStorageToSynchronizationServiceInterface;
+use Spryker\Client\MerchantOpeningHoursStorage\Mapper\MerchantOpeningHoursMapperInterface;
 use Spryker\Shared\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig;
 
 class MerchantOpeningHoursStorageReader implements MerchantOpeningHoursStorageReaderInterface
@@ -26,15 +27,23 @@ class MerchantOpeningHoursStorageReader implements MerchantOpeningHoursStorageRe
     protected $synchronizationService;
 
     /**
+     * @var \Spryker\Client\MerchantOpeningHoursStorage\Mapper\MerchantOpeningHoursMapperInterface
+     */
+    protected $merchantOpeningHoursMapper;
+
+    /**
      * @param \Spryker\Client\MerchantOpeningHoursStorage\Dependency\Client\MerchantOpeningHoursStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\MerchantOpeningHoursStorage\Dependency\Service\MerchantOpeningHoursStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Client\MerchantOpeningHoursStorage\Mapper\MerchantOpeningHoursMapperInterface $merchantOpeningHoursMapper
      */
     public function __construct(
         MerchantOpeningHoursStorageToStorageClientInterface $storageClient,
-        MerchantOpeningHoursStorageToSynchronizationServiceInterface $synchronizationService
+        MerchantOpeningHoursStorageToSynchronizationServiceInterface $synchronizationService,
+        MerchantOpeningHoursMapperInterface $merchantOpeningHoursMapper
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
+        $this->merchantOpeningHoursMapper = $merchantOpeningHoursMapper;
     }
 
     /**
@@ -52,18 +61,8 @@ class MerchantOpeningHoursStorageReader implements MerchantOpeningHoursStorageRe
             return null;
         }
 
-        return $this->mapToMerchantOpeningHoursStorage($merchantOpeningHoursStorageData);
-    }
-
-    /**
-     * @param array $merchantOpeningHoursStorageData
-     *
-     * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer
-     */
-    protected function mapToMerchantOpeningHoursStorage(array $merchantOpeningHoursStorageData): MerchantOpeningHoursStorageTransfer
-    {
-        return (new MerchantOpeningHoursStorageTransfer())
-            ->fromArray($merchantOpeningHoursStorageData, true);
+        return $this->merchantOpeningHoursMapper
+            ->mapMerchantOpeningHoursStorageDataToMerchantOpeningHoursStorageTransfer($merchantOpeningHoursStorageData, (new MerchantOpeningHoursStorageTransfer()));
     }
 
     /**
