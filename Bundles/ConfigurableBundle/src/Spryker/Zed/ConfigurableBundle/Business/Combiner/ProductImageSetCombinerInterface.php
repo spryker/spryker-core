@@ -11,9 +11,9 @@ interface ProductImageSetCombinerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $localizedProductImageSetTransfers
-     * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
+     * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $defaultProductImageSetTransfers
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
-    public function combineProductImageSets(array $localizedProductImageSetTransfers, array $productImageSetTransfers): array;
+    public function combineProductImageSets(array $localizedProductImageSetTransfers, array $defaultProductImageSetTransfers): array;
 }

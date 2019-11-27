@@ -36,7 +36,10 @@ class ConfigurableBundleTemplateImageStorageEventSubscriber extends AbstractPlug
             ->addConfigurableBundleTemplateImageUnPublishListener($eventCollection)
             ->addConfigurableBundleTemplateImageProductImageSetCreateListener($eventCollection)
             ->addConfigurableBundleTemplateImageProductImageSetUpdateListener($eventCollection)
-            ->addConfigurableBundleTemplateImageProductImageSetDeleteListener($eventCollection);
+            ->addConfigurableBundleTemplateImageProductImageSetDeleteListener($eventCollection)
+            ->addConfigurableBundleTemplateCreateListener($eventCollection)
+            ->addConfigurableBundleTemplateUpdateListener($eventCollection)
+            ->addConfigurableBundleTemplateDeleteListener($eventCollection);
 
         return $eventCollection;
     }
@@ -102,6 +105,45 @@ class ConfigurableBundleTemplateImageStorageEventSubscriber extends AbstractPlug
     {
         $eventCollection
             ->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_DELETE, new ConfigurableBundleTemplateImageProductImageSetStoragePublishListener());
+
+        return $this;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return $this
+     */
+    protected function addConfigurableBundleTemplateCreateListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection
+            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_CREATE, new ConfigurableBundleTemplateImageStoragePublishListener());
+
+        return $this;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return $this
+     */
+    protected function addConfigurableBundleTemplateUpdateListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection
+            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_UPDATE, new ConfigurableBundleTemplateImageStoragePublishListener());
+
+        return $this;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return $this
+     */
+    protected function addConfigurableBundleTemplateDeleteListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection
+            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_DELETE, new ConfigurableBundleTemplateImageProductImageSetStoragePublishListener());
 
         return $this;
     }

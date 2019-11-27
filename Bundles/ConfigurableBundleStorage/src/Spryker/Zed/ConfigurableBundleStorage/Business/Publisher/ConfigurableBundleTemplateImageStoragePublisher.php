@@ -125,8 +125,7 @@ class ConfigurableBundleTemplateImageStoragePublisher implements ConfigurableBun
             $configurableBundleTemplateImageStorageEntity = $localizedConfigurableBundleTemplateImageStorageEntityMap[$idConfigurableBundleTemplate][$localeName]
                 ?? new SpyConfigurableBundleTemplateImageStorage();
 
-            $productImageSetTransfers = isset($localizedProductImageSetTransfers[$localeName])
-                ? array_merge($localizedProductImageSetTransfers[$localeName], $defaultProductImageSetTransfers) : $defaultProductImageSetTransfers;
+            $productImageSetTransfers = array_merge($localizedProductImageSetTransfers[$localeName] ?? [], $defaultProductImageSetTransfers);
 
             $this->saveConfigurableBundleTemplateImageStorageEntity(
                 $localeName,

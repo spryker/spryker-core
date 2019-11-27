@@ -61,11 +61,11 @@ class ConfigurableBundleTemplateImageSetExpander implements ConfigurableBundleTe
         $localeIds = $this->extractLocaleIds($localeTransfers);
 
         $localizedProductImageSetTransfers = $this->configurableBundleRepository->getConfigurableBundleTemplateImageSets($idConfigurableBundleTemplate, $localeIds);
-        $productImageSetTransfers = $this->configurableBundleRepository->getDefaultConfigurableBundleTemplateImageSets($idConfigurableBundleTemplate);
+        $defaultProductImageSetTransfers = $this->configurableBundleRepository->getDefaultConfigurableBundleTemplateImageSets($idConfigurableBundleTemplate);
 
         $productImageSetTransfers = $this->productImageSetCombiner->combineProductImageSets(
             $localizedProductImageSetTransfers,
-            $productImageSetTransfers
+            $defaultProductImageSetTransfers
         );
 
         $configurableBundleTemplateTransfer->setProductImageSets(new ArrayObject($productImageSetTransfers));
