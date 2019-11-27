@@ -19,6 +19,11 @@ class CmsPageConditionDataProvider implements CmsPageConditionDataProviderInterf
     protected const KEY_OPTION_SPECIFIC_CMS_PAGES = 'Specific CMS Pages';
 
     /**
+     * @uses \Spryker\Zed\Cms\Persistence\CmsQueryContainer::CMS_NAME
+     */
+    protected const CMS_PAGE_NAME = 'name';
+
+    /**
      * @var \Spryker\Zed\CmsSlotBlockCmsGui\Dependency\QueryContainer\CmsSlotBlockCmsGuiToCmsQueryContainerInterface
      */
     protected $cmsQueryContainer;
@@ -92,7 +97,7 @@ class CmsPageConditionDataProvider implements CmsPageConditionDataProviderInterf
         $pageIds = [];
 
         foreach ($cmsPageEntityCollection as $cmsPageEntity) {
-            $pageIds[$cmsPageEntity->getName()] = $cmsPageEntity->getIdCmsPage();
+            $pageIds[$cmsPageEntity->getVirtualColumn(static::CMS_PAGE_NAME)] = $cmsPageEntity->getIdCmsPage();
         }
 
         return $pageIds;

@@ -54,15 +54,15 @@ class CmsSlotBlockFacadeTest extends Unit
         $this->tester->ensureCmsSlotTemplateTableIsEmpty();
     }
 
-//    /**
-//     * @return void
-//     */
-//    protected function _after(): void
-//    {
-//        $this->tester->ensureCmsSlotBlockTableIsEmpty();
-//        $this->tester->ensureCmsSlotTableIsEmpty();
-//        $this->tester->ensureCmsSlotTemplateTableIsEmpty();
-//    }
+    /**
+     * @return void
+     */
+    protected function _after(): void
+    {
+        $this->tester->ensureCmsSlotBlockTableIsEmpty();
+        $this->tester->ensureCmsSlotTableIsEmpty();
+        $this->tester->ensureCmsSlotTemplateTableIsEmpty();
+    }
 
     /**
      * @return void
