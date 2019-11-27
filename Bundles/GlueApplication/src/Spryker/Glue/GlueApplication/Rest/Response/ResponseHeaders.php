@@ -64,10 +64,10 @@ class ResponseHeaders implements ResponseHeadersInterface
             $restRequest->getMetadata()->getLocale()
         );
 
-        if ($value = $this->config->getCorsAllowOrigin()) {
+        if ($this->config->getCorsAllowOrigin()) {
             $httpResponse->headers->set(
                 RequestConstantsInterface::HEADER_ACCESS_CONTROL_ALLOW_ORIGIN,
-                $value
+                $this->config->getCorsAllowOrigin()
             );
         }
 
