@@ -12,7 +12,7 @@ class CategoryStructureExpected
     /**
      * @return array
      */
-    public function getOrderedCategoriesArray()
+    public function getOrderedCategoriesArray(): array
     {
         $categories = [
             1 => [
@@ -63,7 +63,7 @@ class CategoryStructureExpected
     /**
      * @return array
      */
-    public function getSecondOrderedCategoriesArray()
+    public function getSecondOrderedCategoriesArray(): array
     {
         $categories = [
             1 => [
@@ -113,7 +113,7 @@ class CategoryStructureExpected
     /**
      * @return array
      */
-    public function getCategoryStructureWithChildrenBeforeParent()
+    public function getCategoryStructureWithChildrenBeforeParent(): array
     {
         $categories = [
             1 => [
@@ -163,7 +163,7 @@ class CategoryStructureExpected
     /**
      * @return array
      */
-    public function getCategoryStructureWithNonexistentParent()
+    public function getCategoryStructureWithNonexistentParent(): array
     {
         $categories = [
             1 => [

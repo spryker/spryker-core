@@ -18,6 +18,7 @@
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
     "spryker/event-dispatcher": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
@@ -27,6 +28,11 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
     }
   },
   "minimum-stability": "dev",

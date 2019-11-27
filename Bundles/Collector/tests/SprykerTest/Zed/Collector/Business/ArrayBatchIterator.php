@@ -40,7 +40,7 @@ class ArrayBatchIterator implements CountableIteratorInterface
     /**
      * @return void
      */
-    public function next()
+    public function next(): void
     {
         next($this->batch);
         $this->currentElementIndex++;
@@ -57,7 +57,7 @@ class ArrayBatchIterator implements CountableIteratorInterface
     /**
      * @return bool
      */
-    public function valid()
+    public function valid(): bool
     {
         return ($this->currentElementIndex + 1 <= $this->count());
     }
@@ -65,7 +65,7 @@ class ArrayBatchIterator implements CountableIteratorInterface
     /**
      * @return void
      */
-    public function rewind()
+    public function rewind(): void
     {
         reset($this->batch);
         $this->currentElementIndex = 0;
@@ -74,7 +74,7 @@ class ArrayBatchIterator implements CountableIteratorInterface
     /**
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->batch);
     }

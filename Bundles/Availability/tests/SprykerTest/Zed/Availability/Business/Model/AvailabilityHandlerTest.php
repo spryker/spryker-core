@@ -41,7 +41,7 @@ class AvailabilityHandlerTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateAvailabilityShouldTouchWhenStockUpdated()
+    public function testUpdateAvailabilityShouldTouchWhenStockUpdated(): void
     {
         $availabilityContainerMock = $this->createAvailabilityQueryContainerMock(0);
 
@@ -64,7 +64,7 @@ class AvailabilityHandlerTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateAvailabilityShouldTouchAndUpdateNewStock()
+    public function testUpdateAvailabilityShouldTouchAndUpdateNewStock(): void
     {
         $availabilityContainerMock = $this->createAvailabilityQueryContainerMock(5);
 
@@ -103,8 +103,7 @@ class AvailabilityHandlerTest extends Unit
         ?AvailabilityToProductInterface $availabilityToProductFacade = null,
         ?AvailabilityToStoreFacadeInterface $availabilityToStoreFacade = null,
         ?AvailabilityToEventFacadeInterface $availabilityToEventFacade = null
-    ) {
-
+    ): AvailabilityHandler {
         if ($sellable === null) {
             $sellable = $this->createSellableMock();
         }
@@ -187,7 +186,7 @@ class AvailabilityHandlerTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface
      */
-    protected function createAvailabilityQueryContainerMock($availabilityQuantity = 0)
+    protected function createAvailabilityQueryContainerMock(int $availabilityQuantity = 0)
     {
         $availabilityContainerMock = $this->getMockBuilder(AvailabilityQueryContainerInterface::class)
             ->getMock();
@@ -228,7 +227,7 @@ class AvailabilityHandlerTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    protected function createStoreTransfer()
+    protected function createStoreTransfer(): StoreTransfer
     {
         return new StoreTransfer();
     }

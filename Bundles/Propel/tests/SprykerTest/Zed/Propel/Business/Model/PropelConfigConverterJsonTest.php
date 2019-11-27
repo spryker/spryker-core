@@ -53,7 +53,7 @@ class PropelConfigConverterJsonTest extends Unit
     /**
      * @return string
      */
-    protected function getFixtureDirectory()
+    protected function getFixtureDirectory(): string
     {
         return __DIR__ . '/Fixtures/Config/';
     }
@@ -61,7 +61,7 @@ class PropelConfigConverterJsonTest extends Unit
     /**
      * @return array
      */
-    protected function getTestConfiguration()
+    protected function getTestConfiguration(): array
     {
         return [
             'paths' => [
@@ -78,7 +78,7 @@ class PropelConfigConverterJsonTest extends Unit
     /**
      * @return void
      */
-    public function testInitialization()
+    public function testInitialization(): void
     {
         $propelConfigConverterJson = new PropelConfigConverterJson($this->getTestConfiguration());
 
@@ -88,7 +88,7 @@ class PropelConfigConverterJsonTest extends Unit
     /**
      * @return void
      */
-    public function testInitializationThrowsExceptionWhenDataIsMissing()
+    public function testInitializationThrowsExceptionWhenDataIsMissing(): void
     {
         $this->expectException(ConfigMissingPropertyException::class);
         new PropelConfigConverterJson([]);
@@ -97,7 +97,7 @@ class PropelConfigConverterJsonTest extends Unit
     /**
      * @return void
      */
-    public function testInitializationCreatesTargetDirectory()
+    public function testInitializationCreatesTargetDirectory(): void
     {
         $this->assertFalse(is_dir($this->getFixtureDirectory()));
 
@@ -109,7 +109,7 @@ class PropelConfigConverterJsonTest extends Unit
     /**
      * @return void
      */
-    public function testConvertConfig()
+    public function testConvertConfig(): void
     {
         $this->assertFalse(file_exists($this->fixtureDirectory . self::FILE_NAME));
 
@@ -122,7 +122,7 @@ class PropelConfigConverterJsonTest extends Unit
     /**
      * @return void
      */
-    public function testConvertConfigThrowsExceptionIfFileNotCreated()
+    public function testConvertConfigThrowsExceptionIfFileNotCreated(): void
     {
         $this->assertFalse(file_exists($this->fixtureDirectory . self::FILE_NAME));
 

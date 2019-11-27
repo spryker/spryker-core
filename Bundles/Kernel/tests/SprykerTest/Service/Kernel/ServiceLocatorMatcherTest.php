@@ -24,7 +24,7 @@ class ServiceLocatorMatcherTest extends Unit
     /**
      * @return void
      */
-    public function testMatchShouldReturnTrueIfMethodStartsWithService()
+    public function testMatchShouldReturnTrueIfMethodStartsWithService(): void
     {
         $this->assertTrue((new ServiceLocatorMatcher())->match('service'));
     }
@@ -32,7 +32,7 @@ class ServiceLocatorMatcherTest extends Unit
     /**
      * @return void
      */
-    public function testMatchShouldReturnFalseIfMethodNotStartsWithService()
+    public function testMatchShouldReturnFalseIfMethodNotStartsWithService(): void
     {
         $this->assertFalse((new ServiceLocatorMatcher())->match('locatorFoo'));
     }
@@ -40,7 +40,7 @@ class ServiceLocatorMatcherTest extends Unit
     /**
      * @return void
      */
-    public function testMatchShouldReturnFalseIfMethodNotStartsWithServiceButServiceInString()
+    public function testMatchShouldReturnFalseIfMethodNotStartsWithServiceButServiceInString(): void
     {
         $this->assertFalse((new ServiceLocatorMatcher())->match('locatorService'));
     }

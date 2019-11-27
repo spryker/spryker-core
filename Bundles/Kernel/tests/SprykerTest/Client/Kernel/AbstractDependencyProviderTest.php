@@ -25,7 +25,7 @@ class AbstractDependencyProviderTest extends Unit
     /**
      * @return void
      */
-    public function testCallProvideServiceLayerDependenciesMustReturnContainer()
+    public function testCallProvideServiceLayerDependenciesMustReturnContainer(): void
     {
         $container = new Container();
 
@@ -46,7 +46,7 @@ class AbstractDependencyProviderTest extends Unit
     /**
      * @return void
      */
-    public function testProvideServiceLayerDependencies()
+    public function testProvideServiceLayerDependencies(): void
     {
         $container = new Container();
         $abstractDependencyContainerMock = $this->getAbstractDependencyContainerMock();

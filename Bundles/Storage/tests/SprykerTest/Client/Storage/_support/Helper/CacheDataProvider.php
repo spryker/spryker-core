@@ -43,7 +43,7 @@ class CacheDataProvider
      *
      * @return array
      */
-    public function getTestCacheDataInput($testType)
+    public function getTestCacheDataInput(string $testType): array
     {
         $cacheData = [];
 
@@ -121,7 +121,7 @@ class CacheDataProvider
      *
      * @return array
      */
-    public function getExpectedOutputForReplaceStrategy($testType)
+    public function getExpectedOutputForReplaceStrategy(string $testType): array
     {
         $expectedOutput = [];
 
@@ -174,7 +174,7 @@ class CacheDataProvider
      *
      * @return array
      */
-    public function getExpectedOutputForIncrementalStrategy($testType)
+    public function getExpectedOutputForIncrementalStrategy(string $testType): array
     {
         $expectedOutput = [];
 
@@ -252,7 +252,7 @@ class CacheDataProvider
      *
      * @return array
      */
-    private function generateOverLimitCacheInput($testType)
+    private function generateOverLimitCacheInput(string $testType): array
     {
         $cache = [];
         $cacheSize = $this->storageClientConfigMock->getStorageCacheIncrementalStrategyKeySizeLimit();
@@ -303,7 +303,7 @@ class CacheDataProvider
      *
      * @return array
      */
-    private function generateOverLimitCacheOutput($testType)
+    private function generateOverLimitCacheOutput(string $testType): array
     {
         $cache = [];
         $cacheSize = $this->storageClientConfigMock->getStorageCacheIncrementalStrategyKeySizeLimit();

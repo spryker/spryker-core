@@ -33,7 +33,7 @@ class ProductOptionOrderSaverTest extends MockProvider
     /**
      * @return void
      */
-    public function testSaveOptionShouldPersistProvidedOptions()
+    public function testSaveOptionShouldPersistProvidedOptions(): void
     {
         $glossaryFacadeMock = $this->createGlossaryFacadeMock();
         $glossaryFacadeMock->method('hasTranslation')->willReturn(true);
@@ -46,7 +46,7 @@ class ProductOptionOrderSaverTest extends MockProvider
         $salesOrderItemOptionEntityMock
             ->expects($this->exactly(2))
             ->method('save')
-            ->willReturnCallback(function () use ($salesOrderItemOptionEntityMock) {
+            ->willReturnCallback(function () use ($salesOrderItemOptionEntityMock): void {
                 $salesOrderItemOptionEntityMock->setIdSalesOrderItemOption(1);
             });
 
