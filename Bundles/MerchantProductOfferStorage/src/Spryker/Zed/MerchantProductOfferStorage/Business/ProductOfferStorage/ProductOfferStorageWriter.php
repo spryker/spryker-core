@@ -21,11 +21,20 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     protected $productOfferFacade;
 
     /**
-     * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade
+     * @var array
      */
-    public function __construct(MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade)
-    {
+    protected $merchantProductOfferPublishPreCheckPlugins;
+
+    /**
+     * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade
+     * @param array $merchantProductOfferPublishPreCheckPlugins
+     */
+    public function __construct(
+        MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade,
+        array $merchantProductOfferPublishPreCheckPlugins
+    ) {
         $this->productOfferFacade = $productOfferFacade;
+        $this->merchantProductOfferPublishPreCheckPlugins = $merchantProductOfferPublishPreCheckPlugins;
     }
 
     /**
@@ -45,7 +54,11 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
                 ->findOneOrCreate();
             $productOfferStorageEntity->setData($this->createProductOfferStorageTransfer($productOfferTransfer)->modifiedToArray());
 
-            $productOfferStorageEntity->save();
+            if ($this->executeMerchantProductOfferPublishPreCheckPlugins($productOfferTransfer)) {
+                $productOfferStorageEntity->save();
+            } elseif (!$productOfferStorageEntity->isPrimaryKeyNull()) {
+                $productOfferStorageEntity->delete();
+            }
         }
     }
 
@@ -77,5 +90,22 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
         $productOfferStorageTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
 
         return $productOfferStorageTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return bool
+     */
+    protected function executeMerchantProductOfferPublishPreCheckPlugins(ProductOfferTransfer $productOfferTransfer): bool
+    {
+        /** @var \Spryker\Zed\MerchantProductofferStorageExtension\Dependency\Plugin\MerchantProductOfferPublishPreCheckPluginInterface $merchantProductOfferPublishPreCheckPlugin */
+        foreach ($this->merchantProductOfferPublishPreCheckPlugins as $merchantProductOfferPublishPreCheckPlugin) {
+            if (!$merchantProductOfferPublishPreCheckPlugin->isValid($productOfferTransfer)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

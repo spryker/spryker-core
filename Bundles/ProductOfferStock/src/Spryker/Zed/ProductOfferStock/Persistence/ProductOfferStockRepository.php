@@ -24,8 +24,7 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
      */
     public function findOne(
         ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaFilterTransfer
-    ): ?ProductOfferStockTransfer
-    {
+    ): ?ProductOfferStockTransfer {
         $productOfferStockEntity = $this->applyFilters(
             $this->getFactory()->createProductOfferStockPropelQuery(),
             $productOfferStockCriteriaFilterTransfer

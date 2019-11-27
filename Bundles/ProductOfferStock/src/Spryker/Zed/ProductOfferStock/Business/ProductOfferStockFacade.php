@@ -27,8 +27,7 @@ class ProductOfferStockFacade extends AbstractFacade implements ProductOfferStoc
      */
     public function isProductOfferNeverOutOfStock(
         ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaFilterTransfer
-    ): bool
-    {
+    ): bool {
         return $this->getFactory()
             ->createProductOfferStockReader()
             ->isProductOfferNeverOutOfStock($productOfferStockCriteriaFilterTransfer);

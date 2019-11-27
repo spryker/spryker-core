@@ -7,7 +7,9 @@
     "php": ">=7.2",
     "spryker/kernel": "^3.30.0",
     "spryker/product-offer": "^0.1.0",
-    "spryker/stock": "^7.0.0 || ^8.0.0"
+    "spryker/stock": "^7.0.0 || ^8.0.0",
+    "spryker/availability": "^9.0.0",
+    "spryker/merchant-product-offer-storage-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

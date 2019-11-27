@@ -35,8 +35,7 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
      */
     public function isProductOfferNeverOutOfStock(
         ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaFilterTransfer
-    ): bool
-    {
+    ): bool {
         $productOfferStockCriteriaFilterTransfer->requireFkProductOffer();
 
         $productOfferTransfer = $this->productOfferStockRepository->findOne($productOfferStockCriteriaFilterTransfer);
