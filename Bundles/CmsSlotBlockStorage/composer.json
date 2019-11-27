@@ -18,6 +18,7 @@
     "spryker/util-encoding": "^1.0.0 || ^2.0.0"
   },
   "require-dev": {
+    "spryker/cms-block": "*",
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
     "spryker/propel": "*",
