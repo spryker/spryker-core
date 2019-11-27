@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Container;
 
 class AvailabilityCartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const FACADE_AVAILABILITY = 'availability facade';
+    public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -34,9 +34,9 @@ class AvailabilityCartConnectorDependencyProvider extends AbstractBundleDependen
      */
     protected function addAvailabilityFacade(Container $container): Container
     {
-        $container[static::FACADE_AVAILABILITY] = function (Container $container) {
+        $container->set(static::FACADE_AVAILABILITY, function (Container $container) {
             return new AvailabilityCartConnectorToAvailabilityBridge($container->getLocator()->availability()->facade());
-        };
+        });
 
         return $container;
     }

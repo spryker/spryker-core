@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\ProductBundle\Business\Availability\PreCheck;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCheckoutAvailabilityCheck;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
 use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 use Spryker\Zed\ProductBundle\ProductBundleConfig;
@@ -88,13 +88,13 @@ class ProductBundleCheckoutAvailabilityCheckTest extends PreCheckMocks
     }
 
     /**
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityInterface|null $availabilityFacadeMock
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface|null $availabilityFacadeMock
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface|null $storeFacadeMock
      *
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
     protected function createProductBundleCheckoutAvailabilityCheckMock(
-        ?ProductBundleToAvailabilityInterface $availabilityFacadeMock = null,
+        ?ProductBundleToAvailabilityFacadeInterface $availabilityFacadeMock = null,
         ?ProductBundleToStoreFacadeInterface $storeFacadeMock = null
     ): MockObject {
         if ($availabilityFacadeMock === null) {
