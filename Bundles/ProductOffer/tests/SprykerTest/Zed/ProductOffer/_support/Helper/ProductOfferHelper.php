@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductOffer\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ProductOfferBuilder;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -33,6 +34,20 @@ class ProductOfferHelper extends Module
             ->facade()
             ->create($productOfferTransfer);
 
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productOfferTransfer) {
+            $this->getProductOfferQuery()
+                ->findByIdProductOffer($productOfferTransfer->getIdProductOffer())
+                ->delete();
+        });
+
         return $productOfferTransfer;
+    }
+
+    /**
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     */
+    public function getProductOfferQuery(): SpyProductOfferQuery
+    {
+        return SpyProductOfferQuery::create();
     }
 }

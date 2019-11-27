@@ -10,11 +10,11 @@ namespace Zed\ProductOfferStockDataImport\Communication\Plugin;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
-use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use Spryker\Zed\ProductOfferStockDataImport\Communication\ProductOfferStockDataImportPlugin;
 use Spryker\Zed\ProductOfferStockDataImport\ProductOfferStockDataImportConfig;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
 /**
  * Auto-generated group annotations
@@ -30,6 +30,8 @@ use Spryker\Zed\ProductOfferStockDataImport\ProductOfferStockDataImportConfig;
  */
 class ProductOfferStockDataImportPluginTest extends Unit
 {
+    use DataCleanupHelperTrait;
+
     protected const PRODUCT_OFFER_REFERENCE_VALUE = 'offer-1';
     protected const STOCK_NAME_VALUE = 'stock-name-1';
 
@@ -58,8 +60,11 @@ class ProductOfferStockDataImportPluginTest extends Unit
             TypeTransfer::NAME => static::STOCK_NAME_VALUE,
         ]);
 
+        $merchantTransfer = $this->tester->haveMerchant();
+
         $this->tester->haveProductOffer([
             ProductOfferTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_VALUE,
+            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
         ]);
 
         $dataImporterReaderConfigurationTransfer = (new DataImporterReaderConfigurationTransfer())
@@ -73,8 +78,12 @@ class ProductOfferStockDataImportPluginTest extends Unit
         $dataImporterReportTransfer = $productOfferStockDataImportPlugin->import($dataImportConfigurationTransfer);
 
         // Assert
-        $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
+        $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
         $this->tester->assertProductOfferStockDatabaseTablesContainsData();
+
+        $this->getDataCleanupHelper()->_addCleanup(function () {
+            $this->tester->ensureProductOfferStockTableIsEmpty();
+        });
     }
 
     /**
