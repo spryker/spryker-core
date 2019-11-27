@@ -98,22 +98,25 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
                 ->setCustomerReference($cartItemRequestTransfer->getCustomer()->getCustomerReference())
         );
 
-        $customerQuotes = $guestQuoteCollection->getQuotes();
+        $customerQuoteTransfers = $guestQuoteCollection->getQuotes();
 
-        if (!$customerQuotes->count() && $cartItemRequestTransfer->getQuoteUuid()) {
+        if (!$customerQuoteTransfers->count() && $cartItemRequestTransfer->getQuoteUuid()) {
             return $this->createCartNotFoundError();
         }
 
-        if (!$customerQuotes->count()) {
+        if (!$customerQuoteTransfers->count()) {
             return $this->createGuestQuote($cartItemRequestTransfer);
         }
 
-        $customerQuote = $this->findQuoteInQuoteCollection($customerQuotes, $cartItemRequestTransfer->getQuoteUuid());
-        if (!$customerQuote) {
+        $customerQuoteTransfer = $this->findQuoteInQuoteCollection(
+            $customerQuoteTransfers,
+            $cartItemRequestTransfer->getQuoteUuid()
+        );
+        if (!$customerQuoteTransfer) {
             return $this->createCartNotFoundError();
         }
 
-        $cartItemRequestTransfer->setQuoteUuid($customerQuote->getUuid());
+        $cartItemRequestTransfer->setQuoteUuid($customerQuoteTransfer->getUuid());
 
         return $this->addItem($cartItemRequestTransfer);
     }
@@ -180,20 +183,22 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
     }
 
     /**
-     * @param \ArrayObject $customerQuotes
+     * @param \ArrayObject $customerQuoteTransfers
      * @param string|null $quoteUuid
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
      */
-    protected function findQuoteInQuoteCollection(ArrayObject $customerQuotes, ?string $quoteUuid): ?QuoteTransfer
-    {
-        if (!$quoteUuid && isset($customerQuotes[0])) {
-            return $customerQuotes[0];
+    protected function findQuoteInQuoteCollection(
+        ArrayObject $customerQuoteTransfers,
+        ?string $quoteUuid
+    ): ?QuoteTransfer {
+        if (!$quoteUuid && isset($customerQuoteTransfers[0])) {
+            return $customerQuoteTransfers[0];
         }
 
-        foreach ($customerQuotes->getArrayCopy() as $customerQuote) {
-            if ($customerQuote->getUuid() === $quoteUuid) {
-                return $customerQuote;
+        foreach ($customerQuoteTransfers as $customerQuoteTransfer) {
+            if ($customerQuoteTransfer->getUuid() === $quoteUuid) {
+                return $customerQuoteTransfer;
             }
         }
 
