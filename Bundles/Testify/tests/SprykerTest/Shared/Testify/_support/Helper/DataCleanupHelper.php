@@ -47,7 +47,6 @@ class DataCleanupHelper extends Module
             try {
                 $cleanup();
             } catch (Exception $e) {
-                dd($e);
                 $this->debugSection('Cleanup Failure', $e->getMessage());
             }
         }
