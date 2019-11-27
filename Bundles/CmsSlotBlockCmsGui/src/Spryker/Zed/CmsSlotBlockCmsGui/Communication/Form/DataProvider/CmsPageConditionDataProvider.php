@@ -76,7 +76,7 @@ class CmsPageConditionDataProvider implements CmsPageConditionDataProviderInterf
     protected function getPages(): array
     {
         $cmsPageEntityCollection = $this->cmsQueryContainer
-            ->queryPagesByLocale($this->localeFacade->getCurrentLocale()->getIdLocale())
+            ->queryPagesWithTemplatesForSelectedLocale($this->localeFacade->getCurrentLocale()->getIdLocale())
             ->find();
 
         return $this->getCmsPageIdsFromCollection($cmsPageEntityCollection);

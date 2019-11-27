@@ -43,10 +43,10 @@ class CmsSlotBlockDataImportBusinessFactory extends DataImportBusinessFactory
         $dataSetStepBroker->addStep($this->createCmsSlotTemplatePathToCmsSlotTemplateIdStep());
         $dataSetStepBroker->addStep($this->createCmsSlotKeyToCmsSlotIdStep());
         $dataSetStepBroker->addStep($this->createCmsBlockKeyToCmsBlockIdStep());
-        $dataSetStepBroker->addStep($this->createCmsSlotBlockValidatorStep());
         $dataSetStepBroker->addStep($this->createCmsSlotBlockCategoryConditionsStep());
         $dataSetStepBroker->addStep($this->createCmsSlotBlockProductCategoryConditionsStep());
         $dataSetStepBroker->addStep($this->createCmsPageKeysToIdsConditionsStep());
+        $dataSetStepBroker->addStep($this->createCmsSlotBlockValidatorStep());
         $dataSetStepBroker->addStep($this->createCmsSlotBlockWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);

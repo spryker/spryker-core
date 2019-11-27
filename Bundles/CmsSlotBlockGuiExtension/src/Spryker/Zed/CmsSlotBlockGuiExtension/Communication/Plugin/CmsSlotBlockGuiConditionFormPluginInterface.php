@@ -26,7 +26,7 @@ interface CmsSlotBlockGuiConditionFormPluginInterface
 
     /**
      * Specification:
-     * - Expands form by a form or a form field.
+     * - Add form parts to the main form builder.
      *
      * @api
      *

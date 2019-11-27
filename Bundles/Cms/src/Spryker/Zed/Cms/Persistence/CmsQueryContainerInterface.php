@@ -337,13 +337,4 @@ interface CmsQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */
     public function queryUrlsWithRedirect(): SpyUrlQuery;
-
-    /**
-     * @api
-     *
-     * @param int $idLocale
-     *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
-     */
-    public function queryPagesByLocale(int $idLocale): SpyCmsPageQuery;
 }

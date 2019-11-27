@@ -6,14 +6,14 @@
  */
 namespace Spryker\Zed\CmsSlotBlockCmsGui\Dependency\QueryContainer;
 
-use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 interface CmsSlotBlockCmsGuiToCmsQueryContainerInterface
 {
     /**
      * @param int $idLocale
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function queryPagesByLocale(int $idLocale): SpyCmsPageQuery;
+    public function queryPagesWithTemplatesForSelectedLocale(int $idLocale): ModelCriteria;
 }

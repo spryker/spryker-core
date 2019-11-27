@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\CmsSlotBlock\Business\Validator;
 
+use Exception;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Shared\CmsSlotBlock\CmsSlotBlockConfig;
-use Spryker\Zed\CmsSlot\Business\Exception\MissingCmsSlotException;
 use Spryker\Zed\CmsSlotBlock\Dependency\Facade\CmsSlotBlockToCmsSlotFacadeInterface;
 
 class CmsSlotBlockValidator implements CmsSlotBlockValidatorInterface
@@ -70,7 +70,7 @@ class CmsSlotBlockValidator implements CmsSlotBlockValidatorInterface
 
         try {
             $cmsSlotTransfer = $this->cmsSlotFacade->getCmsSlotById($idCmsSlot);
-        } catch (MissingCmsSlotException $cmsSlotException) {
+        } catch (Exception $cmsSlotException) {
             return false;
         }
 

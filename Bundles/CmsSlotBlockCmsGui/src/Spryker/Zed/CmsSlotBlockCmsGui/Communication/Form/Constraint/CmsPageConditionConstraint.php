@@ -14,7 +14,7 @@ class CmsPageConditionConstraint extends Constraint
     /**
      * @var string
      */
-    protected const ERROR_MESSAGE = 'This value should not be blank.';
+    protected const ERROR_MESSAGE = 'At least one page should be specified.';
 
     /**
      * @return string

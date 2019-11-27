@@ -14,7 +14,7 @@ class CategoryConditionConstraint extends Constraint
     /**
      * @var string
      */
-    protected const ERROR_MESSAGE = 'This value should not be blank.';
+    protected const ERROR_MESSAGE = 'At least one category should be specified.';
 
     /**
      * @return string

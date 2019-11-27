@@ -14,7 +14,7 @@ interface CmsSlotBlockProductCategoryConnectorClientInterface
 {
     /**
      * Specification:
-     * - Returns true if CMS slot block condition is applicable.
+     * - Returns true if CmsSlotBlockTransfer.conditions has specific key.
      *
      * @api
      *
