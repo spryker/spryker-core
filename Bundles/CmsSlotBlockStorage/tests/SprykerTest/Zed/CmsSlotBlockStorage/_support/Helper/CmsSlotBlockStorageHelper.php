@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\CmsSlotBlockStorage\Helper;
 
 use Codeception\Module;
 use Generated\Shared\Transfer\SpyCmsSlotBlockStorageEntityTransfer;
+use Generated\Shared\Transfer\SpyCmsSlotToCmsSlotTemplateEntityTransfer;
+use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotToCmsSlotTemplate;
 use Orm\Zed\CmsSlotBlockStorage\Persistence\SpyCmsSlotBlockStorage;
 use Orm\Zed\CmsSlotBlockStorage\Persistence\SpyCmsSlotBlockStorageQuery;
 
@@ -39,6 +41,19 @@ class CmsSlotBlockStorageHelper extends Module
         $cmsSlotBlockStorageEntityTransfer->fromArray($cmsSlotBlockStorageEntity->toArray(), true);
 
         return $cmsSlotBlockStorageEntityTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyCmsSlotToCmsSlotTemplateEntityTransfer $cmsSlotToCmsSlotTemplateEntityTransfer
+     *
+     * @return void
+     */
+    public function haveCmsSlotToCmsSlotTemplateInDb(
+        SpyCmsSlotToCmsSlotTemplateEntityTransfer $cmsSlotToCmsSlotTemplateEntityTransfer
+    ): void {
+        $cmsSlotToCmsSlotTemplateEntity = new SpyCmsSlotToCmsSlotTemplate();
+        $cmsSlotToCmsSlotTemplateEntity->fromArray($cmsSlotToCmsSlotTemplateEntityTransfer->toArray());
+        $cmsSlotToCmsSlotTemplateEntity->save();
     }
 
     /**

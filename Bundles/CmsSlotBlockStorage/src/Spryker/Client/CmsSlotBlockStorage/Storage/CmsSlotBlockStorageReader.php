@@ -61,6 +61,10 @@ class CmsSlotBlockStorageReader implements CmsSlotBlockStorageReaderInterface
         $storageKey = $this->generateStorageKey($cmsSlotTemplatePath, $cmsSlotKey);
         $cmsSlotBlockStorageData = $this->storageClient->get($storageKey);
 
+        if (!$cmsSlotBlockStorageData) {
+            return new CmsSlotBlockCollectionTransfer();
+        }
+
         $cmsSlotBlockCollectionTransfer = new CmsSlotBlockCollectionTransfer();
         foreach ($cmsSlotBlockStorageData[CmsSlotBlockCollectionTransfer::CMS_SLOT_BLOCKS] as $cmsSlotBlock) {
             $cmsSlotBlockTransfer = (new CmsSlotBlockTransfer())

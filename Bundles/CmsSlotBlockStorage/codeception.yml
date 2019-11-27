@@ -2,6 +2,8 @@ namespace: SprykerTest
 actor: Tester
 
 include:
+    - tests/SprykerTest/Client/CmsSlotBlockStorage
+    - tests/SprykerTest/Service/CmsSlotBlockStorage
     - tests/SprykerTest/Zed/CmsSlotBlockStorage
 
 paths:

@@ -1,5 +1,9 @@
-namespace: CmsContentWidgetCmsBlockConnector
+namespace: SprykerTest
 actor: Tester
+
+include:
+  - tests/SprykerTest/Client/CmsSlotBlockCategoryConnector
+
 paths:
     tests: tests
     log: tests/_output
