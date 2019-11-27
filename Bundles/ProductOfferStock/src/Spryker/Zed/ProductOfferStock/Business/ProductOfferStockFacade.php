@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferStock\Business;
 
+use Generated\Shared\Transfer\ProductOfferStockCriteriaFilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -14,4 +15,19 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductOfferStockFacade extends AbstractFacade implements ProductOfferStockFacadeInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaFilterTransfer
+     *
+     * @return bool
+     */
+    public function isProductOfferNeverOutOfStock(ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaFilterTransfer): bool
+    {
+        return $this->getFactory()
+            ->createProductOfferStockReader()
+            ->isProductOfferNeverOutOfStock($productOfferStockCriteriaFilterTransfer);
+    }
 }

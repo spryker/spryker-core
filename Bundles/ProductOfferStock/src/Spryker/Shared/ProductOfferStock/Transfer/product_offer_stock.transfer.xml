@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ProductOfferStock">
+        <property name="idProductOfferStock" type="int"/>
+        <property name="fkProductOffer" type="int"/>
+        <property name="fkStock" type="int"/>
+        <property name="quantity" type="float"/>
+        <property name="isNeverOutOfStock" type="boolean"/>
+    </transfer>
+
+    <transfer name="ProductOfferStockCriteriaFilter">
+        <property name="fkProductOffer" type="int"/>
+    </transfer>
+
+</transfers>

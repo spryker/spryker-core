@@ -7,6 +7,19 @@
 
 namespace Spryker\Zed\ProductOfferStock\Business;
 
+use Generated\Shared\Transfer\ProductOfferStockCriteriaFilterTransfer;
+
 interface ProductOfferStockFacadeInterface
 {
+    /**
+     * Specification:
+     * - Returns is product offer is never out of stock by ProductOfferStockCriteriaFilterTransfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaTransfer
+     *
+     * @return bool
+     */
+    public function isProductOfferNeverOutOfStock(ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaTransfer): bool;
 }

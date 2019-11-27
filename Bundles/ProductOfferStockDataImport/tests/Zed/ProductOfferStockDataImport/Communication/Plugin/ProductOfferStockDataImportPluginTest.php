@@ -53,6 +53,18 @@ class ProductOfferStockDataImportPluginTest extends Unit
     /**
      * @return void
      */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->getDataCleanupHelper()->_addCleanup(function () {
+            $this->tester->ensureProductOfferStockTableIsEmpty();
+        });
+    }
+
+    /**
+     * @return void
+     */
     public function testImportImportsData(): void
     {
         // Arrange
@@ -80,10 +92,6 @@ class ProductOfferStockDataImportPluginTest extends Unit
         // Assert
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
         $this->tester->assertProductOfferStockDatabaseTablesContainsData();
-
-        $this->getDataCleanupHelper()->_addCleanup(function () {
-            $this->tester->ensureProductOfferStockTableIsEmpty();
-        });
     }
 
     /**
