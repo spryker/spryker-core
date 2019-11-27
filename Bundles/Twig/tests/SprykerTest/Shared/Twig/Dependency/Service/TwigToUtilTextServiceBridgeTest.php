@@ -30,7 +30,7 @@ class TwigToUtilTextServiceBridgeTest extends Unit
     /**
      * @return void
      */
-    public function testCamelCaseToDashReturnConvertedString()
+    public function testCamelCaseToDashReturnConvertedString(): void
     {
         $utilTextService = new UtilTextService();
         $twigToUtilTextBridge = new TwigToUtilTextServiceBridge($utilTextService);

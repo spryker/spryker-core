@@ -34,7 +34,7 @@ class PersistenceManager implements PersistenceManagerInterface
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
-    public function getStateEntity($stateName)
+    protected function getStateEntity($stateName)
     {
         $stateEntity = SpyOmsOrderItemStateQuery::create()->findOneByName($stateName);
 

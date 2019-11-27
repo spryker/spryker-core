@@ -44,7 +44,7 @@ class TriggerTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testTriggerForNewItemShouldExecutedSMAndPersistNewItem()
+    public function testTriggerForNewItemShouldExecutedSMAndPersistNewItem(): void
     {
         $stateMachinePersistenceMock = $this->createPersistenceMock();
         $stateMachinePersistenceMock->expects($this->once())
@@ -101,7 +101,7 @@ class TriggerTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testTriggerEventShouldTriggerSmForGiveItems()
+    public function testTriggerEventShouldTriggerSmForGiveItems(): void
     {
         $stateMachinePersistenceMock = $this->createTriggerPersistenceMock();
         $finderMock = $this->createTrigerFinderMock();
@@ -116,7 +116,9 @@ class TriggerTest extends StateMachineMocks
         );
 
         $stateMachineItemTransfer = $this->createTriggerStateMachineItem();
-        $stateMachineItems[] = $stateMachineItemTransfer;
+        $stateMachineItems = [
+            $stateMachineItemTransfer,
+        ];
 
         $affectedItems = $trigger->triggerEvent(
             'event',
@@ -129,7 +131,7 @@ class TriggerTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testTriggerConditionsWithoutEventShouldExecuteConditionCheckAndTriggerEvents()
+    public function testTriggerConditionsWithoutEventShouldExecuteConditionCheckAndTriggerEvents(): void
     {
         $stateMachinePersistenceMock = $this->createTriggerPersistenceMock();
         $finderMock = $this->createTrigerFinderMock();
@@ -155,7 +157,7 @@ class TriggerTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testTriggerForTimeoutExpiredItemsShouldExecuteSMOnItemsWithExpiredTimeout()
+    public function testTriggerForTimeoutExpiredItemsShouldExecuteSMOnItemsWithExpiredTimeout(): void
     {
         $stateMachinePersistenceMock = $this->createTriggerPersistenceMock();
         $finderMock = $this->createTrigerFinderMock();
@@ -181,7 +183,7 @@ class TriggerTest extends StateMachineMocks
     /**
      * @return void
      */
-    public function testTriggerShouldLogTransitionsForTriggerEvent()
+    public function testTriggerShouldLogTransitionsForTriggerEvent(): void
     {
         $stateMachinePersistenceMock = $this->createTriggerPersistenceMock();
         $finderMock = $this->createTrigerFinderMock();
@@ -197,7 +199,9 @@ class TriggerTest extends StateMachineMocks
             $conditionMock
         );
 
-        $stateMachineItems[] = $this->createTriggerStateMachineItem();
+        $stateMachineItems = [
+            $this->createTriggerStateMachineItem(),
+        ];
 
         $trigger->triggerEvent(
             'event',
@@ -208,7 +212,7 @@ class TriggerTest extends StateMachineMocks
     /**
      * @return \Spryker\Zed\StateMachine\Business\Process\Process[]
      */
-    protected function createProcesses()
+    protected function createProcesses(): array
     {
         $processes = [];
         $process = new Process();
@@ -241,7 +245,7 @@ class TriggerTest extends StateMachineMocks
     /**
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    protected function createStateMachineItems()
+    protected function createStateMachineItems(): array
     {
         $items = [];
 
@@ -272,7 +276,7 @@ class TriggerTest extends StateMachineMocks
         ?ConditionInterface $conditionMock = null,
         ?StateUpdaterInterface $stateUpdaterMock = null,
         ?HandlerResolverInterface $handlerResolverMock = null
-    ) {
+    ): Trigger {
         if ($transitionLogMock === null) {
             $transitionLogMock = $this->createTransitionLogMock();
         }
@@ -388,7 +392,7 @@ class TriggerTest extends StateMachineMocks
     /**
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer
      */
-    protected function createTriggerStateMachineItem()
+    protected function createTriggerStateMachineItem(): StateMachineItemTransfer
     {
         $stateMachineItemTransfer = new StateMachineItemTransfer();
         $stateMachineItemTransfer->setIdentifier(1);

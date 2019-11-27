@@ -30,7 +30,7 @@ class TransferBusinessFactoryTest extends Unit
     /**
      * @return \Spryker\Zed\Transfer\Business\TransferBusinessFactory
      */
-    private function getFactory()
+    private function getFactory(): TransferBusinessFactory
     {
         return new TransferBusinessFactory();
     }
@@ -46,7 +46,7 @@ class TransferBusinessFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateTransferGeneratorShouldReturnFullyConfiguredInstance()
+    public function testCreateTransferGeneratorShouldReturnFullyConfiguredInstance(): void
     {
         $transferGenerator = $this->getFactory()->createTransferGenerator(
             $this->getMessenger()
@@ -58,7 +58,7 @@ class TransferBusinessFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateTransferCleanerShouldReturnFullyConfiguredInstance()
+    public function testCreateTransferCleanerShouldReturnFullyConfiguredInstance(): void
     {
         $transferCleaner = $this->getFactory()->createTransferCleaner();
 
@@ -68,7 +68,7 @@ class TransferBusinessFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateTransferValidatorShouldReturnFullyConfiguredInstance()
+    public function testCreateTransferValidatorShouldReturnFullyConfiguredInstance(): void
     {
         $transferCleaner = $this->getFactory()->createValidator($this->getMessenger());
 

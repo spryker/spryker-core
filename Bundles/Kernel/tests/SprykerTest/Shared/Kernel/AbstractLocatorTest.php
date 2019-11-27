@@ -24,7 +24,7 @@ class AbstractLocatorTest extends Unit
     /**
      * @return void
      */
-    public function testCreateInstanceShouldThrowExceptionIfApplicationNotDefined()
+    public function testCreateInstanceShouldThrowExceptionIfApplicationNotDefined(): void
     {
         $this->expectException('\Exception');
 
@@ -34,7 +34,7 @@ class AbstractLocatorTest extends Unit
     /**
      * @return void
      */
-    public function testCanCreateShouldThrowException()
+    public function testCanCreateShouldThrowException(): void
     {
         $this->expectException('\Exception');
 

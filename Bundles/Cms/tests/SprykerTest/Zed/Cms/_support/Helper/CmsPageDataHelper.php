@@ -12,6 +12,7 @@ use Generated\Shared\DataBuilder\CmsPageAttributesBuilder;
 use Generated\Shared\DataBuilder\CmsPageBuilder;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Spryker\Zed\Cms\Business\CmsFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -25,7 +26,7 @@ class CmsPageDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CmsPageTransfer
      */
-    public function haveCmsPage(array $seedData = [])
+    public function haveCmsPage(array $seedData = []): CmsPageTransfer
     {
         $cmsPageTransfer = $this->generateLocalizedCmsPageTransfer($seedData);
 
@@ -33,7 +34,7 @@ class CmsPageDataHelper extends Module
 
         $idCmsPage = $this->getCmsFacade()->createPage($cmsPageTransfer);
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($idCmsPage) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($idCmsPage): void {
             $this->cleanupCmsPage($idCmsPage);
         });
 
@@ -45,7 +46,7 @@ class CmsPageDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CmsPageTransfer
      */
-    protected function generateLocalizedCmsPageTransfer(array $seedData = [])
+    protected function generateLocalizedCmsPageTransfer(array $seedData = []): CmsPageTransfer
     {
         $cmsPageTransfer = (new CmsPageBuilder($seedData))->build();
 
@@ -76,7 +77,7 @@ class CmsPageDataHelper extends Module
     /**
      * @return \Spryker\Zed\Cms\Business\CmsFacadeInterface
      */
-    protected function getCmsFacade()
+    protected function getCmsFacade(): CmsFacadeInterface
     {
         return $this->getLocator()->cms()->facade();
     }
@@ -86,7 +87,7 @@ class CmsPageDataHelper extends Module
      *
      * @return void
      */
-    protected function cleanupCmsPage($idCmsPage)
+    protected function cleanupCmsPage(int $idCmsPage): void
     {
         $this->getCmsFacade()->deletePageById($idCmsPage);
     }

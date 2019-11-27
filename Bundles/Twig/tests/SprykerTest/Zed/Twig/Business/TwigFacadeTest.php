@@ -28,7 +28,7 @@ class TwigFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testWarmUpCacheDelegatesToCacheWarmerModel()
+    public function testWarmUpCacheDelegatesToCacheWarmerModel(): void
     {
         $factoryMock = $this->getFactoryMock();
         $twigFacade = new TwigFacade();

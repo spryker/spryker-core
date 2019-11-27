@@ -28,7 +28,7 @@ class ProductPageSearchBusinessFactoryMock extends ProductPageSearchBusinessFact
     /**
      * @return \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface
      */
-    public function getSearchFacade()
+    public function getSearchFacade(): ProductPageSearchToSearchInterface
     {
         return $this->searchFacadeMock;
     }

@@ -33,7 +33,7 @@ class AssertionTest extends Unit
      *
      * @return void
      */
-    public function testAssertNumeric($value, $isValid)
+    public function testAssertNumeric($value, bool $isValid): void
     {
         $this->doTest($value, $isValid, 'assertNumeric');
     }
@@ -41,7 +41,7 @@ class AssertionTest extends Unit
     /**
      * @return array
      */
-    public function numeric()
+    public function numeric(): array
     {
         return [
             [0, true],
@@ -63,7 +63,7 @@ class AssertionTest extends Unit
      *
      * @return void
      */
-    public function testAssertNumericNotZero($value, $isValid)
+    public function testAssertNumericNotZero($value, bool $isValid): void
     {
         $this->doTest($value, $isValid, 'assertNumericNotZero');
     }
@@ -71,7 +71,7 @@ class AssertionTest extends Unit
     /**
      * @return array
      */
-    public function numericNotZero()
+    public function numericNotZero(): array
     {
         return [
             [0, false],
@@ -93,7 +93,7 @@ class AssertionTest extends Unit
      *
      * @return void
      */
-    public function testAssertAlphaNumeric($value, $isValid)
+    public function testAssertAlphaNumeric($value, bool $isValid): void
     {
         $this->doTest($value, $isValid, 'assertAlphaNumeric');
     }
@@ -101,7 +101,7 @@ class AssertionTest extends Unit
     /**
      * @return array
      */
-    public function alphaNumeric()
+    public function alphaNumeric(): array
     {
         return [
             [0, false],
@@ -127,7 +127,7 @@ class AssertionTest extends Unit
      *
      * @return void
      */
-    public function testAssertAlpha($value, $isValid)
+    public function testAssertAlpha($value, bool $isValid): void
     {
         $this->doTest($value, $isValid, 'assertAlpha');
     }
@@ -135,7 +135,7 @@ class AssertionTest extends Unit
     /**
      * @return array
      */
-    public function alpha()
+    public function alpha(): array
     {
         return [
             [0, false],
@@ -155,7 +155,7 @@ class AssertionTest extends Unit
      *
      * @return void
      */
-    private function doTest($value, $isValid, $method)
+    private function doTest($value, bool $isValid, string $method): void
     {
         if (!$isValid) {
             $this->expectException(InvalidArgumentException::class);

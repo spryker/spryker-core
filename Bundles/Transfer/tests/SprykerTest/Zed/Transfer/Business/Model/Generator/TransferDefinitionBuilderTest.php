@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Transfer\Business\Model\Generator;
 use Codeception\Test\Unit;
 use InvalidArgumentException;
 use Spryker\Zed\Transfer\Business\Model\Generator\ClassDefinition;
+use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface;
 use Spryker\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionBuilder;
 use Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder;
@@ -34,7 +35,7 @@ class TransferDefinitionBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testBuildTransferDefinitionShouldReturnArrayWithClassDefinitions()
+    public function testBuildTransferDefinitionShouldReturnArrayWithClassDefinitions(): void
     {
         $directories = [
             codecept_data_dir('Builder/'),
@@ -52,7 +53,7 @@ class TransferDefinitionBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testBuildTransferDefinitionWithStrictnessError()
+    public function testBuildTransferDefinitionWithStrictnessError(): void
     {
         $sourceDirectories = [
             codecept_data_dir('Shared/Error/Transfer/'),
@@ -73,7 +74,7 @@ class TransferDefinitionBuilderTest extends Unit
      *
      * @return \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface
      */
-    protected function getTransferDefinitionBuilder($sourceDirectories, ?TransferConfig $config = null)
+    protected function getTransferDefinitionBuilder(array $sourceDirectories, ?TransferConfig $config = null): DefinitionBuilderInterface
     {
         $finder = new TransferDefinitionFinder($sourceDirectories);
         $normalizer = new DefinitionNormalizer();

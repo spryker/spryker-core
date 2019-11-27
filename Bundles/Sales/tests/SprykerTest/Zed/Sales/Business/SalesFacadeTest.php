@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 
 /**
@@ -32,10 +33,6 @@ class SalesFacadeTest extends Unit
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
     protected const DEFAULT_ITEM_STATE = 'test';
 
-    protected const ORDER_SEARCH_PARAMS = [
-        'orderReference' => '123',
-        'customerReference' => 'testing-customer',
-    ];
     protected const ORDER_WRONG_SEARCH_PARAMS = [
         'orderReference' => '123_wrong',
         'customerReference' => 'testing-customer-wrong',
@@ -49,7 +46,7 @@ class SalesFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetOrderByIdSalesOrderShouldReturnOrderTransferWithOrderDataAndTotals()
+    public function testGetOrderByIdSalesOrderShouldReturnOrderTransferWithOrderDataAndTotals(): void
     {
         $productTransfer = $this->tester->haveProduct();
         $this->tester->haveProductInStock([StockProductTransfer::SKU => $productTransfer->getSku()]);
@@ -82,7 +79,7 @@ class SalesFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetOrderByIdSalesOrderWhenGuestCustomerShouldNotCountOrders()
+    public function testGetOrderByIdSalesOrderWhenGuestCustomerShouldNotCountOrders(): void
     {
         $productTransfer = $this->tester->haveProduct();
         $this->tester->haveProductInStock([StockProductTransfer::SKU => $productTransfer->getSku()]);
@@ -102,7 +99,7 @@ class SalesFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCustomerOrderShouldReturnListOfCustomerPlacedOrders()
+    public function testCustomerOrderShouldReturnListOfCustomerPlacedOrders(): void
     {
         $salesOrderEntity = $this->tester->create();
 
@@ -122,14 +119,19 @@ class SalesFacadeTest extends Unit
      */
     public function testGetCustomerOrderByOrderReference(): void
     {
-        $orderEntity = $this->tester->create();
-
+        //Arrange
+        $orderEntity = $this->tester->haveSalesOrderEntity();
         $salesFacade = $this->createSalesFacade();
 
+        //Act
         $order = $salesFacade->getCustomerOrderByOrderReference(
-            $this->createOrderTransferWithParams(static::ORDER_SEARCH_PARAMS)
+            $this->createOrderTransferWithParams([
+                OrderTransfer::ORDER_REFERENCE => $orderEntity->getOrderReference(),
+                OrderTransfer::CUSTOMER_REFERENCE => $orderEntity->getCustomerReference(),
+            ])
         );
 
+        //Assert
         $this->assertNotNull($order);
         $this->assertSame($orderEntity->getIdSalesOrder(), $order->getIdSalesOrder());
     }
@@ -151,7 +153,7 @@ class SalesFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Sales\Business\SalesFacadeInterface
      */
-    protected function createSalesFacade()
+    protected function createSalesFacade(): SalesFacadeInterface
     {
         return $this->tester->getLocator()->sales()->facade();
     }

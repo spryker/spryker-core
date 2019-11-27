@@ -70,7 +70,7 @@ class QuoteRequestBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer
      */
-    public function createCompanyUser(CustomerTransfer $customerTransfer)
+    public function createCompanyUser(CustomerTransfer $customerTransfer): CompanyUserTransfer
     {
         $companyTransfer = $this->createCompany();
         $companyBusinessUnit = $this->createCompanyBusinessUnit($companyTransfer);
@@ -88,7 +88,7 @@ class QuoteRequestBusinessTester extends Actor
     /**
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */
-    public function createCompany()
+    public function createCompany(): CompanyTransfer
     {
         return $this->haveCompany(
             [
@@ -105,7 +105,7 @@ class QuoteRequestBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
-    public function createCompanyBusinessUnit($companyTransfer)
+    public function createCompanyBusinessUnit(CompanyTransfer $companyTransfer): CompanyBusinessUnitTransfer
     {
         return $this->haveCompanyBusinessUnit(
             [

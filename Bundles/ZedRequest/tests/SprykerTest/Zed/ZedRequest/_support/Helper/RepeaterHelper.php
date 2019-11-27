@@ -29,7 +29,7 @@ class RepeaterHelper extends Module
      *
      * @return void
      */
-    public function _before(TestInterface $test)
+    public function _before(TestInterface $test): void
     {
         $this->cleanupFixtureDirectory();
 
@@ -43,7 +43,7 @@ class RepeaterHelper extends Module
      *
      * @return void
      */
-    private function setConfig($key, $value)
+    private function setConfig(string $key, $value): void
     {
         $this->getConfigHelper()->setConfig($key, $value);
     }
@@ -59,7 +59,7 @@ class RepeaterHelper extends Module
     /**
      * @return void
      */
-    private function cleanupFixtureDirectory()
+    private function cleanupFixtureDirectory(): void
     {
         $fixtureDirectory = $this->getPathToYvesRequestRepeatData();
         $filesystem = new Filesystem();
@@ -71,7 +71,7 @@ class RepeaterHelper extends Module
     /**
      * @return string
      */
-    private function getPathToYvesRequestRepeatData()
+    private function getPathToYvesRequestRepeatData(): string
     {
         $pathToYvesRequestRepeatData = Configuration::dataDir() . 'Fixtures' . DIRECTORY_SEPARATOR;
 
@@ -81,7 +81,7 @@ class RepeaterHelper extends Module
     /**
      * @return string
      */
-    public function getDefaultFileName()
+    public function getDefaultFileName(): string
     {
         $defaultFileName = $this->getPathToYvesRequestRepeatData() . $this->getConfig()->getYvesRequestRepeatDataFileName();
 
@@ -91,7 +91,7 @@ class RepeaterHelper extends Module
     /**
      * @return \Spryker\Zed\ZedRequest\ZedRequestConfig
      */
-    private function getConfig()
+    private function getConfig(): ZedRequestConfig
     {
         return new ZedRequestConfig();
     }
@@ -101,7 +101,7 @@ class RepeaterHelper extends Module
      *
      * @return string
      */
-    public function getFileNameWithBundleControllerAction()
+    public function getFileNameWithBundleControllerAction(): string
     {
         $bundleControllerAction = $this->getBundleControllerAction();
 
@@ -113,7 +113,7 @@ class RepeaterHelper extends Module
     /**
      * @return string
      */
-    public function getBundleControllerAction()
+    public function getBundleControllerAction(): string
     {
         $mvc = implode('_', [
             static::BUNDLE,
@@ -127,7 +127,7 @@ class RepeaterHelper extends Module
     /**
      * @return \Spryker\Shared\ZedRequest\Client\AbstractRequest
      */
-    public function getTransferRequest()
+    public function getTransferRequest(): AbstractRequest
     {
         /** @var \Spryker\Shared\ZedRequest\Client\AbstractRequest $request */
         $request = Stub::make(AbstractRequest::class);
@@ -138,7 +138,7 @@ class RepeaterHelper extends Module
     /**
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    public function getHttpRequest()
+    public function getHttpRequest(): Request
     {
         $httpRequest = new Request();
         $httpRequest->attributes->set(static::BUNDLE, static::BUNDLE);
