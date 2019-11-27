@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
 
-use Generated\Shared\Transfer\ProductConcreteTransfer;
-
 class ProductPackagingUnitToProductFacadeBridge implements ProductPackagingUnitToProductFacadeInterface
 {
     /**
@@ -29,7 +27,7 @@ class ProductPackagingUnitToProductFacadeBridge implements ProductPackagingUnitT
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function findProductConcreteById(int $idProduct): ?ProductConcreteTransfer
+    public function findProductConcreteById($idProduct)
     {
         return $this->productFacade->findProductConcreteById($idProduct);
     }
@@ -39,7 +37,7 @@ class ProductPackagingUnitToProductFacadeBridge implements ProductPackagingUnitT
      *
      * @return int|null
      */
-    public function findProductConcreteIdBySku(string $sku): ?int
+    public function findProductConcreteIdBySku($sku)
     {
         return $this->productFacade->findProductConcreteIdBySku($sku);
     }
