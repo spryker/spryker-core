@@ -13,7 +13,7 @@ interface ProductOfferStockFacadeInterface
 {
     /**
      * Specification:
-     * - Returns is product offer is never out of stock by ProductOfferStockCriteriaFilterTransfer
+     * - Returns is product offer is never out of stock by fkProductOffer in ProductOfferStockCriteriaFilterTransfer
      *
      * @api
      *
@@ -21,5 +21,7 @@ interface ProductOfferStockFacadeInterface
      *
      * @return bool
      */
-    public function isProductOfferNeverOutOfStock(ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaTransfer): bool;
+    public function isProductOfferNeverOutOfStock(
+        ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaTransfer
+    ): bool;
 }

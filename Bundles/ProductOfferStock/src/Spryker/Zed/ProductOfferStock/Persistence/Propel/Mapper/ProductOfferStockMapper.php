@@ -21,8 +21,7 @@ class ProductOfferStockMapper implements ProductOfferStockMapperInterface
     public function mapProductOfferStockEntityToProductOfferStockTransfer(
         SpyProductOfferStock $productOfferStockEntity,
         ProductOfferStockTransfer $productOfferStockTransfer
-    ): ProductOfferStockTransfer
-    {
+    ): ProductOfferStockTransfer {
         $productOfferStockTransfer->fromArray($productOfferStockEntity->toArray(), true);
 
         return $productOfferStockTransfer;

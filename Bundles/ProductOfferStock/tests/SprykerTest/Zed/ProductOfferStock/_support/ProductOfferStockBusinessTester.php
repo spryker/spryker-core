@@ -34,6 +34,7 @@ class ProductOfferStockBusinessTester extends Actor
    /**
     * Define custom actions here
     */
+
     /**
      * @return void
      */

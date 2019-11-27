@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductOfferStock\Business\ProductOfferStock;
@@ -19,8 +19,6 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
     protected $productOfferStockRepository;
 
     /**
-     * ProductOfferStockReader constructor.
-     *
      * @param \Spryker\Zed\ProductOfferStock\Persistence\ProductOfferStockRepositoryInterface $productOfferStockRepository
      */
     public function __construct(ProductOfferStockRepositoryInterface $productOfferStockRepository)
@@ -31,11 +29,13 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaFilterTransfer
      *
-     * @return bool
-     *
      * @throws \Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferStockNotFoundException
+     *
+     * @return bool
      */
-    public function isProductOfferNeverOutOfStock(ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaFilterTransfer): bool
+    public function isProductOfferNeverOutOfStock(
+        ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaFilterTransfer
+    ): bool
     {
         $productOfferStockCriteriaFilterTransfer->requireFkProductOffer();
 
