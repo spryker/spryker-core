@@ -14,7 +14,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Service\\Barcode\\Helper\\": "tests/SprykerTest/Service/Barcode/_support/Helper/"
     }
   },
   "autoload-dev": {

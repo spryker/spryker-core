@@ -45,7 +45,7 @@ class ProductImageCartPluginTest extends Unit
     /**
      * @return void
      */
-    public function testPluginExpandsCartItemWithImages()
+    public function testPluginExpandsCartItemWithImages(): void
     {
         $productTransfer = new ProductConcreteTransfer();
         $productTransfer->setIdProductConcrete(66);

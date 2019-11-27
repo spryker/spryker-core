@@ -46,7 +46,7 @@ class BuilderTest extends Unit
      *
      * @return void
      */
-    public function testInstantiationWithoutXmlFolder()
+    public function testInstantiationWithoutXmlFolder(): void
     {
         $eventMock = $this->getEventMock();
         $stateMock = $this->getStateMock();
@@ -60,7 +60,7 @@ class BuilderTest extends Unit
     /**
      * @return void
      */
-    public function testInstantiationWithXmlFolderAsString()
+    public function testInstantiationWithXmlFolderAsString(): void
     {
         $eventMock = $this->getEventMock();
         $stateMock = $this->getStateMock();
@@ -74,7 +74,7 @@ class BuilderTest extends Unit
     /**
      * @return void
      */
-    public function testInstantiationWithXmlFolderAsArray()
+    public function testInstantiationWithXmlFolderAsArray(): void
     {
         $eventMock = $this->getEventMock();
         $stateMock = $this->getStateMock();
@@ -88,7 +88,7 @@ class BuilderTest extends Unit
     /**
      * @return void
      */
-    public function testGetProcessShouldThrowExceptionWhenProcessFoundInMoreThenOneLocation()
+    public function testGetProcessShouldThrowExceptionWhenProcessFoundInMoreThenOneLocation(): void
     {
         $eventMock = $this->getEventMock();
         $stateMock = $this->getStateMock();
@@ -106,7 +106,7 @@ class BuilderTest extends Unit
     /**
      * @return void
      */
-    public function testGetProcessShouldThrowExceptionWhenNoProcessFound()
+    public function testGetProcessShouldThrowExceptionWhenNoProcessFound(): void
     {
         $eventMock = $this->getEventMock();
         $stateMock = $this->getStateMock();
@@ -122,7 +122,7 @@ class BuilderTest extends Unit
     /**
      * @return void
      */
-    public function testGetProcess()
+    public function testGetProcess(): void
     {
         $eventMock = $this->getEventMock();
         $stateMock = $this->getStateMock();
@@ -162,7 +162,7 @@ class BuilderTest extends Unit
     /**
      * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface
      */
-    private function getProcess()
+    private function getProcess(): ProcessInterface
     {
         $drawerMock = $this->getDrawerMock();
 
@@ -180,7 +180,7 @@ class BuilderTest extends Unit
     /**
      * @return string
      */
-    private function getProcessLocationA()
+    private function getProcessLocationA(): string
     {
         return __DIR__ . '/Builder/Fixtures/DefinitionLocationA';
     }
@@ -188,7 +188,7 @@ class BuilderTest extends Unit
     /**
      * @return string
      */
-    private function getProcessLocationB()
+    private function getProcessLocationB(): string
     {
         return __DIR__ . '/Builder/Fixtures/DefinitionLocationB';
     }

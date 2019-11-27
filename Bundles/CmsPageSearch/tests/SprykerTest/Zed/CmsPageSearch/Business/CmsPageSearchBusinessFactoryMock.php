@@ -28,7 +28,7 @@ class CmsPageSearchBusinessFactoryMock extends CmsPageSearchBusinessFactory
     /**
      * @return \Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToSearchInterface
      */
-    public function getSearchFacade()
+    public function getSearchFacade(): CmsPageSearchToSearchInterface
     {
         return $this->searchFacadeMock;
     }

@@ -36,6 +36,7 @@ class AbstractEntityTransfer extends AbstractTransfer implements EntityTransferI
         foreach ($data as $property => $value) {
             if ($this->hasProperty($property, $acceptVirtualProperties) === false) {
                 $this->virtualProperties[$property] = $value;
+
                 continue;
             }
 

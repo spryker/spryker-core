@@ -34,7 +34,7 @@ class ProductReviewSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductReviewSearchListenerStoreData()
+    public function testProductReviewSearchListenerStoreData(): void
     {
         SpyProductReviewSearchQuery::create()->filterByFkProductReview(1)->delete();
         $beforeCount = SpyProductReviewSearchQuery::create()->count();
@@ -54,7 +54,7 @@ class ProductReviewSearchListenerTest extends Unit
     /**
      * @return \Spryker\Zed\ProductReviewSearch\Business\ProductReviewSearchFacade
      */
-    protected function getProductReviewSearchFacade()
+    protected function getProductReviewSearchFacade(): ProductReviewSearchFacade
     {
         $factory = new ProductReviewSearchBusinessFactory();
         $factory->setConfig(new ProductReviewSearchConfigMock());
@@ -70,7 +70,7 @@ class ProductReviewSearchListenerTest extends Unit
      *
      * @return void
      */
-    protected function assertProductReviewSearch($beforeCount)
+    protected function assertProductReviewSearch(int $beforeCount): void
     {
         $productSetStorageCount = SpyProductReviewSearchQuery::create()->count();
         $this->assertGreaterThan($beforeCount, $productSetStorageCount);

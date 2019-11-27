@@ -28,7 +28,7 @@ class TestResourceWithGetCollectionController
      *
      * @return void
      */
-    public function getAction()
+    public function getAction(): void
     {
     }
 }

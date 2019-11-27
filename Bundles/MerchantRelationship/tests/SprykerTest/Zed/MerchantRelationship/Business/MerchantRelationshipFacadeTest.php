@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Business\MerchantRelationship;
 
 use Codeception\Test\Unit;
+use Exception;
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
@@ -53,8 +54,6 @@ class MerchantRelationshipFacadeTest extends Unit
     }
 
     /**
-     * @expectedException \Exception
-     *
      * @return void
      */
     public function testCreateMerchantRelationshipWithNotUniqueKeyThrowsException(): void
@@ -63,6 +62,8 @@ class MerchantRelationshipFacadeTest extends Unit
         $merchantRelationshipTransfer = $this->tester->createMerchantRelationship(static::MR_KEY_TEST);
         $newMerchantRelationshipTransfer = clone $merchantRelationshipTransfer;
         $newMerchantRelationshipTransfer->setIdMerchantRelationship(null);
+
+        $this->expectException(Exception::class);
 
         // Action
         $this->tester->getFacade()
@@ -187,8 +188,7 @@ class MerchantRelationshipFacadeTest extends Unit
             ->getMerchantRelationshipById($merchantRelationship);
 
         // Assert
-        $this->assertNotNull($actualMerchantRelationship->getIdMerchantRelationship());
-        $this->assertEquals($expectedMerchantRelationship->toArray(), $actualMerchantRelationship->toArray());
+        $this->assertEquals($expectedMerchantRelationship->getIdMerchantRelationship(), $actualMerchantRelationship->getIdMerchantRelationship());
     }
 
     /**
