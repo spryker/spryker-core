@@ -361,20 +361,33 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected function addFirewall(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_FIREWALL, function (ContainerInterface $container) {
-            if ($container->has(static::SERVICE_VALIDATOR)) {
-                $container->set('security.validator.user_password_validator', function (ContainerInterface $container) {
-                    return new UserPasswordValidator($container->get(static::SERVICE_SECURITY_TOKEN_STORAGE), $container->get(static::SERVICE_SECURITY_ENCODER_FACTORY));
-                });
-                $container->set('validator.validator_service_ids', array_merge(
-                    $container->get('validator.validator_service_ids'),
-                    ['security.validator.user_password' => 'security.validator.user_password_validator']
-                ));
-            }
+            $this->addUserPasswordValidator($container);
 
             return new Firewall($this->getFirewallMap($container), $container->get(static::SERVICE_DISPATCHER));
         });
 
         return $container;
+    }
+
+    /**
+     * @deprecated This method exists only for BC reasons. To add the `\Symfony\Component\Security\Core\Validator\Constraints\UserPasswordValidator` use the `UserPasswordValidatorConstraintPlugin`.
+     *
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return void
+     */
+    protected function addUserPasswordValidator(ContainerInterface $container)
+    {
+        if ($container->has(static::SERVICE_VALIDATOR) && $container->has('validator.validator_service_ids')) {
+            $container->set('security.validator.user_password_validator', function (ContainerInterface $container) {
+                return new UserPasswordValidator($container->get(static::SERVICE_SECURITY_TOKEN_STORAGE), $container->get(static::SERVICE_SECURITY_ENCODER_FACTORY));
+            });
+
+            $container->set('validator.validator_service_ids', array_merge(
+                $container->get('validator.validator_service_ids'),
+                ['security.validator.user_password' => 'security.validator.user_password_validator']
+            ));
+        }
     }
 
     /**
