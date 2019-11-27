@@ -20,6 +20,8 @@ use Symfony\Component\HttpFoundation\Response;
 class OauthAccessTokenValidator implements OauthAccessTokenValidatorInterface
 {
     protected const REQUEST_ATTRIBUTE_IS_PROTECTED = 'is-protected';
+    protected const AUTHORIZATION_HEADER_TYPE = 0;
+    protected const AUTHORIZATION_HEADER_CREDENTIALS = 1;
 
     /**
      * @var \Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface
@@ -59,7 +61,18 @@ class OauthAccessTokenValidator implements OauthAccessTokenValidatorInterface
             return null;
         }
 
-        $authAccessTokenValidationResponseTransfer = $this->validateAccessToken((string)$authorizationToken);
+        $authorizationHeaderValue = $this->extractToken((string)$authorizationToken);
+        if (!isset($authorizationHeaderValue[static::AUTHORIZATION_HEADER_CREDENTIALS])) {
+            return (new RestErrorCollectionTransfer())->addRestError(
+                $this->createErrorMessageTransfer(
+                    AuthRestApiConfig::RESPONSE_DETAIL_INVALID_ACCESS_TOKEN,
+                    Response::HTTP_UNAUTHORIZED,
+                    AuthRestApiConfig::RESPONSE_CODE_ACCESS_CODE_INVALID
+                )
+            );
+        }
+
+        $authAccessTokenValidationResponseTransfer = $this->validateAccessToken($authorizationHeaderValue);
 
         if (!$authAccessTokenValidationResponseTransfer->getIsValid()) {
             return (new RestErrorCollectionTransfer())->addRestError(
@@ -100,13 +113,14 @@ class OauthAccessTokenValidator implements OauthAccessTokenValidatorInterface
     }
 
     /**
-     * @param string $authorizationToken
+     * @param array $authorizationToken
      *
      * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
      */
-    protected function validateAccessToken(string $authorizationToken): OauthAccessTokenValidationResponseTransfer
+    protected function validateAccessToken(array $authorizationToken): OauthAccessTokenValidationResponseTransfer
     {
-        [$type, $accessToken] = $this->extractToken($authorizationToken);
+        $type = $authorizationToken[static::AUTHORIZATION_HEADER_TYPE];
+        $accessToken = $authorizationToken[static::AUTHORIZATION_HEADER_CREDENTIALS];
 
         $authAccessTokenValidationRequestTransfer = new OauthAccessTokenValidationRequestTransfer();
         $authAccessTokenValidationRequestTransfer
