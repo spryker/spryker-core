@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\QuoteItem;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -107,7 +108,12 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
             return $this->createGuestQuote($cartItemRequestTransfer);
         }
 
-        $cartItemRequestTransfer->setQuoteUuid($customerQuotes[0]->getUuid());
+        $customerQuote = $this->findQuoteInQuoteCollection($customerQuotes, $cartItemRequestTransfer->getQuoteUuid());
+        if (!$customerQuote) {
+            return $this->createCartNotFoundError();
+        }
+
+        $cartItemRequestTransfer->setQuoteUuid($customerQuote->getUuid());
 
         return $this->addItem($cartItemRequestTransfer);
     }
@@ -166,10 +172,31 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
     protected function createCartNotFoundError(): QuoteResponseTransfer
     {
         return (new QuoteResponseTransfer())
+            ->setIsSuccessful(false)
             ->addError(
                 (new QuoteErrorTransfer())
                     ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_NOT_FOUND)
-            )
-            ->setIsSuccessful(false);
+            );
+    }
+
+    /**
+     * @param \ArrayObject $customerQuotes
+     * @param string|null $quoteUuid
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     */
+    protected function findQuoteInQuoteCollection(ArrayObject $customerQuotes, ?string $quoteUuid): ?QuoteTransfer
+    {
+        if (!$quoteUuid && isset($customerQuotes[0])) {
+            return $customerQuotes[0];
+        }
+
+        foreach ($customerQuotes->getArrayCopy() as $customerQuote) {
+            if ($customerQuote->getUuid() === $quoteUuid) {
+                return $customerQuote;
+            }
+        }
+
+        return null;
     }
 }
