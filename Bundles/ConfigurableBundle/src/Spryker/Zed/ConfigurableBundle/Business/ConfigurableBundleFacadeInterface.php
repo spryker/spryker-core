@@ -27,6 +27,7 @@ interface ConfigurableBundleFacadeInterface
      * - Expands found configurable bundle templates with translations.
      * - Returns translations for locales specified in ConfigurableBundleTemplateFilterTransfer::translationLocales, or for all available locales otherwise.
      * - Returns product image sets for locales specified in ConfigurableBundleTemplateFilterTransfer::translationLocales, or for all available locales otherwise.
+     * - Returns always empty-locale ("default") image sets.
      * - Returns fallback locale translation if provided single locale translation does not exist or translation key if nothing found.
      *
      * @api
@@ -46,6 +47,7 @@ interface ConfigurableBundleFacadeInterface
      * - Expands found configurable bundle templates with translations.
      * - Returns translations for locales specified in ConfigurableBundleTemplateFilterTransfer::translationLocales, or for all available locales otherwise.
      * - Returns product image sets for locales specified in ConfigurableBundleTemplateFilterTransfer::translationLocales, or for all available locales otherwise.
+     * - Returns always empty-locale ("default") image sets.
      * - Returns fallback locale translation if provided single locale translation does not exist or translation key if nothing found.
      *
      * @api
