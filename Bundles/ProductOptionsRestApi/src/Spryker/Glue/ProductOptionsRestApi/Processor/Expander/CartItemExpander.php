@@ -7,8 +7,8 @@
 
 namespace Spryker\Glue\ProductOptionsRestApi\Processor\Expander;
 
-use Generated\Shared\Transfer\CartItemRequestProductOptionTransfer;
 use Generated\Shared\Transfer\CartItemRequestTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionStorageReaderInterface;
 
@@ -46,8 +46,8 @@ class CartItemExpander implements CartItemExpanderInterface
             }
 
             $cartItemRequestTransfer->addProductOptionValue(
-                (new CartItemRequestProductOptionTransfer())
-                    ->setIdProductOption($productOptionIds[$restCartItemsProductOptionTransfer->getSku()])
+                (new ProductOptionTransfer())
+                    ->setIdProductOptionValue($productOptionIds[$restCartItemsProductOptionTransfer->getSku()])
             );
         }
 

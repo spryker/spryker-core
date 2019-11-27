@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductOptionsRestApi\Business\Mapper;
 use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
-use Generated\Shared\Transfer\ProductOptionTransfer;
 
 class ProductOptionMapper implements ProductOptionMapperInterface
 {
@@ -45,9 +44,7 @@ class ProductOptionMapper implements ProductOptionMapperInterface
         CartItemRequestTransfer $cartItemRequestTransfer,
         ItemTransfer $itemTransfer
     ): ItemTransfer {
-        foreach ($cartItemRequestTransfer->getProductOptionValues() as $cartItemRequestProductOptionTransfer) {
-            $productOptionTransfer = (new ProductOptionTransfer())
-                ->setIdProductOptionValue($cartItemRequestProductOptionTransfer->getIdProductOption());
+        foreach ($cartItemRequestTransfer->getProductOptionValues() as $productOptionTransfer) {
             $itemTransfer->addProductOption($productOptionTransfer);
         }
 

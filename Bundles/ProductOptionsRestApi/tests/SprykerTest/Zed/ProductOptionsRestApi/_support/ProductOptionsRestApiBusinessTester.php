@@ -9,9 +9,9 @@ namespace SprykerTest\Zed\ProductOptionsRestApi;
 
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\CartItemRequestBuilder;
-use Generated\Shared\DataBuilder\CartItemRequestProductOptionBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\PersistentCartChangeBuilder;
+use Generated\Shared\DataBuilder\ProductOptionBuilder;
 use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 
@@ -38,14 +38,14 @@ class ProductOptionsRestApiBusinessTester extends Actor
 
     public const PRODUCT_CONCRETE_SKU = 'PRODUCT_CONCRETE_SKU';
     public const DIFFERENT_PRODUCT_CONCRETE_SKU = 'DIFFERENT_PRODUCT_CONCRETE_SKU';
-    public const ID_PRODUCT_OPTION = '1';
+    public const ID_PRODUCT_OPTION_VALUE = '1';
 
     /**
      * @return \Generated\Shared\Transfer\CartItemRequestTransfer
      */
     public function buildCartItemRequestTransferWithOptions(): CartItemRequestTransfer
     {
-        $productOptionBuilder = new CartItemRequestProductOptionBuilder(['idProductOption' => static::ID_PRODUCT_OPTION]);
+        $productOptionBuilder = new ProductOptionBuilder(['idProductOptionValue' => static::ID_PRODUCT_OPTION_VALUE]);
 
         return (new CartItemRequestBuilder(['sku' => static::PRODUCT_CONCRETE_SKU]))
             ->withProductOptionValue($productOptionBuilder)

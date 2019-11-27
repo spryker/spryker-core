@@ -65,7 +65,7 @@ class ProductOptionsRestApiFacadeTest extends Unit
             ->offsetGet(0)
             ->getIdProductOptionValue();
         $this->tester->assertEquals(
-            $this->tester::ID_PRODUCT_OPTION,
+            $this->tester::ID_PRODUCT_OPTION_VALUE,
             $idProductOption
         );
     }

@@ -20,6 +20,9 @@ class ProductOptionCartItemExpanderPlugin extends AbstractPlugin implements Cart
     /**
      * {@inheritDoc}
      * - Expands CartItemRequestTransfer with product options.
+     * - Finds product options by RestCartItemsAttributesTransfer::$sku
+     * - Sets ProductOptionTransfer::$idProductOptionValue matched by RestCartItemsProductOptionTransfer::$sku
+     * - Adds list of ProductOptionTransfer to the CartItemRequestTransfer::$productOptionValues
      *
      * @api
      *

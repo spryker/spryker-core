@@ -14,7 +14,7 @@ interface ProductOptionsRestApiFacadeInterface
 {
     /**
      * Specification:
-     * - Maps CartItemRequestTransfer:ProductOptions to PersistentCartChangeTransfer:ProductOptions.
+     * - Maps CartItemRequestTransfer::$productOptionValues to PersistentCartChangeTransfer::$productOptions.
      *
      * @api
      *
