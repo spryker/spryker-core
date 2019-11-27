@@ -33,7 +33,7 @@ class AbstractFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testSetContainer()
+    public function testSetContainer(): void
     {
         $container = new Container();
         $factory = new Factory();
@@ -44,7 +44,7 @@ class AbstractFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testGetProvidedDependencyThrowsException()
+    public function testGetProvidedDependencyThrowsException(): void
     {
         $container = new Container();
         $factory = new Factory();
@@ -57,7 +57,7 @@ class AbstractFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testGetProvidedDependency()
+    public function testGetProvidedDependency(): void
     {
         $container = new Container();
         $container->set(self::CONTAINER_KEY, self::CONTAINER_VALUE);
@@ -70,7 +70,7 @@ class AbstractFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testGetProvidedDependencyShouldResolveContainer()
+    public function testGetProvidedDependencyShouldResolveContainer(): void
     {
         $container = new Container();
         $container->set(self::CONTAINER_KEY, self::CONTAINER_VALUE);
@@ -84,7 +84,7 @@ class AbstractFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testGetProvidedDependencyShouldGetInjectedData()
+    public function testGetProvidedDependencyShouldGetInjectedData(): void
     {
         $dependencyInjectorResolver = $this->getDependencyInjectorResolverMock();
         $factoryMock = $this->getFactoryMock(['createDependencyInjectorResolver', 'resolveDependencyProvider']);

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorageQuery;
 use Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorageQuery;
 use ReflectionClass;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\ProductListStorage\Business\ProductListStorageBusinessFactory;
 use Spryker\Zed\ProductListStorage\Communication\Plugin\Event\Listener\ProductAbstractStorageListener;
@@ -41,7 +42,7 @@ class ProductListStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductAbstractStorageListenerStoreData()
+    public function testProductAbstractStorageListenerStoreData(): void
     {
         SpyProductAbstractProductListStorageQuery::create()->filterByFkProductAbstract(42)->delete();
         $beforeCount = SpyProductAbstractProductListStorageQuery::create()->count();
@@ -62,7 +63,7 @@ class ProductListStorageListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductConcreteStorageListenerStoreData()
+    public function testProductConcreteStorageListenerStoreData(): void
     {
         SpyProductConcreteProductListStorageQuery::create()->filterByFkProduct(42)->delete();
         $beforeCount = SpyProductConcreteProductListStorageQuery::create()->count();
@@ -83,7 +84,7 @@ class ProductListStorageListenerTest extends Unit
     /**
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
-    protected function getFacade()
+    protected function getFacade(): AbstractFacade
     {
         $facade = $this->tester->getFacade();
 
@@ -98,7 +99,7 @@ class ProductListStorageListenerTest extends Unit
     /**
      * @return \Spryker\Zed\ProductListStorage\Business\ProductListStorageBusinessFactory
      */
-    public function getFactoryMock()
+    public function getFactoryMock(): ProductListStorageBusinessFactory
     {
         $factory = new ProductListStorageBusinessFactory();
         $factory->setConfig($this->getConfigMock());
@@ -107,7 +108,7 @@ class ProductListStorageListenerTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\ProductListStorage\ProductListStorageConfig|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getConfigMock()
     {

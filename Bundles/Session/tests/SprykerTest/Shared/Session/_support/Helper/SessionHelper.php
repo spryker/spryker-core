@@ -17,7 +17,7 @@ class SessionHelper extends Module
     /**
      * @return void
      */
-    public function _initialize()
+    public function _initialize(): void
     {
         $sessionClient = new SessionClient();
         $sessionClient->setContainer(new Session(new MockArraySessionStorage()));

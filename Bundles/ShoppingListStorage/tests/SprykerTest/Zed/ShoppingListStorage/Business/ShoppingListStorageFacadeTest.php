@@ -26,7 +26,7 @@ class ShoppingListStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCustomerReferencesByCompanyUserIds()
+    public function testGetCustomerReferencesByCompanyUserIds(): void
     {
         // TODO: temporary disable until P&S is able to handle storage tests
         $this->markTestSkipped('These tests temporary skipped until P&S is able to handle storage tests');
@@ -40,7 +40,7 @@ class ShoppingListStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testPublish()
+    public function testPublish(): void
     {
         // TODO: temporary empty until P&S is able to handle storage tests
         $this->markTestSkipped('These tests temporary skipped until P&S is able to handle storage tests');
@@ -54,7 +54,7 @@ class ShoppingListStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCustomerReferencesByShoppingListIds()
+    public function testGetCustomerReferencesByShoppingListIds(): void
     {
         // TODO: temporary empty until P&S is able to handle storage tests
         $this->markTestSkipped('These tests temporary skipped until P&S is able to handle storage tests');
@@ -68,7 +68,7 @@ class ShoppingListStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCustomerReferencesByCompanyBusinessUnitIds()
+    public function testGetCustomerReferencesByCompanyBusinessUnitIds(): void
     {
         // TODO: temporary empty until P&S is able to handle storage tests
         $this->markTestSkipped('These tests temporary skipped until P&S is able to handle storage tests');

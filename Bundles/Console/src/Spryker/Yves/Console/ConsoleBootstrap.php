@@ -7,7 +7,8 @@
 
 namespace Spryker\Yves\Console;
 
-use Spryker\Shared\Kernel\Communication\Application as SprykerApplication;
+use Spryker\Service\Kernel\Container;
+use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface;
 use Spryker\Yves\Console\Environment\ConsoleEnvironment;
 use Spryker\Yves\Kernel\BundleConfigResolverAwareTrait;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
@@ -33,9 +34,19 @@ class ConsoleBootstrap extends Application
     protected $factory;
 
     /**
-     * @var \Spryker\Shared\Kernel\Communication\Application
+     * @var \Spryker\Service\Container\ContainerInterface
      */
-    protected $application;
+    protected $container;
+
+    /**
+     * @var \Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface[]
+     */
+    protected $bootablePlugins = [];
+
+    /**
+     * @var bool
+     */
+    protected $booted = false;
 
     /**
      * @param string $name
@@ -52,7 +63,7 @@ class ConsoleBootstrap extends Application
         $this->setCatchExceptions($config->shouldCatchExceptions());
         $this->addEventDispatcher();
 
-        $this->application = new SprykerApplication();
+        $this->container = new Container();
 
         $this->provideApplicationPlugins();
     }
@@ -80,7 +91,11 @@ class ConsoleBootstrap extends Application
         $applicationPlugins = $this->getFactory()->getApplicationPlugins();
 
         foreach ($applicationPlugins as $applicationPlugin) {
-            $applicationPlugin->provide($this->application);
+            $applicationPlugin->provide($this->container);
+
+            if ($applicationPlugin instanceof BootableApplicationPluginInterface) {
+                $this->bootablePlugins[] = $applicationPlugin;
+            }
         }
     }
 
@@ -158,7 +173,10 @@ class ConsoleBootstrap extends Application
             $output->writeln($this->getInfoText());
         }
 
-        $this->application->boot();
+        if (!$this->booted) {
+            $this->booted = true;
+            $this->bootPlugins();
+        }
 
         if (!$input->hasParameterOption(['--no-pre'], true)) {
             $this->getFactory()->createConsoleRunnerHook()->preRun($input, $output);
@@ -171,6 +189,16 @@ class ConsoleBootstrap extends Application
         }
 
         return $response;
+    }
+
+    /**
+     * @return void
+     */
+    protected function bootPlugins(): void
+    {
+        foreach ($this->bootablePlugins as $bootablePlugin) {
+            $this->container = $bootablePlugin->boot($this->container);
+        }
     }
 
     /**

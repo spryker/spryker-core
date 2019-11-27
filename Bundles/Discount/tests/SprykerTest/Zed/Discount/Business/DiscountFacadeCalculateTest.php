@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Currency\Persistence\SpyCurrency;
 use Orm\Zed\Currency\Persistence\SpyCurrencyQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountAmount;
@@ -27,6 +28,7 @@ use Propel\Runtime\Propel;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\DiscountBusinessFactory;
 use Spryker\Zed\Discount\Business\DiscountFacade;
+use Spryker\Zed\Discount\Business\DiscountFacadeInterface;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountableItemFilterPluginInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
@@ -65,7 +67,7 @@ class DiscountFacadeCalculateTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateWhenQueryStringMatchesAllItemsIncludeAllProvidedDiscounts()
+    public function testCalculateWhenQueryStringMatchesAllItemsIncludeAllProvidedDiscounts(): void
     {
         $discountEntity = $this->createDiscountEntity(
             '(sku = "123" or sku = "431")',
@@ -135,7 +137,7 @@ class DiscountFacadeCalculateTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateWithEmptyDecisionRuleShouldIncludeDiscount()
+    public function testCalculateWithEmptyDecisionRuleShouldIncludeDiscount(): void
     {
         $discountEntity = $this->createDiscountEntity(
             '',
@@ -158,7 +160,7 @@ class DiscountFacadeCalculateTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateWithIncorrectDecisionRuleShouldSkipDiscount()
+    public function testCalculateWithIncorrectDecisionRuleShouldSkipDiscount(): void
     {
         $this->createDiscountEntity(
             'alskdhas jkashdj asjkdhjashdjs ahjdhas1293820',
@@ -178,7 +180,7 @@ class DiscountFacadeCalculateTest extends Unit
     /**
      * @return void
      */
-    public function testWhenMultipleVouchersFromSamePoolUsedShouldUseOnlyOnce()
+    public function testWhenMultipleVouchersFromSamePoolUsedShouldUseOnlyOnce(): void
     {
         Propel::disableInstancePooling();
 
@@ -217,7 +219,7 @@ class DiscountFacadeCalculateTest extends Unit
     /**
      * @return void
      */
-    public function testWhenDiscountFilterUsedShouldFilterOutItems()
+    public function testWhenDiscountFilterUsedShouldFilterOutItems(): void
     {
         $discountEntity = $this->createDiscountEntity(
             '(sku = "123" or sku = "431")',
@@ -260,7 +262,7 @@ class DiscountFacadeCalculateTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteTransfer()
+    protected function createQuoteTransfer(): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
 
@@ -298,11 +300,11 @@ class DiscountFacadeCalculateTest extends Unit
      * @return \Orm\Zed\Discount\Persistence\SpyDiscount
      */
     protected function createDiscountEntity(
-        $decisionRuleQueryString,
-        $collectorQueryString,
-        $discountType = DiscountConstants::TYPE_CART_RULE,
-        $minimumItemAmount = 1
-    ) {
+        string $decisionRuleQueryString,
+        string $collectorQueryString,
+        string $discountType = DiscountConstants::TYPE_CART_RULE,
+        int $minimumItemAmount = 1
+    ): SpyDiscount {
         $discountVoucherPool = new SpyDiscountVoucherPool();
         $discountVoucherPool->setIsActive(true);
         $discountVoucherPool->setName('test');
@@ -344,7 +346,7 @@ class DiscountFacadeCalculateTest extends Unit
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
-    protected function createVoucherCode($voucherCode, SpyDiscount $discountEntity)
+    protected function createVoucherCode(string $voucherCode, SpyDiscount $discountEntity): SpyDiscountVoucher
     {
         $voucherEntity = new SpyDiscountVoucher();
         $voucherEntity->setFkDiscountVoucherPool($discountEntity->getFkDiscountVoucherPool());
@@ -358,7 +360,7 @@ class DiscountFacadeCalculateTest extends Unit
     /**
      * @return \Spryker\Zed\Discount\Business\DiscountFacadeInterface
      */
-    protected function getFacade()
+    protected function getFacade(): DiscountFacadeInterface
     {
         return $this->getLocator()->discount()->facade();
     }
@@ -368,7 +370,7 @@ class DiscountFacadeCalculateTest extends Unit
      *
      * @return \Spryker\Zed\Discount\Business\DiscountFacadeInterface
      */
-    protected function createMockedDiscountFacade(DiscountableItemFilterPluginInterface $filterPluginMock)
+    protected function createMockedDiscountFacade(DiscountableItemFilterPluginInterface $filterPluginMock): DiscountFacadeInterface
     {
         $discountBusinessFactory = new DiscountBusinessFactory();
         $collectorPlugins = $discountBusinessFactory->getProvidedDependency(DiscountDependencyProvider::COLLECTOR_PLUGINS);
@@ -449,7 +451,7 @@ class DiscountFacadeCalculateTest extends Unit
     /**
      * @return \Orm\Zed\Currency\Persistence\SpyCurrency
      */
-    protected function getCurrency()
+    protected function getCurrency(): SpyCurrency
     {
         return SpyCurrencyQuery::create()->findOneByCode('EUR');
     }
@@ -457,7 +459,7 @@ class DiscountFacadeCalculateTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    protected function getCurrentStore()
+    protected function getCurrentStore(): StoreTransfer
     {
         return (new StoreTransfer())
             ->setIdStore(1)

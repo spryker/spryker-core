@@ -29,7 +29,7 @@ class StepHandlerPluginCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testAdd()
+    public function testAdd(): void
     {
         $stepHandlerPluginCollection = new StepHandlerPluginCollection();
 
@@ -42,7 +42,7 @@ class StepHandlerPluginCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testHasReturnFalse()
+    public function testHasReturnFalse(): void
     {
         $stepHandlerPluginCollection = new StepHandlerPluginCollection();
 
@@ -52,7 +52,7 @@ class StepHandlerPluginCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testHasReturnTrue()
+    public function testHasReturnTrue(): void
     {
         $stepHandlerPluginCollection = new StepHandlerPluginCollection();
         $stepHandlerPluginCollection->add($this->getStepHandlerPlugin(), self::TEST_PLUGIN_NAME);
@@ -63,7 +63,7 @@ class StepHandlerPluginCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testGet()
+    public function testGet(): void
     {
         $stepHandlerPluginCollection = new StepHandlerPluginCollection();
         $stepHandlerPluginCollection->add($this->getStepHandlerPlugin(), self::TEST_PLUGIN_NAME);

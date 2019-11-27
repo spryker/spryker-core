@@ -29,7 +29,7 @@ class BackwardsCompatibleUrlRouterEnhancerPluginTest extends Unit
     /**
      * @return void
      */
-    public function testBeforeMatchConvertsCamelCasedUrlsToDashedUrls()
+    public function testBeforeMatchConvertsCamelCasedUrlsToDashedUrls(): void
     {
         $backwardsCompatibleUrlRouterEnhancerPlugin = new BackwardsCompatibleUrlRouterEnhancerPlugin();
 

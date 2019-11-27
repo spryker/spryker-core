@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Oms\Business\OmsBusinessFactory;
 use Spryker\Zed\Oms\Business\OmsFacade;
 use Spryker\Zed\Oms\Business\OmsFacadeInterface;
@@ -74,7 +75,7 @@ class OmsFacadeTest extends Unit
 
         $numberOfItems = SpyOmsStateMachineLockQuery::create()->filterByIdentifier($identifier)->count();
 
-        $this->assertEquals(0, $numberOfItems);
+        $this->assertSame(0, $numberOfItems);
     }
 
     /**
@@ -139,17 +140,6 @@ class OmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testReservedItemsByNonExistentSku(): void
-    {
-        $omsFacade = $this->createOmsFacade();
-        $items = $omsFacade->getReservedOrderItemsForSku('non-existent-sku');
-
-        $this->assertSame(0, $items->count());
-    }
-
-    /**
-     * @return void
-     */
     public function testGetReservedStateNames(): void
     {
         $expected = [
@@ -172,18 +162,18 @@ class OmsFacadeTest extends Unit
      */
     public function testSaveReservation(): void
     {
-        $omsFacade = $this->createOmsFacade();
         $storeTransfer = (new StoreTransfer())->setIdStore(1)->setName('DE');
         $productSku = 'xxx';
-        $reservationQuantity = 10;
+        $reservationQuantity = new Decimal(10);
 
         // Action
         $this->createOmsFacade()->saveReservation($productSku, $storeTransfer, $reservationQuantity);
 
         // Assert
-        $this->assertEquals(
-            $reservationQuantity,
-            $this->createOmsFacade()->getOmsReservedProductQuantityForSku($productSku, $storeTransfer)
+        $this->assertTrue(
+            $this->createOmsFacade()
+                ->getOmsReservedProductQuantityForSku($productSku, $storeTransfer)
+                ->equals($reservationQuantity)
         );
     }
 
@@ -208,7 +198,7 @@ class OmsFacadeTest extends Unit
      *
      * @return \Spryker\Zed\Oms\Business\OmsFacadeInterface
      */
-    protected function createOmsFacadeWithTestStateMachine(array $activeProcesses = [], $xmlFolder = null): OmsFacadeInterface
+    protected function createOmsFacadeWithTestStateMachine(array $activeProcesses = [], ?string $xmlFolder = null): OmsFacadeInterface
     {
         $this->tester->configureTestStateMachine($activeProcesses, $xmlFolder);
 

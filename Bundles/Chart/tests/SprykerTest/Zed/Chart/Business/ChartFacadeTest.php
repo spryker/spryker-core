@@ -30,7 +30,7 @@ class ChartFacadeTest extends Unit
     protected $chartFacade;
 
     /**
-     * @var \Spryker\Zed\Chart\Business\ChartConfig
+     * @var \Spryker\Zed\Chart\ChartConfig
      */
     protected $chartConfig;
 
@@ -48,7 +48,7 @@ class ChartFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDefaultChartType()
+    public function testDefaultChartType(): void
     {
         $defaultType = $this->chartFacade->getDefaultChartType();
 
@@ -58,7 +58,7 @@ class ChartFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testChartTypes()
+    public function testChartTypes(): void
     {
         $types = $this->chartFacade->getChartTypes();
 

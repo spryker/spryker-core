@@ -31,7 +31,7 @@ class RedisSpinLockLockerTest extends Unit
     /**
      * @return void
      */
-    public function testLockBlocksUntilLockIsAcquired()
+    public function testLockBlocksUntilLockIsAcquired(): void
     {
         $redisClientMock = $this->getRedisClientMock();
         $redisClientMock
@@ -47,7 +47,7 @@ class RedisSpinLockLockerTest extends Unit
     /**
      * @return void
      */
-    public function testUnlockUsesGeneratedKeyFromStoredSessionId()
+    public function testUnlockUsesGeneratedKeyFromStoredSessionId(): void
     {
         $sessionId = 'test_session_id';
         $expectedGeneratedKey = "session:{$sessionId}:lock";

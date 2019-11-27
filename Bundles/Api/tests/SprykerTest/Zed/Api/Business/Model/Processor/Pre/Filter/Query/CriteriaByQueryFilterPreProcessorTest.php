@@ -40,7 +40,7 @@ class CriteriaByQueryFilterPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcessEmpty()
+    public function testProcessEmpty(): void
     {
         $processor = new CriteriaByQueryFilterPreProcessor();
 
@@ -54,7 +54,7 @@ class CriteriaByQueryFilterPreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcess()
+    public function testProcess(): void
     {
         $processor = new CriteriaByQueryFilterPreProcessor();
 

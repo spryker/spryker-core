@@ -33,7 +33,7 @@ class AbstractHttpClientTest extends Unit
     /**
      * @return void
      */
-    public function testRequest()
+    public function testRequest(): void
     {
         $abstractRequest = $this->getAbstractRequestMock();
 

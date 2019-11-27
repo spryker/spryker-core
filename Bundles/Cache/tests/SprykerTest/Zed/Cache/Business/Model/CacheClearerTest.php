@@ -29,7 +29,7 @@ class CacheClearerTest extends Unit
     /**
      * @return void
      */
-    public function testClearCacheEmptiesDirectories()
+    public function testClearCacheEmptiesDirectories(): void
     {
         $configMock = $this->getConfigMock(['DE']);
         $configMock
@@ -61,7 +61,7 @@ class CacheClearerTest extends Unit
     /**
      * @return void
      */
-    public function testClearAutoLoadCacheEmptiesDirectories()
+    public function testClearAutoLoadCacheEmptiesDirectories(): void
     {
         $configMock = $this->getConfigMock(['DE']);
         $configMock
@@ -93,7 +93,7 @@ class CacheClearerTest extends Unit
     /**
      * @return void
      */
-    public function testClearingOfFilesForAllStores()
+    public function testClearingOfFilesForAllStores(): void
     {
         $configMock = $this->getConfigMock(['DE', 'EN']);
         $configMock

@@ -31,7 +31,7 @@ class VoucherValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateWhenCodeIsNotActiveShouldReturnFalse()
+    public function testValidateWhenCodeIsNotActiveShouldReturnFalse(): void
     {
         $discountVoucherEntityMock = $this->createDiscountVoucherEntityMock();
         $discountVoucherEntityMock->method('getIsActive')
@@ -48,7 +48,7 @@ class VoucherValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateWhenPoolIsNotSetShouldReturnFalse()
+    public function testValidateWhenPoolIsNotSetShouldReturnFalse(): void
     {
         $discountVoucherEntityMock = $this->createDiscountVoucherEntityMock();
 
@@ -69,7 +69,7 @@ class VoucherValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateWhenPoolIsNotActiveShouldReturnFalse()
+    public function testValidateWhenPoolIsNotActiveShouldReturnFalse(): void
     {
         $discountVoucherEntityMock = $this->createDiscountVoucherEntityMock();
 
@@ -93,7 +93,7 @@ class VoucherValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateWhenVoucherNumberOfUsesIsInvalidShouldReturnFalse()
+    public function testValidateWhenVoucherNumberOfUsesIsInvalidShouldReturnFalse(): void
     {
         $discountVoucherEntityMock = $this->createDiscountVoucherEntityMock();
 
@@ -124,7 +124,7 @@ class VoucherValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateWhenVoucherIsValidShouldReturnTrue()
+    public function testValidateWhenVoucherIsValidShouldReturnTrue(): void
     {
         $discountVoucherEntityMock = $this->createDiscountVoucherEntityMock();
 
@@ -161,8 +161,7 @@ class VoucherValidatorTest extends Unit
     protected function createVoucherValidator(
         ?DiscountQueryContainerInterface $discountQueryContainerMock = null,
         ?DiscountToMessengerInterface $messengerFacadeMock = null
-    ) {
-
+    ): VoucherValidator {
         if ($discountQueryContainerMock == null) {
             $discountQueryContainerMock = $this->createDiscountQueryContainerMock();
         }
@@ -228,7 +227,7 @@ class VoucherValidatorTest extends Unit
     /**
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool
      */
-    protected function createVoucherPoolEntity()
+    protected function createVoucherPoolEntity(): SpyDiscountVoucherPool
     {
         return new SpyDiscountVoucherPool();
     }

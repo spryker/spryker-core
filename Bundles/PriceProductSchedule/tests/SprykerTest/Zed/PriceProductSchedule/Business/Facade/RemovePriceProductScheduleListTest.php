@@ -633,7 +633,7 @@ class RemovePriceProductScheduleListTest extends Unit
      * @param \PHPUnit\Framework\MockObject\MockObject $applierMock
      * @param string $mockFactoryMethod
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function getFactoryMock(MockObject $applierMock, string $mockFactoryMethod): MockObject
     {

@@ -29,6 +29,7 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
 
     public const PLUGIN_STORAGE_PRICE_DIMENSION = 'PLUGIN_STORAGE_PRICE_DIMENSION';
     public const PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR = 'PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR';
+    public const PLUGIN_PRICE_PRODUCT_FILTER_EXPANDER = 'PLUGIN_PRICE_PRODUCT_FILTER_EXPANDER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -44,7 +45,8 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
         $container = $this->addStoreClient($container);
         $container = $this->addPriceDimensionPlugins($container);
         $container = $this->addPriceProductPricesExtractorPlugins($container);
-
+        $container = $this->addPriceProductFilterExpanderPlugins($container);
+        
         return $container;
     }
 
@@ -158,6 +160,28 @@ class PriceProductStorageDependencyProvider extends AbstractDependencyProvider
      * @return \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePricesExtractorPluginInterface[]
      */
     protected function getPriceProductPricesExtractorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addPriceProductFilterExpanderPlugins(Container $container): Container
+    {
+        $container[static::PLUGIN_PRICE_PRODUCT_FILTER_EXPANDER] = function () {
+            return $this->getPriceProductFilterExpanderPlugins();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductFilterExpanderPluginInterface[]
+     */
+    protected function getPriceProductFilterExpanderPlugins(): array
     {
         return [];
     }
