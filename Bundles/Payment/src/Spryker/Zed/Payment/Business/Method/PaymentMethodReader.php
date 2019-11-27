@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Payment\Business\Method;
 
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
-use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeInterface;
 use Spryker\Zed\Payment\PaymentConfig;
@@ -93,9 +92,8 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
         $paymentStateMachineMappings = $this->paymentConfig->getPaymentStatemachineMappings();
 
         foreach ($paymentStateMachineMappings as $methodKey => $process) {
-            foreach ($paymentMethodsFromPersistence->getMethods() as $paymentMethod) {
-                if ($paymentMethod->getMethodName() === $methodKey) {
-                    $paymentMethodTransfer = $this->createPaymentMethodTransfer($methodKey);
+            foreach ($paymentMethodsFromPersistence->getMethods() as $paymentMethodTransfer) {
+                if ($paymentMethodTransfer->getMethodName() === $methodKey) {
                     $paymentMethodsTransfer->addMethod($paymentMethodTransfer);
                 }
             }
@@ -117,19 +115,6 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
         }
 
         return $paymentMethodsTransfer;
-    }
-
-    /**
-     * @param string $methodKey
-     *
-     * @return \Generated\Shared\Transfer\PaymentMethodTransfer
-     */
-    protected function createPaymentMethodTransfer($methodKey)
-    {
-        $paymentMethodTransfer = new PaymentMethodTransfer();
-        $paymentMethodTransfer->setMethodName($methodKey);
-
-        return $paymentMethodTransfer;
     }
 
     /**
