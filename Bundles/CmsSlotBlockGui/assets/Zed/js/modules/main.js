@@ -51,7 +51,7 @@ $(document).ready(function() {
         contentProviderAttribute: 'data-content-provider',
     });
 
-    global.SlotTable.dataTableInitCallback = function() {
+    global.CmsSlotGui_SlotTable.dataTableInitCallback = function() {
         slotBlocks.init();
     };
 });

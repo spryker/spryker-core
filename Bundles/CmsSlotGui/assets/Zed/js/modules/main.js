@@ -17,7 +17,7 @@ $(document).ready(function() {
     });
 
     slotTable.init();
-    global.SlotTable = slotTable;
+    global.CmsSlotGui_SlotTable = slotTable;
 
     var templateTable = new TemplateTable({
         templateTableId: '#template-list-table',
