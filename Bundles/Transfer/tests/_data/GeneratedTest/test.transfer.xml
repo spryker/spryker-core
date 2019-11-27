@@ -11,5 +11,9 @@
         <property name="testTransfer" type="Generated"/>
         <property name="testTransfers" type="Generated[]" singular="transfer"/>
         <property name="testDecimal" type="decimal"/>
+        <property name="assocNestedThings" type="GeneratedNested[]" singular="assocNestedThing" associative="true"/>
+    </transfer>
+    <transfer name="GeneratedNested">
+        <property name="name" type="string"/>
     </transfer>
 </transfers>
