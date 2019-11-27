@@ -59,14 +59,14 @@ class ProductOptionsRestApiFacadeTest extends Unit
                 ->getProductOptions()
         );
 
-        $IdProductOption = $persistentCartChangeTransfer->getItems()
+        $idProductOption = $persistentCartChangeTransfer->getItems()
             ->offsetGet(0)
             ->getProductOptions()
             ->offsetGet(0)
             ->getIdProductOptionValue();
         $this->tester->assertEquals(
             $this->tester::ID_PRODUCT_OPTION,
-            $IdProductOption
+            $idProductOption
         );
     }
 
