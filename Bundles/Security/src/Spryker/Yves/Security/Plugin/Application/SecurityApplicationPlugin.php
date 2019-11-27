@@ -1414,17 +1414,17 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected function addRouter(ContainerInterface $container): void
     {
         $loader = new ClosureLoader();
-        $fakeRoutes = $this->securityRoutes;
+        $securityRoutes = $this->securityRoutes;
 
-        $resource = function () use ($fakeRoutes) {
+        $resource = function () use ($securityRoutes) {
             $routeCollection = new RouteCollection();
-            foreach ($fakeRoutes as $route) {
+            foreach ($securityRoutes as $route) {
                 [$method, $pattern, $name] = $route;
 
                 $route = new Route($pattern);
 
                 $controller = function (Request $request) {
-                    throw new LogicException(sprintf('The "%s" route must have code to run when it matches.', $request->attributes->get('_route')));
+                    throw new LogicException('None of the configured firewalls matched. Please check your firewall configuration.');
                 };
 
                 $route->setDefault('_controller', $controller);

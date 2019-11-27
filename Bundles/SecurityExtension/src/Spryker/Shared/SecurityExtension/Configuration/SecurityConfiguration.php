@@ -7,12 +7,20 @@
 
 namespace Spryker\Shared\SecurityExtension\Configuration;
 
+use Spryker\Shared\SecurityExtension\Exception\FirewallNotFoundException;
+use Spryker\Shared\SecurityExtension\Exception\SecurityConfigurationException;
+
 class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigurationInterface
 {
     /**
      * @var array
      */
     protected $firewalls = [];
+
+    /**
+     * @var array
+     */
+    protected $mergableFirewalls = [];
 
     /**
      * @var array
@@ -50,6 +58,11 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
     protected $eventSubscribers = [];
 
     /**
+     * @var bool
+     */
+    protected $isFrozen = false;
+
+    /**
      * @param string $firewallName
      * @param array $configuration
      *
@@ -57,6 +70,8 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      */
     public function addFirewall(string $firewallName, array $configuration)
     {
+        $this->assertNotFrozen();
+
         $this->firewalls[$firewallName] = $configuration;
 
         return $this;
@@ -70,9 +85,9 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      */
     public function mergeFirewall(string $firewallName, array $configuration)
     {
-        $configuration = array_merge_recursive($this->firewalls[$firewallName], $configuration);
+        $this->assertNotFrozen();
 
-        $this->firewalls[$firewallName] = $configuration;
+        $this->mergableFirewalls[$firewallName] = $configuration;
 
         return $this;
     }
@@ -82,6 +97,8 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      */
     public function getFirewalls(): array
     {
+        $this->assertFrozen();
+
         return $this->firewalls;
     }
 
@@ -92,6 +109,8 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      */
     public function addAccessRules(array $accessRules)
     {
+        $this->assertNotFrozen();
+
         $this->accessRules = array_merge($this->accessRules, $accessRules);
 
         return $this;
@@ -102,6 +121,8 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      */
     public function getAccessRules(): array
     {
+        $this->assertFrozen();
+
         return $this->accessRules;
     }
 
@@ -112,6 +133,8 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      */
     public function addRoleHierarchy(array $roleHierarchy)
     {
+        $this->assertNotFrozen();
+
         foreach ($roleHierarchy as $mainRole => $hierarchy) {
             $this->roleHierarchies[$mainRole] = $hierarchy;
         }
@@ -124,6 +147,8 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      */
     public function getRoleHierarchies(): array
     {
+        $this->assertFrozen();
+
         return $this->roleHierarchies;
     }
 
@@ -135,6 +160,8 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      */
     public function addAuthenticationSuccessHandler(string $firewallName, callable $authenticationSuccessHandler)
     {
+        $this->assertNotFrozen();
+
         $this->authenticationSuccessHandlers[$firewallName] = $authenticationSuccessHandler;
 
         return $this;
@@ -145,6 +172,8 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      */
     public function getAuthenticationSuccessHandlers(): array
     {
+        $this->assertFrozen();
+
         return $this->authenticationSuccessHandlers;
     }
 
@@ -156,6 +185,8 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      */
     public function addAuthenticationFailureHandler(string $firewallName, callable $authenticationFailureHandler)
     {
+        $this->assertNotFrozen();
+
         $this->authenticationFailureHandlers[$firewallName] = $authenticationFailureHandler;
 
         return $this;
@@ -166,6 +197,8 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      */
     public function getAuthenticationFailureHandlers(): array
     {
+        $this->assertFrozen();
+
         return $this->authenticationFailureHandlers;
     }
 
@@ -177,6 +210,8 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      */
     public function addLogoutHandler(string $firewallName, callable $logoutHandler)
     {
+        $this->assertNotFrozen();
+
         $this->logoutHandlers[$firewallName] = $logoutHandler;
 
         return $this;
@@ -187,6 +222,8 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      */
     public function getLogoutHandlers(): array
     {
+        $this->assertFrozen();
+
         return $this->logoutHandlers;
     }
 
@@ -198,6 +235,8 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      */
     public function addAccessDeniedHandler(string $firewallName, callable $accessDeniedHandler)
     {
+        $this->assertNotFrozen();
+
         $this->accessDeniedHandlers[$firewallName] = $accessDeniedHandler;
 
         return $this;
@@ -208,6 +247,8 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      */
     public function getAccessDeniedHandlers(): array
     {
+        $this->assertFrozen();
+
         return $this->accessDeniedHandlers;
     }
 
@@ -218,6 +259,8 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      */
     public function addEventSubscriber(callable $eventSubscriber)
     {
+        $this->assertNotFrozen();
+
         $this->eventSubscribers[] = $eventSubscriber;
 
         return $this;
@@ -228,14 +271,54 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      */
     public function getEventSubscribers(): array
     {
+        $this->assertFrozen();
+
         return $this->eventSubscribers;
     }
 
     /**
+     * @throws \Spryker\Shared\SecurityExtension\Exception\FirewallNotFoundException
+     *
      * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface
      */
     public function getConfiguration(): SecurityConfigurationInterface
     {
+        $this->assertNotFrozen();
+
+        $this->isFrozen = true;
+
+        foreach ($this->mergableFirewalls as $firewallName => $configuration) {
+            if (!isset($this->firewalls[$firewallName])) {
+                throw new FirewallNotFoundException(sprintf('You tried to merge a firewall "%s" which is not configured.', $firewallName));
+            }
+
+            $this->firewalls[$firewallName] = array_merge_recursive($this->firewalls[$firewallName], $configuration);
+        }
+
         return $this;
+    }
+
+    /**
+     * @throws \Spryker\Shared\SecurityExtension\Exception\SecurityConfigurationException
+     *
+     * @return void
+     */
+    protected function assertNotFrozen()
+    {
+        if ($this->isFrozen) {
+            throw new SecurityConfigurationException('The configuration is marked as frozen and can\'t be changed.');
+        }
+    }
+
+    /**
+     * @throws \Spryker\Shared\SecurityExtension\Exception\SecurityConfigurationException
+     *
+     * @return void
+     */
+    protected function assertFrozen()
+    {
+        if (!$this->isFrozen) {
+            throw new SecurityConfigurationException('Please use "\Spryker\Shared\SecurityExtension\Configuration\SecurityConfiguration::getConfiguration()" to retrieve the security configuration.');
+        }
     }
 }
