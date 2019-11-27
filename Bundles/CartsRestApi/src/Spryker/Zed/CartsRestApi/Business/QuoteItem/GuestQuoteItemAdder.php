@@ -183,7 +183,7 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
     }
 
     /**
-     * @param \ArrayObject $customerQuoteTransfers
+     * @param \Generated\Shared\Transfer\QuoteTransfer[]|\ArrayObject $customerQuoteTransfers
      * @param string|null $quoteUuid
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer|null
@@ -192,8 +192,8 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
         ArrayObject $customerQuoteTransfers,
         ?string $quoteUuid
     ): ?QuoteTransfer {
-        if (!$quoteUuid && isset($customerQuoteTransfers[0])) {
-            return $customerQuoteTransfers[0];
+        if (!$quoteUuid && $customerQuoteTransfers->offsetExists(0)) {
+            return $customerQuoteTransfers->offsetGet(0);
         }
 
         foreach ($customerQuoteTransfers as $customerQuoteTransfer) {
