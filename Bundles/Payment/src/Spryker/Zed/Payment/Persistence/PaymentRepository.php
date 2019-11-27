@@ -49,9 +49,12 @@ class PaymentRepository extends AbstractRepository implements PaymentRepositoryI
         $paymentProviderCollectionTransfer = new PaymentProviderCollectionTransfer();
         $paymentProviderEntities = $this->getFactory()
             ->createPaymentProviderQuery()
+            ->leftJoinWithPaymentMethod()
             ->usePaymentMethodQuery()
+                ->leftJoinWithPaymentMethodStore()
                 ->filterByIsActive(true)
                 ->usePaymentMethodStoreQuery()
+                    ->leftJoinWithStore()
                     ->useStoreQuery()
                         ->filterByName($storeName)
                     ->endUse()

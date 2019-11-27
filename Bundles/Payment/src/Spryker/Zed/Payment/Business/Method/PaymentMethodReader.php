@@ -94,7 +94,7 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
 
         foreach ($paymentStateMachineMappings as $methodKey => $process) {
             foreach ($paymentMethodsFromPersistence->getMethods() as $paymentMethod) {
-                if ($paymentMethod->getPaymentMethodKey() === $methodKey) {
+                if ($paymentMethod->getMethodName() === $methodKey) {
                     $paymentMethodTransfer = $this->createPaymentMethodTransfer($methodKey);
                     $paymentMethodsTransfer->addMethod($paymentMethodTransfer);
                 }

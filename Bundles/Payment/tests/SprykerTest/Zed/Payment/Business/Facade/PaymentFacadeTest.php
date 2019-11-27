@@ -121,7 +121,7 @@ class PaymentFacadeTest extends Unit
         $storeRelationExist = SpyPaymentMethodStoreQuery::create()
             ->filterByFkPaymentMethod($paymentMethodTransfer->getIdPaymentMethod())
             ->exists();
-        $this->assertEquals('test1', $resultPaymentMethodEntity->getName(), 'Payment method name should match to the expected value');
+        $this->assertEquals('test1', $resultPaymentMethodEntity->getPaymentMethodKey(), 'Payment method name should match to the expected value');
         $this->assertTrue($storeRelationExist, 'Payment method store relation should exists');
     }
 
@@ -148,13 +148,13 @@ class PaymentFacadeTest extends Unit
         ])->build();
         $this->tester->havePaymentMethod([
             PaymentMethodTransfer::IS_ACTIVE => true,
-            PaymentMethodTransfer::PAYMENT_METHOD_KEY => 'dummyPaymentInvoice',
+            PaymentMethodTransfer::METHOD_NAME => 'dummyPaymentInvoice',
             PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
             PaymentMethodTransfer::STORE_RELATION => $storeRelationTransfer,
         ]);
         $this->tester->havePaymentMethod([
             PaymentMethodTransfer::IS_ACTIVE => false,
-            PaymentMethodTransfer::PAYMENT_METHOD_KEY => 'dummyPaymentCreditCard',
+            PaymentMethodTransfer::METHOD_NAME => 'dummyPaymentCreditCard',
             PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
         ]);
         $quoteTransfer = (new QuoteBuilder())->withStore([
@@ -165,6 +165,66 @@ class PaymentFacadeTest extends Unit
         $paymentMethodsTransfer = $this->paymentFacade->getAvailableMethods($quoteTransfer);
 
         // Assert
-        $this->assertCount(1, $paymentMethodsTransfer->getMethods());
+        $this->assertCount(
+            1,
+            $paymentMethodsTransfer->getMethods(),
+            'Amount of found payment method does not match to the expected value'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAvailablePaymentProvidersForStoreShouldReturnActivePaymentProviderForGivenStore(): void
+    {
+        // Arrange
+        $this->tester->ensurePaymentProviderTableIsEmpty();
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
+        $storeRelationTransfer = (new StoreRelationBuilder())->seed([
+            StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStore()],
+        ])->build();
+        $paymentProviderOne = $this->tester->havePaymentProvider();
+        $paymentProviderTwo = $this->tester->havePaymentProvider();
+        $this->tester->havePaymentMethod([
+            PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderOne->getIdPaymentProvider(),
+            PaymentMethodTransfer::IS_ACTIVE => true,
+            PaymentMethodTransfer::STORE_RELATION => $storeRelationTransfer,
+            PaymentMethodTransfer::NAME => 'test1',
+        ]);
+        $this->tester->havePaymentMethod([
+            PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderOne->getIdPaymentProvider(),
+            PaymentMethodTransfer::IS_ACTIVE => false,
+            PaymentMethodTransfer::STORE_RELATION => $storeRelationTransfer,
+            PaymentMethodTransfer::NAME => 'test2',
+        ]);
+        $this->tester->havePaymentMethod([
+            PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderOne->getIdPaymentProvider(),
+            PaymentMethodTransfer::IS_ACTIVE => true,
+            PaymentMethodTransfer::STORE_RELATION => null,
+            PaymentMethodTransfer::NAME => 'test3',
+        ]);
+        $this->tester->havePaymentMethod([
+            PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTwo->getIdPaymentProvider(),
+            PaymentMethodTransfer::IS_ACTIVE => true,
+            PaymentMethodTransfer::NAME => 'test4',
+        ]);
+
+        // Act
+        $paymentProviderCollectionTransfer = $this->paymentFacade->getAvailablePaymentProvidersForStore('DE');
+
+        // Assert
+        $this->assertCount(
+            1,
+            $paymentProviderCollectionTransfer->getPaymentProviders(),
+            'Amount of payment providers does not match the expected value'
+        );
+        $paymentMethods = $paymentProviderCollectionTransfer->getPaymentProviders()[0]->getPaymentMethods();
+        $this->assertCount(
+            1,
+            $paymentMethods,
+            'Amount of payment methods does not match the expected value'
+        );
     }
 }
