@@ -15,7 +15,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 /**
  * @method \Spryker\Glue\ProductOptionsRestApi\ProductOptionsRestApiFactory getFactory()
  */
-class CartItemProductOptionExpanderPlugin extends AbstractPlugin implements CartItemExpanderPluginInterface
+class ProductOptionCartItemExpanderPlugin extends AbstractPlugin implements CartItemExpanderPluginInterface
 {
     /**
      * {@inheritDoc}

@@ -27,7 +27,7 @@
     <transfer name="CartItemRequest">
     </transfer>
 
-    <transfer name="CartItemRequestProductOption">
+    <transfer name="CartItemRequestProductOptionValue">
     </transfer>
 
     <transfer name="PersistentCartChange">

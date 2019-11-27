@@ -124,7 +124,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      */
     public function getProductOptionIdsByProductConcreteSku(string $productConcreteSku): array
     {
-        $idProductAbstract = $this->findIdProductAbstractByProductAbstractSku($productConcreteSku);
+        $idProductAbstract = $this->findIdProductAbstractByProductConcreteSku($productConcreteSku);
         if (!$idProductAbstract) {
             return [];
         }
@@ -133,7 +133,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
             $idProductAbstract
         );
 
-        return $this->getProductOptionIdsFromProductAbstractOptionStorageTransfer($productAbstractOptionStorageTransfer);
+        return $this->getProductOptionIdsGroupedByProductOptionSku($productAbstractOptionStorageTransfer);
     }
 
     /**
@@ -163,7 +163,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      *
      * @return int|null
      */
-    protected function findIdProductAbstractByProductAbstractSku(string $productConcreteSku): ?int
+    protected function findIdProductAbstractByProductConcreteSku(string $productConcreteSku): ?int
     {
         $productConcreteStorageDataItem = $this->productStorageClient->findProductConcreteStorageDataByMappingForCurrentLocale(
             static::PRODUCT_CONCRETE_MAPPING_TYPE,
@@ -178,7 +178,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
      *
      * @return int[]
      */
-    protected function getProductOptionIdsFromProductAbstractOptionStorageTransfer(
+    protected function getProductOptionIdsGroupedByProductOptionSku(
         ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
     ): array {
         $productOptionIds = [];
