@@ -25,6 +25,12 @@ class RememberMeSecurityPlugin implements SecurityPluginInterface
     protected const SERVICE_DISPATCHER = 'dispatcher';
 
     /**
+     * {@inheritDoc}
+     * - Adds remember_me related services.
+     * - Adds a ResponseListener.
+     *
+     * @api
+     *
      * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface $securityBuilder
      * @param \Spryker\Service\Container\ContainerInterface $container
      *

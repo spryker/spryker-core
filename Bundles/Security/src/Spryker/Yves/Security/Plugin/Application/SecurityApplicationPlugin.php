@@ -115,6 +115,12 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected const SERVICE_SECURITY_AUTHENTICATION_PROVIDER_GUARD_PROTO = 'security.authentication_provider.guard._proto';
     protected const SERVICE_SECURITY_AUTHENTICATION_PROVIDER_ANONYMOUS_PROTO = 'security.authentication_provider.anonymous._proto';
     protected const SERVICE_LOGGER = 'logger';
+    protected const SERVICE_CSRF_TOKEN_MANAGER = 'csrf.token_manager';
+
+    /**
+     * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     */
+    protected const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
@@ -567,8 +573,8 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
             return new ChannelListener(
                 $container->get(static::SERVICE_SECURITY_ACCESS_MAP),
                 new RetryAuthenticationEntryPoint(
-                    $container->has('request.http_port') ? $container->get('request.http_port') : 80,
-                    $container->has('request.https_port') ? $container->get('request.https_port') : 443
+                    $this->getConfig()->getHttpPort(),
+                    $this->getConfig()->getHttpsPort()
                 ),
                 $this->getLogger($container)
             );
@@ -720,7 +726,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         });
 
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_UTILS, function (ContainerInterface $container) {
-            return new AuthenticationUtils($container->get('request_stack'));
+            return new AuthenticationUtils($container->get(static::SERVICE_REQUEST_STACK));
         });
 
         return $container;
@@ -946,7 +952,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_FORM_PROTO, $container->protect(function ($name, $options) use ($container) {
             return function () use ($container, $name, $options) {
                 $tmp = $options['check_path'] ?? '/login_check';
-                $this->addFakeRoute('match', $tmp, str_replace('/', '_', ltrim($tmp, '/')));
+                $this->addSecurityRoute('match', $tmp, str_replace('/', '_', ltrim($tmp, '/')));
 
                 $class = $options['listener_class'] ?? UsernamePasswordFormAuthenticationListener::class;
 
@@ -1084,7 +1090,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_LOGOUT_PROTO, $container->protect(function ($name, $options) use ($container) {
             return function () use ($container, $name, $options) {
                 $tmp = $options['logout_path'] ?? '/logout';
-                $this->addFakeRoute('get', $tmp, str_replace('/', '_', ltrim($tmp, '/')));
+                $this->addSecurityRoute('get', $tmp, str_replace('/', '_', ltrim($tmp, '/')));
 
                 $listener = new LogoutListener(
                     $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
@@ -1132,7 +1138,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function getCsrfTokenManager(ContainerInterface $container, array $options): ?CsrfTokenManager
     {
-        return isset($options['with_csrf']) && $options['with_csrf'] && $container->has('csrf.token_manager') ? $container->get('csrf.token_manager') : null;
+        return !empty($options['with_csrf']) && $container->has(static::SERVICE_CSRF_TOKEN_MANAGER) ? $container->get(static::SERVICE_CSRF_TOKEN_MANAGER) : null;
     }
 
     /**
@@ -1168,8 +1174,8 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $firewallName,
                     $container->get(static::SERVICE_SECURITY_ACCESS_MANAGER),
                     $this->getLogger($container),
-                    isset($options['parameter']) ? $options['parameter'] : '_switch_user',
-                    isset($options['role']) ? $options['role'] : 'ROLE_ALLOWED_TO_SWITCH',
+                    $options['parameter'] ?? '_switch_user',
+                    $options['role'] ?? 'ROLE_ALLOWED_TO_SWITCH',
                     $container->get(static::SERVICE_DISPATCHER),
                     $options['stateless'] ?? true
                 );
@@ -1202,8 +1208,8 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     {
         $container->set(static::SERVICE_SECURITY_ENTRY_POINT_FORM_PROTO, $container->protect(function ($name, array $options) use ($container) {
             return function () use ($container, $options) {
-                $loginPath = isset($options['login_path']) ? $options['login_path'] : '/login';
-                $useForward = isset($options['use_forward']) ? $options['use_forward'] : false;
+                $loginPath = $options['login_path'] ?? '/login';
+                $useForward = $options['use_forward'] ?? false;
 
                 return new FormAuthenticationEntryPoint($container->get(static::SERVICE_KERNEL), $container->get(static::SERVICE_SECURITY_HTTP_UTILS), $loginPath, $useForward);
             };
@@ -1380,7 +1386,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      *
      * @return void
      */
-    protected function addFakeRoute(string $method, string $pattern, string $name)
+    protected function addSecurityRoute(string $method, string $pattern, string $name)
     {
         $this->securityRoutes[] = [$method, $pattern, $name];
     }
