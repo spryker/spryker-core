@@ -77,7 +77,6 @@ interface CalculationFacadeInterface
     public function validateCheckoutGrandTotal(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
 
     /**
-     *
      * Specification:
      *  - Calculates item prices, based on store tax mode (gross/net)
      *  - Calculates item sum (gross/net) price
@@ -272,7 +271,6 @@ interface CalculationFacadeInterface
     public function calculateCanceledTotal(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
-     *
      * Specification:
      *  - Calculate total tax amount for order, take into account canceled amount
      *
@@ -310,7 +308,6 @@ interface CalculationFacadeInterface
     public function removeCanceledAmount(CalculableObjectTransfer $calculableObjectTransfer);
 
     /**
-     *
      * Specification:
      *  - Calculates order total before taxes, net total.
      *

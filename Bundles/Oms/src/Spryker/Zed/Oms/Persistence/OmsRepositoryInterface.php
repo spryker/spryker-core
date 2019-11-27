@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Oms\Persistence;
 
+use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
+
 interface OmsRepositoryInterface
 {
     /**
@@ -16,4 +19,21 @@ interface OmsRepositoryInterface
      * @return array
      */
     public function getMatrixOrderItems(array $processIds, array $stateBlackList): array;
+
+    /**
+     * @param string[] $stateNames
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
+     */
+    public function getSalesOrderAggregationBySkuAndStatesNames(array $stateNames, string $sku, ?StoreTransfer $storeTransfer = null): array;
+
+    /**
+     * @param string[] $concreteSkus
+     * @param int $idStore
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function getSumOmsReservedProductQuantityByConcreteProductSkusForStore(array $concreteSkus, int $idStore): Decimal;
 }

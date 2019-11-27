@@ -15,6 +15,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Development
@@ -33,7 +34,7 @@ class QueryContainerMethodBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testMethodNameIsQueryConntainer()
+    public function testMethodNameIsQueryConntainer(): void
     {
         $methodBuilderMock = $this->getQueryContainerMethodBuilderMock();
         $methodBuilderMock
@@ -49,7 +50,7 @@ class QueryContainerMethodBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testFileLookupIsPerformedInPersistenceLayer()
+    public function testFileLookupIsPerformedInPersistenceLayer(): void
     {
         $methodBuilderMock = $this->getQueryContainerMethodBuilderMock();
         $methodBuilderMock
@@ -92,7 +93,7 @@ class QueryContainerMethodBuilderTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer
      */
-    protected function getBundleTransfer()
+    protected function getBundleTransfer(): IdeAutoCompletionBundleTransfer
     {
         $bundleTransfer = new IdeAutoCompletionBundleTransfer();
         $bundleTransfer->setName('FooBundle');

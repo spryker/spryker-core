@@ -8,12 +8,14 @@
 namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Processor;
 
 use Codeception\Test\Unit;
+use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generated\Shared\Transfer\AnnotationTransfer;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGeneratorRestApiTestFactory;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRoutePlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DocumentationGeneratorRestApi
@@ -24,6 +26,8 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResou
  */
 class HttpMethodProcessorTest extends Unit
 {
+    use ArraySubsetAsserts;
+
     protected const RESOURCE_PATH = '/test-resource';
     protected const RESOURCE_ID = '{testResourceId}';
     protected const BAD_REQUEST_RESPONSE_DESCRIPTION = 'Bad Request.';

@@ -27,6 +27,16 @@ class OrdersRestApiToSalesClientBridge implements OrdersRestApiToSalesClientInte
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function getPaginatedOrder(OrderListTransfer $orderListTransfer)
+    {
+        return $this->salesClient->getPaginatedOrder($orderListTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\OrderListRequestTransfer $orderListRequestTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer

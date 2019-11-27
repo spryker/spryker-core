@@ -13,6 +13,7 @@ use Spryker\Zed\Propel\PropelConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Propel
@@ -26,7 +27,7 @@ class PropelFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Propel\Business\PropelFacade
      */
-    private function getFacade()
+    private function getFacade(): PropelFacade
     {
         return new PropelFacade();
     }
@@ -34,7 +35,7 @@ class PropelFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Propel\PropelConfig
      */
-    private function getConfig()
+    private function getConfig(): PropelConfig
     {
         return new PropelConfig();
     }
@@ -42,7 +43,7 @@ class PropelFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCleanPropelSchemaDirectoryShouldRemoveSchemaDirectoryAndAllFilesInIt()
+    public function testCleanPropelSchemaDirectoryShouldRemoveSchemaDirectoryAndAllFilesInIt(): void
     {
         if (!is_dir($this->getConfig()->getSchemaDirectory())) {
             mkdir($this->getConfig()->getSchemaDirectory(), 755, true);
@@ -56,7 +57,7 @@ class PropelFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCopySchemaFilesToTargetDirectoryShouldCollectAllSchemaFilesMergeAndCopyThemToSpecifiedDirectory()
+    public function testCopySchemaFilesToTargetDirectoryShouldCollectAllSchemaFilesMergeAndCopyThemToSpecifiedDirectory(): void
     {
         $this->getFacade()->copySchemaFilesToTargetDirectory();
         $this->assertTrue(is_dir($this->getConfig()->getSchemaDirectory()));

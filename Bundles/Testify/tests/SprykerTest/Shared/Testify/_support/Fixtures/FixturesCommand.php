@@ -25,7 +25,7 @@ class FixturesCommand extends Run implements CustomCommandInterface
     /**
      * @return string
      */
-    public static function getCommandName()
+    public static function getCommandName(): string
     {
         return 'fixtures';
     }
@@ -33,7 +33,7 @@ class FixturesCommand extends Run implements CustomCommandInterface
     /**
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'Builds fixtures and serializes them into files';
     }
@@ -43,7 +43,7 @@ class FixturesCommand extends Run implements CustomCommandInterface
      *
      * @return void
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDefinition([
             new InputOption(
@@ -97,7 +97,7 @@ class FixturesCommand extends Run implements CustomCommandInterface
      *
      * @return void
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->options = $input->getOptions();
         $this->output = $output;

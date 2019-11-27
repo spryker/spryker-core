@@ -7,13 +7,13 @@
 
 namespace Spryker\Glue\Testify\OpenApi3\Collection;
 
-use Spryker\Glue\Testify\OpenApi3\Object\MediaType;
 use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
+use Spryker\Glue\Testify\OpenApi3\SchemaObject\MediaType;
 
 class MediaTypes extends AbstractCollection
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getElementDefinition(): PropertyDefinition
     {

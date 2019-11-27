@@ -25,6 +25,7 @@ use SprykerTest\Zed\ShoppingListProductOptionConnector\Stub\ShoppingListProductO
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ShoppingListProductOptionConnector

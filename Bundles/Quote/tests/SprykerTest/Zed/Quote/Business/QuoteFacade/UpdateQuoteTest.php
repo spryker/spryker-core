@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Quote
@@ -32,7 +33,7 @@ class UpdateQuoteTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateQuotePersistChangesToDatabase()
+    public function testUpdateQuotePersistChangesToDatabase(): void
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer();

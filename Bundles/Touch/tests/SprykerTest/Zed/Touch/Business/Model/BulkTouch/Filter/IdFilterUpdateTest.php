@@ -13,6 +13,7 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Touch
@@ -35,7 +36,7 @@ class IdFilterUpdateTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -50,7 +51,7 @@ class IdFilterUpdateTest extends Unit
     /**
      * @return void
      */
-    public function testFilter()
+    public function testFilter(): void
     {
         $ids = range(1, 200);
 
@@ -65,7 +66,7 @@ class IdFilterUpdateTest extends Unit
     /**
      * @return void
      */
-    public function testFilterChunkedAllInDatabase()
+    public function testFilterChunkedAllInDatabase(): void
     {
         $countAboveChunkSize = 500;
         $this->assertTrue(IdFilterUpdate::CHUNK_SIZE < $countAboveChunkSize);
@@ -82,7 +83,7 @@ class IdFilterUpdateTest extends Unit
     /**
      * @return void
      */
-    public function testFilterChunkedNoneInDatabase()
+    public function testFilterChunkedNoneInDatabase(): void
     {
         $countAboveChunkSize = 500;
         $ids = range(1, $countAboveChunkSize);

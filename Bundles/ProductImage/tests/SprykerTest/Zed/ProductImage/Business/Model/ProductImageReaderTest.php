@@ -16,6 +16,7 @@ use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductImage
@@ -49,7 +50,7 @@ class ProductImageReaderTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->queryContainer = new ProductImageQueryContainer();
         $this->localeFacade = new LocaleFacade();
@@ -67,7 +68,7 @@ class ProductImageReaderTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductImagesByProductAbstractId()
+    public function testGetProductImagesByProductAbstractId(): void
     {
         $imageCollection = $this->reader
             ->getProductImagesSetCollectionByProductAbstractId(1);

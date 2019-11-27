@@ -14,6 +14,7 @@ use Spryker\Zed\Propel\PropelConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Propel
@@ -28,7 +29,7 @@ class PostgreSqlDatabaseCreatorTest extends Unit
     /**
      * @return void
      */
-    public function testGetEngine()
+    public function testGetEngine(): void
     {
         $postgreSqlDatabaseCreator = new PostgreSqlDatabaseCreator(
             $this->getConfigMock()
@@ -40,7 +41,7 @@ class PostgreSqlDatabaseCreatorTest extends Unit
     /**
      * @return void
      */
-    public function testCreateWithNotExistingDatabase()
+    public function testCreateWithNotExistingDatabase(): void
     {
         $postgreSqlDatabaseCreatorMock = $this->getPostgreSqlDatabaseCreatorMock(['existsDatabase', 'createDatabase']);
         $postgreSqlDatabaseCreatorMock->expects($this->once())->method('existsDatabase')->willReturn(false);
@@ -52,7 +53,7 @@ class PostgreSqlDatabaseCreatorTest extends Unit
     /**
      * @return void
      */
-    public function testCreateWithExistingDatabase()
+    public function testCreateWithExistingDatabase(): void
     {
         $postgreSqlDatabaseCreatorMock = $this->getPostgreSqlDatabaseCreatorMock(['existsDatabase', 'createDatabase']);
         $postgreSqlDatabaseCreatorMock->expects($this->once())->method('existsDatabase')->willReturn(true);

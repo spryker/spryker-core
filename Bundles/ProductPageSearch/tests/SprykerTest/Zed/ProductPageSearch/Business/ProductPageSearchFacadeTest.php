@@ -12,6 +12,7 @@ use Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductPageSearch
@@ -35,7 +36,7 @@ class ProductPageSearchFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->tester->setUp();

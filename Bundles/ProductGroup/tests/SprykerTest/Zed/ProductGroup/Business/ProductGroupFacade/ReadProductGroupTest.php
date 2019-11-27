@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductGroupTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductGroup
@@ -28,7 +29,7 @@ class ReadProductGroupTest extends Unit
     /**
      * @return void
      */
-    public function testReadProductGroupHasProductIdsInCorrectOrder()
+    public function testReadProductGroupHasProductIdsInCorrectOrder(): void
     {
         // Arrange
         $productAbstractTransfer1 = $this->tester->haveProductAbstract();

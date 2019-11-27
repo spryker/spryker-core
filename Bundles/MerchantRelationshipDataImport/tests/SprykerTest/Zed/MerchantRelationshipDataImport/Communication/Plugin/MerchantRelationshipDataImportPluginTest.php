@@ -21,6 +21,7 @@ use Spryker\Zed\MerchantRelationshipDataImport\MerchantRelationshipDataImportCon
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group MerchantRelationshipDataImport
@@ -121,7 +122,7 @@ class MerchantRelationshipDataImportPluginTest extends Unit
     /**
      * @return \Spryker\Zed\MerchantRelationshipDataImport\Business\MerchantRelationshipDataImportFacade
      */
-    public function getFacadeMock()
+    public function getFacadeMock(): MerchantRelationshipDataImportFacade
     {
         $factoryMock = $this->getMockBuilder(MerchantRelationshipDataImportBusinessFactory::class)
             ->setMethods(

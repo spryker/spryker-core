@@ -7,13 +7,16 @@
 
 namespace Spryker\Zed\QuoteApproval\Business\QuoteApproval;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteApprovalRequestTransfer;
 use Generated\Shared\Transfer\QuoteApprovalResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\QuoteApproval\Business\Quote\QuoteLockerInterface;
 use Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToSharedCartFacadeInterface;
 use Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalEntityManagerInterface;
+use Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface;
 
 class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
 {
@@ -42,21 +45,29 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
     protected $quoteLocker;
 
     /**
+     * @var \Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface
+     */
+    protected $quoteApprovalRepository;
+
+    /**
      * @param \Spryker\Zed\QuoteApproval\Business\Quote\QuoteLockerInterface $quoteLocker
      * @param \Spryker\Zed\QuoteApproval\Business\QuoteApproval\QuoteApprovalRequestValidatorInterface $quoteApprovalRequestValidator
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToSharedCartFacadeInterface $sharedCartFacade
      * @param \Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalEntityManagerInterface $quoteApprovalEntityManager
+     * @param \Spryker\Zed\QuoteApproval\Persistence\QuoteApprovalRepositoryInterface $quoteApprovalRepository
      */
     public function __construct(
         QuoteLockerInterface $quoteLocker,
         QuoteApprovalRequestValidatorInterface $quoteApprovalRequestValidator,
         QuoteApprovalToSharedCartFacadeInterface $sharedCartFacade,
-        QuoteApprovalEntityManagerInterface $quoteApprovalEntityManager
+        QuoteApprovalEntityManagerInterface $quoteApprovalEntityManager,
+        QuoteApprovalRepositoryInterface $quoteApprovalRepository
     ) {
         $this->quoteLocker = $quoteLocker;
         $this->quoteApprovalRequestValidator = $quoteApprovalRequestValidator;
         $this->sharedCartFacade = $sharedCartFacade;
         $this->quoteApprovalEntityManager = $quoteApprovalEntityManager;
+        $this->quoteApprovalRepository = $quoteApprovalRepository;
     }
 
     /**
@@ -90,6 +101,7 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
         $this->executeQuoteApprovalRemoval($quoteApprovalResponse, $quoteApprovalRequestTransfer);
 
         return $quoteApprovalResponseTransfer->setIsSuccessful(true)
+            ->setQuote($this->expandQuoteWithQuoteApprovals($quoteApprovalResponse->getQuote()))
             ->addMessage($this->createMessageTransfer(static::GLOSSARY_KEY_APPROVAL_REMOVED));
     }
 
@@ -110,6 +122,18 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
         $this->sharedCartFacade->deleteShareForQuote($quoteTransfer);
         $this->quoteApprovalEntityManager->deleteQuoteApprovalById(
             $quoteApprovalRequestTransfer->getIdQuoteApproval()
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function expandQuoteWithQuoteApprovals(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $quoteTransfer->setQuoteApprovals(
+            new ArrayObject($this->quoteApprovalRepository->getQuoteApprovalsByIdQuote($quoteTransfer->getIdQuote()))
         );
     }
 

@@ -4,22 +4,22 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ChartData">
-        <property name="key" type="string" />
-        <property name="title" type="string" />
-        <property name="traces" type="ChartDataTrace[]" singular="trace" />
+        <property name="key" type="string"/>
+        <property name="title" type="string"/>
+        <property name="traces" type="ChartDataTrace[]" singular="trace"/>
     </transfer>
 
     <transfer name="ChartDataTrace">
-        <property name="name" type="string" />
-        <property name="type" type="string" />
-        <property name="labels" type="string[]" singular="label" />
-        <property name="values" type="array" singular="value" />
-        <property name="options" type="array" singular="option" />
+        <property name="name" type="string"/>
+        <property name="type" type="string"/>
+        <property name="labels" type="string[]" singular="label"/>
+        <property name="values" type="array" singular="value"/>
+        <property name="options" type="array" singular="option"/>
     </transfer>
 
     <transfer name="ChartLayout">
-        <property name="width" type="int" />
-        <property name="height" type="int" />
+        <property name="width" type="int"/>
+        <property name="height" type="int"/>
     </transfer>
 
 </transfers>

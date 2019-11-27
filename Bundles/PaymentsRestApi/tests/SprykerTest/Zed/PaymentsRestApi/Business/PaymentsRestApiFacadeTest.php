@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PaymentsRestApi

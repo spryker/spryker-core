@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Storage
@@ -65,7 +66,7 @@ class ServiceTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setupServerVariable();
@@ -74,7 +75,7 @@ class ServiceTest extends Unit
     /**
      * @return void
      */
-    protected function _before()
+    protected function _before(): void
     {
         $this->clientMock = $this->getMockBuilder(ClientInterface::class)
             ->setMethods([
@@ -100,7 +101,7 @@ class ServiceTest extends Unit
     /**
      * @return void
      */
-    public function testGetAllKeysTriggersRightCommand()
+    public function testGetAllKeysTriggersRightCommand(): void
     {
         $this->clientMock->expects($this->once())->method('keys')->with($this->equalTo('kv:*'));
 
@@ -110,7 +111,7 @@ class ServiceTest extends Unit
     /**
      * @return void
      */
-    public function testGetKeysPassesPatternCorrectly()
+    public function testGetKeysPassesPatternCorrectly(): void
     {
         $this->clientMock->expects($this->once())->method('keys')->with($this->equalTo('kv:aPattern*'));
 
@@ -120,7 +121,7 @@ class ServiceTest extends Unit
     /**
      * @return void
      */
-    public function testGetMultiWithEmptyKeys()
+    public function testGetMultiWithEmptyKeys(): void
     {
         $requestedKeys = [];
 
@@ -130,7 +131,7 @@ class ServiceTest extends Unit
     /**
      * @return void
      */
-    public function testGet()
+    public function testGet(): void
     {
         $key = 'key';
         $value = 'value';
@@ -144,7 +145,7 @@ class ServiceTest extends Unit
     /**
      * @return void
      */
-    public function testGetMultiCached()
+    public function testGetMultiCached(): void
     {
         $storageClient = new StorageClient();
         $storageClient->setMulti($this->fixtures['multi']);
@@ -176,7 +177,7 @@ class ServiceTest extends Unit
     /**
      * @return void
      */
-    public function testGetMultiReplaceStrategy()
+    public function testGetMultiReplaceStrategy(): void
     {
         $this->testMultiKeyStrategy(
             StorageConstants::STORAGE_CACHE_STRATEGY_REPLACE,
@@ -188,7 +189,7 @@ class ServiceTest extends Unit
     /**
      * @return void
      */
-    public function testGetMultiIncrementalStrategy()
+    public function testGetMultiIncrementalStrategy(): void
     {
         $this->testMultiKeyStrategy(
             StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL,
@@ -200,7 +201,7 @@ class ServiceTest extends Unit
     /**
      * @return void
      */
-    public function testGetSingleReplaceStrategy()
+    public function testGetSingleReplaceStrategy(): void
     {
         $this->testSingleKeyStrategy(
             StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL,
@@ -212,7 +213,7 @@ class ServiceTest extends Unit
     /**
      * @return void
      */
-    public function testGetSingleIncrementalStrategy()
+    public function testGetSingleIncrementalStrategy(): void
     {
         $this->testSingleKeyStrategy(
             StorageConstants::STORAGE_CACHE_STRATEGY_INCREMENTAL,
@@ -228,7 +229,7 @@ class ServiceTest extends Unit
      *
      * @return void
      */
-    protected function testMultiKeyStrategy($strategyName, $fixtures, $expected)
+    protected function testMultiKeyStrategy(string $strategyName, array $fixtures, array $expected): void
     {
         $request = $this->createRequest();
 
@@ -248,7 +249,7 @@ class ServiceTest extends Unit
      *
      * @return void
      */
-    protected function testSingleKeyStrategy($strategyName, $key, $value)
+    protected function testSingleKeyStrategy(string $strategyName, string $key, string $value): void
     {
         $request = $this->createRequest();
 
@@ -264,7 +265,7 @@ class ServiceTest extends Unit
     /**
      * @return void
      */
-    protected function setupServerVariable()
+    protected function setupServerVariable(): void
     {
         $_SERVER['SERVER_NAME'] = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'localhost';
         $_SERVER['REQUEST_URI'] = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/test/url';
@@ -273,7 +274,7 @@ class ServiceTest extends Unit
     /**
      * @return \Symfony\Component\HttpFoundation\Request
      */
-    protected function createRequest()
+    protected function createRequest(): Request
     {
         $request = new Request([], [], [], [], [], $_SERVER);
 
@@ -283,7 +284,7 @@ class ServiceTest extends Unit
     /**
      * @return void
      */
-    public function testGetMultiShouldReturnDataInTheSameOrderAsInput()
+    public function testGetMultiShouldReturnDataInTheSameOrderAsInput(): void
     {
         // Arrange
         $bufferedData = [
@@ -316,7 +317,7 @@ class ServiceTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Client\Storage\Redis\Service|\PHPUnit\Framework\MockObject\MockObject
      */
     public function getStorageClientMock()
     {

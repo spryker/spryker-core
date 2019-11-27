@@ -19,13 +19,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CmsGlossaryFormType extends AbstractType
 {
+    use ArrayObjectTransformerTrait;
+
     public const FIELD_GLOSSARY_ATTRIBUTES = 'glossaryAttributes';
 
     public const OPTION_DATA_CLASS_ATTRIBUTES = 'data_class_glossary_attributes';
 
     public const OPTION_GLOSSARY_KEY_SEARCH_OPTIONS = 'glossaryKeySearchOptions';
-
-    use ArrayObjectTransformerTrait;
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

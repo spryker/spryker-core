@@ -20,6 +20,7 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group Unit
  * @group Spryker
  * @group Zed
@@ -33,7 +34,7 @@ class RedirectManagerTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteUrlRedirectMustThrowExceptionIfUrlRedirectNotFound()
+    public function testDeleteUrlRedirectMustThrowExceptionIfUrlRedirectNotFound(): void
     {
         $this->expectException(MissingRedirectException::class);
 
@@ -53,7 +54,7 @@ class RedirectManagerTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteUrlRedirect()
+    public function testDeleteUrlRedirect(): void
     {
         $entityMock = $this->getMockBuilder(SpyUrlRedirect::class)->setMethods(['delete'])->getMock();
         $entityMock->expects($this->once())->method('delete');

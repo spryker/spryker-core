@@ -23,7 +23,7 @@ class ProductConcreteImageSetStorageUnpublishListener extends AbstractPlugin imp
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -18,7 +18,7 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginCreateInterface;
 class DiscontinuedProductConcreteAfterCreatePlugin extends AbstractPlugin implements ProductConcretePluginCreateInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Marks product bundle as discontinued if one of bundled products is discontinued.
      *
      * @api

@@ -1,4 +1,3 @@
-
 {% set numberOfItemAdditions = orderItem.productOptions | length + 1  %}
 {% set subtotal = group ? bundleItem.sumSubtotalAggregation : orderItem.sumSubtotalAggregation %}
 {% set priceToPay = group ? bundleItem.sumPriceToPayAggregation : orderItem.sumPriceToPayAggregation %}
@@ -36,7 +35,7 @@
       {% endif %}
     </div>
   {% endif %}
-  {% embed '@Sales/Detail/boxes/item-packaging-unit.twig' with {orderItem: orderItem} %}{% endembed %}
+  {% include ['@ProductPackagingUnitGui/Sales/Detail/boxes/item-packaging-unit.twig', '@Sales/Detail/boxes/item-packaging-unit.twig'] with {orderItem: orderItem} %}
 </td>
 <td>
   {{ orderItem.quantity }}
@@ -70,12 +69,11 @@
   {% endif %}
 </td>
 <td rowspan="{{ numberOfItemAdditions }}">
-    {% include [
-        '@Oms/RenderForm/_partial/order-item-actions.twig',
-        '@Sales/Detail/_partial/order-item-actions.twig',
-    ] ignore missing  with {
-        redirectUrl: changeStatusRedirectUrl,
-        idSalesOrderItem: orderItem.idSalesOrderItem,
-        eventsGroupedByItem: eventsGroupedByItem[orderItem.IdSalesOrderItem],
-    } only %}
+    {% if eventsGroupedByItem[orderItem.IdSalesOrderItem] is defined %}
+        {% include '@Oms/RenderForm/_partial/order-item-actions.twig' with {
+            redirectUrl: changeStatusRedirectUrl,
+            idSalesOrderItem: orderItem.idSalesOrderItem,
+            eventsGroupedByItem: eventsGroupedByItem[orderItem.IdSalesOrderItem],
+        } only %}
+    {% endif %}
 </td>

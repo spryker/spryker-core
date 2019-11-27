@@ -22,6 +22,7 @@ use Spryker\Zed\Navigation\Persistence\NavigationQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Navigation
@@ -65,7 +66,7 @@ class NavigationTreeTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -79,7 +80,7 @@ class NavigationTreeTest extends Unit
     /**
      * @return void
      */
-    public function testReadExistingNavigationTreeFromDatabaseReturnsCorrectHierarchy()
+    public function testReadExistingNavigationTreeFromDatabaseReturnsCorrectHierarchy(): void
     {
         $navigationTransfer = new NavigationTransfer();
         $navigationTransfer->setIdNavigation($this->navigationTransfer->getIdNavigation());
@@ -122,7 +123,7 @@ class NavigationTreeTest extends Unit
     /**
      * @return void
      */
-    public function testReadExistingNavigationTreeWithoutLocaleConstraintReturnsAllLocalizedAttributes()
+    public function testReadExistingNavigationTreeWithoutLocaleConstraintReturnsAllLocalizedAttributes(): void
     {
         $navigationTransfer = new NavigationTransfer();
         $navigationTransfer->setIdNavigation($this->navigationTransfer->getIdNavigation());
@@ -135,7 +136,7 @@ class NavigationTreeTest extends Unit
     /**
      * @return void
      */
-    public function testReadExistingNavigationTreeWithLocaleConstraintReturnsExpectedLocalizedAttributes()
+    public function testReadExistingNavigationTreeWithLocaleConstraintReturnsExpectedLocalizedAttributes(): void
     {
         $navigationTransfer = new NavigationTransfer();
         $navigationTransfer->setIdNavigation($this->navigationTransfer->getIdNavigation());
@@ -151,7 +152,7 @@ class NavigationTreeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateNavigationTreeHierarchyPersistsToDatabase()
+    public function testUpdateNavigationTreeHierarchyPersistsToDatabase(): void
     {
         $navigationTransfer = new NavigationTransfer();
         $navigationTransfer->setIdNavigation($this->navigationTransfer->getIdNavigation());
@@ -239,7 +240,7 @@ class NavigationTreeTest extends Unit
     /**
      * @return void
      */
-    protected function setUpNavigationTree()
+    protected function setUpNavigationTree(): void
     {
         $navigationEntity = $this->createNavigationEntity('test-navigation-1', 'Test navigation 1', true);
         $this->navigationTransfer = new NavigationTransfer();
@@ -261,7 +262,7 @@ class NavigationTreeTest extends Unit
      *
      * @return int
      */
-    protected function createLocale($localeName)
+    protected function createLocale(string $localeName): int
     {
         $localeEntity = new SpyLocale();
         $localeEntity
@@ -278,7 +279,7 @@ class NavigationTreeTest extends Unit
      *
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigation
      */
-    protected function createNavigationEntity($key, $name, $isActive)
+    protected function createNavigationEntity(string $key, string $name, bool $isActive): SpyNavigation
     {
         $navigationEntity = new SpyNavigation();
         $navigationEntity
@@ -292,14 +293,14 @@ class NavigationTreeTest extends Unit
 
     /**
      * @param \Orm\Zed\Navigation\Persistence\SpyNavigation $navigationEntity
-     * @param int $position
+     * @param int|null $position
      * @param string $title
      * @param string $externalUrl
      * @param \Orm\Zed\Navigation\Persistence\SpyNavigationNode|null $parentNavigationNodeEntity
      *
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNode
      */
-    protected function createNavigationNodeEntity(SpyNavigation $navigationEntity, $position, $title, $externalUrl, ?SpyNavigationNode $parentNavigationNodeEntity = null)
+    protected function createNavigationNodeEntity(SpyNavigation $navigationEntity, ?int $position, string $title, string $externalUrl, ?SpyNavigationNode $parentNavigationNodeEntity = null): SpyNavigationNode
     {
         $navigationNodeEntity = new SpyNavigationNode();
         if ($parentNavigationNodeEntity) {

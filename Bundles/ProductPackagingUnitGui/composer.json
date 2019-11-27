@@ -4,14 +4,18 @@
   "description": "ProductPackagingUnitGui module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/gui": "^3.9.0",
     "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.0.0",
-    "spryker/product-packaging-unit": "^1.0.0 || ^3.0.0",
-    "spryker/sales": "^8.5.0 || ^10.0.0",
+    "spryker/product-packaging-unit": "^1.0.0 || ^3.0.0 || ^4.0.0",
+    "spryker/sales": "^8.5.0 || ^10.0.0 || ^11.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/util-text": "^1.2.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {

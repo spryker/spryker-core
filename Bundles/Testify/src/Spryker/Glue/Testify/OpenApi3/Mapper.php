@@ -8,7 +8,6 @@
 namespace Spryker\Glue\Testify\OpenApi3;
 
 use Spryker\Glue\Testify\OpenApi3\Collection\CollectionInterface;
-use Spryker\Glue\Testify\OpenApi3\Object\ObjectInterface;
 use Spryker\Glue\Testify\OpenApi3\Primitive\Any;
 use Spryker\Glue\Testify\OpenApi3\Primitive\PrimitiveInterface;
 use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
@@ -18,6 +17,7 @@ use Spryker\Glue\Testify\OpenApi3\Property\PropertyValues;
 use Spryker\Glue\Testify\OpenApi3\Reference\ReferableInterface;
 use Spryker\Glue\Testify\OpenApi3\Reference\ReferenceResolverInterface;
 use Spryker\Glue\Testify\OpenApi3\Reference\ReferenceValue;
+use Spryker\Glue\Testify\OpenApi3\SchemaObject\ObjectInterface;
 
 class Mapper implements MapperInterface
 {
@@ -35,7 +35,7 @@ class Mapper implements MapperInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function mapObjectFromPayload(ObjectInterface $object, $payload): SchemaFieldInterface
     {
@@ -59,7 +59,7 @@ class Mapper implements MapperInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function mapCollectionFromPayload(CollectionInterface $collection, $payload): SchemaFieldInterface
     {
@@ -74,7 +74,7 @@ class Mapper implements MapperInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function mapPrimitiveFromPayload(PrimitiveInterface $primitive, $payload): SchemaFieldInterface
     {

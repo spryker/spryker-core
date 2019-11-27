@@ -17,6 +17,7 @@ use Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group ErrorHandler
@@ -28,7 +29,7 @@ class ErrorHandlerTest extends Unit
     /**
      * @return void
      */
-    public function testIfHandleExceptionThrowsExceptionErrorLoggerShouldLogBeforeExceptionAndLogExceptionAndSendExitCode()
+    public function testIfHandleExceptionThrowsExceptionErrorLoggerShouldLogBeforeExceptionAndLogExceptionAndSendExitCode(): void
     {
         $errorLoggerMock = $this->getErrorLoggerMock();
         $errorLoggerMock->expects($this->exactly(2))->method('log');
@@ -49,7 +50,7 @@ class ErrorHandlerTest extends Unit
     /**
      * @return void
      */
-    public function testIfHandleExceptionThrowsExceptionErrorLoggerShouldLogBeforeExceptionAndLogExceptionAndShouldNotSendExitCode()
+    public function testIfHandleExceptionThrowsExceptionErrorLoggerShouldLogBeforeExceptionAndLogExceptionAndShouldNotSendExitCode(): void
     {
         $errorLoggerMock = $this->getErrorLoggerMock();
         $errorLoggerMock->expects($this->exactly(2))->method('log');
@@ -70,7 +71,7 @@ class ErrorHandlerTest extends Unit
     /**
      * @return void
      */
-    public function testHandleExceptionShouldLogRenderErrorAndSendExitCode()
+    public function testHandleExceptionShouldLogRenderErrorAndSendExitCode(): void
     {
         $errorLoggerMock = $this->getErrorLoggerMock();
         $errorLoggerMock->expects($this->once())->method('log');
@@ -89,7 +90,7 @@ class ErrorHandlerTest extends Unit
     /**
      * @return void
      */
-    public function testHandleExceptionShouldLogRenderErrorAndNotSendExitCode()
+    public function testHandleExceptionShouldLogRenderErrorAndNotSendExitCode(): void
     {
         $errorLoggerMock = $this->getErrorLoggerMock();
         $errorLoggerMock->expects($this->once())->method('log');
@@ -108,7 +109,7 @@ class ErrorHandlerTest extends Unit
     /**
      * @return void
      */
-    public function testHandleFatalShouldCallHandleExceptionWhenLastErrorExists()
+    public function testHandleFatalShouldCallHandleExceptionWhenLastErrorExists(): void
     {
         $errorLoggerMock = $this->getErrorLoggerMock();
         $errorRendererMock = $this->getErrorRendererMock();
@@ -124,7 +125,7 @@ class ErrorHandlerTest extends Unit
     /**
      * @return void
      */
-    public function testHandleFatalShouldNotCallHandleExceptionWhenNoLastErrorExists()
+    public function testHandleFatalShouldNotCallHandleExceptionWhenNoLastErrorExists(): void
     {
         $errorLoggerMock = $this->getErrorLoggerMock();
         $errorRendererMock = $this->getErrorRendererMock();

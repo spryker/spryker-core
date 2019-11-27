@@ -23,7 +23,7 @@ class ProductSetDataStorageUnpublishListener extends AbstractPlugin implements E
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Handles product sets unpublish event.
      *
      * @api

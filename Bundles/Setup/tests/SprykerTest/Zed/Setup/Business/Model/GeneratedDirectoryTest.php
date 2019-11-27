@@ -14,6 +14,7 @@ use Symfony\Component\Finder\Finder;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Setup
@@ -27,7 +28,7 @@ class GeneratedDirectoryTest extends Unit
     /**
      * @return void
      */
-    public function testClearAbortsOnNonExistingDirectory()
+    public function testClearAbortsOnNonExistingDirectory(): void
     {
         $fileSystemMock = $this->getFileSystemMock();
         $fileSystemMock

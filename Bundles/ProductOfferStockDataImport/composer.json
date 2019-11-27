@@ -1,0 +1,34 @@
+{
+  "name": "spryker/product-offer-stock-data-import",
+  "type": "library",
+  "description": "ProductOfferStockDataImport module",
+  "license": "MIT",
+  "require": {
+    "php": ">=7.2",
+    "spryker/data-import": "^1.0.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/product-offer": "^0.1.0",
+    "spryker/product-offer-stock": "^0.1.0",
+    "spryker/stock": "^7.0.0 || ^8.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

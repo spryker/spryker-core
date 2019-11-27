@@ -15,6 +15,7 @@ use Spryker\Zed\ProductList\Business\ProductListRestrictionFilter\ProductListRes
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductList
@@ -31,7 +32,7 @@ class ProductListRestrictionFilterTest extends Unit
     protected $tester;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \Spryker\Zed\ProductList\Business\ProductList\ProductListReaderInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $productListReaderMock;
 
@@ -184,7 +185,7 @@ class ProductListRestrictionFilterTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\ProductList\Business\ProductList\ProductListReaderInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createProductListReaderMock(): MockObject
     {

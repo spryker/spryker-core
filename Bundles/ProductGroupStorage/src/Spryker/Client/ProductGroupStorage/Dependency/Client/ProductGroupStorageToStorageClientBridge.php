@@ -33,7 +33,7 @@ class ProductGroupStorageToStorageClientBridge implements ProductGroupStorageToS
     }
 
     /**
-     * @param array $keys
+     * @param string[] $keys
      *
      * @return array
      */

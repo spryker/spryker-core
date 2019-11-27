@@ -13,6 +13,7 @@ use Spryker\Zed\Twig\Business\Model\CacheWarmerInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Twig
@@ -27,7 +28,7 @@ class CacheWarmerCompositeTest extends Unit
     /**
      * @return void
      */
-    public function testCanBeInstantiated()
+    public function testCanBeInstantiated(): void
     {
         $cacheWarmerMock1 = $this->getCacheWarmerMock();
         $cacheWarmerMock2 = $this->getCacheWarmerMock();
@@ -43,7 +44,7 @@ class CacheWarmerCompositeTest extends Unit
     /**
      * @return void
      */
-    public function testWarmUpCallsAllAppliedCacheWarmer()
+    public function testWarmUpCallsAllAppliedCacheWarmer(): void
     {
         $cacheWarmerMock1 = $this->getCacheWarmerMock();
         $cacheWarmerMock1->expects($this->once())->method('warmUp');

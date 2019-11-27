@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\ProductLabel\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ProductLabelBuilder;
+use Generated\Shared\Transfer\ProductLabelTransfer;
+use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ProductLabelDataHelper extends Module
@@ -20,7 +22,7 @@ class ProductLabelDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer
      */
-    public function haveProductLabel(array $seedData = [])
+    public function haveProductLabel(array $seedData = []): ProductLabelTransfer
     {
         $productLabelTransfer = (new ProductLabelBuilder($seedData))->build();
         $productLabelTransfer->setIdProductLabel(null);
@@ -35,7 +37,7 @@ class ProductLabelDataHelper extends Module
      *
      * @return void
      */
-    public function haveProductLabelToAbstractProductRelation($idProductLabel, $idProductAbstract)
+    public function haveProductLabelToAbstractProductRelation(int $idProductLabel, int $idProductAbstract): void
     {
         $this
             ->getProductLabelFacade()
@@ -45,7 +47,7 @@ class ProductLabelDataHelper extends Module
     /**
      * @return \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
      */
-    protected function getProductLabelFacade()
+    protected function getProductLabelFacade(): ProductLabelFacadeInterface
     {
         return $this->getLocator()->productLabel()->facade();
     }

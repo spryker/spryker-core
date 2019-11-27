@@ -15,6 +15,7 @@ use Spryker\Shared\Money\Mapper\TransferToMoneyMapperInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Money
@@ -41,7 +42,7 @@ abstract class AbstractIntlMoneyFormatterTest extends Unit
      *
      * @return \Money\Money
      */
-    public function convert(MoneyTransfer $moneyTransfer)
+    public function convert(MoneyTransfer $moneyTransfer): Money
     {
         $money = new Money($moneyTransfer->getAmount(), new Currency($moneyTransfer->getCurrency()->getCode()));
 

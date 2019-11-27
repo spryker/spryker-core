@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormView;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group StepEngine
@@ -29,7 +30,7 @@ class AbstractSubFormTypeTest extends Unit
     /**
      * @return void
      */
-    public function testBuildViewVarsContainExpectedPathToTemplate()
+    public function testBuildViewVarsContainExpectedPathToTemplate(): void
     {
         $abstractSubFormTypeMock = $this->getAbstractSubFormTypeMock();
 

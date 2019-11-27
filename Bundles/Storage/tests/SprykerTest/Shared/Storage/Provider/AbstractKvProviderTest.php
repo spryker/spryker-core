@@ -12,6 +12,7 @@ use Spryker\Shared\Storage\Provider\AbstractKvProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Storage
@@ -24,7 +25,7 @@ class AbstractKvProviderTest extends Unit
     /**
      * @return void
      */
-    public function testGetConfigByKvNameShouldReturnArray()
+    public function testGetConfigByKvNameShouldReturnArray(): void
     {
         $abstractKvProviderMock = $this->getAbstractKvProviderMock();
         $config = $abstractKvProviderMock->getConfigByKvName(AbstractKvProvider::KV_ADAPTER_REDIS);

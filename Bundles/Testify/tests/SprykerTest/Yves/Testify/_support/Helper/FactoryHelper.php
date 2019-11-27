@@ -12,6 +12,9 @@ use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
 use Exception;
+use Spryker\Yves\Kernel\AbstractBundleConfig;
+use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\Kernel\Container;
 use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 
 class FactoryHelper extends Module
@@ -34,7 +37,7 @@ class FactoryHelper extends Module
      *
      * @throws \Exception
      *
-     * @return object|\Spryker\Zed\Kernel\Business\AbstractBusinessFactory
+     * @return object|\Spryker\Yves\Kernel\AbstractFactory
      */
     public function mockFactoryMethod(string $methodName, $return)
     {
@@ -53,24 +56,24 @@ class FactoryHelper extends Module
     /**
      * @return \Spryker\Yves\Kernel\AbstractFactory
      */
-    public function getFactory()
+    public function getFactory(): AbstractFactory
     {
         if ($this->factoryStub !== null) {
+            $this->factoryStub = $this->injectConfig($this->factoryStub);
+            $this->factoryStub = $this->injectContainer($this->factoryStub);
+
             return $this->factoryStub;
         }
 
         $moduleFactory = $this->createFactory();
-        if ($this->hasModule('\\' . ConfigHelper::class)) {
-            $moduleFactory->setConfig($this->getConfig());
-        }
 
-        return $moduleFactory;
+        return $this->injectConfig($moduleFactory);
     }
 
     /**
      * @return \Spryker\Yves\Kernel\AbstractFactory
      */
-    protected function createFactory()
+    protected function createFactory(): AbstractFactory
     {
         $moduleFactoryClassName = $this->getFactoryClassName();
 
@@ -85,13 +88,27 @@ class FactoryHelper extends Module
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
 
-        return sprintf(static::FACTORY_CLASS_NAME_PATTERN, $namespaceParts[0], $namespaceParts[2]);
+        return sprintf(static::FACTORY_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $namespaceParts[2]);
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\AbstractFactory $factory
+     *
+     * @return \Spryker\Yves\Kernel\AbstractFactory
+     */
+    protected function injectConfig(AbstractFactory $factory): AbstractFactory
+    {
+        if ($this->hasModule('\\' . ConfigHelper::class)) {
+            $factory->setConfig($this->getConfig());
+        }
+
+        return $factory;
     }
 
     /**
      * @return \Spryker\Yves\Kernel\AbstractBundleConfig
      */
-    protected function getConfig()
+    protected function getConfig(): AbstractBundleConfig
     {
         return $this->getConfigHelper()->getModuleConfig();
     }
@@ -105,11 +122,41 @@ class FactoryHelper extends Module
     }
 
     /**
+     * @param \Spryker\Yves\Kernel\AbstractFactory $factory
+     *
+     * @return \Spryker\Yves\Kernel\AbstractFactory
+     */
+    protected function injectContainer(AbstractFactory $factory): AbstractFactory
+    {
+        if ($this->hasModule('\\' . DependencyProviderHelper::class)) {
+            $factory->setContainer($this->getContainer());
+        }
+
+        return $factory;
+    }
+
+    /**
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function getContainer(): Container
+    {
+        return $this->getDependencyProviderHelper()->getContainer();
+    }
+
+    /**
+     * @return \SprykerTest\Yves\Testify\Helper\DependencyProviderHelper
+     */
+    protected function getDependencyProviderHelper(): DependencyProviderHelper
+    {
+        return $this->getModule('\\' . DependencyProviderHelper::class);
+    }
+
+    /**
      * @param \Codeception\TestInterface $test
      *
      * @return void
      */
-    public function _before(TestInterface $test)
+    public function _before(TestInterface $test): void
     {
         $this->factoryStub = null;
         $this->mockedFactoryMethods = [];

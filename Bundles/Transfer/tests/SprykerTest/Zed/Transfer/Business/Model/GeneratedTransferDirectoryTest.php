@@ -14,6 +14,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Transfer
@@ -27,7 +28,7 @@ class GeneratedTransferDirectoryTest extends Unit
     /**
      * @return void
      */
-    public function testClearAbortsOnNonExistingDirectory()
+    public function testClearAbortsOnNonExistingDirectory(): void
     {
         $fileSystemMock = $this->getFileSystemMock();
         $fileSystemMock

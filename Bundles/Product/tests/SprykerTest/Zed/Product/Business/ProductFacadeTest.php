@@ -15,6 +15,7 @@ use Spryker\Zed\Product\Business\ProductFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Product
@@ -38,7 +39,7 @@ class ProductFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -49,7 +50,7 @@ class ProductFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateProductConcreteSku()
+    public function testGenerateProductConcreteSku(): void
     {
         $sku = $this->productFacade->generateProductConcreteSku(
             $this->createProductAbstractTransfer(),
@@ -95,7 +96,7 @@ class ProductFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    protected function createProductAbstractTransfer()
+    protected function createProductAbstractTransfer(): ProductAbstractTransfer
     {
         $productAbstractTransfer = new ProductAbstractTransfer();
         $productAbstractTransfer->setSku('abstract_sku');
@@ -106,7 +107,7 @@ class ProductFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function createProductConcreteTransfer()
+    protected function createProductConcreteTransfer(): ProductConcreteTransfer
     {
         $productConcreteTransfer = new ProductConcreteTransfer();
         $productConcreteTransfer->setAttributes([
@@ -120,7 +121,7 @@ class ProductFacadeTest extends Unit
     /**
      * @return string
      */
-    protected function getExpectedProductConcreteSku()
+    protected function getExpectedProductConcreteSku(): string
     {
         return 'abstract_sku' .
             SkuGenerator::SKU_ABSTRACT_SEPARATOR .

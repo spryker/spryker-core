@@ -15,7 +15,7 @@ use Spryker\Service\Kernel\AbstractService;
 class UtilEncodingService extends AbstractService implements UtilEncodingServiceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,7 @@ class UtilEncodingService extends AbstractService implements UtilEncodingService
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -52,16 +52,16 @@ class UtilEncodingService extends AbstractService implements UtilEncodingService
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param array $data
      * @param string $format
      *
-     * @return string|null
-     *
      * @throws \Spryker\Service\UtilEncoding\Exception\FormatNotSupportedException
+     *
+     * @return string|null
      */
     public function encodeToFormat(array $data, string $format): ?string
     {
@@ -71,16 +71,16 @@ class UtilEncodingService extends AbstractService implements UtilEncodingService
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
      * @param string $data
      * @param string $format
      *
-     * @return array|null
-     *
      * @throws \Spryker\Service\UtilEncoding\Exception\FormatNotSupportedException
+     *
+     * @return array|null
      */
     public function decodeFromFormat(string $data, string $format): ?array
     {

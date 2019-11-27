@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Auth
@@ -41,7 +42,7 @@ class AuthTest extends Unit
     /**
      * @return void
      */
-    public function testSessionRegenerationOnLogin()
+    public function testSessionRegenerationOnLogin(): void
     {
         $userTransfer = $this->createUserTransfer(static::USERNAME);
 
@@ -66,7 +67,7 @@ class AuthTest extends Unit
     /**
      * @return void
      */
-    public function testSessionRegenerationOnLogout()
+    public function testSessionRegenerationOnLogout(): void
     {
         $facadeUser = $this->createFacadeUser();
         $facadeUser
@@ -79,7 +80,7 @@ class AuthTest extends Unit
     /**
      * @return void
      */
-    public function testNoReferenceSavedInSession()
+    public function testNoReferenceSavedInSession(): void
     {
         $sessionClient = $this->createSessionClient();
         $authModel = new Auth(
@@ -102,7 +103,7 @@ class AuthTest extends Unit
     /**
      * @return void
      */
-    public function testAuthorise()
+    public function testAuthorise(): void
     {
         $sessionClient = $this->createSessionClient();
         $userFacade = $this->createFacadeUser();
@@ -152,7 +153,7 @@ class AuthTest extends Unit
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    protected function createUserTransfer($userName)
+    protected function createUserTransfer(string $userName): UserTransfer
     {
         $userTransfer = new UserTransfer();
         $userTransfer
@@ -226,11 +227,11 @@ class AuthTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $sessionClient
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Session\SessionClient $sessionClient
      *
      * @return void
      */
-    protected function checkMigrateIsCalled(MockObject $sessionClient)
+    protected function checkMigrateIsCalled(MockObject $sessionClient): void
     {
         $sessionClient->expects($this->once())
             ->method('migrate')

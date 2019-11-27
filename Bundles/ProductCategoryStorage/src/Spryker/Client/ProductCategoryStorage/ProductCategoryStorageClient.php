@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductCategoryStorageClient extends AbstractClient implements ProductCategoryStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -29,5 +29,22 @@ class ProductCategoryStorageClient extends AbstractClient implements ProductCate
         return $this->getFactory()
             ->createProductCategoryStorageReader()
             ->findProductAbstractCategory($idProductAbstract, $locale);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[]
+     */
+    public function findBulkProductAbstractCategory(array $productAbstractIds, string $localeName): array
+    {
+        return $this->getFactory()
+            ->createProductCategoryStorageReader()
+            ->findBulkProductAbstractCategory($productAbstractIds, $localeName);
     }
 }

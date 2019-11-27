@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Storage
@@ -35,7 +36,7 @@ class StorageClientTest extends Unit
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $storageClient = $this->createStorageClient();
@@ -50,10 +51,10 @@ class StorageClientTest extends Unit
      * @return void
      */
     protected function testStorageCacheAllowedGetParameters(
-        $uri,
-        $expectedCacheKey,
+        string $uri,
+        string $expectedCacheKey,
         array $getParameters = []
-    ) {
+    ): void {
         $request = new Request();
         $request->server->set('SERVER_NAME', 'localhost');
         $request->server->set('REQUEST_URI', $uri);
@@ -159,7 +160,7 @@ class StorageClientTest extends Unit
     /**
      * @return void
      */
-    public function testGenerateCacheKeyWithTwoAllowedGetParameterAndTwoOrderedAreGiven()
+    public function testGenerateCacheKeyWithTwoAllowedGetParameterAndTwoOrderedAreGiven(): void
     {
         $this->markTestSkipped(
             'This test will be updated in the next major.'
@@ -197,12 +198,11 @@ class StorageClientTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Client\Storage\Exception\InvalidStorageScanPluginInterfaceException
-     *
      * @return void
      */
     public function testInvalidStorageScanPluginInterfaceExceptionThrown(): void
     {
+        $this->expectException('Spryker\Client\Storage\Exception\InvalidStorageScanPluginInterfaceException');
         /** @var \Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface|\PHPUnit\Framework\MockObject\MockObject $storagePluginMock */
         $storagePluginMock = $this->getMockBuilder(StoragePluginInterface::class)->getMock();
 

@@ -19,7 +19,7 @@ use Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface;
 class OfferSavingHydratorPlugin extends AbstractPlugin implements OfferHydratorPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

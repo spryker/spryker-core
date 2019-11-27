@@ -128,8 +128,10 @@ class DataImportConsole extends Console
         $this->info(sprintf('<fg=white>Start "<fg=green>%s</>" import</>', $this->getImporterType($input)));
         $dataImportReportTransfer = $this->getFacade()->import($dataImporterConfigurationTransfer);
 
-        if ($dataImportReportTransfer->getDataImporterReports()) {
-            $this->printDataImporterReports($dataImportReportTransfer->getDataImporterReports());
+        /** @var \Generated\Shared\Transfer\DataImporterReportTransfer[]|null $dataImporterReports */
+        $dataImporterReports = $dataImportReportTransfer->getDataImporterReports();
+        if ($dataImporterReports) {
+            $this->printDataImporterReports($dataImporterReports);
         }
 
         $this->info('<fg=green>---------------------------------</>');

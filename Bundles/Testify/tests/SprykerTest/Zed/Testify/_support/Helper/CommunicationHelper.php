@@ -12,7 +12,9 @@ use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
 use Exception;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 
 class CommunicationHelper extends Module
@@ -32,7 +34,7 @@ class CommunicationHelper extends Module
     /**
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
-    public function getFacade()
+    public function getFacade(): AbstractFacade
     {
         $facade = $this->createFacade();
 
@@ -77,7 +79,7 @@ class CommunicationHelper extends Module
     /**
      * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
-    public function getFactory()
+    public function getFactory(): AbstractCommunicationFactory
     {
         if ($this->factoryStub !== null) {
             return $this->injectConfig($this->factoryStub);
@@ -91,7 +93,7 @@ class CommunicationHelper extends Module
     /**
      * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
-    protected function createFactory()
+    protected function createFactory(): AbstractCommunicationFactory
     {
         $moduleFactoryClassName = $this->getFactoryClassName();
 
@@ -114,7 +116,7 @@ class CommunicationHelper extends Module
      *
      * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
-    protected function injectConfig($moduleFactory)
+    protected function injectConfig($moduleFactory): AbstractCommunicationFactory
     {
         if ($this->hasConfigHelper()) {
             $moduleFactory->setConfig($this->getConfig());
@@ -134,7 +136,7 @@ class CommunicationHelper extends Module
     /**
      * @return \Spryker\Zed\Kernel\AbstractBundleConfig
      */
-    protected function getConfig()
+    protected function getConfig(): AbstractBundleConfig
     {
         return $this->getConfigHelper()->getModuleConfig();
     }
@@ -152,7 +154,7 @@ class CommunicationHelper extends Module
      *
      * @return void
      */
-    public function _before(TestInterface $test)
+    public function _before(TestInterface $test): void
     {
         $this->factoryStub = null;
         $this->mockedFactoryMethods = [];

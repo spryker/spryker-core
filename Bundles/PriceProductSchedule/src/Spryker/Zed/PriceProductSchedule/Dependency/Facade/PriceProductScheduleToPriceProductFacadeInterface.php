@@ -65,4 +65,20 @@ interface PriceProductScheduleToPriceProductFacadeInterface
         int $idProductAbstract,
         ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
     ): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    public function createPriceForProduct(PriceProductTransfer $priceProductTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return bool
+     */
+    public function isPriceProductByProductIdentifierAndPriceTypeExists(
+        PriceProductTransfer $priceProductTransfer
+    ): bool;
 }

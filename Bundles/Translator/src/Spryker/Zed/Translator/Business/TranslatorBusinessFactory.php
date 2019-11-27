@@ -103,11 +103,11 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
      */
     public function createTranslatorCollection(): array
     {
-        $availableLocales = $this->getLocaleFacade()->getAvailableLocales();
+        $supportedLocalesCodes = $this->getLocaleFacade()->getSupportedLocaleCodes();
 
-        return array_map(function ($availableLocale) {
-            return $this->createTranslator($availableLocale);
-        }, $availableLocales);
+        return array_map(function ($supportedLocalesCodes) {
+            return $this->createTranslator($supportedLocalesCodes);
+        }, $supportedLocalesCodes);
     }
 
     /**

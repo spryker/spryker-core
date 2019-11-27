@@ -14,6 +14,7 @@ use SprykerTest\Glue\Testify\OpenApi3\Stub\Document;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group Testify

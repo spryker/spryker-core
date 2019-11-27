@@ -8,4 +8,7 @@
         <property name="updatedAt" type="int"/>
     </transfer>
 
+    <transfer name="ShoppingListCollection">
+    </transfer>
+
 </transfers>

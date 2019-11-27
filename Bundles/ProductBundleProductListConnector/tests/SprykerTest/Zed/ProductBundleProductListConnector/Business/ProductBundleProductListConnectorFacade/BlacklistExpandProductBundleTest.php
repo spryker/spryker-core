@@ -17,6 +17,7 @@ use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundl
 
 /**
  * Auto-generated group annotations
+ *
  * @group Spryker
  * @group Zed
  * @group ProductBundleProductListConnector

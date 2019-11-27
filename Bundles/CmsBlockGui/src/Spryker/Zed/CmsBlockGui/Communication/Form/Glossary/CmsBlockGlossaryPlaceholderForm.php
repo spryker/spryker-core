@@ -23,6 +23,8 @@ use Symfony\Component\Validator\Constraint;
  */
 class CmsBlockGlossaryPlaceholderForm extends AbstractType
 {
+    use ArrayObjectTransformerTrait;
+
     public const FIELD_FK_CMS_BLOCK = 'fkCmsBlock';
     public const FIELD_PLACEHOLDER = 'placeholder';
     public const FIELD_ID_GLOSSARY_KEY_MAPPING = 'idCmsBlockGlossaryKeyMapping';
@@ -31,8 +33,6 @@ class CmsBlockGlossaryPlaceholderForm extends AbstractType
     public const FIELD_TRANSLATION_KEY = 'translationKey';
 
     public const GROUP_PLACEHOLDER_CHECK = 'placeholder_check';
-
-    use ArrayObjectTransformerTrait;
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver

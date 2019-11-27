@@ -12,7 +12,7 @@ use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\UpSellingProductsRestApi\Dependency\Client\UpSellingProductsRestApiToCartsRestApiClientBridge;
 use Spryker\Glue\UpSellingProductsRestApi\Dependency\Client\UpSellingProductsRestApiToProductRelationStorageClientBridge;
 use Spryker\Glue\UpSellingProductsRestApi\Dependency\Client\UpSellingProductsRestApiToProductStorageClientBridge;
-use Spryker\Glue\UpSellingProductsRestApi\Dependency\Resource\UpSellingProductsRestApiToProductsRestApiResourceBridge;
+use Spryker\Glue\UpSellingProductsRestApi\Dependency\RestApiResource\UpSellingProductsRestApiToProductsRestApiResourceBridge;
 
 /**
  * @method \Spryker\Glue\UpSellingProductsRestApi\UpSellingProductsRestApiConfig getConfig()

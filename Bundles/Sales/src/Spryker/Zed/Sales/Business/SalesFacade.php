@@ -26,9 +26,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class SalesFacade extends AbstractFacade implements SalesFacadeInterface
 {
     /**
-     * Specification:
-     *  - Returns persisted order information stored into OrderTransfer
-     *  - Hydrates order by calling HydrateOrderPlugin's registered in project dependency provider.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -39,14 +37,12 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function getOrderByIdSalesOrder($idSalesOrder)
     {
         return $this->getFactory()
-            ->createOrderHydrator()
+            ->createOrderHydratorWithMultiShippingAddress()
             ->hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder);
     }
 
     /**
-     * Specification:
-     *  - Returns persisted order information stored into OrderTransfer
-     *  - Hydrates order by calling HydrateOrderPlugin's registered in project dependency provider.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -57,12 +53,12 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function findOrderByIdSalesOrder(int $idSalesOrder): ?OrderTransfer
     {
         return $this->getFactory()
-            ->createOrderReader()
+            ->createOrderReaderWithMultiShippingAddress()
             ->findOrderByIdSalesOrder($idSalesOrder);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -73,12 +69,12 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function findOrderByIdSalesOrderItem($idSalesOrderItem)
     {
         return $this->getFactory()
-            ->createOrderReader()
+            ->createOrderReaderWithMultiShippingAddress()
             ->findOrderByIdSalesOrderItem($idSalesOrderItem);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -113,7 +109,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -130,7 +126,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -163,9 +159,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Returns the order for the given customer id and sales order id.
-     *  - Aggregates order totals calls -> SalesAggregator
+     * {@inheritDoc}
      *
      * @api
      *
@@ -176,12 +170,13 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function getCustomerOrder(OrderTransfer $orderTransfer)
     {
         return $this->getFactory()
-            ->createOrderHydrator()
+            ->createOrderHydratorStrategyResolver()
+            ->resolve($orderTransfer->getItems())
             ->getCustomerOrder($orderTransfer);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -200,7 +195,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -237,8 +232,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns the distinct states of all order items for the given order id
+     * {@inheritDoc}
      *
      * @api
      *
@@ -249,7 +243,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function getDistinctOrderStates($idSalesOrder)
     {
         return $this->getFactory()
-            ->createOrderReader()
+            ->createOrderReaderWithMultiShippingAddress()
             ->getDistinctOrderStates($idSalesOrder);
     }
 
@@ -290,9 +284,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Replaces all values of the order address by the values from the addresses transfer
-     * - Returns true if order was successfully updated
+     * {@inheritDoc}
      *
      * @api
      *
@@ -304,12 +296,28 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     public function updateOrderAddress(AddressTransfer $addressesTransfer, $idAddress)
     {
         return $this->getFactory()
-            ->createOrderAddressUpdater()
+            ->createOrderAddressWriter()
             ->update($addressesTransfer, $idAddress);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressesTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function createOrderAddress(AddressTransfer $addressesTransfer): AddressTransfer
+    {
+        return $this->getFactory()
+            ->createOrderAddressWriter()
+            ->create($addressesTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *
@@ -326,7 +334,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -339,5 +347,53 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
         return $this->getFactory()
             ->createExpenseWriter()
             ->createSalesExpense($expenseTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    public function updateSalesExpense(ExpenseTransfer $expenseTransfer): ExpenseTransfer
+    {
+        return $this->getFactory()
+            ->createExpenseUpdater()
+            ->updateSalesExpense($expenseTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getUniqueOrderItems(iterable $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createSalesOrderItemGrouper()
+            ->getUniqueOrderItems($itemTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function expandWithCustomerOrSalesAddress(AddressTransfer $addressTransfer): AddressTransfer
+    {
+        return $this->getFactory()
+            ->createSalesAddressExpander()
+            ->expandWithCustomerOrSalesAddress($addressTransfer);
     }
 }

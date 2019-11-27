@@ -15,6 +15,7 @@ use Spryker\Zed\Oms\Business\OrderStateMachine\Timeout;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Oms
@@ -32,7 +33,7 @@ class TimeoutTest extends Unit
     /**
      * @return void
      */
-    public function testCheckTimeouts()
+    public function testCheckTimeouts(): void
     {
         $salesOrderItem1 = $this->createSalesOrderItem(10, 1, static::EVENT_PAY);
         $salesOrderItem2 = $this->createSalesOrderItem(11, 1, static::EVENT_PAY);
@@ -75,7 +76,7 @@ class TimeoutTest extends Unit
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
-    protected function createSalesOrderItem($idSalesOrderItem, $idSalesOrder, $eventName)
+    protected function createSalesOrderItem(int $idSalesOrderItem, int $idSalesOrder, string $eventName): SpySalesOrderItem
     {
         return (new SpySalesOrderItem())
             ->setIdSalesOrderItem($idSalesOrderItem)

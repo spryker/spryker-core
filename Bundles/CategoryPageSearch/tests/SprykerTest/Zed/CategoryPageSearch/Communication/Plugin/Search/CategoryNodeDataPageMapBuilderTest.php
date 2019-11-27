@@ -16,6 +16,7 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CategoryPageSearch
@@ -31,7 +32,7 @@ class CategoryNodeDataPageMapBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testBuildPageMapWillReturnCorrectTransfer()
+    public function testBuildPageMapWillReturnCorrectTransfer(): void
     {
         $query = new CategoryPageSearchQueryContainer();
         $categoryNodeDataPageMapBuilder = new CategoryNodeDataPageMapBuilder();

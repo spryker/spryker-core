@@ -15,7 +15,7 @@ use Spryker\Service\Kernel\AbstractService;
 class UtilMeasurementUnitConversionService extends AbstractService implements UtilMeasurementUnitConversionServiceInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param string $fromCode
      * @param string $toCode

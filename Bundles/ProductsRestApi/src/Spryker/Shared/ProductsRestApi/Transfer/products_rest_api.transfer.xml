@@ -7,14 +7,14 @@
         <property name="sku" type="string"/>
         <property name="name" type="string"/>
         <property name="description" type="string"/>
-        <property name="attributes" type="array"/>
-        <property name="superAttributesDefinition" type="array"/>
-        <property name="superAttributes" type="array"/>
-        <property name="attributeMap" type="array"/>
+        <property name="attributes" type="array" singular="attributes"/>
+        <property name="superAttributesDefinition" type="array" singular="superAttributesDefinition"/>
+        <property name="superAttributes" type="array" singular="superAttributes"/>
+        <property name="attributeMap" type="array" singular="attributeMap"/>
         <property name="metaTitle" type="string"/>
         <property name="metaKeywords" type="string"/>
         <property name="metaDescription" type="string"/>
-        <property name="attributeNames" type="array"/>
+        <property name="attributeNames" type="array" singular="attributeNames"/>
         <property name="url" type="string"/>
     </transfer>
 
@@ -22,27 +22,30 @@
         <property name="sku" type="string"/>
         <property name="name" type="string"/>
         <property name="description" type="string"/>
-        <property name="attributes" type="array"/>
-        <property name="superAttributesDefinition" type="array"/>
+        <property name="attributes" type="array" singular="attributes"/>
+        <property name="superAttributesDefinition" type="array" singular="superAttributesDefinition"/>
         <property name="metaTitle" type="string"/>
         <property name="metaKeywords" type="string"/>
         <property name="metaDescription" type="string"/>
-        <property name="attributeNames" type="array"/>
+        <property name="attributeNames" type="array" singular="attributeNames"/>
     </transfer>
 
     <transfer name="RestErrorMessage">
-        <property name="status" type="int" />
-        <property name="code" type="string" />
-        <property name="detail" type="string" />
+        <property name="status" type="int"/>
+        <property name="code" type="string"/>
+        <property name="detail" type="string"/>
     </transfer>
 
     <transfer name="UrlStorage">
-        <property name="fkResourceProductAbstract" type="int" />
+        <property name="fkResourceProductAbstract" type="int"/>
+        <property name="localeName" type="string"/>
+        <property name="localeUrls" type="UrlStorage[]" singular="urlStorage"/>
+        <property name="fkLocale" type="int"/>
     </transfer>
 
     <transfer name="RestUrlResolverAttributes">
-        <property name="entityType" type="string" />
-        <property name="entityId" type="string" />
+        <property name="entityType" type="string"/>
+        <property name="entityId" type="string"/>
     </transfer>
 
 </transfers>

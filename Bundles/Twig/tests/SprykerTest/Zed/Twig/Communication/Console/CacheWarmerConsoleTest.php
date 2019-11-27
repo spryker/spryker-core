@@ -15,6 +15,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Twig
@@ -28,7 +29,7 @@ class CacheWarmerConsoleTest extends Unit
     /**
      * @return void
      */
-    public function testCommandIsExecutable()
+    public function testCommandIsExecutable(): void
     {
         $application = new Application();
         $application->add($this->getCacheWarmerConsoleMock());

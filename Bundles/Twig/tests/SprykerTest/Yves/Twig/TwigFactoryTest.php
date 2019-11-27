@@ -13,6 +13,7 @@ use Twig\Loader\LoaderInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Twig
@@ -24,7 +25,7 @@ class TwigFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateFilesystemLoaderReturnsLoaderInterface()
+    public function testCreateFilesystemLoaderReturnsLoaderInterface(): void
     {
         $twigFactory = new TwigFactory();
         $filesystemLoader = $twigFactory->createFilesystemLoader();
