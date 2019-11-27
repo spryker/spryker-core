@@ -21,7 +21,7 @@ class CmsSlotBlockValidator implements CmsSlotBlockValidatorInterface
     protected $cmsSlotFacade;
 
     /**
-     * @var bool[]
+     * @var int[]
      */
     protected $validCmsSlotBuffer = [];
 
