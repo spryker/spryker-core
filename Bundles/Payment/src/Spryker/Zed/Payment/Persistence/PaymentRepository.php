@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Payment\Persistence;
 
+use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
@@ -48,9 +49,12 @@ class PaymentRepository extends AbstractRepository implements PaymentRepositoryI
         $paymentProviderCollectionTransfer = new PaymentProviderCollectionTransfer();
         $paymentProviderEntities = $this->getFactory()
             ->createPaymentProviderQuery()
+            ->leftJoinWithPaymentMethod()
             ->usePaymentMethodQuery()
+                ->leftJoinWithPaymentMethodStore()
                 ->filterByIsActive(true)
                 ->usePaymentMethodStoreQuery()
+                    ->leftJoinWithStore()
                     ->useStoreQuery()
                         ->filterByName($storeName)
                     ->endUse()
@@ -88,5 +92,34 @@ class PaymentRepository extends AbstractRepository implements PaymentRepositoryI
         return $this->getFactory()
             ->createStoreRelationMapper()
             ->mapPaymentMethodStoreEntitiesToStoreRelationTransfer($shipmentMethodStoreEntities, $storeRelationTransfer);
+    }
+
+    /**
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
+     */
+    public function getActivePaymentMethodsForStore(int $idStore): PaymentMethodsTransfer
+    {
+        $paymentMethodsTransfer = new PaymentMethodsTransfer();
+        $paymentMethodEntities = $this->getFactory()
+            ->createPaymentMethodQuery()
+            ->filterByIsActive(true)
+            ->usePaymentMethodStoreQuery()
+                ->filterByFkStore($idStore)
+            ->endUse()
+            ->groupByIdPaymentMethod()
+            ->find();
+
+        if (!$paymentMethodEntities->getData()) {
+            return $paymentMethodsTransfer;
+        }
+
+        return $this->getFactory()
+            ->createPaymentMapper()
+            ->mapPaymentMethodEntityCollectionToPaymentMethodsTransfer(
+                $paymentMethodEntities,
+                $paymentMethodsTransfer
+            );
     }
 }

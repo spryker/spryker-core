@@ -20,6 +20,7 @@ use Spryker\Zed\Payment\Business\Method\PaymentMethodUpdaterInterface;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentHydrator;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentReader;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentSaver;
+use Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeInterface;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
 /**
@@ -90,7 +91,9 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     {
         return new PaymentMethodReader(
             $this->getPaymentMethodFilterPlugins(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getStoreFacade(),
+            $this->getRepository()
         );
     }
 
@@ -138,5 +141,13 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     protected function getPaymentMethodFilterPlugins()
     {
         return $this->getProvidedDependency(PaymentDependencyProvider::PAYMENT_METHOD_FILTER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeInterface
+     */
+    protected function getStoreFacade(): PaymentToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(PaymentDependencyProvider::FACADE_STORE);
     }
 }
