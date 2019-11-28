@@ -220,14 +220,15 @@ class CmsSlotBlockFacadeTest extends Unit
     public function testGetCmsBlocksWithSlotRelationsReturnsDataWithCorrectLimit(): void
     {
         // Arrange
-        $this->tester->createCmsBlocksInDb(3);
-        $filterTransfer = (new FilterTransfer())->setLimit(2);
+        $countCmsBlocks = SpyCmsBlockQuery::create()->count();
+        $this->tester->createCmsBlocksInDb();
+        $filterTransfer = (new FilterTransfer())->setLimit($countCmsBlocks + 1);
 
         // Act
         $cmsBlockTransfers = $this->tester->createCmsSlotBlockFacade()->getCmsBlocksWithSlotRelations($filterTransfer);
 
         // Assert
-        $this->assertCount(2, $cmsBlockTransfers);
+        $this->assertCount($countCmsBlocks, $cmsBlockTransfers);
     }
 
     /**
