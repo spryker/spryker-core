@@ -36,7 +36,7 @@ class ProductAbstractDataFeedQueryContainer extends AbstractQueryContainer imple
 
         if ($productDataFeedTransfer !== null) {
             $abstractProductQuery = $this->getFactory()
-                ->getAbstractProductJoinQuery()
+                ->createAbstractProductJoinQuery()
                 ->applyJoins($abstractProductQuery, $productDataFeedTransfer);
             $abstractProductQuery = $this->filterByUpdatedAt($abstractProductQuery, $productDataFeedTransfer);
         }
