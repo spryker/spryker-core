@@ -10,5 +10,6 @@
         <property name="testArray" type="array"/>
         <property name="testTransfer" type="Generated"/>
         <property name="testTransfers" type="Generated[]" singular="transfer"/>
+        <property name="testDecimal" type="decimal"/>
     </transfer>
 </transfers>

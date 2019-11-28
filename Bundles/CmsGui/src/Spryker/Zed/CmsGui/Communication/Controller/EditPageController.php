@@ -154,9 +154,9 @@ class EditPageController extends AbstractController
             $this->addSuccessMessage(static::MESSAGE_PAGE_ACTIVATION_SUCCESS);
         } catch (CannotActivatePageException $exception) {
              $this->addErrorMessage($exception->getMessage());
-        } finally {
-            return $this->redirectResponse($redirectUrl);
         }
+
+        return $this->redirectResponse($redirectUrl);
     }
 
     /**
