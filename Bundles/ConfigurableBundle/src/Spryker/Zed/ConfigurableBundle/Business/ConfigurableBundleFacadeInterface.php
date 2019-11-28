@@ -132,7 +132,7 @@ interface ConfigurableBundleFacadeInterface
     /**
      * Specification:
      * - Expects configurable bundle template ID to be provided.
-     * - Removes product image sets from Persistence.
+     * - Removes configurable bundle template related product image sets from Persistence.
      * - Removes configurable bundle template slots from Persistence.
      * - Removes configurable bundle template from Persistence.
      *
