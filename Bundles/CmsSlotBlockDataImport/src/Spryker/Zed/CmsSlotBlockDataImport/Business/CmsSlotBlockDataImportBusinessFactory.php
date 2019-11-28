@@ -15,14 +15,12 @@ use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsSlotBlockValid
 use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsSlotBlockWriterStep;
 use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsSlotKeyToCmsSlotIdStep;
 use Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep\CmsSlotTemplatePathToCmsSlotTemplateIdStep;
-use Spryker\Zed\CmsSlotBlockDataImport\Business\Hook\CmsSlotBlockDataImportAfterImportHook;
 use Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\AllConditionResolver;
 use Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\CategoryKeysToIdsConditionResolver;
 use Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\CmsPageKeysToIdsConditionResolver;
 use Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ConditionResolverInterface;
 use Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ProductAbstractSkusToIdsConditionResolver;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
-use Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 
 /**
@@ -50,7 +48,6 @@ class CmsSlotBlockDataImportBusinessFactory extends DataImportBusinessFactory
         $dataSetStepBroker->addStep($this->createCmsSlotBlockWriterStep());
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
-        $dataImporter->addAfterImportHook($this->createAfterImportHook());
 
         return $dataImporter;
     }
@@ -159,13 +156,5 @@ class CmsSlotBlockDataImportBusinessFactory extends DataImportBusinessFactory
     public function createCmsSlotBlockWriterStep(): DataImportStepInterface
     {
         return new CmsSlotBlockWriterStep($this->getUtilEncodingService());
-    }
-
-    /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface
-     */
-    public function createAfterImportHook(): DataImporterAfterImportInterface
-    {
-        return new CmsSlotBlockDataImportAfterImportHook($this->getEventFacade());
     }
 }

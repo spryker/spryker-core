@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep;
 
 use Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlockQuery;
+use Spryker\Zed\CmsSlotBlock\Dependency\CmsSlotBlockEvents;
 use Spryker\Zed\CmsSlotBlockDataImport\Business\DataSet\CmsSlotBlockDataSetInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
@@ -49,5 +50,10 @@ class CmsSlotBlockWriterStep extends PublishAwareStep implements DataImportStepI
         $cmsSlotBlockEntity->setConditions($conditions);
 
         $cmsSlotBlockEntity->save();
+
+        $this->addPublishEvents(
+            CmsSlotBlockEvents::CMS_SLOT_BLOCK_PUBLISH,
+            (int)$cmsSlotBlockEntity->getIdCmsSlotBlock()
+        );
     }
 }
