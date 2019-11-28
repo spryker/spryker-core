@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductLabelSearch\Communication\Plugin\PageMapExpander\Elasticsearch;
+namespace Spryker\Zed\ProductLabelSearch\Communication\Plugin\ProductPageSearch\Elasticsearch;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
@@ -21,6 +21,9 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractPage
 class ProductLabelMapExpanderPlugin extends AbstractPlugin implements ProductAbstractPageMapExpanderPluginInterface
 {
     /**
+     * {@inheritDoc}
+     * - Adds product label ids to product abstract search data.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer

@@ -254,7 +254,7 @@ class PageMapBuilder implements PageMapBuilderInterface
      *
      * @return array
      */
-    protected function ensureArrayValues($value)
+    protected function ensureArrayValues($value): array
     {
         if (!is_array($value)) {
             $value = [$value];

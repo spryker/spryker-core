@@ -123,16 +123,4 @@ interface StoreFacadeInterface
      * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
     public function getStoreTransfersByStoreNames(array $storeNames): array;
-
-    /**
-     * Specification:
-     * - Gets all locales for store.
-     *
-     * @api
-     *
-     * @param string $storeName
-     *
-     * @return string[]
-     */
-    public function getLocalesPerStore(string $storeName): array;
 }

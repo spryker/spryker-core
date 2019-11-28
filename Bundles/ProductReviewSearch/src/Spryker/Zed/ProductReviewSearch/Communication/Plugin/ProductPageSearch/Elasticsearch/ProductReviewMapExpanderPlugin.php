@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductReviewSearch\Communication\Plugin\PageMapExpander\Elasticsearch;
+namespace Spryker\Zed\ProductReviewSearch\Communication\Plugin\ProductPageSearch\Elasticsearch;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
@@ -22,6 +22,9 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractPage
 class ProductReviewMapExpanderPlugin extends AbstractPlugin implements ProductAbstractPageMapExpanderPluginInterface
 {
     /**
+     * {@inehritDoc}
+     * - Adds product review related data to product abstract search data.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
