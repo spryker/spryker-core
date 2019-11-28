@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductSetPageSearch\Business;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-
 interface ProductSetPageSearchFacadeInterface
 {
     /**

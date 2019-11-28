@@ -28,8 +28,4 @@ use Codeception\Actor;
 class CategoryPageSearchBusinessTester extends Actor
 {
     use _generated\CategoryPageSearchBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }
