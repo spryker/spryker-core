@@ -15,6 +15,8 @@ var SlotBlocks = function (options) {
     this.blocksTable = {};
     this.blocksChoice = {};
     this.slotBlocksForm = {};
+    this.cmsSlotBlockContentProviderSelector = '';
+    this.cmsSlotBlockContentProvider = '';
     this.contentProviderAttribute = '';
     this.paramIdCmsSlotTemplate = '';
     this.paramIdCmsSlot = '';
@@ -23,6 +25,7 @@ var SlotBlocks = function (options) {
     $.extend(this, options);
 
     this.init = function () {
+        _self.cmsSlotBlockContentProvider = $.trim($(_self.cmsSlotBlockContentProviderSelector).val());
         _self.$slotTable = $(_self.slotTableSelector).DataTable();
         $(_self.slotTableSelector).find('tbody').on('click', 'tr', _self.tableRowSelect);
         _self.$slotTable.on('draw', _self.selectFirstRow);
@@ -44,8 +47,8 @@ var SlotBlocks = function (options) {
     };
 
     this.selectFirstRow = function () {
-        var state = _self.$slotTable.rows().count() !== 0 && $(_self.slotTableSelector).is(':visible');
-        _self.blocksTable.toggleTableRow(state);
+        var isSlotTableEnabled = _self.$slotTable.rows().count() !== 0 && $(_self.slotTableSelector).is(':visible');
+        _self.blocksTable.toggleTableRow(isSlotTableEnabled);
         _self.$slotTable.row(0).select();
     };
 
@@ -56,7 +59,7 @@ var SlotBlocks = function (options) {
             return;
         }
 
-        if (! _self.isCmsSlotBlockContentProvider(api, indexes)) {
+        if (!_self.isCmsSlotBlockContentProvider(api, indexes)) {
             _self.blocksTable.toggleTableRow(false);
             return;
         }
@@ -94,7 +97,7 @@ var SlotBlocks = function (options) {
         return api.row(indexes[0])
             .nodes()
             .to$()
-            .find("[" + _self.contentProviderAttribute + "='" + cmsSlotBlockContentProvider + "']")
+            .find("[" + _self.contentProviderAttribute + "='" + _self.cmsSlotBlockContentProvider + "']")
             .length;
     };
 };
