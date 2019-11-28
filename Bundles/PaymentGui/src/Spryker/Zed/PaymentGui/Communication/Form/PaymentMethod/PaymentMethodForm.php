@@ -35,6 +35,7 @@ class PaymentMethodForm extends ViewPaymentMethodForm
     protected function addIsActiveField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_IS_ACTIVE, CheckboxType::class, [
+            'label' => 'Is the Payment Method active?',
             'required' => false,
         ]);
 
