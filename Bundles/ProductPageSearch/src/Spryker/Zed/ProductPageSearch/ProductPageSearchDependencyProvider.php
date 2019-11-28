@@ -65,6 +65,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const PLUGIN_PRODUCT_PAGE_DATA_EXPANDER = 'PLUGIN_PRODUCT_PAGE_DATA_EXPANDER';
     public const PLUGIN_PRODUCT_PAGE_DATA_LOADER = 'PLUGIN_PRODUCT_PAGE_DATA_LOADER';
+
     /**
      * @deprecated Use `\Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_PAGE_MAP_EXPANDER` instead.
      */
@@ -74,6 +75,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     public const PLUGIN_PRODUCT_IMAGE_PAGE_DATA = 'PLUGIN_PRODUCT_IMAGE_PAGE_DATA';
     public const PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER';
     public const PLUGINS_CONCRETE_PRODUCT_PAGE_MAP_EXPANDER = 'PLUGINS_CONCRETE_PRODUCT_PAGE_MAP_EXPANDER';
+
     /**
      * @deprecated Use ProductPageSearchDependencyProvider::PLUGINS_CONCRETE_PRODUCT_PAGE_MAP_EXPANDER instead.
      */
