@@ -42,17 +42,4 @@ class ProductSetPageSearchFacade extends AbstractFacade implements ProductSetPag
     {
         $this->getFactory()->createProductSetPageSearchWriter()->unpublish($productSetIds);
     }
-
-    /**
-     * @api
-     *
-     * @param array $data
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return array
-     */
-    public function mapProductSetDataToSearchData(array $data, LocaleTransfer $localeTransfer): array
-    {
-        return $this->getFactory()->createProductSetSearchDataMapper()->mapProductSetDataToSearchData($data, $localeTransfer);
-    }
 }
