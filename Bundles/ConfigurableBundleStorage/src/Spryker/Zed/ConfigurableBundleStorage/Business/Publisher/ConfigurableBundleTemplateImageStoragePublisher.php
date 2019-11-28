@@ -221,7 +221,7 @@ class ConfigurableBundleTemplateImageStoragePublisher implements ConfigurableBun
      */
     protected function combineProductImageSetsByName(array $localizedProductImageSetTransfers, array $defaultProductImageSetTransfers): array
     {
-        $combinedProductImageSetTransfers = $this->getProductImageSetsIndexedByName($defaultProductImageSetTransfers) + $this->getProductImageSetsIndexedByName($localizedProductImageSetTransfers);
+        $combinedProductImageSetTransfers = $this->getProductImageSetsIndexedByName($localizedProductImageSetTransfers) + $this->getProductImageSetsIndexedByName($defaultProductImageSetTransfers);
 
         return array_values($combinedProductImageSetTransfers);
     }

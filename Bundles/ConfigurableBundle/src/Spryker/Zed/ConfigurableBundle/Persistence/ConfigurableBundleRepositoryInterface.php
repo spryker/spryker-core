@@ -66,11 +66,4 @@ interface ConfigurableBundleRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
     public function getConfigurableBundleTemplateImageSets(int $idConfigurableBundleTemplate, array $localeIds): array;
-
-    /**
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
-     */
-    public function getDefaultConfigurableBundleTemplateImageSets(int $idConfigurableBundleTemplate): array;
 }

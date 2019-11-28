@@ -223,40 +223,19 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
         $productImageSetQuery = $this->getFactory()
             ->getProductImageSetQuery()
             ->filterByFkResourceConfigurableBundleTemplate($idConfigurableBundleTemplate)
-            ->joinWithSpyLocale()
+            ->leftJoinWithSpyLocale()
             ->joinWithSpyProductImageSetToProductImage()
             ->useSpyProductImageSetToProductImageQuery()
                 ->joinWithSpyProductImage()
                 ->orderBySortOrder(Criteria::ASC)
                 ->orderByIdProductImageSetToProductImage(Criteria::ASC)
-            ->endUse();
+            ->endUse()
+            ->filterByFkLocale(null, Criteria::ISNULL);
 
         if ($localeIds) {
-            $productImageSetQuery->filterByFkLocale_In($localeIds);
+            $productImageSetQuery->_or()
+                ->filterByFkLocale_In($localeIds);
         }
-
-        return $this->getFactory()
-            ->createConfigurableBundleMapper()
-            ->mapProductImageSetEntityCollectionToProductImageSetTransfers($productImageSetQuery->find());
-    }
-
-    /**
-     * @param int $idConfigurableBundleTemplate
-     *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
-     */
-    public function getDefaultConfigurableBundleTemplateImageSets(int $idConfigurableBundleTemplate): array
-    {
-        $productImageSetQuery = $this->getFactory()
-            ->getProductImageSetQuery()
-            ->filterByFkResourceConfigurableBundleTemplate($idConfigurableBundleTemplate)
-            ->filterByFkLocale(null, Criteria::ISNULL)
-            ->joinWithSpyProductImageSetToProductImage()
-            ->useSpyProductImageSetToProductImageQuery()
-                ->joinWithSpyProductImage()
-                ->orderBySortOrder(Criteria::ASC)
-                ->orderByIdProductImageSetToProductImage(Criteria::ASC)
-            ->endUse();
 
         return $this->getFactory()
             ->createConfigurableBundleMapper()
