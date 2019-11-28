@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Search\Business;
 
-use Generated\Shared\Transfer\DataMappingContextTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;

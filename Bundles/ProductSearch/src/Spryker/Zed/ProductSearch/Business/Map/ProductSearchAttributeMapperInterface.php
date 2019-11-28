@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductSearch\Business\Map;
 
 use Generated\Shared\Transfer\PageMapTransfer;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface as ProductSearchExtensionPageMapBuilderInterface;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 
 interface ProductSearchAttributeMapperInterface
 {

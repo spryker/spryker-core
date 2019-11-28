@@ -151,22 +151,4 @@ class StoreToKernelStoreAdapter implements StoreToStoreInterface
     {
         return $this->store->getContexts()['*']['timezone'] ?? '';
     }
-
-    /**
-     * @return string[]
-     */
-    public function getLocales(): array
-    {
-        return $this->store->getLocales();
-    }
-
-    /**
-     * @param string $storeName
-     *
-     * @return string[]
-     */
-    public function getLocalesPerStore(string $storeName): array
-    {
-        return $this->store->getLocalesPerStore($storeName);
-    }
 }

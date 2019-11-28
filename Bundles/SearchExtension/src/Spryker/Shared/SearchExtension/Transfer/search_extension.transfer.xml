@@ -10,9 +10,4 @@
     <transfer name="SearchConfiguration">
     </transfer>
 
-    <transfer name="DataMappingContext">
-        <property name="locale" type="Locale"/>
-        <property name="resourceName" type="string"/>
-    </transfer>
-
 </transfers>

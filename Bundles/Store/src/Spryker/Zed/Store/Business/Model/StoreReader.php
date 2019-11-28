@@ -211,14 +211,4 @@ class StoreReader implements StoreReaderInterface
     {
         return $this->storeRepository->getStoreTransfersByStoreNames($storeNames);
     }
-
-    /**
-     * @param string $storeName
-     *
-     * @return string[]
-     */
-    public function getLocalesPerStore(string $storeName): array
-    {
-        return $this->store->getLocalesPerStore($storeName);
-    }
 }

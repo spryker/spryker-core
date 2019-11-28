@@ -52,30 +52,6 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
         'index.gc_deletes',
     ];
 
-    protected const RESOURCE_NAME_PRODUCT_ABSTRACT = 'product_abstract';
-    protected const RESOURCE_NAME_PRODUCT_CONCRETE = 'product_concrete';
-    protected const RESOURCE_NAME_CATEGORY_NODE = 'category_node';
-    protected const RESOURCE_NAME_CMS_PAGE_SEARCH = 'cms_page_search';
-    protected const RESOURCE_NAME_PRODUCT_REVIEW = 'product_review';
-    protected const RESOURCE_NAME_PRODUCT_SET = 'product_set';
-
-    protected const APPLICABLE_MAPPING_RESOURCE_TYPES = [
-        self::RESOURCE_NAME_PRODUCT_ABSTRACT,
-        self::RESOURCE_NAME_PRODUCT_CONCRETE,
-        self::RESOURCE_NAME_CATEGORY_NODE,
-        self::RESOURCE_NAME_CMS_PAGE_SEARCH,
-        self::RESOURCE_NAME_PRODUCT_REVIEW,
-        self::RESOURCE_NAME_PRODUCT_SET,
-    ];
-
-    protected const PAGE_DATA_MAP_RESOURCE_TYPES = [
-        self::RESOURCE_NAME_PRODUCT_ABSTRACT,
-        self::RESOURCE_NAME_PRODUCT_CONCRETE,
-        self::RESOURCE_NAME_CATEGORY_NODE,
-        self::RESOURCE_NAME_CMS_PAGE_SEARCH,
-        self::RESOURCE_NAME_PRODUCT_SET,
-    ];
-
     public const INDEX_OPEN_STATE = 'open';
     public const INDEX_CLOSE_STATE = 'close';
 
@@ -169,61 +145,5 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     public function getSupportedSourceIdentifiers(): array
     {
         return $this->getSharedConfig()->getSupportedSourceIdentifiers();
-    }
-
-    /**
-     * @return string
-     */
-    public function getProductAbstractResourceName(): string
-    {
-        return static::RESOURCE_NAME_PRODUCT_ABSTRACT;
-    }
-
-    /**
-     * @return string
-     */
-    public function getProductConcreteResourceName(): string
-    {
-        return static::RESOURCE_NAME_PRODUCT_ABSTRACT;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCategoryNodeResourceName(): string
-    {
-        return static::RESOURCE_NAME_PRODUCT_ABSTRACT;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCmsPageSearchResourceName(): string
-    {
-        return static::RESOURCE_NAME_PRODUCT_ABSTRACT;
-    }
-
-    /**
-     * @return string
-     */
-    public function getProductReviewResourceName(): string
-    {
-        return static::RESOURCE_NAME_PRODUCT_REVIEW;
-    }
-
-    /**
-     * @return array
-     */
-    public function getApplicableMappingResourceNames(): array
-    {
-        return static::APPLICABLE_MAPPING_RESOURCE_TYPES;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getPageDataMapResourceNames(): array
-    {
-        return static::PAGE_DATA_MAP_RESOURCE_TYPES;
     }
 }
