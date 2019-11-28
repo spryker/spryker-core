@@ -19,7 +19,6 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
 {
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
-    public const PLUGINS_MERCHANT_PRODUCT_OFFER_PUBLISH_PRE_CHECK = 'PLUGINS_MERCHANT_PRODUCT_OFFER_PUBLISH_PRE_CHECK';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container

@@ -43,12 +43,4 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(MerchantProductOfferStorageDependencyProvider::FACADE_PRODUCT_OFFER);
     }
-
-    /**
-     * @return \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPreDeletePluginInterface[]
-     */
-    public function getMerchantProductOfferPublishPreCheckPlugins(): array
-    {
-        return $this->getProvidedDependency(MerchantProductOfferStorageDependencyProvider::PLUGINS_MERCHANT_PRODUCT_OFFER_PUBLISH_PRE_CHECK);
-    }
 }
