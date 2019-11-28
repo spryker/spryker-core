@@ -35,7 +35,6 @@ class ConfigurableBundleTemplateStoragePublishListener extends AbstractPlugin im
             ->getEventBehaviorFacade()
             ->getEventTransferIds($eventTransfers);
 
-        $this->getFacade()
-            ->publishConfigurableBundleTemplate($configurableBundleTemplateIds);
+        $this->getFacade()->publishConfigurableBundleTemplate($configurableBundleTemplateIds);
     }
 }

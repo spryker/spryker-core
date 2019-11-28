@@ -41,15 +41,16 @@ class ConfigurableBundleStorageUnpublisher implements ConfigurableBundleStorageU
      */
     public function unpublishConfigurableBundleTemplates(array $configurableBundleTemplateIds): void
     {
-        $configurableBundleTemplateEntityMap = $this->configurableBundleStorageRepository->getConfigurableBundleTemplateEntityMap($configurableBundleTemplateIds);
+        $configurableBundleTemplateIds = array_unique(array_filter($configurableBundleTemplateIds));
+
+        if (!$configurableBundleTemplateIds) {
+            return;
+        }
+
         $configurableBundleTemplateStorageEntityMap = $this->configurableBundleStorageRepository->getConfigurableBundleTemplateStorageEntityMap($configurableBundleTemplateIds);
 
-        foreach ($configurableBundleTemplateStorageEntityMap as $idConfigurableBundleTemplate => $configurableBundleTemplateStorageEntity) {
-            if (isset($configurableBundleTemplateEntityMap[$idConfigurableBundleTemplate])) {
-                continue;
-            }
-
-            $configurableBundleTemplateStorageEntity->delete();
+        foreach ($configurableBundleTemplateStorageEntityMap as $configurableBundleTemplateStorageEntity) {
+            $this->configurableBundleStorageEntityManager->deleteConfigurableBundleTemplateStorageEntity($configurableBundleTemplateStorageEntity);
         }
     }
 }

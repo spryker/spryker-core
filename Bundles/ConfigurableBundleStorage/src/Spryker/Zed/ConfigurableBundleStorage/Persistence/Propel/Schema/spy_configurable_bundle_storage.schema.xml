@@ -27,4 +27,26 @@
         <behavior name="timestampable"/>
     </table>
 
+    <table name="spy_configurable_bundle_template_image_storage" identifierQuoting="true">
+        <column name="id_configurable_bundle_template_image_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_configurable_bundle_template" type="INTEGER" required="true"/>
+        <column name="data" type="LONGVARCHAR" required="false"/>
+        <column name="key" type="VARCHAR" required="true"/>
+
+        <id-method-parameter value="spy_configurable_bundle_template_image_storage_pk_seq"/>
+
+        <index name="spy_configurable_bundle_template_image_storage-fk_product">
+            <index-column name="fk_configurable_bundle_template"/>
+        </index>
+
+        <behavior name="synchronization">
+            <parameter name="resource" value="configurable_bundle_template_image"/>
+            <parameter name="locale" required="true"/>
+            <parameter name="key_suffix_column" value="fk_configurable_bundle_template"/>
+            <parameter name="queue_group" value="sync.storage.configurable_bundle"/>
+        </behavior>
+
+        <behavior name="timestampable"/>
+    </table>
+
 </database>

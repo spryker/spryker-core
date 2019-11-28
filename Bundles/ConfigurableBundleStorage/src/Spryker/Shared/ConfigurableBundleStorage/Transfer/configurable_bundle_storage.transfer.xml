@@ -8,6 +8,7 @@
         <property name="uuid" type="string"/>
         <property name="name" type="string"/>
         <property name="slots" singular="slot" type="ConfigurableBundleTemplateSlotStorage[]"/>
+        <property name="imageSets" type="ProductImageSetStorage[]" singular="imageSet"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlotStorage">
@@ -15,6 +16,22 @@
         <property name="uuid" type="string"/>
         <property name="name" type="string"/>
         <property name="idProductList" type="int"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateImageStorage">
+        <property name="idConfigurableBundleTemplate" type="int"/>
+        <property name="imageSets" type="ProductImageSetStorage[]" singular="imageSet"/>
+    </transfer>
+
+    <transfer name="ProductImageSetStorage">
+        <property name="name" type="string"/>
+        <property name="images" type="ProductImageStorage[]" singular="image"/>
+    </transfer>
+
+    <transfer name="ProductImageStorage">
+        <property name="idProductImage" type="int"/>
+        <property name="externalUrlLarge" type="string"/>
+        <property name="externalUrlSmall" type="string"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplate">
@@ -37,6 +54,15 @@
         <property name="orderBy" type="string"/>
         <property name="offset" type="int"/>
         <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateFilter">
+        <property name="configurableBundleTemplateIds" type="int[]" singular="configurableBundleTemplateId"/>
+        <property name="filter" type="Filter"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateSlotFilter">
+        <property name="idConfigurableBundleTemplate" type="int"/>
     </transfer>
 
 </transfers>

@@ -58,4 +58,12 @@ interface ConfigurableBundleRepositoryInterface
      * @return string[]
      */
     public function getActiveConfigurableBundleTemplateUuids(array $templateUuid): array;
+
+    /**
+     * @param int $idConfigurableBundleTemplate
+     * @param int[] $localeIds
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function getConfigurableBundleTemplateImageSets(int $idConfigurableBundleTemplate, array $localeIds): array;
 }
