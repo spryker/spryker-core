@@ -68,7 +68,7 @@ class CmsSlotBlockBusinessTester extends Actor
         $cmsSlotTransfers = [];
         for ($i = 0; $i < $slotsNumber; $i++) {
             $cmsSlotTransfers[] = $this->haveCmsSlotInDb([
-                CmsSlotTransfer::KEY => 'slt-' . $i,
+                CmsSlotTransfer::KEY => 'test-slt-' . $i,
             ]);
         }
 
@@ -85,7 +85,7 @@ class CmsSlotBlockBusinessTester extends Actor
         $cmsSlotTemplateTransfers = [];
         for ($i = 0; $i < $slotTemplatesNumber; $i++) {
             $cmsSlotTemplateTransfers[] = $this->haveCmsSlotTemplateInDb([
-                CmsSlotTemplateTransfer::PATH => 'path-' . $i,
+                CmsSlotTemplateTransfer::PATH => 'test-path-' . $i,
             ]);
         }
 
