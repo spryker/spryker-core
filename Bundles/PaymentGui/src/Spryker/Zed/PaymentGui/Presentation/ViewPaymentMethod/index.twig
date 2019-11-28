@@ -25,7 +25,7 @@
                         <dd>{{ paymentMethod.name }}</dd>
                         <dt>{{ 'Payment Provider' | trans }}</dt>
                         <dd>{{ paymentMethod.paymentProvider.name }}</dd>
-                        <dt>{{ 'Is this payment method active?' | trans }}</dt>
+                        <dt>{{ 'Is the payment method active?' | trans }}</dt>
                         <dd><input type="checkbox" disabled {% if paymentMethod.isActive %}checked="checked"{% endif %}</dd>
                     </dl>
                 </div>
