@@ -28,8 +28,4 @@ use Codeception\Actor;
 class ValidatorYvesTester extends Actor
 {
     use _generated\ValidatorYvesTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

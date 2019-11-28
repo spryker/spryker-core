@@ -28,8 +28,4 @@ use Codeception\Actor;
 class ValidatorCommunicationTester extends Actor
 {
     use _generated\ValidatorCommunicationTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

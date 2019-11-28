@@ -28,8 +28,4 @@ use Codeception\Actor;
 class FormYvesTester extends Actor
 {
     use _generated\FormYvesTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

@@ -28,8 +28,4 @@ use Codeception\Actor;
 class FormCommunicationTester extends Actor
 {
     use _generated\FormCommunicationTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }
