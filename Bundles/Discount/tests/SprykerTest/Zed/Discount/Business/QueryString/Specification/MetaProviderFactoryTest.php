@@ -31,7 +31,7 @@ class MetaProviderFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateMetaProviderByTypeForDecisionRuleShouldReturnMetaProviderForDecisionRule()
+    public function testCreateMetaProviderByTypeForDecisionRuleShouldReturnMetaProviderForDecisionRule(): void
     {
         $discountBusinessFactoryMock = $this->createDiscountBusinessFactoryMock();
         $discountBusinessFactoryMock->expects($this->once())
@@ -58,7 +58,7 @@ class MetaProviderFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateMetaProviderByTypeForCollectorShouldReturnMetaProviderForCollector()
+    public function testCreateMetaProviderByTypeForCollectorShouldReturnMetaProviderForCollector(): void
     {
         $discountBusinessFactoryMock = $this->createDiscountBusinessFactoryMock();
         $discountBusinessFactoryMock->expects($this->once())
@@ -85,9 +85,9 @@ class MetaProviderFactoryTest extends Unit
     /**
      * @param \Spryker\Zed\Discount\Business\DiscountBusinessFactory|null $discountBusinessFactoryMock
      *
-     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaProviderFactory
+     * @return \Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory
      */
-    protected function createMetaProviderFactory(?DiscountBusinessFactory $discountBusinessFactoryMock = null)
+    protected function createMetaProviderFactory(?DiscountBusinessFactory $discountBusinessFactoryMock = null): MetaProviderFactory
     {
         if (!isset($discountBusinessFactoryMock)) {
             $discountBusinessFactoryMock = $this->createDiscountBusinessFactoryMock();

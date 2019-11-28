@@ -97,9 +97,9 @@ class GlobalThresholdDataProvider
 
         $salesOrderThresholdTransfers = $this->getSalesOrderThresholdTransfers($storeTransfer, $currencyTransfer);
         foreach ($salesOrderThresholdTransfers as $salesOrderThresholdTransfer) {
-            if ($thresholdStrategyDataProvider = $this->globalThresholdDataProviderResolver
+            if ($this->globalThresholdDataProviderResolver
                 ->hasGlobalThresholdDataProviderByStrategyGroup($salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getSalesOrderThresholdType()->getThresholdGroup())) {
-                $data = $thresholdStrategyDataProvider = $this->globalThresholdDataProviderResolver
+                $data = $this->globalThresholdDataProviderResolver
                     ->resolveGlobalThresholdDataProviderByStrategyGroup($salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getSalesOrderThresholdType()->getThresholdGroup())
                     ->mapSalesOrderThresholdValueTransferToFormData($salesOrderThresholdTransfer, $data);
             }

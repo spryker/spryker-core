@@ -27,7 +27,7 @@ class ProductManagementProductEditCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(ProductManagementPresentationTester $i)
+    public function breadcrumbIsVisible(ProductManagementPresentationTester $i): void
     {
         $i->registerProductManagementStoreRelationFormTypePlugin();
         $i->registerMoneyCollectionFormTypePlugin();
@@ -37,7 +37,7 @@ class ProductManagementProductEditCest
         $i->waitForElementVisible('.dataTables_scrollBody');
 
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Products / Edit Product');
+        $i->seeBreadcrumbNavigation('Products / Products / Edit Product');
     }
 
     /**
@@ -45,7 +45,7 @@ class ProductManagementProductEditCest
      *
      * @return void
      */
-    public function canSaveProductWithoutEditing(ProductManagementPresentationTester $i)
+    public function canSaveProductWithoutEditing(ProductManagementPresentationTester $i): void
     {
         $i->registerProductManagementStoreRelationFormTypePlugin();
         $i->registerMoneyCollectionFormTypePlugin();
@@ -55,7 +55,7 @@ class ProductManagementProductEditCest
         $i->waitForElementVisible('.dataTables_scrollBody');
 
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Dashboard / Products / Products / Edit Product');
+        $i->seeBreadcrumbNavigation('Products / Products / Edit Product');
         $i->click('Save');
 
         $i->waitForJS('return document.readyState == "complete"');

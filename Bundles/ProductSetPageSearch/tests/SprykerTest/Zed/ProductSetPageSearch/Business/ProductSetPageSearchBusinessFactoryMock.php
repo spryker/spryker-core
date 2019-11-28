@@ -28,7 +28,7 @@ class ProductSetPageSearchBusinessFactoryMock extends ProductSetPageSearchBusine
     /**
      * @return \Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToSearchInterface
      */
-    public function getSearchFacade()
+    public function getSearchFacade(): ProductSetPageSearchToSearchInterface
     {
         return $this->searchFacadeMock;
     }

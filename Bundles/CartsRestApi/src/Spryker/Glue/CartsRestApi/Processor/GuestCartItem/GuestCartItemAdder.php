@@ -83,7 +83,10 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
             return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 
-        return $this->guestCartRestResponseBuilder->createGuestCartRestResponse($quoteResponseTransfer->getQuoteTransfer());
+        return $this->guestCartRestResponseBuilder->createGuestCartRestResponse(
+            $quoteResponseTransfer->getQuoteTransfer(),
+            $restRequest->getMetadata()->getLocale()
+        );
     }
 
     /**

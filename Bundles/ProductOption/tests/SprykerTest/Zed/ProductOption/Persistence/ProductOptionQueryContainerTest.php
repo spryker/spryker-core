@@ -29,7 +29,7 @@ class ProductOptionQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAllProductAbstractProductOptionGroupsReturnsCorrectQuery()
+    public function testQueryAllProductAbstractProductOptionGroupsReturnsCorrectQuery(): void
     {
         $productOptionQueryContainer = new ProductOptionQueryContainer();
         $productOptionQueryContainer->setFactory(new ProductOptionPersistenceFactory());
@@ -41,7 +41,7 @@ class ProductOptionQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAllProductOptionGroupsReturnsCorrectQuery()
+    public function testQueryAllProductOptionGroupsReturnsCorrectQuery(): void
     {
         $productOptionQueryContainer = new ProductOptionQueryContainer();
         $productOptionQueryContainer->setFactory(new ProductOptionPersistenceFactory());
@@ -53,7 +53,7 @@ class ProductOptionQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAllProductOptionValuesReturnsCorrectQuery()
+    public function testQueryAllProductOptionValuesReturnsCorrectQuery(): void
     {
         $productOptionQueryContainer = new ProductOptionQueryContainer();
         $productOptionQueryContainer->setFactory(new ProductOptionPersistenceFactory());

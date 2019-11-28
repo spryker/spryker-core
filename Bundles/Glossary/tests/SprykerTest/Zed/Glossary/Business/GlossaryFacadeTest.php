@@ -52,7 +52,7 @@ class GlossaryFacadeTest extends Unit
     /**
      * @return void
      */
-    private function getAvailableLocales()
+    private function getAvailableLocales(): void
     {
         $this->locales = $this->getLocaleFacade()->getAvailableLocales();
     }
@@ -60,7 +60,7 @@ class GlossaryFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Locale\Business\LocaleFacade
      */
-    private function getLocaleFacade()
+    private function getLocaleFacade(): LocaleFacade
     {
         return new LocaleFacade();
     }
@@ -68,7 +68,7 @@ class GlossaryFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Glossary\Business\GlossaryFacade
      */
-    private function getGlossaryFacade()
+    private function getGlossaryFacade(): GlossaryFacade
     {
         return new GlossaryFacade();
     }
@@ -78,7 +78,7 @@ class GlossaryFacadeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    private function buildLocaleTransferObject(array $locales)
+    private function buildLocaleTransferObject(array $locales): LocaleTransfer
     {
         $locale = new LocaleTransfer();
         $locale->setIdLocale($locales[0]);
@@ -91,7 +91,7 @@ class GlossaryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddTranslation()
+    public function testAddTranslation(): void
     {
         $glossaryFacade = $this->getGlossaryFacade();
 
@@ -112,7 +112,7 @@ class GlossaryFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateTranslation()
+    public function testUpdateTranslation(): void
     {
         $glossaryFacade = $this->getGlossaryFacade();
         $localesIds = array_keys($this->locales);

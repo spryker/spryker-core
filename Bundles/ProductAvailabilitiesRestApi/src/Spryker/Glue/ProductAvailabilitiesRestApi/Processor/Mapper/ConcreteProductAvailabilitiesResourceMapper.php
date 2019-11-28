@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -18,10 +19,8 @@ class ConcreteProductAvailabilitiesResourceMapper implements ConcreteProductAvai
      */
     public function mapAvailabilityTransferToRestConcreteProductAvailabilityAttributesTransfer(SpyAvailabilityEntityTransfer $availabilityEntityTransfer): RestConcreteProductAvailabilityAttributesTransfer
     {
-        $restProductsConcreteAvailabilityAttributesTransfer = (new RestConcreteProductAvailabilityAttributesTransfer())
-            ->fromArray($availabilityEntityTransfer->toArray(), true);
-        $restProductsConcreteAvailabilityAttributesTransfer->setAvailability($availabilityEntityTransfer->getQuantity() > 0);
-
-        return $restProductsConcreteAvailabilityAttributesTransfer;
+        return (new RestConcreteProductAvailabilityAttributesTransfer())
+            ->fromArray($availabilityEntityTransfer->toArray(), true)
+            ->setAvailability($availabilityEntityTransfer->getQuantity()->greaterThan(0));
     }
 }

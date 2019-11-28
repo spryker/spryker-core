@@ -4,7 +4,7 @@
   "description": "CmsSlotGui module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/cms-slot": "^0.5.0",
     "spryker/gui": "^3.24.0",
     "spryker/kernel": "^3.37.0",
