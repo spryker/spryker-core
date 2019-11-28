@@ -11,11 +11,8 @@ use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToConfigurableBundleFacadeBridge;
-use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToConfigurableBundleFacadeInterface;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeBridge;
-use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToProductListFacadeBridge;
-use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToProductListFacadeInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -69,7 +66,7 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addConfigurableBundleFacade(Container $container): Container
     {
-        $container->set(static::FACADE_CONFIGURABLE_BUNDLE, function (Container $container): ConfigurableBundleGuiToConfigurableBundleFacadeInterface {
+        $container->set(static::FACADE_CONFIGURABLE_BUNDLE, function (Container $container) {
             return new ConfigurableBundleGuiToConfigurableBundleFacadeBridge(
                 $container->getLocator()->configurableBundle()->facade()
             );
@@ -85,7 +82,7 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container->set(static::FACADE_LOCALE, function (Container $container): ConfigurableBundleGuiToLocaleFacadeInterface {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ConfigurableBundleGuiToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade()
             );
@@ -101,7 +98,7 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addProductListFacade(Container $container): Container
     {
-        $container->set(static::FACADE_PRODUCT_LIST, function (Container $container): ConfigurableBundleGuiToProductListFacadeInterface {
+        $container->set(static::FACADE_PRODUCT_LIST, function (Container $container) {
             return new ConfigurableBundleGuiToProductListFacadeBridge(
                 $container->getLocator()->productList()->facade()
             );
@@ -117,7 +114,7 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addConfigurableBundleTemplatePropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE, $container->factory(function (): SpyConfigurableBundleTemplateQuery {
+        $container->set(static::PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE, $container->factory(function () {
             return SpyConfigurableBundleTemplateQuery::create();
         }));
 
@@ -131,7 +128,7 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addConfigurableBundleTemplateSlotPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT, $container->factory(function (): SpyConfigurableBundleTemplateSlotQuery {
+        $container->set(static::PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT, $container->factory(function () {
             return SpyConfigurableBundleTemplateSlotQuery::create();
         }));
 
@@ -145,7 +142,7 @@ class ConfigurableBundleGuiDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addProductPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT, $container->factory(function (): SpyProductQuery {
+        $container->set(static::PROPEL_QUERY_PRODUCT, $container->factory(function () {
             return SpyProductQuery::create();
         }));
 

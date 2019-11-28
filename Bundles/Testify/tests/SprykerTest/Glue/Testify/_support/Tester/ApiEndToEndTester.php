@@ -19,7 +19,7 @@ abstract class ApiEndToEndTester extends EndToEndTester
      *
      * @return string
      */
-    public function formatUrl(string $url, $params = []): string
+    public function formatUrl(string $url, array $params = []): string
     {
         $refinedParams = [];
 
@@ -36,7 +36,7 @@ abstract class ApiEndToEndTester extends EndToEndTester
      *
      * @return string
      */
-    public function formatFullUrl(string $url, $params = []): string
+    public function formatFullUrl(string $url, array $params = []): string
     {
         return rtrim(Config::get(TestifyConstants::GLUE_APPLICATION_DOMAIN) . '/' . $this->formatUrl($url, $params), '/');
     }

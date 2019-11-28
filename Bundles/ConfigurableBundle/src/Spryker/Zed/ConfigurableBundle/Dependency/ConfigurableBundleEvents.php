@@ -26,6 +26,22 @@ class ConfigurableBundleEvents
     public const CONFIGURABLE_BUNDLE_TEMPLATE_UNPUBLISH = 'ConfigurableBundle.configurable_bundle_template.unpublish';
 
     /**
+     * Specification
+     * - This event will be used for configurable_bundle_template_image publishing
+     *
+     * @api
+     */
+    public const CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_PUBLISH = 'ConfigurableBundle.configurable_bundle_template_image.publish';
+
+    /**
+     * Specification
+     * - This event will be used for configurable_bundle_template_image un-publishing
+     *
+     * @api
+     */
+    public const CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_UNPUBLISH = 'ConfigurableBundle.configurable_bundle_template_image.unpublish';
+
+    /**
      * Specification:
      * - This event is used for spy_configurable_bundle_template entity creation.
      *

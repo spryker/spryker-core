@@ -35,7 +35,7 @@ class FixedTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateFixedShouldReturnTheGivenAmount()
+    public function testCalculateFixedShouldReturnTheGivenAmount(): void
     {
         $items = $this->getItems(
             [
@@ -55,7 +55,7 @@ class FixedTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateFixedShouldReturnNullForGivenNegativeAmounts()
+    public function testCalculateFixedShouldReturnNullForGivenNegativeAmounts(): void
     {
         $items = $this->getItems(
             [
@@ -77,7 +77,7 @@ class FixedTest extends Unit
      *
      * @return \Generated\Shared\Transfer\DiscountTransfer
      */
-    protected function createDiscountTransfer($amount)
+    protected function createDiscountTransfer(int $amount): DiscountTransfer
     {
         $discountTransfer = new DiscountTransfer();
 
@@ -99,7 +99,7 @@ class FixedTest extends Unit
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    protected function getItems(array $grossPrices)
+    protected function getItems(array $grossPrices): array
     {
         $items = [];
 

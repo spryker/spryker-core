@@ -32,15 +32,15 @@ class ProductListMerchantRelationshipCreateFormExpanderPlugin extends AbstractPl
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return void
+     * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    public function expand(FormBuilderInterface $builder, array $options): void
+    public function expand(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
         if (!$options[static::OPTION_SELECTED_COMPANY]) {
-            return;
+            return $builder;
         }
 
-        $this->getFactory()
+        return $this->getFactory()
             ->createProductListMerchantRelationshipFormExpander()
             ->expand($builder, $options);
     }

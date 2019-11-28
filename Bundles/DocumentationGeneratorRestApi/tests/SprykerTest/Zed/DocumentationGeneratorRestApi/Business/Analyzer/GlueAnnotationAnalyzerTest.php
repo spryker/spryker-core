@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Analyzer;
 
 use Codeception\Test\Unit;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\GlueAnnotationAnalyzer;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Exception\InvalidAnnotationFormatException;
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\Service\DocumentationGeneratorRestApiToUtilEncodingServiceInterface;
@@ -79,15 +78,14 @@ class GlueAnnotationAnalyzerTest extends Unit
         $this->assertNotEmpty($parameters->getGetResourceById()->getParameters());
         $this->assertEquals(static::HEADER_ACCEPT_LANGUAGE, $parameters->getGetResourceById()->getParameters()[0]->getName());
         $this->assertNotEmpty($parameters->getGetResourceById()->getResponses());
-        $this->assertArraySubset([
-            static::KEY_RESPONSE_BAD_REQUEST => static::VALUE_RESPONSE_BAD_REQUEST,
-            static::KEY_RESPONSE_NOT_FOUND => static::VALUE_RESPONSE_NOT_FOUND,
-        ], $parameters->getGetResourceById()->getResponses());
+        $this->assertArrayHasKey(static::KEY_RESPONSE_BAD_REQUEST, $parameters->getGetResourceById()->getResponses());
+        $this->assertArrayHasKey(static::KEY_RESPONSE_NOT_FOUND, $parameters->getGetResourceById()->getResponses());
+        $this->assertSame(static::VALUE_RESPONSE_BAD_REQUEST, $parameters->getGetResourceById()->getResponses()[static::KEY_RESPONSE_BAD_REQUEST]);
+        $this->assertSame(static::VALUE_RESPONSE_NOT_FOUND, $parameters->getGetResourceById()->getResponses()[static::KEY_RESPONSE_NOT_FOUND]);
         $this->assertNotEmpty($parameters->getPost()->getResponseAttributesClassName());
         $this->assertEquals(static::ALTERNATIVE_RESPONSE_CLASS, $parameters->getPost()->getResponseAttributesClassName());
-        $this->assertArraySubset([
-            static::KEY_RESPONSE_BAD_REQUEST => static::VALUE_RESPONSE_BAD_REQUEST,
-        ], $parameters->getPost()->getResponses());
+        $this->assertArrayHasKey(static::KEY_RESPONSE_BAD_REQUEST, $parameters->getPost()->getResponses());
+        $this->assertSame(static::VALUE_RESPONSE_BAD_REQUEST, $parameters->getPost()->getResponses()[static::KEY_RESPONSE_BAD_REQUEST]);
     }
 
     /**
@@ -162,7 +160,7 @@ class GlueAnnotationAnalyzerTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DocumentationGeneratorRestApi\Business\Finder\GlueControllerFinderInterface
      */
-    protected function getGlueControllerFinder(string $controller): MockObject
+    protected function getGlueControllerFinder(string $controller)
     {
         return $this->testFactory->createGlueControllerFinderMock($controller);
     }

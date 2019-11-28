@@ -9,8 +9,8 @@ namespace Spryker\Zed\SalesConfigurableBundle\Business\Expander;
 
 use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\SalesOrderConfigurableBundleTemplateTranslationTransfer;
 use Generated\Shared\Transfer\SalesOrderConfiguredBundleFilterTransfer;
+use Generated\Shared\Transfer\SalesOrderConfiguredBundleTranslationTransfer;
 use Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToGlossaryFacadeInterface;
 use Spryker\Zed\SalesConfigurableBundle\Persistence\SalesConfigurableBundleRepositoryInterface;
 
@@ -72,7 +72,7 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
     {
         foreach ($salesOrderConfiguredBundleTransfers as $salesOrderConfiguredBundleTransfer) {
             $salesOrderConfiguredBundleTransfer->addTranslation(
-                (new SalesOrderConfigurableBundleTemplateTranslationTransfer())
+                (new SalesOrderConfiguredBundleTranslationTransfer())
                     ->setName(
                         $this->glossaryFacade->translate(
                             $salesOrderConfiguredBundleTransfer->getName()

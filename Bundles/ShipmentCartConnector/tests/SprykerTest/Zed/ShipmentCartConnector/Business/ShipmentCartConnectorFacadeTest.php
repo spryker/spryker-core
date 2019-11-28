@@ -13,8 +13,10 @@ use Generated\Shared\DataBuilder\ExpenseBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\ShipmentBuilder;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\ShipmentCartConnector\ShipmentCartConnectorConfig;
 
 /**
@@ -32,6 +34,11 @@ class ShipmentCartConnectorFacadeTest extends Unit
 {
     public const SKU = 'sku';
     public const CURRENCY_ISO_CODE = 'USD';
+    public const DEFAULT_PRICE_LIST = [
+        'DE' => [
+            'EUR' => [],
+        ],
+    ];
 
     /**
      * @var \SprykerTest\Zed\ShipmentCartConnector\ShipmentCartConnectorBusinessTester
@@ -41,16 +48,19 @@ class ShipmentCartConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateShipmentPriceShouldUpdatePriceBasedOnCurrency()
+    public function testUpdateShipmentPriceShouldUpdatePriceBasedOnCurrency(): void
     {
         $shipmentCartConnectorFacade = $this->tester->getFacade();
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
 
-        $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod([], [], static::DEFAULT_PRICE_LIST, [$storeTransfer->getIdStore()]);
 
         $shipmentMethodTransfer->setCurrencyIsoCode(static::CURRENCY_ISO_CODE);
         $shipmentMethodTransfer->setStoreCurrencyPrice(-1);
 
-        $cartChangeTransfer = $this->createCartCartChangeTransfer($shipmentMethodTransfer);
+        $cartChangeTransfer = $this->createCartCartChangeTransfer($shipmentMethodTransfer, $storeTransfer);
 
         $updatedCartChangeTransfer = $shipmentCartConnectorFacade->updateShipmentPrice($cartChangeTransfer);
 
@@ -66,16 +76,19 @@ class ShipmentCartConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateShipmentPriceShouldUpdatePriceBasedOnCurrencyWithItemLevelShipments()
+    public function testUpdateShipmentPriceShouldUpdatePriceBasedOnCurrencyWithItemLevelShipments(): void
     {
         $shipmentCartConnectorFacade = $this->tester->getFacade();
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
 
-        $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod([], [], static::DEFAULT_PRICE_LIST, [$storeTransfer->getIdStore()]);
 
         $shipmentMethodTransfer->setCurrencyIsoCode(static::CURRENCY_ISO_CODE);
         $shipmentMethodTransfer->setStoreCurrencyPrice(-1);
 
-        $cartChangeTransfer = $this->createCartChangeTransferWithItemLevelShipments($shipmentMethodTransfer);
+        $cartChangeTransfer = $this->createCartChangeTransferWithItemLevelShipments($shipmentMethodTransfer, $storeTransfer);
 
         $updatedCartChangeTransfer = $shipmentCartConnectorFacade->updateShipmentPrice($cartChangeTransfer);
 
@@ -95,13 +108,16 @@ class ShipmentCartConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateShipmentShouldReturnFalseWhenSelectedShipmentHaveNoPrice()
+    public function testValidateShipmentShouldReturnFalseWhenSelectedShipmentHaveNoPrice(): void
     {
         $shipmentCartConnectorFacade = $this->tester->getFacade();
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
 
-        $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod([], [], static::DEFAULT_PRICE_LIST, [$storeTransfer->getIdStore()]);
 
-        $cartChangeTransfer = $this->createCartCartChangeTransfer($shipmentMethodTransfer);
+        $cartChangeTransfer = $this->createCartCartChangeTransfer($shipmentMethodTransfer, $storeTransfer);
 
         $cartChangeTransfer->getQuote()->getCurrency()->setCode('LTL');
 
@@ -114,13 +130,16 @@ class ShipmentCartConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateShipmentShouldReturnFalseWhenSelectedShipmentHaveNoPriceWithItemLevelShipments()
+    public function testValidateShipmentShouldReturnFalseWhenSelectedShipmentHaveNoPriceWithItemLevelShipments(): void
     {
         $shipmentCartConnectorFacade = $this->tester->getFacade();
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
 
-        $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod([], [], static::DEFAULT_PRICE_LIST, [$storeTransfer->getIdStore()]);
 
-        $cartChangeTransfer = $this->createCartChangeTransferWithItemLevelShipments($shipmentMethodTransfer);
+        $cartChangeTransfer = $this->createCartChangeTransferWithItemLevelShipments($shipmentMethodTransfer, $storeTransfer);
 
         $cartChangeTransfer->getQuote()->getCurrency()->setCode('LTL');
 
@@ -133,13 +152,16 @@ class ShipmentCartConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateShipmentShouldReturnTrueWhenSelectedShipmentHavePrice()
+    public function testValidateShipmentShouldReturnTrueWhenSelectedShipmentHavePrice(): void
     {
         $shipmentCartConnectorFacade = $this->tester->getFacade();
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
 
-        $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod([], [], static::DEFAULT_PRICE_LIST, [$storeTransfer->getIdStore()]);
 
-        $cartChangeTransfer = $this->createCartCartChangeTransfer($shipmentMethodTransfer);
+        $cartChangeTransfer = $this->createCartCartChangeTransfer($shipmentMethodTransfer, $storeTransfer);
 
         $cartPreCheckResponseTransfer = $shipmentCartConnectorFacade->validateShipment($cartChangeTransfer);
 
@@ -150,13 +172,16 @@ class ShipmentCartConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateShipmentShouldReturnTrueWhenSelectedShipmentHavePriceWithItemLevelShipments()
+    public function testValidateShipmentShouldReturnTrueWhenSelectedShipmentHavePriceWithItemLevelShipments(): void
     {
         $shipmentCartConnectorFacade = $this->tester->getFacade();
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
 
-        $shipmentMethodTransfer = $this->tester->haveShipmentMethod();
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod([], [], static::DEFAULT_PRICE_LIST, [$storeTransfer->getIdStore()]);
 
-        $cartChangeTransfer = $this->createCartChangeTransferWithItemLevelShipments($shipmentMethodTransfer);
+        $cartChangeTransfer = $this->createCartChangeTransferWithItemLevelShipments($shipmentMethodTransfer, $storeTransfer);
 
         $cartPreCheckResponseTransfer = $shipmentCartConnectorFacade->validateShipment($cartChangeTransfer);
 
@@ -166,14 +191,16 @@ class ShipmentCartConnectorFacadeTest extends Unit
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    protected function createCartCartChangeTransfer(ShipmentMethodTransfer $shipmentMethodTransfer)
+    protected function createCartCartChangeTransfer(ShipmentMethodTransfer $shipmentMethodTransfer, StoreTransfer $storeTransfer): CartChangeTransfer
     {
         $cartChangeTransfer = (new CartChangeBuilder())->build();
 
         $quoteTransfer = (new QuoteBuilder())
+            ->withStore($storeTransfer->toArray())
             ->withCurrency()
             ->withExpense()
             ->build();
@@ -206,14 +233,16 @@ class ShipmentCartConnectorFacadeTest extends Unit
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    protected function createCartChangeTransferWithItemLevelShipments(ShipmentMethodTransfer $shipmentMethodTransfer)
+    protected function createCartChangeTransferWithItemLevelShipments(ShipmentMethodTransfer $shipmentMethodTransfer, StoreTransfer $storeTransfer): CartChangeTransfer
     {
         $cartChangeTransfer = (new CartChangeBuilder())->build();
 
         $quoteTransfer = (new QuoteBuilder())
+            ->withStore($storeTransfer->toArray())
             ->withCurrency()
             ->build();
 

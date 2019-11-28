@@ -45,7 +45,7 @@ class OperatorValueTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->rule = new PropelQueryBuilderRuleSetTransfer();
         $this->rule->setField('foo');
@@ -56,7 +56,7 @@ class OperatorValueTest extends Unit
     /**
      * @return void
      */
-    public function testBeginsWith()
+    public function testBeginsWith(): void
     {
         $operator = new BeginsWith();
         $value = $operator->getValue($this->rule);
@@ -67,7 +67,7 @@ class OperatorValueTest extends Unit
     /**
      * @return void
      */
-    public function testContains()
+    public function testContains(): void
     {
         $operator = new Contains();
         $value = $operator->getValue($this->rule);
@@ -78,7 +78,7 @@ class OperatorValueTest extends Unit
     /**
      * @return void
      */
-    public function testEndsWith()
+    public function testEndsWith(): void
     {
         $operator = new EndsWith();
         $value = $operator->getValue($this->rule);
@@ -89,7 +89,7 @@ class OperatorValueTest extends Unit
     /**
      * @return void
      */
-    public function testEqual()
+    public function testEqual(): void
     {
         $operator = new Equal();
         $value = $operator->getValue($this->rule);
@@ -100,7 +100,7 @@ class OperatorValueTest extends Unit
     /**
      * @return void
      */
-    public function testGreater()
+    public function testGreater(): void
     {
         $operator = new Greater();
         $value = $operator->getValue($this->rule);
@@ -111,7 +111,7 @@ class OperatorValueTest extends Unit
     /**
      * @return void
      */
-    public function testGreaterOrEqual()
+    public function testGreaterOrEqual(): void
     {
         $operator = new GreaterOrEqual();
         $value = $operator->getValue($this->rule);
@@ -122,7 +122,7 @@ class OperatorValueTest extends Unit
     /**
      * @return void
      */
-    public function testIn()
+    public function testIn(): void
     {
         $operator = new In();
         $value = $operator->getValue($this->rule);
@@ -133,7 +133,7 @@ class OperatorValueTest extends Unit
     /**
      * @return void
      */
-    public function testLess()
+    public function testLess(): void
     {
         $operator = new Less();
         $value = $operator->getValue($this->rule);
@@ -144,7 +144,7 @@ class OperatorValueTest extends Unit
     /**
      * @return void
      */
-    public function testLessOrEqual()
+    public function testLessOrEqual(): void
     {
         $operator = new LessOrEqual();
         $value = $operator->getValue($this->rule);
@@ -155,7 +155,7 @@ class OperatorValueTest extends Unit
     /**
      * @return void
      */
-    public function testNotBeginsWith()
+    public function testNotBeginsWith(): void
     {
         $operator = new NotBeginsWith();
         $value = $operator->getValue($this->rule);
@@ -166,7 +166,7 @@ class OperatorValueTest extends Unit
     /**
      * @return void
      */
-    public function testNotContains()
+    public function testNotContains(): void
     {
         $operator = new NotContains();
         $value = $operator->getValue($this->rule);
@@ -177,7 +177,7 @@ class OperatorValueTest extends Unit
     /**
      * @return void
      */
-    public function testNotEndsWith()
+    public function testNotEndsWith(): void
     {
         $operator = new NotEndsWith();
         $value = $operator->getValue($this->rule);
@@ -188,7 +188,7 @@ class OperatorValueTest extends Unit
     /**
      * @return void
      */
-    public function testNotEqual()
+    public function testNotEqual(): void
     {
         $operator = new NotEqual();
         $value = $operator->getValue($this->rule);
@@ -199,7 +199,7 @@ class OperatorValueTest extends Unit
     /**
      * @return void
      */
-    public function testNotIn()
+    public function testNotIn(): void
     {
         $operator = new NotIn();
         $value = $operator->getValue($this->rule);

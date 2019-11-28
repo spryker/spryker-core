@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundle;
 
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToEventFacadeBridge;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeBridge;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeBridge;
@@ -26,6 +27,8 @@ class ConfigurableBundleDependencyProvider extends AbstractBundleDependencyProvi
     public const FACADE_PRODUCT_LIST = 'FACADE_PRODUCT_LIST';
 
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
+
+    public const PROPEL_QUERY_PRODUCT_IMAGE_SET = 'PROPEL_QUERY_PRODUCT_IMAGE_SET';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -53,6 +56,19 @@ class ConfigurableBundleDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addLocaleFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
+        $container = $this->addProductImageSetQuery($container);
 
         return $container;
     }
@@ -133,6 +149,22 @@ class ConfigurableBundleDependencyProvider extends AbstractBundleDependencyProvi
                 $container->getLocator()->utilText()->service()
             );
         });
+
+        return $container;
+    }
+
+    /**
+     * @module ProductImage
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductImageSetQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_PRODUCT_IMAGE_SET, $container->factory(function () {
+            return SpyProductImageSetQuery::create();
+        }));
 
         return $container;
     }

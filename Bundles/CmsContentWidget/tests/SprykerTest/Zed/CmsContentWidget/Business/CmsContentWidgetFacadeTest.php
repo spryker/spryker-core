@@ -38,7 +38,7 @@ class CmsContentWidgetFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -48,7 +48,7 @@ class CmsContentWidgetFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testMapContentWidgetParametersShouldSkipMappingIfThereIsNoTwigContent()
+    public function testMapContentWidgetParametersShouldSkipMappingIfThereIsNoTwigContent(): void
     {
         $parameterMap = $this->cmsContentWidgetFacade->mapContentWidgetParameters('cms content without twig functions');
         $this->assertEmpty($parameterMap);
@@ -57,7 +57,7 @@ class CmsContentWidgetFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testMapContentWidgetParametersShouldMapParametersWithPlugin()
+    public function testMapContentWidgetParametersShouldMapParametersWithPlugin(): void
     {
         $mockedCmsContentWidgetFunction = $this->createMockedCmsContentWidgetFunction();
 
@@ -84,10 +84,10 @@ class CmsContentWidgetFacadeTest extends Unit
      * @return void
      */
     public function testGetContentWidgetConfigurationListShouldReturnProvidedConfigurations(
-        $functionName,
+        string $functionName,
         array $availableTemplates,
-        $usageInformation
-    ) {
+        string $usageInformation
+    ): void {
         $cmsContentWidgetConfigurationProviderMock = $this->createCmsContentWidgetConfigurationProviderMock();
 
         $cmsContentWidgetConfigurationProviderMock
@@ -127,7 +127,7 @@ class CmsContentWidgetFacadeTest extends Unit
     /**
      * @return array
      */
-    public function getContentWidgetDataProvider()
+    public function getContentWidgetDataProvider(): array
     {
         return [
             [
@@ -155,7 +155,7 @@ class CmsContentWidgetFacadeTest extends Unit
      */
     protected function createCmsFacadeWithMockedContentWidgetConfigurationProviders(
         CmsContentWidgetConfigurationProviderInterface $cmsContentWidgetConfigurationProviderMock
-    ) {
+    ): CmsContentWidgetFacade {
         $cmsContentWidgetFacade = $this->createCmsContentWidgetFacade();
         $cmsBusinessFactory = $this->createBusinessFactory();
 
@@ -177,8 +177,7 @@ class CmsContentWidgetFacadeTest extends Unit
      */
     protected function createCmsFacadeWithMockedContentWidgetParameterMapper(
         CmsContentWidgetParameterMapperPluginInterface $cmsContentWidgetParameterMapperPluginMock
-    ) {
-
+    ): CmsContentWidgetFacade {
         $cmsContentFacade = $this->createCmsContentWidgetFacade();
         $cmsBusinessFactory = $this->createBusinessFactory();
 
@@ -212,7 +211,7 @@ class CmsContentWidgetFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\CmsContentWidget\Business\CmsContentWidgetFacade
      */
-    protected function createCmsContentWidgetFacade()
+    protected function createCmsContentWidgetFacade(): CmsContentWidgetFacade
     {
         return new CmsContentWidgetFacade();
     }
@@ -220,7 +219,7 @@ class CmsContentWidgetFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\CmsContentWidget\Business\CmsContentWidgetBusinessFactory
      */
-    protected function createBusinessFactory()
+    protected function createBusinessFactory(): CmsContentWidgetBusinessFactory
     {
         return new CmsContentWidgetBusinessFactory();
     }
@@ -228,7 +227,7 @@ class CmsContentWidgetFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function createZedContainer()
+    protected function createZedContainer(): Container
     {
         return new Container();
     }

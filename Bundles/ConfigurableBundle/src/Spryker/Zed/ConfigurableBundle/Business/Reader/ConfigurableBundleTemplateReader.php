@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTemplateImageSetExpanderInterface;
 use Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpanderInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface;
@@ -38,18 +39,26 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTemplateImageSetExpanderInterface
+     */
+    protected $configurableBundleTemplateImageSetExpander;
+
+    /**
      * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleRepositoryInterface $configurableBundleRepository
      * @param \Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTranslationExpanderInterface $configurableBundleTranslationExpander
      * @param \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\ConfigurableBundle\Business\Expander\ConfigurableBundleTemplateImageSetExpanderInterface $configurableBundleTemplateImageSetExpander
      */
     public function __construct(
         ConfigurableBundleRepositoryInterface $configurableBundleRepository,
         ConfigurableBundleTranslationExpanderInterface $configurableBundleTranslationExpander,
-        ConfigurableBundleToLocaleFacadeInterface $localeFacade
+        ConfigurableBundleToLocaleFacadeInterface $localeFacade,
+        ConfigurableBundleTemplateImageSetExpanderInterface $configurableBundleTemplateImageSetExpander
     ) {
         $this->configurableBundleRepository = $configurableBundleRepository;
         $this->configurableBundleTranslationExpander = $configurableBundleTranslationExpander;
         $this->localeFacade = $localeFacade;
+        $this->configurableBundleTemplateImageSetExpander = $configurableBundleTemplateImageSetExpander;
     }
 
     /**
@@ -129,6 +138,12 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
     ): ConfigurableBundleTemplateTransfer {
         $configurableBundleTemplateTransfer = $this->configurableBundleTranslationExpander
             ->expandConfigurableBundleTemplateWithTranslations(
+                $configurableBundleTemplateTransfer,
+                $configurableBundleTemplateFilterTransfer->getTranslationLocales()
+            );
+
+        $configurableBundleTemplateTransfer = $this->configurableBundleTemplateImageSetExpander
+            ->expandConfigurableBundleTemplateWithImageSets(
                 $configurableBundleTemplateTransfer,
                 $configurableBundleTemplateFilterTransfer->getTranslationLocales()
             );

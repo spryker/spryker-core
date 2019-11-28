@@ -26,7 +26,7 @@ class ClassInfoTest extends Unit
     /**
      * @return void
      */
-    public function testGetBundleStripsStoreNameFromBundleName()
+    public function testGetBundleStripsStoreNameFromBundleName(): void
     {
         $classInfo = $this->getClassInfo('DE');
 
@@ -40,7 +40,7 @@ class ClassInfoTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\ClassResolver\ClassInfo
      */
-    protected function getClassInfo($storeName)
+    protected function getClassInfo(string $storeName)
     {
         $mock = $this
             ->getMockBuilder(ClassInfo::class)
@@ -59,7 +59,7 @@ class ClassInfoTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
      */
-    protected function getBundleNameResolverMock($storeName)
+    protected function getBundleNameResolverMock(string $storeName)
     {
         $mock = $this
             ->getMockBuilder(BundleNameResolver::class)

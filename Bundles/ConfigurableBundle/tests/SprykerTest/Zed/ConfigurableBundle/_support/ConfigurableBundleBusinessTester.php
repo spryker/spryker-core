@@ -9,10 +9,12 @@ namespace SprykerTest\Zed\ConfigurableBundle;
 
 use ArrayObject;
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\ProductImageBuilder;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTranslationTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
+use Generated\Shared\Transfer\ProductImageTransfer;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 
 /**
@@ -189,6 +191,21 @@ class ConfigurableBundleBusinessTester extends Actor
         }
 
         return $configurableBundleTemplateSlotTranslationTransfers;
+    }
+
+    /**
+     * @param int $sortOrder
+     *
+     * @return \Generated\Shared\Transfer\ProductImageTransfer
+     */
+    public function createProductImageTransferWithSortOrder(int $sortOrder): ProductImageTransfer
+    {
+        /** @var \Generated\Shared\Transfer\ProductImageTransfer $productImageTransfer */
+        $productImageTransfer = (new ProductImageBuilder())
+            ->seed([ProductImageTransfer::SORT_ORDER => $sortOrder])
+            ->build();
+
+        return $productImageTransfer;
     }
 
     /**

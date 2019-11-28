@@ -19,7 +19,7 @@ class CmsBlockStoreRelationMapper implements CmsBlockStoreRelationMapperInterfac
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
-    public function mapStoreRelationToTransfer(SpyCmsBlock $cmsBlockEntity)
+    public function mapStoreRelationToTransfer(SpyCmsBlock $cmsBlockEntity): StoreRelationTransfer
     {
         $storeTransferCollection = $this->mapStoreTransfers($cmsBlockEntity);
         $idStores = $this->selectIdStores($storeTransferCollection);
@@ -37,7 +37,7 @@ class CmsBlockStoreRelationMapper implements CmsBlockStoreRelationMapperInterfac
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
      */
-    protected function mapStoreTransfers(SpyCmsBlock $cmsBlockEntity)
+    protected function mapStoreTransfers(SpyCmsBlock $cmsBlockEntity): ArrayObject
     {
         $storeTransferCollection = new ArrayObject();
         foreach ($cmsBlockEntity->getSpyCmsBlockStores() as $cmsBlockStoreEntity) {
@@ -58,7 +58,7 @@ class CmsBlockStoreRelationMapper implements CmsBlockStoreRelationMapperInterfac
      *
      * @return int[]
      */
-    protected function selectIdStores(ArrayObject $storeTransferCollection)
+    protected function selectIdStores(ArrayObject $storeTransferCollection): array
     {
         return array_map(function (StoreTransfer $storeTransfer) {
             return $storeTransfer->getIdStore();

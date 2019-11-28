@@ -9,6 +9,8 @@ namespace Spryker\Zed\ConfigurableBundle\Persistence;
 
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
 use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuery;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
+use Spryker\Zed\ConfigurableBundle\ConfigurableBundleDependencyProvider;
 use Spryker\Zed\ConfigurableBundle\Persistence\Propel\Mapper\ConfigurableBundleMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -41,5 +43,13 @@ class ConfigurableBundlePersistenceFactory extends AbstractPersistenceFactory
     public function getConfigurableBundleTemplateSlotPropelQuery(): SpyConfigurableBundleTemplateSlotQuery
     {
         return SpyConfigurableBundleTemplateSlotQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    public function getProductImageSetQuery(): SpyProductImageSetQuery
+    {
+        return $this->getProvidedDependency(ConfigurableBundleDependencyProvider::PROPEL_QUERY_PRODUCT_IMAGE_SET);
     }
 }

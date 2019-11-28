@@ -38,7 +38,7 @@ class ProductAbstractAssertionTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -49,7 +49,7 @@ class ProductAbstractAssertionTest extends Unit
     /**
      * @return void
      */
-    public function testAssertSkuIsUnique()
+    public function testAssertSkuIsUnique(): void
     {
         $query = $this->getMockBuilder(SpyProductAbstractQuery::class)
             ->disableOriginalConstructor()->getMock();
@@ -73,7 +73,7 @@ class ProductAbstractAssertionTest extends Unit
     /**
      * @return void
      */
-    public function testAssertSkuIsUniqueShouldThrowException()
+    public function testAssertSkuIsUniqueShouldThrowException(): void
     {
         $this->expectException(ProductAbstractExistsException::class);
         $this->expectExceptionMessage(sprintf(
@@ -103,7 +103,7 @@ class ProductAbstractAssertionTest extends Unit
     /**
      * @return void
      */
-    public function testAssertSkuIsUniqueWhenUpdatingProduct()
+    public function testAssertSkuIsUniqueWhenUpdatingProduct(): void
     {
         $query = $this->getMockBuilder(SpyProductAbstractQuery::class)
             ->disableOriginalConstructor()->getMock();
@@ -133,7 +133,7 @@ class ProductAbstractAssertionTest extends Unit
     /**
      * @return void
      */
-    public function testAssertSkuIsUniqueWhenUpdatingProductShouldThrowException()
+    public function testAssertSkuIsUniqueWhenUpdatingProductShouldThrowException(): void
     {
         $this->expectException(ProductAbstractExistsException::class);
         $this->expectExceptionMessage(sprintf(
@@ -169,7 +169,7 @@ class ProductAbstractAssertionTest extends Unit
     /**
      * @return void
      */
-    public function testAssertProductExists()
+    public function testAssertProductExists(): void
     {
         $query = $this->getMockBuilder(SpyProductAbstractQuery::class)
             ->disableOriginalConstructor()->getMock();
@@ -198,7 +198,7 @@ class ProductAbstractAssertionTest extends Unit
     /**
      * @return void
      */
-    public function testAssertProductExistsShouldThrowException()
+    public function testAssertProductExistsShouldThrowException(): void
     {
         $this->expectException(MissingProductException::class);
         $this->expectExceptionMessage(sprintf(

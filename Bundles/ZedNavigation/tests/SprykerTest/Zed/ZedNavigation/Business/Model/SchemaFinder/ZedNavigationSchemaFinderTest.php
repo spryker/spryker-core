@@ -29,7 +29,7 @@ class ZedNavigationSchemaFinderTest extends ZedNavigationBusinessTester
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         mkdir($this->getFixtureDirectory());
     }
@@ -37,7 +37,7 @@ class ZedNavigationSchemaFinderTest extends ZedNavigationBusinessTester
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $fileSystem = new Filesystem();
         $fileSystem->remove($this->getFixtureDirectory());
@@ -46,7 +46,7 @@ class ZedNavigationSchemaFinderTest extends ZedNavigationBusinessTester
     /**
      * @return string
      */
-    private function getFixtureDirectory()
+    private function getFixtureDirectory(): string
     {
         return __DIR__ . DIRECTORY_SEPARATOR . 'Fixtures';
     }
@@ -54,7 +54,7 @@ class ZedNavigationSchemaFinderTest extends ZedNavigationBusinessTester
     /**
      * @return void
      */
-    public function testGetSchemasShouldReturnIterateableFileCollection()
+    public function testGetSchemasShouldReturnIterateableFileCollection(): void
     {
         $schemaFinder = new ZedNavigationSchemaFinder(
             [$this->getFixtureDirectory()],

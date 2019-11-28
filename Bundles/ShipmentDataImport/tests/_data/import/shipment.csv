@@ -1,0 +1,3 @@
+shipment_method_key,name,carrier,taxSetName
+spryker_dummy_shipment-standard,Standard,Spryker Dummy Shipment,Shipment Taxes
+spryker_dummy_shipment-express,Express,Spryker Dummy Shipment,Shipment Taxes

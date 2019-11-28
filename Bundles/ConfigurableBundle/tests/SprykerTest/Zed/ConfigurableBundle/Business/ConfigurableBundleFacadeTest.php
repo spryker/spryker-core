@@ -16,7 +16,9 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTranslationTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
 use Generated\Shared\Transfer\ConfiguredBundleTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
@@ -37,6 +39,9 @@ class ConfigurableBundleFacadeTest extends Unit
     protected const FAKE_TEMPLATE_ID = 666;
     protected const FAKE_TEMPLATE_SLOT_ID = 666;
     protected const FAKE_PRODUCT_LIST_ID = 666;
+
+    protected const FAKE_PRODUCT_IMAGE_SET_NAME_1 = 'FAKE_PRODUCT_IMAGE_SET_NAME_1';
+    protected const FAKE_PRODUCT_IMAGE_SET_NAME_2 = 'FAKE_PRODUCT_IMAGE_SET_NAME_2';
 
     /**
      * @see \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReader::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_EXISTS
@@ -1037,5 +1042,202 @@ class ConfigurableBundleFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($productListResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetConfigurableBundleTemplateRetrievesTemplateWithCombinedImageSets(): void
+    {
+        // Arrange
+        $locale = $this->tester->getLocaleFacade()->getCurrentLocale();
+        $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
+        $productImageSetTransfer = $this->tester->haveProductImageSet([
+            ProductImageSetTransfer::FK_RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
+            ProductImageSetTransfer::LOCALE => null,
+            ProductImageSetTransfer::NAME => static::FAKE_PRODUCT_IMAGE_SET_NAME_1,
+        ]);
+
+        $localizedProductImageSetTransfer = $this->tester->haveProductImageSet([
+            ProductImageSetTransfer::FK_RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
+        ]);
+
+        $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())
+            ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+            ->setTranslationLocales(new ArrayObject([$locale]));
+
+        // Act
+        $configurableBundleTemplateResponseTransfer = $this->tester
+            ->getFacade()
+            ->getConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
+
+        // Assert
+        $productImageSetTransfers = $configurableBundleTemplateResponseTransfer
+            ->getConfigurableBundleTemplate()
+            ->getProductImageSets();
+
+        $this->assertTrue($configurableBundleTemplateResponseTransfer->getIsSuccessful());
+        $this->assertCount(2, $productImageSetTransfers);
+        $this->assertSame($productImageSetTransfer->toArray(), $productImageSetTransfers->offsetGet(0)->toArray());
+        $this->assertSame($localizedProductImageSetTransfer->toArray(), $productImageSetTransfers->offsetGet(1)->toArray());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetConfigurableBundleTemplateRetrievesTemplateWithDefaultImageSets(): void
+    {
+        // Arrange
+        $locale = $this->tester->getLocaleFacade()->getCurrentLocale();
+        $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
+        $productImageSetTransfer = $this->tester->haveProductImageSet([
+            ProductImageSetTransfer::FK_RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
+            ProductImageSetTransfer::LOCALE => null,
+        ]);
+
+        $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())
+            ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+            ->setTranslationLocales(new ArrayObject([$locale]));
+
+        // Act
+        $configurableBundleTemplateResponseTransfer = $this->tester
+            ->getFacade()
+            ->getConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
+
+        // Assert
+        $productImageSetTransfers = $configurableBundleTemplateResponseTransfer
+            ->getConfigurableBundleTemplate()
+            ->getProductImageSets();
+
+        $this->assertTrue($configurableBundleTemplateResponseTransfer->getIsSuccessful());
+        $this->assertCount(1, $productImageSetTransfers);
+        $this->assertSame($productImageSetTransfer->toArray(), $productImageSetTransfers->offsetGet(0)->toArray());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetConfigurableBundleTemplateRetrievesTemplateWithTwoImageSets(): void
+    {
+        // Arrange
+        $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
+        $this->tester->haveProductImageSet([
+            ProductImageSetTransfer::FK_RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
+            ProductImageSetTransfer::NAME => static::FAKE_PRODUCT_IMAGE_SET_NAME_1,
+        ]);
+        $this->tester->haveProductImageSet([
+            ProductImageSetTransfer::FK_RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
+            ProductImageSetTransfer::NAME => static::FAKE_PRODUCT_IMAGE_SET_NAME_2,
+        ]);
+
+        $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())
+            ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+
+        // Act
+        $configurableBundleTemplateResponseTransfer = $this->tester
+            ->getFacade()
+            ->getConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
+
+        $productImageSetTransfers = $configurableBundleTemplateResponseTransfer
+            ->getConfigurableBundleTemplate()
+            ->getProductImageSets();
+
+        // Assert
+        $this->assertTrue($configurableBundleTemplateResponseTransfer->getIsSuccessful());
+        $this->assertCount(2, $productImageSetTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetConfigurableBundleTemplateRetrievesTemplateWithOrderedImages(): void
+    {
+        // Arrange
+        $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
+
+        $this->tester->haveProductImageSet([
+            ProductImageSetTransfer::FK_RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
+            ProductImageSetTransfer::PRODUCT_IMAGES => [
+                $this->tester->createProductImageTransferWithSortOrder(12),
+                $this->tester->createProductImageTransferWithSortOrder(5),
+                $this->tester->createProductImageTransferWithSortOrder(8),
+            ],
+        ]);
+
+        $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())
+            ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+
+        // Act
+        $configurableBundleTemplateResponseTransfer = $this->tester
+            ->getFacade()
+            ->getConfigurableBundleTemplate($configurableBundleTemplateFilterTransfer);
+
+        $productImageSetTransfers = $configurableBundleTemplateResponseTransfer
+            ->getConfigurableBundleTemplate()
+            ->getProductImageSets();
+
+        /** @var \ArrayObject|\Generated\Shared\Transfer\ProductImageTransfer[] $productImageTransfers */
+        $productImageTransfers = $productImageSetTransfers->offsetGet(0)->getProductImages();
+
+        // Assert
+        $this->assertTrue($configurableBundleTemplateResponseTransfer->getIsSuccessful());
+        $this->assertCount(3, $productImageTransfers);
+        $this->assertSame(5, $productImageTransfers->offsetGet(0)->getSortorder());
+        $this->assertSame(8, $productImageTransfers->offsetGet(1)->getSortorder());
+        $this->assertSame(12, $productImageTransfers->offsetGet(2)->getSortorder());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetConfigurableBundleTemplateCollectionRetrievesTemplatesWithImageSets(): void
+    {
+        // Arrange
+        $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
+        $productImageSetTransfer = $this->tester->haveProductImageSet([
+            ProductImageSetTransfer::FK_RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
+        ]);
+
+        $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())
+            ->setIdConfigurableBundleTemplate($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate());
+
+        // Act
+        $configurableBundleTemplateCollectionTransfer = $this->tester
+            ->getFacade()
+            ->getConfigurableBundleTemplateCollection($configurableBundleTemplateFilterTransfer);
+
+        $configurableBundleTemplateTransfer = $configurableBundleTemplateCollectionTransfer
+            ->getConfigurableBundleTemplates()
+            ->offsetGet(0);
+
+        // Assert
+        $this->assertCount(1, $configurableBundleTemplateCollectionTransfer->getConfigurableBundleTemplates());
+        $this->assertEquals(
+            $productImageSetTransfer->toArray(),
+            $configurableBundleTemplateTransfer->getProductImageSets()->offsetGet(0)->toArray()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetConfigurableBundleTemplateCollectionRetrievesTemplatesWithLimit(): void
+    {
+        // Arrange
+        $firstConfigurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
+        $secondConfigurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
+
+        $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())
+            ->addConfigurableBundleTemplateId($firstConfigurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+            ->addConfigurableBundleTemplateId($secondConfigurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
+            ->setFilter((new FilterTransfer())->setLimit(1));
+
+        // Act
+        $configurableBundleTemplateCollectionTransfer = $this->tester
+            ->getFacade()
+            ->getConfigurableBundleTemplateCollection($configurableBundleTemplateFilterTransfer);
+
+        // Assert
+        $this->assertCount(1, $configurableBundleTemplateCollectionTransfer->getConfigurableBundleTemplates());
     }
 }

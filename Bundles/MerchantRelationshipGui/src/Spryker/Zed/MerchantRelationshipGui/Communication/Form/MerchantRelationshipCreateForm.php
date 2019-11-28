@@ -96,7 +96,7 @@ class MerchantRelationshipCreateForm extends AbstractType
             ->getMerchantRelationshipCreateFormExpanderPlugins();
 
         foreach ($merchantRelationshipCreateFormExpanderPlugins as $merchantRelationshipCreateFormExpanderPlugin) {
-            $merchantRelationshipCreateFormExpanderPlugin->expand($builder, $options);
+            $builder = $merchantRelationshipCreateFormExpanderPlugin->expand($builder, $options);
         }
     }
 

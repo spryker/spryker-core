@@ -10,9 +10,8 @@ namespace Spryker\Zed\Heartbeat\Business\Assistant;
 use Orm\Zed\Heartbeat\Persistence\SpyPropelHeartbeat;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Shared\Heartbeat\Code\AbstractHealthIndicator;
-use Spryker\Shared\Heartbeat\Code\HealthIndicatorInterface;
 
-class PropelHealthIndicator extends AbstractHealthIndicator implements HealthIndicatorInterface
+class PropelHealthIndicator extends AbstractHealthIndicator
 {
     public const HEALTH_MESSAGE_UNABLE_TO_WRITE_TO_DATABASE = 'Unable to write to database';
 

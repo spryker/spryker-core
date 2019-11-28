@@ -34,7 +34,6 @@ class ConfigurableBundleTemplateStorageUnpublishListener extends AbstractPlugin 
             ->getEventBehaviorFacade()
             ->getEventTransferIds($eventTransfers);
 
-        $this->getFacade()
-            ->unpublishConfigurableBundleTemplate($configurableBundleTemplateIds);
+        $this->getFacade()->unpublishConfigurableBundleTemplate($configurableBundleTemplateIds);
     }
 }

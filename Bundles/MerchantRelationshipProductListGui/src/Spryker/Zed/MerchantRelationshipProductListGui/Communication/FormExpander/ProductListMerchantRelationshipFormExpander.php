@@ -37,9 +37,9 @@ class ProductListMerchantRelationshipFormExpander implements ProductListMerchant
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
-     * @return void
+     * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    public function expand(FormBuilderInterface $builder, array $options): void
+    public function expand(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $productListOptions = $this->productListMerchantRelationshipFormDataProvider->getOptions($event->getData());
@@ -53,5 +53,7 @@ class ProductListMerchantRelationshipFormExpander implements ProductListMerchant
                     'data' => $productListOptions[static::OPTION_DATA],
                 ]);
         });
+
+        return $builder;
     }
 }

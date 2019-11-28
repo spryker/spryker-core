@@ -93,7 +93,7 @@ abstract class AbstractTable
     /**
      * @var string|null
      */
-    protected $tableIdentifier = null;
+    protected $tableIdentifier;
 
     /**
      * @var \Generated\Shared\Transfer\DataTablesTransfer
@@ -460,7 +460,6 @@ abstract class AbstractTable
 
         $field = key($defaultSortField);
         $direction = $defaultSortField[$field];
-        $index = null;
 
         $availableFields = array_keys($config->getHeader());
         $index = array_search($field, $availableFields, true);

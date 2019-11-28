@@ -19,7 +19,7 @@ class Config
     /**
      * @var \ArrayObject|null
      */
-    protected static $config = null;
+    protected static $config;
 
     /**
      * @var self|null

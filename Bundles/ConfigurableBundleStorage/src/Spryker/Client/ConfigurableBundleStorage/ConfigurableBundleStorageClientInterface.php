@@ -15,14 +15,16 @@ interface ConfigurableBundleStorageClientInterface
      * Specification:
      * - Finds a configurable bundle template within Storage with a given ID.
      * - Returns null if configurable bundle template was not found.
+     * - Populates ConfigurableBundleTemplateStorageTransfer::imageSets using provided locale.
      *
      * @api
      *
      * @param int $idConfigurableBundleTemplate
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
      */
-    public function findConfigurableBundleTemplateStorage(int $idConfigurableBundleTemplate): ?ConfigurableBundleTemplateStorageTransfer;
+    public function findConfigurableBundleTemplateStorage(int $idConfigurableBundleTemplate, string $localeName): ?ConfigurableBundleTemplateStorageTransfer;
 
     /**
      * Specification:

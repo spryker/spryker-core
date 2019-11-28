@@ -84,6 +84,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
             'name_underscore' => 'scalar_field',
             'is_collection' => false,
             'is_transfer' => false,
+            'is_value_object' => false,
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
@@ -93,6 +94,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
             'name_underscore' => 'array_field',
             'is_collection' => false,
             'is_transfer' => false,
+            'is_value_object' => false,
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
@@ -102,6 +104,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
             'name_underscore' => 'transfer_field',
             'is_collection' => false,
             'is_transfer' => true,
+            'is_value_object' => false,
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
@@ -111,6 +114,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
             'name_underscore' => 'transfer_collection_field',
             'is_collection' => true,
             'is_transfer' => true,
+            'is_value_object' => false,
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
@@ -335,28 +339,28 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     public function fromArray(array $data, $ignoreMissingProperty = false)
     {
         foreach ($data as $property => $value) {
-            $property = $this->transferPropertyNameMap[$property] ?? null;
+            $normalizedPropertyName = $this->transferPropertyNameMap[$property] ?? null;
 
-            switch ($property) {
+            switch ($normalizedPropertyName) {
                 case 'scalarField':
                 case 'arrayField':
-                    $this->$property = $value;
-                    $this->modifiedProperties[$property] = true;
+                    $this->$normalizedPropertyName = $value;
+                    $this->modifiedProperties[$normalizedPropertyName] = true;
                     break;
                 case 'transferField':
                     if (is_array($value)) {
-                        $type = $this->transferMetadata[$property]['type'];
+                        $type = $this->transferMetadata[$normalizedPropertyName]['type'];
                         /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject */
                         $value = (new $type())->fromArray($value, $ignoreMissingProperty);
                     }
-                    $this->$property = $value;
-                    $this->modifiedProperties[$property] = true;
+                    $this->$normalizedPropertyName = $value;
+                    $this->modifiedProperties[$normalizedPropertyName] = true;
 
                     break;
                 case 'transferCollectionField':
-                    $elementType = $this->transferMetadata[$property]['type'];
-                    $this->$property = $this->processArrayObject($elementType, $value, $ignoreMissingProperty);
-                    $this->modifiedProperties[$property] = true;
+                    $elementType = $this->transferMetadata[$normalizedPropertyName]['type'];
+                    $this->$normalizedPropertyName = $this->processArrayObject($elementType, $value, $ignoreMissingProperty);
+                    $this->modifiedProperties[$normalizedPropertyName] = true;
                     break;
                 default:
                     if (!$ignoreMissingProperty) {
@@ -460,6 +464,11 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
             $value = $this->$property;
 
             $arrayKey = $property;
+
+            if ($value instanceof AbstractTransfer) {
+                $values[$arrayKey] = $value->modifiedToArray(true, true);
+                continue;
+            }
             switch ($property) {
                 case 'scalarField':
                 case 'arrayField':
@@ -487,6 +496,11 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
             $value = $this->$property;
 
             $arrayKey = $this->transferMetadata[$property]['name_underscore'];
+
+            if ($value instanceof AbstractTransfer) {
+                $values[$arrayKey] = $value->modifiedToArray(true, false);
+                continue;
+            }
             switch ($property) {
                 case 'scalarField':
                 case 'arrayField':
@@ -514,6 +528,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
             $value = $this->$property;
 
             $arrayKey = $this->transferMetadata[$property]['name_underscore'];
+
             $values[$arrayKey] = $value;
         }
 
@@ -530,6 +545,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
             $value = $this->$property;
 
             $arrayKey = $property;
+
             $values[$arrayKey] = $value;
         }
 
@@ -576,10 +592,10 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     public function toArrayRecursiveNotCamelCased()
     {
         return [
-            'scalar_field' => $this->scalarField,
-            'array_field' => $this->arrayField,
+            'scalar_field' => $this->scalarField instanceof AbstractTransfer ? $this->scalarField->toArray(true, false) : $this->scalarField,
+            'array_field' => $this->arrayField instanceof AbstractTransfer ? $this->arrayField->toArray(true, false) : $this->arrayField,
             'transfer_field' => $this->transferField instanceof AbstractTransfer ? $this->transferField->toArray(true, false) : $this->transferField,
-            'transfer_collection_field' => $this->addValuesToCollection($this->transferCollectionField, true, false),
+            'transfer_collection_field' => $this->transferCollectionField instanceof AbstractTransfer ? $this->transferCollectionField->toArray(true, false) : $this->addValuesToCollection($this->transferCollectionField, true, false),
         ];
     }
 
@@ -589,10 +605,10 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     public function toArrayRecursiveCamelCased()
     {
         return [
-            'scalarField' => $this->scalarField,
-            'arrayField' => $this->arrayField,
+            'scalarField' => $this->scalarField instanceof AbstractTransfer ? $this->scalarField->toArray(true, true) : $this->scalarField,
+            'arrayField' => $this->arrayField instanceof AbstractTransfer ? $this->arrayField->toArray(true, true) : $this->arrayField,
             'transferField' => $this->transferField instanceof AbstractTransfer ? $this->transferField->toArray(true, true) : $this->transferField,
-            'transferCollectionField' => $this->addValuesToCollection($this->transferCollectionField, true, true),
+            'transferCollectionField' => $this->transferCollectionField instanceof AbstractTransfer ? $this->transferCollectionField->toArray(true, true) : $this->addValuesToCollection($this->transferCollectionField, true, true),
         ];
     }
 }
