@@ -20,6 +20,10 @@ class ConfiguredBundleValidator implements ConfiguredBundleValidatorInterface
      */
     public function validateCreateConfiguredBundleRequestTransfer(CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer): bool
     {
+        if (!$createConfiguredBundleRequestTransfer->getLocaleName()) {
+            return false;
+        }
+
         if (!$createConfiguredBundleRequestTransfer->getConfiguredBundleRequest() || !$createConfiguredBundleRequestTransfer->getConfiguredBundleRequest()->getTemplateUuid()) {
             return false;
         }

@@ -38,14 +38,15 @@ class ConfigurableBundleStorageClient extends AbstractClient implements Configur
      * @api
      *
      * @param string $configurableBundleTemplateUuid
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
      */
-    public function findConfigurableBundleTemplateStorageByUuid(string $configurableBundleTemplateUuid): ?ConfigurableBundleTemplateStorageTransfer
+    public function findConfigurableBundleTemplateStorageByUuid(string $configurableBundleTemplateUuid, string $localeName): ?ConfigurableBundleTemplateStorageTransfer
     {
         return $this->getFactory()
             ->createConfigurableBundleStorageReader()
-            ->findConfigurableBundleTemplateStorageByUuid($configurableBundleTemplateUuid);
+            ->findConfigurableBundleTemplateStorageByUuid($configurableBundleTemplateUuid, $localeName);
     }
 
     /**

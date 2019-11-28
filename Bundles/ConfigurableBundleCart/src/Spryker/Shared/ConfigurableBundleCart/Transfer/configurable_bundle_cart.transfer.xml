@@ -12,6 +12,7 @@
     <transfer name="CreateConfiguredBundleRequest">
         <property name="configuredBundleRequest" type="ConfiguredBundleRequest"/>
         <property name="configuredBundleItemRequests" type="ConfiguredBundleItemRequest[]" singular="configuredBundleItemRequest"/>
+        <property name="localeName" type="string"/>
     </transfer>
 
     <transfer name="ConfiguredBundleItemRequest">

@@ -26,11 +26,12 @@ class ConfigurableBundleCartToConfigurableBundleStorageClientBridge implements C
 
     /**
      * @param string $configurableBundleTemplateUuid
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
      */
-    public function findConfigurableBundleTemplateStorageByUuid(string $configurableBundleTemplateUuid): ?ConfigurableBundleTemplateStorageTransfer
+    public function findConfigurableBundleTemplateStorageByUuid(string $configurableBundleTemplateUuid, string $localeName): ?ConfigurableBundleTemplateStorageTransfer
     {
-        return $this->configurableBundleStorageClient->findConfigurableBundleTemplateStorageByUuid($configurableBundleTemplateUuid);
+        return $this->configurableBundleStorageClient->findConfigurableBundleTemplateStorageByUuid($configurableBundleTemplateUuid, $localeName);
     }
 }

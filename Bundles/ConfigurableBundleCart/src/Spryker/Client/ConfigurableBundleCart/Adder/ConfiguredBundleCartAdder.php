@@ -77,7 +77,8 @@ class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
         }
 
         $configurableBundleTemplateStorageTransfer = $this->configurableBundleStorageClient->findConfigurableBundleTemplateStorageByUuid(
-            $createConfiguredBundleRequestTransfer->getConfiguredBundleRequest()->getTemplateUuid()
+            $createConfiguredBundleRequestTransfer->getConfiguredBundleRequest()->getTemplateUuid(),
+            $createConfiguredBundleRequestTransfer->getLocaleName()
         );
 
         if (!$configurableBundleTemplateStorageTransfer) {

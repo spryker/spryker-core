@@ -13,8 +13,9 @@ interface ConfigurableBundleCartToConfigurableBundleStorageClientInterface
 {
     /**
      * @param string $configurableBundleTemplateUuid
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
      */
-    public function findConfigurableBundleTemplateStorageByUuid(string $configurableBundleTemplateUuid): ?ConfigurableBundleTemplateStorageTransfer;
+    public function findConfigurableBundleTemplateStorageByUuid(string $configurableBundleTemplateUuid, string $localeName): ?ConfigurableBundleTemplateStorageTransfer;
 }

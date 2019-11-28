@@ -57,15 +57,16 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
      */
     public function findConfigurableBundleTemplateStorage(int $idConfigurableBundleTemplate, string $localeName): ?ConfigurableBundleTemplateStorageTransfer
     {
-        return $this->findStorageData((string)$idConfigurableBundleTemplate);
+        return $this->findStorageData((string)$idConfigurableBundleTemplate, $localeName);
     }
 
     /**
      * @param string $configurableBundleTemplateUuid
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
      */
-    public function findConfigurableBundleTemplateStorageByUuid(string $configurableBundleTemplateUuid): ?ConfigurableBundleTemplateStorageTransfer
+    public function findConfigurableBundleTemplateStorageByUuid(string $configurableBundleTemplateUuid, string $localeName): ?ConfigurableBundleTemplateStorageTransfer
     {
         $mappingData = $this->storageClient->get(
             $this->generateKey(static::MAPPING_TYPE_UUID . static::MAPPING_DELIMITER . $configurableBundleTemplateUuid)
@@ -75,15 +76,16 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
             return null;
         }
 
-        return $this->findStorageData($mappingData[static::MAPPING_DATA_KEY_ID]);
+        return $this->findStorageData($mappingData[static::MAPPING_DATA_KEY_ID], $localeName);
     }
 
     /**
      * @param string $key
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
      */
-    protected function findStorageData(string $key): ?ConfigurableBundleTemplateStorageTransfer
+    protected function findStorageData(string $key, string $localeName): ?ConfigurableBundleTemplateStorageTransfer
     {
         $configurableBundleTemplateStorageTransferData = $this->storageClient->get(
             $this->generateKey($key)
