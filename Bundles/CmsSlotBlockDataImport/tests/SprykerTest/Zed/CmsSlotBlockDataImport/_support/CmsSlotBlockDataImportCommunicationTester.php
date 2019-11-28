@@ -7,8 +7,10 @@
 
 namespace SprykerTest\Zed\CmsSlotBlockDataImport;
 
+use ArrayObject;
 use Codeception\Actor;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\CmsSlotBlockConditionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
@@ -70,39 +72,63 @@ class CmsSlotBlockDataImportCommunicationTester extends Actor
             return null;
         }
 
-        return (new CmsSlotBlockTransfer())
-            ->fromArray($cmsSlotBlockEntity->toArray(), true)
+        $cmsSlotBlockTransfer = (new CmsSlotBlockTransfer())
             ->setIdSlotTemplate($cmsSlotBlockEntity->getFkCmsSlotTemplate())
             ->setIdSlot($cmsSlotBlockEntity->getFkCmsSlot())
             ->setIdCmsBlock($cmsSlotBlockEntity->getFkCmsBlock())
-            ->setConditions(json_decode($cmsSlotBlockEntity->getConditions(), true));
+            ->setPosition($cmsSlotBlockEntity->getPosition());
+
+        if ($cmsSlotBlockEntity->getConditions()) {
+            $conditions = json_decode($cmsSlotBlockEntity->getConditions(), true);
+            $cmsSlotBlockConditionTransfers = new ArrayObject();
+
+            foreach ($conditions as $condition) {
+                if ($condition) {
+                    $cmsSlotBlockConditionTransfers->append((new CmsSlotBlockConditionTransfer())->fromArray($condition, true));
+                }
+            }
+
+            if ($cmsSlotBlockConditionTransfers) {
+                $cmsSlotBlockTransfer->setConditions($cmsSlotBlockConditionTransfers);
+            }
+        }
+
+        return $cmsSlotBlockTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return array
+     * @return \ArrayObject
      */
     public function getCmsSlotBlockConditions(
         CategoryTransfer $categoryTransfer,
         ProductAbstractTransfer $productAbstractTransfer
-    ): array {
-        return [
-            'category' => [
-                'all' => true,
-                'categoryIds' => [$categoryTransfer->getIdCategory()],
-            ],
-            'productCategory' => [
-                'all' => false,
-                'productIds' => [$productAbstractTransfer->getIdProductAbstract()],
-                'categoryIds' => [$categoryTransfer->getIdCategory()],
-            ],
-            'cms_page' => [
-                'all' => true,
-                'pageIds' => [],
-            ],
-        ];
+    ): ArrayObject {
+        $conditions = new ArrayObject();
+
+        $conditionCategory = (new CmsSlotBlockConditionTransfer())->fromArray([
+            'all' => false,
+            'categoryIds' => [$categoryTransfer->getIdCategory()],
+        ], true);
+
+        $conditionProductCategory = (new CmsSlotBlockConditionTransfer())->fromArray([
+            'all' => false,
+            'productIds' => [$productAbstractTransfer->getIdProductAbstract()],
+            'categoryIds' => [$categoryTransfer->getIdCategory()],
+        ], true);
+
+        $conditionCmsPage = (new CmsSlotBlockConditionTransfer())->fromArray([
+            'all' => true,
+            'pageIds' => [],
+        ], true);
+
+        $conditions->append($conditionCategory);
+        $conditions->append($conditionProductCategory);
+        $conditions->append($conditionCmsPage);
+
+        return $conditions;
     }
 
     /**

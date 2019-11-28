@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\CmsSlotBlock\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CmsSlotBlockBuilder;
-use Generated\Shared\Transfer\CmsSlotBlockConditionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlock;
 use Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlockQuery;
@@ -27,7 +26,7 @@ class CmsSlotBlockHelper extends Module
             CmsSlotBlockTransfer::ID_SLOT_TEMPLATE => 1,
             CmsSlotBlockTransfer::ID_SLOT => 1,
             CmsSlotBlockTransfer::ID_CMS_BLOCK => 1,
-            CmsSlotBlockTransfer::CONDITIONS => new CmsSlotBlockConditionTransfer(),
+            CmsSlotBlockTransfer::CONDITIONS => [],
             CmsSlotBlockTransfer::POSITION => 1,
         ];
 

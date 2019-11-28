@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\CmsSlotBlockDataImport\Communication\Plugin;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
@@ -175,6 +176,6 @@ class CmsSlotBlockDataImportPluginTest extends Unit
         );
 
         //Assert
-        $this->assertEquals([], $cmsSlotBlockTransferFromDb->getConditions());
+        $this->assertEquals(new ArrayObject(), $cmsSlotBlockTransferFromDb->getConditions());
     }
 }

@@ -1,2 +1,2 @@
 template_path,slot_key,block_key,position,conditions.productCategory.all,conditions.productCategory.skus,conditions.productCategory.category_key,conditions.category.all,conditions.category.category_key,conditions.cms_page.all,conditions.cms_page.page_key
-"@TestPage/views/pdp/pdp.twig",test-slot-key,test-block-key,1,0,"test-product-abstract-sku","test-category-key",1,"test-category-key",1,
+"@TestPage/views/pdp/pdp.twig",test-slot-key,test-block-key,1,0,"test-product-abstract-sku","test-category-key",0,"test-category-key",1,

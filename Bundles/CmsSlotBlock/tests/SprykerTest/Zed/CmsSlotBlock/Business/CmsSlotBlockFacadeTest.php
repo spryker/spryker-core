@@ -57,7 +57,7 @@ class CmsSlotBlockFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function _after(): void
+    protected function _before(): void
     {
         $this->tester->ensureCmsSlotBlockTableIsEmpty();
         $this->tester->ensureCmsSlotTableIsEmpty();
@@ -165,8 +165,8 @@ class CmsSlotBlockFacadeTest extends Unit
 
         // Assert
         $this->assertCount(2, $cmsSlotBlocks);
-        $this->assertEquals($cmsSlotBlockTransfer1, $cmsSlotBlocks[0]);
-        $this->assertEquals($cmsSlotBlockTransfer2, $cmsSlotBlocks[1]);
+        $this->assertEquals($cmsSlotBlockTransfer1->toArray(), $cmsSlotBlocks[0]->toArray());
+        $this->assertEquals($cmsSlotBlockTransfer2->toArray(), $cmsSlotBlocks[1]->toArray());
     }
 
     /**
@@ -238,7 +238,7 @@ class CmsSlotBlockFacadeTest extends Unit
         // Arrange
         $countCmsBlocks = SpyCmsBlockQuery::create()->count();
         $this->tester->createCmsBlocksInDb();
-        $filterTransfer = (new FilterTransfer())->setOffset($countCmsBlocks);
+        $filterTransfer = (new FilterTransfer())->setOffset($countCmsBlocks - 1);
 
         // Act
         $cmsBlockTransfers = $this->tester->createCmsSlotBlockFacade()->getCmsBlocksWithSlotRelations($filterTransfer);
