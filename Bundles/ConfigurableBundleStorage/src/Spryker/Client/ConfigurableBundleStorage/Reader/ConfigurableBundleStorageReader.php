@@ -69,7 +69,10 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
     public function findConfigurableBundleTemplateStorageByUuid(string $configurableBundleTemplateUuid, string $localeName): ?ConfigurableBundleTemplateStorageTransfer
     {
         $mappingData = $this->storageClient->get(
-            $this->generateKey(static::MAPPING_TYPE_UUID . static::MAPPING_DELIMITER . $configurableBundleTemplateUuid)
+            $this->generateKey(
+                static::MAPPING_TYPE_UUID . static::MAPPING_DELIMITER . $configurableBundleTemplateUuid,
+                $localeName
+            )
         );
 
         if (!$mappingData) {
@@ -88,7 +91,7 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
     protected function findStorageData(string $key, string $localeName): ?ConfigurableBundleTemplateStorageTransfer
     {
         $configurableBundleTemplateStorageTransferData = $this->storageClient->get(
-            $this->generateKey($key)
+            $this->generateKey($key, $localeName)
         );
 
         if (!$configurableBundleTemplateStorageTransferData) {
@@ -114,12 +117,14 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
 
     /**
      * @param string $reference
+     * @param string $localeName
      *
      * @return string
      */
-    protected function generateKey(string $reference): string
+    protected function generateKey(string $reference, string $localeName): string
     {
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
+            ->setLocale($localeName)
             ->setReference($reference);
 
         return $this->synchronizationService
