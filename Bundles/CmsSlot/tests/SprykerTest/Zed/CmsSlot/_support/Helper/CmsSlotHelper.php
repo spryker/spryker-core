@@ -168,6 +168,24 @@ class CmsSlotHelper extends Module
     }
 
     /**
+     * @return void
+     */
+    public function ensureCmsSlotTableIsEmpty(): void
+    {
+        $this->getCmsSlotToCmsSlotTemplateQuery()->deleteAll();
+        $this->getCmsSlotQuery()->deleteAll();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureCmsSlotTemplateTableIsEmpty(): void
+    {
+        $this->getCmsSlotToCmsSlotTemplateQuery()->deleteAll();
+        $this->getCmsSlotTemplateQuery()->deleteAll();
+    }
+
+    /**
      * @return \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotToCmsSlotTemplateQuery
      */
     protected function getCmsSlotToCmsSlotTemplateQuery(): SpyCmsSlotToCmsSlotTemplateQuery
