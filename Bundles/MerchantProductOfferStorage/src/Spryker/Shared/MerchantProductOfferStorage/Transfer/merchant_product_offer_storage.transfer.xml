@@ -37,4 +37,11 @@
         <property name="key" type="string"/>
     </transfer>
 
+    <transfer name="ProductView">
+        <property name="productOfferReference" type="string"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="selectedAttributes" type="array" singular="selectedAttribute"/>
+    </transfer>
+
 </transfers>

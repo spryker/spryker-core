@@ -28,15 +28,15 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     }
 
     /**
-     * @param string[] $concreteSkus
+     * @param string[] $productSkus
      *
      * @return void
      */
-    public function publish(array $concreteSkus): void
+    public function publish(array $productSkus): void
     {
-        $concreteSkus = array_unique($concreteSkus);
+        $productSkus = array_unique($productSkus);
         $productOfferCriteriaFilterTransfer = new ProductOfferCriteriaFilterTransfer();
-        $productOfferCriteriaFilterTransfer->setConcreteSkus($concreteSkus);
+        $productOfferCriteriaFilterTransfer->setConcreteSkus($productSkus);
         $productOfferCollectionTransfer = $this->productOfferFacade->find($productOfferCriteriaFilterTransfer);
 
         $productOffersGroupedBySku = $this->groupProductOfferByConcreteSku($productOfferCollectionTransfer);
@@ -52,14 +52,14 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     }
 
     /**
-     * @param string[] $concreteSkus
+     * @param string[] $productSkus
      *
      * @return void
      */
-    public function unpublish(array $concreteSkus): void
+    public function unpublish(array $productSkus): void
     {
         $productConcreteProductOffersStorageEntities = SpyProductConcreteProductOffersStorageQuery::create()
-            ->filterByConcreteSku_In($concreteSkus)
+            ->filterByConcreteSku_In($productSkus)
             ->find();
 
         foreach ($productConcreteProductOffersStorageEntities as $productConcreteProductOffersStorageEntity) {
