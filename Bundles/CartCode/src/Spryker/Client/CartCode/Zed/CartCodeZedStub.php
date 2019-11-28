@@ -9,19 +9,19 @@ namespace Spryker\Client\CartCode\Zed;
 
 use Generated\Shared\Transfer\CartCodeRequestTransfer;
 use Generated\Shared\Transfer\CartCodeResponseTransfer;
-use Spryker\Client\CartCodesRestApi\Dependency\Client\CartCodesRestApiToZedRequestClientInterface;
+use Spryker\Client\CartCode\Dependency\Client\CartCodeToZedRequestClientInterface;
 
 class CartCodeZedStub implements CartCodeZedStubInterface
 {
     /**
-     * @var \Spryker\Client\CartCodesRestApi\Dependency\Client\CartCodesRestApiToZedRequestClientInterface
+     * @var \Spryker\Client\CartCode\Dependency\Client\CartCodeToZedRequestClientInterface
      */
     protected $zedStubClient;
 
     /**
-     * @param \Spryker\Client\CartCodesRestApi\Dependency\Client\CartCodesRestApiToZedRequestClientInterface $zedStubClient
+     * @param \Spryker\Client\CartCode\Dependency\Client\CartCodeToZedRequestClientInterface $zedStubClient
      */
-    public function __construct(CartCodesRestApiToZedRequestClientInterface $zedStubClient)
+    public function __construct(CartCodeToZedRequestClientInterface $zedStubClient)
     {
         $this->zedStubClient = $zedStubClient;
     }

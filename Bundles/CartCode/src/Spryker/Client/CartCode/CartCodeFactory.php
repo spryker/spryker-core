@@ -9,6 +9,7 @@ namespace Spryker\Client\CartCode;
 
 use Spryker\Client\CartCode\Dependency\Client\CartCodeToCalculationClientInterface;
 use Spryker\Client\CartCode\Dependency\Client\CartCodeToQuoteClientInterface;
+use Spryker\Client\CartCode\Dependency\Client\CartCodeToZedRequestClientInterface;
 use Spryker\Client\CartCode\Operation\CodeAdder;
 use Spryker\Client\CartCode\Operation\CodeAdderInterface;
 use Spryker\Client\CartCode\Operation\CodeClearer;
@@ -97,5 +98,13 @@ class CartCodeFactory extends AbstractFactory
     public function getCartCodePlugins(): array
     {
         return $this->getProvidedDependency(CartCodeDependencyProvider::PLUGIN_CART_CODE_COLLECTION);
+    }
+
+    /**
+     * @return \Spryker\Client\PersistentCart\Dependency\Client\CartCodeToZedRequestClientInterface
+     */
+    public function getZedRequestClient(): CartCodeToZedRequestClientInterface
+    {
+        return $this->getProvidedDependency(CartCodeDependencyProvider::CLIENT_ZED_REQUEST);
     }
 }
