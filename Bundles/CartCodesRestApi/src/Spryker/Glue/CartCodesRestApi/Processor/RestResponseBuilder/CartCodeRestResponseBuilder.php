@@ -8,7 +8,6 @@
 namespace Spryker\Glue\CartCodesRestApi\Processor\RestResponseBuilder;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CartCodesRestApi\Dependency\RestApiResource\CartCodesRestApiToCartsRestApiResourceInterface;

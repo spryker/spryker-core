@@ -15,7 +15,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-class DiscountByQuoteResourceRelationshipExpander implements DiscountByQuoteResourceRelationshipExpanderInterface
+class CartRuleByQuoteResourceRelationshipExpander implements CartRuleByQuoteResourceRelationshipExpanderInterface
 {
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -56,12 +56,8 @@ class DiscountByQuoteResourceRelationshipExpander implements DiscountByQuoteReso
                 continue;
             }
 
-            $discountTransfers = array_merge(
-                $payload->getVoucherDiscounts()->getArrayCopy(),
-                $payload->getCartRuleDiscounts()->getArrayCopy()
-            );
-
-            if (!count($discountTransfers)) {
+            $discountTransfers = $payload->getCartRuleDiscounts()->getArrayCopy();
+            if (!count($payload->getCartRuleDiscounts()->getArrayCopy())) {
                 continue;
             }
 
@@ -87,8 +83,8 @@ class DiscountByQuoteResourceRelationshipExpander implements DiscountByQuoteReso
                 );
 
             $discountResource = $this->restResourceBuilder->createRestResource(
-                CartCodesRestApiConfig::RESOURCE_DISCOUNTS,
-                (string)$discountTransfer->getVoucherCode(),
+                CartCodesRestApiConfig::RESOURCE_CART_RULES,
+                (string)$discountTransfer->getIdDiscount(),
                 $restDiscountsAttributesTransfer
             );
 

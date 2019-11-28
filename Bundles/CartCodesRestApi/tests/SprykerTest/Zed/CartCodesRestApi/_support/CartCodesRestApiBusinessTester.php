@@ -36,7 +36,7 @@ class CartCodesRestApiBusinessTester extends Actor
 
     public const CODE = 'testCode1';
 
-    public const ID_DISCOUNT = 9999;
+    public const NON_EXISTENT_CODE = 'testCode2';
 
     public const NON_EXISTENT_ID_DISCOUNT = 7777;
 
@@ -65,8 +65,7 @@ class CartCodesRestApiBusinessTester extends Actor
         $customerTransfer = $this->haveCustomer();
 
         $discountTransfer = (new DiscountTransfer())
-            ->setVoucherCode(static::CODE)
-            ->setIdDiscount(static::ID_DISCOUNT);
+            ->setVoucherCode(static::CODE);
 
         return $this->havePersistentQuote([
             QuoteTransfer::UUID => uniqid('uuid'),

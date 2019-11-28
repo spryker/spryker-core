@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CartCodesRestApi\Business\CartCodeRemover;
 
-use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
+use ArrayObject;
 use Generated\Shared\Transfer\CartCodeRequestTransfer;
 use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
@@ -49,17 +49,17 @@ class CartCodeRemover implements CartCodeRemoverInterface
         $quoteTransfer = $cartCodeRequestTransfer->getQuote();
         $quoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
 
-//        if (!$quoteResponseTransfer->getIsSuccessful()) {
-//            return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
-//                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND
-//            );
-//        }
-//
-//        if (!$cartCode) {
-//            return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
-//                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_NOT_FOUND
-//            );
-//        }
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
+                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND
+            );
+        }
+
+        if (!$this->checkIfVoucherCodeIsInQuote($quoteTransfer->getVoucherDiscounts(), $cartCodeRequestTransfer->getCartCode())) {
+            return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
+                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_NOT_FOUND
+            );
+        }
 
         $cartCodeRequestTransfer->setQuote($quoteResponseTransfer->getQuoteTransfer());
 
@@ -67,30 +67,30 @@ class CartCodeRemover implements CartCodeRemoverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discountTransfers
-     * @param int $idDiscount
+     * @param \ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $discountTransfers
+     * @param string $voucherCode
      *
      * @return string|null
      */
-    protected function findVoucherCodeById(array $discountTransfers, int $idDiscount): ?string
+    protected function checkIfVoucherCodeIsInQuote(ArrayObject $discountTransfers, string $voucherCode): ?string
     {
         foreach ($discountTransfers as $discountTransfer) {
-            if ($discountTransfer->getIdDiscount() === $idDiscount) {
-                return $discountTransfer->getVoucherCode();
+            if ($discountTransfer->getVoucherCode() === $voucherCode) {
+                return true;
             }
         }
 
-        return null;
+        return false;
     }
 
     /**
      * @param string $errorIdentifier
      *
-     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    protected function createCartCodeOperationResultTransferWithErrorMessageTransfer(string $errorIdentifier): CartCodeOperationResultTransfer
+    protected function createCartCodeOperationResultTransferWithErrorMessageTransfer(string $errorIdentifier): CartCodeResponseTransfer
     {
-        return (new CartCodeOperationResultTransfer())->addMessage(
+        return (new CartCodeResponseTransfer())->addMessage(
             (new MessageTransfer())->setValue($errorIdentifier)
         );
     }

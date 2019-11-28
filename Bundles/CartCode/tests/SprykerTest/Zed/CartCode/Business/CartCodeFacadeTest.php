@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\CartCode\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CartCodeRequestTransfer;
 use Spryker\Zed\CartCode\CartCodeDependencyProvider;
 use Spryker\Zed\Discount\Communication\Plugin\CartCode\VoucherCartCodePlugin;
 
@@ -44,35 +45,43 @@ class CartCodeFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddCandidateAddsVoucherCodeToUnlockedQuote(): void
+    public function testAddCartCodeAddsVoucherCodeToUnlockedQuote(): void
     {
         // Arrange
         $quoteTransfer = $this->tester->prepareQuoteTransfer(false);
 
         // Act
-        $cartCodeOperationResultTransfer = $this->tester->getFacade()->addCartCode($quoteTransfer, static::CODE);
+        $cartCodeResponseTransfer = $this->tester->getFacade()->addCartCode(
+            (new CartCodeRequestTransfer())
+                ->setCartCode(static::CODE)
+                ->setQuote($quoteTransfer)
+        );
 
         // Assert
-        $this->assertEquals(1, $cartCodeOperationResultTransfer->getQuote()->getVoucherDiscounts()->count());
+        $this->assertEquals(1, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->count());
         $this->assertEquals(
             static::CODE,
-            $cartCodeOperationResultTransfer->getQuote()->getVoucherDiscounts()[0]->getVoucherCode()
+            $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()[0]->getVoucherCode()
         );
     }
 
     /**
      * @return void
      */
-    public function testAddCandidateDoesNotAddVoucherCodeToLockedQuote(): void
+    public function testAddCartCodeDoesNotAddVoucherCodeToLockedQuote(): void
     {
         // Arrange
         $quoteTransfer = $this->tester->prepareQuoteTransfer(true);
 
         // Act
-        $cartCodeOperationResultTransfer = $this->tester->getFacade()->addCartCode($quoteTransfer, static::CODE);
+        $cartCodeResponseTransfer = $this->tester->getFacade()->addCartCode(
+            (new CartCodeRequestTransfer())
+                ->setCartCode(static::CODE)
+                ->setQuote($quoteTransfer)
+        );
 
         // Assert
-        $this->assertEquals(0, $cartCodeOperationResultTransfer->getQuote()->getVoucherDiscounts()->count());
+        $this->assertEquals(0, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->count());
     }
 
     /**
@@ -84,10 +93,14 @@ class CartCodeFacadeTest extends Unit
         $quoteTransfer = $this->tester->prepareQuoteTransferWithDiscount(false, static::CODE);
 
         // Act
-        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCartCode($quoteTransfer, static::CODE);
+        $cartCodeResponseTransfer = $this->tester->getFacade()->removeCartCode(
+            (new CartCodeRequestTransfer())
+                ->setCartCode(static::CODE)
+                ->setQuote($quoteTransfer)
+        );
 
         // Assert
-        $this->assertEquals(0, $cartCodeOperationResultTransfer->getQuote()->getVoucherDiscounts()->count());
+        $this->assertEquals(0, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->count());
     }
 
     /**
@@ -99,10 +112,14 @@ class CartCodeFacadeTest extends Unit
         $quoteTransfer = $this->tester->prepareQuoteTransferWithDiscount(true, static::CODE);
 
         // Act
-        $cartCodeOperationResultTransfer = $this->tester->getFacade()->removeCartCode($quoteTransfer, static::CODE);
+        $cartCodeResponseTransfer = $this->tester->getFacade()->removeCartCode(
+            (new CartCodeRequestTransfer())
+                ->setCartCode(static::CODE)
+                ->setQuote($quoteTransfer)
+        );
 
         // Assert
-        $this->assertEquals(1, $cartCodeOperationResultTransfer->getQuote()->getVoucherDiscounts()->count());
+        $this->assertEquals(1, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->count());
     }
 
     /**

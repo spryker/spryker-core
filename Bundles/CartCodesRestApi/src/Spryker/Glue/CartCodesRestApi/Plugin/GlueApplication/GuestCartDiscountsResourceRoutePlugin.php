@@ -45,7 +45,7 @@ class GuestCartDiscountsResourceRoutePlugin extends AbstractPlugin implements Re
      */
     public function getResourceType(): string
     {
-        return CartCodesRestApiConfig::RESOURCE_DISCOUNTS;
+        return CartCodesRestApiConfig::RESOURCE_VOUCHERS;
     }
 
     /**

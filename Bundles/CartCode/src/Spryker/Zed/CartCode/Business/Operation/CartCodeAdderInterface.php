@@ -13,7 +13,8 @@ use Generated\Shared\Transfer\CartCodeResponseTransfer;
 interface CartCodeAdderInterface
 {
     /**
-    /**
+     * /**
+     *
      * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
      * @return \Generated\Shared\Transfer\CartCodeResponseTransfer

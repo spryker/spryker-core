@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\CartCodesRestApi\Processor\CartCodeAdder;
 
-use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
 use Generated\Shared\Transfer\CartCodeRequestTransfer;
 use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;

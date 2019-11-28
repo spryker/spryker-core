@@ -17,7 +17,6 @@ use Spryker\Client\CartCode\Operation\CodeRemover;
 use Spryker\Client\CartCode\Operation\CodeRemoverInterface;
 use Spryker\Client\CartCode\Operation\QuoteOperationChecker;
 use Spryker\Client\CartCode\Operation\QuoteOperationCheckerInterface;
-use Spryker\Client\CartCode\Zed\CartCodeStubInterface;
 use Spryker\Client\CartCode\Zed\CartCodeZedStub;
 use Spryker\Client\CartCode\Zed\CartCodeZedStubInterface;
 use Spryker\Client\Kernel\AbstractFactory;
