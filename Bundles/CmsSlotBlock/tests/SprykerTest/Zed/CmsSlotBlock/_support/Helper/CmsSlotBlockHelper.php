@@ -57,15 +57,6 @@ class CmsSlotBlockHelper extends Module
      */
     public function ensureCmsSlotBlockTableIsEmpty(): void
     {
-        $cmsSlotBlockQuery = $this->getCmsSlotBlockQuery();
-        $cmsSlotBlockQuery->deleteAll();
-    }
-
-    /**
-     * @return \Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlockQuery
-     */
-    protected function getCmsSlotBlockQuery(): SpyCmsSlotBlockQuery
-    {
-        return SpyCmsSlotBlockQuery::create();
+        SpyCmsSlotBlockQuery::create()->deleteAll();
     }
 }

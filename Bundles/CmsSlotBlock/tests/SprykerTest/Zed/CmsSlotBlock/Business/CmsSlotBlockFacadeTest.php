@@ -48,20 +48,6 @@ class CmsSlotBlockFacadeTest extends Unit
         parent::setUp();
 
         $this->cmsSlotBlockRepository = new CmsSlotBlockRepository();
-
-        $this->tester->ensureCmsSlotBlockTableIsEmpty();
-        $this->tester->ensureCmsSlotTableIsEmpty();
-        $this->tester->ensureCmsSlotTemplateTableIsEmpty();
-    }
-
-    /**
-     * @return void
-     */
-    protected function _before(): void
-    {
-        $this->tester->ensureCmsSlotBlockTableIsEmpty();
-        $this->tester->ensureCmsSlotTableIsEmpty();
-        $this->tester->ensureCmsSlotTemplateTableIsEmpty();
     }
 
     /**
@@ -220,15 +206,15 @@ class CmsSlotBlockFacadeTest extends Unit
     public function testGetCmsBlocksWithSlotRelationsReturnsDataWithCorrectLimit(): void
     {
         // Arrange
-        $countCmsBlocks = SpyCmsBlockQuery::create()->count();
-        $this->tester->createCmsBlocksInDb();
-        $filterTransfer = (new FilterTransfer())->setLimit($countCmsBlocks + 1);
+        $cmsBlockCountBefore = SpyCmsBlockQuery::create()->count();
+        $this->tester->createCmsBlocksInDb(1);
+        $filterTransfer = (new FilterTransfer())->setLimit($cmsBlockCountBefore + 1);
 
         // Act
         $cmsBlockTransfers = $this->tester->createCmsSlotBlockFacade()->getCmsBlocksWithSlotRelations($filterTransfer);
 
         // Assert
-        $this->assertCount($countCmsBlocks, $cmsBlockTransfers);
+        $this->assertCount($cmsBlockCountBefore + 1, $cmsBlockTransfers);
     }
 
     /**
@@ -237,9 +223,9 @@ class CmsSlotBlockFacadeTest extends Unit
     public function testGetCmsBlocksWithSlotRelationsReturnsDataWithCorrectOffset(): void
     {
         // Arrange
-        $countCmsBlocks = SpyCmsBlockQuery::create()->count();
-        $this->tester->createCmsBlocksInDb();
-        $filterTransfer = (new FilterTransfer())->setOffset($countCmsBlocks);
+        $cmsBlockCountBefore = SpyCmsBlockQuery::create()->count();
+        $this->tester->createCmsBlocksInDb(1);
+        $filterTransfer = (new FilterTransfer())->setOffset($cmsBlockCountBefore);
 
         // Act
         $cmsBlockTransfers = $this->tester->createCmsSlotBlockFacade()->getCmsBlocksWithSlotRelations($filterTransfer);
