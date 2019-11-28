@@ -25,10 +25,7 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductConcreteProductOffersStorageWriter(): ProductConcreteOffersStorageWriterInterface
     {
-        return new ProductConcreteOffersStorageWriter(
-            $this->getProductOfferFacade(),
-            $this->getMerchantProductOfferPublishPreCheckPlugins()
-        );
+        return new ProductConcreteOffersStorageWriter($this->getProductOfferFacade());
     }
 
     /**
@@ -36,10 +33,7 @@ class MerchantProductOfferStorageBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductOfferStorageWriter(): ProductOfferStorageWriterInterface
     {
-        return new ProductOfferStorageWriter(
-            $this->getProductOfferFacade(),
-            $this->getMerchantProductOfferPublishPreCheckPlugins()
-        );
+        return new ProductOfferStorageWriter($this->getProductOfferFacade());
     }
 
     /**

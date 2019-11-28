@@ -45,7 +45,6 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
         parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addProductOfferFacade($container);
-        $container = $this->addMerchantProductOfferPublishPreCheckPlugins($container);
 
         return $container;
     }
@@ -80,27 +79,5 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
         });
 
         return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addMerchantProductOfferPublishPreCheckPlugins(Container $container): Container
-    {
-        $container->set(static::PLUGINS_MERCHANT_PRODUCT_OFFER_PUBLISH_PRE_CHECK, function () {
-            return $this->getMerchantProductOfferPublishPreCheckPlugins();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantProductOfferStorageExtension\Dependency\Plugin\MerchantProductOfferPublishPreCheckPluginInterface[]
-     */
-    protected function getMerchantProductOfferPublishPreCheckPlugins(): array
-    {
-        return [];
     }
 }

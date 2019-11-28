@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\ProductOfferStock;
 
 use Codeception\Actor;
 use Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery;
-use Spryker\Zed\ProductOfferStock\Communication\Plugin\MerchantProductOfferStorage\ProductOfferStockPublishPreCheckPlugin;
 
 /**
  * Inherited Methods
@@ -52,13 +51,5 @@ class ProductOfferStockBusinessTester extends Actor
     public function getProductOfferStockQuery(): SpyProductOfferStockQuery
     {
         return SpyProductOfferStockQuery::create();
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOfferStock\Communication\Plugin\MerchantProductOfferStorage\ProductOfferStockPublishPreCheckPlugin
-     */
-    public function createProductOfferStockPublishPreCheckPlugin(): ProductOfferStockPublishPreCheckPlugin
-    {
-        return new ProductOfferStockPublishPreCheckPlugin();
     }
 }

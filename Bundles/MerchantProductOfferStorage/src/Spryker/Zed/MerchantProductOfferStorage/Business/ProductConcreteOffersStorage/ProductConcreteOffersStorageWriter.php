@@ -9,7 +9,6 @@ namespace Spryker\Zed\MerchantProductOfferStorage\Business\ProductConcreteOffers
 
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
-use Generated\Shared\Transfer\ProductOfferTransfer;
 use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorageQuery;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface;
 
@@ -21,20 +20,11 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     protected $productOfferFacade;
 
     /**
-     * @var array
-     */
-    protected $merchantProductOfferPublishPreCheckPlugins;
-
-    /**
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade
-     * @param array $merchantProductOfferPublishPreCheckPlugins
      */
-    public function __construct(
-        MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade,
-        array $merchantProductOfferPublishPreCheckPlugins
-    ) {
+    public function __construct(MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade)
+    {
         $this->productOfferFacade = $productOfferFacade;
-        $this->merchantProductOfferPublishPreCheckPlugins = $merchantProductOfferPublishPreCheckPlugins;
     }
 
     /**
@@ -86,9 +76,6 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     {
         $productOffersGroupedBySku = [];
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
-            if (!$this->executeMerchantProductOfferPublishPreCheckPlugins($productOfferTransfer)) {
-                continue;
-            }
             if (!isset($productOffersGroupedBySku[$productOfferTransfer->getConcreteSku()])) {
                 $productOffersGroupedBySku[$productOfferTransfer->getConcreteSku()] = [];
             }
@@ -96,22 +83,5 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
         }
 
         return $productOffersGroupedBySku;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
-     *
-     * @return bool
-     */
-    protected function executeMerchantProductOfferPublishPreCheckPlugins(ProductOfferTransfer $productOfferTransfer): bool
-    {
-        /** @var \Spryker\Zed\MerchantProductofferStorageExtension\Dependency\Plugin\MerchantProductOfferPublishPreCheckPluginInterface $merchantProductOfferPublishPreCheckPlugin */
-        foreach ($this->merchantProductOfferPublishPreCheckPlugins as $merchantProductOfferPublishPreCheckPlugin) {
-            if (!$merchantProductOfferPublishPreCheckPlugin->isValid($productOfferTransfer)) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }
