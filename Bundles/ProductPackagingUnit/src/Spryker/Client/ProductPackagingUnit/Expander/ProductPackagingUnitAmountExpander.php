@@ -67,7 +67,7 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
      */
     protected function updateItemTransferWithAmountSalesUnit(ItemTransfer $itemTransfer, array $params): void
     {
-        $amountSalesUnitId = $this->findAmountSalesUnit($params, $itemTransfer->getSku());
+        $amountSalesUnitId = $this->findAmountSalesUnitId($params, $itemTransfer->getSku());
 
         if ($amountSalesUnitId) {
             $amountSalesUnitTransfer = $this->createSalesUnitTransfer($amountSalesUnitId);
@@ -90,15 +90,15 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
      * @param array $params
      * @param string $sku
      *
-     * @return int|null
+     * @return string|null
      */
-    protected function findAmount(array $params, string $sku): ?int
+    protected function findAmount(array $params, string $sku): ?string
     {
         if (!isset($params[static::PARAM_AMOUNT][$sku])) {
             return null;
         }
 
-        return (int)$params[static::PARAM_AMOUNT][$sku];
+        return $params[static::PARAM_AMOUNT][$sku];
     }
 
     /**
@@ -107,7 +107,7 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
      *
      * @return int|null
      */
-    protected function findAmountSalesUnit(array $params, string $sku): ?int
+    protected function findAmountSalesUnitId(array $params, string $sku): ?int
     {
         if (!isset($params[static::PARAM_AMOUNT_SALES_UNIT][$sku])) {
             return null;
