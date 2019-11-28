@@ -61,27 +61,23 @@ class OauthAccessTokenValidator implements OauthAccessTokenValidatorInterface
             return null;
         }
 
-        $authorizationHeaderValue = $this->extractToken((string)$authorizationToken);
+        $restErrorCollectionTransfer = (new RestErrorCollectionTransfer())->addRestError(
+            $this->createErrorMessageTransfer(
+                AuthRestApiConfig::RESPONSE_DETAIL_INVALID_ACCESS_TOKEN,
+                Response::HTTP_UNAUTHORIZED,
+                AuthRestApiConfig::RESPONSE_CODE_ACCESS_CODE_INVALID
+            )
+        );
+
+        $authorizationHeaderValue = $this->extractToken($authorizationToken);
         if (!isset($authorizationHeaderValue[static::AUTHORIZATION_HEADER_CREDENTIALS])) {
-            return (new RestErrorCollectionTransfer())->addRestError(
-                $this->createErrorMessageTransfer(
-                    AuthRestApiConfig::RESPONSE_DETAIL_INVALID_ACCESS_TOKEN,
-                    Response::HTTP_UNAUTHORIZED,
-                    AuthRestApiConfig::RESPONSE_CODE_ACCESS_CODE_INVALID
-                )
-            );
+            return $restErrorCollectionTransfer;
         }
 
         $authAccessTokenValidationResponseTransfer = $this->validateAccessToken($authorizationHeaderValue);
 
         if (!$authAccessTokenValidationResponseTransfer->getIsValid()) {
-            return (new RestErrorCollectionTransfer())->addRestError(
-                $this->createErrorMessageTransfer(
-                    AuthRestApiConfig::RESPONSE_DETAIL_INVALID_ACCESS_TOKEN,
-                    Response::HTTP_UNAUTHORIZED,
-                    AuthRestApiConfig::RESPONSE_CODE_ACCESS_CODE_INVALID
-                )
-            );
+            return $restErrorCollectionTransfer;
         }
 
         return null;
