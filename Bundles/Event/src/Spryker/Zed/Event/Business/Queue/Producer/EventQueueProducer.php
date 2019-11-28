@@ -16,6 +16,8 @@ use Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface;
 
 class EventQueueProducer implements EventQueueProducerInterface
 {
+    protected const ENQUEUE_EVENT_MESSAGE_CHUNK_SIZE = 500;
+
     /**
      * @var \Spryker\Zed\Event\Dependency\Client\EventToQueueInterface
      */
@@ -48,12 +50,11 @@ class EventQueueProducer implements EventQueueProducerInterface
      */
     public function enqueueListenerBulk($eventName, array $transfers, $listener, $queuePoolName = null): void
     {
-        $queueSendMessageTransfers = [];
-        foreach ($transfers as $transfer) {
-            $queueSendMessageTransfers[] = $this->createQueueSendMessageTransfer($eventName, $transfer, $listener, $queuePoolName);
-        }
+        $transfers = array_chunk($transfers, static::ENQUEUE_EVENT_MESSAGE_CHUNK_SIZE);
 
-        $this->queueClient->sendMessages(EventConstants::EVENT_QUEUE, $queueSendMessageTransfers);
+        foreach ($transfers as $transfersChunk) {
+            $this->enqueueListenerBulkChunk($eventName, $transfersChunk, $listener, $queuePoolName);
+        }
     }
 
     /**
@@ -69,6 +70,24 @@ class EventQueueProducer implements EventQueueProducerInterface
         $messageTransfer = $this->createQueueSendMessageTransfer($eventName, $transfer, $listener, $queuePoolName);
 
         $this->queueClient->sendMessage(EventConstants::EVENT_QUEUE, $messageTransfer);
+    }
+
+    /**
+     * @param string $eventName
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     * @param string $listener
+     * @param string|null $queuePoolName
+     *
+     * @return void
+     */
+    protected function enqueueListenerBulkChunk(string $eventName, array $transfers, string $listener, ?string $queuePoolName = null): void
+    {
+        $queueSendMessageTransfers = [];
+        foreach ($transfers as $transfer) {
+            $queueSendMessageTransfers[] = $this->createQueueSendMessageTransfer($eventName, $transfer, $listener, $queuePoolName);
+        }
+
+        $this->queueClient->sendMessages(EventConstants::EVENT_QUEUE, $queueSendMessageTransfers);
     }
 
     /**
