@@ -48,7 +48,7 @@ class ProductOptionsRestApiBusinessTester extends Actor
         $productOptionBuilder = new ProductOptionBuilder(['idProductOptionValue' => static::ID_PRODUCT_OPTION_VALUE]);
 
         return (new CartItemRequestBuilder(['sku' => static::PRODUCT_CONCRETE_SKU]))
-            ->withProductOptionValue($productOptionBuilder)
+            ->withProductOption($productOptionBuilder)
             ->build();
     }
 

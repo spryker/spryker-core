@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductOptionsRestApi\Business\Mapper;
 
 use Generated\Shared\Transfer\CartItemRequestTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 
 class ProductOptionMapper implements ProductOptionMapperInterface
@@ -24,30 +23,14 @@ class ProductOptionMapper implements ProductOptionMapperInterface
         PersistentCartChangeTransfer $persistentCartChangeTransfer
     ): PersistentCartChangeTransfer {
         foreach ($persistentCartChangeTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getSku() === $cartItemRequestTransfer->getSku()) {
-                $this->mapCartItemRequestTransferToItemTransfer($cartItemRequestTransfer, $itemTransfer);
-
-                break;
+            if ($itemTransfer->getSku() !== $cartItemRequestTransfer->getSku()) {
+                continue;
             }
+
+            $itemTransfer->setProductOptions($cartItemRequestTransfer->getProductOptions());
+            break;
         }
 
         return $persistentCartChangeTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
-    protected function mapCartItemRequestTransferToItemTransfer(
-        CartItemRequestTransfer $cartItemRequestTransfer,
-        ItemTransfer $itemTransfer
-    ): ItemTransfer {
-        foreach ($cartItemRequestTransfer->getProductOptionValues() as $productOptionTransfer) {
-            $itemTransfer->addProductOption($productOptionTransfer);
-        }
-
-        return $itemTransfer;
     }
 }
