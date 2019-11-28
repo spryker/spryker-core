@@ -63,11 +63,13 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
             $responseSchemaDataTransfer = new PathSchemaDataTransfer();
         }
 
-        $pathMethodDataTransfer = $this->defineDefaultSuccessfulResponseSchema(
-            $pathMethodDataTransfer,
-            $responseSchemaDataTransfer,
-            (string)Response::HTTP_OK
-        );
+        if (!$this->isSuccessResponseCodeDeclared($pathMethodDataTransfer)) {
+            $responseSchemaDataTransfer->setCode(
+                $this->getResponseStatusCode($pathMethodDataTransfer, (string)Response::HTTP_OK)
+            );
+            $responseSchemaDataTransfer->setDescription(static::DESCRIPTION_SUCCESSFUL_RESPONSE);
+            $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
+        }
 
         $errorSchemaDataTransfer->setCode(static::KEY_DEFAULT);
         $errorSchemaDataTransfer->setDescription(static::DESCRIPTION_DEFAULT_RESPONSE);
@@ -96,11 +98,13 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
             $responseSchemaDataTransfer = new PathSchemaDataTransfer();
         }
 
-        $pathMethodDataTransfer = $this->defineDefaultSuccessfulResponseSchema(
-            $pathMethodDataTransfer,
-            $responseSchemaDataTransfer,
-            (string)Response::HTTP_CREATED
-        );
+        if (!$this->isSuccessResponseCodeDeclared($pathMethodDataTransfer)) {
+            $responseSchemaDataTransfer->setCode(
+                $this->getResponseStatusCode($pathMethodDataTransfer, (string)Response::HTTP_CREATED)
+            );
+            $responseSchemaDataTransfer->setDescription(static::DESCRIPTION_SUCCESSFUL_RESPONSE);
+            $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
+        }
 
         $errorSchemaDataTransfer->setCode(static::KEY_DEFAULT);
         $errorSchemaDataTransfer->setDescription(static::DESCRIPTION_DEFAULT_RESPONSE);
@@ -133,11 +137,13 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
             $responseSchemaDataTransfer = new PathSchemaDataTransfer();
         }
 
-        $pathMethodDataTransfer = $this->defineDefaultSuccessfulResponseSchema(
-            $pathMethodDataTransfer,
-            $responseSchemaDataTransfer,
-            (string)Response::HTTP_OK
-        );
+        if (!$this->isSuccessResponseCodeDeclared($pathMethodDataTransfer)) {
+            $responseSchemaDataTransfer->setCode(
+                $this->getResponseStatusCode($pathMethodDataTransfer, (string)Response::HTTP_OK)
+            );
+            $responseSchemaDataTransfer->setDescription(static::DESCRIPTION_SUCCESSFUL_RESPONSE);
+            $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
+        }
 
         $errorSchemaDataTransfer->setCode(static::KEY_DEFAULT);
         $errorSchemaDataTransfer->setDescription(static::DESCRIPTION_DEFAULT_RESPONSE);
@@ -163,11 +169,13 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
         PathSchemaDataTransfer $errorSchemaDataTransfer
     ): void {
         $responseSchemaDataTransfer = new PathSchemaDataTransfer();
-        $pathMethodDataTransfer = $this->defineDefaultSuccessfulResponseSchema(
-            $pathMethodDataTransfer,
-            $responseSchemaDataTransfer,
-            (string)Response::HTTP_NO_CONTENT
-        );
+        if (!$this->isSuccessResponseCodeDeclared($pathMethodDataTransfer)) {
+            $responseSchemaDataTransfer->setCode(
+                $this->getResponseStatusCode($pathMethodDataTransfer, (string)Response::HTTP_NO_CONTENT)
+            );
+            $responseSchemaDataTransfer->setDescription(static::DESCRIPTION_SUCCESSFUL_RESPONSE);
+            $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
+        }
 
         $errorSchemaDataTransfer->setCode(static::KEY_DEFAULT);
         $errorSchemaDataTransfer->setDescription(static::DESCRIPTION_DEFAULT_RESPONSE);
@@ -214,28 +222,5 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
         }
 
         return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PathMethodDataTransfer $pathMethodDataTransfer
-     * @param \Generated\Shared\Transfer\PathSchemaDataTransfer $responseSchemaDataTransfer
-     * @param string $defaultSuccessfulCode
-     *
-     * @return \Generated\Shared\Transfer\PathMethodDataTransfer
-     */
-    protected function defineDefaultSuccessfulResponseSchema(
-        PathMethodDataTransfer $pathMethodDataTransfer,
-        PathSchemaDataTransfer $responseSchemaDataTransfer,
-        string $defaultSuccessfulCode
-    ): PathMethodDataTransfer {
-        if (!$this->isSuccessResponseCodeDeclared($pathMethodDataTransfer)) {
-            $responseSchemaDataTransfer->setCode(
-                $this->getResponseStatusCode($pathMethodDataTransfer, $defaultSuccessfulCode)
-            );
-            $responseSchemaDataTransfer->setDescription(static::DESCRIPTION_SUCCESSFUL_RESPONSE);
-            $pathMethodDataTransfer->addResponseSchema($responseSchemaDataTransfer);
-        }
-
-        return $pathMethodDataTransfer;
     }
 }
