@@ -31,4 +31,14 @@ class ProductOptionsRestApiToProductOptionStorageClientBridge implements Product
     {
         return $this->productOptionStorageClient->getBulkProductOptions($productAbstractIds);
     }
+
+    /**
+     * @param int $idAbstractProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer|null
+     */
+    public function getProductOptionsForCurrentStore($idAbstractProduct)
+    {
+        return $this->productOptionStorageClient->getProductOptionsForCurrentStore($idAbstractProduct);
+    }
 }

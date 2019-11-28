@@ -35,6 +35,19 @@
         <property name="productOptionValues" singular="productOptionValue" type="ProductOptionValueStorage[]"/>
     </transfer>
 
+    <transfer name="CartItemRequest">
+        <property name="productOptions" type="ProductOption[]" singular="productOption"/>
+    </transfer>
+
+    <transfer name="RestCartItemsAttributes">
+        <property name="productOptions" type="RestCartItemsProductOption[]" singular="productOption"/>
+        <property name="sku" type="string" restRequestParameter="required"/>
+    </transfer>
+
+    <transfer name="RestCartItemsProductOption">
+        <property name="sku" type="string"/>
+    </transfer>
+
     <transfer name="RestOrderItemsAttributes">
         <property name="productOptions" type="RestOrderItemProductOptions[]" singular="productOption"/>
     </transfer>
@@ -51,6 +64,7 @@
     </transfer>
 
     <transfer name="ProductOption">
+        <property name="idProductOptionValue" type="int"/>
         <property name="sku" type="string"/>
         <property name="groupName" type="string"/>
         <property name="value" type="string"/>

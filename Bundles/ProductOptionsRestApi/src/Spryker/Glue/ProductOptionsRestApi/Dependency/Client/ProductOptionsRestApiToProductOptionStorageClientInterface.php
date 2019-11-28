@@ -15,4 +15,11 @@ interface ProductOptionsRestApiToProductOptionStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[]
      */
     public function getBulkProductOptions(array $productAbstractIds): array;
+
+    /**
+     * @param int $idAbstractProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer|null
+     */
+    public function getProductOptionsForCurrentStore($idAbstractProduct);
 }

@@ -23,6 +23,13 @@ interface ProductOptionStorageReaderInterface
     ): array;
 
     /**
+     * @param string $productConcreteSku
+     *
+     * @return int[]
+     */
+    public function getProductOptionIdsByProductConcreteSku(string $productConcreteSku): array;
+
+    /**
      * @param string[] $productConcreteSkus
      * @param string $localeName
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
