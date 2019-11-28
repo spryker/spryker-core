@@ -15,8 +15,6 @@ class MerchantProductOfferStorageToAvailabilityFacadeBridge implements MerchantP
     protected $availabilityFacade;
 
     /**
-     * MerchantProductOfferStorageToAvailabilityFacadeBridge constructor.
-     *
      * @param \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface $availabilityFacade
      */
     public function __construct($availabilityFacade)

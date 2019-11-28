@@ -18,8 +18,6 @@ class ProductOfferAvailabilityChecker implements ProductOfferAvailabilityChecker
     protected $merchantProductOfferStorageToAvailabilityFacade;
 
     /**
-     * ProductOfferAvailabilityChecker constructor.
-     *
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToAvailabilityFacadeInterface $merchantProductOfferStorageToAvailabilityFacade
      */
     public function __construct(

@@ -71,7 +71,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addAvailabilityFacade(Container $container): Container
+    protected function addProductOfferFacade(Container $container): Container
     {
         $container->set(static::FACADE_PRODUCT_OFFER, function (Container $container) {
             return new MerchantProductOfferStorageToProductOfferFacadeBridge(
@@ -87,7 +87,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductOfferFacade(Container $container): Container
+    protected function addAvailabilityFacade(Container $container): Container
     {
         $container->set(static::FACADE_AVAILABILITY, function (Container $container) {
             return new MerchantProductOfferStorageToAvailabilityFacadeBridge(

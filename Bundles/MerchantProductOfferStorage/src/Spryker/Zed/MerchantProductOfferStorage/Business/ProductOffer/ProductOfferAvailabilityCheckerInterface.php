@@ -11,5 +11,10 @@ use Generated\Shared\Transfer\ProductOfferTransfer;
 
 interface ProductOfferAvailabilityCheckerInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return bool
+     */
     public function isProductOfferAvailable(ProductOfferTransfer $productOfferTransfer): bool;
 }
