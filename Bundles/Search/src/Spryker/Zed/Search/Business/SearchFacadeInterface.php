@@ -133,19 +133,6 @@ interface SearchFacadeInterface
 
     /**
      * Specification:
-     * - Maps raw data to search data within a given context.
-     *
-     * @api
-     *
-     * @param array $data
-     * @param \Generated\Shared\Transfer\DataMappingContextTransfer $dataMappingContextTransfer
-     *
-     * @return array
-     */
-    public function mapRawDataToSearchData(array $data, DataMappingContextTransfer $dataMappingContextTransfer): array;
-
-    /**
-     * Specification:
      * - Loads index definition json files from the folders
      * - Generates IndexMap class for each mapping type
      * - The generated IndexMaps are not store specific and has the class name of the mapping types suffixed with "IndexMap"

@@ -13,12 +13,8 @@ use Spryker\Client\Search\Provider\IndexClientProvider;
 use Spryker\Client\Search\Provider\SearchClientProvider;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Search\Business\DataMapper\SearchDataMapper;
-use Spryker\Zed\Search\Business\DataMapper\SearchDataMapperInterface;
-use Spryker\Zed\Search\Business\DataMapper\SearchDataMapperToPageDataMapperAdapter;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Copier\IndexCopier;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageDataMapper;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageDataMapperInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilder;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionLoader;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMerger;
@@ -256,9 +252,11 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageDataMapperInterface
      */
-    public function createElasticsearchPageDataMapper(): PageDataMapperInterface
+    public function createPageDataMapper()
     {
         return new PageDataMapper(
             $this->createPageMapBuilder(),
@@ -267,23 +265,8 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\Search\Business\SearchBusinessFactory::createSearchDataMapper()` instead.
+     * @deprecated Will be removed without replacement.
      *
-     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageDataMapperInterface
-     */
-    public function createPageDataMapper()
-    {
-        if (count($this->getSearchDataMapperPlugins()) > 0) {
-            return new SearchDataMapperToPageDataMapperAdapter(
-                $this->createSearchDataMapper(),
-                $this->createElasticsearchPageDataMapper()
-            );
-        }
-
-        return $this->createElasticsearchPageDataMapper();
-    }
-
-    /**
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface
      */
     public function createPageMapBuilder()
@@ -300,7 +283,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\Search\Business\SearchBusinessFactory::getSearchDataMapperPlugins()` instead.
+     * @deprecated Will be removed without replacement.
      *
      * @return \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface[]
      */
@@ -344,23 +327,5 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     public function getGuzzleClient()
     {
         return $this->getProvidedDependency(SearchDependencyProvider::GUZZLE_CLIENT);
-    }
-
-    /**
-     * @return \Spryker\Zed\Search\Business\DataMapper\SearchDataMapperInterface
-     */
-    public function createSearchDataMapper(): SearchDataMapperInterface
-    {
-        return new SearchDataMapper(
-            $this->getSearchDataMapperPlugins()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\DataMapperPluginInterface[]
-     */
-    protected function getSearchDataMapperPlugins(): array
-    {
-        return $this->getProvidedDependency(SearchDependencyProvider::PLUGINS_SEARCH_DATA_MAPPER);
     }
 }

@@ -224,11 +224,11 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
      */
     protected function getSharedPersistenceLocaleNames(): array
     {
-        $localeNames = $this->storeFacade->getLocales();
-        $storeWithSharedPersistenceTransfers = $this->storeFacade->getStoresWithSharedPersistence($this->storeFacade->getCurrentStore());
+        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $localeNames = $storeTransfer->getAvailableLocaleIsoCodes();
 
-        foreach ($storeWithSharedPersistenceTransfers as $storeTransfer) {
-            foreach ($this->storeFacade->getLocalesPerStore($storeTransfer->getName()) as $localeName) {
+        foreach ($storeTransfer->getStoresWithSharedPersistence() as $storeName) {
+            foreach ($this->storeFacade->getLocalesPerStore($storeName) as $localeName) {
                 $localeNames[] = $localeName;
             }
         }

@@ -157,18 +157,6 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
      *
      * @api
      *
-     * @return string[]
-     */
-    public function getLocales(): array
-    {
-        return $this->getFactory()->createStoreReader()->getLocales();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param string $storeName
      *
      * @return string[]

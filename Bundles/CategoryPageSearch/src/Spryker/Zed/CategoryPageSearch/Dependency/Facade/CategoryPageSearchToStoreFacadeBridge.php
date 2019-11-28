@@ -25,14 +25,6 @@ class CategoryPageSearchToStoreFacadeBridge implements CategoryPageSearchToStore
     }
 
     /**
-     * @return string[]
-     */
-    public function getLocales(): array
-    {
-        return $this->storeFacade->getLocales();
-    }
-
-    /**
      * @param string $storeName
      *
      * @return string[]

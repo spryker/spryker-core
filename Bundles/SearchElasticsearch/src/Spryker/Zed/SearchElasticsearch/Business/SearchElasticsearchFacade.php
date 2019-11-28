@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SearchElasticsearch\Business;
 
-use Generated\Shared\Transfer\DataMappingContextTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -228,50 +227,5 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
     public function restoreSnapshot(string $repositoryName, string $snapshotName, array $options = []): bool
     {
         return $this->getFactory()->createSnapshot()->restoreSnapshot($repositoryName, $snapshotName, $options);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param array $data
-     * @param \Generated\Shared\Transfer\DataMappingContextTransfer $dataMappingContextTransfer
-     *
-     * @return array
-     */
-    public function mapRawDataToSearchData(array $data, DataMappingContextTransfer $dataMappingContextTransfer): array
-    {
-        return $this->getFactory()->createDataMapperDelegator()->mapRawDataToSearchData($data, $dataMappingContextTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param array $data
-     * @param \Generated\Shared\Transfer\DataMappingContextTransfer $dataMappingContextTransfer
-     *
-     * @return array
-     */
-    public function mapPageDataToSearchData(array $data, DataMappingContextTransfer $dataMappingContextTransfer): array
-    {
-        return $this->getFactory()->createPageDataMapper()->mapRawDataToSearchData($data, $dataMappingContextTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param array $data
-     * @param \Generated\Shared\Transfer\DataMappingContextTransfer $dataMappingContextTransfer
-     *
-     * @return array
-     */
-    public function mapProductReviewDataToSearchData(array $data, DataMappingContextTransfer $dataMappingContextTransfer): array
-    {
-        return $this->getFactory()->createProductReviewDataMapper()->mapRawDataToSearchData($data, $dataMappingContextTransfer);
     }
 }

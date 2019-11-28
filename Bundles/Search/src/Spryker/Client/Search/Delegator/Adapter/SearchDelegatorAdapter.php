@@ -39,7 +39,7 @@ class SearchDelegatorAdapter implements SearchDelegatorAdapterInterface
      *
      * @return mixed
      */
-    public function read($key, $typeName = null, $indexName = null)
+    public function read(string $key, ?string $typeName = null, ?string $indexName = null)
     {
         $searchDocumentTransfer = $this->createSearchDocumentTransfer($key, $typeName);
 
@@ -53,7 +53,7 @@ class SearchDelegatorAdapter implements SearchDelegatorAdapterInterface
      *
      * @return bool
      */
-    public function write(array $documentDataSet, $typeName = null, $indexName = null): bool
+    public function write(array $documentDataSet, ?string $typeName = null, ?string $indexName = null): bool
     {
         [$documentId, $documentDataSet] = $this->getDocumentAttributesFromDocumentDataSet($documentDataSet);
         $searchDocumentTransfer = $this->createSearchDocumentTransfer($documentId, $typeName, $documentDataSet);
@@ -80,7 +80,7 @@ class SearchDelegatorAdapter implements SearchDelegatorAdapterInterface
      *
      * @return bool
      */
-    public function delete(array $documentDataSet, $typeName = null, $indexName = null): bool
+    public function delete(array $documentDataSet, ?string $typeName = null, ?string $indexName = null): bool
     {
         [$documentId] = $this->getDocumentAttributesFromDocumentDataSet($documentDataSet);
         $searchDocumentTransfer = $this->createSearchDocumentTransfer($documentId, $typeName);
@@ -138,7 +138,7 @@ class SearchDelegatorAdapter implements SearchDelegatorAdapterInterface
     }
 
     /**
-     * @param string|\Generated\Shared\Transfer\SearchContextTransfer $sourceIdentifier
+     * @param string $sourceIdentifier
      *
      * @return \Generated\Shared\Transfer\SearchContextTransfer
      */

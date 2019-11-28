@@ -20,12 +20,11 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
     public const CLIENT_SEARCH = 'search client';
     public const SERVICE_UTIL_ENCODING = 'util encoding service';
     /**
-     * @deprecated Use `\Spryker\Zed\Search\SearchDependencyProvider::PLUGINS_SEARCH_DATA_MAPPER` instead.
+     * @deprecated Will be removed without replacement.
      */
     public const PLUGIN_SEARCH_PAGE_MAPS = 'PLUGIN_SEARCH_PAGE_MAPS';
     public const PLUGINS_SEARCH_SOURCE_INSTALLER = 'SEARCH_SCHEMA_INSTALLER_PLUGINS';
     public const PLUGINS_SEARCH_MAP_INSTALLER = 'PLUGINS_SEARCH_MAP_INSTALLER';
-    public const PLUGINS_SEARCH_DATA_MAPPER = 'PLUGINS_SEARCH_DATA_MAPPER';
     public const GUZZLE_CLIENT = 'GUZZLE_CLIENT';
 
     /**
@@ -41,7 +40,6 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSearchSourceInstallerPlugins($container);
         $container = $this->addSearchMapInstallerPlugins($container);
         $container = $this->addGuzzleClient($container);
-        $container = $this->addSearchDataMapperPlugins($container);
 
         return $container;
     }
@@ -75,7 +73,7 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\Search\SearchDependencyProvider::addSearchDataMapperPlugins()` instead.
+     * @deprecated Will be removed without replacement.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -91,6 +89,8 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface[]
      */
     protected function getSearchPageMapPlugins()
@@ -154,27 +154,5 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addSearchDataMapperPlugins(Container $container): Container
-    {
-        $container->set(static::PLUGINS_SEARCH_DATA_MAPPER, function () {
-            return $this->getSearchDataMapperPlugins();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\DataMapperPluginInterface[]
-     */
-    protected function getSearchDataMapperPlugins(): array
-    {
-        return [];
     }
 }
