@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ProductListTransfer;
 class ConfigurableBundleToProductListFacadeBridge implements ConfigurableBundleToProductListFacadeInterface
 {
     /**
-     * @var \Spryker\Zed\ProductList\Business\ProductListFacadeInterface $productListFacade
+     * @var \Spryker\Zed\ProductList\Business\ProductListFacadeInterface
      */
     protected $productListFacade;
 

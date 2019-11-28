@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductImageSetTransfer;
 class ConfigurableBundleToProductImageFacadeBridge implements ConfigurableBundleToProductImageFacadeInterface
 {
     /**
-     * @var \Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface $productImageFacade
+     * @var \Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface
      */
     protected $productImageFacade;
 
