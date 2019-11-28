@@ -11,6 +11,7 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\CmsSlotBlockBuilder;
 use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlock;
+use Orm\Zed\CmsSlotBlock\Persistence\SpyCmsSlotBlockQuery;
 
 class CmsSlotBlockHelper extends Module
 {
@@ -49,5 +50,13 @@ class CmsSlotBlockHelper extends Module
         $cmsSlotBlockTransfer->setIdCmsSlotBlock((string)$cmsSlotBlockEntity->getIdCmsSlotBlock());
 
         return $cmsSlotBlockTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureCmsSlotBlockTableIsEmpty(): void
+    {
+        SpyCmsSlotBlockQuery::create()->deleteAll();
     }
 }
