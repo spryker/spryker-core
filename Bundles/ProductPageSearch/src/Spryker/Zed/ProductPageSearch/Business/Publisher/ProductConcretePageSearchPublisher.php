@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Spryker\Zed\ProductPageSearch\Business\DataMapper\Elasticsearch\AbstractProductSearchDataMapper;
+use Spryker\Zed\ProductPageSearch\Business\DataMapper\AbstractProductSearchDataMapper;
 use Spryker\Zed\ProductPageSearch\Business\Exception\ProductConcretePageSearchNotFoundException;
 use Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader\ProductConcretePageSearchReaderInterface;
 use Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchWriter\ProductConcretePageSearchWriterInterface;
@@ -50,7 +50,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     protected $utilEncoding;
 
     /**
-     * @var \Spryker\Zed\ProductPageSearch\Business\DataMapper\Elasticsearch\AbstractProductSearchDataMapper
+     * @var \Spryker\Zed\ProductPageSearch\Business\DataMapper\AbstractProductSearchDataMapper
      */
     protected $productConcreteSearchDataMapper;
 
@@ -69,7 +69,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      * @param \Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchWriter\ProductConcretePageSearchWriterInterface $productConcretePageSearchWriter
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductInterface $productFacade
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface $utilEncoding
-     * @param \Spryker\Zed\ProductPageSearch\Business\DataMapper\Elasticsearch\AbstractProductSearchDataMapper $productConcreteSearchDataMapper
+     * @param \Spryker\Zed\ProductPageSearch\Business\DataMapper\AbstractProductSearchDataMapper $productConcreteSearchDataMapper
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageDataExpanderPluginInterface[] $pageDataExpanderPlugins
      */

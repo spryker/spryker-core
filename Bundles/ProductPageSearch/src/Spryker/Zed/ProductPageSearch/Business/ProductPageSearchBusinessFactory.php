@@ -9,10 +9,10 @@ namespace Spryker\Zed\ProductPageSearch\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductPageSearch\Business\Attribute\ProductPageAttribute;
-use Spryker\Zed\ProductPageSearch\Business\DataMapper\Elasticsearch\AbstractProductSearchDataMapper;
-use Spryker\Zed\ProductPageSearch\Business\DataMapper\Elasticsearch\PageMapBuilder;
-use Spryker\Zed\ProductPageSearch\Business\DataMapper\Elasticsearch\ProductAbstractSearchDataMapper;
-use Spryker\Zed\ProductPageSearch\Business\DataMapper\Elasticsearch\ProductConcreteSearchDataMapper;
+use Spryker\Zed\ProductPageSearch\Business\DataMapper\AbstractProductSearchDataMapper;
+use Spryker\Zed\ProductPageSearch\Business\DataMapper\PageMapBuilder;
+use Spryker\Zed\ProductPageSearch\Business\DataMapper\ProductAbstractSearchDataMapper;
+use Spryker\Zed\ProductPageSearch\Business\DataMapper\ProductConcreteSearchDataMapper;
 use Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapper;
 use Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriter;
 use Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader\ProductConcretePageSearchReader;
@@ -176,7 +176,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPageSearch\Business\DataMapper\Elasticsearch\AbstractProductSearchDataMapper
+     * @return \Spryker\Zed\ProductPageSearch\Business\DataMapper\AbstractProductSearchDataMapper
      */
     public function createProductAbstractSearchDataMapper(): AbstractProductSearchDataMapper
     {
@@ -188,7 +188,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductPageSearch\Business\DataMapper\Elasticsearch\AbstractProductSearchDataMapper
+     * @return \Spryker\Zed\ProductPageSearch\Business\DataMapper\AbstractProductSearchDataMapper
      */
     public function createProductConcreteSearchDataMapper(): AbstractProductSearchDataMapper
     {

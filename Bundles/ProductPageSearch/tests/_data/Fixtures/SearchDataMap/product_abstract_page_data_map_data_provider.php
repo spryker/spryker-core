@@ -146,57 +146,11 @@ return [
                     'abstract_name' => 'HP Pro Tablet 608 G1',
                     'url' => '/en/hp-pro-tablet-608-g1-170',
                     'type' => 'product_abstract',
-                    'price' => 6707,
-                    'prices' =>
-                        [
-                            'EUR' =>
-                                [
-                                    'priceData' => null,
-                                    'GROSS_MODE' =>
-                                        [
-                                            'DEFAULT' => 6707,
-                                        ],
-                                    'NET_MODE' =>
-                                        [
-                                            'DEFAULT' => 6036,
-                                        ],
-                                ],
-                            'CHF' =>
-                                [
-                                    'priceData' => null,
-                                    'GROSS_MODE' =>
-                                        [
-                                            'DEFAULT' => 7713,
-                                        ],
-                                    'NET_MODE' =>
-                                        [
-                                            'DEFAULT' => 6941,
-                                        ],
-                                ],
-                        ],
-                    'images' =>
-                        [
-                            0 =>
-                                [
-                                    'id_product_image' => 384,
-                                    'external_url_large' => '//images.icecat.biz/img/gallery/28516206_9834842392.jpg',
-                                    'external_url_small' => '//images.icecat.biz/img/gallery_mediums/28516206_9834842392.jpg',
-                                    'product_image_key' => 'product_image_384',
-                                    'created_at' => '2019-11-01 11:19:13.754523',
-                                    'updated_at' => '2019-11-01 11:19:13.754523',
-                                    'id_product_image_set_to_product_image' => 384,
-                                    'fk_product_image' => 384,
-                                    'fk_product_image_set' => 384,
-                                    'sort_order' => 0,
-                                ],
-                        ],
                 ],
             'full-text-boosted' =>
                 [
                     0 => 'HP Pro Tablet 608 G1',
                     1 => '170',
-                    2 => 'Variant Showcase',
-                    3 => 'Tablets',
                 ],
             'full-text' =>
                 [
@@ -204,8 +158,7 @@ return [
                     1 => '170_28516206, 170_28549472',
                     2 => 'Create efficiencies with mobile solutions Tailor your experience to the needs of your business with a keyboard, cases, portable docking station and more to customize your tablet.        Transform your business with this small stylish business tablet equipped with a brilliant, high definition display and the pervasive connectivity to mobilize most any business process. Choose from an expansive choice of accessories for a customized experience. Get business-class security and manageability options on the HP Pro Tablet 608 with HP Client Security, HP Touchpoint Manager and more.    ',
                     3 => 'Create efficiencies with mobile solutions Tailor your experience to the needs of your business with a keyboard, cases, portable docking station and more to customize your tablet.         Transform your business with this small stylish business tablet equipped with a brilliant, high definition display and the pervasive connectivity to mobilize most any business process. Choose from an expansive choice of accessories for a customized experience. Get business-class security and manageability options on the HP Pro Tablet 608 with HP Client Security, HP Touchpoint Manager and more.    , Create efficiencies with mobile solutions Tailor your experience to the needs of your business with a keyboard, cases, portable docking station and more to customize your tablet.      Transform your business with this small stylish business tablet equipped with a brilliant, high definition display and the pervasive connectivity to mobilize most any business process. Choose from an expansive choice of accessories for a customized experience. Get business-class security and manageability options on the HP Pro Tablet 608 with HP Client Security, HP Touchpoint Manager and more.    ',
-                    4 => 'Computer',
-                    5 => 'HP',
+                    4 => 'HP',
                 ],
             'suggestion-terms' =>
                 [
@@ -221,76 +174,6 @@ return [
                 [
                     'name' => 'HP Pro Tablet 608 G1',
                 ],
-            'integer-sort' =>
-                [
-                    'price' => 6707,
-                    'price-DEFAULT-EUR-NET_MODE' => 6036,
-                    'price-DEFAULT-EUR-GROSS_MODE' => 6707,
-                    'price-DEFAULT-CHF-NET_MODE' => 6941,
-                    'price-DEFAULT-CHF-GROSS_MODE' => 7713,
-                    'category:14' => 36,
-                    'category:1' => 13,
-                    'category:8' => 13,
-                    'category:5' => 13,
-                ],
-            'integer-facet' =>
-                [
-                    0 =>
-                        [
-                            'facet-name' => 'price',
-                            'facet-value' =>
-                                [
-                                    0 => 6707,
-                                ],
-                        ],
-                    1 =>
-                        [
-                            'facet-name' => 'price-DEFAULT-EUR-NET_MODE',
-                            'facet-value' =>
-                                [
-                                    0 => 6036,
-                                ],
-                        ],
-                    2 =>
-                        [
-                            'facet-name' => 'price-DEFAULT-EUR-GROSS_MODE',
-                            'facet-value' =>
-                                [
-                                    0 => 6707,
-                                ],
-                        ],
-                    3 =>
-                        [
-                            'facet-name' => 'price-DEFAULT-CHF-NET_MODE',
-                            'facet-value' =>
-                                [
-                                    0 => 6941,
-                                ],
-                        ],
-                    4 =>
-                        [
-                            'facet-name' => 'price-DEFAULT-CHF-GROSS_MODE',
-                            'facet-value' =>
-                                [
-                                    0 => 7713,
-                                ],
-                        ],
-                ],
-            'category' =>
-                [
-                    'all-parents' =>
-                        [
-                            0 => 14,
-                            1 => 1,
-                            2 => 5,
-                            3 => 8,
-                        ],
-                    'direct-parents' =>
-                        [
-                            0 => 14,
-                            1 => 8,
-                        ],
-                ],
             'string-facet' =>
                 [
                     0 =>
@@ -304,6 +187,5 @@ return [
                 ],
         ],
         'en_US',
-        'product_abstract',
     ],
 ];

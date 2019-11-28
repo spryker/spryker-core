@@ -99,6 +99,5 @@ return [
                 ],
         ],
         'de_DE',
-        'category_node',
     ],
 ];

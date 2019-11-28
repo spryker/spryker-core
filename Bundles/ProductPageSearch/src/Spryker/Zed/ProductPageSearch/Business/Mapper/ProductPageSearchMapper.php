@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConstants;
 use Spryker\Zed\ProductPageSearch\Business\Attribute\ProductPageAttributeInterface;
-use Spryker\Zed\ProductPageSearch\Business\DataMapper\Elasticsearch\AbstractProductSearchDataMapper;
+use Spryker\Zed\ProductPageSearch\Business\DataMapper\AbstractProductSearchDataMapper;
 use Spryker\Zed\ProductPageSearch\Business\Exception\EncodedDataNotValidException;
 use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface;
 
@@ -23,7 +23,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
     protected $productPageAttributes;
 
     /**
-     * @var \Spryker\Zed\ProductPageSearch\Business\DataMapper\Elasticsearch\AbstractProductSearchDataMapper
+     * @var \Spryker\Zed\ProductPageSearch\Business\DataMapper\AbstractProductSearchDataMapper
      */
     protected $productAbstractSearchDataMapper;
 
@@ -34,7 +34,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
 
     /**
      * @param \Spryker\Zed\ProductPageSearch\Business\Attribute\ProductPageAttributeInterface $productPageAttributes
-     * @param \Spryker\Zed\ProductPageSearch\Business\DataMapper\Elasticsearch\AbstractProductSearchDataMapper $productAbstractSearchDataMapper
+     * @param \Spryker\Zed\ProductPageSearch\Business\DataMapper\AbstractProductSearchDataMapper $productAbstractSearchDataMapper
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface $utilEncoding
      */
     public function __construct(

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductPageSearch\Business\DataMapper\Elasticsearch;
+namespace Spryker\Zed\ProductPageSearch\Business\DataMapper;
 
 use Exception;
 use Generated\Shared\Search\PageIndexMap;
