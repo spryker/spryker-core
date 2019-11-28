@@ -24,7 +24,6 @@ install:
     - if [[ $PREFER_LOWEST == 1 ]]; then COMPOSER_MEMORY_LIMIT=-1 composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable ; fi
 
 script:
-    - if [[ ${TRAVIS_PHP_VERSION} == "7.4snapshot" ]]; then vendor/bin/phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ ; fi
     - find ./src -path src -prune -o -type f -name '*.php' -print0 | xargs -0 -n1 -P4 php -l -n | (! grep -v "No syntax errors detected" )
 
 cache:
