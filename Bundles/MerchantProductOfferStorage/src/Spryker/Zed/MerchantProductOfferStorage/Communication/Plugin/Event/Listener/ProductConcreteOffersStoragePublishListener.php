@@ -29,14 +29,14 @@ class ProductConcreteOffersStoragePublishListener extends AbstractPlugin impleme
      */
     public function handleBulk(array $transfers, $eventName): void
     {
-        $concreteSkus = $this->getFactory()
+        $productSkus = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransfersAdditionalValues($transfers, SpyProductOfferTableMap::COL_CONCRETE_SKU);
 
-        if (!$concreteSkus) {
+        if (!$productSkus) {
             return;
         }
 
-        $this->getFacade()->publishProductConcreteProductOffersStorage($concreteSkus);
+        $this->getFacade()->publishProductConcreteProductOffersStorage($productSkus);
     }
 }
