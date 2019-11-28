@@ -7,17 +7,15 @@
 
 namespace Spryker\Zed\CartCodesRestApi\Business\CartCodeAdder;
 
-use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
+use Generated\Shared\Transfer\CartCodeRequestTransfer;
+use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\CartCodesRestApi\CartCodesRestApiConfig;
 use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeInterface;
 use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeInterface;
 
 class CartCodeAdder implements CartCodeAdderInterface
 {
-    protected const MESSAGE_TYPE_ERROR = 'error';
-
     /**
      * @var \Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeInterface
      */
@@ -41,45 +39,41 @@ class CartCodeAdder implements CartCodeAdderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $voucherCode
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function addCandidate(QuoteTransfer $quoteTransfer, string $voucherCode): CartCodeOperationResultTransfer
+    public function addCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
-        $quoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
+        $quoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid($cartCodeRequestTransfer->getQuote());
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
+            return $this->createCartCodeResponseTransferWithErrorMessageTransfer(
                 CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND
             );
         }
 
-        $cartCodeOperationResultTransfer = $this->cartCodeFacade->addCandidate($quoteResponseTransfer->getQuoteTransfer(), $voucherCode);
+        $cartCodeRequestTransfer->setQuote($quoteResponseTransfer->getQuoteTransfer());
+        $cartCodeResponseTransfer = $this->cartCodeFacade->addCartCode($cartCodeRequestTransfer);
 
-        foreach ($cartCodeOperationResultTransfer->getMessages() as $messageTransfer) {
-            if ($messageTransfer->getType() !== static::MESSAGE_TYPE_ERROR) {
-                continue;
-            }
-
-            return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
+        if (!$cartCodeResponseTransfer->getIsSuccessful()) {
+            return $this->createCartCodeResponseTransferWithErrorMessageTransfer(
                 CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_CANT_BE_ADDED
             );
         }
 
-        return $cartCodeOperationResultTransfer;
+        return $cartCodeResponseTransfer;
     }
 
     /**
      * @param string $errorIdentifier
      *
-     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    protected function createCartCodeOperationResultTransferWithErrorMessageTransfer(string $errorIdentifier): CartCodeOperationResultTransfer
+    protected function createCartCodeResponseTransferWithErrorMessageTransfer(string $errorIdentifier): CartCodeResponseTransfer
     {
-        return (new CartCodeOperationResultTransfer())->addMessage(
-            (new MessageTransfer())->setValue($errorIdentifier)
-        );
+        return (new CartCodeResponseTransfer())
+            ->setIsSuccessful(false)
+            ->addMessage((new MessageTransfer())->setValue($errorIdentifier));
     }
 }

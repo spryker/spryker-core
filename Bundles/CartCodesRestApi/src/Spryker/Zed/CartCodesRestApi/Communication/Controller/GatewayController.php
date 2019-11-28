@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\CartCodesRestApi\Communication\Controller;
 
-use Generated\Shared\Transfer\AddCandidateRequestTransfer;
-use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
-use Generated\Shared\Transfer\RemoveCodeRequestTransfer;
+use Generated\Shared\Transfer\CartCodeRequestTransfer;
+use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -18,28 +17,22 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 class GatewayController extends AbstractGatewayController
 {
     /**
-     * @param \Generated\Shared\Transfer\AddCandidateRequestTransfer $addCandidateRequestTransfer
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function addCandidateAction(AddCandidateRequestTransfer $addCandidateRequestTransfer): CartCodeOperationResultTransfer
+    public function addCartCodeAction(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
-        $quoteTransfer = $addCandidateRequestTransfer->getQuote();
-        $voucherCode = $addCandidateRequestTransfer->getVoucherCode();
-
-        return $this->getFacade()->addCandidate($quoteTransfer, $voucherCode);
+        return $this->getFacade()->addCartCode($cartCodeRequestTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RemoveCodeRequestTransfer $removeCodeRequestTransfer
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function removeCartCodeAction(RemoveCodeRequestTransfer $removeCodeRequestTransfer): CartCodeOperationResultTransfer
+    public function removeCartCodeAction(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
-        $quoteTransfer = $removeCodeRequestTransfer->getQuote();
-        $idDiscount = $removeCodeRequestTransfer->getIdDiscount();
-
-        return $this->getFacade()->removeCartCode($quoteTransfer, $idDiscount);
+        return $this->getFacade()->removeCartCode($cartCodeRequestTransfer);
     }
 }

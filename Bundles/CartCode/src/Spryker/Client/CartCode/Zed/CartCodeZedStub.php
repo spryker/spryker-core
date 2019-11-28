@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\CartCodesRestApi\Zed;
+namespace Spryker\Client\CartCode\Zed;
 
 use Generated\Shared\Transfer\CartCodeRequestTransfer;
 use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Spryker\Client\CartCodesRestApi\Dependency\Client\CartCodesRestApiToZedRequestClientInterface;
 
-class CartCodesRestApiStub implements CartCodesRestApiStubInterface
+class CartCodeZedStub implements CartCodeZedStubInterface
 {
     /**
      * @var \Spryker\Client\CartCodesRestApi\Dependency\Client\CartCodesRestApiToZedRequestClientInterface
@@ -27,7 +27,7 @@ class CartCodesRestApiStub implements CartCodesRestApiStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\CartCodesRestApi\Communication\Controller\GatewayController::addCartCodeAction()
+     * @uses \Spryker\Zed\CartCode\Communication\Controller\GatewayController::addCartCodeAction()
      *
      * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
@@ -36,13 +36,13 @@ class CartCodesRestApiStub implements CartCodesRestApiStubInterface
     public function addCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\CartCodeResponseTransfer $cartCodeResponseTransfer */
-        $cartCodeResponseTransfer = $this->zedStubClient->call('/cart-codes-rest-api/gateway/add-cart-code', $cartCodeRequestTransfer);
+        $cartCodeResponseTransfer = $this->zedStubClient->call('/cart-code/gateway/add-cart-code', $cartCodeRequestTransfer);
 
         return $cartCodeResponseTransfer;
     }
 
     /**
-     * @uses \Spryker\Zed\CartCodesRestApi\Communication\Controller\GatewayController::removeCartCodeAction()
+     * @uses \Spryker\Zed\CartCode\Communication\Controller\GatewayController::removeCartCodeAction()
      *
      * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
@@ -52,6 +52,21 @@ class CartCodesRestApiStub implements CartCodesRestApiStubInterface
     {
         /** @var \Generated\Shared\Transfer\CartCodeResponseTransfer $cartCodeResponseTransfer */
         $cartCodeResponseTransfer = $this->zedStubClient->call('/cart-codes-rest-api/gateway/remove-cart-code', $cartCodeRequestTransfer);
+
+        return $cartCodeResponseTransfer;
+    }
+
+    /**
+     * @uses \Spryker\Zed\CartCode\Communication\Controller\GatewayController::clearCartCodesAction()
+     *
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     */
+    public function clearCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CartCodeResponseTransfer $cartCodeResponseTransfer */
+        $cartCodeResponseTransfer = $this->zedStubClient->call('/cart-codes-rest-api/gateway/clear-cart-codes', $cartCodeRequestTransfer);
 
         return $cartCodeResponseTransfer;
     }

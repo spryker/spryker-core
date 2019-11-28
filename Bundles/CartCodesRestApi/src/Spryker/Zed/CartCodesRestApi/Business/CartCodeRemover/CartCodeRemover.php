@@ -8,8 +8,9 @@
 namespace Spryker\Zed\CartCodesRestApi\Business\CartCodeRemover;
 
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
+use Generated\Shared\Transfer\CartCodeRequestTransfer;
+use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\CartCodesRestApi\CartCodesRestApiConfig;
 use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeInterface;
 use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeInterface;
@@ -39,31 +40,30 @@ class CartCodeRemover implements CartCodeRemoverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int $idDiscount
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function removeCartCode(QuoteTransfer $quoteTransfer, int $idDiscount): CartCodeOperationResultTransfer
+    public function removeCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
+        $quoteTransfer = $cartCodeRequestTransfer->getQuote();
         $quoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
 
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
-                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND
-            );
-        }
+//        if (!$quoteResponseTransfer->getIsSuccessful()) {
+//            return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
+//                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND
+//            );
+//        }
+//
+//        if (!$cartCode) {
+//            return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
+//                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_NOT_FOUND
+//            );
+//        }
 
-        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
+        $cartCodeRequestTransfer->setQuote($quoteResponseTransfer->getQuoteTransfer());
 
-        $voucherCode = $this->findVoucherCodeById($quoteTransfer->getVoucherDiscounts()->getArrayCopy(), $idDiscount);
-        if (!$voucherCode) {
-            return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
-                CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_NOT_FOUND
-            );
-        }
-
-        return $this->cartCodeFacade->removeCartCode($quoteTransfer, $voucherCode);
+        return $this->cartCodeFacade->removeCartCode($cartCodeRequestTransfer);
     }
 
     /**

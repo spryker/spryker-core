@@ -13,6 +13,7 @@ use Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
+ * @deprecated
  * @method \Spryker\Client\GiftCard\GiftCardFactory getFactory()
  */
 class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInterface

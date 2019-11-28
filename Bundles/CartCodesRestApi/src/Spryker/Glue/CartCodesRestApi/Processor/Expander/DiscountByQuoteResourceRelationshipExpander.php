@@ -88,7 +88,7 @@ class DiscountByQuoteResourceRelationshipExpander implements DiscountByQuoteReso
 
             $discountResource = $this->restResourceBuilder->createRestResource(
                 CartCodesRestApiConfig::RESOURCE_DISCOUNTS,
-                (string)$discountTransfer->getIdDiscount(),
+                (string)$discountTransfer->getVoucherCode(),
                 $restDiscountsAttributesTransfer
             );
 

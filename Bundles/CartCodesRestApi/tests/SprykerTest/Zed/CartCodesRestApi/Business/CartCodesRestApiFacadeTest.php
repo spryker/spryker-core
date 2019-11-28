@@ -61,7 +61,7 @@ class CartCodesRestApiFacadeTest extends Unit
         $quoteTransfer = $this->tester->havePersistentQuoteWithoutVouchers();
 
         // Act
-        $cartCodeOperationResultTransfer = $this->tester->getFacade()->addCandidate(
+        $cartCodeOperationResultTransfer = $this->tester->getFacade()->addCartCode(
             $quoteTransfer,
             $this->tester::CODE
         );
@@ -83,7 +83,7 @@ class CartCodesRestApiFacadeTest extends Unit
         $quoteTransfer = $this->tester->prepareQuoteTransfer();
 
         // Act
-        $cartCodeOperationResultTransfer = $this->tester->getFacade()->addCandidate(
+        $cartCodeOperationResultTransfer = $this->tester->getFacade()->addCartCode(
             $quoteTransfer,
             $this->tester::CODE
         );

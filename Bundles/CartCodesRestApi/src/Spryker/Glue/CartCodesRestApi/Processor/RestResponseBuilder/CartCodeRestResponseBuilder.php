@@ -9,6 +9,7 @@ namespace Spryker\Glue\CartCodesRestApi\Processor\RestResponseBuilder;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
+use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\CartCodesRestApi\Dependency\RestApiResource\CartCodesRestApiToCartsRestApiResourceInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\CartCodeMapperInterface;
@@ -49,33 +50,33 @@ class CartCodeRestResponseBuilder implements CartCodeRestResponseBuilderInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartCodeOperationResultTransfer $cartCodeOperationResultTransfer
+     * @param \Generated\Shared\Transfer\CartCodeResponseTransfer $cartCodeResponseTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function buildCartRestResponse(
-        CartCodeOperationResultTransfer $cartCodeOperationResultTransfer,
+        CartCodeResponseTransfer $cartCodeResponseTransfer,
         RestRequestInterface $restRequest
     ): RestResponseInterface {
-        $quoteTransfer = $cartCodeOperationResultTransfer->getQuote();
+        $quoteTransfer = $cartCodeResponseTransfer->getQuote();
         if (!$quoteTransfer) {
-            return $this->createFailedErrorResponse($cartCodeOperationResultTransfer->getMessages());
+            return $this->createFailedErrorResponse($cartCodeResponseTransfer->getMessages());
         }
 
         return $this->cartsRestApiResource->createCartRestResponse($quoteTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartCodeOperationResultTransfer $cartCodeOperationResultTransfer
+     * @param \Generated\Shared\Transfer\CartCodeResponseTransfer $cartCodeResponseTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function buildGuestCartRestResponse(CartCodeOperationResultTransfer $cartCodeOperationResultTransfer): RestResponseInterface
+    public function buildGuestCartRestResponse(CartCodeResponseTransfer $cartCodeResponseTransfer): RestResponseInterface
     {
-        $quoteTransfer = $cartCodeOperationResultTransfer->getQuote();
+        $quoteTransfer = $cartCodeResponseTransfer->getQuote();
         if (!$quoteTransfer) {
-            return $this->createFailedErrorResponse($cartCodeOperationResultTransfer->getMessages());
+            return $this->createFailedErrorResponse($cartCodeResponseTransfer->getMessages());
         }
 
         return $this->cartsRestApiResource->createGuestCartRestResponse($quoteTransfer);

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CartCode\Business\Operation;
 
-use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
+use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface QuoteOperationCheckerInterface
@@ -15,7 +15,7 @@ interface QuoteOperationCheckerInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer|null
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer|null
      */
-    public function checkLockedQuoteResponse(QuoteTransfer $quoteTransfer): ?CartCodeOperationResultTransfer;
+    public function checkLockedQuoteResponse(QuoteTransfer $quoteTransfer): ?CartCodeResponseTransfer;
 }

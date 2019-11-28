@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\CartCode\Business\Operation;
 
-use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
+use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartCode\Dependency\Facade\CartCodeToQuoteFacadeInterface;
@@ -34,15 +34,15 @@ class QuoteOperationChecker implements QuoteOperationCheckerInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer|null
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer|null
      */
-    public function checkLockedQuoteResponse(QuoteTransfer $quoteTransfer): ?CartCodeOperationResultTransfer
+    public function checkLockedQuoteResponse(QuoteTransfer $quoteTransfer): ?CartCodeResponseTransfer
     {
         if (!$this->quoteFacade->isQuoteLocked($quoteTransfer)) {
             return null;
         }
 
-        return (new CartCodeOperationResultTransfer())
+        return (new CartCodeResponseTransfer())
             ->setQuote($quoteTransfer)
             ->addMessage((new MessageTransfer())
                 ->setValue(static::GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED)
