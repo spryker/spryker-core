@@ -111,6 +111,8 @@ class CartCodeClient extends AbstractClient implements CartCodeClientInterface
      */
     public function clearCartCodes(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
-        return $this->getFactory()->createCartCodeZedStub()->clearCartCodes($cartCodeRequestTransfer);
+        return $this->getFactory()
+            ->createCartCodeZedStub()
+            ->clearCartCodes($cartCodeRequestTransfer);
     }
 }

@@ -5,22 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Discount\Plugin\CartCode;
+namespace Spryker\Zed\GiftCard\Communication\Plugin\CartCode;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface;
+use Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
- * @deprecated Will be removed in the next major version.
- * @method \Spryker\Client\Discount\DiscountFactory getFactory()
+ * @method \Spryker\Zed\GiftCard\Business\GiftCardBusinessFactory getFactory()
  */
-class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInterface
+class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Sets voucher discount to the quote if the code hasn't been added already.
+     * - Sets gift card to the quote if the code hasn't been added already.
      *
      * @api
      *
@@ -29,16 +28,16 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addCandidate(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
+    public function addCartCode(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
     {
         return $this->getFactory()
-            ->createVoucherCartCode()
+            ->createGiftCardCartCode()
             ->addCandidate($quoteTransfer, $code);
     }
 
     /**
      * {@inheritDoc}
-     * - Removes matching applied and not applied voucher discount from quote.
+     * - Removes matching applied gift card and gift card payment from quote.
      *
      * @api
      *
@@ -47,17 +46,17 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeCode(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
+    public function removeCartCode(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
     {
         return $this->getFactory()
-            ->createVoucherCartCode()
+            ->createGiftCardCartCode()
             ->removeCode($quoteTransfer, $code);
     }
 
     /**
      * {@inheritDoc}
-     * - Returns voucher apply success message in case the given voucher code has been applied successfully.
-     * - Returns voucher apply failed message in case the given voucher code hasn't been applied successfully.
+     * - Returns gift card apply success message in case the given gift card code has been applied successfully.
+     * - Returns gift card apply failed message in case the given gift card code hasn't been applied successfully.
      * - Returns an empty failed message if code is not relevant.
      *
      * @api
@@ -70,13 +69,13 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
     public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
     {
         return $this->getFactory()
-            ->createVoucherCartCode()
+            ->createGiftCardCartCode()
             ->getOperationResponseMessage($quoteTransfer, $code);
     }
 
     /**
      * {@inheritDoc}
-     * - Clears all applied and not applied voucher codes from the quote.
+     * - Clears all gift cards and gift card payments from the quote.
      *
      * @api
      *
@@ -84,10 +83,10 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function clearAllCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function clearCartCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFactory()
-            ->createVoucherCartCode()
+            ->createGiftCardCartCode()
             ->clearAllCodes($quoteTransfer);
     }
 }
