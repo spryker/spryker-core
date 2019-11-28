@@ -46,18 +46,17 @@ class CmsSlotBlockStorageListenerTest extends Unit
     public function testCmsSlotBlockStoragePublishListener(): void
     {
         // Assign
-        $this->tester->ensureCmsSlotTableIsEmpty();
-        $this->tester->ensureCmsSlotTemplateTableIsEmpty();
         $this->tester->ensureCmsSlotBlockTableIsEmpty();
         $this->tester->ensureCmsSlotBlockStorageTableIsEmpty();
 
         $cmsSlotTransfer = $this->tester->haveCmsSlotInDb();
         $cmsSlotTemplateTransfer = $this->tester->haveCmsSlotTemplateInDb();
+        $cmsBlockTransfer = $this->tester->haveCmsBlock();
+
         $cmsSlotToCmsSlotTemplateEntityTransfer = (new SpyCmsSlotToCmsSlotTemplateEntityTransfer())
             ->setFkCmsSlotTemplate($cmsSlotTemplateTransfer->getIdCmsSlotTemplate())
             ->setFkCmsSlot($cmsSlotTransfer->getIdCmsSlot());
         $this->tester->haveCmsSlotToCmsSlotTemplateInDb($cmsSlotToCmsSlotTemplateEntityTransfer);
-        $cmsBlockTransfer = $this->tester->haveCmsBlock();
 
         $cmsSlotBlockTransfer = $this->tester->haveCmsSlotBlockInDb([
             CmsSlotBlockTransfer::ID_SLOT_TEMPLATE => $cmsSlotTemplateTransfer->getIdCmsSlotTemplate(),
