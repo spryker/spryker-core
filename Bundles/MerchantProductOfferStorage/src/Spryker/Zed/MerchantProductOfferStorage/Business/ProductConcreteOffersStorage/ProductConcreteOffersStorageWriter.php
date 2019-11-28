@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantProductOfferStorage\Business\ProductConcreteOffers
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorageQuery;
+use Spryker\Zed\MerchantProductOfferStorage\Business\ProductOffer\ProductOfferAvailabilityCheckerInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface;
 
 class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorageWriterInterface
@@ -20,11 +21,20 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     protected $productOfferFacade;
 
     /**
-     * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade
+     * @var \Spryker\Zed\MerchantProductOfferStorage\Business\ProductOffer\ProductOfferAvailabilityCheckerInterface
      */
-    public function __construct(MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade)
-    {
+    protected $productOfferAvailabilityChecker;
+
+    /**
+     * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade
+     * @param \Spryker\Zed\MerchantProductOfferStorage\Business\ProductOffer\ProductOfferAvailabilityCheckerInterface $productOfferAvailabilityChecker
+     */
+    public function __construct(
+        MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade,
+        ProductOfferAvailabilityCheckerInterface $productOfferAvailabilityChecker
+    ) {
         $this->productOfferFacade = $productOfferFacade;
+        $this->productOfferAvailabilityChecker = $productOfferAvailabilityChecker;
     }
 
     /**
@@ -76,6 +86,9 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     {
         $productOffersGroupedBySku = [];
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
+            if (!$this->productOfferAvailabilityChecker->isProductOfferAvailable($productOfferTransfer)) {
+                continue;
+            }
             if (!isset($productOffersGroupedBySku[$productOfferTransfer->getConcreteSku()])) {
                 $productOffersGroupedBySku[$productOfferTransfer->getConcreteSku()] = [];
             }

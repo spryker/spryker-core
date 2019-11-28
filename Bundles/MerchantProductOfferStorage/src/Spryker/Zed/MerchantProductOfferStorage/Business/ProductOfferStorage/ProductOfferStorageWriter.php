@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorageQuery;
+use Spryker\Zed\MerchantProductOfferStorage\Business\ProductOffer\ProductOfferAvailabilityCheckerInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface;
 
 class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
@@ -21,11 +22,20 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     protected $productOfferFacade;
 
     /**
-     * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade
+     * @var \Spryker\Zed\MerchantProductOfferStorage\Business\ProductOffer\ProductOfferAvailabilityCheckerInterface
      */
-    public function __construct(MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade)
-    {
+    protected $productOfferAvailabilityChecker;
+
+    /**
+     * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade
+     * @param \Spryker\Zed\MerchantProductOfferStorage\Business\ProductOffer\ProductOfferAvailabilityCheckerInterface $productOfferAvailabilityChecker
+     */
+    public function __construct(
+        MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade,
+        ProductOfferAvailabilityCheckerInterface $productOfferAvailabilityChecker
+    ) {
         $this->productOfferFacade = $productOfferFacade;
+        $this->productOfferAvailabilityChecker = $productOfferAvailabilityChecker;
     }
 
     /**
@@ -45,7 +55,11 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
                 ->findOneOrCreate();
             $productOfferStorageEntity->setData($this->createProductOfferStorageTransfer($productOfferTransfer)->modifiedToArray());
 
-            $productOfferStorageEntity->save();
+            if ($this->productOfferAvailabilityChecker->isProductOfferAvailable($productOfferTransfer)) {
+                $productOfferStorageEntity->save();
+            } elseif (!$productOfferStorageEntity->isNew()) {
+                $productOfferStorageEntity->delete();
+            }
         }
     }
 

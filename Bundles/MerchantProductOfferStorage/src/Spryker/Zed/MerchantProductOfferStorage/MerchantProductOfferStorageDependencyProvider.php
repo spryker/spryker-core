@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantProductOfferStorage;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToAvailabilityFacadeBridge;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeBridge;
 
@@ -19,6 +20,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
 {
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
+    public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -69,11 +71,27 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductOfferFacade(Container $container): Container
+    protected function addAvailabilityFacade(Container $container): Container
     {
         $container->set(static::FACADE_PRODUCT_OFFER, function (Container $container) {
             return new MerchantProductOfferStorageToProductOfferFacadeBridge(
                 $container->getLocator()->productOffer()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductOfferFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_AVAILABILITY, function (Container $container) {
+            return new MerchantProductOfferStorageToAvailabilityFacadeBridge(
+                $container->getLocator()->availability()->facade()
             );
         });
 
