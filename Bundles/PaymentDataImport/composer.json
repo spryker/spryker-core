@@ -4,6 +4,7 @@
   "description": "PaymentDataImport module",
   "license": "MIT",
   "require": {
+    "php": ">=7.2",
     "spryker/data-import": "^1.4.3",
     "spryker/kernel": "^3.33.0",
     "spryker/payment": "^5.0.0",
