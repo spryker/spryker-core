@@ -161,7 +161,9 @@ class CmsSlotBlockFacadeTest extends Unit
     public function testGetCmsSlotBlockCollectionReturnsEmptyCollectionIfRelationsDoNotExist(): void
     {
         // Arrange
-        $cmsSlotBlockCriteriaTransfer = $this->tester->createCmsSlotBlockCriteriaTransfer(1, 1);
+        $idCmsSlot = $this->tester->createCmsSlotsInDb()[0]->getIdCmsSlot();
+        $idCmsSlotTemplate = $this->tester->createCmsSlotTemplatesInDb()[0]->getIdCmsSlotTemplate();
+        $cmsSlotBlockCriteriaTransfer = $this->tester->createCmsSlotBlockCriteriaTransfer($idCmsSlot, $idCmsSlotTemplate);
 
         // Act
         $cmsSlotBlocks = $this->tester->createCmsSlotBlockFacade()
