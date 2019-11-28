@@ -61,23 +61,14 @@ class OauthAccessTokenValidator implements OauthAccessTokenValidatorInterface
             return null;
         }
 
-        $restErrorCollectionTransfer = (new RestErrorCollectionTransfer())->addRestError(
-            $this->createErrorMessageTransfer(
-                AuthRestApiConfig::RESPONSE_DETAIL_INVALID_ACCESS_TOKEN,
-                Response::HTTP_UNAUTHORIZED,
-                AuthRestApiConfig::RESPONSE_CODE_ACCESS_CODE_INVALID
-            )
-        );
-
-        $authorizationHeaderValue = $this->extractToken($authorizationToken);
-        if (!isset($authorizationHeaderValue[static::AUTHORIZATION_HEADER_CREDENTIALS])) {
-            return $restErrorCollectionTransfer;
-        }
-
-        $authAccessTokenValidationResponseTransfer = $this->validateAccessToken($authorizationHeaderValue);
-
-        if (!$authAccessTokenValidationResponseTransfer->getIsValid()) {
-            return $restErrorCollectionTransfer;
+        if (!$this->validateAccessToken($authorizationToken)) {
+            return (new RestErrorCollectionTransfer())->addRestError(
+                $this->createErrorMessageTransfer(
+                    AuthRestApiConfig::RESPONSE_DETAIL_INVALID_ACCESS_TOKEN,
+                    Response::HTTP_UNAUTHORIZED,
+                    AuthRestApiConfig::RESPONSE_CODE_ACCESS_CODE_INVALID
+                )
+            );
         }
 
         return null;
@@ -109,24 +100,26 @@ class OauthAccessTokenValidator implements OauthAccessTokenValidatorInterface
     }
 
     /**
-     * @param array $authorizationToken
+     * @param string $authorizationToken
      *
-     * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
+     * @return bool
      */
-    protected function validateAccessToken(array $authorizationToken): OauthAccessTokenValidationResponseTransfer
+    protected function validateAccessToken(string $authorizationToken): bool
     {
-        $type = $authorizationToken[static::AUTHORIZATION_HEADER_TYPE];
-        $accessToken = $authorizationToken[static::AUTHORIZATION_HEADER_CREDENTIALS];
+        $authorizationTokenItems = $this->extractToken($authorizationToken);
+        if (!isset($authorizationTokenItems[static::AUTHORIZATION_HEADER_CREDENTIALS])) {
+            return false;
+        }
 
         $authAccessTokenValidationRequestTransfer = new OauthAccessTokenValidationRequestTransfer();
         $authAccessTokenValidationRequestTransfer
-            ->setAccessToken($accessToken)
-            ->setType($type);
+            ->setAccessToken($authorizationTokenItems[static::AUTHORIZATION_HEADER_CREDENTIALS])
+            ->setType($authorizationTokenItems[static::AUTHORIZATION_HEADER_TYPE]);
 
         $authAccessTokenValidationResponseTransfer = $this->oauthClient->validateAccessToken(
             $authAccessTokenValidationRequestTransfer
         );
 
-        return $authAccessTokenValidationResponseTransfer;
+        return $authAccessTokenValidationResponseTransfer->getIsValid();
     }
 }
