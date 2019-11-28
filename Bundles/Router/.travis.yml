@@ -25,7 +25,7 @@ install:
 
 script:
     - if [[ ${TRAVIS_PHP_VERSION} == "7.2" ]]; then vendor/bin/phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ ; fi
-    - find . -path src -prune -o -type f -name '*.php' -print0 | xargs -0 -n1 -P4 php -l -n | (! grep -v "No syntax errors detected" )
+    - find ./src -path src -prune -o -type f -name '*.php' -print0 | xargs -0 -n1 -P4 php -l -n | (! grep -v "No syntax errors detected" )
 
 cache:
     directories:
