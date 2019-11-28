@@ -131,17 +131,17 @@ var BlocksTable = function (options) {
         var buttonsTemplate = '';
 
         $buttons.each(function() {
-            var button = $(this);
+            var $button = $(this);
 
-            if (!button.is('a')) {
+            if (!$button.is('a')) {
                 return;
             }
 
-            if (button.hasClass('btn-view')) {
-                button.attr('href', _self.viewBlockUrl + '?id-cms-block=' + blockId);
+            if ($button.hasClass('btn-view')) {
+                $button.attr('href', _self.viewBlockUrl + '?id-cms-block=' + blockId);
             }
 
-            buttonsTemplate += button[0].outerHTML + ' ';
+            buttonsTemplate += $button[0].outerHTML + ' ';
         });
 
         return buttonsTemplate;
@@ -184,7 +184,7 @@ var BlocksTable = function (options) {
 
     this.changeOrderRow = function (rowIndex, direction) {
         var table = _self.getTable();
-        var newRowIndex = rowIndex;
+        var newRowIndex = null;
 
         switch (direction) {
             case 'up':
@@ -314,18 +314,18 @@ var BlocksTable = function (options) {
     };
 
     this.tableRowSelect = function (element) {
-        var cellIndex = _self.selectedRowIndex;
+        var rowIndex = _self.selectedRowIndex;
 
         if ($(_self.$blocksTable).DataTable().rows().count() < 1) {
             return;
         }
 
         if (element !== undefined && $(element.target).is('td')) {
-            cellIndex = $(this).index();
-            _self.selectedRowIndex = cellIndex;
+            rowIndex = $(this).index();
+            _self.selectedRowIndex = rowIndex;
         }
 
-        var row = _self.$blocksTable.DataTable().row(cellIndex);
+        var row = _self.$blocksTable.DataTable().row(rowIndex);
         _self.$blocksTable.DataTable().rows().deselect();
         row.select();
         var idCmsBlock = row.data()[0];

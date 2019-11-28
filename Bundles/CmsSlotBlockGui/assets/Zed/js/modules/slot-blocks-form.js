@@ -44,17 +44,17 @@ var SlotBlocksForm = function (options) {
         var prevCmsBlockId = 0;
 
         $(tableData).each(function (index, item) {
-            var formItem = $(_self.slotBlockFormItemIdPrefix + item[0]);
+            var $formItem = $(_self.slotBlockFormItemIdPrefix + item[0]);
 
-            if (formItem.length < 1) {
-                formItem = _self.createNewFormElement(idCmsSlotTemplate, idCmsSlot, item[0]);
+            if ($formItem.length < 1) {
+                $formItem = _self.createNewFormElement(idCmsSlotTemplate, idCmsSlot, item[0]);
             }
 
-            formItem.find('input[name*=\\[position\\]]').val(index + 1);
-            $(_self.slotBlockFormWrapperId).prepend(formItem);
+            $formItem.find('input[name*=\\[position\\]]').val(index + 1);
+            $(_self.slotBlockFormWrapperId).prepend($formItem);
 
             if (prevCmsBlockId > 0) {
-                formItem.insertAfter(
+                $formItem.insertAfter(
                     $(_self.slotBlockFormItemIdPrefix + prevCmsBlockId)
                 );
             }
@@ -160,7 +160,7 @@ var SlotBlocksForm = function (options) {
     };
 
     this.toggleEnablement = function (radioInput) {
-        if (! radioInput.is(':checked')) {
+        if (!radioInput.is(':checked')) {
             return;
         }
 

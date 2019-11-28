@@ -42,6 +42,7 @@ $(document).ready(function() {
         slotSelector: '.js-row-list-of-slots',
         slotTableSelector: '.js-row-list-of-slots table',
         blockContainerSelector: '.js-row-list-of-blocks-container',
+        cmsSlotBlockContentProviderSelector: '#cms-slot-block-content-provider',
         baseUrl: '/cms-slot-block-gui/slot-block/index',
         paramIdCmsSlotTemplate: 'id-cms-slot-template',
         paramIdCmsSlot: 'id-cms-slot',
