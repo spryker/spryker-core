@@ -38,16 +38,22 @@
         <property name="idConfigurableBundleTemplate" type="int"/>
         <property name="uuid" type="string"/>
         <property name="name" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="productImageSets" type="ProductImageSet[]" singular="productImageSet"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlot">
         <property name="uuid" type="string"/>
+        <property name="idConfigurableBundleTemplateSlot" type="int"/>
+        <property name="name" type="string"/>
+        <property name="productList" type="ProductList"/>
     </transfer>
 
     <transfer name="SynchronizationData">
         <property name="reference" type="string"/>
         <property name="key" type="string"/>
         <property name="data" type="string"/>
+        <property name="locale" type="string"/>
     </transfer>
 
     <transfer name="Filter">
@@ -63,6 +69,34 @@
 
     <transfer name="ConfigurableBundleTemplateSlotFilter">
         <property name="idConfigurableBundleTemplate" type="int"/>
+    </transfer>
+
+    <transfer name="ProductImageSet">
+        <property name="productImages" type="ProductImage[]" singular="productImage"/>
+        <property name="name" type="string"/>
+        <property name="locale" type="Locale"/>
+    </transfer>
+
+    <transfer name="ProductImage">
+        <property name="idProductImage" type="int"/>
+        <property name="externalUrlLarge" type="string"/>
+        <property name="externalUrlSmall" type="string"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateCollection">
+        <property name="configurableBundleTemplates" type="ConfigurableBundleTemplate[]" singular="configurableBundleTemplate"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateSlotCollection">
+        <property name="configurableBundleTemplateSlots" type="ConfigurableBundleTemplateSlot[]" singular="configurableBundleTemplateSlot"/>
+    </transfer>
+
+    <transfer name="ProductList">
+        <property name="idProductList" type="int"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
     </transfer>
 
 </transfers>
