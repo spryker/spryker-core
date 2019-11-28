@@ -21,7 +21,7 @@ class CmsSlotBlockValidator implements CmsSlotBlockValidatorInterface
     protected $cmsSlotFacade;
 
     /**
-     * @var int[]
+     * @var bool[]
      */
     protected $validCmsSlotBuffer = [];
 
@@ -64,7 +64,7 @@ class CmsSlotBlockValidator implements CmsSlotBlockValidatorInterface
      */
     protected function isValidCmsSlot(int $idCmsSlot): bool
     {
-        if (in_array($idCmsSlot, $this->validCmsSlotBuffer, true)) {
+        if (isset($this->validCmsSlotBuffer[$idCmsSlot])) {
             return true;
         }
 
@@ -77,7 +77,7 @@ class CmsSlotBlockValidator implements CmsSlotBlockValidatorInterface
         $isValidCmsSlot = $cmsSlotTransfer->getContentProviderType() === CmsSlotBlockConfig::CMS_SLOT_CONTENT_PROVIDER_TYPE;
 
         if ($isValidCmsSlot) {
-            $this->validCmsSlotBuffer[] = $idCmsSlot;
+            $this->validCmsSlotBuffer[$idCmsSlot] = true;
         }
 
         return $isValidCmsSlot;
