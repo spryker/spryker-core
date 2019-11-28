@@ -405,7 +405,8 @@ class TemplateController extends AbstractController
             $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
         );
 
-        $configurableBundleTemplateFilterTransfer = $this->createConfigurableBundleTemplateFilter($idConfigurableBundleTemplate);
+        $configurableBundleTemplateFilterTransfer = (new ConfigurableBundleTemplateFilterTransfer())
+            ->setIdConfigurableBundleTemplate($idConfigurableBundleTemplate);
 
         $configurableBundleTemplateTransfer = $this->getFactory()
             ->getConfigurableBundleFacade()

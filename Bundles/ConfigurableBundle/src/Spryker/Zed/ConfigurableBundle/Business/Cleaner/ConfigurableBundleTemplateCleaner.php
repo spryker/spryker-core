@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateResponseTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface;
+use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToProductImageFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
@@ -29,15 +30,23 @@ class ConfigurableBundleTemplateCleaner implements ConfigurableBundleTemplateCle
     protected $configurableBundleTemplateReader;
 
     /**
+     * @var \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToProductImageFacadeInterface
+     */
+    protected $productImageFacade;
+
+    /**
      * @param \Spryker\Zed\ConfigurableBundle\Persistence\ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager
      * @param \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReaderInterface $configurableBundleTemplateReader
+     * @param \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToProductImageFacadeInterface $productImageFacade
      */
     public function __construct(
         ConfigurableBundleEntityManagerInterface $configurableBundleEntityManager,
-        ConfigurableBundleTemplateReaderInterface $configurableBundleTemplateReader
+        ConfigurableBundleTemplateReaderInterface $configurableBundleTemplateReader,
+        ConfigurableBundleToProductImageFacadeInterface $productImageFacade
     ) {
         $this->configurableBundleEntityManager = $configurableBundleEntityManager;
         $this->configurableBundleTemplateReader = $configurableBundleTemplateReader;
+        $this->productImageFacade = $productImageFacade;
     }
 
     /**
@@ -74,10 +83,23 @@ class ConfigurableBundleTemplateCleaner implements ConfigurableBundleTemplateCle
             ->requireIdConfigurableBundleTemplate()
                 ->getIdConfigurableBundleTemplate();
 
+        $this->deleteProductImageSets($configurableBundleTemplateTransfer);
         $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateSlotsByIdTemplate($idConfigurableBundleTemplate);
         $this->configurableBundleEntityManager->deleteConfigurableBundleTemplateById($idConfigurableBundleTemplate);
 
         return (new ConfigurableBundleTemplateResponseTransfer())
             ->setIsSuccessful(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
+     *
+     * @return void
+     */
+    protected function deleteProductImageSets(ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer): void
+    {
+        foreach ($configurableBundleTemplateTransfer->getProductImageSets() as $productImageSetTransfer) {
+            $this->productImageFacade->deleteProductImageSet($productImageSetTransfer);
+        }
     }
 }
