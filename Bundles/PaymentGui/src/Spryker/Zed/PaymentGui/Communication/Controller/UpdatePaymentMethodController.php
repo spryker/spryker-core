@@ -46,6 +46,7 @@ class UpdatePaymentMethodController extends AbstractController
         $paymentMethodResponseTransfer->requirePaymentMethod();
         $paymentMethodTabs = $this->getFactory()->createPaymentMethodTabs();
         $dataProvider = $this->getFactory()->createPaymentMethodFormDataProvider();
+        /** @var \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer */
         $paymentMethodTransfer = $paymentMethodResponseTransfer->getPaymentMethod();
         $paymentMethodForm = $this->getFactory()
             ->createPaymentMethodForm(

@@ -14,11 +14,11 @@ class ViewPaymentMethodFormDataProvider
     public const OPTION_STORE_RELATION_DISABLED = 'option_store_relation_disabled';
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentMethodTransfer|null $paymentMethodTransfer
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
      *
-     * @return \Generated\Shared\Transfer\PaymentMethodTransfer|null
+     * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
-    public function getData(?PaymentMethodTransfer $paymentMethodTransfer): ?PaymentMethodTransfer
+    public function getData(PaymentMethodTransfer $paymentMethodTransfer): PaymentMethodTransfer
     {
         return $paymentMethodTransfer;
     }

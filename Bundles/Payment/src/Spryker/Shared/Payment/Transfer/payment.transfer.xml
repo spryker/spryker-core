@@ -16,6 +16,7 @@
     <transfer name="Quote">
         <property name="payment" type="Payment" deprecated="Use payments property instead."/>
         <property name="payments" type="Payment[]" singular="payment"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="Order">
@@ -74,6 +75,7 @@
 
     <transfer name="Store">
         <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="PaymentMethodResponse">
