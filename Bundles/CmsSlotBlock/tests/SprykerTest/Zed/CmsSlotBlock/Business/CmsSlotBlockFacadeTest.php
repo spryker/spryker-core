@@ -239,7 +239,7 @@ class CmsSlotBlockFacadeTest extends Unit
         // Arrange
         $countCmsBlocks = SpyCmsBlockQuery::create()->count();
         $this->tester->createCmsBlocksInDb();
-        $filterTransfer = (new FilterTransfer())->setOffset($countCmsBlocks - 1);
+        $filterTransfer = (new FilterTransfer())->setOffset($countCmsBlocks);
 
         // Act
         $cmsBlockTransfers = $this->tester->createCmsSlotBlockFacade()->getCmsBlocksWithSlotRelations($filterTransfer);
