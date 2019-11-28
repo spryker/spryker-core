@@ -46,3 +46,4 @@ suites:
                 - \SprykerTest\Zed\ProductAttribute\Helper\ProductAttributeDataHelper
                 - \SprykerTest\Shared\ProductImage\Helper\ProductImageDataHelper
                 - \SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper
+                - \SprykerTest\Shared\Testify\Helper\BusinessHelper

@@ -12,11 +12,6 @@ use Generated\Shared\Transfer\StoreTransfer;
 interface CategoryPageSearchToStoreFacadeInterface
 {
     /**
-     * @return string[]
-     */
-    public function getLocales(): array;
-
-    /**
      * @param string $storeName
      *
      * @return string[]

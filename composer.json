@@ -513,7 +513,6 @@
     "spryker/scheduler-jenkins": "*",
     "spryker/search": "*",
     "spryker/search-elasticsearch": "*",
-    "spryker/search-elasticsearch-extension": "*",
     "spryker/search-extension": "*",
     "spryker/sequence-number": "*",
     "spryker/session": "*",

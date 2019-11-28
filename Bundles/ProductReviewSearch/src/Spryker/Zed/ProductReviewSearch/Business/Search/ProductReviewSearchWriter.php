@@ -7,22 +7,17 @@
 
 namespace Spryker\Zed\ProductReviewSearch\Business\Search;
 
-use Exception;
 use Generated\Shared\Search\ProductReviewIndexMap;
-use Generated\Shared\Transfer\DataMappingContextTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchTransfer;
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 use Orm\Zed\ProductReview\Persistence\SpyProductReview;
 use Orm\Zed\ProductReviewSearch\Persistence\SpyProductReviewSearch;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToSearchFacadeInterface;
 use Spryker\Zed\ProductReviewSearch\Dependency\Service\ProductReviewSearchToUtilEncodingInterface;
 use Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchQueryContainerInterface;
 
 class ProductReviewSearchWriter implements ProductReviewSearchWriterInterface
 {
-    protected const PRODUCT_REVIEW_RESOURCE_NAME = 'product_review';
-
     /**
      * @var \Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchQueryContainerInterface
      */
@@ -44,28 +39,20 @@ class ProductReviewSearchWriter implements ProductReviewSearchWriterInterface
     protected $isSendingToQueue = true;
 
     /**
-     * @var \Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToSearchFacadeInterface
-     */
-    protected $searchFacade;
-
-    /**
      * @param \Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductReviewSearch\Dependency\Service\ProductReviewSearchToUtilEncodingInterface $utilEncodingService
      * @param \Spryker\Shared\Kernel\Store $store
-     * @param \Spryker\Zed\ProductReviewSearch\Dependency\Facade\ProductReviewSearchToSearchFacadeInterface $searchFacade
      * @param bool $isSendingToQueue
      */
     public function __construct(
         ProductReviewSearchQueryContainerInterface $queryContainer,
         ProductReviewSearchToUtilEncodingInterface $utilEncodingService,
         Store $store,
-        ProductReviewSearchToSearchFacadeInterface $searchFacade,
         $isSendingToQueue
     ) {
         $this->queryContainer = $queryContainer;
         $this->utilEncodingService = $utilEncodingService;
         $this->store = $store;
-        $this->searchFacade = $searchFacade;
         $this->isSendingToQueue = $isSendingToQueue;
     }
 
@@ -161,33 +148,11 @@ class ProductReviewSearchWriter implements ProductReviewSearchWriterInterface
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\ProductReviewSearch\Business\Search\ProductReviewSearchWriter::mapRawDataToSearchData()` instead.
-     *
      * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview $productReviewEntity
      *
      * @return array
      */
     protected function mapToSearchData(SpyProductReview $productReviewEntity)
-    {
-        /**
-         * For BC reasons only. In case search is not configured to work with mapper plugins (legacy mode) an exception will be thrown.
-         * In this case data mapping will be done in the old way.
-         */
-        try {
-            return $this->mapRawDataToSearchData($productReviewEntity);
-        } catch (Exception $exception) {
-            return $this->mapTosSearchFallback($productReviewEntity);
-        }
-    }
-
-    /**
-     * @deprecated Use `\Spryker\Zed\ProductReviewSearch\Business\Search\ProductReviewSearchWriter::mapRawDataToSearchData()` instead.
-     *
-     * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview $productReviewEntity
-     *
-     * @return array
-     */
-    protected function mapTosSearchFallback(SpyProductReview $productReviewEntity): array
     {
         return [
             ProductReviewIndexMap::STORE => $this->store->getStoreName(),
@@ -225,18 +190,5 @@ class ProductReviewSearchWriter implements ProductReviewSearchWriterInterface
         $productReviewTransfer->fromArray($spyProductReview->toArray(), true);
 
         return $productReviewTransfer->modifiedToArray();
-    }
-
-    /**
-     * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview $productReviewEntity
-     *
-     * @return array
-     */
-    protected function mapRawDataToSearchData(SpyProductReview $productReviewEntity)
-    {
-        $dataMappingContextTransfer = new DataMappingContextTransfer();
-        $dataMappingContextTransfer->setResourceName(static::PRODUCT_REVIEW_RESOURCE_NAME);
-
-        return $this->searchFacade->mapRawDataToSearchData($productReviewEntity->toArray(), $dataMappingContextTransfer);
     }
 }

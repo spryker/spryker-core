@@ -16,8 +16,6 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface;
 
 /**
- * @deprecated Use `\Spryker\Zed\ProductListSearch\Communication\Plugin\ProductPageSearch\Elasticsearch\ProductConcreteProductListPageMapExpanderPlugin` instead.
- *
  * @method \Spryker\Zed\ProductListSearch\Business\ProductListSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductListSearch\ProductListSearchConfig getConfig()
  * @method \Spryker\Zed\ProductListSearch\Communication\ProductListSearchCommunicationFactory getFactory()

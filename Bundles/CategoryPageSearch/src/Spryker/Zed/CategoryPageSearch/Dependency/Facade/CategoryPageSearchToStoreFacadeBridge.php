@@ -25,14 +25,6 @@ class CategoryPageSearchToStoreFacadeBridge implements CategoryPageSearchToStore
     }
 
     /**
-     * @return string[]
-     */
-    public function getLocales(): array
-    {
-        return $this->storeFacade->getLocales();
-    }
-
-    /**
      * @param string $storeName
      *
      * @return string[]
@@ -49,7 +41,7 @@ class CategoryPageSearchToStoreFacadeBridge implements CategoryPageSearchToStore
      */
     public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer)
     {
-        return $this->storeFacade->getLocalesPerStore($storeTransfer);
+        return $this->storeFacade->getStoresWithSharedPersistence($storeTransfer);
     }
 
     /**

@@ -126,16 +126,6 @@ interface StoreFacadeInterface
 
     /**
      * Specification:
-     * - Gets all available locales.
-     *
-     * @api
-     *
-     * @return string[]
-     */
-    public function getLocales(): array;
-
-    /**
-     * Specification:
      * - Gets all locales for store.
      *
      * @api

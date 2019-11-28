@@ -66,11 +66,6 @@ interface StoreReaderInterface
     public function getStoreTransfersByStoreNames(array $storeNames): array;
 
     /**
-     * @return string[]
-     */
-    public function getLocales(): array;
-
-    /**
      * @param string $storeName
      *
      * @return string[]

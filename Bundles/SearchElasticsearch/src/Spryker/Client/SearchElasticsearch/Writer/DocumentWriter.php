@@ -18,7 +18,7 @@ class DocumentWriter implements DocumentWriterInterface
     /**
      * @var \Elastica\Client
      */
-    protected $client;
+    protected $elasticaClient;
 
     /**
      * @var \Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig
@@ -31,7 +31,7 @@ class DocumentWriter implements DocumentWriterInterface
      */
     public function __construct(Client $client, SearchElasticsearchConfig $config)
     {
-        $this->client = $client;
+        $this->elasticaClient = $client;
         $this->config = $config;
     }
 
@@ -43,7 +43,7 @@ class DocumentWriter implements DocumentWriterInterface
     public function writeDocument(SearchDocumentTransfer $searchDocumentTransfer): bool
     {
         $document = $this->mapSearchDocumentTransferToElasticaDocument($searchDocumentTransfer);
-        $index = $this->client->getIndex($document->getIndex());
+        $index = $this->elasticaClient->getIndex($document->getIndex());
         $index->addDocuments([$document]);
         $response = $index->refresh();
 
@@ -58,8 +58,8 @@ class DocumentWriter implements DocumentWriterInterface
     public function writeDocuments(array $searchDocumentTransfers): bool
     {
         $documents = $this->mapSearchDocumentTransfersToElasticaDocuments($searchDocumentTransfers);
-        $this->client->addDocuments($documents);
-        $response = $this->client->refreshAll();
+        $this->elasticaClient->addDocuments($documents);
+        $response = $this->elasticaClient->refreshAll();
 
         return $response->isOk();
     }
@@ -105,7 +105,7 @@ class DocumentWriter implements DocumentWriterInterface
     public function deleteDocument(SearchDocumentTransfer $searchDocumentTransfer): bool
     {
         $indexName = $this->getIndexNameFromSearchDocumentTransfer($searchDocumentTransfer);
-        $index = $this->client->getIndex($indexName);
+        $index = $this->elasticaClient->getIndex($indexName);
         $document = $this->getDocumentFromIndex($searchDocumentTransfer->getId(), $index);
 
         $index->deleteDocuments([$document]);
@@ -122,8 +122,8 @@ class DocumentWriter implements DocumentWriterInterface
     public function deleteDocuments(array $searchDocumentTransfers): bool
     {
         $documents = $this->mapSearchDocumentTransfersToElasticaDocuments($searchDocumentTransfers);
-        $this->client->deleteDocuments($documents);
-        $response = $this->client->refreshAll();
+        $this->elasticaClient->deleteDocuments($documents);
+        $response = $this->elasticaClient->refreshAll();
 
         return $response->isOk();
     }

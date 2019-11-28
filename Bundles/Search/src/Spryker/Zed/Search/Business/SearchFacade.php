@@ -124,7 +124,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use transformPageMapToDocumentByMapperName() instead.
+     * @deprecated Will be removed without replacement.
      *
      * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $pageMap
      * @param array $data
@@ -146,7 +146,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `::mapRawDataToSearchData()` instead.
+     * @deprecated Will be removed without replacement.
      *
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -161,23 +161,6 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
         return $this->getFactory()
             ->createPageDataMapper()
             ->transferDataByMapperName($data, $localeTransfer, $mapperName);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param array $data
-     * @param \Generated\Shared\Transfer\DataMappingContextTransfer $dataMappingContextTransfer
-     *
-     * @return array
-     */
-    public function mapRawDataToSearchData(array $data, DataMappingContextTransfer $dataMappingContextTransfer): array
-    {
-        return $this->getFactory()
-            ->createSearchDataMapper()
-            ->mapRawDataToSearchData($data, $dataMappingContextTransfer);
     }
 
     /**

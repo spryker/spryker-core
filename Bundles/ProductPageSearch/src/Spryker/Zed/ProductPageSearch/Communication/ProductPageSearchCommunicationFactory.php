@@ -79,6 +79,8 @@ class ProductPageSearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\ProductPageSearch\Business\ProductPageSearchBusinessFactory::getProductAbstractPageMapExpanderPlugins()` instead.
+     *
      * @return \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterface[]
      */
     public function getProductPageMapExpanderPlugins()
@@ -97,8 +99,6 @@ class ProductPageSearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory::getElasticsearchProductConcretePageMapExpanderPlugins()` instead.
-     *
      * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface[]
      */
     public function getConcreteProductPageMapExpanderPlugins(): array
@@ -152,13 +152,5 @@ class ProductPageSearchCommunicationFactory extends AbstractCommunicationFactory
     public function getPriceFacade(): ProductPageSearchToPriceFacadeInterface
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::FACADE_PRICE);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\Elasticsearch\ProductConcretePageMapExpanderPluginInterface[]
-     */
-    public function getElasticsearchProductConcretePageMapExpanderPlugins(): array
-    {
-        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_ELASTICSEARCH_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER);
     }
 }

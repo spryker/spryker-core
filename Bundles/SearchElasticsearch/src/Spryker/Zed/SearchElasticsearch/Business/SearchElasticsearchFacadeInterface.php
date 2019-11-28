@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SearchElasticsearch\Business;
 
-use Generated\Shared\Transfer\DataMappingContextTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Psr\Log\LoggerInterface;
 
@@ -201,43 +200,4 @@ interface SearchElasticsearchFacadeInterface
      * @return bool
      */
     public function restoreSnapshot(string $repositoryName, string $snapshotName, array $options = []): bool;
-
-    /**
-     * Specification:
-     * - Maps raw resource data to Elasticsearch darta.
-     *
-     * @api
-     *
-     * @param array $data
-     * @param \Generated\Shared\Transfer\DataMappingContextTransfer $dataMappingContextTransfer
-     *
-     * @return array
-     */
-    public function mapRawDataToSearchData(array $data, DataMappingContextTransfer $dataMappingContextTransfer): array;
-
-    /**
-     * Specification:
-     * - Maps page data (product page, cms page etc.) to search data.
-     *
-     * @api
-     *
-     * @param array $data
-     * @param \Generated\Shared\Transfer\DataMappingContextTransfer $dataMappingContextTransfer
-     *
-     * @return array
-     */
-    public function mapPageDataToSearchData(array $data, DataMappingContextTransfer $dataMappingContextTransfer): array;
-
-    /**
-     * Specification:
-     * - Maps product review data to search data.
-     *
-     * @api
-     *
-     * @param array $data
-     * @param \Generated\Shared\Transfer\DataMappingContextTransfer $dataMappingContextTransfer
-     *
-     * @return array
-     */
-    public function mapProductReviewDataToSearchData(array $data, DataMappingContextTransfer $dataMappingContextTransfer): array;
 }

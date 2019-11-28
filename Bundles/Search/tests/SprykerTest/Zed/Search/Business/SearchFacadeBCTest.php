@@ -9,16 +9,11 @@ namespace SprykerTest\Zed\Search\Business;
 
 use Codeception\Test\Unit;
 use Elastica\Snapshot;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Psr\Log\NullLogger;
 use Spryker\Client\Search\Provider\SearchClientProvider;
-use Spryker\Shared\Search\SearchConstants;
-use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Search\CategoryNodeDataPageMapBuilder;
-use Spryker\Zed\ProductPageSearch\Communication\Plugin\Search\ProductPageMapPlugin;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\SnapshotHandler;
 use Spryker\Zed\Search\Business\SearchBusinessFactory;
 use Spryker\Zed\Search\Business\SearchFacadeInterface;
-use Spryker\Zed\Search\SearchDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -50,9 +45,6 @@ class SearchFacadeBCTest extends Unit
     protected function _setUp(): void
     {
         parent::_setUp();
-
-        $this->setUpConfiguration();
-        $this->setUpDependencies();
     }
 
     /**
@@ -200,58 +192,6 @@ class SearchFacadeBCTest extends Unit
         $this->assertTrue($index->exists(), 'Index was expected to be installed but was not.');
 
         $this->tester->getFacade()->delete(static::INDEX_NAME);
-    }
-
-    /**
-     * @dataProvider canMapRawDataToSearchDataProvider
-     *
-     * @param array $inputData
-     * @param array $expected
-     * @param string $localeName
-     * @param string $mapperName
-     *
-     * @return void
-     */
-    public function testCanMapRawDataToSearchData(array $inputData, array $expected, string $localeName, string $mapperName): void
-    {
-        // Arrange
-        $localeTransfer = new LocaleTransfer();
-        $localeTransfer->setLocaleName($localeName);
-
-        // Act
-        $result = $this->tester->getFacade()->transformPageMapToDocumentByMapperName($inputData, $localeTransfer, $mapperName);
-
-        // Assert
-        $this->assertEquals($expected, $result);
-    }
-
-    /**
-     * @return array
-     */
-    public function canMapRawDataToSearchDataProvider(): array
-    {
-        return require codecept_data_dir('Fixtures/SearchDataMap/search_data_map_test_provider_data.php');
-    }
-
-    /**
-     * @return void
-     */
-    protected function setUpDependencies(): void
-    {
-        $this->tester->setDependency(SearchDependencyProvider::PLUGIN_SEARCH_PAGE_MAPS, [
-            new ProductPageMapPlugin(),
-            new CategoryNodeDataPageMapBuilder(),
-        ]);
-    }
-
-    /**
-     * @return void
-     */
-    protected function setUpConfiguration(): void
-    {
-        $this->tester->setConfig(SearchConstants::ELASTICA_PARAMETER__HOST, 'localhost');
-        $this->tester->setConfig(SearchConstants::ELASTICA_PARAMETER__PORT, '10005');
-        $this->tester->setConfig(SearchConstants::ELASTICA_PARAMETER__TRANSPORT, 'http');
     }
 
     /**

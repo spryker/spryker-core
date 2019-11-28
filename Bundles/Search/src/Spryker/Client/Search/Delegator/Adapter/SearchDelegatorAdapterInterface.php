@@ -19,7 +19,7 @@ interface SearchDelegatorAdapterInterface
      *
      * @return mixed
      */
-    public function read($key, $typeName = null, $indexName = null);
+    public function read(string $key, ?string $typeName = null, ?string $indexName = null);
 
     /**
      * @param array $documentDataSet
@@ -28,7 +28,7 @@ interface SearchDelegatorAdapterInterface
      *
      * @return bool
      */
-    public function write(array $documentDataSet, $typeName = null, $indexName = null): bool;
+    public function write(array $documentDataSet, ?string $typeName = null, ?string $indexName = null): bool;
 
     /**
      * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
@@ -44,7 +44,7 @@ interface SearchDelegatorAdapterInterface
      *
      * @return bool
      */
-    public function delete(array $documentDataSet, $typeName = null, $indexName = null): bool;
+    public function delete(array $documentDataSet, ?string $typeName = null, ?string $indexName = null): bool;
 
     /**
      * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers

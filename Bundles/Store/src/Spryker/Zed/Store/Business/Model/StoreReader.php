@@ -213,14 +213,6 @@ class StoreReader implements StoreReaderInterface
     }
 
     /**
-     * @return string[]
-     */
-    public function getLocales(): array
-    {
-        return $this->store->getLocales();
-    }
-
-    /**
      * @param string $storeName
      *
      * @return string[]

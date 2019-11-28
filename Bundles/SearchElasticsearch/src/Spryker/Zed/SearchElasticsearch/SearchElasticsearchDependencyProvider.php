@@ -23,8 +23,6 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    public const PLUGINS_PAGE_DATA_MAPPER = 'PLUGINS_PAGE_DATA_MAPPER';
-    public const PLUGINS_RESOURCE_DATA_MAPPER = 'PLUGINS_RESOURCE_DATA_MAPPER';
     public const SEARCH_INSTALLER_PLUGINS = 'SEARCH_INSTALLER_PLUGINS';
 
     /**
@@ -38,8 +36,6 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addUtilEncodingFacade($container);
         $container = $this->addStoreClient($container);
         $container = $this->addUtilSanitizeService($container);
-        $container = $this->addPageDataMapperPlugins($container);
-        $container = $this->addResourceDataMapperPlugins($container);
 
         return $container;
     }
@@ -100,49 +96,5 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
         });
 
         return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addPageDataMapperPlugins(Container $container): Container
-    {
-        $container->set(static::PLUGINS_PAGE_DATA_MAPPER, function (Container $container) {
-            return $this->getPageDataMapperPlugins();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @return \Spryker\Zed\SearchElasticsearchExtension\Dependency\Plugin\PageMapPluginInterface[]
-     */
-    protected function getPageDataMapperPlugins(): array
-    {
-        return [];
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addResourceDataMapperPlugins(Container $container): Container
-    {
-        $container->set(static::PLUGINS_RESOURCE_DATA_MAPPER, function (Container $container) {
-            return $this->getResourceDataMapperPlugins();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @return \Spryker\Zed\SearchElasticsearchExtension\Dependency\Plugin\ResourceDataMapperPluginInterface[]
-     */
-    protected function getResourceDataMapperPlugins(): array
-    {
-        return [];
     }
 }

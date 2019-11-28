@@ -98,7 +98,7 @@ interface SearchFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use transformPageMapToDocumentByMapperName() instead.
+     * @deprecated Will be removed without replacement.
      *
      * Specification:
      * - Transforms a raw data array into an Elasticsearch "page" mapping type document
@@ -119,7 +119,7 @@ interface SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `::mapRawDataToSearchData()` instead.
+     * @deprecated Will be removed without replacement.
      *
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -130,19 +130,6 @@ interface SearchFacadeInterface
      * @return array
      */
     public function transformPageMapToDocumentByMapperName(array $data, LocaleTransfer $localeTransfer, $mapperName);
-
-    /**
-     * Specification:
-     * - Maps raw data to search data within a given context.
-     *
-     * @api
-     *
-     * @param array $data
-     * @param \Generated\Shared\Transfer\DataMappingContextTransfer $dataMappingContextTransfer
-     *
-     * @return array
-     */
-    public function mapRawDataToSearchData(array $data, DataMappingContextTransfer $dataMappingContextTransfer): array;
 
     /**
      * Specification:
