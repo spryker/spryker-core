@@ -11,7 +11,7 @@ use Exception;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Spryker\Client\Search\Exception\SearchDelegatorException;
-use Spryker\Client\Search\SearchContext\SourceIdentifierMapperInterface;
+use Spryker\Client\Search\SearchContext\SearchContextExpanderInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
@@ -24,18 +24,18 @@ class SearchDelegator implements SearchDelegatorInterface
     protected $searchAdapterPlugins;
 
     /**
-     * @var \Spryker\Client\Search\SearchContext\SourceIdentifierMapperInterface
+     * @var \Spryker\Client\Search\SearchContext\SearchContextExpanderInterface
      */
-    protected $sourceIdentifierMapper;
+    protected $searchContextExpander;
 
     /**
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface[] $searchAdapterPlugins
-     * @param \Spryker\Client\Search\SearchContext\SourceIdentifierMapperInterface $sourceIdentifierMapper
+     * @param \Spryker\Client\Search\SearchContext\SearchContextExpanderInterface $searchContextExpander
      */
-    public function __construct(array $searchAdapterPlugins, SourceIdentifierMapperInterface $sourceIdentifierMapper)
+    public function __construct(array $searchAdapterPlugins, SearchContextExpanderInterface $searchContextExpander)
     {
         $this->searchAdapterPlugins = $this->getSearchAdapterPluginsIndexedByName($searchAdapterPlugins);
-        $this->sourceIdentifierMapper = $sourceIdentifierMapper;
+        $this->searchContextExpander = $searchContextExpander;
     }
 
     /**
@@ -202,7 +202,7 @@ class SearchDelegator implements SearchDelegatorInterface
      */
     protected function mapSearchContextTransferForQuery(QueryInterface $searchQuery): QueryInterface
     {
-        $mappedSearchContextTransfer = $this->mapSourceIdentifierToSourceName($searchQuery->getSearchContext());
+        $mappedSearchContextTransfer = $this->expandSearchContext($searchQuery->getSearchContext());
         $searchQuery->setSearchContext($mappedSearchContextTransfer);
 
         return $searchQuery;
@@ -227,7 +227,7 @@ class SearchDelegator implements SearchDelegatorInterface
      */
     protected function mapSearchContextTransferForSearchDocumentTransfer(SearchDocumentTransfer $searchDocumentTransfer): SearchDocumentTransfer
     {
-        $mappedSearchContextTransfer = $this->mapSourceIdentifierToSourceName($searchDocumentTransfer->getSearchContext());
+        $mappedSearchContextTransfer = $this->expandSearchContext($searchDocumentTransfer->getSearchContext());
         $searchDocumentTransfer->setSearchContext($mappedSearchContextTransfer);
 
         return $searchDocumentTransfer;
@@ -238,8 +238,8 @@ class SearchDelegator implements SearchDelegatorInterface
      *
      * @return \Generated\Shared\Transfer\SearchContextTransfer
      */
-    protected function mapSourceIdentifierToSourceName(SearchContextTransfer $searchContextTransfer): SearchContextTransfer
+    protected function expandSearchContext(SearchContextTransfer $searchContextTransfer): SearchContextTransfer
     {
-        return $this->sourceIdentifierMapper->mapSourceIdentifier($searchContextTransfer);
+        return $this->searchContextExpander->expandSearchContext($searchContextTransfer);
     }
 }
