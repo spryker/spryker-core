@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Oms\Business\OmsBusinessFactory;
 use Spryker\Zed\Oms\Business\OmsFacade;
 use Spryker\Zed\Oms\Business\OmsFacadeInterface;
@@ -139,17 +140,6 @@ class OmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testReservedItemsByNonExistentSku(): void
-    {
-        $omsFacade = $this->createOmsFacade();
-        $items = $omsFacade->getReservedOrderItemsForSku('non-existent-sku');
-
-        $this->assertSame(0, $items->count());
-    }
-
-    /**
-     * @return void
-     */
     public function testGetReservedStateNames(): void
     {
         $expected = [
@@ -174,15 +164,16 @@ class OmsFacadeTest extends Unit
     {
         $storeTransfer = (new StoreTransfer())->setIdStore(1)->setName('DE');
         $productSku = 'xxx';
-        $reservationQuantity = 10;
+        $reservationQuantity = new Decimal(10);
 
         // Action
         $this->createOmsFacade()->saveReservation($productSku, $storeTransfer, $reservationQuantity);
 
         // Assert
-        $this->assertEquals(
-            $reservationQuantity,
-            $this->createOmsFacade()->getOmsReservedProductQuantityForSku($productSku, $storeTransfer)
+        $this->assertTrue(
+            $this->createOmsFacade()
+                ->getOmsReservedProductQuantityForSku($productSku, $storeTransfer)
+                ->equals($reservationQuantity)
         );
     }
 

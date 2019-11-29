@@ -205,7 +205,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
      */
-    protected function getGraph()
+    public function getGraph()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::PLUGIN_GRAPH);
     }
@@ -244,7 +244,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getReservationHandlerPlugins(),
             $this->getStoreFacade(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getReservationAggregationStrategyPlugins()
         );
     }
 
@@ -275,7 +276,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface[]
      */
-    protected function getReservationHandlerPlugins()
+    public function getReservationHandlerPlugins()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_RESERVATION);
     }
@@ -283,7 +284,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface
      */
-    protected function getSalesFacade()
+    public function getSalesFacade()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::FACADE_SALES);
     }
@@ -291,7 +292,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface
      */
-    protected function getUtilTextService()
+    public function getUtilTextService()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::FACADE_UTIL_TEXT);
     }
@@ -299,7 +300,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Oms\Dependency\Service\OmsToUtilNetworkInterface
      */
-    protected function getUtilNetworkService()
+    public function getUtilNetworkService()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::SERVICE_UTIL_NETWORK);
     }
@@ -307,7 +308,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Oms\Dependency\Service\OmsToUtilSanitizeInterface
      */
-    protected function getUtilSanitizeService()
+    public function getUtilSanitizeService()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::SERVICE_UTIL_SANITIZE);
     }
@@ -340,7 +341,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Oms\Dependency\Facade\OmsToMailInterface
      */
-    protected function getMailFacade()
+    public function getMailFacade()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::FACADE_MAIL);
     }
@@ -348,7 +349,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface
      */
-    protected function getStoreFacade()
+    public function getStoreFacade()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::FACADE_STORE);
     }
@@ -356,7 +357,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Oms\Dependency\Plugin\ReservationExportPluginInterface[]
      */
-    protected function getReservationExportPlugins()
+    public function getReservationExportPlugins()
     {
         return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_RESERVATION_EXPORT);
     }
@@ -395,5 +396,13 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function getOmsManualEventGrouperPlugins(): array
     {
         return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_OMS_MANUAL_EVENT_GROUPER);
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[]
+     */
+    public function getReservationAggregationStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_RESERVATION_AGGREGATION);
     }
 }
