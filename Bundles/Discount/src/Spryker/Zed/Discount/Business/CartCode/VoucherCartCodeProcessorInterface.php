@@ -10,7 +10,7 @@ namespace Spryker\Zed\Discount\Business\CartCode;
 use Generated\Shared\Transfer\CartCodeRequestTransfer;
 use Generated\Shared\Transfer\CartCodeResponseTransfer;
 
-interface VoucherCartCodeInterface
+interface VoucherCartCodeProcessorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer

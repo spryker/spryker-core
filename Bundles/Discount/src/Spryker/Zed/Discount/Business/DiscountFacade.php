@@ -729,7 +729,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     public function addCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
         return $this->getFactory()
-            ->createVoucherCartCode()
+            ->createVoucherCartCodeProcessor()
             ->addCartCode($cartCodeRequestTransfer);
     }
 
@@ -745,7 +745,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     public function removeCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
         return $this->getFactory()
-            ->createVoucherCartCode()
+            ->createVoucherCartCodeProcessor()
             ->removeCartCode($cartCodeRequestTransfer);
     }
 
@@ -761,7 +761,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     public function getOperationResponseMessage(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
         return $this->getFactory()
-            ->createVoucherCartCode()
+            ->createVoucherCartCodeProcessor()
             ->getOperationResponseMessage($cartCodeRequestTransfer);
     }
 
@@ -777,7 +777,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     public function clearCartCodes(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
         return $this->getFactory()
-            ->createVoucherCartCode()
+            ->createVoucherCartCodeProcessor()
             ->clearCartCodes($cartCodeRequestTransfer);
     }
 }

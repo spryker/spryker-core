@@ -14,6 +14,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
  * @deprecated Will be removed in the next major version. Please use \Spryker\Zed\Discount\Communication\Plugin\CartCode\VoucherCartCodePlugin.
+ *
  * @method \Spryker\Client\Discount\DiscountFactory getFactory()
  */
 class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInterface

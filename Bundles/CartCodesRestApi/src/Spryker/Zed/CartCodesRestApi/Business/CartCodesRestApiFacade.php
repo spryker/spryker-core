@@ -21,7 +21,7 @@ class CartCodesRestApiFacade extends AbstractFacade implements CartCodesRestApiF
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
      */

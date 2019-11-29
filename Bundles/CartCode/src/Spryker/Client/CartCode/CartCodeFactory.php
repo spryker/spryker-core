@@ -25,6 +25,8 @@ use Spryker\Client\Kernel\AbstractFactory;
 class CartCodeFactory extends AbstractFactory
 {
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @return \Spryker\Client\CartCode\Operation\CodeAdderInterface
      */
     public function createCodeAdder(): CodeAdderInterface
@@ -37,6 +39,8 @@ class CartCodeFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @return \Spryker\Client\CartCode\Operation\CodeRemoverInterface
      */
     public function createCodeRemover(): CodeRemoverInterface
@@ -49,6 +53,8 @@ class CartCodeFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @return \Spryker\Client\CartCode\Operation\CodeClearerInterface
      */
     public function createCodeClearer(): CodeClearerInterface
@@ -61,6 +67,8 @@ class CartCodeFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @return \Spryker\Client\CartCode\Operation\QuoteOperationCheckerInterface
      */
     public function createQuoteOperationChecker(): QuoteOperationCheckerInterface
