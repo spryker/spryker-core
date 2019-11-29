@@ -31,7 +31,8 @@ class PriceProductStorageFactory extends AbstractFactory
             $this->createPriceAbstractStorageReader(),
             $this->createPriceConcreteStorageReader(),
             $this->getPriceProductClient(),
-            $this->getPriceProductService()
+            $this->getPriceProductService(),
+            $this->getPriceProductFilterExpanderPlugins()
         );
     }
 
@@ -158,5 +159,13 @@ class PriceProductStorageFactory extends AbstractFactory
     public function getPriceProductPricesExtractorPlugins(): array
     {
         return $this->getProvidedDependency(PriceProductStorageDependencyProvider::PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR);
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductFilterExpanderPluginInterface[]
+     */
+    public function getPriceProductFilterExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(PriceProductStorageDependencyProvider::PLUGIN_PRICE_PRODUCT_FILTER_EXPANDER);
     }
 }

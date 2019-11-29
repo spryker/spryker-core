@@ -38,7 +38,7 @@ class ResourcePreProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testProcess()
+    public function testProcess(): void
     {
         $processor = new ResourcePreProcessor();
 

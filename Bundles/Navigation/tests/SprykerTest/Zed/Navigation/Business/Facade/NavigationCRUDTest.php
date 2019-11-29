@@ -50,7 +50,7 @@ class NavigationCRUDTest extends Unit
     /**
      * @return void
      */
-    public function testCreateNewNavigationPersistsToDatabase()
+    public function testCreateNewNavigationPersistsToDatabase(): void
     {
         $navigationTransfer = $this->createNavigationTransfer('test-navigation-1', 'Test navigation 1', true);
 
@@ -62,7 +62,7 @@ class NavigationCRUDTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateExistingNavigationPersistsToDatabase()
+    public function testUpdateExistingNavigationPersistsToDatabase(): void
     {
         $navigationEntity = $this->createNavigationEntity('test-navigation-1', 'Test navigation 1', true);
 
@@ -80,7 +80,7 @@ class NavigationCRUDTest extends Unit
     /**
      * @return void
      */
-    public function testReadExistingNavigationReadsFromDatabase()
+    public function testReadExistingNavigationReadsFromDatabase(): void
     {
         $navigationEntity = $this->createNavigationEntity('test-navigation-1', 'Test navigation 1', true);
 
@@ -97,7 +97,7 @@ class NavigationCRUDTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteExistingNavigationDeletesFromDatabase()
+    public function testDeleteExistingNavigationDeletesFromDatabase(): void
     {
         $navigationEntity = $this->createNavigationEntity('test-navigation-1', 'Test navigation 1', true);
 
@@ -120,7 +120,7 @@ class NavigationCRUDTest extends Unit
      *
      * @return \Generated\Shared\Transfer\NavigationTransfer
      */
-    protected function createNavigationTransfer($key, $name, $isActive)
+    protected function createNavigationTransfer(string $key, string $name, bool $isActive): NavigationTransfer
     {
         $navigationTransfer = new NavigationTransfer();
         $navigationTransfer
@@ -138,7 +138,7 @@ class NavigationCRUDTest extends Unit
      *
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigation
      */
-    protected function createNavigationEntity($key, $name, $isActive)
+    protected function createNavigationEntity(string $key, string $name, bool $isActive): SpyNavigation
     {
         $navigationEntity = new SpyNavigation();
         $navigationEntity

@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\CmsBlockCategoryConnector\Business;
 
 use Codeception\Test\Unit;
+use Spryker\Zed\CmsBlockCategoryConnector\Business\CmsBlockCategoryConnectorFacadeInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig;
 
 /**
@@ -31,7 +32,7 @@ class CmsBlockCategoryConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateCmsBlockCategoryRelations()
+    public function testUpdateCmsBlockCategoryRelations(): void
     {
         $cmsBlockTransfer = $this->tester->haveCmsBlock();
 
@@ -60,7 +61,7 @@ class CmsBlockCategoryConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testHydrateCmsBlockCategoryRelations()
+    public function testHydrateCmsBlockCategoryRelations(): void
     {
         $cmsBlockTransfer = $this->tester->haveCmsBlock();
 
@@ -90,7 +91,7 @@ class CmsBlockCategoryConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testSyncCmsBlockCategoryPosition()
+    public function testSyncCmsBlockCategoryPosition(): void
     {
         $this->createCmsBlockCategoryConnectorFacade()
             ->syncCmsBlockCategoryPosition();
@@ -104,7 +105,7 @@ class CmsBlockCategoryConnectorFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\CmsBlockCategoryConnector\Business\CmsBlockCategoryConnectorFacadeInterface
      */
-    protected function createCmsBlockCategoryConnectorFacade()
+    protected function createCmsBlockCategoryConnectorFacade(): CmsBlockCategoryConnectorFacadeInterface
     {
         return $this->tester->getLocator()->cmsBlockCategoryConnector()->facade();
     }
@@ -112,7 +113,7 @@ class CmsBlockCategoryConnectorFacadeTest extends Unit
     /**
      * @return string
      */
-    protected function getDefaultPositionName()
+    protected function getDefaultPositionName(): string
     {
         return (new CmsBlockCategoryConnectorConfig())->getCmsBlockCategoryPositionDefault();
     }

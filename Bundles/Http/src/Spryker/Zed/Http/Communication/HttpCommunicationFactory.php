@@ -12,6 +12,8 @@ use Spryker\Zed\Http\HttpDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Bridge\Twig\Extension\HttpKernelExtension;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\Extension\HttpFoundation\Type\FormTypeHttpFoundationExtension;
+use Symfony\Component\Form\FormTypeExtensionInterface;
 use Symfony\Component\HttpKernel\EventListener\FragmentListener;
 use Symfony\Component\HttpKernel\UriSigner;
 use Twig\Extension\AbstractExtension;
@@ -59,5 +61,13 @@ class HttpCommunicationFactory extends AbstractCommunicationFactory
     public function createUriSigner(): UriSigner
     {
         return new UriSigner($this->getConfig()->getUriSignerSecret());
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormTypeExtensionInterface
+     */
+    public function createFormTypeHttpFoundationExtension(): FormTypeExtensionInterface
+    {
+        return new FormTypeHttpFoundationExtension();
     }
 }

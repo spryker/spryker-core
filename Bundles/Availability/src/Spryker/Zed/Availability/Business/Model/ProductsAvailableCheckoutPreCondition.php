@@ -7,11 +7,12 @@
 
 namespace Spryker\Zed\Availability\Business\Model;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\AvailabilityConfig;
 
 class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckoutPreConditionInterface
@@ -51,7 +52,8 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
         $isPassed = true;
 
         $storeTransfer = $quoteTransfer->getStore();
-        $groupedItemQuantities = $this->groupItemsBySku($quoteTransfer->getItems());
+        $filteredItems = $this->filterItemsWithAmount($quoteTransfer->getItems()->getArrayCopy());
+        $groupedItemQuantities = $this->groupItemsBySku($filteredItems);
 
         foreach ($groupedItemQuantities as $sku => $quantity) {
             if ($this->isProductSellable($sku, $quantity, $storeTransfer) === true) {
@@ -66,35 +68,48 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    protected function isProductSellable($sku, $quantity, StoreTransfer $storeTransfer)
+    protected function isProductSellable(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): bool
     {
         return $this->sellable->isProductSellableForStore($sku, $quantity, $storeTransfer);
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return array
+     * @return \Spryker\DecimalObject\Decimal[] [string, \Spryker\DecimalObject\Decimal]
      */
-    private function groupItemsBySku(ArrayObject $items)
+    protected function groupItemsBySku(array $itemTransfers): array
     {
+        /** @var \Spryker\DecimalObject\Decimal[] $result */
         $result = [];
-
-        foreach ($items as $itemTransfer) {
+        foreach ($itemTransfers as $itemTransfer) {
             $sku = $itemTransfer->getSku();
 
             if (!isset($result[$sku])) {
-                $result[$sku] = 0;
+                $result[$sku] = new Decimal(0);
             }
-            $result[$sku] += $itemTransfer->getQuantity();
+
+            $result[$sku] = $result[$sku]->add($itemTransfer->getQuantity());
         }
 
         return $result;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function filterItemsWithAmount(array $itemTransfers): array
+    {
+        return array_filter($itemTransfers, function (ItemTransfer $itemTransfer) {
+            return $itemTransfer->getAmount() === null;
+        });
     }
 
     /**
@@ -111,7 +126,7 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
      *
      * @return void
      */
-    protected function addAvailabilityErrorToCheckoutResponse(CheckoutResponseTransfer $checkoutResponse, string $sku)
+    protected function addAvailabilityErrorToCheckoutResponse(CheckoutResponseTransfer $checkoutResponse, string $sku): void
     {
         $checkoutErrorTransfer = $this->createCheckoutErrorTransfer();
         $checkoutErrorTransfer

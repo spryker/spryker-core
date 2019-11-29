@@ -30,7 +30,7 @@ class CacheWarmerTest extends Unit
     /**
      * @return void
      */
-    public function testCanBeInstantiated()
+    public function testCanBeInstantiated(): void
     {
         $cacheWriterMock = $this->getCacheWriterMock();
         $cacheWarmer = new CacheWarmer($cacheWriterMock, $this->getTemplatePathMapBuilderMock());
@@ -41,7 +41,7 @@ class CacheWarmerTest extends Unit
     /**
      * @return void
      */
-    public function testWarmUpCallsTemplatePathMapBuilderAndCacheWriter()
+    public function testWarmUpCallsTemplatePathMapBuilderAndCacheWriter(): void
     {
         $cacheWriterMock = $this->getCacheWriterMock();
         $cacheWriterMock->expects($this->once())->method('write');

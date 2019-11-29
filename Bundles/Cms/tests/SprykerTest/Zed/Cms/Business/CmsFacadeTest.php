@@ -108,7 +108,7 @@ class CmsFacadeTest extends Unit
      *
      * @return void
      */
-    public function testCreateTemplateInsertsAndReturnsSomething()
+    public function testCreateTemplateInsertsAndReturnsSomething(): void
     {
         $templateQuery = $this->cmsQueryContainer->queryTemplates();
 
@@ -126,7 +126,7 @@ class CmsFacadeTest extends Unit
      *
      * @return void
      */
-    public function testSavePageInsertsAndReturnsSomethingOnCreate()
+    public function testSavePageInsertsAndReturnsSomethingOnCreate(): void
     {
         $pageQuery = $this->cmsQueryContainer->queryPages();
         $this->localeFacade->createLocale('ABCDE');
@@ -151,7 +151,7 @@ class CmsFacadeTest extends Unit
      *
      * @return void
      */
-    public function testSavePageWithNewTemplateMustSaveFkTemplateInPage()
+    public function testSavePageWithNewTemplateMustSaveFkTemplateInPage(): void
     {
         $template1 = $this->cmsFacade->createTemplate('AnotherUsedTemplateName', 'AnotherUsedTemplatePath');
         $template2 = $this->cmsFacade->createTemplate('YetAnotherUsedTemplateName', 'YetAnotherUsedTemplatePath');
@@ -181,7 +181,7 @@ class CmsFacadeTest extends Unit
      *
      * @return void
      */
-    public function testSaveTemplateInsertsAndReturnsSomethingOnCreate()
+    public function testSaveTemplateInsertsAndReturnsSomethingOnCreate(): void
     {
         $template = new CmsTemplateTransfer();
         $template->setTemplateName('WhatARandomName');
@@ -203,7 +203,7 @@ class CmsFacadeTest extends Unit
      *
      * @return void
      */
-    public function testSaveTemplateUpdatesSomething()
+    public function testSaveTemplateUpdatesSomething(): void
     {
         $template = new CmsTemplateTransfer();
         $template->setTemplateName('WhatARandomName');
@@ -227,7 +227,7 @@ class CmsFacadeTest extends Unit
      *
      * @return void
      */
-    public function testSavePageKeyMappingInsertsAndReturnsSomethingOnCreate()
+    public function testSavePageKeyMappingInsertsAndReturnsSomethingOnCreate(): void
     {
         $pageKeyMappingQuery = $this->cmsQueryContainer->queryGlossaryKeyMappings();
 
@@ -259,7 +259,7 @@ class CmsFacadeTest extends Unit
      *
      * @return void
      */
-    public function testSavePageKeyMappingUpdatesSomething()
+    public function testSavePageKeyMappingUpdatesSomething(): void
     {
         $glossaryKeyId1 = $this->glossaryFacade->createKey('AHopefullyNotYetExistingKey2');
         $glossaryKeyId2 = $this->glossaryFacade->createKey('AHopefullyNotYetExistingKey3');
@@ -295,7 +295,7 @@ class CmsFacadeTest extends Unit
      *
      * @return void
      */
-    public function testAddPlaceholderTextInsertsAndReturnsSomething()
+    public function testAddPlaceholderTextInsertsAndReturnsSomething(): void
     {
         $keyQuery = $this->glossaryQueryContainer->queryKeys();
         $pageMappingQuery = $this->cmsQueryContainer->queryGlossaryKeyMappings();
@@ -327,7 +327,7 @@ class CmsFacadeTest extends Unit
      *
      * @return void
      */
-    public function testTranslatePlaceholder()
+    public function testTranslatePlaceholder(): void
     {
         $template = $this->cmsFacade->createTemplate('APlaceholderTemplate2', 'APlaceholderTemplatePath2');
 
@@ -345,7 +345,7 @@ class CmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreatePageAndTouchForCustomLocale()
+    public function testCreatePageAndTouchForCustomLocale(): void
     {
         $localeTransfer = $this->localeFacade->createLocale('ABCDE');
         $template = $this->cmsFacade->createTemplate('APlaceholderTemplate2', 'APlaceholderTemplatePath2');
@@ -369,7 +369,7 @@ class CmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreatePageAndTouchForCurrentLocale()
+    public function testCreatePageAndTouchForCurrentLocale(): void
     {
         $template = $this->cmsFacade->createTemplate('APlaceholderTemplate2', 'APlaceholderTemplatePath2');
 
@@ -392,7 +392,7 @@ class CmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateFlattenedLocaleCmsPageDataAppliesPreConfiguredCmsPageDataExpanderPlugins()
+    public function testCalculateFlattenedLocaleCmsPageDataAppliesPreConfiguredCmsPageDataExpanderPlugins(): void
     {
         // Assign
         $input = new LocaleCmsPageDataTransfer();
@@ -409,7 +409,7 @@ class CmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateFlattenedLocaleCmsPageDataRetrievesFlattenedArray()
+    public function testCalculateFlattenedLocaleCmsPageDataRetrievesFlattenedArray(): void
     {
         // Assign
         $expectedResult = [
@@ -438,7 +438,7 @@ class CmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExtractCmsVersionDataTransferReturnsCmsVersionDataTransfer()
+    public function testExtractCmsVersionDataTransferReturnsCmsVersionDataTransfer(): void
     {
         // Assign
         $input = '{}';
@@ -454,7 +454,7 @@ class CmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExtractCmsVersionDataTransferPopulatesCmsVersionDataTransfer()
+    public function testExtractCmsVersionDataTransferPopulatesCmsVersionDataTransfer(): void
     {
         // Assign
         $expectedResult = "dummyTestValue";
@@ -470,7 +470,7 @@ class CmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExtractLocaleCmsPageDataTransferReturnsLocaleCmsPageDataTransfer()
+    public function testExtractLocaleCmsPageDataTransferReturnsLocaleCmsPageDataTransfer(): void
     {
         // Assign
         $input = (new CmsVersionDataTransfer())
@@ -489,7 +489,7 @@ class CmsFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function buildGlossaryFacade()
+    protected function buildGlossaryFacade(): void
     {
         $this->glossaryFacade = new GlossaryFacade();
         $container = new Container();
@@ -507,7 +507,7 @@ class CmsFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
-    protected function getUrlTransfer()
+    protected function getUrlTransfer(): UrlTransfer
     {
         $urlTransfer = new UrlTransfer();
         $localeEntity = (new LocaleQueryContainer())->queryLocales()->findOne();

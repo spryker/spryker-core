@@ -61,6 +61,7 @@ class AutoloadUpdater implements UpdaterInterface
      * @var array
      */
     protected $applications = [
+        'Service',
         'Client',
         'Shared',
         'Yves',

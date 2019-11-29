@@ -28,7 +28,7 @@ class RepeaterTest extends Test
     /**
      * @return void
      */
-    public function testSetRepeatedDataWritesDataToFiles()
+    public function testSetRepeatedDataWritesDataToFiles(): void
     {
         $requestMock = $this->tester->getTransferRequest();
         $httpRequest = $this->tester->getHttpRequest();
@@ -43,7 +43,7 @@ class RepeaterTest extends Test
     /**
      * @return void
      */
-    public function testGetRepeatedDataReturnsArray()
+    public function testGetRepeatedDataReturnsArray(): void
     {
         $repeater = new Repeater();
 
