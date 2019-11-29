@@ -40,34 +40,6 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
 
     /**
      * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string|null $indexName
-     *
-     * @return int
-     */
-    public function getTotalCount(?string $indexName = null): int
-    {
-        return $this->getClient()->getTotalCount($indexName);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string|null $indexName
-     *
-     * @return array
-     */
-    public function getMetaData(?string $indexName = null): array
-    {
-        return $this->getClient()->getMetaData($indexName);
-    }
-
-    /**
-     * {@inheritDoc}
      * - Reads a single document from Elasticsearch.
      *
      * @api

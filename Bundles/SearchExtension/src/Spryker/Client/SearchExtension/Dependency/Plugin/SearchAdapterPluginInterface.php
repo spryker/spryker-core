@@ -30,32 +30,6 @@ interface SearchAdapterPluginInterface
 
     /**
      * Specification:
-     * - Returns the number of documents in index if an indexName is passed.
-     * - Returns the number of documents in all indices if indexName is not passed.
-     *
-     * @api
-     *
-     * @param string|null $indexName
-     *
-     * @return int
-     */
-    public function getTotalCount(?string $indexName = null): int;
-
-    /**
-     * Specification:
-     * - Returns the meta data of an index if indexName is passed.
-     * - Returns the meta data of all indices if indexName is not passed.
-     *
-     * @api
-     *
-     * @param string|null $indexName
-     *
-     * @return array
-     */
-    public function getMetaData(?string $indexName = null): array;
-
-    /**
-     * Specification:
      * - Retrieves a document, stored for search, by document key.
      *
      * @api

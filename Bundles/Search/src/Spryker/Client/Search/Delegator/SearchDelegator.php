@@ -209,7 +209,7 @@ class SearchDelegator implements SearchDelegatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer|array $searchDocumentTransfers
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
      *
      * @return \Generated\Shared\Transfer\SearchDocumentTransfer[]
      */

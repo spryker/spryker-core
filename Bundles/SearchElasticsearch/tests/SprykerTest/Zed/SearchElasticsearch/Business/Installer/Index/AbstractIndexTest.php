@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\SearchElasticsearch\tests\SprykerTest\Zed\SearchElasticsearch\Business\Installer\Index;
@@ -35,7 +35,7 @@ abstract class AbstractIndexTest extends Unit
      *
      * @return \Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilderInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createMappingBuilderMock(array $mappings = []): MappingBuilderInterface
+    protected function createMappingBuilderMock(array $mappings = [])
     {
         $mappingMock = $this->createMock(Mapping::class);
         $mappingMock->method('toArray')->willReturn($mappings);
@@ -51,7 +51,7 @@ abstract class AbstractIndexTest extends Unit
      *
      * @return \Elastica\Client|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createClientMock(?Index $indexMock = null): Client
+    protected function createClientMock(?Index $indexMock = null)
     {
         $clientMock = $this->createMock(Client::class);
         $clientMock->method('getIndex')->willReturn(
@@ -64,7 +64,7 @@ abstract class AbstractIndexTest extends Unit
     /**
      * @return \Elastica\Index|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createIndexMock(): Index
+    protected function createIndexMock()
     {
         return $this->createMock(Index::class);
     }

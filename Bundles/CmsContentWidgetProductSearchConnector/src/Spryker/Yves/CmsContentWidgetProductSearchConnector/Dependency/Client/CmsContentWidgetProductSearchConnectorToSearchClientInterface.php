@@ -10,6 +10,8 @@ namespace Spryker\Yves\CmsContentWidgetProductSearchConnector\Dependency\Client;
 interface CmsContentWidgetProductSearchConnectorToSearchClientInterface
 {
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $searchString
      * @param int|null $limit
      * @param int|null $offset

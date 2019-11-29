@@ -37,36 +37,6 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
      *
      * @api
      *
-     * @param string|null $indexName
-     *
-     * @return int
-     */
-    public function getTotalCount(?string $indexName = null): int
-    {
-        // TODO Provide implementation
-        return 0;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string|null $indexName
-     *
-     * @return array
-     */
-    public function getMetaData(?string $indexName = null): array
-    {
-        // TODO Provide implementation
-        return [];
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
      *
      * @return \Generated\Shared\Transfer\SearchDocumentTransfer

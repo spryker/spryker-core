@@ -23,6 +23,8 @@ class CmsContentWidgetProductSearchConnectorToSearchClientBridge implements CmsC
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $searchString
      * @param int|null $limit
      * @param int|null $offset

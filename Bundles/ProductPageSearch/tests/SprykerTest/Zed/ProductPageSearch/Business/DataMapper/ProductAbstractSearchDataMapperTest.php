@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\ProductPageSearch\tests\SprykerTest\Zed\ProductPageSearch\Business\DataMapper;
@@ -64,7 +64,7 @@ class ProductAbstractSearchDataMapperTest extends Unit
      */
     public function canMapRawDataToSearchDataProvider(): array
     {
-        return require codecept_data_dir('Fixtures/SearchDataMap/product_abstract_page_data_map_data_provider.php');
+        return codecept_data_dir('Fixtures/SearchDataMap/product_abstract_page_data_map_data_provider.php');
     }
 
     /**

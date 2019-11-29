@@ -123,6 +123,8 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $searchString
      * @param int|null $limit
      * @param int|null $offset

@@ -72,10 +72,12 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $key
      * @param string $type
      *
-     * @return \Elastica\Document
+     * @return \Elastica\Document|mixed (@deprecated Only mixed will be supported with the next major)
      */
     public function getDocument($key, $type);
 
