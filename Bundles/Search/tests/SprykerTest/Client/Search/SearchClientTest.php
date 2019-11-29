@@ -437,8 +437,8 @@ class SearchClientTest extends Unit
      */
     protected function getSearchContextExpanderMock(): SearchContextExpanderInterface
     {
-        $sourceIdentifierMapperMock = $this->createMock(SearchContextExpanderInterface::class);
-        $sourceIdentifierMapperMock->method('expandSearchContext')
+        $searchContextExpanderMock = $this->createMock(SearchContextExpanderInterface::class);
+        $searchContextExpanderMock->method('expandSearchContext')
             ->willReturnCallback(function (SearchContextTransfer $searchContextTransfer) {
                 $searchContextTransfer->setElasticsearchContext(
                     (new ElasticsearchSearchContextTransfer())->setIndexName($searchContextTransfer->getSourceIdentifier())
@@ -447,7 +447,7 @@ class SearchClientTest extends Unit
                 return $searchContextTransfer;
             });
 
-        return $sourceIdentifierMapperMock;
+        return $searchContextExpanderMock;
     }
 
     /**

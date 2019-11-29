@@ -24,7 +24,7 @@ class SearchDependencyProvider extends AbstractDependencyProvider
     public const SEARCH_CONFIG_EXPANDER_PLUGINS = 'search config expander plugins';
     public const STORE = 'store';
     public const PLUGIN_MONEY = 'money plugin';
-    public const PLUGINS_SOURCE_IDENTIFIER_MAPPER = 'PLUGINS_SOURCE_IDENTIFIER_MAPPER';
+    public const PLUGINS_SEARCH_CONTEXT_EXPANDER = 'PLUGINS_SOURCE_IDENTIFIER_MAPPER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -47,7 +47,7 @@ class SearchDependencyProvider extends AbstractDependencyProvider
         });
 
         $container = $this->addMoneyPlugin($container);
-        $container = $this->addSourceIdentifierMapperPlugins($container);
+        $container = $this->addSearchContextExpanderPlugins($container);
 
         return $container;
     }
@@ -132,10 +132,10 @@ class SearchDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addSourceIdentifierMapperPlugins(Container $container): Container
+    protected function addSearchContextExpanderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_SOURCE_IDENTIFIER_MAPPER, function () {
-            return $this->getSourceIdentifierMapperPlugins();
+        $container->set(static::PLUGINS_SEARCH_CONTEXT_EXPANDER, function () {
+            return $this->getSearchContextExpanderPlugins();
         });
 
         return $container;
@@ -144,7 +144,7 @@ class SearchDependencyProvider extends AbstractDependencyProvider
     /**
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextExpanderPluginInterface[]
      */
-    protected function getSourceIdentifierMapperPlugins(): array
+    protected function getSearchContextExpanderPlugins(): array
     {
         return [];
     }

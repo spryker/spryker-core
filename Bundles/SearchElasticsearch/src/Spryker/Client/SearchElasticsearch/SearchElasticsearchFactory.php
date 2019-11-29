@@ -40,8 +40,8 @@ use Spryker\Client\SearchElasticsearch\Reader\DocumentReader;
 use Spryker\Client\SearchElasticsearch\Reader\DocumentReaderInterface;
 use Spryker\Client\SearchElasticsearch\Search\Search;
 use Spryker\Client\SearchElasticsearch\Search\SearchInterface;
-use Spryker\Client\SearchElasticsearch\SourceIdentifierMapper\SearchContextExpander;
-use Spryker\Client\SearchElasticsearch\SourceIdentifierMapper\SearchContextExpanderInterface;
+use Spryker\Client\SearchElasticsearch\SearchContextExpander\SearchContextExpander;
+use Spryker\Client\SearchElasticsearch\SearchContextExpander\SearchContextExpanderInterface;
 use Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilder;
 use Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilderInterface;
 use Spryker\Client\SearchElasticsearch\Writer\DocumentWriter;
@@ -226,7 +226,7 @@ class SearchElasticsearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\SearchElasticsearch\SourceIdentifierMapper\SearchContextExpanderInterface
+     * @return \Spryker\Client\SearchElasticsearch\SearchContextExpander\SearchContextExpanderInterface
      */
     public function createSearchContextExpander(): SearchContextExpanderInterface
     {
