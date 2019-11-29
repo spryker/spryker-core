@@ -10,23 +10,23 @@ namespace Spryker\Yves\CartVariant\Mapper;
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\StorageAvailabilityTransfer;
-use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityClientBridgeInterface;
+use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityStorageClientBridgeInterface;
 
 class CartItemsAvailabilityMapper implements CartItemsMapperInterface
 {
     public const CONCRETE_PRODUCT_AVAILABLE_ITEMS = 'concrete_product_available_items';
 
     /**
-     * @var \Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityClientBridgeInterface
+     * @var \Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityStorageClientBridgeInterface
      */
-    protected $productAvailabilityClient;
+    protected $availabilityStorageClient;
 
     /**
-     * @param \Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityClientBridgeInterface $productAvailabilityClient
+     * @param \Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityStorageClientBridgeInterface $availabilityStorageClient
      */
-    public function __construct(CartVariantToAvailabilityClientBridgeInterface $productAvailabilityClient)
+    public function __construct(CartVariantToAvailabilityStorageClientBridgeInterface $availabilityStorageClient)
     {
-        $this->productAvailabilityClient = $productAvailabilityClient;
+        $this->availabilityStorageClient = $availabilityStorageClient;
     }
 
     /**
@@ -51,10 +51,11 @@ class CartItemsAvailabilityMapper implements CartItemsMapperInterface
      */
     protected function getAvailability(ItemTransfer $item)
     {
+        $availability = $this->availabilityStorageClient
+            ->getProductAvailabilityByIdProductAbstract($item->getIdProductAbstract())
+            ->toArray();
+
         $availabilityBySku = [];
-
-        $availability = $this->productAvailabilityClient->getProductAvailabilityByIdProductAbstract($item->getIdProductAbstract())->toArray();
-
         foreach ($availability[static::CONCRETE_PRODUCT_AVAILABLE_ITEMS] as $sku => $itemAvailable) {
             $availabilityBySku[$sku][StorageAvailabilityTransfer::CONCRETE_PRODUCT_AVAILABLE_ITEMS] = $itemAvailable;
         }

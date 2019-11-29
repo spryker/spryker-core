@@ -7,39 +7,26 @@
 
 namespace Spryker\Zed\AvailabilityCartConnector\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 
 interface AvailabilityCartConnectorToAvailabilityInterface
 {
     /**
      * @param string $sku
-     * @param int $quantity
-     *
-     * @return bool
-     */
-    public function isProductSellable($sku, $quantity);
-
-    /**
-     * @param string $sku
-     *
-     * @return int
-     */
-    public function calculateStockForProduct($sku);
-
-    /**
-     * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
-    public function calculateStockForProductWithStore($sku, StoreTransfer $storeTransfer);
+    public function findOrCreateProductConcreteAvailabilityBySkuForStore(string $sku, StoreTransfer $storeTransfer): ?ProductConcreteAvailabilityTransfer;
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
      */
-    public function isProductSellableForStore($sku, $quantity, StoreTransfer $storeTransfer);
+    public function isProductSellableForStore(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): bool;
 }

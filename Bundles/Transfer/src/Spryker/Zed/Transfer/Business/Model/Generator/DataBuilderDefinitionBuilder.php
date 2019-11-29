@@ -12,17 +12,17 @@ class DataBuilderDefinitionBuilder extends AbstractDefinitionBuilder
     /**
      * @var \Spryker\Zed\Transfer\Business\Model\Generator\LoaderInterface
      */
-    private $loader;
+    protected $loader;
 
     /**
      * @var \Spryker\Zed\Transfer\Business\Model\Generator\MergerInterface
      */
-    private $merger;
+    protected $merger;
 
     /**
      * @var \Spryker\Zed\Transfer\Business\Model\Generator\DataBuilderDefinitionInterface
      */
-    private $dataBuilderDefinition;
+    protected $dataBuilderDefinition;
 
     /**
      * @param \Spryker\Zed\Transfer\Business\Model\Generator\LoaderInterface $loader

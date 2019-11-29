@@ -13,6 +13,10 @@ use Spryker\Shared\ZedRequest\Client\HandlerStack\HandlerStackContainer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
+ * @deprecated Will be removed without replacement. The header is now always set within the \Spryker\Client\ZedRequest\Client\HttpClient::getHeaders() method.
+ *
+ * @see \Spryker\Client\ZedRequest\Client\HttpClient::getHeaders()
+ *
  * @method \Spryker\Yves\ZedRequest\ZedRequestFactory getFactory()
  */
 class ZedRequestHeaderServiceProvider extends AbstractPlugin implements ServiceProviderInterface
