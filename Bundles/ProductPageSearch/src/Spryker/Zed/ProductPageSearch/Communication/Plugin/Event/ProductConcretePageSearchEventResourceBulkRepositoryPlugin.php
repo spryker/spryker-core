@@ -31,7 +31,7 @@ class ProductConcretePageSearchEventResourceBulkRepositoryPlugin extends Abstrac
      * @param int $offset
      * @param int $limit
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getData(int $offset, int $limit): array
     {
