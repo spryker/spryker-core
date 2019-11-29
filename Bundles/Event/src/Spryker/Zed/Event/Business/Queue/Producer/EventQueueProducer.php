@@ -13,11 +13,10 @@ use Spryker\Shared\Event\EventConstants;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Event\Dependency\Client\EventToQueueInterface;
 use Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface;
+use Spryker\Zed\Event\EventConfig;
 
 class EventQueueProducer implements EventQueueProducerInterface
 {
-    protected const ENQUEUE_EVENT_MESSAGE_CHUNK_SIZE = 500;
-
     /**
      * @var \Spryker\Zed\Event\Dependency\Client\EventToQueueInterface
      */
@@ -29,15 +28,23 @@ class EventQueueProducer implements EventQueueProducerInterface
     protected $utilEncodingService;
 
     /**
+     * @var \Spryker\Zed\Event\EventConfig
+     */
+    protected $eventConfig;
+
+    /**
      * @param \Spryker\Zed\Event\Dependency\Client\EventToQueueInterface $queueClient
      * @param \Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface $utilEncodingService
+     * @param \Spryker\Zed\Event\EventConfig $eventConfig
      */
     public function __construct(
         EventToQueueInterface $queueClient,
-        EventToUtilEncodingInterface $utilEncodingService
+        EventToUtilEncodingInterface $utilEncodingService,
+        EventConfig $eventConfig
     ) {
         $this->queueClient = $queueClient;
         $this->utilEncodingService = $utilEncodingService;
+        $this->eventConfig = $eventConfig;
     }
 
     /**
@@ -50,7 +57,7 @@ class EventQueueProducer implements EventQueueProducerInterface
      */
     public function enqueueListenerBulk($eventName, array $transfers, $listener, $queuePoolName = null): void
     {
-        $transfers = array_chunk($transfers, static::ENQUEUE_EVENT_MESSAGE_CHUNK_SIZE);
+        $transfers = array_chunk($transfers, $this->eventConfig->getEnqueueEventMessageChunkSize());
 
         foreach ($transfers as $transfersChunk) {
             $this->enqueueListenerBulkChunk($eventName, $transfersChunk, $listener, $queuePoolName);

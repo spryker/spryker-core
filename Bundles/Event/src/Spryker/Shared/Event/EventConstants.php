@@ -46,6 +46,14 @@ interface EventConstants
 
     /**
      * Specification:
+     *  - Chunk size of enqueue event messages for bulk operations
+     *
+     * @api
+     */
+    public const ENQUEUE_EVENT_CHUNK = 'EVENT:ENQUEUE_EVENT_CHUNK';
+
+    /**
+     * Specification:
      * - Queue name as used when with asynchronous event handling
      *
      * @api
