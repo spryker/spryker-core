@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 interface ConfigurableBundleTemplatePageDataExpanderPluginInterface
 {
     /**
-     * Specification:Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplatePageMapExpanderPluginInterface
+     * Specification:
      * - Expands the provided ConfigurableBundleTemplatePageSearchTransfer object and returns the modified version.
      *
      * @api
