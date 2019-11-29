@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 
 /**
- * @deprecated Use `\Spryker\Zed\Search\Business\DataMapper\SearchDataMapperInterface` instead.
+ * @deprecated Will be removed without replacement.
  */
 interface PageDataMapperInterface
 {

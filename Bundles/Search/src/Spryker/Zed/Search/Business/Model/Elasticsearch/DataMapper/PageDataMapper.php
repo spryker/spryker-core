@@ -17,7 +17,7 @@ use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 use Zend\Filter\Word\UnderscoreToDash;
 
 /**
- * @deprecated Use `\Spryker\Zed\Search\Business\DataMapper\SearchDataMapper` instead.
+ * @deprecated Will be removed without replacement.
  */
 class PageDataMapper implements PageDataMapperInterface
 {
