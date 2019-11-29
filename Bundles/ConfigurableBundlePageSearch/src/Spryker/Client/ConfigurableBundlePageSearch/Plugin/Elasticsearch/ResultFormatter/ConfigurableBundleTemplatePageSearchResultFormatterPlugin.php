@@ -9,6 +9,7 @@ namespace Spryker\Client\ConfigurableBundlePageSearch\Plugin\Elasticsearch\Resul
 
 use Elastica\ResultSet;
 use Generated\Shared\Search\PageIndexMap;
+use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticsearchResultFormatterPlugin;
 
@@ -34,15 +35,28 @@ class ConfigurableBundleTemplatePageSearchResultFormatterPlugin extends Abstract
      */
     protected function formatSearchResult(ResultSet $searchResult, array $requestParameters): array
     {
-        $configurableBundleTemplateTransfers = [];
+        $configurableBundleTemplatePageSearchTransfers = [];
 
         foreach ($searchResult->getResults() as $document) {
-            $configurableBundleTemplateTransfers[] = (new ConfigurableBundleTemplateTransfer())->fromArray(
-                $document->getSource()[PageIndexMap::SEARCH_RESULT_DATA],
-                true
+            $configurableBundleTemplatePageSearchTransfers[] = $this->mapToTransfer(
+                $document->getSource()[PageIndexMap::SEARCH_RESULT_DATA]
             );
         }
 
-        return $configurableBundleTemplateTransfers;
+        return $configurableBundleTemplatePageSearchTransfers;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer
+     */
+    protected function mapToTransfer(array $data): ConfigurableBundleTemplatePageSearchTransfer
+    {
+        $productConcretePageSearchTransfer = new ConfigurableBundleTemplatePageSearchTransfer();
+        $productConcretePageSearchTransfer->fromArray($data, true);
+        $productConcretePageSearchTransfer->setFkConfigurableBundleTemplate($data[ConfigurableBundleTemplateTransfer::ID_CONFIGURABLE_BUNDLE_TEMPLATE]);
+
+        return $productConcretePageSearchTransfer;
     }
 }

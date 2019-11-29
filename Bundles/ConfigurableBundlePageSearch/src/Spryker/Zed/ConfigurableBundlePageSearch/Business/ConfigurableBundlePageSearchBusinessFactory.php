@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ConfigurableBundlePageSearch\Business;
 
+use Spryker\Zed\ConfigurableBundlePageSearch\Business\Expander\ConfigurableBundleTemplatePageSearchExpander;
+use Spryker\Zed\ConfigurableBundlePageSearch\Business\Expander\ConfigurableBundleTemplatePageSearchExpanderInterface;
 use Spryker\Zed\ConfigurableBundlePageSearch\Business\Mapper\ConfigurableBundleTemplatePageSearchMapper;
 use Spryker\Zed\ConfigurableBundlePageSearch\Business\Mapper\ConfigurableBundleTemplatePageSearchMapperInterface;
 use Spryker\Zed\ConfigurableBundlePageSearch\Business\Publisher\ConfigurableBundleTemplatePublisher;
@@ -35,7 +37,8 @@ class ConfigurableBundlePageSearchBusinessFactory extends AbstractBusinessFactor
             $this->getConfigurableBundleFacade(),
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->createConfigurableBundlePageSearchMapper()
+            $this->createConfigurableBundlePageSearchMapper(),
+            $this->createConfigurableBundleTemplatePageSearchExpander()
         );
     }
 
@@ -58,6 +61,16 @@ class ConfigurableBundlePageSearchBusinessFactory extends AbstractBusinessFactor
         return new ConfigurableBundleTemplatePageSearchMapper(
             $this->getUtilEncodingService(),
             $this->getSearchFacade(),
+            $this->createConfigurableBundleTemplatePageSearchExpander()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundlePageSearch\Business\Expander\ConfigurableBundleTemplatePageSearchExpanderInterface
+     */
+    public function createConfigurableBundleTemplatePageSearchExpander(): ConfigurableBundleTemplatePageSearchExpanderInterface
+    {
+        return new ConfigurableBundleTemplatePageSearchExpander(
             $this->getConfigurableBundleTemplatePageDataExpanderPlugins()
         );
     }
