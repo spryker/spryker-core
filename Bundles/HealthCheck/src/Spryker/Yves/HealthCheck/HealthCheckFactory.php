@@ -7,7 +7,7 @@
 
 namespace Spryker\Yves\HealthCheck;
 
-use Spryker\Service\HealthCheck\HealthCheckServiceInterface;
+use Spryker\Client\HealthCheck\HealthCheckClientInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 
 /**
@@ -16,10 +16,10 @@ use Spryker\Yves\Kernel\AbstractFactory;
 class HealthCheckFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Service\HealthCheck\HealthCheckServiceInterface
+     * @return \Spryker\Client\HealthCheck\HealthCheckClientInterface
      */
-    public function getHealthCheckService(): HealthCheckServiceInterface
+    public function getHealthCheckClient(): HealthCheckClientInterface
     {
-        return $this->getProvidedDependency(HealthCheckDependencyProvider::SERVICE_HEALTH_CHECK);
+        return $this->getProvidedDependency(HealthCheckDependencyProvider::CLIENT_HEALTH_CHECK);
     }
 }

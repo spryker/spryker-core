@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Search\Business;
 
+use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -331,5 +332,17 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     public function installIndexes(LoggerInterface $messenger): void
     {
         $this->getFactory()->createElasticsearchIndexInstaller($messenger)->install();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
+     */
+    public function executeSearchHealthCheck(): HealthCheckServiceResponseTransfer
+    {
+        return $this->getFactory()->createSearchHealthCheckIndicator()->executeHealthCheck();
     }
 }

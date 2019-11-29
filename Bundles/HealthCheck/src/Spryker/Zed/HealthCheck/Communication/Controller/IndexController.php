@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @method \Spryker\Zed\HealthCheck\Business\HealthCheckFacade getFacade()()
  * @method \Spryker\Zed\HealthCheck\Communication\HealthCheckCommunicationFactory getFactory()
  */
 class IndexController extends AbstractController
@@ -27,13 +28,8 @@ class IndexController extends AbstractController
     public function indexAction(Request $request): JsonResponse
     {
         $requestedServices = $request->get(static::KEY_SERVICES);
-
-        $healthCheckRequestTransfer = (new HealthCheckRequestTransfer())
-            ->setServices($requestedServices);
-
-        $healthCheckResponseTransfer = $this->getFactory()
-            ->getHealthCheckService()
-            ->checkZedHealthCheck($healthCheckRequestTransfer);
+        $healthCheckRequestTransfer = (new HealthCheckRequestTransfer())->setServices($requestedServices);
+        $healthCheckResponseTransfer = $this->getFacade()->executeHealthCheck($healthCheckRequestTransfer);
 
         return new JsonResponse($healthCheckResponseTransfer->toArray());
     }

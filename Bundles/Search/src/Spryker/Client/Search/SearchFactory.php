@@ -13,6 +13,8 @@ use Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilder;
 use Spryker\Client\Search\Model\Elasticsearch\Aggregation\FacetAggregationFactory;
 use Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\AggregationExtractorFactory;
 use Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\FacetValueTransformerFactory;
+use Spryker\Client\Search\Model\Elasticsearch\HealthCheckIndicator\HealthIndicatorInterface;
+use Spryker\Client\Search\Model\Elasticsearch\HealthCheckIndicator\SearchHealthIndicator;
 use Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilder;
 use Spryker\Client\Search\Model\Elasticsearch\Query\QueryFactory;
 use Spryker\Client\Search\Model\Elasticsearch\Reader\Reader;
@@ -282,5 +284,15 @@ class SearchFactory extends AbstractFactory
         }
 
         return static::$searchClient;
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Model\Elasticsearch\HealthCheckIndicator\HealthIndicatorInterface
+     */
+    public function createSearchHealthCheckIndicator(): HealthIndicatorInterface
+    {
+        return new SearchHealthIndicator(
+            $this->getElasticsearchClient()
+        );
     }
 }

@@ -15,7 +15,7 @@ use Spryker\Yves\Kernel\Container;
  */
 class HealthCheckDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const SERVICE_HEALTH_CHECK = 'SERVICE_HEALTH_CHECK';
+    public const CLIENT_HEALTH_CHECK = 'CLIENT_HEALTH_CHECK';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -24,7 +24,7 @@ class HealthCheckDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container): Container
     {
-        $container = $this->addHealthCheckService($container);
+        $container = $this->addHealthCheckClient($container);
 
         return $container;
     }
@@ -34,12 +34,20 @@ class HealthCheckDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function addHealthCheckService(Container $container): Container
+    protected function addHealthCheckClient(Container $container): Container
     {
-        $container->set(static::SERVICE_HEALTH_CHECK, function (Container $container) {
-            return $container->getLocator()->healthCheck()->service();
+        $container->set(static::CLIENT_HEALTH_CHECK, function (Container $container) {
+            return $container->getLocator()->healthCheck()->client();
         });
 
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[]
+     */
+    protected function getHealthCheckPlugins(): array
+    {
+        return [];
     }
 }

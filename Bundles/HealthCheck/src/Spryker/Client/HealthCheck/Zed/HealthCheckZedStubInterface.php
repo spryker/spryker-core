@@ -14,5 +14,5 @@ interface HealthCheckZedStubInterface
     /**
      * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
      */
-    public function doHealthCheck(): HealthCheckServiceResponseTransfer;
+    public function executeZedRequestHealthCheck(): HealthCheckServiceResponseTransfer;
 }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\HealthCheckRestApi;
 
-use Spryker\Glue\HealthCheckRestApi\Dependency\Service\HealthCheckRestApiToHealthCheckServiceBridge;
+use Spryker\Glue\HealthCheckRestApi\Dependency\Client\HealthCheckRestApiToHealthCheckClientBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
@@ -16,7 +16,7 @@ use Spryker\Glue\Kernel\Container;
  */
 class HealthCheckRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const SERVICE_HEALTH_CHECK = 'SERVICE_HEALTH_CHECK';
+    public const CLIENT_HEALTH_CHECK = 'CLIENT_HEALTH_CHECK';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -25,7 +25,7 @@ class HealthCheckRestApiDependencyProvider extends AbstractBundleDependencyProvi
      */
     public function provideDependencies(Container $container): Container
     {
-        $container = $this->addHealthCheckService($container);
+        $container = $this->addHealthCheckClient($container);
 
         return $container;
     }
@@ -35,11 +35,11 @@ class HealthCheckRestApiDependencyProvider extends AbstractBundleDependencyProvi
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addHealthCheckService(Container $container): Container
+    protected function addHealthCheckClient(Container $container): Container
     {
-        $container->set(static::SERVICE_HEALTH_CHECK, function (Container $container) {
-            return new HealthCheckRestApiToHealthCheckServiceBridge(
-                $container->getLocator()->healthCheck()->service()
+        $container->set(static::CLIENT_HEALTH_CHECK, function (Container $container) {
+            return new HealthCheckRestApiToHealthCheckClientBridge(
+                $container->getLocator()->healthCheck()->client()
             );
         });
 

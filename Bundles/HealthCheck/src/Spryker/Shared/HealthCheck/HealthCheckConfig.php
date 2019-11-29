@@ -21,6 +21,14 @@ class HealthCheckConfig extends AbstractSharedConfig
     protected const HEALTH_CHECK_FORBIDDEN_STATUS_MESSAGE = 'HealthCheck endpoints are disabled for all applications.';
 
     /**
+     * @return bool
+     */
+    public function isHealthCheckEnabled(): bool
+    {
+        return $this->get(HealthCheckConstants::HEALTH_CHECK_ENABLED, false);
+    }
+
+    /**
      * @return int
      */
     public function getSuccessHealthCheckStatusCode(): int

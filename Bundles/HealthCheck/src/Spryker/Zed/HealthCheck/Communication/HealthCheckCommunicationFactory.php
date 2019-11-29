@@ -7,20 +7,12 @@
 
 namespace Spryker\Zed\HealthCheck\Communication;
 
-use Spryker\Service\HealthCheck\HealthCheckServiceInterface;
-use Spryker\Zed\HealthCheck\HealthCheckDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\HealthCheck\HealthCheckConfig getConfig()
+ * @method \Spryker\Zed\HealthCheck\HealthCheckConfig getConfig()()
+ * @method \Spryker\Zed\HealthCheck\Business\HealthCheckFacadeInterface getFacade()
  */
 class HealthCheckCommunicationFactory extends AbstractCommunicationFactory
 {
-    /**
-     * @return \Spryker\Service\HealthCheck\HealthCheckServiceInterface
-     */
-    public function getHealthCheckService(): HealthCheckServiceInterface
-    {
-        return $this->getProvidedDependency(HealthCheckDependencyProvider::SERVICE_HEALTH_CHECK);
-    }
 }

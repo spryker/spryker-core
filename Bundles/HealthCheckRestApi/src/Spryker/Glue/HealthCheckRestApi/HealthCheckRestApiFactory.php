@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\HealthCheckRestApi;
 
-use Spryker\Glue\HealthCheckRestApi\Dependency\Service\HealthCheckRestApiToHealthCheckServiceInterface;
+use Spryker\Glue\HealthCheckRestApi\Dependency\Client\HealthCheckRestApiToHealthCheckClientInterface;
 use Spryker\Glue\HealthCheckRestApi\Processor\HealthCheck\HealthCheckProcessor;
 use Spryker\Glue\HealthCheckRestApi\Processor\HealthCheck\HealthCheckProcessorInterface;
 use Spryker\Glue\HealthCheckRestApi\Processor\Mapper\HealthCheckMapper;
@@ -25,7 +25,7 @@ class HealthCheckRestApiFactory extends AbstractFactory
     public function createHealthCheckProcessor(): HealthCheckProcessorInterface
     {
         return new HealthCheckProcessor(
-            $this->getCheckoutService(),
+            $this->getHealthCheckClient(),
             $this->getResourceBuilder(),
             $this->createHealthCheckMapper(),
             $this->getConfig()
@@ -41,10 +41,10 @@ class HealthCheckRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\HealthCheckRestApi\Dependency\Service\HealthCheckRestApiToHealthCheckServiceInterface
+     * @return \Spryker\Glue\HealthCheckRestApi\Dependency\Client\HealthCheckRestApiToHealthCheckClientInterface
      */
-    public function getCheckoutService(): HealthCheckRestApiToHealthCheckServiceInterface
+    public function getHealthCheckClient(): HealthCheckRestApiToHealthCheckClientInterface
     {
-        return $this->getProvidedDependency(HealthCheckRestApiDependencyProvider::SERVICE_HEALTH_CHECK);
+        return $this->getProvidedDependency(HealthCheckRestApiDependencyProvider::CLIENT_HEALTH_CHECK);
     }
 }

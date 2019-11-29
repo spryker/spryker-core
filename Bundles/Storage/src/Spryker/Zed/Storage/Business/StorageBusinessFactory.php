@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Storage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Storage\Business\Model\HealthCheckIndicator\HealthCheckIndicatorInterface;
+use Spryker\Zed\Storage\Business\Model\HealthCheckIndicator\KeyValueStoreHealthCheckIndicator;
 use Spryker\Zed\Storage\Business\Model\Storage;
 use Spryker\Zed\Storage\Business\Model\StorageExporter;
 use Spryker\Zed\Storage\Business\Model\StorageImporter;
@@ -50,5 +52,15 @@ class StorageBusinessFactory extends AbstractBusinessFactory
     public function createStorageImporter()
     {
         return new StorageImporter($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\Storage\Business\Model\HealthCheckIndicator\HealthCheckIndicatorInterface
+     */
+    public function createKeyValueStoreHealthCheckIndicator(): HealthCheckIndicatorInterface
+    {
+        return new KeyValueStoreHealthCheckIndicator(
+            $this->getStorageClient()
+        );
     }
 }

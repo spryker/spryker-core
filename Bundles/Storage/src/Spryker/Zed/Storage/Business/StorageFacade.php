@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Storage\Business;
 
+use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -94,5 +95,17 @@ class StorageFacade extends AbstractFacade implements StorageFacadeInterface
     public function import($source)
     {
         return $this->getFactory()->createStorageImporter()->import($source);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
+     */
+    public function executeKeyValueStoreHealthCheck(): HealthCheckServiceResponseTransfer
+    {
+        return $this->getFactory()->createKeyValueStoreHealthCheckIndicator()->executeHealthCheck();
     }
 }

@@ -8,10 +8,13 @@
 namespace Spryker\Client\Storage;
 
 use Predis\Client;
+use Spryker\Client\HealthCheck\HealthCheckDependencyProvider;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Storage\Cache\StorageCacheStrategyFactory;
 use Spryker\Client\Storage\Dependency\Client\StorageToLocaleClientInterface;
 use Spryker\Client\Storage\Dependency\Client\StorageToStoreClientInterface;
+use Spryker\Client\Storage\HealthCheckIndicator\HealthCheckIndicatorInterface;
+use Spryker\Client\Storage\HealthCheckIndicator\KeyValueStoreHealthCheckIndicator;
 use Spryker\Client\Storage\Redis\Service;
 use Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface;
 use Spryker\Shared\Config\Config;
@@ -185,5 +188,23 @@ class StorageFactory extends AbstractFactory
         }
 
         return null;
+    }
+
+    /**
+     * @return \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[]
+     */
+    public function getHealthCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(HealthCheckDependencyProvider::PLUGINS_HEALTH_CHECK);
+    }
+
+    /**
+     * @return \Spryker\Client\Storage\HealthCheckIndicator\HealthCheckIndicatorInterface
+     */
+    public function createKeyValueStoreHealthCheckIndicator(): HealthCheckIndicatorInterface
+    {
+        return new KeyValueStoreHealthCheckIndicator(
+            $this->getStorageClient()
+        );
     }
 }
