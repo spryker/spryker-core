@@ -316,9 +316,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
             $localeNames = $localeNameMap[$storeName];
 
             foreach ($localeNames as $localeName) {
-                $cmsBlockStorageEntity = isset($mappedCmsBlockStorageEntities[$idCmsBlock][$localeName][$storeName]) ?
-                    $mappedCmsBlockStorageEntities[$idCmsBlock][$localeName][$storeName] :
-                    new SpyCmsBlockStorage();
+                $cmsBlockStorageEntity = $mappedCmsBlockStorageEntities[$idCmsBlock][$localeName][$storeName] ?? new SpyCmsBlockStorage();
 
                 $pairs[] = [
                     static::CMS_BLOCK_ENTITY => $cmsBlockEntity,
