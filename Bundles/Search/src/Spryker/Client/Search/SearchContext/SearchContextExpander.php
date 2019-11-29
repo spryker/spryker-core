@@ -14,14 +14,14 @@ class SearchContextExpander implements SearchContextExpanderInterface
     /**
      * @var array|\Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextExpanderPluginInterface[]
      */
-    protected $sourceIdentifierPlugins;
+    protected $searchContextExpanderPlugins;
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextExpanderPluginInterface[] $sourceIdentifierPlugins
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextExpanderPluginInterface[] $searchContextExpanderPlugins
      */
-    public function __construct(array $sourceIdentifierPlugins)
+    public function __construct(array $searchContextExpanderPlugins)
     {
-        $this->sourceIdentifierPlugins = $sourceIdentifierPlugins;
+        $this->searchContextExpanderPlugins = $searchContextExpanderPlugins;
     }
 
     /**
@@ -31,8 +31,8 @@ class SearchContextExpander implements SearchContextExpanderInterface
      */
     public function expandSearchContext(SearchContextTransfer $searchContextTransfer): SearchContextTransfer
     {
-        foreach ($this->sourceIdentifierPlugins as $sourceIdentifierPlugin) {
-            $searchContextTransfer = $sourceIdentifierPlugin->expandSearchContext($searchContextTransfer);
+        foreach ($this->searchContextExpanderPlugins as $searchContextExpanderPlugin) {
+            $searchContextTransfer = $searchContextExpanderPlugin->expandSearchContext($searchContextTransfer);
         }
 
         return $searchContextTransfer;

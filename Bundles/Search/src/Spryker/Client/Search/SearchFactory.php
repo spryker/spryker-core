@@ -76,7 +76,7 @@ class SearchFactory extends AbstractFactory
     public function createSearchContextExpander(): SearchContextExpanderInterface
     {
         return new SearchContextExpander(
-            $this->getSourceIdentifierMapperPlugins()
+            $this->getSearchContextExpanderPlugins()
         );
     }
 
@@ -91,9 +91,9 @@ class SearchFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextExpanderPluginInterface[]
      */
-    public function getSourceIdentifierMapperPlugins(): array
+    public function getSearchContextExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(SearchDependencyProvider::PLUGINS_SOURCE_IDENTIFIER_MAPPER);
+        return $this->getProvidedDependency(SearchDependencyProvider::PLUGINS_SEARCH_CONTEXT_EXPANDER);
     }
 
     /**
