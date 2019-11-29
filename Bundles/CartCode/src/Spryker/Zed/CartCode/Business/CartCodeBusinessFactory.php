@@ -72,7 +72,7 @@ class CartCodeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[]
+     * @return \Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[]
      */
     public function getCartCodePlugins(): array
     {

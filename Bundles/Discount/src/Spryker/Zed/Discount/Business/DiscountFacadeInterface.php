@@ -6,6 +6,8 @@
  */
 namespace Spryker\Zed\Discount\Business;
 
+use Generated\Shared\Transfer\CartCodeRequestTransfer;
+use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
@@ -573,12 +575,11 @@ interface DiscountFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function addCandidate(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer;
+    public function addCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer;
 
     /**
      * Specification:
@@ -586,12 +587,11 @@ interface DiscountFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function removeCode(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer;
+    public function removeCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer;
 
     /**
      * Specification:
@@ -601,12 +601,11 @@ interface DiscountFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
      * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer;
+    public function getOperationResponseMessage(CartCodeRequestTransfer $cartCodeRequestTransfer): ?MessageTransfer;
 
     /**
      * Specification:
@@ -614,9 +613,9 @@ interface DiscountFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function clearAllCodes(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function clearCartCodes(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer;
 }

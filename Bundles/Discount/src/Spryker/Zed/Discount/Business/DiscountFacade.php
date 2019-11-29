@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Discount\Business;
 
+use Generated\Shared\Transfer\CartCodeRequestTransfer;
+use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
@@ -721,16 +723,15 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function addCandidate(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
+    public function addCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
         return $this->getFactory()
             ->createVoucherCartCode()
-            ->addCandidate($quoteTransfer, $code);
+            ->addCartCode($cartCodeRequestTransfer);
     }
 
     /**
@@ -738,16 +739,15 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function removeCode(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
+    public function removeCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
         return $this->getFactory()
             ->createVoucherCartCode()
-            ->removeCode($quoteTransfer, $code);
+            ->removeCartCode($cartCodeRequestTransfer);
     }
 
     /**
@@ -755,16 +755,15 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
      * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
+    public function getOperationResponseMessage(CartCodeRequestTransfer $cartCodeRequestTransfer): ?MessageTransfer
     {
         return $this->getFactory()
             ->createVoucherCartCode()
-            ->getOperationResponseMessage($quoteTransfer, $code);
+            ->getOperationResponseMessage($cartCodeRequestTransfer);
     }
 
     /**
@@ -772,14 +771,14 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function clearAllCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function clearCartCodes(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
         return $this->getFactory()
             ->createVoucherCartCode()
-            ->clearAllCodes($quoteTransfer);
+            ->clearCartCodes($cartCodeRequestTransfer);
     }
 }

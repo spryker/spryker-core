@@ -10,7 +10,6 @@ namespace Spryker\Zed\CartCodeExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\CartCodeRequestTransfer;
 use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CartCodePluginInterface
 {
@@ -47,11 +46,11 @@ interface CartCodePluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function clearCartCodes(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function clearCartCodes(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer;
 
     /**
      * Specification:
@@ -61,10 +60,9 @@ interface CartCodePluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $cartCode
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
      * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, string $cartCode): ?MessageTransfer;
+    public function getOperationResponseMessage(CartCodeRequestTransfer $cartCodeRequestTransfer): ?MessageTransfer;
 }

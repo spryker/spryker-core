@@ -27,14 +27,14 @@ class CartCodeAdder implements CartCodeAdderInterface
     protected $quoteOperationChecker;
 
     /**
-     * @var \Spryker\Shared\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[]
+     * @var \Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[]
      */
     protected $cartCodePlugins;
 
     /**
      * @param \Spryker\Zed\CartCode\Dependency\Facade\CartCodeToCalculationFacadeInterface $calculationClient
      * @param \Spryker\Zed\CartCode\Business\Operation\QuoteOperationCheckerInterface $quoteOperationChecker
-     * @param \Spryker\Shared\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[] $cartCodePlugins
+     * @param \Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[] $cartCodePlugins
      */
     public function __construct(
         CartCodeToCalculationFacadeInterface $calculationClient,
@@ -53,47 +53,46 @@ class CartCodeAdder implements CartCodeAdderInterface
      */
     public function addCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
-        $quoteTransfer = $cartCodeRequestTransfer->getQuote();
-        $lockedCartCodeOperationResultTransfer = $this->quoteOperationChecker->checkLockedQuoteResponse($quoteTransfer);
+        $lockedCartCodeOperationResultTransfer = $this->quoteOperationChecker
+            ->checkLockedQuoteResponse($cartCodeRequestTransfer->getQuote());
         if ($lockedCartCodeOperationResultTransfer) {
             return $lockedCartCodeOperationResultTransfer;
         }
 
-        $cartCode = $cartCodeRequestTransfer->getCartCode();
-        $quoteTransfer = $this->executeCartCodePlugins($quoteTransfer, $cartCode);
+        $quoteTransfer = $this->executeCartCodePlugins($cartCodeRequestTransfer);
         $quoteTransfer = $this->calculationFacade->recalculateQuote($quoteTransfer);
 
-        return $this->processRecalculationResults($quoteTransfer, $cartCode);
+        return $this->processRecalculationResults($cartCodeRequestTransfer->setQuote($quoteTransfer));
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function executeCartCodePlugins(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
+    protected function executeCartCodePlugins(CartCodeRequestTransfer $cartCodeRequestTransfer): QuoteTransfer
     {
+        $quoteTransfer = $cartCodeRequestTransfer->getQuote();
         foreach ($this->cartCodePlugins as $cartCodePlugin) {
-            $quoteTransfer = $cartCodePlugin->addCandidate($quoteTransfer, $code);
+            $quoteTransfer = $cartCodePlugin->addCartCode($cartCodeRequestTransfer)->getQuote();
         }
 
         return $quoteTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
      * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    protected function processRecalculationResults(QuoteTransfer $quoteTransfer, string $code): CartCodeResponseTransfer
+    protected function processRecalculationResults(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
+        $quoteTransfer = $cartCodeRequestTransfer->getQuote();
         $cartCodeResponseTransfer = (new CartCodeResponseTransfer())->setIsSuccessful(true);
         $cartCodeResponseTransfer->setQuote($quoteTransfer);
 
         foreach ($this->cartCodePlugins as $cartCodePlugin) {
-            $messageTransfer = $cartCodePlugin->getOperationResponseMessage($quoteTransfer, $code);
+            $messageTransfer = $cartCodePlugin->getOperationResponseMessage($cartCodeRequestTransfer);
 
             if ($messageTransfer) {
                 $cartCodeResponseTransfer->addMessage($messageTransfer);
