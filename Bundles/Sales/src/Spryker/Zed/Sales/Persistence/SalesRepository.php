@@ -122,8 +122,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     protected function getPaginationTransferByOrderQuery(
         OrderListRequestTransfer $orderListRequestTransfer,
         SpySalesOrderQuery $orderListQuery
-    ): PaginationTransfer
-    {
+    ): PaginationTransfer {
         $paginationTransfer = $orderListRequestTransfer->getPagination();
         if (!$paginationTransfer) {
             return (new PaginationTransfer())->setNbResults($orderListQuery->count());

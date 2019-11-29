@@ -66,7 +66,7 @@ class SalesClient extends AbstractClient implements SalesClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
