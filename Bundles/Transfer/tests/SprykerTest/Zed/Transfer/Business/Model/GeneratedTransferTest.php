@@ -552,9 +552,52 @@ class GeneratedTransferTest extends Unit
     }
 
     /**
+     * @dataProvider associativeCollectionFromArrayProvider
+     *
+     * @param array $input
+     * @param array $expected
+     *
+     * @return void
+     */
+    public function testAssociativeCollectionFromArray(array $input, array $expected): void
+    {
+        // Prepare
+        $generatedTransfer = new GeneratedTransfer();
+
+        // Act
+        $generatedTransfer->fromArray([
+            'associativeNestedTransfers' => $input,
+        ]);
+        $normalized = $generatedTransfer->toArray(true);
+
+        // Assert
+        $this->assertArrayHasKey('associative_nested_transfers', $normalized);
+        $this->assertEquals($expected, $normalized['associative_nested_transfers']);
+    }
+
+    /**
+     * @return void
+     */
+    public function testAssociativeCollectionAdder(): void
+    {
+        // Prepare
+        $generatedTransfer = new GeneratedTransfer();
+
+        // Act
+        $generatedTransfer->addAssociativeNestedTransfer('one', new GeneratedNestedTransfer());
+        $normalized = $generatedTransfer->toArray(false);
+
+        // Assert
+        $this->assertArrayHasKey('associative_nested_transfers', $normalized);
+        $this->assertInstanceOf(ArrayObject::class, $normalized['associative_nested_transfers']);
+        $this->assertArrayHasKey('one', $normalized['associative_nested_transfers']);
+        $this->assertInstanceOf(GeneratedNestedTransfer::class, $normalized['associative_nested_transfers']['one']);
+    }
+
+    /**
      * @return array
      */
-    public function assocCollectionFromArrayProvider(): array
+    public function associativeCollectionFromArrayProvider(): array
     {
         return [
             'nested with fields' => [
@@ -597,49 +640,6 @@ class GeneratedTransferTest extends Unit
                 ],
             ],
         ];
-    }
-
-    /**
-     * @dataProvider assocCollectionFromArrayProvider
-     *
-     * @param array $input
-     * @param array $expected
-     *
-     * @return void
-     */
-    public function testAssocCollectionFromArray(array $input, array $expected): void
-    {
-        // Prepare
-        $generatedTransfer = new GeneratedTransfer();
-
-        // Act
-        $generatedTransfer->fromArray([
-            'assocNestedThings' => $input,
-        ]);
-        $normalized = $generatedTransfer->toArray(true);
-
-        // Assert
-        $this->assertArrayHasKey('assoc_nested_things', $normalized);
-        $this->assertEquals($expected, $normalized['assoc_nested_things']);
-    }
-
-    /**
-     * @return void
-     */
-    public function testAssocCollectionAdder(): void
-    {
-        // Prepare
-        $generatedTransfer = new GeneratedTransfer();
-
-        // Act
-        $generatedTransfer->addAssocNestedThing('one', new GeneratedNestedTransfer());
-        $normalized = $generatedTransfer->toArray(false);
-
-        // Assert
-        $this->assertArrayHasKey('assoc_nested_things', $normalized);
-        $this->assertInstanceOf(ArrayObject::class, $normalized['assoc_nested_things']);
-        $this->assertArrayHasKey('one', $normalized['assoc_nested_things']);
-        $this->assertInstanceOf(GeneratedNestedTransfer::class, $normalized['assoc_nested_things']['one']);
     }
 
     /**
