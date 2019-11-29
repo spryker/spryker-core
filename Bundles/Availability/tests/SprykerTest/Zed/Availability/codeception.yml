@@ -12,9 +12,6 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    Persistence:
-        path: Persistence
-        class_name: AvailabilityPersistenceTester
     Business:
         path: Business
         class_name: AvailabilityBusinessTester
@@ -27,3 +24,7 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+                - \SprykerTest\Shared\Stock\Helper\StockDataHelper
+                - \SprykerTest\Shared\Availability\Helper\AvailabilityDataHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper

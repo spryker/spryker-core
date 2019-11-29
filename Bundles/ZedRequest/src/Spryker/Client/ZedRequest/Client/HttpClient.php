@@ -67,6 +67,7 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
     {
         $headers = [
             'Auth-Token' => $this->utilTextService->generateToken($this->rawToken, $this->tokenGenerationOptions),
+            'X-Request-ID' => $this->utilNetworkService->getRequestId(),
         ];
 
         return $headers;

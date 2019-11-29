@@ -13,6 +13,14 @@ coverage:
 
 suites:
     Business:
+        path: Business
+        class_name: ProductSetPageSearchBusinessTester
+        modules:
+            enabled:
+            - Asserts
+            - \SprykerTest\Shared\Testify\Helper\Environment
+
+    Communication:
         path: Communication
         class_name: ProductSetPageSearchCommunicationTester
         modules:

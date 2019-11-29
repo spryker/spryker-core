@@ -91,6 +91,7 @@ class ProductApiFacadeTest extends Unit
      */
     public function testFindConditionsAndSortAndLimit(): void
     {
+        //Arrange
         $productApiFacade = new ProductApiFacade();
 
         $jsonDataForPagination = $this->getJsonDataForPagination();
@@ -104,14 +105,16 @@ class ProductApiFacadeTest extends Unit
 
         $apiRequestTransfer->setFilter($apiFilterTransfer);
 
+        //Act
         $resultTransfer = $productApiFacade->findProducts($apiRequestTransfer);
 
+        //Assert
         $this->assertInstanceOf(ApiCollectionTransfer::class, $resultTransfer);
         $this->assertSame(2, count($resultTransfer->getData()));
 
         $data = $resultTransfer->getData();
-        $this->assertGreaterThanOrEqual(209, $data[0]['sku']);
-        $this->assertGreaterThanOrEqual(209, $data[1]['sku']);
+        $this->assertGreaterThanOrEqual(209, $data[0]['id_product_abstract']);
+        $this->assertGreaterThanOrEqual(209, $data[1]['id_product_abstract']);
 
         $apiPaginationTransfer = $resultTransfer->getPagination();
         $this->assertSame(2, $apiPaginationTransfer->getPage());

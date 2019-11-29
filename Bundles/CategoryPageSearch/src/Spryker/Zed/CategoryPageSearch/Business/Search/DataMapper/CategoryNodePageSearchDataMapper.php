@@ -43,7 +43,7 @@ class CategoryNodePageSearchDataMapper implements CategoryNodePageSearchDataMapp
             PageIndexMap::LOCALE => $localeTransfer->getLocaleName(),
             PageIndexMap::TYPE => static::TYPE_CATEGORY,
             PageIndexMap::SEARCH_RESULT_DATA => $this->getSearchResultData($data),
-            PageIndexMap::FULL_TEXT_BOOSTED => $this->getFullTestBoostedData($data),
+            PageIndexMap::FULL_TEXT_BOOSTED => $this->getFullTextBoostedData($data),
             PageIndexMap::FULL_TEXT => $this->getFullTextData($data),
             PageIndexMap::SUGGESTION_TERMS => $this->getSuggestionTermsData($data),
             PageIndexMap::COMPLETION_TERMS => $this->getCompletionTermsData($data),
@@ -70,7 +70,7 @@ class CategoryNodePageSearchDataMapper implements CategoryNodePageSearchDataMapp
      *
      * @return array
      */
-    protected function getFullTestBoostedData(array $data): array
+    protected function getFullTextBoostedData(array $data): array
     {
         return [
             $this->getCategoryAttribute($data)[static::KEY_NAME],
