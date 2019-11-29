@@ -965,7 +965,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_FORM_PROTO, $container->protect(function ($name, $options) use ($container) {
             return function () use ($container, $name, $options) {
                 $tmp = $options['check_path'] ?? '/login_check';
-                $this->addSecurityRoute('match', $tmp, str_replace('/', '_', ltrim($tmp, '/')));
+                $this->addSecurityRoute('match', $tmp);
 
                 $class = $options['listener_class'] ?? UsernamePasswordFormAuthenticationListener::class;
 
@@ -1103,7 +1103,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_LOGOUT_PROTO, $container->protect(function ($name, $options) use ($container) {
             return function () use ($container, $name, $options) {
                 $tmp = $options['logout_path'] ?? '/logout';
-                $this->addSecurityRoute('get', $tmp, str_replace('/', '_', ltrim($tmp, '/')));
+                $this->addSecurityRoute('get', $tmp);
 
                 $listener = new LogoutListener(
                     $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
@@ -1394,14 +1394,46 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
 
     /**
      * @param string $method
-     * @param string $pattern
-     * @param string $name
+     * @param string $routeNameOrUrl
+     * @param string|null $routeName
      *
      * @return void
      */
-    protected function addSecurityRoute(string $method, string $pattern, string $name)
+    protected function addSecurityRoute(string $method, string $routeNameOrUrl, ?string $routeName = null)
     {
-        $this->securityRoutes[] = [$method, $pattern, $name];
+        $url = $this->buildUrl($routeNameOrUrl);
+        $routeName = $this->buildRouteName($routeNameOrUrl, $routeName);
+
+        $this->securityRoutes[] = [$method, $url, $routeName];
+    }
+
+    /**
+     * @param string $routeNameOrUrl
+     *
+     * @return string
+     */
+    protected function buildUrl(string $routeNameOrUrl): string
+    {
+        if ($routeNameOrUrl[0] === '/') {
+            return $routeNameOrUrl;
+        }
+
+        return '/' . str_replace('_', '/', ltrim($routeNameOrUrl, '/'));
+    }
+
+    /**
+     * @param string $routeNameOrUrl
+     * @param string|null $routeName
+     *
+     * @return string
+     */
+    protected function buildRouteName(string $routeNameOrUrl, ?string $routeName = null): string
+    {
+        if ($routeName) {
+            return $routeName;
+        }
+
+        return str_replace('/', '_', ltrim($routeNameOrUrl, '/'));
     }
 
     /**
@@ -1419,9 +1451,9 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         $resource = function () use ($securityRoutes) {
             $routeCollection = new RouteCollection();
             foreach ($securityRoutes as $route) {
-                [$method, $pattern, $name] = $route;
+                [$method, $url, $name] = $route;
 
-                $route = new Route($pattern);
+                $route = new Route($url);
 
                 $controller = function (Request $request) {
                     throw new LogicException('None of the configured firewalls matched. Please check your firewall configuration.');
