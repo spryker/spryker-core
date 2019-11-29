@@ -35,7 +35,7 @@ class FacadeMethodBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testMethodNameIsFacade()
+    public function testMethodNameIsFacade(): void
     {
         $methodBuilderMock = $this->getFacadeMethodBuilderMock();
         $methodBuilderMock
@@ -51,7 +51,7 @@ class FacadeMethodBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testFileLookupIsPerformedInBusinessLayer()
+    public function testFileLookupIsPerformedInBusinessLayer(): void
     {
         $methodBuilderMock = $this->getFacadeMethodBuilderMock();
         $methodBuilderMock
@@ -65,7 +65,7 @@ class FacadeMethodBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testFileLookupPrefersInterface()
+    public function testFileLookupPrefersInterface(): void
     {
         $methodBuilderMock = $this->getFacadeMethodBuilderMock();
         $methodBuilderMock
@@ -87,7 +87,7 @@ class FacadeMethodBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testFileLookupFallsBackToConcreteClassIfInterfaceIsMissing()
+    public function testFileLookupFallsBackToConcreteClassIfInterfaceIsMissing(): void
     {
         $methodBuilderMock = $this->getFacadeMethodBuilderMock();
         $methodBuilderMock
@@ -139,7 +139,7 @@ class FacadeMethodBuilderTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer
      */
-    protected function getBundleTransfer()
+    protected function getBundleTransfer(): IdeAutoCompletionBundleTransfer
     {
         $bundleTransfer = new IdeAutoCompletionBundleTransfer();
         $bundleTransfer->setName('FooBundle');

@@ -51,7 +51,7 @@ class ProductImageWriterTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->writer = new Writer(
             new ProductImageQueryContainer()
@@ -63,7 +63,7 @@ class ProductImageWriterTest extends Unit
     /**
      * @return void
      */
-    public function testPersistProductImage()
+    public function testPersistProductImage(): void
     {
         $imageTransfer = new ProductImageTransfer();
         $imageTransfer
@@ -82,7 +82,7 @@ class ProductImageWriterTest extends Unit
     /**
      * @return void
      */
-    public function testPersistProductImageSet()
+    public function testPersistProductImageSet(): void
     {
         $imageTransfer = new ProductImageTransfer();
         $imageTransfer

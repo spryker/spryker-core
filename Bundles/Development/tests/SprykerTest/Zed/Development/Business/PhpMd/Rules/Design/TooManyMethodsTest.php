@@ -38,7 +38,7 @@ class TooManyMethodsTest extends Unit
      *
      * @return void
      */
-    public function testApplyDoesNotAddViolationIfNodeIsIgnorable($fullyQualifiedClassName, $nodeName)
+    public function testApplyDoesNotAddViolationIfNodeIsIgnorable(string $fullyQualifiedClassName, string $nodeName): void
     {
         $nodeMock = $this->getNodeMock($fullyQualifiedClassName, $nodeName);
 
@@ -51,7 +51,7 @@ class TooManyMethodsTest extends Unit
     /**
      * @return array
      */
-    public function ignorableNodesProvider()
+    public function ignorableNodesProvider(): array
     {
         return [
             ['Client\\Foo\\BarFacade', 'BarFacade'],
@@ -66,7 +66,7 @@ class TooManyMethodsTest extends Unit
     /**
      * @return void
      */
-    public function testApplyAddsViolationWhenClassIsNotIgnorable()
+    public function testApplyAddsViolationWhenClassIsNotIgnorable(): void
     {
         $nodeMock = $this->getNodeMock('Foo', 'Bar');
 
@@ -79,7 +79,7 @@ class TooManyMethodsTest extends Unit
     /**
      * @return void
      */
-    public function testApplyDoesNotAddViolationIfNumberOfMethodsLowerThenThreshold()
+    public function testApplyDoesNotAddViolationIfNumberOfMethodsLowerThenThreshold(): void
     {
         $nodeMock = $this->getNodeMock('Foo', 'Bar');
 
@@ -109,7 +109,7 @@ class TooManyMethodsTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\PHPMD\AbstractNode
      */
-    protected function getNodeMock($fullyQualifiedClassName, $nodeName)
+    protected function getNodeMock(string $fullyQualifiedClassName, string $nodeName)
     {
         $mockBuilder = $this->getMockBuilder(AbstractTypeNode::class);
         $mockBuilder->setMethods(['getMetric', 'getName', 'getNamespace', 'getNamespaceName', 'hasSuppressWarningsAnnotationFor', 'getFullQualifiedName', 'getParentName', 'getMethodNames'])

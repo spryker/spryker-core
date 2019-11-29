@@ -27,7 +27,7 @@ class SubFormPluginCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testAdd()
+    public function testAdd(): void
     {
         $subFormPluginCollection = new SubFormPluginCollection();
 
@@ -40,7 +40,7 @@ class SubFormPluginCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testKey()
+    public function testKey(): void
     {
         $subFormPluginCollection = new SubFormPluginCollection();
 
@@ -50,7 +50,7 @@ class SubFormPluginCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testCollectionMustIterateable()
+    public function testCollectionMustIterateable(): void
     {
         $subFormPluginCollection = new SubFormPluginCollection();
         $subFormPluginCollection->add($this->getSubFormPlugin());
@@ -63,7 +63,7 @@ class SubFormPluginCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testCollectionIsCountable()
+    public function testCollectionIsCountable(): void
     {
         $subFormPluginCollection = new SubFormPluginCollection();
         $subFormPluginCollection->add($this->getSubFormPlugin());

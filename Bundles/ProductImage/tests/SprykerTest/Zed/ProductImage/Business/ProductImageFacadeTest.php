@@ -129,7 +129,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -143,7 +143,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setupProducts()
+    protected function setupProducts(): void
     {
         $this->productAbstractEntity = new SpyProductAbstract();
         $this->productAbstractEntity
@@ -175,7 +175,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setupImages()
+    protected function setupImages(): void
     {
         $this->image = new SpyProductImage();
         $this->image
@@ -257,7 +257,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testPersistProductImageShouldCreateImage()
+    public function testPersistProductImageShouldCreateImage(): void
     {
         $productImageTransfer = (new ProductImageTransfer())
             ->setExternalUrlSmall(self::URL_SMALL)
@@ -271,7 +271,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testPersistProductImageSetShouldCreateImageSet()
+    public function testPersistProductImageSetShouldCreateImageSet(): void
     {
         $productImageSetTransfer = (new ProductImageSetTransfer())
             ->setName(self::SET_NAME)
@@ -285,7 +285,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testPersistProductImageSetShouldPersistImageSetAndProductImages()
+    public function testPersistProductImageSetShouldPersistImageSetAndProductImages(): void
     {
         $productImageTransfer = (new ProductImageTransfer())
             ->setExternalUrlSmall(self::URL_SMALL)
@@ -305,7 +305,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductImagesSetCollectionByProductAbstractId()
+    public function testGetProductImagesSetCollectionByProductAbstractId(): void
     {
         $productImageSetCollection = $this->productImageFacade->getProductImagesSetCollectionByProductAbstractId(
             $this->productAbstractEntity->getIdProductAbstract()
@@ -366,7 +366,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductImagesSetCollectionByProductId()
+    public function testGetProductImagesSetCollectionByProductId(): void
     {
         $productImageSetCollection = $this->productImageFacade->getProductImagesSetCollectionByProductId(
             $this->productConcreteEntity->getIdProduct()
@@ -489,7 +489,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateProductAbstractImageSetCollection()
+    public function testCreateProductAbstractImageSetCollection(): void
     {
         $productAbstractTransfer = $this->createProductAbstractTransfer();
 
@@ -514,7 +514,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateProductAbstractImageSetCollection()
+    public function testUpdateProductAbstractImageSetCollection(): void
     {
         $productAbstractTransfer = $this->createProductAbstractTransfer();
 
@@ -541,7 +541,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandProductAbstractWithImageSets()
+    public function testExpandProductAbstractWithImageSets(): void
     {
         $productAbstractTransfer = $this->createProductAbstractTransfer();
 
@@ -562,7 +562,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateProductConcreteImageSetCollection()
+    public function testCreateProductConcreteImageSetCollection(): void
     {
         $productConcreteTransfer = $this->createProductConcreteTransfer();
 
@@ -587,7 +587,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateProductConcreteImageSetCollection()
+    public function testUpdateProductConcreteImageSetCollection(): void
     {
         $productConcreteTransfer = $this->createProductConcreteTransfer();
 
@@ -614,7 +614,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandProductConcreteWithImageSets()
+    public function testExpandProductConcreteWithImageSets(): void
     {
         $productConcreteTransfer = $this->createProductConcreteTransfer();
 
@@ -635,7 +635,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRemovalProductImageSetFromProductConcrete()
+    public function testRemovalProductImageSetFromProductConcrete(): void
     {
         $productConcreteTransfer = $this->createProductConcreteTransfer();
         $productImageSetTransfers = new ArrayObject($this->productImageFacade->getProductImagesSetCollectionByProductId(
@@ -669,7 +669,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRemovalProductImageSetFromProductAbstract()
+    public function testRemovalProductImageSetFromProductAbstract(): void
     {
         $productAbstractTransfer = $this->createProductAbstractTransfer();
         $productImageSetTransfers = new ArrayObject($this->productImageFacade->getProductImagesSetCollectionByProductAbstractId(
@@ -703,7 +703,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRemovalProductImageFromProductConcrete()
+    public function testRemovalProductImageFromProductConcrete(): void
     {
         $productConcreteTransfer = $this->createProductConcreteTransfer();
         $productImageSetTransfers = new ArrayObject();
@@ -733,7 +733,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRemovalProductImageFromProductAbstract()
+    public function testRemovalProductImageFromProductAbstract(): void
     {
         $productAbstractTransfer = $this->createProductAbstractTransfer();
         $productImageSetTransfers = new ArrayObject();
@@ -763,7 +763,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteProductImageSet()
+    public function testDeleteProductImageSet(): void
     {
         $productAbstractTransfer = $this->createProductAbstractTransfer();
 
@@ -788,7 +788,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCombinedConcreteImageSets()
+    public function testGetCombinedConcreteImageSets(): void
     {
         $imageSetTransfers = $this->productImageFacade->getCombinedConcreteImageSets(
             $this->productConcreteEntity->getIdProduct(),
@@ -815,7 +815,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCombinedAbstractImageSets()
+    public function testGetCombinedAbstractImageSets(): void
     {
         $imageSetTransfers = $this->productImageFacade->getCombinedAbstractImageSets(
             $this->productConcreteEntity->getFkProductAbstract(),
@@ -843,7 +843,7 @@ class ProductImageFacadeTest extends Unit
      *
      * @return void
      */
-    protected function assertCreateImage(ProductImageTransfer $productImageTransfer)
+    protected function assertCreateImage(ProductImageTransfer $productImageTransfer): void
     {
         $productImage = (new SpyProductImageQuery())
             ->filterByIdProductImage($productImageTransfer->getIdProductImage())
@@ -859,7 +859,7 @@ class ProductImageFacadeTest extends Unit
      *
      * @return void
      */
-    protected function assertCreateImageSet(ProductImageSetTransfer $productImageSetTransfer)
+    protected function assertCreateImageSet(ProductImageSetTransfer $productImageSetTransfer): void
     {
         $productImage = (new SpyProductImageSetQuery())
             ->filterByIdProductImageSet($productImageSetTransfer->getIdProductImageSet())
@@ -873,7 +873,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function assertAbstractCreateImageForImageSet()
+    protected function assertAbstractCreateImageForImageSet(): void
     {
         $imageCollection = $this->queryContainer->queryImageCollectionByProductAbstractId(
             $this->productAbstractEntity->getIdProductAbstract()
@@ -885,7 +885,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function assertConcreteCreateImageForImageSet()
+    protected function assertConcreteCreateImageForImageSet(): void
     {
         $imageCollection = $this->queryContainer->queryImageCollectionByProductId(
             $this->productConcreteEntity->getIdProduct()
@@ -899,7 +899,7 @@ class ProductImageFacadeTest extends Unit
      *
      * @return void
      */
-    protected function assertConcreteHasNumberOfProductImageSet($expectedCount)
+    protected function assertConcreteHasNumberOfProductImageSet(int $expectedCount): void
     {
         $imageSetCollection = $this->queryContainer->queryImageSetByProductId(
             $this->productConcreteEntity->getIdProduct()
@@ -913,7 +913,7 @@ class ProductImageFacadeTest extends Unit
      *
      * @return void
      */
-    protected function assertAbstractHasNumberOfProductImageSet($expectedCount)
+    protected function assertAbstractHasNumberOfProductImageSet(int $expectedCount): void
     {
         $imageSetCollection = $this->queryContainer->queryImageSetByProductAbstractId(
             $this->productAbstractEntity->getIdProductAbstract()
@@ -927,7 +927,7 @@ class ProductImageFacadeTest extends Unit
      *
      * @return void
      */
-    protected function assertProductImageSetExists($idProductImageSet)
+    protected function assertProductImageSetExists(int $idProductImageSet): void
     {
         $exists = (new SpyProductImageSetQuery())
             ->filterByIdProductImageSet($idProductImageSet)
@@ -941,7 +941,7 @@ class ProductImageFacadeTest extends Unit
      *
      * @return void
      */
-    protected function assertProductImageSetNotExists($idProductImageSet)
+    protected function assertProductImageSetNotExists(int $idProductImageSet): void
     {
         $exists = (new SpyProductImageSetQuery())
             ->filterByIdProductImageSet($idProductImageSet)
@@ -955,7 +955,7 @@ class ProductImageFacadeTest extends Unit
      *
      * @return void
      */
-    protected function assertAbstractHasNumberOfProductImage($expectedCount)
+    protected function assertAbstractHasNumberOfProductImage(int $expectedCount): void
     {
         $imageCollection = $this->queryContainer->queryImageCollectionByProductAbstractId(
             $this->productAbstractEntity->getIdProductAbstract()
@@ -969,7 +969,7 @@ class ProductImageFacadeTest extends Unit
      *
      * @return void
      */
-    protected function assertConcreteHasNumberOfProductImage($expectedCount)
+    protected function assertConcreteHasNumberOfProductImage(int $expectedCount): void
     {
         $imageCollection = $this->queryContainer->queryImageCollectionByProductId(
             $this->productConcreteEntity->getIdProduct()
@@ -981,7 +981,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    protected function createProductAbstractTransfer()
+    protected function createProductAbstractTransfer(): ProductAbstractTransfer
     {
         $productData = $this->productAbstractEntity->toArray();
         unset($productData[ProductAbstractTransfer::ATTRIBUTES]);
@@ -995,7 +995,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function createProductConcreteTransfer()
+    protected function createProductConcreteTransfer(): ProductConcreteTransfer
     {
         $productData = $this->productConcreteEntity->toArray();
         unset($productData[ProductAbstractTransfer::ATTRIBUTES]);
@@ -1010,7 +1010,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductImagesSetById()
+    public function testGetProductImagesSetById(): void
     {
         $productImageSetTransfer = $this->productImageFacade->findProductImageSetById(
             $this->imageSetAbstract->getIdProductImageSet()
@@ -1023,7 +1023,7 @@ class ProductImageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductImagesSetByIdWithoutImages()
+    public function testGetProductImagesSetByIdWithoutImages(): void
     {
         $imageSetEntity = new SpyProductImageSet();
         $imageSetEntity

@@ -8,7 +8,7 @@
 namespace Spryker\Zed\AvailabilityCartConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface;
+use Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -19,6 +19,8 @@ class CheckAvailabilityPlugin extends AbstractPlugin implements CartPreCheckPlug
 {
     /**
      * {@inheritDoc}
+     *  - Checks if items in CartChangeTransfer are sellable.
+     *  - In case `ItemTransfer.amount` was defined, item availability check will be ignored.
      *
      * @api
      *

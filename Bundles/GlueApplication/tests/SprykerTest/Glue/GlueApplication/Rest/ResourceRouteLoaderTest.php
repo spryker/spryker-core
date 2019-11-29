@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -83,6 +83,7 @@ class ResourceRouteLoaderTest extends Unit
 
         $resourceRouteLoader = $this->createResourceLoader([$resourceRoutePluginMock1, $resourceRoutePluginMock2], $versionResolverMock);
 
+        /** @var \Spryker\Glue\GlueApplication\Rest\Request\Data\VersionInterface[] $route */
         $route = $resourceRouteLoader->load('tests', [], Request::create('/tests/1'));
 
         $this->assertSame(2, $route[RequestConstantsInterface::ATTRIBUTE_RESOURCE_VERSION]->getMajor());
@@ -114,6 +115,7 @@ class ResourceRouteLoaderTest extends Unit
 
         $resourceRouteLoader = $this->createResourceLoader([$resourceRoutePluginMock1, $resourceRoutePluginMock2], $versionResolverMock);
 
+        /** @var \Spryker\Glue\GlueApplication\Rest\Request\Data\VersionInterface[] $route */
         $route = $resourceRouteLoader->load('tests', [], Request::create('/tests/1'));
 
         $this->assertSame(1, $route[RequestConstantsInterface::ATTRIBUTE_RESOURCE_VERSION]->getMajor());
@@ -141,6 +143,7 @@ class ResourceRouteLoaderTest extends Unit
 
         $resourceRouteLoader = $this->createResourceLoader([$resourceRoutePluginMock1, $resourceRoutePluginMock2], $versionResolverMock);
 
+        $parents = [];
         $parents[][RequestConstantsInterface::ATTRIBUTE_TYPE] = 'parent-resource2';
         $parents[][RequestConstantsInterface::ATTRIBUTE_TYPE] = 'tests';
 

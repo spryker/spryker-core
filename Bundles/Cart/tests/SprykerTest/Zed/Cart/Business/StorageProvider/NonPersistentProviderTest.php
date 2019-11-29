@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
 use SprykerTest\Zed\Cart\Business\Mocks\CartItemAddTripleStrategy;
 
@@ -38,7 +39,7 @@ class NonPersistentProviderTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->provider = new NonPersistentProvider([], []);
@@ -47,7 +48,7 @@ class NonPersistentProviderTest extends Unit
     /**
      * @return void
      */
-    public function testAddExistingItem()
+    public function testAddExistingItem(): void
     {
         $itemId = '123';
         $existingQuantity = 1;
@@ -75,7 +76,7 @@ class NonPersistentProviderTest extends Unit
     /**
      * @return void
      */
-    public function testAddNewItem()
+    public function testAddNewItem(): void
     {
         $itemId = '123';
         $newId = '321';
@@ -113,7 +114,7 @@ class NonPersistentProviderTest extends Unit
     /**
      * @return void
      */
-    public function testAddDoubleNewItem()
+    public function testAddDoubleNewItem(): void
     {
         $existingItemId = '123';
         $newItemId = '321';
@@ -154,7 +155,7 @@ class NonPersistentProviderTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveExistingItem()
+    public function testRemoveExistingItem(): void
     {
         $itemId = '123';
         $existingQuantity = 1;
@@ -173,7 +174,7 @@ class NonPersistentProviderTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveNotExistingItem()
+    public function testRemoveNotExistingItem(): void
     {
         $itemId = '123';
         $existingQuantity = 1;
@@ -197,7 +198,7 @@ class NonPersistentProviderTest extends Unit
     /**
      * @return void
      */
-    public function testReduceWithMoreThenExists()
+    public function testReduceWithMoreThenExists(): void
     {
         $itemId = '123';
         $existingQuantity = 1;
@@ -214,13 +215,12 @@ class NonPersistentProviderTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption
-     * @expectedExceptionMessage Could not change the quantity of cart item "123" to "-3".
-     *
      * @return void
      */
-    public function testIncreaseWithNegativeValue()
+    public function testIncreaseWithNegativeValue(): void
     {
+        $this->expectException(InvalidQuantityExeption::class);
+        $this->expectExceptionMessage('Could not change the quantity of cart item "123" to "-3".');
         $itemId = '123';
         $newId = '123';
         $existingQuantity = 1;
@@ -237,13 +237,12 @@ class NonPersistentProviderTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption
-     * @expectedExceptionMessage Could not change the quantity of cart item "123" to "0".
-     *
      * @return void
      */
-    public function testIncreaseWithZeroValue()
+    public function testIncreaseWithZeroValue(): void
     {
+        $this->expectException(InvalidQuantityExeption::class);
+        $this->expectExceptionMessage('Could not change the quantity of cart item "123" to "0".');
         $itemId = '123';
         $newId = '123';
         $existingQuantity = 1;
@@ -260,13 +259,12 @@ class NonPersistentProviderTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption
-     * @expectedExceptionMessage Could not change the quantity of cart item "123" to "-3".
-     *
      * @return void
      */
-    public function testDecreaseWithNegativeValue()
+    public function testDecreaseWithNegativeValue(): void
     {
+        $this->expectException(InvalidQuantityExeption::class);
+        $this->expectExceptionMessage('Could not change the quantity of cart item "123" to "-3".');
         $itemId = '123';
         $newId = '123';
         $existingQuantity = 1;
@@ -283,13 +281,12 @@ class NonPersistentProviderTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Zed\Cart\Business\Exception\InvalidQuantityExeption
-     * @expectedExceptionMessage Could not change the quantity of cart item "123" to "0".
-     *
      * @return void
      */
-    public function testDecreaseWithZeroValue()
+    public function testDecreaseWithZeroValue(): void
     {
+        $this->expectException(InvalidQuantityExeption::class);
+        $this->expectExceptionMessage('Could not change the quantity of cart item "123" to "0".');
         $itemId = '123';
         $newId = '123';
         $existingQuantity = 1;
@@ -322,7 +319,6 @@ class NonPersistentProviderTest extends Unit
         $newSecondItemQuantity = 4;
 
         $quoteTransfer = $this->createQuoteWithItem($existingItemId, $existingItemQuantity);
-        $orignalItemTransfer = $quoteTransfer->getItems()->offsetGet(0);
 
         $newFirstItem = $this->createItem($newItemId, $newFirstItemQuantity);
         $newSecondItem = $this->createItem($newItemId, $newSecondItemQuantity);
@@ -355,7 +351,7 @@ class NonPersistentProviderTest extends Unit
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteWithItem($itemId, $itemQuantity)
+    protected function createQuoteWithItem(string $itemId, int $itemQuantity): QuoteTransfer
     {
         $cart = $this->createQuoteTransfer();
         $existingItem = $this->createItem($itemId, $itemQuantity);
@@ -370,7 +366,7 @@ class NonPersistentProviderTest extends Unit
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function createItem($itemId, $itemQuantity)
+    protected function createItem(string $itemId, int $itemQuantity): ItemTransfer
     {
         $existingItem = new ItemTransfer();
         $existingItem->setId($itemId);
@@ -383,7 +379,7 @@ class NonPersistentProviderTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteTransfer()
+    protected function createQuoteTransfer(): QuoteTransfer
     {
         return new QuoteTransfer();
     }

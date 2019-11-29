@@ -38,7 +38,7 @@ class DrawerTest extends Unit
     /**
      * @return void
      */
-    public function testInstantiationConditionsArrayShouldConvertedToCollection()
+    public function testInstantiationConditionsArrayShouldConvertedToCollection(): void
     {
         $drawer = new Drawer(
             [],
@@ -58,7 +58,7 @@ class DrawerTest extends Unit
     /**
      * @return void
      */
-    public function testInstantiationWithConditionCollection()
+    public function testInstantiationWithConditionCollection(): void
     {
         $conditionCollection = new ConditionCollection();
         $conditionCollection->add($this->getConditionMock(), self::CONDITION_NAME);
@@ -81,7 +81,7 @@ class DrawerTest extends Unit
     /**
      * @return void
      */
-    public function testInstantiationCommandsArrayShouldConvertedToCollection()
+    public function testInstantiationCommandsArrayShouldConvertedToCollection(): void
     {
         $drawer = new Drawer(
             [self::COMMAND_NAME => $this->getCommandMock()],
@@ -101,7 +101,7 @@ class DrawerTest extends Unit
     /**
      * @return void
      */
-    public function testInstantiationWithCommandCollection()
+    public function testInstantiationWithCommandCollection(): void
     {
         $commandCollection = new CommandCollection();
         $commandCollection->add($this->getCommandMock(), self::COMMAND_NAME);

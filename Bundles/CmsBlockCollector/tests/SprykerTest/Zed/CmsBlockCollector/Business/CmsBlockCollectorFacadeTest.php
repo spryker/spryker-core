@@ -65,7 +65,7 @@ class CmsBlockCollectorFacadeTest extends Unit
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -121,7 +121,7 @@ class CmsBlockCollectorFacadeTest extends Unit
      *
      * @return void
      */
-    public function testStorageCmsBlockCollectorCallsRunCollector()
+    public function testStorageCmsBlockCollectorCallsRunCollector(): void
     {
         $this->collectorFacadeMock
             ->expects($this->exactly(1))

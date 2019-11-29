@@ -39,7 +39,7 @@ class FlysystemAws3v3FileSystemTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->testDataFlysystemRootDirectory = Configuration::dataDir() . static::ROOT_DIRECTORY;
     }
@@ -47,7 +47,7 @@ class FlysystemAws3v3FileSystemTest extends Unit
     /**
      * @return void
      */
-    public function testLocalFilesystemBuilderPlugin()
+    public function testLocalFilesystemBuilderPlugin(): void
     {
         if (!class_exists('Aws\S3\S3Client') || !class_exists('League\Flysystem\Adapter\AwsS3v3\AwsS3Adapter')) {
             $this->markTestSkipped('Requires Aws\S3\S3Client and League\Flysystem\Adapter\AwsS3v3\AwsS3Adapter to be installed');
@@ -77,7 +77,7 @@ class FlysystemAws3v3FileSystemTest extends Unit
     /**
      * @return void
      */
-    public function testLocalFilesystemBuilderPluginShouldAcceptType()
+    public function testLocalFilesystemBuilderPluginShouldAcceptType(): void
     {
         $localFilesystemBuilderPlugin = new Aws3v3FilesystemBuilderPlugin();
 

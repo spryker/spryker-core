@@ -26,7 +26,7 @@ class DummyPaymentBusinessFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateRefundShouldReturnRefundInterface()
+    public function testCreateRefundShouldReturnRefundInterface(): void
     {
         $dummyPaymentBusinessFactory = new DummyPaymentBusinessFactory();
         $refund = $dummyPaymentBusinessFactory->createRefund();

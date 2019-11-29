@@ -38,7 +38,7 @@ class IsProductSearchableTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -48,7 +48,7 @@ class IsProductSearchableTest extends Unit
     /**
      * @return void
      */
-    public function testProductAbstractIsSearchableShouldReturnTrueIfAnyVariantIsSearchable()
+    public function testProductAbstractIsSearchableShouldReturnTrueIfAnyVariantIsSearchable(): void
     {
         $productAbstractEntity = $this->createProductAbstract();
         $localeTransfer = $this->createLocale('aa_AA');
@@ -75,7 +75,7 @@ class IsProductSearchableTest extends Unit
     /**
      * @return void
      */
-    public function testProductAbstractIsSearchableShouldReturnFalseIfNoVariantIsSearchable()
+    public function testProductAbstractIsSearchableShouldReturnFalseIfNoVariantIsSearchable(): void
     {
         $productAbstractEntity = $this->createProductAbstract();
         $localeTransfer = $this->createLocale('aa_AA');
@@ -95,7 +95,7 @@ class IsProductSearchableTest extends Unit
     /**
      * @return void
      */
-    public function testProductConcreteIsSearchableShouldReturnTrueIfSearchable()
+    public function testProductConcreteIsSearchableShouldReturnTrueIfSearchable(): void
     {
         $productAbstractEntity = $this->createProductAbstract();
         $localeTransfer = $this->createLocale('aa_AA');
@@ -111,7 +111,7 @@ class IsProductSearchableTest extends Unit
     /**
      * @return void
      */
-    public function testProductConcreteIsSearchableShouldReturnFalseIfNotSearchable()
+    public function testProductConcreteIsSearchableShouldReturnFalseIfNotSearchable(): void
     {
         $productAbstractEntity = $this->createProductAbstract();
         $localeTransfer = $this->createLocale('aa_AA');
@@ -127,7 +127,7 @@ class IsProductSearchableTest extends Unit
     /**
      * @return void
      */
-    public function testPersistProductSearchShouldSaveCorrectDataToDatabase()
+    public function testPersistProductSearchShouldSaveCorrectDataToDatabase(): void
     {
         $productAbstractEntity = $this->createProductAbstract();
         $productConcreteEntity = $productAbstractEntity->getSpyProducts()[0];
@@ -160,7 +160,7 @@ class IsProductSearchableTest extends Unit
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
      */
-    protected function createProductAbstract()
+    protected function createProductAbstract(): SpyProductAbstract
     {
         $sku = uniqid('sku_');
 
@@ -181,7 +181,7 @@ class IsProductSearchableTest extends Unit
      *
      * @return \Orm\Zed\Product\Persistence\SpyProduct
      */
-    protected function createProductConcrete($sku)
+    protected function createProductConcrete(string $sku): SpyProduct
     {
         $productConcreteEntity = new SpyProduct();
         $productConcreteEntity
@@ -196,7 +196,7 @@ class IsProductSearchableTest extends Unit
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    protected function createLocale($localeName)
+    protected function createLocale(string $localeName): LocaleTransfer
     {
         $localeEntity = SpyLocaleQuery::create()
             ->filterByLocaleName($localeName)
@@ -216,7 +216,7 @@ class IsProductSearchableTest extends Unit
      *
      * @return void
      */
-    protected function createProductSearchEntity($idProduct, $idLocale, $isSearchable)
+    protected function createProductSearchEntity(int $idProduct, int $idLocale, bool $isSearchable): void
     {
         $productSearchEntity = new SpyProductSearch();
 

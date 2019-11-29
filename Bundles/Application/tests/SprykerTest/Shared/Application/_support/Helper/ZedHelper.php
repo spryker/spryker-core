@@ -27,7 +27,7 @@ class ZedHelper extends Module
      *
      * @return void
      */
-    public function _after(TestInterface $test)
+    public function _after(TestInterface $test): void
     {
         if ($this->seeElement(static::LOGOUT_LINK_SELECTOR)) {
             $tester = $this->getWebDriver();
@@ -60,7 +60,7 @@ class ZedHelper extends Module
      *
      * @return void
      */
-    public function amLoggedInUser($username = 'admin@spryker.com', $password = 'change123')
+    public function amLoggedInUser(string $username = 'admin@spryker.com', string $password = 'change123'): void
     {
         $tester = $this->getWebDriver();
 

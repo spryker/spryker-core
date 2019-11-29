@@ -1,7 +1,7 @@
 {% block form_row -%}
     {% spaceless %}
         <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
-            <div class="{{ block('form_group_class') }}">
+            <div{% if block('form_group_class') is defined %} class="{{ block('form_group_class') }}"{% endif %}>
                 {{ form_widget(form) }}
                 {{ form_errors(form) }}
             </div>
