@@ -41,8 +41,6 @@ class GiftCardCartCodeProcessor implements GiftCardCartCodeProcessorInterface
 
         $quoteTransfer->addGiftCard($giftCard);
 
-        file_put_contents('vcv233223.txt', print_r($quoteTransfer, 1));
-
         return $cartCodeResponseTransfer->setQuote($quoteTransfer);
     }
 

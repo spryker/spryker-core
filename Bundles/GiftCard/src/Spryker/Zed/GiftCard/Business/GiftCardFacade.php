@@ -325,7 +325,6 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
 
     /**
      * {@inheritDoc}
-     * - Sets gift card to the quote if the code hasn't been added already.
      *
      * @api
      *
@@ -342,7 +341,6 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
 
     /**
      * {@inheritDoc}
-     * - Removes matching applied gift card and gift card payment from quote.
      *
      * @api
      *
@@ -359,7 +357,6 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
 
     /**
      * {@inheritDoc}
-     * - Clears all gift cards and gift card payments from the quote.
      *
      * @api
      *
@@ -376,9 +373,6 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
 
     /**
      * {@inheritDoc}
-     * - Returns gift card apply success message in case the given gift card code has been applied successfully.
-     * - Returns gift card apply failed message in case the given gift card code hasn't been applied successfully.
-     * - Returns an empty failed message if code is not relevant.
      *
      * @api
      *

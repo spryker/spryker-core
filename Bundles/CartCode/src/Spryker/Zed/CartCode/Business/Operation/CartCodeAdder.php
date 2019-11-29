@@ -98,7 +98,7 @@ class CartCodeAdder implements CartCodeAdderInterface
                 $cartCodeResponseTransfer->addMessage($messageTransfer);
             }
 
-            if ($messageTransfer->getType() === static::MESSAGE_TYPE_ERROR) {
+            if ($messageTransfer && $messageTransfer->getType() === static::MESSAGE_TYPE_ERROR) {
                 $cartCodeResponseTransfer->setIsSuccessful(false);
             }
         }

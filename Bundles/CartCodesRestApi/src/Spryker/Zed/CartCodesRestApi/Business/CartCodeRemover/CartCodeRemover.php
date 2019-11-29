@@ -55,7 +55,8 @@ class CartCodeRemover implements CartCodeRemoverInterface
             );
         }
 
-        if (!$this->checkIfVoucherCodeIsInQuote($quoteTransfer->getVoucherDiscounts(), $cartCodeRequestTransfer->getCartCode())) {
+        $discountTransfers = $quoteResponseTransfer->getQuoteTransfer()->getVoucherDiscounts();
+        if (!$this->checkIfVoucherCodeIsInQuote($discountTransfers, $cartCodeRequestTransfer->getCartCode())) {
             return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
                 CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_NOT_FOUND
             );
