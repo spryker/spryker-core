@@ -9,4 +9,7 @@
     <transfer name="RestOrderItemProductOptions">
     </transfer>
 
+    <transfer name="Item">
+    </transfer>
+
 </transfers>

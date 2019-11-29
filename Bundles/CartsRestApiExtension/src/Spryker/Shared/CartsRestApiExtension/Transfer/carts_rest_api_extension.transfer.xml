@@ -33,4 +33,10 @@
     <transfer name="PersistentCartChange">
     </transfer>
 
+    <transfer name="Item">
+    </transfer>
+
+    <transfer name="RestCartItemsAttributes">
+    </transfer>
+
 </transfers>

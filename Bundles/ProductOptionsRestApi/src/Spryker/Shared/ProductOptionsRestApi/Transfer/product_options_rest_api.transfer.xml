@@ -28,6 +28,8 @@
 
     <transfer name="ProductOptionValueStorage">
         <property name="value" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="idProductOptionValue" type="int"/>
     </transfer>
 
     <transfer name="ProductOptionGroupStorage">
@@ -37,6 +39,7 @@
 
     <transfer name="CartItemRequest">
         <property name="productOptions" type="ProductOption[]" singular="productOption"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="RestCartItemsAttributes">
@@ -69,6 +72,10 @@
         <property name="groupName" type="string"/>
         <property name="value" type="string"/>
         <property name="sumPrice" type="int"/>
+    </transfer>
+
+    <transfer name="PersistentCartChange">
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
 </transfers>
