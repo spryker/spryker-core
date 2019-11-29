@@ -26,7 +26,7 @@ class ProductConcretePageSearchEventResourceBulkRepositoryPlugin extends Abstrac
 
     /**
      * {@inheritDoc}
-     * - Returns array of product entity transfers.
+     * - Returns array of product concrete transfers.
      *
      * @api
      *

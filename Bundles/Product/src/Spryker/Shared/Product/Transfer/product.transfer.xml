@@ -107,4 +107,8 @@
         <property name="fkLocale" type="int"/>
     </transfer>
 
+    <transfer name="Filter">
+    </transfer>
+
+
 </transfers>
