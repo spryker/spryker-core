@@ -9,12 +9,14 @@ namespace Spryker\Zed\CartCodeExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\CartCodeRequestTransfer;
 use Generated\Shared\Transfer\CartCodeResponseTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
+use Spryker\Zed\Messenger\Business\Model\MessageTranslator;
 
 interface CartCodePluginInterface
 {
     /**
      * Specification:
-     * - Executed by CartCodeClient::addCartCode() method.
+     * - Executed by CartCodeFacade::addCartCode() method.
      * - Extends QuoteTransfer with $cartCode and its relevant data when the $cartCode is applicable.
      *
      * @api
@@ -61,7 +63,7 @@ interface CartCodePluginInterface
      *
      * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    public function getOperationResponseMessage(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer;
+    public function getOperationResponseMessage(CartCodeRequestTransfer $cartCodeRequestTransfer): ?MessageTransfer;
 }

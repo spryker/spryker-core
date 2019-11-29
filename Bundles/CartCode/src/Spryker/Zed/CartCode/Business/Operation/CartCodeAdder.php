@@ -53,10 +53,10 @@ class CartCodeAdder implements CartCodeAdderInterface
      */
     public function addCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
-        $lockedCartCodeOperationResultTransfer = $this->quoteOperationChecker
+        $lockedCartCodeResponseTransfer = $this->quoteOperationChecker
             ->checkLockedQuoteResponse($cartCodeRequestTransfer->getQuote());
-        if ($lockedCartCodeOperationResultTransfer) {
-            return $lockedCartCodeOperationResultTransfer;
+        if ($lockedCartCodeResponseTransfer) {
+            return $lockedCartCodeResponseTransfer;
         }
 
         $quoteTransfer = $this->executeCartCodePlugins($cartCodeRequestTransfer);

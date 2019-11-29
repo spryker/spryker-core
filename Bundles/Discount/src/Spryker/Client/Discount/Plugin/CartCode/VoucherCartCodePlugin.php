@@ -57,6 +57,23 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
 
     /**
      * {@inheritDoc}
+     * - Clears all applied and not applied voucher codes from the quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function clearAllCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createVoucherCartCode()
+            ->clearAllCodes($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
      * - Returns voucher apply success message in case the given voucher code has been applied successfully.
      * - Returns voucher apply failed message in case the given voucher code hasn't been applied successfully.
      * - Returns an empty failed message if code is not relevant.
@@ -73,22 +90,5 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
         return $this->getFactory()
             ->createVoucherCartCode()
             ->getOperationResponseMessage($quoteTransfer, $code);
-    }
-
-    /**
-     * {@inheritDoc}
-     * - Clears all applied and not applied voucher codes from the quote.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function clearAllCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        return $this->getFactory()
-            ->createVoucherCartCode()
-            ->clearAllCodes($quoteTransfer);
     }
 }

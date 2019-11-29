@@ -55,6 +55,6 @@ class CartCodeFacade extends AbstractFacade implements CartCodeFacadeInterface
      */
     public function clearCartCodes(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
-        return $this->getFactory()->createCartCodeRemover()->clearCartCodes($cartCodeRequestTransfer);
+        return $this->getFactory()->createCartCodeClearer()->clearCartCodes($cartCodeRequestTransfer);
     }
 }

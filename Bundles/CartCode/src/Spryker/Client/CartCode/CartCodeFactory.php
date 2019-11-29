@@ -109,7 +109,7 @@ class CartCodeFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PersistentCart\Dependency\Client\CartCodeToZedRequestClientInterface
+     * @return \Spryker\Client\CartCode\Dependency\Client\CartCodeToZedRequestClientInterface
      */
     public function getZedRequestClient(): CartCodeToZedRequestClientInterface
     {

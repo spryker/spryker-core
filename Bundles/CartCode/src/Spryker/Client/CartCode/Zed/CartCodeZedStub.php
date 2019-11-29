@@ -16,14 +16,14 @@ class CartCodeZedStub implements CartCodeZedStubInterface
     /**
      * @var \Spryker\Client\CartCode\Dependency\Client\CartCodeToZedRequestClientInterface
      */
-    protected $zedStubClient;
+    protected $zedRequestClient;
 
     /**
-     * @param \Spryker\Client\CartCode\Dependency\Client\CartCodeToZedRequestClientInterface $zedStubClient
+     * @param \Spryker\Client\CartCode\Dependency\Client\CartCodeToZedRequestClientInterface $zedRequestClient
      */
-    public function __construct(CartCodeToZedRequestClientInterface $zedStubClient)
+    public function __construct(CartCodeToZedRequestClientInterface $zedRequestClient)
     {
-        $this->zedStubClient = $zedStubClient;
+        $this->zedRequestClient = $zedRequestClient;
     }
 
     /**
@@ -36,7 +36,7 @@ class CartCodeZedStub implements CartCodeZedStubInterface
     public function addCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\CartCodeResponseTransfer $cartCodeResponseTransfer */
-        $cartCodeResponseTransfer = $this->zedStubClient->call('/cart-code/gateway/add-cart-code', $cartCodeRequestTransfer);
+        $cartCodeResponseTransfer = $this->zedRequestClient->call('/cart-code/gateway/add-cart-code', $cartCodeRequestTransfer);
 
         return $cartCodeResponseTransfer;
     }
@@ -51,7 +51,7 @@ class CartCodeZedStub implements CartCodeZedStubInterface
     public function removeCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\CartCodeResponseTransfer $cartCodeResponseTransfer */
-        $cartCodeResponseTransfer = $this->zedStubClient->call('/cart-codes-rest-api/gateway/remove-cart-code', $cartCodeRequestTransfer);
+        $cartCodeResponseTransfer = $this->zedRequestClient->call('/cart-codes-rest-api/gateway/remove-cart-code', $cartCodeRequestTransfer);
 
         return $cartCodeResponseTransfer;
     }
@@ -66,7 +66,7 @@ class CartCodeZedStub implements CartCodeZedStubInterface
     public function clearCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\CartCodeResponseTransfer $cartCodeResponseTransfer */
-        $cartCodeResponseTransfer = $this->zedStubClient->call('/cart-codes-rest-api/gateway/clear-cart-codes', $cartCodeRequestTransfer);
+        $cartCodeResponseTransfer = $this->zedRequestClient->call('/cart-codes-rest-api/gateway/clear-cart-codes', $cartCodeRequestTransfer);
 
         return $cartCodeResponseTransfer;
     }
