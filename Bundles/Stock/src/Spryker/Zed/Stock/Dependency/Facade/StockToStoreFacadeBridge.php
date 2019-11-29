@@ -23,6 +23,14 @@ class StockToStoreFacadeBridge implements StockToStoreFacadeInterface
     }
 
     /**
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getAllStores()
+    {
+        return $this->storeFacade->getAllStores();
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getCurrentStore()

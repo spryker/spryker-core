@@ -40,6 +40,7 @@ use Spryker\Zed\ProductManagement\Communication\Tabs\ProductFormEditTabs;
 use Spryker\Zed\ProductManagement\Communication\Transfer\ProductFormTransferMapper;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductBundleInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductCategoryInterface;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreFacadeInterface;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
 /**
@@ -417,6 +418,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
             $this->getAvailabilityFacade(),
             $this->getLocaleFacade()->getCurrentLocale(),
             $this->getPriceFacade(),
+            $this->getStoreFacade(),
             $idProductConcrete
         );
     }
@@ -534,6 +536,14 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     protected function getStore()
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreFacadeInterface
+     */
+    protected function getStoreFacade(): ProductManagementToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_STORE);
     }
 
     /**

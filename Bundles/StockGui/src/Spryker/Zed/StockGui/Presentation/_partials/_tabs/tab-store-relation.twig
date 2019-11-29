@@ -1,0 +1,5 @@
+{% if stockForm.storeRelation is defined %}
+    {{ form_row(stockForm.storeRelation.id_stores, { 'label': 'Available in the following store(s)' | trans }) }}
+{% endif %}
+
+{{ form_rest(stockForm.storeRelation) }}
