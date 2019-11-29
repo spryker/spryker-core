@@ -930,7 +930,7 @@ interface ProductFacadeInterface
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getProductConcreteTransfersByFilter(FilterTransfer $filterTransfer): array;
 }

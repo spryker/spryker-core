@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business;
 
-use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**

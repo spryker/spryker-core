@@ -22,6 +22,8 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
  */
 class ProductConcretePageSearchEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
 {
+    protected const COL_ID_PRODUCT_CONCRETE = '.id_product_concrete';
+
     /**
      * {@inheritDoc}
      * - Returns array of product entity transfers.
@@ -75,7 +77,7 @@ class ProductConcretePageSearchEventResourceBulkRepositoryPlugin extends Abstrac
      */
     public function getIdColumnName(): ?string
     {
-        return SpyProductTableMap::COL_ID_PRODUCT;
+        return static::COL_ID_PRODUCT_CONCRETE;
     }
 
     /**

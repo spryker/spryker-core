@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business;
 
-use Generated\Shared\Transfer\FilterTransfer;
-
 interface ProductPageSearchFacadeInterface
 {
     /**

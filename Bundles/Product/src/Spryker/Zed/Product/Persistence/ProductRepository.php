@@ -377,14 +377,16 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getProductConcreteTransfersByFilter(FilterTransfer $filterTransfer): array
     {
-        return $this->buildQueryFromCriteria(
+        $productEntityTransfers = $this->buildQueryFromCriteria(
             $this->getFactory()->createProductQuery(),
             $filterTransfer
-        )->find();
+        )->setFormatter(ModelCriteria::FORMAT_OBJECT)->find();
+
+        return $this->getProductConcreteTransfersMappedFromProductConcreteEntities($productEntityTransfers);
     }
 
     /**
