@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTokenProvider;
 
+/**
+ * @deprecated Use `Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface` instead.
+ */
 interface TokenGeneratorInterface
 {
     public const DEFAULT_ALGORITHM = 'sha256';
@@ -17,8 +20,8 @@ interface TokenGeneratorInterface
     public function generateToken();
 
     /**
-     * @param mixed $expected
-     * @param mixed $actual
+     * @param string $expected
+     * @param string $actual
      *
      * @return bool
      */
