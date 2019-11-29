@@ -10,7 +10,9 @@ namespace Spryker\Zed\Sales\Persistence;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\Propel\PropelFilterCriteria;
 
@@ -94,11 +96,6 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             ->createSalesOrderQuery()
             ->filterByCustomerReference($orderListRequestTransfer->getCustomerReference());
 
-        $ordersCount = $orderListQuery->count();
-        if (!$ordersCount) {
-            return new OrderListTransfer();
-        }
-
         $filterTransfer = $orderListRequestTransfer->getFilter();
         if ($filterTransfer) {
             $orderListQuery->mergeWith(
@@ -106,8 +103,49 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             );
         }
 
-        return $this->getFactory()
+        $orderListTransfer = $this->getFactory()
             ->createSalesOrderMapper()
-            ->mapSalesOrderEntitiesToOrderListTransfer($orderListQuery->find()->getArrayCopy(), new OrderListTransfer(), $ordersCount);
+            ->mapSalesOrderEntitiesToOrderListTransfer($orderListQuery->find()->getArrayCopy(), new OrderListTransfer());
+        $orderListTransfer->setPagination(
+            $this->getPaginationTransferByOrderQuery($orderListRequestTransfer, $orderListQuery)
+        );
+
+        return $orderListTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderListRequestTransfer $orderListRequestTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $orderListQuery
+     *
+     * @return \Generated\Shared\Transfer\PaginationTransfer
+     */
+    protected function getPaginationTransferByOrderQuery(
+        OrderListRequestTransfer $orderListRequestTransfer,
+        SpySalesOrderQuery $orderListQuery
+    ): PaginationTransfer
+    {
+        $paginationTransfer = $orderListRequestTransfer->getPagination();
+        if (!$paginationTransfer) {
+            return (new PaginationTransfer())->setNbResults($orderListQuery->count());
+        }
+
+        $page = $paginationTransfer
+            ->requirePage()
+            ->getPage();
+
+        $maxPerPage = $paginationTransfer
+            ->requireMaxPerPage()
+            ->getMaxPerPage();
+
+        $paginationModel = $orderListQuery->paginate($page, $maxPerPage);
+        $paginationTransfer->setNbResults($paginationModel->getNbResults());
+        $paginationTransfer->setFirstIndex($paginationModel->getFirstIndex());
+        $paginationTransfer->setLastIndex($paginationModel->getLastIndex());
+        $paginationTransfer->setFirstPage($paginationModel->getFirstPage());
+        $paginationTransfer->setLastPage($paginationModel->getLastPage());
+        $paginationTransfer->setNextPage($paginationModel->getNextPage());
+        $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
+
+        return $paginationTransfer;
     }
 }
