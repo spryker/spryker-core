@@ -29,7 +29,7 @@ abstract class AbstractIndexNameAwareSearchIndexConsole extends Console
             return $this->executeForSingleIndex($indexName);
         }
 
-        return $this->executeForAllIndices();
+        return $this->executeForAllIndexes();
     }
 
     /**
@@ -42,5 +42,5 @@ abstract class AbstractIndexNameAwareSearchIndexConsole extends Console
     /**
      * @return int
      */
-    abstract protected function executeForAllIndices(): int;
+    abstract protected function executeForAllIndexes(): int;
 }

@@ -67,7 +67,7 @@ interface SearchElasticsearchClientInterface
     /**
      * Specification:
      * - Deletes one index available for this Client if indexName is passed.
-     * - Deletes all indices available for this Client if indexName is not passed.
+     * - Deletes all indexes available for this Client if indexName is not passed.
      *
      * @api
      *

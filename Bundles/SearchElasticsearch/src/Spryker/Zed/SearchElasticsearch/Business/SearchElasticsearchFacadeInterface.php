@@ -15,7 +15,7 @@ interface SearchElasticsearchFacadeInterface
     /**
      * Specification:
      * - Finds index definition files in modules.
-     * - Installs or update indices by found index definition files.
+     * - Installs or update indexes by found index definition files.
      *
      * @api
      *
@@ -53,7 +53,7 @@ interface SearchElasticsearchFacadeInterface
 
     /**
      * Specification:
-     * - Opens all the existing Elasticsearch indices.
+     * - Opens all the existing Elasticsearch indexes.
      *
      * @api
      *
@@ -76,7 +76,7 @@ interface SearchElasticsearchFacadeInterface
 
     /**
      * Specification:
-     * - Closes all the existing Elasticsearch indices.
+     * - Closes all the existing Elasticsearch indexes.
      *
      * @api
      *
@@ -88,7 +88,7 @@ interface SearchElasticsearchFacadeInterface
      * Specification:
      * - Deletes an Elasticsearch index.
      * - The name of an index to be deleted is carried by SearchContextTransfer object.
-     * - If no SearchContextTransfer object is passed, all the existing indices are deleted.
+     * - If no SearchContextTransfer object is passed, all the existing indexes are deleted.
      *
      * @api
      *
@@ -100,7 +100,7 @@ interface SearchElasticsearchFacadeInterface
 
     /**
      * Specification:
-     * - Deletes all the existing Elasticsearch indices.
+     * - Deletes all the existing Elasticsearch indexes.
      *
      * @api
      *

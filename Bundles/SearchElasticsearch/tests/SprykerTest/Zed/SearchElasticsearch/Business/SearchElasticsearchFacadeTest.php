@@ -46,7 +46,7 @@ class SearchElasticsearchFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testInstallsIndices(): void
+    public function testInstallsIndexes(): void
     {
         // Arrange
         $this->tester->mockConfigMethod('getJsonSchemaDefinitionDirectories', $this->tester->getFixturesSchemaDirectory());
@@ -100,7 +100,7 @@ class SearchElasticsearchFacadeTest extends Unit
      *
      * @return void
      */
-    public function testCanCloseAllIndices(): void
+    public function testCanCloseAllIndexes(): void
     {
         // Arrange
         /** @var \Elastica\Index $index */
@@ -113,7 +113,7 @@ class SearchElasticsearchFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($result);
-        $this->assertAllIndicesAreOfExpectedState([$index, $anotherIndex], SearchElasticsearchConfig::INDEX_CLOSE_STATE);
+        $this->assertAllIndexesAreOfExpectedState([$index, $anotherIndex], SearchElasticsearchConfig::INDEX_CLOSE_STATE);
     }
 
     /**
@@ -138,7 +138,7 @@ class SearchElasticsearchFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCanOpenAllIndices(): void
+    public function testCanOpenAllIndexes(): void
     {
         // Arrange
         /** @var \Elastica\Index $index */
@@ -152,7 +152,7 @@ class SearchElasticsearchFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($result);
-        $this->assertAllIndicesAreOfExpectedState([$index, $anotherIndex], SearchElasticsearchConfig::INDEX_OPEN_STATE);
+        $this->assertAllIndexesAreOfExpectedState([$index, $anotherIndex], SearchElasticsearchConfig::INDEX_OPEN_STATE);
     }
 
     /**
@@ -174,7 +174,7 @@ class SearchElasticsearchFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCanDeleteAllIndices(): void
+    public function testCanDeleteAllIndexes(): void
     {
         // Arrange
         $index = $this->tester->haveIndex('dummy_index_name');
@@ -185,7 +185,7 @@ class SearchElasticsearchFacadeTest extends Unit
         $this->tester->getFacade()->deleteIndexes();
 
         // Assert
-        $this->assertAllIndicesAreDeleted([$index, $anotherIndex]);
+        $this->assertAllIndexesAreDeleted([$index, $anotherIndex]);
     }
 
     /**
@@ -214,46 +214,46 @@ class SearchElasticsearchFacadeTest extends Unit
     }
 
     /**
-     * @param \Elastica\Index[] $indices
+     * @param \Elastica\Index[] $indexes
      * @param string $expectedState
      *
      * @return void
      */
-    protected function assertAllIndicesAreOfExpectedState(array $indices, string $expectedState): void
+    protected function assertAllIndexesAreOfExpectedState(array $indexes, string $expectedState): void
     {
-        $allIndicesAreOpen = true;
+        $allIndexesAreOpen = true;
 
-        foreach ($indices as $index) {
+        foreach ($indexes as $index) {
             $indexState = $this->getIndexState($index);
 
             if ($indexState !== $expectedState) {
-                $allIndicesAreOpen = false;
+                $allIndexesAreOpen = false;
 
                 break;
             }
         }
 
-        $this->assertTrue($allIndicesAreOpen);
+        $this->assertTrue($allIndexesAreOpen);
     }
 
     /**
-     * @param \Elastica\Index[] $indices
+     * @param \Elastica\Index[] $indexes
      *
      * @return void
      */
-    protected function assertAllIndicesAreDeleted(array $indices): void
+    protected function assertAllIndexesAreDeleted(array $indexes): void
     {
-        $allIndicesAreDeleted = true;
+        $allIndexesAreDeleted = true;
 
-        foreach ($indices as $index) {
+        foreach ($indexes as $index) {
             if ($index->exists()) {
-                $allIndicesAreDeleted = false;
+                $allIndexesAreDeleted = false;
 
                 break;
             }
         }
 
-        $this->assertTrue($allIndicesAreDeleted);
+        $this->assertTrue($allIndexesAreDeleted);
     }
 
     /**

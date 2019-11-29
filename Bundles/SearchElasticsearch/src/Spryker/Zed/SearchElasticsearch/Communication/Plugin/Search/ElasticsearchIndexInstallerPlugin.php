@@ -21,7 +21,7 @@ class ElasticsearchIndexInstallerPlugin extends AbstractPlugin implements Instal
     /**
      * {@inheritDoc}
      * - Finds schema definition files in modules.
-     * - Installs or updates Elasticsearch indices by found schema definition files.
+     * - Installs or updates Elasticsearch indexes by found schema definition files.
      *
      * @api
      *
