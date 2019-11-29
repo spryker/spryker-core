@@ -80,10 +80,10 @@ class ConfigurableBundleTemplatePageSearchExpander implements ConfigurableBundle
         ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer
     ): ConfigurableBundleTemplatePageSearchTransfer {
         $images = [];
-        $localizedProductImageSetTransfers = $this->getLocalizedProductImageSets($configurableBundleTemplateTransfer, $configurableBundleTemplatePageSearchTransfer);
+        $productImageSetTransfers = $this->getProductImageSets($configurableBundleTemplateTransfer);
 
-        foreach ($localizedProductImageSetTransfers as $productImageSetTransfer) {
-            $images = array_merge($images, $this->mapImageSetTransferToImages($productImageSetTransfer));
+        foreach ($productImageSetTransfers as $productImageSetTransfer) {
+            $images = array_merge($images, $this->getImagesArrayFromImageSetTransfer($productImageSetTransfer));
         }
 
         $configurableBundleTemplatePageSearchTransfer->setImages($images);
@@ -93,27 +93,18 @@ class ConfigurableBundleTemplatePageSearchExpander implements ConfigurableBundle
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
      */
-    protected function getLocalizedProductImageSets(
-        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer,
-        ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer
-    ): array {
-        $configurableBundleTemplatePageSearchTransfer->requireLocale();
-        $localizedProductImageSetTransfers = [];
+    protected function getProductImageSets(ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer): array
+    {
+        $productImageSetTransfers = [];
 
         foreach ($configurableBundleTemplateTransfer->getProductImageSets() as $productImageSetTransfer) {
-            if (!$productImageSetTransfer->getLocale()
-                || $productImageSetTransfer->getLocale()->getLocaleName() !== $configurableBundleTemplatePageSearchTransfer->getLocale()) {
-                continue;
-            }
-
-            $localizedProductImageSetTransfers[] = $productImageSetTransfer;
+            $productImageSetTransfers[] = $productImageSetTransfer;
         }
 
-        return $localizedProductImageSetTransfers;
+        return $productImageSetTransfers;
     }
 
     /**
@@ -121,7 +112,7 @@ class ConfigurableBundleTemplatePageSearchExpander implements ConfigurableBundle
      *
      * @return array
      */
-    protected function mapImageSetTransferToImages(ProductImageSetTransfer $productImageSetTransfer): array
+    protected function getImagesArrayFromImageSetTransfer(ProductImageSetTransfer $productImageSetTransfer): array
     {
         $images = [];
 

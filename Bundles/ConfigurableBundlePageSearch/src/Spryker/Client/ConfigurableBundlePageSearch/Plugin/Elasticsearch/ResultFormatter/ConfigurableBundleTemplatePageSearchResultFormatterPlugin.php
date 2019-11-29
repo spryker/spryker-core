@@ -38,7 +38,7 @@ class ConfigurableBundleTemplatePageSearchResultFormatterPlugin extends Abstract
         $configurableBundleTemplatePageSearchTransfers = [];
 
         foreach ($searchResult->getResults() as $document) {
-            $configurableBundleTemplatePageSearchTransfers[] = $this->mapToTransfer(
+            $configurableBundleTemplatePageSearchTransfers[] = $this->getMappedConfigurableBundleTemplatePageSearchTransfer(
                 $document->getSource()[PageIndexMap::SEARCH_RESULT_DATA]
             );
         }
@@ -51,12 +51,10 @@ class ConfigurableBundleTemplatePageSearchResultFormatterPlugin extends Abstract
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer
      */
-    protected function mapToTransfer(array $data): ConfigurableBundleTemplatePageSearchTransfer
+    protected function getMappedConfigurableBundleTemplatePageSearchTransfer(array $data): ConfigurableBundleTemplatePageSearchTransfer
     {
-        $productConcretePageSearchTransfer = new ConfigurableBundleTemplatePageSearchTransfer();
-        $productConcretePageSearchTransfer->fromArray($data, true);
-        $productConcretePageSearchTransfer->setFkConfigurableBundleTemplate($data[ConfigurableBundleTemplateTransfer::ID_CONFIGURABLE_BUNDLE_TEMPLATE]);
-
-        return $productConcretePageSearchTransfer;
+        return (new ConfigurableBundleTemplatePageSearchTransfer())
+            ->fromArray($data, true)
+            ->setFkConfigurableBundleTemplate($data[ConfigurableBundleTemplateTransfer::ID_CONFIGURABLE_BUNDLE_TEMPLATE]);
     }
 }
