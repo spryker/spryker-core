@@ -17,4 +17,4 @@ coverage:
     enabled: true
     whitelist:
         include:
-            - 'src/*'
+            - 'src/*.php'
