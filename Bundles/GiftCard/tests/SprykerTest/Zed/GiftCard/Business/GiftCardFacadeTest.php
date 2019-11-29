@@ -186,7 +186,7 @@ class GiftCardFacadeTest extends Test
         );
 
         // Assert
-        $this->assertCount(0, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts());
+        $this->assertCount(0, $cartCodeResponseTransfer->getQuote()->getGiftCards());
     }
 
     /**
@@ -204,7 +204,7 @@ class GiftCardFacadeTest extends Test
         );
 
         // Assert
-        $this->assertCount(0, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts());
+        $this->assertCount(0, $cartCodeResponseTransfer->getQuote()->getGiftCards());
     }
 
     /**
@@ -216,16 +216,15 @@ class GiftCardFacadeTest extends Test
         $quoteTransfer = $this->tester->createQuoteTransferWithGiftCard();
 
         // Act
-        $messageTransfer = $this->getFacade()->getOperationResponseMessage(
+        $cartCodeResponseTransfer = $this->getFacade()->getOperationResponseMessage(
             (new CartCodeRequestTransfer())
                 ->setCartCode($this->tester::GIFT_CARD_CODE)
                 ->setQuote($quoteTransfer)
         );
 
         // Assert
-        $this->assertNotNull($messageTransfer);
+        $this->assertNotNull($cartCodeResponseTransfer->getMessages());
     }
-
 
     /**
      * @return array

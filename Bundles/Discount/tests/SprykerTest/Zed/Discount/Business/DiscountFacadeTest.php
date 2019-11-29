@@ -1028,14 +1028,14 @@ class DiscountFacadeTest extends Unit
         $quoteTransfer = $this->tester->createQuoteTransferWithVoucherDiscount();
 
         // Act
-        $messageTransfer = $this->createDiscountFacade()->getOperationResponseMessage(
+        $cartCodeResponseTransfer = $this->createDiscountFacade()->getOperationResponseMessage(
             (new CartCodeRequestTransfer())
                 ->setCartCode($this->tester::VOUCHER_CODE)
                 ->setQuote($quoteTransfer)
         );
 
         // Assert
-        $this->assertNotNull($messageTransfer);
+        $this->assertNotNull($cartCodeResponseTransfer->getMessages());
     }
 
     /**

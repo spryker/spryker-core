@@ -62,23 +62,24 @@ class GiftCardCartCodeProcessor implements GiftCardCartCodeProcessorInterface
     /**
      * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer|null
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function getOperationResponseMessage(CartCodeRequestTransfer $cartCodeRequestTransfer): ?MessageTransfer
+    public function getOperationResponseMessage(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
+        $cartCodeResponseTransfer = new CartCodeResponseTransfer();
         $cartCode = $cartCodeRequestTransfer->getCartCode();
         $quoteTransfer = $cartCodeRequestTransfer->getQuote();
         $giftCardApplySuccessMessageTransfer = $this->getGiftCardApplySuccessMessage($quoteTransfer, $cartCode);
         if ($giftCardApplySuccessMessageTransfer) {
-            return $giftCardApplySuccessMessageTransfer;
+            return $cartCodeResponseTransfer->addMessage($giftCardApplySuccessMessageTransfer);
         }
 
         $giftCardApplyFailedMessageTransfer = $this->getGiftCardApplyFailedMessage($quoteTransfer, $cartCode);
         if ($giftCardApplyFailedMessageTransfer) {
-            return $giftCardApplyFailedMessageTransfer;
+            return $cartCodeResponseTransfer->addMessage($giftCardApplyFailedMessageTransfer);
         }
 
-        return null;
+        return $cartCodeResponseTransfer;
     }
 
     /**

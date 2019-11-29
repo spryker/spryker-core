@@ -95,23 +95,24 @@ class VoucherCartCode implements VoucherCartCodeInterface
     /**
      * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer|null
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function getOperationResponseMessage(CartCodeRequestTransfer $cartCodeRequestTransfer): ?MessageTransfer
+    public function getOperationResponseMessage(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
+        $cartCodeResponseTransfer = new CartCodeResponseTransfer();
         $quoteTransfer = $cartCodeRequestTransfer->getQuote();
         $cartCode = $cartCodeRequestTransfer->getCartCode();
         $voucherApplySuccessMessageTransfer = $this->getVoucherApplySuccessMessage($quoteTransfer, $cartCode);
         if ($voucherApplySuccessMessageTransfer) {
-            return $voucherApplySuccessMessageTransfer;
+            return $cartCodeResponseTransfer->addMessage($voucherApplySuccessMessageTransfer);
         }
 
         $nonApplicableErrorMessageTransfer = $this->getNonApplicableErrorMessage($quoteTransfer, $cartCode);
         if ($nonApplicableErrorMessageTransfer) {
-            return $nonApplicableErrorMessageTransfer;
+            return $cartCodeResponseTransfer->addMessage($nonApplicableErrorMessageTransfer);
         }
 
-        return null;
+        return $cartCodeResponseTransfer;
     }
 
     /**

@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -595,20 +594,6 @@ interface DiscountFacadeInterface
 
     /**
      * Specification:
-     * - Returns voucher apply success message in case the given voucher code has been applied successfully.
-     * - Returns voucher apply failed message in case the given voucher code hasn't been applied successfully.
-     * - Returns an empty failed message if code is not relevant.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\MessageTransfer|null
-     */
-    public function getOperationResponseMessage(CartCodeRequestTransfer $cartCodeRequestTransfer): ?MessageTransfer;
-
-    /**
-     * Specification:
      * - Clears all applied and not applied voucher codes from the quote.
      *
      * @api
@@ -618,4 +603,18 @@ interface DiscountFacadeInterface
      * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
     public function clearCartCodes(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer;
+
+    /**
+     * Specification:
+     * - Returns voucher apply success message in case the given voucher code has been applied successfully.
+     * - Returns voucher apply failed message in case the given voucher code hasn't been applied successfully.
+     * - Returns an empty failed message if code is not relevant.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     */
+    public function getOperationResponseMessage(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer;
 }

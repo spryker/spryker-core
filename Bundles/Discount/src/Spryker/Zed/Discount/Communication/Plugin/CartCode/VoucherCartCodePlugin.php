@@ -9,7 +9,6 @@ namespace Spryker\Zed\Discount\Communication\Plugin\CartCode;
 
 use Generated\Shared\Transfer\CartCodeRequestTransfer;
 use Generated\Shared\Transfer\CartCodeResponseTransfer;
-use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -61,9 +60,9 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
      *
      * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer|null
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function getOperationResponseMessage(CartCodeRequestTransfer $cartCodeRequestTransfer): ?MessageTransfer
+    public function getOperationResponseMessage(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
         return $this->getFacade()->getOperationResponseMessage($cartCodeRequestTransfer);
     }
