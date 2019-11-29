@@ -209,6 +209,7 @@
     "spryker/customer-access": "*",
     "spryker/customer-access-gui": "*",
     "spryker/customer-access-permission": "*",
+    "spryker/customer-access-rest-api": "*",
     "spryker/customer-access-storage": "*",
     "spryker/customer-api": "*",
     "spryker/customer-catalog": "*",
@@ -519,10 +520,7 @@
     "spryker/scheduler-jenkins": "*",
     "spryker/search": "*",
     "spryker/security": "*",
-<<<<<<< HEAD
     "spryker/security-extension": "*",
-=======
->>>>>>> origin/master
     "spryker/sequence-number": "*",
     "spryker/session": "*",
     "spryker/session-extension": "*",
@@ -555,9 +553,9 @@
     "spryker/state-machine": "*",
     "spryker/step-engine": "*",
     "spryker/stock": "*",
-    "spryker/stock-gui": "*",
+    "spryker/stock-data-import": "*",
     "spryker/stock-extension": "*",
-    "spryker/stock-sales-connector": "*",
+    "spryker/stock-gui": "*",
     "spryker/storage": "*",
     "spryker/storage-extension": "*",
     "spryker/storage-redis": "*",
