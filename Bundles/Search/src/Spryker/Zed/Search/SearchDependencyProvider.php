@@ -19,6 +19,9 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_SEARCH = 'search client';
     public const SERVICE_UTIL_ENCODING = 'util encoding service';
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const PLUGIN_SEARCH_PAGE_MAPS = 'PLUGIN_SEARCH_PAGE_MAPS';
     public const PLUGINS_SEARCH_SOURCE_INSTALLER = 'SEARCH_SCHEMA_INSTALLER_PLUGINS';
     public const PLUGINS_SEARCH_MAP_INSTALLER = 'PLUGINS_SEARCH_MAP_INSTALLER';
@@ -70,6 +73,8 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -84,6 +89,8 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface[]
      */
     protected function getSearchPageMapPlugins()

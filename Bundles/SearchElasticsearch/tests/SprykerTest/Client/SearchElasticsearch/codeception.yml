@@ -27,3 +27,4 @@ suites:
             - \SprykerTest\Shared\Testify\Helper\LocatorHelper
             - \SprykerTest\Shared\Testify\Helper\DependencyHelper
             - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+            - \SprykerTest\Client\Testify\Helper\ClientHelper

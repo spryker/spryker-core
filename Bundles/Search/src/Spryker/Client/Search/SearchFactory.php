@@ -9,6 +9,8 @@ namespace Spryker\Client\Search;
 
 use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Search\Delegator\Adapter\SearchDelegatorAdapter;
+use Spryker\Client\Search\Delegator\Adapter\SearchDelegatorAdapterInterface;
 use Spryker\Client\Search\Delegator\SearchDelegator;
 use Spryker\Client\Search\Delegator\SearchDelegatorInterface;
 use Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilder;
@@ -59,6 +61,16 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return \Spryker\Client\Search\Delegator\Adapter\SearchDelegatorAdapterInterface
+     */
+    public function createSearchDelegatorAdapter(): SearchDelegatorAdapterInterface
+    {
+        return new SearchDelegatorAdapter($this->createSearchDelegator());
+    }
+
+    /**
      * @return \Spryker\Client\Search\SearchContext\SourceIdentifierMapperInterface
      */
     public function createSourceIdentifierMapper(): SourceIdentifierMapperInterface
@@ -73,7 +85,7 @@ class SearchFactory extends AbstractFactory
      */
     public function getClientAdapterPlugins(): array
     {
-        return $this->getProvidedDependency(SearchDependencyProvider::CLIENT_ADAPTER_PLUGINS);
+        return $this->getProvidedDependency(SearchDependencyProvider::PLUGINS_CLIENT_ADAPTER);
     }
 
     /**
@@ -334,10 +346,14 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Model\Elasticsearch\Writer\WriterInterface
+     * @return \Spryker\Client\Search\Model\Elasticsearch\Writer\WriterInterface|\Spryker\Client\Search\Delegator\Adapter\SearchDelegatorAdapterInterface
      */
     public function createWriter()
     {
+        if (count($this->getClientAdapterPlugins()) > 0) {
+            return $this->createSearchDelegatorAdapter();
+        }
+
         return new Writer(
             $this->createCachedElasticsearchClient(),
             $this->getConfig()->getSearchIndexName(),
@@ -346,10 +362,14 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Model\Elasticsearch\Reader\ReaderInterface
+     * @return \Spryker\Client\Search\Model\Elasticsearch\Reader\ReaderInterface|\Spryker\Client\Search\Delegator\Adapter\SearchDelegatorAdapterInterface
      */
     public function createReader()
     {
+        if (count($this->getClientAdapterPlugins()) > 0) {
+            return $this->createSearchDelegatorAdapter();
+        }
+
         return new Reader(
             $this->createCachedElasticsearchClient(),
             $this->getConfig()->getSearchIndexName(),

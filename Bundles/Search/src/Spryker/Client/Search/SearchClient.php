@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Search;
 
+use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
@@ -142,6 +143,8 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Client\Search\SearchClient::readDocument()` instead.
+     *
      * @param string $key
      * @param string|null $typeName
      * @param string|null $indexName
@@ -160,6 +163,22 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return mixed
+     */
+    public function readDocument(SearchDocumentTransfer $searchDocumentTransfer)
+    {
+        return $this->getFactory()->createSearchDelegator()->readDocument($searchDocumentTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Use `\Spryker\Client\Search\SearchClient::writeDocument()` instead.
      *
      * @param array $dataSet
      * @param string|null $typeName
@@ -180,6 +199,22 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return bool
+     */
+    public function writeDocument(SearchDocumentTransfer $searchDocumentTransfer): bool
+    {
+        return $this->getFactory()->createSearchDelegator()->writeDocument($searchDocumentTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Use `\Spryker\Client\Search\SearchClient::writeDocuments()` instead.
+     *
      * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
      *
      * @return bool
@@ -196,6 +231,22 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function writeDocuments(array $searchDocumentTransfers): bool
+    {
+        return $this->getFactory()->createSearchDelegator()->writeDocuments($searchDocumentTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Use `\Spryker\Client\Search\SearchClient::deleteDocument()` instead.
      *
      * @param array $dataSet
      * @param string|null $typeName
@@ -216,6 +267,25 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return bool
+     */
+    public function deleteDocument(SearchDocumentTransfer $searchDocumentTransfer): bool
+    {
+        return $this
+            ->getFactory()
+            ->createSearchDelegator()
+            ->deleteDocument($searchDocumentTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Use `\Spryker\Client\Search\SearchClient::deleteDocuments()` instead.
+     *
      * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
      *
      * @return bool
@@ -226,5 +296,22 @@ class SearchClient extends AbstractClient implements SearchClientInterface
             ->getFactory()
             ->createWriter()
             ->deleteBulk($searchDocumentTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function deleteDocuments(array $searchDocumentTransfers): bool
+    {
+        return $this
+            ->getFactory()
+            ->createSearchDelegator()
+            ->deleteDocuments($searchDocumentTransfers);
     }
 }

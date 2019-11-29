@@ -20,7 +20,7 @@ use Spryker\Shared\Kernel\Store;
 class SearchDependencyProvider extends AbstractDependencyProvider
 {
     public const SEARCH_CONFIG_BUILDER = 'search config builder';
-    public const CLIENT_ADAPTER_PLUGINS = 'CLIENT_ADAPTER_PLUGINS';
+    public const PLUGINS_CLIENT_ADAPTER = 'PLUGINS_CLIENT_ADAPTER';
     public const SEARCH_CONFIG_EXPANDER_PLUGINS = 'search config expander plugins';
     public const STORE = 'store';
     public const PLUGIN_MONEY = 'money plugin';
@@ -112,7 +112,7 @@ class SearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function addClientAdapterPlugins(Container $container): Container
     {
-        $container->set(static::CLIENT_ADAPTER_PLUGINS, function () {
+        $container->set(static::PLUGINS_CLIENT_ADAPTER, function () {
             return $this->getClientAdapterPlugins();
         });
 

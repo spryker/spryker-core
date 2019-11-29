@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Search\Dependency\Plugin;
 
+/**
+ * @deprecated Use `\Spryker\Zed\SearchElasticsearchExtension\Dependency\Plugin\ResourceDataMapperPluginInterface` instead.
+ */
 interface NamedPageMapInterface extends PageMapInterface
 {
     /**

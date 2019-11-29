@@ -23,7 +23,6 @@ class SearchElasticsearchDependencyProvider extends AbstractBundleDependencyProv
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    public const PLUGIN_SEARCH_PAGE_MAPS = 'PLUGIN_SEARCH_PAGE_MAPS';
     public const SEARCH_INSTALLER_PLUGINS = 'SEARCH_INSTALLER_PLUGINS';
 
     /**

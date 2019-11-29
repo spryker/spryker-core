@@ -125,6 +125,43 @@ class ElasticsearchHelper extends Module
     }
 
     /**
+     * @param string $documentId
+     * @param string $indexName
+     * @param array|string $expectedData
+     * @param string $typeName
+     *
+     * @return void
+     */
+    public function assertDocumentExists(string $documentId, string $indexName, $expectedData = [], string $typeName = self::DEFAULT_MAPPING_TYPE): void
+    {
+        try {
+            $document = $this->getClient()->getIndex($indexName)->getType($typeName)->getDocument($documentId);
+
+            if ($expectedData) {
+                $this->assertEquals($expectedData, $document->getData(), 'Document with id %s exists, but doesn\'t contain expected data.');
+            }
+        } catch (NotFoundException $e) {
+            $this->fail(sprintf('Document with id %s was not found in index %s.', $documentId, $indexName));
+        }
+    }
+
+    /**
+     * @param string $documentId
+     * @param string $indexName
+     *
+     * @return void
+     */
+    public function assertDocumentDoesNotExist(string $documentId, string $indexName): void
+    {
+        try {
+            $this->getClient()->getIndex($indexName)->getType(static::DEFAULT_MAPPING_TYPE)->getDocument($documentId);
+            $this->fail(sprintf('Document with id %s was found in index %s.', $documentId, $indexName));
+        } catch (NotFoundException $e) {
+            return;
+        }
+    }
+
+    /**
      * @param \Codeception\TestInterface $test
      *
      * @return void

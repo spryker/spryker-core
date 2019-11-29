@@ -27,7 +27,6 @@ use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToPriceFaca
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToPriceProductBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchBridge;
-use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\QueryContainer\ProductPageSearchToCategoryQueryContainerBridge;
@@ -66,17 +65,23 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const PLUGIN_PRODUCT_PAGE_DATA_EXPANDER = 'PLUGIN_PRODUCT_PAGE_DATA_EXPANDER';
     public const PLUGIN_PRODUCT_PAGE_DATA_LOADER = 'PLUGIN_PRODUCT_PAGE_DATA_LOADER';
+
+    /**
+     * @deprecated Use `\Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_PAGE_MAP_EXPANDER` instead.
+     */
     public const PLUGIN_PRODUCT_PAGE_MAP_EXPANDER = 'PLUGIN_PRODUCT_PAGE_MAP_EXPANDER';
     public const PLUGIN_PRODUCT_PRICE_PAGE_DATA = 'PLUGIN_PRODUCT_PRICE_PAGE_DATA';
     public const PLUGIN_PRODUCT_CATEGORY_PAGE_DATA = 'PLUGIN_PRODUCT_CATEGORY_PAGE_DATA';
     public const PLUGIN_PRODUCT_IMAGE_PAGE_DATA = 'PLUGIN_PRODUCT_IMAGE_PAGE_DATA';
     public const PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER';
     public const PLUGINS_CONCRETE_PRODUCT_PAGE_MAP_EXPANDER = 'PLUGINS_CONCRETE_PRODUCT_PAGE_MAP_EXPANDER';
+
     /**
      * @deprecated Use ProductPageSearchDependencyProvider::PLUGINS_CONCRETE_PRODUCT_PAGE_MAP_EXPANDER instead.
      */
     public const PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER';
     public const PROPEL_QUERY_PRODUCT_SEARCH = 'PROPEL_QUERY_PRODUCT_SEARCH';
+    public const PLUGINS_PRODUCT_ABSTRACT_PAGE_MAP_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_PAGE_MAP_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -95,10 +100,6 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
             return new ProductPageSearchToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
-
-        $container[static::FACADE_PRODUCT_SEARCH] = function (Container $container) {
-            return new ProductPageSearchToProductSearchBridge($container->getLocator()->productSearch()->facade());
         };
 
         $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
@@ -129,9 +130,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
             return $this->getProductConcretePageMapExpanderPlugins();
         };
 
-        $container[static::PLUGINS_CONCRETE_PRODUCT_PAGE_MAP_EXPANDER] = function () {
-            return $this->getConcreteProductPageMapExpanderPlugins();
-        };
+        $container = $this->addProductConcretePageMapExpanderPlugins($container);
 
         $container[static::PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER] = function () {
             return $this->getProductConcretePageDataExpanderPlugins();
@@ -144,6 +143,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addPriceProductService($container);
         $container = $this->addPriceFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addProductSearchFacade($container);
 
         return $container;
     }
@@ -180,6 +180,9 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
         };
 
         $container = $this->addStoreFacade($container);
+        $container = $this->addProductSearchFacade($container);
+        $container = $this->addProductConcretePageMapExpanderPlugins($container);
+        $container = $this->addProductAbstractPageMapExpanderPlugins($container);
 
         return $container;
     }
@@ -317,6 +320,8 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider::getProductAbstractPageMapExpanderPlugins` instead.
+     *
      * @return \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterface[]
      */
     protected function getMapExpanderPlugins()
@@ -353,11 +358,61 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @deprecated Use ProductPageSearchDependencyProvider::getConcreteProductPageMapExpanderPlugins()
+     * @deprecated Use `\Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider::getConcreteProductPageMapExpanderPlugins()` instead.
      *
      * @return \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterface[]
      */
     protected function getProductConcretePageMapExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductSearchFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_SEARCH, function (Container $container) {
+            return new ProductPageSearchToProductSearchBridge($container->getLocator()->productSearch()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductConcretePageMapExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CONCRETE_PRODUCT_PAGE_MAP_EXPANDER, function () {
+            return $this->getConcreteProductPageMapExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAbstractPageMapExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_PAGE_MAP_EXPANDER, function () {
+            return $this->getProductAbstractPageMapExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractPageMapExpanderPluginInterface[]
+     */
+    protected function getProductAbstractPageMapExpanderPlugins(): array
     {
         return [];
     }

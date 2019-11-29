@@ -24,12 +24,12 @@
     "spryker/application": "*",
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
+    "spryker/search-elasticsearch": "*",
     "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\Search\\Helper\\": "tests/SprykerTest/Zed/Search/_support/Helper/"
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {

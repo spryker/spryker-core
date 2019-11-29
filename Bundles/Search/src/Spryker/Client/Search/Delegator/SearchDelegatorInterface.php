@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\Search\Delegator;
 
+use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
 interface SearchDelegatorInterface
@@ -21,36 +22,35 @@ interface SearchDelegatorInterface
     public function search(QueryInterface $queryCriteria, array $resultFormatters = [], array $requestParameters = []);
 
     /**
-     * @param string|null $indexName
-     *
-     * @return int
-     */
-    public function getTotalCount(?string $indexName = null): int;
-
-    /**
-     * @param string|null $indexName
-     *
-     * @return array
-     */
-    public function getMetaData(?string $indexName = null): array;
-
-    /**
-     * @param string $key
-     * @param string $indexName
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
      *
      * @return mixed
      */
-    public function read(string $key, string $indexName);
+    public function readDocument(SearchDocumentTransfer $searchDocumentTransfer);
 
     /**
-     * @param string|null $indexName
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
      *
      * @return bool
      */
-    public function delete(?string $indexName = null): bool;
+    public function writeDocument(SearchDocumentTransfer $searchDocumentTransfer): bool;
 
     /**
-     * @param array $searchDocumentTransfers
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function writeDocuments(array $searchDocumentTransfers): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return bool
+     */
+    public function deleteDocument(SearchDocumentTransfer $searchDocumentTransfer): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
      *
      * @return bool
      */

@@ -97,7 +97,7 @@ interface SearchFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use transformPageMapToDocumentByMapperName() instead.
+     * @deprecated Will be removed without replacement.
      *
      * Specification:
      * - Transforms a raw data array into an Elasticsearch "page" mapping type document
@@ -117,6 +117,8 @@ interface SearchFacadeInterface
      * - The transformation is based on the given page map plugin name what configures which data goes into which field
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer

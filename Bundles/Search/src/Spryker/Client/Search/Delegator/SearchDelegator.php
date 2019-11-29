@@ -9,6 +9,7 @@ namespace Spryker\Client\Search\Delegator;
 
 use Exception;
 use Generated\Shared\Transfer\SearchContextTransfer;
+use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Spryker\Client\Search\Exception\SearchDelegatorException;
 use Spryker\Client\Search\SearchContext\SourceIdentifierMapperInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
@@ -28,12 +29,12 @@ class SearchDelegator implements SearchDelegatorInterface
     protected $sourceIdentifierMapper;
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface[] $searchAdapter
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface[] $searchAdapterPlugins
      * @param \Spryker\Client\Search\SearchContext\SourceIdentifierMapperInterface $sourceIdentifierMapper
      */
-    public function __construct(array $searchAdapter, SourceIdentifierMapperInterface $sourceIdentifierMapper)
+    public function __construct(array $searchAdapterPlugins, SourceIdentifierMapperInterface $sourceIdentifierMapper)
     {
-        $this->searchAdapterPlugins = $searchAdapter;
+        $this->searchAdapterPlugins = $this->getSearchAdapterPluginsIndexedByName($searchAdapterPlugins);
         $this->sourceIdentifierMapper = $sourceIdentifierMapper;
     }
 
@@ -54,59 +55,123 @@ class SearchDelegator implements SearchDelegatorInterface
 
         $searchQuery = $this->mapSearchContextTransferForQuery($searchQuery);
 
-        return $this->getSearchAdapterByIndexName($searchQuery->getSearchContext())
+        return $this->getSearchAdapter($searchQuery->getSearchContext())
             ->search($searchQuery, $resultFormatters, $requestParameters);
     }
 
     /**
-     * @param string|null $indexName
-     *
-     * @return int
-     */
-    public function getTotalCount(?string $indexName = null): int
-    {
-        return 0;
-    }
-
-    /**
-     * @param string|null $indexName
-     *
-     * @return array
-     */
-    public function getMetaData(?string $indexName = null): array
-    {
-        return [];
-    }
-
-    /**
-     * @param string $key
-     * @param string $indexName
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
      *
      * @return mixed
      */
-    public function read(string $key, string $indexName)
+    public function readDocument(SearchDocumentTransfer $searchDocumentTransfer)
     {
-        return true;
+        $searchDocumentTransfer = $this->mapSearchContextTransferForSearchDocumentTransfer($searchDocumentTransfer);
+
+        return $this->getSearchAdapter($searchDocumentTransfer->getSearchContext())->readDocument($searchDocumentTransfer);
     }
 
     /**
-     * @param string|null $indexName
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
      *
      * @return bool
      */
-    public function delete(?string $indexName = null): bool
+    public function writeDocument(SearchDocumentTransfer $searchDocumentTransfer): bool
     {
-        return true;
+        $searchDocumentTransfer = $this->mapSearchContextTransferForSearchDocumentTransfer($searchDocumentTransfer);
+        $plugin = $this->getSearchAdapter($searchDocumentTransfer->getSearchContext());
+
+        return $plugin->writeDocument($searchDocumentTransfer);
     }
 
     /**
-     * @param array $searchDocumentTransfers
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function writeDocuments(array $searchDocumentTransfers): bool
+    {
+        $overallResult = true;
+        $searchDocumentTransfers = $this->mapSearchContextTransferForSearchDocumentTransfers($searchDocumentTransfers);
+        $searchDocumentTransfersBySearchAdapterPluginName = $this->groupSearchDocumentTransfersBySearchAdapterPluginName($searchDocumentTransfers);
+
+        foreach ($searchDocumentTransfersBySearchAdapterPluginName as $searchAdapterPluginName => $searchDocumentTransfers) {
+            $singleOperationResult = $this->searchAdapterPlugins[$searchAdapterPluginName]->writeDocuments($searchDocumentTransfers);
+
+            if (!$singleOperationResult) {
+                $overallResult = false;
+            }
+        }
+
+        return $overallResult;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return bool
+     */
+    public function deleteDocument(SearchDocumentTransfer $searchDocumentTransfer): bool
+    {
+        $searchDocumentTransfer = $this->mapSearchContextTransferForSearchDocumentTransfer($searchDocumentTransfer);
+        $plugin = $this->getSearchAdapter($searchDocumentTransfer->getSearchContext());
+
+        return $plugin->deleteDocument($searchDocumentTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
      *
      * @return bool
      */
     public function deleteDocuments(array $searchDocumentTransfers): bool
     {
-        return true;
+        $overallResult = true;
+        $searchDocumentTransfers = $this->mapSearchContextTransferForSearchDocumentTransfers($searchDocumentTransfers);
+        $searchDocumentTransfersBySearchAdapterPluginName = $this->groupSearchDocumentTransfersBySearchAdapterPluginName($searchDocumentTransfers);
+
+        foreach ($searchDocumentTransfersBySearchAdapterPluginName as $searchAdapterPluginName => $searchDocumentTransfersPerAdapter) {
+            $singleOperationResult = $this->searchAdapterPlugins[$searchAdapterPluginName]->deleteDocuments($searchDocumentTransfersPerAdapter);
+
+            if (!$singleOperationResult) {
+                $overallResult = false;
+            }
+        }
+
+        return $overallResult;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return \Generated\Shared\Transfer\SearchDocumentTransfer[][]
+     */
+    protected function groupSearchDocumentTransfersBySearchAdapterPluginName(array $searchDocumentTransfers): array
+    {
+        $searchContextTransfersPerAdapter = [];
+
+        foreach ($searchDocumentTransfers as $searchDocumentTransfer) {
+            $searchAdapterPlugin = $this->getSearchAdapter($searchDocumentTransfer->getSearchContext());
+            $searchContextTransfersPerAdapter[$searchAdapterPlugin->getName()][] = $searchDocumentTransfer;
+        }
+
+        return $searchContextTransfersPerAdapter;
+    }
+
+    /**
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface[] $searchAdapterPlugins
+     *
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface[]
+     */
+    protected function getSearchAdapterPluginsIndexedByName(array $searchAdapterPlugins): array
+    {
+        $searchAdapterPluginsIndexedByVendorName = [];
+
+        foreach ($searchAdapterPlugins as $searchAdapterPlugin) {
+            $searchAdapterPluginsIndexedByVendorName[$searchAdapterPlugin->getName()] = $searchAdapterPlugin;
+        }
+
+        return $searchAdapterPluginsIndexedByVendorName;
     }
 
     /**
@@ -116,7 +181,7 @@ class SearchDelegator implements SearchDelegatorInterface
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface
      */
-    protected function getSearchAdapterByIndexName(SearchContextTransfer $searchContextTransfer): SearchAdapterPluginInterface
+    protected function getSearchAdapter(SearchContextTransfer $searchContextTransfer): SearchAdapterPluginInterface
     {
         foreach ($this->searchAdapterPlugins as $searchAdapterPlugin) {
             if ($searchAdapterPlugin->isApplicable($searchContextTransfer)) {
@@ -137,10 +202,44 @@ class SearchDelegator implements SearchDelegatorInterface
      */
     protected function mapSearchContextTransferForQuery(QueryInterface $searchQuery): QueryInterface
     {
-        $mappedSearchContextTransfer = $this->sourceIdentifierMapper
-            ->mapSourceIdentifier($searchQuery->getSearchContext());
+        $mappedSearchContextTransfer = $this->mapSourceIdentifierToSourceName($searchQuery->getSearchContext());
         $searchQuery->setSearchContext($mappedSearchContextTransfer);
 
         return $searchQuery;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer|array $searchDocumentTransfers
+     *
+     * @return \Generated\Shared\Transfer\SearchDocumentTransfer[]
+     */
+    protected function mapSearchContextTransferForSearchDocumentTransfers(array $searchDocumentTransfers): array
+    {
+        return array_map(function (SearchDocumentTransfer $searchDocumentTransfer) {
+            return $this->mapSearchContextTransferForSearchDocumentTransfer($searchDocumentTransfer);
+        }, $searchDocumentTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return \Generated\Shared\Transfer\SearchDocumentTransfer
+     */
+    protected function mapSearchContextTransferForSearchDocumentTransfer(SearchDocumentTransfer $searchDocumentTransfer): SearchDocumentTransfer
+    {
+        $mappedSearchContextTransfer = $this->mapSourceIdentifierToSourceName($searchDocumentTransfer->getSearchContext());
+        $searchDocumentTransfer->setSearchContext($mappedSearchContextTransfer);
+
+        return $searchDocumentTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     *
+     * @return \Generated\Shared\Transfer\SearchContextTransfer
+     */
+    protected function mapSourceIdentifierToSourceName(SearchContextTransfer $searchContextTransfer): SearchContextTransfer
+    {
+        return $this->sourceIdentifierMapper->mapSourceIdentifier($searchContextTransfer);
     }
 }

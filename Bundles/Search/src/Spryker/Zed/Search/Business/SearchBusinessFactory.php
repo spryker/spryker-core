@@ -252,6 +252,8 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageDataMapperInterface
      */
     public function createPageDataMapper()
@@ -263,6 +265,8 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface
      */
     public function createPageMapBuilder()
@@ -279,6 +283,8 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface[]
      */
     public function getSearchPageMapPlugins()
