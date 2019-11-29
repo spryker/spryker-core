@@ -14,6 +14,7 @@ use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\ShipmentGroupBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodsBuilder;
+use Generated\Shared\Transfer\CartCodeRequestTransfer;
 use Generated\Shared\Transfer\GiftCardMetadataTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
@@ -126,6 +127,105 @@ class GiftCardFacadeTest extends Test
             'shipment group: not only gift card items; expected: all methods except NoShipment method' => $this->getDataWithNotOnlyGiftCardItems(),
         ];
     }
+
+    /**
+     * @return void
+     */
+    public function testAddCartCodeAddsVoucherDiscountToQuote(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->createQuoteTransferWithoutVoucherDiscount();
+
+        // Act
+        $cartCodeResponseTransfer = $this->createDiscountFacade()->addCartCode(
+            (new CartCodeRequestTransfer())
+                ->setCartCode($this->tester::VOUCHER_CODE)
+                ->setQuote($quoteTransfer)
+        );
+
+        // Assert
+        $this->assertCount(1, $quoteTransfer->getVoucherDiscounts());
+        $this->assertEquals(
+            $this->tester::VOUCHER_CODE,
+            $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()[0]->getVoucherCode()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddCartCodeCantAddVoucherDiscountToQuoteWithVoucherCodeAlreadyAddedToQuote(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->createQuoteTransferWithVoucherDiscount();
+
+        // Act
+        $cartCodeResponseTransfer = $this->createDiscountFacade()->addCartCode(
+            (new CartCodeRequestTransfer())
+                ->setCartCode($this->tester::VOUCHER_CODE)
+                ->setQuote($quoteTransfer)
+        );
+
+        // Assert
+        $this->assertCount(1, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveCartCodeRemovesVoucherDiscountFromQuote(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->createQuoteTransferWithVoucherDiscount();
+
+        // Act
+        $cartCodeResponseTransfer = $this->createDiscountFacade()->removeCartCode(
+            (new CartCodeRequestTransfer())
+                ->setCartCode($this->tester::VOUCHER_CODE)
+                ->setQuote($quoteTransfer)
+        );
+
+        // Assert
+        $this->assertCount(0, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts());
+    }
+
+    /**
+     * @return void
+     */
+    public function testClearCartCodesRemovesVoucherDiscountsFromQuote(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->createQuoteTransferWithVoucherDiscount();
+
+        // Act
+        $cartCodeResponseTransfer = $this->createDiscountFacade()->clearCartCodes(
+            (new CartCodeRequestTransfer())
+                ->setQuote($quoteTransfer)
+        );
+
+        // Assert
+        $this->assertCount(0, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetOperationResponseMessageReturnsMessageTransfer(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->createQuoteTransferWithVoucherDiscount();
+
+        // Act
+        $messageTransfer = $this->createDiscountFacade()->getOperationResponseMessage(
+            (new CartCodeRequestTransfer())
+                ->setCartCode($this->tester::VOUCHER_CODE)
+                ->setQuote($quoteTransfer)
+        );
+
+        // Assert
+        $this->assertNotNull($messageTransfer);
+    }
+
 
     /**
      * @return array

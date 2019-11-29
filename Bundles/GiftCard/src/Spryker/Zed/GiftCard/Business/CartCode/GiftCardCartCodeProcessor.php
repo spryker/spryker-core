@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class GiftCardCartCode implements GiftCardCartCodeInterface
+class GiftCardCartCodeProcessor implements GiftCardCartCodeProcessorInterface
 {
     public const CART_GIFT_CARD_APPLY_SUCCESSFUL = 'cart.giftcard.apply.successful';
     public const CART_GIFT_CARD_APPLY_FAILED = 'cart.giftcard.apply.failed';
@@ -29,8 +29,6 @@ class GiftCardCartCode implements GiftCardCartCodeInterface
      */
     public function addCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
-        $cartCodeRequestTransfer->requireQuote();
-        $cartCodeRequestTransfer->requireCartCode();
         $cartCodeResponseTransfer = new CartCodeResponseTransfer();
         $quoteTransfer = $cartCodeRequestTransfer->getQuote();
         $cartCode = $cartCodeRequestTransfer->getCartCode();
@@ -43,37 +41,41 @@ class GiftCardCartCode implements GiftCardCartCodeInterface
 
         $quoteTransfer->addGiftCard($giftCard);
 
-        return $cartCodeResponseTransfer->setQuote($quoteTransfer);;
+        file_put_contents('vcv233223.txt', print_r($quoteTransfer, 1));
+
+        return $cartCodeResponseTransfer->setQuote($quoteTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function removeCartCode(QuoteTransfer $quoteTransfer, $code): QuoteTransfer
+    public function removeCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
-        $this->removeGiftCard($quoteTransfer, $code);
-        $this->removeGiftCardPayment($quoteTransfer, $code);
+        $quoteTransfer = $cartCodeRequestTransfer->getQuote();
+        $cartCode = $cartCodeRequestTransfer->getCartCode();
+        $this->removeGiftCard($quoteTransfer, $cartCode);
+        $this->removeGiftCardPayment($quoteTransfer, $cartCode);
 
-        return $quoteTransfer;
+        return (new CartCodeResponseTransfer())->setQuote($quoteTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
      * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, $code): ?MessageTransfer
+    public function getOperationResponseMessage(CartCodeRequestTransfer $cartCodeRequestTransfer): ?MessageTransfer
     {
-        $giftCardApplySuccessMessageTransfer = $this->getGiftCardApplySuccessMessage($quoteTransfer, $code);
+        $cartCode = $cartCodeRequestTransfer->getCartCode();
+        $quoteTransfer = $cartCodeRequestTransfer->getQuote();
+        $giftCardApplySuccessMessageTransfer = $this->getGiftCardApplySuccessMessage($quoteTransfer, $cartCode);
         if ($giftCardApplySuccessMessageTransfer) {
             return $giftCardApplySuccessMessageTransfer;
         }
 
-        $giftCardApplyFailedMessageTransfer = $this->getGiftCardApplyFailedMessage($quoteTransfer, $code);
+        $giftCardApplyFailedMessageTransfer = $this->getGiftCardApplyFailedMessage($quoteTransfer, $cartCode);
         if ($giftCardApplyFailedMessageTransfer) {
             return $giftCardApplyFailedMessageTransfer;
         }
@@ -82,17 +84,18 @@ class GiftCardCartCode implements GiftCardCartCodeInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function clearCartCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
+    public function clearCartCodes(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
+        $quoteTransfer = $cartCodeRequestTransfer->getQuote();
         $quoteTransfer->setGiftCards(new ArrayObject());
 
         $this->removeGiftCardPayment($quoteTransfer);
 
-        return $quoteTransfer;
+        return (new CartCodeResponseTransfer())->setQuote($quoteTransfer);
     }
 
     /**

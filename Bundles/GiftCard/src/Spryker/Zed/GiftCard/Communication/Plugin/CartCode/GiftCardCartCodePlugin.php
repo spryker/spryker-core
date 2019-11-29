@@ -7,13 +7,17 @@
 
 namespace Spryker\Zed\GiftCard\Communication\Plugin\CartCode;
 
+use Generated\Shared\Transfer\CartCodeRequestTransfer;
+use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface;
-use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\GiftCard\Business\GiftCardBusinessFactory getFactory()
+ * @method \Spryker\Zed\GiftCard\Business\GiftCardFacade getFacade()
+ * @method \Spryker\Zed\GiftCard\GiftCardConfig getConfig()
+ * @method \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface getQueryContainer()
  */
 class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInterface
 {
@@ -23,16 +27,13 @@ class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function addCartCode(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
+    public function addCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
-        return $this->getFactory()
-            ->createGiftCardCartCode()
-            ->addCandidate($quoteTransfer, $code);
+        return $this->getFacade()->addCartCode($cartCodeRequestTransfer);
     }
 
     /**
@@ -41,16 +42,28 @@ class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function removeCartCode(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
+    public function removeCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
-        return $this->getFactory()
-            ->createGiftCardCartCode()
-            ->removeCode($quoteTransfer, $code);
+        return $this->getFacade()->removeCartCode($cartCodeRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     * - Clears all gift cards and gift card payments from the quote.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     */
+    public function clearCartCodes(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
+    {
+        return $this->getFacade()->removeCartCode($cartCodeRequestTransfer);
     }
 
     /**
@@ -66,27 +79,8 @@ class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInt
      *
      * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
+    public function getOperationResponseMessage(CartCodeRequestTransfer $cartCodeRequestTransfer): ?MessageTransfer
     {
-        return $this->getFactory()
-            ->createGiftCardCartCode()
-            ->getOperationResponseMessage($quoteTransfer, $code);
-    }
-
-    /**
-     * {@inheritDoc}
-     * - Clears all gift cards and gift card payments from the quote.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function clearCartCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        return $this->getFactory()
-            ->createGiftCardCartCode()
-            ->clearAllCodes($quoteTransfer);
+        return $this->getFacade()->getOperationResponseMessage($cartCodeRequestTransfer);
     }
 }

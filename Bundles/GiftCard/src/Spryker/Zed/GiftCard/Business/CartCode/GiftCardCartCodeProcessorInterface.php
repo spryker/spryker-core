@@ -10,9 +10,8 @@ namespace Spryker\Zed\GiftCard\Business\CartCode;
 use Generated\Shared\Transfer\CartCodeRequestTransfer;
 use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 
-interface GiftCardCartCodeInterface
+interface GiftCardCartCodeProcessorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
@@ -22,25 +21,23 @@ interface GiftCardCartCodeInterface
     public function addCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function removeCartCode(QuoteTransfer $quoteTransfer, $code): QuoteTransfer;
+    public function removeCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
      * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, $code): ?MessageTransfer;
+    public function getOperationResponseMessage(CartCodeRequestTransfer $cartCodeRequestTransfer): ?MessageTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function clearCartCodes(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function clearCartCodes(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer;
 }
