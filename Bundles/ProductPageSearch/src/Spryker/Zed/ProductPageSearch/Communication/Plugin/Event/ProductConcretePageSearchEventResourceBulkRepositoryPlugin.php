@@ -24,6 +24,7 @@ class ProductConcretePageSearchEventResourceBulkRepositoryPlugin extends Abstrac
 {
     /**
      * {@inheritDoc}
+     * - Returns array of product entity transfers.
      *
      * @api
      *
@@ -36,7 +37,9 @@ class ProductConcretePageSearchEventResourceBulkRepositoryPlugin extends Abstrac
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        return $this->getFacade()->getProductConcreteTransfersByFilter($filterTransfer);
+        return $this->getFactory()
+            ->getProductFacade()
+            ->getProductConcreteTransfersByFilter($filterTransfer);
     }
 
     /**

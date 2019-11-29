@@ -116,16 +116,4 @@ interface ProductPageSearchFacadeInterface
      * @return void
      */
     public function publishProductConcretePageSearchesByProductAbstractIds(array $productAbstractIds): void;
-
-    /**
-     * Specification:
-     *  - Retrieves product concrete transfers according to given offset and limit.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
-     */
-    public function getProductConcreteTransfersByFilter(FilterTransfer $filterTransfer): array;
 }
