@@ -7,8 +7,10 @@
 
 namespace Spryker\Shared\Log\Dependency\Plugin;
 
+use Monolog\Handler\FormattableHandlerInterface;
 use Monolog\Handler\HandlerInterface;
+use Monolog\Handler\ProcessableHandlerInterface;
 
-interface LogHandlerPluginInterface extends HandlerInterface
+interface LogHandlerPluginInterface extends HandlerInterface, ProcessableHandlerInterface, FormattableHandlerInterface
 {
 }
