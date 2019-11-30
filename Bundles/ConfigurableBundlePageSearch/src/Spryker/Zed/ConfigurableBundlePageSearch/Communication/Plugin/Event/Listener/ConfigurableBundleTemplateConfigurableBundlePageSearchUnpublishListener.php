@@ -16,12 +16,13 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  * @method \Spryker\Zed\ConfigurableBundlePageSearch\ConfigurableBundlePageSearchConfig getConfig()
  * @method \Spryker\Zed\ConfigurableBundlePageSearch\Communication\ConfigurableBundlePageSearchCommunicationFactory getFactory()
  */
-class ConfigurableBundleTemplatePageSearchConfigurableBundleTemplateUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class ConfigurableBundleTemplateConfigurableBundlePageSearchUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
 
     /**
      * {@inheritDoc}
+     * - Unublishes configurable bundle templates.
      *
      * @api
      *

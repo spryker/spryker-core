@@ -20,13 +20,15 @@
     "spryker/elastica": "*",
     "spryker/event": "*",
     "spryker/glossary": "*",
+    "spryker/product-image": "*",
     "spryker/propel": "*",
     "spryker/queue": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker/elastica": "If you want to use search functionality from ConfigurableBundlePageSearchClient.",
-    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"
+    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
+    "spryker/product-image": "If you want to use search functionality from ProductImageSetConfigurableBundlePageSearchPublishListener."
   },
   "autoload": {
     "psr-4": {

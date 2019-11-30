@@ -76,6 +76,8 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
      */
     public function publish(array $configurableBundleTemplateIds): void
     {
+        $configurableBundleTemplateIds = array_unique(array_filter($configurableBundleTemplateIds));
+
         $configurableBundleTemplateTransfers = $this->configurableBundleFacade->getConfigurableBundleTemplateCollection(
             (new ConfigurableBundleTemplateFilterTransfer())->setConfigurableBundleTemplateIds($configurableBundleTemplateIds)
         );
@@ -158,11 +160,6 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
             $configurableBundleTemplatePageSearchTransfers
         );
 
-        $configurableBundleTemplatePageSearchTransfers = $this->expandConfigurableBundleTemplatePageSearchTransfers(
-            $configurableBundleTemplateTransfer,
-            $configurableBundleTemplatePageSearchTransfers
-        );
-
         foreach ($configurableBundleTemplatePageSearchTransfers as $configurableBundleTemplatePageSearchTransfer) {
             $this->storeSingleConfigurableBundlePageSearch($configurableBundleTemplatePageSearchTransfer);
         }
@@ -222,20 +219,5 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
         foreach ($configurableBundleTemplatePageSearchTransfers as $configurableBundleTemplatePageSearchTransfer) {
             $this->configurableBundlePageSearchEntityManager->deleteConfigurableBundlePageSearch($configurableBundleTemplatePageSearchTransfer);
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer[] $configurableBundleTemplatePageSearchTransfers
-     *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer[]
-     */
-    protected function expandConfigurableBundleTemplatePageSearchTransfers(ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer, array $configurableBundleTemplatePageSearchTransfers): array
-    {
-        foreach ($configurableBundleTemplatePageSearchTransfers as $configurableBundleTemplatePageSearchTransfer) {
-            $this->configurableBundleTemplatePageSearchExpander->expand($configurableBundleTemplateTransfer, $configurableBundleTemplatePageSearchTransfer);
-        }
-
-        return $configurableBundleTemplatePageSearchTransfers;
     }
 }

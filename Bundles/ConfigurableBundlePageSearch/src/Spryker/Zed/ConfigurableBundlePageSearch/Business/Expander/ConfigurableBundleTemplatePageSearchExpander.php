@@ -112,7 +112,7 @@ class ConfigurableBundleTemplatePageSearchExpander implements ConfigurableBundle
                 continue;
             }
 
-            $localizedProductImageSetTransfers[] = $productImageSetTransfer;
+            $localizedProductImageSetTransfers[$productImageSetTransfer->getName()] = $productImageSetTransfer;
         }
 
         return $localizedProductImageSetTransfers;
@@ -129,7 +129,7 @@ class ConfigurableBundleTemplatePageSearchExpander implements ConfigurableBundle
 
         foreach ($configurableBundleTemplateTransfer->getProductImageSets() as $productImageSetTransfer) {
             if (!$productImageSetTransfer->getLocale()) {
-                $defaultProductImageSetTransfers[] = $productImageSetTransfer;
+                $defaultProductImageSetTransfers[$productImageSetTransfer->getName()] = $productImageSetTransfer;
             }
         }
 
