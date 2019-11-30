@@ -11,4 +11,3 @@ parameters:
     -
             message: '#Ternary operator condition is always true.#'
             path: 'vendor/spryker/spryker/Bundles/Session/src/Spryker/Shared/Session/Business/Handler/SessionHandlerRedis.php'
-    - '#Call to an undefined method Generated\\Service\\Ide\\Session::client\(\).#'
