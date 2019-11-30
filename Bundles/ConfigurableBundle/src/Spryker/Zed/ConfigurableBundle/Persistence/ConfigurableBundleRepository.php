@@ -111,7 +111,8 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
     ): ConfigurableBundleTemplateSlotCollectionTransfer {
         $configurableBundleTemplateSlotQuery = $this->getFactory()
             ->getConfigurableBundleTemplateSlotPropelQuery()
-            ->joinWithSpyConfigurableBundleTemplate();
+            ->joinWithSpyConfigurableBundleTemplate()
+            ->orderByIdConfigurableBundleTemplateSlot(Criteria::ASC);
 
         $configurableBundleTemplateSlotQuery = $this->setConfigurableBundleTemplateSlotFilters(
             $configurableBundleTemplateSlotQuery,

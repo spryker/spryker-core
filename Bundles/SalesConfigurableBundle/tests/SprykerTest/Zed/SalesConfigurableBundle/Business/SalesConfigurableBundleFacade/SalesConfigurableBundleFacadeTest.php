@@ -583,6 +583,7 @@ class SalesConfigurableBundleFacadeTest extends Unit
                 KeyTranslationTransfer::GLOSSARY_KEY => $itemTransfer->getConfiguredBundle()->getTemplate()->getName(),
                 KeyTranslationTransfer::LOCALES => [
                     'en_US' => $itemTransfer->getConfiguredBundle()->getTemplate()->getName(),
+                    'de_DE' => $itemTransfer->getConfiguredBundle()->getTemplate()->getName(),
                 ],
             ]);
         }

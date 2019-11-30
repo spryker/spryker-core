@@ -47,6 +47,7 @@ use Spryker\Zed\ConfigurableBundle\ConfigurableBundleDependencyProvider;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToEventFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToGlossaryFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface;
+use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToProductImageFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToProductListFacadeInterface;
 use Spryker\Zed\ConfigurableBundle\Dependency\Service\ConfigurableBundleToUtilTextServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -93,7 +94,8 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     {
         return new ConfigurableBundleTemplateCleaner(
             $this->getEntityManager(),
-            $this->createConfigurableBundleTemplateReader()
+            $this->createConfigurableBundleTemplateReader(),
+            $this->getProductImageFacade()
         );
     }
 
@@ -290,6 +292,14 @@ class ConfigurableBundleBusinessFactory extends AbstractBusinessFactory
     public function getEventFacade(): ConfigurableBundleToEventFacadeInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleDependencyProvider::FACADE_EVENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToProductImageFacadeInterface
+     */
+    public function getProductImageFacade(): ConfigurableBundleToProductImageFacadeInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleDependencyProvider::FACADE_PRODUCT_IMAGE);
     }
 
     /**

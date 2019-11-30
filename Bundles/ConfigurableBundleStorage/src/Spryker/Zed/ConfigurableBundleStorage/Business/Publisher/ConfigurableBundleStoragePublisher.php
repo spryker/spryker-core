@@ -86,6 +86,10 @@ class ConfigurableBundleStoragePublisher implements ConfigurableBundleStoragePub
                 continue;
             }
 
+            if (!$configurableBundleTemplateTransfer->getIsActive()) {
+                continue;
+            }
+
             $configurableBundleTemplateStorageEntity = $this->mapConfigurableBundleTemplateTransferToConfigurableBundleTemplateStorageEntity(
                 $configurableBundleTemplateTransfer,
                 $configurableBundleTemplateStorageEntity

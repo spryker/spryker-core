@@ -100,7 +100,7 @@ class ConfigurableBundleStorageListenerTest extends Unit
         $configurableBundleTemplateStoragePublishListener->handleBulk($eventEntityTransfers, ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_CREATE);
 
         // Assert
-        $this->assertNotNull(
+        $this->assertNull(
             $this->tester->findConfigurableBundleTemplateStorageById($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate())
         );
     }

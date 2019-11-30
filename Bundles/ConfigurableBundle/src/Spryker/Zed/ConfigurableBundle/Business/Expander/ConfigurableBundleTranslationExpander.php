@@ -98,7 +98,7 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
     protected function getTranslations(string $translationKey, ArrayObject $localeTransfers): array
     {
         if ($localeTransfers->count() === 1) {
-            return [$this->getSingleLocaleTranslation($translationKey, reset($localeTransfers))];
+            return [$this->getSingleLocaleTranslation($translationKey, $localeTransfers->getIterator()->current())];
         }
 
         return $this->glossaryFacade->getTranslationsByGlossaryKeyAndLocales($translationKey, $localeTransfers->getArrayCopy());
