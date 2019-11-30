@@ -35,7 +35,7 @@
 
         <id-method-parameter value="spy_configurable_bundle_template_image_storage_pk_seq"/>
 
-        <index name="spy_configurable_bundle_template_image_storage-fk_product">
+        <index name="spy_configurable_bundle_template_image_storage-fk_c_b_t">
             <index-column name="fk_configurable_bundle_template"/>
         </index>
 
