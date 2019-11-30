@@ -59,6 +59,8 @@ class HealthCheckFacadeTest extends Unit
 
         $this->configurationProvider = new ConfigurationProvider(new HealthCheckConfig());
         $this->healthCheckFacade = new HealthCheckFacade();
+
+        $this->tester->setConfig(HealthCheckConstants::HEALTH_CHECK_ENABLED, true);
     }
 
     /**
