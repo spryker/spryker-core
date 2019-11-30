@@ -58,7 +58,7 @@ class ProductImageCartPluginTest extends Unit
 
         $this->productImageCartConnectorFacade->expandItems($changeTransfer);
 
-        $itemTransfer = $changeTransfer->getItems()[0];
+        $itemTransfer = $changeTransfer->getItems()->offsetGet(0);
 
         /** @var \Generated\Shared\Transfer\ProductImageTransfer $imageTransfer */
         $imageTransfer = $itemTransfer->getImages()->offsetGet(0);
