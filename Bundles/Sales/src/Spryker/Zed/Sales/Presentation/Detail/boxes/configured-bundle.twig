@@ -27,6 +27,14 @@
             {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: bundleSumSubtotalAggregation, priceToPay: bundleSumPriceToPayAggregation} %} {% endembed %}</td>
         <td colspan="2"></td>
     </tr>
+    {% if bundle.cartNote %}
+    <tr>
+        <td colspan="8" class="text-left">
+            {{ 'Note' | trans }}<br>
+            {{ bundle.cartNote | escape | nl2br }}
+        </td>
+    </tr>
+    {% endif %}
     {% set partialItemCount = 0 %}
     {% for item in bundle.salesOrderConfiguredBundleItems if mappedItems['_' ~ item.IdSalesOrderItem] is defined %}
         <tr>
