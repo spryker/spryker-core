@@ -78,6 +78,10 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
     {
         $configurableBundleTemplateIds = array_unique(array_filter($configurableBundleTemplateIds));
 
+        if (!$configurableBundleTemplateIds) {
+            return;
+        }
+
         $configurableBundleTemplateTransfers = $this->configurableBundleFacade->getConfigurableBundleTemplateCollection(
             (new ConfigurableBundleTemplateFilterTransfer())->setConfigurableBundleTemplateIds($configurableBundleTemplateIds)
         );
