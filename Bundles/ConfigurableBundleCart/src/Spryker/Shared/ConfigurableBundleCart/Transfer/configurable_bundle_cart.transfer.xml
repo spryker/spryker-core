@@ -9,23 +9,14 @@
         <property name="quantity" type="int"/>
     </transfer>
 
-    <transfer name="CreateConfiguredBundleRequest">
-        <property name="configuredBundleRequest" type="ConfiguredBundleRequest"/>
-        <property name="configuredBundleItemRequests" type="ConfiguredBundleItemRequest[]" singular="configuredBundleItemRequest"/>
-        <property name="localeName" type="string"/>
-    </transfer>
-
-    <transfer name="ConfiguredBundleItemRequest">
-        <property name="slotUuid" type="string"/>
-        <property name="sku" type="string"/>
+    <transfer name="ConfiguredBundle">
+        <property name="template" type="ConfigurableBundleTemplate"/>
         <property name="quantity" type="int"/>
-    </transfer>
-
-    <transfer name="ConfiguredBundleRequest">
-        <property name="templateUuid" type="string"/>
-        <property name="templateName" type="string"/>
         <property name="groupKey" type="string"/>
-        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="ConfiguredBundleItem">
+        <property name="slot" type="ConfigurableBundleTemplateSlot"/>
     </transfer>
 
     <transfer name="Quote">

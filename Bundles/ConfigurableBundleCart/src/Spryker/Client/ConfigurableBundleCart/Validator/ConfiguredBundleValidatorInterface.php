@@ -22,12 +22,12 @@ interface ConfiguredBundleValidatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\ConfiguredBundleItemRequestTransfer[] $configuredBundleItemRequestTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return bool
      */
     public function validateConfiguredBundleTemplateSlotCombination(
         ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer,
-        ArrayObject $configuredBundleItemRequestTransfers
+        ArrayObject $itemTransfers
     ): bool;
 }

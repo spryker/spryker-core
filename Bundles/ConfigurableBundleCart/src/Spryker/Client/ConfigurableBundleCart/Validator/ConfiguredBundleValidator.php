@@ -24,29 +24,30 @@ class ConfiguredBundleValidator implements ConfiguredBundleValidatorInterface
             return false;
         }
 
-        if (!$createConfiguredBundleRequestTransfer->getConfiguredBundleRequest() || !$createConfiguredBundleRequestTransfer->getConfiguredBundleRequest()->getTemplateUuid()) {
-            return false;
-        }
-
-        return $this->validateConfiguredBundleItemRequestTransfers(
-            $createConfiguredBundleRequestTransfer->getConfiguredBundleItemRequests()
+        return $this->validateItemTransfers(
+            $createConfiguredBundleRequestTransfer->getItems()
         );
     }
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\ConfiguredBundleItemRequestTransfer[] $configuredBundleItemRequestTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return bool
      */
     public function validateConfiguredBundleTemplateSlotCombination(
         ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer,
-        ArrayObject $configuredBundleItemRequestTransfers
+        ArrayObject $itemTransfers
     ): bool {
         $configurableBundleTemplateSlotStorageUuids = $this->extractConfigurableBundleTemplateSlotStorageUuids($configurableBundleTemplateStorageTransfer);
 
-        foreach ($configuredBundleItemRequestTransfers as $configuredBundleItemRequestTransfer) {
-            if (!in_array($configuredBundleItemRequestTransfer->getSlotUuid(), $configurableBundleTemplateSlotStorageUuids, true)) {
+        foreach ($itemTransfers as $itemTransfer) {
+            $itemTransfer
+                ->requireConfiguredBundleItem()
+                ->getConfiguredBundleItem()
+                    ->requireSlot();
+
+            if (!in_array($itemTransfer->getConfiguredBundleItem()->getSlot()->getUuid(), $configurableBundleTemplateSlotStorageUuids, true)) {
                 return false;
             }
         }
@@ -55,18 +56,23 @@ class ConfiguredBundleValidator implements ConfiguredBundleValidatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ConfiguredBundleItemRequestTransfer[] $configuredBundleItemRequestTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return bool
      */
-    protected function validateConfiguredBundleItemRequestTransfers(ArrayObject $configuredBundleItemRequestTransfers): bool
+    protected function validateItemTransfers(ArrayObject $itemTransfers): bool
     {
-        if (!$configuredBundleItemRequestTransfers->count()) {
+        if (!$itemTransfers->count()) {
             return false;
         }
 
-        foreach ($configuredBundleItemRequestTransfers as $configuredBundleItemRequestTransfer) {
-            if (!$configuredBundleItemRequestTransfer->getSku() || !$configuredBundleItemRequestTransfer->getSlotUuid()) {
+        foreach ($itemTransfers as $itemTransfer) {
+            $itemTransfer
+                ->requireConfiguredBundleItem()
+                ->getConfiguredBundleItem()
+                ->requireSlot();
+
+            if (!$itemTransfer->getSku() || !$itemTransfer->getConfiguredBundleItem()->getSlot()->getUuid()) {
                 return false;
             }
         }
