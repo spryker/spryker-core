@@ -54,6 +54,6 @@ class CategoryNodePageSearchDataMapperTest extends Unit
      */
     public function canMapRawDataToSearchDataProvider(): array
     {
-        return codecept_data_dir('Fixtures/SearchDataMap/category_node_page_data_map_data_provider.php');
+        return require codecept_data_dir('Fixtures/SearchDataMap/category_node_page_data_map_data_provider.php');
     }
 }
