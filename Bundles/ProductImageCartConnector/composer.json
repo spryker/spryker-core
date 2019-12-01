@@ -10,6 +10,7 @@
   },
   "require-dev": {
     "spryker/cart": "*",
+    "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
