@@ -13,6 +13,9 @@ use Spryker\Client\ConfigurableBundleNote\Zed\ConfigurableBundleNoteZedStubInter
 
 class DatabaseQuoteStorageStrategy implements QuoteStorageStrategyInterface
 {
+    /**
+     * @uses \Spryker\Shared\Quote\QuoteConfig::STORAGE_STRATEGY_DATABASE
+     */
     protected const STORAGE_STRATEGY = 'database';
 
     /**
