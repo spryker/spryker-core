@@ -8,19 +8,22 @@
 namespace Spryker\Zed\SearchElasticsearch\Business\Installer\IndexMap\Generator;
 
 use Generated\Shared\Transfer\IndexDefinitionTransfer;
+use Spryker\Zed\SearchElasticsearch\Business\Exception\MissingIndexMappingException;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
 use Twig\Environment;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class IndexMapGenerator implements IndexMapGeneratorInterface
 {
-    public const CLASS_NAME_SUFFIX = 'IndexMap';
-    public const CLASS_EXTENSION = '.php';
-    public const PROPERTIES = 'properties';
-    public const PROPERTY_PATH_SEPARATOR = '.';
-    public const TEMPLATE_VARIABLE_CLASS_NAME = 'className';
-    public const TEMPLATE_VARIABLE_CONSTANTS = 'constants';
-    public const TEMPLATE_VARIABLE_METADATA = 'metadata';
+    protected const CLASS_NAME_SUFFIX = 'IndexMap';
+    protected const CLASS_EXTENSION = '.php';
+    protected const PROPERTIES = 'properties';
+    protected const PROPERTY_PATH_SEPARATOR = '.';
+    protected const TEMPLATE_VARIABLE_CLASS_NAME = 'className';
+    protected const TEMPLATE_VARIABLE_CONSTANTS = 'constants';
+    protected const TEMPLATE_VARIABLE_METADATA = 'metadata';
+
+    protected const MAPPING_TYPE_NAME = '_doc';
 
     /**
      * @var \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig
@@ -49,20 +52,22 @@ class IndexMapGenerator implements IndexMapGeneratorInterface
      */
     public function generate(IndexDefinitionTransfer $indexDefinition): void
     {
-        foreach ($indexDefinition->getMappings() as $mappingName => $mapping) {
-            $mappingName = $this->normalizeToClassName($mappingName);
-            $this->generateIndexMapClass($mappingName, $mapping);
-        }
+        $indexMapName = $this->transformIndexNameToIndexMapPrefix($indexDefinition->getIndexName());
+        $mappingData = $this->getMappingData($indexDefinition);
+
+        $this->generateIndexMapClass($indexMapName, $mappingData);
     }
 
     /**
-     * @param string $mappingName
+     * @param string $indexName
      *
      * @return string
      */
-    protected function normalizeToClassName(string $mappingName): string
+    protected function transformIndexNameToIndexMapPrefix(string $indexName): string
     {
-        $normalized = preg_replace('/\\W+/', '_', $mappingName);
+        $indexNameFragments = explode('_', $indexName);
+        $indexMapName = end($indexNameFragments);
+        $normalized = preg_replace('/\\W+/', '_', $indexMapName);
         $normalized = trim($normalized, '_');
 
         $filter = new UnderscoreToCamelCase();
@@ -73,16 +78,16 @@ class IndexMapGenerator implements IndexMapGeneratorInterface
     }
 
     /**
-     * @param string $mappingName
-     * @param array $mapping
+     * @param string $indexMapPrefix
+     * @param array $mappingData
      *
      * @return void
      */
-    protected function generateIndexMapClass(string $mappingName, array $mapping): void
+    protected function generateIndexMapClass(string $indexMapPrefix, array $mappingData): void
     {
         $targetDirectory = $this->config->getClassTargetDirectory();
-        $fileName = $mappingName . static::CLASS_NAME_SUFFIX . static::CLASS_EXTENSION;
-        $templateData = $this->getTemplateData($mappingName, $mapping);
+        $fileName = $indexMapPrefix . static::CLASS_NAME_SUFFIX . static::CLASS_EXTENSION;
+        $templateData = $this->getTemplateData($indexMapPrefix, $mappingData);
         $fileContent = $this->twig->render('class.php.twig', $templateData);
 
         if (!is_dir($targetDirectory)) {
@@ -237,5 +242,25 @@ class IndexMapGenerator implements IndexMapGeneratorInterface
         $constants = array_merge($constants, $childMetadata);
 
         return $constants;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\IndexDefinitionTransfer $indexDefinition
+     *
+     * @throws \Spryker\Zed\SearchElasticsearch\Business\Exception\MissingIndexMappingException
+     *
+     * @return array
+     */
+    protected function getMappingData(IndexDefinitionTransfer $indexDefinition): array
+    {
+        $mapping = $indexDefinition->getMappings()[static::MAPPING_TYPE_NAME] ?? null;
+
+        if (!$mapping) {
+            throw new MissingIndexMappingException(
+                sprintf('Default mapping type %s is not configured for index %s.', static::MAPPING_TYPE_NAME, $indexDefinition->getIndexName())
+            );
+        }
+
+        return $mapping;
     }
 }

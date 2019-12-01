@@ -1,6 +1,6 @@
 {
   "mappings": {
-    "page": {
+    "_doc": {
       "properties": {
       }
     }

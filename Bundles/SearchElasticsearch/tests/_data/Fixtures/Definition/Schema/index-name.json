@@ -6,7 +6,7 @@
     }
   },
   "mappings": {
-    "index-name": {
+    "_doc": {
       "properties": {
         "foo": {
           "type": "keyword"
