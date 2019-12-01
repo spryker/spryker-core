@@ -99,4 +99,10 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="SearchDocument">
+        <property name="id" type="string"/>
+        <property name="searchContext" type="SearchContext"/>
+        <property name="data" type="array" singular="data"/>
+    </transfer>
+
 </transfers>

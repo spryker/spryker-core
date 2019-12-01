@@ -130,4 +130,22 @@
     <transfer name="PriceProductCriteria">
     </transfer>
 
+    <transfer name="CategoryMap">
+    </transfer>
+
+    <transfer name="IntegerFacetMap">
+    </transfer>
+
+    <transfer name="IntegerSortMap">
+    </transfer>
+
+    <transfer name="SearchResultDataMap">
+    </transfer>
+
+    <transfer name="StringFacetMap">
+    </transfer>
+
+    <transfer name="StringSortMap">
+    </transfer>
+
 </transfers>
