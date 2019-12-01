@@ -66,13 +66,13 @@ class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
     public function addConfiguredBundleToCart(CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer): QuoteResponseTransfer
     {
         $createConfiguredBundleRequestTransfer
+            ->requireItems()
+            ->requireLocaleName()
             ->requireConfiguredBundle()
             ->getConfiguredBundle()
-                ->requireTemplate();
-
-        if (!$this->configuredBundleValidator->validateCreateConfiguredBundleRequestTransfer($createConfiguredBundleRequestTransfer)) {
-            return $this->createErrorResponse(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_ADDED);
-        }
+                ->requireTemplate()
+                ->getTemplate()
+                    ->requireUuid();
 
         $configurableBundleTemplateStorageTransfer = $this->configurableBundleStorageClient->findConfigurableBundleTemplateStorageByUuid(
             $createConfiguredBundleRequestTransfer->getConfiguredBundle()->getTemplate()->getUuid(),
