@@ -27,7 +27,7 @@ class ProductConcreteSearchDataMapper extends AbstractProductSearchDataMapper
     protected $productSearchFacade;
 
     /**
-     * @var \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractPageMapExpanderPluginInterface[]
+     * @var \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface[]
      */
     protected $productConcretePageMapExpanderPlugins;
 

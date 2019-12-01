@@ -76,6 +76,16 @@
         <property name="store" type="string"/>
         <property name="locale" type="string"/>
         <property name="isActive" type="bool"/>
+        <property name="searchResultData" type="SearchResultDataMap[]" singular="searchResultData"/>
+        <property name="stringFacet" type="StringFacetMap[]" singular="stringFacet"/>
+        <property name="integerFacet" type="IntegerFacetMap[]" singular="integerFacet"/>
+        <property name="stringSort" type="StringSortMap[]" singular="stringSort"/>
+        <property name="integerSort" type="IntegerSortMap[]" singular="integerSort"/>
+        <property name="category" type="CategoryMap"/>
+        <property name="fullText" type="array" singular="fullText"/>
+        <property name="fullTextBoosted" type="array" singular="fullTextBoosted"/>
+        <property name="suggestionTerms" type="array" singular="suggestionTerms"/>
+        <property name="completionTerms" type="array" singular="completionTerms"/>
     </transfer>
 
     <transfer name="SynchronizationData">
@@ -131,21 +141,33 @@
     </transfer>
 
     <transfer name="CategoryMap">
+        <property name="allParents" type="array" singular="allParents"/>
+        <property name="directParents" type="array" singular="directParents"/>
     </transfer>
 
     <transfer name="IntegerFacetMap">
+        <property name="name" type="string"/>
+        <property name="value" type="array" singular="value"/>
     </transfer>
 
     <transfer name="IntegerSortMap">
+        <property name="name" type="string"/>
+        <property name="value" type="int"/>
     </transfer>
 
     <transfer name="SearchResultDataMap">
+        <property name="name" type="string"/>
+        <property name="value" type="string"/>
     </transfer>
 
     <transfer name="StringFacetMap">
+        <property name="name" type="string"/>
+        <property name="value" type="array" singular="value"/>
     </transfer>
 
     <transfer name="StringSortMap">
+        <property name="name" type="string"/>
+        <property name="value" type="string"/>
     </transfer>
 
 </transfers>
