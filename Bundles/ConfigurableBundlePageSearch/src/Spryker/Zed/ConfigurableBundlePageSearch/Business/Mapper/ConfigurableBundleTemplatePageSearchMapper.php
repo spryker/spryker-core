@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Shared\ConfigurableBundlePageSearch\ConfigurableBundlePageSearchConfig;
+use Spryker\Zed\ConfigurableBundlePageSearch\Business\Expander\ConfigurableBundleTemplatePageSearchExpanderInterface;
 use Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToSearchFacadeInterface;
 use Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Service\ConfigurableBundlePageSearchToUtilEncodingServiceInterface;
 
@@ -27,23 +28,23 @@ class ConfigurableBundleTemplatePageSearchMapper implements ConfigurableBundleTe
     protected $searchFacade;
 
     /**
-     * @var \Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplatePageDataExpanderPluginInterface[]
+     * @var \Spryker\Zed\ConfigurableBundlePageSearch\Business\Expander\ConfigurableBundleTemplatePageSearchExpanderInterface
      */
-    protected $configurableBundleTemplatePageDataExpanderPlugins;
+    protected $configurableBundleTemplatePageSearchExpander;
 
     /**
      * @param \Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Service\ConfigurableBundlePageSearchToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToSearchFacadeInterface $searchFacade
-     * @param \Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplatePageDataExpanderPluginInterface[] $configurableBundleTemplatePageDataExpanderPlugins
+     * @param \Spryker\Zed\ConfigurableBundlePageSearch\Business\Expander\ConfigurableBundleTemplatePageSearchExpanderInterface $configurableBundleTemplatePageSearchExpander
      */
     public function __construct(
         ConfigurableBundlePageSearchToUtilEncodingServiceInterface $utilEncodingService,
         ConfigurableBundlePageSearchToSearchFacadeInterface $searchFacade,
-        array $configurableBundleTemplatePageDataExpanderPlugins
+        ConfigurableBundleTemplatePageSearchExpanderInterface $configurableBundleTemplatePageSearchExpander
     ) {
         $this->utilEncodingService = $utilEncodingService;
         $this->searchFacade = $searchFacade;
-        $this->configurableBundleTemplatePageDataExpanderPlugins = $configurableBundleTemplatePageDataExpanderPlugins;
+        $this->configurableBundleTemplatePageSearchExpander = $configurableBundleTemplatePageSearchExpander;
     }
 
     /**
@@ -65,7 +66,7 @@ class ConfigurableBundleTemplatePageSearchMapper implements ConfigurableBundleTe
 
         $configurableBundleTemplatePageSearchTransfer->setLocale($localeTransfer->getLocaleName());
 
-        $configurableBundleTemplatePageSearchTransfer = $this->executeConfigurableBundleTemplatePageDataExpanderPlugins(
+        $configurableBundleTemplatePageSearchTransfer = $this->configurableBundleTemplatePageSearchExpander->expand(
             $configurableBundleTemplateTransfer,
             $configurableBundleTemplatePageSearchTransfer
         );
@@ -136,25 +137,5 @@ class ConfigurableBundleTemplatePageSearchMapper implements ConfigurableBundleTe
         unset($structuredData[ConfigurableBundleTemplatePageSearchTransfer::STRUCTURED_DATA]);
 
         return $this->utilEncodingService->encodeJson($structuredData);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer
-     *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer
-     */
-    protected function executeConfigurableBundleTemplatePageDataExpanderPlugins(
-        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer,
-        ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer
-    ): ConfigurableBundleTemplatePageSearchTransfer {
-        foreach ($this->configurableBundleTemplatePageDataExpanderPlugins as $configurableBundleTemplatePageDataExpanderPlugin) {
-            $configurableBundleTemplatePageSearchTransfer = $configurableBundleTemplatePageDataExpanderPlugin->expand(
-                $configurableBundleTemplateTransfer,
-                $configurableBundleTemplatePageSearchTransfer
-            );
-        }
-
-        return $configurableBundleTemplatePageSearchTransfer;
     }
 }

@@ -12,8 +12,9 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
-use Spryker\Zed\ConfigurableBundlePageSearch\Communication\Plugin\Event\Listener\ConfigurableBundleTemplatePageSearchConfigurableBundleTemplatePublishListener;
-use Spryker\Zed\ConfigurableBundlePageSearch\Communication\Plugin\Event\Listener\ConfigurableBundleTemplatePageSearchConfigurableBundleTemplateUnpublishListener;
+use Spryker\Zed\ConfigurableBundlePageSearch\Communication\Plugin\Event\Listener\ConfigurableBundleTemplateConfigurableBundlePageSearchPublishListener;
+use Spryker\Zed\ConfigurableBundlePageSearch\Communication\Plugin\Event\Listener\ConfigurableBundleTemplateConfigurableBundlePageSearchUnpublishListener;
+use Spryker\Zed\ConfigurableBundlePageSearch\Communication\Plugin\Event\Listener\ProductImageSetConfigurableBundlePageSearchPublishListener;
 use Spryker\Zed\ConfigurableBundlePageSearch\Communication\Plugin\Search\ConfigurableBundleTemplatePageMapPlugin;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Search\SearchDependencyProvider;
@@ -31,7 +32,6 @@ use Spryker\Zed\Search\SearchDependencyProvider;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method void pause()
- * @method \Spryker\Zed\ConfigurableBundlePageSearch\Business\ConfigurableBundlePageSearchFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -87,7 +87,7 @@ class ConfigurableBundlePageSearchCommunicationTester extends Actor
      */
     public function createConfigurableBundleTemplatePublishListener(): EventBulkHandlerInterface
     {
-        $configurableBundleTemplatePublishListener = new ConfigurableBundleTemplatePageSearchConfigurableBundleTemplatePublishListener();
+        $configurableBundleTemplatePublishListener = new ConfigurableBundleTemplateConfigurableBundlePageSearchPublishListener();
         $configurableBundleTemplatePublishListener->setFacade($this->getFacade());
 
         return $configurableBundleTemplatePublishListener;
@@ -98,7 +98,18 @@ class ConfigurableBundlePageSearchCommunicationTester extends Actor
      */
     public function createConfigurableBundleTemplateUnpublishListener(): EventBulkHandlerInterface
     {
-        $configurableBundleTemplateUnpublishListener = new ConfigurableBundleTemplatePageSearchConfigurableBundleTemplateUnpublishListener();
+        $configurableBundleTemplateUnpublishListener = new ConfigurableBundleTemplateConfigurableBundlePageSearchUnpublishListener();
+        $configurableBundleTemplateUnpublishListener->setFacade($this->getFacade());
+
+        return $configurableBundleTemplateUnpublishListener;
+    }
+
+    /**
+     * @return \Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface
+     */
+    public function createProductImageSetConfigurableBundlePageSearchPublishListener(): EventBulkHandlerInterface
+    {
+        $configurableBundleTemplateUnpublishListener = new ProductImageSetConfigurableBundlePageSearchPublishListener();
         $configurableBundleTemplateUnpublishListener->setFacade($this->getFacade());
 
         return $configurableBundleTemplateUnpublishListener;

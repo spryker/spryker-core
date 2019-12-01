@@ -31,4 +31,15 @@ class ConfigurableBundlePageSearchToEvenBehaviorFacadeBridge implements Configur
     {
         return $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param string $foreignKeyColumnName
+     *
+     * @return array
+     */
+    public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName)
+    {
+        return $this->eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, $foreignKeyColumnName);
+    }
 }

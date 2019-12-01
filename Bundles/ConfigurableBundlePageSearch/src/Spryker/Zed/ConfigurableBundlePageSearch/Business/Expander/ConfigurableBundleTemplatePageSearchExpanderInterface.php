@@ -5,19 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin;
+namespace Spryker\Zed\ConfigurableBundlePageSearch\Business\Expander;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 
-interface ConfigurableBundleTemplatePageDataExpanderPluginInterface
+interface ConfigurableBundleTemplatePageSearchExpanderInterface
 {
     /**
-     * Specification:
-     * - Expands the provided ConfigurableBundleTemplatePageSearchTransfer object and returns the modified version.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer
      *

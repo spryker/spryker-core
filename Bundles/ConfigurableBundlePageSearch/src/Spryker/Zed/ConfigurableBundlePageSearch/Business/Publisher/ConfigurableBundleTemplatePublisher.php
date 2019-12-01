@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchCollectionTran
 use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Spryker\Zed\ConfigurableBundlePageSearch\Business\Expander\ConfigurableBundleTemplatePageSearchExpanderInterface;
 use Spryker\Zed\ConfigurableBundlePageSearch\Business\Mapper\ConfigurableBundleTemplatePageSearchMapperInterface;
 use Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToConfigurableBundleFacadeInterface;
 use Spryker\Zed\ConfigurableBundlePageSearch\Persistence\ConfigurableBundlePageSearchEntityManagerInterface;
@@ -43,21 +44,29 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
     protected $configurableBundleTemplatePageSearchMapper;
 
     /**
+     * @var \Spryker\Zed\ConfigurableBundlePageSearch\Business\Expander\ConfigurableBundleTemplatePageSearchExpanderInterface
+     */
+    protected $configurableBundleTemplatePageSearchExpander;
+
+    /**
      * @param \Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToConfigurableBundleFacadeInterface $configurableBundleFacade
      * @param \Spryker\Zed\ConfigurableBundlePageSearch\Persistence\ConfigurableBundlePageSearchRepositoryInterface $configurableBundlePageSearchRepository
      * @param \Spryker\Zed\ConfigurableBundlePageSearch\Persistence\ConfigurableBundlePageSearchEntityManagerInterface $configurableBundlePageSearchEntityManager
      * @param \Spryker\Zed\ConfigurableBundlePageSearch\Business\Mapper\ConfigurableBundleTemplatePageSearchMapperInterface $configurableBundleTemplatePageSearchMapper
+     * @param \Spryker\Zed\ConfigurableBundlePageSearch\Business\Expander\ConfigurableBundleTemplatePageSearchExpanderInterface $configurableBundleTemplatePageSearchExpander
      */
     public function __construct(
         ConfigurableBundlePageSearchToConfigurableBundleFacadeInterface $configurableBundleFacade,
         ConfigurableBundlePageSearchRepositoryInterface $configurableBundlePageSearchRepository,
         ConfigurableBundlePageSearchEntityManagerInterface $configurableBundlePageSearchEntityManager,
-        ConfigurableBundleTemplatePageSearchMapperInterface $configurableBundleTemplatePageSearchMapper
+        ConfigurableBundleTemplatePageSearchMapperInterface $configurableBundleTemplatePageSearchMapper,
+        ConfigurableBundleTemplatePageSearchExpanderInterface $configurableBundleTemplatePageSearchExpander
     ) {
         $this->configurableBundleFacade = $configurableBundleFacade;
         $this->configurableBundlePageSearchRepository = $configurableBundlePageSearchRepository;
         $this->configurableBundlePageSearchEntityManager = $configurableBundlePageSearchEntityManager;
         $this->configurableBundleTemplatePageSearchMapper = $configurableBundleTemplatePageSearchMapper;
+        $this->configurableBundleTemplatePageSearchExpander = $configurableBundleTemplatePageSearchExpander;
     }
 
     /**
@@ -67,6 +76,12 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
      */
     public function publish(array $configurableBundleTemplateIds): void
     {
+        $configurableBundleTemplateIds = array_unique(array_filter($configurableBundleTemplateIds));
+
+        if (!$configurableBundleTemplateIds) {
+            return;
+        }
+
         $configurableBundleTemplateTransfers = $this->configurableBundleFacade->getConfigurableBundleTemplateCollection(
             (new ConfigurableBundleTemplateFilterTransfer())->setConfigurableBundleTemplateIds($configurableBundleTemplateIds)
         );

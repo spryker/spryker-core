@@ -22,10 +22,10 @@ use Spryker\Zed\ConfigurableBundle\Dependency\ConfigurableBundleEvents;
  * @group Plugin
  * @group Event
  * @group Listener
- * @group ConfigurableBundlePageSearchListenerTest
+ * @group ConfigurableBundleTemplateConfigurableBundlePageSearchUnpublishListenerTest
  * Add your own group annotations below this line
  */
-class ConfigurableBundlePageSearchListenerTest extends Unit
+class ConfigurableBundleTemplateConfigurableBundlePageSearchUnpublishListenerTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\ConfigurableBundlePageSearch\ConfigurableBundlePageSearchCommunicationTester
@@ -44,42 +44,19 @@ class ConfigurableBundlePageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testConfigurableBundleTemplatePublishListenerPublishesData(): void
-    {
-        // Arrange
-        $configurableBundleTemplateTransfer = $this->tester->createConfigurableBundleTemplate();
-        $configurableBundleTemplateIds = [$configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()];
-        $configurableBundleTemplatePublishListener = $this->tester->createConfigurableBundleTemplatePublishListener();
-        $eventTransfers = [
-            (new EventEntityTransfer())->setId($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()),
-        ];
-
-        // Act
-        $configurableBundleTemplatePublishListener->handleBulk($eventTransfers, ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_PUBLISH);
-        $configurableBundleTemplatePageSearchCollectionTransfer = $this->tester->getFacade()->getConfigurableBundleTemplatePageSearchCollection(
-            (new ConfigurableBundleTemplatePageSearchFilterTransfer())->setConfigurableBundleTemplateIds($configurableBundleTemplateIds)
-        );
-
-        // Assert
-        $this->assertNotEmpty($configurableBundleTemplatePageSearchCollectionTransfer->getConfigurableBundleTemplatePageSearches());
-    }
-
-    /**
-     * @return void
-     */
     public function testConfigurableBundleTemplateUnpublishListenerUnpublishesData(): void
     {
         // Arrange
         $configurableBundleTemplateTransfer = $this->tester->createConfigurableBundleTemplate();
         $configurableBundleTemplateIds = [$configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()];
         $configurableBundleTemplateUnpublishListener = $this->tester->createConfigurableBundleTemplateUnpublishListener();
-        $eventTransfers = [
+        $eventEntityTransfers = [
             (new EventEntityTransfer())->setId($configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate()),
         ];
 
         // Act
         $this->tester->getFacade()->publishConfigurableBundleTemplates($configurableBundleTemplateIds);
-        $configurableBundleTemplateUnpublishListener->handleBulk($eventTransfers, ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_PUBLISH);
+        $configurableBundleTemplateUnpublishListener->handleBulk($eventEntityTransfers, ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_PUBLISH);
         $configurableBundleTemplatePageSearchCollectionTransfer = $this->tester->getFacade()->getConfigurableBundleTemplatePageSearchCollection(
             (new ConfigurableBundleTemplatePageSearchFilterTransfer())->setConfigurableBundleTemplateIds($configurableBundleTemplateIds)
         );
