@@ -313,7 +313,7 @@ class GlueApplicationFactory extends AbstractFactory
      */
     public function createRestResponsePagination(): ResponsePaginationInterface
     {
-        return new ResponsePagination($this->getConfig()->getGlueDomainName());
+        return new ResponsePagination($this->getConfig());
     }
 
     /**
