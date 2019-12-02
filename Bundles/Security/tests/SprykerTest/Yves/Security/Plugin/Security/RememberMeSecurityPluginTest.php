@@ -163,7 +163,7 @@ class RememberMeSecurityPluginTest extends Unit
              */
             public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
             {
-                $eventDispatcher->addListener(SecurityEvents::INTERACTIVE_LOGIN, function () {
+                $eventDispatcher->addListener(SecurityEvents::INTERACTIVE_LOGIN, function (): void {
                     $this->testClass->interactiveLoginTriggered = true;
                 });
 

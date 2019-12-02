@@ -111,7 +111,7 @@ class SecurityConfigurationTest extends Unit
     public function testAddAuthenticationSuccessHandlerAddsAAuthenticationFailureHandler(): void
     {
         $securityConfiguration = new SecurityConfiguration();
-        $securityConfiguration->addAuthenticationSuccessHandler(static::FIREWALL_MAIN, function () {
+        $securityConfiguration->addAuthenticationSuccessHandler(static::FIREWALL_MAIN, function (): void {
         });
         $securityConfiguration = $securityConfiguration->getConfiguration();
 
@@ -124,7 +124,7 @@ class SecurityConfigurationTest extends Unit
     public function testAddAuthenticationFailureHandlerAddsAAuthenticationFailureHandler(): void
     {
         $securityConfiguration = new SecurityConfiguration();
-        $securityConfiguration->addAuthenticationFailureHandler(static::FIREWALL_MAIN, function () {
+        $securityConfiguration->addAuthenticationFailureHandler(static::FIREWALL_MAIN, function (): void {
         });
         $securityConfiguration = $securityConfiguration->getConfiguration();
 
@@ -137,7 +137,7 @@ class SecurityConfigurationTest extends Unit
     public function testAddLogoutHandlerAddsALogoutHandler(): void
     {
         $securityConfiguration = new SecurityConfiguration();
-        $securityConfiguration->addLogoutHandler(static::FIREWALL_MAIN, function () {
+        $securityConfiguration->addLogoutHandler(static::FIREWALL_MAIN, function (): void {
         });
         $securityConfiguration = $securityConfiguration->getConfiguration();
 
@@ -150,7 +150,7 @@ class SecurityConfigurationTest extends Unit
     public function testAddAccessDeniedHandlerAddsAAccessDeniedHandler(): void
     {
         $securityConfiguration = new SecurityConfiguration();
-        $securityConfiguration->addAccessDeniedHandler(static::FIREWALL_MAIN, function () {
+        $securityConfiguration->addAccessDeniedHandler(static::FIREWALL_MAIN, function (): void {
         });
         $securityConfiguration = $securityConfiguration->getConfiguration();
 
@@ -163,7 +163,7 @@ class SecurityConfigurationTest extends Unit
     public function testAddEventSubscriberAddsAEventSubscriber(): void
     {
         $securityConfiguration = new SecurityConfiguration();
-        $securityConfiguration->addEventSubscriber(function () {
+        $securityConfiguration->addEventSubscriber(function (): void {
         });
         $securityConfiguration = $securityConfiguration->getConfiguration();
 

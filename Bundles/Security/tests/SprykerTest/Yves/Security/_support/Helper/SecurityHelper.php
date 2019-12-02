@@ -60,7 +60,7 @@ class SecurityHelper extends Module
     /**
      * @return \Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin
      */
-    protected function getSecurityApplicationPluginStub()
+    protected function getSecurityApplicationPluginStub(): SecurityApplicationPlugin
     {
         /** @var \Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin $securityApplicationPlugin */
         $securityApplicationPlugin = Stub::make(SecurityApplicationPlugin::class, [

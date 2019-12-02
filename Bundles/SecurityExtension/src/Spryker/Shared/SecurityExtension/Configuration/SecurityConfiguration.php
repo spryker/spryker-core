@@ -233,7 +233,7 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      *
      * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
-    public function addAccessDeniedHandler(string $firewallName, callable $accessDeniedHandler)
+    public function addAccessDeniedHandler(string $firewallName, callable $accessDeniedHandler): SecurityBuilderInterface
     {
         $this->assertNotFrozen();
 
@@ -257,7 +257,7 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      *
      * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface
      */
-    public function addEventSubscriber(callable $eventSubscriber)
+    public function addEventSubscriber(callable $eventSubscriber): SecurityBuilderInterface
     {
         $this->assertNotFrozen();
 
@@ -303,7 +303,7 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      *
      * @return void
      */
-    protected function assertNotFrozen()
+    protected function assertNotFrozen(): void
     {
         if ($this->isFrozen) {
             throw new SecurityConfigurationException('The configuration is marked as frozen and can\'t be changed.');
@@ -315,7 +315,7 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
      *
      * @return void
      */
-    protected function assertFrozen()
+    protected function assertFrozen(): void
     {
         if (!$this->isFrozen) {
             throw new SecurityConfigurationException('Please use "\Spryker\Shared\SecurityExtension\Configuration\SecurityConfiguration::getConfiguration()" to retrieve the security configuration.');

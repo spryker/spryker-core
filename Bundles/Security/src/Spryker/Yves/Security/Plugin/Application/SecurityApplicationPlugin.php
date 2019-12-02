@@ -376,7 +376,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      *
      * @return void
      */
-    protected function addUserPasswordValidator(ContainerInterface $container)
+    protected function addUserPasswordValidator(ContainerInterface $container): void
     {
         if ($container->has(static::SERVICE_VALIDATOR) && $container->has('validator.validator_service_ids')) {
             $container->set('security.validator.user_password_validator', function (ContainerInterface $container) {
@@ -1399,7 +1399,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      *
      * @return void
      */
-    protected function addSecurityRoute(string $method, string $routeNameOrUrl, ?string $routeName = null)
+    protected function addSecurityRoute(string $method, string $routeNameOrUrl, ?string $routeName = null): void
     {
         $url = $this->buildUrl($routeNameOrUrl);
         $routeName = $this->buildRouteName($routeNameOrUrl, $routeName);
@@ -1455,7 +1455,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
 
                 $route = new Route($url);
 
-                $controller = function (Request $request) {
+                $controller = function (Request $request): void {
                     throw new LogicException('None of the configured firewalls matched. Please check your firewall configuration.');
                 };
 

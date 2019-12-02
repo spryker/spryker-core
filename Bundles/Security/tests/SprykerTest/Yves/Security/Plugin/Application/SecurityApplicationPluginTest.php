@@ -79,7 +79,7 @@ class SecurityApplicationPluginTest extends Unit
         ]);
         $this->tester->mockSecurityPlugin($securityConfiguration);
 
-        $this->tester->addRoute('homepage', '/', function () {
+        $this->tester->addRoute('homepage', '/', function (): void {
         });
 
         $this->expectException(LogicException::class);
@@ -89,7 +89,7 @@ class SecurityApplicationPluginTest extends Unit
     /**
      * @return void
      */
-    public function testFormAuthentication()
+    public function testFormAuthentication(): void
     {
         $this->addFormAuthentication();
 
@@ -142,7 +142,7 @@ class SecurityApplicationPluginTest extends Unit
     /**
      * @return void
      */
-    public function testHttpAuthentication()
+    public function testHttpAuthentication(): void
     {
         $this->addHttpAuthentication();
 
@@ -333,7 +333,7 @@ class SecurityApplicationPluginTest extends Unit
                  *
                  * @return \Symfony\Component\HttpFoundation\Response
                  */
-                public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+                public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
                 {
                     return new Response('authentication failure');
                 }
@@ -565,7 +565,7 @@ class SecurityApplicationPluginTest extends Unit
     /**
      * @return void
      */
-    public function testExposedExceptions()
+    public function testExposedExceptions(): void
     {
         $container = $this->tester->getContainer();
         $this->tester->mockConfigMethod('hideUserNotFoundException', function () {

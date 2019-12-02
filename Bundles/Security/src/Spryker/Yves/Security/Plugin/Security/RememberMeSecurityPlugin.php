@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\Security\Plugin\Security;
 
+use Exception;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
 use Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface;
@@ -100,6 +101,8 @@ class RememberMeSecurityPlugin implements SecurityPluginInterface
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
+     * @throws \Exception
+     *
      * @return \Spryker\Service\Container\ContainerInterface
      */
     protected function addRememberMeServicePrototype(ContainerInterface $container): ContainerInterface
@@ -116,6 +119,10 @@ class RememberMeSecurityPlugin implements SecurityPluginInterface
                     'always_remember_me' => false,
                     'remember_me_parameter' => '_remember_me',
                 ], $options);
+
+                if (!is_array($options)) {
+                    throw new Exception('An error occured "array_replace" returned "null".');
+                }
 
                 $logger = $container->has('logger') ? $container->get('logger') : null;
 
