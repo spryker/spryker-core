@@ -38,17 +38,18 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
 
     /**
      * @param int $idProductOptionValue
+     * @param string|null $currencyCode
      *
      * @throws \Spryker\Zed\ProductOption\Business\Exception\ProductOptionNotFoundException
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    public function getProductOption($idProductOptionValue)
+    public function getProductOption($idProductOptionValue, $currencyCode = null)
     {
         $productOptionValueEntity = $this->findOptionValueById((int)$idProductOptionValue);
 
         if ($productOptionValueEntity) {
-            return $this->hydrateProductOptionTransfer($productOptionValueEntity);
+            return $this->hydrateProductOptionTransfer($productOptionValueEntity, $currencyCode);
         }
 
         throw new ProductOptionNotFoundException(
@@ -103,16 +104,17 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
 
     /**
      * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue $productOptionValueEntity
+     * @param string|null $currencyCode
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    protected function hydrateProductOptionTransfer(SpyProductOptionValue $productOptionValueEntity)
+    protected function hydrateProductOptionTransfer(SpyProductOptionValue $productOptionValueEntity, $currencyCode = null)
     {
         $productOptionTransfer = new ProductOptionTransfer();
         $productOptionTransfer->fromArray($productOptionValueEntity->toArray(), true);
         $productOptionTransfer->setGroupName($productOptionValueEntity->getSpyProductOptionGroup()->getName());
-        $productOptionTransfer->setUnitGrossPrice($this->productOptionValuePriceReader->getCurrentGrossPrice($productOptionValueEntity));
-        $productOptionTransfer->setUnitNetPrice($this->productOptionValuePriceReader->getCurrentNetPrice($productOptionValueEntity));
+        $productOptionTransfer->setUnitGrossPrice($this->productOptionValuePriceReader->getCurrentGrossPrice($productOptionValueEntity, $currencyCode));
+        $productOptionTransfer->setUnitNetPrice($this->productOptionValuePriceReader->getCurrentNetPrice($productOptionValueEntity, $currencyCode));
 
         return $productOptionTransfer;
     }

@@ -14,17 +14,19 @@ interface ProductOptionValuePriceReaderInterface
 {
     /**
      * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue $productOptionValueEntity
+     * @param string|null $currencyCode
      *
      * @return int|null
      */
-    public function getCurrentGrossPrice(SpyProductOptionValue $productOptionValueEntity);
+    public function getCurrentGrossPrice(SpyProductOptionValue $productOptionValueEntity, $currencyCode = null);
 
     /**
      * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue $productOptionValueEntity
+     * @param string|null $currencyCode
      *
      * @return int|null
      */
-    public function getCurrentNetPrice(SpyProductOptionValue $productOptionValueEntity);
+    public function getCurrentNetPrice(SpyProductOptionValue $productOptionValueEntity, $currencyCode = null);
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer $storePricesRequestTransfer

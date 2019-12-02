@@ -11,17 +11,19 @@ interface ProductOptionCartConnectorToProductOptionFacadeInterface
 {
     /**
      * @param int $idProductOptionValueUsage
+     * @param string|null $currencyCode
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    public function getProductOptionValue($idProductOptionValueUsage);
+    public function getProductOptionValue($idProductOptionValueUsage, $currencyCode = null);
 
     /**
      * @param int $idProductOptionValue
+     * @param string|null $currencyCode
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    public function getProductOptionValueById($idProductOptionValue);
+    public function getProductOptionValueById($idProductOptionValue, $currencyCode = null);
 
     /**
      * @param int $idProductOptionValue
