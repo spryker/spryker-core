@@ -67,7 +67,7 @@ class VoucherByQuoteResourceRelationshipExpander implements VoucherByQuoteResour
     }
 
     /**
-     * @param ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $discountTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $discountTransfers
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      *
      * @return void
