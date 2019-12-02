@@ -17,7 +17,7 @@ class CartCodesRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\CartCodesRestApi\Zed\CartCodesRestApiStubInterface
      */
-    public function createCartCodesRestApiStub(): CartCodesRestApiStubInterface
+    public function createCartCodesRestApiZedStub(): CartCodesRestApiStubInterface
     {
         return new CartCodesRestApiStub($this->getZedRequestClient());
     }

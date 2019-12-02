@@ -27,7 +27,7 @@ class CartCodesRestApiClient extends AbstractClient implements CartCodesRestApiC
      */
     public function addCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
-        return $this->getFactory()->createCartCodesRestApiStub()->addCartCode($cartCodeRequestTransfer);
+        return $this->getFactory()->createCartCodesRestApiZedStub()->addCartCode($cartCodeRequestTransfer);
     }
 
     /**
@@ -41,6 +41,6 @@ class CartCodesRestApiClient extends AbstractClient implements CartCodesRestApiC
      */
     public function removeCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
-        return $this->getFactory()->createCartCodesRestApiStub()->removeCartCode($cartCodeRequestTransfer);
+        return $this->getFactory()->createCartCodesRestApiZedStub()->removeCartCode($cartCodeRequestTransfer);
     }
 }

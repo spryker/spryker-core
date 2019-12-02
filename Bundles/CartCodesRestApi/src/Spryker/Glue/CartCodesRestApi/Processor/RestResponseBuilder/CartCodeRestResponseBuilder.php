@@ -54,7 +54,7 @@ class CartCodeRestResponseBuilder implements CartCodeRestResponseBuilderInterfac
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function buildCartRestResponse(
+    public function createCartRestResponse(
         CartCodeResponseTransfer $cartCodeResponseTransfer,
         RestRequestInterface $restRequest
     ): RestResponseInterface {
@@ -71,7 +71,7 @@ class CartCodeRestResponseBuilder implements CartCodeRestResponseBuilderInterfac
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function buildGuestCartRestResponse(CartCodeResponseTransfer $cartCodeResponseTransfer): RestResponseInterface
+    public function createGuestCartRestResponse(CartCodeResponseTransfer $cartCodeResponseTransfer): RestResponseInterface
     {
         $quoteTransfer = $cartCodeResponseTransfer->getQuote();
         if (!$quoteTransfer) {

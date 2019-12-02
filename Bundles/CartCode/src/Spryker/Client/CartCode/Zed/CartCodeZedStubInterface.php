@@ -31,5 +31,5 @@ interface CartCodeZedStubInterface
      *
      * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function clearCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer;
+    public function clearCartCodes(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer;
 }

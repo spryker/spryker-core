@@ -63,7 +63,7 @@ class CartCodeZedStub implements CartCodeZedStubInterface
      *
      * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function clearCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
+    public function clearCartCodes(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
         /** @var \Generated\Shared\Transfer\CartCodeResponseTransfer $cartCodeResponseTransfer */
         $cartCodeResponseTransfer = $this->zedRequestClient->call('/cart-codes-rest-api/gateway/clear-cart-codes', $cartCodeRequestTransfer);

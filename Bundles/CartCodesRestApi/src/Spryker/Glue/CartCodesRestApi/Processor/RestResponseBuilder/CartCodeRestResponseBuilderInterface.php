@@ -19,7 +19,7 @@ interface CartCodeRestResponseBuilderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function buildCartRestResponse(
+    public function createCartRestResponse(
         CartCodeResponseTransfer $cartCodeResponseTransfer,
         RestRequestInterface $restRequest
     ): RestResponseInterface;
@@ -29,5 +29,5 @@ interface CartCodeRestResponseBuilderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function buildGuestCartRestResponse(CartCodeResponseTransfer $cartCodeResponseTransfer): RestResponseInterface;
+    public function createGuestCartRestResponse(CartCodeResponseTransfer $cartCodeResponseTransfer): RestResponseInterface;
 }

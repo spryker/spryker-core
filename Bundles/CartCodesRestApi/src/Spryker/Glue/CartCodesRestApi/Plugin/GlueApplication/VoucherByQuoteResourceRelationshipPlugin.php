@@ -15,11 +15,11 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 /**
  * @method \Spryker\Glue\CartCodesRestApi\CartCodesRestApiFactory getFactory()
  */
-class CartRuleByCartResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class VoucherByQuoteResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Adds cart-rules resource as relationship by cart resource.
+     * - Adds vouchers resource as relationship by cart resource.
      *
      * @api
      *
@@ -31,7 +31,7 @@ class CartRuleByCartResourceRelationshipPlugin extends AbstractPlugin implements
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createCartRuleByQuoteResourceRelationshipExpander()
+            ->createVoucherByQuoteResourceRelationshipExpander()
             ->addResourceRelationships($resources, $restRequest);
     }
 
@@ -44,6 +44,6 @@ class CartRuleByCartResourceRelationshipPlugin extends AbstractPlugin implements
      */
     public function getRelationshipResourceType(): string
     {
-        return CartCodesRestApiConfig::RESOURCE_CART_RULES;
+        return CartCodesRestApiConfig::RESOURCE_VOUCHERS;
     }
 }

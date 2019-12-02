@@ -1,7 +1,7 @@
 # CartCodesRestApi Module
 [![Build Status](https://travis-ci.org/spryker/cart-codes-rest-api.svg)](https://travis-ci.org/spryker/cart-codes-rest-api)
 
-CartCodesRestApi module provides Glue API endpoints for cart-codes.
+CartCodesRestApi module provides Glue API endpoints for vouchers and cart-rules.
 
 ## Installation
 
