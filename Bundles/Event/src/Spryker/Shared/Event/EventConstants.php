@@ -46,7 +46,7 @@ interface EventConstants
 
     /**
      * Specification:
-     *  - Chunk size of enqueue event messages for bulk operations
+     *  - Chunk size of enqueueing event messages for bulk operations
      *
      * @api
      */
