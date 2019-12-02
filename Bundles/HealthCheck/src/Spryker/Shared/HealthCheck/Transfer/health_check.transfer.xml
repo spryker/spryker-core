@@ -15,15 +15,6 @@
         <property name="healthCheckServiceResponses" type="HealthCheckServiceResponse[]" singular="healthCheckServiceResponse"/>
     </transfer>
 
-    <transfer name="HealthCheckResponseStatus">
-        <property name="successStatusMessage" type="string"/>
-        <property name="successStatusCode" type="int"/>
-        <property name="unavailableStatusMessage" type="string"/>
-        <property name="unavailableStatusCode" type="int"/>
-        <property name="forbiddenStatusMessage" type="string"/>
-        <property name="forbiddenStatusCode" type="int"/>
-    </transfer>
-
     <transfer name="HealthCheckServiceResponse">
         <property name="name" type="string"/>
         <property name="status" type="bool"/>

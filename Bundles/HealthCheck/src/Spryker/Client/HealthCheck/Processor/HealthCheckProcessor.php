@@ -7,31 +7,70 @@
 
 namespace Spryker\Client\HealthCheck\Processor;
 
-use Generated\Shared\Transfer\HealthCheckRequestTransfer;
 use Generated\Shared\Transfer\HealthCheckResponseTransfer;
+use Spryker\Client\HealthCheck\HealthCheckConfig;
+use Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface;
 use Spryker\Shared\HealthCheck\Processor\AbstractHealthCheckProcessor;
-use Spryker\Shared\HealthCheck\Processor\HealthCheckProcessorInterface;
 
-class HealthCheckProcessor extends AbstractHealthCheckProcessor implements HealthCheckProcessorInterface
+class HealthCheckProcessor extends AbstractHealthCheckProcessor
 {
     /**
-     * @param \Generated\Shared\Transfer\HealthCheckRequestTransfer $healthCheckRequestTransfer
+     * @var \Spryker\Client\HealthCheck\HealthCheckConfig
+     */
+    protected $healthCheckConfig;
+
+    /**
+     * @param \Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface $chainFilter
+     * @param \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[] $healthCheckPlugins
+     * @param \Spryker\Client\HealthCheck\HealthCheckConfig $healthCheckConfig
+     */
+    public function __construct(
+        ChainFilterInterface $chainFilter,
+        array $healthCheckPlugins,
+        HealthCheckConfig $healthCheckConfig
+    ) {
+        parent::__construct($chainFilter, $healthCheckPlugins);
+        $this->healthCheckConfig = $healthCheckConfig;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isHealthCheckEnabled(): bool
+    {
+        return $this->healthCheckConfig->isHealthCheckEnabled();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
+     */
+    protected function createSuccessHealthCheckResponseTransfer(): HealthCheckResponseTransfer
+    {
+        return (new HealthCheckResponseTransfer())
+            ->setStatus($this->healthCheckConfig->getSuccessHealthCheckStatusMessage())
+            ->setStatusCode($this->healthCheckConfig->getSuccessHealthCheckStatusCode());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
+     */
+    protected function createForbiddenHealthCheckResponseTransfer(): HealthCheckResponseTransfer
+    {
+        return (new HealthCheckResponseTransfer())
+            ->setStatus($this->healthCheckConfig->getUnavailableHealthCheckStatusMessage())
+            ->setStatusCode($this->healthCheckConfig->getForbiddenHealthCheckStatusCode())
+            ->setMessage($this->healthCheckConfig->getForbiddenHealthCheckStatusMessage());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\HealthCheckResponseTransfer $healthCheckResponseTransfer
      *
      * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
      */
-    public function process(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer
+    protected function updateHealthCheckResponseTransferWithUnavailableHealthCheckStatus(HealthCheckResponseTransfer $healthCheckResponseTransfer): HealthCheckResponseTransfer
     {
-        if ($this->configurationProvider->isHealthCheckEnabled() === false) {
-            return (new HealthCheckResponseTransfer())
-                ->setStatus($this->configurationProvider->getUnavailableHealthCheckStatusMessage())
-                ->setStatusCode($this->configurationProvider->getForbiddenHealthCheckStatusCode())
-                ->setMessage($this->configurationProvider->getForbiddenHealthCheckStatusMessage());
-        }
-
-        $filteredHealthCheckPlugins = $this->serviceFilter->filter($healthCheckRequestTransfer);
-        $healthCheckResponseTransfer = $this->processFilteredHealthCheckPlugins($filteredHealthCheckPlugins);
-        $healthCheckResponseTransfer = $this->validateGeneralSystemStatus($healthCheckResponseTransfer);
-
-        return $healthCheckResponseTransfer;
+        return $healthCheckResponseTransfer
+            ->setStatusCode($this->healthCheckConfig->getUnavailableHealthCheckStatusCode())
+            ->setStatus($this->healthCheckConfig->getUnavailableHealthCheckStatusMessage());
     }
 }

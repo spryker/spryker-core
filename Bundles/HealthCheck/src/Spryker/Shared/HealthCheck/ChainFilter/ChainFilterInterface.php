@@ -5,16 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\HealthCheck\Filter\Service;
+namespace Spryker\Shared\HealthCheck\ChainFilter;
 
 use Generated\Shared\Transfer\HealthCheckRequestTransfer;
 
-interface ServiceFilterInterface
+interface ChainFilterInterface
 {
     /**
+     * @param \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[] $healthCheckPlugins
      * @param \Generated\Shared\Transfer\HealthCheckRequestTransfer $healthCheckRequestTransfer
      *
      * @return \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[]
      */
-    public function filter(HealthCheckRequestTransfer $healthCheckRequestTransfer): array;
+    public function filter(array $healthCheckPlugins, HealthCheckRequestTransfer $healthCheckRequestTransfer): array;
 }

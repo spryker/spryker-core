@@ -7,12 +7,11 @@
 
 namespace Spryker\Client\HealthCheck;
 
-use Spryker\Client\HealthCheck\ConfigurationProvider\ConfigurationProvider;
-use Spryker\Client\HealthCheck\Filter\NameServiceFilter;
 use Spryker\Client\HealthCheck\Processor\HealthCheckProcessor;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Shared\HealthCheck\ConfigurationProvider\ConfigurationProviderInterface;
-use Spryker\Shared\HealthCheck\Filter\Service\ServiceFilterInterface;
+use Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface;
+use Spryker\Shared\HealthCheck\ChainFilter\Filter\ServiceNameFilter;
+use Spryker\Shared\HealthCheck\ChainFilter\ServiceChainFilter;
 use Spryker\Shared\HealthCheck\Processor\HealthCheckProcessorInterface;
 
 /**
@@ -26,29 +25,30 @@ class HealthCheckFactory extends AbstractFactory
     public function createHealthCheckProcessor(): HealthCheckProcessorInterface
     {
         return new HealthCheckProcessor(
-            $this->createNameServiceFilter(),
-            $this->createConfigurationProvider()
-        );
-    }
-
-    /**
-     * @return \Spryker\Shared\HealthCheck\Filter\Service\ServiceFilterInterface
-     */
-    public function createNameServiceFilter(): ServiceFilterInterface
-    {
-        return new NameServiceFilter(
-            $this->getHealthCheckPlugins()
-        );
-    }
-
-    /**
-     * @return \Spryker\Shared\HealthCheck\ConfigurationProvider\ConfigurationProviderInterface
-     */
-    public function createConfigurationProvider(): ConfigurationProviderInterface
-    {
-        return new ConfigurationProvider(
+            $this->createServiceChainFilter(),
+            $this->getHealthCheckPlugins(),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface
+     */
+    public function createServiceChainFilter(): ChainFilterInterface
+    {
+        $chainFilter = new ServiceChainFilter();
+        $chainFilter
+            ->addFilter($this->createServiceNameFilter());
+
+        return $chainFilter;
+    }
+
+    /**
+     * @return \Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface
+     */
+    public function createServiceNameFilter(): ChainFilterInterface
+    {
+        return new ServiceNameFilter();
     }
 
     /**

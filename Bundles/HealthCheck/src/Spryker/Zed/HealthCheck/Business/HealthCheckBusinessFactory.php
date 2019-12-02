@@ -7,11 +7,10 @@
 
 namespace Spryker\Zed\HealthCheck\Business;
 
-use Spryker\Shared\HealthCheck\ConfigurationProvider\ConfigurationProviderInterface;
-use Spryker\Shared\HealthCheck\Filter\Service\ServiceFilterInterface;
+use Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface;
+use Spryker\Shared\HealthCheck\ChainFilter\Filter\ServiceNameFilter;
+use Spryker\Shared\HealthCheck\ChainFilter\ServiceChainFilter;
 use Spryker\Shared\HealthCheck\Processor\HealthCheckProcessorInterface;
-use Spryker\Zed\HealthCheck\Business\ConfigurationProvider\ConfigurationProvider;
-use Spryker\Zed\HealthCheck\Business\Filter\NameServiceFilter;
 use Spryker\Zed\HealthCheck\Business\Processor\HealthCheckProcessor;
 use Spryker\Zed\HealthCheck\HealthCheckDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -27,29 +26,30 @@ class HealthCheckBusinessFactory extends AbstractBusinessFactory
     public function createHealthCheckProcessor(): HealthCheckProcessorInterface
     {
         return new HealthCheckProcessor(
-            $this->createServiceNameFilter(),
-            $this->createConfigurationProvider()
-        );
-    }
-
-    /**
-     * @return \Spryker\Shared\HealthCheck\ConfigurationProvider\ConfigurationProviderInterface
-     */
-    public function createConfigurationProvider(): ConfigurationProviderInterface
-    {
-        return new ConfigurationProvider(
+            $this->createServiceChainFilter(),
+            $this->getHealthCheckPlugins(),
             $this->getConfig()
         );
     }
 
     /**
-     * @return \Spryker\Shared\HealthCheck\Filter\Service\ServiceFilterInterface
+     * @return \Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface
      */
-    public function createServiceNameFilter(): ServiceFilterInterface
+    public function createServiceChainFilter(): ChainFilterInterface
     {
-        return new NameServiceFilter(
-            $this->getHealthCheckPlugins()
-        );
+        $chainFilter = new ServiceChainFilter();
+        $chainFilter
+            ->addFilter($this->createServiceNameFilter());
+
+        return $chainFilter;
+    }
+
+    /**
+     * @return \Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface
+     */
+    public function createServiceNameFilter(): ChainFilterInterface
+    {
+        return new ServiceNameFilter();
     }
 
     /**

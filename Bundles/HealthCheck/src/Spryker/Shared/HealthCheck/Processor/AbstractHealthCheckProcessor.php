@@ -7,30 +7,48 @@
 
 namespace Spryker\Shared\HealthCheck\Processor;
 
+use Generated\Shared\Transfer\HealthCheckRequestTransfer;
 use Generated\Shared\Transfer\HealthCheckResponseTransfer;
-use Spryker\Shared\HealthCheck\ConfigurationProvider\ConfigurationProviderInterface;
-use Spryker\Shared\HealthCheck\Filter\Service\ServiceFilterInterface;
+use Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface;
 
-abstract class AbstractHealthCheckProcessor
+abstract class AbstractHealthCheckProcessor implements HealthCheckProcessorInterface
 {
     /**
-     * @var \Spryker\Shared\HealthCheck\Filter\Service\ServiceFilterInterface
+     * @var \Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface
      */
-    protected $serviceFilter;
+    protected $chainFilter;
 
     /**
-     * @var \Spryker\Shared\HealthCheck\ConfigurationProvider\ConfigurationProviderInterface
+     * @var \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[]
      */
-    protected $configurationProvider;
+    protected $healthCheckPlugins;
 
     /**
-     * @param \Spryker\Shared\HealthCheck\Filter\Service\ServiceFilterInterface $serviceFilter
-     * @param \Spryker\Shared\HealthCheck\ConfigurationProvider\ConfigurationProviderInterface $configurationProvider
+     * @param \Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface $chainFilter
+     * @param \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[] $healthCheckPlugins
      */
-    public function __construct(ServiceFilterInterface $serviceFilter, ConfigurationProviderInterface $configurationProvider)
+    public function __construct(ChainFilterInterface $chainFilter, array $healthCheckPlugins)
     {
-        $this->serviceFilter = $serviceFilter;
-        $this->configurationProvider = $configurationProvider;
+        $this->chainFilter = $chainFilter;
+        $this->healthCheckPlugins = $healthCheckPlugins;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\HealthCheckRequestTransfer $healthCheckRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
+     */
+    public function process(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer
+    {
+        if ($this->isHealthCheckEnabled() === false) {
+            return $this->createForbiddenHealthCheckResponseTransfer();
+        }
+
+        $filteredHealthCheckPlugins = $this->chainFilter->filter($this->healthCheckPlugins, $healthCheckRequestTransfer);
+        $healthCheckResponseTransfer = $this->processFilteredHealthCheckPlugins($filteredHealthCheckPlugins);
+        $healthCheckResponseTransfer = $this->validateGeneralSystemStatus($healthCheckResponseTransfer);
+
+        return $healthCheckResponseTransfer;
     }
 
     /**
@@ -40,9 +58,7 @@ abstract class AbstractHealthCheckProcessor
      */
     protected function processFilteredHealthCheckPlugins(array $filteredHealthCheckPlugins): HealthCheckResponseTransfer
     {
-        $healthCheckResponseTransfer = (new HealthCheckResponseTransfer())
-            ->setStatus($this->configurationProvider->getSuccessHealthCheckStatusMessage())
-            ->setStatusCode($this->configurationProvider->getSuccessHealthCheckStatusCode());
+        $healthCheckResponseTransfer = $this->createSuccessHealthCheckResponseTransfer();
 
         foreach ($filteredHealthCheckPlugins as $filteredHealthCheckPlugin) {
             $healthCheckServiceResponseTransfer = $filteredHealthCheckPlugin->check();
@@ -63,12 +79,32 @@ abstract class AbstractHealthCheckProcessor
     ): HealthCheckResponseTransfer {
         foreach ($healthCheckResponseTransfer->getHealthCheckServiceResponses() as $healthCheckServiceResponseTransfer) {
             if ($healthCheckServiceResponseTransfer->getStatus() === false) {
-                $healthCheckResponseTransfer
-                    ->setStatusCode($this->configurationProvider->getUnavailableHealthCheckStatusCode())
-                    ->setStatus($this->configurationProvider->getUnavailableHealthCheckStatusMessage());
+                return $this->updateHealthCheckResponseTransferWithUnavailableHealthCheckStatus($healthCheckResponseTransfer);
             }
         }
 
         return $healthCheckResponseTransfer;
     }
+
+    /**
+     * @return bool
+     */
+    abstract protected function isHealthCheckEnabled(): bool;
+
+    /**
+     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
+     */
+    abstract protected function createForbiddenHealthCheckResponseTransfer(): HealthCheckResponseTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
+     */
+    abstract protected function createSuccessHealthCheckResponseTransfer(): HealthCheckResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\HealthCheckResponseTransfer $healthCheckResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
+     */
+    abstract protected function updateHealthCheckResponseTransferWithUnavailableHealthCheckStatus(HealthCheckResponseTransfer $healthCheckResponseTransfer): HealthCheckResponseTransfer;
 }
