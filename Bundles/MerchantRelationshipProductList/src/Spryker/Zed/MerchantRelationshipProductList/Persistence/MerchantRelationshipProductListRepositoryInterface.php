@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationshipProductList\Persistence;
 
+use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\ProductListCollectionTransfer;
 
 interface MerchantRelationshipProductListRepositoryInterface
@@ -19,9 +20,23 @@ interface MerchantRelationshipProductListRepositoryInterface
     public function getProductListCollectionByIdCompanyBusinessUnit(int $idCompanyBusinessUnit): ProductListCollectionTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListCollectionTransfer
+     */
+    public function getAvailableProductListsForMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): ProductListCollectionTransfer;
+
+    /**
      * @param int $idMerchantRelationship
      *
      * @return \Generated\Shared\Transfer\ProductListCollectionTransfer
      */
     public function findProductListCollectionByIdMerchantRelationship(int $idMerchantRelationship): ProductListCollectionTransfer;
+
+    /**
+     * @param int $idProductList
+     *
+     * @return int[]
+     */
+    public function getMerchantRelationshipIdsByProductListId(int $idProductList): array;
 }

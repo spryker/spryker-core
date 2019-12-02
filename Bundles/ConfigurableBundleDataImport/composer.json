@@ -5,9 +5,10 @@
   "license": "MIT",
   "require": {
     "php": ">=7.2",
-    "spryker/configurable-bundle": "^1.0.0",
+    "spryker/configurable-bundle": "^2.0.0",
     "spryker/data-import": "^1.0.0",
     "spryker/kernel": "^3.33.0",
+    "spryker/product-image": "^3.0.0",
     "spryker/product-list": "^1.4.0"
   },
   "require-dev": {
