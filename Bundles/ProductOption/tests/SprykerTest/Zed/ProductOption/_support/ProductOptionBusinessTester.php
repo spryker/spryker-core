@@ -23,9 +23,9 @@ use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
 use Propel\Runtime\Propel;
-use Pyz\Zed\ProductOption\ProductOptionDependencyProvider;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreFacadeBridge;
+use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
  * Inherited Methods
