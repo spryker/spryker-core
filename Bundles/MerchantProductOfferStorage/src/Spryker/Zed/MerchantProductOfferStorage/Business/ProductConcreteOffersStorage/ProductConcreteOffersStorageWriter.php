@@ -15,6 +15,11 @@ use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOff
 class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorageWriterInterface
 {
     /**
+     * @uses \Spryker\Zed\ProductOffer\ProductOfferConfig::STATUS_APPROVED
+     */
+    public const STATUS_APPROVED = 'approved';
+
+    /**
      * @var \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface
      */
     protected $productOfferFacade;
@@ -35,19 +40,33 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     public function publish(array $productSkus): void
     {
         $productSkus = array_unique($productSkus);
-        $productOfferCriteriaFilterTransfer = new ProductOfferCriteriaFilterTransfer();
-        $productOfferCriteriaFilterTransfer->setConcreteSkus($productSkus);
+        $productOfferCriteriaFilterTransfer = $this->createProductOfferCriteriaFilterTransfer($productSkus);
         $productOfferCollectionTransfer = $this->productOfferFacade->find($productOfferCriteriaFilterTransfer);
 
         $productOffersGroupedBySku = $this->groupProductOfferByConcreteSku($productOfferCollectionTransfer);
 
+        $storedProductSkus = [];
         foreach ($productOffersGroupedBySku as $sku => $productOfferReferenceList) {
-            $productConcreteProductOffersStorageEntity = SpyProductConcreteProductOffersStorageQuery::create()
+            $productConcreteProductOffersStorageEntity = $this->createProductConcreteProductOffersStoragePropelQuery()
                 ->filterByConcreteSku($sku)
                 ->findOneOrCreate();
             $productConcreteProductOffersStorageEntity->setData($productOfferReferenceList);
 
             $productConcreteProductOffersStorageEntity->save();
+
+            $storedProductSkus[] = $sku;
+        }
+
+        $productSkusToDelete = array_diff($productSkus, $storedProductSkus);
+
+        if (!empty($productSkusToDelete)) {
+            $productConcreteProductOffersStorageEntities = $this->createProductConcreteProductOffersStoragePropelQuery()
+                ->filterByConcreteSku_In($productSkusToDelete)
+                ->find();
+
+            foreach ($productConcreteProductOffersStorageEntities as $productConcreteProductOffersStorageEntity) {
+                $productConcreteProductOffersStorageEntity->delete();
+            }
         }
     }
 
@@ -83,5 +102,27 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
         }
 
         return $productOffersGroupedBySku;
+    }
+
+    /**
+     * @param string[] $productSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer
+     */
+    protected function createProductOfferCriteriaFilterTransfer(array $productSkus): ProductOfferCriteriaFilterTransfer
+    {
+        return (new ProductOfferCriteriaFilterTransfer())
+            ->setConcreteSkus($productSkus)
+            ->setIsActive(true)
+            ->setIsActiveConcreteProduct(true)
+            ->addApprovalStatus(static::STATUS_APPROVED);
+    }
+
+    /**
+     * @return \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorageQuery
+     */
+    protected function createProductConcreteProductOffersStoragePropelQuery(): SpyProductConcreteProductOffersStorageQuery
+    {
+        return SpyProductConcreteProductOffersStorageQuery::create();
     }
 }
