@@ -110,10 +110,6 @@ class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
         CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer,
         CartChangeTransfer $cartChangeTransfer
     ): CartChangeTransfer {
-        $createConfiguredBundleRequestTransfer
-            ->requireConfiguredBundle()
-            ->requireItems();
-
         $configuredBundleTransfer = $createConfiguredBundleRequestTransfer->getConfiguredBundle();
 
         $configuredBundleTransfer->setGroupKey(
