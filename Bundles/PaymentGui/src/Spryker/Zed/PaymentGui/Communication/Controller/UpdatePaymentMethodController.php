@@ -43,11 +43,11 @@ class UpdatePaymentMethodController extends AbstractController
             return $this->redirectResponse(static::REDIRECT_URL);
         }
 
-        $paymentMethodResponseTransfer->requirePaymentMethod();
         $paymentMethodTabs = $this->getFactory()->createPaymentMethodTabs();
         $dataProvider = $this->getFactory()->createPaymentMethodFormDataProvider();
         /** @var \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer */
-        $paymentMethodTransfer = $paymentMethodResponseTransfer->getPaymentMethod();
+        $paymentMethodTransfer = $paymentMethodResponseTransfer->requirePaymentMethod()
+            ->getPaymentMethod();
         $paymentMethodForm = $this->getFactory()
             ->createPaymentMethodForm(
                 $dataProvider->getData($paymentMethodTransfer),

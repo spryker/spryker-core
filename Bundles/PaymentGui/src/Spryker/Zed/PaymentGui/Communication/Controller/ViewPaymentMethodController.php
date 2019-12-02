@@ -40,9 +40,9 @@ class ViewPaymentMethodController extends AbstractController
             return $this->redirectResponse(static::REDIRECT_URL);
         }
 
-        $paymentMethodResponseTransfer->requirePaymentMethod();
         /** @var \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer */
-        $paymentMethodTransfer = $paymentMethodResponseTransfer->getPaymentMethod();
+        $paymentMethodTransfer = $paymentMethodResponseTransfer->requirePaymentMethod()
+            ->getPaymentMethod();
         $dataProvider = $this->getFactory()->createViewPaymentMethodFormDataProvider();
         $form = $this->getFactory()->createViewPaymentMethodForm(
             $dataProvider->getData($paymentMethodTransfer),

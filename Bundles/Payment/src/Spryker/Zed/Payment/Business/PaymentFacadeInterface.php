@@ -111,7 +111,7 @@ interface PaymentFacadeInterface
 
     /**
      * Specification:
-     * - Finds available payment providers for the given store.
+     * - Finds payment providers which has available payment methods for the given store.
      *
      * @api
      *
