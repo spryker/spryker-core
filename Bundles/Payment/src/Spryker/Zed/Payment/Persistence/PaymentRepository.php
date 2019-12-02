@@ -49,13 +49,13 @@ class PaymentRepository extends AbstractRepository implements PaymentRepositoryI
         $paymentProviderCollectionTransfer = new PaymentProviderCollectionTransfer();
         $paymentProviderEntities = $this->getFactory()
             ->createPaymentProviderQuery()
-            ->joinWithPaymentMethod()
-            ->usePaymentMethodQuery()
-                ->joinWithPaymentMethodStore()
+            ->joinWithSpyPaymentMethod()
+            ->useSpyPaymentMethodQuery()
+                ->joinWithSpyPaymentMethodStore()
                 ->filterByIsActive(true)
-                ->usePaymentMethodStoreQuery()
-                    ->joinWithStore()
-                    ->useStoreQuery()
+                ->useSpyPaymentMethodStoreQuery()
+                    ->joinWithSpyStore()
+                    ->useSpyStoreQuery()
                         ->filterByName($storeName)
                     ->endUse()
                 ->endUse()
@@ -84,7 +84,7 @@ class PaymentRepository extends AbstractRepository implements PaymentRepositoryI
         $shipmentMethodStoreEntities = $this->getFactory()
             ->createPaymentMethodStoreQuery()
             ->filterByFkPaymentMethod($idPaymentMethod)
-            ->leftJoinWithStore()
+            ->leftJoinWithSpyStore()
             ->find();
 
         $storeRelationTransfer = (new StoreRelationTransfer())->setIdEntity($idPaymentMethod);
@@ -105,7 +105,7 @@ class PaymentRepository extends AbstractRepository implements PaymentRepositoryI
         $paymentMethodEntities = $this->getFactory()
             ->createPaymentMethodQuery()
             ->filterByIsActive(true)
-            ->usePaymentMethodStoreQuery()
+            ->useSpyPaymentMethodStoreQuery()
                 ->filterByFkStore($idStore)
             ->endUse()
             ->groupByIdPaymentMethod()

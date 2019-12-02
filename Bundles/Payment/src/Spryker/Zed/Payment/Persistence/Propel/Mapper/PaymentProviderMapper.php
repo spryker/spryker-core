@@ -63,7 +63,7 @@ class PaymentProviderMapper
         SpyPaymentProvider $paymentProviderEntity,
         PaymentProviderTransfer $paymentProviderTransfer
     ): PaymentProviderTransfer {
-        foreach ($paymentProviderEntity->getPaymentMethods() as $paymentMethodEntity) {
+        foreach ($paymentProviderEntity->getSpyPaymentMethods() as $paymentMethodEntity) {
             $paymentMethodTransfer = (new PaymentMethodTransfer())
                 ->fromArray($paymentMethodEntity->toArray(), true)
                 ->setMethodName($paymentMethodEntity->getPaymentMethodKey());

@@ -25,7 +25,7 @@ class StoreRelationMapper
         StoreRelationTransfer $storeRelationTransfer
     ): StoreRelationTransfer {
         foreach ($paymentMethodStoreEntities as $paymentMethodStoreEntity) {
-            $storeRelationTransfer->addStores($this->mapStoreEntityToStoreTransfer($paymentMethodStoreEntity->getStore(), new StoreTransfer()));
+            $storeRelationTransfer->addStores($this->mapStoreEntityToStoreTransfer($paymentMethodStoreEntity->getSpyStore(), new StoreTransfer()));
             $storeRelationTransfer->addIdStores($paymentMethodStoreEntity->getFkStore());
         }
 

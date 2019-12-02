@@ -73,7 +73,7 @@ class PaymentMapper
 
         $paymentMethodTransfer->setPaymentProvider(
             $this->paymentProviderMapper->mapPaymentProviderEntityToPaymentProviderTransfer(
-                $paymentMethodEntity->getPaymentProvider(),
+                $paymentMethodEntity->getSpyPaymentProvider(),
                 new PaymentProviderTransfer()
             )
         );
@@ -82,7 +82,7 @@ class PaymentMapper
             ->setIdEntity($paymentMethodEntity->getIdPaymentMethod());
         $paymentMethodTransfer->setStoreRelation(
             $this->storeRelationMapper->mapPaymentMethodStoreEntitiesToStoreRelationTransfer(
-                $paymentMethodEntity->getPaymentMethodStores(),
+                $paymentMethodEntity->getSpyPaymentMethodStores(),
                 $storeRelationTransfer
             )
         );
