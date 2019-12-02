@@ -205,8 +205,6 @@ class ProductPageSearchListenerTest extends Unit
     }
 
     /**
-     * @group foobar
-     *
      * @return void
      */
     public function testProductPageProductAbstractUnpublishListener(): void
