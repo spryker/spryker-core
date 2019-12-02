@@ -8,7 +8,6 @@
 namespace Spryker\Glue\AuthRestApi\Processor\AccessTokens;
 
 use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
-use Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer;
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\AuthRestApi\AuthRestApiConfig;
@@ -20,8 +19,6 @@ use Symfony\Component\HttpFoundation\Response;
 class OauthAccessTokenValidator implements OauthAccessTokenValidatorInterface
 {
     protected const REQUEST_ATTRIBUTE_IS_PROTECTED = 'is-protected';
-    protected const AUTHORIZATION_HEADER_TYPE = 0;
-    protected const AUTHORIZATION_HEADER_CREDENTIALS = 1;
 
     /**
      * @var \Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientInterface
@@ -92,11 +89,21 @@ class OauthAccessTokenValidator implements OauthAccessTokenValidatorInterface
     /**
      * @param string $authorizationToken
      *
-     * @return array
+     * @return string|null
      */
-    protected function extractToken(string $authorizationToken): array
+    protected function extractToken(string $authorizationToken): ?string
     {
-        return preg_split('/\s+/', $authorizationToken);
+        return preg_split('/\s+/', $authorizationToken)[1] ?? null;
+    }
+
+    /**
+     * @param string $authorizationToken
+     *
+     * @return string|null
+     */
+    protected function extractTokenType(string $authorizationToken): ?string
+    {
+        return preg_split('/\s+/', $authorizationToken)[0] ?? null;
     }
 
     /**
@@ -106,15 +113,16 @@ class OauthAccessTokenValidator implements OauthAccessTokenValidatorInterface
      */
     protected function validateAccessToken(string $authorizationToken): bool
     {
-        $authorizationTokenItems = $this->extractToken($authorizationToken);
-        if (!isset($authorizationTokenItems[static::AUTHORIZATION_HEADER_CREDENTIALS])) {
+        $accessToken = $this->extractToken($authorizationToken);
+        $type = $this->extractTokenType($authorizationToken);
+        if (!$accessToken) {
             return false;
         }
 
         $authAccessTokenValidationRequestTransfer = new OauthAccessTokenValidationRequestTransfer();
         $authAccessTokenValidationRequestTransfer
-            ->setAccessToken($authorizationTokenItems[static::AUTHORIZATION_HEADER_CREDENTIALS])
-            ->setType($authorizationTokenItems[static::AUTHORIZATION_HEADER_TYPE]);
+            ->setAccessToken($accessToken)
+            ->setType($type);
 
         $authAccessTokenValidationResponseTransfer = $this->oauthClient->validateAccessToken(
             $authAccessTokenValidationRequestTransfer
