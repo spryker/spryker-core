@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsBlock\Business\Model;
 
+use Spryker\Zed\CmsBlock\Business\Exception\CmsBlockGlossaryKeyNotCreatedException;
 use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryInterface;
 
 class CmsBlockGlossaryKeyGenerator implements CmsBlockGlossaryKeyGeneratorInterface
@@ -14,6 +15,9 @@ class CmsBlockGlossaryKeyGenerator implements CmsBlockGlossaryKeyGeneratorInterf
     public const GENERATED_GLOSSARY_KEY_PREFIX = 'generated.cms.cms-block';
     public const ID_CMS_BLOCK = 'idCmsBlock';
     public const UNIQUE_ID = 'uniqueId';
+
+    protected const KEY_GENERATOR_ITERATION_LIMIT = 10;
+    protected const ERROR_CMS_BLOCK_GLOSSARY_KEY_NOT_CREATED = 'Cannot create cms block glossary key: maximum iterations threshold met.';
 
     /**
      * @var \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryInterface
@@ -32,26 +36,41 @@ class CmsBlockGlossaryKeyGenerator implements CmsBlockGlossaryKeyGeneratorInterf
      * @param int $idCmsBlock
      * @param string $templateName
      * @param string $placeholder
-     * @param bool $autoIncrement
+     *
+     * @throws \Spryker\Zed\CmsBlock\Business\Exception\CmsBlockGlossaryKeyNotCreatedException
      *
      * @return string
      */
-    public function generateGlossaryKeyName(
-        int $idCmsBlock,
-        string $templateName,
-        string $placeholder,
-        bool $autoIncrement = true
-    ): string {
+    public function generateGlossaryKeyName(int $idCmsBlock, string $templateName, string $placeholder): string
+    {
+        $index = 1;
+
+        do {
+            if ($index >= static::KEY_GENERATOR_ITERATION_LIMIT) {
+                throw new CmsBlockGlossaryKeyNotCreatedException(static::ERROR_CMS_BLOCK_GLOSSARY_KEY_NOT_CREATED);
+            }
+
+            $candidate = $this->suggestCandidate($idCmsBlock, $templateName, $placeholder, $index);
+            $index++;
+        } while ($this->glossaryFacade->hasKey($candidate));
+
+        return $candidate;
+    }
+
+    /**
+     * @param int $idCmsBlock
+     * @param string $templateName
+     * @param string $placeholder
+     * @param int $index
+     *
+     * @return string
+     */
+    protected function suggestCandidate(int $idCmsBlock, string $templateName, string $placeholder, int $index): string
+    {
         $keyName = static::GENERATED_GLOSSARY_KEY_PREFIX . '.';
         $keyName .= str_replace([' ', '.'], '-', $templateName) . '.';
         $keyName .= str_replace([' ', '.'], '-', $placeholder);
 
-        $index = 0;
-
-        do {
-            $candidate = sprintf('%s.%s.%d.%s.%d', $keyName, static::ID_CMS_BLOCK, $idCmsBlock, static::UNIQUE_ID, ++$index);
-        } while ($autoIncrement === true && $this->glossaryFacade->hasKey($candidate));
-
-        return $candidate;
+        return sprintf('%s.%s.%d.%s.%d', $keyName, static::ID_CMS_BLOCK, $idCmsBlock, static::UNIQUE_ID, $index);
     }
 }
