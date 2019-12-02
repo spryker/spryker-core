@@ -5,12 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductPageSearch\Dependency\Facade;
+namespace Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ProductImageCriteriaFilterTransfer;
 
-class ProductPageSearchToProductImageFacadeBridge implements ProductPageSearchToProductImageFacadeInterface
+class ConfigurableBundlePageSearchToProductImageFacadeBridge implements ConfigurableBundlePageSearchToProductImageFacadeInterface
 {
     /**
      * @var \Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface
@@ -23,26 +22,6 @@ class ProductPageSearchToProductImageFacadeBridge implements ProductPageSearchTo
     public function __construct($productImageFacade)
     {
         $this->productImageFacade = $productImageFacade;
-    }
-
-    /**
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
-     */
-    public function getProductImagesSetCollectionByProductId($idProduct)
-    {
-        return $this->productImageFacade->getProductImagesSetCollectionByProductId($idProduct);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductImageCriteriaFilterTransfer $productImageCriteriaFilterTransfer
-     *
-     * @return int[]
-     */
-    public function getProductConcreteIds(ProductImageCriteriaFilterTransfer $productImageCriteriaFilterTransfer): array
-    {
-        return $this->productImageFacade->getProductConcreteIds($productImageCriteriaFilterTransfer);
     }
 
     /**

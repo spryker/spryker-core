@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business\Expander;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductImageFacadeInterface;
@@ -34,43 +35,25 @@ class ProductConcretePageSearchExpander implements ProductConcretePageSearchExpa
     public function expandProductConcretePageSearchTransferWithProductImages(
         ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
     ): ProductConcretePageSearchTransfer {
-        $images = [];
-        $localizedProductImageSetTransfers = $this->getLocalizedProductImageSets($productConcretePageSearchTransfer);
+        $productConcretePageSearchTransfer
+            ->requireFkProduct()
+            ->requireLocale();
 
-        foreach ($localizedProductImageSetTransfers as $productImageSetTransfer) {
+        $images = [];
+
+        $productImageSetTransfers = $this->productImageFacade->getProductImagesSetCollectionByProductId($productConcretePageSearchTransfer->getFkProduct());
+        $productImageSetTransfers = $this->productImageFacade->resolveProductImageSetsForLocale(
+            new ArrayObject($productImageSetTransfers),
+            $productConcretePageSearchTransfer->getLocale()
+        );
+
+        foreach ($productImageSetTransfers as $productImageSetTransfer) {
             $images = array_merge($images, $this->mapImageSetTransferToImages($productImageSetTransfer));
         }
 
         $productConcretePageSearchTransfer->setImages($images);
 
         return $productConcretePageSearchTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
-     */
-    protected function getLocalizedProductImageSets(ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): array
-    {
-        $productConcretePageSearchTransfer
-            ->requireFkProduct()
-            ->requireLocale();
-
-        $localizedProductImageSetTransfers = [];
-        $productImageSetTransfers = $this->productImageFacade
-            ->getProductImagesSetCollectionByProductId($productConcretePageSearchTransfer->getFkProduct());
-
-        foreach ($productImageSetTransfers as $productImageSetTransfer) {
-            if (!$productImageSetTransfer->getLocale()
-                || $productImageSetTransfer->getLocale()->getLocaleName() !== $productConcretePageSearchTransfer->getLocale()) {
-                continue;
-            }
-
-            $localizedProductImageSetTransfers[] = $productImageSetTransfer;
-        }
-
-        return $localizedProductImageSetTransfers;
     }
 
     /**

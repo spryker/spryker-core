@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductImage\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageCriteriaFilterTransfer;
@@ -233,4 +234,21 @@ interface ProductImageFacadeInterface
      * @return int[]
      */
     public function getProductConcreteIds(ProductImageCriteriaFilterTransfer $productImageCriteriaFilterTransfer): array;
+
+    /**
+     * Specification:
+     * - Merges localized product image sets by name.
+     * - Merges default product image sets by name.
+     * - Merges resulting localized and default product image sets together by name.
+     * - If localized and default product image sets have the same names, localized one wins.
+     * - Returns resulting product image sets.
+     *
+     * @api
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
+     * @param string $localeName
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function resolveProductImageSetsForLocale(ArrayObject $productImageSetTransfers, string $localeName): ArrayObject;
 }

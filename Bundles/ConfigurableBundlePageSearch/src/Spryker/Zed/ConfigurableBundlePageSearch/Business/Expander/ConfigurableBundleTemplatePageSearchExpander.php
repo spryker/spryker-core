@@ -10,20 +10,30 @@ namespace Spryker\Zed\ConfigurableBundlePageSearch\Business\Expander;
 use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
+use Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToProductImageFacadeInterface;
 
 class ConfigurableBundleTemplatePageSearchExpander implements ConfigurableBundleTemplatePageSearchExpanderInterface
 {
+    /**
+     * @var \Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToProductImageFacadeInterface
+     */
+    protected $productImageFacade;
+
     /**
      * @var \Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplatePageDataExpanderPluginInterface[]
      */
     protected $configurableBundleTemplatePageDataExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplatePageDataExpanderPluginInterface[] $configurableBundleTemplatePageDataExpanderPlugins
+     * @param \Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToProductImageFacadeInterface $productImageFacade
+     * @param array $configurableBundleTemplatePageDataExpanderPlugins
      */
-    public function __construct(array $configurableBundleTemplatePageDataExpanderPlugins)
-    {
+    public function __construct(
+        ConfigurableBundlePageSearchToProductImageFacadeInterface $productImageFacade,
+        array $configurableBundleTemplatePageDataExpanderPlugins
+    ) {
         $this->configurableBundleTemplatePageDataExpanderPlugins = $configurableBundleTemplatePageDataExpanderPlugins;
+        $this->productImageFacade = $productImageFacade;
     }
 
     /**
@@ -81,8 +91,10 @@ class ConfigurableBundleTemplatePageSearchExpander implements ConfigurableBundle
     ): ConfigurableBundleTemplatePageSearchTransfer {
         $images = [];
 
-        $productImageSetTransfers = $this->getLocalizedProductImageSets($configurableBundleTemplateTransfer, $configurableBundleTemplatePageSearchTransfer);
-        $productImageSetTransfers += $this->getDefaultProductImageSets($configurableBundleTemplateTransfer);
+        $productImageSetTransfers = $this->productImageFacade->resolveProductImageSetsForLocale(
+            $configurableBundleTemplateTransfer->getProductImageSets(),
+            $configurableBundleTemplatePageSearchTransfer->getLocale()
+        );
 
         foreach ($productImageSetTransfers as $productImageSetTransfer) {
             $images = array_merge($images, $this->getImagesArrayFromImageSetTransfer($productImageSetTransfer));
@@ -91,49 +103,6 @@ class ConfigurableBundleTemplatePageSearchExpander implements ConfigurableBundle
         $configurableBundleTemplatePageSearchTransfer->setImages($images);
 
         return $configurableBundleTemplatePageSearchTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
-     */
-    protected function getLocalizedProductImageSets(
-        ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer,
-        ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer
-    ): array {
-        $configurableBundleTemplatePageSearchTransfer->requireLocale();
-        $localizedProductImageSetTransfers = [];
-
-        foreach ($configurableBundleTemplateTransfer->getProductImageSets() as $productImageSetTransfer) {
-            if (!$productImageSetTransfer->getLocale()
-                || $productImageSetTransfer->getLocale()->getLocaleName() !== $configurableBundleTemplatePageSearchTransfer->getLocale()) {
-                continue;
-            }
-
-            $localizedProductImageSetTransfers[$productImageSetTransfer->getName()] = $productImageSetTransfer;
-        }
-
-        return $localizedProductImageSetTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
-     */
-    protected function getDefaultProductImageSets(ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer): array
-    {
-        $defaultProductImageSetTransfers = [];
-
-        foreach ($configurableBundleTemplateTransfer->getProductImageSets() as $productImageSetTransfer) {
-            if (!$productImageSetTransfer->getLocale()) {
-                $defaultProductImageSetTransfers[$productImageSetTransfer->getName()] = $productImageSetTransfer;
-            }
-        }
-
-        return $defaultProductImageSetTransfers;
     }
 
     /**

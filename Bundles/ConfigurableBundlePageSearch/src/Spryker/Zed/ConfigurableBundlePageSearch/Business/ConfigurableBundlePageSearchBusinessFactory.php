@@ -17,6 +17,7 @@ use Spryker\Zed\ConfigurableBundlePageSearch\Business\Unpublisher\ConfigurableBu
 use Spryker\Zed\ConfigurableBundlePageSearch\Business\Unpublisher\ConfigurableBundleTemplateUnpublisherInterface;
 use Spryker\Zed\ConfigurableBundlePageSearch\ConfigurableBundlePageSearchDependencyProvider;
 use Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToConfigurableBundleFacadeInterface;
+use Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToProductImageFacadeInterface;
 use Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToSearchFacadeInterface;
 use Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Service\ConfigurableBundlePageSearchToUtilEncodingServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -71,6 +72,7 @@ class ConfigurableBundlePageSearchBusinessFactory extends AbstractBusinessFactor
     public function createConfigurableBundleTemplatePageSearchExpander(): ConfigurableBundleTemplatePageSearchExpanderInterface
     {
         return new ConfigurableBundleTemplatePageSearchExpander(
+            $this->getProductImageFacade(),
             $this->getConfigurableBundleTemplatePageDataExpanderPlugins()
         );
     }
@@ -89,6 +91,14 @@ class ConfigurableBundlePageSearchBusinessFactory extends AbstractBusinessFactor
     public function getSearchFacade(): ConfigurableBundlePageSearchToSearchFacadeInterface
     {
         return $this->getProvidedDependency(ConfigurableBundlePageSearchDependencyProvider::FACADE_SEARCH);
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToProductImageFacadeInterface
+     */
+    public function getProductImageFacade(): ConfigurableBundlePageSearchToProductImageFacadeInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundlePageSearchDependencyProvider::FACADE_PRODUCT_IMAGE);
     }
 
     /**

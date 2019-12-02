@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPageSearch\Dependency\Facade;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductImageCriteriaFilterTransfer;
 
 interface ProductPageSearchToProductImageFacadeInterface
@@ -24,4 +25,12 @@ interface ProductPageSearchToProductImageFacadeInterface
      * @return int[]
      */
     public function getProductConcreteIds(ProductImageCriteriaFilterTransfer $productImageCriteriaFilterTransfer): array;
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
+     * @param string $localeName
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function resolveProductImageSetsForLocale(ArrayObject $productImageSetTransfers, string $localeName): ArrayObject;
 }

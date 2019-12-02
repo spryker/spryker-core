@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductImage\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageCriteriaFilterTransfer;
@@ -309,5 +310,22 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     public function getProductConcreteIds(ProductImageCriteriaFilterTransfer $productImageCriteriaFilterTransfer): array
     {
         return $this->getRepository()->getProductConcreteIds($productImageCriteriaFilterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
+     * @param string $localeName
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function resolveProductImageSetsForLocale(ArrayObject $productImageSetTransfers, string $localeName): ArrayObject
+    {
+        return $this->getFactory()
+            ->createProductImageSetResolver()
+            ->resolveProductImageSetsForLocale($productImageSetTransfers, $localeName);
     }
 }

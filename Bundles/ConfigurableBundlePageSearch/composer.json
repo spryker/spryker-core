@@ -9,6 +9,7 @@
     "spryker/configurable-bundle-page-search-extension": "^1.0.0",
     "spryker/event-behavior": "^1.0.0",
     "spryker/kernel": "^3.33.0",
+    "spryker/product-image": "^3.8.0",
     "spryker/propel-orm": "^1.5.0",
     "spryker/search": "^8.0.0",
     "spryker/synchronization-behavior": "^1.0.0",
@@ -20,15 +21,13 @@
     "spryker/elastica": "*",
     "spryker/event": "*",
     "spryker/glossary": "*",
-    "spryker/product-image": "*",
     "spryker/propel": "*",
     "spryker/queue": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker/elastica": "If you want to use search functionality from ConfigurableBundlePageSearchClient.",
-    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
-    "spryker/product-image": "If you want to use search functionality from ProductImageSetConfigurableBundlePageSearchPublishListener."
+    "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"
   },
   "autoload": {
     "psr-4": {
