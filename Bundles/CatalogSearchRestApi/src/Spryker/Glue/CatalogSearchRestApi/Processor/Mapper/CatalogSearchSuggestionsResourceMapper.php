@@ -17,7 +17,6 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
     protected const SEARCH_RESPONSE_PRODUCT_ABSTRACT_IMAGES_KEY = 'images';
     protected const SEARCH_RESPONSE_CATEGORY_KEY = 'category';
     protected const SEARCH_RESPONSE_CMS_PAGE_KEY = 'cms_page';
-
     protected const SEARCH_RESPONSE_NAME_KEY = 'name';
     protected const SEARCH_RESPONSE_URL_KEY = 'url';
 
