@@ -20,11 +20,20 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
     protected $salesConfigurableBundleRepository;
 
     /**
-     * @param \Spryker\Zed\SalesConfigurableBundle\Persistence\SalesConfigurableBundleRepositoryInterface $salesConfigurableBundleRepository
+     * @var \Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToGlossaryFacadeInterface
      */
-    public function __construct(SalesConfigurableBundleRepositoryInterface $salesConfigurableBundleRepository)
-    {
+    protected $glossaryFacade;
+
+    /**
+     * @param \Spryker\Zed\SalesConfigurableBundle\Persistence\SalesConfigurableBundleRepositoryInterface $salesConfigurableBundleRepository
+     * @param \Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundleToGlossaryFacadeInterface $glossaryFacade
+     */
+    public function __construct(
+        SalesConfigurableBundleRepositoryInterface $salesConfigurableBundleRepository,
+        SalesConfigurableBundleToGlossaryFacadeInterface $glossaryFacade
+    ) {
         $this->salesConfigurableBundleRepository = $salesConfigurableBundleRepository;
+        $this->glossaryFacade = $glossaryFacade;
     }
 
     /**
@@ -43,11 +52,34 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
             ->getSalesOrderConfiguredBundleCollectionByFilter($salesOrderConfiguredBundleFilterTransfer)
             ->getSalesOrderConfiguredBundles();
 
+        $salesOrderConfiguredBundleTransfers = $this->translateConfigurableBundleTemplateNames($salesOrderConfiguredBundleTransfers);
+
         $orderTransfer->setSalesOrderConfiguredBundles($salesOrderConfiguredBundleTransfers);
 
         $orderTransfer = $this->expandOrderItemsWithSalesOrderConfiguredBundleItems($orderTransfer, $salesOrderConfiguredBundleTransfers);
 
         return $orderTransfer;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[] $salesOrderConfiguredBundleTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[]
+     */
+    protected function translateConfigurableBundleTemplateNames(ArrayObject $salesOrderConfiguredBundleTransfers): ArrayObject
+    {
+        foreach ($salesOrderConfiguredBundleTransfers as $salesOrderConfiguredBundleTransfer) {
+            $salesOrderConfiguredBundleTransfer->addTranslation(
+                (new SalesOrderConfiguredBundleTranslationTransfer())
+                    ->setName(
+                        $this->glossaryFacade->translate(
+                            $salesOrderConfiguredBundleTransfer->getName()
+                        )
+                    )
+            );
+        }
+
+        return $salesOrderConfiguredBundleTransfers;
     }
 
     /**
