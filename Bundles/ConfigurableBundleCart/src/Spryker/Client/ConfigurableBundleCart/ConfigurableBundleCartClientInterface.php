@@ -16,12 +16,11 @@ interface ConfigurableBundleCartClientInterface
     /**
      * Specification:
      * - Adds configured bundle to the cart.
-     * - Requires `configuredBundle`, `items` and `localeName` properties to be set for CreateConfiguredBundleRequestTransfer.
-     * - Requires `quantity` and `uuid` properties to be set for ConfiguredBundleTransfer.
-     * - Requires `sku`, `quantity` and `configuredBundleItem` properties to be set for ItemTransfer under CreateConfiguredBundleRequestTransfer::items.
-     * - Requires ConfiguredBundleItemTransfer::uuid to be set.
-     * - ConfiguredBundleTransfer:quantity is used for configured bundle quantity.
-     * - ItemTransfer::quantity is used for bundle item quantity.
+     * - Requires `configuredBundle.quantity` property to control amount of configured bundles put to cart.
+     * - Requires `configuredBundle.template.uuid` property to populate configurable bundle template related data.
+     * - Requires `items` property with `sku`, `quantity` and `configuredBundleItem.slot.uuid` properties to define how many
+     * items were added in total to a specific slot.
+     * - Requires `localeName` property to be set for populating locale specific information.
      * - Returns QuoteResponseTransfer.
      *
      * @api
