@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockGlossaryKeyMappingTableMap;
+use Orm\Zed\CmsBlockStorage\Persistence\Map\SpyCmsBlockStorageTableMap;
 use Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorageQuery;
 use Spryker\Zed\CmsBlock\Dependency\CmsBlockEvents;
 use Spryker\Zed\CmsBlockStorage\Business\CmsBlockStorageBusinessFactory;
@@ -17,6 +18,8 @@ use Spryker\Zed\CmsBlockStorage\Business\CmsBlockStorageFacade;
 use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockGlossaryKeyMappingBlockStoragePublishListener;
 use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockStoragePublishListener;
 use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockStorageUnpublishListener;
+use Spryker\Zed\Store\Business\StoreFacade;
+use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use SprykerTest\Zed\CmsBlockStorage\CmsBlockStorageConfigMock;
 
 /**
@@ -134,6 +137,20 @@ class CmsBlockStorageListenerTest extends Unit
     protected function assertCmsBlockCategoryStorage(int $beforeCount): void
     {
         $count = SpyCmsBlockStorageQuery::create()->count();
+        $relatedStoreNames = SpyCmsBlockStorageQuery::create()
+            ->filterByFkCmsBlock(1)
+            ->select(SpyCmsBlockStorageTableMap::COL_STORE)
+            ->find()
+            ->toArray();
+
+        $storeTransfers = $this->getStoreFacade()->getAllStores();
+        $countLocalesByStores = 0;
+
+        foreach ($storeTransfers as $storeTransfer) {
+            if (in_array($storeTransfer->getName(), array_unique($relatedStoreNames), true)) {
+                $countLocalesByStores += count($storeTransfer->getAvailableLocaleIsoCodes());
+            }
+        }
 
         $cmsBlockStorage = SpyCmsBlockStorageQuery::create()
             ->filterByLocale('en_US')
@@ -142,6 +159,15 @@ class CmsBlockStorageListenerTest extends Unit
         $this->assertNotNull($cmsBlockStorage);
 
         $data = $cmsBlockStorage->getData();
+        $this->assertSame($beforeCount + $countLocalesByStores, $count);
         $this->assertSame('Teaser for home page', $data['name']);
+    }
+
+    /**
+     * @return \Spryker\Zed\Store\Business\StoreFacadeInterface
+     */
+    protected function getStoreFacade(): StoreFacadeInterface
+    {
+        return new StoreFacade();
     }
 }
