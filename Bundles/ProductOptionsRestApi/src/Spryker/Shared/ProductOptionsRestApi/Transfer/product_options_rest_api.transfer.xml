@@ -64,6 +64,7 @@
 
     <transfer name="Item">
         <property name="productOptions" type="ProductOption[]" singular="productOption"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="ProductOption">
