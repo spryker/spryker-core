@@ -18,7 +18,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
     /**
      * @var \Spryker\Client\StorageDatabase\Storage\StorageDatabaseInterface
      */
-    protected static $storageDatabaseService;
+    protected static $storageDatabase;
 
     /**
      * {@inheritDoc}
@@ -31,7 +31,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
      */
     public function get(string $key)
     {
-        return $this->getStorageDatabaseService()->get($key);
+        return $this->getStorageDatabase()->get($key);
     }
 
     /**
@@ -45,7 +45,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
      */
     public function getMulti(array $keys): array
     {
-        return $this->getStorageDatabaseService()->getMulti($keys);
+        return $this->getStorageDatabase()->getMulti($keys);
     }
 
     /**
@@ -57,7 +57,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
      */
     public function resetAccessStats(): void
     {
-        $this->getStorageDatabaseService()->resetAccessStats();
+        $this->getStorageDatabase()->resetAccessStats();
     }
 
     /**
@@ -69,7 +69,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
      */
     public function getAccessStats(): array
     {
-        return $this->getStorageDatabaseService()->getAccessStats();
+        return $this->getStorageDatabase()->getAccessStats();
     }
 
     /**
@@ -83,7 +83,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
      */
     public function setDebug(bool $debug): void
     {
-        $this->getStorageDatabaseService()->setDebug($debug);
+        $this->getStorageDatabase()->setDebug($debug);
     }
 
     /**
@@ -99,7 +99,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
      */
     public function set(string $key, string $value, ?int $ttl = null): void
     {
-        $this->getStorageDatabaseService()->set($key, $value, $ttl);
+        $this->getStorageDatabase()->set($key, $value, $ttl);
     }
 
     /**
@@ -113,7 +113,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
      */
     public function setMulti(array $items): void
     {
-        $this->getStorageDatabaseService()->setMulti($items);
+        $this->getStorageDatabase()->setMulti($items);
     }
 
     /**
@@ -127,7 +127,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
      */
     public function delete(string $key): int
     {
-        return $this->getStorageDatabaseService()->delete($key);
+        return $this->getStorageDatabase()->delete($key);
     }
 
     /**
@@ -141,7 +141,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
      */
     public function deleteMulti(array $keys): int
     {
-        return $this->getStorageDatabaseService()->deleteMulti($keys);
+        return $this->getStorageDatabase()->deleteMulti($keys);
     }
 
     /**
@@ -153,7 +153,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
      */
     public function deleteAll(): int
     {
-        return $this->getStorageDatabaseService()->deleteAll();
+        return $this->getStorageDatabase()->deleteAll();
     }
 
     /**
@@ -165,7 +165,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
      */
     public function getStats(): array
     {
-        return $this->getStorageDatabaseService()->getStats();
+        return $this->getStorageDatabase()->getStats();
     }
 
     /**
@@ -177,7 +177,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
      */
     public function getAllKeys(): array
     {
-        return $this->getStorageDatabaseService()->getAllKeys();
+        return $this->getStorageDatabase()->getAllKeys();
     }
 
     /**
@@ -191,7 +191,7 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
      */
     public function getKeys(string $pattern): array
     {
-        return $this->getStorageDatabaseService()->getKeys($pattern);
+        return $this->getStorageDatabase()->getKeys($pattern);
     }
 
     /**
@@ -203,18 +203,18 @@ class StorageDatabaseClient extends AbstractClient implements StorageDatabaseCli
      */
     public function getCountItems(): int
     {
-        return $this->getStorageDatabaseService()->getCountItems();
+        return $this->getStorageDatabase()->getCountItems();
     }
 
     /**
      * @return \Spryker\Client\StorageDatabase\Storage\StorageDatabaseInterface
      */
-    protected function getStorageDatabaseService(): StorageDatabaseInterface
+    protected function getStorageDatabase(): StorageDatabaseInterface
     {
-        if (static::$storageDatabaseService === null) {
-            static::$storageDatabaseService = $this->getFactory()->createStorageDatabaseService();
+        if (static::$storageDatabase === null) {
+            static::$storageDatabase = $this->getFactory()->createStorageDatabase();
         }
 
-        return static::$storageDatabaseService;
+        return static::$storageDatabase;
     }
 }

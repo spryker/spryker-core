@@ -20,6 +20,22 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     protected const STORAGE_TABLE_NAME_PART_SEPARATOR = '_';
 
     /**
+     * Example:
+     *
+     * [
+     *     'translation' => [
+     *         StorageDatabaseConfig::KEY_STORAGE_TABLE_NAME => 'glossary',
+     *     ],
+     *     'product_search_config_extension' => [
+     *         StorageDatabaseConfig::KEY_STORAGE_TABLE_PREFIX => 'pyz',
+     *         StorageDatabaseConfig::KEY_STORAGE_TABLE_NAME => 'product_search_config',
+     *         StorageDatabaseConfig::KEY_STORAGE_TABLE_SUFFIX => 'storage',
+     *     ],
+     * ];
+     */
+    protected const RESOURCE_PREFIX_TO_STORAGE_TABLE_MAP = [];
+
+    /**
      * @return array
      */
     public function getConnectionConfigForCurrentEngine(): array
@@ -33,17 +49,22 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     /**
      * @return bool
      */
-    public function isConnectInDebugMode(): bool
+    public function isDbDebug(): bool
     {
         return $this->get(StorageDatabaseConstants::DB_DEBUG, false);
     }
 
     /**
+     * Specification:
+     * - Returns a map of resources prefixes to storage/search table names.
+     *
+     * @api
+     *
      * @return string[][]
      */
     public function getResourceNameToStorageTableMap(): array
     {
-        return $this->get(StorageDatabaseConstants::RESOURCE_PREFIX_TO_STORAGE_TABLE_MAP, []);
+        return static::RESOURCE_PREFIX_TO_STORAGE_TABLE_MAP;
     }
 
     /**

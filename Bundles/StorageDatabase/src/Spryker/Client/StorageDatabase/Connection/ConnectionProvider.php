@@ -100,7 +100,7 @@ class ConnectionProvider implements ConnectionProviderInterface
             static::$connection = Propel::getConnection(static::CONNECTION_NAME, ServiceContainerInterface::CONNECTION_READ);
 
             static::$connection->useDebug(
-                $this->config->isConnectInDebugMode()
+                $this->config->isDbDebug()
             );
         } catch (Throwable $e) {
             throw new ConnectionFailedException($e->getMessage());

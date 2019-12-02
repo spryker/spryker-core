@@ -38,7 +38,7 @@ class StorageDatabaseFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\StorageDatabase\Storage\StorageDatabaseInterface
      */
-    public function createStorageDatabaseService(): StorageDatabaseInterface
+    public function createStorageDatabase(): StorageDatabaseInterface
     {
         return new StorageDatabase(
             $this->getUtilEncodingService(),
@@ -87,9 +87,9 @@ class StorageDatabaseFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderPluginInterface|null
+     * @return \Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderPluginInterface
      */
-    public function getStorageReaderPlugin(): ?StorageReaderPluginInterface
+    public function getStorageReaderPlugin(): StorageReaderPluginInterface
     {
         return $this->getProvidedDependency(StorageDatabaseDependencyProvider::PLUGIN_STORAGE_READER_PROVIDER);
     }

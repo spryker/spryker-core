@@ -7,7 +7,9 @@
 
 namespace Spryker\Shared\StorageDatabase;
 
-class StorageDatabaseConfig
+use Spryker\Shared\Kernel\AbstractSharedConfig;
+
+class StorageDatabaseConfig extends AbstractSharedConfig
 {
     public const DB_ENGINE_PGSQL = 'pgsql';
     public const DB_ENGINE_MYSQL = 'mysql';

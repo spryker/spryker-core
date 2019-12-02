@@ -10,6 +10,7 @@ namespace Spryker\Client\StorageDatabase;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\StorageDatabase\Dependency\Service\StorageDatabaseToUtilEncodingBridge;
+use Spryker\Client\StorageDatabase\Exception\MissingStorageReaderPluginException;
 use Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderPluginInterface;
 
 /**
@@ -62,10 +63,19 @@ class StorageDatabaseDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderPluginInterface|null
+     * @throws \Spryker\Client\StorageDatabase\Exception\MissingStorageReaderPluginException
+     *
+     * @return \Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderPluginInterface
      */
-    protected function getStorageReaderProviderPlugin(): ?StorageReaderPluginInterface
+    protected function getStorageReaderProviderPlugin(): StorageReaderPluginInterface
     {
-        return null;
+        throw new MissingStorageReaderPluginException(
+            sprintf(
+                'There is no registered plugin which can perform storage database interaction.
+                    Make sure that StorageDatabaseDependencyProvider::getStorageReaderProviderPlugin() returns
+                    an implementation of %s',
+                StorageReaderPluginInterface::class
+            )
+        );
     }
 }

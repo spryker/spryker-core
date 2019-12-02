@@ -8,9 +8,8 @@
 namespace SprykerTest\Client\StorageDatabase\StorageTableNameResolver;
 
 use Codeception\Test\Unit;
-use Spryker\Client\StorageDatabase\StorageDatabaseFactory;
+use Spryker\Client\StorageDatabase\StorageTableNameResolver\StorageTableNameResolver;
 use Spryker\Shared\StorageDatabase\StorageDatabaseConfig;
-use Spryker\Shared\StorageDatabase\StorageDatabaseConstants;
 
 /**
  * Auto-generated group annotations
@@ -78,7 +77,7 @@ class StorageTableNameResolverTest extends Unit
      */
     protected function setupStorageTableNameResolver(): void
     {
-        $this->storageTableNameResolver = (new StorageDatabaseFactory())->createStorageTableNameResolver();
+        $this->storageTableNameResolver = new StorageTableNameResolver($this->tester->getModuleConfig());
     }
 
     /**
@@ -86,7 +85,7 @@ class StorageTableNameResolverTest extends Unit
      */
     protected function setupConfig(): void
     {
-        $this->tester->setConfig(StorageDatabaseConstants::RESOURCE_PREFIX_TO_STORAGE_TABLE_MAP, [
+        $this->tester->mockConfigMethod('getResourceNameToStorageTableMap', [
             'translation' => [
                 StorageDatabaseConfig::KEY_STORAGE_TABLE_NAME => 'glossary',
             ],

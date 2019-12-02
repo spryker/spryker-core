@@ -18,23 +18,14 @@ use Spryker\Client\StorageRedis\Redis\StorageRedisWrapperInterface;
 class StorageRedisFactory extends AbstractFactory
 {
     /**
-     * @var \Spryker\Client\StorageRedis\Redis\StorageRedisWrapperInterface
-     */
-    protected static $storageRedisWrapper;
-
-    /**
      * @return \Spryker\Client\StorageRedis\Redis\StorageRedisWrapperInterface
      */
     public function createStorageRedisWrapper(): StorageRedisWrapperInterface
     {
-        if (static::$storageRedisWrapper === null) {
-            static::$storageRedisWrapper = new StorageRedisWrapper(
-                $this->getRedisClient(),
-                $this->getConfig()
-            );
-        }
-
-        return static::$storageRedisWrapper;
+        return new StorageRedisWrapper(
+            $this->getRedisClient(),
+            $this->getConfig()
+        );
     }
 
     /**
