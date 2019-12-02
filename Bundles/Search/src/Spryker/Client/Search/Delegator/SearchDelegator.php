@@ -53,7 +53,7 @@ class SearchDelegator implements SearchDelegatorInterface
             throw new Exception(sprintf('Your query class "%s" must implement %s interface.', get_class($searchQuery), SearchContextAwareQueryInterface::class));
         }
 
-        $searchQuery = $this->mapSearchContextTransferForQuery($searchQuery);
+        $searchQuery = $this->expandSearchContextTransferForQuery($searchQuery);
 
         return $this->getSearchAdapter($searchQuery->getSearchContext())
             ->search($searchQuery, $resultFormatters, $requestParameters);
@@ -66,7 +66,7 @@ class SearchDelegator implements SearchDelegatorInterface
      */
     public function readDocument(SearchDocumentTransfer $searchDocumentTransfer)
     {
-        $searchDocumentTransfer = $this->mapSearchContextTransferForSearchDocumentTransfer($searchDocumentTransfer);
+        $searchDocumentTransfer = $this->expandSearchContextTransferForSearchDocumentTransfer($searchDocumentTransfer);
 
         return $this->getSearchAdapter($searchDocumentTransfer->getSearchContext())->readDocument($searchDocumentTransfer);
     }
@@ -78,7 +78,7 @@ class SearchDelegator implements SearchDelegatorInterface
      */
     public function writeDocument(SearchDocumentTransfer $searchDocumentTransfer): bool
     {
-        $searchDocumentTransfer = $this->mapSearchContextTransferForSearchDocumentTransfer($searchDocumentTransfer);
+        $searchDocumentTransfer = $this->expandSearchContextTransferForSearchDocumentTransfer($searchDocumentTransfer);
         $plugin = $this->getSearchAdapter($searchDocumentTransfer->getSearchContext());
 
         return $plugin->writeDocument($searchDocumentTransfer);
@@ -92,7 +92,7 @@ class SearchDelegator implements SearchDelegatorInterface
     public function writeDocuments(array $searchDocumentTransfers): bool
     {
         $overallResult = true;
-        $searchDocumentTransfers = $this->mapSearchContextTransferForSearchDocumentTransfers($searchDocumentTransfers);
+        $searchDocumentTransfers = $this->expandSearchContextTransferForSearchDocumentTransfers($searchDocumentTransfers);
         $searchDocumentTransfersBySearchAdapterPluginName = $this->groupSearchDocumentTransfersBySearchAdapterPluginName($searchDocumentTransfers);
 
         foreach ($searchDocumentTransfersBySearchAdapterPluginName as $searchAdapterPluginName => $searchDocumentTransfers) {
@@ -113,7 +113,7 @@ class SearchDelegator implements SearchDelegatorInterface
      */
     public function deleteDocument(SearchDocumentTransfer $searchDocumentTransfer): bool
     {
-        $searchDocumentTransfer = $this->mapSearchContextTransferForSearchDocumentTransfer($searchDocumentTransfer);
+        $searchDocumentTransfer = $this->expandSearchContextTransferForSearchDocumentTransfer($searchDocumentTransfer);
         $plugin = $this->getSearchAdapter($searchDocumentTransfer->getSearchContext());
 
         return $plugin->deleteDocument($searchDocumentTransfer);
@@ -127,7 +127,7 @@ class SearchDelegator implements SearchDelegatorInterface
     public function deleteDocuments(array $searchDocumentTransfers): bool
     {
         $overallResult = true;
-        $searchDocumentTransfers = $this->mapSearchContextTransferForSearchDocumentTransfers($searchDocumentTransfers);
+        $searchDocumentTransfers = $this->expandSearchContextTransferForSearchDocumentTransfers($searchDocumentTransfers);
         $searchDocumentTransfersBySearchAdapterPluginName = $this->groupSearchDocumentTransfersBySearchAdapterPluginName($searchDocumentTransfers);
 
         foreach ($searchDocumentTransfersBySearchAdapterPluginName as $searchAdapterPluginName => $searchDocumentTransfersPerAdapter) {
@@ -200,7 +200,7 @@ class SearchDelegator implements SearchDelegatorInterface
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
-    protected function mapSearchContextTransferForQuery(QueryInterface $searchQuery): QueryInterface
+    protected function expandSearchContextTransferForQuery(QueryInterface $searchQuery): QueryInterface
     {
         $mappedSearchContextTransfer = $this->expandSearchContext($searchQuery->getSearchContext());
         $searchQuery->setSearchContext($mappedSearchContextTransfer);
@@ -213,10 +213,10 @@ class SearchDelegator implements SearchDelegatorInterface
      *
      * @return \Generated\Shared\Transfer\SearchDocumentTransfer[]
      */
-    protected function mapSearchContextTransferForSearchDocumentTransfers(array $searchDocumentTransfers): array
+    protected function expandSearchContextTransferForSearchDocumentTransfers(array $searchDocumentTransfers): array
     {
         return array_map(function (SearchDocumentTransfer $searchDocumentTransfer) {
-            return $this->mapSearchContextTransferForSearchDocumentTransfer($searchDocumentTransfer);
+            return $this->expandSearchContextTransferForSearchDocumentTransfer($searchDocumentTransfer);
         }, $searchDocumentTransfers);
     }
 
@@ -225,7 +225,7 @@ class SearchDelegator implements SearchDelegatorInterface
      *
      * @return \Generated\Shared\Transfer\SearchDocumentTransfer
      */
-    protected function mapSearchContextTransferForSearchDocumentTransfer(SearchDocumentTransfer $searchDocumentTransfer): SearchDocumentTransfer
+    protected function expandSearchContextTransferForSearchDocumentTransfer(SearchDocumentTransfer $searchDocumentTransfer): SearchDocumentTransfer
     {
         $mappedSearchContextTransfer = $this->expandSearchContext($searchDocumentTransfer->getSearchContext());
         $searchDocumentTransfer->setSearchContext($mappedSearchContextTransfer);
