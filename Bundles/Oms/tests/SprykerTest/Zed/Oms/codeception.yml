@@ -26,6 +26,7 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Zed\Oms\Helper\OmsHelper
                 - \SprykerTest\Shared\Testify\Helper\ZedBootstrap:
                       depends: \SprykerTest\Shared\Testify\Helper\BundleConfig
