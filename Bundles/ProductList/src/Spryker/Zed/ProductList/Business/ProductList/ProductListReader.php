@@ -200,6 +200,10 @@ class ProductListReader implements ProductListReaderInterface
         $productListTransfer = $this->productListRepository
             ->getProductListById($productListTransfer->getIdProductList());
 
+        if (!$productListTransfer->getIdProductList()) {
+            return $productListTransfer;
+        }
+
         $productListCategoryRelationTransfer = new ProductListCategoryRelationTransfer();
         $productListCategoryRelationTransfer->setIdProductList($productListTransfer->getIdProductList());
         $productListCategoryRelationTransfer = $this->productListCategoryRelationReader

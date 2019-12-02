@@ -81,6 +81,38 @@ class CmsSlotFacade extends AbstractFacade implements CmsSlotFacadeInterface
      *
      * @api
      *
+     * @param int $idCmsSlot
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotTransfer
+     */
+    public function getCmsSlotById(int $idCmsSlot): CmsSlotTransfer
+    {
+        return $this->getFactory()
+            ->createCmsSlotReader()
+            ->getCmsSlotById($idCmsSlot);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idCmsSlotTemplate
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotTemplateTransfer
+     */
+    public function getCmsSlotTemplateById(int $idCmsSlotTemplate): CmsSlotTemplateTransfer
+    {
+        return $this->getFactory()
+            ->createCmsSlotTemplateReader()
+            ->getTemplateById($idCmsSlotTemplate);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\CmsSlotCriteriaTransfer $cmsSlotCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
