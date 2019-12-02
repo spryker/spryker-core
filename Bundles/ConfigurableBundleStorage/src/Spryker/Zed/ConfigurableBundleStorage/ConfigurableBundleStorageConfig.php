@@ -24,6 +24,6 @@ class ConfigurableBundleStorageConfig extends AbstractBundleConfig
      */
     public function getConfigurableBundleTemplateSynchronizationPoolName(): ?string
     {
-        return 'synchronizationPool';
+        return null;
     }
 }
