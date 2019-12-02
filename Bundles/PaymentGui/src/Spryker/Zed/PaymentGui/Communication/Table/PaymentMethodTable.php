@@ -156,7 +156,7 @@ class PaymentMethodTable extends AbstractTable
     protected function prepareQuery(): SpyPaymentMethodQuery
     {
         return $this->paymentMethodQuery
-            ->leftJoinWithPaymentProvider();
+            ->leftJoinWithSpyPaymentProvider();
     }
 
     /**
@@ -168,7 +168,7 @@ class PaymentMethodTable extends AbstractTable
     {
         return [
             SpyPaymentMethodTableMap::COL_PAYMENT_METHOD_KEY => $paymentMethodEntity->getPaymentMethodKey(),
-            SpyPaymentProviderTableMap::COL_NAME => $paymentMethodEntity->getPaymentProvider()->getName(),
+            SpyPaymentProviderTableMap::COL_NAME => $paymentMethodEntity->getSpyPaymentProvider()->getName(),
             SpyPaymentMethodTableMap::COL_NAME => $paymentMethodEntity->getName(),
             SpyPaymentMethodTableMap::COL_IS_ACTIVE => $this->generateIsActiveLabel($paymentMethodEntity),
             SpyStoreTableMap::COL_NAME => $this->getStoreNames($paymentMethodEntity),
@@ -238,8 +238,8 @@ class PaymentMethodTable extends AbstractTable
     protected function getStoreNames(SpyPaymentMethod $paymentMethodEntity): string
     {
         $storeNames = [];
-        foreach ($paymentMethodEntity->getPaymentMethodStores() as $paymentMethodStore) {
-            $storeName = $paymentMethodStore->getStore()->getName();
+        foreach ($paymentMethodEntity->getSpyPaymentMethodStores() as $paymentMethodStore) {
+            $storeName = $paymentMethodStore->getSpyStore()->getName();
 
             if ($storeName === null) {
                 continue;
