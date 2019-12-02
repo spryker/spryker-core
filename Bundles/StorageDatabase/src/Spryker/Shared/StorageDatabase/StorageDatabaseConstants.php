@@ -67,25 +67,4 @@ interface StorageDatabaseConstants
      * @api
      */
     public const DB_DEBUG = 'STORAGE_DATABASE:DB_DEBUG';
-
-    /**
-     * Specification:
-     * - Defines a map for storage/search table names.
-     *
-     * Example:
-     *
-     * $config[StorageDatabaseConstants::RESOURCE_PREFIX_TO_STORAGE_TABLE_MAP] = [
-     *     'translation' => [
-     *         StorageDatabaseConfig::KEY_STORAGE_TABLE_NAME => 'glossary',
-     *     ],
-     *     'product_search_config_extension' => [
-     *         StorageDatabaseConfig::KEY_STORAGE_TABLE_PREFIX => 'pyz',
-     *         StorageDatabaseConfig::KEY_STORAGE_TABLE_NAME => 'product_search_config',
-     *         StorageDatabaseConfig::KEY_STORAGE_TABLE_SUFFIX => 'storage',
-     *     ],
-     * ];
-     *
-     * @api
-     */
-    public const RESOURCE_PREFIX_TO_STORAGE_TABLE_MAP = 'STORAGE_DATABASE:RESOURCE_PREFIX_TO_STORAGE_TABLE_MAP';
 }
