@@ -28,7 +28,7 @@ interface CartCodePluginInterface
 
     /**
      * Specification:
-     * - Executed by CartCodeClient::removeCartCode() method.
+     * - Executed by CartCodeFacade::removeCartCode() method.
      * - Cleans up $cartCode and its relevant data when $cartCode is present in QuoteTransfer.
      *
      * @api
@@ -42,7 +42,7 @@ interface CartCodePluginInterface
 
     /**
      * Specification:
-     * - Executed by CartCodeClient::clearAllCartCodes() method.
+     * - Executed by CartCodeFacade::clearCartCodes() method.
      * - Clears all codes and their relevant data when $cartCode is present in QuoteTransfer.
      *
      * @api
@@ -55,7 +55,7 @@ interface CartCodePluginInterface
 
     /**
      * Specification:
-     * - Executed after every cart code operations (add cart code, remove cart code, clear cart codes).
+     * - Executed after every cart code operations (add cart code, remove cart code).
      * - Runs only on a recalculated QuoteTransfer.
      * - Checks QuoteTransfer and provides a success or an error message.
      *

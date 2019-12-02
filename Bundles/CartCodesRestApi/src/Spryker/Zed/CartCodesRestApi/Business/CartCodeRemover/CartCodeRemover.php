@@ -56,7 +56,7 @@ class CartCodeRemover implements CartCodeRemoverInterface
         }
 
         $discountTransfers = $quoteResponseTransfer->getQuoteTransfer()->getVoucherDiscounts();
-        if (!$this->checkIfVoucherCodeIsInQuote($discountTransfers, $cartCodeRequestTransfer->getCartCode())) {
+        if (!$this->isVoucherCodeInQuote($discountTransfers, $cartCodeRequestTransfer->getCartCode())) {
             return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
                 CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_NOT_FOUND
             );
@@ -71,9 +71,9 @@ class CartCodeRemover implements CartCodeRemoverInterface
      * @param \ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $discountTransfers
      * @param string $voucherCode
      *
-     * @return string|null
+     * @return bool
      */
-    protected function checkIfVoucherCodeIsInQuote(ArrayObject $discountTransfers, string $voucherCode): ?string
+    protected function isVoucherCodeInQuote(ArrayObject $discountTransfers, string $voucherCode): bool
     {
         foreach ($discountTransfers as $discountTransfer) {
             if ($discountTransfer->getVoucherCode() === $voucherCode) {

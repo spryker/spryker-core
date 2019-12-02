@@ -17,7 +17,7 @@ interface CartCodePluginInterface
 {
     /**
      * Specification:
-     * - Executed by CartCodeClient::addCode() method.
+     * - Executed by CartCodeClient::addCandidate() method.
      * - Extends QuoteTransfer with $code and its relevant data when the $code is applicable.
      *
      * @api

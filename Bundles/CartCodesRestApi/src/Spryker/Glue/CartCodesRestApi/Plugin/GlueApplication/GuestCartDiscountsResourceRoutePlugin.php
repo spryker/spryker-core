@@ -19,7 +19,7 @@ class GuestCartDiscountsResourceRoutePlugin extends AbstractPlugin implements Re
 {
     /**
      * {@inheritDoc}
-     * - Configures available actions for guest cart-codes resource.
+     * - Configures available actions for guest vouchers resource.
      *
      * @api
      *

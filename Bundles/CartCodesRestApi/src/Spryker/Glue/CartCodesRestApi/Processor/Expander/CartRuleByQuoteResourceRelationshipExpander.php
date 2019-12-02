@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CartCodesRestApi\Processor\Expander;
 
+use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestDiscountsAttributesTransfer;
 use Spryker\Glue\CartCodesRestApi\CartCodesRestApiConfig;
@@ -56,8 +57,8 @@ class CartRuleByQuoteResourceRelationshipExpander implements CartRuleByQuoteReso
                 continue;
             }
 
-            $discountTransfers = $payload->getCartRuleDiscounts()->getArrayCopy();
-            if (!count($payload->getCartRuleDiscounts()->getArrayCopy())) {
+            $discountTransfers = $payload->getCartRuleDiscounts();
+            if (!count($discountTransfers)) {
                 continue;
             }
 
@@ -66,13 +67,13 @@ class CartRuleByQuoteResourceRelationshipExpander implements CartRuleByQuoteReso
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discountTransfers
+     * @param ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $discountTransfers
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      *
      * @return void
      */
     protected function addDiscountResourceRelationship(
-        array $discountTransfers,
+        ArrayObject $discountTransfers,
         RestResourceInterface $resource
     ): void {
         foreach ($discountTransfers as $discountTransfer) {

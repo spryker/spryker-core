@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CartCodesRestApi\Processor\Expander;
 
+use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestDiscountsAttributesTransfer;
 use Spryker\Glue\CartCodesRestApi\CartCodesRestApiConfig;
@@ -56,7 +57,7 @@ class VoucherByQuoteResourceRelationshipExpander implements VoucherByQuoteResour
                 continue;
             }
 
-            $discountTransfers = $payload->getVoucherDiscounts()->getArrayCopy();
+            $discountTransfers = $payload->getVoucherDiscounts();
             if (!count($discountTransfers)) {
                 continue;
             }
@@ -66,13 +67,13 @@ class VoucherByQuoteResourceRelationshipExpander implements VoucherByQuoteResour
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discountTransfers
+     * @param ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $discountTransfers
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      *
      * @return void
      */
     protected function addDiscountResourceRelationship(
-        array $discountTransfers,
+        ArrayObject $discountTransfers,
         RestResourceInterface $resource
     ): void {
         foreach ($discountTransfers as $discountTransfer) {
@@ -84,7 +85,7 @@ class VoucherByQuoteResourceRelationshipExpander implements VoucherByQuoteResour
 
             $discountResource = $this->restResourceBuilder->createRestResource(
                 CartCodesRestApiConfig::RESOURCE_VOUCHERS,
-                (string)$discountTransfer->getVoucherCode(),
+                $discountTransfer->getVoucherCode(),
                 $restDiscountsAttributesTransfer
             );
 
