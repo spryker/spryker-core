@@ -14,16 +14,16 @@ interface ConfigurableBundleStorageRepositoryInterface
     /**
      * @param int[] $configurableBundleTemplateIds
      *
-     * @return \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplate[]
+     * @return \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateStorage[]
      */
-    public function getConfigurableBundleTemplateEntityMap(array $configurableBundleTemplateIds): array;
+    public function getConfigurableBundleTemplateStorageEntityMap(array $configurableBundleTemplateIds): array;
 
     /**
      * @param int[] $configurableBundleTemplateIds
      *
-     * @return \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateStorage[]
+     * @return \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage[][]
      */
-    public function getConfigurableBundleTemplateStorageEntityMap(array $configurableBundleTemplateIds): array;
+    public function getConfigurableBundleTemplateImageStorageEntityMap(array $configurableBundleTemplateIds): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
@@ -35,8 +35,9 @@ interface ConfigurableBundleStorageRepositoryInterface
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $configurableBundleTemplateIds
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer[]
+     * @return \Generated\Shared\Transfer\SpyConfigurableBundleTemplateImageStorageEntityTransfer[]
      */
-    public function getConfigurableBundleTemplatesByFilter(FilterTransfer $filterTransfer): array;
+    public function getFilteredConfigurableBundleTemplateImageStorageEntities(FilterTransfer $filterTransfer, array $configurableBundleTemplateIds): array;
 }
