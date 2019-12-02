@@ -2,7 +2,7 @@
   <tr>
       {% embed '@SalesReclamationGui/Detail/boxes/order-item.twig' with {
           orderItem: reclamationItem.orderItem,
-          displayImage: reclamationItem.orderItem.metadata is not null ? true : null,
+          displayImage: reclamationItem.orderItem.metadata is not null,
           image: reclamationItem.orderItem.metadata is not null ? reclamationItem.orderItem.metadata.image : null,
           displayTotals: true,
           group: false
