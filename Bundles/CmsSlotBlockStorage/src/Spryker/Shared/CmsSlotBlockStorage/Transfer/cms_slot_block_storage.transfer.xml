@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="CmsSlotBlock">
+        <property name="idCmsSlotBlock" type="string"/>
+        <property name="idSlotTemplate" type="int"/>
+        <property name="idSlot" type="int"/>
+        <property name="cmsBlockKey" type="string"/>
+        <property name="conditions" type="CmsSlotBlockCondition[]" singular="condition" associative="true"/>
+    </transfer>
+
+    <transfer name="CmsSlotBlockCondition">
+    </transfer>
+
+    <transfer name="CmsSlotBlockCollection">
+        <property name="cmsSlotBlocks" type="CmsSlotBlock[]" singular="cmsSlotBlock"/>
+    </transfer>
+
+    <transfer name="CmsSlotBlockCriteria">
+        <property name="filter" type="Filter"/>
+        <property name="idCmsSlotTemplate" type="int"/>
+        <property name="idCmsSlot" type="int"/>
+    </transfer>
+
+    <transfer name="CmsSlotBlockStorage">
+        <property name="idCmsSlot" type="int"/>
+        <property name="idCmsSlotTemplate" type="int"/>
+        <property name="slotKey" type="string"/>
+        <property name="templatePath" type="string"/>
+        <property name="slotTemplateKey" type="string"/>
+        <property name="data" type="CmsSlotBlockCollection"/>
+    </transfer>
+
+    <transfer name="EventEntity">
+        <property name="id" type="int"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="orderBy" type="string"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
+    </transfer>
+</transfers>
