@@ -15,8 +15,6 @@ use Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig;
 
 class DocumentWriter implements DocumentWriterInterface
 {
-    protected const MAPPING_TYPE_NAME = '_doc';
-
     /**
      * @var \Elastica\Client
      */
@@ -93,7 +91,7 @@ class DocumentWriter implements DocumentWriterInterface
         $document = new Document();
         $document->setId($searchDocumentTransfer->getId())
             ->setData($searchDocumentTransfer->getData())
-            ->setType(static::MAPPING_TYPE_NAME)
+            ->setType($this->config->getDefaultMappingType())
             ->setIndex($indexName);
 
         return $document;
@@ -163,6 +161,6 @@ class DocumentWriter implements DocumentWriterInterface
      */
     protected function getDocumentFromIndex(string $documentId, Index $index): Document
     {
-        return $index->getType(static::MAPPING_TYPE_NAME)->getDocument($documentId);
+        return $index->getType($this->config->getDefaultMappingType())->getDocument($documentId);
     }
 }

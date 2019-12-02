@@ -1,6 +1,6 @@
 {
   "mappings": {
-    "_doc": {
+    "product-review": {
       "dynamic_templates": [
         {
           "search-result-data": {

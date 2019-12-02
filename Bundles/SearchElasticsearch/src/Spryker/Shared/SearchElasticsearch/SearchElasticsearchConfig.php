@@ -20,6 +20,7 @@ class SearchElasticsearchConfig extends AbstractSharedConfig
     public const FACET_TYPE_CATEGORY = 'category';
 
     protected const SUPPORTED_SOURCE_IDENTIFIERS = [];
+    protected const DEFAULT_MAPPING_TYPE = '_doc';
 
     /**
      * @return array
@@ -53,5 +54,13 @@ class SearchElasticsearchConfig extends AbstractSharedConfig
     public function getSupportedSourceIdentifiers(): array
     {
         return static::SUPPORTED_SOURCE_IDENTIFIERS;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultMappingType(): string
+    {
+        return static::DEFAULT_MAPPING_TYPE;
     }
 }

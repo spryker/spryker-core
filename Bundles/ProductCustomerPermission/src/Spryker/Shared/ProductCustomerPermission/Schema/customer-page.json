@@ -1,6 +1,6 @@
 {
   "mappings": {
-    "_doc": {
+    "customer-page": {
       "properties": {
         "id-customer": {
           "type": "integer"

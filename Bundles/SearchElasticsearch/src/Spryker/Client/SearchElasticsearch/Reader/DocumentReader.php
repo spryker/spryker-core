@@ -14,8 +14,6 @@ use Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig;
 
 class DocumentReader implements DocumentReaderInterface
 {
-    protected const MAPPING_TYPE_NAME = '_doc';
-
     /**
      * @var \Elastica\Client
      */
@@ -46,7 +44,7 @@ class DocumentReader implements DocumentReaderInterface
         $indexName = $this->getIndexNameFromSearchDocumentTransfer($searchDocumentTransfer);
         $index = $this->elasticaClient->getIndex($indexName);
 
-        $document = $index->getType(static::MAPPING_TYPE_NAME)->getDocument($searchDocumentTransfer->getId());
+        $document = $index->getType($this->config->getDefaultMappingType())->getDocument($searchDocumentTransfer->getId());
 
         return $this->mapDocumentToSearchDocumentTransfer($document, $searchDocumentTransfer);
     }
