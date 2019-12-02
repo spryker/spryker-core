@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\HealthCheck\Communication\Controller;
+namespace Spryker\Zed\ZedRequest\Communication\Controller;
 
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;

@@ -9,7 +9,6 @@ namespace Spryker\Client\HealthCheck;
 
 use Generated\Shared\Transfer\HealthCheckRequestTransfer;
 use Generated\Shared\Transfer\HealthCheckResponseTransfer;
-use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -29,17 +28,5 @@ class HealthCheckClient extends AbstractClient implements HealthCheckClientInter
     public function executeHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer
     {
         return $this->getFactory()->createHealthCheckProcessor()->process($healthCheckRequestTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
-     */
-    public function executeZedRequestHealthCheck(): HealthCheckServiceResponseTransfer
-    {
-        return $this->getFactory()->createZedRequestHealthCheckIndicator()->executeHealthCheck();
     }
 }

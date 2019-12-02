@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ZedRequest;
 
+use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 interface ZedRequestClientInterface
@@ -115,4 +116,14 @@ interface ZedRequestClientInterface
      * @return void
      */
     public function addResponseMessagesToMessenger(): void;
+
+    /**
+     * Specification:
+     * - Checks that zed request is accessible.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
+     */
+    public function executeZedRequestHealthCheck(): HealthCheckServiceResponseTransfer;
 }

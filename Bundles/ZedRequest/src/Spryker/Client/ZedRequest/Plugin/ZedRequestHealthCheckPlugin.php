@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\HealthCheck\Plugin;
+namespace Spryker\Client\ZedRequest\Plugin;
 
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface;
 
 /**
- * @method \Spryker\Client\HealthCheck\HealthCheckFactory getFactory()
- * @method \Spryker\Client\HealthCheck\HealthCheckClient getClient()()
+ * @method \Spryker\Client\ZedRequest\ZedRequestFactory getFactory()
+ * @method \Spryker\Client\ZedRequest\ZedRequestClient getClient()
  */
 class ZedRequestHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {

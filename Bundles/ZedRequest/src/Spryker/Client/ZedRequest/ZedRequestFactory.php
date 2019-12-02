@@ -10,6 +10,8 @@ namespace Spryker\Client\ZedRequest;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ZedRequest\Client\HttpClient;
 use Spryker\Client\ZedRequest\Client\ZedClient;
+use Spryker\Client\ZedRequest\HealthIndicator\HealthIndicatorInterface;
+use Spryker\Client\ZedRequest\HealthIndicator\ZedRequestHealthIndicator;
 use Spryker\Client\ZedRequest\Messenger\Messenger;
 use Spryker\Client\ZedRequest\Messenger\MessengerInterface;
 
@@ -114,5 +116,15 @@ class ZedRequestFactory extends AbstractFactory
     public function getMessengerClient()
     {
         return $this->getProvidedDependency(ZedRequestDependencyProvider::CLIENT_MESSENGER);
+    }
+
+    /**
+     * @return \Spryker\Client\ZedRequest\HealthIndicator\HealthIndicatorInterface
+     */
+    public function createZedRequestHealthCheckIndicator(): HealthIndicatorInterface
+    {
+        return new ZedRequestHealthIndicator(
+            $this->createClient()
+        );
     }
 }

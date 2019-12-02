@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\HealthCheck;
 
-use Spryker\Client\HealthCheck\Dependency\Client\HealthCheckToZedRequestClientBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
@@ -27,24 +26,7 @@ class HealthCheckDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container): Container
     {
-        $container = $this->addZedRequestClient($container);
         $container = $this->addHealthCheckPlugins($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addZedRequestClient(Container $container): Container
-    {
-        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
-            return new HealthCheckToZedRequestClientBridge(
-                $container->getLocator()->zedRequest()->client()
-            );
-        });
 
         return $container;
     }
