@@ -7,14 +7,14 @@
 
 namespace Spryker\Client\ConfigurableBundleCart\Generator;
 
-use Generated\Shared\Transfer\ConfiguredBundleRequestTransfer;
+use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 
 interface ConfiguredBundleGroupKeyGeneratorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ConfiguredBundleRequestTransfer $configuredBundleRequestTransfer
+     * @param \Generated\Shared\Transfer\ConfiguredBundleTransfer $configuredBundleTransfer
      *
      * @return string
      */
-    public function generateConfiguredBundleGroupKeyByUuid(ConfiguredBundleRequestTransfer $configuredBundleRequestTransfer): string;
+    public function generateConfiguredBundleGroupKeyByUuid(ConfiguredBundleTransfer $configuredBundleTransfer): string;
 }
