@@ -46,7 +46,7 @@ interface SalesClientInterface
      * - Makes Zed request.
      * - Returns a transfer with the filtered list of orders for the given customer.
      * - Uses OrderListRequestTransfer::$filter to pull params for offset-based pagination strategy.
-     * - customerReference must be set in the OrderListRequestTransfer.
+     * - OrderListRequestTransfer::customerReference must be set.
      * - Updates the total number of orders for the customer to the pagination transfer.
      *
      * @api

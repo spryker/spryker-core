@@ -54,6 +54,8 @@ class SalesStub implements SalesStubInterface
     }
 
     /**
+     * @uses \getOffsetPaginatedCustomerOrderListAction\GatewayController::getOffsetPaginatedCustomerOrderListAction
+     *
      * @param \Generated\Shared\Transfer\OrderListRequestTransfer $orderListRequestTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
