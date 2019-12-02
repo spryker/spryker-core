@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsSlot\Persistence;
 
 use Generated\Shared\Transfer\CmsSlotCriteriaTransfer;
+use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery;
@@ -25,13 +26,37 @@ class CmsSlotRepository extends AbstractRepository implements CmsSlotRepositoryI
      */
     public function findCmsSlotById(int $idCmsSlot): ?CmsSlotTransfer
     {
-        $cmsSlot = $this->getFactory()->createCmsSlotQuery()->findOneByIdCmsSlot($idCmsSlot);
+        $cmsSlot = $this->getFactory()
+            ->createCmsSlotQuery()
+            ->findOneByIdCmsSlot($idCmsSlot);
 
         if (!$cmsSlot) {
             return null;
         }
 
-        return $this->getFactory()->createCmsSlotMapper()->mapCmsSlotEntityToTransfer($cmsSlot);
+        return $this->getFactory()
+            ->createCmsSlotMapper()
+            ->mapCmsSlotEntityToTransfer($cmsSlot);
+    }
+
+    /**
+     * @param int $idCmsSlotTemplate
+     *
+     * @return \Generated\Shared\Transfer\CmsSlotTemplateTransfer|null
+     */
+    public function findCmsSlotTemplateById(int $idCmsSlotTemplate): ?CmsSlotTemplateTransfer
+    {
+        $cmsSlotTemplateEntity = $this->getFactory()
+            ->createCmsSlotTemplateQuery()
+            ->findOneByIdCmsSlotTemplate($idCmsSlotTemplate);
+
+        if (!$cmsSlotTemplateEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createCmsSlotMapper()
+            ->mapCmsSlotTemplateEntityToTransfer($cmsSlotTemplateEntity);
     }
 
     /**
