@@ -8,12 +8,17 @@
 namespace Spryker\Zed\MerchantRelationshipProductList\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantRelationshipProductList\Business\Checker\ProductListDeleteChecker;
+use Spryker\Zed\MerchantRelationshipProductList\Business\Checker\ProductListDeleteCheckerInterface;
 use Spryker\Zed\MerchantRelationshipProductList\Business\CustomerExpander\CustomerExpander;
 use Spryker\Zed\MerchantRelationshipProductList\Business\CustomerExpander\CustomerExpanderInterface;
 use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListReader;
 use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListReaderInterface;
 use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListWriter;
 use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductListWriterInterface;
+use Spryker\Zed\MerchantRelationshipProductList\Business\Reader\MerchantRelationshipReader;
+use Spryker\Zed\MerchantRelationshipProductList\Business\Reader\MerchantRelationshipReaderInterface;
+use Spryker\Zed\MerchantRelationshipProductList\Dependency\Facade\MerchantRelationshipProductListToMerchantRelationshipFacadeInterface;
 use Spryker\Zed\MerchantRelationshipProductList\Dependency\Facade\MerchantRelationshipProductListToProductListFacadeInterface;
 use Spryker\Zed\MerchantRelationshipProductList\MerchantRelationshipProductListDependencyProvider;
 
@@ -47,7 +52,29 @@ class MerchantRelationshipProductListBusinessFactory extends AbstractBusinessFac
     {
         return new ProductListWriter(
             $this->getRepository(),
+            $this->getEntityManager(),
             $this->getProductListFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipProductList\Business\Reader\MerchantRelationshipReaderInterface
+     */
+    public function createMerchantRelationshipReader(): MerchantRelationshipReaderInterface
+    {
+        return new MerchantRelationshipReader(
+            $this->getRepository(),
+            $this->getMerchantRelationshipFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipProductList\Business\Checker\ProductListDeleteCheckerInterface
+     */
+    public function createProductListDeleteChecker(): ProductListDeleteCheckerInterface
+    {
+        return new ProductListDeleteChecker(
+            $this->createMerchantRelationshipReader()
         );
     }
 
@@ -57,5 +84,13 @@ class MerchantRelationshipProductListBusinessFactory extends AbstractBusinessFac
     public function getProductListFacade(): MerchantRelationshipProductListToProductListFacadeInterface
     {
         return $this->getProvidedDependency(MerchantRelationshipProductListDependencyProvider::FACADE_PRODUCT_LIST);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipProductList\Dependency\Facade\MerchantRelationshipProductListToMerchantRelationshipFacadeInterface
+     */
+    public function getMerchantRelationshipFacade(): MerchantRelationshipProductListToMerchantRelationshipFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantRelationshipProductListDependencyProvider::FACADE_MERCHANT_RELATIONSHIP);
     }
 }
