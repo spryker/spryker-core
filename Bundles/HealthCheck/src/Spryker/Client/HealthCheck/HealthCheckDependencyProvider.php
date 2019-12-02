@@ -15,8 +15,6 @@ use Spryker\Client\Kernel\Container;
  */
 class HealthCheckDependencyProvider extends AbstractDependencyProvider
 {
-    public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
-
     public const PLUGINS_HEALTH_CHECK = 'PLUGINS_HEALTH_CHECK';
 
     /**
