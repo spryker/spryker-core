@@ -73,7 +73,11 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
         string $localeName,
         array $sorts
     ): array {
-        $productAbstractIds = $this->getProductAbstractIdsByProductAbstractSkus($productAbstractSkus, $localeName);
+        $productAbstractIds = $this->productStorageClient->getBulkProductAbstractIdsByMapping(
+            static::PRODUCT_ABSTRACT_MAPPING_TYPE,
+            $productAbstractSkus,
+            $localeName
+        );
         $productAbstractOptionStorageTransfers = $this->productOptionStorageClient->getBulkProductOptions(
             $productAbstractIds
         );
@@ -134,28 +138,6 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
         );
 
         return $this->getProductOptionIdsGroupedByProductOptionSku($productAbstractOptionStorageTransfer);
-    }
-
-    /**
-     * @param string[] $productAbstractSkus
-     * @param string $localeName
-     *
-     * @return int[]
-     */
-    protected function getProductAbstractIdsByProductAbstractSkus(array $productAbstractSkus, string $localeName): array
-    {
-        $productAbstractIdsByProductAbstractSkus = [];
-        $productAbstractStorageDataItems = $this->productStorageClient->findBulkProductAbstractStorageDataByMapping(
-            static::PRODUCT_ABSTRACT_MAPPING_TYPE,
-            $productAbstractSkus,
-            $localeName
-        );
-        foreach ($productAbstractStorageDataItems as $productAbstractStorageDataItem) {
-            $productAbstractIdsByProductAbstractSkus[$productAbstractStorageDataItem[static::KEY_PRODUCT_ABSTRACT_SKU]] =
-                $productAbstractStorageDataItem[static::KEY_ID_PRODUCT_ABSTRACT];
-        }
-
-        return $productAbstractIdsByProductAbstractSkus;
     }
 
     /**

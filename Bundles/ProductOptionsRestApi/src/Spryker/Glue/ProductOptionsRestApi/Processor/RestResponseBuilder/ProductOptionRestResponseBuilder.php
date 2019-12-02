@@ -69,7 +69,7 @@ class ProductOptionRestResponseBuilder implements ProductOptionRestResponseBuild
                 continue;
             }
 
-            $productOptionRestResources[$parentResourceId] = $this->prepareRestResources(
+            $productOptionRestResources[$parentResourceId] = $this->createRestResources(
                 $restProductOptionsAttributesTransfers[$idProductAbstract],
                 $parentResourceType,
                 $parentResourceId
@@ -113,7 +113,7 @@ class ProductOptionRestResponseBuilder implements ProductOptionRestResponseBuild
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    protected function prepareRestResources(
+    protected function createRestResources(
         array $restProductOptionsAttributesTransfers,
         string $parentResourceType,
         string $parentResourceId

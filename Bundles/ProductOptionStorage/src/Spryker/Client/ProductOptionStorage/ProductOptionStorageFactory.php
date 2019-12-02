@@ -9,6 +9,8 @@ namespace Spryker\Client\ProductOptionStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductOptionStorage\Dependency\Service\ProductOptionStorageToUtilEncodingServiceInterface;
+use Spryker\Client\ProductOptionStorage\Mapper\ProductOptionMapper;
+use Spryker\Client\ProductOptionStorage\Mapper\ProductOptionMapperInterface;
 use Spryker\Client\ProductOptionStorage\Price\ValuePriceReader;
 use Spryker\Client\ProductOptionStorage\Storage\ProductOptionStorageReader;
 
@@ -24,6 +26,7 @@ class ProductOptionStorageFactory extends AbstractFactory
             $this->getStore(),
             $this->getSynchronizationService(),
             $this->createValuePriceReader(),
+            $this->createProductOptionMapper(),
             $this->getUtilEncodingService()
         );
     }
@@ -61,6 +64,14 @@ class ProductOptionStorageFactory extends AbstractFactory
             $this->getCurrencyClient(),
             $this->getPriceClient()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductOptionStorage\Mapper\ProductOptionMapperInterface
+     */
+    public function createProductOptionMapper(): ProductOptionMapperInterface
+    {
+        return new ProductOptionMapper();
     }
 
     /**

@@ -13,7 +13,7 @@ interface RestCartItemsAttributesMapperPluginInterface
 {
     /**
      * Specification:
-     * - Maps ItemTransfer to RestOrderItemsAttributesTransfer.
+     * - Maps ItemTransfer to RestItemsAttributesTransfer.
      *
      * @api
      *

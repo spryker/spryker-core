@@ -110,35 +110,26 @@ class ProductOptionTranslator implements ProductOptionTranslatorInterface
     protected function getGlossaryStorageKeysFromProductAbstractOptionStorageTransfers(array $productAbstractOptionStorageTransfers): array
     {
         $glossaryStorageKeys = [];
+        $productOptionGroupStorageTransfers = [];
         foreach ($productAbstractOptionStorageTransfers as $productAbstractOptionStorageTransfer) {
-            $glossaryStorageKeys += $this->getGlossaryStorageKeysFromProductAbstractOptionStorageTransfer(
-                $productAbstractOptionStorageTransfer
-            );
+            $productOptionGroupStorageTransfers[] = $productAbstractOptionStorageTransfer->getProductOptionGroups()
+                ->getArrayCopy();
+        }
+        $productOptionGroupStorageTransfers = array_merge(...$productOptionGroupStorageTransfers);
+
+        $productOptionValueStorageTransfers = [];
+        foreach ($productOptionGroupStorageTransfers as $productOptionGroupStorageTransfer) {
+            $glossaryStorageKeys[] = $productOptionGroupStorageTransfer->getName();
+            $productOptionValueStorageTransfers[] = $productOptionGroupStorageTransfer->getProductOptionValues()
+                ->getArrayCopy();
+        }
+        $productOptionValueStorageTransfers = array_merge(...$productOptionValueStorageTransfers);
+
+        foreach ($productOptionValueStorageTransfers as $productOptionValueStorageTransfer) {
+            $glossaryStorageKeys[] = $productOptionValueStorageTransfer->getValue();
         }
 
-        return array_values($glossaryStorageKeys);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
-     *
-     * @return string[]
-     */
-    protected function getGlossaryStorageKeysFromProductAbstractOptionStorageTransfer(
-        ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
-    ): array {
-        $glossaryStorageKeys = [];
-        foreach ($productAbstractOptionStorageTransfer->getProductOptionGroups() as $productOptionGroupStorageTransfer) {
-            $optionGroupName = $productOptionGroupStorageTransfer->getName();
-            $glossaryStorageKeys[$optionGroupName] = $optionGroupName;
-
-            foreach ($productOptionGroupStorageTransfer->getProductOptionValues() as $productOptionValueStorageTransfer) {
-                $optionValueName = $productOptionValueStorageTransfer->getValue();
-                $glossaryStorageKeys[$optionValueName] = $optionValueName;
-            }
-        }
-
-        return $glossaryStorageKeys;
+        return array_unique($glossaryStorageKeys);
     }
 
     /**

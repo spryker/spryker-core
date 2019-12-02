@@ -35,7 +35,7 @@ class ProductOptionSorter implements ProductOptionSorterInterface
             RestProductOptionsAttributesTransfer $currentRestProductOptionsAttributesTransfer,
             RestProductOptionsAttributesTransfer $nextRestProductOptionsAttributesTransfer
         ) use ($sorts) {
-            return $this->compare(
+            return $this->compareRestProductOptionsAttributesTransfers(
                 $currentRestProductOptionsAttributesTransfer,
                 $nextRestProductOptionsAttributesTransfer,
                 $sorts
@@ -53,27 +53,22 @@ class ProductOptionSorter implements ProductOptionSorterInterface
      *
      * @return int
      */
-    protected function compare(
+    protected function compareRestProductOptionsAttributesTransfers(
         RestProductOptionsAttributesTransfer $currentRestProductOptionsAttributesTransfer,
         RestProductOptionsAttributesTransfer $nextRestProductOptionsAttributesTransfer,
         array $sorts,
         int $index = 0
     ): int {
-        $currentSort = $sorts[$index];
-        $field = explode(static::SORT_VALUE_DELIMITER, $currentSort->getField())[1];
-        $currentPropertyValue = $nextPropertyValue = null;
-
-        if ($currentRestProductOptionsAttributesTransfer->offsetExists($field)) {
-            $currentPropertyValue = $currentRestProductOptionsAttributesTransfer->offsetGet($field);
-            $nextPropertyValue = $nextRestProductOptionsAttributesTransfer->offsetGet($field);
-        }
+        [$field, $direction] = $this->getSortingParameters($sorts[$index]);
+        $currentPropertyValue = $this->findPropertyValue($currentRestProductOptionsAttributesTransfer, $field);
+        $nextPropertyValue = $this->findPropertyValue($nextRestProductOptionsAttributesTransfer, $field);
 
         if ($currentPropertyValue === $nextPropertyValue) {
             if (!isset($sorts[$index + 1])) {
                 return 0;
             }
 
-            return $this->compare(
+            return $this->compareRestProductOptionsAttributesTransfers(
                 $currentRestProductOptionsAttributesTransfer,
                 $nextRestProductOptionsAttributesTransfer,
                 $sorts,
@@ -81,22 +76,54 @@ class ProductOptionSorter implements ProductOptionSorterInterface
             );
         }
 
-        if ($currentSort->getDirection() === SortInterface::SORT_DESC) {
-            return $currentPropertyValue < $nextPropertyValue ? 1 : -1;
+        if ($direction === SortInterface::SORT_DESC) {
+            return ($currentPropertyValue <=> $nextPropertyValue) * -1;
         }
 
-        return $currentPropertyValue < $nextPropertyValue ? -1 : 1;
+        return $currentPropertyValue <=> $nextPropertyValue;
     }
 
     /**
+     * Removes the non-options related sorting parameters.
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
+     * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[]
      */
     protected function filterSorts(array $sorts): array
     {
         return array_filter($sorts, function (SortInterface $sort) {
             return explode(static::SORT_VALUE_DELIMITER, $sort->getField())[0] === ProductOptionsRestApiConfig::RESOURCE_PRODUCT_OPTIONS;
         });
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface $sort
+     *
+     * @return string[]
+     */
+    protected function getSortingParameters(SortInterface $sort): array
+    {
+        return [
+            explode(static::SORT_VALUE_DELIMITER, $sort->getField())[1],
+            $sort->getDirection(),
+        ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer $restProductOptionsAttributesTransfer
+     * @param string $field
+     *
+     * @return mixed|null
+     */
+    protected function findPropertyValue(
+        RestProductOptionsAttributesTransfer $restProductOptionsAttributesTransfer,
+        string $field
+    ) {
+        if (property_exists($restProductOptionsAttributesTransfer, $field)) {
+            return $restProductOptionsAttributesTransfer->offsetGet($field);
+        }
+
+        return null;
     }
 }
