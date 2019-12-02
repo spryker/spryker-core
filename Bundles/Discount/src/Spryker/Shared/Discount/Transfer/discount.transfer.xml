@@ -249,16 +249,5 @@
     <transfer name="Money">
     </transfer>
 
-    <transfer name="CartCodeRequest">
-        <property name="quote" type="Quote"/>
-        <property name="cartCode" type="string"/>
-    </transfer>
-
-    <transfer name="CartCodeResponse">
-        <property name="quote" type="Quote"/>
-        <property name="isSuccessful" type="bool"/>
-        <property name="messages" type="Message[]" singular="message"/>
-    </transfer>
-
 </transfers>
 

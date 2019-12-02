@@ -73,7 +73,7 @@ class CartCodeClearer implements CartCodeClearerInterface
     {
         $quoteTransfer = $cartCodeRequestTransfer->getQuote();
         foreach ($this->cartCodePlugins as $cartCodePlugin) {
-            $quoteTransfer = $cartCodePlugin->clearCartCodes($cartCodeRequestTransfer)->getQuote();
+            $quoteTransfer = $cartCodePlugin->clearCartCodes($quoteTransfer);
         }
 
         return $quoteTransfer;

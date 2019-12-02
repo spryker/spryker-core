@@ -14,7 +14,6 @@ use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\ShipmentGroupBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
 use Generated\Shared\DataBuilder\ShipmentMethodsBuilder;
-use Generated\Shared\Transfer\CartCodeRequestTransfer;
 use Generated\Shared\Transfer\GiftCardMetadataTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
@@ -137,37 +136,29 @@ class GiftCardFacadeTest extends Test
         $quoteTransfer = $this->tester->createQuoteTransferWithoutGiftCard();
 
         // Act
-        $cartCodeResponseTransfer = $this->getFacade()->addCartCode(
-            (new CartCodeRequestTransfer())
-                ->setCartCode($this->tester::GIFT_CARD_CODE)
-                ->setQuote($quoteTransfer)
-        );
+        $resultQuoteTransfer = $this->getFacade()->addCartCode($quoteTransfer, $this->tester::GIFT_CARD_CODE);
 
         // Assert
         $this->assertCount(1, $quoteTransfer->getGiftCards());
         $this->assertEquals(
             $this->tester::GIFT_CARD_CODE,
-            $cartCodeResponseTransfer->getQuote()->getGiftCards()[0]->getCode()
+            $resultQuoteTransfer->getGiftCards()[0]->getCode()
         );
     }
 
     /**
      * @return void
      */
-    public function testAddCartCodeCantAddGiftCardToQuoteWithVoucherCodeAlreadyAddedToQuote(): void
+    public function testAddCartCodeCantAddGiftCardToQuoteWithGiftCardAlreadyAddedToQuote(): void
     {
         // Arrange
         $quoteTransfer = $this->tester->createQuoteTransferWithGiftCard();
 
         // Act
-        $cartCodeResponseTransfer = $this->getFacade()->addCartCode(
-            (new CartCodeRequestTransfer())
-                ->setCartCode($this->tester::GIFT_CARD_CODE)
-                ->setQuote($quoteTransfer)
-        );
+        $resultQuoteTransfer = $this->getFacade()->addCartCode($quoteTransfer, $this->tester::GIFT_CARD_CODE);
 
         // Assert
-        $this->assertCount(1, $cartCodeResponseTransfer->getQuote()->getGiftCards());
+        $this->assertCount(1, $resultQuoteTransfer->getGiftCards());
     }
 
     /**
@@ -179,14 +170,10 @@ class GiftCardFacadeTest extends Test
         $quoteTransfer = $this->tester->createQuoteTransferWithGiftCard();
 
         // Act
-        $cartCodeResponseTransfer = $this->getFacade()->removeCartCode(
-            (new CartCodeRequestTransfer())
-                ->setCartCode($this->tester::GIFT_CARD_CODE)
-                ->setQuote($quoteTransfer)
-        );
+        $resultQuoteTransfer = $this->getFacade()->removeCartCode($quoteTransfer, $this->tester::GIFT_CARD_CODE);
 
         // Assert
-        $this->assertCount(0, $cartCodeResponseTransfer->getQuote()->getGiftCards());
+        $this->assertCount(0, $resultQuoteTransfer->getGiftCards());
     }
 
     /**
@@ -198,13 +185,10 @@ class GiftCardFacadeTest extends Test
         $quoteTransfer = $this->tester->createQuoteTransferWithGiftCard();
 
         // Act
-        $cartCodeResponseTransfer = $this->getFacade()->clearCartCodes(
-            (new CartCodeRequestTransfer())
-                ->setQuote($quoteTransfer)
-        );
+        $resultQuoteTransfer = $this->getFacade()->clearCartCodes($quoteTransfer);
 
         // Assert
-        $this->assertCount(0, $cartCodeResponseTransfer->getQuote()->getGiftCards());
+        $this->assertCount(0, $resultQuoteTransfer->getGiftCards());
     }
 
     /**
@@ -216,14 +200,10 @@ class GiftCardFacadeTest extends Test
         $quoteTransfer = $this->tester->createQuoteTransferWithGiftCard();
 
         // Act
-        $cartCodeResponseTransfer = $this->getFacade()->getOperationResponseMessage(
-            (new CartCodeRequestTransfer())
-                ->setCartCode($this->tester::GIFT_CARD_CODE)
-                ->setQuote($quoteTransfer)
-        );
+        $messageTransfer = $this->getFacade()->getOperationResponseMessage($quoteTransfer, $this->tester::GIFT_CARD_CODE);
 
         // Assert
-        $this->assertNotNull($cartCodeResponseTransfer->getMessages());
+        $this->assertNotNull($messageTransfer);
     }
 
     /**

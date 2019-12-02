@@ -10,11 +10,10 @@ namespace Spryker\Zed\GiftCard\Business;
 use ArrayObject;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\CartCodeRequestTransfer;
-use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
@@ -262,11 +261,12 @@ interface GiftCardFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $cartCode
      *
-     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer;
+    public function addCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer;
 
     /**
      * Specification:
@@ -274,11 +274,12 @@ interface GiftCardFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $cartCode
      *
-     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer;
+    public function removeCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer;
 
     /**
      * Specification:
@@ -286,11 +287,11 @@ interface GiftCardFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function clearCartCodes(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer;
+    public function clearCartCodes(QuoteTransfer $quoteTransfer): QuoteTransfer;
 
     /**
      * Specification:
@@ -300,9 +301,10 @@ interface GiftCardFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $cartCode
      *
-     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    public function getOperationResponseMessage(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer;
+    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, string $cartCode): ?MessageTransfer;
 }

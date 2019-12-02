@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\Discount\Business;
 use ArrayObject;
 use Codeception\Test\Unit;
 use DateTime;
-use Generated\Shared\Transfer\CartCodeRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\CollectedDiscountTransfer;
@@ -949,17 +948,13 @@ class DiscountFacadeTest extends Unit
         $quoteTransfer = $this->tester->createQuoteTransferWithoutVoucherDiscount();
 
         // Act
-        $cartCodeResponseTransfer = $this->createDiscountFacade()->addCartCode(
-            (new CartCodeRequestTransfer())
-                ->setCartCode($this->tester::VOUCHER_CODE)
-                ->setQuote($quoteTransfer)
-        );
+        $resultQuoteTransfer = $this->createDiscountFacade()->addCartCode($quoteTransfer, $this->tester::VOUCHER_CODE);
 
         // Assert
         $this->assertCount(1, $quoteTransfer->getVoucherDiscounts());
         $this->assertEquals(
             $this->tester::VOUCHER_CODE,
-            $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()[0]->getVoucherCode()
+            $resultQuoteTransfer->getVoucherDiscounts()[0]->getVoucherCode()
         );
     }
 
@@ -972,14 +967,10 @@ class DiscountFacadeTest extends Unit
         $quoteTransfer = $this->tester->createQuoteTransferWithVoucherDiscount();
 
         // Act
-        $cartCodeResponseTransfer = $this->createDiscountFacade()->addCartCode(
-            (new CartCodeRequestTransfer())
-                ->setCartCode($this->tester::VOUCHER_CODE)
-                ->setQuote($quoteTransfer)
-        );
+        $resultQuoteTransfer = $this->createDiscountFacade()->addCartCode($quoteTransfer, $this->tester::VOUCHER_CODE);
 
         // Assert
-        $this->assertCount(1, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts());
+        $this->assertCount(1, $resultQuoteTransfer->getVoucherDiscounts());
     }
 
     /**
@@ -991,14 +982,10 @@ class DiscountFacadeTest extends Unit
         $quoteTransfer = $this->tester->createQuoteTransferWithVoucherDiscount();
 
         // Act
-        $cartCodeResponseTransfer = $this->createDiscountFacade()->removeCartCode(
-            (new CartCodeRequestTransfer())
-                ->setCartCode($this->tester::VOUCHER_CODE)
-                ->setQuote($quoteTransfer)
-        );
+        $resultQuoteTransfer = $this->createDiscountFacade()->removeCartCode($quoteTransfer, $this->tester::VOUCHER_CODE);
 
         // Assert
-        $this->assertCount(0, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts());
+        $this->assertCount(0, $resultQuoteTransfer->getVoucherDiscounts());
     }
 
     /**
@@ -1010,13 +997,10 @@ class DiscountFacadeTest extends Unit
         $quoteTransfer = $this->tester->createQuoteTransferWithVoucherDiscount();
 
         // Act
-        $cartCodeResponseTransfer = $this->createDiscountFacade()->clearCartCodes(
-            (new CartCodeRequestTransfer())
-                ->setQuote($quoteTransfer)
-        );
+        $resultQuoteTransfer = $this->createDiscountFacade()->clearCartCodes($quoteTransfer);
 
         // Assert
-        $this->assertCount(0, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts());
+        $this->assertCount(0, $resultQuoteTransfer->getVoucherDiscounts());
     }
 
     /**
@@ -1028,14 +1012,10 @@ class DiscountFacadeTest extends Unit
         $quoteTransfer = $this->tester->createQuoteTransferWithVoucherDiscount();
 
         // Act
-        $cartCodeResponseTransfer = $this->createDiscountFacade()->getOperationResponseMessage(
-            (new CartCodeRequestTransfer())
-                ->setCartCode($this->tester::VOUCHER_CODE)
-                ->setQuote($quoteTransfer)
-        );
+        $messageTransfer = $this->createDiscountFacade()->getOperationResponseMessage($quoteTransfer, $this->tester::VOUCHER_CODE);
 
         // Assert
-        $this->assertNotNull($cartCodeResponseTransfer->getMessages());
+        $this->assertNotNull($messageTransfer);
     }
 
     /**

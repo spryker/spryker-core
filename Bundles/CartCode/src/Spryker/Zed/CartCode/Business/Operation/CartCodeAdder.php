@@ -14,8 +14,6 @@ use Spryker\Zed\CartCode\Dependency\Facade\CartCodeToCalculationFacadeInterface;
 
 class CartCodeAdder implements CartCodeAdderInterface
 {
-    protected const MESSAGE_TYPE_ERROR = 'error';
-
     /**
      * @var \Spryker\Zed\CartCode\Dependency\Facade\CartCodeToCalculationFacadeInterface
      */
@@ -27,6 +25,11 @@ class CartCodeAdder implements CartCodeAdderInterface
     protected $quoteOperationChecker;
 
     /**
+     * @var \Spryker\Zed\CartCode\Business\Operation\RecalculationResultProcessorInterface
+     */
+    protected $recalculationResultProcessor;
+
+    /**
      * @var \Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[]
      */
     protected $cartCodePlugins;
@@ -34,15 +37,18 @@ class CartCodeAdder implements CartCodeAdderInterface
     /**
      * @param \Spryker\Zed\CartCode\Dependency\Facade\CartCodeToCalculationFacadeInterface $calculationClient
      * @param \Spryker\Zed\CartCode\Business\Operation\QuoteOperationCheckerInterface $quoteOperationChecker
+     * @param \Spryker\Zed\CartCode\Business\Operation\RecalculationResultProcessorInterface $recalculationResultProcessor
      * @param \Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[] $cartCodePlugins
      */
     public function __construct(
         CartCodeToCalculationFacadeInterface $calculationClient,
         QuoteOperationCheckerInterface $quoteOperationChecker,
+        RecalculationResultProcessorInterface $recalculationResultProcessor,
         array $cartCodePlugins = []
     ) {
         $this->calculationFacade = $calculationClient;
         $this->quoteOperationChecker = $quoteOperationChecker;
+        $this->recalculationResultProcessor = $recalculationResultProcessor;
         $this->cartCodePlugins = $cartCodePlugins;
     }
 
@@ -62,7 +68,8 @@ class CartCodeAdder implements CartCodeAdderInterface
         $quoteTransfer = $this->executeCartCodePlugins($cartCodeRequestTransfer);
         $quoteTransfer = $this->calculationFacade->recalculateQuote($quoteTransfer);
 
-        return $this->processRecalculationResults($cartCodeRequestTransfer->setQuote($quoteTransfer));
+        return $this->recalculationResultProcessor
+            ->processRecalculationResults($cartCodeRequestTransfer->setQuote($quoteTransfer));
     }
 
     /**
@@ -74,35 +81,9 @@ class CartCodeAdder implements CartCodeAdderInterface
     {
         $quoteTransfer = $cartCodeRequestTransfer->getQuote();
         foreach ($this->cartCodePlugins as $cartCodePlugin) {
-            $quoteTransfer = $cartCodePlugin->addCartCode($cartCodeRequestTransfer)->getQuote();
+            $quoteTransfer = $cartCodePlugin->addCartCode($quoteTransfer, $cartCodeRequestTransfer->getCartCode());
         }
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
-     */
-    protected function processRecalculationResults(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
-    {
-        $quoteTransfer = $cartCodeRequestTransfer->getQuote();
-        $cartCodeResponseTransfer = (new CartCodeResponseTransfer())->setIsSuccessful(true);
-        $cartCodeResponseTransfer->setQuote($quoteTransfer);
-
-        foreach ($this->cartCodePlugins as $cartCodePlugin) {
-            $messageTransfer = $cartCodePlugin->getOperationResponseMessage($cartCodeRequestTransfer);
-
-            if ($messageTransfer) {
-                $cartCodeResponseTransfer->addMessage($messageTransfer);
-            }
-
-            if ($messageTransfer && $messageTransfer->getType() === static::MESSAGE_TYPE_ERROR) {
-                $cartCodeResponseTransfer->setIsSuccessful(false);
-            }
-        }
-
-        return $cartCodeResponseTransfer;
     }
 }

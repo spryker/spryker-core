@@ -8,8 +8,6 @@
 namespace Spryker\Zed\Discount\Business\CartCode;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CartCodeRequestTransfer;
-use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -23,38 +21,31 @@ class VoucherCartCodeProcessor implements VoucherCartCodeProcessorInterface
     protected const MESSAGE_TYPE_ERROR = 'error';
 
     /**
-     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $cartCode
      *
-     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
+    public function addCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer
     {
-        $quoteTransfer = $cartCodeRequestTransfer->getQuote();
-        $cartCode = $cartCodeRequestTransfer->getCartCode();
-
-        $cartCodeResponseTransfer = new CartCodeResponseTransfer();
         if ($this->hasCandidate($quoteTransfer, $cartCode)) {
-            return $cartCodeResponseTransfer->setQuote($quoteTransfer);
+            return $quoteTransfer;
         }
 
         $voucherDiscount = new DiscountTransfer();
         $voucherDiscount->setVoucherCode($cartCode);
 
-        $quoteTransfer->addVoucherDiscount($voucherDiscount);
-
-        return $cartCodeResponseTransfer->setQuote($quoteTransfer);
+        return $quoteTransfer->addVoucherDiscount($voucherDiscount);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $cartCode
      *
-     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
+    public function removeCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer
     {
-        $quoteTransfer = $cartCodeRequestTransfer->getQuote();
-        $cartCode = $cartCodeRequestTransfer->getCartCode();
-        $cartCodeResponseTransfer = new CartCodeResponseTransfer();
         $voucherDiscountsIterator = $quoteTransfer->getVoucherDiscounts()->getIterator();
         foreach ($quoteTransfer->getVoucherDiscounts() as $key => $voucherDiscountTransfer) {
             if ($voucherDiscountTransfer->getVoucherCode() === $cartCode) {
@@ -73,46 +64,41 @@ class VoucherCartCodeProcessor implements VoucherCartCodeProcessorInterface
             }
         );
 
-        $quoteTransfer->setUsedNotAppliedVoucherCodes($usedNotAppliedVoucherCodeResultList);
-
-        return $cartCodeResponseTransfer->setQuote($quoteTransfer);
+        return $quoteTransfer->setUsedNotAppliedVoucherCodes($usedNotAppliedVoucherCodeResultList);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function clearCartCodes(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
+    public function clearCartCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        $quoteTransfer = $cartCodeRequestTransfer->getQuote();
         $quoteTransfer->setVoucherDiscounts(new ArrayObject());
         $quoteTransfer->setUsedNotAppliedVoucherCodes([]);
 
-        return (new CartCodeResponseTransfer())->setQuote($quoteTransfer);
+        return $quoteTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $cartCode
      *
-     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    public function getOperationResponseMessage(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
+    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, string $cartCode): ?MessageTransfer
     {
-        $cartCodeResponseTransfer = new CartCodeResponseTransfer();
-        $quoteTransfer = $cartCodeRequestTransfer->getQuote();
-        $cartCode = $cartCodeRequestTransfer->getCartCode();
         $voucherApplySuccessMessageTransfer = $this->getVoucherApplySuccessMessage($quoteTransfer, $cartCode);
         if ($voucherApplySuccessMessageTransfer) {
-            return $cartCodeResponseTransfer->addMessage($voucherApplySuccessMessageTransfer);
+            return $voucherApplySuccessMessageTransfer;
         }
 
         $nonApplicableErrorMessageTransfer = $this->getNonApplicableErrorMessage($quoteTransfer, $cartCode);
         if ($nonApplicableErrorMessageTransfer) {
-            return $cartCodeResponseTransfer->addMessage($nonApplicableErrorMessageTransfer);
+            return $nonApplicableErrorMessageTransfer;
         }
 
-        return $cartCodeResponseTransfer;
+        return null;
     }
 
     /**

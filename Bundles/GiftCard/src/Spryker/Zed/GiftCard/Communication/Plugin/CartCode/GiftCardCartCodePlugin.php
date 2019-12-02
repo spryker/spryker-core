@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\GiftCard\Communication\Plugin\CartCode;
 
-use Generated\Shared\Transfer\CartCodeRequestTransfer;
-use Generated\Shared\Transfer\CartCodeResponseTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -26,13 +26,14 @@ class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $cartCode
      *
-     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
+    public function addCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer
     {
-        return $this->getFacade()->addCartCode($cartCodeRequestTransfer);
+        return $this->getFacade()->addCartCode($quoteTransfer, $cartCode);
     }
 
     /**
@@ -41,13 +42,14 @@ class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $cartCode
      *
-     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
+    public function removeCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer
     {
-        return $this->getFacade()->removeCartCode($cartCodeRequestTransfer);
+        return $this->getFacade()->removeCartCode($quoteTransfer, $cartCode);
     }
 
     /**
@@ -56,13 +58,13 @@ class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function clearCartCodes(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
+    public function clearCartCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        return $this->getFacade()->removeCartCode($cartCodeRequestTransfer);
+        return $this->getFacade()->clearCartCodes($quoteTransfer);
     }
 
     /**
@@ -73,12 +75,13 @@ class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $cartCode
      *
-     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    public function getOperationResponseMessage(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
+    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, string $cartCode): ?MessageTransfer
     {
-        return $this->getFacade()->getOperationResponseMessage($cartCodeRequestTransfer);
+        return $this->getFacade()->getOperationResponseMessage($quoteTransfer, $cartCode);
     }
 }

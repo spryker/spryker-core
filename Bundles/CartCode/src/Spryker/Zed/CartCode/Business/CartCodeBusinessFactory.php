@@ -15,6 +15,8 @@ use Spryker\Zed\CartCode\Business\Operation\CartCodeRemover;
 use Spryker\Zed\CartCode\Business\Operation\CartCodeRemoverInterface;
 use Spryker\Zed\CartCode\Business\Operation\QuoteOperationChecker;
 use Spryker\Zed\CartCode\Business\Operation\QuoteOperationCheckerInterface;
+use Spryker\Zed\CartCode\Business\Operation\RecalculationResultProcessor;
+use Spryker\Zed\CartCode\Business\Operation\RecalculationResultProcessorInterface;
 use Spryker\Zed\CartCode\CartCodeDependencyProvider;
 use Spryker\Zed\CartCode\Dependency\Facade\CartCodeToCalculationFacadeInterface;
 use Spryker\Zed\CartCode\Dependency\Facade\CartCodeToQuoteFacadeInterface;
@@ -33,6 +35,7 @@ class CartCodeBusinessFactory extends AbstractBusinessFactory
         return new CartCodeAdder(
             $this->getCalculationFacade(),
             $this->createQuoteOperationChecker(),
+            $this->createRecalculationResultProcessor(),
             $this->getCartCodePlugins()
         );
     }
@@ -45,6 +48,7 @@ class CartCodeBusinessFactory extends AbstractBusinessFactory
         return new CartCodeRemover(
             $this->getCalculationFacade(),
             $this->createQuoteOperationChecker(),
+            $this->createRecalculationResultProcessor(),
             $this->getCartCodePlugins()
         );
     }
@@ -67,6 +71,14 @@ class CartCodeBusinessFactory extends AbstractBusinessFactory
     public function createQuoteOperationChecker(): QuoteOperationCheckerInterface
     {
         return new QuoteOperationChecker($this->getQuoteFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\CartCode\Business\Operation\RecalculationResultProcessorInterface
+     */
+    public function createRecalculationResultProcessor(): RecalculationResultProcessorInterface
+    {
+        return new RecalculationResultProcessor($this->getCartCodePlugins());
     }
 
     /**
