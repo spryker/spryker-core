@@ -17,7 +17,6 @@ class CmsBlockGlossaryKeyGenerator implements CmsBlockGlossaryKeyGeneratorInterf
     public const UNIQUE_ID = 'uniqueId';
 
     protected const KEY_GENERATOR_ITERATION_LIMIT = 10;
-    protected const ERROR_CMS_BLOCK_GLOSSARY_KEY_NOT_CREATED = 'Cannot create cms block glossary key: maximum iterations threshold met.';
 
     /**
      * @var \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryInterface
@@ -46,12 +45,11 @@ class CmsBlockGlossaryKeyGenerator implements CmsBlockGlossaryKeyGeneratorInterf
         $index = 1;
 
         do {
-            if ($index >= static::KEY_GENERATOR_ITERATION_LIMIT) {
-                throw new CmsBlockGlossaryKeyNotCreatedException(static::ERROR_CMS_BLOCK_GLOSSARY_KEY_NOT_CREATED);
+            if ($index > static::KEY_GENERATOR_ITERATION_LIMIT) {
+                throw new CmsBlockGlossaryKeyNotCreatedException('Cannot create cms block glossary key: maximum iterations threshold met.');
             }
 
-            $candidate = $this->suggestCandidate($idCmsBlock, $templateName, $placeholder, $index);
-            $index++;
+            $candidate = $this->suggestCandidate($idCmsBlock, $templateName, $placeholder, $index++);
         } while ($this->glossaryFacade->hasKey($candidate));
 
         return $candidate;
