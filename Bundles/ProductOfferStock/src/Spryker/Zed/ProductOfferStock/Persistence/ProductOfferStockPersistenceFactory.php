@@ -29,7 +29,7 @@ class ProductOfferStockPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery
      */
-    public function createProductOfferStockPropelQuery(): SpyProductOfferStockQuery
+    public function getProductOfferStockPropelQuery(): SpyProductOfferStockQuery
     {
         return SpyProductOfferStockQuery::create();
     }

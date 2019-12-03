@@ -197,7 +197,7 @@ class Operation implements OperationInterface
 
             return $this->addQuoteErrorsToQuoteResponse($quoteResponseTransfer);
         }
-
+        $cartChangeTransfer->setItems($this->setDefaultItemIdentifiers($cartChangeTransfer->getItems()));
         $cartChangeTransfer = $this->normalizeCartChangeTransfer($cartChangeTransfer);
         $this->addInfoMessages(
             $this->getNotificationMessages($cartChangeTransfer)
@@ -286,6 +286,7 @@ class Operation implements OperationInterface
             return $quoteTransfer;
         }
 
+        $quoteTransfer->setItems($this->setDefaultItemIdentifiers($quoteTransfer->getItems()));
         $originalQuoteTransfer = (new QuoteTransfer())->fromArray($quoteTransfer->modifiedToArray(), true);
 
         $quoteTransfer = $this->executePreReloadPlugins($quoteTransfer);
@@ -313,6 +314,20 @@ class Operation implements OperationInterface
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function setDefaultItemIdentifiers(ArrayObject $itemTransfers): ArrayObject
+    {
+        foreach ($itemTransfers as $itemTransfer) {
+            $itemTransfer->setItemIdentifier($itemTransfer->getSku());
+        }
+
+        return $itemTransfers;
     }
 
     /**

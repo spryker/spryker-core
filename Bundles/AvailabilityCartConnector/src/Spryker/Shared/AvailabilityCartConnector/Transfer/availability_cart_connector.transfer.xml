@@ -21,6 +21,7 @@
         <property name="sku" type="string"/>
         <property name="quantity" type="int"/>
         <property name="amount" type="decimal"/>
+        <property name="itemIdentifier" type="string"/>
     </transfer>
 
     <transfer name="CartPreCheckResponse">
@@ -37,6 +38,9 @@
         <property name="sku" type="string"/>
         <property name="availability" type="decimal"/>
         <property name="isNeverOutOfStock" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductAvailabilityCriteria">
     </transfer>
 
 </transfers>

@@ -53,7 +53,9 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
             $productOfferStorageEntity = SpyProductOfferStorageQuery::create()
                 ->filterByProductOfferReference($productOfferTransfer->getProductOfferReference())
                 ->findOneOrCreate();
-            $productOfferStorageEntity->setData($this->createProductOfferStorageTransfer($productOfferTransfer)->modifiedToArray());
+            $productOfferStorageTransfer = $this->createProductOfferStorageTransfer($productOfferTransfer);
+            
+            $productOfferStorageEntity->setData($productOfferStorageTransfer->modifiedToArray());
 
             if ($this->productOfferAvailabilityChecker->isProductOfferAvailable($productOfferTransfer)) {
                 $productOfferStorageEntity->save();

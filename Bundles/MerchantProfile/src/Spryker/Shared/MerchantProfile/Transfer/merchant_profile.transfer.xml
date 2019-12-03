@@ -32,6 +32,7 @@
         <property name="latitude" type="string"/>
         <property name="longitude" type="string"/>
         <property name="faxNumber" type="string"/>
+        <property name="merchantReference" type="string"/>
         <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" singular="merchantProfileLocalizedGlossaryAttribute"/>
         <property name="addressCollection" type="MerchantProfileAddressCollection" singular="address"/>
     </transfer>
@@ -72,6 +73,7 @@
         <property name="idUrl" type="int"/>
         <property name="fkResourceMerchantProfile" type="int"/>
         <property name="urlPrefix" type="string"/>
+        <property name="localeName" type="string"/>
     </transfer>
 
     <transfer name="MerchantProfileAddressCollection">

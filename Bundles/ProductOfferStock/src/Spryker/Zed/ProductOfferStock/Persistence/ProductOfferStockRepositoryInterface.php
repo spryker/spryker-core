@@ -9,9 +9,18 @@ namespace Spryker\Zed\ProductOfferStock\Persistence;
 
 use Generated\Shared\Transfer\ProductOfferStockCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
+use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
+use Spryker\DecimalObject\Decimal;
 
 interface ProductOfferStockRepositoryInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function getProductOfferStockForRequest(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): Decimal;
+
     /**
      * @param \Generated\Shared\Transfer\ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaFilterTransfer
      *

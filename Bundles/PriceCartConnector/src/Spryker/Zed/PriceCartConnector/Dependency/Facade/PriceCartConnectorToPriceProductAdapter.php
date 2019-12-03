@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceCartConnector\Dependency\Facade;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 
@@ -110,5 +111,16 @@ class PriceCartConnectorToPriceProductAdapter implements PriceCartToPriceProduct
         }
 
         return $priceProductTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    public function isProductPrice(PriceProductTransfer $priceProductTransfer, ItemTransfer $itemTransfer): bool
+    {
+        return $this->priceProductFacade->isProductPrice($priceProductTransfer, $itemTransfer);
     }
 }

@@ -19,6 +19,7 @@
         <property name="quantity" type="int"/>
         <property name="sumNetPrice" type="int"/>
         <property name="unitNetPrice" type="int"/>
+        <property name="itemIdentifier" type="string"/>
     </transfer>
 
     <transfer name="Quote">
@@ -40,6 +41,7 @@
         <property name="sku" type="string"/>
         <property name="quote" type="Quote"/>
         <property name="quantity" type="int"/>
+        <property name="itemIdentifier" type="string"/>
     </transfer>
 
     <transfer name="CartChange">
@@ -61,6 +63,7 @@
     <transfer name="PriceProduct">
         <property name="skuProduct" type="string"/>
         <property name="moneyValue" type="MoneyValue"/>
+        <property name="itemIdentifier" type="string"/>
     </transfer>
 
     <transfer name="Currency">

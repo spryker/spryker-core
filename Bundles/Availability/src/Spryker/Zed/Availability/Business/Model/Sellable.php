@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Availability\Business\Model;
 
+use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
@@ -31,29 +32,50 @@ class Sellable implements SellableInterface
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityProviderStrategyPluginInterface[]
+     */
+    protected $availabilityProviderStrategyPlugins;
+
+    /**
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface $availabilityRepository
      * @param \Spryker\Zed\Availability\Business\Model\AvailabilityHandlerInterface $availabilityHandler
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityProviderStrategyPluginInterface[] $availabilityProviderStrategyPlugins
      */
     public function __construct(
         AvailabilityRepositoryInterface $availabilityRepository,
         AvailabilityHandlerInterface $availabilityHandler,
-        AvailabilityToStoreFacadeInterface $storeFacade
+        AvailabilityToStoreFacadeInterface $storeFacade,
+        array $availabilityProviderStrategyPlugins
     ) {
         $this->availabilityRepository = $availabilityRepository;
         $this->availabilityHandler = $availabilityHandler;
         $this->storeFacade = $storeFacade;
+        $this->availabilityProviderStrategyPlugins = $availabilityProviderStrategyPlugins;
     }
 
     /**
      * @param string $concreteSku
      * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer|null $productAvailabilityCriteriaTransfer
      *
      * @return bool
      */
-    public function isProductSellableForStore(string $concreteSku, Decimal $quantity, StoreTransfer $storeTransfer): bool
-    {
+    public function isProductSellableForStore(
+        string $concreteSku,
+        Decimal $quantity,
+        StoreTransfer $storeTransfer,
+        ?ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer = null
+    ): bool {
+        foreach ($this->availabilityProviderStrategyPlugins as $availabilityProviderStrategyPlugin) {
+            if (!$availabilityProviderStrategyPlugin->isApplicable($concreteSku, $quantity, $storeTransfer, $productAvailabilityCriteriaTransfer)) {
+                continue;
+            }
+
+            return $availabilityProviderStrategyPlugin->isProductSellableForStore($concreteSku, $quantity, $storeTransfer, $productAvailabilityCriteriaTransfer);
+        }
+
         $storeTransfer = $this->assertStoreTransfer($storeTransfer);
         $productConcreteAvailabilityTransfer = $this->availabilityRepository
             ->findProductConcreteAvailabilityBySkuAndStore($concreteSku, $storeTransfer);

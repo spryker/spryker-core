@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductOfferStock\Business;
 
 use Generated\Shared\Transfer\ProductOfferStockCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
+use Spryker\DecimalObject\Decimal;
 
 interface ProductOfferStockFacadeInterface
 {
@@ -24,4 +26,16 @@ interface ProductOfferStockFacadeInterface
     public function isProductOfferNeverOutOfStock(
         ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaTransfer
     ): bool;
+
+    /**
+     * Specification:
+     * - Returns product offer stock for provided request criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function calculateProductOfferStockForRequest(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): Decimal;
 }

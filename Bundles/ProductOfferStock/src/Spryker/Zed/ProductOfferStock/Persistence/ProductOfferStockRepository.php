@@ -10,6 +10,9 @@ namespace Spryker\Zed\ProductOfferStock\Persistence;
 use Generated\Shared\Transfer\ProductOfferStockCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery;
+use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
+use Orm\Zed\ProductOfferStock\Persistence\Map\SpyProductOfferStockTableMap;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -17,6 +20,37 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ProductOfferStockRepository extends AbstractRepository implements ProductOfferStockRepositoryInterface
 {
+    protected const COLUMN_ALIAS_QUANTITY = 'quantity';
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function getProductOfferStockForRequest(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): Decimal
+    {
+        $productOfferStockRequestTransfer->requireProductOfferReference()
+            ->requireStore()
+            ->getStore()
+            ->requireIdStore();
+
+        $quantity = $this->getFactory()
+            ->getProductOfferStockPropelQuery()
+            ->useSpyProductOfferQuery()
+            ->filterByProductOfferReference($productOfferStockRequestTransfer->getProductOfferReference())
+            ->endUse()
+            ->useStockQuery()
+            ->useStockStoreQuery()
+            ->filterByFkStore($productOfferStockRequestTransfer->getStore()->getIdStore())
+            ->endUse()
+            ->endUse()
+            ->withColumn('SUM(' . SpyProductOfferStockTableMap::COL_QUANTITY . ')', static::COLUMN_ALIAS_QUANTITY)
+            ->select([static::COLUMN_ALIAS_QUANTITY])
+            ->findOne();
+
+        return new Decimal($quantity ?: 0);
+    }
+
     /**
      * @param \Generated\Shared\Transfer\ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaFilterTransfer
      *
@@ -26,7 +60,7 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
         ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaFilterTransfer
     ): ?ProductOfferStockTransfer {
         $productOfferStockEntity = $this->applyFilters(
-            $this->getFactory()->createProductOfferStockPropelQuery(),
+            $this->getFactory()->getProductOfferStockPropelQuery(),
             $productOfferStockCriteriaFilterTransfer
         )->findOne();
 

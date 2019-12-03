@@ -62,23 +62,24 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
         $priceProductFilters = $this->createPriceProductFilters($quoteTransfer);
         $validPrices = $this->priceProductFacade->getValidPrices($priceProductFilters);
 
-        $productWithoutProductSkus = $this->getProductWithoutPriceSkus($validPrices, $quoteTransfer->getItems()->getArrayCopy());
+        $productWithoutProductIdentifiers = $this->getProductWithoutPriceIdentifiers($validPrices, $quoteTransfer->getItems()->getArrayCopy());
 
-        return $this->removeItemsWithoutPrice($quoteTransfer, $productWithoutProductSkus);
+        return $this->removeItemsWithoutPrice($quoteTransfer, $productWithoutProductIdentifiers);
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string[] $productWithoutPricesSkus
+     * @param string[] $productWithoutPricesIdentifiers
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function removeItemsWithoutPrice(QuoteTransfer $quoteTransfer, array $productWithoutPricesSkus): QuoteTransfer
+    protected function removeItemsWithoutPrice(QuoteTransfer $quoteTransfer, array $productWithoutPricesIdentifiers): QuoteTransfer
     {
-        foreach ($productWithoutPricesSkus as $sku) {
-            $key = $this->findItemKeyBySku($quoteTransfer->getItems(), $sku);
+        foreach ($productWithoutPricesIdentifiers as $identifier) {
+            $key = $this->findItemKeyByIdentifier($quoteTransfer->getItems(), $identifier);
+
             if ($key !== null) {
-                $this->addFilterMessage($sku);
+                $this->addFilterMessage($identifier);
                 $quoteTransfer->getItems()->offsetUnset($key);
             }
         }
@@ -88,14 +89,14 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
 
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     * @param string $sku
+     * @param string $identifier
      *
      * @return int|null
      */
-    protected function findItemKeyBySku(ArrayObject $itemTransfers, string $sku): ?int
+    protected function findItemKeyByIdentifier(ArrayObject $itemTransfers, string $identifier): ?int
     {
         foreach ($itemTransfers as $key => $itemTransfer) {
-            if ($itemTransfer->getSku() === $sku) {
+            if ($itemTransfer->getItemIdentifier() === $identifier) {
                 return (int)$key;
             }
         }
@@ -224,16 +225,17 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
      *
      * @return string[]
      */
-    protected function getProductWithoutPriceSkus(array $priceProductTransfers, array $items): array
+    protected function getProductWithoutPriceIdentifiers(array $priceProductTransfers, array $items): array
     {
-        $itemSkus = array_map(function (ItemTransfer $item) {
-            return $item->getSku();
+        return [];
+        $itemPriceIdentifiers = array_map(function (ItemTransfer $item) {
+            return $item->getItemIdentifier();
         }, $items);
 
-        $validProductSkus = array_map(function (PriceProductTransfer $priceProductTransfer) {
-            return $priceProductTransfer->getSkuProduct();
+        $validProductPriceIdentifiers = array_map(function (PriceProductTransfer $priceProductTransfer) {
+            return $priceProductTransfer->getItemIdentifier();
         }, $priceProductTransfers);
 
-        return array_diff($itemSkus, $validProductSkus);
+        return array_diff($itemPriceIdentifiers, $validProductPriceIdentifiers);
     }
 }

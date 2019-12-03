@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductOfferStock\Business;
 
+use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
+use Spryker\DecimalObject\Decimal;
 use Generated\Shared\Transfer\ProductOfferStockCriteriaFilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -31,5 +33,18 @@ class ProductOfferStockFacade extends AbstractFacade implements ProductOfferStoc
         return $this->getFactory()
             ->createProductOfferStockReader()
             ->isProductOfferNeverOutOfStock($productOfferStockCriteriaFilterTransfer);
+    }
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function calculateProductOfferStockForRequest(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): Decimal
+    {
+        return $this->getRepository()
+            ->getProductOfferStockForRequest($productOfferStockRequestTransfer);
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProduct\Business;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
@@ -595,5 +596,22 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     {
         return $this->getRepository()
             ->isPriceProductByProductIdentifierAndPriceTypeExists($priceProductTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    public function isProductPrice(PriceProductTransfer $priceProductTransfer, ItemTransfer $itemTransfer): bool
+    {
+        return $this->getFactory()
+            ->createPriceProductMatcher()
+            ->isProductPrice($priceProductTransfer, $itemTransfer);
     }
 }
