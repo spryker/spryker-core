@@ -11,6 +11,14 @@ interface ProductOfferAvailabilityEvents
 {
     /**
      * Specification:
+     * - Represents product offer publish.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_PRODUCT_OFFER_PUBLISH = 'ProductOffer.spy_product_offer.publish';
+
+    /**
+     * Specification:
      * - Represents spy_product_offer entity creation.
      *
      * @api

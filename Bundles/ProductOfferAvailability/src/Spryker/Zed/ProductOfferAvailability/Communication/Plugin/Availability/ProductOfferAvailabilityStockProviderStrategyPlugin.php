@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ProductOfferAvailabilityStockProviderStrategyPlugin extends AbstractPlugin implements AvailabilityStockProviderStrategyPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Checks if product offer availability requested, and strategy should be applied.
      *
      * @api
@@ -58,6 +58,11 @@ class ProductOfferAvailabilityStockProviderStrategyPlugin extends AbstractPlugin
         StoreTransfer $storeTransfer,
         ?ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer = null
     ): ?ProductConcreteAvailabilityTransfer {
+        $productAvailabilityCriteriaTransfer
+            ->requireProductOffer()
+            ->getProductOffer()
+                ->requireProductOfferReference();
+
         $productOfferAvailabilityRequestTransfer = (new ProductOfferAvailabilityRequestTransfer())
             ->setStore($storeTransfer)
             ->setProductOfferReference($productAvailabilityCriteriaTransfer->getProductOffer()->getProductOfferReference());

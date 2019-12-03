@@ -227,7 +227,6 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
      */
     protected function getProductWithoutPriceIdentifiers(array $priceProductTransfers, array $items): array
     {
-        return [];
         $itemPriceIdentifiers = array_map(function (ItemTransfer $item) {
             return $item->getItemIdentifier();
         }, $items);

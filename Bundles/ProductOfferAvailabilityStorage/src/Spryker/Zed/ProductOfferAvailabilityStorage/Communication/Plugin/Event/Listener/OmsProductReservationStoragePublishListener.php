@@ -18,9 +18,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class OmsProductReservationStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Writes product offer availability data to storage by provided oms product reservation events.
-
      *
      * @api
      *

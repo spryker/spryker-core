@@ -10,6 +10,7 @@
         <column name="productOfferReference" type="VARCHAR" required="true"/>
         <column name="data" type="LONGVARCHAR" required="false"/>
         <column name="key" type="VARCHAR" required="true"/>
+        <column name="store" type="VARCHAR" size="255" required="true"/>
 
         <id-method-parameter value="id_product_offer_availability_storage_pk_seq"/>
 

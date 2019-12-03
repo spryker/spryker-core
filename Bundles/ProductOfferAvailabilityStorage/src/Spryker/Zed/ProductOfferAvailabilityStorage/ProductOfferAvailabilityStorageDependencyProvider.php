@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductOfferAvailabilityStorage\Dependency\Facade\ProductOfferAvailabilityStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\ProductOfferAvailabilityStorage\Dependency\Facade\ProductOfferAvailabilityStorageToProductOfferAvailabilityFacadeBridge;
+use Spryker\Zed\ProductOfferAvailabilityStorage\Dependency\Facade\ProductOfferAvailabilityStorageToProductOfferFacadeBridge;
 use Spryker\Zed\ProductOfferAvailabilityStorage\Dependency\Service\ProductOfferAvailabilityStorageToSynchronizationServiceBridge;
 
 /**
@@ -19,6 +20,7 @@ use Spryker\Zed\ProductOfferAvailabilityStorage\Dependency\Service\ProductOfferA
  */
 class ProductOfferAvailabilityStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_PRODUCT_OFFER_AVAILABILITY_FACADE = 'FACADE_PRODUCT_OFFER_AVAILABILITY';
 
@@ -57,6 +59,15 @@ class ProductOfferAvailabilityStorageDependencyProvider extends AbstractBundleDe
         return $container;
     }
 
+    public function provideCommunicationLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideCommunicationLayerDependencies($container);
+
+        $container = $this->addProductOfferFacade($container);
+
+        return $container;
+    }
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -81,6 +92,22 @@ class ProductOfferAvailabilityStorageDependencyProvider extends AbstractBundleDe
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductOfferAvailabilityStorageToEventBehaviorFacadeBridge(
                 $container->getLocator()->eventBehavior()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductOfferFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_OFFER, function (Container $container) {
+            return new ProductOfferAvailabilityStorageToProductOfferFacadeBridge(
+                $container->getLocator()->productOffer()->facade()
             );
         });
 

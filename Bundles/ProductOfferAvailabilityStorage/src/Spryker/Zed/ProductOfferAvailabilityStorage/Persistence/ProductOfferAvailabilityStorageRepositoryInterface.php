@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferAvailabilityStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\ProductOfferAvailabilityStorage\Persistence\SpyProductOfferAvailabilityStorage;
 
 interface ProductOfferAvailabilityStorageRepositoryInterface
@@ -39,4 +40,12 @@ interface ProductOfferAvailabilityStorageRepositoryInterface
      * @return \Orm\Zed\ProductOfferAvailabilityStorage\Persistence\SpyProductOfferAvailabilityStorage|null
      */
     public function findProductOfferAvailabilityStorageByProductOfferReferenceAndStoreName(string $offerReference, string $storeName): ?SpyProductOfferAvailabilityStorage;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\SpyProductOfferAvailabilityStorageEntityTransfer[]
+     */
+    public function getFilteredProductOfferAvailabilityStorageEntityTransfers(FilterTransfer $filterTransfer, array $ids): array;
 }

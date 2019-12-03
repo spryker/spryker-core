@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferAvailabilityStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsProductReservationTableMap;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
@@ -37,8 +38,7 @@ class ProductOfferAvailabilityStorageRepository extends AbstractRepository imple
                     ->joinStore()
                 ->endUse()
             ->endUse()
-            ->endUse()
-            ->filterByProductOfferStock($productOfferStockIds, Criteria::IN);
+            ->filterByIdProductOfferStock_In($productOfferStockIds);
 
         $productOfferAvailabilityRequestsData = $this->addProductOfferAvailabilityRequestSelectColumns($productOfferStockPropelQuery)
             ->find()
@@ -62,7 +62,7 @@ class ProductOfferAvailabilityStorageRepository extends AbstractRepository imple
                     ->joinStore()
                 ->endUse()
             ->endUse()
-            ->filterByFkProductOffer($productOfferIds, Criteria::IN);
+            ->filterByFkProductOffer_In($productOfferIds);
 
         $productOfferAvailabilityRequestsData = $this->addProductOfferAvailabilityRequestSelectColumns($productOfferStockPropelQuery)
             ->find()
@@ -80,8 +80,9 @@ class ProductOfferAvailabilityStorageRepository extends AbstractRepository imple
     {
         $productOfferStockPropelQuery = $this->getFactory()
             ->getProductOfferStockPropelQuery()
-            ->joinSpyProductOffer()
-            ->addJoin(SpyProductOfferTableMap::COL_CONCRETE_SKU, SpyOmsProductReservationTableMap::COL_SKU, Criteria::INNER_JOIN)
+            ->joinSpyProductOffer();
+
+        $productOfferStockPropelQuery->addJoin(SpyProductOfferTableMap::COL_CONCRETE_SKU, SpyOmsProductReservationTableMap::COL_SKU, Criteria::INNER_JOIN)
             ->addJoin(SpyOmsProductReservationTableMap::COL_FK_STORE, SpyStoreTableMap::COL_ID_STORE, Criteria::INNER_JOIN)
             ->addOr(SpyOmsProductReservationTableMap::COL_ID_OMS_PRODUCT_RESERVATION, $omsProductReservationIds, Criteria::IN);
 
@@ -101,10 +102,29 @@ class ProductOfferAvailabilityStorageRepository extends AbstractRepository imple
     public function findProductOfferAvailabilityStorageByProductOfferReferenceAndStoreName(string $offerReference, string $storeName): ?SpyProductOfferAvailabilityStorage
     {
         return $this->getFactory()
-            ->getProductOfferAvailabilityPropelQuery()
+            ->getProductOfferAvailabilityStoragePropelQuery()
             ->filterByProductOfferReference($offerReference)
             ->filterByStore($storeName)
             ->findOne();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $ids
+     *
+     * @return \Generated\Shared\Transfer\SpyProductOfferAvailabilityStorageEntityTransfer[]
+     */
+    public function getFilteredProductOfferAvailabilityStorageEntityTransfers(FilterTransfer $filterTransfer, array $ids): array
+    {
+        $productOfferAvailabilityStoragePropelQuery = $this->getFactory()
+            ->getProductOfferAvailabilityStoragePropelQuery();
+
+        if ($ids) {
+            $productOfferAvailabilityStoragePropelQuery->filterByIdProductOfferAvailabilityStorage_In($ids);
+        }
+
+        return $this->buildQueryFromCriteria($productOfferAvailabilityStoragePropelQuery, $filterTransfer)
+            ->find();
     }
 
     /**
@@ -129,13 +149,13 @@ class ProductOfferAvailabilityStorageRepository extends AbstractRepository imple
     }
 
     /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $productOfferAvailabilityStorageQuery
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function addProductOfferAvailabilityRequestSelectColumns(ModelCriteria $productOfferAvailabilityStorageQuery): ModelCriteria
+    protected function addProductOfferAvailabilityRequestSelectColumns(ModelCriteria $query): ModelCriteria
     {
-        return $productOfferAvailabilityStorageQuery
+        return $query
             ->withColumn(SpyStoreTableMap::COL_ID_STORE, ProductOfferAvailabilityStorageMapper::COL_ALIAS_ID_STORE)
             ->withColumn(SpyStoreTableMap::COL_NAME, ProductOfferAvailabilityStorageMapper::COL_ALIAS_STORE_NAME)
             ->withColumn(SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE, ProductOfferAvailabilityStorageMapper::COL_ALIAS_PRODUCT_OFFER_REFERENCE)
