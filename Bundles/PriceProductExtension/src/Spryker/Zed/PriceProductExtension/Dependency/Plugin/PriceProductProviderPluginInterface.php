@@ -13,7 +13,7 @@ interface PriceProductProviderPluginInterface
 {
     /**
      * Specification:
-     * - Endpoint
+     * - Returns list of product price transfers by criteria.
      *
      * @api
      *

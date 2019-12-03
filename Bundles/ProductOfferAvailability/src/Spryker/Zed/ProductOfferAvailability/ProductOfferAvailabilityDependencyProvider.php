@@ -24,6 +24,8 @@ class ProductOfferAvailabilityDependencyProvider extends AbstractBundleDependenc
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
+        $container = parent::provideBusinessLayerDependencies($container);
+
         $container = $this->addOmsFacade($container);
         $container = $this->addProductOfferStockFacade($container);
 

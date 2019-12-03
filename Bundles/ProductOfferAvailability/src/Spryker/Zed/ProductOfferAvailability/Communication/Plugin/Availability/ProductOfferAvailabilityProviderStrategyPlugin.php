@@ -21,6 +21,7 @@ class ProductOfferAvailabilityProviderStrategyPlugin extends AbstractPlugin impl
 {
     /**
      * {@inheritDoc}
+     * - Returns true if criteria transfer contains product offer reference.
      *
      * @api
      *
@@ -44,6 +45,7 @@ class ProductOfferAvailabilityProviderStrategyPlugin extends AbstractPlugin impl
 
     /**
      * {@inheritDoc}
+     * - Returns true if product offer is available in requested quantity.
      *
      * @api
      *

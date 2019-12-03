@@ -1,9 +1,8 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: smarovydlo
- * Date: 12/2/19
- * Time: 3:04 PM
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\AvailabilityStorage\src\Spryker\Client\AvailabilityStorage\Expander;
@@ -52,6 +51,7 @@ class ProductViewAvailabilityExpander implements ProductViewAvailabilityExpander
         }
 
         $concreteProductAvailableItems = $storageAvailabilityTransfer->getConcreteProductAvailableItems();
+
         if (isset($concreteProductAvailableItems[$productViewTransfer->getSku()])) {
             $productViewTransfer->setAvailable($concreteProductAvailableItems[$productViewTransfer->getSku()]);
         }

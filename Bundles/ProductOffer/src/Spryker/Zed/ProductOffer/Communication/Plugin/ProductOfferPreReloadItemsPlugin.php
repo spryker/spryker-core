@@ -15,6 +15,7 @@ class ProductOfferPreReloadItemsPlugin implements PreReloadItemsPluginInterface
 {
     /**
      * {@inheritDoc}
+     * - Updates item identifier for product offer items.
      *
      * @api
      *

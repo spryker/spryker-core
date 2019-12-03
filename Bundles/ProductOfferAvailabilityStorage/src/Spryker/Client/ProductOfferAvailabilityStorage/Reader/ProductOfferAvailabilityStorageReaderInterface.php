@@ -12,10 +12,6 @@ use Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer;
 interface ProductOfferAvailabilityStorageReaderInterface
 {
     /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param string $productOfferReference
      * @param string $storeName
      *

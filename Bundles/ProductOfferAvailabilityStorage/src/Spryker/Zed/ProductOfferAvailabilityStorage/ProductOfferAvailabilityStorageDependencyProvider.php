@@ -58,8 +58,6 @@ class ProductOfferAvailabilityStorageDependencyProvider extends AbstractBundleDe
     }
 
     /**
-     * @module ProductOfferStock
-     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container

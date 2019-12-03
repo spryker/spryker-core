@@ -26,6 +26,7 @@ interface ProductOfferAvailabilityFacadeInterface
 
     /**
      * Specification:
+     * - Finds availability for product offer.
      *
      * @api
      *

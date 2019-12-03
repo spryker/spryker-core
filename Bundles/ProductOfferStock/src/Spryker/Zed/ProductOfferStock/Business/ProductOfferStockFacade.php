@@ -18,6 +18,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductOfferStockFacade extends AbstractFacade implements ProductOfferStockFacadeInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer

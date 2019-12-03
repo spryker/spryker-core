@@ -1,9 +1,8 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: smarovydlo
- * Date: 12/2/19
- * Time: 3:03 PM
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\AvailabilityStorage\src\Spryker\Client\AvailabilityStorage\Expander;

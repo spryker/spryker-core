@@ -28,7 +28,7 @@ class ProductOfferStoragePublishListener extends AbstractPlugin implements Event
      *
      * @return void
      */
-    public function handleBulk(array $eventTransfers, $eventName)
+    public function handleBulk(array $eventTransfers, $eventName): void
     {
         $this->getFacade()
             ->writeProductOfferAvailabilityStorageCollectionByProductOfferKeyEvents($eventTransfers);
