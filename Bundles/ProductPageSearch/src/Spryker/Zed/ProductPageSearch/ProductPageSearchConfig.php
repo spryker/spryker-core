@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductPageSearchConfig extends AbstractBundleConfig
 {
+    public const PRODUCT_ABSTRACT_RESOURCE_NAME = 'product_abstract';
+
     /**
      * @return bool
      */

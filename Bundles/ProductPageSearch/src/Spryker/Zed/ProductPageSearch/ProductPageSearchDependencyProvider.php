@@ -27,6 +27,7 @@ use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToPriceFaca
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToPriceProductBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchBridge;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\QueryContainer\ProductPageSearchToCategoryQueryContainerBridge;
@@ -161,6 +162,10 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
 
         $container[static::FACADE_PRODUCT] = function (Container $container) {
             return new ProductPageSearchToProductBridge($container->getLocator()->product()->facade());
+        };
+
+        $container[static::FACADE_SEARCH] = function (Container $container) {
+            return new ProductPageSearchToSearchBridge($container->getLocator()->search()->facade());
         };
 
         $container[static::PLUGIN_PRODUCT_PAGE_DATA_EXPANDER] = function () {

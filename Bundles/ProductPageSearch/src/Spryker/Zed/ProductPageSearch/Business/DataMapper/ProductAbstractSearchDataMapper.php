@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductPageSearch\Business\DataMapper;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchInterface;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface;
+use Spryker\Zed\ProductPageSearch\ProductPageSearchConfig;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 
 class ProductAbstractSearchDataMapper extends AbstractProductSearchDataMapper
@@ -25,6 +27,11 @@ class ProductAbstractSearchDataMapper extends AbstractProductSearchDataMapper
     protected $pageMapBuilder;
 
     /**
+     * @var \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface
+     */
+    protected $searchFacade;
+
+    /**
      * @var \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchInterface
      */
     protected $productSearchFacade;
@@ -36,17 +43,20 @@ class ProductAbstractSearchDataMapper extends AbstractProductSearchDataMapper
 
     /**
      * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
+     * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface $searchFacade
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchInterface $productSearchFacade
      * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractPageMapExpanderPluginInterface[] $productAbstractPageMapExpanderPlugins
      */
     public function __construct(
         PageMapBuilderInterface $pageMapBuilder,
+        ProductPageSearchToSearchInterface $searchFacade,
         ProductPageSearchToProductSearchInterface $productSearchFacade,
         array $productAbstractPageMapExpanderPlugins
     ) {
         parent::__construct();
 
         $this->pageMapBuilder = $pageMapBuilder;
+        $this->searchFacade = $searchFacade;
         $this->productSearchFacade = $productSearchFacade;
         $this->productAbstractPageMapExpanderPlugins = $productAbstractPageMapExpanderPlugins;
     }
@@ -55,9 +65,28 @@ class ProductAbstractSearchDataMapper extends AbstractProductSearchDataMapper
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
+     * @return array
+     */
+    public function mapProductDataToSearchData(array $data, LocaleTransfer $localeTransfer): array
+    {
+        if (!count($this->productAbstractPageMapExpanderPlugins)) {
+            return $this->searchFacade->transformPageMapToDocumentByMapperName(
+                $data,
+                $localeTransfer,
+                ProductPageSearchConfig::PRODUCT_ABSTRACT_RESOURCE_NAME
+            );
+        }
+
+        return $this->buildProductPageSearchData($data, $localeTransfer);
+    }
+
+    /**
+     * @param array $data
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function buildPageMap(array $data, LocaleTransfer $localeTransfer): PageMapTransfer
+    protected function buildPageMap(array $data, LocaleTransfer $localeTransfer): PageMapTransfer
     {
         $pageMapTransfer = (new PageMapTransfer())
             ->setStore($data['store'])

@@ -46,6 +46,17 @@ class ProductConcreteSearchDataMapper extends AbstractProductSearchDataMapper
     }
 
     /**
+     * @param array $data
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    public function mapProductDataToSearchData(array $data, LocaleTransfer $localeTransfer): array
+    {
+        return $this->buildProductPageSearchData($data, $localeTransfer);
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @api
@@ -55,7 +66,7 @@ class ProductConcreteSearchDataMapper extends AbstractProductSearchDataMapper
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function buildPageMap(array $data, LocaleTransfer $locale): PageMapTransfer
+    protected function buildPageMap(array $data, LocaleTransfer $locale): PageMapTransfer
     {
         $pageMapTransfer = (new PageMapTransfer())
             ->setStore($data[ProductConcretePageSearchTransfer::STORE])

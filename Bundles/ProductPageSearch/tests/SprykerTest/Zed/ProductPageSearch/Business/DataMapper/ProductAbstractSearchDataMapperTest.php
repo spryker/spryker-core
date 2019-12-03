@@ -13,6 +13,9 @@ use Spryker\Zed\ProductPageSearch\Business\DataMapper\PageMapBuilder;
 use Spryker\Zed\ProductPageSearch\Business\DataMapper\ProductAbstractSearchDataMapper;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchInterface;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchBridge;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractPageMapExpanderPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -47,7 +50,8 @@ class ProductAbstractSearchDataMapperTest extends Unit
         $productAbstractSearchDataMapper = new ProductAbstractSearchDataMapper(
             new PageMapBuilder(),
             $this->getSearchFacade(),
-            []
+            $this->getProductSearchFacade(),
+            [$this->createProductAbstractPageMapExpanderPluginMock()]
         );
         $localeTransfer = new LocaleTransfer();
         $localeTransfer->setLocaleName($localeName);
@@ -68,10 +72,29 @@ class ProductAbstractSearchDataMapperTest extends Unit
     }
 
     /**
+     * @return \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface
+     */
+    public function getSearchFacade(): ProductPageSearchToSearchInterface
+    {
+        return new ProductPageSearchToSearchBridge($this->tester->getLocator()->search()->facade());
+    }
+
+    /**
      * @return \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchInterface
      */
-    protected function getSearchFacade(): ProductPageSearchToProductSearchInterface
+    protected function getProductSearchFacade(): ProductPageSearchToProductSearchInterface
     {
         return new ProductPageSearchToProductSearchBridge($this->tester->getLocator()->productSearch()->facade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractPageMapExpanderPluginInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createProductAbstractPageMapExpanderPluginMock()
+    {
+        $pluginMock = $this->createMock(ProductAbstractPageMapExpanderPluginInterface::class);
+        $pluginMock->method('expandProductPageMap')->willReturnArgument(1);
+
+        return $pluginMock;
     }
 }

@@ -37,7 +37,15 @@ abstract class AbstractProductSearchDataMapper
      *
      * @return array
      */
-    public function mapProductDataToSearchData(array $data, LocaleTransfer $localeTransfer): array
+    abstract public function mapProductDataToSearchData(array $data, LocaleTransfer $localeTransfer): array;
+
+    /**
+     * @param array $data
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array
+     */
+    protected function buildProductPageSearchData(array $data, LocaleTransfer $localeTransfer): array
     {
         $result = [];
         $pageMapTransfer = $this->buildPageMap($data, $localeTransfer);

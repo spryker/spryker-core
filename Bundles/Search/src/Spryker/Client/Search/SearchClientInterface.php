@@ -66,6 +66,8 @@ interface SearchClientInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
      */
     public function getSearchConfig();

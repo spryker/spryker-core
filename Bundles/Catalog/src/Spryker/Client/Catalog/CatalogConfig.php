@@ -13,6 +13,8 @@ use Spryker\Client\Kernel\AbstractBundleConfig;
 class CatalogConfig extends AbstractBundleConfig
 {
     /**
+     * @deprecated Use `\Spryker\Client\Catalog\CatalogConfig::ELASTICSEARCH_FULL_TEXT_BOOSTED_BOOSTING_VALUE` instead.
+     *
      * @uses \Spryker\Shared\ProductPageSearch\ProductPageSearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE
      */
     protected const FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'FULL_TEXT_BOOSTED_BOOSTING_VALUE';
@@ -26,6 +28,13 @@ class CatalogConfig extends AbstractBundleConfig
     protected const PAGINATION_CATALOG_SEARCH_DEFAULT_ITEMS_PER_PAGE = 10;
 
     /**
+     * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE
+     */
+    protected const ELASTICSEARCH_FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'SEARCH_ELASTICSEARCH:FULL_TEXT_BOOSTED_BOOSTING_VALUE';
+
+    /**
+     * @deprecated Use `\Spryker\Client\Catalog\CatalogConfig::getElasticsearchFullTextBoostedBoostingValue()` instead.
+     *
      * @return int
      */
     public function getFullTextBoostedBoostingValue(): int
@@ -68,5 +77,13 @@ class CatalogConfig extends AbstractBundleConfig
             ->setValidItemsPerPageOptions(static::PAGINATION_CATALOG_SEARCH_VALID_ITEMS_PER_PAGE);
 
         return $paginationConfigTransfer;
+    }
+
+    /**
+     * @return int
+     */
+    public function getElasticsearchFullTextBoostedBoostingValue(): int
+    {
+        return $this->get(static::ELASTICSEARCH_FULL_TEXT_BOOSTED_BOOSTING_VALUE, static::FULL_TEXT_BOOSTED_BOOSTING_VALUE);
     }
 }

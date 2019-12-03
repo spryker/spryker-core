@@ -13,36 +13,41 @@ namespace Spryker\Shared\SearchElasticsearch;
 interface SearchElasticsearchConstants
 {
     /**
-     * When executing boosted full text search queries the value of this config setting will be used as the boost factor.
-     * I.e. to set the boost factor to 3 add this to your config: `$config[SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE] = 3;`.
+     * Specification:
+     * - When executing boosted full text search queries the value of this config setting will be used as the boost factor.
+     * - I.e. to set the boost factor to 3 add this to your config: `$config[SearchElasticsearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE] = 3;`.
      *
      * @api
      */
     public const FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'SEARCH_ELASTICSEARCH:FULL_TEXT_BOOSTED_BOOSTING_VALUE';
 
     /**
-     * Elasticsearch connection host name. (Required)
+     * Specification:
+     * - Elasticsearch connection host name. (Required).
      *
      * @api
      */
     public const HOST = 'SEARCH_ELASTICSEARCH:HOST';
 
     /**
-     * Elasticsearch connection port number. (Required)
+     * Specification:
+     * - Elasticsearch connection port number. (Required).
      *
      * @api
      */
     public const PORT = 'SEARCH_ELASTICSEARCH:PORT';
 
     /**
-     * Elasticsearch connection transport name (i.e. "http"). (Required)
+     * Specification:
+     * - Elasticsearch connection transport name (i.e. "http"). (Required).
      *
      * @api
      */
     public const TRANSPORT = 'SEARCH_ELASTICSEARCH:TRANSPORT';
 
     /**
-     * Elasticsearch connection authentication header parameters. (Optional)
+     * Specification:
+     * - Elasticsearch connection authentication header parameters. (Optional).
      *
      * @api
      */

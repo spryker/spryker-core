@@ -152,6 +152,14 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface
+     */
+    protected function getSearchFacade()
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::FACADE_SEARCH);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface
      */
     public function getStoreFacade(): ProductPageSearchToStoreFacadeInterface
@@ -182,6 +190,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAbstractSearchDataMapper(
             $this->createPageMapBuilder(),
+            $this->getSearchFacade(),
             $this->getProductSearchFacade(),
             $this->getProductAbstractPageMapExpanderPlugins()
         );

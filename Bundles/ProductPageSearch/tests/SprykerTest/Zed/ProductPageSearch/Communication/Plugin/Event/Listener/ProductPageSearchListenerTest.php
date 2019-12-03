@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\ProductPageSearch\Communication\Plugin\Event\Listener;
 
+use Codeception\Stub;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
@@ -53,7 +54,9 @@ use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPag
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageProductImageSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageUrlSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\PageDataExpander\ProductCategoryPageDataExpanderPlugin;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchBridge;
 use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainer;
+use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 use Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use Spryker\Zed\Url\Dependency\UrlEvents;
@@ -144,6 +147,7 @@ class ProductPageSearchListenerTest extends Unit
 
         $this->priceProductTransfer = $this->tester->havePriceProduct($priceProductOverride);
         $this->tester->mockConfigMethod('isSendingToQueue', false);
+        $this->mockSearchFacade();
     }
 
     /**
@@ -716,5 +720,20 @@ class ProductPageSearchListenerTest extends Unit
         $property = $reflectedClass->getProperty('categoryTree');
         $property->setAccessible(true);
         $property->setValue(null);
+    }
+
+    /**
+     * @return void
+     */
+    protected function mockSearchFacade(): void
+    {
+        $this->tester->setDependency(ProductPageSearchDependencyProvider::FACADE_SEARCH, Stub::make(
+            ProductPageSearchToSearchBridge::class,
+            [
+                'transformPageMapToDocumentByMapperName' => function () {
+                    return [];
+                },
+            ]
+        ));
     }
 }

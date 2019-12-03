@@ -215,7 +215,7 @@ class ProductConcreteCatalogSearchQueryPlugin extends AbstractPlugin implements 
     {
         return $this->getFactory()
             ->getCatalogConfig()
-            ->getFullTextBoostedBoostingValue();
+            ->getElasticsearchFullTextBoostedBoostingValue();
     }
 
     /**

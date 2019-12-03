@@ -21,9 +21,10 @@ use Spryker\Client\Search\Dependency\Plugin\SearchStringGetterInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Search\SearchConstants;
 
+/**
+ * @method \Spryker\Client\CmsPageSearch\CmsPageSearchFactory getFactory()
+ */
 class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface, SearchContextAwareQueryInterface, SearchStringSetterInterface, SearchStringGetterInterface
 {
     protected const SOURCE_IDENTIFIER = 'page';
@@ -134,7 +135,7 @@ class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
     {
         $fields = [
             PageIndexMap::FULL_TEXT,
-            PageIndexMap::FULL_TEXT_BOOSTED . '^' . Config::get(SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE),
+            PageIndexMap::FULL_TEXT_BOOSTED . '^' . $this->getFullTextBoostedBoostingValue(),
         ];
 
         $matchQuery = (new MultiMatch())
@@ -220,5 +221,13 @@ class CmsPageSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
     protected function hasSearchContext(): bool
     {
         return (bool)$this->searchContextTransfer;
+    }
+
+    /**
+     * @return int
+     */
+    protected function getFullTextBoostedBoostingValue(): int
+    {
+        return $this->getFactory()->getConfig()->getFullTextBoostedBoostingValue();
     }
 }
