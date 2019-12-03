@@ -20,27 +20,27 @@ class ServiceWhiteListFilter implements ChainFilterInterface
      */
     public function filter(array $healthCheckPlugins, HealthCheckRequestTransfer $healthCheckRequestTransfer): array
     {
-        $whiteListServices = $healthCheckRequestTransfer->getWhiteListServices();
+        $availableServices = $healthCheckRequestTransfer->getAvailableServices();
 
-        if (count($whiteListServices) === 0) {
+        if (count($availableServices) === 0) {
             return $healthCheckPlugins;
         }
 
-        return $this->filterByWhiteLitServices($healthCheckPlugins, $whiteListServices);
+        return $this->filterByWhiteLitServices($healthCheckPlugins, $availableServices);
     }
 
     /**
      * @param \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[] $healthCheckPlugins
-     * @param string[] $whiteListServices
+     * @param string[] $availableServices
      *
      * @return \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[]
      */
-    protected function filterByWhiteLitServices(array $healthCheckPlugins, array $whiteListServices): array
+    protected function filterByWhiteLitServices(array $healthCheckPlugins, array $availableServices): array
     {
         $filteredServicePlugins = [];
 
         foreach ($healthCheckPlugins as $healthCheckPluginName => $healthCheckPlugin) {
-            if (in_array($healthCheckPluginName, $whiteListServices)) {
+            if (in_array($healthCheckPluginName, $availableServices)) {
                 $filteredServicePlugins[$healthCheckPluginName] = $healthCheckPlugin;
             }
         }

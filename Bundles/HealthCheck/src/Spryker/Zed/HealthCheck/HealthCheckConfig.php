@@ -9,6 +9,16 @@ namespace Spryker\Zed\HealthCheck;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\HealthCheck\HealthCheckConfig getSharedConfig()
+ */
 class HealthCheckConfig extends AbstractBundleConfig
 {
+    /**
+     * @return string[]
+     */
+    public function getAvailableHealthCheckServices(): array
+    {
+        return [];
+    }
 }

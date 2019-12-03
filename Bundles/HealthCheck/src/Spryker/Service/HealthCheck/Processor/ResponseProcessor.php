@@ -36,25 +36,8 @@ class ResponseProcessor implements ResponseProcessorInterface
             return $this->createForbiddenHealthCheckResponseTransfer();
         }
 
-        $healthCheckResponseTransfer = $this->createSuccessHealthCheckResponseTransfer($healthCheckServiceResponseTransfers);
-        $healthCheckResponseTransfer = $this->validateGeneralSystemStatus($healthCheckResponseTransfer);
-
-        return $healthCheckResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\HealthCheckResponseTransfer $healthCheckResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
-     */
-    protected function validateGeneralSystemStatus(
-        HealthCheckResponseTransfer $healthCheckResponseTransfer
-    ): HealthCheckResponseTransfer {
-        foreach ($healthCheckResponseTransfer->getHealthCheckServiceResponses() as $healthCheckServiceResponseTransfer) {
-            if ($healthCheckServiceResponseTransfer->getStatus() === false) {
-                return $this->updateHealthCheckResponseTransferWithUnavailableHealthCheckStatus($healthCheckResponseTransfer);
-            }
-        }
+        $healthCheckResponseTransfer = $this->createHealthCheckResponseTransfer($healthCheckServiceResponseTransfers);
+        $healthCheckResponseTransfer = $this->processSystemStatus($healthCheckResponseTransfer);
 
         return $healthCheckResponseTransfer;
     }
@@ -64,7 +47,7 @@ class ResponseProcessor implements ResponseProcessorInterface
      *
      * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
      */
-    protected function createSuccessHealthCheckResponseTransfer(array $healthCheckServiceResponseTransfers): HealthCheckResponseTransfer
+    protected function createHealthCheckResponseTransfer(array $healthCheckServiceResponseTransfers): HealthCheckResponseTransfer
     {
         $healthCheckResponseTransfer = (new HealthCheckResponseTransfer())
             ->setStatus($this->healthCheckConfig->getSuccessHealthCheckStatusMessage())
@@ -72,6 +55,23 @@ class ResponseProcessor implements ResponseProcessorInterface
 
         foreach ($healthCheckServiceResponseTransfers as $healthCheckServiceResponseTransfer) {
             $healthCheckResponseTransfer->addHealthCheckServiceResponse($healthCheckServiceResponseTransfer);
+        }
+
+        return $healthCheckResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\HealthCheckResponseTransfer $healthCheckResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
+     */
+    protected function processSystemStatus(
+        HealthCheckResponseTransfer $healthCheckResponseTransfer
+    ): HealthCheckResponseTransfer {
+        foreach ($healthCheckResponseTransfer->getHealthCheckServiceResponses() as $healthCheckServiceResponseTransfer) {
+            if ($healthCheckServiceResponseTransfer->getStatus() === false) {
+                return $this->updateHealthCheckResponseTransferWithUnavailableHealthCheckStatus($healthCheckResponseTransfer);
+            }
         }
 
         return $healthCheckResponseTransfer;

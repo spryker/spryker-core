@@ -18,7 +18,7 @@ use Spryker\Glue\HealthCheckRestApi\Processor\Mapper\HealthCheckMapperInterface;
 
 class HealthCheckProcessor implements HealthCheckProcessorInterface
 {
-    protected const KEY_SERVICES = 'services';
+    protected const KEY_HEALTH_CHECK_SERVICES = 'services';
 
     /**
      * @var \Spryker\Glue\HealthCheckRestApi\Dependency\Client\HealthCheckRestApiToHealthCheckClientInterface
@@ -66,11 +66,14 @@ class HealthCheckProcessor implements HealthCheckProcessorInterface
     public function processHealthCheck(RestRequestInterface $restRequest): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
-        $services = $restRequest->getHttpRequest()->get(static::KEY_SERVICES);
+        $requestedServices = $restRequest->getHttpRequest()->get(static::KEY_HEALTH_CHECK_SERVICES);
 
         $healthCheckRequestTransfer = (new HealthCheckRequestTransfer())
-            ->setServices($services)
-            ->setWhiteListServices($this->healthCheckRestApiConfig->getWhiteListServiceNames());
+            ->setAvailableServices($this->healthCheckRestApiConfig->getAvailableServiceNames());
+
+        if ($requestedServices !== null) {
+            $healthCheckRequestTransfer->setRequestedServices(explode(',', $requestedServices));
+        }
 
         $healthCheckResponseTransfer = $this->healthCheckClient->executeHealthCheck($healthCheckRequestTransfer);
 

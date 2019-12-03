@@ -20,9 +20,9 @@ class ServiceNameFilter implements ChainFilterInterface
      */
     public function filter(array $healthCheckPlugins, HealthCheckRequestTransfer $healthCheckRequestTransfer): array
     {
-        $requestedServices = $healthCheckRequestTransfer->getServices();
+        $requestedServices = $healthCheckRequestTransfer->getRequestedServices();
 
-        if (strlen($requestedServices) === 0) {
+        if (count($requestedServices) === 0) {
             return $healthCheckPlugins;
         }
 
@@ -31,17 +31,16 @@ class ServiceNameFilter implements ChainFilterInterface
 
     /**
      * @param \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[] $healthCheckPlugins
-     * @param string $requestedServices
+     * @param string[] $requestedServices
      *
      * @return \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[]
      */
-    protected function filterByServiceName(array $healthCheckPlugins, string $requestedServices): array
+    protected function filterByServiceName(array $healthCheckPlugins, array $requestedServices): array
     {
         $filteredServicePlugins = [];
-        $requestedServicesArray = explode(',', $requestedServices);
 
         foreach ($healthCheckPlugins as $healthCheckPluginName => $healthCheckPlugin) {
-            if (in_array($healthCheckPluginName, $requestedServicesArray)) {
+            if (in_array($healthCheckPluginName, $requestedServices)) {
                 $filteredServicePlugins[$healthCheckPluginName] = $healthCheckPlugin;
             }
         }

@@ -4,9 +4,8 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="HealthCheckRequest">
-        <property name="services" type="string"/>
-        <property name="whiteListServices" type="string[]"/>
-        <property name="format" type="string"/>
+        <property name="requestedServices" type="string[]"/>
+        <property name="availableServices" type="string[]"/>
     </transfer>
 
     <transfer name="HealthCheckResponse">

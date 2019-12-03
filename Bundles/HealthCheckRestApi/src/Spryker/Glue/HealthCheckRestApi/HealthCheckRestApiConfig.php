@@ -20,8 +20,8 @@ class HealthCheckRestApiConfig extends AbstractBundleConfig
     /**
      * @return string[]
      */
-    public function getWhiteListServiceNames(): array
+    public function getAvailableServiceNames(): array
     {
-        return $this->getSharedConfig()->getWhiteListServiceNames();
+        return [];
     }
 }
