@@ -160,7 +160,7 @@ class ProductLabelReader implements ProductLabelReaderInterface
      */
     protected function getProductAbstractIdsByProductConcreteSkus(array $productConcreteSkus, string $localeName): array
     {
-        $productConcreteDataCollection = $this->productStorageClient->getProductConcreteStorageDataByMapping(
+        $productConcreteDataCollection = $this->productStorageClient->getBulkProductConcreteStorageDataByMapping(
             static::PRODUCT_CONCRETE_MAPPING_TYPE,
             $productConcreteSkus,
             $localeName
