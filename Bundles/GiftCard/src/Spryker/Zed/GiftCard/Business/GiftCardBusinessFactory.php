@@ -14,10 +14,10 @@ use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeAdder;
 use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeAdderInterface;
 use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeClearer;
 use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeClearerInterface;
-use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeDeleter;
-use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeDeleterInterface;
 use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeOperationMessageFinder;
 use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeOperationMessageFinderInterface;
+use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeRemover;
+use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeRemoverInterface;
 use Spryker\Zed\GiftCard\Business\Checker\GiftCardItemsChecker;
 use Spryker\Zed\GiftCard\Business\Checker\GiftCardItemsCheckerInterface;
 use Spryker\Zed\GiftCard\Business\Discount\GiftCardDiscountableItemFilter;
@@ -111,11 +111,11 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeDeleterInterface
+     * @return \Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeRemoverInterface
      */
-    public function createGiftCardCartCodeDeleter(): GiftCardCartCodeDeleterInterface
+    public function createGiftCardCartCodeRemover(): GiftCardCartCodeRemoverInterface
     {
-        return new GiftCardCartCodeDeleter();
+        return new GiftCardCartCodeRemover();
     }
 
     /**

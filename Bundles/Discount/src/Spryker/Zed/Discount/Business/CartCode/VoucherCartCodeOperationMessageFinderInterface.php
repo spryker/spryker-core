@@ -5,17 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\GiftCard\Business\CartCode;
+namespace Spryker\Zed\Discount\Business\CartCode;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface GiftCardCartCodeDeleterInterface
+interface VoucherCartCodeOperationMessageFinderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $cartCode
      *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
+     * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    public function removeCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer;
+    public function findOperationResponseMessage(QuoteTransfer $quoteTransfer, string $cartCode): ?MessageTransfer;
 }

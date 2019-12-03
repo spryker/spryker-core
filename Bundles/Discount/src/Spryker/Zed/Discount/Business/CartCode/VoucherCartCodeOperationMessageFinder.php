@@ -7,78 +7,16 @@
 
 namespace Spryker\Zed\Discount\Business\CartCode;
 
-use ArrayObject;
-use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class VoucherCartCode implements VoucherCartCodeInterface
+class VoucherCartCodeOperationMessageFinder implements VoucherCartCodeOperationMessageFinderInterface
 {
     protected const GLOSSARY_KEY_VOUCHER_NON_APPLICABLE = 'cart.voucher.apply.non_applicable';
     protected const GLOSSARY_KEY_VOUCHER_APPLY_SUCCESSFUL = 'cart.voucher.apply.successful';
 
     protected const MESSAGE_TYPE_SUCCESS = 'success';
     protected const MESSAGE_TYPE_ERROR = 'error';
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $cartCode
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function addCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer
-    {
-        if ($this->hasCandidate($quoteTransfer, $cartCode)) {
-            return $quoteTransfer;
-        }
-
-        $voucherDiscount = new DiscountTransfer();
-        $voucherDiscount->setVoucherCode($cartCode);
-
-        return $quoteTransfer->addVoucherDiscount($voucherDiscount);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $cartCode
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function removeCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer
-    {
-        $voucherDiscountsIterator = $quoteTransfer->getVoucherDiscounts()->getIterator();
-        foreach ($quoteTransfer->getVoucherDiscounts() as $key => $voucherDiscountTransfer) {
-            if ($voucherDiscountTransfer->getVoucherCode() === $cartCode) {
-                $voucherDiscountsIterator->offsetUnset($key);
-            }
-
-            if (!$voucherDiscountsIterator->valid()) {
-                break;
-            }
-        }
-
-        $usedNotAppliedVoucherCodeResultList = array_filter(
-            $quoteTransfer->getUsedNotAppliedVoucherCodes(),
-            function (string $usedNotAppliedVoucherCode) use ($cartCode) {
-                return $usedNotAppliedVoucherCode != $cartCode;
-            }
-        );
-
-        return $quoteTransfer->setUsedNotAppliedVoucherCodes($usedNotAppliedVoucherCodeResultList);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function clearCartCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        $quoteTransfer->setVoucherDiscounts(new ArrayObject());
-        $quoteTransfer->setUsedNotAppliedVoucherCodes([]);
-
-        return $quoteTransfer;
-    }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -99,23 +37,6 @@ class VoucherCartCode implements VoucherCartCodeInterface
         }
 
         return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
-     *
-     * @return bool
-     */
-    protected function hasCandidate(QuoteTransfer $quoteTransfer, string $code): bool
-    {
-        foreach ($quoteTransfer->getVoucherDiscounts() as $voucherDiscount) {
-            if ($voucherDiscount->getVoucherCode() === $code) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**

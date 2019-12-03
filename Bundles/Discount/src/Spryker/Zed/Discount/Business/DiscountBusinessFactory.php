@@ -12,8 +12,14 @@ use Spryker\Zed\Discount\Business\Calculator\Discount;
 use Spryker\Zed\Discount\Business\Calculator\FilteredCalculator;
 use Spryker\Zed\Discount\Business\Calculator\Type\FixedType;
 use Spryker\Zed\Discount\Business\Calculator\Type\PercentageType;
-use Spryker\Zed\Discount\Business\CartCode\VoucherCartCode;
-use Spryker\Zed\Discount\Business\CartCode\VoucherCartCodeInterface;
+use Spryker\Zed\Discount\Business\CartCode\VoucherCartCodeAdder;
+use Spryker\Zed\Discount\Business\CartCode\VoucherCartCodeAdderInterface;
+use Spryker\Zed\Discount\Business\CartCode\VoucherCartCodeClearer;
+use Spryker\Zed\Discount\Business\CartCode\VoucherCartCodeClearerInterface;
+use Spryker\Zed\Discount\Business\CartCode\VoucherCartCodeOperationMessageFinder;
+use Spryker\Zed\Discount\Business\CartCode\VoucherCartCodeOperationMessageFinderInterface;
+use Spryker\Zed\Discount\Business\CartCode\VoucherCartCodeRemover;
+use Spryker\Zed\Discount\Business\CartCode\VoucherCartCodeRemoverInterface;
 use Spryker\Zed\Discount\Business\Checkout\DiscountOrderSaver;
 use Spryker\Zed\Discount\Business\Collector\ItemPriceCollector;
 use Spryker\Zed\Discount\Business\Collector\ItemQuantityCollector;
@@ -100,11 +106,35 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Business\CartCode\VoucherCartCodeInterface
+     * @return \Spryker\Zed\Discount\Business\CartCode\VoucherCartCodeAdderInterface
      */
-    public function createVoucherCartCode(): VoucherCartCodeInterface
+    public function createVoucherCartCodeAdder(): VoucherCartCodeAdderInterface
     {
-        return new VoucherCartCode();
+        return new VoucherCartCodeAdder();
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\CartCode\VoucherCartCodeRemoverInterface
+     */
+    public function createVoucherCartCodeRemover(): VoucherCartCodeRemoverInterface
+    {
+        return new VoucherCartCodeRemover();
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\CartCode\VoucherCartCodeClearerInterface
+     */
+    public function createVoucherCartCodeClearer(): VoucherCartCodeClearerInterface
+    {
+        return new VoucherCartCodeClearer();
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Business\CartCode\VoucherCartCodeOperationMessageFinderInterface
+     */
+    public function createVoucherCartCodeOperationMessageFinder(): VoucherCartCodeOperationMessageFinderInterface
+    {
+        return new VoucherCartCodeOperationMessageFinder();
     }
 
     /**

@@ -351,7 +351,7 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     public function removeCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer
     {
         return $this->getFactory()
-            ->createGiftCardCartCodeDeleter()
+            ->createGiftCardCartCodeRemover()
             ->removeCartCode($quoteTransfer, $cartCode);
     }
 
