@@ -25,8 +25,6 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
      *
      * @api
      *
-     * @deprecated Will be removed in the next major version.
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *
@@ -44,8 +42,6 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
      * - Removes matching applied and not applied voucher discount from quote.
      *
      * @api
-     *
-     * @deprecated Will be removed in the next major version.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
@@ -65,8 +61,6 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
      *
      * @api
      *
-     * @deprecated Will be removed in the next major version.
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -85,8 +79,6 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
      * - Returns an empty failed message if code is not relevant.
      *
      * @api
-     *
-     * @deprecated Will be removed in the next major version.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code

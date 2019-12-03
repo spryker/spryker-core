@@ -25,8 +25,6 @@ class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInt
      *
      * @api
      *
-     * @deprecated Will be removed in the next major version.
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *
@@ -44,8 +42,6 @@ class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInt
      * - Removes matching applied gift card and gift card payment from quote.
      *
      * @api
-     *
-     * @deprecated Will be removed in the next major version.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
@@ -67,8 +63,6 @@ class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInt
      *
      * @api
      *
-     * @deprecated Will be removed in the next major version.
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *
@@ -86,8 +80,6 @@ class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInt
      * - Clears all gift cards and gift card payments from the quote.
      *
      * @api
-     *
-     * @deprecated Will be removed in the next major version.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
