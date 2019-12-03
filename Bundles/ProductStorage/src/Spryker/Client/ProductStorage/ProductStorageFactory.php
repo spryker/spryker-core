@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilter;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
 use Spryker\Client\ProductStorage\Finder\ProductAbstractViewTransferFinder;
@@ -40,6 +41,14 @@ class ProductStorageFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): ProductStorageToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(ProductStorageDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
      * @return \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface
      */
     public function getLocaleClient()
@@ -56,6 +65,7 @@ class ProductStorageFactory extends AbstractFactory
             $this->getStorageClient(),
             $this->getSynchronizationService(),
             $this->getLocaleClient(),
+            $this->getUtilEncodingService(),
             $this->getProductConcreteRestrictionPlugins(),
             $this->getProductConcreteRestrictionFilterPlugins()
         );
