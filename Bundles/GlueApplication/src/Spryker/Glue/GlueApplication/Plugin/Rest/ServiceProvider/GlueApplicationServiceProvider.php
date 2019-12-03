@@ -17,6 +17,9 @@ use Spryker\Glue\Kernel\Plugin\Pimple;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\GlueApplication\GlueApplicationConstants;
 
+/**
+ * @deprecated Use `\Spryker\Glue\GlueApplication\Plugin\Application\GlueApplicationApplicationPlugin` instead.
+ */
 class GlueApplicationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
     /**
