@@ -48,6 +48,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
         $productOfferCriteriaFilterTransfer = new ProductOfferCriteriaFilterTransfer();
         $productOfferCriteriaFilterTransfer->setConcreteSkus($concreteSkus);
         $productOfferCollectionTransfer = $this->productOfferFacade->find($productOfferCriteriaFilterTransfer);
+        $productOfferCollectionTransfer = $this->filterProductOfferCollectionTransfersByAvailability($productOfferCollectionTransfer);
 
         $productOffersGroupedBySku = $this->groupProductOfferByConcreteSku($productOfferCollectionTransfer);
 
@@ -80,15 +81,31 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     /**
      * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
      *
+     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
+     */
+    protected function filterProductOfferCollectionTransfersByAvailability(
+        ProductOfferCollectionTransfer $productOfferCollectionTransfer
+    ): ProductOfferCollectionTransfer {
+        $filteredProductOfferCollectionTransfer = new ProductOfferCollectionTransfer();
+        foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
+            if (!$this->productOfferAvailabilityChecker->isProductOfferAvailable($productOfferTransfer)) {
+                continue;
+            }
+            $filteredProductOfferCollectionTransfer->addProductOffer($productOfferTransfer);
+        }
+
+        return $filteredProductOfferCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
+     *
      * @return array
      */
     protected function groupProductOfferByConcreteSku(ProductOfferCollectionTransfer $productOfferCollectionTransfer): array
     {
         $productOffersGroupedBySku = [];
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
-            if (!$this->productOfferAvailabilityChecker->isProductOfferAvailable($productOfferTransfer)) {
-                continue;
-            }
             if (!isset($productOffersGroupedBySku[$productOfferTransfer->getConcreteSku()])) {
                 $productOffersGroupedBySku[$productOfferTransfer->getConcreteSku()] = [];
             }
