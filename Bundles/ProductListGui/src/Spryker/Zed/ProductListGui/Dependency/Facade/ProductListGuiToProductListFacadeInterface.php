@@ -29,14 +29,14 @@ interface ProductListGuiToProductListFacadeInterface
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductListTransfer
      */
-    public function deleteProductList(ProductListTransfer $productListTransfer): void;
+    public function getProductListById(ProductListTransfer $productListTransfer): ProductListTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductListTransfer
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function getProductListById(ProductListTransfer $productListTransfer): ProductListTransfer;
+    public function removeProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer;
 }

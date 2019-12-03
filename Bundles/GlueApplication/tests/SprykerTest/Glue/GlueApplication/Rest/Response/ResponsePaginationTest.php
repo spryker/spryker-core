@@ -8,6 +8,7 @@
 namespace SprykerTest\Glue\GlueApplication\Rest\Response;
 
 use Codeception\Test\Unit;
+use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponsePagination;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponsePaginationInterface;
@@ -51,6 +52,6 @@ class ResponsePaginationTest extends Unit
      */
     public function createResponsePagination(): ResponsePaginationInterface
     {
-        return new ResponsePagination('');
+        return new ResponsePagination(new GlueApplicationConfig());
     }
 }

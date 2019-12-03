@@ -29,7 +29,7 @@ class GlueApplicationToUtilEncodingServiceBridge implements GlueApplicationToUti
      *
      * @return string|null
      */
-    public function encodeJson(array $value, $options = null, $depth = null): ?string
+    public function encodeJson($value, $options = null, $depth = null)
     {
         return $this->utilEncoding->encodeJson($value, $options, $depth);
     }
