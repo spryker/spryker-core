@@ -32,7 +32,7 @@ class NavigationsRestApiConfig extends AbstractBundleConfig
      *    'category' => 'fkResourceCategorynode',
      * ]
      *
-     * @return array
+     * @return string[]
      */
     public function getNavigationTypeToUrlResourceIdFieldMapping(): array
     {
