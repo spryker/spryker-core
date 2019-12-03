@@ -37,7 +37,7 @@ class MappingBuilderTest extends Unit
             'bar_key' => 'bar_value',
             'baz_key' => 'baz_value',
         ];
-        $mappingType = '_doc';
+        $mappingType = 'page';
 
         /** @var \Elastica\Index|\PHPUnit\Framework\MockObject\MockObject $indexMock */
         $indexMock = $this->createMock(Index::class);

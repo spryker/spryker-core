@@ -11,25 +11,31 @@ use Generated\Shared\Transfer\SearchContextTransfer;
 use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Spryker\Client\Search\Delegator\SearchDelegatorInterface;
 use Spryker\Client\Search\Exception\InvalidDataSetException;
+use Spryker\Client\Search\SearchConfig;
 
 /**
  * @deprecated Will be removed without replacement.
  */
 class SearchDelegatorAdapter implements SearchDelegatorAdapterInterface
 {
-    protected const DEFAULT_SOURCE_IDENTIFIER = 'page';
-
     /**
      * @var \Spryker\Client\Search\Delegator\SearchDelegatorInterface
      */
     protected $searchDelegator;
 
     /**
-     * @param \Spryker\Client\Search\Delegator\SearchDelegatorInterface $searchDelegator
+     * @var \Spryker\Client\Search\SearchConfig
      */
-    public function __construct(SearchDelegatorInterface $searchDelegator)
+    protected $config;
+
+    /**
+     * @param \Spryker\Client\Search\Delegator\SearchDelegatorInterface $searchDelegator
+     * @param \Spryker\Client\Search\SearchConfig $config
+     */
+    public function __construct(SearchDelegatorInterface $searchDelegator, SearchConfig $config)
     {
         $this->searchDelegator = $searchDelegator;
+        $this->config = $config;
     }
 
     /**
@@ -109,8 +115,8 @@ class SearchDelegatorAdapter implements SearchDelegatorAdapterInterface
      */
     protected function createSearchDocumentTransfer(string $documentId, ?string $typeName = null, ?array $documentData = null): SearchDocumentTransfer
     {
-        $typeName = $typeName ?? static::DEFAULT_SOURCE_IDENTIFIER;
-        $searchContextTransfer = $this->createSearchContextTransferFromType($typeName);
+        $sourceIdentifier = $this->getSourceIdentifier($typeName);
+        $searchContextTransfer = (new SearchContextTransfer())->setSourceIdentifier($sourceIdentifier);
 
         return (new SearchDocumentTransfer())->setId($documentId)
             ->setData($documentData)
@@ -138,13 +144,17 @@ class SearchDelegatorAdapter implements SearchDelegatorAdapterInterface
     }
 
     /**
-     * @param string $typeName
+     * @param string|null $typeName
      *
      * @return \Generated\Shared\Transfer\SearchContextTransfer
      */
-    protected function createSearchContextTransferFromType(string $typeName): SearchContextTransfer
+    protected function createSearchContextTransferFromType(?string $typeName = null): SearchContextTransfer
     {
-        return (new SearchContextTransfer())->setSourceIdentifier($typeName);
+        $sourceIdentifier = $this->getSourceIdentifier($typeName);
+        $searchContextTransfer = new SearchContextTransfer();
+        $searchContextTransfer->setSourceIdentifier($sourceIdentifier);
+
+        return $searchContextTransfer;
     }
 
     /**
@@ -170,5 +180,15 @@ class SearchDelegatorAdapter implements SearchDelegatorAdapterInterface
         $searchDocumentTransfer->setSearchContext($searchContextTransfer);
 
         return $searchDocumentTransfer;
+    }
+
+    /**
+     * @param string|null $typeName
+     *
+     * @return string
+     */
+    protected function getSourceIdentifier(?string $typeName): string
+    {
+        return $typeName ?: $this->config->getDefaultSourceIdentifier();
     }
 }

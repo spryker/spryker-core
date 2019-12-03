@@ -21,6 +21,7 @@ use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Spryker\Client\SearchElasticsearch\SearchElasticsearchClient;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
+use SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchHelper;
 
 /**
  * Auto-generated group annotations
@@ -282,8 +283,11 @@ class SearchElasticsearchClientTest extends Unit
      */
     protected function createSearchDocumentTransfer(string $documentId, $documentData = null, string $indexName = self::INDEX_NAME): SearchDocumentTransfer
     {
-        $elasticsearchContextTransfer = (new ElasticsearchSearchContextTransfer())->setIndexName($indexName);
-        $searchContextTransfer = (new SearchContextTransfer())->setElasticsearchContext($elasticsearchContextTransfer);
+        $elasticsearchContextTransfer = (new ElasticsearchSearchContextTransfer())->setIndexName($indexName)
+            ->setTypeName(ElasticsearchHelper::DEFAULT_MAPPING_TYPE);
+        $searchContextTransfer = (new SearchContextTransfer())
+            ->setElasticsearchContext($elasticsearchContextTransfer)
+            ->setSourceIdentifier(ElasticsearchHelper::DEFAULT_MAPPING_TYPE);
         $searchDocumentTransfer = (new SearchDocumentTransfer())->setId($documentId)
             ->setSearchContext($searchContextTransfer);
 

@@ -67,7 +67,7 @@ class SearchFactory extends AbstractFactory
      */
     public function createSearchDelegatorAdapter(): SearchDelegatorAdapterInterface
     {
-        return new SearchDelegatorAdapter($this->createSearchDelegator());
+        return new SearchDelegatorAdapter($this->createSearchDelegator(), $this->getConfig());
     }
 
     /**

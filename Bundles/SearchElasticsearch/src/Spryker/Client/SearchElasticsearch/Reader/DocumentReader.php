@@ -90,8 +90,6 @@ class DocumentReader implements DocumentReaderInterface
     }
 
     /**
-     * Source identifier will be used as type name instead of _doc for the sake of compatibility with Elasticsearch 5.
-     *
      * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
      *
      * @return string
@@ -100,7 +98,7 @@ class DocumentReader implements DocumentReaderInterface
     {
         $this->validateSearchDocumentTransferHasSourceIdentifier($searchDocumentTransfer);
 
-        return $searchDocumentTransfer->getSearchContext()->getSourceIdentifier();
+        return $searchDocumentTransfer->getSearchContext()->getElasticsearchContext()->getTypeName();
     }
 
     /**
@@ -112,6 +110,8 @@ class DocumentReader implements DocumentReaderInterface
     {
         $searchDocumentTransfer->requireSearchContext()
             ->getSearchContext()
-            ->requireSourceIdentifier();
+            ->requireElasticsearchContext()
+            ->getElasticsearchContext()
+            ->requireTypeName();
     }
 }

@@ -24,10 +24,10 @@ use Spryker\Client\Search\SearchClient;
 use Spryker\Client\Search\SearchContext\SearchContextExpanderInterface;
 use Spryker\Client\Search\SearchFactory;
 use Spryker\Client\SearchElasticsearch\Plugin\ElasticsearchSearchAdapterPlugin;
-use Spryker\Client\SearchElasticsearch\SearchElasticsearchClient;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface;
+use SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchHelper;
 
 /**
  * Auto-generated group annotations
@@ -261,7 +261,7 @@ class SearchClientTest extends Unit
         $this->tester->haveIndex(static::INDEX_NAME);
 
         // Act
-        $result = $this->tester->getClient()->write($dataSet, static::INDEX_NAME);
+        $result = $this->tester->getClient()->write($dataSet, ElasticsearchHelper::DEFAULT_MAPPING_TYPE);
 
         // Assert
         $this->tester->assertDocumentExists($documentId, static::INDEX_NAME, $documentData);
@@ -318,7 +318,7 @@ class SearchClientTest extends Unit
         $this->tester->haveDocumentInIndex(static::INDEX_NAME, $documentId, $documentData);
 
         // Act
-        $result = $this->tester->getClient()->read($documentId, static::INDEX_NAME);
+        $result = $this->tester->getClient()->read($documentId, ElasticsearchHelper::DEFAULT_MAPPING_TYPE);
 
         // Assert
         $this->assertSame($documentData, $result->getData());
@@ -355,7 +355,7 @@ class SearchClientTest extends Unit
         $this->tester->haveDocumentInIndex(static::INDEX_NAME, $documentId);
 
         // Act
-        $this->tester->getClient()->delete($dataSet, static::INDEX_NAME);
+        $this->tester->getClient()->delete($dataSet, ElasticsearchHelper::DEFAULT_MAPPING_TYPE);
 
         // Assert
         $this->tester->assertDocumentDoesNotExist($documentId, static::INDEX_NAME);
@@ -405,15 +405,13 @@ class SearchClientTest extends Unit
     /**
      * @param string $documentId
      * @param array|string|null $documentData
-     * @param string $indexName
      *
      * @return \Generated\Shared\Transfer\SearchDocumentTransfer
      */
-    protected function createSearchDocumentTransfer(string $documentId, $documentData = null, string $indexName = self::INDEX_NAME): SearchDocumentTransfer
+    protected function createSearchDocumentTransfer(string $documentId, $documentData = null): SearchDocumentTransfer
     {
-        $searchContextTransfer = (new SearchContextTransfer())->setSourceIdentifier($indexName);
+        $searchContextTransfer = (new SearchContextTransfer())->setSourceIdentifier(ElasticsearchHelper::DEFAULT_MAPPING_TYPE);
         $searchDocumentTransfer = (new SearchDocumentTransfer())->setId($documentId)
-            ->setType($indexName)
             ->setSearchContext($searchContextTransfer);
 
         if ($documentData) {
@@ -441,7 +439,7 @@ class SearchClientTest extends Unit
         $searchContextExpanderMock->method('expandSearchContext')
             ->willReturnCallback(function (SearchContextTransfer $searchContextTransfer) {
                 $searchContextTransfer->setElasticsearchContext(
-                    (new ElasticsearchSearchContextTransfer())->setIndexName($searchContextTransfer->getSourceIdentifier())
+                    (new ElasticsearchSearchContextTransfer())->setIndexName(static::INDEX_NAME)->setTypeName(ElasticsearchHelper::DEFAULT_MAPPING_TYPE)
                 );
 
                 return $searchContextTransfer;
@@ -457,7 +455,7 @@ class SearchClientTest extends Unit
     {
         /** @var \Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface $elasticsearchAdapterPluginMock */
         $elasticsearchAdapterPluginMock = Stub::make(ElasticsearchSearchAdapterPlugin::class, [
-            'getClient' => new SearchElasticsearchClient(),
+            'getClient' => $this->tester->getLocator()->searchElasticsearch()->client(),
             'isApplicable' => true,
         ]);
 

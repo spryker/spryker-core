@@ -23,7 +23,7 @@ use Generated\Shared\Transfer\SearchDocumentTransfer;
 class SearchClientBCTest extends Unit
 {
     protected const INDEX_NAME = 'de_search_devtest';
-    protected const MAPPING_TYPE = '_doc';
+    protected const MAPPING_TYPE = 'page';
 
     /**
      * @return void

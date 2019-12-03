@@ -33,36 +33,30 @@ class SearchContextExpander implements SearchContextExpanderInterface
      */
     public function expandSearchContext(SearchContextTransfer $searchContextTransfer): SearchContextTransfer
     {
-        $searchContextTransfer = $this->expandSearchContextWithElasticsearchContext($searchContextTransfer);
-        $searchContextTransfer = $this->addIndexNameToElasticsearchContext($searchContextTransfer);
-
-        return $searchContextTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
-     *
-     * @return \Generated\Shared\Transfer\SearchContextTransfer
-     */
-    protected function expandSearchContextWithElasticsearchContext(SearchContextTransfer $searchContextTransfer): SearchContextTransfer
-    {
-        $elasticsearchSearchContextTransfer = new ElasticsearchSearchContextTransfer();
+        $sourceIdentifier = $searchContextTransfer->requireSourceIdentifier()->getSourceIdentifier();
+        $indexName = $this->indexNameResolver->resolve($sourceIdentifier);
+        $elasticsearchSearchContextTransfer = $this->createElasticsearchContext($indexName, $sourceIdentifier);
         $searchContextTransfer->setElasticsearchContext($elasticsearchSearchContextTransfer);
 
         return $searchContextTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
+     * @param string $indexName
+     * @param string $sourceIdentifier
      *
-     * @return \Generated\Shared\Transfer\SearchContextTransfer
+     * @return \Generated\Shared\Transfer\ElasticsearchSearchContextTransfer
      */
-    protected function addIndexNameToElasticsearchContext(SearchContextTransfer $searchContextTransfer): SearchContextTransfer
+    protected function createElasticsearchContext(string $indexName, string $sourceIdentifier): ElasticsearchSearchContextTransfer
     {
-        $sourceIdentifier = $searchContextTransfer->requireSourceIdentifier()->getSourceIdentifier();
-        $indexName = $this->indexNameResolver->resolve($sourceIdentifier);
-        $searchContextTransfer->getElasticsearchContext()->setIndexName($indexName);
+        $elasticsearchSearchContextTransfer = new ElasticsearchSearchContextTransfer();
+        $elasticsearchSearchContextTransfer->setIndexName($indexName);
 
-        return $searchContextTransfer;
+        /**
+         * Source identifier will be used as type name instead of _doc for the sake of compatibility with Elasticsearch 5.
+         */
+        $elasticsearchSearchContextTransfer->setTypeName($sourceIdentifier);
+
+        return $elasticsearchSearchContextTransfer;
     }
 }

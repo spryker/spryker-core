@@ -9,7 +9,6 @@ namespace Spryker\Client\SearchElasticsearch\Writer;
 
 use Elastica\Client;
 use Elastica\Document;
-use Elastica\Index;
 use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig;
 
@@ -42,7 +41,7 @@ class DocumentWriter implements DocumentWriterInterface
      */
     public function writeDocument(SearchDocumentTransfer $searchDocumentTransfer): bool
     {
-        $document = $this->mapSearchDocumentTransferToElasticaDocument($searchDocumentTransfer);
+        $document = $this->createSearchDocumentTransferToElasticaDocument($searchDocumentTransfer);
         $index = $this->elasticaClient->getIndex($document->getIndex());
         $index->addDocuments([$document]);
         $response = $index->refresh();
@@ -57,7 +56,7 @@ class DocumentWriter implements DocumentWriterInterface
      */
     public function writeDocuments(array $searchDocumentTransfers): bool
     {
-        $documents = $this->mapSearchDocumentTransfersToElasticaDocuments($searchDocumentTransfers);
+        $documents = $this->createSearchDocumentTransfersToElasticaDocuments($searchDocumentTransfers);
         $this->elasticaClient->addDocuments($documents);
         $response = $this->elasticaClient->refreshAll();
 
@@ -69,12 +68,12 @@ class DocumentWriter implements DocumentWriterInterface
      *
      * @return \Elastica\Document[]
      */
-    protected function mapSearchDocumentTransfersToElasticaDocuments(array $searchDocumentTransfers): array
+    protected function createSearchDocumentTransfersToElasticaDocuments(array $searchDocumentTransfers): array
     {
         $documents = [];
 
         foreach ($searchDocumentTransfers as $searchDocumentTransfer) {
-            $documents[] = $this->mapSearchDocumentTransferToElasticaDocument($searchDocumentTransfer);
+            $documents[] = $this->createSearchDocumentTransferToElasticaDocument($searchDocumentTransfer);
         }
 
         return $documents;
@@ -85,7 +84,7 @@ class DocumentWriter implements DocumentWriterInterface
      *
      * @return \Elastica\Document
      */
-    protected function mapSearchDocumentTransferToElasticaDocument(SearchDocumentTransfer $searchDocumentTransfer): Document
+    protected function createSearchDocumentTransferToElasticaDocument(SearchDocumentTransfer $searchDocumentTransfer): Document
     {
         $indexName = $this->extractIndexNameFromSearchDocumentTransfer($searchDocumentTransfer);
         $typeName = $this->extractTypeNameFromSearchDocumentTransfer($searchDocumentTransfer);
@@ -123,7 +122,7 @@ class DocumentWriter implements DocumentWriterInterface
      */
     public function deleteDocuments(array $searchDocumentTransfers): bool
     {
-        $documents = $this->mapSearchDocumentTransfersToElasticaDocuments($searchDocumentTransfers);
+        $documents = $this->createSearchDocumentTransfersToElasticaDocuments($searchDocumentTransfers);
         $this->elasticaClient->deleteDocuments($documents);
         $response = $this->elasticaClient->refreshAll();
 
@@ -152,22 +151,11 @@ class DocumentWriter implements DocumentWriterInterface
         $searchDocumentTransfer->requireSearchContext()
             ->getSearchContext()
             ->requireElasticsearchContext()
-            ->getElasticsearchContext();
+            ->getElasticsearchContext()
+            ->requireIndexName();
     }
 
     /**
-     * @param string $documentId
-     * @param \Elastica\Index $index
-     *
-     * @return \Elastica\Document
-     */
-    protected function getDocumentFromIndex(string $documentId, Index $index): Document
-    {
-    }
-
-    /**
-     * Source identifier will be used as type name instead of _doc for the sake of compatibility with Elasticsearch 5.
-     *
      * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
      *
      * @return string
@@ -176,7 +164,7 @@ class DocumentWriter implements DocumentWriterInterface
     {
         $this->validateSearchDocumentTransferHasSourceIdentifier($searchDocumentTransfer);
 
-        return $searchDocumentTransfer->getSearchContext()->getSourceIdentifier();
+        return $searchDocumentTransfer->getSearchContext()->getElasticsearchContext()->getTypeName();
     }
 
     /**
@@ -188,6 +176,8 @@ class DocumentWriter implements DocumentWriterInterface
     {
         $searchDocumentTransfer->requireSearchContext()
             ->getSearchContext()
-            ->requireSourceIdentifier();
+            ->requireElasticsearchContext()
+            ->getElasticsearchContext()
+            ->requireTypeName();
     }
 }

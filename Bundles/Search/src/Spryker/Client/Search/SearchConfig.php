@@ -17,8 +17,10 @@ class SearchConfig extends AbstractBundleConfig
 {
     public const FACET_NAME_AGGREGATION_SIZE = 10;
 
+    protected const DEFAULT_SOURCE_IDENTIFIER = 'page';
+
     /**
-     * @deprecated Use `\Spryker\Client\SearchExtension\Dependency\Plugin\NamedQueryInterface::getIndexName()` in your Query class to determine which index should be used for the specific query.
+     * @deprecated Use source identifiers instead.
      *
      * @return string
      */
@@ -28,7 +30,7 @@ class SearchConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Will be removed without replacement. Since ES v6 only one type per index is allowed and we don't need it anymore.
+     * @deprecated Use `\Spryker\Client\Search\SearchConfig::getDefaultSourceIdentifier` instead for vendor specific source identification.
      *
      * @return string
      */
@@ -72,5 +74,13 @@ class SearchConfig extends AbstractBundleConfig
     public function getFacetNameAggregationSize()
     {
         return static::FACET_NAME_AGGREGATION_SIZE;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultSourceIdentifier(): string
+    {
+        return static::DEFAULT_SOURCE_IDENTIFIER;
     }
 }
