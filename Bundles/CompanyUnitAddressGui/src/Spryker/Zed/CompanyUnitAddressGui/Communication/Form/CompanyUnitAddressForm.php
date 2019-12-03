@@ -52,7 +52,7 @@ class CompanyUnitAddressForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addIdCompanyUnitAddressField($builder)
             ->addCompanyField($builder, $options[static::OPTION_COMPANY_CHOICES])
@@ -63,7 +63,7 @@ class CompanyUnitAddressForm extends AbstractType
             ->addAddress2Field($builder)
             ->addAddress3Field($builder)
             ->addCommentField($builder)
-            ->addPluginForms($builder);
+            ->executeCompanyUnitAddressFormPlugins($builder);
     }
 
     /**
@@ -237,7 +237,7 @@ class CompanyUnitAddressForm extends AbstractType
      *
      * @return $this
      */
-    protected function addPluginForms(FormBuilderInterface $builder)
+    protected function executeCompanyUnitAddressFormPlugins(FormBuilderInterface $builder)
     {
         foreach ($this->getFactory()->getCompanyUnitAddressFormPlugins() as $formPlugin) {
             $formPlugin->buildForm($builder);
@@ -249,7 +249,7 @@ class CompanyUnitAddressForm extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'company_unit_address';
     }
