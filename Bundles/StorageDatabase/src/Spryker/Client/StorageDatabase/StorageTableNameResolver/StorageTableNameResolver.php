@@ -9,6 +9,7 @@ namespace Spryker\Client\StorageDatabase\StorageTableNameResolver;
 
 use Spryker\Client\StorageDatabase\Exception\InvalidRecourseToTableMappingConfigurationException;
 use Spryker\Client\StorageDatabase\StorageDatabaseConfig;
+use Spryker\Shared\StorageDatabase\StorageDatabaseConfig as SharedStorageDatabaseConfig;
 
 class StorageTableNameResolver implements StorageTableNameResolverInterface
 {
@@ -98,7 +99,7 @@ EOT;
     {
         $storageTableNameParts = $this->getStorageTableNamePartsForResourceName($resourceName);
 
-        return $storageTableNameParts[$this->config->getStorageTablePrefixConfigKey()] ?? $this->config->getDefaultStorageTablePrefix();
+        return $storageTableNameParts[SharedStorageDatabaseConfig::KEY_STORAGE_TABLE_PREFIX] ?? $this->config->getDefaultStorageTablePrefix();
     }
 
     /**
@@ -110,7 +111,7 @@ EOT;
     {
         $storageTableNameParts = $this->getStorageTableNamePartsForResourceName($resourceName);
 
-        return $storageTableNameParts[$this->config->getStorageTableSuffixConfigKey()] ?? $this->config->getDefaultStorageTableSuffix();
+        return $storageTableNameParts[SharedStorageDatabaseConfig::KEY_STORAGE_TABLE_SUFFIX] ?? $this->config->getDefaultStorageTableSuffix();
     }
 
     /**
@@ -127,7 +128,7 @@ EOT;
         }
 
         $storageTableNameParts = $this->resourceNameToStorageTableMap[$resourceName];
-        $resourceStorageTableName = $storageTableNameParts[$this->config->getStorageTableNameConfigKey()] ?? null;
+        $resourceStorageTableName = $storageTableNameParts[SharedStorageDatabaseConfig::KEY_STORAGE_TABLE_NAME] ?? null;
 
         if (!$resourceStorageTableName) {
             throw new InvalidRecourseToTableMappingConfigurationException(

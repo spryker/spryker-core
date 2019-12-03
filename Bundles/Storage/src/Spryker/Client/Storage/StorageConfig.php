@@ -11,8 +11,6 @@ use Spryker\Client\Kernel\AbstractBundleConfig;
 
 class StorageConfig extends AbstractBundleConfig
 {
-    protected const STORAGE_CACHE_ENABLED = true;
-
     /**
      * @return int
      */
@@ -46,6 +44,6 @@ class StorageConfig extends AbstractBundleConfig
      */
     public function isStorageCachingEnabled(): bool
     {
-        return static::STORAGE_CACHE_ENABLED;
+        return true;
     }
 }

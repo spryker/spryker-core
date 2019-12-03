@@ -8,6 +8,7 @@
 namespace Spryker\Client\StorageDatabase;
 
 use Spryker\Client\Kernel\AbstractBundleConfig;
+use Spryker\Shared\StorageDatabase\StorageDatabaseConfig as SharedStorageDatabaseConfig;
 use Spryker\Shared\StorageDatabase\StorageDatabaseConstants;
 
 /**
@@ -18,22 +19,6 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     protected const DEFAULT_STORAGE_TABLE_PREFIX = 'spy';
     protected const DEFAULT_STORAGE_TABLE_SUFFIX = 'storage';
     protected const STORAGE_TABLE_NAME_PART_SEPARATOR = '_';
-
-    /**
-     * Example:
-     *
-     * [
-     *     'translation' => [
-     *         StorageDatabaseConfig::KEY_STORAGE_TABLE_NAME => 'glossary',
-     *     ],
-     *     'product_search_config_extension' => [
-     *         StorageDatabaseConfig::KEY_STORAGE_TABLE_PREFIX => 'pyz',
-     *         StorageDatabaseConfig::KEY_STORAGE_TABLE_NAME => 'product_search_config',
-     *         StorageDatabaseConfig::KEY_STORAGE_TABLE_SUFFIX => 'storage',
-     *     ],
-     * ];
-     */
-    protected const RESOURCE_PREFIX_TO_STORAGE_TABLE_MAP = [];
 
     /**
      * @return array
@@ -58,13 +43,25 @@ class StorageDatabaseConfig extends AbstractBundleConfig
      * Specification:
      * - Returns a map of resources prefixes to storage/search table names.
      *
+     * Example:
+     * [
+     *     'translation' => [
+     *         StorageDatabaseConfig::KEY_STORAGE_TABLE_NAME => 'glossary',
+     *     ],
+     *     'product_search_config_extension' => [
+     *         StorageDatabaseConfig::KEY_STORAGE_TABLE_PREFIX => 'pyz',
+     *         StorageDatabaseConfig::KEY_STORAGE_TABLE_NAME => 'product_search_config',
+     *         StorageDatabaseConfig::KEY_STORAGE_TABLE_SUFFIX => 'storage',
+     *     ],
+     * ];
+     *
      * @api
      *
      * @return string[][]
      */
     public function getResourceNameToStorageTableMap(): array
     {
-        return static::RESOURCE_PREFIX_TO_STORAGE_TABLE_MAP;
+        return [];
     }
 
     /**
@@ -100,47 +97,20 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string
-     */
-    public function getStorageTablePrefixConfigKey(): string
-    {
-        return $this->getSharedConfig()->getStorageTablePrefixConfigKey();
-    }
-
-    /**
-     * @return string
-     */
-    public function getStorageTableSuffixConfigKey(): string
-    {
-        return $this->getSharedConfig()->getStorageTableSuffixConfigKey();
-    }
-
-    /**
-     * @return string
-     */
-    public function getStorageTableNameConfigKey(): string
-    {
-        return $this->getSharedConfig()->getStorageTableNameConfigKey();
-    }
-
-    /**
      * @return array
      */
     protected function getConnectionConfigData(): array
     {
-        $postgreSqlDbEngineName = $this->getSharedConfig()->getPostgreSqlDbEngineName();
-        $mySqlDbEngineName = $this->getSharedConfig()->getMySqlDbEngineName();
-
         return [
-            $postgreSqlDbEngineName => [
-                'adapter' => $postgreSqlDbEngineName,
+            SharedStorageDatabaseConfig::DB_ENGINE_PGSQL => [
+                'adapter' => SharedStorageDatabaseConfig::DB_ENGINE_PGSQL,
                 'dsn' => $this->getDsn(),
                 'user' => $this->get(StorageDatabaseConstants::DB_USERNAME),
                 'password' => $this->get(StorageDatabaseConstants::DB_PASSWORD),
                 'settings' => [],
             ],
-            $mySqlDbEngineName => [
-                'adapter' => $mySqlDbEngineName,
+            SharedStorageDatabaseConfig::DB_ENGINE_MYSQL => [
+                'adapter' => SharedStorageDatabaseConfig::DB_ENGINE_MYSQL,
                 'dsn' => $this->getDsn(),
                 'user' => $this->get(StorageDatabaseConstants::DB_USERNAME),
                 'password' => $this->get(StorageDatabaseConstants::DB_PASSWORD),
