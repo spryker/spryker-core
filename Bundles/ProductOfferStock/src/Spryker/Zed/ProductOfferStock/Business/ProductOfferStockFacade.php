@@ -22,7 +22,7 @@ class ProductOfferStockFacade extends AbstractFacade implements ProductOfferStoc
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
      * @return bool
      */

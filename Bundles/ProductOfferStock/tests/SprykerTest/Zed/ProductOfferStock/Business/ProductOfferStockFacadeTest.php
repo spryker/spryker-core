@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\ProductOfferStock\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ProductOfferStockCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;

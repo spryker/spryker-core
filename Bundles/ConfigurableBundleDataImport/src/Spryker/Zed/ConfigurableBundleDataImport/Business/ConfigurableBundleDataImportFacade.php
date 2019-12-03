@@ -47,4 +47,20 @@ class ConfigurableBundleDataImportFacade extends AbstractFacade implements Confi
             ->getConfigurableBundleTemplateSlotDataImporter()
             ->import($dataImporterConfigurationTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importConfigurableBundleTemplateImages(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
+    {
+        return $this->getFactory()
+            ->getConfigurableBundleTemplateImageDataImporter()
+            ->import($dataImporterConfigurationTransfer);
+    }
 }

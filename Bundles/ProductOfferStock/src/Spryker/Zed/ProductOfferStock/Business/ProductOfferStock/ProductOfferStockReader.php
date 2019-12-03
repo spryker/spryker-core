@@ -29,14 +29,16 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
-     * @return bool
      * @throws \Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferStockNotFoundException
+     *
+     * @return bool
      */
-    public function isProductOfferNeverOutOfStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): bool {
+    public function isProductOfferNeverOutOfStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): bool
+    {
         $productOfferStockRequestTransfer->requireProductOfferReference()
             ->requireStore()
             ->getStore()
-                ->requireIdStore();
+            ->requireIdStore();
 
         $productOfferTransfer = $this->productOfferStockRepository->findOne($productOfferStockRequestTransfer);
 

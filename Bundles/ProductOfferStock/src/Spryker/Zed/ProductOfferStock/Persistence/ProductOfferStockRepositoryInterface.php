@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductOfferStock\Persistence;
 
-use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
+use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Spryker\DecimalObject\Decimal;
 
 interface ProductOfferStockRepositoryInterface

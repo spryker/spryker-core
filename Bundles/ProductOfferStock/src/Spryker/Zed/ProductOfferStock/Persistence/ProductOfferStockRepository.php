@@ -7,11 +7,10 @@
 
 namespace Spryker\Zed\ProductOfferStock\Persistence;
 
-use Generated\Shared\Transfer\ProductOfferStockCriteriaFilterTransfer;
-use Generated\Shared\Transfer\ProductOfferStockTransfer;
-use Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery;
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
+use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Orm\Zed\ProductOfferStock\Persistence\Map\SpyProductOfferStockTableMap;
+use Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -47,7 +46,8 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
      *
      * @return \Generated\Shared\Transfer\ProductOfferStockTransfer|null
      */
-    public function findOne(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ?ProductOfferStockTransfer {
+    public function findOne(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ?ProductOfferStockTransfer
+    {
         $productOfferStockEntity = $this->applyFilters(
             $this->getFactory()->getProductOfferStockPropelQuery(),
             $productOfferStockRequestTransfer
@@ -70,7 +70,6 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
      * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
      * @return \Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      */
     protected function applyFilters(
         SpyProductOfferStockQuery $productOfferStockQuery,
@@ -79,16 +78,16 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
         if ($productOfferStockRequestTransfer->getProductOfferReference() !== null) {
             $productOfferStockQuery
                 ->useSpyProductOfferQuery()
-                    ->filterByProductOfferReference($productOfferStockRequestTransfer->getProductOfferReference())
+                ->filterByProductOfferReference($productOfferStockRequestTransfer->getProductOfferReference())
                 ->endUse();
         }
 
         if ($productOfferStockRequestTransfer->getStore() && $productOfferStockRequestTransfer->getStore()->getIdStore()) {
             $productOfferStockQuery
                 ->useStockQuery()
-                    ->useStockStoreQuery()
-                        ->filterByFkStore($productOfferStockRequestTransfer->getStore()->getIdStore())
-                    ->endUse()
+                ->useStockStoreQuery()
+                ->filterByFkStore($productOfferStockRequestTransfer->getStore()->getIdStore())
+                ->endUse()
                 ->endUse();
         }
 
