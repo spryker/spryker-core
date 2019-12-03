@@ -45,6 +45,14 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
      */
     public function isProductSellableForRequest(ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer): bool
     {
+        $productOfferStockRequestTransfer = $this->createProductOfferStockRequestTransferFromProductOfferAvailabilityRequestTransfer(
+            $productOfferAvailabilityRequestTransfer
+        );
+
+        if ($this->productOfferStockFacade->isProductOfferNeverOutOfStock($productOfferStockRequestTransfer)) {
+            return true;
+        }
+
         return $productOfferAvailabilityRequestTransfer->getQuantity()
             ->lessThanOrEquals(
                 $this->calculateAvailabilityForRequest($productOfferAvailabilityRequestTransfer)
@@ -59,11 +67,14 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
     public function findProductConcreteAvailabilityForRequest(ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer): ?ProductConcreteAvailabilityTransfer
     {
         $availability = $this->calculateAvailabilityForRequest($productOfferAvailabilityRequestTransfer);
+        $productOfferStockRequestTransfer = $this->createProductOfferStockRequestTransferFromProductOfferAvailabilityRequestTransfer(
+            $productOfferAvailabilityRequestTransfer
+        );
 
         return (new ProductConcreteAvailabilityTransfer())
             ->setAvailability($availability)
             ->setSku($productOfferAvailabilityRequestTransfer->getSku())
-            ->setIsNeverOutOfStock(false);
+            ->setIsNeverOutOfStock($this->productOfferStockFacade->isProductOfferNeverOutOfStock($productOfferStockRequestTransfer));
     }
 
     /**
@@ -79,9 +90,7 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
         );
 
         $stock = $this->productOfferStockFacade->calculateProductOfferStockForRequest(
-            (new ProductOfferStockRequestTransfer())
-                ->setProductOfferReference($productOfferAvailabilityRequestTransfer->getProductOfferReference())
-                ->setStore($productOfferAvailabilityRequestTransfer->getStore())
+            $this->createProductOfferStockRequestTransferFromProductOfferAvailabilityRequestTransfer($productOfferAvailabilityRequestTransfer)
         );
 
         if ($stock->isZero()) {
@@ -89,5 +98,18 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
         }
 
         return $stock->subtract($reservedProductQuantity);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStockRequestTransfer
+     */
+    protected function createProductOfferStockRequestTransferFromProductOfferAvailabilityRequestTransfer(
+        ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
+    ): ProductOfferStockRequestTransfer {
+        return (new ProductOfferStockRequestTransfer())
+            ->setProductOfferReference($productOfferAvailabilityRequestTransfer->getProductOfferReference())
+            ->setStore($productOfferAvailabilityRequestTransfer->getStore());
     }
 }
