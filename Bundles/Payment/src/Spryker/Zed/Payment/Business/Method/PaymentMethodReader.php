@@ -94,26 +94,75 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
     ): PaymentMethodsTransfer {
         $paymentMethodsTransfer = new PaymentMethodsTransfer();
         $paymentStateMachineMappings = array_keys($this->paymentConfig->getPaymentStatemachineMappings());
-        $persistentMethodNames = [];
-
-        foreach ($paymentMethodsFromPersistence->getMethods() as $paymentMethodTransfer) {
-            $persistentMethodNames[] = $paymentMethodTransfer->getMethodName();
-        }
+        $persistentMethodNames = $this->getPersistentPaymentMethodKeys($paymentMethodsFromPersistence);
         
-        foreach ($paymentMethodsFromPersistence->getMethods() as $paymentMethodTransfer) {
-            if ($this->isPaymentMethodAvailableForStore($paymentMethodTransfer, $idStore)) {
-                $paymentMethodsTransfer->addMethod($paymentMethodTransfer);
-            }
-        }
+        $paymentMethodsTransfer = $this->collectPaymentMethodsFromPersistence(
+            $paymentMethodsTransfer,
+            $paymentMethodsFromPersistence,
+            $idStore
+        );
 
         $infrastructuralMethodNames = array_diff($paymentStateMachineMappings, $persistentMethodNames);
         
+        return $this->collectInfrastructuralPaymentMethods(
+            $infrastructuralMethodNames,
+            $paymentMethodsTransfer
+        );
+    }
+
+    /**
+     * @param string[] $infrastructuralMethodNames
+     * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
+     */
+    protected function collectInfrastructuralPaymentMethods(
+        array $infrastructuralMethodNames,
+        PaymentMethodsTransfer $paymentMethodsTransfer
+    ): PaymentMethodsTransfer {
         foreach ($infrastructuralMethodNames as $methodKey) {
             $infrastructurePaymentMethod = $this->createPaymentMethodTransfer($methodKey);
             $paymentMethodsTransfer->addMethod($infrastructurePaymentMethod);
         }
 
         return $paymentMethodsTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsTransfer
+     * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsFromPersistence
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
+     */
+    protected function collectPaymentMethodsFromPersistence(
+        PaymentMethodsTransfer $paymentMethodsTransfer,
+        PaymentMethodsTransfer $paymentMethodsFromPersistence,
+        int $idStore
+    ): PaymentMethodsTransfer {
+        foreach ($paymentMethodsFromPersistence->getMethods() as $paymentMethodTransfer) {
+            if ($this->isPaymentMethodAvailableForStore($paymentMethodTransfer, $idStore)) {
+                $paymentMethodsTransfer->addMethod($paymentMethodTransfer);
+            }
+        }
+
+        return $paymentMethodsTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsFromPersistence
+     *
+     * @return string[]
+     */
+    protected function getPersistentPaymentMethodKeys(PaymentMethodsTransfer $paymentMethodsFromPersistence): array
+    {
+        $persistentMethodNames = [];
+
+        foreach ($paymentMethodsFromPersistence->getMethods() as $paymentMethodTransfer) {
+            $persistentMethodNames[] = $paymentMethodTransfer->getMethodName();
+        }
+
+        return $persistentMethodNames;
     }
 
     /**
