@@ -10,7 +10,14 @@ namespace Spryker\Zed\GiftCard\Business;
 use Spryker\Zed\GiftCard\Business\ActualValueHydrator\GiftCardActualValueHydrator;
 use Spryker\Zed\GiftCard\Business\Calculation\GiftCardCalculator;
 use Spryker\Zed\GiftCard\Business\Cart\MetadataExpander;
-use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCode;
+use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeAdder;
+use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeAdderInterface;
+use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeClearer;
+use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeClearerInterface;
+use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeDeleter;
+use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeDeleterInterface;
+use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeOperationMessageFinder;
+use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeOperationMessageFinderInterface;
 use Spryker\Zed\GiftCard\Business\Checker\GiftCardItemsChecker;
 use Spryker\Zed\GiftCard\Business\Checker\GiftCardItemsCheckerInterface;
 use Spryker\Zed\GiftCard\Business\Discount\GiftCardDiscountableItemFilter;
@@ -96,11 +103,35 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeInterface
+     * @return \Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeAdderInterface
      */
-    public function createGiftCardCartCode()
+    public function createGiftCardCartCodeAdder(): GiftCardCartCodeAdderInterface
     {
-        return new GiftCardCartCode();
+        return new GiftCardCartCodeAdder();
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeDeleterInterface
+     */
+    public function createGiftCardCartCodeDeleter(): GiftCardCartCodeDeleterInterface
+    {
+        return new GiftCardCartCodeDeleter();
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeClearerInterface
+     */
+    public function createGiftCardCartCodeClearer(): GiftCardCartCodeClearerInterface
+    {
+        return new GiftCardCartCodeClearer();
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeOperationMessageFinderInterface
+     */
+    public function createGiftCardCartCodeOperationMessageFinder(): GiftCardCartCodeOperationMessageFinderInterface
+    {
+        return new GiftCardCartCodeOperationMessageFinder();
     }
 
     /**
