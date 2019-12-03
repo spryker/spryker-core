@@ -54,7 +54,7 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
 
     /**
      * {@inheritDoc}
-     * - Clears all applied and not applied voucher codes from the quote.
+     * - Clears all (both applied and unapplied) voucher codes from the Quote.
      *
      * @api
      *
@@ -69,9 +69,9 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
 
     /**
      * {@inheritDoc}
-     * - Returns voucher apply success message in case the given voucher code has been applied successfully.
-     * - Returns voucher apply failed message in case the given voucher code hasn't been applied successfully.
-     * - Returns an empty failed message if code is not relevant.
+     * - Returns a MessageTransfer with a Successfully Applied Voucher message when the voucher was applied successfully.
+     * - Returns a MessageTransfer with a Failed to Apply Voucher message when the voucher was applied unsuccessfully.
+     * - Returns an empty failed message when the code is not applicable.
      *
      * @api
      *
@@ -80,8 +80,8 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
      *
      * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, string $cartCode): ?MessageTransfer
+    public function findOperationResponseMessage(QuoteTransfer $quoteTransfer, string $cartCode): ?MessageTransfer
     {
-        return $this->getFacade()->getOperationResponseMessage($quoteTransfer, $cartCode);
+        return $this->getFacade()->findOperationResponseMessage($quoteTransfer, $cartCode);
     }
 }

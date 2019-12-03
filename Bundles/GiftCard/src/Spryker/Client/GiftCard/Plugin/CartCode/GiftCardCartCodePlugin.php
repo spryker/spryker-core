@@ -13,7 +13,8 @@ use Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
- * @deprecated Will be removed in the next major version. Please use \Spryker\Zed\GiftCard\Communication\Plugin\CartCode\GiftCardCartCodePlugin
+ * @deprecated Will be removed in the next major version. Please use \Spryker\Zed\GiftCard\Communication\Plugin\CartCode\GiftCardCartCodePlugin.
+ *
  * @method \Spryker\Client\GiftCard\GiftCardFactory getFactory()
  */
 class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInterface
@@ -23,6 +24,8 @@ class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInt
      * - Sets gift card to the quote if the code hasn't been added already.
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major version.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
@@ -41,6 +44,8 @@ class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInt
      * - Removes matching applied gift card and gift card payment from quote.
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major version.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
@@ -62,6 +67,8 @@ class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInt
      *
      * @api
      *
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *
@@ -79,6 +86,8 @@ class GiftCardCartCodePlugin extends AbstractPlugin implements CartCodePluginInt
      * - Clears all gift cards and gift card payments from the quote.
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major version.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

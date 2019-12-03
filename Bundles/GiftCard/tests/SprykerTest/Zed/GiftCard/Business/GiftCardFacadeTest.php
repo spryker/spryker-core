@@ -194,13 +194,13 @@ class GiftCardFacadeTest extends Test
     /**
      * @return void
      */
-    public function testGetOperationResponseMessageReturnsMessageTransfer(): void
+    public function testFindOperationResponseMessageReturnsMessageTransfer(): void
     {
         // Arrange
         $quoteTransfer = $this->tester->createQuoteTransferWithGiftCard();
 
         // Act
-        $messageTransfer = $this->getFacade()->getOperationResponseMessage($quoteTransfer, $this->tester::GIFT_CARD_CODE);
+        $messageTransfer = $this->getFacade()->findOperationResponseMessage($quoteTransfer, $this->tester::GIFT_CARD_CODE);
 
         // Assert
         $this->assertNotNull($messageTransfer);

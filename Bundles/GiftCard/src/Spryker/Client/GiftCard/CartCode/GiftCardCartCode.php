@@ -24,6 +24,8 @@ class GiftCardCartCode implements GiftCardCartCodeInterface
     protected const MESSAGE_TYPE_ERROR = 'error';
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *
@@ -44,6 +46,8 @@ class GiftCardCartCode implements GiftCardCartCodeInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *
@@ -58,6 +62,8 @@ class GiftCardCartCode implements GiftCardCartCodeInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *
@@ -79,6 +85,8 @@ class GiftCardCartCode implements GiftCardCartCodeInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer

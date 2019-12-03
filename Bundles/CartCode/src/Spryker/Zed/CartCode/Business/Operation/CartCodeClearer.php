@@ -57,11 +57,11 @@ class CartCodeClearer implements CartCodeClearerInterface
             return $lockedCartCodeResponseTransfer;
         }
 
-        $quoteTransfer = $this->executeCartCodePlugins($cartCodeRequestTransfer);
-        $quoteTransfer = $this->calculationFacade->recalculateQuote($quoteTransfer);
+        $quoteTransferWithClearedCodes = $this->executeCartCodePlugins($cartCodeRequestTransfer);
+        $recalculatedQuoteTransfer = $this->calculationFacade->recalculateQuote($quoteTransferWithClearedCodes);
 
         return (new CartCodeResponseTransfer())
-            ->setQuote($quoteTransfer);
+            ->setQuote($recalculatedQuoteTransfer);
     }
 
     /**

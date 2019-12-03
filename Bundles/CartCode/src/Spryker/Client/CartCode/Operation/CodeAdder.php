@@ -47,6 +47,8 @@ class CodeAdder implements CodeAdderInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *

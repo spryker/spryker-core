@@ -10,7 +10,7 @@ namespace Spryker\Zed\GiftCard\Business;
 use Spryker\Zed\GiftCard\Business\ActualValueHydrator\GiftCardActualValueHydrator;
 use Spryker\Zed\GiftCard\Business\Calculation\GiftCardCalculator;
 use Spryker\Zed\GiftCard\Business\Cart\MetadataExpander;
-use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeProcessor;
+use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCode;
 use Spryker\Zed\GiftCard\Business\Checker\GiftCardItemsChecker;
 use Spryker\Zed\GiftCard\Business\Checker\GiftCardItemsCheckerInterface;
 use Spryker\Zed\GiftCard\Business\Discount\GiftCardDiscountableItemFilter;
@@ -96,11 +96,11 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeProcessorInterface
+     * @return \Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeInterface
      */
-    public function createGiftCardCartCodeProcessor()
+    public function createGiftCardCartCode()
     {
-        return new GiftCardCartCodeProcessor();
+        return new GiftCardCartCode();
     }
 
     /**

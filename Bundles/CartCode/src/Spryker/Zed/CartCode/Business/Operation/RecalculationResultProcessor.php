@@ -35,19 +35,22 @@ class RecalculationResultProcessor implements RecalculationResultProcessorInterf
     public function processRecalculationResults(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
         $quoteTransfer = $cartCodeRequestTransfer->getQuote();
-        $cartCodeResponseTransfer = (new CartCodeResponseTransfer())->setIsSuccessful(true);
-        $cartCodeResponseTransfer->setQuote($quoteTransfer);
+        $cartCodeResponseTransfer = (new CartCodeResponseTransfer())->setQuote($quoteTransfer);
 
+        $cartCode = $cartCodeRequestTransfer->getCartCode();
         foreach ($this->cartCodePlugins as $cartCodePlugin) {
-            $messageTransfer = $cartCodePlugin->getOperationResponseMessage($quoteTransfer, $cartCodeRequestTransfer->getCartCode());
+            $messageTransfer = $cartCodePlugin->findOperationResponseMessage(
+                $quoteTransfer,
+                $cartCode
+            );
 
-            if ($messageTransfer) {
-                $cartCodeResponseTransfer->addMessage($messageTransfer);
+            if (!$messageTransfer) {
+                continue;
             }
 
-            if ($messageTransfer && $messageTransfer->getType() === static::MESSAGE_TYPE_ERROR) {
-                $cartCodeResponseTransfer->setIsSuccessful(false);
-            }
+            $cartCodeResponseTransfer->addMessage($messageTransfer);
+            $isSuccess = !($messageTransfer->getType() === static::MESSAGE_TYPE_ERROR);
+            $cartCodeResponseTransfer->setIsSuccessful($isSuccess);
         }
 
         return $cartCodeResponseTransfer;

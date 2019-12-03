@@ -22,6 +22,8 @@ interface CartCodePluginInterface
      *
      * @api
      *
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *
@@ -35,6 +37,8 @@ interface CartCodePluginInterface
      * - Cleans up $code and its relevant data when $code is present in QuoteTransfer.
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major version.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
@@ -50,6 +54,8 @@ interface CartCodePluginInterface
      *
      * @api
      *
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -63,6 +69,8 @@ interface CartCodePluginInterface
      * - Checks QuoteTransfer and provides a success or an error message.
      *
      * @api
+     *
+     * @deprecated Will be removed in the next major version.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code

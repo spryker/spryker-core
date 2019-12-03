@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class VoucherCartCodeProcessor implements VoucherCartCodeProcessorInterface
+class VoucherCartCode implements VoucherCartCodeInterface
 {
     protected const GLOSSARY_KEY_VOUCHER_NON_APPLICABLE = 'cart.voucher.apply.non_applicable';
     protected const GLOSSARY_KEY_VOUCHER_APPLY_SUCCESSFUL = 'cart.voucher.apply.successful';
@@ -86,14 +86,14 @@ class VoucherCartCodeProcessor implements VoucherCartCodeProcessorInterface
      *
      * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, string $cartCode): ?MessageTransfer
+    public function findOperationResponseMessage(QuoteTransfer $quoteTransfer, string $cartCode): ?MessageTransfer
     {
-        $voucherApplySuccessMessageTransfer = $this->getVoucherApplySuccessMessage($quoteTransfer, $cartCode);
+        $voucherApplySuccessMessageTransfer = $this->findVoucherApplySuccessMessage($quoteTransfer, $cartCode);
         if ($voucherApplySuccessMessageTransfer) {
             return $voucherApplySuccessMessageTransfer;
         }
 
-        $nonApplicableErrorMessageTransfer = $this->getNonApplicableErrorMessage($quoteTransfer, $cartCode);
+        $nonApplicableErrorMessageTransfer = $this->findNonApplicableErrorMessage($quoteTransfer, $cartCode);
         if ($nonApplicableErrorMessageTransfer) {
             return $nonApplicableErrorMessageTransfer;
         }
@@ -124,7 +124,7 @@ class VoucherCartCodeProcessor implements VoucherCartCodeProcessorInterface
      *
      * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    protected function getVoucherApplySuccessMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
+    protected function findVoucherApplySuccessMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
     {
         if ($this->isVoucherFromPromotionDiscount($quoteTransfer, $code) || !$this->isVoucherCodeApplied($quoteTransfer, $code)) {
             return null;
@@ -169,7 +169,7 @@ class VoucherCartCodeProcessor implements VoucherCartCodeProcessorInterface
      *
      * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    protected function getNonApplicableErrorMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
+    protected function findNonApplicableErrorMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
     {
         if ($this->isVoucherCodeApplyFailed($quoteTransfer, $code)) {
             $messageTransfer = new MessageTransfer();

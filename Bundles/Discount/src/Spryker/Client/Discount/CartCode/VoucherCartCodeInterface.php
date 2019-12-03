@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface VoucherCartCodeInterface
 {
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *
@@ -21,6 +23,8 @@ interface VoucherCartCodeInterface
     public function addCandidate(QuoteTransfer $quoteTransfer, $code): QuoteTransfer;
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *
@@ -29,6 +33,8 @@ interface VoucherCartCodeInterface
     public function removeCode(QuoteTransfer $quoteTransfer, $code): QuoteTransfer;
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -36,6 +42,8 @@ interface VoucherCartCodeInterface
     public function clearAllCodes(QuoteTransfer $quoteTransfer): QuoteTransfer;
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *

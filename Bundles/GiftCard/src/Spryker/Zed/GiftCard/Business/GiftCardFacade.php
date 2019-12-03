@@ -334,7 +334,7 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     public function addCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer
     {
         return $this->getFactory()
-            ->createGiftCardCartCodeProcessor()
+            ->createGiftCardCartCode()
             ->addCartCode($quoteTransfer, $cartCode);
     }
 
@@ -351,7 +351,7 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     public function removeCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer
     {
         return $this->getFactory()
-            ->createGiftCardCartCodeProcessor()
+            ->createGiftCardCartCode()
             ->removeCartCode($quoteTransfer, $cartCode);
     }
 
@@ -367,7 +367,7 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
     public function clearCartCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->getFactory()
-            ->createGiftCardCartCodeProcessor()
+            ->createGiftCardCartCode()
             ->clearCartCodes($quoteTransfer);
     }
 
@@ -381,10 +381,10 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, string $cartCode): ?MessageTransfer
+    public function findOperationResponseMessage(QuoteTransfer $quoteTransfer, string $cartCode): ?MessageTransfer
     {
         return $this->getFactory()
-            ->createGiftCardCartCodeProcessor()
-            ->getOperationResponseMessage($quoteTransfer, $cartCode);
+            ->createGiftCardCartCode()
+            ->findOperationResponseMessage($quoteTransfer, $cartCode);
     }
 }

@@ -21,6 +21,8 @@ class VoucherCartCode implements VoucherCartCodeInterface
     protected const MESSAGE_TYPE_ERROR = 'error';
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *
@@ -41,6 +43,8 @@ class VoucherCartCode implements VoucherCartCodeInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *
@@ -63,6 +67,8 @@ class VoucherCartCode implements VoucherCartCodeInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -76,6 +82,8 @@ class VoucherCartCode implements VoucherCartCodeInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *

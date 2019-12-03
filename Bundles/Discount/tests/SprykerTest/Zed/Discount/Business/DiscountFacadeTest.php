@@ -1006,13 +1006,13 @@ class DiscountFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetOperationResponseMessageReturnsMessageTransfer(): void
+    public function testFindOperationResponseMessageReturnsMessageTransfer(): void
     {
         // Arrange
         $quoteTransfer = $this->tester->createQuoteTransferWithVoucherDiscount();
 
         // Act
-        $messageTransfer = $this->createDiscountFacade()->getOperationResponseMessage($quoteTransfer, $this->tester::VOUCHER_CODE);
+        $messageTransfer = $this->createDiscountFacade()->findOperationResponseMessage($quoteTransfer, $this->tester::VOUCHER_CODE);
 
         // Assert
         $this->assertNotNull($messageTransfer);

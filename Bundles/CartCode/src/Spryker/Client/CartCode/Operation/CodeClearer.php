@@ -47,6 +47,8 @@ class CodeClearer implements CodeClearerInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer

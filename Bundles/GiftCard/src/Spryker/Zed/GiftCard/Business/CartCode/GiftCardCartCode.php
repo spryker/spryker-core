@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
-class GiftCardCartCodeProcessor implements GiftCardCartCodeProcessorInterface
+class GiftCardCartCode implements GiftCardCartCodeInterface
 {
     public const CART_GIFT_CARD_APPLY_SUCCESSFUL = 'cart.giftcard.apply.successful';
     public const CART_GIFT_CARD_APPLY_FAILED = 'cart.giftcard.apply.failed';
@@ -58,7 +58,9 @@ class GiftCardCartCodeProcessor implements GiftCardCartCodeProcessorInterface
      */
     public function clearCartCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        return $this->removeGiftCardPayment($quoteTransfer->setGiftCards(new ArrayObject()));
+        $quoteTransfer->setGiftCards(new ArrayObject());
+
+        return $quoteTransfer->setPayment(null);
     }
 
     /**
@@ -67,14 +69,14 @@ class GiftCardCartCodeProcessor implements GiftCardCartCodeProcessorInterface
      *
      * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, string $cartCode): ?MessageTransfer
+    public function findOperationResponseMessage(QuoteTransfer $quoteTransfer, string $cartCode): ?MessageTransfer
     {
-        $giftCardApplySuccessMessageTransfer = $this->getGiftCardApplySuccessMessage($quoteTransfer, $cartCode);
+        $giftCardApplySuccessMessageTransfer = $this->findGiftCardApplySuccessMessage($quoteTransfer, $cartCode);
         if ($giftCardApplySuccessMessageTransfer) {
             return $giftCardApplySuccessMessageTransfer;
         }
 
-        $giftCardApplyFailedMessageTransfer = $this->getGiftCardApplyFailedMessage($quoteTransfer, $cartCode);
+        $giftCardApplyFailedMessageTransfer = $this->findGiftCardApplyFailedMessage($quoteTransfer, $cartCode);
         if ($giftCardApplyFailedMessageTransfer) {
             return $giftCardApplyFailedMessageTransfer;
         }
@@ -143,7 +145,7 @@ class GiftCardCartCodeProcessor implements GiftCardCartCodeProcessorInterface
      *
      * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    protected function getGiftCardApplySuccessMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
+    protected function findGiftCardApplySuccessMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
     {
         foreach ($quoteTransfer->getGiftCards() as $giftCard) {
             if ($giftCard->getCode() !== $code) {
@@ -167,7 +169,7 @@ class GiftCardCartCodeProcessor implements GiftCardCartCodeProcessorInterface
      *
      * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    protected function getGiftCardApplyFailedMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
+    protected function findGiftCardApplyFailedMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
     {
         foreach ($quoteTransfer->getNotApplicableGiftCardCodes() as $giftCardCode) {
             if ($giftCardCode !== $code) {
