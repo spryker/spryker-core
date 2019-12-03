@@ -1,19 +1,22 @@
-# IDEs
-/.idea
-/.project
-/nbproject
-/.buildpath
-/.settings
+# IDE
+.idea/
+.project/
+nbproject/
+.buildpath/
+.settings/
 *.sublime-*
+
+# OS
+.DS_Store
 *.AppleDouble
 *.AppleDB
 *.AppleDesktop
 
-# OS
-.DS_Store
+# grunt stuff
+.grunt
+.sass-cache
+/node_modules/
 
-/vendor
-/composer.lock
-
-/tests/_output/*
-!/tests/_output/.gitkeep
+# Tooling
+vendor/
+composer.lock
