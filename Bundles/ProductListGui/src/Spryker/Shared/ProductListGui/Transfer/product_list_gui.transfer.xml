@@ -38,6 +38,10 @@
         <property name="customOptions" type="array" singular="customOptions"/>
     </transfer>
 
+    <transfer name="ButtonCollection">
+        <property name="buttons" type="Button[]" singular="button"/>
+    </transfer>
+
     <transfer name="TabsView">
         <property name="isNavigable" type="bool"/>
         <property name="tabs" type="TabItem[]" singular="tab"/>
@@ -78,10 +82,25 @@
         <property name="value" type="string"/>
     </transfer>
 
+    <transfer name="ProductListUsedByTable">
+        <property name="productList" type="ProductList"/>
+        <property name="rows" type="ProductListUsedByTableRow[]" singular="row"/>
+    </transfer>
+
+    <transfer name="ProductListUsedByTableRow">
+        <property name="title" type="string"/>
+        <property name="name" type="string"/>
+        <property name="actionButtons" type="ButtonCollection"/>
+    </transfer>
+
     <transfer name="ProductListCategoryRelation">
     </transfer>
 
     <transfer name="CategoryCollection">
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateSlotEditForm">
+        <property name="productListAggregateForm" type="ProductListAggregateForm"/>
     </transfer>
 
     <transfer name="Category">

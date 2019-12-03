@@ -313,4 +313,22 @@ interface ProductStorageClientInterface
      * @return array
      */
     public function findBulkProductAbstractStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): array;
+
+    /**
+     * Specification:
+     * - Retrieves a current Store specific ProductConcrete resources from Storage using specified mapping.
+     *
+     * @api
+     *
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return array
+     */
+    public function getBulkProductConcreteStorageDataByMapping(
+        string $mappingType,
+        array $identifiers,
+        string $localeName
+    ): array;
 }

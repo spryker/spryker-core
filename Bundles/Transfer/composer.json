@@ -6,7 +6,8 @@
   "require": {
     "fzaninotto/faker": "^1.6",
     "php": ">=7.2",
-    "spryker/kernel": "^3.30.0",
+    "spryker/decimal-object": "^1.0.0",
+    "spryker/kernel": "^3.42.0",
     "spryker/log": "^3.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/twig": "^3.0.0",

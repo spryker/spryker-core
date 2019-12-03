@@ -68,8 +68,8 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleInterface $localeClient
      * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface $utilEncodingService
-     * @param array $productConcreteRestrictionPlugins
-     * @param array $productConcreteRestrictionFilterPlugins
+     * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionPluginInterface[] $productConcreteRestrictionPlugins
+     * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionFilterPluginInterface[] $productConcreteRestrictionFilterPlugins
      */
     public function __construct(
         ProductStorageToStorageClientInterface $storageClient,
@@ -257,20 +257,13 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      *
      * @return array
      */
-    public function getProductConcreteStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): array
+    public function getBulkProductConcreteStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): array
     {
         $storageKeys = $this->generateMappingStorageKeys($mappingType, $identifiers, $localeName);
-        $productConcreteStorageData = $this->storageClient->getMulti($storageKeys);
-
         $productConcreteIds = [];
-        foreach ($productConcreteStorageData as $productConcreteStorageDataItem) {
-            $decodedProductConcreteStorageDataItem = $this->utilEncodingService->decodeJson($productConcreteStorageDataItem, true);
-
-            if (!$decodedProductConcreteStorageDataItem) {
-                continue;
-            }
-
-            $productConcreteIds[] = $decodedProductConcreteStorageDataItem[static::KEY_ID];
+        $mappings = $this->storageClient->getMulti($storageKeys);
+        foreach ($mappings as $mapping) {
+            $productConcreteIds[] = $this->utilEncodingService->decodeJson($mapping, true)[static::KEY_ID];
         }
 
         if (!$productConcreteIds) {

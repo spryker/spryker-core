@@ -67,4 +67,20 @@ class SalesConfigurableBundleFacade extends AbstractFacade implements SalesConfi
             ->createSalesOrderConfiguredBundleExpander()
             ->expandOrderWithConfiguredBundles($orderTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function transformConfiguredBundleOrderItems(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        return $this->getFactory()
+            ->createConfigurableBundleItemTransformer()
+            ->transformConfiguredBundleOrderItems($orderTransfer);
+    }
 }

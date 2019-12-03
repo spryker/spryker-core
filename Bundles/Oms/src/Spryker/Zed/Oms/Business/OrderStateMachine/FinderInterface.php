@@ -36,13 +36,6 @@ interface FinderInterface
     public function isOrderFlaggedAll($idOrder, $flag);
 
     /**
-     * @param string $sku
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    public function getReservedOrderItemsForSku($sku);
-
-    /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
      * @return array
