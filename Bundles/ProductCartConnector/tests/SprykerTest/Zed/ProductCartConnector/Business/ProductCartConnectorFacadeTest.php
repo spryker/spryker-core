@@ -45,7 +45,6 @@ class ProductCartConnectorFacadeTest extends Unit
     public function setUp(): void
     {
         parent::setUp();
-//        $this->tester->setUpDatabase();
     }
 
     /**
