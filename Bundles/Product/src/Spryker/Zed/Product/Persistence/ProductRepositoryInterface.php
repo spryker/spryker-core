@@ -129,5 +129,5 @@ interface ProductRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function getProductConcreteTransfersByFilter(FilterTransfer $filterTransfer): array;
+    public function getProductConcretesByFilter(FilterTransfer $filterTransfer): array;
 }

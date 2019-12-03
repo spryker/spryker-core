@@ -924,7 +924,7 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves product concrete transfers according to given offset and limit.
+     *  - Retrieves product concrete transfers according to given filter.
      *
      * @api
      *
@@ -932,5 +932,5 @@ interface ProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function getProductConcreteTransfersByFilter(FilterTransfer $filterTransfer): array;
+    public function getProductConcretesByFilter(FilterTransfer $filterTransfer): array;
 }

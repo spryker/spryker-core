@@ -1080,8 +1080,8 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function getProductConcreteTransfersByFilter(FilterTransfer $filterTransfer): array
+    public function getProductConcretesByFilter(FilterTransfer $filterTransfer): array
     {
-        return $this->getRepository()->getProductConcreteTransfersByFilter($filterTransfer);
+        return $this->getRepository()->getProductConcretesByFilter($filterTransfer);
     }
 }
