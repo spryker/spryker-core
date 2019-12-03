@@ -17,8 +17,8 @@
     </transfer>
 
     <transfer name="HealthCheckRequest">
-        <property name="requestedServices" type="string[]"/>
-        <property name="availableServices" type="string[]"/>
+        <property name="requestedServices" type="string[]" singular="requestedService"/>
+        <property name="availableServices" type="string[]" singular="availableService"/>
     </transfer>
 
     <transfer name="HealthCheckResponse">
