@@ -10,7 +10,6 @@ namespace Spryker\Zed\Oms\Communication\Controller;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
@@ -35,7 +34,7 @@ class TriggerController extends AbstractController
     protected const ERROR_INVALID_FORM = 'Form is invalid';
 
     /**
-     * @deprecated Use submitTriggerEventForOrderItemsAction() instead.
+     * @deprecated use submitTriggerEventForOrderItemsAction instead
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -43,11 +42,6 @@ class TriggerController extends AbstractController
      */
     public function triggerEventForOrderItemsAction(Request $request)
     {
-        trigger_error(
-            "This action is deprecated, please use submitTriggerEventForOrderItemsAction() instead.",
-            E_USER_DEPRECATED
-        );
-
         $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, static::ROUTE_REDIRECT_DEFAULT);
         $idOrderItems = $this->getRequestIdSalesOrderItems($request);
         if ($idOrderItems === []) {
@@ -88,7 +82,7 @@ class TriggerController extends AbstractController
     }
 
     /**
-     * @deprecated Use submitTriggerEventForOrderAction() instead.
+     * @deprecated use submitTriggerEventForOrderAction instead
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -96,11 +90,6 @@ class TriggerController extends AbstractController
      */
     public function triggerEventForOrderAction(Request $request)
     {
-        trigger_error(
-            "This action is deprecated, please use submitTriggerEventForOrderAction() instead.",
-            E_USER_DEPRECATED
-        );
-
         $idOrder = $this->castId($request->query->getInt('id-sales-order'));
         $event = $request->query->get('event');
         $redirect = $request->query->get('redirect', '/');
@@ -164,17 +153,11 @@ class TriggerController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
-     *
      * @return bool
      */
     protected function isValidPostRequest(Request $request): bool
     {
-        if (!$request->isMethod(Request::METHOD_POST)) {
-            throw new BadRequestHttpException();
-        }
-
-        return $this->isTriggerFormValid($request);
+        return $request->isMethod(Request::METHOD_POST) && $this->isTriggerFormValid($request);
     }
 
     /**
