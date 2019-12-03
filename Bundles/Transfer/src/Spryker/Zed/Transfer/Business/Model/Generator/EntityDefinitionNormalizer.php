@@ -113,7 +113,7 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
     protected function getTransferType($type)
     {
         $type = mb_strtolower($type);
-        if (!preg_match('/^int|^integer|^float|^double|^string|^array|^\[\]|^bool|^boolean/', $type)) {
+        if (!preg_match('/^int|^integer|^float|^double|^decimal|^string|^array|^\[\]|^bool|^boolean/', $type)) {
             return 'string';
         }
 
@@ -127,7 +127,7 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
      *
      * @return array
      */
-    private function normalizeForeignKeys(array $foreignKeys, array $properties, $module)
+    protected function normalizeForeignKeys(array $foreignKeys, array $properties, $module)
     {
         if (isset($foreignKeys[0])) {
             return $this->addForeignKeyTransfer($foreignKeys, $properties, $module);

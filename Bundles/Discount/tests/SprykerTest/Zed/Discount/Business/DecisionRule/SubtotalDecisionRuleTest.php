@@ -29,7 +29,7 @@ class SubtotalDecisionRuleTest extends BaseRuleTester
     /**
      * @return void
      */
-    public function testWhenSubTotalMatchesClauseShouldReturnTrue()
+    public function testWhenSubTotalMatchesClauseShouldReturnTrue(): void
     {
         $comparatorMock = $this->createComparatorMock();
         $comparatorMock->method('compare')->willReturnCallback(function (ClauseTransfer $clauseTransfer, $grandTotal) {
@@ -55,7 +55,7 @@ class SubtotalDecisionRuleTest extends BaseRuleTester
     /**
      * @return void
      */
-    public function testWhenSubTotalsNotSetShouldReturnFalse()
+    public function testWhenSubTotalsNotSetShouldReturnFalse(): void
     {
         $subtotalDecisionRule = $this->createSubtotalDecisionRule();
 
@@ -73,7 +73,7 @@ class SubtotalDecisionRuleTest extends BaseRuleTester
      *
      * @return \Spryker\Zed\Discount\Business\DecisionRule\SubTotalDecisionRule
      */
-    protected function createSubtotalDecisionRule(?ComparatorOperatorsInterface $comparatorMock = null)
+    protected function createSubtotalDecisionRule(?ComparatorOperatorsInterface $comparatorMock = null): SubTotalDecisionRule
     {
         if ($comparatorMock === null) {
             $comparatorMock = $this->createComparatorMock();

@@ -4,7 +4,7 @@
   "description": "CompanyUserGui module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/company": "^1.1.3",
     "spryker/company-user": "^2.7.0",
     "spryker/company-user-gui-extension": "^1.0.0",

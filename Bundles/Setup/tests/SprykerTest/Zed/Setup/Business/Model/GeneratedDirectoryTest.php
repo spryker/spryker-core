@@ -28,7 +28,7 @@ class GeneratedDirectoryTest extends Unit
     /**
      * @return void
      */
-    public function testClearAbortsOnNonExistingDirectory()
+    public function testClearAbortsOnNonExistingDirectory(): void
     {
         $fileSystemMock = $this->getFileSystemMock();
         $fileSystemMock

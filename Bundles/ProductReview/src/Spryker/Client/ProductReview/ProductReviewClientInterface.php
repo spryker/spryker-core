@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductReview;
 
+use Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 
@@ -36,6 +37,18 @@ interface ProductReviewClientInterface
      * @return array
      */
     public function findProductReviewsInSearch(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer);
+
+    /**
+     * Specification:
+     * - Retrieves provided products abstract related product reviews from Search.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer
+     *
+     * @return array
+     */
+    public function getBulkProductReviewsFromSearch(BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer): array;
 
     /**
      * Specification:

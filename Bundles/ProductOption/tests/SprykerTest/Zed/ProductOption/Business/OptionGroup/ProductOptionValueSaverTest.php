@@ -33,7 +33,7 @@ class ProductOptionValueSaverTest extends MockProvider
      *
      * @return void
      */
-    public function testSaveProductOptionValuePersistsProvidedOptionValue()
+    public function testSaveProductOptionValuePersistsProvidedOptionValue(): void
     {
         // Assign
         $productOptionValueEntity = $this->createProductOptionValueEntityMock();

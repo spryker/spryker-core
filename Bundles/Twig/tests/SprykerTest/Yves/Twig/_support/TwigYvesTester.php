@@ -36,7 +36,7 @@ class TwigYvesTester extends Actor
      *
      * @return void
      */
-    public function assertPathsInOrder(array $templatePaths, array $expectedPaths)
+    public function assertPathsInOrder(array $templatePaths, array $expectedPaths): void
     {
         $this->assertSame($expectedPaths, $templatePaths);
     }

@@ -42,7 +42,7 @@ class TransferCleanerTest extends Unit
     /**
      * @return string
      */
-    private function getTestDirectory()
+    private function getTestDirectory(): string
     {
         return codecept_data_dir('test_files/tmp/');
     }
@@ -65,7 +65,7 @@ class TransferCleanerTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteShouldDeleteAllFilesInADirectory()
+    public function testExecuteShouldDeleteAllFilesInADirectory(): void
     {
         $this->assertTrue(file_exists($this->getTestDirectory() . static::TEST_FILE_NAME));
 

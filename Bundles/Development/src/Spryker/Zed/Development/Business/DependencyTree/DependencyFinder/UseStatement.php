@@ -29,8 +29,10 @@ class UseStatement extends AbstractDependencyFinder
                 $className = str_replace(['use ', ';'], '', $match[0]);
                 $toBundle = $match[static::BUNDLE];
                 $layer = $this->getLayerFromUseStatement($match);
-                $dependencyInformation[DependencyTree::META_FOREIGN_LAYER] = $layer;
-                $dependencyInformation[DependencyTree::META_FOREIGN_CLASS_NAME] = $className;
+                $dependencyInformation = [
+                    DependencyTree::META_FOREIGN_LAYER => $layer,
+                    DependencyTree::META_FOREIGN_CLASS_NAME => $className,
+                ];
 
                 $this->addDependency($fileInfo, $toBundle, $dependencyInformation);
             }
@@ -38,8 +40,10 @@ class UseStatement extends AbstractDependencyFinder
 
         if (preg_match('/use Spryker\\\Shared\\\Config/', $content)) {
             $toBundle = 'Config';
-            $dependencyInformation[DependencyTree::META_FOREIGN_LAYER] = '';
-            $dependencyInformation[DependencyTree::META_FOREIGN_CLASS_NAME] = 'Spryker\\Shared\\Config';
+            $dependencyInformation = [
+                DependencyTree::META_FOREIGN_LAYER => '',
+                DependencyTree::META_FOREIGN_CLASS_NAME => 'Spryker\\Shared\\Config',
+            ];
 
             $this->addDependency($fileInfo, $toBundle, $dependencyInformation);
         }
