@@ -123,7 +123,9 @@ class CatalogSearchRequestParametersIntegerValidator implements CatalogSearchReq
                 return $default;
             }
 
-            $data = $data[$innerKey];
+            if (is_array($data[$innerKey])) {
+                $data = $data[$innerKey];
+            }
         }
 
         return $data;
