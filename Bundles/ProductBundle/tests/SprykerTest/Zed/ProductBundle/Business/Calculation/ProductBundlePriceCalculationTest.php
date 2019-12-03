@@ -34,7 +34,7 @@ class ProductBundlePriceCalculationTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateShouldSumAllBundledItemAmountsToProductBundle()
+    public function testCalculateShouldSumAllBundledItemAmountsToProductBundle(): void
     {
         $productBundlePriceCalculationMock = $this->createProductPriceCalculationMock();
 
@@ -71,7 +71,7 @@ class ProductBundlePriceCalculationTest extends Unit
      *
      * @return void
      */
-    protected function setupFindOrderItemsByIdSalesOrder(MockObject $productBundlePriceCalculationMock)
+    protected function setupFindOrderItemsByIdSalesOrder(MockObject $productBundlePriceCalculationMock): void
     {
         $salesOrderItems = new ObjectCollection();
 
@@ -96,7 +96,7 @@ class ProductBundlePriceCalculationTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    protected function createOrderTransfer()
+    protected function createOrderTransfer(): OrderTransfer
     {
         $orderTransfer = new OrderTransfer();
 
@@ -109,7 +109,7 @@ class ProductBundlePriceCalculationTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function createQuoteTransfer()
+    protected function createQuoteTransfer(): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
 
@@ -122,7 +122,7 @@ class ProductBundlePriceCalculationTest extends Unit
     /**
      * @return \ArrayObject
      */
-    protected function createBundledItems()
+    protected function createBundledItems(): ArrayObject
     {
         $bundledItems = new ArrayObject();
 

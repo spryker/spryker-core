@@ -38,11 +38,11 @@ class RequestServiceProviderTest extends Unit
      * @return void
      */
     public function testBeforeMustParseRequestDataAndSetBundleControllerAndActionInRequest(
-        $givenUrl,
-        $expectedBundle,
-        $expectedController,
-        $expectedAction
-    ) {
+        string $givenUrl,
+        string $expectedBundle,
+        string $expectedController,
+        string $expectedAction
+    ): void {
         $application = new Application();
 
         $requestServiceProvider = new RequestServiceProvider();
@@ -59,7 +59,7 @@ class RequestServiceProviderTest extends Unit
     /**
      * @return array
      */
-    public function urlStack()
+    public function urlStack(): array
     {
         return [
             ['/foo', 'foo', 'index', 'index'],

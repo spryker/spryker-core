@@ -16,6 +16,8 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/product-label-storage": "*",
+    "spryker/product-review": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },

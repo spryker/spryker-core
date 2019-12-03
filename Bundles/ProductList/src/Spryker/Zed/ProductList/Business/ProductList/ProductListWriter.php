@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductList\Business\ProductList;
 
 use ArrayObject;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -17,6 +18,8 @@ use Spryker\Zed\ProductList\Persistence\ProductListEntityManagerInterface;
 class ProductListWriter implements ProductListWriterInterface
 {
     use TransactionTrait;
+
+    protected const MESSAGE_PRODUCT_LIST_DELETE_SUCCESS = 'Product List has been successfully removed.';
 
     /**
      * @var \Spryker\Zed\ProductList\Persistence\ProductListEntityManagerInterface
@@ -44,24 +47,32 @@ class ProductListWriter implements ProductListWriterInterface
     protected $productListPreUpdatePlugins;
 
     /**
+     * @var \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListDeletePreCheckPluginInterface[]
+     */
+    protected $productListDeletePreCheckPlugins;
+
+    /**
      * @param \Spryker\Zed\ProductList\Persistence\ProductListEntityManagerInterface $productListEntityManager
      * @param \Spryker\Zed\ProductList\Business\KeyGenerator\ProductListKeyGeneratorInterface $productListKeyGenerator
      * @param \Spryker\Zed\ProductList\Business\ProductList\ProductListPostSaverInterface[] $productListPostSavers
      * @param \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreCreatePluginInterface[] $productListPreCreatePlugins
      * @param \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreUpdatePluginInterface[] $productListPreUpdatePlugins
+     * @param \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListDeletePreCheckPluginInterface[] $productListDeletePreCheckPlugins
      */
     public function __construct(
         ProductListEntityManagerInterface $productListEntityManager,
         ProductListKeyGeneratorInterface $productListKeyGenerator,
         array $productListPostSavers = [],
         array $productListPreCreatePlugins = [],
-        array $productListPreUpdatePlugins = []
+        array $productListPreUpdatePlugins = [],
+        array $productListDeletePreCheckPlugins = []
     ) {
         $this->productListEntityManager = $productListEntityManager;
         $this->productListKeyGenerator = $productListKeyGenerator;
         $this->productListPostSavers = $productListPostSavers;
         $this->productListPreCreatePlugins = $productListPreCreatePlugins;
         $this->productListPreUpdatePlugins = $productListPreUpdatePlugins;
+        $this->productListDeletePreCheckPlugins = $productListDeletePreCheckPlugins;
     }
 
     /**
@@ -105,12 +116,22 @@ class ProductListWriter implements ProductListWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function deleteProductList(ProductListTransfer $productListTransfer): void
+    public function deleteProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
-        $this->getTransactionHandler()->handleTransaction(function () use ($productListTransfer) {
-            $this->executeDeleteProductListTransaction($productListTransfer);
+        $productListResponseTransfer = (new ProductListResponseTransfer())
+            ->setProductList($productListTransfer)
+            ->setIsSuccessful(true);
+
+        $productListResponseTransfer = $this->executeProductListDeletePreCheckPlugins($productListResponseTransfer);
+
+        if (!$productListResponseTransfer->getIsSuccessful()) {
+            return $productListResponseTransfer;
+        }
+
+        return $this->getTransactionHandler()->handleTransaction(function () use ($productListTransfer, $productListResponseTransfer) {
+            return $this->executeDeleteProductListTransaction($productListTransfer, $productListResponseTransfer);
         });
     }
 
@@ -185,15 +206,23 @@ class ProductListWriter implements ProductListWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
     protected function executeDeleteProductListTransaction(
-        ProductListTransfer $productListTransfer
-    ): void {
+        ProductListTransfer $productListTransfer,
+        ProductListResponseTransfer $productListResponseTransfer
+    ): ProductListResponseTransfer {
         $this->productListEntityManager->deleteProductListProductRelations($productListTransfer);
         $this->productListEntityManager->deleteProductListCategoryRelations($productListTransfer);
         $this->productListEntityManager->deleteProductList($productListTransfer);
+
+        $productListResponseTransfer->addMessage(
+            (new MessageTransfer())->setValue(static::MESSAGE_PRODUCT_LIST_DELETE_SUCCESS)
+        );
+
+        return $productListResponseTransfer;
     }
 
     /**
@@ -230,6 +259,21 @@ class ProductListWriter implements ProductListWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    protected function executeProductListDeletePreCheckPlugins(ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
+    {
+        foreach ($this->productListDeletePreCheckPlugins as $productListDeletePreCheckPlugin) {
+            $resultProductListResponseTransfer = $productListDeletePreCheckPlugin->execute($productListResponseTransfer->getProductList());
+            $productListResponseTransfer = $this->mergeProductListResponseTransfers($productListResponseTransfer, $resultProductListResponseTransfer);
+        }
+
+        return $productListResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
      * @param \Generated\Shared\Transfer\ProductListResponseTransfer $resultProductListResponseTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
@@ -245,5 +289,25 @@ class ProductListWriter implements ProductListWriterInterface
 
         return $productListResponseTransfer
             ->setMessages(new ArrayObject($messageTransfers));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
+     * @param \Generated\Shared\Transfer\ProductListResponseTransfer $resultProductListResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    protected function mergeProductListResponseTransfers(
+        ProductListResponseTransfer $productListResponseTransfer,
+        ProductListResponseTransfer $resultProductListResponseTransfer
+    ): ProductListResponseTransfer {
+        $productListResponseTransfer = $this->mergeProductListResponseMessages(
+            $productListResponseTransfer,
+            $resultProductListResponseTransfer
+        );
+
+        return $productListResponseTransfer->setIsSuccessful(
+            $productListResponseTransfer->getIsSuccessful() && $resultProductListResponseTransfer->getIsSuccessful()
+        );
     }
 }

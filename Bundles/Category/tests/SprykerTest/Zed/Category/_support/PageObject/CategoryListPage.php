@@ -23,7 +23,7 @@ class CategoryListPage
      *
      * @return string
      */
-    public static function getAssignProductsButtonSelector($position = 1)
+    public static function getAssignProductsButtonSelector(int $position = 1): string
     {
         return sprintf('//a[@title="Assign Products to this Category"][%s]', $position);
     }
@@ -33,7 +33,7 @@ class CategoryListPage
      *
      * @return string
      */
-    public static function getDeleteButtonSelector($position = 1)
+    public static function getDeleteButtonSelector(int $position = 1): string
     {
         return sprintf('//a[@title="Delete Category"][%s]', $position);
     }

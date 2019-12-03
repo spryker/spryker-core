@@ -26,7 +26,7 @@ class TwigCommunicationFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateFilesystemLoaderReturnsTwigLoader()
+    public function testCreateFilesystemLoaderReturnsTwigLoader(): void
     {
         $twigCommunicationFactory = new TwigCommunicationFactory();
         $filesystemLoader = $twigCommunicationFactory->createFilesystemLoader();

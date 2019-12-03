@@ -14,6 +14,7 @@ use Codeception\Stub;
 use Codeception\TestInterface;
 use Exception;
 use ReflectionClass;
+use ReflectionProperty;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\AbstractBundleConfig;
 
@@ -49,7 +50,7 @@ class ConfigHelper extends Module
     /**
      * @return void
      */
-    public function _initialize()
+    public function _initialize(): void
     {
         Config::init();
         $reflectionProperty = $this->getConfigReflectionProperty();
@@ -59,7 +60,7 @@ class ConfigHelper extends Module
     /**
      * @return \ReflectionProperty
      */
-    protected function getConfigReflectionProperty()
+    protected function getConfigReflectionProperty(): ReflectionProperty
     {
         $reflection = new ReflectionClass(Config::class);
         $reflectionProperty = $reflection->getProperty('config');
@@ -74,7 +75,7 @@ class ConfigHelper extends Module
      *
      * @return void
      */
-    public function setConfig($key, $value)
+    public function setConfig(string $key, $value): void
     {
         $configProperty = $this->getConfigReflectionProperty();
         $config = $configProperty->getValue();
@@ -88,7 +89,7 @@ class ConfigHelper extends Module
      *
      * @return void
      */
-    public function mockEnvironmentConfig($key, $value)
+    public function mockEnvironmentConfig(string $key, $value): void
     {
         $configProperty = $this->getConfigReflectionProperty();
         $config = $configProperty->getValue();
@@ -104,7 +105,7 @@ class ConfigHelper extends Module
      *
      * @return \Spryker\Shared\Kernel\AbstractBundleConfig|null
      */
-    public function mockConfigMethod(string $methodName, $return)
+    public function mockConfigMethod(string $methodName, $return): ?AbstractBundleConfig
     {
         $className = $this->getConfigClassName();
 
@@ -126,7 +127,7 @@ class ConfigHelper extends Module
      *
      * @return \Spryker\Shared\Kernel\AbstractBundleConfig|null
      */
-    public function mockSharedConfigMethod(string $methodName, $return)
+    public function mockSharedConfigMethod(string $methodName, $return): ?AbstractBundleConfig
     {
         $className = $this->getSharedConfigClassName();
 
@@ -143,7 +144,7 @@ class ConfigHelper extends Module
     /**
      * @return \Spryker\Shared\Kernel\AbstractBundleConfig
      */
-    public function getModuleConfig()
+    public function getModuleConfig(): AbstractBundleConfig
     {
         if ($this->configStub !== null) {
             $this->configStub = $this->injectSharedConfig($this->configStub);
@@ -183,7 +184,7 @@ class ConfigHelper extends Module
      *
      * @return \Spryker\Shared\Kernel\AbstractBundleConfig
      */
-    protected function injectSharedConfig(AbstractBundleConfig $moduleConfig)
+    protected function injectSharedConfig(AbstractBundleConfig $moduleConfig): AbstractBundleConfig
     {
         if (!method_exists($moduleConfig, 'setSharedConfig')) {
             return $moduleConfig;
@@ -202,7 +203,7 @@ class ConfigHelper extends Module
     /**
      * @return \Spryker\Shared\Kernel\AbstractBundleConfig|null
      */
-    protected function getSharedConfig()
+    protected function getSharedConfig(): ?AbstractBundleConfig
     {
         if ($this->sharedConfigStub !== null) {
             return $this->sharedConfigStub;
@@ -214,7 +215,7 @@ class ConfigHelper extends Module
     /**
      * @return \Spryker\Shared\Kernel\AbstractBundleConfig|null
      */
-    protected function createSharedConfig()
+    protected function createSharedConfig(): ?AbstractBundleConfig
     {
         $sharedConfigClassName = $this->getSharedConfigClassName();
         if (!class_exists($sharedConfigClassName)) {
@@ -240,7 +241,7 @@ class ConfigHelper extends Module
      *
      * @return void
      */
-    public function removeConfig($key)
+    public function removeConfig(string $key): void
     {
         $configProperty = $this->getConfigReflectionProperty();
         $config = $configProperty->getValue();
@@ -253,7 +254,7 @@ class ConfigHelper extends Module
      *
      * @return void
      */
-    public function _before(TestInterface $test)
+    public function _before(TestInterface $test): void
     {
         $this->configStub = null;
         $this->mockedConfigMethods = [];
@@ -267,7 +268,7 @@ class ConfigHelper extends Module
      *
      * @return void
      */
-    public function _after(TestInterface $test)
+    public function _after(TestInterface $test): void
     {
         $this->resetConfig();
     }
@@ -275,7 +276,7 @@ class ConfigHelper extends Module
     /**
      * @return void
      */
-    public function _afterSuite()
+    public function _afterSuite(): void
     {
         $this->resetConfig();
     }
@@ -283,7 +284,7 @@ class ConfigHelper extends Module
     /**
      * @return void
      */
-    private function resetConfig()
+    private function resetConfig(): void
     {
         $reflectionProperty = $this->getConfigReflectionProperty();
         $reflectionProperty->setValue(new ArrayObject($this->configCache));

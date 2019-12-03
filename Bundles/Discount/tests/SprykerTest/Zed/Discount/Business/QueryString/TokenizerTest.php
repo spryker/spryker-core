@@ -26,7 +26,7 @@ class TokenizerTest extends Unit
     /**
      * @return void
      */
-    public function testWhenSpaceUsedShouldReturnEachWordAsAToken()
+    public function testWhenSpaceUsedShouldReturnEachWordAsAToken(): void
     {
         $tokenizer = $this->createTokenizer();
         $tokens = $tokenizer->tokenizeQueryString('one two     and three  ');
@@ -36,7 +36,7 @@ class TokenizerTest extends Unit
     /**
      * @return void
      */
-    public function testWhenQuotesUsedShouldThreadAsASingleTokenWhatIsInside()
+    public function testWhenQuotesUsedShouldThreadAsASingleTokenWhatIsInside(): void
     {
         $tokenizer = $this->createTokenizer();
         $tokens = $tokenizer->tokenizeQueryString('sku = "one two three" ');
@@ -47,7 +47,7 @@ class TokenizerTest extends Unit
     /**
      * @return void
      */
-    public function testWhenParenthesisIsUsedShouldBeUsedAsSeparateToken()
+    public function testWhenParenthesisIsUsedShouldBeUsedAsSeparateToken(): void
     {
         $tokenizer = $this->createTokenizer();
         $tokens = $tokenizer->tokenizeQueryString(' ( one and two) ');
@@ -58,7 +58,7 @@ class TokenizerTest extends Unit
     /**
      * @return \Spryker\Zed\Discount\Business\QueryString\Tokenizer
      */
-    protected function createTokenizer()
+    protected function createTokenizer(): Tokenizer
     {
         return new Tokenizer();
     }
