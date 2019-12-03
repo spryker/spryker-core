@@ -31,7 +31,7 @@ class CollectorAndSpecificationTest extends Unit
     /**
      * @return void
      */
-    public function testCollectShouldReturnRecordsOnlyExistingInBoth()
+    public function testCollectShouldReturnRecordsOnlyExistingInBoth(): void
     {
         $leftMock = $this->createCollectorSpecificationMock();
 
@@ -62,7 +62,7 @@ class CollectorAndSpecificationTest extends Unit
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorAndSpecification
      */
-    protected function createCollectorAndSpecification(CollectorSpecificationInterface $leftMock, CollectorSpecificationInterface $rightMock)
+    protected function createCollectorAndSpecification(CollectorSpecificationInterface $leftMock, CollectorSpecificationInterface $rightMock): CollectorAndSpecification
     {
         return new CollectorAndSpecification($leftMock, $rightMock);
     }

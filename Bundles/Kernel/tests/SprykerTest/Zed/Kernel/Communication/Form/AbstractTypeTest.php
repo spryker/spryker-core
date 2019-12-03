@@ -34,7 +34,7 @@ class AbstractTypeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCommunicationFactoryShouldReturnInstanceIfExists()
+    public function testGetCommunicationFactoryShouldReturnInstanceIfExists(): void
     {
         $formType = new FooType();
 
@@ -52,7 +52,7 @@ class AbstractTypeTest extends Unit
     /**
      * @return void
      */
-    public function testGetFacadeShouldThrowExceptionIfFacadeNotFound()
+    public function testGetFacadeShouldThrowExceptionIfFacadeNotFound(): void
     {
         $this->expectException(FacadeNotFoundException::class);
 
@@ -63,7 +63,7 @@ class AbstractTypeTest extends Unit
     /**
      * @return void
      */
-    public function testGetFacadeShouldReturnInstanceIfExists()
+    public function testGetFacadeShouldReturnInstanceIfExists(): void
     {
         $formType = new FooType();
 
@@ -81,7 +81,7 @@ class AbstractTypeTest extends Unit
     /**
      * @return void
      */
-    public function testGetQueryContainerThrowExceptionIfQueryContainerNotFound()
+    public function testGetQueryContainerThrowExceptionIfQueryContainerNotFound(): void
     {
         $this->expectException(QueryContainerNotFoundException::class);
 
@@ -105,7 +105,7 @@ class AbstractTypeTest extends Unit
     /**
      * @return void
      */
-    public function testGetQueryContainerShouldReturnInstanceIfQueryContainerIfExists()
+    public function testGetQueryContainerShouldReturnInstanceIfQueryContainerIfExists(): void
     {
         $formType = new FooType();
 

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Glue\GlueApplication\Helper;
 
 use Codeception\Lib\Framework;
@@ -15,7 +20,7 @@ class GlueBootstrap extends Framework
     /**
      * @return void
      */
-    public function _initialize()
+    public function _initialize(): void
     {
         $this->boot();
     }
@@ -23,7 +28,7 @@ class GlueBootstrap extends Framework
     /**
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $pimplePlugin = new Pimple();
         $pimplePlugin->setApplication(new Application());

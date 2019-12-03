@@ -28,7 +28,7 @@ class ItemCountPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetItemCountReturns0WhenNoItemAndNoBundleProductInCart()
+    public function testGetItemCountReturns0WhenNoItemAndNoBundleProductInCart(): void
     {
         $quoteTransfer = new QuoteTransfer();
         $itemCountPlugin = new ItemCountPlugin();
@@ -39,7 +39,7 @@ class ItemCountPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetItemCountReturns1WhenOneItemInCart()
+    public function testGetItemCountReturns1WhenOneItemInCart(): void
     {
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->addItem(new ItemTransfer());
@@ -51,7 +51,7 @@ class ItemCountPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetItemCountReturns1WhenOneBundleProductInCart()
+    public function testGetItemCountReturns1WhenOneBundleProductInCart(): void
     {
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->addBundleItem(new ItemTransfer());
@@ -63,7 +63,7 @@ class ItemCountPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetItemCountReturns2WhenOneBundleProductAndOneItemInCart()
+    public function testGetItemCountReturns2WhenOneBundleProductAndOneItemInCart(): void
     {
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->addBundleItem(new ItemTransfer());

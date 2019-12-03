@@ -35,7 +35,7 @@ class ProductBundleSalesOrderSaverTest extends Unit
     /**
      * @return void
      */
-    public function testSaveSaleOrderBundleItemsShouldPersistGivenBundleItems()
+    public function testSaveSaleOrderBundleItemsShouldPersistGivenBundleItems(): void
     {
         $productBundleMock = $this->createProductBundleSalesOrderSaverMock();
 

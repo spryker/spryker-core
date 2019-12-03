@@ -118,7 +118,7 @@ class CmsBlockStorageListenerTest extends Unit
     /**
      * @return \Spryker\Zed\CmsBlockStorage\Business\CmsBlockStorageFacade
      */
-    protected function getCmsBlockStorageFacade()
+    protected function getCmsBlockStorageFacade(): CmsBlockStorageFacade
     {
         $factory = new CmsBlockStorageBusinessFactory();
         $factory->setConfig(new CmsBlockStorageConfigMock());

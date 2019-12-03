@@ -17,7 +17,7 @@ class CollectorConfigWithNotDefinedDbEngineFake extends CollectorConfig
     /**
      * @return string
      */
-    public function getCurrentEngineName()
+    public function getCurrentEngineName(): string
     {
         return $this->getMysqlEngineName();
     }

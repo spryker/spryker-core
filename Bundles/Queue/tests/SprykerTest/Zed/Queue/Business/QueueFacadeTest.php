@@ -57,7 +57,7 @@ class QueueFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function _before()
+    protected function _before(): void
     {
         $this->tester->setDependency(QueueDependencyProvider::QUEUE_MESSAGE_PROCESSOR_PLUGINS, [
             EventConstants::EVENT_QUEUE => new EventQueueMessageProcessorPlugin(),

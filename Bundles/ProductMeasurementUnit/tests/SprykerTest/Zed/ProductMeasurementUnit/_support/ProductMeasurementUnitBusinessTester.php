@@ -64,8 +64,8 @@ class ProductMeasurementUnitBusinessTester extends Actor
     public function addSkuToCartChangeTransfer(
         CartChangeTransfer $cartChangeTransfer,
         int $idProductMeasurementSalesUnit,
-        $sku,
-        $quantity = 1
+        string $sku,
+        int $quantity = 1
     ): CartChangeTransfer {
         $quantitySalesUnit = $this->createProductMeasurementSalesUnitTransfer($idProductMeasurementSalesUnit);
 

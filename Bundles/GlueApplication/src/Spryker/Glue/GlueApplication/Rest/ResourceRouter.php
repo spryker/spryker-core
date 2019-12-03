@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -8,11 +9,11 @@ namespace Spryker\Glue\GlueApplication\Rest;
 
 use Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\Uri\UriParserInterface;
-use Spryker\Glue\Kernel\Application;
 use Spryker\Glue\Kernel\BundleControllerAction;
 use Spryker\Glue\Kernel\ClassResolver\Controller\ControllerResolver;
 use Spryker\Glue\Kernel\Controller\RouteNameResolver;
 use Spryker\Shared\Application\Communication\ControllerServiceBuilder;
+use Spryker\Shared\Kernel\Communication\Application;
 use Symfony\Component\HttpFoundation\Request;
 
 class ResourceRouter implements ResourceRouterInterface
@@ -23,7 +24,7 @@ class ResourceRouter implements ResourceRouterInterface
     protected $requestHeaderValidator;
 
     /**
-     * @var \Spryker\Glue\Kernel\Application
+     * @var \Spryker\Shared\Kernel\Communication\Application
      */
     protected $application;
 
@@ -39,7 +40,7 @@ class ResourceRouter implements ResourceRouterInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidatorInterface $requestHeaderValidator
-     * @param \Spryker\Glue\Kernel\Application $application
+     * @param \Spryker\Shared\Kernel\Communication\Application $application
      * @param \Spryker\Glue\GlueApplication\Rest\Uri\UriParserInterface $uriParser
      * @param \Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface $resourceRouteLoader
      */

@@ -32,7 +32,7 @@ class MoneyToTransferConverterTest extends Unit
     /**
      * @return void
      */
-    public function testConvertShouldReturnTransfer()
+    public function testConvertShouldReturnTransfer(): void
     {
         $money = new Money(self::AMOUNT, new Currency(self::CURRENCY));
         $moneyToTransferConverter = new MoneyToTransferMapper();
