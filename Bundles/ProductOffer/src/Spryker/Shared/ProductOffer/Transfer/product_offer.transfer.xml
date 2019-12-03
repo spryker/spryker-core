@@ -9,6 +9,12 @@
         <property name="productOfferReference" type="string"/>
     </transfer>
 
+    <transfer name="ProductOfferStore">
+        <property name="idProductOfferStore" type="int"/>
+        <property name="fkProductOffer" type="string"/>
+        <property name="fkStore" type="string"/>
+    </transfer>
+
     <transfer name="ProductOfferCollection">
         <property name="productOffers" type="ProductOffer[]" singular="productOffer"/>
     </transfer>

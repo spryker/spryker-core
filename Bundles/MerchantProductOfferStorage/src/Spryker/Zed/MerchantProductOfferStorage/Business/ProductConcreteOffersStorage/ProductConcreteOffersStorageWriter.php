@@ -10,6 +10,8 @@ namespace Spryker\Zed\MerchantProductOfferStorage\Business\ProductConcreteOffers
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorageQuery;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStoreQuery;
+use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface;
 
 class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorageWriterInterface
@@ -37,17 +39,35 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
         $productSkus = array_unique($productSkus);
         $productOfferCriteriaFilterTransfer = new ProductOfferCriteriaFilterTransfer();
         $productOfferCriteriaFilterTransfer->setConcreteSkus($productSkus);
+
+        //As far as I know we don't have to use facade methods in storage module, don't we?
+        //Instead of this you have to get all the needed data + store data
         $productOfferCollectionTransfer = $this->productOfferFacade->find($productOfferCriteriaFilterTransfer);
 
         $productOffersGroupedBySku = $this->groupProductOfferByConcreteSku($productOfferCollectionTransfer);
 
         foreach ($productOffersGroupedBySku as $sku => $productOfferReferenceList) {
-            $productConcreteProductOffersStorageEntity = SpyProductConcreteProductOffersStorageQuery::create()
-                ->filterByConcreteSku($sku)
-                ->findOneOrCreate();
-            $productConcreteProductOffersStorageEntity->setData($productOfferReferenceList);
 
-            $productConcreteProductOffersStorageEntity->save();
+            //Should be removed. You can get all the data by one query.
+            $stores = SpyProductOfferStoreQuery::create()
+                ->useSpyProductOfferQuery()
+                    ->filterByConcreteSku($sku)
+                ->endUse()
+                ->useSpyStoreQuery()
+                ->endUse()
+                ->select([SpyStoreTableMap::COL_NAME])
+                ->find();
+
+            foreach ($stores->getData() as $store) {
+                $productConcreteProductOffersStorageEntity = SpyProductConcreteProductOffersStorageQuery::create()
+                    ->filterByConcreteSku($sku)
+                    ->filterByStore($store)
+                    ->findOneOrCreate();
+                $productConcreteProductOffersStorageEntity->setData($productOfferReferenceList);
+                $productConcreteProductOffersStorageEntity->setStore($store);
+
+                $productConcreteProductOffersStorageEntity->save();
+            }
         }
     }
 

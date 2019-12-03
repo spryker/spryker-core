@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorageQuery;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStore;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStoreQuery;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface;
 
 class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
@@ -37,17 +39,29 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     {
         $productOfferCriteriaFilterTransfer = new ProductOfferCriteriaFilterTransfer();
         $productOfferCriteriaFilterTransfer->setProductOfferReferences($productOfferReferences);
+
+        //As far as I know we don't have to use facade methods in storage module, don't we?
+        //Instead of this you have to get all the needed data + store data
         $productOfferCollectionTransfer = $this->productOfferFacade->find($productOfferCriteriaFilterTransfer);
 
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
-            $productOfferStorageEntity = SpyProductOfferStorageQuery::create()
-                ->filterByProductOfferReference($productOfferTransfer->getProductOfferReference())
-                ->findOneOrCreate();
-            $productOfferStorageTransfer = $this->createProductOfferStorageTransfer($productOfferTransfer);
-            
-            $productOfferStorageEntity->setData($productOfferStorageTransfer->modifiedToArray());
+                //Should be removed. You can get all the data by one query.
+                $productOfferStores = SpyProductOfferStoreQuery::create()
+                ->findByFkProductOffer($productOfferTransfer->getIdProductOffer());
 
-            $productOfferStorageEntity->save();
+            /** @var SpyProductOfferStore $storeTransfer */
+            foreach ($productOfferStores as $storeTransfer) {
+                $productOfferStorageEntity = SpyProductOfferStorageQuery::create()
+                    ->filterByProductOfferReference($productOfferTransfer->getProductOfferReference())
+                    ->filterByStore($storeTransfer->getSpyStore()->getName())
+                    ->findOneOrCreate();
+                $productOfferStorageTransfer = $this->createProductOfferStorageTransfer($productOfferTransfer);
+
+            $productOfferStorageEntity->setData($productOfferStorageTransfer->modifiedToArray());
+                $productOfferStorageEntity->setStore($storeTransfer->getSpyStore()->getName());
+
+                $productOfferStorageEntity->save();
+            }
         }
     }
 
