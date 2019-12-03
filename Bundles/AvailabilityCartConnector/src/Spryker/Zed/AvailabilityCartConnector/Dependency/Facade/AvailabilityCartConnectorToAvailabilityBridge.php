@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AvailabilityCartConnector\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
@@ -29,23 +30,32 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer|null $productConcreteAvailabilityTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
-    public function findOrCreateProductConcreteAvailabilityBySkuForStore(string $sku, StoreTransfer $storeTransfer): ?ProductConcreteAvailabilityTransfer
-    {
-        return $this->availabilityFacade->findOrCreateProductConcreteAvailabilityBySkuForStore($sku, $storeTransfer);
+    public function findOrCreateProductConcreteAvailabilityBySkuForStore(
+        string $sku,
+        StoreTransfer $storeTransfer,
+        ?ProductAvailabilityCriteriaTransfer $productConcreteAvailabilityTransfer = null
+    ): ?ProductConcreteAvailabilityTransfer {
+        return $this->availabilityFacade->findOrCreateProductConcreteAvailabilityBySkuForStore($sku, $storeTransfer, $productConcreteAvailabilityTransfer);
     }
 
     /**
      * @param string $sku
      * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer|null $productAvailabilityCriteriaTransfer
      *
      * @return bool
      */
-    public function isProductSellableForStore(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): bool
-    {
-        return $this->availabilityFacade->isProductSellableForStore($sku, $quantity, $storeTransfer);
+    public function isProductSellableForStore(
+        string $sku,
+        Decimal $quantity,
+        StoreTransfer $storeTransfer,
+        ?ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer = null
+    ): bool {
+        return $this->availabilityFacade->isProductSellableForStore($sku, $quantity, $storeTransfer, $productAvailabilityCriteriaTransfer);
     }
 }

@@ -18,7 +18,10 @@ use Spryker\Client\Kernel\Container;
 class AvailabilityStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+
+    public const PLUGINS_POST_PRODUCT_VIEW_AVAILABILITY_EXPAND = 'PLUGINS_POST_PRODUCT_VIEW_AVAILABILITY_EXPAND';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -29,6 +32,8 @@ class AvailabilityStorageDependencyProvider extends AbstractDependencyProvider
     {
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
+
+        $container = $this->addPostProductViewAvailabilityStorageExpandPlugins($container);
 
         return $container;
     }
@@ -59,5 +64,27 @@ class AvailabilityStorageDependencyProvider extends AbstractDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addPostProductViewAvailabilityStorageExpandPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_POST_PRODUCT_VIEW_AVAILABILITY_EXPAND, function (Container $container) {
+            return $this->getPostProductViewAvailabilityStorageExpandPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\PostProductViewAvailabilityStorageExpandPluginInterface[]
+     */
+    public function getPostProductViewAvailabilityStorageExpandPlugins(): array
+    {
+        return [];
     }
 }

@@ -55,6 +55,11 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
     protected $pluginExecutor;
 
     /**
+     * @var \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductProviderPluginInterface[]
+     */
+    protected $priceProductProviderPlugins;
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceProductQueryContainer
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface $priceProductMapper
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface $storeFacade
@@ -62,6 +67,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      * @param \Spryker\Service\PriceProduct\PriceProductServiceInterface $priceProductService
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductExpanderInterface $priceProductExpander
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductReader\PriceProductReaderPluginExecutorInterface $pluginExecutor
+     * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductProviderPluginInterface[] $priceProductProviderPlugins
      */
     public function __construct(
         PriceProductQueryContainerInterface $priceProductQueryContainer,
@@ -70,7 +76,8 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
         PriceProductRepositoryInterface $priceProductRepository,
         PriceProductServiceInterface $priceProductService,
         PriceProductExpanderInterface $priceProductExpander,
-        PriceProductReaderPluginExecutorInterface $pluginExecutor
+        PriceProductReaderPluginExecutorInterface $pluginExecutor,
+        array $priceProductProviderPlugins
     ) {
         $this->priceProductQueryContainer = $priceProductQueryContainer;
         $this->priceProductMapper = $priceProductMapper;
@@ -79,6 +86,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
         $this->priceProductService = $priceProductService;
         $this->priceProductExpander = $priceProductExpander;
         $this->pluginExecutor = $pluginExecutor;
+        $this->priceProductProviderPlugins = $priceProductProviderPlugins;
     }
 
     /**
@@ -241,8 +249,9 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
         $priceProductTransfers = $this->priceProductRepository->getProductConcretePricesByConcreteSkusAndCriteria($skus, $priceProductCriteriaTransfer);
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
         $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPluginsForProductConcrete($priceProductTransfers);
+        $priceProductTransfers = $this->executePriceProductProviderPlugins($priceProductTransfers, $skus, $priceProductCriteriaTransfer);
 
-        return $this->indexPriceProductTransferByProductSku($priceProductTransfers);
+        return $this->indexPriceProductTransfersByIdentifier($priceProductTransfers);
     }
 
     /**
@@ -250,13 +259,32 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
      */
-    protected function indexPriceProductTransferByProductSku(array $priceProductTransfers): array
+    protected function indexPriceProductTransfersByIdentifier(array $priceProductTransfers): array
     {
         $indexedPriceProductTransfers = [];
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $indexedPriceProductTransfers[$priceProductTransfer->getSkuProduct()][] = $priceProductTransfer;
+            $indexedPriceProductTransfers[$priceProductTransfer->getItemIdentifier() ?: $priceProductTransfer->getSkuProduct()][] = $priceProductTransfer;
         }
 
         return $indexedPriceProductTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param string[] $skus
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return array
+     */
+    protected function executePriceProductProviderPlugins(array $priceProductTransfers, array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
+    {
+        foreach ($this->priceProductProviderPlugins as $priceProductProviderPlugin) {
+            $priceProductTransfers = array_merge($priceProductTransfers, $priceProductProviderPlugin->providePriceProductConcreteTransfers(
+                $skus,
+                $priceProductCriteriaTransfer
+            ));
+        }
+
+        return $priceProductTransfers;
     }
 }

@@ -29,6 +29,9 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
+    public const PLUGINS_AVAILABILITY_PROVIDER_STRATEGY = 'PLUGINS_AVAILABILITY_PROVIDER_STRATEGY';
+    public const PLUGINS_AVAILABILITY_STOCK_PROVIDER_STRATEGY = 'PLUGINS_AVAILABILITY_STOCK_PROVIDER_STRATEGY';
+
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
 
     /**
@@ -44,6 +47,9 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStoreFacade($container);
         $container = $this->addEventFacade($container);
         $container = $this->addProductFacade($container);
+
+        $container = $this->addAvailabilityProviderStrategyPlugins($container);
+        $container = $this->addAvailabilityStockProviderStrategyPlugins($container);
 
         return $container;
     }
@@ -144,6 +150,50 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAvailabilityProviderStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_AVAILABILITY_PROVIDER_STRATEGY, function () {
+            return $this->getAvailabilityProviderStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAvailabilityStockProviderStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_AVAILABILITY_STOCK_PROVIDER_STRATEGY, function () {
+            return $this->getAvailabilityStockProviderStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityProviderStrategyPluginInterface[]
+     */
+    protected function getAvailabilityProviderStrategyPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStockProviderStrategyPluginInterface[]
+     */
+    protected function getAvailabilityStockProviderStrategyPlugins(): array
+    {
+        return [];
     }
 
     /**

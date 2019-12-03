@@ -12,4 +12,32 @@
         <property name="netPrice" type="int"/>
         <property name="grossPrice" type="int"/>
     </transfer>
+
+    <transfer name="ProductOffer">
+        <property name="productOfferReference" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductCriteria">
+        <property name="productOffer" type="ProductOffer"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="productOffer" type="ProductOffer"/>
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="priceDimension" type="PriceProductDimension"/>
+        <property name="skuProduct" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductDimension">
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="fkStore" type="int"/>
+    </transfer>
+
+    <transfer name="Currency">
+    </transfer>
 </transfers>

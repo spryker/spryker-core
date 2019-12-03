@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Zed\PriceProductExtension\Dependency\Plugin;
+
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+
+interface PriceProductProviderPluginInterface
+{
+    /**
+     * Specification:
+     * - Endpoint
+     *
+     * @api
+     *
+     * @param string[] $skus
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function providePriceProductConcreteTransfers(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array;
+}
