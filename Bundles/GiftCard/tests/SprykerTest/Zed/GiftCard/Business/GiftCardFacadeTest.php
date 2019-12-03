@@ -172,7 +172,7 @@ class GiftCardFacadeTest extends Test
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\GiftCard\GiftCardConfig
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\GiftCard\GiftCardConfig
      */
     protected function createGiftCardConfigMock(): GiftCardConfig
     {
@@ -183,7 +183,7 @@ class GiftCardFacadeTest extends Test
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\GiftCard\Business\GiftCardBusinessFactory
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\GiftCard\Business\GiftCardBusinessFactory
      */
     protected function createGiftCardBusinessFactoryMock(): GiftCardBusinessFactory
     {
@@ -193,7 +193,7 @@ class GiftCardFacadeTest extends Test
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface
      */
     protected function getFacadeWithMockedConfig(): GiftCardFacadeInterface
     {

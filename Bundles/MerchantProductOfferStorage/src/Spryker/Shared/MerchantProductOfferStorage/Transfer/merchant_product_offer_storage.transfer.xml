@@ -11,6 +11,7 @@
         <property name="idProductOffer" type="int"/>
         <property name="productOfferReference" type="string"/>
         <property name="idMerchant" type="int"/>
+        <property name="merchantSku" type="string"/>
     </transfer>
 
     <transfer name="ProductOfferCriteriaFilter">
@@ -23,6 +24,7 @@
         <property name="fkMerchant" type="int"/>
         <property name="productOfferReference" type="string"/>
         <property name="concreteSku" type="string"/>
+        <property name="merchantSku" type="string"/>
     </transfer>
 
     <transfer name="ProductOfferCollection">
@@ -33,6 +35,13 @@
         <property name="reference" type="string"/>
         <property name="data" type="string"/>
         <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="ProductView">
+        <property name="productOfferReference" type="string"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="selectedAttributes" type="array" singular="selectedAttribute"/>
     </transfer>
 
 </transfers>
