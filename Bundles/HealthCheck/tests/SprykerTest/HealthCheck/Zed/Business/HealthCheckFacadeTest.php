@@ -30,9 +30,9 @@ use Spryker\Zed\HealthCheck\HealthCheckDependencyProvider;
  */
 class HealthCheckFacadeTest extends Unit
 {
-    protected const DATABASE_HEALTH_CHECK_PLUGIN_NAME = 'database';
-    protected const SEARCH_HEALTH_CHECK_PLUGIN_NAME = 'search';
-    protected const STORAGE_HEALTH_CHECK_PLUGIN_NAME = 'storage';
+    protected const DATABASE_SERVICE_NAME = 'database';
+    protected const SEARCH_SERVICE_NAME = 'search';
+    protected const STORAGE_SERVICE_NAME = 'storage';
 
     /**
      * @var \SprykerTest\Zed\HealthCheck\HealthCheckBusinessTester
@@ -68,9 +68,9 @@ class HealthCheckFacadeTest extends Unit
     public function testProcessedHealthCheckServicesWithEmptyRequestAndSuccessResponse(): void
     {
         $healthCheckPlugins = [
-            HealthCheckConfig::DATABASE_SERVICE_NAME => $this->getHealthCheckPluginMock(HealthCheckConfig::DATABASE_SERVICE_NAME, true),
-            HealthCheckConfig::SEARCH_SERVICE_NAME => $this->getHealthCheckPluginMock(HealthCheckConfig::SEARCH_SERVICE_NAME, true),
-            HealthCheckConfig::STORAGE_SERVICE_NAME => $this->getHealthCheckPluginMock(HealthCheckConfig::STORAGE_SERVICE_NAME, true),
+            static::DATABASE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::DATABASE_SERVICE_NAME, true),
+            static::SEARCH_SERVICE_NAME => $this->getHealthCheckPluginMock(static::SEARCH_SERVICE_NAME, true),
+            static::STORAGE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::STORAGE_SERVICE_NAME, true),
         ];
 
         $this->tester->setDependency(HealthCheckDependencyProvider::PLUGINS_HEALTH_CHECK, $healthCheckPlugins);
@@ -90,9 +90,9 @@ class HealthCheckFacadeTest extends Unit
     public function testProcessedHealthCheckServicesWithEmptyRequestAndFailedResponse(): void
     {
         $healthCheckPlugins = [
-            HealthCheckConfig::DATABASE_SERVICE_NAME => $this->getHealthCheckPluginMock(HealthCheckConfig::DATABASE_SERVICE_NAME, false),
-            HealthCheckConfig::SEARCH_SERVICE_NAME => $this->getHealthCheckPluginMock(HealthCheckConfig::SEARCH_SERVICE_NAME, false),
-            HealthCheckConfig::STORAGE_SERVICE_NAME => $this->getHealthCheckPluginMock(HealthCheckConfig::STORAGE_SERVICE_NAME, false),
+            static::DATABASE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::DATABASE_SERVICE_NAME, false),
+            static::SEARCH_SERVICE_NAME => $this->getHealthCheckPluginMock(static::SEARCH_SERVICE_NAME, false),
+            static::STORAGE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::STORAGE_SERVICE_NAME, false),
         ];
 
         $this->tester->setDependency(HealthCheckDependencyProvider::PLUGINS_HEALTH_CHECK, $healthCheckPlugins);
@@ -112,9 +112,9 @@ class HealthCheckFacadeTest extends Unit
     public function testProcessedHealthCheckServicesWithEmptyRequestAndAnyFailedResponse(): void
     {
         $healthCheckPlugins = [
-            HealthCheckConfig::DATABASE_SERVICE_NAME => $this->getHealthCheckPluginMock(HealthCheckConfig::DATABASE_SERVICE_NAME, true),
-            HealthCheckConfig::SEARCH_SERVICE_NAME => $this->getHealthCheckPluginMock(HealthCheckConfig::SEARCH_SERVICE_NAME, false),
-            HealthCheckConfig::STORAGE_SERVICE_NAME => $this->getHealthCheckPluginMock(HealthCheckConfig::STORAGE_SERVICE_NAME, true),
+            static::DATABASE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::DATABASE_SERVICE_NAME, true),
+            static::SEARCH_SERVICE_NAME => $this->getHealthCheckPluginMock(static::SEARCH_SERVICE_NAME, false),
+            static::STORAGE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::STORAGE_SERVICE_NAME, true),
         ];
 
         $this->tester->setDependency(HealthCheckDependencyProvider::PLUGINS_HEALTH_CHECK, $healthCheckPlugins);
@@ -149,16 +149,16 @@ class HealthCheckFacadeTest extends Unit
     public function testProcessedHealthCheckServicesWithRequestedServiceResponse(): void
     {
         $healthCheckPlugins = [
-            HealthCheckConfig::DATABASE_SERVICE_NAME => $this->getHealthCheckPluginMock(HealthCheckConfig::DATABASE_SERVICE_NAME, true),
-            HealthCheckConfig::SEARCH_SERVICE_NAME => $this->getHealthCheckPluginMock(HealthCheckConfig::SEARCH_SERVICE_NAME, true),
-            HealthCheckConfig::STORAGE_SERVICE_NAME => $this->getHealthCheckPluginMock(HealthCheckConfig::STORAGE_SERVICE_NAME, true),
+            static::DATABASE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::DATABASE_SERVICE_NAME, true),
+            static::SEARCH_SERVICE_NAME => $this->getHealthCheckPluginMock(static::SEARCH_SERVICE_NAME, true),
+            static::STORAGE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::STORAGE_SERVICE_NAME, true),
         ];
 
         $this->tester->setDependency(HealthCheckDependencyProvider::PLUGINS_HEALTH_CHECK, $healthCheckPlugins);
 
-        $requestedHealthCheckServices = [static::DATABASE_HEALTH_CHECK_PLUGIN_NAME, static::STORAGE_HEALTH_CHECK_PLUGIN_NAME];
+        $requestedHealthCheckServices = [static::DATABASE_SERVICE_NAME, static::STORAGE_SERVICE_NAME];
         $healthCheckRequestTransfer = (new HealthCheckRequestTransfer())
-            ->setServices(implode(',', $requestedHealthCheckServices));
+            ->setRequestedServices($requestedHealthCheckServices);
 
         $healthCheckResponseTransfer = $this->healthCheckFacade->executeHealthCheck($healthCheckRequestTransfer);
 
@@ -174,16 +174,16 @@ class HealthCheckFacadeTest extends Unit
     public function testProcessedHealthCheckServicesWithRequestedNotExistingService(): void
     {
         $healthCheckPlugins = [
-            HealthCheckConfig::DATABASE_SERVICE_NAME => $this->getHealthCheckPluginMock(HealthCheckConfig::DATABASE_SERVICE_NAME, true),
-            HealthCheckConfig::SEARCH_SERVICE_NAME => $this->getHealthCheckPluginMock(HealthCheckConfig::SEARCH_SERVICE_NAME, true),
-            HealthCheckConfig::STORAGE_SERVICE_NAME => $this->getHealthCheckPluginMock(HealthCheckConfig::STORAGE_SERVICE_NAME, true),
+            static::DATABASE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::DATABASE_SERVICE_NAME, true),
+            static::SEARCH_SERVICE_NAME => $this->getHealthCheckPluginMock(static::SEARCH_SERVICE_NAME, true),
+            static::STORAGE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::STORAGE_SERVICE_NAME, true),
         ];
 
         $this->tester->setDependency(HealthCheckDependencyProvider::PLUGINS_HEALTH_CHECK, $healthCheckPlugins);
 
-        $requestedHealthCheckServices = ['REQUESTED_NON_EXISTED_SERVICE_NAME', static::STORAGE_HEALTH_CHECK_PLUGIN_NAME];
+        $requestedHealthCheckServices = ['REQUESTED_NON_EXISTED_SERVICE_NAME', static::STORAGE_SERVICE_NAME];
         $healthCheckRequestTransfer = (new HealthCheckRequestTransfer())
-            ->setServices(implode(',', $requestedHealthCheckServices));
+            ->setRequestedServices($requestedHealthCheckServices);
 
         $healthCheckResponseTransfer = $this->healthCheckFacade->executeHealthCheck($healthCheckRequestTransfer);
 
@@ -199,9 +199,9 @@ class HealthCheckFacadeTest extends Unit
     public function testProcessedHealthCheckServicesWithDisabledHealthCheck(): void
     {
         $healthCheckPlugins = [
-            HealthCheckConfig::DATABASE_SERVICE_NAME => $this->getHealthCheckPluginMock(HealthCheckConfig::DATABASE_SERVICE_NAME, true),
-            HealthCheckConfig::SEARCH_SERVICE_NAME => $this->getHealthCheckPluginMock(HealthCheckConfig::SEARCH_SERVICE_NAME, true),
-            HealthCheckConfig::STORAGE_SERVICE_NAME => $this->getHealthCheckPluginMock(HealthCheckConfig::STORAGE_SERVICE_NAME, true),
+            static::DATABASE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::DATABASE_SERVICE_NAME, true),
+            static::SEARCH_SERVICE_NAME => $this->getHealthCheckPluginMock(static::SEARCH_SERVICE_NAME, true),
+            static::STORAGE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::STORAGE_SERVICE_NAME, true),
         ];
 
         $this->tester->setDependency(HealthCheckDependencyProvider::PLUGINS_HEALTH_CHECK, $healthCheckPlugins);
