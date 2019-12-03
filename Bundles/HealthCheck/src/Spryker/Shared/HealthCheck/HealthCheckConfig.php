@@ -11,6 +11,12 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class HealthCheckConfig extends AbstractSharedConfig
 {
+    public const SESSION_SERVICE_NAME = 'session';
+    public const STORAGE_SERVICE_NAME = 'storage';
+    public const SEARCH_SERVICE_NAME = 'search';
+    public const ZED_REQUEST_SERVICE_NAME = 'zed-request';
+    public const DATABASE_SERVICE_NAME = 'database';
+
     protected const HEALTH_CHECK_SUCCESS_STATUS_CODE = 200;
     protected const HEALTH_CHECK_SUCCESS_STATUS_MESSAGE = 'healthy';
 

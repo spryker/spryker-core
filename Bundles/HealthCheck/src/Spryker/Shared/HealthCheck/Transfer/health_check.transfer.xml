@@ -5,6 +5,7 @@
 
     <transfer name="HealthCheckRequest">
         <property name="services" type="string"/>
+        <property name="whiteListServices" type="string[]"/>
         <property name="format" type="string"/>
     </transfer>
 

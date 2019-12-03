@@ -63,9 +63,9 @@ class HealthCheckProcessor implements HealthCheckProcessorInterface
     {
         $healthCheckServiceResponseTransfers = [];
 
-        foreach ($filteredHealthCheckPlugins as $filteredHealthCheckPlugin) {
+        foreach ($filteredHealthCheckPlugins as $filteredHealthCheckServiceName => $filteredHealthCheckPlugin) {
             $healthCheckServiceResponseTransfer = $filteredHealthCheckPlugin->check();
-            $healthCheckServiceResponseTransfer->setName($filteredHealthCheckPlugin->getName());
+            $healthCheckServiceResponseTransfer->setName($filteredHealthCheckServiceName);
             $healthCheckServiceResponseTransfers[] = $healthCheckServiceResponseTransfer;
         }
 

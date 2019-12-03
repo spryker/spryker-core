@@ -17,20 +17,6 @@ use Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInter
  */
 class ZedRequestHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {
-    protected const SERVICE_NAME = 'zed-request';
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getName(): string
-    {
-        return static::SERVICE_NAME;
-    }
-
     /**
      * {@inheritDoc}
      *

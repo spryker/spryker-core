@@ -16,20 +16,6 @@ use Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInter
  */
 class SearchHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {
-    protected const SERVICE_NAME = 'search';
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getName(): string
-    {
-        return static::SERVICE_NAME;
-    }
-
     /**
      * {@inheritDoc}
      *

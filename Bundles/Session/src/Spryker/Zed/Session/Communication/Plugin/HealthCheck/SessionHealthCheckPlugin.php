@@ -18,20 +18,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class SessionHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {
-    protected const SERVICE_NAME = 'session';
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getName(): string
-    {
-        return static::SERVICE_NAME;
-    }
-
     /**
      * {@inheritDoc}
      *

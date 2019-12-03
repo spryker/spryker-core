@@ -11,6 +11,7 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Service\HealthCheck\HealthCheckServiceInterface;
 use Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface;
 use Spryker\Shared\HealthCheck\ChainFilter\Filter\ServiceNameFilter;
+use Spryker\Shared\HealthCheck\ChainFilter\Filter\ServiceWhiteListFilter;
 use Spryker\Shared\HealthCheck\ChainFilter\ServiceChainFilter;
 use Spryker\Shared\HealthCheck\Processor\HealthCheckProcessor;
 use Spryker\Shared\HealthCheck\Processor\HealthCheckProcessorInterface;
@@ -40,6 +41,7 @@ class HealthCheckFactory extends AbstractFactory
     {
         $chainFilter = new ServiceChainFilter();
         $chainFilter
+            ->addFilter($this->createServiceWhiteListFilter())
             ->addFilter($this->createServiceNameFilter());
 
         return $chainFilter;
@@ -51,6 +53,14 @@ class HealthCheckFactory extends AbstractFactory
     public function createServiceNameFilter(): ChainFilterInterface
     {
         return new ServiceNameFilter();
+    }
+
+    /**
+     * @return \Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface
+     */
+    public function createServiceWhiteListFilter(): ChainFilterInterface
+    {
+        return new ServiceWhiteListFilter();
     }
 
     /**

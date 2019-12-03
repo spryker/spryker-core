@@ -69,7 +69,8 @@ class HealthCheckProcessor implements HealthCheckProcessorInterface
         $services = $restRequest->getHttpRequest()->get(static::KEY_SERVICES);
 
         $healthCheckRequestTransfer = (new HealthCheckRequestTransfer())
-            ->setServices($services);
+            ->setServices($services)
+            ->setWhiteListServices($this->healthCheckRestApiConfig->getWhiteListServiceNames());
 
         $healthCheckResponseTransfer = $this->healthCheckClient->executeHealthCheck($healthCheckRequestTransfer);
 

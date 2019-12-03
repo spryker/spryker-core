@@ -10,7 +10,7 @@ namespace Spryker\Shared\HealthCheck\ChainFilter\Filter;
 use Generated\Shared\Transfer\HealthCheckRequestTransfer;
 use Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface;
 
-class ServiceNameFilter implements ChainFilterInterface
+class ServiceWhiteListFilter implements ChainFilterInterface
 {
     /**
      * @param \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[] $healthCheckPlugins
@@ -20,28 +20,27 @@ class ServiceNameFilter implements ChainFilterInterface
      */
     public function filter(array $healthCheckPlugins, HealthCheckRequestTransfer $healthCheckRequestTransfer): array
     {
-        $requestedServices = $healthCheckRequestTransfer->getServices();
+        $whiteListServices = $healthCheckRequestTransfer->getWhiteListServices();
 
-        if (strlen($requestedServices) === 0) {
+        if (count($whiteListServices) === 0) {
             return $healthCheckPlugins;
         }
 
-        return $this->filterByServiceName($healthCheckPlugins, $requestedServices);
+        return $this->filterByWhiteLitServices($healthCheckPlugins, $whiteListServices);
     }
 
     /**
      * @param \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[] $healthCheckPlugins
-     * @param string $requestedServices
+     * @param string[] $whiteListServices
      *
      * @return \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[]
      */
-    protected function filterByServiceName(array $healthCheckPlugins, string $requestedServices): array
+    protected function filterByWhiteLitServices(array $healthCheckPlugins, array $whiteListServices): array
     {
         $filteredServicePlugins = [];
-        $requestedServicesArray = explode(',', $requestedServices);
 
         foreach ($healthCheckPlugins as $healthCheckPluginName => $healthCheckPlugin) {
-            if (in_array($healthCheckPluginName, $requestedServicesArray)) {
+            if (in_array($healthCheckPluginName, $whiteListServices)) {
                 $filteredServicePlugins[$healthCheckPluginName] = $healthCheckPlugin;
             }
         }
