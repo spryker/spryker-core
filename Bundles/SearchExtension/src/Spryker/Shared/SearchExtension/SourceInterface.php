@@ -10,11 +10,17 @@ namespace Spryker\Shared\SearchExtension;
 interface SourceInterface
 {
     /**
+     * Specification:
+     * - Returns source map properties.
+     *
      * @return array
      */
     public function getProperties();
 
     /**
+     * Specification:
+     * - Returns source type.
+     *
      * @param string $propertyName
      *
      * @return string|null
@@ -22,6 +28,9 @@ interface SourceInterface
     public function getType($propertyName);
 
     /**
+     * Specification:
+     * - Returns source map metadata.
+     *
      * @param string $propertyName
      *
      * @return array
