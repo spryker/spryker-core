@@ -7,12 +7,14 @@
 
 namespace Spryker\Client\HealthCheck;
 
-use Spryker\Client\HealthCheck\Processor\HealthCheckProcessor;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Service\HealthCheck\HealthCheckServiceInterface;
 use Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface;
 use Spryker\Shared\HealthCheck\ChainFilter\Filter\ServiceNameFilter;
 use Spryker\Shared\HealthCheck\ChainFilter\ServiceChainFilter;
+use Spryker\Shared\HealthCheck\Processor\HealthCheckProcessor;
 use Spryker\Shared\HealthCheck\Processor\HealthCheckProcessorInterface;
+use Spryker\Zed\HealthCheck\HealthCheckDependencyProvider;
 
 /**
  * @method \Spryker\Client\HealthCheck\HealthCheckConfig getConfig()
@@ -27,7 +29,7 @@ class HealthCheckFactory extends AbstractFactory
         return new HealthCheckProcessor(
             $this->createServiceChainFilter(),
             $this->getHealthCheckPlugins(),
-            $this->getConfig()
+            $this->getHealthCheckService()
         );
     }
 
@@ -49,6 +51,14 @@ class HealthCheckFactory extends AbstractFactory
     public function createServiceNameFilter(): ChainFilterInterface
     {
         return new ServiceNameFilter();
+    }
+
+    /**
+     * @return \Spryker\Service\HealthCheck\HealthCheckServiceInterface
+     */
+    public function getHealthCheckService(): HealthCheckServiceInterface
+    {
+        return $this->getProvidedDependency(HealthCheckDependencyProvider::SERVICE_HEALTH_CHECK);
     }
 
     /**

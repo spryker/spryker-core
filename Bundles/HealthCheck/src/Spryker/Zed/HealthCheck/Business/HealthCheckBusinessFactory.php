@@ -7,11 +7,12 @@
 
 namespace Spryker\Zed\HealthCheck\Business;
 
+use Spryker\Service\HealthCheck\HealthCheckServiceInterface;
 use Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface;
 use Spryker\Shared\HealthCheck\ChainFilter\Filter\ServiceNameFilter;
 use Spryker\Shared\HealthCheck\ChainFilter\ServiceChainFilter;
+use Spryker\Shared\HealthCheck\Processor\HealthCheckProcessor;
 use Spryker\Shared\HealthCheck\Processor\HealthCheckProcessorInterface;
-use Spryker\Zed\HealthCheck\Business\Processor\HealthCheckProcessor;
 use Spryker\Zed\HealthCheck\HealthCheckDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -28,7 +29,7 @@ class HealthCheckBusinessFactory extends AbstractBusinessFactory
         return new HealthCheckProcessor(
             $this->createServiceChainFilter(),
             $this->getHealthCheckPlugins(),
-            $this->getConfig()
+            $this->getHealthCheckService()
         );
     }
 
@@ -50,6 +51,14 @@ class HealthCheckBusinessFactory extends AbstractBusinessFactory
     public function createServiceNameFilter(): ChainFilterInterface
     {
         return new ServiceNameFilter();
+    }
+
+    /**
+     * @return \Spryker\Service\HealthCheck\HealthCheckServiceInterface
+     */
+    public function getHealthCheckService(): HealthCheckServiceInterface
+    {
+        return $this->getProvidedDependency(HealthCheckDependencyProvider::SERVICE_HEALTH_CHECK);
     }
 
     /**

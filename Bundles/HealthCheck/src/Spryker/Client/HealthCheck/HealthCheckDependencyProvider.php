@@ -15,6 +15,8 @@ use Spryker\Client\Kernel\Container;
  */
 class HealthCheckDependencyProvider extends AbstractDependencyProvider
 {
+    public const SERVICE_HEALTH_CHECK = 'SERVICE_HEALTH_CHECK';
+
     public const PLUGINS_HEALTH_CHECK = 'PLUGINS_HEALTH_CHECK';
 
     /**
@@ -24,7 +26,22 @@ class HealthCheckDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container): Container
     {
+        $container = $this->addHealthCheckService($container);
         $container = $this->addHealthCheckPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addHealthCheckService(Container $container): Container
+    {
+        $container->set(static::SERVICE_HEALTH_CHECK, function (Container $container) {
+            return $container->getLocator()->healthCheck()->service();
+        });
 
         return $container;
     }

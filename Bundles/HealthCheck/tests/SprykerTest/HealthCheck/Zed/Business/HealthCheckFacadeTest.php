@@ -11,10 +11,10 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\HealthCheckRequestTransfer;
 use Generated\Shared\Transfer\HealthCheckResponseTransfer;
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
+use Spryker\Shared\HealthCheck\HealthCheckConfig;
 use Spryker\Shared\HealthCheck\HealthCheckConstants;
 use Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface;
 use Spryker\Zed\HealthCheck\Business\HealthCheckFacade;
-use Spryker\Zed\HealthCheck\HealthCheckConfig;
 use Spryker\Zed\HealthCheck\HealthCheckDependencyProvider;
 
 /**
