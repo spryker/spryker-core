@@ -89,7 +89,7 @@ class Search implements SearchInterface
         }
 
         try {
-            $index = $this->getIndexForQuery($query->getSearchContext());
+            $index = $this->getIndexForQueryFromSearchContext($query->getSearchContext());
             $rawSearchResult = $index->search(
                 $query->getSearchQuery()
             );
@@ -111,7 +111,7 @@ class Search implements SearchInterface
      *
      * @return \Elastica\Index
      */
-    protected function getIndexForQuery(SearchContextTransfer $searchContextTransfer): Index
+    protected function getIndexForQueryFromSearchContext(SearchContextTransfer $searchContextTransfer): Index
     {
         $indexName = $this->getIndexName($searchContextTransfer);
 

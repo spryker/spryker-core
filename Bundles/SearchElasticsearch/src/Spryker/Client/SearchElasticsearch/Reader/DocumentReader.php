@@ -41,10 +41,11 @@ class DocumentReader implements DocumentReaderInterface
      */
     public function readDocument(SearchDocumentTransfer $searchDocumentTransfer): SearchDocumentTransfer
     {
-        $indexName = $this->getIndexNameFromSearchDocumentTransfer($searchDocumentTransfer);
+        $indexName = $this->extractIndexNameFromSearchDocumentTransfer($searchDocumentTransfer);
+        $typeName = $this->extractTypeNameFromSearchDocumentTransfer($searchDocumentTransfer);
         $index = $this->elasticaClient->getIndex($indexName);
 
-        $document = $index->getType($this->config->getDefaultMappingType())->getDocument($searchDocumentTransfer->getId());
+        $document = $index->getType($typeName)->getDocument($searchDocumentTransfer->getId());
 
         return $this->mapDocumentToSearchDocumentTransfer($document, $searchDocumentTransfer);
     }
@@ -54,7 +55,7 @@ class DocumentReader implements DocumentReaderInterface
      *
      * @return string
      */
-    protected function getIndexNameFromSearchDocumentTransfer(SearchDocumentTransfer $searchDocumentTransfer): string
+    protected function extractIndexNameFromSearchDocumentTransfer(SearchDocumentTransfer $searchDocumentTransfer): string
     {
         $this->validateSearchDocumentTransferHasIndexName($searchDocumentTransfer);
 
@@ -71,7 +72,8 @@ class DocumentReader implements DocumentReaderInterface
         $searchDocumentTransfer->requireSearchContext()
             ->getSearchContext()
             ->requireElasticsearchContext()
-            ->getElasticsearchContext();
+            ->getElasticsearchContext()
+            ->requireIndexName();
     }
 
     /**
@@ -85,5 +87,31 @@ class DocumentReader implements DocumentReaderInterface
         return $searchDocumentTransfer
             ->setId($document->getId())
             ->setData($document->getData());
+    }
+
+    /**
+     * Source identifier will be used as type name instead of _doc for the sake of compatibility with Elasticsearch 5.
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return string
+     */
+    protected function extractTypeNameFromSearchDocumentTransfer(SearchDocumentTransfer $searchDocumentTransfer): string
+    {
+        $this->validateSearchDocumentTransferHasSourceIdentifier($searchDocumentTransfer);
+
+        return $searchDocumentTransfer->getSearchContext()->getSourceIdentifier();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return void
+     */
+    protected function validateSearchDocumentTransferHasSourceIdentifier(SearchDocumentTransfer $searchDocumentTransfer): void
+    {
+        $searchDocumentTransfer->requireSearchContext()
+            ->getSearchContext()
+            ->requireSourceIdentifier();
     }
 }

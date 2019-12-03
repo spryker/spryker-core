@@ -87,11 +87,12 @@ class DocumentWriter implements DocumentWriterInterface
      */
     protected function mapSearchDocumentTransferToElasticaDocument(SearchDocumentTransfer $searchDocumentTransfer): Document
     {
-        $indexName = $this->getIndexNameFromSearchDocumentTransfer($searchDocumentTransfer);
+        $indexName = $this->extractIndexNameFromSearchDocumentTransfer($searchDocumentTransfer);
+        $typeName = $this->extractTypeNameFromSearchDocumentTransfer($searchDocumentTransfer);
         $document = new Document();
         $document->setId($searchDocumentTransfer->getId())
             ->setData($searchDocumentTransfer->getData())
-            ->setType($this->config->getDefaultMappingType())
+            ->setType($typeName)
             ->setIndex($indexName);
 
         return $document;
@@ -104,9 +105,10 @@ class DocumentWriter implements DocumentWriterInterface
      */
     public function deleteDocument(SearchDocumentTransfer $searchDocumentTransfer): bool
     {
-        $indexName = $this->getIndexNameFromSearchDocumentTransfer($searchDocumentTransfer);
+        $indexName = $this->extractIndexNameFromSearchDocumentTransfer($searchDocumentTransfer);
+        $typeName = $this->extractTypeNameFromSearchDocumentTransfer($searchDocumentTransfer);
         $index = $this->elasticaClient->getIndex($indexName);
-        $document = $this->getDocumentFromIndex($searchDocumentTransfer->getId(), $index);
+        $document = $index->getType($typeName)->getDocument($searchDocumentTransfer->getId());
 
         $index->deleteDocuments([$document]);
         $response = $index->flush();
@@ -133,7 +135,7 @@ class DocumentWriter implements DocumentWriterInterface
      *
      * @return string
      */
-    protected function getIndexNameFromSearchDocumentTransfer(SearchDocumentTransfer $searchDocumentTransfer): string
+    protected function extractIndexNameFromSearchDocumentTransfer(SearchDocumentTransfer $searchDocumentTransfer): string
     {
         $this->validateSearchDocumentTransferHasIndexName($searchDocumentTransfer);
 
@@ -161,6 +163,31 @@ class DocumentWriter implements DocumentWriterInterface
      */
     protected function getDocumentFromIndex(string $documentId, Index $index): Document
     {
-        return $index->getType($this->config->getDefaultMappingType())->getDocument($documentId);
+    }
+
+    /**
+     * Source identifier will be used as type name instead of _doc for the sake of compatibility with Elasticsearch 5.
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return string
+     */
+    protected function extractTypeNameFromSearchDocumentTransfer(SearchDocumentTransfer $searchDocumentTransfer): string
+    {
+        $this->validateSearchDocumentTransferHasSourceIdentifier($searchDocumentTransfer);
+
+        return $searchDocumentTransfer->getSearchContext()->getSourceIdentifier();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return void
+     */
+    protected function validateSearchDocumentTransferHasSourceIdentifier(SearchDocumentTransfer $searchDocumentTransfer): void
+    {
+        $searchDocumentTransfer->requireSearchContext()
+            ->getSearchContext()
+            ->requireSourceIdentifier();
     }
 }

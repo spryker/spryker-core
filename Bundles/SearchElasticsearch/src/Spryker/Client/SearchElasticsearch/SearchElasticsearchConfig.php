@@ -48,12 +48,4 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     {
         return $this->getSharedConfig()->getSupportedSourceIdentifiers();
     }
-
-    /**
-     * @return string
-     */
-    public function getDefaultMappingType(): string
-    {
-        return $this->getSharedConfig()->getDefaultMappingType();
-    }
 }

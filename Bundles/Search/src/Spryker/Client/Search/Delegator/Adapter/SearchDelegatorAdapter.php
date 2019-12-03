@@ -110,7 +110,7 @@ class SearchDelegatorAdapter implements SearchDelegatorAdapterInterface
     protected function createSearchDocumentTransfer(string $documentId, ?string $typeName = null, ?array $documentData = null): SearchDocumentTransfer
     {
         $typeName = $typeName ?? static::DEFAULT_SOURCE_IDENTIFIER;
-        $searchContextTransfer = $this->createSearchContextTransferFromMappingType($typeName);
+        $searchContextTransfer = $this->createSearchContextTransferFromType($typeName);
 
         return (new SearchDocumentTransfer())->setId($documentId)
             ->setData($documentData)
@@ -138,13 +138,13 @@ class SearchDelegatorAdapter implements SearchDelegatorAdapterInterface
     }
 
     /**
-     * @param string $sourceIdentifier
+     * @param string $typeName
      *
      * @return \Generated\Shared\Transfer\SearchContextTransfer
      */
-    protected function createSearchContextTransferFromMappingType(string $sourceIdentifier): SearchContextTransfer
+    protected function createSearchContextTransferFromType(string $typeName): SearchContextTransfer
     {
-        return (new SearchContextTransfer())->setSourceIdentifier($sourceIdentifier);
+        return (new SearchContextTransfer())->setSourceIdentifier($typeName);
     }
 
     /**
@@ -166,7 +166,7 @@ class SearchDelegatorAdapter implements SearchDelegatorAdapterInterface
      */
     protected function addSearchContextToSearchDocumentTransfer(SearchDocumentTransfer $searchDocumentTransfer): SearchDocumentTransfer
     {
-        $searchContextTransfer = $this->createSearchContextTransferFromMappingType($searchDocumentTransfer->getType());
+        $searchContextTransfer = $this->createSearchContextTransferFromType($searchDocumentTransfer->getType());
         $searchDocumentTransfer->setSearchContext($searchContextTransfer);
 
         return $searchDocumentTransfer;
