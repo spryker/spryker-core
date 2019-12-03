@@ -97,7 +97,8 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
             $this->createProductListKeyGenerator(),
             $this->getProductListPostSaverCollection(),
             $this->getProductListPreCreatePlugins(),
-            $this->getProductListPreUpdatePlugins()
+            $this->getProductListPreUpdatePlugins(),
+            $this->getProductListDeletePreCheckPlugins()
         );
     }
 
@@ -188,6 +189,14 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     public function getProductListPreUpdatePlugins(): array
     {
         return $this->getProvidedDependency(ProductListDependencyProvider::PLUGINS_PRODUCT_LIST_PRE_UPDATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListDeletePreCheckPluginInterface[]
+     */
+    public function getProductListDeletePreCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductListDependencyProvider::PLUGINS_PRODUCT_LIST_DELETE_PRE_CHECK);
     }
 
     /**
