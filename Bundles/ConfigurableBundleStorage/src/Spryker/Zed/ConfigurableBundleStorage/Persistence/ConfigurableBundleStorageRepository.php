@@ -7,10 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundleStorage\Persistence;
 
-use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
-use Orm\Zed\ConfigurableBundle\Persistence\Map\SpyConfigurableBundleTemplateTableMap;
-use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -18,29 +15,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ConfigurableBundleStorageRepository extends AbstractRepository implements ConfigurableBundleStorageRepositoryInterface
 {
-    /**
-     * @param int[] $configurableBundleTemplateIds
-     *
-     * @return \Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplate[]
-     */
-    public function getConfigurableBundleTemplateEntityMap(array $configurableBundleTemplateIds): array
-    {
-        $configurableBundleTemplateEntities = $this->getFactory()
-            ->getConfigurableBundleTemplatePropelQuery()
-            ->leftJoinWithSpyConfigurableBundleTemplateSlot()
-            ->filterByIdConfigurableBundleTemplate_In($configurableBundleTemplateIds)
-            ->find();
-
-        $configurableBundleTemplateEntityMap = [];
-
-        foreach ($configurableBundleTemplateEntities as $configurableBundleTemplateEntity) {
-            $configurableBundleTemplateEntityMap[$configurableBundleTemplateEntity->getIdConfigurableBundleTemplate()]
-                = $configurableBundleTemplateEntity;
-        }
-
-        return $configurableBundleTemplateEntityMap;
-    }
-
     /**
      * @param int[] $configurableBundleTemplateIds
      *
@@ -64,6 +38,27 @@ class ConfigurableBundleStorageRepository extends AbstractRepository implements 
     }
 
     /**
+     * @param int[] $configurableBundleTemplateIds
+     *
+     * @return \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage[][]
+     */
+    public function getConfigurableBundleTemplateImageStorageEntityMap(array $configurableBundleTemplateIds): array
+    {
+        $configurableBundleTemplateImageStorageEntities = $this->getFactory()
+            ->getConfigurableBundleTemplateImageStoragePropelQuery()
+            ->filterByFkConfigurableBundleTemplate_In($configurableBundleTemplateIds)
+            ->find();
+
+        $localizedConfigurableBundleTemplateImageStorageEntityMap = [];
+
+        foreach ($configurableBundleTemplateImageStorageEntities as $configurableBundleTemplateImageStorageEntity) {
+            $localizedConfigurableBundleTemplateImageStorageEntityMap[$configurableBundleTemplateImageStorageEntity->getFkConfigurableBundleTemplate()][$configurableBundleTemplateImageStorageEntity->getLocale()] = $configurableBundleTemplateImageStorageEntity;
+        }
+
+        return $localizedConfigurableBundleTemplateImageStorageEntityMap;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $configurableBundleTemplateIds
      *
@@ -84,27 +79,20 @@ class ConfigurableBundleStorageRepository extends AbstractRepository implements 
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $configurableBundleTemplateIds
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer[]
+     * @return \Generated\Shared\Transfer\SpyConfigurableBundleTemplateImageStorageEntityTransfer[]
      */
-    public function getConfigurableBundleTemplatesByFilter(FilterTransfer $filterTransfer): array
+    public function getFilteredConfigurableBundleTemplateImageStorageEntities(FilterTransfer $filterTransfer, array $configurableBundleTemplateIds): array
     {
-        $configurableBundleTemplatePropelQuery = $this->getFactory()
-            ->getConfigurableBundleTemplatePropelQuery()
-            ->select([SpyConfigurableBundleTemplateTableMap::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE]);
+        $configurableBundleTemplateImageStoragePropelQuery = $this->getFactory()
+            ->getConfigurableBundleTemplateImageStoragePropelQuery();
 
-        $configurableBundleTemplateIds = $this->buildQueryFromCriteria($configurableBundleTemplatePropelQuery, $filterTransfer)
-            ->setFormatter(SimpleArrayFormatter::class)
-            ->find()
-            ->toArray();
-
-        $configurableBundleTemplateTransfers = [];
-
-        foreach ($configurableBundleTemplateIds as $configurableBundleTemplateId) {
-            $configurableBundleTemplateTransfers[] = (new ConfigurableBundleTemplateTransfer())
-                ->setIdConfigurableBundleTemplate($configurableBundleTemplateId);
+        if ($configurableBundleTemplateIds) {
+            $configurableBundleTemplateImageStoragePropelQuery->filterByFkConfigurableBundleTemplate_In($configurableBundleTemplateIds);
         }
 
-        return $configurableBundleTemplateTransfers;
+        return $this->buildQueryFromCriteria($configurableBundleTemplateImageStoragePropelQuery, $filterTransfer)
+            ->find();
     }
 }
