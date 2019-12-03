@@ -1,5 +1,3 @@
 payment_method_key,payment_method_name,payment_provider_key,payment_provider_name,is_active
 dummyPaymentInvoice,Invoice,dummyPayment,Dummy Payment,1
 dummyPaymentCreditCard,Credit Card,dummyPayment,Dummy Payment,1
-GiftCard,Gift Card,GiftCard,Gift Card,1
-Nopayment,Nopayment,Nopayment,Nopayment,1

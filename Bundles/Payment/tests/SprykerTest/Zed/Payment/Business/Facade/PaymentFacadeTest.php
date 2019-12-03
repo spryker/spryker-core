@@ -16,6 +16,8 @@ use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Payment\Persistence\SpyPaymentMethodQuery;
 use Orm\Zed\Payment\Persistence\SpyPaymentMethodStoreQuery;
+use Spryker\Zed\Payment\Business\PaymentBusinessFactory;
+use Spryker\Zed\Payment\PaymentConfig;
 
 /**
  * Auto-generated group annotations
@@ -48,6 +50,11 @@ class PaymentFacadeTest extends Unit
     {
         parent::setUp();
         $this->paymentFacade = $this->tester->getFacade();
+        $configMock = $this->createMock(PaymentConfig::class);
+        $configMock->method('getPaymentStatemachineMappings')->willReturn([]);
+        $factory = new PaymentBusinessFactory();
+        $factory->setConfig($configMock);
+        $this->paymentFacade->setFactory($factory);
     }
 
     /**
@@ -167,6 +174,69 @@ class PaymentFacadeTest extends Unit
         // Assert
         $this->assertCount(
             1,
+            $paymentMethodsTransfer->getMethods(),
+            'Amount of found payment method does not match to the expected value'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAvailablePaymentMethodsShouldCollectPersistentAndInfrastructuralPaymentMethods(): void
+    {
+        $this->tester->ensurePaymentProviderTableIsEmpty();
+        $paymentProviderTransfer = $this->tester->havePaymentProvider([
+            PaymentProviderTransfer::PAYMENT_PROVIDER_KEY => 'dummyPayment',
+        ]);
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
+        $storeRelationTransfer = (new StoreRelationBuilder())->seed([
+            StoreRelationTransfer::ID_STORES => [
+                $storeTransfer->getIdStore(),
+            ],
+            StoreRelationTransfer::STORES => [
+                $storeTransfer,
+            ],
+        ])->build();
+        $this->tester->havePaymentMethod([
+            PaymentMethodTransfer::IS_ACTIVE => true,
+            PaymentMethodTransfer::METHOD_NAME => 'dummyPaymentInvoice',
+            PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
+            PaymentMethodTransfer::STORE_RELATION => $storeRelationTransfer,
+        ]);
+        $this->tester->havePaymentMethod([
+            PaymentMethodTransfer::IS_ACTIVE => false,
+            PaymentMethodTransfer::METHOD_NAME => 'dummyPaymentCreditCard',
+            PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
+            PaymentMethodTransfer::STORE_RELATION => $storeRelationTransfer,
+        ]);
+        $this->tester->havePaymentMethod([
+            PaymentMethodTransfer::IS_ACTIVE => true,
+            PaymentMethodTransfer::METHOD_NAME => 'dummyPaymentTest',
+            PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
+            PaymentMethodTransfer::STORE_RELATION => null,
+        ]);
+        $configMock = $this->createMock(PaymentConfig::class);
+        $configMock->method('getPaymentStatemachineMappings')->willReturn([
+            'dummyPaymentInvoice' => 'statemachine1',
+            'dummyPaymentCreditCard' => 'statemachine2',
+            'dummyPaymentTest' => 'statemachine3',
+            'not_in_db' => 'statemachine4',
+        ]);
+
+        $factory = new PaymentBusinessFactory();
+        $factory->setConfig($configMock);
+        $this->paymentFacade->setFactory($factory);
+        $quoteTransfer = (new QuoteBuilder())->withStore([
+            StoreTransfer::NAME => $storeTransfer->getName(),
+        ])->build();
+
+        // Act
+        $paymentMethodsTransfer = $this->paymentFacade->getAvailableMethods($quoteTransfer);
+
+        $this->assertCount(
+            2,
             $paymentMethodsTransfer->getMethods(),
             'Amount of found payment method does not match to the expected value'
         );

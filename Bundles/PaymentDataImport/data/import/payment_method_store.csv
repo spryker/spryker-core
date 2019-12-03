@@ -5,9 +5,3 @@ dummyPaymentInvoice,US
 dummyPaymentCreditCard,DE
 dummyPaymentCreditCard,AT
 dummyPaymentCreditCard,US
-GiftCard,DE
-GiftCard,AT
-GiftCard,US
-Nopayment,DE
-Nopayment,AT
-Nopayment,US
