@@ -5,7 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/configurable-bundle": "^1.0.0",
+    "spryker/configurable-bundle": "^1.0.0 || ^2.0.0",
     "spryker/kernel": "^3.33.0",
     "spryker/quote": "^2.0.0",
     "spryker/sales-configurable-bundle": "^1.0.0",
