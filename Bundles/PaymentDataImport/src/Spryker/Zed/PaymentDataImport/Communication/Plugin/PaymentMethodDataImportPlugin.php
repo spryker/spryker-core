@@ -32,7 +32,7 @@ class PaymentMethodDataImportPlugin extends AbstractPlugin implements DataImport
     public function import(
         ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
     ): DataImporterReportTransfer {
-        return $this->getFacade()->importPaymentMethod();
+        return $this->getFacade()->importPaymentMethod($dataImporterConfigurationTransfer);
     }
 
     /**
