@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductOfferStock\Persistence;
 
-use Generated\Shared\Transfer\ProductOfferStockCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
 use Spryker\DecimalObject\Decimal;
@@ -22,11 +21,9 @@ interface ProductOfferStockRepositoryInterface
     public function getProductOfferStockForRequest(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): Decimal;
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferStockTransfer|null
      */
-    public function findOne(
-        ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaFilterTransfer
-    ): ?ProductOfferStockTransfer;
+    public function findOne(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ?ProductOfferStockTransfer;
 }

@@ -34,16 +34,7 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
             ->getStore()
             ->requireIdStore();
 
-        $quantity = $this->getFactory()
-            ->getProductOfferStockPropelQuery()
-            ->useSpyProductOfferQuery()
-            ->filterByProductOfferReference($productOfferStockRequestTransfer->getProductOfferReference())
-            ->endUse()
-            ->useStockQuery()
-            ->useStockStoreQuery()
-            ->filterByFkStore($productOfferStockRequestTransfer->getStore()->getIdStore())
-            ->endUse()
-            ->endUse()
+        $quantity = $this->applyFilters($this->getFactory()->getProductOfferStockPropelQuery(), $productOfferStockRequestTransfer)
             ->withColumn('SUM(' . SpyProductOfferStockTableMap::COL_QUANTITY . ')', static::COLUMN_ALIAS_QUANTITY)
             ->select([static::COLUMN_ALIAS_QUANTITY])
             ->findOne();
@@ -52,16 +43,14 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferStockTransfer|null
      */
-    public function findOne(
-        ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaFilterTransfer
-    ): ?ProductOfferStockTransfer {
+    public function findOne(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ?ProductOfferStockTransfer {
         $productOfferStockEntity = $this->applyFilters(
             $this->getFactory()->getProductOfferStockPropelQuery(),
-            $productOfferStockCriteriaFilterTransfer
+            $productOfferStockRequestTransfer
         )->findOne();
 
         if (!$productOfferStockEntity) {
@@ -78,18 +67,29 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
 
     /**
      * @param \Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery $productOfferStockQuery
-     * @param \Generated\Shared\Transfer\ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
      * @return \Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery
+     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
      */
     protected function applyFilters(
         SpyProductOfferStockQuery $productOfferStockQuery,
-        ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaFilterTransfer
+        ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
     ): SpyProductOfferStockQuery {
-        if ($productOfferStockCriteriaFilterTransfer->getFkProductOffer() !== null) {
-            $productOfferStockQuery->filterByFkProductOffer(
-                $productOfferStockCriteriaFilterTransfer->getFkProductOffer()
-            );
+        if ($productOfferStockRequestTransfer->getProductOfferReference() !== null) {
+            $productOfferStockQuery
+                ->useSpyProductOfferQuery()
+                    ->filterByProductOfferReference($productOfferStockRequestTransfer->getProductOfferReference())
+                ->endUse();
+        }
+
+        if ($productOfferStockRequestTransfer->getStore() && $productOfferStockRequestTransfer->getStore()->getIdStore()) {
+            $productOfferStockQuery
+                ->useStockQuery()
+                    ->useStockStoreQuery()
+                        ->filterByFkStore($productOfferStockRequestTransfer->getStore()->getIdStore())
+                    ->endUse()
+                ->endUse();
         }
 
         return $productOfferStockQuery;

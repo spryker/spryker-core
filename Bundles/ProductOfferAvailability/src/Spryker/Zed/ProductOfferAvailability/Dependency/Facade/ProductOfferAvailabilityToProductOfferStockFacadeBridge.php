@@ -34,4 +34,14 @@ class ProductOfferAvailabilityToProductOfferStockFacadeBridge implements Product
     {
         return $this->productOfferStockFacade->calculateProductOfferStockForRequest($productOfferStockRequestTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
+     *
+     * @return bool
+     */
+    public function isProductOfferNeverOutOfStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): bool
+    {
+        return $this->productOfferStockFacade->isProductOfferNeverOutOfStock($productOfferStockRequestTransfer);
+    }
 }

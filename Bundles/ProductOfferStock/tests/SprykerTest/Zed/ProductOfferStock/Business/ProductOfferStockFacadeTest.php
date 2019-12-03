@@ -9,9 +9,11 @@ namespace SprykerTest\Zed\ProductOfferStock\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductOfferStockCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\StockTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
 /**
@@ -66,8 +68,12 @@ class ProductOfferStockFacadeTest extends Unit
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
         $stockTransfer = $this->tester->haveStock([
             StockTransfer::NAME => static::STOCK_NAME_VALUE,
+            'storeRelation' => ['idStores' => [$storeTransfer->getIdStore()]],
         ]);
         $productOffer = $this->tester->haveProductOffer([
             ProductOfferTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_VALUE,
@@ -80,10 +86,11 @@ class ProductOfferStockFacadeTest extends Unit
         ]);
 
         // Act
-        $productOfferStockCriteriaTransfer = new ProductOfferStockCriteriaFilterTransfer();
-        $productOfferStockCriteriaTransfer->setFkProductOffer($productOffer->getIdProductOffer());
+        $productOfferStockRequestTransfer = new ProductOfferStockRequestTransfer();
+        $productOfferStockRequestTransfer->setProductOfferReference($productOffer->getProductOfferReference());
+        $productOfferStockRequestTransfer->setStore((new StoreTransfer())->setIdStore($stockTransfer->getStoreRelation()->getIdStores()[0]));
 
-        $response = $this->tester->getFacade()->isProductOfferNeverOutOfStock($productOfferStockCriteriaTransfer);
+        $response = $this->tester->getFacade()->isProductOfferNeverOutOfStock($productOfferStockRequestTransfer);
 
         // Assert
         $this->assertTrue($response);

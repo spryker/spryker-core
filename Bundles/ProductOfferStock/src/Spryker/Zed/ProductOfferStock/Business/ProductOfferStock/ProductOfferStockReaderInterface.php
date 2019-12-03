@@ -7,16 +7,14 @@
 
 namespace Spryker\Zed\ProductOfferStock\Business\ProductOfferStock;
 
-use Generated\Shared\Transfer\ProductOfferStockCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
 
 interface ProductOfferStockReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
      * @return bool
      */
-    public function isProductOfferNeverOutOfStock(
-        ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaFilterTransfer
-    ): bool;
+    public function isProductOfferNeverOutOfStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): bool;
 }

@@ -18,4 +18,11 @@ interface ProductOfferAvailabilityToProductOfferStockFacadeInterface
      * @return \Spryker\DecimalObject\Decimal
      */
     public function calculateProductOfferStockForRequest(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): Decimal;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
+     *
+     * @return bool
+     */
+    public function isProductOfferNeverOutOfStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): bool;
 }

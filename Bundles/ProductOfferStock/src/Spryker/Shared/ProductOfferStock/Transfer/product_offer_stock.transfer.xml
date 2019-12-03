@@ -20,8 +20,4 @@
         <property name="isNeverOutOfStock" type="boolean"/>
     </transfer>
 
-    <transfer name="ProductOfferStockCriteriaFilter">
-        <property name="fkProductOffer" type="int"/>
-    </transfer>
-
 </transfers>

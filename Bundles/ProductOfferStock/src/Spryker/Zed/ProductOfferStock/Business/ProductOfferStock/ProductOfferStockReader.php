@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferStock\Business\ProductOfferStock;
 
-use Generated\Shared\Transfer\ProductOfferStockCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
 use Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferStockNotFoundException;
 use Spryker\Zed\ProductOfferStock\Persistence\ProductOfferStockRepositoryInterface;
 
@@ -27,24 +27,24 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaFilterTransfer
-     *
-     * @throws \Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferStockNotFoundException
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
      * @return bool
+     * @throws \Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferStockNotFoundException
      */
-    public function isProductOfferNeverOutOfStock(
-        ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaFilterTransfer
-    ): bool {
-        $productOfferStockCriteriaFilterTransfer->requireFkProductOffer();
+    public function isProductOfferNeverOutOfStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): bool {
+        $productOfferStockRequestTransfer->requireProductOfferReference()
+            ->requireStore()
+            ->getStore()
+                ->requireIdStore();
 
-        $productOfferTransfer = $this->productOfferStockRepository->findOne($productOfferStockCriteriaFilterTransfer);
+        $productOfferTransfer = $this->productOfferStockRepository->findOne($productOfferStockRequestTransfer);
 
         if (!$productOfferTransfer) {
             throw new ProductOfferStockNotFoundException(
                 sprintf(
-                    'Product offer stock with product offer foreign key "%s" not found!',
-                    $productOfferStockCriteriaFilterTransfer->getFkProductOffer()
+                    'Product offer stock with product offer reference "%s" not found!',
+                    $productOfferStockRequestTransfer->getProductOfferReference()
                 )
             );
         }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductOfferStock\Business;
 
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
 use Spryker\DecimalObject\Decimal;
-use Generated\Shared\Transfer\ProductOfferStockCriteriaFilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -27,12 +26,11 @@ class ProductOfferStockFacade extends AbstractFacade implements ProductOfferStoc
      *
      * @return bool
      */
-    public function isProductOfferNeverOutOfStock(
-        ProductOfferStockCriteriaFilterTransfer $productOfferStockCriteriaFilterTransfer
-    ): bool {
+    public function isProductOfferNeverOutOfStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): bool
+    {
         return $this->getFactory()
             ->createProductOfferStockReader()
-            ->isProductOfferNeverOutOfStock($productOfferStockCriteriaFilterTransfer);
+            ->isProductOfferNeverOutOfStock($productOfferStockRequestTransfer);
     }
 
     /**
