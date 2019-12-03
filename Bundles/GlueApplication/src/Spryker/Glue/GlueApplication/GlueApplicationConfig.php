@@ -52,7 +52,7 @@ class GlueApplicationConfig extends AbstractBundleConfig
      * Specification:
      *  - List of allowed CORS headers.
      *
-     * @return array
+     * @return string[]
      */
     public function getCorsAllowedHeaders(): array
     {
