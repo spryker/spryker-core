@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
  * @method \Spryker\Client\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageFactory getFactory()
  * @method \Spryker\Client\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageClientInterface getClient()
  */
-class ProductOfferPostProductViewAvailabilityStorageExpandPluginPlugin extends AbstractPlugin implements PostProductViewAvailabilityStorageExpandPluginInterface
+class ProductOfferPostProductViewAvailabilityStorageExpandPlugin extends AbstractPlugin implements PostProductViewAvailabilityStorageExpandPluginInterface
 {
     /**
      * {@inheritDoc}
