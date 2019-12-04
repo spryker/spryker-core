@@ -43,6 +43,17 @@ class ResponseProcessor implements ResponseProcessorInterface
     }
 
     /**
+     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
+     */
+    public function processNonExistingServiceName(): HealthCheckResponseTransfer
+    {
+        return (new HealthCheckResponseTransfer())
+            ->setStatus($this->healthCheckConfig->getUnavailableHealthCheckStatusMessage())
+            ->setMessage($this->healthCheckConfig->getNotFoundHealthCheckStatusMessage())
+            ->setStatusCode($this->healthCheckConfig->getNotFoundHealthCheckStatusCode());
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer[] $healthCheckServiceResponseTransfers
      *
      * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer

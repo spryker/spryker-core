@@ -24,4 +24,12 @@ class HealthCheckService extends AbstractService implements HealthCheckServiceIn
     {
         return $this->getFactory()->createHealthCheckResponseProcessor()->processOutput($healthCheckServiceResponseTransfers);
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
+     */
+    public function processNonExistingServiceName(): HealthCheckResponseTransfer
+    {
+        return $this->getFactory()->createHealthCheckResponseProcessor()->processNonExistingServiceName();
+    }
 }

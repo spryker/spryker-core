@@ -189,8 +189,9 @@ class HealthCheckFacadeTest extends Unit
 
         $this->assertInstanceOf(HealthCheckResponseTransfer::class, $healthCheckResponseTransfer);
         $this->assertLessThan(count($requestedHealthCheckServices), $healthCheckResponseTransfer->getHealthCheckServiceResponses()->count());
-        $this->assertSame($this->healthCheckConfig->getSuccessHealthCheckStatusMessage(), $healthCheckResponseTransfer->getStatus());
-        $this->assertSame($this->healthCheckConfig->getSuccessHealthCheckStatusCode(), $healthCheckResponseTransfer->getStatusCode());
+        $this->assertSame($this->healthCheckConfig->getUnavailableHealthCheckStatusMessage(), $healthCheckResponseTransfer->getStatus());
+        $this->assertSame($this->healthCheckConfig->getNotFoundHealthCheckStatusMessage(), $healthCheckResponseTransfer->getMessage());
+        $this->assertSame($this->healthCheckConfig->getNotFoundHealthCheckStatusCode(), $healthCheckResponseTransfer->getStatusCode());
     }
 
     /**

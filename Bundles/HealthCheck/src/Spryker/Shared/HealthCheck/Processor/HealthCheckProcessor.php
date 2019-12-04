@@ -11,18 +11,19 @@ use Generated\Shared\Transfer\HealthCheckRequestTransfer;
 use Generated\Shared\Transfer\HealthCheckResponseTransfer;
 use Spryker\Service\HealthCheck\HealthCheckServiceInterface;
 use Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface;
+use Spryker\Shared\HealthCheck\Validator\ValidatorInterface;
 
 class HealthCheckProcessor implements HealthCheckProcessorInterface
 {
     /**
+     * @var \Spryker\Shared\HealthCheck\Validator\ValidatorInterface
+     */
+    protected $validator;
+
+    /**
      * @var \Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface
      */
     protected $chainFilter;
-
-    /**
-     * @var \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[]
-     */
-    protected $healthCheckPlugins;
 
     /**
      * @var \Spryker\Service\HealthCheck\HealthCheckServiceInterface
@@ -30,15 +31,26 @@ class HealthCheckProcessor implements HealthCheckProcessorInterface
     protected $healthCheckService;
 
     /**
-     * @param \Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface $chainFilter
-     * @param \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[] $healthCheckPlugins
-     * @param \Spryker\Service\HealthCheck\HealthCheckServiceInterface $healthCheckService
+     * @var \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[]
      */
-    public function __construct(ChainFilterInterface $chainFilter, array $healthCheckPlugins, HealthCheckServiceInterface $healthCheckService)
-    {
+    protected $healthCheckPlugins;
+
+    /**
+     * @param \Spryker\Shared\HealthCheck\Validator\ValidatorInterface $validator
+     * @param \Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface $chainFilter
+     * @param \Spryker\Service\HealthCheck\HealthCheckServiceInterface $healthCheckService
+     * @param \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[] $healthCheckPlugins
+     */
+    public function __construct(
+        ValidatorInterface $validator,
+        ChainFilterInterface $chainFilter,
+        HealthCheckServiceInterface $healthCheckService,
+        array $healthCheckPlugins
+    ) {
+        $this->validator = $validator;
         $this->chainFilter = $chainFilter;
-        $this->healthCheckPlugins = $healthCheckPlugins;
         $this->healthCheckService = $healthCheckService;
+        $this->healthCheckPlugins = $healthCheckPlugins;
     }
 
     /**
@@ -48,6 +60,12 @@ class HealthCheckProcessor implements HealthCheckProcessorInterface
      */
     public function process(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer
     {
+        $isValidaRequestedServices = $this->validator->validate($this->healthCheckPlugins, $healthCheckRequestTransfer);
+
+        if ($isValidaRequestedServices === false) {
+            return $this->healthCheckService->processNonExistingServiceName();
+        }
+
         $filteredHealthCheckPlugins = $this->chainFilter->filter($this->healthCheckPlugins, $healthCheckRequestTransfer);
         $healthCheckResponseTransfer = $this->processFilteredHealthCheckPlugins($filteredHealthCheckPlugins);
 

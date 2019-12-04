@@ -17,4 +17,9 @@ interface ResponseProcessorInterface
      * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
      */
     public function processOutput(array $healthCheckServiceResponseTransfers): HealthCheckResponseTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
+     */
+    public function processNonExistingServiceName(): HealthCheckResponseTransfer;
 }
