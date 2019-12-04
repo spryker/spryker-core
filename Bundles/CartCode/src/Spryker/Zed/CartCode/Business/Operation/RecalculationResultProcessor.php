@@ -37,22 +37,18 @@ class RecalculationResultProcessor implements RecalculationResultProcessorInterf
         $quoteTransfer = $cartCodeRequestTransfer->getQuote();
         $cartCodeResponseTransfer = (new CartCodeResponseTransfer())->setQuote($quoteTransfer);
 
+        $isSuccess = true;
         $cartCode = $cartCodeRequestTransfer->getCartCode();
         foreach ($this->cartCodePlugins as $cartCodePlugin) {
-            $messageTransfer = $cartCodePlugin->findOperationResponseMessage(
-                $quoteTransfer,
-                $cartCode
-            );
-
+            $messageTransfer = $cartCodePlugin->findOperationResponseMessage($quoteTransfer, $cartCode);
             if (!$messageTransfer) {
                 continue;
             }
 
             $cartCodeResponseTransfer->addMessage($messageTransfer);
-            $isSuccess = !($messageTransfer->getType() === static::MESSAGE_TYPE_ERROR);
-            $cartCodeResponseTransfer->setIsSuccessful($isSuccess);
+            $isSuccess = $isSuccess === true ? !($messageTransfer->getType() === static::MESSAGE_TYPE_ERROR) : false;
         }
 
-        return $cartCodeResponseTransfer;
+        return $cartCodeResponseTransfer->setIsSuccessful($isSuccess);
     }
 }
