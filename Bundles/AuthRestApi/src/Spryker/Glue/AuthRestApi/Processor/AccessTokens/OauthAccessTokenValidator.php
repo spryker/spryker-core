@@ -115,7 +115,7 @@ class OauthAccessTokenValidator implements OauthAccessTokenValidatorInterface
     {
         $accessToken = $this->extractToken($authorizationToken);
         $type = $this->extractTokenType($authorizationToken);
-        if (!$accessToken) {
+        if (!$accessToken || !$type) {
             return false;
         }
 
