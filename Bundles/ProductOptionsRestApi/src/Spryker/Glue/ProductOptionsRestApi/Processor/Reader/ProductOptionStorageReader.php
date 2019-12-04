@@ -133,9 +133,12 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
             return [];
         }
 
-        $productAbstractOptionStorageTransfer = $this->productOptionStorageClient->getProductOptionsForCurrentStore(
-            $idProductAbstract
-        );
+        $productAbstractOptionStorageTransfer = $this->productOptionStorageClient
+            ->getProductOptionsForCurrentStore($idProductAbstract);
+
+        if (!$productAbstractOptionStorageTransfer) {
+            return [];
+        }
 
         return $this->getProductOptionIdsGroupedByProductOptionSku($productAbstractOptionStorageTransfer);
     }

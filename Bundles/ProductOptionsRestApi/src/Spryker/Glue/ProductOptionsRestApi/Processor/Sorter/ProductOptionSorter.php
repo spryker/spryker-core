@@ -25,7 +25,7 @@ class ProductOptionSorter implements ProductOptionSorterInterface
         array $restProductOptionsAttributesTransfers,
         array $sorts
     ): array {
-        $sorts = array_values($this->filterSorts($sorts));
+        $sorts = array_values($this->removeNonOptionsRelatedSortingParameters($sorts));
 
         if (!$sorts) {
             return $restProductOptionsAttributesTransfers;
@@ -84,13 +84,11 @@ class ProductOptionSorter implements ProductOptionSorterInterface
     }
 
     /**
-     * Removes the non-options related sorting parameters.
-     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
      *
      * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[]
      */
-    protected function filterSorts(array $sorts): array
+    protected function removeNonOptionsRelatedSortingParameters(array $sorts): array
     {
         return array_filter($sorts, function (SortInterface $sort) {
             return explode(static::SORT_VALUE_DELIMITER, $sort->getField())[0] === ProductOptionsRestApiConfig::RESOURCE_PRODUCT_OPTIONS;

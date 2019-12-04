@@ -15,6 +15,8 @@ interface CartItemExpanderPluginInterface
     /**
      * Specification:
      * - Expands CartItemRequestTransfer with additional data.
+     * - Receives the second parameter for input, changes applies only for CartItemRequestTransfer.
+     * - RestCartItemsAttributesTransfer is immutable.
      *
      * @api
      *
