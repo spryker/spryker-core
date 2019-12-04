@@ -15,19 +15,21 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 /**
  * @method \Spryker\Glue\CartCodesRestApi\CartCodesRestApiFactory getFactory()
  */
-class GuestCartDiscountsResourceController extends AbstractController
+class CartVouchersResourceController extends AbstractController
 {
     /**
      * @Glue({
      *     "post": {
      *          "summary": [
-     *              "Adds a code to guest cart."
+     *              "Adds a code to cart."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
      *          "responses": {
+     *              "401": "Invalid access token.",
+     *              "403": "Missing access token.",
      *              "404": "Cart with given uuid not found."
      *          }
      *     }
@@ -42,21 +44,25 @@ class GuestCartDiscountsResourceController extends AbstractController
         RestRequestInterface $restRequest,
         RestDiscountsRequestAttributesTransfer $restDiscountRequestAttributesTransfer
     ): RestResponseInterface {
-        return $this->getFactory()->createCartCodeAdder()->addCartCodeToGuestCart($restRequest, $restDiscountRequestAttributesTransfer);
+        return $this->getFactory()
+            ->createCartCodeAdder()
+            ->addCartCodeToCart($restRequest, $restDiscountRequestAttributesTransfer);
     }
 
     /**
      * @Glue({
      *     "delete": {
-     *          "path": "/guest-carts/{guestCartId}/discounts",
+     *          "path": "/carts/{cartId}/discounts",
      *          "summary": [
-     *              "Deletes a code from guest cart."
+     *              "Deletes a code from cart."
      *          ],
      *          "parameters": [{
      *              "name": "Accept-Language",
      *              "in": "header"
      *          }],
      *          "responses": {
+     *              "401": "Invalid access token.",
+     *              "403": "Missing access token.",
      *              "404": "Cart with given uuid not found.",
      *              "422": "Cart code can't be deleted."
      *          }
@@ -70,6 +76,6 @@ class GuestCartDiscountsResourceController extends AbstractController
     public function deleteAction(
         RestRequestInterface $restRequest
     ): RestResponseInterface {
-        return $this->getFactory()->createCartCodeRemover()->removeCodeFromGuestCart($restRequest);
+        return $this->getFactory()->createCartCodeRemover()->removeCodeFromCart($restRequest);
     }
 }

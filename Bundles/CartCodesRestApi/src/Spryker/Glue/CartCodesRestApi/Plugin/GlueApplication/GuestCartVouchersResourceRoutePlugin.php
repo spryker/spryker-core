@@ -57,7 +57,7 @@ class GuestCartVouchersResourceRoutePlugin extends AbstractPlugin implements Res
      */
     public function getController(): string
     {
-        return 'guest-cart-discounts-resource';
+        return 'guest-cart-vouchers-resource';
     }
 
     /**

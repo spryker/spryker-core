@@ -57,7 +57,7 @@ class CartVouchersResourceRoutePlugin extends AbstractPlugin implements Resource
      */
     public function getController(): string
     {
-        return 'cart-discounts-resource';
+        return 'cart-vouchers-resource';
     }
 
     /**
