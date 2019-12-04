@@ -76,7 +76,7 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
         $productOfferAvailabilityRequestTransfers = $this->productOfferAvailabilityStorageRepository
             ->getProductOfferAvailabilityRequestsByOmsReservationIds($omsProductReservationIds);
 
-        $this->publishProductOfferAvailabilityStorageForRequests($productOfferAvailabilityRequestTransfers);
+        $this->writeProductOfferAvailabilityStorageForRequests($productOfferAvailabilityRequestTransfers);
     }
 
     /**
@@ -91,7 +91,7 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
         $productOfferAvailabilityRequestTransfers = $this->productOfferAvailabilityStorageRepository
             ->getProductOfferAvailabilityRequestsByProductOfferStockIds($productOfferStockIds);
 
-        $this->publishProductOfferAvailabilityStorageForRequests($productOfferAvailabilityRequestTransfers);
+        $this->writeProductOfferAvailabilityStorageForRequests($productOfferAvailabilityRequestTransfers);
     }
 
     /**
@@ -106,7 +106,7 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
         $productOfferAvailabilityRequestTransfers = $this->productOfferAvailabilityStorageRepository
             ->getProductOfferAvailabilityRequestsByProductOfferIds($productOfferIds);
 
-        $this->publishProductOfferAvailabilityStorageForRequests($productOfferAvailabilityRequestTransfers);
+        $this->writeProductOfferAvailabilityStorageForRequests($productOfferAvailabilityRequestTransfers);
     }
 
     /**
@@ -114,7 +114,7 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
      *
      * @return void
      */
-    public function publishProductOfferAvailabilityStorageForRequests(array $productOfferAvailabilityRequestTransfers): void
+    public function writeProductOfferAvailabilityStorageForRequests(array $productOfferAvailabilityRequestTransfers): void
     {
         foreach ($productOfferAvailabilityRequestTransfers as $productOfferAvailabilityRequestTransfer) {
             $productOfferAvailabilityStorageTransfer = $this->productOfferAvailabilityFacade->findProductConcreteAvailabilityForRequest($productOfferAvailabilityRequestTransfer);

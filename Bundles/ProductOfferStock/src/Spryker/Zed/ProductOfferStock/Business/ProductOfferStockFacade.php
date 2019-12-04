@@ -34,6 +34,8 @@ class ProductOfferStockFacade extends AbstractFacade implements ProductOfferStoc
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer

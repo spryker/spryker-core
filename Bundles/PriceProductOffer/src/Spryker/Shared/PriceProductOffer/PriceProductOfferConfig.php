@@ -1,9 +1,8 @@
 <?php
+
 /**
- * Created by PhpStorm.
- * User: smarovydlo
- * Date: 11/22/19
- * Time: 5:10 PM
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\PriceProductOffer\src\Spryker\Shared\PriceProductOffer;

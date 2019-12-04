@@ -38,10 +38,6 @@ class ProductOfferAvailabilityStorageReader implements ProductOfferAvailabilityS
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param string $productOfferReference
      * @param string $storeName
      *

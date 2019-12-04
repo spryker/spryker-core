@@ -39,7 +39,7 @@ class ProductOfferAvailabilityStoragePersistenceFactory extends AbstractPersiste
     /**
      * @return \Orm\Zed\ProductOfferAvailabilityStorage\Persistence\SpyProductOfferAvailabilityStorageQuery
      */
-    public function getProductOfferAvailabilityPropelQuery(): SpyProductOfferAvailabilityStorageQuery
+    public function getProductOfferAvailabilityStoragePropelQuery(): SpyProductOfferAvailabilityStorageQuery
     {
         return SpyProductOfferAvailabilityStorageQuery::create();
     }

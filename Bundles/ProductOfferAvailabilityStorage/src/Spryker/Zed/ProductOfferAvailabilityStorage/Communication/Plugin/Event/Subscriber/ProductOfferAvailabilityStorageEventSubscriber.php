@@ -23,7 +23,7 @@ use Spryker\Zed\ProductOfferAvailabilityStorage\Communication\Plugin\Event\Liste
 class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Ads product offer availability storage related listeners.
      *
      * @api
@@ -36,6 +36,7 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
     {
         $this->addOmsProductReservationCreateListener($eventCollection)
             ->addOmsProductReservationUpdateListener($eventCollection)
+            ->addProductOfferPublishListener($eventCollection)
             ->addProductOfferStockCreateListener($eventCollection)
             ->addProductOfferStockUpdateListener($eventCollection)
             ->addProductOfferCreateListener($eventCollection)
@@ -105,6 +106,19 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
     {
         $eventCollection
             ->addListenerQueued(ProductOfferAvailabilityEvents::ENTITY_SPY_PRODUCT_OFFER_CREATE, new ProductOfferStoragePublishListener());
+
+        return $this;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return $this
+     */
+    protected function addProductOfferPublishListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection
+            ->addListenerQueued(ProductOfferAvailabilityEvents::ENTITY_SPY_PRODUCT_OFFER_PUBLISH, new ProductOfferStoragePublishListener());
 
         return $this;
     }

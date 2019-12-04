@@ -13,7 +13,7 @@ use Spryker\Zed\CartExtension\Dependency\Plugin\CartChangeTransferNormalizerPlug
 class ProductOfferCartChangeTransferNormalizerPlugin implements CartChangeTransferNormalizerPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Always executable.
      *
      * @api
@@ -28,7 +28,7 @@ class ProductOfferCartChangeTransferNormalizerPlugin implements CartChangeTransf
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Updates item identifier to product offer reference.
      *
      * @api
