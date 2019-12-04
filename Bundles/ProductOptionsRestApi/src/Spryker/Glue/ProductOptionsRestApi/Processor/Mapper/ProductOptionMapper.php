@@ -77,7 +77,7 @@ class ProductOptionMapper implements ProductOptionMapperInterface
             );
         }
 
-        $restItemsAttributesTransfer->setSelectedOptions(new ArrayObject($restItemProductOptionsTransfers));
+        $restItemsAttributesTransfer->setSelectedProductOptions(new ArrayObject($restItemProductOptionsTransfers));
 
         return $restItemsAttributesTransfer;
     }

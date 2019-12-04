@@ -19,7 +19,7 @@
     </transfer>
 
     <transfer name="RestItemsAttributes">
-        <property name="selectedOptions" type="RestItemProductOptions[]" singular="selectedOption"/>
+        <property name="selectedProductOptions" type="RestItemProductOptions[]" singular="selectedProductOptions"/>
     </transfer>
 
     <transfer name="ProductAbstractOptionStorage">
