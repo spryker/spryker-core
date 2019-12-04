@@ -9,7 +9,7 @@
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/product-label-storage": "^1.5.0",
-    "spryker/product-storage": "^1.17.0",
+    "spryker/product-storage": "^1.16.0",
     "spryker/symfony": "^3.0.0",
     "spryker/synchronization-behavior": "^1.2.0"
   },
