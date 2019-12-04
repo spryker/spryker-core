@@ -28,7 +28,7 @@ class HealthCheckConfig extends AbstractSharedConfig
      */
     public function isHealthCheckEnabled(): bool
     {
-        return $this->get(HealthCheckConstants::HEALTH_CHECK_ENABLED, true);
+        return $this->get(HealthCheckConstants::HEALTH_CHECK_ENABLED, false);
     }
 
     /**

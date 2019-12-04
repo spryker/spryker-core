@@ -81,6 +81,8 @@ class HealthCheckProcessor implements HealthCheckProcessorInterface
             $restHealthCheckResponseAttributesTransfer
         );
 
-        return $restResponse->addResource($restResource);
+        return $restResponse
+            ->addResource($restResource)
+            ->setStatus($healthCheckResponseTransfer->getStatusCode());
     }
 }
