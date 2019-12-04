@@ -27,7 +27,7 @@ class HealthCheckResourceController extends AbstractController
      *              "in": "header"
      *          }],
      *          "responses": {
-     *              "400": "Bad request."
+     *              "400": "Bad request.",
      *              "403": "Services are disabled.",
      *              "503": "Services are unavailable."
      *          }
