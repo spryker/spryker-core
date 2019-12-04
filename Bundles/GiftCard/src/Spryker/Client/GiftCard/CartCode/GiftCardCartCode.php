@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
- * @deprecated Will be removed in the next major version. Please use \Spryker\Zed\Discount\Communication\Plugin\CartCode\VoucherCartCodePlugin.
+ * @deprecated Will be removed in the next major version.
  */
 class GiftCardCartCode implements GiftCardCartCodeInterface
 {
