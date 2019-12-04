@@ -12,7 +12,6 @@
     "spryker/health-check-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/messenger": "^3.0.0",
-    "spryker/silex": "^2.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/util-network": "^1.1.0",
     "spryker/util-text": "^1.1.0"
@@ -23,12 +22,14 @@
     "spryker/event-dispatcher": "*",
     "spryker/log": "*",
     "spryker/propel": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
     "spryker/container": "Add this module when you want to use the Container.",
     "spryker/event-dispatcher": "Add this module when you want to use the EventDispatcher.",
-    "spryker/log": "Required for using the Log middleware."
+    "spryker/log": "Required for using the Log middleware.",
+    "spryker/silex": "Add this when you still want to use the abandoned Silex."
   },
   "autoload": {
     "psr-4": {

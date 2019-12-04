@@ -27,7 +27,11 @@
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/search-elasticsearch": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/silex": "Add this when you still want to use the abandoned Silex."
   },
   "autoload": {
     "psr-4": {

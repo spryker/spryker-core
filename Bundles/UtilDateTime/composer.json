@@ -7,16 +7,17 @@
     "php": ">=7.2",
     "spryker/config": "^3.0.0",
     "spryker/kernel": "^3.30.0",
-    "spryker/silex": "^2.0.0",
     "spryker/twig": "^3.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/container": "If you want to use Twig Plugins"
+    "spryker/container": "If you want to use Twig Plugins",
+    "spryker/silex": "Add this when you still want to use the abandoned Silex."
   },
   "autoload": {
     "psr-4": {
