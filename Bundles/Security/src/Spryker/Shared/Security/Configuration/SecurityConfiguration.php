@@ -7,10 +7,10 @@
 
 namespace Spryker\Shared\Security\Configuration;
 
-use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
-use Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface;
 use Spryker\Shared\Security\Exception\FirewallNotFoundException;
 use Spryker\Shared\Security\Exception\SecurityConfigurationException;
+use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
+use Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface;
 
 class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigurationInterface
 {
@@ -281,7 +281,7 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
     /**
      * @throws \Spryker\Shared\Security\Exception\FirewallNotFoundException
      *
-     * @return \Spryker\Shared\Security\Configuration\SecurityConfigurationInterface
+     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface
      */
     public function getConfiguration(): SecurityConfigurationInterface
     {

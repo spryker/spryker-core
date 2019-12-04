@@ -12,7 +12,6 @@ use Psr\Log\LoggerInterface;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface;
-use Spryker\Shared\SecurityExtension\Configuration\SecurityConfiguration;
 use Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
