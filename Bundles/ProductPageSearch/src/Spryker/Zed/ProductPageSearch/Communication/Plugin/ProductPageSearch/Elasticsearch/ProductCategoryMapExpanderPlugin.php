@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\SortedCategoryQueryExpanderPlugin;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
-use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractPageMapExpanderPluginInterface;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapExpanderPluginInterface;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
@@ -20,7 +20,7 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractPage
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
  */
-class ProductCategoryPageMapExpanderPlugin extends AbstractPlugin implements ProductAbstractPageMapExpanderPluginInterface
+class ProductCategoryMapExpanderPlugin extends AbstractPlugin implements ProductAbstractMapExpanderPluginInterface
 {
     protected const KEY_CATEGORY_NODE_IDS = 'category_node_ids';
     protected const KEY_ALL_PARENT_CATEGORY_NODE_IDS = 'all_parent_category_ids';
@@ -52,7 +52,7 @@ class ProductCategoryPageMapExpanderPlugin extends AbstractPlugin implements Pro
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function expandProductPageMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer)
+    public function expandProductMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer)
     {
         $directParentCategories = $productData[static::KEY_CATEGORY_NODE_IDS];
         $allParentCategories = $productData[static::KEY_ALL_PARENT_CATEGORY_NODE_IDS];

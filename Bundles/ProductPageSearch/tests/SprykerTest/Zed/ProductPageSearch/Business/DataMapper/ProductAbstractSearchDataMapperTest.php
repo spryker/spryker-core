@@ -15,7 +15,7 @@ use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSe
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface;
-use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractPageMapExpanderPluginInterface;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapExpanderPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -88,11 +88,11 @@ class ProductAbstractSearchDataMapperTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractPageMapExpanderPluginInterface|\PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapExpanderPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createProductAbstractPageMapExpanderPluginMock()
     {
-        $pluginMock = $this->createMock(ProductAbstractPageMapExpanderPluginInterface::class);
+        $pluginMock = $this->createMock(ProductAbstractMapExpanderPluginInterface::class);
         $pluginMock->method('expandProductPageMap')->willReturnArgument(1);
 
         return $pluginMock;

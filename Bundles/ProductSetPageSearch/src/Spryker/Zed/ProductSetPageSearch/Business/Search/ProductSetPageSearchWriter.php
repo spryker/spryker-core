@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ProductSetPageSearchTransfer;
 use Generated\Shared\Transfer\StorageProductImageTransfer;
 use Orm\Zed\ProductSetPageSearch\Persistence\SpyProductSetPageSearch;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetPageSearchDataMapperInterface;
+use Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetSearchDataMapperInterface;
 use Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToProductSetInterface;
 use Spryker\Zed\ProductSetPageSearch\Dependency\Service\ProductSetPageSearchToUtilEncodingInterface;
 use Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainerInterface;
@@ -33,7 +33,7 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetPageSearchDataMapperInterface
+     * @var \Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetSearchDataMapperInterface
      */
     protected $productSetPageSearchDataMapper;
 
@@ -55,7 +55,7 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
     /**
      * @param \Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductSetPageSearch\Dependency\Service\ProductSetPageSearchToUtilEncodingInterface $utilEncodingService
-     * @param \Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetPageSearchDataMapperInterface $productSetPageSearchDataMapper
+     * @param \Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetSearchDataMapperInterface $productSetPageSearchDataMapper
      * @param \Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToProductSetInterface $productSetFacade
      * @param \Spryker\Shared\Kernel\Store $store
      * @param bool $isSendingToQueue
@@ -63,7 +63,7 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
     public function __construct(
         ProductSetPageSearchQueryContainerInterface $queryContainer,
         ProductSetPageSearchToUtilEncodingInterface $utilEncodingService,
-        ProductSetPageSearchDataMapperInterface $productSetPageSearchDataMapper,
+        ProductSetSearchDataMapperInterface $productSetPageSearchDataMapper,
         ProductSetPageSearchToProductSetInterface $productSetFacade,
         Store $store,
         $isSendingToQueue

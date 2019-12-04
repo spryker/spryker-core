@@ -10,4 +10,7 @@
     <transfer name="SearchConfiguration">
     </transfer>
 
+    <transfer name="SearchDocument">
+    </transfer>
+
 </transfers>

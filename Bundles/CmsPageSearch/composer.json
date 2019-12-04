@@ -18,7 +18,6 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/config": "*",
     "spryker/elastica": "*",
     "spryker/event": "*",
     "spryker/propel": "*",

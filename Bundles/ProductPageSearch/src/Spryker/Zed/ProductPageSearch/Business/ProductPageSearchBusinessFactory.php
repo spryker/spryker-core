@@ -192,7 +192,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->createPageMapBuilder(),
             $this->getSearchFacade(),
             $this->getProductSearchFacade(),
-            $this->getProductAbstractPageMapExpanderPlugins()
+            $this->getProductAbstractMapExpanderPlugins()
         );
     }
 
@@ -203,7 +203,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductConcreteSearchDataMapper(
             $this->createPageMapBuilder(),
-            $this->getProductConcretePageMapExpanderPlugins()
+            $this->getProductConcreteMapExpanderPlugins()
         );
     }
 
@@ -226,16 +226,16 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface[]
      */
-    public function getProductConcretePageMapExpanderPlugins(): array
+    public function getProductConcreteMapExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_CONCRETE_PRODUCT_PAGE_MAP_EXPANDER);
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_CONCRETE_PRODUCT_MAP_EXPANDER);
     }
 
     /**
-     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractPageMapExpanderPluginInterface[]
+     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapExpanderPluginInterface[]
      */
-    public function getProductAbstractPageMapExpanderPlugins(): array
+    public function getProductAbstractMapExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_PAGE_MAP_EXPANDER);
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_MAP_EXPANDER);
     }
 }

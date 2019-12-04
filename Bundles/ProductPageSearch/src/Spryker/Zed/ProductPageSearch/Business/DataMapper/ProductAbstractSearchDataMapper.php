@@ -37,28 +37,28 @@ class ProductAbstractSearchDataMapper extends AbstractProductSearchDataMapper
     protected $productSearchFacade;
 
     /**
-     * @var \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractPageMapExpanderPluginInterface[]
+     * @var \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapExpanderPluginInterface[]
      */
-    protected $productAbstractPageMapExpanderPlugins;
+    protected $productAbstractMapExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface $searchFacade
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchInterface $productSearchFacade
-     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractPageMapExpanderPluginInterface[] $productAbstractPageMapExpanderPlugins
+     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapExpanderPluginInterface[] $productAbstractMapExpanderPlugins
      */
     public function __construct(
         PageMapBuilderInterface $pageMapBuilder,
         ProductPageSearchToSearchInterface $searchFacade,
         ProductPageSearchToProductSearchInterface $productSearchFacade,
-        array $productAbstractPageMapExpanderPlugins
+        array $productAbstractMapExpanderPlugins
     ) {
         parent::__construct();
 
         $this->pageMapBuilder = $pageMapBuilder;
         $this->searchFacade = $searchFacade;
         $this->productSearchFacade = $productSearchFacade;
-        $this->productAbstractPageMapExpanderPlugins = $productAbstractPageMapExpanderPlugins;
+        $this->productAbstractMapExpanderPlugins = $productAbstractMapExpanderPlugins;
     }
 
     /**
@@ -69,7 +69,7 @@ class ProductAbstractSearchDataMapper extends AbstractProductSearchDataMapper
      */
     public function mapProductDataToSearchData(array $data, LocaleTransfer $localeTransfer): array
     {
-        if (!count($this->productAbstractPageMapExpanderPlugins)) {
+        if (!count($this->productAbstractMapExpanderPlugins)) {
             return $this->searchFacade->transformPageMapToDocumentByMapperName(
                 $data,
                 $localeTransfer,
@@ -123,10 +123,10 @@ class ProductAbstractSearchDataMapper extends AbstractProductSearchDataMapper
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    protected function expandProductPageMap(PageMapTransfer $pageMapTransfer, array $productData, LocaleTransfer $localeTransfer)
+    protected function expandProductPageMap(PageMapTransfer $pageMapTransfer, array $productData, LocaleTransfer $localeTransfer): PageMapTransfer
     {
-        foreach ($this->productAbstractPageMapExpanderPlugins as $productPageMapExpander) {
-            $pageMapTransfer = $productPageMapExpander->expandProductPageMap($pageMapTransfer, $this->pageMapBuilder, $productData, $localeTransfer);
+        foreach ($this->productAbstractMapExpanderPlugins as $productAbstractMapExpander) {
+            $pageMapTransfer = $productAbstractMapExpander->expandProductMap($pageMapTransfer, $this->pageMapBuilder, $productData, $localeTransfer);
         }
 
         return $pageMapTransfer;

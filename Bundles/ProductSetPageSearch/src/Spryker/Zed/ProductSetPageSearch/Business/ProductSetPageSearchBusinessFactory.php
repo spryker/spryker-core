@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductSetPageSearch\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetPageSearchDataMapper;
-use Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetPageSearchDataMapperInterface;
+use Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetSearchDataMapper;
+use Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetSearchDataMapperInterface;
 use Spryker\Zed\ProductSetPageSearch\Business\Search\ProductSetPageSearchWriter;
 use Spryker\Zed\ProductSetPageSearch\ProductSetPageSearchDependencyProvider;
 
@@ -59,10 +59,10 @@ class ProductSetPageSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetPageSearchDataMapperInterface
+     * @return \Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetSearchDataMapperInterface
      */
-    public function createProductSetSearchDataMapper(): ProductSetPageSearchDataMapperInterface
+    public function createProductSetSearchDataMapper(): ProductSetSearchDataMapperInterface
     {
-        return new ProductSetPageSearchDataMapper();
+        return new ProductSetSearchDataMapper();
     }
 }

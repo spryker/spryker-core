@@ -103,7 +103,7 @@ class ProductPageSearchCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getConcreteProductPageMapExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_CONCRETE_PRODUCT_PAGE_MAP_EXPANDER);
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_CONCRETE_PRODUCT_MAP_EXPANDER);
     }
 
     /**

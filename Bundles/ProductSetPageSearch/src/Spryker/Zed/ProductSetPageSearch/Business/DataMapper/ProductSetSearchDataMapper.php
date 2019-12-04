@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductSetPageSearch\Business\DataMapper;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\LocaleTransfer;
 
-class ProductSetPageSearchDataMapper implements ProductSetPageSearchDataMapperInterface
+class ProductSetSearchDataMapper implements ProductSetSearchDataMapperInterface
 {
     protected const PRODUCT_SET_RESOURCE_NAME = 'product_set';
 

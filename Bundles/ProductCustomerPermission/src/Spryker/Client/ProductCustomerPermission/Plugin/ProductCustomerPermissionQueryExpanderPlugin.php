@@ -11,7 +11,6 @@ use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\HasChild;
 use Elastica\Query\Match;
-use Generated\Shared\Search\CustomerPageIndexMap;
 use InvalidArgumentException;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
@@ -23,6 +22,8 @@ use Spryker\Shared\ProductCustomerPermission\ProductCustomerPermissionConfig;
  */
 class ProductCustomerPermissionQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
+    protected const ID_CUSTOMER = 'id-customer';
+
     /**
      * Specification:
      * - Adds hasChild filter to the catalog Search query if the customer is logged-in.
@@ -78,7 +79,7 @@ class ProductCustomerPermissionQueryExpanderPlugin extends AbstractPlugin implem
     protected function createCustomerQuery(int $idCustomer): Match
     {
         return (new Match())
-            ->setField(CustomerPageIndexMap::ID_CUSTOMER, $idCustomer);
+            ->setField(static::ID_CUSTOMER, $idCustomer);
     }
 
     /**

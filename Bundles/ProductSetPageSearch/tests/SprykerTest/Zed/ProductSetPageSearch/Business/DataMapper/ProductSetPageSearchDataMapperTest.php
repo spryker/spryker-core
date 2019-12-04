@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\ProductSetPageSearch\Business\DataMapper;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetPageSearchDataMapper;
+use Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetSearchDataMapper;
 
 /**
  * Auto-generated group annotations
@@ -38,7 +38,7 @@ class ProductSetPageSearchDataMapperTest extends Unit
     public function testCanTransformPageMapToDocumentByMapperName(array $inputData, array $expected, string $localeName): void
     {
         // Arrange
-        $productSetPageSearchDataMapper = new ProductSetPageSearchDataMapper();
+        $productSetPageSearchDataMapper = new ProductSetSearchDataMapper();
         $localeTransfer = new LocaleTransfer();
         $localeTransfer->setLocaleName($localeName);
 

@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductSetPageSearch\Business\DataMapper;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 
-interface ProductSetPageSearchDataMapperInterface
+interface ProductSetSearchDataMapperInterface
 {
     /**
      * @param array $data

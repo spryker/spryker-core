@@ -29,20 +29,20 @@ class ProductConcreteSearchDataMapper extends AbstractProductSearchDataMapper
     /**
      * @var \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface[]
      */
-    protected $productConcretePageMapExpanderPlugins;
+    protected $productConcreteMapExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
-     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface[] $productConcretePageMapExpanderPlugins
+     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface[] $productConcreteMapExpanderPlugins
      */
     public function __construct(
         PageMapBuilderInterface $pageMapBuilder,
-        array $productConcretePageMapExpanderPlugins
+        array $productConcreteMapExpanderPlugins
     ) {
         parent::__construct();
 
         $this->pageMapBuilder = $pageMapBuilder;
-        $this->productConcretePageMapExpanderPlugins = $productConcretePageMapExpanderPlugins;
+        $this->productConcreteMapExpanderPlugins = $productConcreteMapExpanderPlugins;
     }
 
     /**
@@ -103,8 +103,8 @@ class ProductConcreteSearchDataMapper extends AbstractProductSearchDataMapper
      */
     protected function expandProductPageMap(PageMapTransfer $pageMapTransfer, array $productData, LocaleTransfer $localeTransfer): PageMapTransfer
     {
-        foreach ($this->productConcretePageMapExpanderPlugins as $productConcretePageMapExpanderPlugin) {
-            $pageMapTransfer = $productConcretePageMapExpanderPlugin->expand($pageMapTransfer, $this->pageMapBuilder, $productData, $localeTransfer);
+        foreach ($this->productConcreteMapExpanderPlugins as $productConcreteMapExpanderPlugin) {
+            $pageMapTransfer = $productConcreteMapExpanderPlugin->expand($pageMapTransfer, $this->pageMapBuilder, $productData, $localeTransfer);
         }
 
         return $pageMapTransfer;
