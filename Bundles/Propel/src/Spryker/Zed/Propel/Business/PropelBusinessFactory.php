@@ -9,8 +9,8 @@ namespace Spryker\Zed\Propel\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Propel\Business\Model\DirectoryRemover;
-use Spryker\Zed\Propel\Business\Model\HealthIndicator\HealthIndicatorInterface;
-use Spryker\Zed\Propel\Business\Model\HealthIndicator\PropelHealthIndicator;
+use Spryker\Zed\Propel\Business\Model\HealthCheck\HealthCheckInterface;
+use Spryker\Zed\Propel\Business\Model\HealthCheck\PropelHealthCheck;
 use Spryker\Zed\Propel\Business\Model\PostgresqlCompatibilityAdjuster;
 use Spryker\Zed\Propel\Business\Model\PropelConfigConverterJson;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase;
@@ -409,10 +409,10 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Propel\Business\Model\HealthIndicator\HealthIndicatorInterface
+     * @return \Spryker\Zed\Propel\Business\Model\HealthCheck\HealthCheckInterface
      */
-    public function createPropelHealthCheckIndicator(): HealthIndicatorInterface
+    public function createPropelHealthChecker(): HealthCheckInterface
     {
-        return new PropelHealthIndicator();
+        return new PropelHealthCheck();
     }
 }

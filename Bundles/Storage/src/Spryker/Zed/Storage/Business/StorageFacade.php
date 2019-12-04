@@ -106,6 +106,6 @@ class StorageFacade extends AbstractFacade implements StorageFacadeInterface
      */
     public function executeKeyValueStoreHealthCheck(): HealthCheckServiceResponseTransfer
     {
-        return $this->getFactory()->createKeyValueStoreHealthCheckIndicator()->executeHealthCheck();
+        return $this->getFactory()->createKeyValueStoreHealthChecker()->executeHealthCheck();
     }
 }

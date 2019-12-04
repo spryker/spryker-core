@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Storage\HealthCheckIndicator;
+namespace Spryker\Zed\Search\Business\Model\Elasticsearch\HealthCheck;
 
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 
-interface HealthCheckIndicatorInterface
+interface HealthCheckInterface
 {
     /**
      * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer

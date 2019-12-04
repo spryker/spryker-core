@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Storage\Business\Model\HealthCheckIndicator;
+namespace Spryker\Zed\Storage\Business\Model\HealthCheck;
 
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 
-interface HealthCheckIndicatorInterface
+interface HealthCheckInterface
 {
     /**
      * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer

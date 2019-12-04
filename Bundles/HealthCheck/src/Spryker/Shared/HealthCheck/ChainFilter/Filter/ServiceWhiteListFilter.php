@@ -26,7 +26,7 @@ class ServiceWhiteListFilter implements ChainFilterInterface
             return $healthCheckPlugins;
         }
 
-        return $this->filterByWhiteLitServices($healthCheckPlugins, $availableServices);
+        return $this->filterByWhiteListServices($healthCheckPlugins, $availableServices);
     }
 
     /**
@@ -35,7 +35,7 @@ class ServiceWhiteListFilter implements ChainFilterInterface
      *
      * @return \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[]
      */
-    protected function filterByWhiteLitServices(array $healthCheckPlugins, array $availableServices): array
+    protected function filterByWhiteListServices(array $healthCheckPlugins, array $availableServices): array
     {
         $filteredServicePlugins = [];
 

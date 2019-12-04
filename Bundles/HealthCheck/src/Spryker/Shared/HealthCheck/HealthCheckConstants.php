@@ -14,7 +14,7 @@ interface HealthCheckConstants
 {
     /**
      * Specification:
-     * - Defines is health check is enabled.
+     * - Defines if health check is enabled.
      *
      * @api
      */

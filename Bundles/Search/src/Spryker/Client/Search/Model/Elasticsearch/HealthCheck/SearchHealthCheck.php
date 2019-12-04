@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Model\Elasticsearch\HealthCheckIndicator;
+namespace Spryker\Client\Search\Model\Elasticsearch\HealthCheck;
 
 use Elastica\Client;
 use Exception;
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 
-class SearchHealthIndicator implements HealthIndicatorInterface
+class SearchHealthCheck implements HealthCheckInterface
 {
     /**
      * @var \Elastica\Client
@@ -31,15 +31,17 @@ class SearchHealthIndicator implements HealthIndicatorInterface
      */
     public function executeHealthCheck(): HealthCheckServiceResponseTransfer
     {
+        $healthCheckServiceResponseTransfer = (new HealthCheckServiceResponseTransfer())
+            ->setStatus(true);
+
         try {
             $this->searchClient->getStatus()->getData();
         } catch (Exception $e) {
-            return (new HealthCheckServiceResponseTransfer())
+            return $healthCheckServiceResponseTransfer
                 ->setStatus(false)
                 ->setMessage($e->getMessage());
         }
 
-        return (new HealthCheckServiceResponseTransfer())
-            ->setStatus(true);
+        return $healthCheckServiceResponseTransfer;
     }
 }

@@ -20,8 +20,8 @@ class HealthCheckConfig extends AbstractSharedConfig
     protected const HEALTH_CHECK_FORBIDDEN_STATUS_CODE = 403;
     protected const HEALTH_CHECK_FORBIDDEN_STATUS_MESSAGE = 'HealthCheck endpoints are disabled for all applications.';
 
-    protected const HEALTH_CHECK_NOT_FOUND_STATUS_CODE = 404;
-    protected const HEALTH_CHECK_NOT_FOUND_STATUS_MESSAGE = 'Requested services not found.';
+    protected const HEALTH_CHECK_BAD_REQUEST_STATUS_CODE = 400;
+    protected const HEALTH_CHECK_BAD_REQUEST_STATUS_MESSAGE = 'Requested services not found.';
 
     /**
      * @return bool
@@ -82,16 +82,16 @@ class HealthCheckConfig extends AbstractSharedConfig
     /**
      * @return int
      */
-    public function getNotFoundHealthCheckStatusCode(): int
+    public function getBadRequestHealthCheckStatusCode(): int
     {
-        return static::HEALTH_CHECK_NOT_FOUND_STATUS_CODE;
+        return static::HEALTH_CHECK_BAD_REQUEST_STATUS_CODE;
     }
 
     /**
      * @return string
      */
-    public function getNotFoundHealthCheckStatusMessage(): string
+    public function getBadRequestHealthCheckStatusMessage(): string
     {
-        return static::HEALTH_CHECK_NOT_FOUND_STATUS_MESSAGE;
+        return static::HEALTH_CHECK_BAD_REQUEST_STATUS_MESSAGE;
     }
 }

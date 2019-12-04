@@ -5,18 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\HealthCheck\Business;
+namespace Spryker\Zed\HealthCheck\Business\HealthCheck;
 
 use Generated\Shared\Transfer\HealthCheckResponseTransfer;
 
-interface HealthCheckFacadeInterface
+interface HealthCheckInterface
 {
     /**
-     * Specification:
-     * - Performs health checks based on plugin stack.
-     *
-     * @api
-     *
      * @param string|null $requestedServices
      *
      * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer

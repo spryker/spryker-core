@@ -20,8 +20,8 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefiniti
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Definition\JsonIndexDefinitionMerger;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleaner;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGenerator;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\HealthCheckIndicator\HealthIndicatorInterface;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\HealthCheckIndicator\SearchHealthIndicator;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\HealthCheck\HealthCheckInterface;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\HealthCheck\SearchHealthCheck;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexInstaller;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\IndexMapInstaller;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\SearchIndexManager;
@@ -263,11 +263,11 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\HealthCheckIndicator\HealthIndicatorInterface
+     * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\HealthCheck\HealthCheckInterface
      */
-    public function createSearchHealthCheckIndicator(): HealthIndicatorInterface
+    public function createSearchHealthChecker(): HealthCheckInterface
     {
-        return new SearchHealthIndicator(
+        return new SearchHealthCheck(
             $this->getSearchClient()
         );
     }

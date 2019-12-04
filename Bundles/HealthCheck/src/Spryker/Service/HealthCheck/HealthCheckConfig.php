@@ -73,16 +73,16 @@ class HealthCheckConfig extends AbstractBundleConfig
     /**
      * @return int
      */
-    public function getNotFoundHealthCheckStatusCode(): int
+    public function getBadRequestHealthCheckStatusCode(): int
     {
-        return $this->getSharedConfig()->getNotFoundHealthCheckStatusCode();
+        return $this->getSharedConfig()->getBadRequestHealthCheckStatusCode();
     }
 
     /**
      * @return string
      */
-    public function getNotFoundHealthCheckStatusMessage(): string
+    public function getBadRequestHealthCheckStatusMessage(): string
     {
-        return $this->getSharedConfig()->getNotFoundHealthCheckStatusMessage();
+        return $this->getSharedConfig()->getBadRequestHealthCheckStatusMessage();
     }
 }

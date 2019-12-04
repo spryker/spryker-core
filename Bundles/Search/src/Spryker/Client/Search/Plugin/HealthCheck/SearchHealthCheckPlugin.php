@@ -25,6 +25,6 @@ class SearchHealthCheckPlugin extends AbstractPlugin implements HealthCheckPlugi
      */
     public function check(): HealthCheckServiceResponseTransfer
     {
-        return $this->getFactory()->createSearchHealthCheckIndicator()->executeHealthCheck();
+        return $this->getFactory()->createSearchHealthChecker()->executeHealthCheck();
     }
 }

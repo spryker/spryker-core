@@ -343,6 +343,6 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      */
     public function executeSearchHealthCheck(): HealthCheckServiceResponseTransfer
     {
-        return $this->getFactory()->createSearchHealthCheckIndicator()->executeHealthCheck();
+        return $this->getFactory()->createSearchHealthChecker()->executeHealthCheck();
     }
 }

@@ -8,14 +8,14 @@
 namespace Spryker\Zed\Session\Business;
 
 use Predis\Client;
-use Spryker\Shared\Session\Business\HealthCheckIndicator\HealthCheckIndicatorInterface;
-use Spryker\Shared\Session\Business\HealthCheckIndicator\SessionHealthCheckIndicator;
 use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface;
 use Spryker\Shared\Session\SessionConfig;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Session\Business\Lock\Redis\RedisSessionLockReader;
 use Spryker\Zed\Session\Business\Lock\SessionLockReleaser;
 use Spryker\Zed\Session\Business\Lock\SessionLockReleaser\SessionLockReleaserPool;
+use Spryker\Zed\Session\Business\Model\HealthCheck\HealthCheckInterface;
+use Spryker\Zed\Session\Business\Model\HealthCheck\SessionHealthCheck;
 use Spryker\Zed\Session\Business\Model\SessionFactory;
 use Spryker\Zed\Session\SessionDependencyProvider;
 
@@ -204,11 +204,11 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\Session\Business\HealthCheckIndicator\HealthCheckIndicatorInterface
+     * @return \Spryker\Zed\Session\Business\Model\HealthCheck\HealthCheckInterface
      */
-    public function createSessionHealthCheckIndicator(): HealthCheckIndicatorInterface
+    public function createSessionHealthChecker(): HealthCheckInterface
     {
-        return new SessionHealthCheckIndicator(
+        return new SessionHealthCheck(
             $this->getSessionClient()
         );
     }

@@ -5,28 +5,30 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Propel\Business\Model\HealthIndicator;
+namespace Spryker\Zed\Propel\Business\Model\HealthCheck;
 
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Propel\Runtime\Exception\RuntimeException;
 use Propel\Runtime\Propel;
 
-class PropelHealthIndicator implements HealthIndicatorInterface
+class PropelHealthCheck implements HealthCheckInterface
 {
     /**
      * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
      */
     public function executeHealthCheck(): HealthCheckServiceResponseTransfer
     {
+        $healthCheckServiceResponseTransfer = (new HealthCheckServiceResponseTransfer())
+            ->setStatus(true);
+
         try {
             Propel::getConnection()->getName();
         } catch (RuntimeException $e) {
-            return (new HealthCheckServiceResponseTransfer())
+            return $healthCheckServiceResponseTransfer
                 ->setStatus(false)
                 ->setMessage($e->getMessage());
         }
 
-        return (new HealthCheckServiceResponseTransfer())
-            ->setStatus(true);
+        return $healthCheckServiceResponseTransfer;
     }
 }

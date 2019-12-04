@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Storage\Business\Model\HealthCheckIndicator;
+namespace Spryker\Client\Storage\HealthCheck;
 
 use Exception;
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Spryker\Client\Storage\StorageClientInterface;
 
-class KeyValueStoreHealthCheckIndicator implements HealthCheckIndicatorInterface
+class KeyValueStoreHealthCheck implements HealthCheckInterface
 {
     public const KEY_HEALTH_CHECK = 'healthCheck';
 
@@ -33,16 +33,19 @@ class KeyValueStoreHealthCheckIndicator implements HealthCheckIndicatorInterface
      */
     public function executeHealthCheck(): HealthCheckServiceResponseTransfer
     {
+        $healthCheckServiceResponseTransfer = (new HealthCheckServiceResponseTransfer())
+            ->setStatus(true);
+
         try {
             $this->storageClient->set(static::KEY_HEALTH_CHECK, 'ok');
             $this->storageClient->get(static::KEY_HEALTH_CHECK);
         } catch (Exception $e) {
-            return (new HealthCheckServiceResponseTransfer())
+            return $healthCheckServiceResponseTransfer
                 ->setStatus(false)
                 ->setMessage($e->getMessage());
         }
 
-        return (new HealthCheckServiceResponseTransfer())
+        return $healthCheckServiceResponseTransfer
             ->setStatus(true);
     }
 }

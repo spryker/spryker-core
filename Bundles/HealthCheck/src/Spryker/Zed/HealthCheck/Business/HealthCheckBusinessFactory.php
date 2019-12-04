@@ -16,6 +16,8 @@ use Spryker\Shared\HealthCheck\Processor\HealthCheckProcessor;
 use Spryker\Shared\HealthCheck\Processor\HealthCheckProcessorInterface;
 use Spryker\Shared\HealthCheck\Validator\ServiceNameValidator;
 use Spryker\Shared\HealthCheck\Validator\ValidatorInterface;
+use Spryker\Zed\HealthCheck\Business\HealthCheck\HealthCheck;
+use Spryker\Zed\HealthCheck\Business\HealthCheck\HealthCheckInterface;
 use Spryker\Zed\HealthCheck\HealthCheckDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -72,6 +74,17 @@ class HealthCheckBusinessFactory extends AbstractBusinessFactory
     public function createServiceWhiteListFilter(): ChainFilterInterface
     {
         return new ServiceWhiteListFilter();
+    }
+
+    /**
+     * @return \Spryker\Zed\HealthCheck\Business\HealthCheck\HealthCheckInterface
+     */
+    public function createHealthChecker(): HealthCheckInterface
+    {
+        return new HealthCheck(
+            $this->createHealthCheckProcessor(),
+            $this->getConfig()
+        );
     }
 
     /**

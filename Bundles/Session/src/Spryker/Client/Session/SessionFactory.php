@@ -8,18 +8,28 @@
 namespace Spryker\Client\Session;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Shared\Session\Business\HealthCheckIndicator\HealthCheckIndicatorInterface;
-use Spryker\Shared\Session\Business\HealthCheckIndicator\SessionHealthCheckIndicator;
+use Spryker\Client\Session\HealthCheck\HealthCheckInterface;
+use Spryker\Client\Session\HealthCheck\SessionHealthCheck;
 
 class SessionFactory extends AbstractFactory
 {
     /**
      * @param \Spryker\Client\Session\SessionClientInterface $sessionClient
      *
-     * @return \Spryker\Shared\Session\Business\HealthCheckIndicator\HealthCheckIndicatorInterface
+     * @return \Spryker\Client\Session\HealthCheck\HealthCheckInterface
      */
-    public function createSessionHealthCheckIndicator(SessionClientInterface $sessionClient): HealthCheckIndicatorInterface
+    public function createSessionHealthChecker(): HealthCheckInterface
     {
-        return new SessionHealthCheckIndicator($sessionClient);
+        return new SessionHealthCheck(
+            $this->getSessionClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\Session\SessionClientInterface
+     */
+    public function getSessionClient(): SessionClientInterface
+    {
+        return $this->getProvidedDependency(SessionDependencyProvider::CLIENT_SESSION);
     }
 }

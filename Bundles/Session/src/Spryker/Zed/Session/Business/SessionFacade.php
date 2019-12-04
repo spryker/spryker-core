@@ -58,6 +58,6 @@ class SessionFacade extends AbstractFacade implements SessionFacadeInterface
      */
     public function executeSessionHealthCheck(): HealthCheckServiceResponseTransfer
     {
-        return $this->getFactory()->createSessionHealthCheckIndicator()->executeHealthCheck();
+        return $this->getFactory()->createSessionHealthChecker()->executeHealthCheck();
     }
 }

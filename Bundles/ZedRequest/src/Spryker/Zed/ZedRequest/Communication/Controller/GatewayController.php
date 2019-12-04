@@ -13,10 +13,12 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 class GatewayController extends AbstractGatewayController
 {
     /**
+     * @param \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer $healthCheckServiceResponseTransfer
+     *
      * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
      */
-    public function healthCheckAction(): HealthCheckServiceResponseTransfer
+    public function healthCheckAction(HealthCheckServiceResponseTransfer $healthCheckServiceResponseTransfer): HealthCheckServiceResponseTransfer
     {
-        return new HealthCheckServiceResponseTransfer();
+        return $healthCheckServiceResponseTransfer;
     }
 }

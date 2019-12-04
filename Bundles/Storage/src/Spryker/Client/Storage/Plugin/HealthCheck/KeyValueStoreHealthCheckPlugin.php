@@ -25,6 +25,6 @@ class KeyValueStoreHealthCheckPlugin extends AbstractPlugin implements HealthChe
      */
     public function check(): HealthCheckServiceResponseTransfer
     {
-        return $this->getFactory()->createKeyValueStoreHealthCheckIndicator()->executeHealthCheck();
+        return $this->getFactory()->createKeyValueStoreHealthChecker()->executeHealthCheck();
     }
 }

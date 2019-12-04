@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ZedRequest\HealthIndicator;
+namespace Spryker\Client\ZedRequest\HealthCheck;
 
 use Exception;
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Spryker\Shared\ZedRequest\Client\AbstractZedClientInterface;
 
-class ZedRequestHealthIndicator implements HealthIndicatorInterface
+class ZedRequestHealthCheck implements HealthCheckInterface
 {
     /**
      * @var \Spryker\Shared\ZedRequest\Client\AbstractZedClientInterface
@@ -31,15 +31,17 @@ class ZedRequestHealthIndicator implements HealthIndicatorInterface
      */
     public function executeHealthCheck(): HealthCheckServiceResponseTransfer
     {
+        $healthCheckServiceResponseTransfer = (new HealthCheckServiceResponseTransfer())
+            ->setStatus(true);
+
         try {
             /** @var \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer $healthCheckServiceResponseTransfer */
             $healthCheckServiceResponseTransfer = $this->zedRequestClient
-                ->call('/zed-request/gateway/health-check', new HealthCheckServiceResponseTransfer());
+                ->call('/zed-request/gateway/health-check', $healthCheckServiceResponseTransfer);
 
-            return $healthCheckServiceResponseTransfer
-                ->setStatus(true);
+            return $healthCheckServiceResponseTransfer;
         } catch (Exception $e) {
-            return (new HealthCheckServiceResponseTransfer())
+            return $healthCheckServiceResponseTransfer
                 ->setStatus(false)
                 ->setMessage($e->getMessage());
         }

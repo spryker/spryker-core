@@ -48,9 +48,8 @@ class ResponseProcessor implements ResponseProcessorInterface
     public function processNonExistingServiceName(): HealthCheckResponseTransfer
     {
         return (new HealthCheckResponseTransfer())
-            ->setStatus($this->healthCheckConfig->getUnavailableHealthCheckStatusMessage())
-            ->setMessage($this->healthCheckConfig->getNotFoundHealthCheckStatusMessage())
-            ->setStatusCode($this->healthCheckConfig->getNotFoundHealthCheckStatusCode());
+            ->setMessage($this->healthCheckConfig->getBadRequestHealthCheckStatusMessage())
+            ->setStatusCode($this->healthCheckConfig->getBadRequestHealthCheckStatusCode());
     }
 
     /**
@@ -94,7 +93,6 @@ class ResponseProcessor implements ResponseProcessorInterface
     protected function createForbiddenHealthCheckResponseTransfer(): HealthCheckResponseTransfer
     {
         return (new HealthCheckResponseTransfer())
-            ->setStatus($this->healthCheckConfig->getUnavailableHealthCheckStatusMessage())
             ->setStatusCode($this->healthCheckConfig->getForbiddenHealthCheckStatusCode())
             ->setMessage($this->healthCheckConfig->getForbiddenHealthCheckStatusMessage());
     }

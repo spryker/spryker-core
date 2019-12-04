@@ -26,6 +26,6 @@ class SessionHealthCheckPlugin extends AbstractPlugin implements HealthCheckPlug
      */
     public function check(): HealthCheckServiceResponseTransfer
     {
-        return $this->getFactory()->createSessionHealthCheckIndicator($this->getClient())->executeHealthCheck();
+        return $this->getFactory()->createSessionHealthChecker()->executeHealthCheck();
     }
 }

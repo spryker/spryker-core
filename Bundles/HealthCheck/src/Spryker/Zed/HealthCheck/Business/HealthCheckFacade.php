@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\HealthCheck\Business;
 
-use Generated\Shared\Transfer\HealthCheckRequestTransfer;
 use Generated\Shared\Transfer\HealthCheckResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -21,12 +20,12 @@ class HealthCheckFacade extends AbstractFacade implements HealthCheckFacadeInter
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\HealthCheckRequestTransfer $healthCheckRequestTransfer
+     * @param string|null $requestedServices
      *
      * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
      */
-    public function executeHealthCheck(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer
+    public function executeHealthCheck(?string $requestedServices = null): HealthCheckResponseTransfer
     {
-        return $this->getFactory()->createHealthCheckProcessor()->process($healthCheckRequestTransfer);
+        return $this->getFactory()->createHealthChecker()->executeHealthCheck($requestedServices);
     }
 }

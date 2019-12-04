@@ -28,8 +28,4 @@ use Codeception\Actor;
 class HealthCheckBusinessTester extends Actor
 {
     use _generated\HealthCheckBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

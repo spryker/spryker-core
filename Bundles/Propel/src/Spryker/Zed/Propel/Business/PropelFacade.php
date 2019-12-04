@@ -266,6 +266,6 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
      */
     public function executeDatabaseHealthCheck(): HealthCheckServiceResponseTransfer
     {
-        return $this->getFactory()->createPropelHealthCheckIndicator()->executeHealthCheck();
+        return $this->getFactory()->createPropelHealthChecker()->executeHealthCheck();
     }
 }
