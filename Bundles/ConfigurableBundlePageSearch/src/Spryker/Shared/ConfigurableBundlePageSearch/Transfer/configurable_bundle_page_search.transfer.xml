@@ -32,6 +32,9 @@
 
     <transfer name="ConfigurableBundleTemplate">
         <property name="idConfigurableBundleTemplate" type="int"/>
+        <property name="productImageSets" type="ProductImageSet[]" singular="productImageSet"/>
+        <property name="isActive" type="bool"/>
+        <property name="translations" type="ConfigurableBundleTemplateTranslation[]" singular="translation"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplatePageSearchRequest">
@@ -42,6 +45,35 @@
         <property name="key" type="string"/>
         <property name="data" type="string"/>
         <property name="locale" type="string"/>
+    </transfer>
+
+    <transfer name="ProductImageSet">
+        <property name="productImages" type="ProductImage[]" singular="productImage"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateFilter">
+        <property name="configurableBundleTemplateIds" type="int[]" singular="configurableBundleTemplateId"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="PageMap">
+        <property name="locale" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="ProductImage">
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateTranslation">
+        <property name="locale" type="Locale"/>
     </transfer>
 
 </transfers>

@@ -136,4 +136,11 @@
         <property name="productImageIds" type="array" singular="productImageId"/>
     </transfer>
 
+    <transfer name="ProductImageSet">
+        <property name="productImages" type="ProductImage[]" singular="productImage"/>
+    </transfer>
+
+    <transfer name="ProductImage">
+    </transfer>
+
 </transfers>
