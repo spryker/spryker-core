@@ -21,7 +21,7 @@ class ConfiguredBundleGroupKeyGenerator implements ConfiguredBundleGroupKeyGener
         $configuredBundleTransfer
             ->requireTemplate()
             ->getTemplate()
-             ->requireUuid();
+                ->requireUuid();
 
         return sprintf('%s-%s', $configuredBundleTransfer->getTemplate()->getUuid(), uniqid('', true));
     }

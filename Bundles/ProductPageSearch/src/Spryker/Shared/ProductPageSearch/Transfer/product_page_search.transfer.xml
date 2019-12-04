@@ -131,7 +131,7 @@
     <transfer name="PriceProductCriteria">
     </transfer>
 
-    <transfer name="ProductImageCriteriaFilter">
+    <transfer name="ProductImageFilter">
         <property name="productImageSetIds" type="array" singular="productImageSetId"/>
         <property name="productImageIds" type="array" singular="productImageId"/>
     </transfer>

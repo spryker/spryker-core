@@ -20,7 +20,6 @@ interface ConfigurableBundleCartClientInterface
      * - Requires `configuredBundle.template.uuid` property to populate configurable bundle template related data.
      * - Requires `items` property with `sku`, `quantity` and `configuredBundleItem.slot.uuid` properties to define how many
      * items were added in total to a specific slot.
-     * - Requires `localeName` property to be set for populating locale specific information.
      * - Returns QuoteResponseTransfer.
      *
      * @api

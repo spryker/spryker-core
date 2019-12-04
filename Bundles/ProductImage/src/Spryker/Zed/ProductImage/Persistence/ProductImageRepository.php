@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductImage\Persistence;
 
-use Generated\Shared\Transfer\ProductImageCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductImageFilterTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
@@ -104,22 +104,22 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductImageCriteriaFilterTransfer $productImageCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductImageFilterTransfer $productImageFilterTransfer
      *
      * @return int[]
      */
-    public function getProductConcreteIds(ProductImageCriteriaFilterTransfer $productImageCriteriaFilterTransfer): array
+    public function getProductConcreteIds(ProductImageFilterTransfer $productImageFilterTransfer): array
     {
         $productImageSetQuery = $this->getFactory()->createProductImageSetQuery();
 
-        if ($productImageCriteriaFilterTransfer->getProductImageSetIds()) {
-            $productImageSetQuery->filterByIdProductImageSet_In($productImageCriteriaFilterTransfer->getProductImageSetIds());
+        if ($productImageFilterTransfer->getProductImageSetIds()) {
+            $productImageSetQuery->filterByIdProductImageSet_In($productImageFilterTransfer->getProductImageSetIds());
         }
 
-        if ($productImageCriteriaFilterTransfer->getProductImageIds()) {
+        if ($productImageFilterTransfer->getProductImageIds()) {
             $productImageSetQuery
                 ->useSpyProductImageSetToProductImageQuery()
-                    ->filterByFkProductImage_In($productImageCriteriaFilterTransfer->getProductImageIds())
+                    ->filterByFkProductImage_In($productImageFilterTransfer->getProductImageIds())
                 ->endUse();
         }
 

@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductImage\Business;
 use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductImageCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductImageFilterTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -303,13 +303,13 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductImageCriteriaFilterTransfer $productImageCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductImageFilterTransfer $productImageFilterTransfer
      *
      * @return int[]
      */
-    public function getProductConcreteIds(ProductImageCriteriaFilterTransfer $productImageCriteriaFilterTransfer): array
+    public function getProductConcreteIds(ProductImageFilterTransfer $productImageFilterTransfer): array
     {
-        return $this->getRepository()->getProductConcreteIds($productImageCriteriaFilterTransfer);
+        return $this->getRepository()->getProductConcreteIds($productImageFilterTransfer);
     }
 
     /**

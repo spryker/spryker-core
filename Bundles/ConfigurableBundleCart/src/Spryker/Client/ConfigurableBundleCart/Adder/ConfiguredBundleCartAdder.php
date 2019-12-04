@@ -8,27 +8,23 @@
 namespace Spryker\Client\ConfigurableBundleCart\Adder;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
+use Generated\Shared\Transfer\ConfiguredBundleItemTransfer;
+use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface;
-use Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToConfigurableBundleStorageClientInterface;
 use Spryker\Client\ConfigurableBundleCart\Generator\ConfiguredBundleGroupKeyGeneratorInterface;
-use Spryker\Client\ConfigurableBundleCart\Validator\ConfiguredBundleValidatorInterface;
 
 class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
 {
-    protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_ADDED = 'configured_bundle_cart.error.configured_bundle_cannot_be_added';
-
     /**
      * @var \Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface
      */
     protected $cartClient;
-
-    /**
-     * @var \Spryker\Client\ConfigurableBundleCart\Validator\ConfiguredBundleValidatorInterface
-     */
-    protected $configuredBundleValidator;
 
     /**
      * @var \Spryker\Client\ConfigurableBundleCart\Generator\ConfiguredBundleGroupKeyGeneratorInterface
@@ -36,25 +32,14 @@ class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
     protected $configuredBundleGroupKeyGenerator;
 
     /**
-     * @var \Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToConfigurableBundleStorageClientInterface
-     */
-    protected $configurableBundleStorageClient;
-
-    /**
      * @param \Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface $cartClient
-     * @param \Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToConfigurableBundleStorageClientInterface $configurableBundleStorageClient
-     * @param \Spryker\Client\ConfigurableBundleCart\Validator\ConfiguredBundleValidatorInterface $configuredBundleValidator
      * @param \Spryker\Client\ConfigurableBundleCart\Generator\ConfiguredBundleGroupKeyGeneratorInterface $configuredBundleGroupKeyGenerator
      */
     public function __construct(
         ConfigurableBundleCartToCartClientInterface $cartClient,
-        ConfigurableBundleCartToConfigurableBundleStorageClientInterface $configurableBundleStorageClient,
-        ConfiguredBundleValidatorInterface $configuredBundleValidator,
         ConfiguredBundleGroupKeyGeneratorInterface $configuredBundleGroupKeyGenerator
     ) {
         $this->cartClient = $cartClient;
-        $this->configurableBundleStorageClient = $configurableBundleStorageClient;
-        $this->configuredBundleValidator = $configuredBundleValidator;
         $this->configuredBundleGroupKeyGenerator = $configuredBundleGroupKeyGenerator;
     }
 
@@ -67,30 +52,11 @@ class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
     {
         $createConfiguredBundleRequestTransfer
             ->requireItems()
-            ->requireLocaleName()
             ->requireConfiguredBundle()
             ->getConfiguredBundle()
                 ->requireTemplate()
                 ->getTemplate()
                     ->requireUuid();
-
-        $configurableBundleTemplateStorageTransfer = $this->configurableBundleStorageClient->findConfigurableBundleTemplateStorageByUuid(
-            $createConfiguredBundleRequestTransfer->getConfiguredBundle()->getTemplate()->getUuid(),
-            $createConfiguredBundleRequestTransfer->getLocaleName()
-        );
-
-        if (!$configurableBundleTemplateStorageTransfer) {
-            return $this->createErrorResponse(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_ADDED);
-        }
-
-        $isTemplateSlotCombinationValid = $this->configuredBundleValidator->validateConfiguredBundleTemplateSlotCombination(
-            $configurableBundleTemplateStorageTransfer,
-            $createConfiguredBundleRequestTransfer->getItems()
-        );
-
-        if (!$isTemplateSlotCombinationValid) {
-            return $this->createErrorResponse(static::GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_ADDED);
-        }
 
         $cartChangeTransfer = $this->mapCreateConfiguredBundleRequestTransferToCartChangeTransfer(
             $createConfiguredBundleRequestTransfer,
@@ -110,21 +76,66 @@ class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
         CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer,
         CartChangeTransfer $cartChangeTransfer
     ): CartChangeTransfer {
-        $configuredBundleTransfer = $createConfiguredBundleRequestTransfer->getConfiguredBundle();
-
-        $configuredBundleTransfer->setGroupKey(
-            $this->configuredBundleGroupKeyGenerator->generateConfiguredBundleGroupKeyByUuid($configuredBundleTransfer)
-        );
-
-        $createConfiguredBundleRequestTransfer->setConfiguredBundle($configuredBundleTransfer);
+        $configuredBundleTransfer = $this->getSlimConfiguredBundleTransfer($createConfiguredBundleRequestTransfer->getConfiguredBundle());
 
         foreach ($createConfiguredBundleRequestTransfer->getItems() as $itemTransfer) {
-            $cartChangeTransfer->addItem(
-                $itemTransfer->setConfiguredBundle($configuredBundleTransfer)
-            );
+            $cartChangeTransfer->addItem($this->getSlimItemTransfer($configuredBundleTransfer, $itemTransfer));
         }
 
         return $cartChangeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfiguredBundleTransfer $configuredBundleTransfer
+     *
+     * @return \Generated\Shared\Transfer\ConfiguredBundleTransfer
+     */
+    protected function getSlimConfiguredBundleTransfer(ConfiguredBundleTransfer $configuredBundleTransfer): ConfiguredBundleTransfer
+    {
+        $configuredBundleTransfer
+            ->requireQuantity()
+            ->requireTemplate()
+            ->getTemplate()
+                ->requireUuid();
+
+        $configuredBundleGroupKey = $this->configuredBundleGroupKeyGenerator->generateConfiguredBundleGroupKeyByUuid($configuredBundleTransfer);
+
+        return (new ConfiguredBundleTransfer())
+            ->setGroupKey($configuredBundleGroupKey)
+            ->setQuantity($configuredBundleTransfer->getQuantity())
+            ->setTemplate(
+                (new ConfigurableBundleTemplateTransfer())
+                    ->setUuid($configuredBundleTransfer->getTemplate()->getUuid())
+                    ->setName($configuredBundleTransfer->getTemplate()->getName())
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfiguredBundleTransfer $configuredBundleTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function getSlimItemTransfer(ConfiguredBundleTransfer $configuredBundleTransfer, ItemTransfer $itemTransfer): ItemTransfer
+    {
+        $itemTransfer
+            ->getConfiguredBundleItem()
+                ->requireSlot()
+                ->getSlot()
+                    ->requireUuid();
+
+        $configuredBundleItemTransfer = (new ConfiguredBundleItemTransfer())
+            ->setQuantityPerSlot($itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot())
+            ->setSlot(
+                (new ConfigurableBundleTemplateSlotTransfer())
+                    ->setUuid($itemTransfer->getConfiguredBundleItem()->getSlot()->getUuid())
+            );
+
+        $itemTransfer
+            ->setConfiguredBundle($configuredBundleTransfer)
+            ->setConfiguredBundleItem($configuredBundleItemTransfer);
+
+        return $itemTransfer;
     }
 
     /**

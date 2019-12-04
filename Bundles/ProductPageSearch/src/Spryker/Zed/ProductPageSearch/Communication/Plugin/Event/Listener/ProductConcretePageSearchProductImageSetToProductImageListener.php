@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener;
 
-use Generated\Shared\Transfer\ProductImageCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductImageFilterTransfer;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetToProductImageTableMap;
 
 /**
@@ -33,7 +33,7 @@ class ProductConcretePageSearchProductImageSetToProductImageListener extends Abs
 
         $productConcreteIds = $this->getFactory()
             ->getProductImageFacade()
-            ->getProductConcreteIds((new ProductImageCriteriaFilterTransfer())->setProductImageSetIds($productImageSetIds));
+            ->getProductConcreteIds((new ProductImageFilterTransfer())->setProductImageSetIds($productImageSetIds));
 
         $this->publish($productConcreteIds);
     }
