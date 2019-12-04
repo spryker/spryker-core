@@ -8,13 +8,11 @@
 namespace SprykerTest\Zed\HealthCheck\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\HealthCheckRequestTransfer;
 use Generated\Shared\Transfer\HealthCheckResponseTransfer;
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Spryker\Shared\HealthCheck\HealthCheckConfig;
 use Spryker\Shared\HealthCheck\HealthCheckConstants;
 use Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface;
-use Spryker\Zed\HealthCheck\Business\HealthCheckFacade;
 use Spryker\Zed\HealthCheck\HealthCheckDependencyProvider;
 
 /**
@@ -34,20 +32,13 @@ class HealthCheckFacadeTest extends Unit
     protected const SEARCH_SERVICE_NAME = 'search';
     protected const STORAGE_SERVICE_NAME = 'storage';
 
+    protected const IS_SERVICE_HEALTHY = true;
+    protected const IS_SERVICE_UNHEALTHY = false;
+
     /**
      * @var \SprykerTest\Zed\HealthCheck\HealthCheckBusinessTester
      */
     protected $tester;
-
-    /**
-     * @var \Spryker\Zed\HealthCheck\Business\HealthCheckFacadeInterface
-     */
-    protected $healthCheckFacade;
-
-    /**
-     * @var \Spryker\Zed\HealthCheck\HealthCheckConfig
-     */
-    protected $healthCheckConfig;
 
     /**
      * @return void
@@ -55,9 +46,6 @@ class HealthCheckFacadeTest extends Unit
     public function setUp(): void
     {
         parent::setUp();
-
-        $this->healthCheckFacade = new HealthCheckFacade();
-        $this->healthCheckConfig = new HealthCheckConfig();
 
         $this->tester->setConfig(HealthCheckConstants::HEALTH_CHECK_ENABLED, true);
     }
@@ -67,21 +55,23 @@ class HealthCheckFacadeTest extends Unit
      */
     public function testProcessedHealthCheckServicesWithEmptyRequestAndSuccessResponse(): void
     {
-        $healthCheckPlugins = [
-            static::DATABASE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::DATABASE_SERVICE_NAME, true),
-            static::SEARCH_SERVICE_NAME => $this->getHealthCheckPluginMock(static::SEARCH_SERVICE_NAME, true),
-            static::STORAGE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::STORAGE_SERVICE_NAME, true),
-        ];
+        // Arrange
+        $healthCheckPlugins = $this->getHealthCheckPlugins(
+            static::IS_SERVICE_HEALTHY,
+            static::IS_SERVICE_HEALTHY,
+            static::IS_SERVICE_HEALTHY
+        );
 
         $this->tester->setDependency(HealthCheckDependencyProvider::PLUGINS_HEALTH_CHECK, $healthCheckPlugins);
 
-        $healthCheckRequestTransfer = new HealthCheckRequestTransfer();
-        $healthCheckResponseTransfer = $this->healthCheckFacade->executeHealthCheck($healthCheckRequestTransfer);
+        // Act
+        $healthCheckResponseTransfer = $this->tester->getFacade()->executeHealthCheck();
 
+        // Assert
         $this->assertInstanceOf(HealthCheckResponseTransfer::class, $healthCheckResponseTransfer);
         $this->assertEquals(count($healthCheckPlugins), $healthCheckResponseTransfer->getHealthCheckServiceResponses()->count());
-        $this->assertSame($this->healthCheckConfig->getSuccessHealthCheckStatusMessage(), $healthCheckResponseTransfer->getStatus());
-        $this->assertSame($this->healthCheckConfig->getSuccessHealthCheckStatusCode(), $healthCheckResponseTransfer->getStatusCode());
+        $this->assertSame($this->getConfig()->getSuccessHealthCheckStatusMessage(), $healthCheckResponseTransfer->getStatus());
+        $this->assertSame($this->getConfig()->getSuccessHealthCheckStatusCode(), $healthCheckResponseTransfer->getStatusCode());
     }
 
     /**
@@ -89,21 +79,22 @@ class HealthCheckFacadeTest extends Unit
      */
     public function testProcessedHealthCheckServicesWithEmptyRequestAndFailedResponse(): void
     {
-        $healthCheckPlugins = [
-            static::DATABASE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::DATABASE_SERVICE_NAME, false),
-            static::SEARCH_SERVICE_NAME => $this->getHealthCheckPluginMock(static::SEARCH_SERVICE_NAME, false),
-            static::STORAGE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::STORAGE_SERVICE_NAME, false),
-        ];
-
+        // Arrange
+        $healthCheckPlugins = $this->getHealthCheckPlugins(
+            static::IS_SERVICE_UNHEALTHY,
+            static::IS_SERVICE_UNHEALTHY,
+            static::IS_SERVICE_UNHEALTHY
+        );
         $this->tester->setDependency(HealthCheckDependencyProvider::PLUGINS_HEALTH_CHECK, $healthCheckPlugins);
 
-        $healthCheckRequestTransfer = new HealthCheckRequestTransfer();
-        $healthCheckResponseTransfer = $this->healthCheckFacade->executeHealthCheck($healthCheckRequestTransfer);
+        // Act
+        $healthCheckResponseTransfer = $this->tester->getFacade()->executeHealthCheck();
 
+        // Assert
         $this->assertInstanceOf(HealthCheckResponseTransfer::class, $healthCheckResponseTransfer);
         $this->assertEquals(count($healthCheckPlugins), $healthCheckResponseTransfer->getHealthCheckServiceResponses()->count());
-        $this->assertSame($this->healthCheckConfig->getUnavailableHealthCheckStatusMessage(), $healthCheckResponseTransfer->getStatus());
-        $this->assertSame($this->healthCheckConfig->getUnavailableHealthCheckStatusCode(), $healthCheckResponseTransfer->getStatusCode());
+        $this->assertSame($this->getConfig()->getUnavailableHealthCheckStatusMessage(), $healthCheckResponseTransfer->getStatus());
+        $this->assertSame($this->getConfig()->getUnavailableHealthCheckStatusCode(), $healthCheckResponseTransfer->getStatusCode());
     }
 
     /**
@@ -111,21 +102,22 @@ class HealthCheckFacadeTest extends Unit
      */
     public function testProcessedHealthCheckServicesWithEmptyRequestAndAnyFailedResponse(): void
     {
-        $healthCheckPlugins = [
-            static::DATABASE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::DATABASE_SERVICE_NAME, true),
-            static::SEARCH_SERVICE_NAME => $this->getHealthCheckPluginMock(static::SEARCH_SERVICE_NAME, false),
-            static::STORAGE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::STORAGE_SERVICE_NAME, true),
-        ];
-
+        // Arrange
+        $healthCheckPlugins = $this->getHealthCheckPlugins(
+            static::IS_SERVICE_HEALTHY,
+            static::IS_SERVICE_UNHEALTHY,
+            static::IS_SERVICE_HEALTHY
+        );
         $this->tester->setDependency(HealthCheckDependencyProvider::PLUGINS_HEALTH_CHECK, $healthCheckPlugins);
 
-        $healthCheckRequestTransfer = new HealthCheckRequestTransfer();
-        $healthCheckResponseTransfer = $this->healthCheckFacade->executeHealthCheck($healthCheckRequestTransfer);
+        // Act
+        $healthCheckResponseTransfer = $this->tester->getFacade()->executeHealthCheck();
 
+        // Assert
         $this->assertInstanceOf(HealthCheckResponseTransfer::class, $healthCheckResponseTransfer);
         $this->assertEquals(count($healthCheckPlugins), $healthCheckResponseTransfer->getHealthCheckServiceResponses()->count());
-        $this->assertSame($this->healthCheckConfig->getUnavailableHealthCheckStatusMessage(), $healthCheckResponseTransfer->getStatus());
-        $this->assertSame($this->healthCheckConfig->getUnavailableHealthCheckStatusCode(), $healthCheckResponseTransfer->getStatusCode());
+        $this->assertSame($this->getConfig()->getUnavailableHealthCheckStatusMessage(), $healthCheckResponseTransfer->getStatus());
+        $this->assertSame($this->getConfig()->getUnavailableHealthCheckStatusCode(), $healthCheckResponseTransfer->getStatusCode());
     }
 
     /**
@@ -133,14 +125,16 @@ class HealthCheckFacadeTest extends Unit
      */
     public function testProcessedHealthCheckServicesWithNotEnabledServices(): void
     {
+        // Arrange
         $this->tester->setDependency(HealthCheckDependencyProvider::PLUGINS_HEALTH_CHECK, []);
 
-        $healthCheckRequestTransfer = new HealthCheckRequestTransfer();
-        $healthCheckResponseTransfer = $this->healthCheckFacade->executeHealthCheck($healthCheckRequestTransfer);
+        // Act
+        $healthCheckResponseTransfer = $this->tester->getFacade()->executeHealthCheck();
 
+        // Assert
         $this->assertInstanceOf(HealthCheckResponseTransfer::class, $healthCheckResponseTransfer);
-        $this->assertSame($this->healthCheckConfig->getSuccessHealthCheckStatusMessage(), $healthCheckResponseTransfer->getStatus());
-        $this->assertSame($this->healthCheckConfig->getSuccessHealthCheckStatusCode(), $healthCheckResponseTransfer->getStatusCode());
+        $this->assertSame($this->getConfig()->getSuccessHealthCheckStatusMessage(), $healthCheckResponseTransfer->getStatus());
+        $this->assertSame($this->getConfig()->getSuccessHealthCheckStatusCode(), $healthCheckResponseTransfer->getStatusCode());
     }
 
     /**
@@ -148,24 +142,24 @@ class HealthCheckFacadeTest extends Unit
      */
     public function testProcessedHealthCheckServicesWithRequestedServiceResponse(): void
     {
-        $healthCheckPlugins = [
-            static::DATABASE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::DATABASE_SERVICE_NAME, true),
-            static::SEARCH_SERVICE_NAME => $this->getHealthCheckPluginMock(static::SEARCH_SERVICE_NAME, true),
-            static::STORAGE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::STORAGE_SERVICE_NAME, true),
-        ];
+        // Arrange
+        $healthCheckPlugins = $this->getHealthCheckPlugins(
+            static::IS_SERVICE_HEALTHY,
+            static::IS_SERVICE_HEALTHY,
+            static::IS_SERVICE_HEALTHY
+        );
 
         $this->tester->setDependency(HealthCheckDependencyProvider::PLUGINS_HEALTH_CHECK, $healthCheckPlugins);
 
+        // Act
         $requestedHealthCheckServices = [static::DATABASE_SERVICE_NAME, static::STORAGE_SERVICE_NAME];
-        $healthCheckRequestTransfer = (new HealthCheckRequestTransfer())
-            ->setRequestedServices($requestedHealthCheckServices);
+        $healthCheckResponseTransfer = $this->tester->getFacade()->executeHealthCheck(implode(',', $requestedHealthCheckServices));
 
-        $healthCheckResponseTransfer = $this->healthCheckFacade->executeHealthCheck($healthCheckRequestTransfer);
-
+        // Assert
         $this->assertInstanceOf(HealthCheckResponseTransfer::class, $healthCheckResponseTransfer);
         $this->assertEquals(count($requestedHealthCheckServices), $healthCheckResponseTransfer->getHealthCheckServiceResponses()->count());
-        $this->assertSame($this->healthCheckConfig->getSuccessHealthCheckStatusMessage(), $healthCheckResponseTransfer->getStatus());
-        $this->assertSame($this->healthCheckConfig->getSuccessHealthCheckStatusCode(), $healthCheckResponseTransfer->getStatusCode());
+        $this->assertSame($this->getConfig()->getSuccessHealthCheckStatusMessage(), $healthCheckResponseTransfer->getStatus());
+        $this->assertSame($this->getConfig()->getSuccessHealthCheckStatusCode(), $healthCheckResponseTransfer->getStatusCode());
     }
 
     /**
@@ -173,25 +167,24 @@ class HealthCheckFacadeTest extends Unit
      */
     public function testProcessedHealthCheckServicesWithRequestedNotExistingService(): void
     {
-        $healthCheckPlugins = [
-            static::DATABASE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::DATABASE_SERVICE_NAME, true),
-            static::SEARCH_SERVICE_NAME => $this->getHealthCheckPluginMock(static::SEARCH_SERVICE_NAME, true),
-            static::STORAGE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::STORAGE_SERVICE_NAME, true),
-        ];
+        // Arrange
+        $healthCheckPlugins = $this->getHealthCheckPlugins(
+            static::IS_SERVICE_HEALTHY,
+            static::IS_SERVICE_HEALTHY,
+            static::IS_SERVICE_HEALTHY
+        );
 
         $this->tester->setDependency(HealthCheckDependencyProvider::PLUGINS_HEALTH_CHECK, $healthCheckPlugins);
 
+        // Act
         $requestedHealthCheckServices = ['REQUESTED_NON_EXISTED_SERVICE_NAME', static::STORAGE_SERVICE_NAME];
-        $healthCheckRequestTransfer = (new HealthCheckRequestTransfer())
-            ->setRequestedServices($requestedHealthCheckServices);
+        $healthCheckResponseTransfer = $this->tester->getFacade()->executeHealthCheck(implode(',', $requestedHealthCheckServices));
 
-        $healthCheckResponseTransfer = $this->healthCheckFacade->executeHealthCheck($healthCheckRequestTransfer);
-
+        // Assert
         $this->assertInstanceOf(HealthCheckResponseTransfer::class, $healthCheckResponseTransfer);
         $this->assertLessThan(count($requestedHealthCheckServices), $healthCheckResponseTransfer->getHealthCheckServiceResponses()->count());
-        $this->assertSame($this->healthCheckConfig->getUnavailableHealthCheckStatusMessage(), $healthCheckResponseTransfer->getStatus());
-        $this->assertSame($this->healthCheckConfig->getNotFoundHealthCheckStatusMessage(), $healthCheckResponseTransfer->getMessage());
-        $this->assertSame($this->healthCheckConfig->getNotFoundHealthCheckStatusCode(), $healthCheckResponseTransfer->getStatusCode());
+        $this->assertSame($this->getConfig()->getBadRequestHealthCheckStatusMessage(), $healthCheckResponseTransfer->getMessage());
+        $this->assertSame($this->getConfig()->getBadRequestHealthCheckStatusCode(), $healthCheckResponseTransfer->getStatusCode());
     }
 
     /**
@@ -199,22 +192,43 @@ class HealthCheckFacadeTest extends Unit
      */
     public function testProcessedHealthCheckServicesWithDisabledHealthCheck(): void
     {
-        $healthCheckPlugins = [
-            static::DATABASE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::DATABASE_SERVICE_NAME, true),
-            static::SEARCH_SERVICE_NAME => $this->getHealthCheckPluginMock(static::SEARCH_SERVICE_NAME, true),
-            static::STORAGE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::STORAGE_SERVICE_NAME, true),
-        ];
+        // Arrange
+        $healthCheckPlugins = $this->getHealthCheckPlugins(
+            static::IS_SERVICE_HEALTHY,
+            static::IS_SERVICE_HEALTHY,
+            static::IS_SERVICE_HEALTHY
+        );
 
         $this->tester->setDependency(HealthCheckDependencyProvider::PLUGINS_HEALTH_CHECK, $healthCheckPlugins);
         $this->tester->setConfig(HealthCheckConstants::HEALTH_CHECK_ENABLED, false);
 
-        $healthCheckRequestTransfer = new HealthCheckRequestTransfer();
-        $healthCheckResponseTransfer = $this->healthCheckFacade->executeHealthCheck($healthCheckRequestTransfer);
+        // Act
+        $healthCheckResponseTransfer = $this->tester->getFacade()->executeHealthCheck();
 
+        // Assert
         $this->assertInstanceOf(HealthCheckResponseTransfer::class, $healthCheckResponseTransfer);
         $this->assertEmpty($healthCheckResponseTransfer->getHealthCheckServiceResponses()->count());
-        $this->assertSame($this->healthCheckConfig->getForbiddenHealthCheckStatusCode(), $healthCheckResponseTransfer->getStatusCode());
-        $this->assertSame($this->healthCheckConfig->getForbiddenHealthCheckStatusMessage(), $healthCheckResponseTransfer->getMessage());
+        $this->assertSame($this->getConfig()->getForbiddenHealthCheckStatusCode(), $healthCheckResponseTransfer->getStatusCode());
+        $this->assertSame($this->getConfig()->getForbiddenHealthCheckStatusMessage(), $healthCheckResponseTransfer->getMessage());
+    }
+
+    /**
+     * @param bool $isDatabaseServiceHealthy
+     * @param bool $isServiceServiceHealthy
+     * @param bool $isStorageServiceHealthy
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject[]|\Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[]
+     */
+    protected function getHealthCheckPlugins(
+        bool $isDatabaseServiceHealthy,
+        bool $isServiceServiceHealthy,
+        bool $isStorageServiceHealthy
+    ): array {
+        return [
+            static::DATABASE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::DATABASE_SERVICE_NAME, $isDatabaseServiceHealthy),
+            static::SEARCH_SERVICE_NAME => $this->getHealthCheckPluginMock(static::SEARCH_SERVICE_NAME, $isServiceServiceHealthy),
+            static::STORAGE_SERVICE_NAME => $this->getHealthCheckPluginMock(static::STORAGE_SERVICE_NAME, $isStorageServiceHealthy),
+        ];
     }
 
     /**
@@ -247,5 +261,13 @@ class HealthCheckFacadeTest extends Unit
         return (new HealthCheckServiceResponseTransfer())
             ->setName($serviceName)
             ->setStatus($serviceStatus);
+    }
+
+    /**
+     * @return \Spryker\Shared\HealthCheck\HealthCheckConfig
+     */
+    protected function getConfig(): HealthCheckConfig
+    {
+        return new HealthCheckConfig();
     }
 }

@@ -183,6 +183,6 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
      */
     public function executeZedRequestHealthCheck(): HealthCheckServiceResponseTransfer
     {
-        return $this->getFactory()->createZedRequestHealthCheckIndicator()->executeHealthCheck();
+        return $this->getFactory()->createZedRequestHealthChecker()->executeHealthCheck();
     }
 }

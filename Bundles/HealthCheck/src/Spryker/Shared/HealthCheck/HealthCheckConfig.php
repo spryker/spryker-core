@@ -14,7 +14,7 @@ class HealthCheckConfig extends AbstractSharedConfig
     protected const HEALTH_CHECK_SUCCESS_STATUS_CODE = 200;
     protected const HEALTH_CHECK_SUCCESS_STATUS_MESSAGE = 'healthy';
 
-    protected const HEALTH_CHECK_UNAVAILABLE_STATUS_CODE = 500;
+    protected const HEALTH_CHECK_UNAVAILABLE_STATUS_CODE = 503;
     protected const HEALTH_CHECK_UNAVAILABLE_STATUS_MESSAGE = 'unhealthy';
 
     protected const HEALTH_CHECK_FORBIDDEN_STATUS_CODE = 403;

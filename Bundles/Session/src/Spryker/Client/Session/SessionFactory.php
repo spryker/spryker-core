@@ -14,8 +14,6 @@ use Spryker\Client\Session\HealthCheck\SessionHealthCheck;
 class SessionFactory extends AbstractFactory
 {
     /**
-     * @param \Spryker\Client\Session\SessionClientInterface $sessionClient
-     *
      * @return \Spryker\Client\Session\HealthCheck\HealthCheckInterface
      */
     public function createSessionHealthChecker(): HealthCheckInterface
