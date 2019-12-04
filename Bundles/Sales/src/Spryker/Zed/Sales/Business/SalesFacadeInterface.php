@@ -254,6 +254,7 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
+     * - Executes `ItemPreTransformerPluginInterface` plugins stack.
      * - Transforms provided cart items according configured cart item transformer strategies.
      * - If no cart item transformer strategy is configured, explodes the provided items per quantity.
      * - Recalculates order transfer with new values.

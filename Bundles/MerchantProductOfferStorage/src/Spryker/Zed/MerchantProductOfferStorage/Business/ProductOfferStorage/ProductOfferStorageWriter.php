@@ -77,6 +77,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
         $productOfferStorageTransfer->setIdProductOffer($productOfferTransfer->getIdProductOffer());
         $productOfferStorageTransfer->setIdMerchant($productOfferTransfer->getFkMerchant());
         $productOfferStorageTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
+        $productOfferStorageTransfer->setMerchantSku($productOfferTransfer->getMerchantSku());
 
         return $productOfferStorageTransfer;
     }
