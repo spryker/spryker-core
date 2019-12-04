@@ -20,15 +20,14 @@ before_install:
     - if [[ ${TRAVIS_PHP_VERSION} != "7.4snapshot" ]]; then phpenv config-rm xdebug.ini ; fi
 
 install:
-    - if [[ $PREFER_LOWEST != 1 ]]; then COMPOSER_MEMORY_LIMIT=-1 composer install --prefer-dist --no-interaction ; fi
-    - if [[ $PREFER_LOWEST == 1 ]]; then COMPOSER_MEMORY_LIMIT=-1 composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable ; fi
+    - COMPOSER_MEMORY_LIMIT=-1 composer install --prefer-dist --no-interaction
+    - if [[ $PREFER_LOWEST == 1 ]]; then COMPOSER_MEMORY_LIMIT=-1 composer update --prefer-lowest --prefer-stable --prefer-dist --no-interaction ; fi
 
 script:
     - find ./src -path src -prune -o -type f -name '*.php' -print0 | xargs -0 -n1 -P4 php -l -n | (! grep -v "No syntax errors detected" )
 
 cache:
     directories:
-        - vendor/
         - $HOME/.composer/cache/
 
 notifications:
