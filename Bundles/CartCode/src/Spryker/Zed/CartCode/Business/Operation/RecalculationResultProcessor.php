@@ -46,7 +46,7 @@ class RecalculationResultProcessor implements RecalculationResultProcessorInterf
             }
 
             $cartCodeResponseTransfer->addMessage($messageTransfer);
-            $isSuccess = $isSuccess === true ? !($messageTransfer->getType() === static::MESSAGE_TYPE_ERROR) : false;
+            $isSuccess = $isSuccess && $messageTransfer->getType() !== static::MESSAGE_TYPE_ERROR;
         }
 
         return $cartCodeResponseTransfer->setIsSuccessful($isSuccess);

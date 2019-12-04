@@ -52,7 +52,11 @@ class GiftCardCartCodeRemover implements GiftCardCartCodeRemoverInterface
     protected function removeGiftCardPayment(QuoteTransfer $quoteTransfer, ?string $code = null): QuoteTransfer
     {
         foreach ($quoteTransfer->getPayments() as $index => $payment) {
-            if ($payment->getGiftCard() && $code === null || $payment->getGiftCard()->getCode() === $code) {
+            if (!$payment->getGiftCard()) {
+                return $quoteTransfer;
+            }
+
+            if ($code === null || $payment->getGiftCard()->getCode() === $code) {
                 $quoteTransfer->getPayments()->offsetUnset($index);
             }
         }

@@ -80,8 +80,10 @@ class CartCodeRemover implements CartCodeRemoverInterface
     protected function executeCartCodePlugins(CartCodeRequestTransfer $cartCodeRequestTransfer): QuoteTransfer
     {
         $quoteTransfer = $cartCodeRequestTransfer->getQuote();
+
+        $cartCode = $cartCodeRequestTransfer->getCartCode();
         foreach ($this->cartCodePlugins as $cartCodePlugin) {
-            $quoteTransfer = $cartCodePlugin->removeCartCode($quoteTransfer, $cartCodeRequestTransfer->getCartCode());
+            $quoteTransfer = $cartCodePlugin->removeCartCode($quoteTransfer, $cartCode);
         }
 
         return $quoteTransfer;
