@@ -20,7 +20,7 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapE
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
  */
-class PriceMapExpanderPlugin extends AbstractPlugin implements ProductAbstractMapExpanderPluginInterface
+class ProductPriceMapExpanderPlugin extends AbstractPlugin implements ProductAbstractMapExpanderPluginInterface
 {
     protected const KEY_PRICE = 'price';
     protected const KEY_PRICES = 'prices';
