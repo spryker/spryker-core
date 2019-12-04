@@ -122,43 +122,6 @@ class ConfigurableBundleCartAdderTest extends Unit
     /**
      * @return void
      */
-    public function testAddConfiguredBundleToCartThrowsExceptionRequiredTemplateName(): void
-    {
-        // Arrange
-        $createConfiguredBundleRequestTransfer = (new CreateConfiguredBundleRequestTransfer())
-            ->setConfiguredBundle(
-                (new ConfiguredBundleTransfer())
-                    ->setQuantity(1)
-                    ->setTemplate((new ConfigurableBundleTemplateTransfer())
-                        ->setUuid(static::FAKE_CONFIGURABLE_BUNDLE_UUID_1))
-            )
-            ->addItem(
-                (new ItemTransfer())
-                    ->setConfiguredBundleItem(
-                        (new ConfiguredBundleItemTransfer())
-                            ->setSlot((new ConfigurableBundleTemplateSlotTransfer())->setUuid(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1))
-                    )
-            )
-            ->addItem(
-                (new ItemTransfer())
-                    ->setConfiguredBundleItem(
-                        (new ConfiguredBundleItemTransfer())
-                            ->setSlot((new ConfigurableBundleTemplateSlotTransfer())->setUuid(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_2))
-                    )
-            );
-
-        $configuredBundleCartAdderMock = $this->createConfiguredBundleCartAdderMock($this->createCartClientMock());
-
-        // Assert
-        $this->expectException(RequiredTransferPropertyException::class);
-
-        // Act
-        $configuredBundleCartAdderMock->addConfiguredBundleToCart($createConfiguredBundleRequestTransfer);
-    }
-
-    /**
-     * @return void
-     */
     public function testAddConfiguredBundleToCartThrowsExceptionRequiredSlotUuid(): void
     {
         // Arrange

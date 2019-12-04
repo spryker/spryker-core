@@ -96,8 +96,7 @@ class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
             ->requireQuantity()
             ->requireTemplate()
             ->getTemplate()
-                ->requireUuid()
-                ->requireName();
+                ->requireUuid();
 
         $configuredBundleGroupKey = $this->configuredBundleGroupKeyGenerator->generateConfiguredBundleGroupKeyByUuid($configuredBundleTransfer);
 
