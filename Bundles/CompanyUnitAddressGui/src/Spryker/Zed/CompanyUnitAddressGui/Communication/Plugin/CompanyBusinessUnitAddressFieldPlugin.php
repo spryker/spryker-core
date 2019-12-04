@@ -18,7 +18,7 @@ class CompanyBusinessUnitAddressFieldPlugin extends AbstractPlugin implements Co
 {
     /**
      * {@inheritDoc}
-     * - Adds
+     * - Adds company business address field.
      *
      * @api
      *
