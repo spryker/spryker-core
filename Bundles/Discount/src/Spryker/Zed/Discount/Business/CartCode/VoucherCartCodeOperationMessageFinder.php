@@ -47,24 +47,15 @@ class VoucherCartCodeOperationMessageFinder implements VoucherCartCodeOperationM
      */
     protected function findVoucherApplySuccessMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
     {
-        if ($this->isVoucherFromPromotionDiscount($quoteTransfer, $code) || !$this->isVoucherCodeApplied($quoteTransfer, $code)) {
+        if (in_array($code, $quoteTransfer->getUsedNotAppliedVoucherCodes(), true)
+            || !$this->isVoucherCodeApplied($quoteTransfer, $code)
+        ) {
             return null;
         }
 
         return (new MessageTransfer())
             ->setValue(static::GLOSSARY_KEY_VOUCHER_APPLY_SUCCESSFUL)
             ->setType(static::MESSAGE_TYPE_SUCCESS);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
-     *
-     * @return bool
-     */
-    protected function isVoucherFromPromotionDiscount(QuoteTransfer $quoteTransfer, string $code): bool
-    {
-        return in_array($code, $quoteTransfer->getUsedNotAppliedVoucherCodes(), true);
     }
 
     /**
@@ -92,7 +83,7 @@ class VoucherCartCodeOperationMessageFinder implements VoucherCartCodeOperationM
      */
     protected function findNonApplicableErrorMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
     {
-        if ($this->isVoucherCodeApplyFailed($quoteTransfer, $code)) {
+        if (!in_array($code, $quoteTransfer->getUsedNotAppliedVoucherCodes(), true)) {
             $messageTransfer = new MessageTransfer();
             $messageTransfer->setValue(static::GLOSSARY_KEY_VOUCHER_NON_APPLICABLE);
             $messageTransfer->setType(static::MESSAGE_TYPE_ERROR);
@@ -101,16 +92,5 @@ class VoucherCartCodeOperationMessageFinder implements VoucherCartCodeOperationM
         }
 
         return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
-     *
-     * @return bool
-     */
-    protected function isVoucherCodeApplyFailed(QuoteTransfer $quoteTransfer, string $code): bool
-    {
-        return !in_array($code, $quoteTransfer->getUsedNotAppliedVoucherCodes(), true);
     }
 }

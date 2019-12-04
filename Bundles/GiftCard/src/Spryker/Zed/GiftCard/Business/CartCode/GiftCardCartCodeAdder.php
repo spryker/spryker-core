@@ -20,7 +20,7 @@ class GiftCardCartCodeAdder implements GiftCardCartCodeAdderInterface
      */
     public function addCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer
     {
-        if ($this->hasCandidate($quoteTransfer, $cartCode)) {
+        if ($this->isGiftCardCodeInQuote($quoteTransfer, $cartCode)) {
             return $quoteTransfer;
         }
 
@@ -32,14 +32,14 @@ class GiftCardCartCodeAdder implements GiftCardCartCodeAdderInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param string $cartCode
      *
      * @return bool
      */
-    protected function hasCandidate(QuoteTransfer $quoteTransfer, string $code): bool
+    protected function isGiftCardCodeInQuote(QuoteTransfer $quoteTransfer, string $cartCode): bool
     {
         foreach ($quoteTransfer->getGiftCards() as $giftCard) {
-            if ($giftCard->getCode() === $code) {
+            if ($giftCard->getCode() === $cartCode) {
                 return true;
             }
         }

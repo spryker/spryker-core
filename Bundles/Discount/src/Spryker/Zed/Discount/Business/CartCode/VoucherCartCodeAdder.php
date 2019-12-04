@@ -20,7 +20,7 @@ class VoucherCartCodeAdder implements VoucherCartCodeAdderInterface
      */
     public function addCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer
     {
-        if ($this->hasCandidate($quoteTransfer, $cartCode)) {
+        if ($this->isCartCodeInQuote($quoteTransfer, $cartCode)) {
             return $quoteTransfer;
         }
 
@@ -32,14 +32,14 @@ class VoucherCartCodeAdder implements VoucherCartCodeAdderInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param string $cartCode
      *
      * @return bool
      */
-    protected function hasCandidate(QuoteTransfer $quoteTransfer, string $code): bool
+    protected function isCartCodeInQuote(QuoteTransfer $quoteTransfer, string $cartCode): bool
     {
         foreach ($quoteTransfer->getVoucherDiscounts() as $voucherDiscount) {
-            if ($voucherDiscount->getVoucherCode() === $code) {
+            if ($voucherDiscount->getVoucherCode() === $cartCode) {
                 return true;
             }
         }

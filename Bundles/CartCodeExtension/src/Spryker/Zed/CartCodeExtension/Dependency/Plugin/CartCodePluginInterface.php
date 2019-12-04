@@ -56,7 +56,6 @@ interface CartCodePluginInterface
     /**
      * Specification:
      * - Executed after every cart code operations (add cart code, remove cart code).
-     * - Runs only on a recalculated QuoteTransfer.
      * - Checks QuoteTransfer and provides a success or an error message.
      *
      * @api
