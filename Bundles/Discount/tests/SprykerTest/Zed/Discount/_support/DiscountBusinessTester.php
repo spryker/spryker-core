@@ -57,9 +57,6 @@ class DiscountBusinessTester extends Actor
     protected function createQuoteTransfer(): QuoteTransfer
     {
         $quoteTransfer = new QuoteTransfer();
-        $itemTransfer = new ItemTransfer();
-        $itemTransfer->setQuantity(2);
-        $quoteTransfer->addItem($itemTransfer);
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setQuantity(3);

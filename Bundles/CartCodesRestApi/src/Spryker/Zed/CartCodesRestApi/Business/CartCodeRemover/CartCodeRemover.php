@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\CartCodesRestApi\Business\CartCodeRemover;
 
-use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
+use ArrayObject;
+use Generated\Shared\Transfer\CartCodeRequestTransfer;
+use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\CartCodesRestApi\CartCodesRestApiConfig;
 use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeInterface;
 use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeInterface;
@@ -39,13 +40,13 @@ class CartCodeRemover implements CartCodeRemoverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int $idDiscount
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function removeCartCode(QuoteTransfer $quoteTransfer, int $idDiscount): CartCodeOperationResultTransfer
+    public function removeCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
+        $quoteTransfer = $cartCodeRequestTransfer->getQuote();
         $quoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -54,43 +55,43 @@ class CartCodeRemover implements CartCodeRemoverInterface
             );
         }
 
-        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer();
-
-        $voucherCode = $this->findVoucherCodeById($quoteTransfer->getVoucherDiscounts()->getArrayCopy(), $idDiscount);
-        if (!$voucherCode) {
+        $discountTransfers = $quoteResponseTransfer->getQuoteTransfer()->getVoucherDiscounts();
+        if (!$this->isVoucherCodeInQuote($discountTransfers, $cartCodeRequestTransfer->getCartCode())) {
             return $this->createCartCodeOperationResultTransferWithErrorMessageTransfer(
                 CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_NOT_FOUND
             );
         }
 
-        return $this->cartCodeFacade->removeCartCode($quoteTransfer, $voucherCode);
+        $cartCodeRequestTransfer->setQuote($quoteResponseTransfer->getQuoteTransfer());
+
+        return $this->cartCodeFacade->removeCartCode($cartCodeRequestTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discountTransfers
-     * @param int $idDiscount
+     * @param \ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $discountTransfers
+     * @param string $voucherCode
      *
-     * @return string|null
+     * @return bool
      */
-    protected function findVoucherCodeById(array $discountTransfers, int $idDiscount): ?string
+    protected function isVoucherCodeInQuote(ArrayObject $discountTransfers, string $voucherCode): bool
     {
         foreach ($discountTransfers as $discountTransfer) {
-            if ($discountTransfer->getIdDiscount() === $idDiscount) {
-                return $discountTransfer->getVoucherCode();
+            if ($discountTransfer->getVoucherCode() === $voucherCode) {
+                return true;
             }
         }
 
-        return null;
+        return false;
     }
 
     /**
      * @param string $errorIdentifier
      *
-     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    protected function createCartCodeOperationResultTransferWithErrorMessageTransfer(string $errorIdentifier): CartCodeOperationResultTransfer
+    protected function createCartCodeOperationResultTransferWithErrorMessageTransfer(string $errorIdentifier): CartCodeResponseTransfer
     {
-        return (new CartCodeOperationResultTransfer())->addMessage(
+        return (new CartCodeResponseTransfer())->addMessage(
             (new MessageTransfer())->setValue($errorIdentifier)
         );
     }

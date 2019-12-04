@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CartCodesRestApi\Business;
 
-use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\CartCodeRequestTransfer;
+use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -21,16 +21,15 @@ class CartCodesRestApiFacade extends AbstractFacade implements CartCodesRestApiF
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $voucherCode
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function addCandidate(QuoteTransfer $quoteTransfer, string $voucherCode): CartCodeOperationResultTransfer
+    public function addCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
         return $this->getFactory()
             ->createCartCodeAdder()
-            ->addCandidate($quoteTransfer, $voucherCode);
+            ->addCartCode($cartCodeRequestTransfer);
     }
 
     /**
@@ -38,15 +37,14 @@ class CartCodesRestApiFacade extends AbstractFacade implements CartCodesRestApiF
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int $idDiscount
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function removeCartCode(QuoteTransfer $quoteTransfer, int $idDiscount): CartCodeOperationResultTransfer
+    public function removeCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
         return $this->getFactory()
             ->createCartCodeRemover()
-            ->removeCartCode($quoteTransfer, $idDiscount);
+            ->removeCartCode($cartCodeRequestTransfer);
     }
 }

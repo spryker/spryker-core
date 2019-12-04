@@ -14,7 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CartCodesRestApiConfig extends AbstractBundleConfig
 {
-    public const RESOURCE_DISCOUNTS = 'discounts';
+    public const RESOURCE_VOUCHERS = 'vouchers';
+    public const RESOURCE_CART_RULES = 'cart-rules';
 
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND

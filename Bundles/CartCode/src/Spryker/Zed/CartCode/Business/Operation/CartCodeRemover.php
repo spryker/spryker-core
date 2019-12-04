@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\CartCode\Business\Operation;
 
-use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
+use Generated\Shared\Transfer\CartCodeRequestTransfer;
+use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartCode\Dependency\Facade\CartCodeToCalculationFacadeInterface;
 
@@ -24,54 +25,63 @@ class CartCodeRemover implements CartCodeRemoverInterface
     protected $quoteOperationChecker;
 
     /**
-     * @var \Spryker\Shared\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[]
+     * @var \Spryker\Zed\CartCode\Business\Operation\RecalculationResultProcessorInterface
+     */
+    protected $recalculationResultProcessor;
+
+    /**
+     * @var \Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[]
      */
     protected $cartCodePlugins;
 
     /**
      * @param \Spryker\Zed\CartCode\Dependency\Facade\CartCodeToCalculationFacadeInterface $calculationClient
      * @param \Spryker\Zed\CartCode\Business\Operation\QuoteOperationCheckerInterface $quoteOperationChecker
-     * @param \Spryker\Shared\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[] $cartCodePlugins
+     * @param \Spryker\Zed\CartCode\Business\Operation\RecalculationResultProcessorInterface $recalculationResultProcessor
+     * @param \Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[] $cartCodePlugins
      */
     public function __construct(
         CartCodeToCalculationFacadeInterface $calculationClient,
         QuoteOperationCheckerInterface $quoteOperationChecker,
+        RecalculationResultProcessorInterface $recalculationResultProcessor,
         array $cartCodePlugins = []
     ) {
         $this->calculationFacade = $calculationClient;
         $this->quoteOperationChecker = $quoteOperationChecker;
+        $this->recalculationResultProcessor = $recalculationResultProcessor;
         $this->cartCodePlugins = $cartCodePlugins;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function removeCartCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
+    public function removeCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
-        $lockedCartCodeOperationResultTransfer = $this->quoteOperationChecker->checkLockedQuoteResponse($quoteTransfer);
-        if ($lockedCartCodeOperationResultTransfer) {
-            return $lockedCartCodeOperationResultTransfer;
+        $quoteTransfer = $cartCodeRequestTransfer->getQuote();
+        $lockedCartCodeResponseTransfer = $this->quoteOperationChecker->checkLockedQuoteResponse($quoteTransfer);
+        if ($lockedCartCodeResponseTransfer) {
+            return $lockedCartCodeResponseTransfer;
         }
 
-        $quoteTransfer = $this->executeCartCodePlugins($quoteTransfer, $code);
+        $quoteTransfer = $this->executeCartCodePlugins($cartCodeRequestTransfer);
         $quoteTransfer = $this->calculationFacade->recalculateQuote($quoteTransfer);
 
-        return (new CartCodeOperationResultTransfer())->setQuote($quoteTransfer);
+        return $this->recalculationResultProcessor
+            ->processRecalculationResults($cartCodeRequestTransfer->setQuote($quoteTransfer));
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    protected function executeCartCodePlugins(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
+    protected function executeCartCodePlugins(CartCodeRequestTransfer $cartCodeRequestTransfer): QuoteTransfer
     {
+        $quoteTransfer = $cartCodeRequestTransfer->getQuote();
         foreach ($this->cartCodePlugins as $cartCodePlugin) {
-            $quoteTransfer = $cartCodePlugin->removeCode($quoteTransfer, $code);
+            $quoteTransfer = $cartCodePlugin->removeCartCode($quoteTransfer, $cartCodeRequestTransfer->getCartCode());
         }
 
         return $quoteTransfer;

@@ -15,11 +15,11 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginI
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
-class GuestCartDiscountsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
+class GuestCartVouchersResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Configures available actions for guest discounts resource.
+     * - Configures available actions for guest vouchers resource.
      *
      * @api
      *
@@ -45,7 +45,7 @@ class GuestCartDiscountsResourceRoutePlugin extends AbstractPlugin implements Re
      */
     public function getResourceType(): string
     {
-        return CartCodesRestApiConfig::RESOURCE_DISCOUNTS;
+        return CartCodesRestApiConfig::RESOURCE_VOUCHERS;
     }
 
     /**

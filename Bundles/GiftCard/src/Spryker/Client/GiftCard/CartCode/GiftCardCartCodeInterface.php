@@ -10,9 +10,14 @@ namespace Spryker\Client\GiftCard\CartCode;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
+/**
+ * @deprecated Will be removed in the next major version.
+ */
 interface GiftCardCartCodeInterface
 {
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *
@@ -21,6 +26,8 @@ interface GiftCardCartCodeInterface
     public function addCandidate(QuoteTransfer $quoteTransfer, $code): QuoteTransfer;
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *
@@ -29,6 +36,8 @@ interface GiftCardCartCodeInterface
     public function removeCode(QuoteTransfer $quoteTransfer, $code): QuoteTransfer;
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *
@@ -37,6 +46,8 @@ interface GiftCardCartCodeInterface
     public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, $code): ?MessageTransfer;
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer

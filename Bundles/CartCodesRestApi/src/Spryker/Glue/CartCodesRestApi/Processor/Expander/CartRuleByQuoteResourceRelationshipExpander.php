@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CartCodesRestApi\Processor\Expander;
 
+use ArrayObject;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestDiscountsAttributesTransfer;
 use Spryker\Glue\CartCodesRestApi\CartCodesRestApiConfig;
@@ -15,7 +16,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-class DiscountByQuoteResourceRelationshipExpander implements DiscountByQuoteResourceRelationshipExpanderInterface
+class CartRuleByQuoteResourceRelationshipExpander implements CartRuleByQuoteResourceRelationshipExpanderInterface
 {
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -56,11 +57,7 @@ class DiscountByQuoteResourceRelationshipExpander implements DiscountByQuoteReso
                 continue;
             }
 
-            $discountTransfers = array_merge(
-                $payload->getVoucherDiscounts()->getArrayCopy(),
-                $payload->getCartRuleDiscounts()->getArrayCopy()
-            );
-
+            $discountTransfers = $payload->getCartRuleDiscounts();
             if (!count($discountTransfers)) {
                 continue;
             }
@@ -70,13 +67,13 @@ class DiscountByQuoteResourceRelationshipExpander implements DiscountByQuoteReso
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discountTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $discountTransfers
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      *
      * @return void
      */
     protected function addDiscountResourceRelationship(
-        array $discountTransfers,
+        ArrayObject $discountTransfers,
         RestResourceInterface $resource
     ): void {
         foreach ($discountTransfers as $discountTransfer) {
@@ -87,7 +84,7 @@ class DiscountByQuoteResourceRelationshipExpander implements DiscountByQuoteReso
                 );
 
             $discountResource = $this->restResourceBuilder->createRestResource(
-                CartCodesRestApiConfig::RESOURCE_DISCOUNTS,
+                CartCodesRestApiConfig::RESOURCE_CART_RULES,
                 (string)$discountTransfer->getIdDiscount(),
                 $restDiscountsAttributesTransfer
             );

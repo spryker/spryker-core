@@ -722,15 +722,15 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param string $cartCode
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addCandidate(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
+    public function addCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer
     {
         return $this->getFactory()
-            ->createVoucherCartCode()
-            ->addCandidate($quoteTransfer, $code);
+            ->createVoucherCartCodeAdder()
+            ->addCartCode($quoteTransfer, $cartCode);
     }
 
     /**
@@ -739,15 +739,15 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param string $cartCode
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeCode(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
+    public function removeCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer
     {
         return $this->getFactory()
-            ->createVoucherCartCode()
-            ->removeCode($quoteTransfer, $code);
+            ->createVoucherCartCodeRemover()
+            ->removeCartCode($quoteTransfer, $cartCode);
     }
 
     /**
@@ -756,30 +756,30 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function clearCartCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createVoucherCartCodeClearer()
+            ->clearCartCodes($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $cartCode
      *
      * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
+    public function findOperationResponseMessage(QuoteTransfer $quoteTransfer, string $cartCode): ?MessageTransfer
     {
         return $this->getFactory()
-            ->createVoucherCartCode()
-            ->getOperationResponseMessage($quoteTransfer, $code);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function clearAllCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        return $this->getFactory()
-            ->createVoucherCartCode()
-            ->clearAllCodes($quoteTransfer);
+            ->createVoucherCartCodeOperationMessageFinder()
+            ->findOperationResponseMessage($quoteTransfer, $cartCode);
     }
 }

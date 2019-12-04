@@ -575,11 +575,11 @@ interface DiscountFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param string $cartCode
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addCandidate(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer;
+    public function addCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer;
 
     /**
      * Specification:
@@ -588,26 +588,11 @@ interface DiscountFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param string $cartCode
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeCode(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer;
-
-    /**
-     * Specification:
-     * - Returns voucher apply success message in case the given voucher code has been applied successfully.
-     * - Returns voucher apply failed message in case the given voucher code hasn't been applied successfully.
-     * - Returns an empty failed message if code is not relevant.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
-     *
-     * @return \Generated\Shared\Transfer\MessageTransfer|null
-     */
-    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer;
+    public function removeCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer;
 
     /**
      * Specification:
@@ -619,5 +604,20 @@ interface DiscountFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function clearAllCodes(QuoteTransfer $quoteTransfer): QuoteTransfer;
+    public function clearCartCodes(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Returns voucher apply success message in case the given voucher code has been applied successfully.
+     * - Returns voucher apply failed message in case the given voucher code hasn't been applied successfully.
+     * - Returns an empty failed message if code is not relevant.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $cartCode
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer|null
+     */
+    public function findOperationResponseMessage(QuoteTransfer $quoteTransfer, string $cartCode): ?MessageTransfer;
 }

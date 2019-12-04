@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
+/**
+ * @deprecated Will be removed in the next major version. Please use \Spryker\Zed\Discount\Communication\Plugin\CartCode\VoucherCartCodePlugin.
+ */
 class GiftCardCartCode implements GiftCardCartCodeInterface
 {
     public const CART_GIFT_CARD_APPLY_SUCCESSFUL = 'cart.giftcard.apply.successful';
@@ -21,6 +24,8 @@ class GiftCardCartCode implements GiftCardCartCodeInterface
     protected const MESSAGE_TYPE_ERROR = 'error';
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *
@@ -41,6 +46,8 @@ class GiftCardCartCode implements GiftCardCartCodeInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *
@@ -55,6 +62,8 @@ class GiftCardCartCode implements GiftCardCartCodeInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *
@@ -76,6 +85,8 @@ class GiftCardCartCode implements GiftCardCartCodeInterface
     }
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer

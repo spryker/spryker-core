@@ -9,7 +9,7 @@ namespace Spryker\Zed\Discount\Communication\Plugin\CartCode;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface;
+use Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -27,13 +27,13 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param string $cartCode
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addCandidate(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
+    public function addCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer
     {
-        return $this->getFacade()->addCandidate($quoteTransfer, $code);
+        return $this->getFacade()->addCartCode($quoteTransfer, $cartCode);
     }
 
     /**
@@ -43,45 +43,45 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param string $cartCode
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function removeCode(QuoteTransfer $quoteTransfer, string $code): QuoteTransfer
+    public function removeCartCode(QuoteTransfer $quoteTransfer, string $cartCode): QuoteTransfer
     {
-        return $this->getFacade()->removeCode($quoteTransfer, $code);
+        return $this->getFacade()->removeCartCode($quoteTransfer, $cartCode);
     }
 
     /**
      * {@inheritDoc}
-     * - Returns voucher apply success message in case the given voucher code has been applied successfully.
-     * - Returns voucher apply failed message in case the given voucher code hasn't been applied successfully.
-     * - Returns an empty failed message if code is not relevant.
+     * - Clears all (both applied and unapplied) voucher codes from the Quote.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function clearCartCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFacade()->clearCartCodes($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     * - Returns a MessageTransfer with a Successfully Applied Voucher message when the voucher was applied successfully.
+     * - Returns a MessageTransfer with a Failed to Apply Voucher message when the voucher was applied unsuccessfully.
+     * - Returns an empty failed message when the code is not applicable.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $cartCode
      *
      * @return \Generated\Shared\Transfer\MessageTransfer|null
      */
-    public function getOperationResponseMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
+    public function findOperationResponseMessage(QuoteTransfer $quoteTransfer, string $cartCode): ?MessageTransfer
     {
-        return $this->getFacade()->getOperationResponseMessage($quoteTransfer, $code);
-    }
-
-    /**
-     * {@inheritDoc}
-     * - Clears all applied and not applied voucher codes from the quote.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function clearAllCodes(QuoteTransfer $quoteTransfer): QuoteTransfer
-    {
-        return $this->getFacade()->clearAllCodes($quoteTransfer);
+        return $this->getFacade()->findOperationResponseMessage($quoteTransfer, $cartCode);
     }
 }

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CartCodesRestApi\Dependency\Facade;
 
-use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\CartCodeRequestTransfer;
+use Generated\Shared\Transfer\CartCodeResponseTransfer;
 
 class CartCodesRestApiToCartCodeFacadeBridge implements CartCodesRestApiToCartCodeFacadeInterface
 {
@@ -26,24 +26,22 @@ class CartCodesRestApiToCartCodeFacadeBridge implements CartCodesRestApiToCartCo
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function addCandidate(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
+    public function addCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
-        return $this->cartCodeFacade->addCandidate($quoteTransfer, $code);
+        return $this->cartCodeFacade->addCartCode($cartCodeRequestTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string $code
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
      */
-    public function removeCartCode(QuoteTransfer $quoteTransfer, string $code): CartCodeOperationResultTransfer
+    public function removeCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
     {
-        return $this->cartCodeFacade->removeCartCode($quoteTransfer, $code);
+        return $this->cartCodeFacade->removeCartCode($cartCodeRequestTransfer);
     }
 }

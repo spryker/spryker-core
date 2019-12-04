@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\CartCodesRestApi\Processor\CartCodeRemover;
 
+use Generated\Shared\Transfer\CartCodeRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\CartCodesRestApi\CartCodesRestApiClientInterface;
@@ -48,12 +49,12 @@ class CartCodeRemover implements CartCodeRemoverInterface
     {
         $quoteTransfer = $this->createQuoteTransfer($restRequest, CartsRestApiConfig::RESOURCE_CARTS);
 
-        $cartCodeOperationResultTransfer = $this->cartCodesRestApiClient->removeCartCode(
-            $quoteTransfer,
-            (int)$restRequest->getResource()->getId()
-        );
+        $cartCodeRequestTransfer = (new CartCodeRequestTransfer())
+            ->setQuote($quoteTransfer)
+            ->setCartCode($restRequest->getResource()->getId());
+        $cartCodeOperationResultTransfer = $this->cartCodesRestApiClient->removeCartCode($cartCodeRequestTransfer);
 
-        return $this->cartCodeResponseBuilder->buildCartRestResponse($cartCodeOperationResultTransfer, $restRequest);
+        return $this->cartCodeResponseBuilder->createCartRestResponse($cartCodeOperationResultTransfer, $restRequest);
     }
 
     /**
@@ -70,7 +71,7 @@ class CartCodeRemover implements CartCodeRemoverInterface
             (int)$restRequest->getResource()->getId()
         );
 
-        return $this->cartCodeResponseBuilder->buildGuestCartRestResponse($cartCodeOperationResultTransfer);
+        return $this->cartCodeResponseBuilder->createGuestCartRestResponse($cartCodeOperationResultTransfer);
     }
 
     /**

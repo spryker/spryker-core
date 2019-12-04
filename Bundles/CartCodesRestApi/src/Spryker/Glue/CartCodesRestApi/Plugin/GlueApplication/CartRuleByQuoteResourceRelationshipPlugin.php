@@ -15,11 +15,11 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 /**
  * @method \Spryker\Glue\CartCodesRestApi\CartCodesRestApiFactory getFactory()
  */
-class DiscountByCartResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class CartRuleByQuoteResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Adds discounts resource as relationship by cart resource.
+     * - Adds cart-rules resource as relationship by cart resource.
      *
      * @api
      *
@@ -31,7 +31,7 @@ class DiscountByCartResourceRelationshipPlugin extends AbstractPlugin implements
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createDiscountByQuoteResourceRelationshipExpander()
+            ->createCartRuleByQuoteResourceRelationshipExpander()
             ->addResourceRelationships($resources, $restRequest);
     }
 
@@ -44,6 +44,6 @@ class DiscountByCartResourceRelationshipPlugin extends AbstractPlugin implements
      */
     public function getRelationshipResourceType(): string
     {
-        return CartCodesRestApiConfig::RESOURCE_DISCOUNTS;
+        return CartCodesRestApiConfig::RESOURCE_CART_RULES;
     }
 }

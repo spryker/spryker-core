@@ -12,8 +12,10 @@ use Spryker\Glue\CartCodesRestApi\Processor\CartCodeAdder\CartCodeAdder;
 use Spryker\Glue\CartCodesRestApi\Processor\CartCodeAdder\CartCodeAdderInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\CartCodeRemover\CartCodeRemover;
 use Spryker\Glue\CartCodesRestApi\Processor\CartCodeRemover\CartCodeRemoverInterface;
-use Spryker\Glue\CartCodesRestApi\Processor\Expander\DiscountByQuoteResourceRelationshipExpander;
-use Spryker\Glue\CartCodesRestApi\Processor\Expander\DiscountByQuoteResourceRelationshipExpanderInterface;
+use Spryker\Glue\CartCodesRestApi\Processor\Expander\CartRuleByQuoteResourceRelationshipExpander;
+use Spryker\Glue\CartCodesRestApi\Processor\Expander\CartRuleByQuoteResourceRelationshipExpanderInterface;
+use Spryker\Glue\CartCodesRestApi\Processor\Expander\VoucherByQuoteResourceRelationshipExpander;
+use Spryker\Glue\CartCodesRestApi\Processor\Expander\VoucherByQuoteResourceRelationshipExpanderInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\CartCodeMapper;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\CartCodeMapperInterface;
 use Spryker\Glue\CartCodesRestApi\Processor\Mapper\DiscountMapper;
@@ -79,11 +81,22 @@ class CartCodesRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CartCodesRestApi\Processor\Expander\DiscountByQuoteResourceRelationshipExpanderInterface
+     * @return \Spryker\Glue\CartCodesRestApi\Processor\Expander\VoucherByQuoteResourceRelationshipExpanderInterface
      */
-    public function createDiscountByQuoteResourceRelationshipExpander(): DiscountByQuoteResourceRelationshipExpanderInterface
+    public function createVoucherByQuoteResourceRelationshipExpander(): VoucherByQuoteResourceRelationshipExpanderInterface
     {
-        return new DiscountByQuoteResourceRelationshipExpander(
+        return new VoucherByQuoteResourceRelationshipExpander(
+            $this->getResourceBuilder(),
+            $this->createDiscountMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CartCodesRestApi\Processor\Expander\CartRuleByQuoteResourceRelationshipExpanderInterface
+     */
+    public function createCartRuleByQuoteResourceRelationshipExpander(): CartRuleByQuoteResourceRelationshipExpanderInterface
+    {
+        return new CartRuleByQuoteResourceRelationshipExpander(
             $this->getResourceBuilder(),
             $this->createDiscountMapper()
         );
