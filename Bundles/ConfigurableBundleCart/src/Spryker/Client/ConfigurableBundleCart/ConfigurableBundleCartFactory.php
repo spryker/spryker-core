@@ -10,15 +10,12 @@ namespace Spryker\Client\ConfigurableBundleCart;
 use Spryker\Client\ConfigurableBundleCart\Adder\ConfiguredBundleCartAdder;
 use Spryker\Client\ConfigurableBundleCart\Adder\ConfiguredBundleCartAdderInterface;
 use Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface;
-use Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToConfigurableBundleStorageClientInterface;
 use Spryker\Client\ConfigurableBundleCart\Generator\ConfiguredBundleGroupKeyGenerator;
 use Spryker\Client\ConfigurableBundleCart\Generator\ConfiguredBundleGroupKeyGeneratorInterface;
 use Spryker\Client\ConfigurableBundleCart\Reader\QuoteItemReader;
 use Spryker\Client\ConfigurableBundleCart\Reader\QuoteItemReaderInterface;
 use Spryker\Client\ConfigurableBundleCart\Updater\QuoteItemUpdater;
 use Spryker\Client\ConfigurableBundleCart\Updater\QuoteItemUpdaterInterface;
-use Spryker\Client\ConfigurableBundleCart\Validator\ConfiguredBundleValidator;
-use Spryker\Client\ConfigurableBundleCart\Validator\ConfiguredBundleValidatorInterface;
 use Spryker\Client\ConfigurableBundleCart\Writer\CartWriter;
 use Spryker\Client\ConfigurableBundleCart\Writer\CartWriterInterface;
 use Spryker\Client\Kernel\AbstractFactory;
@@ -73,18 +70,8 @@ class ConfigurableBundleCartFactory extends AbstractFactory
     {
         return new ConfiguredBundleCartAdder(
             $this->getCartClient(),
-            $this->getConfigurableBundleStorageClient(),
-            $this->createConfiguredBundleValidator(),
             $this->createConfiguredBundleGroupKeyGenerator()
         );
-    }
-
-    /**
-     * @return \Spryker\Client\ConfigurableBundleCart\Validator\ConfiguredBundleValidatorInterface
-     */
-    public function createConfiguredBundleValidator(): ConfiguredBundleValidatorInterface
-    {
-        return new ConfiguredBundleValidator();
     }
 
     /**
@@ -93,13 +80,5 @@ class ConfigurableBundleCartFactory extends AbstractFactory
     public function getCartClient(): ConfigurableBundleCartToCartClientInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleCartDependencyProvider::CLIENT_CART);
-    }
-
-    /**
-     * @return \Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToConfigurableBundleStorageClientInterface
-     */
-    public function getConfigurableBundleStorageClient(): ConfigurableBundleCartToConfigurableBundleStorageClientInterface
-    {
-        return $this->getProvidedDependency(ConfigurableBundleCartDependencyProvider::CLIENT_CONFIGURABLE_BUNDLE_STORAGE);
     }
 }

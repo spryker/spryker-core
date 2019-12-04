@@ -14,6 +14,7 @@ use Generated\Shared\DataBuilder\ConfiguredBundleBuilder;
 use Generated\Shared\DataBuilder\ProductConcreteBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfiguredBundleItemTransfer;
 use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -409,7 +410,7 @@ class ConfigurableBundleCartFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function testExpandConfiguredBundleItemsWithGroupKeyWillExpandItems(): void
+    public function testExpandConfiguredBundleItemsWithGroupKeyWillExpandItems(): void
     {
         // Arrange
         $cartChangeTransfer = (new CartChangeBuilder())
@@ -442,7 +443,7 @@ class ConfigurableBundleCartFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function testExpandConfiguredBundleItemsWithGroupKeyWillIgnoreRegularItems(): void
+    public function testExpandConfiguredBundleItemsWithGroupKeyWillIgnoreRegularItems(): void
     {
         // Arrange
         $cartChangeTransfer = (new CartChangeBuilder())
@@ -466,6 +467,122 @@ class ConfigurableBundleCartFacadeTest extends Unit
         foreach ($updatedCartChangeTransfer->getItems() as $itemTransfer) {
             $this->assertSame(static::FAKE_ITEM_GROUP_KEY, $itemTransfer->getGroupKey());
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckConfiguredBundleTemplateSlotCombinationValidatesSlotCombination(): void
+    {
+        // Arrange
+        $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
+        $firstConfigurableBundleTemplateSlotTransfer = $this->tester->createConfigurableBundleTemplateSlot([
+            ConfigurableBundleTemplateSlotTransfer::FK_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
+        ]);
+        $secondConfigurableBundleTemplateSlotTransfer = $this->tester->createConfigurableBundleTemplateSlot([
+            ConfigurableBundleTemplateSlotTransfer::FK_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
+        ]);
+
+        $cartChangeTransfer = (new CartChangeBuilder())
+            ->withQuote()
+            ->withItem([
+                ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
+                ItemTransfer::QUANTITY => 1,
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem($firstConfigurableBundleTemplateSlotTransfer->getUuid()),
+                ItemTransfer::CONFIGURED_BUNDLE => (new ConfiguredBundleTransfer())
+                    ->setQuantity(1)
+                    ->setTemplate((new ConfigurableBundleTemplateTransfer())->setUuid($configurableBundleTemplateTransfer->getUuid())),
+            ])
+            ->withItem([
+                ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
+                ItemTransfer::QUANTITY => 1,
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem($secondConfigurableBundleTemplateSlotTransfer->getUuid()),
+                ItemTransfer::CONFIGURED_BUNDLE => (new ConfiguredBundleTransfer())
+                    ->setQuantity(1)
+                    ->setTemplate((new ConfigurableBundleTemplateTransfer())->setUuid($configurableBundleTemplateTransfer->getUuid())),
+            ])
+            ->build();
+        // Act
+        $cartPreCheckResponseTransfer = $this->tester->getFacade()->checkConfiguredBundleTemplateSlotCombination($cartChangeTransfer);
+
+        // Assert
+        $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
+        $this->assertEmpty($cartPreCheckResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckConfiguredBundleTemplateSlotCombinationValidatesSlotCombinationWithInvalidTemplateUuid(): void
+    {
+        // Arrange
+        $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
+        $firstConfigurableBundleTemplateSlotTransfer = $this->tester->createConfigurableBundleTemplateSlot([
+            ConfigurableBundleTemplateSlotTransfer::FK_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
+        ]);
+        $secondConfigurableBundleTemplateSlotTransfer = $this->tester->createConfigurableBundleTemplateSlot([
+            ConfigurableBundleTemplateSlotTransfer::FK_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
+        ]);
+
+        $cartChangeTransfer = (new CartChangeBuilder())
+            ->withQuote()
+            ->withItem([
+                ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
+                ItemTransfer::QUANTITY => 1,
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem($firstConfigurableBundleTemplateSlotTransfer->getUuid()),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(),
+            ])
+            ->withItem([
+                ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
+                ItemTransfer::QUANTITY => 1,
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem($secondConfigurableBundleTemplateSlotTransfer->getUuid()),
+                ItemTransfer::CONFIGURED_BUNDLE => $this->createConfiguredBundle(),
+            ])
+            ->build();
+        // Act
+        $cartPreCheckResponseTransfer = $this->tester->getFacade()->checkConfiguredBundleTemplateSlotCombination($cartChangeTransfer);
+
+        // Assert
+        $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
+        $this->assertNotEmpty($cartPreCheckResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckConfiguredBundleTemplateSlotCombinationValidatesSlotCombinationWithInvalidSlotUuids(): void
+    {
+        // Arrange
+        $configurableBundleTemplateTransfer = $this->tester->createActiveConfigurableBundleTemplate();
+        $configurableBundleTemplateSlotTransfer = $this->tester->createConfigurableBundleTemplateSlot([
+            ConfigurableBundleTemplateSlotTransfer::FK_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateTransfer->getIdConfigurableBundleTemplate(),
+        ]);
+
+        $cartChangeTransfer = (new CartChangeBuilder())
+            ->withQuote()
+            ->withItem([
+                ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
+                ItemTransfer::QUANTITY => 1,
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem($configurableBundleTemplateSlotTransfer->getUuid()),
+                ItemTransfer::CONFIGURED_BUNDLE => (new ConfiguredBundleTransfer())
+                    ->setQuantity(1)
+                    ->setTemplate((new ConfigurableBundleTemplateTransfer())->setUuid($configurableBundleTemplateTransfer->getUuid())),
+            ])
+            ->withItem([
+                ItemTransfer::SKU => (new ProductConcreteBuilder())->build()->getSku(),
+                ItemTransfer::QUANTITY => 1,
+                ItemTransfer::CONFIGURED_BUNDLE_ITEM => $this->createConfiguredBundleItem(static::FAKE_CONFIGURABLE_BUNDLE_SLOT_UUID_1),
+                ItemTransfer::CONFIGURED_BUNDLE => (new ConfiguredBundleTransfer())
+                    ->setQuantity(1)
+                    ->setTemplate((new ConfigurableBundleTemplateTransfer())->setUuid($configurableBundleTemplateTransfer->getUuid())),
+            ])
+            ->build();
+        // Act
+        $cartPreCheckResponseTransfer = $this->tester->getFacade()->checkConfiguredBundleTemplateSlotCombination($cartChangeTransfer);
+
+        // Assert
+        $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
+        $this->assertNotEmpty($cartPreCheckResponseTransfer->getMessages());
     }
 
     /**

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductImage\Persistence;
 
-use Generated\Shared\Transfer\ProductImageCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductImageFilterTransfer;
 
 interface ProductImageRepositoryInterface
 {
@@ -27,9 +27,9 @@ interface ProductImageRepositoryInterface
     public function getProductImagesByProductSetIds(array $productSetIds): array;
 
     /**
-     * @param \Generated\Shared\Transfer\ProductImageCriteriaFilterTransfer $productImageCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductImageFilterTransfer $productImageFilterTransfer
      *
      * @return int[]
      */
-    public function getProductConcreteIds(ProductImageCriteriaFilterTransfer $productImageCriteriaFilterTransfer): array;
+    public function getProductConcreteIds(ProductImageFilterTransfer $productImageFilterTransfer): array;
 }
