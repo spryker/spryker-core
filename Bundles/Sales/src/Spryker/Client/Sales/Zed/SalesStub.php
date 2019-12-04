@@ -54,7 +54,7 @@ class SalesStub implements SalesStubInterface
     }
 
     /**
-     * @uses \getOffsetPaginatedCustomerOrderListAction\GatewayController::getOffsetPaginatedCustomerOrderListAction
+     * @uses \Spryker\Zed\Sales\Communication\Controller\GatewayController::getOffsetPaginatedCustomerOrderListAction
      *
      * @param \Generated\Shared\Transfer\OrderListRequestTransfer $orderListRequestTransfer
      *
