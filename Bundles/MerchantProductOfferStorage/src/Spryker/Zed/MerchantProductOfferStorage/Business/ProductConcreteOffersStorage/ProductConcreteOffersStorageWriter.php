@@ -88,7 +88,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     ): ProductOfferCollectionTransfer {
         $filteredProductOfferCollectionTransfer = new ProductOfferCollectionTransfer();
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
-            if (!$this->productOfferAvailabilityChecker->isProductOfferAvailable($productOfferTransfer)) { //TODO: pass store transfer
+            if (!$this->productOfferAvailabilityChecker->isProductOfferAvailable($productOfferTransfer, $productOfferTransfer->getStores()[0])) { //TODO: pass store transfer
                 continue;
             }
             $filteredProductOfferCollectionTransfer->addProductOffer($productOfferTransfer);

@@ -57,7 +57,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
 
             $productOfferStorageEntity->setData($productOfferStorageTransfer->modifiedToArray());
 
-            if ($this->productOfferAvailabilityChecker->isProductOfferAvailable($productOfferTransfer)) {//TODO: pass store transfer
+            if ($this->productOfferAvailabilityChecker->isProductOfferAvailable($productOfferTransfer, $productOfferTransfer->getStores()[0])) {//TODO: pass store transfer
                 $productOfferStorageEntity->save();
             } elseif (!$productOfferStorageEntity->isNew()) {
                 $productOfferStorageEntity->delete();
