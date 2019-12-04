@@ -20,7 +20,6 @@ use Spryker\Client\ProductStorage\Mapper\ProductStorageToProductConcreteTransfer
 use Spryker\Client\ProductStorage\Mapper\ProductStorageToProductConcreteTransferDataMapperInterface;
 use Spryker\Client\ProductStorage\Mapper\ProductVariantExpander;
 use Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReader;
-use Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReaderInterface;
 use Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReader;
 
 class ProductStorageFactory extends AbstractFactory
@@ -86,7 +85,7 @@ class ProductStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReaderInterface
      */
-    public function createProductAbstractStorageReader(): ProductAbstractStorageReaderInterface
+    public function createProductAbstractStorageReader()
     {
         return new ProductAbstractStorageReader(
             $this->getStorageClient(),

@@ -37,7 +37,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container): Container
+    public function provideServiceLayerDependencies(Container $container)
     {
         $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addStorageClient($container);
