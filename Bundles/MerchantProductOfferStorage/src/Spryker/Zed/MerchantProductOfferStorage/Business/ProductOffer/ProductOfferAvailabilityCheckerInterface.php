@@ -14,7 +14,6 @@ interface ProductOfferAvailabilityCheckerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
-     *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return bool
