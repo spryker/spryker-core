@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductReview;
 
+use Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -49,6 +50,25 @@ class ProductReviewClient extends AbstractClient implements ProductReviewClientI
         return $this->getFactory()
             ->getSearchClient()
             ->search($searchQuery, $resultFormatters, $productReviewSearchRequestTransfer->getRequestParams());
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer
+     *
+     * @return array
+     */
+    public function getBulkProductReviewsFromSearch(BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer): array
+    {
+        $searchQuery = $this->getFactory()->createBulkProductReviewsQueryPlugin($bulkProductReviewSearchRequestTransfer);
+        $resultFormatters = $this->getFactory()->getProductReviewsSearchResultFormatterPlugins();
+
+        return $this->getFactory()
+            ->getSearchClient()
+            ->search($searchQuery, $resultFormatters, $bulkProductReviewSearchRequestTransfer->getFilter()->toArray());
     }
 
     /**

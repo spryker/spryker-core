@@ -332,6 +332,9 @@ class CheckoutRestApiBusinessTester extends Actor
             ->withShippingAddress(static::ADDRESS_2)
             ->withShipment()
             ->withPayment()
+            ->withStore([
+                StoreTransfer::NAME => 'DE',
+            ])
             ->build();
 
         return $quoteTransfer->setCustomerReference(static::CUSTOMER['customerReference']);
