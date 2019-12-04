@@ -72,7 +72,7 @@ class EditCompanyUnitAddressController extends AbstractController
      *
      * @return void
      */
-    protected function updateCompanyUnitAddress(FormInterface $companyUnitAddressForm)
+    protected function updateCompanyUnitAddress(FormInterface $companyUnitAddressForm): void
     {
         if (!$companyUnitAddressForm->isValid()) {
             $this->addErrorMessage(static::MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_ERROR);

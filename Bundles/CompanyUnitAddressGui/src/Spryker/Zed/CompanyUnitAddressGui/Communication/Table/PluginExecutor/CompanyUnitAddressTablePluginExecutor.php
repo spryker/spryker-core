@@ -45,8 +45,8 @@ class CompanyUnitAddressTablePluginExecutor implements CompanyUnitAddressTablePl
      */
     public function executeTableConfigExpanderPlugins(TableConfiguration $config): TableConfiguration
     {
-        foreach ($this->companyTableConfigExpanderPlugins as $plugin) {
-            $config = $plugin->expandConfig($config);
+        foreach ($this->companyTableConfigExpanderPlugins as $companyTableConfigExpanderPlugin) {
+            $config = $companyTableConfigExpanderPlugin->expandConfig($config);
         }
 
         return $config;
@@ -58,8 +58,8 @@ class CompanyUnitAddressTablePluginExecutor implements CompanyUnitAddressTablePl
     public function executeTableHeaderExpanderPlugins(): array
     {
         $expandedData = [];
-        foreach ($this->companyTableHeaderExpanderPlugins as $plugin) {
-            $expandedData += $plugin->expandHeader();
+        foreach ($this->companyTableHeaderExpanderPlugins as $companyTableHeaderExpanderPlugin) {
+            $expandedData += $companyTableHeaderExpanderPlugin->expandHeader();
         }
 
         return $expandedData;
@@ -73,8 +73,8 @@ class CompanyUnitAddressTablePluginExecutor implements CompanyUnitAddressTablePl
     public function executeTableDataExpanderPlugins(array $item): array
     {
         $expandedData = [];
-        foreach ($this->companyTableDataExpanderPlugins as $plugin) {
-            $expandedData += $plugin->expandData($item);
+        foreach ($this->companyTableDataExpanderPlugins as $companyTableDataExpanderPlugin) {
+            $expandedData += $companyTableDataExpanderPlugin->expandData($item);
         }
 
         return $expandedData;

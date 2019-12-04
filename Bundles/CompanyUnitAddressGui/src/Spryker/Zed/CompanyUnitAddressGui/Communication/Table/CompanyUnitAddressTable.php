@@ -20,26 +20,26 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CompanyUnitAddressTable extends AbstractTable
 {
-    public const COL_ID_COMPANY_UNIT_ADDRESS = SpyCompanyUnitAddressTableMap::COL_ID_COMPANY_UNIT_ADDRESS;
-    public const COL_ADDRESS1 = SpyCompanyUnitAddressTableMap::COL_ADDRESS1;
-    public const COL_ADDRESS2 = SpyCompanyUnitAddressTableMap::COL_ADDRESS2;
-    public const COL_ADDRESS3 = SpyCompanyUnitAddressTableMap::COL_ADDRESS3;
-    public const COL_CITY = SpyCompanyUnitAddressTableMap::COL_CITY;
-    public const COL_ZIPCODE = SpyCompanyUnitAddressTableMap::COL_ZIP_CODE;
-    public const COL_COUNTRY_NAME = SpyCountryTableMap::COL_NAME;
-    public const COL_COMPANY_NAME = SpyCompanyTableMap::COL_NAME;
+    protected const COL_ID_COMPANY_UNIT_ADDRESS = SpyCompanyUnitAddressTableMap::COL_ID_COMPANY_UNIT_ADDRESS;
+    protected const COL_ADDRESS1 = SpyCompanyUnitAddressTableMap::COL_ADDRESS1;
+    protected const COL_ADDRESS2 = SpyCompanyUnitAddressTableMap::COL_ADDRESS2;
+    protected const COL_ADDRESS3 = SpyCompanyUnitAddressTableMap::COL_ADDRESS3;
+    protected const COL_CITY = SpyCompanyUnitAddressTableMap::COL_CITY;
+    protected const COL_ZIPCODE = SpyCompanyUnitAddressTableMap::COL_ZIP_CODE;
+    protected const COL_COUNTRY_NAME = SpyCountryTableMap::COL_NAME;
+    protected const COL_COMPANY_NAME = SpyCompanyTableMap::COL_NAME;
 
-    public const COL_COUNTRY_RELATION = 'Country';
-    public const COL_COMPANY_RELATION = 'Company';
+    protected const COL_COUNTRY_RELATION = 'Country';
+    protected const COL_COMPANY_RELATION = 'Company';
 
-    public const COL_ACTIONS = 'Actions';
+    protected const COL_ACTIONS = 'Actions';
 
-    public const REQUEST_ID_COMPANY_UNIT_ADDRESS = 'id-company-unit-address';
+    protected const REQUEST_ID_COMPANY_UNIT_ADDRESS = 'id-company-unit-address';
 
     /**
      * @uses \Spryker\Zed\CompanyUnitAddressGui\Communication\Controller\EditCompanyUnitAddressController::indexAction()
      */
-    public const URL_COMPANY_UNIT_ADDRESS_EDIT = '/company-unit-address-gui/edit-company-unit-address';
+    protected const URL_COMPANY_UNIT_ADDRESS_EDIT = '/company-unit-address-gui/edit-company-unit-address';
 
     /**
      * @var \Spryker\Zed\CompanyUnitAddressGui\Communication\Table\PluginExecutor\CompanyUnitAddressTablePluginExecutorInterface
@@ -68,7 +68,7 @@ class CompanyUnitAddressTable extends AbstractTable
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    protected function configure(TableConfiguration $config)
+    protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config = $this->setHeader($config);
 
@@ -104,7 +104,7 @@ class CompanyUnitAddressTable extends AbstractTable
      *
      * @return array
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function prepareData(TableConfiguration $config): array
     {
         $this->companyUnitAddressQuery->leftJoinWithCompany()
             ->leftJoinWithCountry();

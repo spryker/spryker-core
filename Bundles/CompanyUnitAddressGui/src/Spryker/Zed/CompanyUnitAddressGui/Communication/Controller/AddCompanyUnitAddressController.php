@@ -54,7 +54,7 @@ class AddCompanyUnitAddressController extends AbstractController
      *
      * @return void
      */
-    protected function createCompanyUnitAddress(FormInterface $companyUnitAddressForm)
+    protected function createCompanyUnitAddress(FormInterface $companyUnitAddressForm): void
     {
         if (!$companyUnitAddressForm->isValid()) {
             $this->addErrorMessage(static::MESSAGE_COMPANY_UNIT_ADDRESS_CREATE_ERROR);

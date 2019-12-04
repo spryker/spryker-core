@@ -25,6 +25,7 @@ class CompanyUnitAddressForm extends AbstractType
 {
     public const OPTION_COMPANY_CHOICES = 'company_choices';
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
+
     protected const FIELD_ID_COMPANY_UNIT_ADDRESS = 'id_company_unit_address';
     protected const FIELD_FK_COMPANY = 'fk_company';
     protected const FIELD_CITY = 'city';
