@@ -27,7 +27,9 @@ class MerchantProductOfferStorageFacade extends AbstractFacade implements Mercha
      */
     public function publishProductConcreteProductOffersStorage(array $productSkus): void
     {
-        $this->getFactory()->createProductConcreteProductOffersStorageWriter()->publish($productSkus);
+        $this->getFactory()
+            ->createProductConcreteProductOffersStorageWriter()
+            ->writeProductConcreteProductOffersStorageCollectionByProductSkus($productSkus);
     }
 
     /**
@@ -41,7 +43,9 @@ class MerchantProductOfferStorageFacade extends AbstractFacade implements Mercha
      */
     public function unpublishProductConcreteProductOffersStorage(array $productSkus): void
     {
-        $this->getFactory()->createProductConcreteProductOffersStorageWriter()->unpublish($productSkus);
+        $this->getFactory()
+            ->createProductConcreteProductOffersStorageDeleter()
+            ->deleteProductConcreteProductOffersStorageCollectionByProductSkus($productSkus);
     }
 
     /**
@@ -55,7 +59,9 @@ class MerchantProductOfferStorageFacade extends AbstractFacade implements Mercha
      */
     public function publishProductOfferStorage(array $productOfferReferences): void
     {
-        $this->getFactory()->createProductOfferStorageWriter()->publish($productOfferReferences);
+        $this->getFactory()
+            ->createProductOfferStorageWriter()
+            ->writeProductOfferStorageCollectionByProductOfferReferences($productOfferReferences);
     }
 
     /**
@@ -69,6 +75,72 @@ class MerchantProductOfferStorageFacade extends AbstractFacade implements Mercha
      */
     public function unpublishProductOfferStorage(array $productOfferReferences): void
     {
-        $this->getFactory()->createProductOfferStorageWriter()->unpublish($productOfferReferences);
+        $this->getFactory()
+            ->createProductOfferStorageDeleter()
+            ->deleteProductOfferStorageCollectionByProductOfferReferences($productOfferReferences);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeProductConcreteProductOffersStorageCollectionByProductSkuEvents(array $eventTransfers): void
+    {
+        $this->getFactory()
+            ->createProductConcreteProductOffersStorageWriter()
+            ->writeProductConcreteProductOffersStorageCollectionByProductSkuEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function deleteProductConcreteProductOffersStorageCollectionByProductSkuEvents(array $eventTransfers): void
+    {
+        $this->getFactory()
+            ->createProductConcreteProductOffersStorageDeleter()
+            ->deleteProductConcreteProductOffersStorageCollectionByProductSkuEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeProductOfferStorageCollectionByProductOfferReferenceEvents(array $eventTransfers): void
+    {
+        $this->getFactory()
+            ->createProductOfferStorageWriter()
+            ->writeProductOfferStorageCollectionByProductOfferReferenceEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function deleteProductOfferStorageCollectionByProductOfferReferenceEvents(array $eventTransfers): void
+    {
+        $this->getFactory()
+            ->createProductOfferStorageDeleter()
+            ->deleteProductOfferStorageCollectionByProductOfferReferenceEvents($eventTransfers);
     }
 }
