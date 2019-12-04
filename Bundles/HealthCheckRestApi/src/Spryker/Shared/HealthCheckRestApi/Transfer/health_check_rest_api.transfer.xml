@@ -22,6 +22,7 @@
     </transfer>
 
     <transfer name="HealthCheckResponse">
+        <property name="statusCode" type="int"/>
     </transfer>
 
 </transfers>
