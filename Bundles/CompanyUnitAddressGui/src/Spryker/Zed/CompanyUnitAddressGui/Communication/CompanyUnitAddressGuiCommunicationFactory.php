@@ -13,8 +13,6 @@ use Spryker\Zed\CompanyUnitAddressGui\Communication\Form\CompanyUnitAddressForm;
 use Spryker\Zed\CompanyUnitAddressGui\Communication\Form\DataProvider\CompanyBusinessUnitAddressFormDataProvider;
 use Spryker\Zed\CompanyUnitAddressGui\Communication\Form\DataProvider\CompanyUnitAddressFormDataProvider;
 use Spryker\Zed\CompanyUnitAddressGui\Communication\Table\CompanyUnitAddressTable;
-use Spryker\Zed\CompanyUnitAddressGui\Communication\Table\PluginExecutor\CompanyUnitAddressTablePluginExecutor;
-use Spryker\Zed\CompanyUnitAddressGui\Communication\Table\PluginExecutor\CompanyUnitAddressTablePluginExecutorInterface;
 use Spryker\Zed\CompanyUnitAddressGui\CompanyUnitAddressGuiDependencyProvider;
 use Spryker\Zed\CompanyUnitAddressGui\Dependency\Facade\CompanyUnitAddressGuiToCompanyFacadeInterface;
 use Spryker\Zed\CompanyUnitAddressGui\Dependency\Facade\CompanyUnitAddressGuiToCompanyUnitAddressFacadeInterface;
@@ -31,16 +29,6 @@ class CompanyUnitAddressGuiCommunicationFactory extends AbstractCommunicationFac
     {
         return new CompanyUnitAddressTable(
             $this->getCompanyUnitAddressPropelQuery(),
-            $this->createCompanyUnitAddressTablePluginExecutor()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\CompanyUnitAddressGui\Communication\Table\PluginExecutor\CompanyUnitAddressTablePluginExecutorInterface
-     */
-    public function createCompanyUnitAddressTablePluginExecutor(): CompanyUnitAddressTablePluginExecutorInterface
-    {
-        return new CompanyUnitAddressTablePluginExecutor(
             $this->getCompanyUnitAddressTableConfigExpanderPlugins(),
             $this->getCompanyUnitAddressTableHeaderExpanderPlugins(),
             $this->getCompanyUnitAddressTableDataExpanderPlugins()

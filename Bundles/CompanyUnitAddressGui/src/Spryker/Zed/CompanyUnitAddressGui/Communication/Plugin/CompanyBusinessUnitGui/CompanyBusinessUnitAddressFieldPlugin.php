@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\CompanyUnitAddressGui\Communication\Plugin;
+namespace Spryker\Zed\CompanyUnitAddressGui\Communication\Plugin\CompanyBusinessUnitGui;
 
 use Spryker\Zed\CompanyBusinessUnitGuiExtension\Communication\Plugin\CompanyBusinessUnitFormExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
