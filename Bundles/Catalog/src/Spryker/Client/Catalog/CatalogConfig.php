@@ -84,6 +84,9 @@ class CatalogConfig extends AbstractBundleConfig
      */
     public function getElasticsearchFullTextBoostedBoostingValue(): int
     {
-        return $this->get(static::ELASTICSEARCH_FULL_TEXT_BOOSTED_BOOSTING_VALUE, static::FULL_TEXT_BOOSTED_BOOSTING_VALUE);
+        return $this->get(
+            static::ELASTICSEARCH_FULL_TEXT_BOOSTED_BOOSTING_VALUE,
+            $this->get(static::FULL_TEXT_BOOSTED_BOOSTING_VALUE)
+        );
     }
 }
