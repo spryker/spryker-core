@@ -10,7 +10,7 @@
         <property name="code" type="string"/>
         <property name="discountType" type="string"/>
         <property name="displayName" type="string"/>
-        <property name="isExclusive" type="boolean"/>
+        <property name="isExclusive" type="bool"/>
         <property name="expirationDateTime" type="string"/>
         <property name="discountPromotionAbstractSku" type="string"/>
         <property name="discountPromotionQuantity" type="int"/>
