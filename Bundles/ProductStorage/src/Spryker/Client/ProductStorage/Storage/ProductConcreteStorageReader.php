@@ -426,7 +426,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
      *
      * @return string[]
      */
-    protected function generateMappingStorageKeys(string $mappingType, array $identifiers, string $localeName): array
+    protected function generateMappingStorageKeys(string $mappingType, array $identifiers, string $localeName)
     {
         $mappingKeys = [];
 
