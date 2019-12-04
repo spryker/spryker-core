@@ -14,7 +14,7 @@ interface ProductOfferStockFacadeInterface
 {
     /**
      * Specification:
-     * - Returns is product offer is never out of stock by fkProductOffer in ProductOfferStockCriteriaFilterTransfer
+     * - Returns is product offer is never out of stock by ProductOfferReference and Store in ProductOfferStockRequestTransfer
      *
      * @api
      *

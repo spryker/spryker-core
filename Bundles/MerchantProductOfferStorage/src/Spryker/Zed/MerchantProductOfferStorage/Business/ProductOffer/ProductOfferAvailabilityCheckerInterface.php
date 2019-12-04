@@ -8,13 +8,16 @@
 namespace Spryker\Zed\MerchantProductOfferStorage\Business\ProductOffer;
 
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface ProductOfferAvailabilityCheckerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
      * @return bool
      */
-    public function isProductOfferAvailable(ProductOfferTransfer $productOfferTransfer): bool;
+    public function isProductOfferAvailable(ProductOfferTransfer $productOfferTransfer, StoreTransfer $storeTransfer): bool;
 }

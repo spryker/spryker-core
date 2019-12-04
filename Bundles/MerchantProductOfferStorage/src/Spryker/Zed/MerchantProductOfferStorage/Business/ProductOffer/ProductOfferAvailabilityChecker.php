@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\MerchantProductOfferStorage\Business\ProductOffer;
 
+use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToAvailabilityFacadeInterface;
 
 class ProductOfferAvailabilityChecker implements ProductOfferAvailabilityCheckerInterface
@@ -15,24 +18,36 @@ class ProductOfferAvailabilityChecker implements ProductOfferAvailabilityChecker
     /**
      * @var \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToAvailabilityFacadeInterface
      */
-    protected $merchantProductOfferStorageToAvailabilityFacade;
+    protected $availabilityFacade;
 
     /**
-     * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToAvailabilityFacadeInterface $merchantProductOfferStorageToAvailabilityFacade
+     * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToAvailabilityFacadeInterface $availabilityFacade
      */
     public function __construct(
-        MerchantProductOfferStorageToAvailabilityFacadeInterface $merchantProductOfferStorageToAvailabilityFacade
+        MerchantProductOfferStorageToAvailabilityFacadeInterface $availabilityFacade
     ) {
-        $this->merchantProductOfferStorageToAvailabilityFacade = $merchantProductOfferStorageToAvailabilityFacade;
+        $this->availabilityFacade = $availabilityFacade;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
      * @return bool
      */
-    public function isProductOfferAvailable(ProductOfferTransfer $productOfferTransfer): bool
+    public function isProductOfferAvailable(ProductOfferTransfer $productOfferTransfer, StoreTransfer $storeTransfer): bool
     {
-        return true; // TODO use facade
+        $productAvailabilityCriteriaTransfer = (new ProductAvailabilityCriteriaTransfer())->setStore($storeTransfer)
+            ->setProductOffer($productOfferTransfer)
+            ->setSku($productOfferTransfer->getConcreteSku())
+            ->setQuantity(new Decimal(0));
+
+        return $this->availabilityFacade->isProductSellableForStore(
+            $productAvailabilityCriteriaTransfer->getSku(),
+            $productAvailabilityCriteriaTransfer->getQuantity(),
+            $productAvailabilityCriteriaTransfer->getStore(),
+            $productAvailabilityCriteriaTransfer
+        );
     }
 }
