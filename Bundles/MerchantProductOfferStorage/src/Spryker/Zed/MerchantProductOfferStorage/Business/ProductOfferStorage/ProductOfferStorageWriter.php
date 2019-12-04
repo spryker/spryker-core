@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantProductOfferStorage\Business\ProductOfferStorage;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorageQuery;
 use Spryker\Zed\MerchantProductOfferStorage\Business\ProductOffer\ProductOfferAvailabilityCheckerInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface;
@@ -57,7 +58,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
 
             $productOfferStorageEntity->setData($productOfferStorageTransfer->modifiedToArray());
 
-            if ($this->productOfferAvailabilityChecker->isProductOfferAvailable($productOfferTransfer, $productOfferTransfer->getStores()[0])) {//TODO: pass store transfer
+            if ($this->productOfferAvailabilityChecker->isProductOfferAvailable($productOfferTransfer, (new StoreTransfer())->setName('DE')->setIdStore(1))) {//TODO: pass store transfer
                 $productOfferStorageEntity->save();
             } elseif (!$productOfferStorageEntity->isNew()) {
                 $productOfferStorageEntity->delete();

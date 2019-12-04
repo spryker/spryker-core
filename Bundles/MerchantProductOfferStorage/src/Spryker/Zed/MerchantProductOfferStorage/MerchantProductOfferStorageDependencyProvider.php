@@ -46,6 +46,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
         parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addProductOfferFacade($container);
+        $container = $this->addAvailabilityFacade($container);
 
         return $container;
     }

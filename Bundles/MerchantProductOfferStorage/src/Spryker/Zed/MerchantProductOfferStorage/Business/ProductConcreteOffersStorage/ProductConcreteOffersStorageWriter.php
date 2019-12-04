@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantProductOfferStorage\Business\ProductConcreteOffers
 
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorageQuery;
 use Spryker\Zed\MerchantProductOfferStorage\Business\ProductOffer\ProductOfferAvailabilityCheckerInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface;
@@ -88,7 +89,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     ): ProductOfferCollectionTransfer {
         $filteredProductOfferCollectionTransfer = new ProductOfferCollectionTransfer();
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
-            if (!$this->productOfferAvailabilityChecker->isProductOfferAvailable($productOfferTransfer, $productOfferTransfer->getStores()[0])) { //TODO: pass store transfer
+            if (!$this->productOfferAvailabilityChecker->isProductOfferAvailable($productOfferTransfer, (new StoreTransfer())->setName('DE')->setIdStore(1))) { //TODO: pass store transfer
                 continue;
             }
             $filteredProductOfferCollectionTransfer->addProductOffer($productOfferTransfer);

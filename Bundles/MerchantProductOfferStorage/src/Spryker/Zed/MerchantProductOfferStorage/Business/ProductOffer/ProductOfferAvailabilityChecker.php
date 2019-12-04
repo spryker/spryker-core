@@ -15,6 +15,7 @@ use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOff
 
 class ProductOfferAvailabilityChecker implements ProductOfferAvailabilityCheckerInterface
 {
+    public const MIN_AVAILABLE_QUANTITY_FOR_AVAILABILITY = 1;
     /**
      * @var \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToAvailabilityFacadeInterface
      */
@@ -40,7 +41,7 @@ class ProductOfferAvailabilityChecker implements ProductOfferAvailabilityChecker
         $productAvailabilityCriteriaTransfer = (new ProductAvailabilityCriteriaTransfer())->setStore($storeTransfer)
             ->setProductOffer($productOfferTransfer)
             ->setSku($productOfferTransfer->getConcreteSku())
-            ->setQuantity(new Decimal(0));
+            ->setQuantity(new Decimal(static::MIN_AVAILABLE_QUANTITY_FOR_AVAILABILITY));
 
         return $this->availabilityFacade->isProductSellableForStore(
             $productAvailabilityCriteriaTransfer->getSku(),
