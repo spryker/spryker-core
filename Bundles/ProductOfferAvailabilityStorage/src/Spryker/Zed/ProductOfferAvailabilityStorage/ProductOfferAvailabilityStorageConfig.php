@@ -16,7 +16,7 @@ class ProductOfferAvailabilityStorageConfig extends AbstractBundleConfig
      */
     public function isSendingToQueue(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,6 +24,6 @@ class ProductOfferAvailabilityStorageConfig extends AbstractBundleConfig
      */
     public function getProductOfferAvailabilitySynchronizationPoolName(): ?string
     {
-        return 'synchronizationPool';
+        return null;
     }
 }

@@ -14,6 +14,9 @@ use Spryker\Zed\ProductOfferAvailability\Dependency\Facade\ProductOfferAvailabil
 use Spryker\Zed\ProductOfferAvailability\Dependency\Facade\ProductOfferAvailabilityToProductOfferStockFacadeInterface;
 use Spryker\Zed\ProductOfferAvailability\ProductOfferAvailabilityDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\ProductOfferAvailability\ProductOfferAvailabilityConfig getConfig()
+ */
 class ProductOfferAvailabilityBusinessFactory extends AbstractBusinessFactory
 {
     /**
