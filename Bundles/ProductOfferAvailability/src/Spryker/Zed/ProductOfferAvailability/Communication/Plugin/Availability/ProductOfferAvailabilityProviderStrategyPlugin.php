@@ -62,6 +62,11 @@ class ProductOfferAvailabilityProviderStrategyPlugin extends AbstractPlugin impl
         StoreTransfer $storeTransfer,
         ?ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
     ): bool {
+        $productAvailabilityCriteriaTransfer
+            ->requireProductOffer()
+            ->getProductOffer()
+            ->requireProductOfferReference();
+
         $productOfferAvailabilityRequestTransfer = (new ProductOfferAvailabilityRequestTransfer())
             ->setSku($concreteSku)
             ->setQuantity($quantity)

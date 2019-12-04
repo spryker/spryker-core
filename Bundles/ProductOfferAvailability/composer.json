@@ -4,7 +4,12 @@
   "description": "ProductOfferAvailability module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.2"
+    "php": ">=7.2",
+    "spryker/availability-extension": "^1.0.0",
+    "spryker/decimal-object": "^1.0.0",
+    "spryker/kernel": "^3.33.0",
+    "spryker/oms": "^11.0.0",
+    "spryker/product-offer-stock": "^0.1.3"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
