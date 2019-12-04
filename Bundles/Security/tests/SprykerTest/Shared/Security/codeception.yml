@@ -1,4 +1,4 @@
-namespace: SprykerTest\Yves\SecurityExtension
+namespace: SprykerTest\Shared\Security
 paths:
     tests: .
     data: ../../../_data
@@ -13,7 +13,10 @@ coverage:
 suites:
     Yves:
         path: .
-        class_name: SecurityExtensionTester
+        class_name: SecurityTester
         modules:
             enabled:
                 - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper

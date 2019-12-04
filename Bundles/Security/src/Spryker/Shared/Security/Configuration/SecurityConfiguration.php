@@ -5,10 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\SecurityExtension\Configuration;
+namespace Spryker\Shared\Security\Configuration;
 
-use Spryker\Shared\SecurityExtension\Exception\FirewallNotFoundException;
-use Spryker\Shared\SecurityExtension\Exception\SecurityConfigurationException;
+use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
+use Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface;
+use Spryker\Shared\Security\Exception\FirewallNotFoundException;
+use Spryker\Shared\Security\Exception\SecurityConfigurationException;
 
 class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigurationInterface
 {
@@ -277,9 +279,9 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
     }
 
     /**
-     * @throws \Spryker\Shared\SecurityExtension\Exception\FirewallNotFoundException
+     * @throws \Spryker\Shared\Security\Exception\FirewallNotFoundException
      *
-     * @return \Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface
+     * @return \Spryker\Shared\Security\Configuration\SecurityConfigurationInterface
      */
     public function getConfiguration(): SecurityConfigurationInterface
     {
@@ -299,7 +301,7 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
     }
 
     /**
-     * @throws \Spryker\Shared\SecurityExtension\Exception\SecurityConfigurationException
+     * @throws \Spryker\Shared\Security\Exception\SecurityConfigurationException
      *
      * @return void
      */
@@ -311,7 +313,7 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
     }
 
     /**
-     * @throws \Spryker\Shared\SecurityExtension\Exception\SecurityConfigurationException
+     * @throws \Spryker\Shared\Security\Exception\SecurityConfigurationException
      *
      * @return void
      */

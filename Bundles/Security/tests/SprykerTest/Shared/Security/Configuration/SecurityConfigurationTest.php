@@ -5,19 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Yves\SecurityExtension\Configuration;
+namespace SprykerTest\Shared\Security\Configuration;
 
 use Codeception\Test\Unit;
-use Spryker\Shared\SecurityExtension\Configuration\SecurityConfiguration;
-use Spryker\Shared\SecurityExtension\Exception\FirewallNotFoundException;
-use Spryker\Shared\SecurityExtension\Exception\SecurityConfigurationException;
+use Spryker\Shared\Security\Configuration\SecurityConfiguration;
+use Spryker\Shared\Security\Exception\FirewallNotFoundException;
+use Spryker\Shared\Security\Exception\SecurityConfigurationException;
 
 /**
  * Auto-generated group annotations
  *
  * @group SprykerTest
- * @group Yves
- * @group SecurityExtension
+ * @group Shared
+ * @group Security
  * @group Configuration
  * @group SecurityConfigurationTest
  * Add your own group annotations below this line

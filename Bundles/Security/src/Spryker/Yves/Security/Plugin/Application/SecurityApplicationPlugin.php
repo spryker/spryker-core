@@ -208,7 +208,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function getSecurityConfigurationFromPlugins(ContainerInterface $container): SecurityConfigurationInterface
     {
-        $securityConfiguration = new SecurityConfiguration();
+        $securityConfiguration = $this->getFactory()->createSecurityConfiguration();
         foreach ($this->getFactory()->getSecurityPlugins() as $securityPlugin) {
             $securityConfiguration = $securityPlugin->extend($securityConfiguration, $container);
         }

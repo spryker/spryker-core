@@ -2,6 +2,7 @@ namespace: SprykerTest
 actor: Tester
 include:
     - tests/SprykerTest/Yves/Security
+    - tests/SprykerTest/Shared/Security
 paths:
     tests: tests
     log: tests/_output

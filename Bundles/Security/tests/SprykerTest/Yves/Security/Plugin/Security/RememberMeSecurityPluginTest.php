@@ -11,7 +11,7 @@ use Codeception\Test\Unit;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
-use Spryker\Shared\SecurityExtension\Configuration\SecurityConfiguration;
+use Spryker\Shared\Security\Configuration\SecurityConfiguration;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Http\SecurityEvents;

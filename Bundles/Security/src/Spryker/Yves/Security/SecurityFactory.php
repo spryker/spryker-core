@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\Security;
 
+use Spryker\Shared\Security\Configuration\SecurityConfiguration;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
@@ -40,5 +41,13 @@ class SecurityFactory extends AbstractFactory
     public function createSessionStrategy(): SessionAuthenticationStrategyInterface
     {
         return new SessionAuthenticationStrategy(SessionAuthenticationStrategy::MIGRATE);
+    }
+
+    /**
+     * @return \Spryker\Shared\Security\Configuration\SecurityConfiguration
+     */
+    public function createSecurityConfiguration(): SecurityConfiguration
+    {
+        return new SecurityConfiguration();
     }
 }

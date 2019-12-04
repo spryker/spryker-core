@@ -5,8 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\SecurityExtension\Exception;
+namespace Spryker\Shared\Security\Exception;
 
-class FirewallNotFoundException extends SecurityExtensionException
+class FirewallNotFoundException extends SecurityException
 {
 }

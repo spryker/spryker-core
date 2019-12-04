@@ -10,7 +10,7 @@ namespace SprykerTest\Yves\Security\Plugin\Application;
 use Codeception\Test\Unit;
 use Exception;
 use LogicException;
-use Spryker\Shared\SecurityExtension\Configuration\SecurityConfiguration;
+use Spryker\Shared\Security\Configuration\SecurityConfiguration;
 use Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin;
 use SprykerTest\Yves\Security\Fixtures\TokenAuthenticator;
 use Symfony\Component\HttpFoundation\Request;

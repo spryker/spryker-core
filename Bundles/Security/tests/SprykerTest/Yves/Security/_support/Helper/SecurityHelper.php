@@ -11,7 +11,7 @@ use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
 use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
-use Spryker\Shared\SecurityExtension\Configuration\SecurityConfiguration;
+use Spryker\Shared\Security\Configuration\SecurityConfiguration;
 use Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface;
 use Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface;
 use Spryker\Yves\Router\Plugin\EventDispatcher\RouterListenerEventDispatcherPlugin;
@@ -112,7 +112,7 @@ class SecurityHelper extends Module
     }
 
     /**
-     * @param \Spryker\Shared\SecurityExtension\Configuration\SecurityConfiguration $securityConfiguration
+     * @param \Spryker\Shared\Security\Configuration\SecurityConfiguration $securityConfiguration
      *
      * @return $this
      */
