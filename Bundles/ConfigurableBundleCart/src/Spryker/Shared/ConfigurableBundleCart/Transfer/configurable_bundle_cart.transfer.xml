@@ -54,18 +54,20 @@
 
     <transfer name="ConfigurableBundleTemplate">
         <property name="uuid" type="string"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlot">
         <property name="uuid" type="string"/>
     </transfer>
 
-    <transfer name="ConfigurableBundleTemplateStorage">
-        <property name="slots" singular="slot" type="ConfigurableBundleTemplateSlotStorage[]"/>
+    <transfer name="Message">
+        <property name="value" type="string"/>
     </transfer>
 
-    <transfer name="ConfigurableBundleTemplateSlotStorage">
-        <property name="uuid" type="string"/>
+    <transfer name="CartPreCheckResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
 </transfers>

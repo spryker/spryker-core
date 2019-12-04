@@ -17,7 +17,6 @@ use Spryker\Client\Kernel\Container;
 class ConfigurableBundleCartDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_CART = 'CLIENT_CART';
-    public const CLIENT_CONFIGURABLE_BUNDLE_STORAGE = 'CLIENT_CONFIGURABLE_BUNDLE_STORAGE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
