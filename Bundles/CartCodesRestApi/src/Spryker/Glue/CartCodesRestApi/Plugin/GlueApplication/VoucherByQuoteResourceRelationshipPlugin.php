@@ -19,7 +19,7 @@ class VoucherByQuoteResourceRelationshipPlugin extends AbstractPlugin implements
 {
     /**
      * {@inheritDoc}
-     * - Adds vouchers resource as relationship by cart resource.
+     * - Adds vouchers resource as relationship by quote.
      *
      * @api
      *

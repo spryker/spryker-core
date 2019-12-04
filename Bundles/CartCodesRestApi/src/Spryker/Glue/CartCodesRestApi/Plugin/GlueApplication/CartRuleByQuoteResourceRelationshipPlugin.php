@@ -19,7 +19,7 @@ class CartRuleByQuoteResourceRelationshipPlugin extends AbstractPlugin implement
 {
     /**
      * {@inheritDoc}
-     * - Adds cart-rules resource as relationship by cart resource.
+     * - Adds cart-rules resource as relationship by quote.
      *
      * @api
      *
