@@ -90,7 +90,7 @@ class ReadQuoteCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testReadCartsCollectionFromDatabaseByCustomer()
+    public function testReadCartsCollectionFromDatabaseByCustomer(): void
     {
         $this->initWithResult();
         $criteriaTransfer = new QuoteCriteriaFilterTransfer();
@@ -106,7 +106,7 @@ class ReadQuoteCollectionTest extends Unit
     /**
      * @return void
      */
-    public function testReadEmptyCartsCollectionFromDatabaseByCustomer()
+    public function testReadEmptyCartsCollectionFromDatabaseByCustomer(): void
     {
         $this->initWithoutResult();
         $criteriaTransfer = new QuoteCriteriaFilterTransfer();
@@ -201,7 +201,7 @@ class ReadQuoteCollectionTest extends Unit
     /**
      * @return \Orm\Zed\Customer\Persistence\SpyCustomer
      */
-    protected function createCustomer()
+    protected function createCustomer(): SpyCustomer
     {
         $customerEntity = SpyCustomerQuery::create()->findOneByCustomerReference(static::CUSTOMER_DATA['customer_reference']);
         if ($customerEntity) {

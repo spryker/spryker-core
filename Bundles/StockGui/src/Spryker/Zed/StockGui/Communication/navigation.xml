@@ -12,6 +12,35 @@
                 <controller>warehouse</controller>
                 <action>list</action>
                 <icon>fa-angle-double-right</icon>
+                <pages>
+                    <warehouse-view>
+                        <label>View</label>
+                        <title>View</title>
+                        <bundle>stock-gui</bundle>
+                        <controller>view-warehouse</controller>
+                        <action>index</action>
+                        <icon>fa-angle-double-right</icon>
+                        <visible>0</visible>
+                    </warehouse-view>
+                    <create-warehouses>
+                        <label>Create Warehouse</label>
+                        <title>Create Warehouse</title>
+                        <bundle>stock-gui</bundle>
+                        <controller>create-warehouse</controller>
+                        <action>index</action>
+                        <icon>fa-angle-double-right</icon>
+                        <visible>0</visible>
+                    </create-warehouses>
+                    <edit-warehouses>
+                        <label>Edit Warehouse</label>
+                        <title>Edit Warehouse</title>
+                        <bundle>stock-gui</bundle>
+                        <controller>edit-warehouse</controller>
+                        <action>index</action>
+                        <icon>fa-angle-double-right</icon>
+                        <visible>0</visible>
+                    </edit-warehouses>
+                </pages>
             </warehouses>
         </pages>
     </administration>

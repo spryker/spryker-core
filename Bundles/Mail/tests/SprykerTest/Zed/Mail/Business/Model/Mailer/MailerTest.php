@@ -35,7 +35,7 @@ class MailerTest extends Unit
     /**
      * @return void
      */
-    public function testInstantiation()
+    public function testInstantiation(): void
     {
         $mailBuilderMock = $this->getMailBuilderMock();
         $mailTypeCollectionMock = $this->getMailTypeCollectionMock();
@@ -49,7 +49,7 @@ class MailerTest extends Unit
     /**
      * @return void
      */
-    public function testHandleMailWillDoNothingWhenMailTypeNotInCollection()
+    public function testHandleMailWillDoNothingWhenMailTypeNotInCollection(): void
     {
         $mailerMock = $this->getMailerWhichIsNotExecuted();
         $mailTransfer = $this->getMailTransfer();
@@ -60,7 +60,7 @@ class MailerTest extends Unit
     /**
      * @return void
      */
-    public function testHandleMailWillCallBuildOnMailTypeWhenMailTypeInCollection()
+    public function testHandleMailWillCallBuildOnMailTypeWhenMailTypeInCollection(): void
     {
         $mailBuilderMock = $this->getMailBuilderMock();
         $mailer = new MailHandler($mailBuilderMock, $this->getMailTypeCollectionWithMailMock(), $this->getMailProviderCollectionWithProviderMock());
@@ -72,7 +72,7 @@ class MailerTest extends Unit
     /**
      * @return void
      */
-    public function testHandleMailWillCallSendOnProviderWhenMailTypeInCollection()
+    public function testHandleMailWillCallSendOnProviderWhenMailTypeInCollection(): void
     {
         $mailBuilderMock = $this->getMailBuilderMock();
         $mailer = new MailHandler($mailBuilderMock, $this->getMailTypeCollectionWithMailMock(), $this->getMailProviderCollectionWithProviderMock());
@@ -160,7 +160,7 @@ class MailerTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\MailTransfer
      */
-    protected function getMailTransfer()
+    protected function getMailTransfer(): MailTransfer
     {
         $mailTransfer = new MailTransfer();
         $mailTransfer->setType(self::MAIL_TYPE_A);

@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated Moved to \SprykerTest\Zed\Http\Communication\SubRequest\SubRequestHandlerTest.
+ *
  * Auto-generated group annotations
  *
  * @group SprykerTest
@@ -46,7 +48,7 @@ class SubRequestHandlerTest extends WebTestCase
     /**
      * @return void
      */
-    public function testHandleSubRequestWithGetParams()
+    public function testHandleSubRequestWithGetParams(): void
     {
         $client = $this->createClient();
         $client->request('get', self::URL_MASTER_REQUEST, self::GET_PARAMS);
@@ -56,7 +58,7 @@ class SubRequestHandlerTest extends WebTestCase
     /**
      * @return void
      */
-    public function testHandleSubRequestWithPostParams()
+    public function testHandleSubRequestWithPostParams(): void
     {
         $client = $this->createClient();
         $client->request('post', self::URL_MASTER_REQUEST, self::POST_PARAMS);
@@ -66,7 +68,7 @@ class SubRequestHandlerTest extends WebTestCase
     /**
      * @return \Silex\Application
      */
-    public function createApplication()
+    public function createApplication(): Application
     {
         $app = new Application();
         $app['debug'] = true;

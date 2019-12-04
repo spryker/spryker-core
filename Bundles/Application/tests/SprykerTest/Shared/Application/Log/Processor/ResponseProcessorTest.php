@@ -26,7 +26,7 @@ class ResponseProcessorTest extends Unit
     /**
      * @return void
      */
-    public function testWHenContextContainsResponseResponseShouldBeRemovedFromContext()
+    public function testWHenContextContainsResponseResponseShouldBeRemovedFromContext(): void
     {
         $processor = new ResponseProcessor();
         $record = ['extra' => [], ResponseProcessor::RECORD_CONTEXT => [ResponseProcessor::EXTRA => 'response']];

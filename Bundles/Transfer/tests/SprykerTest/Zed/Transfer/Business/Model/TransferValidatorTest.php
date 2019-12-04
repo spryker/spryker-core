@@ -35,7 +35,7 @@ class TransferValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidate()
+    public function testValidate(): void
     {
         $sourceDirectories = [
             codecept_data_dir('Shared/Test/Transfer/'),
@@ -57,7 +57,7 @@ class TransferValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateWithBC()
+    public function testValidateWithBC(): void
     {
         $sourceDirectories = [
             codecept_data_dir('Shared/Error/Transfer/'),
@@ -79,7 +79,7 @@ class TransferValidatorTest extends Unit
     /**
      * @return void
      */
-    public function testValidateWithoutBC()
+    public function testValidateWithoutBC(): void
     {
         $sourceDirectories = [
             codecept_data_dir('Shared/Error/Transfer/'),
@@ -105,7 +105,7 @@ class TransferValidatorTest extends Unit
      *
      * @return \Spryker\Zed\Transfer\Business\Model\Generator\TransferDefinitionFinder
      */
-    protected function getDefinitionFinder($sourceDirectories)
+    protected function getDefinitionFinder(array $sourceDirectories): TransferDefinitionFinder
     {
         $this->output = new ConsoleOutput();
         $definitionFinder = new TransferDefinitionFinder(

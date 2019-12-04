@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateFilterTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\ConfigurableBundle\Persistence\Map\SpyConfigurableBundleTemplateTableMap;
 use Spryker\Shared\ConfigurableBundleStorage\ConfigurableBundleStorageConfig;
@@ -48,7 +49,11 @@ class ConfigurableBundleTemplateEventResourceBulkRepositoryPlugin extends Abstra
     {
         $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        return $this->getRepository()->getConfigurableBundleTemplatesByFilter($filterTransfer);
+        return $this->getFactory()
+            ->getConfigurableBundleFacade()
+            ->getConfigurableBundleTemplateCollection((new ConfigurableBundleTemplateFilterTransfer())->setFilter($filterTransfer))
+            ->getConfigurableBundleTemplates()
+            ->getArrayCopy();
     }
 
     /**

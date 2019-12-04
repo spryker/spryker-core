@@ -22,7 +22,7 @@ class BreadcrumbHelper extends Module
      *
      * @return void
      */
-    public function _beforeSuite($settings = [])
+    public function _beforeSuite($settings = []): void
     {
         $className = $settings['class_name'];
         if (preg_match('/CommunicationTester/', $className)) {
@@ -35,7 +35,7 @@ class BreadcrumbHelper extends Module
      *
      * @return void
      */
-    public function seeBreadcrumbNavigation($breadcrumb)
+    public function seeBreadcrumbNavigation(string $breadcrumb): void
     {
         if ($this->isPresentationSuite) {
             $this->checkWithWebdriver($breadcrumb);
@@ -63,12 +63,9 @@ class BreadcrumbHelper extends Module
      *
      * @return void
      */
-    private function checkWithWebdriver($breadcrumb)
+    private function checkWithWebdriver(string $breadcrumb): void
     {
-        $breadcrumb = str_replace('/', ' ', $breadcrumb);
-
-        $driver = $this->getDriver();
-        $driver->see($breadcrumb, '//ol[@class="breadcrumb"]');
+        $this->checkBreadcrumbNavigation($breadcrumb);
     }
 
     /**
@@ -76,17 +73,32 @@ class BreadcrumbHelper extends Module
      *
      * @return void
      */
-    private function checkWithFramework($breadcrumb)
+    private function checkWithFramework(string $breadcrumb): void
+    {
+        $this->checkBreadcrumbNavigation($breadcrumb);
+    }
+
+    /**
+     * @param string $breadcrumb
+     *
+     * @return void
+     */
+    protected function checkBreadcrumbNavigation(string $breadcrumb): void
     {
         $breadcrumbParts = explode('/', $breadcrumb);
         $breadcrumbParts = array_map('trim', $breadcrumbParts);
 
         $driver = $this->getDriver();
-        $position = 0;
 
-        foreach ($breadcrumbParts as $breadcrumbPart) {
-            $driver->see($breadcrumbPart, sprintf('//ol[@class="breadcrumb"]/li[%s]', $position + 1));
-            $position++;
+        $driver->seeElement('//spryker-breadcrumbs');
+        $breadcrumbAttribute = $driver->grabAttributeFrom('//spryker-breadcrumbs', 'breadcrumbs');
+        $driver->assertNotNull($breadcrumbAttribute);
+        $decodedBreadcrumbAttribute = json_decode($breadcrumbAttribute, true);
+        $driver->assertTrue(is_array($decodedBreadcrumbAttribute));
+
+        foreach ($breadcrumbParts as $key => $breadcrumbPart) {
+            $driver->assertTrue(array_key_exists($key, $decodedBreadcrumbAttribute));
+            $driver->assertSame($decodedBreadcrumbAttribute[$key]['label'], $breadcrumbPart);
         }
     }
 }

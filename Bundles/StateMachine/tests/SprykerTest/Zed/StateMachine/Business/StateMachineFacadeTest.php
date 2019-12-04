@@ -49,14 +49,6 @@ class StateMachineFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
-    /**
-     * @return void
-     */
     public function testTriggerForNewStateMachineItemWhenInitialProcessIsSuccessShouldNotifyHandlerStateChange(): void
     {
         $processName = static::TEST_PROCESS_NAME;
