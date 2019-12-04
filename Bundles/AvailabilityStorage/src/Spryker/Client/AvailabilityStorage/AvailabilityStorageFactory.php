@@ -7,8 +7,8 @@
 
 namespace Spryker\Client\AvailabilityStorage;
 
-use Spryker\AvailabilityStorage\src\Spryker\Client\AvailabilityStorage\Expander\ProductViewAvailabilityExpander;
-use Spryker\AvailabilityStorage\src\Spryker\Client\AvailabilityStorage\Expander\ProductViewAvailabilityExpanderInterface;
+use Spryker\Client\AvailabilityStorage\Expander\ProductViewAvailabilityExpander;
+use Spryker\Client\AvailabilityStorage\Expander\ProductViewAvailabilityExpanderInterface;
 use Spryker\Client\AvailabilityStorage\Storage\AvailabilityStorageReader;
 use Spryker\Client\Kernel\AbstractFactory;
 
@@ -23,7 +23,7 @@ class AvailabilityStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\AvailabilityStorage\src\Spryker\Client\AvailabilityStorage\Expander\ProductViewAvailabilityExpanderInterface
+     * @return \Spryker\Client\AvailabilityStorage\Expander\ProductViewAvailabilityExpanderInterface
      */
     public function createProductViewAvailabilityExpander(): ProductViewAvailabilityExpanderInterface
     {

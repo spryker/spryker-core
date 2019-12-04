@@ -1,9 +1,9 @@
-namespace: ProductOfferAvailability
+namespace: PriceProductOffer
 
 actor: Tester
 
 include:
-    - tests/SprykerTest/Zed/ProductOfferAvailability
+    - tests/SprykerTest/Zed/PriceProductOffer
 
 paths:
     tests: tests

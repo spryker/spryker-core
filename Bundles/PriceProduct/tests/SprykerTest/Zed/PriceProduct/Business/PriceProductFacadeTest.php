@@ -11,6 +11,7 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\PriceProductFilterBuilder;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
@@ -925,5 +926,45 @@ class PriceProductFacadeTest extends Unit
 
         //Assert
         $this->assertCount(count($priceProductTransfers), $resultPriceProductPrices);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsProductPriceReturnsTrueForSameSku(): void
+    {
+        // Arrange
+        $sku = 'test-sku';
+
+        $priceProductTransfer = (new PriceProductTransfer())
+            ->setSkuProduct($sku);
+
+        $itemTransfer = (new ItemTransfer())
+            ->setSku($sku);
+
+        // Assert
+        $isProductPrice = $this->getPriceProductFacade()->isProductPrice($priceProductTransfer, $itemTransfer);
+
+        // Assert
+        $this->assertTrue($isProductPrice);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsProductPriceReturnsFalseForDifferentSku(): void
+    {
+        // Arrange
+        $priceProductTransfer = (new PriceProductTransfer())
+            ->setSkuProduct('sku-1');
+
+        $itemTransfer = (new ItemTransfer())
+            ->setSku('sku-2');
+
+        // Assert
+        $isProductPrice = $this->getPriceProductFacade()->isProductPrice($priceProductTransfer, $itemTransfer);
+
+        // Assert
+        $this->assertTrue($isProductPrice);
     }
 }

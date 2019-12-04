@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\PriceProductOffer\Persistence\PriceProductOfferRepositoryInterface getRepository()
+ * @method \Spryker\Zed\PriceProductOffer\PriceProductOfferConfig getConfig()
  */
 class PriceProductOfferPersistenceFactory extends AbstractPersistenceFactory
 {

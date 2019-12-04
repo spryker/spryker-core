@@ -1,4 +1,4 @@
-namespace: SprykerTest\Zed\ProductOfferAvailabilityStorage
+namespace: SprykerTest\Zed\PriceProductOffer
 
 paths:
     tests: .
@@ -13,19 +13,18 @@ coverage:
 
 suites:
     Business:
-        path: Communication
-        class_name: ProductOfferAvailabilityStorageCommunicationTester
+        path: Business
+        class_name: PriceProductOfferBusinessTester
         modules:
             enabled:
                 - Asserts
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
-                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper
-                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
-                - \SprykerTest\Shared\Stock\Helper\StockDataHelper
                 - \SprykerTest\Shared\Testify\Helper\PropelTableRelationSanitizer
-                - \SprykerTest\Zed\Oms\Helper\OmsHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+                - \SprykerTest\Shared\Currency\Helper\CurrencyDataHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper

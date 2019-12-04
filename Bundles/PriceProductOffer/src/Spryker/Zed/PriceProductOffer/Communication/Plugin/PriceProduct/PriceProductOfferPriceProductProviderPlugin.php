@@ -13,6 +13,7 @@ use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductProviderPlug
 
 /**
  * @method \Spryker\Zed\PriceProductOffer\Business\PriceProductOfferFacadeInterface getFacade()
+ * @method \Spryker\Zed\PriceProductOffer\PriceProductOfferConfig getConfig()
  */
 class PriceProductOfferPriceProductProviderPlugin extends AbstractPlugin implements PriceProductProviderPluginInterface
 {

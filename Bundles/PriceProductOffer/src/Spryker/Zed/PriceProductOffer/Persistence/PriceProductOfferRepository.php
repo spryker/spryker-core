@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOffer;
-use Spryker\PriceProductOffer\src\Spryker\Shared\PriceProductOffer\PriceProductOfferConfig;
+use Spryker\Shared\PriceProductOffer\PriceProductOfferConfig;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**

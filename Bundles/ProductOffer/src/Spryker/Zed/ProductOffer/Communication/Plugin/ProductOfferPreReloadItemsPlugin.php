@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\ProductOffer\src\Spryker\Zed\ProductOffer\Communication\Plugin;
+namespace Spryker\Zed\ProductOffer\Communication\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface;

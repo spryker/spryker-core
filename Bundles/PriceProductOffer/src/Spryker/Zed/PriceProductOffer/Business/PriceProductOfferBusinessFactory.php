@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\PriceProductOffer\Persistence\PriceProductOfferRepositoryInterface getRepository()
+ * @method \Spryker\Zed\PriceProductOffer\PriceProductOfferConfig getConfig()
  */
 class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
 {

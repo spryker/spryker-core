@@ -1,9 +1,9 @@
-namespace: ProductOfferAvailability
-
-actor: Tester
+namespace: ProductOfferStock
 
 include:
-    - tests/SprykerTest/Zed/ProductOfferAvailability
+    - tests/SprykerTest/Zed/ProductOfferStock
+
+actor: Tester
 
 paths:
     tests: tests

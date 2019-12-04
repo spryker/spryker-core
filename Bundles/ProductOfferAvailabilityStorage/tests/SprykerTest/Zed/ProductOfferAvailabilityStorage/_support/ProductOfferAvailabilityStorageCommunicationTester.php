@@ -78,7 +78,7 @@ class ProductOfferAvailabilityStorageCommunicationTester extends Actor
      */
     public function createOmsProductReservation(string $quantity, string $storeName): SpyOmsProductReservation
     {
-        $storeEntity = $this->createStockPropelQuery()->findOneByName($storeName);
+        $storeEntity = $this->createStorePropelQuery()->findOneByName($storeName);
 
         $omsProductReservationEntity = (new SpyOmsProductReservation())
             ->setFkStore($storeEntity->getIdStore())
@@ -116,7 +116,7 @@ class ProductOfferAvailabilityStorageCommunicationTester extends Actor
      */
     public function truncateProductOffers(): void
     {
-        $this->truncateTableRelations(SpyProductOfferQuery::create());
+        $this->truncateTableRelations($this->getProductOfferQuery());
     }
 
     /**
@@ -124,7 +124,7 @@ class ProductOfferAvailabilityStorageCommunicationTester extends Actor
      */
     public function truncateProductOfferAvailabilityStorage(): void
     {
-        $this->truncateTableRelations(SpyProductOfferAvailabilityStorageQuery::create());
+        $this->truncateTableRelations($this->getProductOfferAvailabilityStoragePropelQuery());
     }
 
     /**
@@ -154,6 +154,14 @@ class ProductOfferAvailabilityStorageCommunicationTester extends Actor
     protected function getProductOfferAvailabilityStoragePropelQuery(): SpyProductOfferAvailabilityStorageQuery
     {
         return SpyProductOfferAvailabilityStorageQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     */
+    protected function getProductOfferQuery(): SpyProductOfferQuery
+    {
+        return SpyProductOfferQuery::create();
     }
 
     /**
