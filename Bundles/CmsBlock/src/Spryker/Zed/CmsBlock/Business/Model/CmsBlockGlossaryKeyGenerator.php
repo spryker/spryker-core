@@ -51,7 +51,7 @@ class CmsBlockGlossaryKeyGenerator implements CmsBlockGlossaryKeyGeneratorInterf
 
         do {
             if ($index > static::KEY_GENERATOR_ITERATION_LIMIT) {
-                throw new CmsBlockGlossaryKeyNotCreatedException('Cannot create cms block glossary key: maximum iterations threshold met.');
+                throw new CmsBlockGlossaryKeyNotCreatedException('Cannot create CMS block glossary key: maximum iterations threshold met.');
             }
 
             $candidate = $this->suggestCandidate($idCmsBlock, $templateName, $placeholder, $index);
