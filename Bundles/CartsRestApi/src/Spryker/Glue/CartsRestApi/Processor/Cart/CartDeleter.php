@@ -30,7 +30,7 @@ class CartDeleter implements CartDeleterInterface
     /**
      * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartMapperInterface
      */
-    protected $cartsResourceMapper;
+    protected $cartMapper;
 
     /**
      * @var \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
@@ -40,18 +40,18 @@ class CartDeleter implements CartDeleterInterface
     /**
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
-     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartMapperInterface $cartsResourceMapper
+     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartMapperInterface $cartMapper
      * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[] $customerExpanderPlugins
      */
     public function __construct(
         CartRestResponseBuilderInterface $cartRestResponseBuilder,
         CartsRestApiClientInterface $cartsRestApiClient,
-        CartMapperInterface $cartsResourceMapper,
+        CartMapperInterface $cartMapper,
         array $customerExpanderPlugins
     ) {
         $this->cartRestResponseBuilder = $cartRestResponseBuilder;
         $this->cartsRestApiClient = $cartsRestApiClient;
-        $this->cartsResourceMapper = $cartsResourceMapper;
+        $this->cartMapper = $cartMapper;
         $this->customerExpanderPlugins = $customerExpanderPlugins;
     }
 
@@ -62,7 +62,7 @@ class CartDeleter implements CartDeleterInterface
      */
     public function delete(RestRequestInterface $restRequest): RestResponseInterface
     {
-        $quoteTransfer = $this->cartsResourceMapper->mapRestRequestToQuoteTransfer($restRequest, new QuoteTransfer());
+        $quoteTransfer = $this->cartMapper->mapRestRequestToQuoteTransfer($restRequest, new QuoteTransfer());
         $customerTransfer = $this->executeCustomerExpanderPlugins($quoteTransfer->getCustomer(), $restRequest);
         $quoteTransfer->setCustomer($customerTransfer);
 

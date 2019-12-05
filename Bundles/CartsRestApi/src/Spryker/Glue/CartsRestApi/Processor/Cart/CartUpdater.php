@@ -26,7 +26,7 @@ class CartUpdater implements CartUpdaterInterface
     /**
      * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartMapperInterface
      */
-    protected $cartsResourceMapper;
+    protected $cartMapper;
 
     /**
      * @var \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface
@@ -40,18 +40,18 @@ class CartUpdater implements CartUpdaterInterface
 
     /**
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
-     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartMapperInterface $cartsResourceMapper
+     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartMapperInterface $cartMapper
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
      * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[] $customerExpanderPlugins
      */
     public function __construct(
         CartsRestApiClientInterface $cartsRestApiClient,
-        CartMapperInterface $cartsResourceMapper,
+        CartMapperInterface $cartMapper,
         CartRestResponseBuilderInterface $cartRestResponseBuilder,
         array $customerExpanderPlugins
     ) {
         $this->cartsRestApiClient = $cartsRestApiClient;
-        $this->cartsResourceMapper = $cartsResourceMapper;
+        $this->cartMapper = $cartMapper;
         $this->cartRestResponseBuilder = $cartRestResponseBuilder;
         $this->customerExpanderPlugins = $customerExpanderPlugins;
     }
@@ -71,7 +71,7 @@ class CartUpdater implements CartUpdaterInterface
             ->setIdCustomer($restUser->getSurrogateIdentifier())
             ->setCustomerReference($restUser->getNaturalIdentifier());
         $customerTransfer = $this->executeCustomerExpanderPlugins($customerTransfer, $restRequest);
-        $quoteTransfer = $this->cartsResourceMapper->mapRestCartsAttributesTransferToQuoteTransfer(
+        $quoteTransfer = $this->cartMapper->mapRestCartsAttributesTransferToQuoteTransfer(
             $restCartsAttributesTransfer,
             (new QuoteTransfer())->setCustomerReference($restUser->getNaturalIdentifier())
         );
@@ -83,7 +83,6 @@ class CartUpdater implements CartUpdaterInterface
             ->setCustomer($customerTransfer);
 
         $quoteResponseTransfer = $this->cartsRestApiClient->updateQuote($quoteTransfer);
-
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }

@@ -49,14 +49,14 @@ class RequestResourceExtractor implements RequestResourceExtractorInterface
     {
         $resource = $this->processPostData($request, $metadata);
 
-        if ($resource) {
-            return $resource;
+        if (!$resource) {
+            $resource = $this->restResourceBuilder->createRestResource(
+                $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_TYPE, 'errors'),
+                $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_ID)
+            );
         }
 
-        return $this->restResourceBuilder->createRestResource(
-            $this->findResourceType($request),
-            $this->findResourceId($request)
-        );
+        return $resource;
     }
 
     /**
@@ -84,31 +84,9 @@ class RequestResourceExtractor implements RequestResourceExtractorInterface
 
         return $this->restResourceBuilder->createRestResource(
             $data[RestResourceInterface::RESOURCE_TYPE],
-            $this->findResourceId($request),
+            $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_ID),
             $this->mapEntityTransfer($request, $data)
         );
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return string|null
-     */
-    protected function findResourceId(Request $request): ?string
-    {
-        return $request->attributes->get(RestResourceInterface::RESOURCE_DATA)[RestResourceInterface::RESOURCE_ID]
-            ?? $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_ID);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return string|null
-     */
-    protected function findResourceType(Request $request): ?string
-    {
-        return $request->attributes->get(RestResourceInterface::RESOURCE_DATA)[RestResourceInterface::RESOURCE_TYPE]
-            ?? $request->attributes->get(RequestConstantsInterface::ATTRIBUTE_TYPE, 'errors');
     }
 
     /**
@@ -172,7 +150,6 @@ class RequestResourceExtractor implements RequestResourceExtractorInterface
         if (count($allResources) === 1) {
             return [];
         }
-
         $resources = [];
         foreach ($allResources as $resource) {
             if (!$resource[RequestConstantsInterface::ATTRIBUTE_ID]) {

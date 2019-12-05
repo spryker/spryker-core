@@ -34,7 +34,7 @@ class GuestCartRestResponseBuilder extends AbstractCartRestResponseBuilder imple
         $cartResource = $this->restResourceBuilder->createRestResource(
             CartsRestApiConfig::RESOURCE_GUEST_CARTS,
             $quoteTransfer->getUuid(),
-            $this->cartsMapper->mapQuoteTransferToRestCartsAttributesTransfer($quoteTransfer)
+            $this->cartsResourceMapper->mapQuoteTransferToRestCartsAttributesTransfer($quoteTransfer)
         );
 
         $cartResource->setPayload($quoteTransfer);
