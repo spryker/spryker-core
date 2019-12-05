@@ -16,11 +16,6 @@
         <property name="discountPromotionQuantity" type="int"/>
     </transfer>
 
-    <transfer name="RestPromotionalItemsAttributes">
-        <property name="sku" type="string"/>
-        <property name="quantity" type="int"/>
-    </transfer>
-
     <transfer name="CartCodeOperationResult">
         <property name="quote" type="Quote"/>
         <property name="messages" type="Message[]" singular="message"/>
@@ -72,12 +67,6 @@
     <transfer name="QuoteResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="quoteTransfer" type="Quote"/>
-    </transfer>
-
-    <transfer name="PromotionItem">
-        <property name="idDiscountPromotion" type="int"/>
-        <property name="abstractSku" type="string"/>
-        <property name="maxQuantity" type="int"/>
     </transfer>
 
 </transfers>
