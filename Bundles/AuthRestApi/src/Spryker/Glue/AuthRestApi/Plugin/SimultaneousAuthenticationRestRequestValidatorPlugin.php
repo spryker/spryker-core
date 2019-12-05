@@ -20,6 +20,7 @@ class SimultaneousAuthenticationRestRequestValidatorPlugin extends AbstractPlugi
 {
     /**
      * {@inheritDoc}
+     * - Validates request containing Authentication and X-Anonymous-Customer-Unique-Id headers at the same time.
      *
      * @api
      *
@@ -31,7 +32,7 @@ class SimultaneousAuthenticationRestRequestValidatorPlugin extends AbstractPlugi
     public function validate(Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         return $this->getFactory()
-            ->createSimultaneousAuthenticationValidator()
+            ->createSimultaneousAuthenticationRestRequestValidator()
             ->validate($httpRequest, $restRequest);
     }
 }

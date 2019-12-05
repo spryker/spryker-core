@@ -88,7 +88,7 @@ class AuthRestApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\AuthRestApi\Processor\AccessTokens\SimultaneousAuthenticationRestRequestValidatorInterface
      */
-    public function createSimultaneousAuthenticationValidator(): SimultaneousAuthenticationRestRequestValidatorInterface
+    public function createSimultaneousAuthenticationRestRequestValidator(): SimultaneousAuthenticationRestRequestValidatorInterface
     {
         return new SimultaneousAuthenticationRestRequestValidator();
     }
