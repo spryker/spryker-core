@@ -49,6 +49,8 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
     protected $store;
 
     /**
+     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
