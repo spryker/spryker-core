@@ -13,6 +13,8 @@ use Spryker\Zed\ProductPageSearch\Business\DataMapper\AbstractProductSearchDataM
 use Spryker\Zed\ProductPageSearch\Business\DataMapper\PageMapBuilder;
 use Spryker\Zed\ProductPageSearch\Business\DataMapper\ProductAbstractSearchDataMapper;
 use Spryker\Zed\ProductPageSearch\Business\DataMapper\ProductConcreteSearchDataMapper;
+use Spryker\Zed\ProductPageSearch\Business\Expander\ProductConcretePageSearchExpander;
+use Spryker\Zed\ProductPageSearch\Business\Expander\ProductConcretePageSearchExpanderInterface;
 use Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapper;
 use Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriter;
 use Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader\ProductConcretePageSearchReader;
@@ -24,6 +26,7 @@ use Spryker\Zed\ProductPageSearch\Business\Publisher\ProductConcretePageSearchPu
 use Spryker\Zed\ProductPageSearch\Business\Publisher\ProductConcretePageSearchPublisherInterface;
 use Spryker\Zed\ProductPageSearch\Business\Unpublisher\ProductConcretePageSearchUnpublisher;
 use Spryker\Zed\ProductPageSearch\Business\Unpublisher\ProductConcretePageSearchUnpublisherInterface;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductImageFacadeInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
@@ -92,6 +95,16 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     public function createProductConcretePageSearchWriter(): ProductConcretePageSearchWriterInterface
     {
         return new ProductConcretePageSearchWriter($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Business\Expander\ProductConcretePageSearchExpanderInterface
+     */
+    public function createProductConcretePageSearchExpander(): ProductConcretePageSearchExpanderInterface
+    {
+        return new ProductConcretePageSearchExpander(
+            $this->getProductImageFacade()
+        );
     }
 
     /**
@@ -165,6 +178,14 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade(): ProductPageSearchToStoreFacadeInterface
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductImageFacadeInterface
+     */
+    public function getProductImageFacade(): ProductPageSearchToProductImageFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::FACADE_PRODUCT_IMAGE);
     }
 
     /**
