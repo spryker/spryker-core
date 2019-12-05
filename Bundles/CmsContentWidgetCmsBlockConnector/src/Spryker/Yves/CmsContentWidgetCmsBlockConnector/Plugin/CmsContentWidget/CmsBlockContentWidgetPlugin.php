@@ -64,7 +64,9 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
             $isActive = $this->validateBlock($cmsBlockTransfer) && $this->validateDates($cmsBlockTransfer);
 
             if ($isActive) {
-                $templatePath = $this->resolveTemplatePath($cmsBlockTransfer, $templateIdentifier);
+                $templatePath = !$templateIdentifier && $cmsBlockTransfer->getCmsBlockTemplate() ?
+                    $cmsBlockTransfer->getCmsBlockTemplate()->getTemplatePath() :
+                    $this->resolveTemplatePath($templateIdentifier);
 
                 $rendered .= $twig->render($templatePath, [
                     'placeholders' => $this->getPlaceholders($cmsBlockTransfer->getSpyCmsBlockGlossaryKeyMappings()),
@@ -77,17 +79,12 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer $cmsBlockTransfer
      * @param string|null $templateIdentifier
      *
      * @return string
      */
-    protected function resolveTemplatePath(SpyCmsBlockEntityTransfer $cmsBlockTransfer, ?string $templateIdentifier = null): string
+    protected function resolveTemplatePath(?string $templateIdentifier = null): string
     {
-        if (!$templateIdentifier && $cmsBlockTransfer->getCmsBlockTemplate()) {
-            return $cmsBlockTransfer->getCmsBlockTemplate()->getTemplatePath();
-        }
-
         $availableTemplates = $this->widgetConfiguration->getAvailableTemplates();
         if (!$templateIdentifier || !array_key_exists($templateIdentifier, $availableTemplates)) {
             $templateIdentifier = CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER;
