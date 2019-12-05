@@ -62,7 +62,7 @@ class ProductOptionsRestApiFactory extends AbstractFactory
      */
     public function getProductStorageClient(): ProductOptionsRestApiToProductStorageClientInterface
     {
-        return $this->getProvidedDependency(ProductOptionsRestApiDependencyProvider::PRODUCT_STORAGE_CLIENT);
+        return $this->getProvidedDependency(ProductOptionsRestApiDependencyProvider::CLIENT_PRODUCT_STORAGE);
     }
 
     /**
@@ -70,7 +70,7 @@ class ProductOptionsRestApiFactory extends AbstractFactory
      */
     public function getProductOptionStorageClient(): ProductOptionsRestApiToProductOptionStorageClientInterface
     {
-        return $this->getProvidedDependency(ProductOptionsRestApiDependencyProvider::PRODUCT_OPTION_STORAGE_CLIENT);
+        return $this->getProvidedDependency(ProductOptionsRestApiDependencyProvider::CLIENT_PRODUCT_OPTION_STORAGE);
     }
 
     /**
@@ -78,7 +78,7 @@ class ProductOptionsRestApiFactory extends AbstractFactory
      */
     public function getGlossaryStorageClient(): ProductOptionsRestApiToGlossaryStorageClientInterface
     {
-        return $this->getProvidedDependency(ProductOptionsRestApiDependencyProvider::GLOSSARY_STORAGE_CLIENT);
+        return $this->getProvidedDependency(ProductOptionsRestApiDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 
     /**
@@ -86,7 +86,7 @@ class ProductOptionsRestApiFactory extends AbstractFactory
      */
     public function getCurrencyClient(): ProductOptionsRestApiToCurrencyClientInterface
     {
-        return $this->getProvidedDependency(ProductOptionsRestApiDependencyProvider::CURRENCY_CLIENT);
+        return $this->getProvidedDependency(ProductOptionsRestApiDependencyProvider::CLIENT_CURRENCY);
     }
 
     /**

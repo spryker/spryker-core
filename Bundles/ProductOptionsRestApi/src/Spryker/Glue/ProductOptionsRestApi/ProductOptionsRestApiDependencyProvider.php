@@ -19,10 +19,10 @@ use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiTo
  */
 class ProductOptionsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PRODUCT_OPTION_STORAGE_CLIENT = 'PRODUCT_OPTION_STORAGE_CLIENT';
-    public const PRODUCT_STORAGE_CLIENT = 'PRODUCT_STORAGE_CLIENT';
-    public const GLOSSARY_STORAGE_CLIENT = 'GLOSSARY_STORAGE_CLIENT';
-    public const CURRENCY_CLIENT = 'CURRENCY_CLIENT';
+    public const CLIENT_PRODUCT_OPTION_STORAGE = 'CLIENT_PRODUCT_OPTION_STORAGE';
+    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
+    public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -47,7 +47,7 @@ class ProductOptionsRestApiDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addProductOptionStorageClient(Container $container): Container
     {
-        $container->set(static::PRODUCT_OPTION_STORAGE_CLIENT, function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_OPTION_STORAGE, function (Container $container) {
             return new ProductOptionsRestApiToProductOptionStorageClientBridge(
                 $container->getLocator()->productOptionStorage()->client()
             );
@@ -63,7 +63,7 @@ class ProductOptionsRestApiDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addProductStorageClient(Container $container): Container
     {
-        $container->set(static::PRODUCT_STORAGE_CLIENT, function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductOptionsRestApiToProductStorageClientBridge(
                 $container->getLocator()->productStorage()->client()
             );
@@ -79,7 +79,7 @@ class ProductOptionsRestApiDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addGlossaryStorageClient(Container $container): Container
     {
-        $container->set(static::GLOSSARY_STORAGE_CLIENT, function (Container $container) {
+        $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
             return new ProductOptionsRestApiToGlossaryStorageClientBridge(
                 $container->getLocator()->glossaryStorage()->client()
             );
@@ -95,7 +95,7 @@ class ProductOptionsRestApiDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addCurrencyClient(Container $container): Container
     {
-        $container->set(static::CURRENCY_CLIENT, function (Container $container) {
+        $container->set(static::CLIENT_CURRENCY, function (Container $container) {
             return new ProductOptionsRestApiToCurrencyClientBridge(
                 $container->getLocator()->currency()->client()
             );
