@@ -35,13 +35,18 @@ class CmsBlockGlossaryKeyGenerator implements CmsBlockGlossaryKeyGeneratorInterf
      * @param int $idCmsBlock
      * @param string $templateName
      * @param string $placeholder
+     * @param bool $autoIncrement
      *
      * @throws \Spryker\Zed\CmsBlock\Business\Exception\CmsBlockGlossaryKeyNotCreatedException
      *
      * @return string
      */
-    public function generateGlossaryKeyName(int $idCmsBlock, string $templateName, string $placeholder): string
-    {
+    public function generateGlossaryKeyName(
+        int $idCmsBlock,
+        string $templateName,
+        string $placeholder,
+        bool $autoIncrement = true
+    ): string {
         $index = 1;
 
         do {
@@ -49,8 +54,9 @@ class CmsBlockGlossaryKeyGenerator implements CmsBlockGlossaryKeyGeneratorInterf
                 throw new CmsBlockGlossaryKeyNotCreatedException('Cannot create cms block glossary key: maximum iterations threshold met.');
             }
 
-            $candidate = $this->suggestCandidate($idCmsBlock, $templateName, $placeholder, $index++);
-        } while ($this->glossaryFacade->hasKey($candidate));
+            $candidate = $this->suggestCandidate($idCmsBlock, $templateName, $placeholder, $index);
+            $index++;
+        } while ($autoIncrement === true && $this->glossaryFacade->hasKey($candidate));
 
         return $candidate;
     }
