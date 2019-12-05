@@ -577,6 +577,8 @@
     "spryker/stock-extension": "*",
     "spryker/stock-gui": "*",
     "spryker/storage": "*",
+    "spryker/storage-database": "*",
+    "spryker/storage-database-extension": "*",
     "spryker/storage-extension": "*",
     "spryker/storage-redis": "*",
     "spryker/store": "*",
