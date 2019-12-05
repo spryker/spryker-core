@@ -56,17 +56,18 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     public function contentWidgetFunction(Environment $twig, array $context, array $blockNames, $templateIdentifier = null): string
     {
         $blocks = $this->getBlockDataByNames($blockNames);
-        $templatePath = $this->resolveTemplatePath($templateIdentifier);
         $rendered = '';
 
         foreach ($blocks as $block) {
-            $blockData = $this->getCmsBlockTransfer($block);
+            $cmsBlockTransfer = $this->getCmsBlockTransfer($block);
 
-            $isActive = $this->validateBlock($blockData) && $this->validateDates($blockData);
+            $isActive = $this->validateBlock($cmsBlockTransfer) && $this->validateDates($cmsBlockTransfer);
 
             if ($isActive) {
+                $templatePath = $this->resolveTemplatePath($cmsBlockTransfer, $templateIdentifier);
+
                 $rendered .= $twig->render($templatePath, [
-                    'placeholders' => $this->getPlaceholders($blockData->getSpyCmsBlockGlossaryKeyMappings()),
+                    'placeholders' => $this->getPlaceholders($cmsBlockTransfer->getSpyCmsBlockGlossaryKeyMappings()),
                     'cmsContent' => $block,
                 ]);
             }
@@ -76,12 +77,17 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer $cmsBlockTransfer
      * @param string|null $templateIdentifier
      *
      * @return string
      */
-    protected function resolveTemplatePath(?string $templateIdentifier = null): string
+    protected function resolveTemplatePath(SpyCmsBlockEntityTransfer $cmsBlockTransfer, ?string $templateIdentifier = null): string
     {
+        if (!$templateIdentifier && $cmsBlockTransfer->getCmsBlockTemplate()) {
+            return $cmsBlockTransfer->getCmsBlockTemplate()->getTemplatePath();
+        }
+
         $availableTemplates = $this->widgetConfiguration->getAvailableTemplates();
         if (!$templateIdentifier || !array_key_exists($templateIdentifier, $availableTemplates)) {
             $templateIdentifier = CmsContentWidgetConfigurationProviderInterface::DEFAULT_TEMPLATE_IDENTIFIER;
