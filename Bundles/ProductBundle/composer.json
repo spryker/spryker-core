@@ -54,7 +54,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "7.0.x-dev"
     }
   },
   "config": {
