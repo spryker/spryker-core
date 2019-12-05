@@ -137,7 +137,7 @@ var ContentItemDialog = function(
 
                 this.context.invoke('pasteHTML', elementForInsert);
                 this.removeUnecessaryLines($clickedNode);
-                this.removeEmptyContentItemEditor();
+                this.removeEmptyContentItems();
             };
 
             this.isNodeEmpty = function ($clickedNode) {
@@ -156,26 +156,26 @@ var ContentItemDialog = function(
                 return $nodeInnerItems.length <= 2 && $nodeInnerItems.eq(1).is('br') && $nodeInnerItems.children().length <= 1;
             };
 
-            this.isContentItemEditorEmpty = function ($nodeItem) {
+            this.isContentItemEmpty = function ($nodeItem) {
                 var $nodeInnerItems = $nodeItem.children();
-                var isContentItemEditor = $nodeInnerItems.eq(0).is('.js-content-item-editor');
-                var isContentItemEditorEmpty = !$nodeInnerItems.children().text().length;
+                var isContentItem = $nodeInnerItems.eq(0).is('.js-content-item-editor');
+                var isContentItemEmpty = !$nodeInnerItems.children().text().length;
 
-                return isContentItemEditor && isContentItemEditorEmpty;
+                return isContentItem && isContentItemEmpty;
             };
 
-            this.removeEmptyContentItemEditor = function () {
+            this.removeEmptyContentItems = function () {
                 var $self = this;
 
                 this.editable.children().each(function (index, item) {
                     var $nodeItem = $(item);
 
-                    if (!$self.isContentItemEditorEmpty($nodeItem)) {
+                    if (!$self.isContentItemEmpty($nodeItem)) {
                         return;
                     }
 
                     $nodeItem.closest('p').remove();
-                })
+                });
             };
 
             this.removeItemFromEditor = function () {
