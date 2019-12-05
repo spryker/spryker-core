@@ -76,7 +76,7 @@ class RangeExtractor extends AbstractAggregationExtractor implements Aggregation
      */
     protected function resolveMin(int $facetMin, int $selectedMin): int
     {
-        return max($facetMin, $selectedMin);
+        return min($facetMin, $selectedMin);
     }
 
     /**
@@ -89,7 +89,7 @@ class RangeExtractor extends AbstractAggregationExtractor implements Aggregation
      */
     protected function resolveMax(int $facetMax, int $selectedMax): int
     {
-        return min($facetMax, $selectedMax);
+        return max($facetMax, $selectedMax);
     }
 
     /**
