@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToStorageClientInterface;
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToSynchronizationServiceInterface;
 use Spryker\Client\MerchantProductOfferStorage\Mapper\MerchantProductOfferMapperInterface;
-use Spryker\Client\Store\StoreClientInterface;
 use Spryker\Shared\MerchantProductOfferStorage\MerchantProductOfferStorageConfig;
 
 class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
@@ -34,7 +33,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     protected $merchantProductOfferMapper;
 
     /**
-     * @var StoreClientInterface
+     * @var \Spryker\Client\Store\StoreClientInterface
      */
     protected $storeClient;
 

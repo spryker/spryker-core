@@ -7,6 +7,7 @@
         <property name="idProductOffer" type="int"/>
         <property name="concreteSku" type="string"/>
         <property name="productOfferReference" type="string"/>
+        <property name="stores" type="Store[]" singular="Store"/>
     </transfer>
 
     <transfer name="ProductOfferStore">
@@ -37,5 +38,10 @@
         <property name="lastIndex" type="int"/>
         <property name="firstPage" type="int"/>
         <property name="lastPage" type="int"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 </transfers>

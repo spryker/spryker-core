@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -35,9 +36,13 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
         $productOfferEntities = $productOfferQuery->find();
 
         foreach ($productOfferEntities as $productOfferEntity) {
-            $productOfferTransfer = $this->getFactory()
-                ->createPropelProductOfferMapper()
+            $productOfferTransfer = $this->getFactory()->createPropelProductOfferMapper()
                 ->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, (new ProductOfferTransfer()));
+
+            foreach ($this->findStoresByFkProductOffer($productOfferTransfer->getIdProductOffer()) as $storeTransfer) {
+                $productOfferTransfer->addStore($storeTransfer);
+            }
+
             $productOfferCollectionTransfer->addProductOffer($productOfferTransfer);
         }
 
@@ -62,6 +67,31 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
 
         return $this->getFactory()->createPropelProductOfferMapper()
             ->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, new ProductOfferTransfer());
+    }
+
+    /**
+     * @param int $fkProductOffer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function findStoresByFkProductOffer(int $fkProductOffer): array
+    {
+        $storeEntities = $this->getFactory()->getStoreQuery()
+            ->useSpyProductOfferStoreQuery()
+                ->filterByFkProductOffer($fkProductOffer)
+            ->endUse()
+            ->find()
+            ->getData();
+
+        $storeTransfers = [];
+        foreach ($storeEntities as $storeEntity) {
+            $storeTransfers[] = $this->getFactory()->createPropelProductOfferMapper()->mapStoreEntityToStoreTransfer(
+                $storeEntity,
+                new StoreTransfer()
+            );
+        }
+
+        return $storeTransfers;
     }
 
     /**
