@@ -16,6 +16,7 @@ use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOff
 class ProductOfferAvailabilityChecker implements ProductOfferAvailabilityCheckerInterface
 {
     public const MIN_AVAILABLE_QUANTITY_FOR_AVAILABILITY = 1;
+
     /**
      * @var \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToAvailabilityFacadeInterface
      */
