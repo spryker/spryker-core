@@ -19,7 +19,6 @@
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
-  "suggest": [],
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
