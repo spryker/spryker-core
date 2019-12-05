@@ -63,7 +63,7 @@ class CartRestResponseBuilder extends AbstractCartRestResponseBuilder implements
         $cartResource = $this->restResourceBuilder->createRestResource(
             CartsRestApiConfig::RESOURCE_CARTS,
             $quoteTransfer->getUuid(),
-            $this->cartsMapper->mapQuoteTransferToRestCartsAttributesTransfer($quoteTransfer)
+            $this->cartMapper->mapQuoteTransferToRestCartsAttributesTransfer($quoteTransfer)
         );
 
         $cartResource->setPayload($quoteTransfer);
