@@ -22,11 +22,13 @@ use Spryker\Client\Search\Plugin\Elasticsearch\Query\SearchKeysQuery;
 use Spryker\Client\Search\Plugin\Elasticsearch\Query\SearchStringQuery;
 use Spryker\Client\Search\SearchClient;
 use Spryker\Client\Search\SearchContext\SearchContextExpanderInterface;
+use Spryker\Client\Search\SearchDependencyProvider;
 use Spryker\Client\Search\SearchFactory;
 use Spryker\Client\SearchElasticsearch\Plugin\ElasticsearchSearchAdapterPlugin;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextExpanderPluginInterface;
 use SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchHelper;
 
 /**
@@ -426,8 +428,12 @@ class SearchClientTest extends Unit
      */
     protected function setupEnvironmentForSearchTesting(): void
     {
-        $this->tester->mockFactoryMethod('createSearchContextExpander', $this->getSearchContextExpanderMock());
-        $this->tester->mockFactoryMethod('getClientAdapterPlugins', [$this->createElasticsearchSearchAdapterPluginMock()]);
+        $this->tester->setDependency(SearchDependencyProvider::PLUGINS_SEARCH_CONTEXT_EXPANDER, [
+            $this->createSearchContextExpanderPluginMock(),
+        ]);
+        $this->tester->setDependency(SearchDependencyProvider::PLUGINS_CLIENT_ADAPTER, [
+            $this->createElasticsearchSearchAdapterPluginMock(),
+        ]);
     }
 
     /**
@@ -460,5 +466,23 @@ class SearchClientTest extends Unit
         ]);
 
         return $elasticsearchAdapterPluginMock;
+    }
+
+    /**
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextExpanderPluginInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function createSearchContextExpanderPluginMock()
+    {
+        $searchContextExpanderPluginMock = $this->createMock(SearchContextExpanderPluginInterface::class);
+        $searchContextExpanderPluginMock->method('expandSearchContext')
+            ->willReturnCallback(function (SearchContextTransfer $searchContextTransfer) {
+                $searchContextTransfer->setElasticsearchContext(
+                    (new ElasticsearchSearchContextTransfer())->setIndexName(static::INDEX_NAME)->setTypeName(ElasticsearchHelper::DEFAULT_MAPPING_TYPE)
+                );
+
+                return $searchContextTransfer;
+            });
+
+        return $searchContextExpanderPluginMock;
     }
 }
