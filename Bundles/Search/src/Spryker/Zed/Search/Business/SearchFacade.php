@@ -169,6 +169,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\Search\Business\SearchFacade::generateSourceMap()` instead.
+     *
      * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return void
@@ -201,6 +203,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::createSnapshot()` instead.
+     *
      * @param string $repositoryName
      * @param string $snapshotName
      * @param array $options
@@ -217,6 +221,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::existsSnapshot()` instead.
+     *
      * @param string $repositoryName
      * @param string $snapshotName
      *
@@ -231,6 +237,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::deleteSnapshot()` instead.
      *
      * @param string $repositoryName
      * @param string $snapshotName
@@ -247,6 +255,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::existsSnapshotRepository()` instead.
+     *
      * @param string $repositoryName
      *
      * @return bool
@@ -260,6 +270,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::createSnapshotRepository()` instead.
      *
      * @param string $repositoryName
      * @param string $type
@@ -276,6 +288,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::restoreSnapshot()` instead.
      *
      * @param string $repositoryName
      * @param string $snapshotName
