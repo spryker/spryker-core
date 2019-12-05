@@ -74,7 +74,7 @@ class NewsletterConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getNewsletterTypes()
     {

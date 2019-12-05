@@ -31,7 +31,7 @@ class CartNoteProductBundleConnectorToProductBundleClientBridge implements CartN
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function findBundleItemsInQuote(QuoteTransfer $quoteTransfer, $sku, $groupKey)
+    public function findBundleItemsInQuote(QuoteTransfer $quoteTransfer, $sku, $groupKey): array
     {
         return $this->productBundleClient->findBundleItemsInQuote($quoteTransfer, $sku, $groupKey);
     }

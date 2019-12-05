@@ -169,10 +169,11 @@ class CartsRestApiFactory extends AbstractFactory
     public function createGuestCartUpdater(): GuestCartUpdaterInterface
     {
         return new GuestCartUpdater(
-            $this->createGuestCartReader(),
             $this->createCartUpdater(),
             $this->createGuestCartRestResponseBuilder(),
-            $this->getClient()
+            $this->getClient(),
+            $this->createCartsResourceMapper(),
+            $this->getCustomerExpanderPlugins()
         );
     }
 

@@ -71,6 +71,7 @@
         <property name="price" type="int"/>
         <property name="abstractName" type="string"/>
         <property name="abstractSku" type="string"/>
+        <property name="url" type="string"/>
     </transfer>
 
     <transfer name="RestCatalogSearchSuggestionProductImage">
