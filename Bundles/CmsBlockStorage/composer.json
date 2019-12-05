@@ -21,7 +21,9 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
+    "spryker/locale": "*",
     "spryker/propel": "*",
+    "spryker/queue": "*",
     "spryker/testify": "*"
   },
   "suggest": {

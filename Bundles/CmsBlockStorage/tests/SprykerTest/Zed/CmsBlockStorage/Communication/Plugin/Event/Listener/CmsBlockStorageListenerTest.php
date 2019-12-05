@@ -8,17 +8,21 @@
 namespace SprykerTest\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockGlossaryKeyMappingTableMap;
 use Orm\Zed\CmsBlockStorage\Persistence\Map\SpyCmsBlockStorageTableMap;
 use Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorageQuery;
+use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
+use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
+use Spryker\Client\Kernel\Container;
+use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\CmsBlock\Dependency\CmsBlockEvents;
 use Spryker\Zed\CmsBlockStorage\Business\CmsBlockStorageBusinessFactory;
 use Spryker\Zed\CmsBlockStorage\Business\CmsBlockStorageFacade;
 use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockGlossaryKeyMappingBlockStoragePublishListener;
 use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockStoragePublishListener;
 use Spryker\Zed\CmsBlockStorage\Communication\Plugin\Event\Listener\CmsBlockStorageUnpublishListener;
-use Spryker\Zed\Store\Business\StoreFacade;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use SprykerTest\Zed\CmsBlockStorage\CmsBlockStorageConfigMock;
 
@@ -38,20 +42,58 @@ use SprykerTest\Zed\CmsBlockStorage\CmsBlockStorageConfigMock;
 class CmsBlockStorageListenerTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\CmsBlockStorage\CmsBlockStorageCommunicationTester
+     */
+    protected $tester;
+
+    /**
+     * @var int[]
+     */
+    protected $storeIds;
+
+    /**
+     * @var int[]
+     */
+    protected $localeIds;
+
+    /**
+     * @return void
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
+            return [
+                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
+            ];
+        });
+
+        $this->storeIds = $this->getStoreIds();
+        $this->localeIds = $this->getLocaleIds();
+    }
+
+    /**
      * @return void
      */
     public function testCmsBlockStorageUnpublishListener(): void
     {
+        // Arrange
+        $cmsBlockTransfer = $this->tester->createCmsBlock($this->storeIds, $this->localeIds);
         $cmsBlockStorageUnpublishListener = new CmsBlockStorageUnpublishListener();
         $cmsBlockStorageUnpublishListener->setFacade($this->getCmsBlockStorageFacade());
-
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
+            (new EventEntityTransfer())->setId($cmsBlockTransfer->getIdCmsBlock()),
         ];
+
+        // Act
         $cmsBlockStorageUnpublishListener->handleBulk($eventTransfers, CmsBlockEvents::CMS_BLOCK_UNPUBLISH);
 
         // Assert
-        $this->assertSame(0, SpyCmsBlockStorageQuery::create()->filterByFkCmsBlock(1)->count());
+        $countCmsBlockStorageEntity = SpyCmsBlockStorageQuery::create()
+            ->filterByFkCmsBlock($cmsBlockTransfer->getIdCmsBlock())
+            ->count();
+        $this->assertSame(0, $countCmsBlockStorageEntity);
     }
 
     /**
@@ -59,19 +101,22 @@ class CmsBlockStorageListenerTest extends Unit
      */
     public function testCmsBlockStoragePublishListener(): void
     {
-        SpyCmsBlockStorageQuery::create()->filterByFkCmsBlock(1)->delete();
+        // Arrange
+        $cmsBlockTransfer = $this->tester->createCmsBlock($this->storeIds, $this->localeIds);
         $beforeCount = SpyCmsBlockStorageQuery::create()->count();
 
         $cmsBlockStoragePublishListener = new CmsBlockStoragePublishListener();
         $cmsBlockStoragePublishListener->setFacade($this->getCmsBlockStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
+            (new EventEntityTransfer())->setId($cmsBlockTransfer->getIdCmsBlock()),
         ];
+
+        // Act
         $cmsBlockStoragePublishListener->handleBulk($eventTransfers, CmsBlockEvents::CMS_BLOCK_PUBLISH);
 
         // Assert
-        $this->assertCmsBlockCategoryStorage($beforeCount);
+        $this->assertCmsBlockCategoryStorage($beforeCount, $cmsBlockTransfer);
     }
 
     /**
@@ -79,7 +124,8 @@ class CmsBlockStorageListenerTest extends Unit
      */
     public function testCmsBlockGlossaryKeyMappingBlockStoragePublishListener(): void
     {
-        SpyCmsBlockStorageQuery::create()->filterByFkCmsBlock(1)->delete();
+        // Arrange
+        $cmsBlockTransfer = $this->tester->createCmsBlock($this->storeIds, $this->localeIds);
         $beforeCount = SpyCmsBlockStorageQuery::create()->count();
 
         $cmsBlockGlossaryKeyMappingBlockStoragePublishListener = new CmsBlockGlossaryKeyMappingBlockStoragePublishListener();
@@ -87,13 +133,15 @@ class CmsBlockStorageListenerTest extends Unit
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyCmsBlockGlossaryKeyMappingTableMap::COL_FK_CMS_BLOCK => 1,
+                SpyCmsBlockGlossaryKeyMappingTableMap::COL_FK_CMS_BLOCK => $cmsBlockTransfer->getIdCmsBlock(),
             ]),
         ];
+
+        // Act
         $cmsBlockGlossaryKeyMappingBlockStoragePublishListener->handleBulk($eventTransfers, CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_CREATE);
 
         // Assert
-        $this->assertCmsBlockCategoryStorage($beforeCount);
+        $this->assertCmsBlockCategoryStorage($beforeCount, $cmsBlockTransfer);
     }
 
     /**
@@ -101,18 +149,23 @@ class CmsBlockStorageListenerTest extends Unit
      */
     public function testCmsBlockGlossaryKeyMappingBlockStorageUnpublishListener(): void
     {
+        // Arrange
+        $cmsBlockTransfer = $this->tester->createCmsBlock($this->storeIds, $this->localeIds);
         $cmsBlockGlossaryKeyMappingBlockStoragePublishListener = new CmsBlockGlossaryKeyMappingBlockStoragePublishListener();
         $cmsBlockGlossaryKeyMappingBlockStoragePublishListener->setFacade($this->getCmsBlockStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyCmsBlockGlossaryKeyMappingTableMap::COL_FK_CMS_BLOCK => 1,
+                SpyCmsBlockGlossaryKeyMappingTableMap::COL_FK_CMS_BLOCK => $cmsBlockTransfer->getIdCmsBlock(),
             ]),
         ];
         $cmsBlockGlossaryKeyMappingBlockStoragePublishListener->handleBulk($eventTransfers, CmsBlockEvents::ENTITY_SPY_CMS_BLOCK_GLOSSARY_KEY_MAPPING_DELETE);
+        $countCmsBlockStorageEntity = SpyCmsBlockStorageQuery::create()
+            ->filterByFkCmsBlock($cmsBlockTransfer->getIdCmsBlock())
+            ->count();
 
         // Assert
-        $this->assertGreaterThan(1, SpyCmsBlockStorageQuery::create()->filterByFkCmsBlock(1)->count());
+        $this->assertGreaterThan(1, $countCmsBlockStorageEntity);
     }
 
     /**
@@ -130,15 +183,60 @@ class CmsBlockStorageListenerTest extends Unit
     }
 
     /**
+     * @return \Spryker\Zed\Store\Business\StoreFacadeInterface
+     */
+    public function getStoreFacade(): StoreFacadeInterface
+    {
+        return $this->tester->getLocator()->store()->facade();
+    }
+
+    /**
+     * @return int[]
+     */
+    protected function getStoreIds(): array
+    {
+        $storeIds = [];
+
+        foreach ($this->getStoreFacade()->getAllStores() as $storeTransfer) {
+            $storeIds[] = $storeTransfer->getIdStore();
+        }
+
+        return $storeIds;
+    }
+
+    /**
+     * @return int[]
+     */
+    protected function getLocaleIds(): array
+    {
+        $localeIds = [];
+
+        foreach ($this->getStoreFacade()->getAllStores() as $storeTransfer) {
+            $localeNames = $storeTransfer->getAvailableLocaleIsoCodes();
+
+            $localeIdsFromDb = SpyLocaleQuery::create()
+                ->filterByLocaleName_In($localeNames)
+                ->select([SpyLocaleTableMap::COL_ID_LOCALE])
+                ->find()
+                ->toArray();
+
+            $localeIds = array_merge($localeIdsFromDb, $localeIds);
+        }
+
+        return array_unique($localeIds);
+    }
+
+    /**
      * @param int $beforeCount
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return void
      */
-    protected function assertCmsBlockCategoryStorage(int $beforeCount): void
+    protected function assertCmsBlockCategoryStorage(int $beforeCount, CmsBlockTransfer $cmsBlockTransfer): void
     {
         $count = SpyCmsBlockStorageQuery::create()->count();
         $relatedStoreNames = SpyCmsBlockStorageQuery::create()
-            ->filterByFkCmsBlock(1)
+            ->filterByFkCmsBlock($cmsBlockTransfer->getIdCmsBlock())
             ->select(SpyCmsBlockStorageTableMap::COL_STORE)
             ->find()
             ->toArray();
@@ -153,21 +251,12 @@ class CmsBlockStorageListenerTest extends Unit
         }
 
         $cmsBlockStorage = SpyCmsBlockStorageQuery::create()
-            ->filterByLocale('en_US')
             ->orderByIdCmsBlockStorage()
-            ->findOneByFkCmsBlock(1);
+            ->findOneByFkCmsBlock($cmsBlockTransfer->getIdCmsBlock());
         $this->assertNotNull($cmsBlockStorage);
 
         $data = $cmsBlockStorage->getData();
         $this->assertSame($beforeCount + $countLocalesByStores, $count);
-        $this->assertSame('Teaser for home page', $data['name']);
-    }
-
-    /**
-     * @return \Spryker\Zed\Store\Business\StoreFacadeInterface
-     */
-    protected function getStoreFacade(): StoreFacadeInterface
-    {
-        return new StoreFacade();
+        $this->assertSame($cmsBlockTransfer->getName(), $data['name']);
     }
 }
