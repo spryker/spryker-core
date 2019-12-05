@@ -111,13 +111,12 @@ class GlueRest extends REST implements LastConnectionProviderInterface
      * @part json
      *
      * @param string $jsonPath
-     * @param bool $smartGet
      *
      * @return array|mixed
      */
-    public function grabDataFromResponseByJsonPath($jsonPath, $smartGet = false)
+    public function grabDataFromResponseByJsonPath($jsonPath)
     {
-        return (new JsonObject($this->connectionModule->_getResponseContent(), $smartGet))->get($jsonPath);
+        return (new JsonObject($this->connectionModule->_getResponseContent(), true))->get($jsonPath);
     }
 
     /**
@@ -222,7 +221,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
         $this->getJsonPathModule()->seeResponseJsonPathContains([
             'type' => $type,
         ], '$.data[*]');
-        $this->assertCount($size, $this->grabDataFromResponseByJsonPath('$.data', true));
+        $this->assertCount($size, $this->grabDataFromResponseByJsonPath('$.data'));
     }
 
     /**
