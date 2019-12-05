@@ -247,6 +247,25 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     /**
      * @part json
      *
+     * @param string $resourceName
+     * @param string $identifier
+     *
+     * @return array|mixed
+     */
+    public function grabIncludedByTypeAndId(string $resourceName, string $identifier)
+    {
+        $jsonPath = sprintf(
+            '$..included[?(@.type == \'%s\' and @.id == \'%s\')].attributes',
+            $resourceName,
+            $identifier
+        );
+
+        return $this->grabDataFromResponseByJsonPath($jsonPath)[0];
+    }
+
+    /**
+     * @part json
+     *
      * @param string $id
      *
      * @return void

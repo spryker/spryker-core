@@ -32,7 +32,7 @@ class CartNoteSaver implements CartNoteSaverInterface
      *
      * @return void
      */
-    public function saveCartNoteToOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    public function saveCartNoteToOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
         if (!$quoteTransfer->getCartNote()) {
             return;
@@ -47,7 +47,7 @@ class CartNoteSaver implements CartNoteSaverInterface
      *
      * @return void
      */
-    protected function saveOrderNote($idSalesOrder, $note)
+    protected function saveOrderNote(int $idSalesOrder, string $note): void
     {
         $this->cartNoteEntityManager->updateOrderNote($idSalesOrder, $note);
     }
