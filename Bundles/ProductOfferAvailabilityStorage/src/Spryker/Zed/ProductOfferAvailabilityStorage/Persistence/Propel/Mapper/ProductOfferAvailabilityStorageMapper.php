@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductOfferAvailabilityStorage\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
-class ProductOfferAvailabilityStorageMapper
+class ProductOfferAvailabilityStorageMapper implements ProductOfferAvailabilityStorageMapperInterface
 {
     public const COL_ALIAS_STORE_NAME = 'store_name';
     public const COL_ALIAS_SKU = 'sku';

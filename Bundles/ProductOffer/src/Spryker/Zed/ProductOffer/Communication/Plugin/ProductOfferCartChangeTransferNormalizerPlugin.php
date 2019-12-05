@@ -29,7 +29,7 @@ class ProductOfferCartChangeTransferNormalizerPlugin implements CartChangeTransf
 
     /**
      * {@inheritDoc}
-     * - Updates item identifier to product offer reference.
+     * - Sets itemTransfer.identifier same as product offer reference.
      *
      * @api
      *

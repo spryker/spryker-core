@@ -58,10 +58,9 @@ class ProductOfferAvailabilityStockProviderStrategyPlugin extends AbstractPlugin
         StoreTransfer $storeTransfer,
         ?ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer = null
     ): ?ProductConcreteAvailabilityTransfer {
-        $productAvailabilityCriteriaTransfer
-            ->requireProductOffer()
+        $productAvailabilityCriteriaTransfer->requireProductOffer()
             ->getProductOffer()
-                ->requireProductOfferReference();
+            ->requireProductOfferReference();
 
         $productOfferAvailabilityRequestTransfer = (new ProductOfferAvailabilityRequestTransfer())
             ->setStore($storeTransfer)

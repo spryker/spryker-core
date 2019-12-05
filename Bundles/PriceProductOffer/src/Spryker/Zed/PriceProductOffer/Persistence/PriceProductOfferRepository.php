@@ -27,7 +27,7 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function getPriceProductConcreteTransfers(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
+    public function getPriceProductOfferTransfers(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
     {
         $priceProductOfferEntities = $this->getFactory()
             ->getPriceProductOfferPropelQuery()

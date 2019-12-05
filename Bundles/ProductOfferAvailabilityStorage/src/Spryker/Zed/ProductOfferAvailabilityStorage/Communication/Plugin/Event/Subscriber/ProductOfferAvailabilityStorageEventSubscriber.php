@@ -52,8 +52,7 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
      */
     protected function addOmsProductReservationCreateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection
-            ->addListenerQueued(ProductOfferAvailabilityEvents::ENTITY_SPY_OMS_PRODUCT_RESERVATION_CREATE, new OmsProductReservationStoragePublishListener());
+        $eventCollection->addListenerQueued(ProductOfferAvailabilityEvents::ENTITY_SPY_OMS_PRODUCT_RESERVATION_CREATE, new OmsProductReservationStoragePublishListener());
 
         return $this;
     }
@@ -65,8 +64,7 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
      */
     protected function addOmsProductReservationUpdateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection
-            ->addListenerQueued(ProductOfferAvailabilityEvents::ENTITY_SPY_OMS_PRODUCT_RESERVATION_UPDATE, new OmsProductReservationStoragePublishListener());
+        $eventCollection->addListenerQueued(ProductOfferAvailabilityEvents::ENTITY_SPY_OMS_PRODUCT_RESERVATION_UPDATE, new OmsProductReservationStoragePublishListener());
 
         return $this;
     }
@@ -78,8 +76,7 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
      */
     protected function addProductOfferStockCreateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection
-            ->addListenerQueued(ProductOfferAvailabilityEvents::ENTITY_SPY_PRODUCT_OFFER_STOCK_CREATE, new ProductOfferStockStoragePublishListener());
+        $eventCollection->addListenerQueued(ProductOfferAvailabilityEvents::ENTITY_SPY_PRODUCT_OFFER_STOCK_CREATE, new ProductOfferStockStoragePublishListener());
 
         return $this;
     }
@@ -91,8 +88,7 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
      */
     protected function addProductOfferStockUpdateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection
-            ->addListenerQueued(ProductOfferAvailabilityEvents::ENTITY_SPY_PRODUCT_OFFER_STOCK_UPDATE, new ProductOfferStockStoragePublishListener());
+        $eventCollection->addListenerQueued(ProductOfferAvailabilityEvents::ENTITY_SPY_PRODUCT_OFFER_STOCK_UPDATE, new ProductOfferStockStoragePublishListener());
 
         return $this;
     }
@@ -104,8 +100,7 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
      */
     protected function addProductOfferCreateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection
-            ->addListenerQueued(ProductOfferAvailabilityEvents::ENTITY_SPY_PRODUCT_OFFER_CREATE, new ProductOfferStoragePublishListener());
+        $eventCollection->addListenerQueued(ProductOfferAvailabilityEvents::ENTITY_SPY_PRODUCT_OFFER_CREATE, new ProductOfferStoragePublishListener());
 
         return $this;
     }
@@ -117,8 +112,7 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
      */
     protected function addProductOfferPublishListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection
-            ->addListenerQueued(ProductOfferAvailabilityEvents::ENTITY_SPY_PRODUCT_OFFER_PUBLISH, new ProductOfferStoragePublishListener());
+        $eventCollection->addListenerQueued(ProductOfferAvailabilityEvents::ENTITY_SPY_PRODUCT_OFFER_PUBLISH, new ProductOfferStoragePublishListener());
 
         return $this;
     }
@@ -130,8 +124,7 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
      */
     protected function addProductOfferUpdateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection
-            ->addListenerQueued(ProductOfferAvailabilityEvents::ENTITY_SPY_PRODUCT_OFFER_UPDATE, new ProductOfferStoragePublishListener());
+        $eventCollection->addListenerQueued(ProductOfferAvailabilityEvents::ENTITY_SPY_PRODUCT_OFFER_UPDATE, new ProductOfferStoragePublishListener());
 
         return $this;
     }

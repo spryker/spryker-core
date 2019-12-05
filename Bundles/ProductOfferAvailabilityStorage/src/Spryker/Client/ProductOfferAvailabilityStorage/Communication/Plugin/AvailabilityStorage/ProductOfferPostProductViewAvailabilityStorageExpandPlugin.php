@@ -30,15 +30,17 @@ class ProductOfferPostProductViewAvailabilityStorageExpandPlugin extends Abstrac
     public function postExpand(ProductViewTransfer $productViewTransfer): ProductViewTransfer
     {
         if ($productViewTransfer->getProductOfferReference()) {
-            $storeTransfer = $this->getFactory()
-                ->getStoreClient()
-                ->getCurrentStore();
-
-            $availabilityStorageTransfer = $this->getClient()
-                ->findAvailabilityByProductOfferReference($productViewTransfer->getProductOfferReference(), $storeTransfer->getName());
-
-            $productViewTransfer->setAvailable($availabilityStorageTransfer ? $availabilityStorageTransfer->getAvailability() : false);
+            return $productViewTransfer;
         }
+
+        $storeTransfer = $this->getFactory()
+            ->getStoreClient()
+            ->getCurrentStore();
+
+        $availabilityStorageTransfer = $this->getClient()
+            ->findAvailabilityByProductOfferReference($productViewTransfer->getProductOfferReference(), $storeTransfer->getName());
+
+        $productViewTransfer->setAvailable($availabilityStorageTransfer ? $availabilityStorageTransfer->getAvailability() : false);
 
         return $productViewTransfer;
     }

@@ -263,7 +263,8 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
     {
         $indexedPriceProductTransfers = [];
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $indexedPriceProductTransfers[$priceProductTransfer->getItemIdentifier() ?: $priceProductTransfer->getSkuProduct()][] = $priceProductTransfer;
+            $itemIdentifier = $priceProductTransfer->getItemIdentifier() ?: $priceProductTransfer->getSkuProduct();
+            $indexedPriceProductTransfers[$itemIdentifier][] = $priceProductTransfer;
         }
 
         return $indexedPriceProductTransfers;
@@ -274,7 +275,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      * @param string[] $skus
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     protected function executePriceProductProviderPlugins(array $priceProductTransfers, array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
     {
