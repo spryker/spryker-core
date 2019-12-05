@@ -95,7 +95,7 @@ class ConfigurableBundleTemplateImageStoragePublisher implements ConfigurableBun
         $localeTransfers = $this->localeFacade->getLocaleCollection();
 
         foreach ($configurableBundleTemplateTransfers as $configurableBundleTemplateTransfer) {
-            if (!$configurableBundleTemplateTransfer->getIsActive()) {
+            if (!$configurableBundleTemplateTransfer->getIsActive() || !$configurableBundleTemplateTransfer->getProductImageSets()->count()) {
                 continue;
             }
 
