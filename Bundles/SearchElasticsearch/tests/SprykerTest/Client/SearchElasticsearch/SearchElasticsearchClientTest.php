@@ -46,6 +46,8 @@ class SearchElasticsearchClientTest extends Unit
      */
     public function testSearchesBySearchString(): void
     {
+        $this->skipIfCi();
+
         // Arrange
         $documentId = 'document_id';
         $searchString = 'bar';
@@ -180,6 +182,8 @@ class SearchElasticsearchClientTest extends Unit
      */
     public function testCanWriteDocument(): void
     {
+        $this->skipIfCi();
+
         // Arrange
         $documentId = 'document-id';
         $documentData = ['foo' => 'bar'];
@@ -197,6 +201,8 @@ class SearchElasticsearchClientTest extends Unit
      */
     public function testCanWriteMultipleDocuments(): void
     {
+        $this->skipIfCi();
+
         // Arrange
         $documentId = 'new-document';
         $documentData = ['foo' => 'bar'];
@@ -220,6 +226,8 @@ class SearchElasticsearchClientTest extends Unit
      */
     public function testCanReadDocument(): void
     {
+        $this->skipIfCi();
+
         // Arrange
         $documentId = 'document-id';
         $documentData = ['foo' => 'bar'];
@@ -238,6 +246,8 @@ class SearchElasticsearchClientTest extends Unit
      */
     public function testCanDeleteDocument(): void
     {
+        $this->skipIfCi();
+
         // Arrange
         $documentId = 'document-id';
         $this->tester->haveDocumentInIndex(static::INDEX_NAME, $documentId);
@@ -255,6 +265,8 @@ class SearchElasticsearchClientTest extends Unit
      */
     public function testCanDeleteMultipleDocuments(): void
     {
+        $this->skipIfCi();
+
         // Arrange
         $documentId = 'document-id';
         $anotherDocumentId = 'another-document-id';
@@ -296,5 +308,15 @@ class SearchElasticsearchClientTest extends Unit
         }
 
         return $searchDocumentTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    protected function skipIfCi(): void
+    {
+        if (getenv('TRAVIS')) {
+            $this->markTestSkipped('Travis not set up properly');
+        }
     }
 }

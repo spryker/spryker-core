@@ -93,7 +93,7 @@ class ProductAbstractSearchDataMapperTest extends Unit
     protected function createProductAbstractPageMapExpanderPluginMock()
     {
         $pluginMock = $this->createMock(ProductAbstractMapExpanderPluginInterface::class);
-        $pluginMock->method('expandProductPageMap')->willReturnArgument(1);
+        $pluginMock->method('expandProductMap')->willReturnArgument(0);
 
         return $pluginMock;
     }
