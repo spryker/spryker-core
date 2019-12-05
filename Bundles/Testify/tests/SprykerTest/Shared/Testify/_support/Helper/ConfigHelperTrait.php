@@ -21,21 +21,14 @@ trait ConfigHelperTrait
     }
 
     /**
-     * @param string $key
-     *
-     * @return void
+     * @return \SprykerTest\Shared\Testify\Helper\ConfigHelper
      */
-    private function removeConfig(string $key): void
+    protected function getConfigHelper(): ConfigHelper
     {
-        $this->getConfigHelper()->removeConfig($key);
-    }
+        /** @var \SprykerTest\Shared\Testify\Helper\ConfigHelper $configHelper */
+        $configHelper = $this->getModule('\\' . ConfigHelper::class);
 
-    /**
-     * @return \Codeception\Module|\SprykerTest\Shared\Testify\Helper\ConfigHelper
-     */
-    private function getConfigHelper()
-    {
-        return $this->getModule('\\' . ConfigHelper::class);
+        return $configHelper;
     }
 
     /**
