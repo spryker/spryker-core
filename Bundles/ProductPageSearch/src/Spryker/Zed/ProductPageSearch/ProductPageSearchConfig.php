@@ -14,6 +14,8 @@ class ProductPageSearchConfig extends AbstractBundleConfig
     public const PRODUCT_ABSTRACT_RESOURCE_NAME = 'product_abstract';
 
     /**
+     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     *
      * @return bool
      */
     public function isSendingToQueue(): bool

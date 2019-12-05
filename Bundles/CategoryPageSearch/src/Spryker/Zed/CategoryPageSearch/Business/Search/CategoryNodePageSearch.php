@@ -42,6 +42,8 @@ class CategoryNodePageSearch implements CategoryNodePageSearchInterface
     protected $storeFacade;
 
     /**
+     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
