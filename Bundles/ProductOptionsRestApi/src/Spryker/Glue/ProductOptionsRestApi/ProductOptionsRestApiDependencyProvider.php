@@ -9,6 +9,7 @@ namespace Spryker\Glue\ProductOptionsRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
+use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToCurrencyClientBridge;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToGlossaryStorageClientBridge;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductOptionStorageClientBridge;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductStorageClientBridge;
@@ -21,6 +22,7 @@ class ProductOptionsRestApiDependencyProvider extends AbstractBundleDependencyPr
     public const PRODUCT_OPTION_STORAGE_CLIENT = 'PRODUCT_OPTION_STORAGE_CLIENT';
     public const PRODUCT_STORAGE_CLIENT = 'PRODUCT_STORAGE_CLIENT';
     public const GLOSSARY_STORAGE_CLIENT = 'GLOSSARY_STORAGE_CLIENT';
+    public const CURRENCY_CLIENT = 'CURRENCY_CLIENT';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -33,6 +35,7 @@ class ProductOptionsRestApiDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addProductOptionStorageClient($container);
         $container = $this->addProductStorageClient($container);
         $container = $this->addGlossaryStorageClient($container);
+        $container = $this->addCurrencyClient($container);
 
         return $container;
     }
@@ -79,6 +82,22 @@ class ProductOptionsRestApiDependencyProvider extends AbstractBundleDependencyPr
         $container->set(static::GLOSSARY_STORAGE_CLIENT, function (Container $container) {
             return new ProductOptionsRestApiToGlossaryStorageClientBridge(
                 $container->getLocator()->glossaryStorage()->client()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addCurrencyClient(Container $container): Container
+    {
+        $container->set(static::CURRENCY_CLIENT, function (Container $container) {
+            return new ProductOptionsRestApiToCurrencyClientBridge(
+                $container->getLocator()->currency()->client()
             );
         });
 

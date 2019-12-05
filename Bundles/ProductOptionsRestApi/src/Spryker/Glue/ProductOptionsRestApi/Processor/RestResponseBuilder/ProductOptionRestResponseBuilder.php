@@ -9,6 +9,7 @@ namespace Spryker\Glue\ProductOptionsRestApi\Processor\RestResponseBuilder;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToCurrencyClientInterface;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Mapper\ProductOptionMapperInterface;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Sorter\ProductOptionSorterInterface;
 use Spryker\Glue\ProductOptionsRestApi\ProductOptionsRestApiConfig;
@@ -31,18 +32,26 @@ class ProductOptionRestResponseBuilder implements ProductOptionRestResponseBuild
     protected $productOptionSorter;
 
     /**
+     * @var \Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToCurrencyClientInterface
+     */
+    protected $currencyClient;
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\ProductOptionsRestApi\Processor\Mapper\ProductOptionMapperInterface $productOptionMapper
      * @param \Spryker\Glue\ProductOptionsRestApi\Processor\Sorter\ProductOptionSorterInterface $productOptionSorter
+     * @param \Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToCurrencyClientInterface $currencyClient
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         ProductOptionMapperInterface $productOptionMapper,
-        ProductOptionSorterInterface $productOptionSorter
+        ProductOptionSorterInterface $productOptionSorter,
+        ProductOptionsRestApiToCurrencyClientInterface $currencyClient
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->productOptionMapper = $productOptionMapper;
         $this->productOptionSorter = $productOptionSorter;
+        $this->currencyClient = $currencyClient;
     }
 
     /**
@@ -89,11 +98,18 @@ class ProductOptionRestResponseBuilder implements ProductOptionRestResponseBuild
         array $productAbstractOptionStorageTransfers,
         array $sorts
     ): array {
+        $currencyIsoCode = $this->currencyClient->getCurrent()->getCode();
         $restProductOptionsAttributesTransfers = [];
         foreach ($productAbstractOptionStorageTransfers as $idProductAbstract => $productAbstractOptionStorageTransfer) {
             $restProductOptionsAttributesTransfers[$idProductAbstract] = $this->productOptionMapper
                 ->mapProductAbstractOptionStorageTransferToRestProductOptionsAttributesTransfers(
                     $productAbstractOptionStorageTransfer
+                );
+
+            $restProductOptionsAttributesTransfers[$idProductAbstract] =
+                $this->expandRestProductOptionsAttributesTransfersByCurrencyIsoCode(
+                    $restProductOptionsAttributesTransfers[$idProductAbstract],
+                    $currencyIsoCode
                 );
 
             $restProductOptionsAttributesTransfers[$idProductAbstract] = $this->productOptionSorter
@@ -151,5 +167,22 @@ class ProductOptionRestResponseBuilder implements ProductOptionRestResponseBuild
             ProductOptionsRestApiConfig::RESOURCE_PRODUCT_OPTIONS,
             $productOptionSku
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[] $restProductOptionsAttributesTransfers
+     * @param string $currencyIsoCode
+     *
+     * @return \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[]
+     */
+    protected function expandRestProductOptionsAttributesTransfersByCurrencyIsoCode(
+        array $restProductOptionsAttributesTransfers,
+        string $currencyIsoCode
+    ): array {
+        foreach ($restProductOptionsAttributesTransfers as $restProductOptionsAttributesTransfer) {
+            $restProductOptionsAttributesTransfer->setCurrencyIsoCode($currencyIsoCode);
+        }
+
+        return $restProductOptionsAttributesTransfers;
     }
 }

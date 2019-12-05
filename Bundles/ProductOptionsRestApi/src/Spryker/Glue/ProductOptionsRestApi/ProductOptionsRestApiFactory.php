@@ -8,6 +8,7 @@
 namespace Spryker\Glue\ProductOptionsRestApi;
 
 use Spryker\Glue\Kernel\AbstractFactory;
+use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToCurrencyClientInterface;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductOptionStorageClientInterface;
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductStorageClientInterface;
@@ -51,7 +52,8 @@ class ProductOptionsRestApiFactory extends AbstractFactory
         return new ProductOptionRestResponseBuilder(
             $this->getResourceBuilder(),
             $this->createProductOptionMapper(),
-            $this->createProductOptionSorter()
+            $this->createProductOptionSorter(),
+            $this->getCurrencyClient()
         );
     }
 
@@ -77,6 +79,14 @@ class ProductOptionsRestApiFactory extends AbstractFactory
     public function getGlossaryStorageClient(): ProductOptionsRestApiToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(ProductOptionsRestApiDependencyProvider::GLOSSARY_STORAGE_CLIENT);
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToCurrencyClientInterface
+     */
+    public function getCurrencyClient(): ProductOptionsRestApiToCurrencyClientInterface
+    {
+        return $this->getProvidedDependency(ProductOptionsRestApiDependencyProvider::CURRENCY_CLIENT);
     }
 
     /**

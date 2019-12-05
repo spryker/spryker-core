@@ -106,8 +106,7 @@ class ValuePriceReader implements ValuePriceReaderInterface
     ): void {
         $prices = $productOptionValueStorageTransfer->getPrices();
         $price = $prices[$currencyCode][$priceMode][ProductOptionConstants::AMOUNT] ?? null;
-        $productOptionValueStorageTransfer->setCurrencyIsoCode($currencyCode)
-            ->setPrice($price);
+        $productOptionValueStorageTransfer->setPrice($price);
     }
 
     /**
