@@ -10,6 +10,7 @@
     "spryker/product-offer": "^0.2.0"
   },
   "require-dev": {
+    "spryker/propel": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },
