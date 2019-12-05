@@ -23,6 +23,7 @@ use Spryker\Client\Search\SearchFactory;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Search
@@ -39,7 +40,7 @@ class SearchClientTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->searchClient = new SearchClient();
     }
@@ -47,7 +48,7 @@ class SearchClientTest extends Unit
     /**
      * @return void
      */
-    public function testGetSearchConfigShouldReturnTheSameInstance()
+    public function testGetSearchConfigShouldReturnTheSameInstance(): void
     {
         /** @var \Spryker\Client\Search\SearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
         $searchFactoryMock = $this->getMockBuilder(SearchFactory::class)
@@ -71,7 +72,7 @@ class SearchClientTest extends Unit
     /**
      * @return void
      */
-    public function testCheckConnection()
+    public function testCheckConnection(): void
     {
         $elasticaClientMock = $this
             ->getMockBuilder(Client::class)
@@ -97,7 +98,7 @@ class SearchClientTest extends Unit
     /**
      * @return void
      */
-    public function testClientSearchWithoutResultFormatters()
+    public function testClientSearchWithoutResultFormatters(): void
     {
         $this->prepareSearchClientForSearchTest();
 
@@ -111,7 +112,7 @@ class SearchClientTest extends Unit
     /**
      * @return void
      */
-    public function testClientSearchWithResultFormatters()
+    public function testClientSearchWithResultFormatters(): void
     {
         $this->prepareSearchClientForSearchTest();
 
@@ -142,7 +143,7 @@ class SearchClientTest extends Unit
     /**
      * @return void
      */
-    public function testExpandQuery()
+    public function testExpandQuery(): void
     {
         /** @var \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\PHPUnit\Framework\MockObject\MockObject $queryMock */
         $queryMock = $this->getMockBuilder(QueryInterface::class)->getMock();
@@ -167,7 +168,7 @@ class SearchClientTest extends Unit
     /**
      * @return void
      */
-    public function testSearchKeys()
+    public function testSearchKeys(): void
     {
         $expectedQuery = new SearchKeysQuery('foo', 25, 100);
 
@@ -189,7 +190,7 @@ class SearchClientTest extends Unit
     /**
      * @return void
      */
-    public function testSearchString()
+    public function testSearchString(): void
     {
         $expectedQuery = new SearchStringQuery('foo:bar', 25, 100);
 
@@ -211,7 +212,7 @@ class SearchClientTest extends Unit
     /**
      * @return void
      */
-    protected function prepareSearchClientForSearchTest()
+    protected function prepareSearchClientForSearchTest(): void
     {
         $elasticsearchSearchHandlerMock = $this->getMockBuilder(ElasticsearchSearchHandler::class)
             ->setMethods(['executeQuery'])

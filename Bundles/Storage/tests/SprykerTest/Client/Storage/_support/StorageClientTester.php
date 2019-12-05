@@ -12,6 +12,7 @@ use ReflectionClass;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -36,7 +37,7 @@ class StorageClientTester extends Actor
      *
      * @return void
      */
-    public function setProtectedProperty($object, $propertyName, $value)
+    public function setProtectedProperty($object, string $propertyName, $value): void
     {
         $storageClientReflection = new ReflectionClass($object);
         $bufferedValuesReflection = $storageClientReflection->getProperty($propertyName);

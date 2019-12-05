@@ -22,6 +22,7 @@ use Symfony\Component\Console\Output\NullOutput;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Collector
@@ -82,7 +83,7 @@ class AbstractDatabaseCollectorTest extends Unit
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -126,7 +127,7 @@ class AbstractDatabaseCollectorTest extends Unit
     /**
      * @return void
      */
-    public function testExportDataToStoreWritesStorableData()
+    public function testExportDataToStoreWritesStorableData(): void
     {
         // Assign
         $this->abstractDatabaseCollectorMock
@@ -182,7 +183,7 @@ class AbstractDatabaseCollectorTest extends Unit
     /**
      * @return void
      */
-    public function testExportDataToStoreDeletesNotStorableData()
+    public function testExportDataToStoreDeletesNotStorableData(): void
     {
         // Assign
         $this->abstractDatabaseCollectorMock

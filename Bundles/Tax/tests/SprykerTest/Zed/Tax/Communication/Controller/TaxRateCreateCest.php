@@ -12,6 +12,7 @@ use SprykerTest\Zed\Tax\TaxCommunicationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Tax
@@ -27,9 +28,9 @@ class TaxRateCreateCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(TaxCommunicationTester $i)
+    public function breadcrumbIsVisible(TaxCommunicationTester $i): void
     {
         $i->amOnPage(TaxRateCreatePage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Taxes / Tax Rates / Create Tax Rate');
+        $i->seeBreadcrumbNavigation('Taxes / Tax Rates / Create Tax Rate');
     }
 }

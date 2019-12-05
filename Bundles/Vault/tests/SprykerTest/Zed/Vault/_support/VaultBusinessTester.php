@@ -10,10 +10,12 @@ namespace SprykerTest\Zed\Vault;
 use Codeception\Actor;
 use Spryker\Shared\Vault\VaultConfig as SharedVaultConfig;
 use Spryker\Zed\Vault\Business\VaultBusinessFactory;
+use Spryker\Zed\Vault\Business\VaultFacadeInterface;
 use Spryker\Zed\Vault\VaultConfig;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -40,7 +42,7 @@ class VaultBusinessTester extends Actor
      *
      * @return \Spryker\Zed\Vault\Business\VaultFacadeInterface
      */
-    public function getVaultFacadeWithSharedConfig(SharedVaultConfig $sharedVaultConfig)
+    public function getVaultFacadeWithSharedConfig(SharedVaultConfig $sharedVaultConfig): VaultFacadeInterface
     {
         $vaultConfig = (new VaultConfig())
             ->setSharedConfig($sharedVaultConfig);

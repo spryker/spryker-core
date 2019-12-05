@@ -19,6 +19,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Propel
@@ -37,7 +38,7 @@ class PropelSchemaTest extends Unit
     /**
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         $filesystem = new Filesystem();
         $filesystem->remove($this->getFixtureTargetDirectory());
@@ -46,7 +47,7 @@ class PropelSchemaTest extends Unit
     /**
      * @return string
      */
-    private function getFixtureDirectory()
+    private function getFixtureDirectory(): string
     {
         return __DIR__ . DIRECTORY_SEPARATOR . 'Fixtures' . DIRECTORY_SEPARATOR . 'PropelSchema';
     }
@@ -54,7 +55,7 @@ class PropelSchemaTest extends Unit
     /**
      * @return string
      */
-    private function getFixtureTargetDirectory()
+    private function getFixtureTargetDirectory(): string
     {
         return $this->getFixtureDirectory() . DIRECTORY_SEPARATOR . 'Target';
     }
@@ -62,7 +63,7 @@ class PropelSchemaTest extends Unit
     /**
      * @return void
      */
-    public function testCopyShouldCopyFileFromSourceToTargetDirectoryWithoutMergingIfOnlyOneFileBySchemaNameExist()
+    public function testCopyShouldCopyFileFromSourceToTargetDirectoryWithoutMergingIfOnlyOneFileBySchemaNameExist(): void
     {
         $finder = new PropelSchemaFinder([$this->getFixtureDirectory()]);
         $groupedFinder = new PropelGroupedSchemaFinder($finder);
@@ -79,7 +80,7 @@ class PropelSchemaTest extends Unit
     /**
      * @return void
      */
-    public function testCopyShouldMergeAndCopyFileFromSourceToTargetDirectoryIfMoreThenOneFileBySchemaNameExist()
+    public function testCopyShouldMergeAndCopyFileFromSourceToTargetDirectoryIfMoreThenOneFileBySchemaNameExist(): void
     {
         $finder = new PropelSchemaFinder([
             $this->getFixtureDirectory() . DIRECTORY_SEPARATOR . 'Project',

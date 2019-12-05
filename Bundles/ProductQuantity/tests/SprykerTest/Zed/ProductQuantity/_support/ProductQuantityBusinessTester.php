@@ -11,11 +11,13 @@ use ArrayObject;
 use Codeception\Actor;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductQuantityTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -40,7 +42,7 @@ class ProductQuantityBusinessTester extends Actor
     /**
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function createProductWithProductQuantity()
+    public function createProductWithProductQuantity(): ProductConcreteTransfer
     {
         $productTransfer = $this->haveProduct();
         $this->haveProductQuantity($productTransfer->getIdProductConcrete());
@@ -55,7 +57,7 @@ class ProductQuantityBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function createProductWithSpecificProductQuantity($min, $max, $interval)
+    public function createProductWithSpecificProductQuantity(?int $min, ?int $max, ?int $interval): ProductConcreteTransfer
     {
         $productQuantityOverride = [
             ProductQuantityTransfer::QUANTITY_INTERVAL => $interval,
@@ -72,7 +74,7 @@ class ProductQuantityBusinessTester extends Actor
     /**
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function createEmptyCartChangeTransfer()
+    public function createEmptyCartChangeTransfer(): CartChangeTransfer
     {
         return (new CartChangeTransfer())
             ->setQuote(
@@ -89,7 +91,7 @@ class ProductQuantityBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function addSkuToCartChangeTransferQuote(CartChangeTransfer $cartChangeTransfer, $sku, $quantity)
+    public function addSkuToCartChangeTransferQuote(CartChangeTransfer $cartChangeTransfer, string $sku, int $quantity): CartChangeTransfer
     {
         $cartChangeTransfer->getQuote()->addItem(
             (new ItemTransfer())
@@ -107,7 +109,7 @@ class ProductQuantityBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function addSkuToCartChangeTransfer(CartChangeTransfer $cartChangeTransfer, $sku, $quantity)
+    public function addSkuToCartChangeTransfer(CartChangeTransfer $cartChangeTransfer, string $sku, int $quantity): CartChangeTransfer
     {
         $cartChangeTransfer->addItem(
             (new ItemTransfer())
@@ -123,7 +125,7 @@ class ProductQuantityBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function addEmptyItemTransferToCartChangeTransfer(CartChangeTransfer $cartChangeTransfer)
+    public function addEmptyItemTransferToCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
         $cartChangeTransfer->addItem(
             (new ItemTransfer())

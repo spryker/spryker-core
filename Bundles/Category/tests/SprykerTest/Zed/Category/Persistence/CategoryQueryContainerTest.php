@@ -15,6 +15,7 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group Unit
  * @group Spryker
  * @group Zed
@@ -30,7 +31,7 @@ class CategoryQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryClosureTableParentEntriesMustReturnExecutableQuery()
+    public function testQueryClosureTableParentEntriesMustReturnExecutableQuery(): void
     {
         $categoryQueryContainer = new CategoryQueryContainer();
         $query = $categoryQueryContainer->queryClosureTableParentEntries(self::ID_CATEGORY_NODE);
@@ -42,7 +43,7 @@ class CategoryQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAllCategoryNodesReturnCorrectQuery()
+    public function testQueryAllCategoryNodesReturnCorrectQuery(): void
     {
         $categoryQueryContainer = new CategoryQueryContainer();
         $query = $categoryQueryContainer->queryAllCategoryNodes();
@@ -53,7 +54,7 @@ class CategoryQueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testQueryAllCategoryAttributesReturnCorrectQuery()
+    public function testQueryAllCategoryAttributesReturnCorrectQuery(): void
     {
         $categoryQueryContainer = new CategoryQueryContainer();
         $query = $categoryQueryContainer->queryAllCategoryAttributes();

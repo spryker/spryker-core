@@ -32,6 +32,11 @@ class IndexController extends AbstractController
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
     /**
+     * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_SUB_REQUEST
+     */
+    protected const SERVICE_SUB_REQUEST = 'sub_request';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -191,7 +196,7 @@ class IndexController extends AbstractController
      */
     protected function getSubRequestHandler()
     {
-        return $this->getApplication()['sub_request'];
+        return $this->getApplication()->get(static::SERVICE_SUB_REQUEST);
     }
 
     /**

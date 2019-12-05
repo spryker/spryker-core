@@ -12,18 +12,18 @@ use Generated\Shared\Transfer\KeyTranslationTransfer;
 interface CmsBlockToGlossaryInterface
 {
     /**
-     * @param array $keys
+     * @param array $idKeys
      *
      * @return void
      */
-    public function deleteTranslationsByFkKeys(array $keys);
+    public function deleteTranslationsByFkKeys(array $idKeys);
 
     /**
-     * @param array $keys
+     * @param array $idKeys
      *
      * @return bool
      */
-    public function deleteKeys(array $keys);
+    public function deleteKeys(array $idKeys);
 
     /**
      * @param string $keyName

@@ -14,6 +14,7 @@ use SprykerTest\Zed\PropelOrm\Stub\DatabaseTransactionHandlerTraitStub;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PropelOrm
@@ -32,7 +33,7 @@ class DatabaseTransactionHandlerTraitTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->connection = $this->getMockBuilder(ConnectionInterface::class)->getMock();
     }
@@ -40,9 +41,9 @@ class DatabaseTransactionHandlerTraitTest extends Unit
     /**
      * @return void
      */
-    public function testShouldCommitWhenNoErrors()
+    public function testShouldCommitWhenNoErrors(): void
     {
-        $callback = function () {
+        $callback = function (): void {
         };
 
         $this->connection
@@ -63,9 +64,9 @@ class DatabaseTransactionHandlerTraitTest extends Unit
      *
      * @return void
      */
-    public function testShouldCatchExceptionAndRollback()
+    public function testShouldCatchExceptionAndRollback(): void
     {
-        $callback = function () {
+        $callback = function (): void {
             throw new Exception('Error when saving');
         };
 

@@ -20,6 +20,7 @@ use SprykerTest\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlugi
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Kernel
@@ -32,7 +33,7 @@ class AbstractPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetCommunicationFactoryShouldReturnInstanceIfExists()
+    public function testGetCommunicationFactoryShouldReturnInstanceIfExists(): void
     {
         $plugin = new FooPlugin();
 
@@ -50,7 +51,7 @@ class AbstractPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetFacadeShouldThrowExceptionIfFacadeNotFound()
+    public function testGetFacadeShouldThrowExceptionIfFacadeNotFound(): void
     {
         $this->expectException(FacadeNotFoundException::class);
 
@@ -61,7 +62,7 @@ class AbstractPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetFacadeShouldReturnInstanceIfExists()
+    public function testGetFacadeShouldReturnInstanceIfExists(): void
     {
         $plugin = new FooPlugin();
 
@@ -79,7 +80,7 @@ class AbstractPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetQueryContainerThrowExceptionIfQueryContainerNotFound()
+    public function testGetQueryContainerThrowExceptionIfQueryContainerNotFound(): void
     {
         $this->expectException(QueryContainerNotFoundException::class);
 
@@ -103,7 +104,7 @@ class AbstractPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetQueryContainerShouldReturnInstanceIfQueryContainerIfExists()
+    public function testGetQueryContainerShouldReturnInstanceIfQueryContainerIfExists(): void
     {
         $plugin = new FooPlugin();
 

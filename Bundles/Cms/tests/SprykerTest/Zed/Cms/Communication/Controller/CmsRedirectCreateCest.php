@@ -12,6 +12,7 @@ use SprykerTest\Zed\Cms\PageObject\CmsRedirectCreatePage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Cms
@@ -27,9 +28,9 @@ class CmsRedirectCreateCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(CmsCommunicationTester $i)
+    public function breadcrumbIsVisible(CmsCommunicationTester $i): void
     {
         $i->amOnPage(CmsRedirectCreatePage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Content Management / Redirects / Create new CMS Redirect');
+        $i->seeBreadcrumbNavigation('Content Management / Redirects / Create new CMS Redirect');
     }
 }

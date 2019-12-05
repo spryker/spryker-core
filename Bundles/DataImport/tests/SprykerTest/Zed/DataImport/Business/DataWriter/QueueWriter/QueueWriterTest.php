@@ -17,6 +17,7 @@ use Spryker\Zed\DataImport\Dependency\Service\DataImportToUtilEncodingServiceInt
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DataImport

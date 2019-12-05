@@ -8,9 +8,11 @@
 namespace SprykerTest\Zed\CmsBlockProductConnector\Business;
 
 use Codeception\Test\Unit;
+use Spryker\Zed\CmsBlockProductConnector\Business\CmsBlockProductConnectorFacadeInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CmsBlockProductConnector
@@ -29,7 +31,7 @@ class CmsBlockProductConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateCmsBlockProductRelations()
+    public function testUpdateCmsBlockProductRelations(): void
     {
         $cmsBlockTransfer = $this->tester->haveCmsBlock();
 
@@ -50,7 +52,7 @@ class CmsBlockProductConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testHydrateCmsBlockProductRelations()
+    public function testHydrateCmsBlockProductRelations(): void
     {
         $cmsBlockTransfer = $this->tester->haveCmsBlock();
 
@@ -71,7 +73,7 @@ class CmsBlockProductConnectorFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\CmsBlockProductConnector\Business\CmsBlockProductConnectorFacadeInterface
      */
-    protected function createCmsBlockProductConnectorFacade()
+    protected function createCmsBlockProductConnectorFacade(): CmsBlockProductConnectorFacadeInterface
     {
         return $this->tester->getLocator()->cmsBlockProductConnector()->facade();
     }

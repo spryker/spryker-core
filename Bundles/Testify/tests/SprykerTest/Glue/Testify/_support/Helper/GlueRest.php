@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Glue\Testify\Helper;
@@ -32,7 +32,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     protected $lastConnection;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function _initialize(): void
     {
@@ -40,7 +40,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getLastConnection(): ?Connection
     {
@@ -222,6 +222,45 @@ class GlueRest extends REST implements LastConnectionProviderInterface
             'type' => $type,
         ], '$.data[*]');
         $this->assertCount($size, $this->grabDataFromResponseByJsonPath('$.data')[0]);
+    }
+
+    /**
+     * @part json
+     *
+     * @return void
+     */
+    public function seeResponseDataContainsEmptyCollection(): void
+    {
+        $this->getJsonPathModule()->dontSeeResponseMatchesJsonPath('$.data[*]');
+    }
+
+    /**
+     * @part json
+     *
+     * @return void
+     */
+    public function seeResponseDataContainsNonEmptyCollection(): void
+    {
+        $this->getJsonPathModule()->seeResponseMatchesJsonPath('$.data[*]');
+    }
+
+    /**
+     * @part json
+     *
+     * @param string $resourceName
+     * @param string $identifier
+     *
+     * @return array|mixed
+     */
+    public function grabIncludedByTypeAndId(string $resourceName, string $identifier)
+    {
+        $jsonPath = sprintf(
+            '$..included[?(@.type == \'%s\' and @.id == \'%s\')].attributes',
+            $resourceName,
+            $identifier
+        );
+
+        return $this->grabDataFromResponseByJsonPath($jsonPath)[0];
     }
 
     /**
@@ -429,7 +468,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected function resetVariables(): void
     {
@@ -437,7 +476,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected function execute($method, $url, $parameters = [], $files = [])
     {

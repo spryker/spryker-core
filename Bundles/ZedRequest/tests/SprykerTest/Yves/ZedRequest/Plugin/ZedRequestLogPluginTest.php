@@ -16,6 +16,7 @@ use Spryker\Yves\ZedRequest\Plugin\ZedRequestLogPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group ZedRequest
@@ -28,7 +29,7 @@ class ZedRequestLogPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetNameShouldReturnString()
+    public function testGetNameShouldReturnString(): void
     {
         $zedRequestLogPlugin = new ZedRequestLogPlugin();
 
@@ -38,7 +39,7 @@ class ZedRequestLogPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetCallableShouldReturnCallable()
+    public function testGetCallableShouldReturnCallable(): void
     {
         $zedRequestLogPlugin = new ZedRequestLogPlugin();
 
@@ -48,7 +49,7 @@ class ZedRequestLogPluginTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteCallableShouldCallLogger()
+    public function testExecuteCallableShouldCallLogger(): void
     {
         $loggerMock = $this->getLoggerMock();
         $loggerMock->expects($this->once())->method('info');

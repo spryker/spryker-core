@@ -17,6 +17,7 @@ use Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Refund
@@ -30,7 +31,7 @@ class RefundCalculatorTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateRefundShouldReturnRefundTransfer()
+    public function testCalculateRefundShouldReturnRefundTransfer(): void
     {
         $refund = $this->getRefundCalculator([]);
         $result = $refund->calculateRefund([], new SpySalesOrder());
@@ -41,7 +42,7 @@ class RefundCalculatorTest extends Unit
     /**
      * @return void
      */
-    public function testCalculateRefundShouldCallRefundPlugins()
+    public function testCalculateRefundShouldCallRefundPlugins(): void
     {
         $refundCalculationPlugin = $this->getRefundCalculationPlugin();
         $refund = $this->getRefundCalculator([$refundCalculationPlugin]);
@@ -55,7 +56,7 @@ class RefundCalculatorTest extends Unit
      *
      * @return \Spryker\Zed\Refund\Business\Model\RefundCalculator
      */
-    protected function getRefundCalculator(array $refundCalculatorPlugins)
+    protected function getRefundCalculator(array $refundCalculatorPlugins): RefundCalculator
     {
         $refund = new RefundCalculator(
             $refundCalculatorPlugins,

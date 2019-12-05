@@ -24,7 +24,7 @@ class ProductListDataExpanderPlugin extends AbstractPlugin implements ProductPag
     protected const KEY_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

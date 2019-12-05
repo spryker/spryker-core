@@ -12,6 +12,7 @@ use Spryker\Glue\Kernel\Controller\RouteNameResolver;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Glue
  * @group Kernel
@@ -24,7 +25,7 @@ class RouteNameResolverTest extends Unit
     /**
      * @return void
      */
-    public function testResolveShouldReturnResolvedRouteName()
+    public function testResolveShouldReturnResolvedRouteName(): void
     {
         $resolver = new RouteNameResolver('foo', 'bar', 'baz');
 

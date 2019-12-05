@@ -14,6 +14,7 @@ use Spryker\Client\Cart\Plugin\ItemCountPlugin;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Cart
@@ -26,7 +27,7 @@ class ItemCountPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetItemCountReturnsOWhenNoItemInQuote()
+    public function testGetItemCountReturnsOWhenNoItemInQuote(): void
     {
         $quoteTransfer = new QuoteTransfer();
 
@@ -37,7 +38,7 @@ class ItemCountPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetItemCountReturnsNumberOfItemsInCart()
+    public function testGetItemCountReturnsNumberOfItemsInCart(): void
     {
         $quoteTransfer = new QuoteTransfer();
         $itemTransfer = new ItemTransfer();

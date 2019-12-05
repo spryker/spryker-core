@@ -16,6 +16,7 @@ use Spryker\Client\ContentFile\Exception\InvalidFileListTermException;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group ContentFile

@@ -16,6 +16,7 @@ use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Propel
@@ -37,7 +38,7 @@ class PropelSchemaMergerTest extends Unit
     /**
      * @return void
      */
-    public function testMergeTwoSchemaFilesMustReturnStringWithMergedContent()
+    public function testMergeTwoSchemaFilesMustReturnStringWithMergedContent(): void
     {
         $filesToMerge = [
             $this->getSplFileInfo('foo_bar.schema.xml', static::LEVEL_VENDOR),
@@ -54,7 +55,7 @@ class PropelSchemaMergerTest extends Unit
     /**
      * @return void
      */
-    public function testMergeMoreThanTwoSchemaFilesMustReturnStringWithMergedContent()
+    public function testMergeMoreThanTwoSchemaFilesMustReturnStringWithMergedContent(): void
     {
         $filesToMerge = [
             $this->getSplFileInfo('foo_bar.schema.xml', static::LEVEL_VENDOR),
@@ -71,7 +72,7 @@ class PropelSchemaMergerTest extends Unit
     /**
      * @return void
      */
-    public function testMergeAllowsToChangeAttributeValue()
+    public function testMergeAllowsToChangeAttributeValue(): void
     {
         $filesToMerge = [
             $this->getSplFileInfo('attribute_value_change.schema.xml', static::LEVEL_VENDOR),
@@ -109,7 +110,7 @@ class PropelSchemaMergerTest extends Unit
      *
      * @return \Symfony\Component\Finder\SplFileInfo
      */
-    protected function getSplFileInfo($fileName, $level)
+    protected function getSplFileInfo(string $fileName, string $level): SplFileInfo
     {
         return new SplFileInfo($this->getFixtureDirectory($level) . $fileName, '', '');
     }
@@ -119,7 +120,7 @@ class PropelSchemaMergerTest extends Unit
      *
      * @return string
      */
-    private function getFixtureDirectory($level = null)
+    private function getFixtureDirectory(?string $level = null): string
     {
         $pathParts = [
             __DIR__,

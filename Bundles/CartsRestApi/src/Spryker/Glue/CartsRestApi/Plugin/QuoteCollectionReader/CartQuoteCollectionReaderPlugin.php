@@ -20,7 +20,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class CartQuoteCollectionReaderPlugin extends AbstractPlugin implements QuoteCollectionReaderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns quote collection transfer with single quote for customer.
      *
      * @api

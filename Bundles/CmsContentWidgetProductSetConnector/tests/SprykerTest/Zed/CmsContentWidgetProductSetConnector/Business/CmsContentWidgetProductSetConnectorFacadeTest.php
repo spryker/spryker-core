@@ -13,6 +13,7 @@ use Spryker\Zed\CmsContentWidgetProductSetConnector\Business\CmsContentWidgetPro
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CmsContentWidgetProductSetConnector
@@ -26,7 +27,7 @@ class CmsContentWidgetProductSetConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testMapProductKeyListShouldMapSetKeyToPrimaryKey()
+    public function testMapProductKeyListShouldMapSetKeyToPrimaryKey(): void
     {
         $productAbstractTransfer1 = $this->tester->haveProductAbstract();
         $productAbstractTransfer2 = $this->tester->haveProductAbstract();
@@ -52,7 +53,7 @@ class CmsContentWidgetProductSetConnectorFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\CmsContentWidgetProductSetConnector\Business\CmsContentWidgetProductSetConnectorFacade
      */
-    protected function createCmsProductSetConnectorFacade()
+    protected function createCmsProductSetConnectorFacade(): CmsContentWidgetProductSetConnectorFacade
     {
         return new CmsContentWidgetProductSetConnectorFacade();
     }

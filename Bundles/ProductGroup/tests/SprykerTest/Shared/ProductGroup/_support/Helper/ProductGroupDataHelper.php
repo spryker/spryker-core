@@ -39,7 +39,7 @@ class ProductGroupDataHelper extends Module
             $productGroupTransfer->getIdProductGroup()
         ));
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($productGroupTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productGroupTransfer): void {
             $this->cleanupProductGroup($productGroupTransfer);
         });
 

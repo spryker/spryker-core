@@ -16,6 +16,7 @@ use Spryker\Client\Redis\Adapter\RedisAdapterProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Redis
@@ -56,12 +57,11 @@ class RedisAdapterProviderTest extends Unit
     }
 
     /**
-     * @expectedException \Spryker\Client\Redis\Exception\RedisAdapterNotInitializedException
-     *
      * @return void
      */
     public function testThrowsExceptionWhenConnectionNotInitialized(): void
     {
+        $this->expectException('Spryker\Client\Redis\Exception\RedisAdapterNotInitializedException');
         $this->connectionProvider->getAdapter(static::CONNECTION_KEY_SESSION);
     }
 

@@ -68,7 +68,7 @@ class PriceProductDefaultRemover implements PriceProductDefaultRemoverInterface
 
         foreach ($priceProductStores as $priceProductStore) {
             $this->priceProductEntityManager
-                ->deletePriceProductDefaultsByPriceProductStoreId($priceProductStore->getIdPriceProductStore());
+                ->deletePriceProductDefaultsByPriceProductStoreId((int)$priceProductStore->getIdPriceProductStore());
         }
     }
 }

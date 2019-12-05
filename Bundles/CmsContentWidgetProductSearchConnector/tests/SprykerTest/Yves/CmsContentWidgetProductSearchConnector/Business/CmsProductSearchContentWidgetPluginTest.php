@@ -14,6 +14,7 @@ use Spryker\Yves\CmsContentWidgetProductSearchConnector\Plugin\CmsProductSearchC
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group CmsContentWidgetProductSetConnector
@@ -26,7 +27,7 @@ class CmsProductSearchContentWidgetPluginTest extends Unit
     /**
      * @return void
      */
-    public function testCmsProductSearchContentWidgetPluginCreated()
+    public function testCmsProductSearchContentWidgetPluginCreated(): void
     {
         $plugin = new CmsProductSearchContentWidgetPlugin(
             $this->createCmsContentWidgetConfigurationProviderMock()

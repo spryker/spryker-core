@@ -8,8 +8,7 @@
 namespace Spryker\Client\ProductPackagingUnitStorage;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer;
-use Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -18,40 +17,23 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductPackagingUnitStorageClient extends AbstractClient implements ProductPackagingUnitStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
-     * @param int $idProductAbstract
+     * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractPackagingStorageTransfer|null
+     * @return \Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer|null
      */
-    public function findProductAbstractPackagingById(int $idProductAbstract): ?ProductAbstractPackagingStorageTransfer
+    public function findProductPackagingUnitById(int $idProductConcrete): ?ProductPackagingUnitStorageTransfer
     {
         return $this->getFactory()
             ->createProductPackagingUnitStorageReader()
-            ->findProductAbstractPackagingById($idProductAbstract);
+            ->findProductPackagingUnitById($idProductConcrete);
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     *
-     * @param int $idProductAbstract
-     * @param int $idProduct
-     *
-     * @return \Generated\Shared\Transfer\ProductConcretePackagingStorageTransfer|null
-     */
-    public function findProductConcretePackagingById(int $idProductAbstract, int $idProduct): ?ProductConcretePackagingStorageTransfer
-    {
-        return $this->getFactory()
-            ->createProductPackagingUnitStorageReader()
-            ->findProductConcretePackagingById($idProductAbstract, $idProduct);
-    }
-
-    /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

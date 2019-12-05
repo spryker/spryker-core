@@ -14,6 +14,7 @@ use Spryker\Shared\ProductCategoryFilter\ProductCategoryFilterConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductCategoryFilter
@@ -28,7 +29,7 @@ class CreateProductCategoryFilterTest extends Unit
     /**
      * @return void
      */
-    public function testCreateProductCategoryFilterPersistNewEntitiesToDatabase()
+    public function testCreateProductCategoryFilterPersistNewEntitiesToDatabase(): void
     {
         // Arrange
         $productCategory = $this->tester->haveCategory();

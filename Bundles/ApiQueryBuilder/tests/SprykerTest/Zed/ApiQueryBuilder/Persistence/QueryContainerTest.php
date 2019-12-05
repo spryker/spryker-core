@@ -22,6 +22,7 @@ use Spryker\Zed\ApiQueryBuilder\Persistence\ApiQueryBuilderQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group Functional
  * @group Spryker
  * @group Zed
@@ -40,7 +41,7 @@ class QueryContainerTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -50,7 +51,7 @@ class QueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testBuildQueryFromRequest()
+    public function testBuildQueryFromRequest(): void
     {
         $apiFilter = new ApiFilterTransfer();
 
@@ -73,7 +74,7 @@ class QueryContainerTest extends Unit
     /**
      * @return void
      */
-    public function testToPropelQueryBuilderCriteria()
+    public function testToPropelQueryBuilderCriteria(): void
     {
         $apiFilter = new ApiFilterTransfer();
 
@@ -94,7 +95,7 @@ class QueryContainerTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\PropelQueryBuilderColumnSelectionTransfer
      */
-    protected function getColumnSelectionTransfer()
+    protected function getColumnSelectionTransfer(): PropelQueryBuilderColumnSelectionTransfer
     {
         $columnSelectionTransfer = new PropelQueryBuilderColumnSelectionTransfer();
 

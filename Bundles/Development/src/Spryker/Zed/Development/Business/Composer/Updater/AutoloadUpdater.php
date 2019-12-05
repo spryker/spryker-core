@@ -61,10 +61,12 @@ class AutoloadUpdater implements UpdaterInterface
      * @var array
      */
     protected $applications = [
+        'Service',
         'Client',
         'Shared',
         'Yves',
         'Zed',
+        'Glue',
     ];
 
     /**
@@ -334,7 +336,7 @@ class AutoloadUpdater implements UpdaterInterface
      */
     protected function getPath(array $pathParts)
     {
-        return implode($pathParts, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        return implode(DIRECTORY_SEPARATOR, $pathParts) . DIRECTORY_SEPARATOR;
     }
 
     /**

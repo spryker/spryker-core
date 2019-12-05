@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -66,7 +67,7 @@ use Spryker\Glue\GlueApplication\Serialize\Encoder\EncoderInterface;
 use Spryker\Glue\GlueApplication\Serialize\Encoder\JsonEncoder;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\Kernel\Application;
+use Spryker\Shared\Kernel\Communication\Application;
 
 /**
  * @method \Spryker\Glue\GlueApplication\GlueApplicationConfig getConfig()
@@ -234,6 +235,8 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Use `\Spryker\Glue\GlueApplication\Plugin\EventDispatcher\GlueRestControllerListenerEventDispatcherPlugin` instead.
+     *
      * @return \Spryker\Glue\GlueApplication\Plugin\Rest\GlueControllerListenerPlugin
      */
     public function createRestControllerListener(): GlueControllerListenerPlugin
@@ -310,7 +313,7 @@ class GlueApplicationFactory extends AbstractFactory
      */
     public function createRestResponsePagination(): ResponsePaginationInterface
     {
-        return new ResponsePagination($this->getConfig()->getGlueDomainName());
+        return new ResponsePagination($this->getConfig());
     }
 
     /**
@@ -367,7 +370,7 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\Kernel\Application
+     * @return \Spryker\Shared\Kernel\Communication\Application
      */
     public function getGlueApplication(): Application
     {

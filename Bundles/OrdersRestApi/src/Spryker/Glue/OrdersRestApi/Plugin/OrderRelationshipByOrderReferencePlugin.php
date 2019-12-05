@@ -18,7 +18,7 @@ use Spryker\Glue\OrdersRestApi\OrdersRestApiConfig;
 class OrderRelationshipByOrderReferencePlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Adds orders resource as relationship by order reference.
      * - Resource should have order reference field in attributes.
      *
@@ -37,7 +37,7 @@ class OrderRelationshipByOrderReferencePlugin extends AbstractPlugin implements 
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

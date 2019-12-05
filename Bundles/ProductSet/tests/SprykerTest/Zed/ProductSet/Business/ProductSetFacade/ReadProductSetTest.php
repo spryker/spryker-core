@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductSetTransfer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductSet
@@ -27,7 +28,7 @@ class ReadProductSetTest extends Unit
     /**
      * @return void
      */
-    public function testReadProductSetHasLocalizedData()
+    public function testReadProductSetHasLocalizedData(): void
     {
         // Arrange
         $productAbstractTransfer1 = $this->tester->haveProductAbstract();
@@ -57,7 +58,7 @@ class ReadProductSetTest extends Unit
     /**
      * @return void
      */
-    public function testReadProductSetHasUrl()
+    public function testReadProductSetHasUrl(): void
     {
         // Arrange
         $productAbstractTransfer1 = $this->tester->haveProductAbstract();
@@ -91,7 +92,7 @@ class ReadProductSetTest extends Unit
     /**
      * @return void
      */
-    public function testReadProductSetHasImages()
+    public function testReadProductSetHasImages(): void
     {
         // Arrange
         $productAbstractTransfer1 = $this->tester->haveProductAbstract();
@@ -121,7 +122,7 @@ class ReadProductSetTest extends Unit
     /**
      * @return void
      */
-    public function testReadProductSetHasProductIdsInCorrectOrder()
+    public function testReadProductSetHasProductIdsInCorrectOrder(): void
     {
         // Arrange
         $productAbstractTransfer1 = $this->tester->haveProductAbstract();

@@ -7,15 +7,23 @@
 
 namespace Spryker\Client\ProductStorage\Finder;
 
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapperInterface;
 use Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReaderInterface;
 
 class ProductAbstractViewTransferFinder extends AbstractProductViewTransferFinder
 {
+    protected const KEY_ID_PRODUCT = 'id_product_abstract';
+
     /**
      * @var \Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReaderInterface
      */
     protected $productAbstractStorageReader;
+
+    /**
+     * @var array
+     */
+    protected static $productViewTransfersCache = [];
 
     /**
      * @param \Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReaderInterface $productAbstractStorage
@@ -36,5 +44,38 @@ class ProductAbstractViewTransferFinder extends AbstractProductViewTransferFinde
     protected function findProductStorageData(int $idProductAbstract, string $localeName): ?array
     {
         return $this->productAbstractStorageReader->findProductAbstractStorageData($idProductAbstract, $localeName);
+    }
+
+    /**
+     * @param int[] $productIds
+     * @param string $localeName
+     *
+     * @return array
+     */
+    protected function getBulkProductStorageData(array $productIds, string $localeName): array
+    {
+        return $this
+            ->productAbstractStorageReader
+            ->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productIds, $localeName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return int
+     */
+    protected function getProductId(ProductViewTransfer $productViewTransfer): int
+    {
+        return $productViewTransfer->getIdProductAbstract();
+    }
+
+    /**
+     * @param array $productData
+     *
+     * @return int
+     */
+    protected function getProductDataProductId(array $productData): int
+    {
+        return $productData[static::KEY_ID_PRODUCT];
     }
 }

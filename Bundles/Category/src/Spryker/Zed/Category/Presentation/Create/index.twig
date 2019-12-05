@@ -30,11 +30,11 @@
 
 {% block head_css %}
     {{ parent() }}
-    <link rel="stylesheet" href="/assets/css/spryker-zed-category-main.css" />
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-category-main.css') }}" />
 {% endblock %}
 
 {% block footer_js %}
     {{ parent() }}
-    <script src="/assets/js/spryker-zed-category-main.js"></script>
-    <script src="/assets/js/spryker-zed-cms-block-category-connector-main.js"></script>
+    <script src="{{ assetsPath('js/spryker-zed-category-main.js') }}"></script>
+    <script src="{{ assetsPath('js/spryker-zed-cms-block-category-connector-main.js') }}"></script>
 {% endblock %}

@@ -4,21 +4,21 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Content">
-        <property name="idContent" type="int" />
-        <property name="name" type="string" />
-        <property name="key" type="string" />
-        <property name="description" type="string" />
-        <property name="contentTermKey" type="string" />
-        <property name="contentTypeKey" type="string" />
-        <property name="localizedContents" type="LocalizedContent[]" singular="localizedContent" />
+        <property name="idContent" type="int"/>
+        <property name="name" type="string"/>
+        <property name="key" type="string"/>
+        <property name="description" type="string"/>
+        <property name="contentTermKey" type="string"/>
+        <property name="contentTypeKey" type="string"/>
+        <property name="localizedContents" type="LocalizedContent[]" singular="localizedContent"/>
     </transfer>
 
     <transfer name="LocalizedContent">
-        <property name="idContentLocalized" type="int" />
-        <property name="localeName" type="string" />
-        <property name="fkLocale" type="int" />
-        <property name="fkContent" type="int" />
-        <property name="parameters" type="string" />
+        <property name="idContentLocalized" type="int"/>
+        <property name="localeName" type="string"/>
+        <property name="fkLocale" type="int"/>
+        <property name="fkContent" type="int"/>
+        <property name="parameters" type="string"/>
     </transfer>
 
     <transfer name="Locale">
@@ -32,33 +32,45 @@
     </transfer>
 
     <transfer name="CmsBlockGlossary">
-        <property name="glossaryPlaceholders" type="CmsBlockGlossaryPlaceholder[]" singular="glossaryPlaceholder" />
+        <property name="glossaryPlaceholders" type="CmsBlockGlossaryPlaceholder[]" singular="glossaryPlaceholder"/>
     </transfer>
 
     <transfer name="CmsBlockGlossaryPlaceholder">
-        <property name="translations" type="CmsBlockGlossaryPlaceholderTranslation[]" singular="translation" />
+        <property name="translations" type="CmsBlockGlossaryPlaceholderTranslation[]" singular="translation"/>
     </transfer>
 
     <transfer name="CmsBlockGlossaryPlaceholderTranslation">
-        <property name="translation" type="string" />
+        <property name="translation" type="string"/>
     </transfer>
 
     <transfer name="CmsGlossary">
-        <property name="glossaryAttributes" type="CmsGlossaryAttributes[]" singular="glossaryAttribute" />
+        <property name="glossaryAttributes" type="CmsGlossaryAttributes[]" singular="glossaryAttribute"/>
     </transfer>
 
     <transfer name="CmsGlossaryAttributes">
-        <property name="translations" type="CmsPlaceholderTranslation[]" singular="translation" />
+        <property name="translations" type="CmsPlaceholderTranslation[]" singular="translation"/>
     </transfer>
 
     <transfer name="CmsPlaceholderTranslation">
-        <property name="translation" type="string" />
+        <property name="translation" type="string"/>
     </transfer>
 
     <transfer name="TwigExpression">
-        <property name="content" type="Content" />
-        <property name="contentWidgetTemplate" type="ContentWidgetTemplate" />
-        <property name="twigExpression" type="string" />
+        <property name="content" type="Content"/>
+        <property name="contentWidgetTemplate" type="ContentWidgetTemplate"/>
+        <property name="twigExpression" type="string"/>
+    </transfer>
+
+    <transfer name="TabItem">
+        <property name="name" type="string"/>
+        <property name="template" type="string"/>
+        <property name="title" type="string"/>
+        <property name="hasError" type="bool"/>
+    </transfer>
+
+    <transfer name="TabsView">
+        <property name="tabs" type="TabItem[]" singular="tab"/>
+        <property name="footerTemplate" type="string"/>
     </transfer>
 </transfers>
 

@@ -24,6 +24,7 @@ use Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group SchedulerJenkins
@@ -228,7 +229,7 @@ class SchedulerJenkinsFacadeTest extends Unit
 
         $schedulerJenkinsConfigMock
             ->method('getJenkinsConfiguration')
-            ->willReturn('test');
+            ->willReturn(['test']);
 
         return $schedulerJenkinsConfigMock;
     }

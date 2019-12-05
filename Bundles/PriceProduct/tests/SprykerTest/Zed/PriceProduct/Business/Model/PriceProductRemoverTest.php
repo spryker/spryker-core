@@ -16,6 +16,7 @@ use Spryker\Zed\PriceProduct\Business\PriceProductBusinessFactory;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PriceProduct
@@ -69,7 +70,7 @@ class PriceProductRemoverTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

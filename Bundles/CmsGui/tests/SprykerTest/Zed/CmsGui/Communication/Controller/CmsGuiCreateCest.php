@@ -12,6 +12,7 @@ use SprykerTest\Zed\CmsGui\PageObject\CmsGuiCreatePage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CmsGui
@@ -27,10 +28,10 @@ class CmsGuiCreateCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(CmsGuiCommunicationTester $i)
+    public function breadcrumbIsVisible(CmsGuiCommunicationTester $i): void
     {
         $i->registerCmsBlockStoreRelationFormTypePlugin();
         $i->amOnPage(CmsGuiCreatePage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Content Management / Pages / Create new CMS Page');
+        $i->seeBreadcrumbNavigation('Content Management / Pages / Create new CMS Page');
     }
 }

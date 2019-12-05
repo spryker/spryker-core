@@ -20,6 +20,7 @@ use SprykerTest\Zed\Cms\Business\CmsMocks;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Cms
@@ -33,7 +34,7 @@ class CmsPageReaderTest extends CmsMocks
     /**
      * @return void
      */
-    public function testGetCmsPageByIdShouldReturnMappedTransferObjectFromPersistence()
+    public function testGetCmsPageByIdShouldReturnMappedTransferObjectFromPersistence(): void
     {
         $cmsPageReaderMock = $this->createCmsPageReaderMock();
 
@@ -52,7 +53,7 @@ class CmsPageReaderTest extends CmsMocks
     /**
      * @return void
      */
-    public function testGetCmsPageByIdWhenPageNotFoundShouldReturnNull()
+    public function testGetCmsPageByIdWhenPageNotFoundShouldReturnNull(): void
     {
         $cmsPageReaderMock = $this->createCmsPageReaderMock();
 

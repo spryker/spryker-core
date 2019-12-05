@@ -16,6 +16,7 @@ use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Glossary
@@ -49,7 +50,7 @@ class GlossaryTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -62,7 +63,7 @@ class GlossaryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateKeyInsertsSomething()
+    public function testCreateKeyInsertsSomething(): void
     {
         $keyQuery = $this->glossaryQueryContainer->queryKeys();
         $keyCountBeforeCreation = $keyQuery->count();
@@ -75,7 +76,7 @@ class GlossaryTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateKeyMustSaveNewKeyInDatabase()
+    public function testUpdateKeyMustSaveNewKeyInDatabase(): void
     {
         $keyQuery = $this->glossaryQueryContainer->queryKeys();
         $keyId = $this->glossaryFacade->createKey('ATestKey2');
@@ -88,7 +89,7 @@ class GlossaryTest extends Unit
     /**
      * @return void
      */
-    public function testHasKeyReturnsRightValue()
+    public function testHasKeyReturnsRightValue(): void
     {
         $this->glossaryFacade->createKey('SomeNewKey');
         $this->assertTrue($this->glossaryFacade->hasKey('SomeNewKey'));
@@ -97,7 +98,7 @@ class GlossaryTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteKeyDeletesSomething()
+    public function testDeleteKeyDeletesSomething(): void
     {
         $specificKeyQuery = $this->glossaryQueryContainer->queryKey('KeyToBeDeleted');
 
@@ -112,7 +113,7 @@ class GlossaryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateTranslationInsertsSomething()
+    public function testCreateTranslationInsertsSomething(): void
     {
         $translationQuery = $this->glossaryQueryContainer->queryTranslations();
         $this->glossaryFacade->createKey('AKey');
@@ -128,7 +129,7 @@ class GlossaryTest extends Unit
     /**
      * @return void
      */
-    public function testCreateAndTouchTranslationInsertsSomethingAndTouchesIt()
+    public function testCreateAndTouchTranslationInsertsSomethingAndTouchesIt(): void
     {
         $translationQuery = $this->glossaryQueryContainer->queryTranslations();
         $touchQuery = $this->touchQueryContainer->queryTouchListByItemType('translation');
@@ -148,7 +149,7 @@ class GlossaryTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateTranslationUpdatesSomething()
+    public function testUpdateTranslationUpdatesSomething(): void
     {
         $locale = $this->localeFacade->createLocale('Local');
 
@@ -166,7 +167,7 @@ class GlossaryTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateAndTouchTranslationUpdatesSomethingAndTouchesIt()
+    public function testUpdateAndTouchTranslationUpdatesSomethingAndTouchesIt(): void
     {
         $locale = $this->localeFacade->createLocale('Locaz');
         $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByNames('AnotherKey2', $locale->getLocaleName());
@@ -187,7 +188,7 @@ class GlossaryTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteTranslationDeletesSoftly()
+    public function testDeleteTranslationDeletesSoftly(): void
     {
         $locale = $this->localeFacade->createLocale('yx_qw');
         $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByNames('KeyWithTranslation', $locale->getLocaleName());
@@ -203,7 +204,7 @@ class GlossaryTest extends Unit
     /**
      * @return void
      */
-    public function testSaveTranslationDoesACreate()
+    public function testSaveTranslationDoesACreate(): void
     {
         $keyId = $this->glossaryFacade->createKey('SomeNonExistentKey');
         $locale = $this->localeFacade->createLocale('ab_xy');
@@ -226,7 +227,7 @@ class GlossaryTest extends Unit
     /**
      * @return void
      */
-    public function testSaveTranslationDoesAnUpdate()
+    public function testSaveTranslationDoesAnUpdate(): void
     {
         $keyId = $this->glossaryFacade->createKey('SomeNonExistentKey2');
         $locale = $this->localeFacade->createLocale('ab_yz');
@@ -250,7 +251,7 @@ class GlossaryTest extends Unit
     /**
      * @return void
      */
-    public function testSaveAndTouchTranslationDoesATouchForCreation()
+    public function testSaveAndTouchTranslationDoesATouchForCreation(): void
     {
         $keyId = $this->glossaryFacade->createKey('SomeNonExistentKey3');
         $localeId = $this->localeFacade->createLocale('ab_ef')->getIdLocale();
@@ -278,7 +279,7 @@ class GlossaryTest extends Unit
     /**
      * @return void
      */
-    public function testSaveAndTouchTranslationDoesATouchForUpdate()
+    public function testSaveAndTouchTranslationDoesATouchForUpdate(): void
     {
         $keyId = $this->glossaryFacade->createKey('SomeNonExistentKey4');
         $locale = $this->localeFacade->createLocale('ab_fg');
@@ -302,7 +303,7 @@ class GlossaryTest extends Unit
     /**
      * @return void
      */
-    public function testCreatingTranslationForCurrentLocaleInsertsSomething()
+    public function testCreatingTranslationForCurrentLocaleInsertsSomething(): void
     {
         $translationQuery = $this->glossaryQueryContainer->queryTranslations();
         $this->glossaryFacade->createKey('SomeNonExistingKey5');
@@ -319,7 +320,7 @@ class GlossaryTest extends Unit
     /**
      * @return void
      */
-    public function testTouchTranslationForKeyAndCurrentLocale()
+    public function testTouchTranslationForKeyAndCurrentLocale(): void
     {
         $keyId = $this->glossaryFacade->createKey('SomeNonExistentKey6');
         $localeTransfer = $this->localeFacade->getCurrentLocale();
@@ -344,7 +345,7 @@ class GlossaryTest extends Unit
     /**
      * @return void
      */
-    public function testTouchTranslationForKeyAndCustomLocale()
+    public function testTouchTranslationForKeyAndCustomLocale(): void
     {
         $keyId = $this->glossaryFacade->createKey('SomeNonExistentKey7');
         $localeTransfer = $this->localeFacade->createLocale('ab_fg');

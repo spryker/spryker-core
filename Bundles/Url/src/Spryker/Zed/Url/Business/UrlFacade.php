@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 class UrlFacade extends AbstractFacade implements UrlFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -62,7 +62,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -78,7 +78,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -94,7 +94,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -114,7 +114,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -130,7 +130,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -146,7 +146,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -176,7 +176,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -192,7 +192,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -208,7 +208,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -224,7 +224,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -240,7 +240,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -256,7 +256,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -272,7 +272,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -288,7 +288,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -304,7 +304,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -338,7 +338,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -354,7 +354,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -370,7 +370,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -471,7 +471,7 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

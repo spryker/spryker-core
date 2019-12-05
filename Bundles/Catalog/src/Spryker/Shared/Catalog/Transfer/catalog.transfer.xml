@@ -4,26 +4,58 @@
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Attribute">
-        <property name="idCatalogAttribute" type="int" />
-        <property name="name" type="string" />
+        <property name="idCatalogAttribute" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="AttributeSet">
-        <property name="idCatalogAttributeSet" type="int" />
-        <property name="name" type="string" />
+        <property name="idCatalogAttributeSet" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="AttributeSetGroup">
-        <property name="idCatalogAttributeSetGroup" type="int" />
-        <property name="fkCatalogGroup" type="int" />
-        <property name="fkCatalogValueType" type="int" />
+        <property name="idCatalogAttributeSetGroup" type="int"/>
+        <property name="fkCatalogGroup" type="int"/>
+        <property name="fkCatalogValueType" type="int"/>
     </transfer>
 
     <transfer name="ValueType">
-        <property name="idCatalogValueType" type="int" />
-        <property name="variety" type="string" />
-        <property name="fkCatalogAttribute" type="int" />
-        <property name="fkCatalogAttributeSet" type="int" />
+        <property name="idCatalogValueType" type="int"/>
+        <property name="variety" type="string"/>
+        <property name="fkCatalogAttribute" type="int"/>
+        <property name="fkCatalogAttributeSet" type="int"/>
+    </transfer>
+
+    <transfer name="ProductConcretePageSearch">
+        <property name="fkProduct" type="int"/>
+    </transfer>
+
+    <transfer name="ProductConcreteCriteriaFilter">
+        <property name="requestParams" type="array" singular="requestParams"/>
+        <property name="searchString" type="string"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="PaginationConfig">
+        <property name="parameterName" type="string"/>
+        <property name="itemsPerPageParameterName" type="string"/>
+        <property name="defaultItemsPerPage" type="int"/>
+        <property name="validItemsPerPageOptions" type="array" singular="validItemsPerPageOptions"/>
+    </transfer>
+
+    <transfer name="SortConfig">
+        <property name="name" type="string"/>
+        <property name="parameterName" type="string"/>
+        <property name="fieldName" type="string"/>
+        <property name="isDescending" type="bool"/>
+    </transfer>
+
+    <transfer name="FacetConfig">
+        <property name="name" type="string"/>
+        <property name="parameterName" type="string"/>
+        <property name="fieldName" type="string"/>
+        <property name="type" type="string"/>
+        <property name="aggregationParams" type="array" singular="aggregationParams"/>
     </transfer>
 
 </transfers>

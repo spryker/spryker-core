@@ -11,6 +11,7 @@ use SprykerTest\Zed\Refund\RefundPresentationTester;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Refund
@@ -25,7 +26,7 @@ class RefundListCest
      *
      * @return void
      */
-    public function testThatRefundListIsVisible(RefundPresentationTester $i)
+    public function testThatRefundListIsVisible(RefundPresentationTester $i): void
     {
         $i->canOpenRefundListPage();
     }

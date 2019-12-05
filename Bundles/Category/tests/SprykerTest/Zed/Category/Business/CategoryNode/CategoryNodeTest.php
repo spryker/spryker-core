@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryTransfer;
 use ReflectionMethod;
 use Spryker\Zed\Category\Business\CategoryBusinessFactory;
+use Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNode;
 use Spryker\Zed\Category\Business\Model\CategoryToucher;
 use Spryker\Zed\Category\CategoryDependencyProvider;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToTouchBridge;
@@ -19,6 +20,7 @@ use Spryker\Zed\Kernel\Container;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Category
@@ -44,7 +46,7 @@ class CategoryNodeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdatingNodeTouchesEntireTreeBranch()
+    public function testUpdatingNodeTouchesEntireTreeBranch(): void
     {
         $toucherMock = $this->createCategoryToucherMock(['touchCategoryNodeActive']);
         $toucherMock
@@ -69,7 +71,7 @@ class CategoryNodeTest extends Unit
     /**
      * @return void
      */
-    public function testMovingNodeTouchesFormerParentNode()
+    public function testMovingNodeTouchesFormerParentNode(): void
     {
         $touchedIds = [];
         $expectedTouchedIds = [
@@ -85,7 +87,7 @@ class CategoryNodeTest extends Unit
             ->expects($this->exactly(5))
             ->method('touchCategoryNodeActive')
             ->will($this->returnCallback(
-                function ($idTouched) use (&$touchedIds) {
+                function ($idTouched) use (&$touchedIds): void {
                     $touchedIds[] = $idTouched;
                 }
             ));
@@ -136,7 +138,7 @@ class CategoryNodeTest extends Unit
     /**
      * @return \Spryker\Zed\Category\Persistence\CategoryQueryContainer
      */
-    protected function createCategoryQueryContainer()
+    protected function createCategoryQueryContainer(): CategoryQueryContainer
     {
         return new CategoryQueryContainer();
     }
@@ -146,7 +148,7 @@ class CategoryNodeTest extends Unit
      *
      * @return \Spryker\Zed\Category\Business\Model\CategoryNode\CategoryNode
      */
-    protected function createCategoryNodeModel($categoryToucher)
+    protected function createCategoryNodeModel(CategoryToucher $categoryToucher): CategoryNode
     {
         $factory = $this->createCategoryBusinessFactory($categoryToucher);
 
@@ -161,7 +163,7 @@ class CategoryNodeTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Category\Business\CategoryBusinessFactory
      */
-    protected function createCategoryBusinessFactory($categoryToucher)
+    protected function createCategoryBusinessFactory(CategoryToucher $categoryToucher)
     {
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Category\Business\CategoryBusinessFactory $factoryMock */
         $factoryMock = $this
@@ -188,7 +190,7 @@ class CategoryNodeTest extends Unit
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    protected function createCategoryTransfer($idCategory)
+    protected function createCategoryTransfer(int $idCategory): CategoryTransfer
     {
         $categoryTransfer = new CategoryTransfer();
         $categoryTransfer->setIdCategory($idCategory);

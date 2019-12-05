@@ -14,6 +14,7 @@ use Spryker\Zed\DummyPayment\Communication\Plugin\Checkout\DummyPaymentPreCheckP
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group DummyPayment
@@ -28,7 +29,7 @@ class DummyPaymentPreCheckPluginTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteShouldReturnCheckoutResponseTransfer()
+    public function testExecuteShouldReturnCheckoutResponseTransfer(): void
     {
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 

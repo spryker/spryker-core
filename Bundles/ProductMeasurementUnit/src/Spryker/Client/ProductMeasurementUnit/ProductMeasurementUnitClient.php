@@ -17,7 +17,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductMeasurementUnitClient extends AbstractClient implements ProductMeasurementUnitClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,7 +34,7 @@ class ProductMeasurementUnitClient extends AbstractClient implements ProductMeas
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

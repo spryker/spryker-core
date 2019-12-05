@@ -27,6 +27,7 @@ use SprykerTest\Zed\CmsStorage\CmsStorageConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CmsStorage
@@ -187,7 +188,7 @@ class CmsStorageListenerTest extends Unit
     /**
      * @return \Spryker\Zed\CmsStorage\Business\CmsStorageFacade
      */
-    protected function getCmsStorageFacade()
+    protected function getCmsStorageFacade(): CmsStorageFacade
     {
         $factory = new CmsStorageBusinessFactory();
         $factory->setConfig(new CmsStorageConfigMock());

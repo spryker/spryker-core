@@ -13,6 +13,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Sales
@@ -25,7 +26,7 @@ class SpySalesOrderItemTest extends Unit
     /**
      * @return void
      */
-    public function testPostSaveShouldNotCreateNewStateMachineHistoryEntryWhenStateNotChanged()
+    public function testPostSaveShouldNotCreateNewStateMachineHistoryEntryWhenStateNotChanged(): void
     {
         $salesOrderItemEntityMock = $this->createMockedSalesOrderItemEntity();
 
@@ -38,7 +39,7 @@ class SpySalesOrderItemTest extends Unit
     /**
      * @return void
      */
-    public function testPostSaveShouldCreateStateMachineHistoryEntryWhenStateChanged()
+    public function testPostSaveShouldCreateStateMachineHistoryEntryWhenStateChanged(): void
     {
         $salesOrderItemEntityMock = $this->createMockedSalesOrderItemEntity();
 

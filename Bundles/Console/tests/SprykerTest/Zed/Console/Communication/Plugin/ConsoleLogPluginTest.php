@@ -20,6 +20,7 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Console
@@ -33,7 +34,7 @@ class ConsoleLogPluginTest extends Unit
     /**
      * @return void
      */
-    public function testGetSubscribedEventsShouldReturnArray()
+    public function testGetSubscribedEventsShouldReturnArray(): void
     {
         $consoleLogPlugin = new ConsoleLogPlugin();
 
@@ -43,7 +44,7 @@ class ConsoleLogPluginTest extends Unit
     /**
      * @return void
      */
-    public function testOnConsoleCommandShouldCallLogger()
+    public function testOnConsoleCommandShouldCallLogger(): void
     {
         $loggerMock = $this->getLoggerMock();
         $loggerMock->expects($this->once())->method('info');
@@ -57,7 +58,7 @@ class ConsoleLogPluginTest extends Unit
     /**
      * @return void
      */
-    public function testOnConsoleTerminatedShouldCallLogger()
+    public function testOnConsoleTerminatedShouldCallLogger(): void
     {
         $loggerMock = $this->getLoggerMock();
         $loggerMock->expects($this->once())->method('info');
@@ -71,7 +72,7 @@ class ConsoleLogPluginTest extends Unit
     /**
      * @return void
      */
-    public function testOnConsoleExceptionShouldCallLogger()
+    public function testOnConsoleExceptionShouldCallLogger(): void
     {
         $loggerMock = $this->getLoggerMock();
         $loggerMock->expects($this->once())->method('error');

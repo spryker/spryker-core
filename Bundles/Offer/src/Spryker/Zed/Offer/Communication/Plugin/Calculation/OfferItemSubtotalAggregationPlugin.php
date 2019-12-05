@@ -23,7 +23,7 @@ class OfferItemSubtotalAggregationPlugin extends AbstractPlugin implements Calcu
      * after the generic logic is executed.
      *
      *
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
