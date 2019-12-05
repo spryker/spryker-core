@@ -26,6 +26,7 @@ use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToPriceFaca
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToPriceFacadeInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToPriceProductBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductBridge;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductImageFacadeBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeBridge;
@@ -63,6 +64,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_PRICE = 'FACADE_PRICE';
+    public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const PLUGIN_PRODUCT_PAGE_DATA_EXPANDER = 'PLUGIN_PRODUCT_PAGE_DATA_EXPANDER';
     public const PLUGIN_PRODUCT_PAGE_DATA_LOADER = 'PLUGIN_PRODUCT_PAGE_DATA_LOADER';
@@ -144,6 +146,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addPriceProductService($container);
         $container = $this->addPriceFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addProductImageFacade($container);
 
         return $container;
     }
@@ -180,6 +183,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
         };
 
         $container = $this->addStoreFacade($container);
+        $container = $this->addProductImageFacade($container);
 
         return $container;
     }
@@ -272,6 +276,20 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
         $container[static::FACADE_PRICE] = function (Container $container): ProductPageSearchToPriceFacadeInterface {
             return new ProductPageSearchToPriceFacadeBridge($container->getLocator()->price()->facade());
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductImageFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_IMAGE, function (Container $container) {
+            return new ProductPageSearchToProductImageFacadeBridge($container->getLocator()->productImage()->facade());
+        });
 
         return $container;
     }

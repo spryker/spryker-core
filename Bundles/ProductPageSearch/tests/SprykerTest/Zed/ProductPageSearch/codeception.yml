@@ -27,6 +27,8 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Zed\ProductAttribute\Helper\ProductAttributeDataHelper
+                - \SprykerTest\Shared\ProductImage\Helper\ProductImageDataHelper
+                - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
 
     Communication:
         path: Communication
