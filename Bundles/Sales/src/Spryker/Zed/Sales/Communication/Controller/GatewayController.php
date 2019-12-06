@@ -71,6 +71,8 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
+     * @deprecated use getOffsetPaginatedCustomerOrderListAction() instead
+     *
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
