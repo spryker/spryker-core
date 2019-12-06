@@ -143,7 +143,7 @@ class ApiConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getSafeHeaderDataKeys(): array
     {
@@ -154,7 +154,7 @@ class ApiConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getSafeServerDataKeys(): array
     {

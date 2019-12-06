@@ -98,6 +98,12 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      */
     public function publish(array $productIds): void
     {
+        $productIds = array_unique(array_filter($productIds));
+
+        if (!$productIds) {
+            return;
+        }
+
         $productConcreteTransfers = $this->productFacade->getProductConcreteTransfersByProductIds($productIds);
         $productConcretePageSearchTransfers = $this->productConcretePageSearchReader->getProductConcretePageSearchTransfersByProductIdsGrouppedByStoreAndLocale($productIds);
 
