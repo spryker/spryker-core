@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.2",
     "spryker/elastica": "^5.0.0",
-    "spryker/kernel": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.0.0",
     "spryker/log": "^3.0.0",
     "spryker/money": "^2.8.0",
