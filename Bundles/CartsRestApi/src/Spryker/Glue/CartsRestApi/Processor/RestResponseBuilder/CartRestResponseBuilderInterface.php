@@ -16,10 +16,11 @@ interface CartRestResponseBuilderInterface extends BaseCartRestResponseBuilderIn
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createCartRestResponse(QuoteTransfer $quoteTransfer): RestResponseInterface;
+    public function createCartRestResponse(QuoteTransfer $quoteTransfer, string $localeName): RestResponseInterface;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer

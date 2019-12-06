@@ -9,6 +9,7 @@ namespace Spryker\Glue\CartsRestApi;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\AbstractRestResource;
 
 /**
@@ -18,21 +19,27 @@ class CartsRestApiResource extends AbstractRestResource implements CartsRestApiR
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createCartRestResponse(QuoteTransfer $quoteTransfer): RestResponseInterface
+    public function createCartRestResponse(QuoteTransfer $quoteTransfer, RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->getFactory()->createCartRestResponseBuilder()->createCartRestResponse($quoteTransfer);
+        return $this->getFactory()
+            ->createCartRestResponseBuilder()
+            ->createCartRestResponse($quoteTransfer, $restRequest->getMetadata()->getLocale());
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createGuestCartRestResponse(QuoteTransfer $quoteTransfer): RestResponseInterface
+    public function createGuestCartRestResponse(QuoteTransfer $quoteTransfer, RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->getFactory()->createGuestCartRestResponseBuilder()->createGuestCartRestResponse($quoteTransfer);
+        return $this->getFactory()
+            ->createGuestCartRestResponseBuilder()
+            ->createGuestCartRestResponse($quoteTransfer, $restRequest->getMetadata()->getLocale());
     }
 }

@@ -27,12 +27,13 @@ class CartRestResponseBuilder extends AbstractCartRestResponseBuilder implements
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createCartRestResponse(QuoteTransfer $quoteTransfer): RestResponseInterface
+    public function createCartRestResponse(QuoteTransfer $quoteTransfer, string $localeName): RestResponseInterface
     {
-        return $this->createRestResponse()->addResource($this->createCartResourceWithItems($quoteTransfer));
+        return $this->createRestResponse()->addResource($this->createCartResourceWithItems($quoteTransfer, $localeName));
     }
 
     /**
@@ -47,7 +48,12 @@ class CartRestResponseBuilder extends AbstractCartRestResponseBuilder implements
     ): RestResponseInterface {
         $restResponse = $this->createRestResponse();
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
-            $restResponse->addResource($this->createCartResourceWithItems($quoteTransfer));
+            $restResponse->addResource(
+                $this->createCartResourceWithItems(
+                    $quoteTransfer,
+                    $restRequest->getMetadata()->getLocale()
+                )
+            );
         }
 
         return $restResponse;
@@ -55,10 +61,11 @@ class CartRestResponseBuilder extends AbstractCartRestResponseBuilder implements
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    protected function createCartResourceWithItems(QuoteTransfer $quoteTransfer): RestResourceInterface
+    protected function createCartResourceWithItems(QuoteTransfer $quoteTransfer, string $localeName): RestResourceInterface
     {
         $cartResource = $this->restResourceBuilder->createRestResource(
             CartsRestApiConfig::RESOURCE_CARTS,
@@ -72,7 +79,7 @@ class CartRestResponseBuilder extends AbstractCartRestResponseBuilder implements
             $itemResource = $this->restResourceBuilder->createRestResource(
                 CartsRestApiConfig::RESOURCE_CART_ITEMS,
                 $itemTransfer->getGroupKey(),
-                $this->cartItemsMapper->mapItemTransferToRestItemsAttributesTransfer($itemTransfer)
+                $this->cartItemsMapper->mapItemTransferToRestItemsAttributesTransfer($itemTransfer, $localeName)
             );
 
             $itemResource->addLink(

@@ -32,8 +32,10 @@ class CartItemMapper implements CartItemMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestItemsAttributesTransfer
      */
-    public function mapItemTransferToRestItemsAttributesTransfer(ItemTransfer $itemTransfer): RestItemsAttributesTransfer
-    {
+    public function mapItemTransferToRestItemsAttributesTransfer(
+        ItemTransfer $itemTransfer,
+        string $localeName
+    ): RestItemsAttributesTransfer {
         $itemData = $itemTransfer->toArray();
 
         $restCartItemsAttributesResponseTransfer = (new RestItemsAttributesTransfer())

@@ -9,6 +9,7 @@ namespace Spryker\Glue\CartCodesRestApi\Dependency\RestApiResource;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CartCodesRestApiToCartsRestApiResourceBridge implements CartCodesRestApiToCartsRestApiResourceInterface
 {
@@ -27,21 +28,23 @@ class CartCodesRestApiToCartsRestApiResourceBridge implements CartCodesRestApiTo
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createGuestCartRestResponse(QuoteTransfer $quoteTransfer): RestResponseInterface
+    public function createGuestCartRestResponse(QuoteTransfer $quoteTransfer, RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->cartsRestApiResource->createGuestCartRestResponse($quoteTransfer);
+        return $this->cartsRestApiResource->createGuestCartRestResponse($quoteTransfer, $restRequest);
     }
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createCartRestResponse(QuoteTransfer $quoteTransfer): RestResponseInterface
+    public function createCartRestResponse(QuoteTransfer $quoteTransfer, RestRequestInterface $restRequest): RestResponseInterface
     {
-        return $this->cartsRestApiResource->createCartRestResponse($quoteTransfer);
+        return $this->cartsRestApiResource->createCartRestResponse($quoteTransfer, $restRequest);
     }
 }

@@ -71,7 +71,7 @@ class CartCodeAdder implements CartCodeAdderInterface
         $quoteTransfer = $this->createQuoteTransfer($restRequest, CartsRestApiConfig::RESOURCE_GUEST_CARTS);
         $cartCodeResponseTransfer = $this->addCartCode($restDiscountRequestAttributesTransfer, $quoteTransfer);
 
-        return $this->cartCodeResponseBuilder->createGuestCartRestResponse($cartCodeResponseTransfer);
+        return $this->cartCodeResponseBuilder->createGuestCartRestResponse($cartCodeResponseTransfer, $restRequest);
     }
 
     /**

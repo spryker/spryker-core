@@ -63,22 +63,25 @@ class CartCodeRestResponseBuilder implements CartCodeRestResponseBuilderInterfac
             return $this->createFailedErrorResponse($cartCodeResponseTransfer->getMessages());
         }
 
-        return $this->cartsRestApiResource->createCartRestResponse($quoteTransfer);
+        return $this->cartsRestApiResource->createCartRestResponse($quoteTransfer, $restRequest);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CartCodeResponseTransfer $cartCodeResponseTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createGuestCartRestResponse(CartCodeResponseTransfer $cartCodeResponseTransfer): RestResponseInterface
-    {
+    public function createGuestCartRestResponse(
+        CartCodeResponseTransfer $cartCodeResponseTransfer,
+        RestRequestInterface $restRequest
+    ): RestResponseInterface {
         $quoteTransfer = $cartCodeResponseTransfer->getQuote();
         if (!$quoteTransfer) {
             return $this->createFailedErrorResponse($cartCodeResponseTransfer->getMessages());
         }
 
-        return $this->cartsRestApiResource->createGuestCartRestResponse($quoteTransfer);
+        return $this->cartsRestApiResource->createGuestCartRestResponse($quoteTransfer, $restRequest);
     }
 
     /**
