@@ -72,7 +72,7 @@ class CartCodeRemover implements CartCodeRemoverInterface
                 ->setCartCode($restRequest->getResource()->getId())
         );
 
-        return $this->cartCodeResponseBuilder->createGuestCartRestResponse($cartCodeOperationResultTransfer);
+        return $this->cartCodeResponseBuilder->createGuestCartRestResponse($cartCodeOperationResultTransfer, $restRequest);
     }
 
     /**
