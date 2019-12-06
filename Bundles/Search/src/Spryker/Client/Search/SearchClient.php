@@ -89,7 +89,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
+     * @deprecated Will be removed without replacement. This functionality is obsolete and should not be used.
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
      */

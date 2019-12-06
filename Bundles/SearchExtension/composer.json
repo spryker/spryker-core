@@ -13,7 +13,7 @@
   },
   "suggest": {
     "spryker/log": "If you want to use InstallerPluginInterface: ^1.0.0.",
-    "spryker/elastica": "TODO-needs-to-be-replaced-with-some-spryker-result-set."
+    "spryker/elastica": "If you want to use Elasticsearch as the search engine."
   },
   "autoload": {
     "psr-4": {
