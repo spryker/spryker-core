@@ -7,6 +7,7 @@
         <property name="idProductOffer" type="int"/>
         <property name="concreteSku" type="string"/>
         <property name="productOfferReference" type="string"/>
+        <property name="isActive" type="boolean"/>
     </transfer>
 
     <transfer name="ProductOfferCollection">
@@ -14,6 +15,7 @@
     </transfer>
 
     <transfer name="ProductOfferCriteriaFilter">
+        <property name="idProductOffer" type="int"/>
         <property name="concreteSku" type="string"/>
         <property name="productOfferReference" type="string"/>
         <property name="concreteSkus" type="string[]" singular="concreteSku"/>

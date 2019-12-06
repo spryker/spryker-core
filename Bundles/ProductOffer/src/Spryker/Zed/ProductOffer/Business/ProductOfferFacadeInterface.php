@@ -51,4 +51,32 @@ interface ProductOfferFacadeInterface
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
     public function create(ProductOfferTransfer $productOfferCriteriaFilter): ProductOfferTransfer;
+
+    /**
+     * Specification:
+     * - Update product offer is active to true
+     *
+     * @api
+     *
+     * @param int $idProductOffer
+     *
+     * @throws \Spryker\Zed\ProductOffer\Business\Exception\ProductOfferNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     */
+    public function activateProductOfferById(int $idProductOffer): ProductOfferTransfer;
+
+    /**
+     * Specification:
+     * - Update product offer is active to false
+     *
+     * @api
+     *
+     * @param int $idProductOffer
+     *
+     * @throws \Spryker\Zed\ProductOffer\Business\Exception\ProductOfferNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     */
+    public function deactivateProductOfferById(int $idProductOffer): ProductOfferTransfer;
 }

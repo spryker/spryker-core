@@ -60,4 +60,40 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
     {
         return $this->getEntityManager()->createProductOffer($productOfferTransfer);
     }
+
+    /**
+     * @inheritDoc
+     *
+     * @api
+     *
+     * @param int $idProductOffer
+     *
+     * @throws \Spryker\Zed\ProductOffer\Business\Exception\ProductOfferNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     */
+    public function activateProductOfferById(int $idProductOffer): ProductOfferTransfer
+    {
+        return $this->getFactory()
+            ->createProductOfferWriter()
+            ->activateProductOfferById($idProductOffer);
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @api
+     *
+     * @param int $idProductOffer
+     *
+     * @throws \Spryker\Zed\ProductOffer\Business\Exception\ProductOfferNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     */
+    public function deactivateProductOfferById(int $idProductOffer): ProductOfferTransfer
+    {
+        return $this->getFactory()
+            ->createProductOfferWriter()
+            ->deactivateProductOfferById($idProductOffer);
+    }
 }
