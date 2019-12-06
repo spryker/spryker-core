@@ -5,33 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\Search\Dependency\Plugin;
-
-/**
- * @deprecated Use `\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface` instead.
- */
-interface ResultFormatterPluginInterface
-{
-    /**
-     * Specification:
-     * - Returns the name for the current formatter.
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getName();
-
-    /**
-     * Specification:
-     * - Formats the result.
-     *
-     * @api
-     *
-     * @param mixed $searchResult
-     * @param array $requestParameters
-     *
-     * @return mixed
-     */
-    public function formatResult($searchResult, array $requestParameters = []);
-}
+class_alias(
+    'Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface',
+    'Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface'
+);

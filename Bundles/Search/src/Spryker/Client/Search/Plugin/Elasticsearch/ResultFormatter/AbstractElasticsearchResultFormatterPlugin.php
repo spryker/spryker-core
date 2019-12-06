@@ -9,8 +9,8 @@ namespace Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter;
 
 use Elastica\ResultSet;
 use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface;
 use Spryker\Client\Search\Exception\InvalidSearchResultTypeException;
-use Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface;
 
 /**
  * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\AbstractElasticsearchResultFormatterPlugin` instead.
