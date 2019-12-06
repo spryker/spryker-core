@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ConfigurableBundleCart;
 
+use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer;
 use Spryker\Client\Kernel\AbstractClient;
@@ -16,6 +17,22 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class ConfigurableBundleCartClient extends AbstractClient implements ConfigurableBundleCartClientInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addConfiguredBundle(CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createConfiguredBundleCartAdder()
+            ->addConfiguredBundleToCart($createConfiguredBundleRequestTransfer);
+    }
+
     /**
      * {@inheritDoc}
      *
