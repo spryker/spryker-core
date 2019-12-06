@@ -110,7 +110,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     public function getCatalogSearchQueryExpanderPlugins()
     {
@@ -134,7 +134,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     public function getSuggestionQueryExpanderPlugins()
     {
@@ -166,7 +166,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     public function getCatalogSearchCounterQueryExpanderPlugins(): array
     {
@@ -190,7 +190,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     public function getProductConcretePageSearchQueryExpanderPlugins(): array
     {

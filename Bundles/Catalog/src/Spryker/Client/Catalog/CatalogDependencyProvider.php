@@ -267,7 +267,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     protected function createCatalogSearchQueryExpanderPlugins()
     {
@@ -291,7 +291,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     protected function createSuggestionQueryExpanderPlugins()
     {
@@ -323,7 +323,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     protected function createCatalogSearchCountQueryExpanderPlugins(): array
     {
@@ -347,7 +347,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     protected function getProductConcreteCatalogSearchQueryExpanderPlugins(): array
     {
