@@ -9,7 +9,7 @@ namespace Spryker\Client\CatalogPriceProductConnector\Plugin;
 
 use Elastica\ResultSet;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticsearchResultFormatterPlugin;
-use Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface;
+use Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface;
 
 /**
  * @method \Spryker\Client\CatalogPriceProductConnector\CatalogPriceProductConnectorFactory getFactory()
@@ -17,12 +17,12 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterf
 class CurrencyAwareCatalogSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
     /**
-     * @var \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface
+     * @var \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface
      */
     protected $rawCatalogSearchResultFormatterPlugin;
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface $rawCatalogSearchResultFormatterPlugin
+     * @param \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface $rawCatalogSearchResultFormatterPlugin
      */
     public function __construct(ResultFormatterPluginInterface $rawCatalogSearchResultFormatterPlugin)
     {

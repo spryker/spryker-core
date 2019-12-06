@@ -7,8 +7,6 @@
 
 namespace Spryker\Client\Search\Dependency\Plugin;
 
-use Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface as SearchExtensionResultFormatterPluginInterface;
-
 /**
  * @deprecated Use `\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface` instead.
  */
@@ -37,5 +35,3 @@ interface ResultFormatterPluginInterface
      */
     public function formatResult($searchResult, array $requestParameters = []);
 }
-
-class_alias(ResultFormatterPluginInterface::class, SearchExtensionResultFormatterPluginInterface::class, false);

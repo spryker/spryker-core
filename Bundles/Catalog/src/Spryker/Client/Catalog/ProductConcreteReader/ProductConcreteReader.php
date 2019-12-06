@@ -36,7 +36,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
     protected $productConcretePageSearchQueryExpanderPlugins;
 
     /**
-     * @var \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @var \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
      */
     protected $productConcretePageSearchResultFormatterPlugins;
 
