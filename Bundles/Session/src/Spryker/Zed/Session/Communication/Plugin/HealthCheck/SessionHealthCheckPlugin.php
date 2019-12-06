@@ -9,6 +9,7 @@ namespace Spryker\Zed\Session\Communication\Plugin\HealthCheck;
 
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface;
+use Spryker\Shared\Session\SessionConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -18,6 +19,18 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class SessionHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return SessionConfig::SESSION_SERVICE_NAME;
+    }
+
     /**
      * {@inheritDoc}
      *

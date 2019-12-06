@@ -39,9 +39,9 @@ class ServiceNameFilter implements ChainFilterInterface
     {
         $filteredServicePlugins = [];
 
-        foreach ($healthCheckPlugins as $healthCheckPluginName => $healthCheckPlugin) {
-            if (in_array($healthCheckPluginName, $requestedServices)) {
-                $filteredServicePlugins[$healthCheckPluginName] = $healthCheckPlugin;
+        foreach ($healthCheckPlugins as $healthCheckPlugin) {
+            if (in_array($healthCheckPlugin->getName(), $requestedServices)) {
+                $filteredServicePlugins[] = $healthCheckPlugin;
             }
         }
 

@@ -10,6 +10,7 @@ namespace Spryker\Client\Session\Plugin\HealthCheck;
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface;
+use Spryker\Shared\Session\SessionConfig;
 
 /**
  * @method \Spryker\Client\Session\SessionClient getClient()
@@ -17,6 +18,18 @@ use Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInter
  */
 class SessionHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return SessionConfig::SESSION_SERVICE_NAME;
+    }
+
     /**
      * {@inheritDoc}
      *

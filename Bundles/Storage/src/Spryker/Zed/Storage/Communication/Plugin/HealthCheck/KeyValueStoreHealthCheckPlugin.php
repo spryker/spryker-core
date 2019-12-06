@@ -9,6 +9,7 @@ namespace Spryker\Zed\Storage\Communication\Plugin\HealthCheck;
 
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface;
+use Spryker\Shared\Storage\StorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -18,6 +19,18 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class KeyValueStoreHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return StorageConfig::STORAGE_SERVICE_NAME;
+    }
+
     /**
      * {@inheritDoc}
      *

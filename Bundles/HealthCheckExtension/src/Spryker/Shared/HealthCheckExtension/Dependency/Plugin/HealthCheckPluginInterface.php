@@ -13,6 +13,16 @@ interface HealthCheckPluginInterface
 {
     /**
      * Specification:
+     * - Defined the name of service.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getName(): string;
+
+    /**
+     * Specification:
      * - Performs health check for the service.
      *
      * @api

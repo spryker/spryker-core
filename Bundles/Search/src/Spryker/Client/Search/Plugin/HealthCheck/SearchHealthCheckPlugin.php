@@ -10,12 +10,25 @@ namespace Spryker\Client\Search\Plugin\HealthCheck;
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface;
+use Spryker\Shared\Search\SearchConfig;
 
 /**
  * @method \Spryker\Client\Search\SearchFactory getFactory()
  */
 class SearchHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return SearchConfig::SEARCH_SERVICE_NAME;
+    }
+
     /**
      * {@inheritDoc}
      *

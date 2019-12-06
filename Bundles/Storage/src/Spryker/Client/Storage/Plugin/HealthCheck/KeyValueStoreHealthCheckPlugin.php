@@ -10,12 +10,25 @@ namespace Spryker\Client\Storage\Plugin\HealthCheck;
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface;
+use Spryker\Shared\Storage\StorageConfig;
 
 /**
  * @method \Spryker\Client\Storage\StorageFactory getFactory()
  */
 class KeyValueStoreHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return StorageConfig::STORAGE_SERVICE_NAME;
+    }
+
     /**
      * {@inheritDoc}
      *

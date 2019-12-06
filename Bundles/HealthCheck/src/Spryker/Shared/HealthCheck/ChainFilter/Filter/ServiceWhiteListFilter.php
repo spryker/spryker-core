@@ -39,9 +39,9 @@ class ServiceWhiteListFilter implements ChainFilterInterface
     {
         $filteredServicePlugins = [];
 
-        foreach ($healthCheckPlugins as $healthCheckPluginName => $healthCheckPlugin) {
-            if (in_array($healthCheckPluginName, $availableServices)) {
-                $filteredServicePlugins[$healthCheckPluginName] = $healthCheckPlugin;
+        foreach ($healthCheckPlugins as $healthCheckPlugin) {
+            if (in_array($healthCheckPlugin->getName(), $availableServices)) {
+                $filteredServicePlugins[] = $healthCheckPlugin;
             }
         }
 

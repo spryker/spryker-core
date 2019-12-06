@@ -37,4 +37,6 @@ class SessionConfig extends AbstractSharedConfig
     public const SESSION_LIFETIME_3_DAYS = '259200';
     public const SESSION_LIFETIME_30_DAYS = '2592000';
     public const SESSION_LIFETIME_1_YEAR = '31536000';
+
+    public const SESSION_SERVICE_NAME = 'session';
 }

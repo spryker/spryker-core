@@ -10,6 +10,7 @@ namespace Spryker\Client\ZedRequest\Plugin;
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface;
+use Spryker\Shared\ZedRequest\ZedRequestConfig;
 
 /**
  * @method \Spryker\Client\ZedRequest\ZedRequestFactory getFactory()
@@ -17,6 +18,18 @@ use Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInter
  */
 class ZedRequestHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return ZedRequestConfig::ZED_REQUEST_SERVICE_NAME;
+    }
+
     /**
      * {@inheritDoc}
      *
