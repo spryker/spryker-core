@@ -107,6 +107,6 @@ class CartCodesRestApiFactory extends AbstractFactory
      */
     public function getCartsRestApiResource(): CartCodesRestApiToCartsRestApiResourceInterface
     {
-        return $this->getProvidedDependency(CartCodesRestApiDependencyProvider::CARTS_REST_API_RESOURCE);
+        return $this->getProvidedDependency(CartCodesRestApiDependencyProvider::RESOURCE_CARTS_REST_API);
     }
 }
