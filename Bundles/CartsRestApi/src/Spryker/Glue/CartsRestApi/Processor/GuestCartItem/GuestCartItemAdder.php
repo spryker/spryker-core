@@ -35,18 +35,26 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
     protected $cartRestResponseBuilder;
 
     /**
+     * @var \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CartItemExpanderPluginInterface[]
+     */
+    protected $cartItemExpanderPlugins;
+
+    /**
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
+     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CartItemExpanderPluginInterface[] $cartItemExpanderPlugins
      */
     public function __construct(
         CartsRestApiClientInterface $cartsRestApiClient,
         GuestCartRestResponseBuilderInterface $guestCartRestResponseBuilder,
-        CartRestResponseBuilderInterface $cartRestResponseBuilder
+        CartRestResponseBuilderInterface $cartRestResponseBuilder,
+        array $cartItemExpanderPlugins
     ) {
         $this->cartsRestApiClient = $cartsRestApiClient;
         $this->guestCartRestResponseBuilder = $guestCartRestResponseBuilder;
         $this->cartRestResponseBuilder = $cartRestResponseBuilder;
+        $this->cartItemExpanderPlugins = $cartItemExpanderPlugins;
     }
 
     /**
@@ -66,7 +74,10 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
             return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 
-        return $this->guestCartRestResponseBuilder->createGuestCartRestResponse($quoteResponseTransfer->getQuoteTransfer());
+        return $this->guestCartRestResponseBuilder->createGuestCartRestResponse(
+            $quoteResponseTransfer->getQuoteTransfer(),
+            $restRequest->getMetadata()->getLocale()
+        );
     }
 
     /**
@@ -85,6 +96,26 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartItemRequestTransfer
+     */
+    protected function executeCartItemExpanderPlugins(
+        CartItemRequestTransfer $cartItemRequestTransfer,
+        RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
+    ): CartItemRequestTransfer {
+        foreach ($this->cartItemExpanderPlugins as $cartItemExpanderPlugin) {
+            $cartItemRequestTransfer = $cartItemExpanderPlugin->expand(
+                $cartItemRequestTransfer,
+                $restCartItemsAttributesTransfer
+            );
+        }
+
+        return $cartItemRequestTransfer;
+    }
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -94,10 +125,12 @@ class GuestCartItemAdder implements GuestCartItemAdderInterface
         RestRequestInterface $restRequest,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): CartItemRequestTransfer {
-        return (new CartItemRequestTransfer())
+        $cartItemRequestTransfer = (new CartItemRequestTransfer())
             ->setQuoteUuid($this->findGuestCartIdentifier($restRequest))
             ->setSku($restCartItemsAttributesTransfer->getSku())
             ->setQuantity($restCartItemsAttributesTransfer->getQuantity())
             ->setCustomer((new CustomerTransfer())->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier()));
+
+        return $this->executeCartItemExpanderPlugins($cartItemRequestTransfer, $restCartItemsAttributesTransfer);
     }
 }

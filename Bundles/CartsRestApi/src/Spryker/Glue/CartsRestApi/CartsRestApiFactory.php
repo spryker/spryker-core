@@ -116,7 +116,8 @@ class CartsRestApiFactory extends AbstractFactory
         return new CartItemAdder(
             $this->getClient(),
             $this->createCartRestResponseBuilder(),
-            $this->getCustomerExpanderPlugins()
+            $this->getCustomerExpanderPlugins(),
+            $this->getCartItemExpanderPlugins()
         );
     }
 
@@ -177,7 +178,8 @@ class CartsRestApiFactory extends AbstractFactory
         return new GuestCartItemAdder(
             $this->getClient(),
             $this->createGuestCartRestResponseBuilder(),
-            $this->createCartRestResponseBuilder()
+            $this->createCartRestResponseBuilder(),
+            $this->getCartItemExpanderPlugins()
         );
     }
 
@@ -269,7 +271,7 @@ class CartsRestApiFactory extends AbstractFactory
      */
     public function createCartItemMapper(): CartItemMapperInterface
     {
-        return new CartItemMapper();
+        return new CartItemMapper($this->getRestCartItemsAttributesMapperPlugins());
     }
 
     /**
@@ -297,5 +299,21 @@ class CartsRestApiFactory extends AbstractFactory
     public function getCustomerExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_CUSTOMER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\RestCartItemsAttributesMapperPluginInterface[]
+     */
+    public function getRestCartItemsAttributesMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_REST_CART_ITEMS_ATTRIBUTES_MAPPER);
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CartItemExpanderPluginInterface[]
+     */
+    public function getCartItemExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_CART_ITEM_EXPANDER);
     }
 }

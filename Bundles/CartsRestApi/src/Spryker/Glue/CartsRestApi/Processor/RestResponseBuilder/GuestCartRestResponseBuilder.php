@@ -49,15 +49,22 @@ class GuestCartRestResponseBuilder extends AbstractCartRestResponseBuilder imple
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param string $cartResourceId
+     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    protected function createGuestCartItemResource(ItemTransfer $itemTransfer, string $cartResourceId): RestResourceInterface
-    {
+    protected function createGuestCartItemResource(
+        ItemTransfer $itemTransfer,
+        string $cartResourceId,
+        string $localeName
+    ): RestResourceInterface {
         $itemResource = $this->restResourceBuilder->createRestResource(
             CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
             $itemTransfer->getGroupKey(),
-            $this->cartItemsMapper->mapItemTransferToRestItemsAttributesTransfer($itemTransfer)
+            $this->cartItemsMapper->mapItemTransferToRestItemsAttributesTransfer(
+                $itemTransfer
+                $localeName
+            )
         );
 
         $itemResource->addLink(

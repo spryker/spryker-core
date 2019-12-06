@@ -14,7 +14,21 @@ use Generated\Shared\Transfer\RestItemsAttributesTransfer;
 class CartItemMapper implements CartItemMapperInterface
 {
     /**
+     * @var \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\RestCartItemsAttributesMapperPluginInterface[]
+     */
+    protected $restCartItemsAttributesMapperPlugins;
+
+    /**
+     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\RestCartItemsAttributesMapperPluginInterface[] $restCartItemsAttributesMapperPlugins
+     */
+    public function __construct(array $restCartItemsAttributesMapperPlugins)
+    {
+        $this->restCartItemsAttributesMapperPlugins = $restCartItemsAttributesMapperPlugins;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\RestItemsAttributesTransfer
      */
@@ -27,6 +41,15 @@ class CartItemMapper implements CartItemMapperInterface
 
         $calculationsTransfer = (new RestCartItemCalculationsTransfer())->fromArray($itemData, true);
         $restCartItemsAttributesResponseTransfer->setCalculations($calculationsTransfer);
+
+        foreach ($this->restCartItemsAttributesMapperPlugins as $restOrderItemsAttributesMapperPlugin) {
+            $restCartItemsAttributesResponseTransfer =
+                $restOrderItemsAttributesMapperPlugin->mapItemTransferToRestItemsAttributesTransfer(
+                    $itemTransfer,
+                    $restCartItemsAttributesResponseTransfer,
+                    $localeName
+                );
+        }
 
         return $restCartItemsAttributesResponseTransfer;
     }
