@@ -449,7 +449,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
     {
         $productConcreteStorageData = [];
         foreach ($productStorageDataCollection as $productStorageData) {
-            $productStorageData = json_decode($productStorageData, true);
+            $productStorageData = $this->utilEncodingService->decodeJson($productStorageData, true);
             $idProductConcrete = $productStorageData[static::KEY_ID_PRODUCT_CONCRETE];
             $productConcreteStorageData[$idProductConcrete] = $productStorageData;
 

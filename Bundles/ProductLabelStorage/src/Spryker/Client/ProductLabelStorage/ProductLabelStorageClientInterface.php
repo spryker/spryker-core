@@ -24,6 +24,20 @@ interface ProductLabelStorageClientInterface
 
     /**
      * Specification:
+     * - Retrieves product labels by abstract product IDs and by locale.
+     * - Returns array of ProductLabelDictionaryItemTransfers indexed by id of product abstract.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
+     */
+    public function getProductLabelsByProductAbstractIds(array $productAbstractIds, string $localeName): array;
+
+    /**
+     * Specification:
      * - TODO: add specification
      *
      * @api
