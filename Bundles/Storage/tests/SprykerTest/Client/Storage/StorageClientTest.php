@@ -9,6 +9,7 @@ namespace SprykerTest\Client\Storage;
 
 use Codeception\Test\Unit;
 use Spryker\Client\Storage\StorageClient;
+use Spryker\Client\Storage\StorageFactory;
 use Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Storage\StorageConstants;
@@ -23,6 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @group Storage
  * @group StorageClientTest
  * Add your own group annotations below this line
+ * @property \SprykerTest\Client\Storage\StorageClientTester $tester
  */
 class StorageClientTest extends Unit
 {
@@ -32,6 +34,16 @@ class StorageClientTest extends Unit
      * @var \Spryker\Client\Storage\StorageClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $storageClientMock;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->setupStorageClientMock();
+    }
 
     /**
      * @return void
@@ -213,10 +225,57 @@ class StorageClientTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testCacheIsDisabled(): void
+    {
+        $this->tester->mockConfigMethod('isStorageCachingEnabled', false);
+
+        $this->storageClientMock->expects($this->never())
+            ->method('updateCache');
+
+        $this->storageClientMock->persistCacheForRequest(
+            Request::createFromGlobals(),
+            static::STORAGE_CACHE_STRATEGY
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCacheIsEnabled(): void
+    {
+        $this->tester->mockConfigMethod('isStorageCachingEnabled', true);
+        $this->storageClientMock->setCachedKeys([]);
+        $request = new Request();
+        $request->server->set('SERVER_NAME', 'localhost');
+        $request->server->set('REQUEST_URI', '/uri');
+
+        $this->storageClientMock->expects($this->once())
+            ->method('updateCache');
+
+        $this->storageClientMock->persistCacheForRequest(
+            $request,
+            static::STORAGE_CACHE_STRATEGY
+        );
+    }
+
+    /**
      * @return \Spryker\Client\Storage\StorageClient
      */
     protected function createStorageClient(): StorageClient
     {
         return new StorageClient();
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupStorageClientMock(): void
+    {
+        $this->storageClientMock = $this->getMockBuilder(StorageClient::class)
+            ->setMethods(['getFactory', 'updateCache'])
+            ->getMock();
+        $this->storageClientMock->method('getFactory')->willReturn(new StorageFactory());
     }
 }

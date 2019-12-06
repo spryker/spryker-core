@@ -75,7 +75,7 @@ class CartsResourceMapper implements CartsResourceMapperInterface
             $restCartsAttributesTransfer
         );
         $cartResource->setPayload($quoteTransfer);
-        $this->mapCartItems($quoteTransfer, $cartResource);
+        $this->mapCartItems($quoteTransfer, $cartResource, $restRequest->getMetadata()->getLocale());
 
         return $cartResource;
     }
@@ -180,16 +180,20 @@ class CartsResourceMapper implements CartsResourceMapperInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $cartResource
+     * @param string $localeName
      *
      * @return void
      */
-    protected function mapCartItems(QuoteTransfer $quoteTransfer, RestResourceInterface $cartResource): void
-    {
+    protected function mapCartItems(
+        QuoteTransfer $quoteTransfer,
+        RestResourceInterface $cartResource,
+        string $localeName
+    ): void {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemResource = $this->restResourceBuilder->createRestResource(
                 $this->getCartItemResourceName(),
                 $itemTransfer->getGroupKey(),
-                $this->cartItemsResourceMapper->mapCartItemAttributes($itemTransfer)
+                $this->cartItemsResourceMapper->mapCartItemAttributes($itemTransfer, $localeName)
             );
             $itemResource->addLink(
                 RestLinkInterface::LINK_SELF,
