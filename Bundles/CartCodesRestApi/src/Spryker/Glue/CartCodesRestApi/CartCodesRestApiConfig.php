@@ -8,6 +8,7 @@
 namespace Spryker\Glue\CartCodesRestApi;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\Kernel\AbstractBundleConfig;
 use Spryker\Shared\CartCodesRestApi\CartCodesRestApiConfig as CartCodesRestApiSharedConfig;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +17,16 @@ class CartCodesRestApiConfig extends AbstractBundleConfig
 {
     public const RESOURCE_VOUCHERS = 'vouchers';
     public const RESOURCE_CART_RULES = 'cart-rules';
+
+    /**
+     * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESOURCE_CARTS
+     */
+    public const RESOURCE_CARTS = 'carts';
+
+    /**
+     * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESOURCE_GUEST_CARTS
+     */
+    public const RESOURCE_GUEST_CARTS = 'guest-carts';
 
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND

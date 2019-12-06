@@ -9,7 +9,6 @@ namespace Spryker\Glue\CartCodesRestApi\Plugin\GlueApplication;
 
 use Generated\Shared\Transfer\RestDiscountsRequestAttributesTransfer;
 use Spryker\Glue\CartCodesRestApi\CartCodesRestApiConfig;
-use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
@@ -81,6 +80,6 @@ class CartVouchersResourceRoutePlugin extends AbstractPlugin implements Resource
      */
     public function getParentResourceType(): string
     {
-        return CartsRestApiConfig::RESOURCE_CARTS;
+        return CartCodesRestApiConfig::RESOURCE_CARTS;
     }
 }
