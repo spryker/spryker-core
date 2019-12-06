@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Product\Persistence;
 
 use ArrayObject;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
@@ -19,6 +20,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -370,6 +372,21 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->setProductAbstracts(
                 $this->getProductAbstractTransfersMappedFromProductAbstractEntities($productAbstractEntities)
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcretesByFilter(FilterTransfer $filterTransfer): array
+    {
+        $productEntityTransfers = $this->buildQueryFromCriteria(
+            $this->getFactory()->createProductQuery(),
+            $filterTransfer
+        )->setFormatter(ModelCriteria::FORMAT_OBJECT)->find();
+
+        return $this->getProductConcreteTransfersMappedFromProductConcreteEntities($productEntityTransfers);
     }
 
     /**
