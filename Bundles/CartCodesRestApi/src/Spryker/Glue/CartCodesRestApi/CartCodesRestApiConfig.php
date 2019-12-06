@@ -8,7 +8,6 @@
 namespace Spryker\Glue\CartCodesRestApi;
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\Kernel\AbstractBundleConfig;
 use Spryker\Shared\CartCodesRestApi\CartCodesRestApiConfig as CartCodesRestApiSharedConfig;
 use Symfony\Component\HttpFoundation\Response;
