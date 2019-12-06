@@ -20,6 +20,7 @@ use Spryker\Zed\ConfigurableBundleStorage\Business\Unpublisher\ConfigurableBundl
 use Spryker\Zed\ConfigurableBundleStorage\ConfigurableBundleStorageDependencyProvider;
 use Spryker\Zed\ConfigurableBundleStorage\Dependency\Facade\ConfigurableBundleStorageToConfigurableBundleFacadeInterface;
 use Spryker\Zed\ConfigurableBundleStorage\Dependency\Facade\ConfigurableBundleStorageToLocaleFacadeInterface;
+use Spryker\Zed\ConfigurableBundleStorage\Dependency\Facade\ConfigurableBundleStorageToProductImageFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -63,7 +64,8 @@ class ConfigurableBundleStorageBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createConfigurableBundleReader(),
             $this->getLocaleFacade(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getProductImageFacade()
         );
     }
 
@@ -102,5 +104,13 @@ class ConfigurableBundleStorageBusinessFactory extends AbstractBusinessFactory
     public function getLocaleFacade(): ConfigurableBundleStorageToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleStorageDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleStorage\Dependency\Facade\ConfigurableBundleStorageToProductImageFacadeInterface
+     */
+    public function getProductImageFacade(): ConfigurableBundleStorageToProductImageFacadeInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleStorageDependencyProvider::FACADE_PRODUCT_IMAGE);
     }
 }

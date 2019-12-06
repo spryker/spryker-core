@@ -56,10 +56,11 @@ class GuestCartRestResponseBuilder extends AbstractCartRestResponseBuilder imple
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createGuestCartRestResponse(QuoteTransfer $quoteTransfer): RestResponseInterface
+    public function createGuestCartRestResponse(QuoteTransfer $quoteTransfer, string $localeName): RestResponseInterface
     {
         $cartResource = $this->restResourceBuilder->createRestResource(
             CartsRestApiConfig::RESOURCE_GUEST_CARTS,
@@ -68,7 +69,13 @@ class GuestCartRestResponseBuilder extends AbstractCartRestResponseBuilder imple
         );
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $cartResource->addRelationship($this->createGuestCartItemResource($itemTransfer, $cartResource->getId()));
+            $guestCartItemResource = $this->createGuestCartItemResource(
+                $itemTransfer,
+                $cartResource->getId(),
+                $localeName
+            );
+
+            $cartResource->addRelationship($guestCartItemResource);
         }
 
         return $this->createEmptyGuestCartRestResponse()->addResource($cartResource);
@@ -77,15 +84,19 @@ class GuestCartRestResponseBuilder extends AbstractCartRestResponseBuilder imple
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param string $cartResourceId
+     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    protected function createGuestCartItemResource(ItemTransfer $itemTransfer, string $cartResourceId): RestResourceInterface
-    {
+    protected function createGuestCartItemResource(
+        ItemTransfer $itemTransfer,
+        string $cartResourceId,
+        string $localeName
+    ): RestResourceInterface {
         $itemResource = $this->restResourceBuilder->createRestResource(
             CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
             $itemTransfer->getGroupKey(),
-            $this->cartItemsResourceMapper->mapCartItemAttributes($itemTransfer)
+            $this->cartItemsResourceMapper->mapCartItemAttributes($itemTransfer, $localeName)
         );
         $itemResource->addLink(
             static::KEY_REST_RESOURCE_SELF_LINK,
