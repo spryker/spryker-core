@@ -47,6 +47,6 @@ class QuoteOperationChecker implements QuoteOperationCheckerInterface
             ->setQuote($quoteTransfer)
             ->addMessage((new MessageTransfer())
                 ->setValue(static::GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED)
-                ->setType(self::MESSAGE_TYPE_ERROR));
+                ->setType(static::MESSAGE_TYPE_ERROR));
     }
 }

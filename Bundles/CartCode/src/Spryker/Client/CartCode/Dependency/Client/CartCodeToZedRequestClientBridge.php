@@ -31,7 +31,7 @@ class CartCodeToZedRequestClientBridge implements CartCodeToZedRequestClientInte
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function call($url, TransferInterface $object, $requestOptions = null): TransferInterface
+    public function call($url, TransferInterface $object, $requestOptions = null)
     {
         return $this->zedRequestClient->call($url, $object, $requestOptions);
     }
