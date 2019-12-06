@@ -1,8 +1,17 @@
 <?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
 namespace SprykerTest\Zed\ProductOfferValidity;
+
+use Codeception\Actor;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -15,8 +24,8 @@ namespace SprykerTest\Zed\ProductOfferValidity;
  * @method void pause()
  *
  * @SuppressWarnings(PHPMD)
-*/
-class ProductOfferValidityCommunicationTester extends \Codeception\Actor
+ */
+class ProductOfferValidityCommunicationTester extends Actor
 {
     use _generated\ProductOfferValidityCommunicationTesterActions;
 

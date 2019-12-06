@@ -12,6 +12,7 @@ use DateTime;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductOfferValidity
