@@ -72,4 +72,46 @@ class ProductOfferFacadeTest extends Unit
         // Assert
         $this->assertNotEmpty($productOfferTransfer->getIdProductOffer());
     }
+
+    /**
+     * @return void
+     */
+    public function testActivateProductOfferById(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            'isActive' => false,
+            'fkMerchant' => $merchantTransfer->getIdMerchant(),
+        ]);
+
+        // Act
+        $productOfferTransfer = $this->tester->getFacade()->activateProductOfferById(
+            $productOfferTransfer->getIdProductOffer()
+        );
+
+        // Assert
+        $this->assertTrue($productOfferTransfer->getIsActive());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeactivateProductOfferById(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            'isActive' => true,
+            'fkMerchant' => $merchantTransfer->getIdMerchant(),
+        ]);
+
+        // Act
+        $productOfferTransfer = $this->tester->getFacade()->deactivateProductOfferById(
+            $productOfferTransfer->getIdProductOffer()
+        );
+
+        // Assert
+        $this->assertFalse($productOfferTransfer->getIsActive());
+    }
 }

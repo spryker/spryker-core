@@ -54,7 +54,7 @@ interface ProductOfferFacadeInterface
 
     /**
      * Specification:
-     * - Update product offer is active to true
+     * - Activates product offer by id.
      *
      * @api
      *
@@ -68,7 +68,7 @@ interface ProductOfferFacadeInterface
 
     /**
      * Specification:
-     * - Update product offer is active to false
+     * - Deactivates product offer by id.
      *
      * @api
      *

@@ -17,7 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProductOfferValidityConsole extends Console
 {
-    protected const COMMAND_NAME = 'product-offer:check-validity';
+    public const COMMAND_NAME = 'product-offer:check-validity';
 
     /**
      * @return void
