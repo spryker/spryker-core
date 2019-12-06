@@ -12,8 +12,6 @@ use Generated\Shared\DataBuilder\ProductOfferValidityBuilder;
 use Generated\Shared\Transfer\ProductOfferValidityTransfer;
 use Orm\Zed\ProductOfferValidity\Persistence\SpyProductOfferValidity;
 use Orm\Zed\ProductOfferValidity\Persistence\SpyProductOfferValidityQuery;
-use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
-use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ProductOfferValidityHelper extends Module
 {
