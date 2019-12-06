@@ -313,4 +313,22 @@ interface ProductStorageClientInterface
         array $identifiers,
         string $localeName
     ): array;
+
+    /**
+     * Specification:
+     * - Retrieves a current Store specific product abstract ids from Storage using specified mapping.
+     *
+     * @api
+     *
+     * @param string $mappingType
+     * @param string[] $identifiers
+     * @param string $localeName
+     *
+     * @return int[]
+     */
+    public function getBulkProductAbstractIdsByMapping(
+        string $mappingType,
+        array $identifiers,
+        string $localeName
+    ): array;
 }

@@ -23,6 +23,7 @@ use ReflectionClass;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Spryker\Client\Storage\StorageConfig getModuleConfig()
  *
  * @SuppressWarnings(PHPMD)
  */
