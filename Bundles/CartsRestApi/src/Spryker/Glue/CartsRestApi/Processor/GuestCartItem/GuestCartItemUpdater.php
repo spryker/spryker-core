@@ -66,7 +66,10 @@ class GuestCartItemUpdater implements GuestCartItemUpdaterInterface
             return $this->guestCartRestResponseBuilderInterface->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 
-        return $this->guestCartRestResponseBuilderInterface->createGuestCartRestResponse($quoteResponseTransfer->getQuoteTransfer());
+        return $this->guestCartRestResponseBuilderInterface->createGuestCartRestResponse(
+            $quoteResponseTransfer->getQuoteTransfer(),
+            $restRequest->getMetadata()->getLocale()
+        );
     }
 
     /**
