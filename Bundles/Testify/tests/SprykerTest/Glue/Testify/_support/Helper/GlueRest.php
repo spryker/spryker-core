@@ -116,7 +116,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
      */
     public function grabDataFromResponseByJsonPath($jsonPath)
     {
-        return (new JsonObject($this->connectionModule->_getResponseContent()))->get($jsonPath);
+        return (new JsonObject($this->connectionModule->_getResponseContent(), true))->get($jsonPath);
     }
 
     /**
@@ -233,7 +233,7 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     public function seeResponseDataContainsResourceCollectionOfTypeWithSizeOf(string $type, int $size): void
     {
         $this->seeResponseDataContainsResourceCollectionOfType($type);
-        $this->assertCount($size, $this->grabDataFromResponseByJsonPath('$.data')[0]);
+        $this->assertCount($size, $this->grabDataFromResponseByJsonPath('$.data'));
     }
 
     /**
@@ -555,16 +555,14 @@ class GlueRest extends REST implements LastConnectionProviderInterface
     }
 
     /**
-     * @throws \Codeception\Exception\ModuleException
-     *
      * @return \SprykerTest\Glue\Testify\Helper\JsonPath
      */
     protected function getJsonPathModule(): JsonPath
     {
-        $this->jsonPathModule = $this->jsonPathModule ?: $this->findModule(JsonPath::class);
-
-        if ($this->jsonPathModule === null) {
-            throw new ModuleException('GlueRest', 'The module requires JsonPath');
+        if (!$this->jsonPathModule instanceof JsonPath) {
+            /** @var \SprykerTest\Glue\Testify\Helper\JsonPath $module */
+            $module = $this->locateModule(JsonPath::class);
+            $this->jsonPathModule = $module;
         }
 
         return $this->jsonPathModule;
