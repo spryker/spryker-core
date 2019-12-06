@@ -79,4 +79,8 @@
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
 </transfers>
