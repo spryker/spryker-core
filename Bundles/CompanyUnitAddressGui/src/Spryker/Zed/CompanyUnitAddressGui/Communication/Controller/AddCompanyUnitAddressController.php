@@ -16,8 +16,12 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddCompanyUnitAddressController extends AbstractController
 {
-    protected const PARAM_REDIRECT_URL = 'redirect-url';
+    /**
+     * @uses \Spryker\Zed\CompanyUnitAddressGui\Communication\Controller\ListCompanyUnitAddressController::indexAction()
+     */
     protected const REDIRECT_URL_DEFAULT = '/company-unit-address-gui/list-company-unit-address';
+
+    protected const PARAM_REDIRECT_URL = 'redirect-url';
 
     protected const MESSAGE_COMPANY_UNIT_ADDRESS_CREATE_SUCCESS = 'Company unit address has been successfully created.';
     protected const MESSAGE_COMPANY_UNIT_ADDRESS_CREATE_ERROR = 'Company unit address create failed.';
@@ -50,7 +54,7 @@ class AddCompanyUnitAddressController extends AbstractController
      *
      * @return void
      */
-    protected function createCompanyUnitAddress(FormInterface $companyUnitAddressForm)
+    protected function createCompanyUnitAddress(FormInterface $companyUnitAddressForm): void
     {
         if (!$companyUnitAddressForm->isValid()) {
             $this->addErrorMessage(static::MESSAGE_COMPANY_UNIT_ADDRESS_CREATE_ERROR);
