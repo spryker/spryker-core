@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ProductImage\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductImageFilterTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -294,5 +296,36 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
         return $this->getFactory()
             ->createProductImageBulkReader()
             ->getProductImagesByProductIdsAndProductImageSetName($productIds, $productImageSetName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductImageFilterTransfer $productImageFilterTransfer
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIds(ProductImageFilterTransfer $productImageFilterTransfer): array
+    {
+        return $this->getRepository()->getProductConcreteIds($productImageFilterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
+     * @param string $localeName
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function resolveProductImageSetsForLocale(ArrayObject $productImageSetTransfers, string $localeName): ArrayObject
+    {
+        return $this->getFactory()
+            ->createProductImageSetResolver()
+            ->resolveProductImageSetsForLocale($productImageSetTransfers, $localeName);
     }
 }

@@ -140,4 +140,7 @@
         <property name="fkLocale" type="int"/>
     </transfer>
 
+    <transfer name="EventEntity">
+    </transfer>
+
 </transfers>
