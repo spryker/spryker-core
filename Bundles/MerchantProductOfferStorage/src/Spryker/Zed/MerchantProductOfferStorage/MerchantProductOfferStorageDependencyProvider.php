@@ -19,6 +19,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
 {
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
+    public const PLUGINS_MERCHANT_PRODUCT_OFFER_STORAGE_PRE_PUBLISH = 'PLUGINS_MERCHANT_PRODUCT_OFFER_STORAGE_PRE_PUBLISH';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -44,6 +45,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
         parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addProductOfferFacade($container);
+        $container = $this->addMerchantProductOfferStoragePrePublishPlugins($container);
 
         return $container;
     }
@@ -78,5 +80,27 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractBundleDepend
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantProductOfferStoragePrePublishPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_PRODUCT_OFFER_STORAGE_PRE_PUBLISH, function () {
+            return $this->getMerchantProductOfferStoragePrePublishPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getMerchantProductOfferStoragePrePublishPlugins(): array
+    {
+        return [];
     }
 }
