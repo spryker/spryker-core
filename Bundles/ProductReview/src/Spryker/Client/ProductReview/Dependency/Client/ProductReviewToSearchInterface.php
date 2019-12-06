@@ -7,21 +7,21 @@
 
 namespace Spryker\Client\ProductReview\Dependency\Client;
 
-use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 interface ProductReviewToSearchInterface
 {
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[] $searchQueryExpanders
      * @param array $requestParameters
      *
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     public function expandQuery(QueryInterface $searchQuery, array $searchQueryExpanders, array $requestParameters = []);
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
      * @param \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
      * @param array $requestParameters
      *

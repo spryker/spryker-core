@@ -12,8 +12,8 @@ use Spryker\Client\Catalog\ProductConcreteReader\ProductConcreteReader;
 use Spryker\Client\Catalog\ProductConcreteReader\ProductConcreteReaderInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
 /**
  * @method \Spryker\Client\Catalog\CatalogConfig getConfig()
@@ -23,7 +23,7 @@ class CatalogFactory extends AbstractFactory
     /**
      * @param string $searchString
      *
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     public function createCatalogSearchQuery($searchString)
     {
@@ -39,7 +39,7 @@ class CatalogFactory extends AbstractFactory
     /**
      * @param string $searchString
      *
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     public function createSuggestSearchQuery($searchString)
     {
@@ -102,7 +102,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     public function getCatalogSearchQueryPlugin()
     {
@@ -126,7 +126,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     public function getSuggestionQueryPlugin()
     {
@@ -174,7 +174,7 @@ class CatalogFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     public function getProductConcretePageSearchQueryPlugin(): QueryInterface
     {

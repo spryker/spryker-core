@@ -128,7 +128,7 @@ class ProductNewDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     protected function getNewProductsQueryPlugin()
     {

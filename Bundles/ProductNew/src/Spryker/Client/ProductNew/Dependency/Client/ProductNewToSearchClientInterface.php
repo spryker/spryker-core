@@ -7,12 +7,12 @@
 
 namespace Spryker\Client\ProductNew\Dependency\Client;
 
-use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 interface ProductNewToSearchClientInterface
 {
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $resultFormatters
      * @param array $requestParameters
      *
@@ -21,11 +21,11 @@ interface ProductNewToSearchClientInterface
     public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = []);
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $searchQueryExpanders
      * @param array $requestParameters
      *
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     public function expandQuery(QueryInterface $searchQuery, array $searchQueryExpanders, array $requestParameters = []);
 }

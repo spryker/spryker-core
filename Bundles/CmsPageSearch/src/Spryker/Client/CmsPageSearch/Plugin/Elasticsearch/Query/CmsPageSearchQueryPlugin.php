@@ -17,9 +17,9 @@ use Elastica\Suggest;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringGetterInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
 
 /**

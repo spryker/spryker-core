@@ -13,8 +13,8 @@ use Spryker\Client\CmsPageSearch\Config\PaginationConfigBuilderInterface;
 use Spryker\Client\CmsPageSearch\Config\SortConfigBuilderInterface;
 use Spryker\Client\CmsPageSearch\Dependency\Client\CmsPageSearchToSearchBridgeInterface;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringSetterInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
 /**
  * @method \Spryker\Client\CmsPageSearch\CmsPageSearchConfig getConfig()
@@ -26,7 +26,7 @@ class CmsPageSearchFactory extends AbstractFactory
      * @param array $requestParameters
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[] $queryExpanderPlugins
      *
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     public function createCmsPageSearchQuery(
         string $searchString,
@@ -53,7 +53,7 @@ class CmsPageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     public function getCmsPageSearchQueryPlugin(): QueryInterface
     {

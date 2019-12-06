@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductNew\Dependency\Client;
 
-use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 class ProductNewToSearchClientBridge implements ProductNewToSearchClientInterface
 {
@@ -25,7 +25,7 @@ class ProductNewToSearchClientBridge implements ProductNewToSearchClientInterfac
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $resultFormatters
      * @param array $requestParameters
      *
@@ -37,11 +37,11 @@ class ProductNewToSearchClientBridge implements ProductNewToSearchClientInterfac
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $searchQueryExpanders
      * @param array $requestParameters
      *
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     public function expandQuery(QueryInterface $searchQuery, array $searchQueryExpanders, array $requestParameters = [])
     {

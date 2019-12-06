@@ -11,7 +11,7 @@ use Spryker\Client\CmsPageSearch\Dependency\Client\CmsPageSearchToSearchBridge;
 use Spryker\Client\CmsPageSearch\Plugin\Elasticsearch\Query\CmsPageSearchQueryPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 /**
  * @method \Spryker\Client\CmsPageSearch\CmsPageSearchConfig getConfig()
@@ -113,7 +113,7 @@ class CmsPageSearchDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     protected function createCmsPageSearchQueryPlugin(): QueryInterface
     {

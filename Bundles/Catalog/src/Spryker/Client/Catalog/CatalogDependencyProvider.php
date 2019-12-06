@@ -12,8 +12,8 @@ use Spryker\Client\Catalog\Plugin\Elasticsearch\Query\ProductConcreteCatalogSear
 use Spryker\Client\Catalog\Plugin\Elasticsearch\Query\SuggestionQueryPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
-use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
 /**
  * @method \Spryker\Client\Catalog\CatalogConfig getConfig()
@@ -259,7 +259,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     protected function createCatalogSearchQueryPlugin()
     {
@@ -283,7 +283,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     protected function createSuggestionQueryPlugin()
     {
@@ -331,7 +331,7 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     protected function createProductConcreteCatalogSearchQueryPlugin(): QueryInterface
     {

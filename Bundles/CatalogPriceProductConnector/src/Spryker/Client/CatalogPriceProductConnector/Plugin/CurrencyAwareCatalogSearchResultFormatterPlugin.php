@@ -8,8 +8,8 @@
 namespace Spryker\Client\CatalogPriceProductConnector\Plugin;
 
 use Elastica\ResultSet;
-use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticsearchResultFormatterPlugin;
 use Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface;
+use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticsearchResultFormatterPlugin;
 
 /**
  * @method \Spryker\Client\CatalogPriceProductConnector\CatalogPriceProductConnectorFactory getFactory()

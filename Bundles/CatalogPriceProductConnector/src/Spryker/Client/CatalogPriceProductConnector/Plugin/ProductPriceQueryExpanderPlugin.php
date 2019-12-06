@@ -15,7 +15,7 @@ use Generated\Shared\Search\PageIndexMap;
 use InvalidArgumentException;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 /**
  * @method \Spryker\Client\CatalogPriceProductConnector\CatalogPriceProductConnectorFactory getFactory()
@@ -25,10 +25,10 @@ class ProductPriceQueryExpanderPlugin extends AbstractPlugin implements QueryExp
     /**
      * @api
      *
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $requestParameters
      *
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
     {

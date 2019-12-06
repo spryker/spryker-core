@@ -9,7 +9,7 @@ namespace Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander;
 
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
-use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 /**
  * @method \Spryker\Client\ProductReview\ProductReviewFactory getFactory()
@@ -17,10 +17,10 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 class PaginatedProductReviewsQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $requestParameters
      *
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
     {
