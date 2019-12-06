@@ -12,8 +12,8 @@ interface ProductOfferValidityFacadeInterface
     /**
      * Specification:
      * - Finds product offers that are about to become valid/invalid for the current time.
-     * - Product offers that are about to become active will be updated to 'is_active' = true in the database.
-     * - Product offers that are about to become inactive will be updated to 'is_active' = false in the database.
+     * - Product offers that are about to become active will be activated in the database.
+     * - Product offers that are about to become inactive will be deactivated in the database.
      *
      * @api
      *

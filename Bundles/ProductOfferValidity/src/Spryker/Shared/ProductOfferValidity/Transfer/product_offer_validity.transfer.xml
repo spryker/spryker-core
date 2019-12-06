@@ -10,7 +10,7 @@
     </transfer>
 
     <transfer name="ProductOfferValidityCollection">
-        <property name="productOfferValidities" type="ProductOfferValidity[]"/>
+        <property name="productOfferValidities" type="ProductOfferValidity[]" singular="productOfferValidity"/>
     </transfer>
 
 </transfers>

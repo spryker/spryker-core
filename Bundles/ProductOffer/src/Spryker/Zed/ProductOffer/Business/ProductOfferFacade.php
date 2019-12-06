@@ -62,7 +62,7 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @api
      *
@@ -80,7 +80,7 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @api
      *

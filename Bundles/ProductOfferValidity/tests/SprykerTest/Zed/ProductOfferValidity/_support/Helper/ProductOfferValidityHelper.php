@@ -17,9 +17,6 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ProductOfferValidityHelper extends Module
 {
-    use DataCleanupHelperTrait;
-    use LocatorHelperTrait;
-
     /**
      * @param array $seedData
      *

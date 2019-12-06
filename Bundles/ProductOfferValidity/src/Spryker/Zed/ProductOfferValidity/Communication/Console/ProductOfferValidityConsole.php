@@ -24,9 +24,8 @@ class ProductOfferValidityConsole extends Console
      */
     protected function configure(): void
     {
-        $this
-            ->setName(static::COMMAND_NAME)
-            ->setDescription('(Un)Publish products based on validity date ranges.');
+        $this->setName(static::COMMAND_NAME)
+            ->setDescription('Updates product offers\' activity based on validity date ranges.');
     }
 
     /**

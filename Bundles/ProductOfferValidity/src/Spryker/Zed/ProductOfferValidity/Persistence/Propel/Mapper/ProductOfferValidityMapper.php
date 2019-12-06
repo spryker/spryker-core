@@ -25,8 +25,11 @@ class ProductOfferValidityMapper implements ProductOfferValidityMapperInterface
         ProductOfferValidityCollectionTransfer $productOfferValidityCollectionTransfer
     ): ProductOfferValidityCollectionTransfer {
         foreach ($productOfferValidityEntities as $productOfferValidityEntity) {
-            $productOfferValidityCollectionTransfer->addProductOfferValidities(
-                $this->productOfferValidityEntityToProductOfferValidityTransfer($productOfferValidityEntity, new ProductOfferValidityTransfer())
+            $productOfferValidityCollectionTransfer->addProductOfferValidity(
+                $this->productOfferValidityEntityToProductOfferValidityTransfer(
+                    $productOfferValidityEntity,
+                    new ProductOfferValidityTransfer()
+                )
             );
         }
 

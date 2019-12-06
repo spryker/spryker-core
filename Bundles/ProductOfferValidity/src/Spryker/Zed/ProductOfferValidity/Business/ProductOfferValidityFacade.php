@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductOfferValidityFacade extends AbstractFacade implements ProductOfferValidityFacadeInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @api
      *

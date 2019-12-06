@@ -39,7 +39,9 @@ class ProductOfferValidityDependencyProvider extends AbstractBundleDependencyPro
     protected function addProductOfferFacade(Container $container): Container
     {
         $container->set(static::FACADE_PRODUCT_OFFER, function (Container $container) {
-            return new ProductOfferValidityToProductOfferFacadeBridge($container->getLocator()->productOffer()->facade());
+            return new ProductOfferValidityToProductOfferFacadeBridge(
+                $container->getLocator()->productOffer()->facade()
+            );
         });
 
         return $container;

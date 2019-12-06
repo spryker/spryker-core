@@ -56,20 +56,16 @@ class ProductOfferValidityFacadeTest extends Unit
             'isActive' => true,
         ]);
 
-        $dateTimeFrom = new DateTime('yesterday');
-        $dateTimeTo = new DateTime('tomorrow');
         $this->tester->haveProductOfferValidity([
             'idProductOffer' => $productOfferValid->getIdProductOffer(),
-            'validFrom' => $dateTimeFrom->format('Y-m-d H:i:s'),
-            'validTo' => $dateTimeTo->format('Y-m-d H:i:s'),
+            'validFrom' => (new DateTime('yesterday'))->format('Y-m-d H:i:s'),
+            'validTo' => (new DateTime('tomorrow'))->format('Y-m-d H:i:s'),
         ]);
 
-        $dateTimeFrom = new DateTime('yesterday');
-        $dateTimeTo = new DateTime('yesterday');
         $this->tester->haveProductOfferValidity([
             'idProductOffer' => $productOfferInvalid->getIdProductOffer(),
-            'validFrom' => $dateTimeFrom->format('Y-m-d H:i:s'),
-            'validTo' => $dateTimeTo->format('Y-m-d H:i:s'),
+            'validFrom' => (new DateTime('yesterday'))->format('Y-m-d H:i:s'),
+            'validTo' => (new DateTime('yesterday'))->format('Y-m-d H:i:s'),
         ]);
 
         // Act
