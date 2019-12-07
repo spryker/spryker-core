@@ -133,7 +133,8 @@ class PriceProductMatcher implements PriceProductMatcherInterface
             }
         }
 
-        return true;
+        return $priceProductCriteriaTransfer->getPriceType() === null
+            || $priceProductCriteriaTransfer->getPriceType() === $priceProductTransfer->getPriceTypeName();
     }
 
     /**
