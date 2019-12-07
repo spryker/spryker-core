@@ -8,16 +8,16 @@
 namespace SprykerTest\Zed\MerchantProductOfferDataImport\Helper;
 
 use Codeception\Module;
-use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStoreQuery;
 
-class MerchantProductOfferDataImportHelper extends Module
+class MerchantProductOfferStoreDataImportHelper extends Module
 {
     /**
      * @return void
      */
-    public function assertProductOfferDatabaseTableIsEmpty(): void
+    public function assertProductOfferStoreDatabaseTableIsEmpty(): void
     {
-        $query = $this->getProductOfferPropelQuery();
+        $query = $this->getProductOfferStorePropelQuery();
 
         $this->assertSame(0, $query->count(), 'Found at least one entry in the database table but database table was expected to be empty.');
     }
@@ -25,18 +25,18 @@ class MerchantProductOfferDataImportHelper extends Module
     /**
      * @return void
      */
-    public function assertProductOfferDatabaseTableContainsData(): void
+    public function assertProductOfferStoreDatabaseTableContainsData(): void
     {
-        $query = $this->getProductOfferPropelQuery();
+        $query = $this->getProductOfferStorePropelQuery();
 
         $this->assertTrue($query->count() > 0, 'Expected at least one entry in the database table but database table is empty.');
     }
 
     /**
-     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferStoreQuery
      */
-    protected function getProductOfferPropelQuery(): SpyProductOfferQuery
+    protected function getProductOfferStorePropelQuery(): SpyProductOfferStoreQuery
     {
-        return SpyProductOfferQuery::create();
+        return SpyProductOfferStoreQuery::create();
     }
 }

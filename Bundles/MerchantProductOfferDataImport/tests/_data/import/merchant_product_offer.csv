@@ -1,7 +1,8 @@
 product_offer_reference,concrete_sku,merchant_key,merchant_sku
-M9121U0KN-O11,093_24495843,roan-gmbh-und-co-k-g,GS952M00H-Q12
-B07XRR7N5V,090_24495844,steenbok,
-M9121U0KN-O21,091_25873091,roan-gmbh-und-co-k-g,M9122A0AQ-C13
-B07XRR7N5W,091_25873091,steenbok,M9122A0AQ-C14
-M9121U0KN-O41,092_24495842,roan-gmbh-und-co-k-g,TH344E01G-Q15
-B07XRR7N5Q,092_24495842,steenbok,OB054P005-Q16
+offer1,093_24495843,roan-gmbh-und-co-k-g,GS952M00H-Q11
+offer2,090_24495844,steenbok,
+offer3,091_25873091,roan-gmbh-und-co-k-g,M9122A0AQ-C11
+offer4,091_25873091,steenbok,M9122A0AQ-C11
+offer5,092_24495842,roan-gmbh-und-co-k-g,TH344E01G-Q11
+offer6,092_24495842,steenbok,OB054P005-Q11
+offer7,193_32124735,roan-gmbh-und-co-k-g,

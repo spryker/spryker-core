@@ -11,7 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
-use Spryker\Zed\MerchantProductOfferDataImport\Communication\Plugin\MerchantProductOfferDataImportPlugin;
+use Spryker\Zed\MerchantProductOfferDataImport\Communication\Plugin\MerchantProductOfferStoreDataImportPlugin;
 use Spryker\Zed\MerchantProductOfferDataImport\MerchantProductOfferDataImportConfig;
 
 /**
@@ -22,10 +22,10 @@ use Spryker\Zed\MerchantProductOfferDataImport\MerchantProductOfferDataImportCon
  * @group MerchantProductOfferDataImport
  * @group Communication
  * @group Plugin
- * @group MerchantProductOfferDataImportPluginTest
+ * @group MerchantProductOfferStoreDataImportPluginTest
  * Add your own group annotations below this line
  */
-class MerchantProductOfferDataImportPluginTest extends Unit
+class MerchantProductOfferStoreDataImportPluginTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\MerchantProductOfferDataImport\MerchantProductOfferDataImportCommunicationTester
@@ -38,23 +38,23 @@ class MerchantProductOfferDataImportPluginTest extends Unit
     public function testImportImportsData(): void
     {
         // Arrange
-        $this->tester->truncateProductOffers();
-        $this->tester->assertProductOfferDatabaseTableIsEmpty();
+        $this->tester->truncateProductOfferStores();
+        $this->tester->assertProductOfferStoreDatabaseTableIsEmpty();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
-        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/merchant_product_offer.csv');
+        $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/merchant_product_offer_store.csv');
 
         $dataImportConfigurationTransfer = new DataImporterConfigurationTransfer();
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
-        $dataImportPlugin = new MerchantProductOfferDataImportPlugin();
+        $dataImportPlugin = new MerchantProductOfferStoreDataImportPlugin();
 
         // Act
         $dataImporterReportTransfer = $dataImportPlugin->import($dataImportConfigurationTransfer);
 
         // Assert
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
-        $this->tester->assertProductOfferDatabaseTableContainsData();
+        $this->tester->assertProductOfferStoreDatabaseTableContainsData();
     }
 
     /**
@@ -63,9 +63,9 @@ class MerchantProductOfferDataImportPluginTest extends Unit
     public function testGetImportTypeReturnsTypeOfImporter(): void
     {
         // Arrange
-        $dataImportPlugin = new MerchantProductOfferDataImportPlugin();
+        $dataImportPlugin = new MerchantProductOfferStoreDataImportPlugin();
 
         // Assert
-        $this->assertSame(MerchantProductOfferDataImportConfig::IMPORT_TYPE_MERCHANT_PRODUCT_OFFER, $dataImportPlugin->getImportType());
+        $this->assertSame(MerchantProductOfferDataImportConfig::IMPORT_TYPE_MERCHANT_PRODUCT_OFFER_STORE, $dataImportPlugin->getImportType());
     }
 }
