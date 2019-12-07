@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Client\CartsRestApi\CartsRestApiClientInterface;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
-use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface;
-use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
 use Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -31,16 +29,6 @@ class CartItemAdder implements CartItemAdderInterface
     protected $cartRestResponseBuilder;
 
     /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface
-     */
-    protected $cartItemsResourceMapper;
-
-    /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface
-     */
-    protected $cartsResourceMapper;
-
-    /**
      * @var \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
      */
     protected $customerExpanderPlugins;
@@ -53,23 +41,17 @@ class CartItemAdder implements CartItemAdderInterface
     /**
      * @param \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\CartRestResponseBuilderInterface $cartRestResponseBuilder
-     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface $cartItemsResourceMapper
-     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
      * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CustomerExpanderPluginInterface[] $customerExpanderPlugins
      * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CartItemExpanderPluginInterface[] $cartItemExpanderPlugins
      */
     public function __construct(
         CartsRestApiClientInterface $cartsRestApiClient,
         CartRestResponseBuilderInterface $cartRestResponseBuilder,
-        CartItemsResourceMapperInterface $cartItemsResourceMapper,
-        CartsResourceMapperInterface $cartsResourceMapper,
         array $customerExpanderPlugins,
         array $cartItemExpanderPlugins
     ) {
         $this->cartsRestApiClient = $cartsRestApiClient;
         $this->cartRestResponseBuilder = $cartRestResponseBuilder;
-        $this->cartItemsResourceMapper = $cartItemsResourceMapper;
-        $this->cartsResourceMapper = $cartsResourceMapper;
         $this->customerExpanderPlugins = $customerExpanderPlugins;
         $this->cartItemExpanderPlugins = $cartItemExpanderPlugins;
     }
@@ -91,12 +73,10 @@ class CartItemAdder implements CartItemAdderInterface
             return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 
-        $restResource = $this->cartsResourceMapper->mapCartsResource(
+        return $this->cartRestResponseBuilder->createCartRestResponse(
             $quoteResponseTransfer->getQuoteTransfer(),
-            $restRequest
+            $restRequest->getMetadata()->getLocale()
         );
-
-        return $this->cartRestResponseBuilder->createCartRestResponse($restResource);
     }
 
     /**

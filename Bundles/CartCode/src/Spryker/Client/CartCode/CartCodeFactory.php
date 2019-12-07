@@ -9,6 +9,7 @@ namespace Spryker\Client\CartCode;
 
 use Spryker\Client\CartCode\Dependency\Client\CartCodeToCalculationClientInterface;
 use Spryker\Client\CartCode\Dependency\Client\CartCodeToQuoteClientInterface;
+use Spryker\Client\CartCode\Dependency\Client\CartCodeToZedRequestClientInterface;
 use Spryker\Client\CartCode\Operation\CodeAdder;
 use Spryker\Client\CartCode\Operation\CodeAdderInterface;
 use Spryker\Client\CartCode\Operation\CodeClearer;
@@ -17,11 +18,15 @@ use Spryker\Client\CartCode\Operation\CodeRemover;
 use Spryker\Client\CartCode\Operation\CodeRemoverInterface;
 use Spryker\Client\CartCode\Operation\QuoteOperationChecker;
 use Spryker\Client\CartCode\Operation\QuoteOperationCheckerInterface;
+use Spryker\Client\CartCode\Zed\CartCodeZedStub;
+use Spryker\Client\CartCode\Zed\CartCodeZedStubInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class CartCodeFactory extends AbstractFactory
 {
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @return \Spryker\Client\CartCode\Operation\CodeAdderInterface
      */
     public function createCodeAdder(): CodeAdderInterface
@@ -34,6 +39,8 @@ class CartCodeFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @return \Spryker\Client\CartCode\Operation\CodeRemoverInterface
      */
     public function createCodeRemover(): CodeRemoverInterface
@@ -46,6 +53,8 @@ class CartCodeFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @return \Spryker\Client\CartCode\Operation\CodeClearerInterface
      */
     public function createCodeClearer(): CodeClearerInterface
@@ -58,11 +67,21 @@ class CartCodeFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @return \Spryker\Client\CartCode\Operation\QuoteOperationCheckerInterface
      */
     public function createQuoteOperationChecker(): QuoteOperationCheckerInterface
     {
         return new QuoteOperationChecker($this->getQuoteClient());
+    }
+
+    /**
+     * @return \Spryker\Client\CartCode\Zed\CartCodeZedStubInterface
+     */
+    public function createCartCodeZedStub(): CartCodeZedStubInterface
+    {
+        return new CartCodeZedStub($this->getZedRequestClient());
     }
 
     /**
@@ -87,5 +106,13 @@ class CartCodeFactory extends AbstractFactory
     public function getCartCodePlugins(): array
     {
         return $this->getProvidedDependency(CartCodeDependencyProvider::PLUGIN_CART_CODE_COLLECTION);
+    }
+
+    /**
+     * @return \Spryker\Client\CartCode\Dependency\Client\CartCodeToZedRequestClientInterface
+     */
+    public function getZedRequestClient(): CartCodeToZedRequestClientInterface
+    {
+        return $this->getProvidedDependency(CartCodeDependencyProvider::CLIENT_ZED_REQUEST);
     }
 }
