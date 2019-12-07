@@ -26,6 +26,6 @@ class HealthCheckFacade extends AbstractFacade implements HealthCheckFacadeInter
      */
     public function executeHealthCheck(?string $requestedServices = null): HealthCheckResponseTransfer
     {
-        return $this->getFactory()->createHealthChecker()->executeHealthCheck($requestedServices);
+        return $this->getFactory()->createHealthCheckProcessor()->process($requestedServices);
     }
 }

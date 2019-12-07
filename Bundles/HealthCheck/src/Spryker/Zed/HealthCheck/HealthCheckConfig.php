@@ -14,11 +14,4 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
  */
 class HealthCheckConfig extends AbstractBundleConfig
 {
-    /**
-     * @return string[]
-     */
-    public function getAvailableHealthCheckServices(): array
-    {
-        return [];
-    }
 }

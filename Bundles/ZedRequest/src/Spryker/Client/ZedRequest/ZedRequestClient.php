@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ZedRequest;
 
-use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Shared\Kernel\Store;
@@ -172,17 +171,5 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
                 $plugin->getRequestMetaData($requestTransfer)
             );
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
-     */
-    public function executeZedRequestHealthCheck(): HealthCheckServiceResponseTransfer
-    {
-        return $this->getFactory()->createZedRequestHealthChecker()->executeHealthCheck();
     }
 }

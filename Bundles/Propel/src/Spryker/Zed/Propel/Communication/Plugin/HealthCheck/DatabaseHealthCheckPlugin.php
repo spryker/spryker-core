@@ -9,7 +9,6 @@ namespace Spryker\Zed\Propel\Communication\Plugin\HealthCheck;
 
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface;
-use Spryker\Shared\Propel\PropelConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -19,6 +18,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class DatabaseHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {
+    public const DATABASE_HEALTH_CHECK_SERVICE_NAME = 'database';
+
     /**
      * {@inheritDoc}
      *
@@ -28,7 +29,7 @@ class DatabaseHealthCheckPlugin extends AbstractPlugin implements HealthCheckPlu
      */
     public function getName(): string
     {
-        return PropelConfig::DATABASE_SERVICE_NAME;
+        return static::DATABASE_HEALTH_CHECK_SERVICE_NAME;
     }
 
     /**

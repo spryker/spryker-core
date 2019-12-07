@@ -7,15 +7,14 @@
 
 namespace Spryker\Shared\HealthCheck\Processor;
 
-use Generated\Shared\Transfer\HealthCheckRequestTransfer;
 use Generated\Shared\Transfer\HealthCheckResponseTransfer;
 
 interface HealthCheckProcessorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\HealthCheckRequestTransfer $healthCheckRequestTransfer
+     * @param string|null $requestedServices
      *
      * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
      */
-    public function process(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer;
+    public function process(?string $requestedServices = null): HealthCheckResponseTransfer;
 }

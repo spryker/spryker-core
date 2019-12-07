@@ -25,12 +25,30 @@ class ServiceNameValidator implements ValidatorInterface
             return true;
         }
 
+        $healthCheckServiceNames = $this->getHealthCheckServiceName($healthCheckPlugins);
+
         foreach ($requestedServices as $requestedService) {
-            if (!in_array($requestedService, array_keys($healthCheckPlugins))) {
+            if (!in_array($requestedService, $healthCheckServiceNames)) {
                 return false;
             }
         }
 
         return true;
+    }
+
+    /**
+     * @param \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[] $healthCheckPlugins
+     *
+     * @return string[]
+     */
+    protected function getHealthCheckServiceName(array $healthCheckPlugins): array
+    {
+        $healthCheckServiceNames = [];
+
+        foreach ($healthCheckPlugins as $healthCheckPlugin) {
+            $healthCheckServiceNames[] = $healthCheckPlugin->getName();
+        }
+
+        return $healthCheckServiceNames;
     }
 }

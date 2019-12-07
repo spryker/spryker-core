@@ -13,7 +13,7 @@ use Spryker\Client\Storage\StorageClientInterface;
 
 class KeyValueStoreHealthCheck implements HealthCheckInterface
 {
-    public const KEY_HEALTH_CHECK = 'healthCheck';
+    public const KEY_STORAGE_ZED_HEALTH_CHECK = 'STORAGE_ZED_HEALTH_CHECK';
 
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface $storageClient
@@ -37,8 +37,8 @@ class KeyValueStoreHealthCheck implements HealthCheckInterface
             ->setStatus(true);
 
         try {
-            $this->storageClient->set(static::KEY_HEALTH_CHECK, 'ok');
-            $this->storageClient->get(static::KEY_HEALTH_CHECK);
+            $this->storageClient->set(static::KEY_STORAGE_ZED_HEALTH_CHECK, 'ok');
+            $this->storageClient->get(static::KEY_STORAGE_ZED_HEALTH_CHECK);
         } catch (Exception $e) {
             return (new HealthCheckServiceResponseTransfer())
                 ->setStatus(false)

@@ -244,6 +244,10 @@ class HealthCheckFacadeTest extends Unit
             ->getMock();
 
         $healthCheckPluginMock
+            ->method('getName')
+            ->willReturn($serviceName);
+
+        $healthCheckPluginMock
             ->method('check')
             ->willReturn($this->createHealthCheckServiceResponseTransfer($serviceName, $serviceStatus));
 

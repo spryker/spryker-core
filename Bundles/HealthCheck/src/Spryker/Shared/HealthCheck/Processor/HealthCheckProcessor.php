@@ -54,12 +54,13 @@ class HealthCheckProcessor implements HealthCheckProcessorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\HealthCheckRequestTransfer $healthCheckRequestTransfer
+     * @param string|null $requestedServices
      *
      * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
      */
-    public function process(HealthCheckRequestTransfer $healthCheckRequestTransfer): HealthCheckResponseTransfer
+    public function process(?string $requestedServices = null): HealthCheckResponseTransfer
     {
+        $healthCheckRequestTransfer = $this->createHealthCheckRequestTransfer($requestedServices);
         $isValidaRequestedServices = $this->validator->validate($this->healthCheckPlugins, $healthCheckRequestTransfer);
 
         if ($isValidaRequestedServices === false) {
@@ -70,6 +71,23 @@ class HealthCheckProcessor implements HealthCheckProcessorInterface
         $healthCheckResponseTransfer = $this->processFilteredHealthCheckPlugins($filteredHealthCheckPlugins);
 
         return $healthCheckResponseTransfer;
+    }
+
+    /**
+     * @param string|null $requestedServices
+     *
+     * @return \Generated\Shared\Transfer\HealthCheckRequestTransfer
+     */
+    protected function createHealthCheckRequestTransfer(?string $requestedServices = null): HealthCheckRequestTransfer
+    {
+        $healthCheckRequestTransfer = new HealthCheckRequestTransfer();
+
+        if ($requestedServices === null) {
+            return $healthCheckRequestTransfer;
+        }
+
+        return $healthCheckRequestTransfer
+            ->setRequestedServices(explode(',', $requestedServices));
     }
 
     /**

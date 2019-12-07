@@ -11,5 +11,4 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class PropelConfig extends AbstractSharedConfig
 {
-    public const DATABASE_SERVICE_NAME = 'database';
 }

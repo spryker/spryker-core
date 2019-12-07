@@ -9,7 +9,6 @@ namespace Spryker\Zed\Search\Communication\Plugin\HealthCheck;
 
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface;
-use Spryker\Shared\Search\SearchConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
@@ -19,6 +18,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class SearchHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {
+    protected const SEARCH_HEALTH_CHECK_SERVICE_NAME = 'search';
+
     /**
      * {@inheritDoc}
      *
@@ -28,7 +29,7 @@ class SearchHealthCheckPlugin extends AbstractPlugin implements HealthCheckPlugi
      */
     public function getName(): string
     {
-        return SearchConfig::SEARCH_SERVICE_NAME;
+        return static::SEARCH_HEALTH_CHECK_SERVICE_NAME;
     }
 
     /**

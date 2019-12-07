@@ -10,14 +10,11 @@ namespace Spryker\Zed\HealthCheck\Business;
 use Spryker\Service\HealthCheck\HealthCheckServiceInterface;
 use Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface;
 use Spryker\Shared\HealthCheck\ChainFilter\Filter\ServiceNameFilter;
-use Spryker\Shared\HealthCheck\ChainFilter\Filter\ServiceWhiteListFilter;
 use Spryker\Shared\HealthCheck\ChainFilter\ServiceChainFilter;
 use Spryker\Shared\HealthCheck\Processor\HealthCheckProcessor;
 use Spryker\Shared\HealthCheck\Processor\HealthCheckProcessorInterface;
 use Spryker\Shared\HealthCheck\Validator\ServiceNameValidator;
 use Spryker\Shared\HealthCheck\Validator\ValidatorInterface;
-use Spryker\Zed\HealthCheck\Business\HealthCheck\HealthCheck;
-use Spryker\Zed\HealthCheck\Business\HealthCheck\HealthCheckInterface;
 use Spryker\Zed\HealthCheck\HealthCheckDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -54,7 +51,6 @@ class HealthCheckBusinessFactory extends AbstractBusinessFactory
     {
         $chainFilter = new ServiceChainFilter();
         $chainFilter
-            ->addFilter($this->createServiceWhiteListFilter())
             ->addFilter($this->createServiceNameFilter());
 
         return $chainFilter;
@@ -66,25 +62,6 @@ class HealthCheckBusinessFactory extends AbstractBusinessFactory
     public function createServiceNameFilter(): ChainFilterInterface
     {
         return new ServiceNameFilter();
-    }
-
-    /**
-     * @return \Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface
-     */
-    public function createServiceWhiteListFilter(): ChainFilterInterface
-    {
-        return new ServiceWhiteListFilter();
-    }
-
-    /**
-     * @return \Spryker\Zed\HealthCheck\Business\HealthCheck\HealthCheckInterface
-     */
-    public function createHealthChecker(): HealthCheckInterface
-    {
-        return new HealthCheck(
-            $this->createHealthCheckProcessor(),
-            $this->getConfig()
-        );
     }
 
     /**

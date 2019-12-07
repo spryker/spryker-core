@@ -13,7 +13,7 @@ use Spryker\Client\Session\SessionClientInterface;
 
 class SessionHealthCheck implements HealthCheckInterface
 {
-    protected const ZED_SESSION_HEALTH_CHECK = 'ZED_SESSION_HEALTH_CHECK';
+    protected const KEY_SESSION_ZED_HEALTH_CHECK = 'SESSION_ZED_HEALTH_CHECK';
 
     /**
      * @var \Spryker\Client\Session\SessionClientInterface
@@ -37,8 +37,8 @@ class SessionHealthCheck implements HealthCheckInterface
             ->setStatus(true);
 
         try {
-            $this->sessionClient->set(static::ZED_SESSION_HEALTH_CHECK, 'ok');
-            $this->sessionClient->get(static::ZED_SESSION_HEALTH_CHECK);
+            $this->sessionClient->set(static::KEY_SESSION_ZED_HEALTH_CHECK, 'ok');
+            $this->sessionClient->get(static::KEY_SESSION_ZED_HEALTH_CHECK);
         } catch (Exception $e) {
             return $healthCheckServiceResponseTransfer
                 ->setStatus(false)
