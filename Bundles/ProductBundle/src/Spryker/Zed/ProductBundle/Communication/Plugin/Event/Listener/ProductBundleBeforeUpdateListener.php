@@ -39,7 +39,7 @@ class ProductBundleBeforeUpdateListener extends AbstractPlugin implements EventH
             return;
         }
 
-        $this->deactivateProductBundleIfAllBundledProductsAreDeactivated($productConcreteTransfer);
+        $this->deactivateProductBundleIfAnyBundledProductsWereInactive($productConcreteTransfer);
         $this->updateBundleAvailability($productConcreteTransfer);
     }
 
@@ -48,24 +48,18 @@ class ProductBundleBeforeUpdateListener extends AbstractPlugin implements EventH
      *
      * @return void
      */
-    protected function deactivateProductBundleIfAllBundledProductsAreDeactivated(ProductConcreteTransfer $productConcreteTransfer): void
+    protected function deactivateProductBundleIfAnyBundledProductsWereInactive(ProductConcreteTransfer $productConcreteTransfer): void
     {
         if ($productConcreteTransfer->getProductBundle() === null) {
             return;
         }
 
-        $bundledProducts = $this->getFacade()
-            ->findBundledProductsByIdProductConcrete(
-                $productConcreteTransfer->getIdProductConcrete()
-            );
+        foreach ($this->findBundledProducts($productConcreteTransfer) as $bundledProductTransfer) {
+            if (!$bundledProductTransfer->getIsActive()) {
+                $productConcreteTransfer->setIsActive(false);
 
-        $AllInactive = true;
-        foreach ($bundledProducts as $forBundleTransfer) {
-            $AllInactive = !$forBundleTransfer->getIsActive() && $AllInactive;
-        }
-
-        if ($AllInactive) {
-            $productConcreteTransfer->setIsActive(false);
+                return;
+            }
         }
     }
 
@@ -84,13 +78,36 @@ class ProductBundleBeforeUpdateListener extends AbstractPlugin implements EventH
             return;
         }
 
-        $productBundleCollectionTransfer = $this->getFacade()
-            ->getProductBundleCollectionByCriteriaFilter(
-                (new ProductBundleCriteriaFilterTransfer())->setIdBundledProduct($productConcreteTransfer->getIdProductConcrete())
-            );
-
-        foreach ($productBundleCollectionTransfer->getProductBundles() as $productBundleTransfer) {
+        foreach ($this->getProductBundlesForBundledProduct($productConcreteTransfer) as $productBundleTransfer) {
             $this->getFacade()->updateBundleAvailability($productBundleTransfer->getSkuProductConcreteBundle());
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
+     */
+    protected function findBundledProducts(ProductConcreteTransfer $productConcreteTransfer): array
+    {
+        return $this->getFacade()
+            ->findBundledProductsByIdProductConcrete($productConcreteTransfer->getIdProductConcrete())
+            ->getArrayCopy();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductBundleTransfer[]
+     */
+    protected function getProductBundlesForBundledProduct(ProductConcreteTransfer $productConcreteTransfer): array
+    {
+        $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
+            ->setIdBundledProduct($productConcreteTransfer->getIdProductConcrete());
+
+        $productBundleCollectionTransfer = $this->getFacade()
+            ->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer);
+
+        return $productBundleCollectionTransfer->getProductBundles()->getArrayCopy();
     }
 }

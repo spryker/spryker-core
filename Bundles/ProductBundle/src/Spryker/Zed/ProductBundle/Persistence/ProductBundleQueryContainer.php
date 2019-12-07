@@ -77,6 +77,8 @@ class ProductBundleQueryContainer extends AbstractQueryContainer implements Prod
     /**
      * @api
      *
+     * @deprecated Will be removed in the next major.
+     *
      * @param int $idProductBundle
      *
      * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery
@@ -90,6 +92,8 @@ class ProductBundleQueryContainer extends AbstractQueryContainer implements Prod
 
     /**
      * @api
+     *
+     * @deprecated Will be removed in the next major.
      *
      * @param int $idProductConcrete
      *

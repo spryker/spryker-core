@@ -29,7 +29,9 @@ class ProductBundleMapper
                 true
             )
                 ->setIdProductConcrete($productBundleEntity->getFkBundledProduct())
-                ->setIdProductBundle($productBundleEntity->getFkProduct());
+                ->setIdProductBundle($productBundleEntity->getFkProduct())
+                ->setSku($productBundleEntity->getSpyProductRelatedByFkBundledProduct()->getSku())
+                ->setIsActive($productBundleEntity->getSpyProductRelatedByFkBundledProduct()->getIsActive());
         }
 
         return $productForBundleTransfers;

@@ -11,17 +11,15 @@ use ArrayObject;
 use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductForBundleTransfer;
-use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
-use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
+use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface;
 
 class ProductBundleReader implements ProductBundleReaderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
+     * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
      */
-    protected $productBundleQueryContainer;
+    protected $productBundleRepository;
 
     /**
      * @var \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface
@@ -34,17 +32,14 @@ class ProductBundleReader implements ProductBundleReaderInterface
     protected $storeFacade;
 
     /**
-     * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
-     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface $availabilityFacade
+     * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface $productBundleRepository
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
      */
     public function __construct(
-        ProductBundleQueryContainerInterface $productBundleQueryContainer,
-        ProductBundleToAvailabilityFacadeInterface $availabilityFacade,
+        ProductBundleRepositoryInterface $productBundleRepository,
         ProductBundleToStoreFacadeInterface $storeFacade
     ) {
-        $this->productBundleQueryContainer = $productBundleQueryContainer;
-        $this->availabilityFacade = $availabilityFacade;
+        $this->productBundleRepository = $productBundleRepository;
         $this->storeFacade = $storeFacade;
     }
 
@@ -55,20 +50,9 @@ class ProductBundleReader implements ProductBundleReaderInterface
      */
     public function findBundledProductsByIdProductConcrete($idProductConcrete)
     {
-        $bundledProducts = $this->findBundledProducts($idProductConcrete);
-
-        $bundledProductsTransferCollection = new ArrayObject();
-        foreach ($bundledProducts as $bundledProductEntity) {
-            $productForBundleTransfer = (new ProductForBundleTransfer())
-                ->fromArray($bundledProductEntity->toArray(), true)
-                ->setIdProductConcrete($bundledProductEntity->getFkBundledProduct())
-                ->setSku($bundledProductEntity->getSpyProductRelatedByFkBundledProduct()->getSku())
-                ->setIsActive($bundledProductEntity->getSpyProductRelatedByFkBundledProduct()->getIsActive());
-
-            $bundledProductsTransferCollection->append($productForBundleTransfer);
-        }
-
-        return $bundledProductsTransferCollection;
+        return new ArrayObject(
+            $this->productBundleRepository->findBundledProductsByIdProductConcrete($idProductConcrete)
+        );
     }
 
     /**
@@ -84,7 +68,7 @@ class ProductBundleReader implements ProductBundleReaderInterface
             $productConcreteTransfer->getIdProductConcrete()
         );
 
-        if (count($bundledProducts) == 0) {
+        if (count($bundledProducts) === 0) {
             return $productConcreteTransfer;
         }
 
@@ -100,18 +84,6 @@ class ProductBundleReader implements ProductBundleReaderInterface
         $productConcreteTransfer->setProductBundle($productBundleTransfer);
 
         return $productConcreteTransfer;
-    }
-
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection
-     */
-    protected function findBundledProducts($idProductConcrete)
-    {
-        return $this->productBundleQueryContainer
-            ->queryBundleWithRelatedBundledProduct($idProductConcrete)
-            ->find();
     }
 
     /**

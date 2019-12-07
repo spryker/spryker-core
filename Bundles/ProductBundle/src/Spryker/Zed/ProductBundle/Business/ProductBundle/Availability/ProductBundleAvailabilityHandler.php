@@ -64,7 +64,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      *
      * @return void
      */
-    public function updateAffectedBundlesAvailability(string $bundledProductSku): void
+    public function updateAffectedBundlesAvailability($bundledProductSku)
     {
         $bundleProducts = $this->getBundlesUsingProductBySku($bundledProductSku);
 
@@ -83,7 +83,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      *
      * @return void
      */
-    public function updateBundleAvailability(string $bundleProductSku): void
+    public function updateBundleAvailability($bundleProductSku)
     {
         $bundleProductEntity = $this->findBundleProductEntityBySku($bundleProductSku);
 
@@ -101,7 +101,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      *
      * @return void
      */
-    public function removeBundleAvailability(string $bundleProductSku, StoreTransfer $storeTransfer): void
+    public function removeBundleAvailability($bundleProductSku, StoreTransfer $storeTransfer)
     {
         $this->availabilityFacade->saveProductAvailabilityForStore($bundleProductSku, new Decimal(0), $storeTransfer);
     }
@@ -191,7 +191,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      *
      * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle|null
      */
-    protected function findBundleProductEntityBySku(string $bundleProductSku): ?SpyProductBundle
+    protected function findBundleProductEntityBySku($bundleProductSku)
     {
         return $this->productBundleQueryContainer
             ->queryBundleProductBySku($bundleProductSku)
@@ -204,7 +204,7 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
-    protected function findBundledItemAvailabilityEntityBySku(string $bundledItemSku, int $idStore): ?SpyAvailability
+    protected function findBundledItemAvailabilityEntityBySku($bundledItemSku, $idStore)
     {
         return $this->availabilityQueryContainer
             ->querySpyAvailabilityBySku($bundledItemSku, $idStore)

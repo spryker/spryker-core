@@ -67,8 +67,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     public function createProductBundleReader()
     {
         return new ProductBundleReader(
-            $this->getQueryContainer(),
-            $this->getAvailabilityFacade(),
+            $this->getRepository(),
             $this->getStoreFacade()
         );
     }
