@@ -14,8 +14,8 @@
   "require-dev": {
     "spryker/application": "*",
     "spryker/code-sniffer": "*",
-    "spryker/testify": "*",
-    "spryker/router": "*"
+    "spryker/router": "*",
+    "spryker/testify": "*"
   },
   "suggest": {
     "spryker/router": "Use this module when you want to use the Router."
