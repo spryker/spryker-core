@@ -20,4 +20,11 @@
         <property name="message" type="string"/>
     </transfer>
 
+    <transfer name="RestHealthCheckResponseAttributes">
+        <property name="status" type="string"/>
+        <property name="statusCode" type="int"/>
+        <property name="message" type="string"/>
+        <property name="healthCheckServiceResponses" type="HealthCheckServiceResponse[]" singular="healthCheckServiceResponse"/>
+    </transfer>
+
 </transfers>
