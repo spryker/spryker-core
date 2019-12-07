@@ -19,7 +19,7 @@
     </table>
 
     <table name="spy_product_offer_store" idMethod="native" allowPkInsert="true" identifierQuoting="true">
-        <column name="id_product_offer_store" required="true" type="VARCHAR" size="255"/>
+        <column name="id_product_offer_store" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product_offer" required="true" type="INTEGER"/>
         <column name="fk_store" required="true" type="INTEGER"/>
 
@@ -35,7 +35,7 @@
             <reference local="fk_store" foreign="id_store"/>
         </foreign-key>
 
-        <id-method-parameter value="id_product_offer_store_pk_seq"/>
+        <id-method-parameter value="spy_product_offer_store_pk_seq"/>
     </table>
 
 </database>
