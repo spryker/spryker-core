@@ -10,7 +10,6 @@ namespace Spryker\Zed\Auth\Communication\Form;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -38,8 +37,7 @@ class ResetPasswordRequestForm extends AbstractType
     {
         $this
             ->addEmailField($builder)
-            ->addSubmitField($builder)
-            ->addLoginField($builder);
+            ->addSubmitField($builder);
     }
 
     /**
@@ -76,25 +74,6 @@ class ResetPasswordRequestForm extends AbstractType
                 'label' => 'Recover password',
                 'attr' => [
                     'class' => 'btn btn-success btn-block btn-outline',
-                ],
-            ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addLoginField(FormBuilderInterface $builder)
-    {
-        $builder
-            ->add(self::FIELD_LOGIN, UrlType::class, [
-                'attr' => [
-                    'href' => '/auth/login',
-                    'class' => 'btn btn-primary btn-block btn-outline',
-                    'title' => 'Login',
                 ],
             ]);
 

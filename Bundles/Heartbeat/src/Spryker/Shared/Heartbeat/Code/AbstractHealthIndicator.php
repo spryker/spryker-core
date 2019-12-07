@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\HealthIndicatorReportTransfer;
 abstract class AbstractHealthIndicator implements HealthIndicatorInterface
 {
     /**
-     * @var \Generated\Shared\Transfer\HealthReportTransfer|null
+     * @var \Generated\Shared\Transfer\HealthIndicatorReportTransfer|null
      */
     private $healthIndicatorReport;
 

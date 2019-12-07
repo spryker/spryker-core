@@ -19,7 +19,7 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface;
 class QuoteApprovalExpanderPlugin extends AbstractPlugin implements QuoteExpanderPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Expands quote with approvals.
      *
      * @api

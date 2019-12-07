@@ -22,9 +22,9 @@ $(document).ready( function () {
 
         $("select[id^='category_id_cms_blocks_']").each(function (key, item) {
             var assignedCmsBlocks = $(item).data('assigned-cms-blocks');
-            var supportedTemplates = $(item).data('supported-templates');
+            var template = $(item).data('template');
 
-            if ($.inArray(nameCategoryTemplate, supportedTemplates) >= 0) {
+            if (nameCategoryTemplate === template) {
                 $(item).prev('label').show();
                 $(item).next('.select2-container').show();
             } else {
@@ -32,8 +32,8 @@ $(document).ready( function () {
                 $(item).next('.select2-container').hide();
             }
 
-            if (assignedCmsBlocks && assignedCmsBlocks[idCategoryTemplate]) {
-                $.each(assignedCmsBlocks[idCategoryTemplate], function( index, value ) {
+            if (assignedCmsBlocks) {
+                $.each(assignedCmsBlocks, function( index, value ) {
                     const option = $(item).find('option[value=' + value + ']');
                     $(item).append(option);
                 });

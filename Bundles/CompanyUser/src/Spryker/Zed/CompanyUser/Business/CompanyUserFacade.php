@@ -24,7 +24,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -40,7 +40,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -56,7 +56,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -72,7 +72,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -88,7 +88,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -104,7 +104,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -120,7 +120,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -137,7 +137,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -151,7 +151,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -165,7 +165,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -180,7 +180,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -195,7 +195,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -211,7 +211,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -227,7 +227,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -243,7 +243,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -260,7 +260,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -274,7 +274,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -292,7 +292,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -308,7 +308,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -324,7 +324,7 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

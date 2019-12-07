@@ -8,10 +8,24 @@
 namespace Spryker\Zed\Redis\Business\Export;
 
 use Spryker\Zed\Redis\Business\Exception\RedisExportException;
+use Spryker\Zed\Redis\RedisConfig;
 use Symfony\Component\Process\Process;
 
 class RedisExporter implements RedisExporterInterface
 {
+    /**
+     * @var \Spryker\Zed\Redis\RedisConfig
+     */
+    protected $config;
+
+    /**
+     * @param \Spryker\Zed\Redis\RedisConfig $config
+     */
+    public function __construct(RedisConfig $config)
+    {
+        $this->config = $config;
+    }
+
     /**
      * @param string $destination
      * @param int|null $redisPort
@@ -28,6 +42,7 @@ class RedisExporter implements RedisExporterInterface
 
         $command = $this->buildExportCliCommand($destination, $redisPort);
         $process = new Process(explode(' ', $command), APPLICATION_ROOT_DIR);
+        $process->setTimeout($this->config->getProcessTimeout());
         $process->run();
 
         return $process->isSuccessful();

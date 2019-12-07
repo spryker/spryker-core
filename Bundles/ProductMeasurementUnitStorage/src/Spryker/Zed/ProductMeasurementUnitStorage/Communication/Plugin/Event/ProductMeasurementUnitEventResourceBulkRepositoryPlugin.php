@@ -23,7 +23,7 @@ use Spryker\Zed\ProductMeasurementUnit\Dependency\ProductMeasurementUnitEvents;
 class ProductMeasurementUnitEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -35,7 +35,7 @@ class ProductMeasurementUnitEventResourceBulkRepositoryPlugin extends AbstractPl
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -46,13 +46,13 @@ class ProductMeasurementUnitEventResourceBulkRepositoryPlugin extends AbstractPl
      */
     public function getData(int $offset, int $limit): array
     {
-        $filterTranser = $this->createFilterTransfer($offset, $limit);
+        $filterTransfer = $this->createFilterTransfer($offset, $limit);
 
-        return $this->getFacade()->findFilteredProductMeasurementUnitTransfers($filterTranser);
+        return $this->getFacade()->findFilteredProductMeasurementUnitTransfers($filterTransfer);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -64,7 +64,7 @@ class ProductMeasurementUnitEventResourceBulkRepositoryPlugin extends AbstractPl
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

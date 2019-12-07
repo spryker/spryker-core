@@ -20,7 +20,7 @@
 
 {% block action %}
     {{ backActionButton(url('/product-management'), 'List Products' | trans) }}
-    {{ editActionButton('/product-attribute-gui/view/productAbstract?id-product-abstract=' ~ idProductAbstract, 'Manage Attributes' | trans) }}
+    {{ editActionButton('/product-attribute-gui/view/product-abstract?id-product-abstract=' ~ idProductAbstract, 'Manage Attributes' | trans) }}
     {{ editActionButton(url('/product-management/edit', {'id-product-abstract': idProductAbstract}), 'Edit' | trans) }}
 {% endblock %}
 
@@ -40,10 +40,10 @@
 
 {% block head_css %}
     {{ parent() }}
-    <link rel="stylesheet" href="/assets/css/spryker-zed-productmanagement-main.css" />
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-productmanagement-main.css') }}" />
 {% endblock %}
 
 {% block footer_js %}
     {{ parent() }}
-    <script src="/assets/js/spryker-zed-productmanagement-main.js"></script>
+    <script src="{{ assetsPath('js/spryker-zed-productmanagement-main.js') }}"></script>
 {% endblock %}

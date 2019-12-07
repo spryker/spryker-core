@@ -12,6 +12,7 @@ use SprykerTest\Zed\Glossary\PageObject\GlossaryCreatePage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Glossary
@@ -27,9 +28,9 @@ class GlossaryCreateCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(GlossaryCommunicationTester $i)
+    public function breadcrumbIsVisible(GlossaryCommunicationTester $i): void
     {
         $i->amOnPage(GlossaryCreatePage::URL);
-        $i->seeBreadcrumbNavigation('Dashboard / Glossary / Create Translation');
+        $i->seeBreadcrumbNavigation('Glossary / Create Translation');
     }
 }

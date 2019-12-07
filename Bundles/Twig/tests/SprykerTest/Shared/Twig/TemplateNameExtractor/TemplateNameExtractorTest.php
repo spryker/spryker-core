@@ -10,10 +10,12 @@ namespace SprykerTest\Shared\Twig\TemplateNameExtractor;
 use Codeception\Test\Unit;
 use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceBridge;
+use Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceInterface;
 use Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractor;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Twig
@@ -31,7 +33,7 @@ class TemplateNameExtractorTest extends Unit
      *
      * @return void
      */
-    public function testExtractBundleNameShouldReturnBundleName($templateName, $expectedBundleName)
+    public function testExtractBundleNameShouldReturnBundleName(string $templateName, string $expectedBundleName): void
     {
         $templateNameExtractor = new TemplateNameExtractor($this->getUtilTextService());
 
@@ -41,7 +43,7 @@ class TemplateNameExtractorTest extends Unit
     /**
      * @return array
      */
-    public function nameDataProviderForBundle()
+    public function nameDataProviderForBundle(): array
     {
         return [
             ['@Bundle/Directory/template.twig', 'Bundle'],
@@ -60,7 +62,7 @@ class TemplateNameExtractorTest extends Unit
      *
      * @return void
      */
-    public function testExtractTemplateNameShouldReturnTemplatePath($templateName, $expectedBundleName)
+    public function testExtractTemplateNameShouldReturnTemplatePath(string $templateName, string $expectedBundleName): void
     {
         $templateNameExtractor = new TemplateNameExtractor($this->getUtilTextService());
 
@@ -70,10 +72,11 @@ class TemplateNameExtractorTest extends Unit
     /**
      * @return array
      */
-    public function nameDataProviderForTemplatePath()
+    public function nameDataProviderForTemplatePath(): array
     {
         return [
-            ['@Bundle/directory/template.twig', 'Directory/template.twig'],
+            ['@Bundle/template.twig', 'template.twig'],
+            ['@Bundle/directory/template.twig', 'Directory/template.twig'], // This is our rule: folder of templates should start from capital letter.
             ['@Bundle/Directory/template.twig', 'Directory/template.twig'],
             ['@Bundle/Directory/templateCamelCased.twig', 'Directory/template-camel-cased.twig'],
         ];
@@ -82,7 +85,7 @@ class TemplateNameExtractorTest extends Unit
     /**
      * @return \Spryker\Shared\Twig\Dependency\Service\TwigToUtilTextServiceInterface
      */
-    protected function getUtilTextService()
+    protected function getUtilTextService(): TwigToUtilTextServiceInterface
     {
         return new TwigToUtilTextServiceBridge(new UtilTextService());
     }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Console\Communication;
 
+use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface;
 use Spryker\Shared\Kernel\Communication\Application as SprykerApplication;
 use Spryker\Zed\Console\Business\Model\Environment;
 use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
@@ -36,6 +37,16 @@ class ConsoleBootstrap extends Application
     protected $application;
 
     /**
+     * @var \Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface[]
+     */
+    protected $bootablePlugins = [];
+
+    /**
+     * @var bool
+     */
+    protected $booted = false;
+
+    /**
      * @param string $name
      * @param string $version
      */
@@ -50,6 +61,7 @@ class ConsoleBootstrap extends Application
         $this->application = new SprykerApplication();
 
         $this->registerServiceProviders();
+        $this->provideApplicationPlugins();
 
         Pimple::setApplication($this->application);
     }
@@ -68,6 +80,24 @@ class ConsoleBootstrap extends Application
     }
 
     /**
+     * @return void
+     */
+    private function provideApplicationPlugins(): void
+    {
+        $applicationPlugins = $this->getFacade()->getApplicationPlugins();
+
+        foreach ($applicationPlugins as $applicationPlugin) {
+            $applicationPlugin->provide($this->application);
+
+            if ($applicationPlugin instanceof BootableApplicationPluginInterface) {
+                $this->bootablePlugins[] = $applicationPlugin;
+            }
+        }
+    }
+
+    /**
+     * @deprecated Use `\Spryker\Zed\Console\Communication\ConsoleBootstrap::provideApplicationPlugins()` instead.
+     *
      * @return void
      */
     private function registerServiceProviders()
@@ -149,11 +179,17 @@ class ConsoleBootstrap extends Application
     public function doRun(InputInterface $input, OutputInterface $output)
     {
         $this->setDecorated($output);
+
         if (!$input->hasParameterOption(['--format'], true)) {
             $output->writeln($this->getInfoText());
         }
 
         $this->application->boot();
+
+        if (!$this->booted) {
+            $this->booted = true;
+            $this->bootPlugins();
+        }
 
         if (!$input->hasParameterOption(['--no-pre'], true)) {
             $this->getFacade()->preRun($input, $output);
@@ -166,6 +202,16 @@ class ConsoleBootstrap extends Application
         }
 
         return $response;
+    }
+
+    /**
+     * @return void
+     */
+    protected function bootPlugins(): void
+    {
+        foreach ($this->bootablePlugins as $bootablePlugin) {
+            $bootablePlugin->boot($this->application);
+        }
     }
 
     /**

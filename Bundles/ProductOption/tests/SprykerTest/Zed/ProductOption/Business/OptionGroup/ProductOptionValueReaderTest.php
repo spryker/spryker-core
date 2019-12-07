@@ -17,6 +17,7 @@ use SprykerTest\Zed\ProductOption\Business\MockProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductOption
@@ -33,7 +34,7 @@ class ProductOptionValueReaderTest extends MockProvider
      *
      * @return void
      */
-    public function testGetProductOptionReturnsPersistedValueTransfer()
+    public function testGetProductOptionReturnsPersistedValueTransfer(): void
     {
         // Assign
         $expectedIdProductOptionValue = 5;
@@ -64,7 +65,7 @@ class ProductOptionValueReaderTest extends MockProvider
      *
      * @return void
      */
-    public function testGetProductOptionThrowsExceptionWhenOptionValueWasNotFoundInPersistentStorage()
+    public function testGetProductOptionThrowsExceptionWhenOptionValueWasNotFoundInPersistentStorage(): void
     {
         // Assign
         $dummyIdProductOptionValue = 1;

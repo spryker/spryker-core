@@ -4,18 +4,67 @@
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="PriceProductDimension">
-        <property name="idMerchantRelationship" type="int" />
-        <property name="name" type="string" />
+        <property name="idMerchantRelationship" type="int"/>
+        <property name="name" type="string"/>
+        <property name="type" type="string"/>
     </transfer>
 
     <transfer name="QueryCriteria">
-        <property name="joins" type="QueryJoin[]" singular="join" />
-        <property name="withColumns" type="array" singular="withColumn" />
+        <property name="joins" type="QueryJoin[]" singular="join"/>
+        <property name="withColumns" type="array" singular="withColumn"/>
     </transfer>
 
     <transfer name="QueryJoin">
-        <property name="left" type="array" />
-        <property name="right" type="array" />
-        <property name="joinType" type="string" />
+        <property name="left" type="array" singular="left"/>
+        <property name="right" type="array" singular="right"/>
+        <property name="joinType" type="string"/>
+        <property name="relation" type="string"/>
+        <property name="condition" type="string"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
+    </transfer>
+
+    <transfer name="PriceProductFilter">
+        <property name="priceMode" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="priceDimension" type="PriceProductDimension"/>
+        <property name="moneyValue" type="MoneyValue"/>
+        <property name="idPriceProduct" type="int"/>
+        <property name="idProduct" type="int"/>
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantRelationship">
+        <property name="idMerchantRelationship" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductCriteria">
+        <property name="priceDimension" type="PriceProductDimension"/>
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="grossAmount" type="int"/>
+        <property name="netAmount" type="int"/>
+        <property name="idEntity" type="int"/>
+        <property name="fkStore" type="int"/>
+        <property name="fkCurrency" type="int"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship"/>
     </transfer>
 </transfers>

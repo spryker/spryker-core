@@ -13,6 +13,7 @@ use Spryker\Shared\Twig\Cache\CacheWriterInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Twig
@@ -26,7 +27,7 @@ class FilesystemCacheWriterTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         if (is_file($this->getCacheFile())) {
             unlink($this->getCacheFile());
@@ -39,7 +40,7 @@ class FilesystemCacheWriterTest extends Unit
     /**
      * @return string
      */
-    protected function getCacheFile()
+    protected function getCacheFile(): string
     {
         $cacheDirectory = $this->getCacheDirectory();
 
@@ -49,7 +50,7 @@ class FilesystemCacheWriterTest extends Unit
     /**
      * @return string
      */
-    protected function getCacheDirectory()
+    protected function getCacheDirectory(): string
     {
         return __DIR__ . DIRECTORY_SEPARATOR . 'test_files' . DIRECTORY_SEPARATOR;
     }
@@ -57,7 +58,7 @@ class FilesystemCacheWriterTest extends Unit
     /**
      * @return void
      */
-    public function testCanBeInstantiatedWIthPathToCacheFile()
+    public function testCanBeInstantiatedWIthPathToCacheFile(): void
     {
         $cacheWriter = new FilesystemCacheWriter($this->getCacheFile(), 0777);
 
@@ -67,7 +68,7 @@ class FilesystemCacheWriterTest extends Unit
     /**
      * @return void
      */
-    public function testWriteCreatesDirectoryIfItDoesNotExists()
+    public function testWriteCreatesDirectoryIfItDoesNotExists(): void
     {
         $this->assertFalse(is_dir($this->getCacheDirectory()), 'Cache directory exists, make sure you cleanup before test');
 

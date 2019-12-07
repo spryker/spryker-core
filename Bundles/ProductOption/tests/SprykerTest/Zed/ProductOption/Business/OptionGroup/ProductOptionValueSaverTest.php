@@ -16,6 +16,7 @@ use SprykerTest\Zed\ProductOption\Business\MockProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductOption
@@ -32,7 +33,7 @@ class ProductOptionValueSaverTest extends MockProvider
      *
      * @return void
      */
-    public function testSaveProductOptionValuePersistsProvidedOptionValue()
+    public function testSaveProductOptionValuePersistsProvidedOptionValue(): void
     {
         // Assign
         $productOptionValueEntity = $this->createProductOptionValueEntityMock();

@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
@@ -57,7 +58,6 @@ class ResponseHeaders implements ResponseHeadersInterface
         RestResponseInterface $restResponse,
         RestRequestInterface $restRequest
     ): Response {
-
         $this->contentTypeResolver->addResponseHeaders($restRequest, $httpResponse);
 
         $httpResponse->headers->set(
@@ -89,7 +89,6 @@ class ResponseHeaders implements ResponseHeadersInterface
         RestResponseInterface $restResponse,
         RestRequestInterface $restRequest
     ): Response {
-
         foreach ($this->formatResponseHeadersPlugins as $formatResponseHeadersPlugin) {
             $httpResponse = $formatResponseHeadersPlugin->format($httpResponse, $restResponse, $restRequest);
         }

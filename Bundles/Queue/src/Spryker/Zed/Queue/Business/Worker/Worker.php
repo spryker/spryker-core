@@ -72,12 +72,13 @@ class Worker implements WorkerInterface
 
     /**
      * @param string $command
+     * @param array $options
      * @param int $round
      * @param array $processes
      *
      * @return void
      */
-    public function start($command, $round = 1, $processes = [])
+    public function start(string $command, array $options = [], int $round = 1, array $processes = []): void
     {
         $loopPassedSeconds = 0;
         $totalPassedSeconds = 0;
@@ -87,9 +88,16 @@ class Worker implements WorkerInterface
         $delayIntervalMilliseconds = (int)$this->queueConfig->getQueueWorkerInterval();
 
         $this->workerProgressBar->start($maxThreshold, $round);
+
         while ($totalPassedSeconds < $maxThreshold) {
             $processes = array_merge($this->executeOperation($command), $processes);
             $pendingProcesses = $this->getPendingProcesses($processes);
+            $isEmptyQueue = $this->isEmptyQueue($pendingProcesses, $options);
+
+            if ($isEmptyQueue) {
+                return;
+            }
+
             if ($loopPassedSeconds >= 1) {
                 $this->workerProgressBar->advance(1);
                 $totalPassedSeconds++;
@@ -101,7 +109,7 @@ class Worker implements WorkerInterface
 
         $this->workerProgressBar->finish();
         $this->processManager->flushIdleProcesses();
-        $this->waitForPendingProcesses($pendingProcesses, $command, $round, $delayIntervalMilliseconds);
+        $this->waitForPendingProcesses($pendingProcesses, $command, $round, $delayIntervalMilliseconds, $options);
     }
 
     /**
@@ -109,22 +117,29 @@ class Worker implements WorkerInterface
      * @param string $command
      * @param int $round
      * @param int $delayIntervalSeconds
+     * @param array $options
      *
      * @return void
      */
-    protected function waitForPendingProcesses(array $processes, $command, $round, $delayIntervalSeconds)
-    {
+    protected function waitForPendingProcesses(
+        array $processes,
+        string $command,
+        int $round,
+        int $delayIntervalSeconds,
+        array $options = []
+    ): void {
         usleep($delayIntervalSeconds * static::SECOND_TO_MILLISECONDS);
         $pendingProcesses = $this->getPendingProcesses($processes);
 
         if (count($pendingProcesses) > 0) {
-            if ($this->queueConfig->getIsWorkerLoopEnabled()) {
+            $isWorkerLoopEnabled = $this->isWorkerLoopEnabled($options);
+            if ($isWorkerLoopEnabled) {
                 $this->workerProgressBar->reset();
-                $this->start($command, ++$round, $pendingProcesses);
+                $this->start($command, $options, ++$round, $pendingProcesses);
             }
 
             sleep(static::RETRY_INTERVAL_SECONDS);
-            $this->waitForPendingProcesses($processes, $command, $round, $delayIntervalSeconds);
+            $this->waitForPendingProcesses($processes, $command, $round, $delayIntervalSeconds, $options);
         }
     }
 
@@ -133,7 +148,7 @@ class Worker implements WorkerInterface
      *
      * @return \Symfony\Component\Process\Process[]
      */
-    protected function getPendingProcesses($processes)
+    protected function getPendingProcesses(array $processes): array
     {
         $pendingProcesses = [];
         foreach ($processes as $process) {
@@ -150,7 +165,7 @@ class Worker implements WorkerInterface
      *
      * @return \Symfony\Component\Process\Process[]
      */
-    protected function executeOperation($command)
+    protected function executeOperation(string $command): array
     {
         $this->workerProgressBar->refreshOutput(count($this->queueNames));
 
@@ -185,7 +200,7 @@ class Worker implements WorkerInterface
      *
      * @return array
      */
-    protected function startProcesses($command, $queue)
+    protected function startProcesses(string $command, string $queue): array
     {
         $busyProcessNumber = $this->processManager->getBusyProcessNumber($queue);
         $numberOfWorkers = $this->getMaxQueueWorker($queue) - $busyProcessNumber;
@@ -214,7 +229,7 @@ class Worker implements WorkerInterface
      *
      * @return int
      */
-    protected function getMaxQueueWorker($queueName)
+    protected function getMaxQueueWorker(string $queueName): int
     {
         $adapterConfiguration = $this->queueConfig->getQueueAdapterConfiguration();
 
@@ -252,8 +267,39 @@ class Worker implements WorkerInterface
     /**
      * @return float
      */
-    protected function getFreshMicroTime()
+    protected function getFreshMicroTime(): float
     {
         return microtime(true);
+    }
+
+    /**
+     * @param array $pendingProcesses
+     * @param array $options
+     *
+     * @return bool
+     */
+    protected function isEmptyQueue(array $pendingProcesses, array $options): bool
+    {
+        return count($pendingProcesses) === 0 && $this->isWorkerStopsWhenEmptyQueueEnabled($options);
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return bool
+     */
+    protected function isWorkerLoopEnabled(array $options): bool
+    {
+        return $this->queueConfig->getIsWorkerLoopEnabled() || $this->isWorkerStopsWhenEmptyQueueEnabled($options);
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return bool
+     */
+    protected function isWorkerStopsWhenEmptyQueueEnabled(array $options): bool
+    {
+        return isset($options[SharedQueueConfig::CONFIG_WORKER_STOP_WHEN_EMPTY]) && $options[SharedQueueConfig::CONFIG_WORKER_STOP_WHEN_EMPTY];
     }
 }

@@ -12,6 +12,7 @@ use Spryker\Shared\ProductReview\ProductReviewConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductReview
@@ -30,7 +31,7 @@ class DeleteProductReviewTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteProductReviewRemovesEntityFromDatabase()
+    public function testDeleteProductReviewRemovesEntityFromDatabase(): void
     {
         // Arrange
         $productReviewTransfer = $this->tester->haveProductReview();
@@ -47,7 +48,7 @@ class DeleteProductReviewTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteProductReviewTouchesProductReviewSearchResource()
+    public function testDeleteProductReviewTouchesProductReviewSearchResource(): void
     {
         // Arrange
         $productReviewTransfer = $this->tester->haveProductReview();
@@ -63,7 +64,7 @@ class DeleteProductReviewTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteProductReviewTouchesProductReviewAbstractSearchResource()
+    public function testDeleteProductReviewTouchesProductReviewAbstractSearchResource(): void
     {
         // Arrange
         $productReviewTransfer = $this->tester->haveProductReview();

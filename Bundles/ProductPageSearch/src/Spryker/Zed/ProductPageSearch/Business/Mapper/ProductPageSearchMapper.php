@@ -133,7 +133,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
      *
      * @return array
      */
-    protected function getConcreteProductData(array $concreteProducts, $idLocale)
+    protected function getConcreteProductData(array $concreteProducts, int $idLocale)
     {
         $concreteNames = [];
         $concreteSkus = [];
@@ -142,6 +142,10 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
         $concreteDescriptions = [];
 
         foreach ($concreteProducts as $concreteProduct) {
+            if ($this->isSearchable($concreteProduct, $idLocale) === false) {
+                continue;
+            }
+
             $concreteSkus[] = $concreteProduct['sku'];
             $concreteAttributes[] = $concreteProduct['attributes'];
             $this->setConcreteLocalizedProductData(
@@ -163,6 +167,27 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
     }
 
     /**
+     * @param array $concreteProduct
+     * @param int $idLocale
+     *
+     * @return bool
+     */
+    protected function isSearchable(array $concreteProduct, int $idLocale): bool
+    {
+        if (isset($concreteProduct['SpyProductSearches']) === false) {
+            return false;
+        }
+
+        foreach ($concreteProduct['SpyProductSearches'] as $spyProductSearch) {
+            if ($spyProductSearch['fk_locale'] === $idLocale && $spyProductSearch['is_searchable'] === true) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @param array $concreteProductLocalizedAttributes
      * @param int $idLocale
      * @param array $concreteNames
@@ -171,7 +196,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
      *
      * @return void
      */
-    protected function setConcreteLocalizedProductData(array $concreteProductLocalizedAttributes, $idLocale, array &$concreteNames, array &$concreteDescriptions, array &$concreteLocalizedAttributes)
+    protected function setConcreteLocalizedProductData(array $concreteProductLocalizedAttributes, int $idLocale, array &$concreteNames, array &$concreteDescriptions, array &$concreteLocalizedAttributes)
     {
         $concreteNames = [];
         foreach ($concreteProductLocalizedAttributes as $concreteProductLocalizedAttribute) {

@@ -17,61 +17,61 @@ interface CmsBlockGuiToCmsBlockInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer|null
      */
-    public function findCmsBlockById($idCmsBlock);
+    public function findCmsBlockById($idCmsBlock): ?CmsBlockTransfer;
 
     /**
      * @param int $idCmsBlock
      *
      * @return void
      */
-    public function activateById($idCmsBlock);
+    public function activateById($idCmsBlock): void;
 
     /**
      * @param int $idCmsBlock
      *
      * @return void
      */
-    public function deactivateById($idCmsBlock);
+    public function deactivateById($idCmsBlock): void;
 
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
-    public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer);
+    public function updateCmsBlock(CmsBlockTransfer $cmsBlockTransfer): CmsBlockTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
-    public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer);
+    public function createCmsBlock(CmsBlockTransfer $cmsBlockTransfer): CmsBlockTransfer;
 
     /**
      * @param string $templatePath
      *
      * @return void
      */
-    public function syncTemplate($templatePath);
+    public function syncTemplate($templatePath): void;
 
     /**
      * @param int $idCmsBlock
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    public function findGlossary($idCmsBlock);
+    public function findGlossary($idCmsBlock): CmsBlockGlossaryTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
-    public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer);
+    public function saveGlossary(CmsBlockGlossaryTransfer $cmsBlockGlossaryTransfer): CmsBlockGlossaryTransfer;
 
     /**
      * @param int $idCmsBlockTemplate
      *
      * @return bool
      */
-    public function hasTemplateFileById($idCmsBlockTemplate);
+    public function hasTemplateFileById($idCmsBlockTemplate): bool;
 }

@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group UtilValidate
@@ -35,7 +36,7 @@ class UtilValidateServiceTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -49,7 +50,7 @@ class UtilValidateServiceTest extends Unit
      *
      * @return void
      */
-    public function testIsEmailFormatValidReturnsFalseOnInvalidEmailFormat($invalidEmail)
+    public function testIsEmailFormatValidReturnsFalseOnInvalidEmailFormat(string $invalidEmail): void
     {
         // Assign
         $expectedResult = false;
@@ -64,7 +65,7 @@ class UtilValidateServiceTest extends Unit
     /**
      * @return array
      */
-    public function invalidEmailFormats()
+    public function invalidEmailFormats(): array
     {
         return [
             [static::INVALID_EMAIL],
@@ -86,7 +87,7 @@ class UtilValidateServiceTest extends Unit
      *
      * @return void
      */
-    public function testIsEmailFormatValidReturnsTrueOnValidEmailFormat($email)
+    public function testIsEmailFormatValidReturnsTrueOnValidEmailFormat(string $email): void
     {
         // Assign
         $expectedResult = true;
@@ -101,7 +102,7 @@ class UtilValidateServiceTest extends Unit
     /**
      * @return array
      */
-    public function validEmailFormats()
+    public function validEmailFormats(): array
     {
         return [
             [static::VALID_EMAIL],
@@ -111,7 +112,7 @@ class UtilValidateServiceTest extends Unit
     /**
      * @return void
      */
-    public function testIsEmailFormatValidCallsBehaveStateless()
+    public function testIsEmailFormatValidCallsBehaveStateless(): void
     {
         // Assign
         $expectedResult = true;

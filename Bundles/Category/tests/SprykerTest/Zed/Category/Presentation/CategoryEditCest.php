@@ -12,6 +12,7 @@ use SprykerTest\Zed\Category\PageObject\CategoryEditPage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Category
@@ -26,7 +27,7 @@ class CategoryEditCest
      *
      * @return void
      */
-    public function testICanOpenEditCategoryPage(CategoryPresentationTester $i)
+    public function testICanOpenEditCategoryPage(CategoryPresentationTester $i): void
     {
         $categoryTransfer = $i->createCategory(CategoryEditPage::CATEGORY_A);
         $i->amOnPage(CategoryEditPage::getUrl($categoryTransfer->getIdCategory()));
@@ -40,7 +41,7 @@ class CategoryEditCest
      *
      * @return void
      */
-    public function testICanEditCategoryCheckboxes(CategoryPresentationTester $i)
+    public function testICanEditCategoryCheckboxes(CategoryPresentationTester $i): void
     {
         $categoryTransfer = $i->createCategory(CategoryEditPage::CATEGORY_A);
         $i->amOnPage(CategoryEditPage::getUrl($categoryTransfer->getIdCategory()));

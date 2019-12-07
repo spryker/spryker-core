@@ -8,11 +8,13 @@
 namespace SprykerTest\Zed\Propel\Business\Model\PropelDatabase;
 
 use Codeception\Test\Unit;
+use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\PostgreSqlDatabaseCreator;
 use Spryker\Zed\Propel\PropelConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Propel
@@ -27,9 +29,11 @@ class PostgreSqlDatabaseCreatorTest extends Unit
     /**
      * @return void
      */
-    public function testGetEngine()
+    public function testGetEngine(): void
     {
-        $postgreSqlDatabaseCreator = new PostgreSqlDatabaseCreator();
+        $postgreSqlDatabaseCreator = new PostgreSqlDatabaseCreator(
+            $this->getConfigMock()
+        );
 
         $this->assertSame(PropelConfig::DB_ENGINE_PGSQL, $postgreSqlDatabaseCreator->getEngine());
     }
@@ -37,7 +41,7 @@ class PostgreSqlDatabaseCreatorTest extends Unit
     /**
      * @return void
      */
-    public function testCreateWithNotExistingDatabase()
+    public function testCreateWithNotExistingDatabase(): void
     {
         $postgreSqlDatabaseCreatorMock = $this->getPostgreSqlDatabaseCreatorMock(['existsDatabase', 'createDatabase']);
         $postgreSqlDatabaseCreatorMock->expects($this->once())->method('existsDatabase')->willReturn(false);
@@ -49,7 +53,7 @@ class PostgreSqlDatabaseCreatorTest extends Unit
     /**
      * @return void
      */
-    public function testCreateWithExistingDatabase()
+    public function testCreateWithExistingDatabase(): void
     {
         $postgreSqlDatabaseCreatorMock = $this->getPostgreSqlDatabaseCreatorMock(['existsDatabase', 'createDatabase']);
         $postgreSqlDatabaseCreatorMock->expects($this->once())->method('existsDatabase')->willReturn(true);
@@ -65,6 +69,20 @@ class PostgreSqlDatabaseCreatorTest extends Unit
      */
     protected function getPostgreSqlDatabaseCreatorMock(array $methods = [])
     {
-        return $this->getMockBuilder(PostgreSqlDatabaseCreator::class)->setMethods($methods)->getMock();
+        return $this->getMockBuilder(PostgreSqlDatabaseCreator::class)
+            ->disableOriginalConstructor()
+            ->setMethods($methods)
+            ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Propel\PropelConfig
+     */
+    protected function getConfigMock(): MockObject
+    {
+        $configMock = $this->createMock(PropelConfig::class);
+        $configMock->method('getProcessTimeout')->willReturn(null);
+
+        return $configMock;
     }
 }

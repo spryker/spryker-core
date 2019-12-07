@@ -12,15 +12,15 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CmsBlockConfig extends AbstractBundleConfig
 {
-    public const CMS_TWIG_TEMPLATE_PREFIX = '@CmsBlock';
-    public const CMS_BLOCK_PLACEHOLDER_PATTERN = '/<!-- CMS_BLOCK_PLACEHOLDER : "[a-zA-Z0-9._-]*" -->/';
-    public const CMS_BLOCK_PLACEHOLDER_VALUE_PATTERN = '/"([^"]+)"/';
+    protected const CMS_TWIG_TEMPLATE_PREFIX = '@CmsBlock';
+    protected const CMS_BLOCK_PLACEHOLDER_PATTERN = '/<!-- CMS_BLOCK_PLACEHOLDER : "[a-zA-Z0-9._-]*" -->/';
+    protected const CMS_BLOCK_PLACEHOLDER_VALUE_PATTERN = '/"([^"]+)"/';
     protected const THEME_NAME_DEFAULT = 'default';
 
     /**
      * @return string
      */
-    public function getPlaceholderPattern()
+    public function getPlaceholderPattern(): string
     {
         return static::CMS_BLOCK_PLACEHOLDER_PATTERN;
     }
@@ -28,7 +28,7 @@ class CmsBlockConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getPlaceholderValuePattern()
+    public function getPlaceholderValuePattern(): string
     {
         return static::CMS_BLOCK_PLACEHOLDER_VALUE_PATTERN;
     }
@@ -38,7 +38,7 @@ class CmsBlockConfig extends AbstractBundleConfig
      *
      * @return array
      */
-    public function getTemplateRealPaths($templateRelativePath)
+    public function getTemplateRealPaths($templateRelativePath): array
     {
         $templatePaths = [];
 
@@ -56,8 +56,11 @@ class CmsBlockConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    protected function getAbsolutePath(string $templateRelativePath, string $twigLayer, string $themeName = self::THEME_NAME_DEFAULT): string
-    {
+    protected function getAbsolutePath(
+        string $templateRelativePath,
+        string $twigLayer,
+        string $themeName = self::THEME_NAME_DEFAULT
+    ): string {
         $templateRelativePath = str_replace(static::CMS_TWIG_TEMPLATE_PREFIX, '', $templateRelativePath);
 
         return sprintf(
@@ -92,7 +95,7 @@ class CmsBlockConfig extends AbstractBundleConfig
      */
     protected function getThemeName(): string
     {
-        return $this->get(CmsBlockConstants::YVES_THEME, '');
+        return '';
     }
 
     /**

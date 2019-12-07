@@ -16,5 +16,5 @@ interface CmsContentWidgetCmsBlockConnectorToCmsBlockStorageClientInterface
      *
      * @return array
      */
-    public function findBlocksByNames($blockNames, $localeName, $storeName);
+    public function findBlocksByNames($blockNames, $localeName, $storeName): array;
 }

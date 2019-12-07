@@ -13,7 +13,7 @@ use Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig;
 class SoftMinimumThresholdWithFlexibleFeeStrategyPlugin extends AbstractSalesOrderThresholdStrategyPlugin
 {
     /**
-     * {inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -25,7 +25,7 @@ class SoftMinimumThresholdWithFlexibleFeeStrategyPlugin extends AbstractSalesOrd
     }
 
     /**
-     * {inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -37,7 +37,7 @@ class SoftMinimumThresholdWithFlexibleFeeStrategyPlugin extends AbstractSalesOrd
     }
 
     /**
-     * {inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -47,11 +47,11 @@ class SoftMinimumThresholdWithFlexibleFeeStrategyPlugin extends AbstractSalesOrd
      */
     public function isValid(SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer): bool
     {
-        return !(($salesOrderThresholdValueTransfer->getSalesOrderThresholdValue() < 1 || $salesOrderThresholdValueTransfer->getFee() < 1));
+        return !(($salesOrderThresholdValueTransfer->getValue() < 1 || $salesOrderThresholdValueTransfer->getFee() < 1));
     }
 
     /**
-     * {inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -65,7 +65,7 @@ class SoftMinimumThresholdWithFlexibleFeeStrategyPlugin extends AbstractSalesOrd
     }
 
     /**
-     * {inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

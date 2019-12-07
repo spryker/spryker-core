@@ -11,6 +11,8 @@ use Codeception\Module;
 use Codeception\TestInterface;
 use Propel\Runtime\Propel;
 use Silex\Application;
+use Spryker\Service\Container\Container;
+use Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 
 class TransactionHelper extends Module
@@ -18,9 +20,27 @@ class TransactionHelper extends Module
     /**
      * @return void
      */
-    public function _initialize()
+    public function _initialize(): void
     {
         Propel::disableInstancePooling();
+
+        if (class_exists(PropelApplicationPlugin::class)) {
+            $propelApplicationPlugin = new PropelApplicationPlugin();
+            $propelApplicationPlugin->provide(new Container());
+
+            return;
+        }
+
+        $this->addBackwardCompatibleServiceProvider();
+    }
+
+    /**
+     * @deprecated Will be removed in favor of `\Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin`.
+     *
+     * @return void
+     */
+    protected function addBackwardCompatibleServiceProvider(): void
+    {
         $propelServiceProvider = new PropelServiceProvider();
         $propelServiceProvider->boot(new Application());
     }
@@ -30,7 +50,7 @@ class TransactionHelper extends Module
      *
      * @return void
      */
-    public function _before(TestInterface $test)
+    public function _before(TestInterface $test): void
     {
         parent::_before($test);
 
@@ -42,7 +62,7 @@ class TransactionHelper extends Module
      *
      * @return void
      */
-    public function _after(TestInterface $test)
+    public function _after(TestInterface $test): void
     {
         parent::_after($test);
 
@@ -52,7 +72,7 @@ class TransactionHelper extends Module
     /**
      * @return void
      */
-    public function _afterSuite()
+    public function _afterSuite(): void
     {
         Propel::closeConnections();
     }

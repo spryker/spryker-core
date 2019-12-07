@@ -14,6 +14,7 @@ use Spryker\Zed\Twig\Business\TwigFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Twig
@@ -27,7 +28,7 @@ class TwigFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testWarmUpCacheDelegatesToCacheWarmerModel()
+    public function testWarmUpCacheDelegatesToCacheWarmerModel(): void
     {
         $factoryMock = $this->getFactoryMock();
         $twigFacade = new TwigFacade();

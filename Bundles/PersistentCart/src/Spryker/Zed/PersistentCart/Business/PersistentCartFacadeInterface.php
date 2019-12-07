@@ -121,6 +121,23 @@ interface PersistentCartFacadeInterface
      * Specification:
      *  - Loads quote from db.
      *  - Merges loaded quote with quote from change request if is provided.
+     *  - Calls calculate quantity to add or remove.
+     *  - Removes or add items to achieve provided quantities.
+     *  - Saves quote to DB in case success result.
+     *  - Calls quote response extend plugins.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function updateQuantity(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Loads quote from db.
+     *  - Merges loaded quote with quote from change request if is provided.
      *  - Calls calculate quantity to remove.
      *  - Removes items from quote.
      *  - Saves quote to DB.
@@ -153,9 +170,10 @@ interface PersistentCartFacadeInterface
 
     /**
      * Specification:
-     * - Merge provided quote with quote from DB for provided customer
-     * - Saves quote to DB
-     * - Throws QuoteSynchronizationNotAvailable exception if database quote storage strategy is not used
+     * - If there are no items in the quote then it creates a new empty quote and merges it with the provided quote as well as with the quote from DB for provided customer.
+     * - If quote has items then it merges provided quote with quote from DB for provided customer.
+     * - Saves quote to DB.
+     * - Throws QuoteSynchronizationNotAvailable exception if database quote storage strategy is not used.
      *
      * @api
      *

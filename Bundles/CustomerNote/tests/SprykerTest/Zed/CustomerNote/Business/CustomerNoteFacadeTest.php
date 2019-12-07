@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\CustomerNote\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\CustomerNote\Business\CustomerNoteBusinessFactory;
 use Spryker\Zed\CustomerNote\Business\CustomerNoteFacade;
 use Spryker\Zed\CustomerNote\CustomerNoteDependencyProvider;
@@ -16,6 +18,7 @@ use Spryker\Zed\Kernel\Container;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CustomerNote
@@ -56,7 +59,7 @@ class CustomerNoteFacadeTest extends Unit
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->customerNoteFacade = new CustomerNoteFacade();
@@ -67,7 +70,7 @@ class CustomerNoteFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\CustomerNote\Business\CustomerNoteBusinessFactory
      */
-    protected function getBusinessFactory()
+    protected function getBusinessFactory(): CustomerNoteBusinessFactory
     {
         $customerNoteBusinessFactory = new CustomerNoteBusinessFactory();
         $customerNoteBusinessFactory->setContainer($this->getContainer());
@@ -78,7 +81,7 @@ class CustomerNoteFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function getContainer()
+    protected function getContainer(): Container
     {
         $dependencyProvider = new CustomerNoteDependencyProvider();
         $this->businessLayerDependencies = new Container();
@@ -96,7 +99,7 @@ class CustomerNoteFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddNoteReturnsNotEmptyValueOnSuccess()
+    public function testAddNoteReturnsNotEmptyValueOnSuccess(): void
     {
         $note = $this->customerNoteFacade->addNote($this->tester->getCustomerNoteTransfer(
             $this->userTransfer->getIdUser(),
@@ -109,7 +112,7 @@ class CustomerNoteFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddNoteFromCurrentUserReturnsNotEmptyValueOnSuccess()
+    public function testAddNoteFromCurrentUserReturnsNotEmptyValueOnSuccess(): void
     {
         $note = $this->customerNoteFacade->addNote($this->tester->getCustomerNoteTransfer(
             $this->userTransfer->getIdUser(),
@@ -122,7 +125,7 @@ class CustomerNoteFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetNotesReturnsProperAmountOfNotes()
+    public function testGetNotesReturnsProperAmountOfNotes(): void
     {
         $this->createCustomerNotesWithFkUserAndFkCustomer(
             $this->userTransfer->getIdUser(),
@@ -137,7 +140,7 @@ class CustomerNoteFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected function getCustomer()
+    protected function getCustomer(): CustomerTransfer
     {
         return $this->tester->haveCustomer();
     }
@@ -145,7 +148,7 @@ class CustomerNoteFacadeTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    protected function getUser()
+    protected function getUser(): UserTransfer
     {
         return $this->tester->haveUser();
     }
@@ -157,7 +160,7 @@ class CustomerNoteFacadeTest extends Unit
      *
      * @return void
      */
-    protected function createCustomerNotesWithFkUserAndFkCustomer(int $fkUser, int $fkCustomer, int $number)
+    protected function createCustomerNotesWithFkUserAndFkCustomer(int $fkUser, int $fkCustomer, int $number): void
     {
         for ($i = 0; $i < $number; $i++) {
             $this->customerNoteFacade->addNote(

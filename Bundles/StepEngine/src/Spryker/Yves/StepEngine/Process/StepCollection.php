@@ -252,7 +252,6 @@ class StepCollection implements StepCollectionInterface
      */
     public function getEscapeUrl(StepInterface $currentStep)
     {
-        /** @var string|null $route */
         $route = $currentStep->getEscapeRoute();
         if ($route === null) {
             $route = $this->getPreviousStep($currentStep)->getStepRoute();

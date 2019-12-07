@@ -20,6 +20,7 @@ use Generated\Shared\Transfer\ShareDetailTransfer;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -132,15 +133,18 @@ class SharedCartBusinessTester extends Actor
     public function createCompanyUserTransfer(array $seed = []): CompanyUserTransfer
     {
         $customerTransfer = $this->haveCustomer();
+
         $companyTransfer = $this->haveCompany([
             CompanyTransfer::IS_ACTIVE => true,
         ]);
+
         $companyBusinessUnitTransfer = $this->haveCompanyBusinessUnit([
             CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
         ]);
 
         $companyUserTransfer = $this->haveCompanyUser($seed + [
                 CompanyUserTransfer::CUSTOMER => $customerTransfer,
+                CompanyUserTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
                 CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
                 CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
             ]);

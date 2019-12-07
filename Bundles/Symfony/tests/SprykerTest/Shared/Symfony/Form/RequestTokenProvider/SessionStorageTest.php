@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Symfony
@@ -24,7 +25,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class SessionStorageTest extends Unit
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $sessionMock;
 
@@ -36,7 +37,7 @@ class SessionStorageTest extends Unit
     /**
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -47,7 +48,7 @@ class SessionStorageTest extends Unit
     /**
      * @return void
      */
-    public function testSessionStorageGetToken()
+    public function testSessionStorageGetToken(): void
     {
         $testKey = 'test_key';
         $testValue = 'test_value';
@@ -63,7 +64,7 @@ class SessionStorageTest extends Unit
     /**
      * @return void
      */
-    public function testSessionStorageSetToken()
+    public function testSessionStorageSetToken(): void
     {
         $testKey = 'test_key';
         $testValue = 'test_value';
@@ -78,7 +79,7 @@ class SessionStorageTest extends Unit
     /**
      * @return void
      */
-    public function testSessionStorageDeleteToken()
+    public function testSessionStorageDeleteToken(): void
     {
         $testKey = 'test_key';
 

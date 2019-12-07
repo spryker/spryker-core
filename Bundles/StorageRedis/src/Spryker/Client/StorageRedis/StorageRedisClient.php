@@ -7,7 +7,9 @@
 
 namespace Spryker\Client\StorageRedis;
 
+use Generated\Shared\Transfer\StorageScanResultTransfer;
 use Spryker\Client\Kernel\AbstractClient;
+use Spryker\Client\StorageRedis\Redis\StorageRedisWrapperInterface;
 
 /**
  * @method \Spryker\Client\StorageRedis\StorageRedisFactory getFactory()
@@ -15,7 +17,12 @@ use Spryker\Client\Kernel\AbstractClient;
 class StorageRedisClient extends AbstractClient implements StorageRedisClientInterface
 {
     /**
-     * {@inheritdoc}
+     * @var \Spryker\Client\StorageRedis\Redis\StorageRedisWrapperInterface
+     */
+    protected static $storageRedisWrapper;
+    
+    /**
+     * {@inheritDoc}
      *
      * @api
      *
@@ -27,11 +34,11 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
      */
     public function set(string $key, string $value, ?int $ttl = null): bool
     {
-        return $this->getFactory()->createStorageRedisWrapper()->set($key, $value, $ttl);
+        return $this->getStorageRedisWrapper()->set($key, $value, $ttl);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -41,11 +48,11 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
      */
     public function setMulti(array $items): void
     {
-        $this->getFactory()->createStorageRedisWrapper()->setMulti($items);
+        $this->getStorageRedisWrapper()->setMulti($items);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -55,11 +62,11 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
      */
     public function delete(string $key): int
     {
-        return $this->getFactory()->createStorageRedisWrapper()->delete($key);
+        return $this->getStorageRedisWrapper()->delete($key);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -69,11 +76,11 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
      */
     public function deleteMulti(array $keys): int
     {
-        return $this->getFactory()->createStorageRedisWrapper()->deleteMulti($keys);
+        return $this->getStorageRedisWrapper()->deleteMulti($keys);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -81,11 +88,11 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
      */
     public function deleteAll(): int
     {
-        return $this->getFactory()->createStorageRedisWrapper()->deleteAll();
+        return $this->getStorageRedisWrapper()->deleteAll();
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -95,11 +102,11 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
      */
     public function get(string $key)
     {
-        return $this->getFactory()->createStorageRedisWrapper()->get($key);
+        return $this->getStorageRedisWrapper()->get($key);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -109,11 +116,11 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
      */
     public function getMulti(array $keys): array
     {
-        return $this->getFactory()->createStorageRedisWrapper()->getMulti($keys);
+        return $this->getStorageRedisWrapper()->getMulti($keys);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -121,11 +128,11 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
      */
     public function getStats(): array
     {
-        return $this->getFactory()->createStorageRedisWrapper()->getStats();
+        return $this->getStorageRedisWrapper()->getStats();
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -133,11 +140,11 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
      */
     public function getAllKeys(): array
     {
-        return $this->getFactory()->createStorageRedisWrapper()->getAllKeys();
+        return $this->getStorageRedisWrapper()->getAllKeys();
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -147,11 +154,27 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
      */
     public function getKeys(string $pattern): array
     {
-        return $this->getFactory()->createStorageRedisWrapper()->getKeys($pattern);
+        return $this->getStorageRedisWrapper()->getKeys($pattern);
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $pattern
+     * @param int $limit
+     * @param int $cursor
+     *
+     * @return \Generated\Shared\Transfer\StorageScanResultTransfer
+     */
+    public function scanKeys(string $pattern, int $limit, int $cursor): StorageScanResultTransfer
+    {
+        return $this->getStorageRedisWrapper()->scanKeys($pattern, $limit, $cursor);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *
@@ -159,11 +182,11 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
      */
     public function resetAccessStats(): void
     {
-        $this->getFactory()->createStorageRedisWrapper()->resetAccessStats();
+        $this->getStorageRedisWrapper()->resetAccessStats();
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -171,11 +194,11 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
      */
     public function getAccessStats(): array
     {
-        return $this->getFactory()->createStorageRedisWrapper()->getAccessStats();
+        return $this->getStorageRedisWrapper()->getAccessStats();
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -183,11 +206,23 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
      */
     public function getCountItems(): int
     {
-        return $this->getFactory()->createStorageRedisWrapper()->getCountItems();
+        return $this->getStorageRedisWrapper()->getCountItems();
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getDbSize(): int
+    {
+        return $this->getStorageRedisWrapper()->getDbSize();
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *
@@ -197,6 +232,18 @@ class StorageRedisClient extends AbstractClient implements StorageRedisClientInt
      */
     public function setDebug(bool $debug): void
     {
-        $this->getFactory()->createStorageRedisWrapper()->setDebug($debug);
+        $this->getStorageRedisWrapper()->setDebug($debug);
+    }
+
+    /**
+     * @return \Spryker\Client\StorageRedis\Redis\StorageRedisWrapperInterface
+     */
+    protected function getStorageRedisWrapper(): StorageRedisWrapperInterface
+    {
+        if (static::$storageRedisWrapper === null) {
+            static::$storageRedisWrapper = $this->getFactory()->createStorageRedisWrapper();
+        }
+        
+        return static::$storageRedisWrapper;
     }
 }

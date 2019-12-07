@@ -11,4 +11,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class PriceCartConnectorConfig extends AbstractBundleConfig
 {
+    /**
+     * @uses \Spryker\Zed\Cart\CartConfig::OPERATION_REMOVE
+     */
+    public const OPERATION_REMOVE = 'remove';
 }

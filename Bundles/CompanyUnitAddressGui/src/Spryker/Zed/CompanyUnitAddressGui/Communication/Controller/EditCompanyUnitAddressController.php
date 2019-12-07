@@ -18,17 +18,16 @@ use Symfony\Component\HttpFoundation\Request;
 class EditCompanyUnitAddressController extends AbstractController
 {
     /**
-     * @see \Spryker\Zed\CompanyUnitAddressGui\Communication\Controller\ListCompanyUnitAddressController::indexAction()
+     * @uses \Spryker\Zed\CompanyUnitAddressGui\Communication\Controller\ListCompanyUnitAddressController::indexAction()
      */
     protected const COMPANY_UNIT_ADDRESS_LIST_URL = '/company-unit-address-gui/list-company-unit-address';
 
+    protected const PARAM_ID_COMPANY_UNIT_ADDRESS = 'id-company-unit-address';
+    protected const HEADER_REFERER = 'referer';
+
     protected const MESSAGE_COMPANY_UNIT_ADDRESS_NOT_FOUND = 'Company unit address not found.';
-    public const URL_PARAM_ID_COMPANY_UNIT_ADDRESS = 'id-company-unit-address';
-
-    public const MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_SUCCESS = 'Company unit address has been successfully updated.';
-    public const MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_ERROR = 'Company unit address update failed.';
-
-    public const HEADER_REFERER = 'referer';
+    protected const MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_SUCCESS = 'Company unit address has been successfully updated.';
+    protected const MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_ERROR = 'Company unit address update failed.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -37,7 +36,7 @@ class EditCompanyUnitAddressController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCompanyUnitAddress = $this->castId($request->query->get(static::URL_PARAM_ID_COMPANY_UNIT_ADDRESS));
+        $idCompanyUnitAddress = $this->castId($request->query->get(static::PARAM_ID_COMPANY_UNIT_ADDRESS));
 
         $companyUnitAddressForm = $this->getFactory()
             ->createCompanyUnitAddressForm($idCompanyUnitAddress)
@@ -58,7 +57,8 @@ class EditCompanyUnitAddressController extends AbstractController
         $companyUnitAddressTransfer = $this->getFactory()
             ->getCompanyUnitAddressFacade()
             ->getCompanyUnitAddressById(
-                $this->createCompanyUnitAddressTransfer($idCompanyUnitAddress)
+                (new CompanyUnitAddressTransfer())
+                    ->setIdCompanyUnitAddress($idCompanyUnitAddress)
             );
 
         return $this->viewResponse([
@@ -72,7 +72,7 @@ class EditCompanyUnitAddressController extends AbstractController
      *
      * @return void
      */
-    protected function updateCompanyUnitAddress(FormInterface $companyUnitAddressForm)
+    protected function updateCompanyUnitAddress(FormInterface $companyUnitAddressForm): void
     {
         if (!$companyUnitAddressForm->isValid()) {
             $this->addErrorMessage(static::MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_ERROR);
@@ -91,18 +91,5 @@ class EditCompanyUnitAddressController extends AbstractController
         }
 
         $this->addSuccessMessage(static::MESSAGE_COMPANY_UNIT_ADDRESS_UPDATE_SUCCESS);
-    }
-
-    /**
-     * @param int $idCompanyUnitAddress
-     *
-     * @return \Generated\Shared\Transfer\CompanyUnitAddressTransfer
-     */
-    protected function createCompanyUnitAddressTransfer(int $idCompanyUnitAddress)
-    {
-        $companyUnitAddressTransfer = new CompanyUnitAddressTransfer();
-        $companyUnitAddressTransfer->setIdCompanyUnitAddress($idCompanyUnitAddress);
-
-        return $companyUnitAddressTransfer;
     }
 }

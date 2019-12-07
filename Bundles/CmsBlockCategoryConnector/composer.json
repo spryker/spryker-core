@@ -4,9 +4,10 @@
   "description": "CmsBlockCategoryConnector module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/category": "^4.0.0",
-    "spryker/cms-block": "^1.2.0 || ^2.0.0",
+    "spryker/cms-block": "^1.2.0 || ^2.0.0 || ^3.0.0",
+    "spryker/cms-block-extension": "^1.0.0",
     "spryker/collector": "^5.0.0 || ^6.0.0",
     "spryker/gui": "^3.6.0",
     "spryker/kernel": "^3.30.0",
@@ -40,7 +41,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   },
   "config": {

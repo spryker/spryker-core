@@ -19,7 +19,7 @@ use Spryker\Zed\Translator\Business\Translator\Translator;
 class TranslationPlugin extends AbstractPlugin implements TranslationPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -39,7 +39,7 @@ class TranslationPlugin extends AbstractPlugin implements TranslationPluginInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

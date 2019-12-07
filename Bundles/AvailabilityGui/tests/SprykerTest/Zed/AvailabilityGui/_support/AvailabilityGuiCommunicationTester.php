@@ -11,6 +11,7 @@ use Codeception\Actor;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -31,7 +32,7 @@ class AvailabilityGuiCommunicationTester extends Actor
     /**
      * @return void
      */
-    public function assertTableWithDataExists()
+    public function assertTableWithDataExists(): void
     {
         $showingEntries = $this->grabTextFrom('//*[@class="dataTables_info"]');
         preg_match('/^Showing\s{1}\d+\s{1}to\s{1}(\d+)/', $showingEntries, $matches);

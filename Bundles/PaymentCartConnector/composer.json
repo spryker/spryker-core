@@ -4,11 +4,11 @@
   "description": "PaymentCartConnector module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
-    "spryker/cart": "^5.0.0",
+    "spryker/cart": "*",
     "spryker/code-sniffer": "*",
     "spryker/testify": "*"
   },

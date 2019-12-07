@@ -36,6 +36,7 @@ use Spryker\Zed\Shipment\Business\ShipmentFacade;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CheckoutRestApi
@@ -246,11 +247,11 @@ class CheckoutRestApiFacadeTest extends Unit
     {
         $mockShipmentFacade = $this->createPartialMock(
             ShipmentFacade::class,
-            ['getAvailableMethods']
+            ['getAvailableMethodsByShipment']
         );
         $mockShipmentFacade
-            ->method('getAvailableMethods')
-            ->willReturn($this->tester->createShipmentMethodsTransfer());
+            ->method('getAvailableMethodsByShipment')
+            ->willReturn($this->tester->createShipmentMethodsCollectionTransfer());
 
         $mockCheckoutRestApiFactory
             ->method('getShipmentFacade')
@@ -429,12 +430,12 @@ class CheckoutRestApiFacadeTest extends Unit
         $mockPaymentFacade = $this->createPartialMock(
             PaymentFacade::class,
             [
-                'getAvailablePaymentProviders',
+                'getAvailablePaymentProvidersForStore',
                 'getAvailableMethods',
             ]
         );
         $mockPaymentFacade
-            ->method('getAvailablePaymentProviders')
+            ->method('getAvailablePaymentProvidersForStore')
             ->willReturn($this->tester->createPaymentProviderCollectionTransfer());
         $mockPaymentFacade
             ->method('getAvailableMethods')

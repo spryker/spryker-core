@@ -52,6 +52,8 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
     protected $store;
 
     /**
+     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -175,7 +177,6 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
         string $localeName,
         ?string $storeName = null
     ): void {
-
         if (empty($cmsPageEntity->getSpyCmsVersions())) {
             return;
         }

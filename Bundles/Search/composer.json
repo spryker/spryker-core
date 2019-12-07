@@ -4,7 +4,7 @@
   "description": "Search module",
   "license": "proprietary",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/config": "^3.0.0",
     "spryker/elastica": "^4.0.0",
     "spryker/gui": "^3.0.0",
@@ -21,6 +21,7 @@
   },
   "require-dev": {
     "spryker/application": "*",
+    "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
@@ -38,7 +39,7 @@
   "prefer-stable": true,
   "extra": {
     "branch-alias": {
-      "dev-master": "6.0.x-dev"
+      "dev-master": "8.0.x-dev"
     }
   },
   "config": {

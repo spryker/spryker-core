@@ -31,7 +31,7 @@ Save,Save
 "Tax rates","Tax rates"
 "Tax set %d was created successfully.","Tax set %d was created successfully."
 "Tax set %d was updated successfully.","Tax set %d was updated successfully."
-"Tax Set deletion confirmation","Tax Set was successfully deleted"
+"Tax Set deletion confirmation","Are you sure about deleting this tax set?"
 "Tax set details","Tax set details"
 "Tax set ID","Tax set ID"
 "Tax set is not created. Please fill-in all required fields.","Tax set is not created. Please fill-in all required fields."

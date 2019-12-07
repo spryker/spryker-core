@@ -12,6 +12,7 @@ use SprykerTest\Zed\Acl\PageObject\AclGroupListPage;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Acl
@@ -27,10 +28,10 @@ class AclGroupEditCest
      *
      * @return void
      */
-    public function breadcrumbIsVisible(AclCommunicationTester $i)
+    public function breadcrumbIsVisible(AclCommunicationTester $i): void
     {
         $i->listDataTable(AclGroupListPage::URL . '/table');
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Dashboard / Users Control / Groups / Edit Group');
+        $i->seeBreadcrumbNavigation('Users Control / Groups / Edit Group');
     }
 }

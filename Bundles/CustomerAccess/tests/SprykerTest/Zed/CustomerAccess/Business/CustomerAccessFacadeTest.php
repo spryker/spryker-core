@@ -16,6 +16,7 @@ use Spryker\Zed\CustomerAccess\CustomerAccessConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CustomerAccess
@@ -106,7 +107,7 @@ class CustomerAccessFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetAllContentTypesReturnsAllTableRows()
+    public function testGetAllContentTypesReturnsAllTableRows(): void
     {
         // Arrange
         $contentType1 = 'test content 1';
@@ -140,7 +141,7 @@ class CustomerAccessFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateUnauthenticatedCustomerAccessUpdatesCorrectContentType()
+    public function testUpdateUnauthenticatedCustomerAccessUpdatesCorrectContentType(): void
     {
         // Arrange
         $customerAccessTransfer = $this->tester->haveCustomerAccess();
@@ -169,7 +170,7 @@ class CustomerAccessFacadeTest extends Unit
      *
      * @return void
      */
-    protected function assertCustomerAccessTransferContainsContentTypeAccess(CustomerAccessTransfer $customerAccessTransfer, ContentTypeAccessTransfer $contentTypeAccessTransfer)
+    protected function assertCustomerAccessTransferContainsContentTypeAccess(CustomerAccessTransfer $customerAccessTransfer, ContentTypeAccessTransfer $contentTypeAccessTransfer): void
     {
         foreach ($customerAccessTransfer->getContentTypeAccess() as $contentTypeAccess) {
             if ($contentTypeAccess->getContentType() === $contentTypeAccessTransfer->getContentType()) {

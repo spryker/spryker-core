@@ -4,13 +4,14 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
+
 namespace Spryker\Service\UtilText;
 
 interface UtilTextServiceInterface
 {
     /**
      * Specification:
-     * - Generate slug based on value.
+     * - Generates slug from value.
      *
      * @api
      *
@@ -74,7 +75,7 @@ interface UtilTextServiceInterface
 
     /**
      * Specification:
-     * - Generates a token from given string.
+     * - Generates a hash token from given raw token.
      *
      * @api
      *
@@ -87,7 +88,7 @@ interface UtilTextServiceInterface
 
     /**
      * Specification:
-     * - Checks if a given token is valid.
+     * - Checks if a hash matches against a raw token that gets hashed internally.
      *
      * @param string $rawToken
      * @param string $hash

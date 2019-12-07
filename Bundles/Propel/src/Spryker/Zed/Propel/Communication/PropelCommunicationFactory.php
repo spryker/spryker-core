@@ -16,6 +16,7 @@ use Spryker\Zed\Propel\Communication\Command\Input\PropelCommandInputBuilder;
 use Spryker\Zed\Propel\Communication\Command\Input\PropelCommandInputBuilderInterface;
 use Spryker\Zed\Propel\Communication\Command\Runner\PropelCommandRunner;
 use Spryker\Zed\Propel\Communication\Command\Runner\PropelCommandRunnerInterface;
+use Spryker\Zed\Propel\Dependency\Facade\PropelToTransferFacadeInterface;
 use Spryker\Zed\Propel\PropelDependencyProvider;
 use Spryker\Zed\PropelOrm\Communication\Generator\Command\MigrationDiffCommand;
 use Spryker\Zed\PropelOrm\Communication\Generator\Command\MigrationMigrateCommand;
@@ -139,5 +140,13 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
     public function createSqlInsertCommand(): Command
     {
         return new SqlInsertCommand();
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Dependency\Facade\PropelToTransferFacadeInterface
+     */
+    public function getTransferFacade(): PropelToTransferFacadeInterface
+    {
+        return $this->getProvidedDependency(PropelDependencyProvider::FACADE_TRANSFER);
     }
 }

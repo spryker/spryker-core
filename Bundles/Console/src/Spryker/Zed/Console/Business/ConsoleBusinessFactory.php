@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Console\Business;
 
-use Spryker\Zed\Console\Business\Model\ConsoleRunnerHook;
+use Spryker\Shared\Console\Hook\ConsoleRunnerHook;
 use Spryker\Zed\Console\ConsoleDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class ConsoleBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\Console\Business\Model\ConsoleRunnerHookInterface
+     * @return \Spryker\Shared\Console\Hook\ConsoleRunnerHookInterface
      */
     public function createConsoleRunnerHook()
     {
@@ -44,6 +44,16 @@ class ConsoleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     */
+    public function getApplicationPlugins(): array
+    {
+        return $this->getProvidedDependency(ConsoleDependencyProvider::PLUGINS_APPLICATION);
+    }
+
+    /**
+     * @deprecated Use `\Spryker\Zed\Console\Business\ConsoleBusinessFactory::getApplicationPlugins()` instead.
+     *
      * @return \Silex\ServiceProviderInterface[]
      */
     public function getServiceProviders()

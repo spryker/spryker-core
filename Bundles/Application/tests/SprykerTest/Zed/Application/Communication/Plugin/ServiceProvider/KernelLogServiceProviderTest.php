@@ -14,6 +14,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  * Auto-generated group annotations
+ *
  * @group Unit
  * @group Spryker
  * @group Zed
@@ -29,7 +30,7 @@ class KernelLogServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testRegisterShouldDoNothing()
+    public function testRegisterShouldDoNothing(): void
     {
         $serviceProvider = new KernelLogServiceProvider();
         $serviceProvider->register(new Application());
@@ -38,7 +39,7 @@ class KernelLogServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testBootShouldAddListenerToDispatcher()
+    public function testBootShouldAddListenerToDispatcher(): void
     {
         $application = new Application();
         $dispatcher = new EventDispatcher();

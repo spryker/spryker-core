@@ -8,9 +8,11 @@
 namespace SprykerTest\Client\PersistentCartShare;
 
 use Codeception\Actor;
+use Spryker\Client\PersistentCartShare\PersistentCartShareClientInterface;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -31,7 +33,7 @@ class PersistentCartShareClientTester extends Actor
     /**
      * @return \Spryker\Client\PersistentCartShare\PersistentCartShareClientInterface
      */
-    public function getPersistentCartShareClient()
+    public function getPersistentCartShareClient(): PersistentCartShareClientInterface
     {
         return $this->getLocator()->persistentCartShare()->client();
     }

@@ -31,6 +31,7 @@ use SprykerTest\Zed\CategoryPageSearch\CategoryPageSearchConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CategoryPageSearch
@@ -341,7 +342,7 @@ class CategoryNodePageSearchListenerTest extends Unit
     /**
      * @return \Spryker\Zed\CategoryPageSearch\Business\CategoryPageSearchFacade
      */
-    protected function getCategoryPageSearchFacade()
+    protected function getCategoryPageSearchFacade(): CategoryPageSearchFacade
     {
         $categoryPageSearchToSearchBridgeMock = $this->getMockBuilder(CategoryPageSearchToSearchBridge::class)->disableOriginalConstructor()->getMock();
         $categoryPageSearchToSearchBridgeMock->method('transformPageMapToDocumentByMapperName')->willReturn([]);

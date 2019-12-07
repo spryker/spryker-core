@@ -21,7 +21,7 @@ class ProductListProductConcretePublishSearchListener extends AbstractPlugin imp
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

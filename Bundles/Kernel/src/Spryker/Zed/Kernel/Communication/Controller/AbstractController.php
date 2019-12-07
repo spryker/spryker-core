@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Kernel\Communication\Controller;
 
 use Generated\Shared\Transfer\MessageTransfer;
-use Silex\Application;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
@@ -28,7 +27,12 @@ abstract class AbstractController
     use RepositoryResolverAwareTrait;
 
     /**
-     * @var \Silex\Application
+     * @uses \Spryker\Zed\Messenger\Communication\Plugin\Application\MessengerApplicationPlugin::SERVICE_MESSENGER
+     */
+    protected const SERVICE_MESSENGER = 'messenger';
+
+    /**
+     * @var \Silex\Application|\Spryker\Service\Container\ContainerInterface
      */
     private $application;
 
@@ -55,11 +59,11 @@ abstract class AbstractController
     }
 
     /**
-     * @param \Silex\Application $application
+     * @param \Silex\Application|\Spryker\Service\Container\ContainerInterface $application
      *
      * @return $this
      */
-    public function setApplication(Application $application)
+    public function setApplication($application)
     {
         $this->application = $application;
 
@@ -184,6 +188,9 @@ abstract class AbstractController
     }
 
     /**
+     * @see \Spryker\Shared\Kernel\KernelConstants::STRICT_DOMAIN_REDIRECT For strict redirection check status.
+     * @see \Spryker\Shared\Kernel\KernelConstants::DOMAIN_WHITELIST For allowed list of external domains.
+     *
      * @param string $url
      * @param int $code
      * @param array $headers
@@ -282,7 +289,7 @@ abstract class AbstractController
      */
     protected function getMessenger()
     {
-        $messenger = ($this->application->has('messenger')) ? $this->application->get('messenger') : new NullMessenger();
+        $messenger = ($this->getApplication()->has(static::SERVICE_MESSENGER)) ? $this->getApplication()->get(static::SERVICE_MESSENGER) : new NullMessenger();
         $kernelToMessengerBridge = new KernelToMessengerBridge($messenger);
 
         return $kernelToMessengerBridge;
@@ -304,7 +311,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Silex\Application
+     * @return \Silex\Application|\Spryker\Service\Container\ContainerInterface
      */
     protected function getApplication()
     {

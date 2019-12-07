@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business;
 
+use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -17,7 +18,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearchFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +34,7 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -50,7 +51,7 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -66,7 +67,7 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -82,7 +83,7 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -98,7 +99,7 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -114,7 +115,7 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -130,9 +131,11 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -141,5 +144,22 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
         $this->getFactory()
             ->createProductConcretePageSearchPublisher()
             ->publishProductConcretePageSearchesByProductAbstractIds($productAbstractIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer
+     */
+    public function expandProductConcretePageSearchTransferWithProductImages(
+        ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+    ): ProductConcretePageSearchTransfer {
+        return $this->getFactory()
+            ->createProductConcretePageSearchExpander()
+            ->expandProductConcretePageSearchTransferWithProductImages($productConcretePageSearchTransfer);
     }
 }

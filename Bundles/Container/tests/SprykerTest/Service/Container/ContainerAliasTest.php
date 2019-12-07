@@ -15,6 +15,7 @@ use Spryker\Service\Container\Exception\NotFoundException;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group Container

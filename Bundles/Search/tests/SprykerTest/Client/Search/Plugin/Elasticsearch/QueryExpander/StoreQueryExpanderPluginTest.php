@@ -15,6 +15,7 @@ use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\StoreQueryExpanderP
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Search
@@ -33,7 +34,7 @@ class StoreQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
      *
      * @return void
      */
-    public function testStoreQueryExpanderShouldExpandTheBaseQueryAccordingToRequestParameters(Query $expectedQuery)
+    public function testStoreQueryExpanderShouldExpandTheBaseQueryAccordingToRequestParameters(Query $expectedQuery): void
     {
         $queryExpander = $this->createStoreQueryExpanderPluginMock();
 
@@ -47,7 +48,7 @@ class StoreQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     /**
      * @return array
      */
-    public function storeQueryExpanderDataProvider()
+    public function storeQueryExpanderDataProvider(): array
     {
         return [
             'simple store filtered query' => $this->getDataForSimpleStoreFilteredQuery(),
@@ -57,7 +58,7 @@ class StoreQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     /**
      * @return array
      */
-    protected function getDataForSimpleStoreFilteredQuery()
+    protected function getDataForSimpleStoreFilteredQuery(): array
     {
         $expectedQuery = (new Query())
             ->setQuery((new BoolQuery())

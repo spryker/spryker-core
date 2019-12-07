@@ -14,6 +14,7 @@ use Spryker\Zed\QuoteApproval\Communication\Plugin\Permission\PlaceOrderPermissi
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group QuoteApproval
@@ -36,6 +37,7 @@ class PlaceOrderPermissionPluginTest extends Unit
      */
     public function testCanWithValidDataReturnTrue(): void
     {
+        $configuration = [];
         $configuration[static::FIELD_MULTI_CURRENCY][static::STORE_NAME][static::CURRENCY_CODE] = static::CENT_AMOUNT;
 
         $placeOrderPermissionPlugin = $this->createPlaceOrderPermissionPlugin();
@@ -49,6 +51,7 @@ class PlaceOrderPermissionPluginTest extends Unit
      */
     public function testCanWithNullConfigurationCentAmountDataReturnTrue(): void
     {
+        $configuration = [];
         $configuration[static::FIELD_MULTI_CURRENCY][static::STORE_NAME][static::CURRENCY_CODE] = null;
 
         $placeOrderPermissionPlugin = $this->createPlaceOrderPermissionPlugin();
@@ -62,6 +65,7 @@ class PlaceOrderPermissionPluginTest extends Unit
      */
     public function testCanWithZeroConfigurationCentAmountDataReturnFalse(): void
     {
+        $configuration = [];
         $configuration[static::FIELD_MULTI_CURRENCY][static::STORE_NAME][static::CURRENCY_CODE] = 0;
 
         $placeOrderPermissionPlugin = $this->createPlaceOrderPermissionPlugin();
@@ -75,6 +79,7 @@ class PlaceOrderPermissionPluginTest extends Unit
      */
     public function testCanWithEmptyQuoteReturnFalse(): void
     {
+        $configuration = [];
         $configuration[static::FIELD_MULTI_CURRENCY][static::STORE_NAME][static::CURRENCY_CODE] = static::CENT_AMOUNT;
 
         $placeOrderPermissionPlugin = $this->createPlaceOrderPermissionPlugin();
@@ -88,6 +93,7 @@ class PlaceOrderPermissionPluginTest extends Unit
      */
     public function testCanWithLessGrandTotalAmountReturnFalse(): void
     {
+        $configuration = [];
         $configuration[static::FIELD_MULTI_CURRENCY][static::STORE_NAME][static::CURRENCY_CODE] = static::CENT_AMOUNT - 1;
 
         $placeOrderPermissionPlugin = $this->createPlaceOrderPermissionPlugin();

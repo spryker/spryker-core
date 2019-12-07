@@ -26,7 +26,7 @@ class OmsHelper extends Module
      *
      * @return void
      */
-    public function triggerEventForNewOrderItems(array $idSalesOrderItems)
+    public function triggerEventForNewOrderItems(array $idSalesOrderItems): void
     {
         $omsFacade = new OmsFacade();
         $omsFacade->triggerEventForNewOrderItems($idSalesOrderItems);
@@ -38,7 +38,7 @@ class OmsHelper extends Module
      *
      * @return void
      */
-    public function moveItemAfterTimeOut($idSalesOrderItem, DateInterval $timeout)
+    public function moveItemAfterTimeOut(int $idSalesOrderItem, DateInterval $timeout): void
     {
         $omsEventTimeoutQuery = new SpyOmsEventTimeoutQuery();
         $omsEventTimeout = $omsEventTimeoutQuery->findOneByFkSalesOrderItem($idSalesOrderItem);
@@ -54,7 +54,7 @@ class OmsHelper extends Module
      *
      * @return void
      */
-    public function setItemState($idSalesOrderItem, $stateName)
+    public function setItemState(int $idSalesOrderItem, string $stateName): void
     {
         $salesOrderItemQuery = new SpySalesOrderItemQuery();
         $salesOrderItemEntity = $salesOrderItemQuery->findOneByIdSalesOrderItem($idSalesOrderItem);
@@ -70,7 +70,7 @@ class OmsHelper extends Module
     /**
      * @return void
      */
-    public function checkCondition()
+    public function checkCondition(): void
     {
         $this->runCommand('vendor/bin/console oms:check-condition -q');
     }
@@ -78,7 +78,7 @@ class OmsHelper extends Module
     /**
      * @return void
      */
-    public function checkTimeout()
+    public function checkTimeout(): void
     {
         $this->runCommand('vendor/bin/console oms:check-timeout -q');
     }
@@ -86,7 +86,7 @@ class OmsHelper extends Module
     /**
      * @return void
      */
-    public function clearLocks()
+    public function clearLocks(): void
     {
         $this->runCommand('vendor/bin/console oms:check-locks -q');
     }
@@ -98,7 +98,7 @@ class OmsHelper extends Module
      *
      * @return void
      */
-    protected function runCommand($command)
+    protected function runCommand(string $command): void
     {
         $process = new Process(explode(' ', $command));
         $process->run();
@@ -110,7 +110,7 @@ class OmsHelper extends Module
      *
      * @return void
      */
-    public function configureTestStateMachine(array $activeProcesses, $xmlFolder = null)
+    public function configureTestStateMachine(array $activeProcesses, ?string $xmlFolder = null): void
     {
         if (!$xmlFolder) {
             $xmlFolder = realpath(__DIR__ . '/../../../../../_data/state-machine/');

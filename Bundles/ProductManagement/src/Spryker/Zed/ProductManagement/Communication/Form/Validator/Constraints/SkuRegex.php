@@ -17,7 +17,7 @@ class SkuRegex extends Regex
     public function __construct($options = null)
     {
         $defaults = [
-            'pattern' => '/^[a-zA-Z0-9\pL\.\-\_\s*]+$/u',
+            'pattern' => '/^[a-zA-Z0-9-_\.]+$/u',
             'message' => 'Invalid value provided. Please use only alphanumeric characters and  ". - _"',
         ];
 

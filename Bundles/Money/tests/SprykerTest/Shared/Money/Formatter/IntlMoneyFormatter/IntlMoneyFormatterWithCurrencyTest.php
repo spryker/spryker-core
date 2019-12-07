@@ -15,6 +15,7 @@ use Spryker\Shared\Money\Formatter\MoneyFormatterInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Shared
  * @group Money
@@ -32,7 +33,7 @@ class IntlMoneyFormatterWithCurrencyTest extends AbstractIntlMoneyFormatterTest
     /**
      * @return void
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $intlMoneyFormatter = new IntlMoneyFormatterWithCurrency($this->getTransferToMoneyConverterMock());
         $this->assertInstanceOf(MoneyFormatterInterface::class, $intlMoneyFormatter);
@@ -41,7 +42,7 @@ class IntlMoneyFormatterWithCurrencyTest extends AbstractIntlMoneyFormatterTest
     /**
      * @return void
      */
-    public function testFormatShouldReturnFormatted()
+    public function testFormatShouldReturnFormatted(): void
     {
         $intlMoneyFormatter = new IntlMoneyFormatterWithCurrency($this->getTransferToMoneyConverterMock());
         $moneyTransfer = new MoneyTransfer();

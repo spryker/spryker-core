@@ -12,9 +12,11 @@ use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\CompanyRoleDataImport\Communication\Plugin\DataImport\CompanyRoleDataImportPlugin;
 use Spryker\Zed\CompanyRoleDataImport\CompanyRoleDataImportConfig;
+use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group CompanyRoleDataImport
@@ -50,12 +52,11 @@ class CompanyRoleDataImportPluginTest extends AbstractCompanyRoleDataImportMock
     }
 
     /**
-     * @expectedException \Spryker\Zed\DataImport\Business\Exception\DataImportException
-     *
      * @return void
      */
     public function testImportCompanyRoleWithInvalidCompany(): void
     {
+        $this->expectException(DataImportException::class);
         $this->tester->truncateCompanyRoles();
         $this->tester->assertCompanyRoleTableIsEmtpy();
 
@@ -79,7 +80,6 @@ class CompanyRoleDataImportPluginTest extends AbstractCompanyRoleDataImportMock
      */
     public function testGetImportTypeReturnsTypeOfImporter(): void
     {
-        $companyRoleDataImportPlugin = new CompanyRoleDataImportPlugin();
         $this->assertSame(
             CompanyRoleDataImportConfig::IMPORT_TYPE_COMPANY_ROLE,
             $this->getCompanyRoleDataImportPlugin()->getImportType()

@@ -12,14 +12,14 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 abstract class AbstractProductTable extends AbstractTable
 {
     /**
-     * @param string $status
+     * @param bool $status
      *
      * @return string
      */
     protected function getStatusLabel($status)
     {
         if (!$status) {
-            return $this->generateLabel('Inactive', 'label-danger');
+            return $this->generateLabel('Deactivated', 'label-danger');
         }
 
         return $this->generateLabel('Active', 'label-info');

@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ShipmentQuoteMapperPlugin extends AbstractPlugin implements QuoteMapperPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Maps rest request shipment attribute to quote transfer.
      *
      * @api

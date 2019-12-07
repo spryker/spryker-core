@@ -26,6 +26,11 @@ class DetailController extends AbstractController
     public const ROUTE_REDIRECT = '/sales/detail';
 
     /**
+     * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_SUB_REQUEST
+     */
+    protected const SERVICE_SUB_REQUEST = 'sub_request';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -43,21 +48,27 @@ class DetailController extends AbstractController
         }
 
         $distinctOrderStates = $this->getFacade()->getDistinctOrderStates($idSalesOrder);
-        $events = $this->getFactory()->getOmsFacade()->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
+        $eventsGroupedByShipment = $this->getFactory()->getOmsFacade()->getGroupedDistinctManualEventsByIdSalesOrder($idSalesOrder);
         $eventsGroupedByItem = $this->getFactory()->getOmsFacade()->getManualEventsByIdSalesOrder($idSalesOrder);
         $orderItemSplitFormCollection = $this->getFactory()->createOrderItemSplitFormCollection($orderTransfer->getItems());
+        $events = $this->getFactory()->getOmsFacade()->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
 
         $blockResponseData = $this->renderSalesDetailBlocks($request, $orderTransfer);
         if ($blockResponseData instanceof RedirectResponse) {
             return $blockResponseData;
         }
 
+        $groupedOrderItems = $this->getFacade()
+            ->getUniqueOrderItems($orderTransfer->getItems());
+
         return array_merge([
             'eventsGroupedByItem' => $eventsGroupedByItem,
             'events' => $events,
+            'eventsGroupedByShipment' => $eventsGroupedByShipment,
             'distinctOrderStates' => $distinctOrderStates,
             'order' => $orderTransfer,
             'orderItemSplitFormCollection' => $orderItemSplitFormCollection,
+            'groupedOrderItems' => $groupedOrderItems,
             'changeStatusRedirectUrl' => $this->createRedirectLink($idSalesOrder),
         ], $blockResponseData);
     }
@@ -148,6 +159,6 @@ class DetailController extends AbstractController
      */
     protected function getSubRequestHandler()
     {
-        return $this->getApplication()['sub_request'];
+        return $this->getApplication()->get(static::SERVICE_SUB_REQUEST);
     }
 }

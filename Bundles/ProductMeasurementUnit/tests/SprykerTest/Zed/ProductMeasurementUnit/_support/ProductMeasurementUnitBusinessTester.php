@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -63,8 +64,8 @@ class ProductMeasurementUnitBusinessTester extends Actor
     public function addSkuToCartChangeTransfer(
         CartChangeTransfer $cartChangeTransfer,
         int $idProductMeasurementSalesUnit,
-        $sku,
-        $quantity = 1
+        string $sku,
+        int $quantity = 1
     ): CartChangeTransfer {
         $quantitySalesUnit = $this->createProductMeasurementSalesUnitTransfer($idProductMeasurementSalesUnit);
 

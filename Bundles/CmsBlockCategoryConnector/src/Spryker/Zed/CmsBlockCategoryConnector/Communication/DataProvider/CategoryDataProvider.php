@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsBlockCategoryConnector\Communication\DataProvider;
 
 use DateTime;
+use Generated\Shared\Transfer\CategoryTemplateTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlock;
 use Spryker\Zed\CmsBlockCategoryConnector\Communication\Form\CategoryType;
@@ -68,6 +69,7 @@ class CategoryDataProvider
             CategoryType::OPTION_CMS_BLOCK_POSITION_LIST => $this->getPositionList(),
             CategoryType::OPTION_WRONG_CMS_BLOCK_LIST => $this->getWrongCmsBlockList(),
             CategoryType::OPTION_ASSIGNED_CMS_BLOCK_TEMPLATE_LIST => $this->getAssignedIdCmsBlocksForTemplates(),
+            CategoryType::OPTION_CATEGORY_TEMPLATES => $this->getCategoryTemplates(),
         ];
     }
 
@@ -82,10 +84,7 @@ class CategoryDataProvider
 
         $idCmsBlocks = [];
         if ($categoryTransfer->getIdCategory()) {
-            $idCmsBlocks = $this->getAssignedIdCmsBlocks(
-                $categoryTransfer->getIdCategory(),
-                $categoryTransfer->getFkCategoryTemplate()
-            );
+            $idCmsBlocks = $this->getAssignedIdCmsBlocksByIdCategory($categoryTransfer->getIdCategory());
         }
 
         $categoryTransfer->setIdCmsBlocks($idCmsBlocks);
@@ -95,21 +94,20 @@ class CategoryDataProvider
 
     /**
      * @param int $idCategory
-     * @param int $idCategoryTemplate
      *
      * @return array
      */
-    protected function getAssignedIdCmsBlocks($idCategory, $idCategoryTemplate)
+    protected function getAssignedIdCmsBlocksByIdCategory(int $idCategory): array
     {
-        $query = $this->queryContainer
-            ->queryCmsBlockCategoryWithBlocksByIdCategoryIdTemplate($idCategory, $idCategoryTemplate)
+        $cmsBlockCategoryEntities = $this->queryContainer
+            ->queryCmsBlockCategoryWithBlocksByIdCategory($idCategory)
             ->find();
 
         $assignedBlocks = [];
 
-        foreach ($query as $item) {
-            $assignedBlocks[$item->getFkCmsBlockCategoryPosition()][] = $item->getFkCmsBlock();
-            $this->assertCmsBlock($item->getCmsBlock());
+        foreach ($cmsBlockCategoryEntities as $cmsBlockCategoryEntity) {
+            $assignedBlocks[$cmsBlockCategoryEntity->getFkCategoryTemplate()][$cmsBlockCategoryEntity->getFkCmsBlockCategoryPosition()][] = $cmsBlockCategoryEntity->getFkCmsBlock();
+            $this->assertCmsBlock($cmsBlockCategoryEntity->getCmsBlock());
         }
 
         return $assignedBlocks;
@@ -204,5 +202,16 @@ class CategoryDataProvider
     protected function getWrongCmsBlockList()
     {
         return $this->wrongCmsBlocks;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCategoryTemplates(): array
+    {
+        return $this->categoryQueryContainer
+            ->queryCategoryTemplate()
+            ->find()
+            ->toKeyValue(CategoryTemplateTransfer::ID_CATEGORY_TEMPLATE, CategoryTemplateTransfer::NAME);
     }
 }

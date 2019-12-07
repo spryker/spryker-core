@@ -15,7 +15,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductLabelStorageClient extends AbstractClient implements ProductLabelStorageClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -33,7 +33,24 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
+     */
+    public function getProductLabelsByProductAbstractIds(array $productAbstractIds, string $localeName): array
+    {
+        return $this->getFactory()
+            ->createProductAbstractLabelStorageReader()
+            ->getProductLabelsByProductAbstractIds($productAbstractIds, $localeName);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *
@@ -51,7 +68,7 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

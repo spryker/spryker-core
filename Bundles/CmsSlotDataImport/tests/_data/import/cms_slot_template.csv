@@ -1,0 +1,2 @@
+template_path,name,description
+"@CatalogPage/views/catalog/search.twig","Catalog Search","When you do search by catalog you see this template."

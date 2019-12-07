@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" namespace="Orm\Zed\Sales\Persistence" package="src.Orm.Zed.Sales.Persistence" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd">
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" namespace="Orm\Zed\Sales\Persistence" package="src.Orm.Zed.Sales.Persistence" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd">
 
     <table name="spy_sales_order_item_option" phpName="SpySalesOrderItemOption">
         <column name="id_sales_order_item_option" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
@@ -11,10 +11,10 @@
         <column name="tax_rate" type="DECIMAL" size="8" scale="2" required="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
 
-        <column name="net_price" type="INTEGER" required="false" default="0" description="/Price for one unit not including tax, without shipping, coupons/" />
-        <column name="price" type="INTEGER" required="false" default="0" description="/Price for item, can be gross or net price depending on tax mode/" />
-        <column name="discount_amount_aggregation" type="INTEGER" default="0" required="false" description="/Total discount amount for item/" />
-        <column name="tax_amount" type="INTEGER" required="false" default="0" description="/Calculated tax amount based on tax mode/" />
+        <column name="net_price" type="INTEGER" required="false" default="0" description="/Price for one unit not including tax, without shipping, coupons/"/>
+        <column name="price" type="INTEGER" required="false" default="0" description="/Price for item, can be gross or net price depending on tax mode/"/>
+        <column name="discount_amount_aggregation" type="INTEGER" default="0" required="false" description="/Total discount amount for item/"/>
+        <column name="tax_amount" type="INTEGER" required="false" default="0" description="/Calculated tax amount based on tax mode/"/>
 
         <behavior name="timestampable"/>
 

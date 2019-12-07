@@ -16,11 +16,11 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ContentRepository extends AbstractRepository implements ContentRepositoryInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param int $idContent
      *
-     * @return null|\Generated\Shared\Transfer\ContentTransfer
+     * @return \Generated\Shared\Transfer\ContentTransfer|null
      */
     public function findContentById(int $idContent): ?ContentTransfer
     {
@@ -36,7 +36,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param string $contentKey
      *
@@ -56,7 +56,7 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @param string $key
      *

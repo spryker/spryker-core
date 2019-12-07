@@ -13,6 +13,7 @@ use Spryker\Service\UtilEncoding\UtilEncodingService;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Service
  * @group UtilEncoding
@@ -43,7 +44,7 @@ JSON;
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -53,7 +54,7 @@ JSON;
     /**
      * @return void
      */
-    public function testEncodeJsonWithDefaultOptions()
+    public function testEncodeJsonWithDefaultOptions(): void
     {
         $jsonEncodeValue = $this->utilEncodingService->encodeJson($this->jsonData);
 
@@ -63,7 +64,7 @@ JSON;
     /**
      * @return void
      */
-    public function testEncodeString()
+    public function testEncodeString(): void
     {
         $jsonEncodeValue = $this->utilEncodingService->encodeJson('A string!');
 
@@ -73,7 +74,7 @@ JSON;
     /**
      * @return void
      */
-    public function testEncodeBooleanAndNull()
+    public function testEncodeBooleanAndNull(): void
     {
         $jsonEncodeValue = $this->utilEncodingService->encodeJson(true);
 
@@ -91,7 +92,7 @@ JSON;
     /**
      * @return void
      */
-    public function testEncodeInvalid()
+    public function testEncodeInvalid(): void
     {
         $jsonEncodeValue = $this->utilEncodingService->encodeJson(['x' => ['y' => 'z']], JSON_NUMERIC_CHECK, 1);
 
@@ -101,7 +102,7 @@ JSON;
     /**
      * @return void
      */
-    public function testEncodeJsonWithPrettyPrintIncluded()
+    public function testEncodeJsonWithPrettyPrintIncluded(): void
     {
         $jsonEncodeValue = $this->utilEncodingService->encodeJson($this->jsonData, Json::DEFAULT_OPTIONS | JSON_PRETTY_PRINT);
 
@@ -111,7 +112,7 @@ JSON;
     /**
      * @return void
      */
-    public function testDecodeJsonShouldReturnAssocArray()
+    public function testDecodeJsonShouldReturnAssocArray(): void
     {
         $jsonDecodeValue = $this->utilEncodingService->decodeJson(self::JSON_ENCODED_VALUE, true);
 
@@ -121,7 +122,7 @@ JSON;
     /**
      * @return void
      */
-    public function testDecodeJsonWhenAssocFlagIsOffShouldReturnStdObject()
+    public function testDecodeJsonWhenAssocFlagIsOffShouldReturnStdObject(): void
     {
         $jsonDecodeValue = $this->utilEncodingService->decodeJson(self::JSON_ENCODED_VALUE);
 
@@ -131,7 +132,7 @@ JSON;
     /**
      * @return void
      */
-    public function testDecodeString()
+    public function testDecodeString(): void
     {
         $jsonEncodeValue = $this->utilEncodingService->decodeJson('"A string!"');
 
@@ -141,7 +142,7 @@ JSON;
     /**
      * @return void
      */
-    public function testDecodeBooleanAndNull()
+    public function testDecodeBooleanAndNull(): void
     {
         $jsonEncodeValue = $this->utilEncodingService->decodeJson('true');
 

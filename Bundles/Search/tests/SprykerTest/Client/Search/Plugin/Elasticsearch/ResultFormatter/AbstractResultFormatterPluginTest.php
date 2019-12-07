@@ -10,6 +10,7 @@ namespace SprykerTest\Client\Search\Plugin\Elasticsearch\ResultFormatter;
 use Codeception\Test\Unit;
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\FacetConfigTransfer;
+use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 use Spryker\Client\Search\Plugin\Config\FacetConfigBuilder;
 use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
 use Spryker\Client\Search\Plugin\Config\SearchConfig;
@@ -18,6 +19,7 @@ use Spryker\Shared\Search\SearchConfig as SharedSearchConfig;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Client
  * @group Search
@@ -32,7 +34,7 @@ abstract class AbstractResultFormatterPluginTest extends Unit
     /**
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
      */
-    protected function createSearchConfigMock()
+    protected function createSearchConfigMock(): SearchConfigInterface
     {
         $searchConfigMock = $this->getMockBuilder(SearchConfig::class)
             ->disableOriginalConstructor()
@@ -57,7 +59,7 @@ abstract class AbstractResultFormatterPluginTest extends Unit
     /**
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
      */
-    protected function createStringSearchConfig()
+    protected function createStringSearchConfig(): SearchConfigInterface
     {
         $searchConfig = $this->createSearchConfigMock();
         $searchConfig->getFacetConfigBuilder()
@@ -75,7 +77,7 @@ abstract class AbstractResultFormatterPluginTest extends Unit
     /**
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
      */
-    protected function createMultiStringSearchConfig()
+    protected function createMultiStringSearchConfig(): SearchConfigInterface
     {
         $searchConfig = $this->createSearchConfigMock();
         $searchConfig->getFacetConfigBuilder()
@@ -107,7 +109,7 @@ abstract class AbstractResultFormatterPluginTest extends Unit
     /**
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
      */
-    protected function createIntegerSearchConfig()
+    protected function createIntegerSearchConfig(): SearchConfigInterface
     {
         $searchConfig = $this->createSearchConfigMock();
         $searchConfig->getFacetConfigBuilder()
@@ -125,7 +127,7 @@ abstract class AbstractResultFormatterPluginTest extends Unit
     /**
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
      */
-    protected function createMultiIntegerSearchConfig()
+    protected function createMultiIntegerSearchConfig(): SearchConfigInterface
     {
         $searchConfig = $this->createSearchConfigMock();
         $searchConfig->getFacetConfigBuilder()
@@ -157,7 +159,7 @@ abstract class AbstractResultFormatterPluginTest extends Unit
     /**
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
      */
-    protected function createCategorySearchConfig()
+    protected function createCategorySearchConfig(): SearchConfigInterface
     {
         $searchConfig = $this->createSearchConfigMock();
         $searchConfig->getFacetConfigBuilder()

@@ -17,6 +17,7 @@ use Spryker\Client\SharedCart\Dependency\Client\SharedCartToCustomerClientInterf
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMessengerClientInterface;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToMultiCartClientInterface;
 use Spryker\Client\SharedCart\Dependency\Client\SharedCartToPersistentCartClientInterface;
+use Spryker\Client\SharedCart\Dependency\Client\SharedCartToQuoteClientInterface;
 use Spryker\Client\SharedCart\Permission\PermissionResolver;
 use Spryker\Client\SharedCart\Permission\PermissionResolverInterface;
 use Spryker\Client\SharedCart\ResourceShare\SwitchDefaultCartByResourceShare;
@@ -37,7 +38,8 @@ class SharedCartFactory extends AbstractFactory
             $this->getMultiCartClient(),
             $this->getPersistentCartClient(),
             $this->getMessengerClient(),
-            $this->getCustomerClient()
+            $this->getCustomerClient(),
+            $this->getQuoteClient()
         );
     }
 
@@ -115,6 +117,14 @@ class SharedCartFactory extends AbstractFactory
     public function getZedRequestClient(): ZedRequestClientInterface
     {
         return $this->getProvidedDependency(SharedCartDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
+    /**
+     * @return \Spryker\Client\SharedCart\Dependency\Client\SharedCartToQuoteClientInterface
+     */
+    public function getQuoteClient(): SharedCartToQuoteClientInterface
+    {
+        return $this->getProvidedDependency(SharedCartDependencyProvider::CLIENT_QUOTE);
     }
 
     /**

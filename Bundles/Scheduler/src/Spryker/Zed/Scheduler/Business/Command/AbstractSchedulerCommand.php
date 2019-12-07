@@ -79,7 +79,6 @@ abstract class AbstractSchedulerCommand implements SchedulerCommandInterface
         string $idScheduler,
         SchedulerFilterTransfer $filterTransfer
     ): SchedulerScheduleTransfer {
-
         $scheduleTransfer = (new SchedulerScheduleTransfer())
             ->setIdScheduler($idScheduler);
 

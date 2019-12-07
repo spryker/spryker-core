@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Glue\Testify\OpenApi3\Primitive;
@@ -24,7 +24,7 @@ abstract class AbstractPrimitive implements PrimitiveInterface
     abstract protected function cast($value);
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function hydrate($content): SchemaFieldInterface
     {
@@ -34,7 +34,7 @@ abstract class AbstractPrimitive implements PrimitiveInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function export()
     {
@@ -42,7 +42,7 @@ abstract class AbstractPrimitive implements PrimitiveInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function __toString()
     {

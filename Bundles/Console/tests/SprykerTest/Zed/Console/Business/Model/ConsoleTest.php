@@ -22,6 +22,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group Console
@@ -35,7 +36,7 @@ class ConsoleTest extends Unit
     /**
      * @return void
      */
-    public function testGetCommunicationFactoryShouldReturnInstanceIfSet()
+    public function testGetCommunicationFactoryShouldReturnInstanceIfSet(): void
     {
         $console = $this->getConsole();
         $console->setFactory($this->getCommunicationFactoryMock());
@@ -49,7 +50,7 @@ class ConsoleTest extends Unit
     /**
      * @return void
      */
-    public function testPreRunPluginsWillExecutesBeforeConsoleCommands()
+    public function testPreRunPluginsWillExecutesBeforeConsoleCommands(): void
     {
         $container = new Container();
         $container[ConsoleDependencyProvider::PLUGINS_CONSOLE_PRE_RUN_HOOK] = function (Container $container) {
@@ -71,7 +72,7 @@ class ConsoleTest extends Unit
     /**
      * @return void
      */
-    public function testPostRunPluginsWillExecutesBeforeConsoleCommands()
+    public function testPostRunPluginsWillExecutesBeforeConsoleCommands(): void
     {
         $container = new Container();
         $container[ConsoleDependencyProvider::PLUGINS_CONSOLE_PRE_RUN_HOOK] = function (Container $container) {
@@ -93,7 +94,7 @@ class ConsoleTest extends Unit
     /**
      * @return void
      */
-    public function testGetQueryContainerShouldReturnNullIfNotSet()
+    public function testGetQueryContainerShouldReturnNullIfNotSet(): void
     {
         $console = $this->getConsole();
 
@@ -103,7 +104,7 @@ class ConsoleTest extends Unit
     /**
      * @return void
      */
-    public function testGetQueryContainerShouldReturnInstanceIfSet()
+    public function testGetQueryContainerShouldReturnInstanceIfSet(): void
     {
         $console = $this->getConsole();
         $console->setQueryContainer($this->getQueryContainerMock());
@@ -115,7 +116,7 @@ class ConsoleTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
+     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory|\PHPUnit\Framework\MockObject\MockObject
      */
     private function getCommunicationFactoryMock()
     {
@@ -123,7 +124,7 @@ class ConsoleTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
+     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer|\PHPUnit\Framework\MockObject\MockObject
      */
     private function getQueryContainerMock()
     {
@@ -133,13 +134,13 @@ class ConsoleTest extends Unit
     /**
      * @return \SprykerTest\Zed\Console\Business\Model\Fixtures\ConsoleMock
      */
-    private function getConsole()
+    private function getConsole(): ConsoleMock
     {
         return new ConsoleMock('TestCommand');
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     private function getPreRunPluginMock()
     {
@@ -150,7 +151,7 @@ class ConsoleTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     private function getPostRunPluginMock()
     {
@@ -165,7 +166,7 @@ class ConsoleTest extends Unit
      *
      * @return \Spryker\Zed\Console\Business\ConsoleFacade
      */
-    protected function prepareFacade(Container $container)
+    protected function prepareFacade(Container $container): ConsoleFacade
     {
         $consoleBusinessFactory = new ConsoleBusinessFactory();
         $consoleBusinessFactory->setContainer($container);

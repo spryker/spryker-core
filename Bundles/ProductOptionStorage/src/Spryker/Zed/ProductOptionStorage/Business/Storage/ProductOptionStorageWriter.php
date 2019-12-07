@@ -41,6 +41,8 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     protected $productOptionStorageReader;
 
     /**
+     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     *
      * @var bool
      */
     protected $isSendingToQueue;
@@ -184,7 +186,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     /**
      * @param int $idProductAbstract
      * @param array $productOptions
-     * @param \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[] $productAbstractOptionStorageEntities
+     * @param \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[][] $productAbstractOptionStorageEntities
      *
      * @return void
      */

@@ -34,6 +34,7 @@ use SprykerTest\Zed\ProductSetPageSearch\ProductSetPageSearchConfigMock;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group ProductSetPageSearch
@@ -64,7 +65,7 @@ class ProductSetPageSearchListenerTest extends Unit
      *
      * @return void
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -78,7 +79,7 @@ class ProductSetPageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductSetPageSearchListenerStoreData()
+    public function testProductSetPageSearchListenerStoreData(): void
     {
         SpyProductSetPageSearchQuery::create()->filterByFkProductSet(1)->delete();
         $beforeCount = SpyProductSetPageSearchQuery::create()->count();
@@ -101,7 +102,7 @@ class ProductSetPageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductSetDataPageSearchListenerStoreData()
+    public function testProductSetDataPageSearchListenerStoreData(): void
     {
         SpyProductSetPageSearchQuery::create()->filterByFkProductSet(1)->delete();
         $beforeCount = SpyProductSetPageSearchQuery::create()->count();
@@ -165,7 +166,7 @@ class ProductSetPageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductAbstractProductSetPageSearchListenerStoreData()
+    public function testProductAbstractProductSetPageSearchListenerStoreData(): void
     {
         SpyProductSetPageSearchQuery::create()->filterByFkProductSet(1)->delete();
         $beforeCount = SpyProductSetPageSearchQuery::create()->count();
@@ -190,7 +191,7 @@ class ProductSetPageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductSetPageProductImageSetSearchListenerStoreData()
+    public function testProductSetPageProductImageSetSearchListenerStoreData(): void
     {
         SpyProductSetPageSearchQuery::create()->filterByFkProductSet(1)->delete();
         $beforeCount = SpyProductSetPageSearchQuery::create()->count();
@@ -215,7 +216,7 @@ class ProductSetPageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductSetPageUrlSearchListenerStoreData()
+    public function testProductSetPageUrlSearchListenerStoreData(): void
     {
         SpyProductSetPageSearchQuery::create()->filterByFkProductSet(1)->delete();
         $beforeCount = SpyProductSetPageSearchQuery::create()->count();
@@ -243,7 +244,7 @@ class ProductSetPageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductSetPageProductImageSearchListenerStoreData()
+    public function testProductSetPageProductImageSearchListenerStoreData(): void
     {
         $this->markTestSkipped(
             'These tests need to be re-written in CC-940'
@@ -271,7 +272,7 @@ class ProductSetPageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    public function testProductSetPageProductImageSetImageSearchListenerStoreData()
+    public function testProductSetPageProductImageSetImageSearchListenerStoreData(): void
     {
         $this->markTestSkipped(
             'These tests need to be re-written in CC-940'
@@ -299,7 +300,7 @@ class ProductSetPageSearchListenerTest extends Unit
     /**
      * @return \Spryker\Zed\ProductSetPageSearch\Business\ProductSetPageSearchFacade
      */
-    protected function getProductSetPageSearchFacade()
+    protected function getProductSetPageSearchFacade(): ProductSetPageSearchFacade
     {
         $searchFacadeMock = $this->getMockBuilder(ProductSetPageSearchToSearchBridge::class)->disableOriginalConstructor()->getMock();
         $searchFacadeMock->method('transformPageMapToDocumentByMapperName')->willReturn([]);
@@ -315,7 +316,7 @@ class ProductSetPageSearchListenerTest extends Unit
     /**
      * @return void
      */
-    protected function assertProductSetPageSearch()
+    protected function assertProductSetPageSearch(): void
     {
         $productSet = SpyProductSetPageSearchQuery::create()->orderByFkProductSet()->findOneByFkProductSet(1);
         $this->assertNotNull($productSet);

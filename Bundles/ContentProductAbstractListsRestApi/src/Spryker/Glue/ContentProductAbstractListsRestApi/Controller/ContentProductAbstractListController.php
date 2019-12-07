@@ -18,7 +18,7 @@ class ContentProductAbstractListController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getResourceByKey": {
+     *     "getResourceById": {
      *          "summary": [
      *              "Retrieves content item abstract products."
      *          ],

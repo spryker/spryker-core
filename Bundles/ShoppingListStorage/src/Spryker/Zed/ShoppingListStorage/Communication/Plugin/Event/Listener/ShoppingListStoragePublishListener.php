@@ -23,7 +23,7 @@ class ShoppingListStoragePublishListener extends AbstractPlugin implements Event
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *  - Handles unpublish shipping list event.
      *
      * @api

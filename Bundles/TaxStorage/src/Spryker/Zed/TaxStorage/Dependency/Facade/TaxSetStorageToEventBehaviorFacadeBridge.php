@@ -12,14 +12,14 @@ class TaxSetStorageToEventBehaviorFacadeBridge implements TaxSetStorageToEventBe
     /**
      * @var \Spryker\Zed\EventBehavior\Business\EventBehaviorFacadeInterface
      */
-    protected $eventBehaviourFacade;
+    protected $eventBehaviorFacade;
 
     /**
-     * @param \Spryker\Zed\EventBehavior\Business\EventBehaviorFacadeInterface $eventBehaviourFacade
+     * @param \Spryker\Zed\EventBehavior\Business\EventBehaviorFacadeInterface $eventBehaviorFacade
      */
-    public function __construct($eventBehaviourFacade)
+    public function __construct($eventBehaviorFacade)
     {
-        $this->eventBehaviourFacade = $eventBehaviourFacade;
+        $this->eventBehaviorFacade = $eventBehaviorFacade;
     }
 
     /**
@@ -29,17 +29,17 @@ class TaxSetStorageToEventBehaviorFacadeBridge implements TaxSetStorageToEventBe
      */
     public function getEventTransferIds(array $eventTransfers)
     {
-        return $this->eventBehaviourFacade->getEventTransferIds($eventTransfers);
+        return $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
     }
 
     /**
-     * @param array $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $foreignKeyColumnName
      *
      * @return array
      */
     public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName)
     {
-        return $this->eventBehaviourFacade->getEventTransferForeignKeys($eventTransfers, $foreignKeyColumnName);
+        return $this->eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, $foreignKeyColumnName);
     }
 }

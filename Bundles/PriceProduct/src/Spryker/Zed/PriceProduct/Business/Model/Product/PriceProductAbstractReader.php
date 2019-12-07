@@ -120,7 +120,6 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
         string $sku,
         PriceProductDimensionTransfer $priceProductDimensionTransfer
     ): array {
-
         $abstractSku = $this->findAbstractSku($sku);
 
         $idStore = $this->storeFacade->getCurrentStore()->getIdStore();

@@ -14,6 +14,7 @@ use Spryker\Yves\Kernel\Container;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Yves
  * @group Checkout
@@ -29,7 +30,7 @@ class FormFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCreatePaymentMethodSubForms()
+    public function testCreatePaymentMethodSubForms(): void
     {
         $container = new Container();
         $container[CheckoutDependencyProvider::PAYMENT_SUB_FORMS] = self::SUB_FORMS;

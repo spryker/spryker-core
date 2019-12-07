@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\StorageRedis;
 
+use Generated\Shared\Transfer\StorageScanResultTransfer;
+
 interface StorageRedisClientInterface
 {
     /**
@@ -132,6 +134,22 @@ interface StorageRedisClientInterface
 
     /**
      * Specification:
+     * - Gets a list of all the keys available in a storage, start iterating from CURSOR.
+     * - Scan the keys to COUNT limit.
+     * - Returns an array with a cursor and keys.
+     *
+     * @api
+     *
+     * @param string $pattern
+     * @param int $limit
+     * @param int $cursor
+     *
+     * @return \Generated\Shared\Transfer\StorageScanResultTransfer
+     */
+    public function scanKeys(string $pattern, int $limit, int $cursor): StorageScanResultTransfer;
+
+    /**
+     * Specification:
      * - Resets statistical information about access to a storage.
      *
      * @api
@@ -159,6 +177,16 @@ interface StorageRedisClientInterface
      * @return int
      */
     public function getCountItems(): int;
+
+    /**
+     * Specification:
+     * - Gets amount of items in the database.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getDbSize(): int;
 
     /**
      * Specification:

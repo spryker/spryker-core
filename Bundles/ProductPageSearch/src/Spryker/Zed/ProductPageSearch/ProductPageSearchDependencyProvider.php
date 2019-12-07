@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductPageSearch;
 
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery;
 use Spryker\Shared\ProductPageSearch\ProductPageSearchConfig;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -25,6 +26,7 @@ use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToPriceFaca
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToPriceFacadeInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToPriceProductBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductBridge;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductImageFacadeBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchBridge;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeBridge;
@@ -62,6 +64,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_PRICE = 'FACADE_PRICE';
+    public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const PLUGIN_PRODUCT_PAGE_DATA_EXPANDER = 'PLUGIN_PRODUCT_PAGE_DATA_EXPANDER';
     public const PLUGIN_PRODUCT_PAGE_DATA_LOADER = 'PLUGIN_PRODUCT_PAGE_DATA_LOADER';
@@ -75,6 +78,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
      * @deprecated Use ProductPageSearchDependencyProvider::PLUGINS_CONCRETE_PRODUCT_PAGE_MAP_EXPANDER instead.
      */
     public const PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER';
+    public const PROPEL_QUERY_PRODUCT_SEARCH = 'PROPEL_QUERY_PRODUCT_SEARCH';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -142,6 +146,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addPriceProductService($container);
         $container = $this->addPriceFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addProductImageFacade($container);
 
         return $container;
     }
@@ -178,6 +183,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
         };
 
         $container = $this->addStoreFacade($container);
+        $container = $this->addProductImageFacade($container);
 
         return $container;
     }
@@ -209,10 +215,34 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
             return new ProductPageSearchToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
         };
 
+        $container = $this->addCategoryNodePropelQuery($container);
+        $container = $this->addProductPropelQuery($container);
+        $container = $this->addProductSearchPropelQuery($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCategoryNodePropelQuery(Container $container): Container
+    {
         $container->set(static::PROPEL_QUERY_CATEGORY_NODE, function () {
             return SpyCategoryNodeQuery::create();
         });
 
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductPropelQuery(Container $container): Container
+    {
         $container->set(static::PROPEL_QUERY_PRODUCT, function () {
             return SpyProductQuery::create();
         });
@@ -255,11 +285,39 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addProductImageFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_IMAGE, function (Container $container) {
+            return new ProductPageSearchToProductImageFacadeBridge($container->getLocator()->productImage()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addStoreFacade(Container $container): Container
     {
         $container[static::FACADE_STORE] = function (Container $container): ProductPageSearchToStoreFacadeInterface {
             return new ProductPageSearchToStoreFacadeBridge($container->getLocator()->store()->facade());
         };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductSearchPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_PRODUCT_SEARCH, function () {
+            return SpyProductSearchQuery::create();
+        });
 
         return $container;
     }

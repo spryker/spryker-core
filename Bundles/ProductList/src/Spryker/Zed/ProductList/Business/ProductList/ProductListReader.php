@@ -200,6 +200,10 @@ class ProductListReader implements ProductListReaderInterface
         $productListTransfer = $this->productListRepository
             ->getProductListById($productListTransfer->getIdProductList());
 
+        if (!$productListTransfer->getIdProductList()) {
+            return $productListTransfer;
+        }
+
         $productListCategoryRelationTransfer = new ProductListCategoryRelationTransfer();
         $productListCategoryRelationTransfer->setIdProductList($productListTransfer->getIdProductList());
         $productListCategoryRelationTransfer = $this->productListCategoryRelationReader
@@ -255,10 +259,16 @@ class ProductListReader implements ProductListReaderInterface
     protected function mergeProductConcreteAndProductAbstractLists(array $productConcreteLists, array $productAbstractLists, array $concreteToAbstractMap): array
     {
         $mergedProductConcreteAndProductAbstractLists = [];
-        foreach ($productConcreteLists as $idProductConcrete => $productConcreteList) {
-            $idProductAbstract = $concreteToAbstractMap[$idProductConcrete];
 
-            $mergedProductConcreteAndProductAbstractLists[$idProductConcrete] = $productAbstractLists[$idProductAbstract] + $productConcreteList;
+        foreach ($concreteToAbstractMap as $idProductConcrete => $idProductAbstract) {
+            $productAbstractList = $productAbstractLists[$idProductAbstract] ?? [];
+            $productConcreteList = $productConcreteLists[$idProductConcrete] ?? [];
+
+            $mergedList = $productAbstractList + $productConcreteList;
+
+            if (count($mergedList)) {
+                $mergedProductConcreteAndProductAbstractLists[$idProductConcrete] = $mergedList;
+            }
         }
 
         return $mergedProductConcreteAndProductAbstractLists;

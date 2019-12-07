@@ -15,6 +15,7 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
 /**
  * Auto-generated group annotations
+ *
  * @group Unit
  * @group Spryker
  * @group Zed
@@ -30,7 +31,7 @@ class HstsServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testDisabledHstsServiceProviderMustNotReturnHeader()
+    public function testDisabledHstsServiceProviderMustNotReturnHeader(): void
     {
         $eventMock = $this->getMockBuilder(FilterResponseEvent::class)->setMethods(['isMasterRequest', 'getResponse'])->disableOriginalConstructor()->getMock();
         $hstsMock = $this->getMockBuilder(ZedHstsServiceProvider::class)->setMethods(['getIsHstsEnabled', 'getHstsConfig'])->getMock();
@@ -52,7 +53,7 @@ class HstsServiceProviderTest extends Unit
     /**
      * @return void
      */
-    public function testHstsServiceProviderGeneratesHeader()
+    public function testHstsServiceProviderGeneratesHeader(): void
     {
         $eventMock = $this->getMockBuilder(FilterResponseEvent::class)->setMethods(['isMasterRequest', 'getResponse'])->disableOriginalConstructor()->getMock();
         $hstsMock = $this->getMockBuilder(ZedHstsServiceProvider::class)->setMethods(['getIsHstsEnabled', 'getHstsConfig'])->getMock();
