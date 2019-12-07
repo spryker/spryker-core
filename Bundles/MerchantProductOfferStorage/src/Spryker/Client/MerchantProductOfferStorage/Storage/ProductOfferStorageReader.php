@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToStorageClientInterface;
+use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToStoreClientInterface;
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToSynchronizationServiceInterface;
 use Spryker\Client\MerchantProductOfferStorage\Mapper\MerchantProductOfferMapperInterface;
 use Spryker\Shared\MerchantProductOfferStorage\MerchantProductOfferStorageConfig;
@@ -33,7 +34,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     protected $merchantProductOfferMapper;
 
     /**
-     * @var \Spryker\Client\Store\StoreClientInterface
+     * @var \Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToStoreClientInterface
      */
     protected $storeClient;
 
@@ -41,15 +42,18 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
      * @param \Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\MerchantProductOfferStorage\Mapper\MerchantProductOfferMapperInterface $merchantProductOfferMapper
+     * @param \Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToStoreClientInterface $storeClient
      */
     public function __construct(
         MerchantProductOfferStorageToStorageClientInterface $storageClient,
         MerchantProductOfferStorageToSynchronizationServiceInterface $synchronizationService,
-        MerchantProductOfferMapperInterface $merchantProductOfferMapper
+        MerchantProductOfferMapperInterface $merchantProductOfferMapper,
+        MerchantProductOfferStorageToStoreClientInterface $storeClient
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
         $this->merchantProductOfferMapper = $merchantProductOfferMapper;
+        $this->storeClient = $storeClient;
     }
 
     /**
@@ -106,9 +110,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer->setReference($keyName);
-        // StoreClientBridge should be used here.
-        $synchronizationDataTransfer->setStore('DE');
-        // $synchronizationDataTransfer->setStore($this->storeClient->getCurrentStore()->getName());
+        $synchronizationDataTransfer->setStore($this->storeClient->getCurrentStore()->getName());
 
         return $this->synchronizationService
             ->getStorageKeyBuilder($resourceName)
