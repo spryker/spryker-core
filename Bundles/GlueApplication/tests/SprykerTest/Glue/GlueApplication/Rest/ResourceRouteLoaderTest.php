@@ -16,9 +16,9 @@ use Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface;
 use Spryker\Glue\GlueApplication\Rest\Version\VersionResolverInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceVersionableInterface;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use SprykerTest\Glue\GlueApplication\Stub\RestTestAttributesTransfer;
+use SprykerTest\Glue\GlueApplication\Stub\TestResourceWithParentRoutePlugin;
+use SprykerTest\Glue\GlueApplication\Stub\TestVersionableResourceRoutePlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -180,10 +180,7 @@ class ResourceRouteLoaderTest extends Unit
      */
     protected function createResourceRoutePluginWithVersionMock(): ResourceRoutePluginInterface
     {
-        return $this->getMockBuilder([
-            ResourceRoutePluginInterface::class,
-            ResourceVersionableInterface::class,
-        ])->getMock();
+        return $this->getMockBuilder(TestVersionableResourceRoutePlugin::class)->getMock();
     }
 
     /**
@@ -191,10 +188,7 @@ class ResourceRouteLoaderTest extends Unit
      */
     protected function createResourceRoutePluginWithParent(): ResourceRoutePluginInterface
     {
-        return $this->getMockBuilder([
-            ResourceRoutePluginInterface::class,
-            ResourceWithParentPluginInterface::class,
-        ])->getMock();
+        return $this->createMock(TestResourceWithParentRoutePlugin::class);
     }
 
     /**
