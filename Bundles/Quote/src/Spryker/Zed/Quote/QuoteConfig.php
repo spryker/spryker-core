@@ -18,13 +18,6 @@ class QuoteConfig extends AbstractBundleConfig
 {
     protected const DEFAULT_GUEST_QUOTE_LIFETIME = 'P01M';
 
-    protected const DEFAULT_FIELDS_ALLOWED_FOR_SAVING = [
-            QuoteTransfer::ITEMS,
-            QuoteTransfer::TOTALS,
-            QuoteTransfer::CURRENCY,
-            QuoteTransfer::PRICE_MODE,
-        ];
-
     /**
      * @return string
      */
@@ -38,7 +31,12 @@ class QuoteConfig extends AbstractBundleConfig
      */
     public function getQuoteFieldsAllowedForSaving()
     {
-        return $this->get(QuoteConstants::FIELDS_ALLOWED_FOR_SAVING, static::DEFAULT_FIELDS_ALLOWED_FOR_SAVING);
+        return [
+            QuoteTransfer::ITEMS,
+            QuoteTransfer::TOTALS,
+            QuoteTransfer::CURRENCY,
+            QuoteTransfer::PRICE_MODE,
+        ];
     }
 
     /**

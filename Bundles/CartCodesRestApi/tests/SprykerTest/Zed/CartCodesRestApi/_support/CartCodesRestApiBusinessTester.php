@@ -35,14 +35,11 @@ class CartCodesRestApiBusinessTester extends Actor
     use _generated\CartCodesRestApiBusinessTesterActions;
 
     public const CODE = 'testCode1';
-
     public const NON_EXISTENT_CODE = 'testCode2';
-
     public const NON_EXISTENT_ID_DISCOUNT = 7777;
-
     public const TEST_QUOTE_UUID = 'test-quote-uuid';
-
     public const TEST_CUSTOMER_REFERENCE = 'DE--666';
+    public const ID_DISCOUNT = 3446;
 
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -60,22 +57,47 @@ class CartCodesRestApiBusinessTester extends Actor
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
+    public function createQuoteTransferWithVouchers(): QuoteTransfer
+    {
+        return (new QuoteBuilder([QuoteTransfer::UUID => static::TEST_QUOTE_UUID]))
+            ->withStore(
+                [
+                    StoreTransfer::NAME => 'DE',
+                    StoreTransfer::ID_STORE => 1,
+                ]
+            )
+            ->withCustomer()
+            ->withVoucherDiscount(
+                (new DiscountTransfer())
+                    ->setVoucherCode(static::CODE)
+                    ->setIdDiscount(static::ID_DISCOUNT)
+                    ->toArray()
+            )
+            ->build();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
     public function havePersistentQuoteWithVouchers(): QuoteTransfer
     {
         $customerTransfer = $this->haveCustomer();
 
         $discountTransfer = (new DiscountTransfer())
-            ->setVoucherCode(static::CODE);
+            ->setVoucherCode(static::CODE)
+            ->setIdDiscount(static::ID_DISCOUNT);
 
-        return $this->havePersistentQuote([
-            QuoteTransfer::UUID => uniqid('uuid'),
-            QuoteTransfer::CUSTOMER => $customerTransfer,
-            QuoteTransfer::VOUCHER_DISCOUNTS => [$discountTransfer->toArray()],
-            QuoteTransfer::STORE => [
-                StoreTransfer::NAME => 'DE',
-                StoreTransfer::ID_STORE => 1,
-            ],
-        ]);
+        return $this->havePersistentQuote(
+            [
+                QuoteTransfer::UUID => uniqid('uuid'),
+                QuoteTransfer::CUSTOMER => $customerTransfer,
+                QuoteTransfer::VOUCHER_DISCOUNTS => [$discountTransfer],
+                QuoteTransfer::STORE => [
+                    StoreTransfer::NAME => 'DE',
+                    StoreTransfer::ID_STORE => 1,
+                ],
+            ]
+        );
     }
 
     /**
@@ -83,9 +105,11 @@ class CartCodesRestApiBusinessTester extends Actor
      */
     public function havePersistentQuoteWithoutVouchers(): QuoteTransfer
     {
-        return $this->havePersistentQuote([
-            QuoteTransfer::UUID => uniqid('uuid', true),
-            QuoteTransfer::CUSTOMER => $this->haveCustomer(),
-        ]);
+        return $this->havePersistentQuote(
+            [
+                QuoteTransfer::UUID => uniqid('uuid', true),
+                QuoteTransfer::CUSTOMER => $this->haveCustomer(),
+            ]
+        );
     }
 }

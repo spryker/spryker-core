@@ -7,12 +7,16 @@
 
 namespace SprykerTest\Zed\CartCodesRestApi\Business;
 
-use Codeception\Test\Unit;
+use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CartCodeRequestTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\QuoteResponseTransfer;
+use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Shared\CartCodesRestApi\CartCodesRestApiConfig;
-use Spryker\Shared\Quote\QuoteConstants;
+use Spryker\Zed\CartCode\Business\CartCodeFacade;
 use Spryker\Zed\CartCode\CartCodeDependencyProvider;
+use Spryker\Zed\CartCodesRestApi\Business\CartCodesRestApiBusinessFactory;
+use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeBridge;
+use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeBridge;
 use Spryker\Zed\Discount\Communication\Plugin\CartCode\VoucherCartCodePlugin;
 
 /**
@@ -26,7 +30,7 @@ use Spryker\Zed\Discount\Communication\Plugin\CartCode\VoucherCartCodePlugin;
  * @group CartCodesRestApiFacadeTest
  * Add your own group annotations below this line
  */
-class CartCodesRestApiFacadeTest extends Unit
+class CartCodesRestApiFacadeTest extends Test
 {
     protected const CODE = 'testCode1';
 
@@ -41,6 +45,11 @@ class CartCodesRestApiFacadeTest extends Unit
     protected $tester;
 
     /**
+     * @var \Spryker\Zed\CartCodesRestApi\Business\CartCodesRestApiFacadeInterface
+     */
+    protected $cartCodesRestApiFacade;
+
+    /**
      * @return void
      */
     public function setUp(): void
@@ -48,9 +57,15 @@ class CartCodesRestApiFacadeTest extends Unit
         parent::setUp();
 
         $this->setPluginCartCodeCollection();
-        $this->tester->setConfig(QuoteConstants::FIELDS_ALLOWED_FOR_SAVING, [
-            QuoteTransfer::VOUCHER_DISCOUNTS,
-        ]);
+
+        /** @var \Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeBridge $mockCartsRestApiFacade */
+        $mockCartsRestApiFacade = $this->createMockCartsRestApiFacade();
+
+        /** @var \Spryker\Zed\CartCodesRestApi\Business\CartCodesRestApiBusinessFactory $mockCartCodesRestApiBusinessFactory */
+        $mockCartCodesRestApiBusinessFactory = $this->createMockCartCodesRestApiBusinessFactory($mockCartsRestApiFacade);
+
+        $this->cartCodesRestApiFacade = $this->tester->getFacade();
+        $this->cartCodesRestApiFacade->setFactory($mockCartCodesRestApiBusinessFactory);
     }
 
     /**
@@ -104,10 +119,10 @@ class CartCodesRestApiFacadeTest extends Unit
     public function testRemoveCartCodeWillRemoveDiscountWithExistingQuote(): void
     {
         // Arrange
-        $quoteTransfer = $this->tester->havePersistentQuoteWithVouchers();
+        $quoteTransfer = $this->tester->createQuoteTransferWithVouchers();
 
         // Act
-        $cartCodeResponseTransfer = $this->tester->getFacade()->removeCartCode(
+        $cartCodeResponseTransfer = $this->cartCodesRestApiFacade->removeCartCode(
             (new CartCodeRequestTransfer())
                 ->setCartCode($this->tester::CODE)
                 ->setQuote($quoteTransfer)
@@ -171,5 +186,44 @@ class CartCodesRestApiFacadeTest extends Unit
         $this->tester->setDependency(CartCodeDependencyProvider::PLUGINS_CART_CODE, [
             new VoucherCartCodePlugin(),
         ]);
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeInterface
+     */
+    protected function createMockCartsRestApiFacade(): MockObject
+    {
+        $mockCartsRestApiFacade = $this->getMockBuilder(CartCodesRestApiToCartsRestApiFacadeBridge::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['findQuoteByUuid'])
+            ->getMock();
+        $mockCartsRestApiFacade->method('findQuoteByUuid')
+            ->willReturn(
+                (new QuoteResponseTransfer())
+                    ->setQuoteTransfer($this->tester->createQuoteTransferWithVouchers())
+                    ->setIsSuccessful(true)
+            );
+
+        return $mockCartsRestApiFacade;
+    }
+
+    /**
+     * @param \Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestApiFacadeBridge $mockCartsRestApiFacade
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CartCodesRestApi\Business\CartCodesRestApiBusinessFactory
+     */
+    protected function createMockCartCodesRestApiBusinessFactory(CartCodesRestApiToCartsRestApiFacadeBridge $mockCartsRestApiFacade): MockObject
+    {
+        $mockCartCodesRestApiBusinessFactory = $this->getMockBuilder(CartCodesRestApiBusinessFactory::class)
+            ->setMethods(['getCartsRestApiFacade', 'getCartCodeFacade'])
+            ->getMock();
+
+        $mockCartCodesRestApiBusinessFactory->method('getCartsRestApiFacade')
+            ->willReturn($mockCartsRestApiFacade);
+
+        $mockCartCodesRestApiBusinessFactory->method('getCartCodeFacade')
+            ->willReturn(new CartCodesRestApiToCartCodeFacadeBridge(new CartCodeFacade()));
+
+        return $mockCartCodesRestApiBusinessFactory;
     }
 }
