@@ -283,6 +283,7 @@
     "spryker/graphviz": "*",
     "spryker/gui": "*",
     "spryker/guzzle": "*",
+    "spryker/heartbeat": "*",
     "spryker/http": "*",
     "spryker/http-extension": "*",
     "spryker/index-generator": "*",
