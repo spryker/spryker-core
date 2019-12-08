@@ -69,7 +69,7 @@ class Doctor
     {
         $patientIsAlive = true;
 
-        foreach ($this->healthReport->getHealthIndicatorReports() as $healthIndicatorReport) {
+        foreach ($this->healthReport->getHealthIndicatorReport() as $healthIndicatorReport) {
             if (!$healthIndicatorReport->getStatus()) {
                 $patientIsAlive = false;
             }
