@@ -4,7 +4,7 @@ Heartbeat provides basic health checks and reporting tools for system availabili
 
 ## Installation
 
-**DEPRECATED - This module is not continued at this point.**
+**DEPRECATED - This module is not continued at this point. Use `HealthCheck` instead.**
 
 ```
 composer require spryker/heartbeat
