@@ -41,17 +41,20 @@ class MerchantProductOfferStorageEntityManager extends AbstractEntityManager imp
      */
     public function saveProductOfferStorage(ProductOfferTransfer $productOfferTransfer): void
     {
-        $productOfferStorageEntity = $this->getFactory()
-            ->createProductOfferStoragePropelQuery()
-            ->filterByProductOfferReference($productOfferTransfer->getProductOfferReference())
-            ->findOneOrCreate();
+        foreach ($productOfferTransfer->getStores() as $storeTransfer) {
+            $productOfferStorageEntity = $this->getFactory()
+                ->createProductOfferStoragePropelQuery()
+                ->filterByStore($storeTransfer->getName())
+                ->filterByProductOfferReference($productOfferTransfer->getProductOfferReference())
+                ->findOneOrCreate();
 
-        $productOfferStorageTransfer = $this->getFactory()
-            ->createProductOfferStorageMapper()
-            ->mapProductOfferTransferToProductOfferStorageTransfer($productOfferTransfer, (new ProductOfferStorageTransfer()));
+            $productOfferStorageTransfer = $this->getFactory()
+                ->createProductOfferStorageMapper()
+                ->mapProductOfferTransferToProductOfferStorageTransfer($productOfferTransfer, (new ProductOfferStorageTransfer()));
 
-        $productOfferStorageEntity->setData($productOfferStorageTransfer->modifiedToArray());
-        $productOfferStorageEntity->save();
+            $productOfferStorageEntity->setData($productOfferStorageTransfer->modifiedToArray());
+            $productOfferStorageEntity->save();
+        }
     }
 
     /**

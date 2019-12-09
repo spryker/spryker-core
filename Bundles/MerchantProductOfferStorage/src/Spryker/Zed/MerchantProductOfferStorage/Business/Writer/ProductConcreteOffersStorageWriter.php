@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantProductOfferStorage\Business\Writer;
 
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorageQuery;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductConcreteOffersStorageDeleterInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface;
@@ -90,9 +91,16 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
         $productOffersGroupedBySku = $this->groupProductOfferByConcreteSku($productOfferCollectionTransfer);
 
         $storedProductSkus = [];
-        foreach ($productOffersGroupedBySku as $concreteSku => $productOfferReferenceList) {
-            $this->merchantProductOfferStorageEntityManager->saveProductConcreteProductOffersStorage($concreteSku, $productOfferReferenceList);
-            $storedProductSkus[] = $concreteSku;
+        foreach ($productOffersGroupedBySku as $sku => $data) {
+            foreach ($data as $store => $productOfferReferenceList) {
+                $productConcreteProductOffersStorageEntity = SpyProductConcreteProductOffersStorageQuery::create()
+                    ->filterByConcreteSku($sku)
+                    ->filterByStore($store)
+                    ->findOneOrCreate();
+
+                $productConcreteProductOffersStorageEntity->setData($productOfferReferenceList);
+                $productConcreteProductOffersStorageEntity->save();
+            }
         }
 
         $productSkusToDelete = array_diff($productSkus, $storedProductSkus);
@@ -111,7 +119,10 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
             if (!isset($productOffersGroupedBySku[$productOfferTransfer->getConcreteSku()])) {
                 $productOffersGroupedBySku[$productOfferTransfer->getConcreteSku()] = [];
             }
-            $productOffersGroupedBySku[$productOfferTransfer->getConcreteSku()][] = mb_strtolower($productOfferTransfer->getProductOfferReference());
+            foreach ($productOfferTransfer->getStores() as $storeTransfer) {
+                $productOffersGroupedBySku[$productOfferTransfer->getConcreteSku()][$storeTransfer->getName()][] =
+                    strtolower($productOfferTransfer->getProductOfferReference());
+            }
         }
 
         return $productOffersGroupedBySku;
