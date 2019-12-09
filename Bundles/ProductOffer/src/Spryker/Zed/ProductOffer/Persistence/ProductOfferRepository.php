@@ -11,8 +11,11 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -122,6 +125,23 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
 
         if ($productOfferCriteriaFilter->getPagination()) {
             $productOfferQuery = $this->getPaginatedCollection($productOfferQuery, $productOfferCriteriaFilter->getPagination());
+        }
+
+        if ($productOfferCriteriaFilter->getIsActive() !== null) {
+            $productOfferQuery->filterByIsActive($productOfferCriteriaFilter->getIsActive());
+        }
+
+        if ($productOfferCriteriaFilter->getApprovalStatuses()) {
+            $productOfferQuery->filterByApprovalStatus_In($productOfferCriteriaFilter->getApprovalStatuses());
+        }
+
+        if ($productOfferCriteriaFilter->getIsActiveConcreteProduct() !== null) {
+            $productOfferQuery->addJoin(
+                SpyProductOfferTableMap::COL_CONCRETE_SKU,
+                SpyProductTableMap::COL_SKU,
+                Criteria::INNER_JOIN
+            )
+            ->where(SpyProductTableMap::COL_IS_ACTIVE, true);
         }
 
         return $productOfferQuery;

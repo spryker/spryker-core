@@ -97,7 +97,7 @@ class PropelConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getCorePropelSchemaPathPatterns()
     {

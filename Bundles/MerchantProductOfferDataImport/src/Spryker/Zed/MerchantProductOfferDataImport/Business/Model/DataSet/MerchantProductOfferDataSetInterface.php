@@ -14,6 +14,8 @@ interface MerchantProductOfferDataSetInterface
     public const CONCRETE_SKU = 'concrete_sku';
     public const MERCHANT_KEY = 'merchant_key';
     public const MERCHANT_SKU = 'merchant_sku';
+    public const IS_ACTIVE = 'is_active';
+    public const APPROVAL_STATUS = 'approval_status';
     public const ID_MERCHANT = 'id_merchant';
     public const ID_PRODUCT_OFFER = 'id_product_offer';
     public const ID_STORE = 'id_store';

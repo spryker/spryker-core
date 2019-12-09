@@ -21,6 +21,7 @@
     "spryker/event": "*",
     "spryker/merchant": "*",
     "spryker/merchant-product-offer": "*",
+    "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
     "spryker/queue": "*",
