@@ -12,17 +12,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ResponseProcessor implements ResponseProcessorInterface
 {
-    protected const HEALTH_CHECK_SUCCESS_STATUS_CODE = Response::HTTP_OK;
-    protected const HEALTH_CHECK_SUCCESS_STATUS_MESSAGE = 'healthy';
+    public const HEALTH_CHECK_SUCCESS_STATUS_CODE = Response::HTTP_OK;
+    public const HEALTH_CHECK_SUCCESS_STATUS_MESSAGE = 'healthy';
 
-    protected const HEALTH_CHECK_UNAVAILABLE_STATUS_CODE = Response::HTTP_SERVICE_UNAVAILABLE;
-    protected const HEALTH_CHECK_UNAVAILABLE_STATUS_MESSAGE = 'unhealthy';
+    public const HEALTH_CHECK_UNAVAILABLE_STATUS_CODE = Response::HTTP_SERVICE_UNAVAILABLE;
+    public const HEALTH_CHECK_UNAVAILABLE_STATUS_MESSAGE = 'unhealthy';
 
-    protected const HEALTH_CHECK_FORBIDDEN_STATUS_CODE = Response::HTTP_FORBIDDEN;
-    protected const HEALTH_CHECK_FORBIDDEN_STATUS_MESSAGE = 'HealthCheck endpoints are disabled for all applications.';
+    public const HEALTH_CHECK_FORBIDDEN_STATUS_CODE = Response::HTTP_FORBIDDEN;
+    public const HEALTH_CHECK_FORBIDDEN_STATUS_MESSAGE = 'HealthCheck endpoints are disabled for all applications.';
 
-    protected const HEALTH_CHECK_BAD_REQUEST_STATUS_CODE = Response::HTTP_BAD_REQUEST;
-    protected const HEALTH_CHECK_BAD_REQUEST_STATUS_MESSAGE = 'Requested services not found.';
+    public const HEALTH_CHECK_BAD_REQUEST_STATUS_CODE = Response::HTTP_BAD_REQUEST;
+    public const HEALTH_CHECK_BAD_REQUEST_STATUS_MESSAGE = 'Requested services not found.';
 
     /**
      * @var bool

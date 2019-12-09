@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\HealthCheckResponseTransfer;
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Spryker\Shared\HealthCheck\HealthCheckConfig;
 use Spryker\Shared\HealthCheck\HealthCheckConstants;
+use Spryker\Shared\HealthCheck\Processor\ResponseProcessor;
 use Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface;
 use Spryker\Zed\HealthCheck\HealthCheckDependencyProvider;
 
@@ -70,8 +71,8 @@ class HealthCheckFacadeTest extends Unit
         // Assert
         $this->assertInstanceOf(HealthCheckResponseTransfer::class, $healthCheckResponseTransfer);
         $this->assertEquals(count($healthCheckPlugins), $healthCheckResponseTransfer->getHealthCheckServiceResponses()->count());
-        $this->assertSame($this->getConfig()->getSuccessHealthCheckStatusMessage(), $healthCheckResponseTransfer->getStatus());
-        $this->assertSame($this->getConfig()->getSuccessHealthCheckStatusCode(), $healthCheckResponseTransfer->getStatusCode());
+        $this->assertSame(ResponseProcessor::HEALTH_CHECK_SUCCESS_STATUS_MESSAGE, $healthCheckResponseTransfer->getStatus());
+        $this->assertSame(ResponseProcessor::HEALTH_CHECK_SUCCESS_STATUS_CODE, $healthCheckResponseTransfer->getStatusCode());
     }
 
     /**
@@ -93,8 +94,8 @@ class HealthCheckFacadeTest extends Unit
         // Assert
         $this->assertInstanceOf(HealthCheckResponseTransfer::class, $healthCheckResponseTransfer);
         $this->assertEquals(count($healthCheckPlugins), $healthCheckResponseTransfer->getHealthCheckServiceResponses()->count());
-        $this->assertSame($this->getConfig()->getUnavailableHealthCheckStatusMessage(), $healthCheckResponseTransfer->getStatus());
-        $this->assertSame($this->getConfig()->getUnavailableHealthCheckStatusCode(), $healthCheckResponseTransfer->getStatusCode());
+        $this->assertSame(ResponseProcessor::HEALTH_CHECK_UNAVAILABLE_STATUS_MESSAGE, $healthCheckResponseTransfer->getStatus());
+        $this->assertSame(ResponseProcessor::HEALTH_CHECK_UNAVAILABLE_STATUS_CODE, $healthCheckResponseTransfer->getStatusCode());
     }
 
     /**
@@ -116,8 +117,8 @@ class HealthCheckFacadeTest extends Unit
         // Assert
         $this->assertInstanceOf(HealthCheckResponseTransfer::class, $healthCheckResponseTransfer);
         $this->assertEquals(count($healthCheckPlugins), $healthCheckResponseTransfer->getHealthCheckServiceResponses()->count());
-        $this->assertSame($this->getConfig()->getUnavailableHealthCheckStatusMessage(), $healthCheckResponseTransfer->getStatus());
-        $this->assertSame($this->getConfig()->getUnavailableHealthCheckStatusCode(), $healthCheckResponseTransfer->getStatusCode());
+        $this->assertSame(ResponseProcessor::HEALTH_CHECK_UNAVAILABLE_STATUS_MESSAGE, $healthCheckResponseTransfer->getStatus());
+        $this->assertSame(ResponseProcessor::HEALTH_CHECK_UNAVAILABLE_STATUS_CODE, $healthCheckResponseTransfer->getStatusCode());
     }
 
     /**
@@ -133,8 +134,8 @@ class HealthCheckFacadeTest extends Unit
 
         // Assert
         $this->assertInstanceOf(HealthCheckResponseTransfer::class, $healthCheckResponseTransfer);
-        $this->assertSame($this->getConfig()->getSuccessHealthCheckStatusMessage(), $healthCheckResponseTransfer->getStatus());
-        $this->assertSame($this->getConfig()->getSuccessHealthCheckStatusCode(), $healthCheckResponseTransfer->getStatusCode());
+        $this->assertSame(ResponseProcessor::HEALTH_CHECK_SUCCESS_STATUS_MESSAGE, $healthCheckResponseTransfer->getStatus());
+        $this->assertSame(ResponseProcessor::HEALTH_CHECK_SUCCESS_STATUS_CODE, $healthCheckResponseTransfer->getStatusCode());
     }
 
     /**
@@ -158,8 +159,8 @@ class HealthCheckFacadeTest extends Unit
         // Assert
         $this->assertInstanceOf(HealthCheckResponseTransfer::class, $healthCheckResponseTransfer);
         $this->assertEquals(count($requestedHealthCheckServices), $healthCheckResponseTransfer->getHealthCheckServiceResponses()->count());
-        $this->assertSame($this->getConfig()->getSuccessHealthCheckStatusMessage(), $healthCheckResponseTransfer->getStatus());
-        $this->assertSame($this->getConfig()->getSuccessHealthCheckStatusCode(), $healthCheckResponseTransfer->getStatusCode());
+        $this->assertSame(ResponseProcessor::HEALTH_CHECK_SUCCESS_STATUS_MESSAGE, $healthCheckResponseTransfer->getStatus());
+        $this->assertSame(ResponseProcessor::HEALTH_CHECK_SUCCESS_STATUS_CODE, $healthCheckResponseTransfer->getStatusCode());
     }
 
     /**
@@ -183,8 +184,8 @@ class HealthCheckFacadeTest extends Unit
         // Assert
         $this->assertInstanceOf(HealthCheckResponseTransfer::class, $healthCheckResponseTransfer);
         $this->assertLessThan(count($requestedHealthCheckServices), $healthCheckResponseTransfer->getHealthCheckServiceResponses()->count());
-        $this->assertSame($this->getConfig()->getBadRequestHealthCheckStatusMessage(), $healthCheckResponseTransfer->getMessage());
-        $this->assertSame($this->getConfig()->getBadRequestHealthCheckStatusCode(), $healthCheckResponseTransfer->getStatusCode());
+        $this->assertSame(ResponseProcessor::HEALTH_CHECK_BAD_REQUEST_STATUS_MESSAGE, $healthCheckResponseTransfer->getMessage());
+        $this->assertSame(ResponseProcessor::HEALTH_CHECK_BAD_REQUEST_STATUS_CODE, $healthCheckResponseTransfer->getStatusCode());
     }
 
     /**
@@ -208,8 +209,8 @@ class HealthCheckFacadeTest extends Unit
         // Assert
         $this->assertInstanceOf(HealthCheckResponseTransfer::class, $healthCheckResponseTransfer);
         $this->assertEmpty($healthCheckResponseTransfer->getHealthCheckServiceResponses()->count());
-        $this->assertSame($this->getConfig()->getForbiddenHealthCheckStatusCode(), $healthCheckResponseTransfer->getStatusCode());
-        $this->assertSame($this->getConfig()->getForbiddenHealthCheckStatusMessage(), $healthCheckResponseTransfer->getMessage());
+        $this->assertSame(ResponseProcessor::HEALTH_CHECK_FORBIDDEN_STATUS_CODE, $healthCheckResponseTransfer->getStatusCode());
+        $this->assertSame(ResponseProcessor::HEALTH_CHECK_FORBIDDEN_STATUS_MESSAGE, $healthCheckResponseTransfer->getMessage());
     }
 
     /**
