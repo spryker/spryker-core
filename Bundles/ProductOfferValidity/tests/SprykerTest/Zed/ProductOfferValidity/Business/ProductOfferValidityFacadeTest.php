@@ -9,6 +9,10 @@ namespace SprykerTest\Zed\ProductOfferValidity\Business;
 
 use Codeception\Test\Unit;
 use DateTime;
+use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\ProductOfferValidityTransfer;
+use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 /**
  * Auto-generated group annotations
@@ -23,6 +27,7 @@ use DateTime;
  */
 class ProductOfferValidityFacadeTest extends Unit
 {
+    use LocatorHelperTrait;
     /**
      * @var \SprykerTest\Zed\ProductOfferValidity\ProductOfferValidityBusinessTester
      */
@@ -47,32 +52,37 @@ class ProductOfferValidityFacadeTest extends Unit
         $merchant = $this->tester->haveMerchant();
 
         $productOfferValid = $this->tester->haveProductOffer([
-            'fkMerchant' => $merchant->getIdMerchant(),
-            'isActive' => false,
+            ProductOfferTransfer::FK_MERCHANT => $merchant->getIdMerchant(),
+            ProductOfferTransfer::IS_ACTIVE => false,
         ]);
 
         $productOfferInvalid = $this->tester->haveProductOffer([
-            'fkMerchant' => $merchant->getIdMerchant(),
-            'isActive' => true,
+            ProductOfferTransfer::FK_MERCHANT => $merchant->getIdMerchant(),
+            ProductOfferTransfer::IS_ACTIVE => true,
         ]);
 
         $this->tester->haveProductOfferValidity([
-            'idProductOffer' => $productOfferValid->getIdProductOffer(),
-            'validFrom' => (new DateTime('yesterday'))->format('Y-m-d H:i:s'),
-            'validTo' => (new DateTime('tomorrow'))->format('Y-m-d H:i:s'),
+            ProductOfferValidityTransfer::ID_PRODUCT_OFFER => $productOfferValid->getIdProductOffer(),
+            ProductOfferValidityTransfer::VALID_FROM => (new DateTime('yesterday'))->format('Y-m-d H:i:s'),
+            ProductOfferValidityTransfer::VALID_TO => (new DateTime('tomorrow'))->format('Y-m-d H:i:s'),
         ]);
 
         $this->tester->haveProductOfferValidity([
-            'idProductOffer' => $productOfferInvalid->getIdProductOffer(),
-            'validFrom' => (new DateTime('yesterday'))->format('Y-m-d H:i:s'),
-            'validTo' => (new DateTime('yesterday'))->format('Y-m-d H:i:s'),
+            ProductOfferValidityTransfer::ID_PRODUCT_OFFER => $productOfferInvalid->getIdProductOffer(),
+            ProductOfferValidityTransfer::VALID_FROM => (new DateTime('yesterday'))->format('Y-m-d H:i:s'),
+            ProductOfferValidityTransfer::VALID_TO => (new DateTime('yesterday'))->format('Y-m-d H:i:s'),
         ]);
 
         // Act
         $this->tester->getFacade()->checkProductOfferValidityDateRange();
 
-        $productOfferValid = $this->tester->findProductOfferById($productOfferValid->getIdProductOffer());
-        $productOfferInvalid = $this->tester->findProductOfferById($productOfferInvalid->getIdProductOffer());
+        $productOfferCriteriaFilterTransfer = new ProductOfferCriteriaFilterTransfer();
+        $productOfferCriteriaFilterTransfer->setIdProductOffer($productOfferValid->getIdProductOffer());
+        $productOfferValid = $this->getLocator()->productOffer()->facade()->findOne($productOfferCriteriaFilterTransfer);
+
+        $productOfferCriteriaFilterTransfer = new ProductOfferCriteriaFilterTransfer();
+        $productOfferCriteriaFilterTransfer->setIdProductOffer($productOfferInvalid->getIdProductOffer());
+        $productOfferInvalid = $this->getLocator()->productOffer()->facade()->findOne($productOfferCriteriaFilterTransfer);
 
         // Assert
         $this->assertTrue($productOfferValid->getIsActive());

@@ -82,6 +82,10 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
             $productOfferQuery->filterByProductOfferReference($productOfferCriteriaFilter->getProductOfferReference());
         }
 
+        if ($productOfferCriteriaFilter->getIdProductOffer()) {
+            $productOfferQuery->filterByIdProductOffer($productOfferCriteriaFilter->getIdProductOffer());
+        }
+
         if ($productOfferCriteriaFilter->getConcreteSkus()) {
             $productOfferQuery->filterByConcreteSku_In($productOfferCriteriaFilter->getConcreteSkus());
         }
@@ -178,25 +182,5 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
         return $this->getFactory()
             ->createPropelProductOfferMapper()
             ->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, $productOfferTransfer);
-    }
-
-    /**
-     * @param int $idProductOffer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
-     */
-    public function findOneByIdProductOffer(int $idProductOffer): ?ProductOfferTransfer
-    {
-        $productOfferEntity = $this->getFactory()
-            ->createProductOfferPropelQuery()
-            ->findOneByIdProductOffer($idProductOffer);
-
-        if (!$productOfferEntity) {
-            return null;
-        }
-
-        return $this->getFactory()
-            ->createPropelProductOfferMapper()
-            ->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, new ProductOfferTransfer());
     }
 }

@@ -40,11 +40,4 @@ interface ProductOfferRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
     public function deactivateProductOffer(ProductOfferTransfer $productOfferTransfer): ?ProductOfferTransfer;
-
-    /**
-     * @param int $idProductOffer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
-     */
-    public function findOneByIdProductOffer(int $idProductOffer): ?ProductOfferTransfer;
 }

@@ -55,6 +55,7 @@ interface ProductOfferFacadeInterface
     /**
      * Specification:
      * - Activates product offer by id.
+     * - Returns updated ProductOfferTransfer.
      *
      * @api
      *
@@ -69,6 +70,7 @@ interface ProductOfferFacadeInterface
     /**
      * Specification:
      * - Deactivates product offer by id.
+     * - Returns updated ProductOfferTransfer.
      *
      * @api
      *

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOffer\Business\ProductOffer;
 
+use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\ProductOffer\Business\Exception\ProductOfferNotFoundException;
 use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface;
@@ -29,11 +30,13 @@ class ProductOfferWriter implements ProductOfferWriterInterface
     /**
      * @param int $idProductOffer
      *
+     * @throws \Spryker\Zed\ProductOffer\Business\Exception\ProductOfferNotFoundException
+     *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
     public function activateProductOfferById(int $idProductOffer): ProductOfferTransfer
     {
-        $productOfferTransfer = $this->findProductOfferById($idProductOffer);
+        $productOfferTransfer = $this->getProductOfferById($idProductOffer);
 
         if ($productOfferTransfer->getIsActive()) {
             return $productOfferTransfer;
@@ -47,11 +50,13 @@ class ProductOfferWriter implements ProductOfferWriterInterface
     /**
      * @param int $idProductOffer
      *
+     * @throws \Spryker\Zed\ProductOffer\Business\Exception\ProductOfferNotFoundException
+     *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
     public function deactivateProductOfferById(int $idProductOffer): ProductOfferTransfer
     {
-        $productOfferTransfer = $this->findProductOfferById($idProductOffer);
+        $productOfferTransfer = $this->getProductOfferById($idProductOffer);
 
         if (!$productOfferTransfer->getIsActive()) {
             return $productOfferTransfer;
@@ -69,9 +74,11 @@ class ProductOfferWriter implements ProductOfferWriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
-    protected function findProductOfferById(int $idProductOffer): ProductOfferTransfer
+    protected function getProductOfferById(int $idProductOffer): ProductOfferTransfer
     {
-        $productOfferTransfer = $this->productOfferRepository->findOneByIdProductOffer($idProductOffer);
+        $productOfferCriteriaFilterTransfer = new ProductOfferCriteriaFilterTransfer();
+        $productOfferCriteriaFilterTransfer->setIdProductOffer($idProductOffer);
+        $productOfferTransfer = $this->productOfferRepository->findOne($productOfferCriteriaFilterTransfer);
 
         if (!$productOfferTransfer) {
             throw new ProductOfferNotFoundException(sprintf(

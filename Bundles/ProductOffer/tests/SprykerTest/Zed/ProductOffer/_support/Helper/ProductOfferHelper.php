@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\ProductOffer\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ProductOfferBuilder;
 use Generated\Shared\Transfer\ProductOfferTransfer;
-use Orm\Zed\ProductOffer\Persistence\SpyProductOffer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -35,24 +34,19 @@ class ProductOfferHelper extends Module
             ->facade()
             ->create($productOfferTransfer);
 
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productOfferTransfer) {
+            $this->createProductOfferPropelQuery()
+                ->filterByIdProductOffer($productOfferTransfer->getIdProductOffer())
+                ->delete();
+        });
+
         return $productOfferTransfer;
     }
 
     /**
-     * @param int $idProductOffer
-     *
-     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOffer|null
+     * @return SpyProductOfferQuery
      */
-    public function findProductOfferById(int $idProductOffer): ?SpyProductOffer
-    {
-        return $this->getProductOfferPropelQuery()
-            ->findOneByIdProductOffer($idProductOffer);
-    }
-
-    /**
-     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
-     */
-    public function getProductOfferPropelQuery(): SpyProductOfferQuery
+    public function createProductOfferPropelQuery(): SpyProductOfferQuery
     {
         return SpyProductOfferQuery::create();
     }

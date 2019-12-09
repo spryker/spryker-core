@@ -12,9 +12,12 @@ use Generated\Shared\DataBuilder\ProductOfferValidityBuilder;
 use Generated\Shared\Transfer\ProductOfferValidityTransfer;
 use Orm\Zed\ProductOfferValidity\Persistence\SpyProductOfferValidity;
 use Orm\Zed\ProductOfferValidity\Persistence\SpyProductOfferValidityQuery;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
 class ProductOfferValidityHelper extends Module
 {
+    use DataCleanupHelperTrait;
+
     /**
      * @param array $seedData
      *
@@ -28,6 +31,10 @@ class ProductOfferValidityHelper extends Module
         $productOfferValidityEntity->fromArray($productOfferValidityTransfer->toArray());
         $productOfferValidityEntity->setFkProductOffer($productOfferValidityTransfer->getIdProductOffer());
         $productOfferValidityEntity->save();
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productOfferValidityEntity) {
+            $productOfferValidityEntity->delete();
+        });
 
         return $productOfferValidityTransfer;
     }
