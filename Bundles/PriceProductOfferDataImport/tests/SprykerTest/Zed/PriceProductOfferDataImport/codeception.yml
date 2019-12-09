@@ -25,4 +25,3 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper
                 - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
-                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
