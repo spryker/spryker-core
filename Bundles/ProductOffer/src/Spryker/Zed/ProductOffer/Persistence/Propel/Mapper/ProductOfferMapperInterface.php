@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductOffer\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOffer;
 
-class ProductOfferMapper implements ProductOfferMapperInterface
+interface ProductOfferMapperInterface
 {
     /**
      * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOffer $productOfferEntity
@@ -21,14 +21,7 @@ class ProductOfferMapper implements ProductOfferMapperInterface
     public function mapProductOfferEntityToProductOfferTransfer(
         SpyProductOffer $productOfferEntity,
         ProductOfferTransfer $productOfferTransfer
-    ): ProductOfferTransfer {
-        $productOfferTransfer = $productOfferTransfer->fromArray(
-            $productOfferEntity->toArray(),
-            true
-        );
-
-        return $productOfferTransfer;
-    }
+    ): ProductOfferTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
@@ -39,11 +32,5 @@ class ProductOfferMapper implements ProductOfferMapperInterface
     public function mapProductOfferTransferToProductOfferEntity(
         ProductOfferTransfer $productOfferTransfer,
         SpyProductOffer $productOfferEntity
-    ): SpyProductOffer {
-        $productOfferEntity->fromArray(
-            $productOfferTransfer->modifiedToArray(false)
-        );
-
-        return $productOfferEntity;
-    }
+    ): SpyProductOffer;
 }

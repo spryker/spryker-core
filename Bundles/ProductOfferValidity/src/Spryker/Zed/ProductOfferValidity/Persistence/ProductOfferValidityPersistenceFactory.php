@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductOfferValidity\Persistence;
 use Orm\Zed\ProductOfferValidity\Persistence\SpyProductOfferValidityQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductOfferValidity\Persistence\Propel\Mapper\ProductOfferValidityMapper;
-use Spryker\Zed\ProductOfferValidity\Persistence\Propel\Mapper\ProductOfferValidityMapperInterface;
 
 /**
  * @method \Spryker\Zed\ProductOfferValidity\ProductOfferValidityConfig getConfig()
@@ -27,9 +26,9 @@ class ProductOfferValidityPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferValidity\Persistence\Propel\Mapper\ProductOfferValidityMapperInterface
+     * @return \Spryker\Zed\ProductOfferValidity\Persistence\Propel\Mapper\ProductOfferValidityMapper
      */
-    public function createProductOfferValidityMapper(): ProductOfferValidityMapperInterface
+    public function createProductOfferValidityMapper(): ProductOfferValidityMapper
     {
         return new ProductOfferValidityMapper();
     }

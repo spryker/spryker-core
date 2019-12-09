@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductOfferValidityTransfer;
 use Orm\Zed\ProductOfferValidity\Persistence\SpyProductOfferValidity;
 use Propel\Runtime\Collection\ObjectCollection;
 
-class ProductOfferValidityMapper implements ProductOfferValidityMapperInterface
+class ProductOfferValidityMapper
 {
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $productOfferValidityEntities
