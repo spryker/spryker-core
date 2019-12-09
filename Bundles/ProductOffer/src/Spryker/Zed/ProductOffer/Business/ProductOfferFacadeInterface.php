@@ -56,29 +56,27 @@ interface ProductOfferFacadeInterface
      * Specification:
      * - Activates product offer by id.
      * - Returns updated ProductOfferTransfer.
+     * - Returns null if product offer was not found.
      *
      * @api
      *
      * @param int $idProductOffer
      *
-     * @throws \Spryker\Zed\ProductOffer\Business\Exception\ProductOfferNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
-    public function activateProductOfferById(int $idProductOffer): ProductOfferTransfer;
+    public function activateProductOfferById(int $idProductOffer): ?ProductOfferTransfer;
 
     /**
      * Specification:
      * - Deactivates product offer by id.
      * - Returns updated ProductOfferTransfer.
+     * - Returns null if product offer was not found.
      *
      * @api
      *
      * @param int $idProductOffer
      *
-     * @throws \Spryker\Zed\ProductOffer\Business\Exception\ProductOfferNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
-    public function deactivateProductOfferById(int $idProductOffer): ProductOfferTransfer;
+    public function deactivateProductOfferById(int $idProductOffer): ?ProductOfferTransfer;
 }

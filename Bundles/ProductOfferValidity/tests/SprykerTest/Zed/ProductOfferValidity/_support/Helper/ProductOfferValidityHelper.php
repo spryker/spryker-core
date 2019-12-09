@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Zed\ProductOfferValidity\Helper;
@@ -32,7 +32,7 @@ class ProductOfferValidityHelper extends Module
         $productOfferValidityEntity->setFkProductOffer($productOfferValidityTransfer->getIdProductOffer());
         $productOfferValidityEntity->save();
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($productOfferValidityEntity) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productOfferValidityEntity): void {
             $productOfferValidityEntity->delete();
         });
 

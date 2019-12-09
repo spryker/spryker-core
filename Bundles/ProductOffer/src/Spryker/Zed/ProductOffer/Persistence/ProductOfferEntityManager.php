@@ -36,4 +36,34 @@ class ProductOfferEntityManager extends AbstractEntityManager implements Product
             ->createPropelProductOfferMapper()
             ->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, $productOfferTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
+     */
+    public function updateProductOffer(ProductOfferTransfer $productOfferTransfer): ?ProductOfferTransfer
+    {
+        $productOfferTransfer->requireIdProductOffer();
+
+        $productOfferEntity = $this->getFactory()
+            ->createProductOfferPropelQuery()
+            ->findOneByIdProductOffer($productOfferTransfer->getIdProductOffer());
+
+        if (!$productOfferEntity) {
+            return null;
+        }
+
+        $productOfferEntity = $this->getFactory()
+            ->createPropelProductOfferMapper()
+            ->mapProductOfferTransferToProductOfferEntity(
+                $productOfferTransfer,
+                $productOfferEntity
+            );
+        $productOfferEntity->save();
+
+        return $this->getFactory()
+            ->createPropelProductOfferMapper()
+            ->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, $productOfferTransfer);
+    }
 }

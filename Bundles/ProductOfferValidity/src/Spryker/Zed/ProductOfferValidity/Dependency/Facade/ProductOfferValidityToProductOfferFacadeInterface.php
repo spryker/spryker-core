@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductOfferValidity\Dependency\Facade;
@@ -14,14 +14,14 @@ interface ProductOfferValidityToProductOfferFacadeInterface
     /**
      * @param int $idProductOffer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
-    public function activateProductOfferById(int $idProductOffer): ProductOfferTransfer;
+    public function activateProductOfferById(int $idProductOffer): ?ProductOfferTransfer;
 
     /**
      * @param int $idProductOffer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
-    public function deactivateProductOfferById(int $idProductOffer): ProductOfferTransfer;
+    public function deactivateProductOfferById(int $idProductOffer): ?ProductOfferTransfer;
 }

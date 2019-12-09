@@ -68,11 +68,9 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
      *
      * @param int $idProductOffer
      *
-     * @throws \Spryker\Zed\ProductOffer\Business\Exception\ProductOfferNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
-    public function activateProductOfferById(int $idProductOffer): ProductOfferTransfer
+    public function activateProductOfferById(int $idProductOffer): ?ProductOfferTransfer
     {
         return $this->getFactory()
             ->createProductOfferWriter()
@@ -86,11 +84,9 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
      *
      * @param int $idProductOffer
      *
-     * @throws \Spryker\Zed\ProductOffer\Business\Exception\ProductOfferNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
-    public function deactivateProductOfferById(int $idProductOffer): ProductOfferTransfer
+    public function deactivateProductOfferById(int $idProductOffer): ?ProductOfferTransfer
     {
         return $this->getFactory()
             ->createProductOfferWriter()

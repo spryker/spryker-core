@@ -23,6 +23,9 @@ class ProductOfferBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductOfferWriter(): ProductOfferWriterInterface
     {
-        return new ProductOfferWriter($this->getRepository());
+        return new ProductOfferWriter(
+            $this->getRepository(),
+            $this->getEntityManager()
+        );
     }
 }

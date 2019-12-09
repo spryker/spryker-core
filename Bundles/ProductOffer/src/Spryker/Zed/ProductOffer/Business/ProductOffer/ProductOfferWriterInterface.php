@@ -14,18 +14,14 @@ interface ProductOfferWriterInterface
     /**
      * @param int $idProductOffer
      *
-     * @throws \Spryker\Zed\ProductOffer\Business\Exception\ProductOfferNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
-    public function activateProductOfferById(int $idProductOffer): ProductOfferTransfer;
+    public function activateProductOfferById(int $idProductOffer): ?ProductOfferTransfer;
 
     /**
      * @param int $idProductOffer
      *
-     * @throws \Spryker\Zed\ProductOffer\Business\Exception\ProductOfferNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
-    public function deactivateProductOfferById(int $idProductOffer): ProductOfferTransfer;
+    public function deactivateProductOfferById(int $idProductOffer): ?ProductOfferTransfer;
 }

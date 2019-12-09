@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\ProductOffer\Business\ProductOffer;
 
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
-use Spryker\Zed\ProductOffer\Business\Exception\ProductOfferNotFoundException;
+use Spryker\Zed\ProductOffer\Persistence\ProductOfferEntityManagerInterface;
 use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface;
 
 class ProductOfferWriter implements ProductOfferWriterInterface
@@ -20,70 +19,47 @@ class ProductOfferWriter implements ProductOfferWriterInterface
     protected $productOfferRepository;
 
     /**
+     * @var \Spryker\Zed\ProductOffer\Persistence\ProductOfferEntityManagerInterface
+     */
+    protected $productOfferEntityManager;
+
+    /**
      * @param \Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface $productOfferRepository
+     * @param \Spryker\Zed\ProductOffer\Persistence\ProductOfferEntityManagerInterface $productOfferEntityManager
      */
-    public function __construct(ProductOfferRepositoryInterface $productOfferRepository)
-    {
+    public function __construct(
+        ProductOfferRepositoryInterface $productOfferRepository,
+        ProductOfferEntityManagerInterface $productOfferEntityManager
+    ) {
         $this->productOfferRepository = $productOfferRepository;
+        $this->productOfferEntityManager = $productOfferEntityManager;
     }
 
     /**
      * @param int $idProductOffer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
-    public function activateProductOfferById(int $idProductOffer): ProductOfferTransfer
+    public function activateProductOfferById(int $idProductOffer): ?ProductOfferTransfer
     {
-        $productOfferTransfer = $this->getProductOfferById($idProductOffer);
+        $productOfferTransfer = new ProductOfferTransfer();
+        $productOfferTransfer->setIdProductOffer($idProductOffer);
+        $productOfferTransfer->setIsActive(true);
 
-        if ($productOfferTransfer->getIsActive()) {
-            return $productOfferTransfer;
-        }
-
-        $productOfferTransfer = $this->productOfferRepository->activateProductOffer($productOfferTransfer);
-
-        return $productOfferTransfer;
+        return $this->productOfferEntityManager->updateProductOffer($productOfferTransfer);
     }
 
     /**
      * @param int $idProductOffer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
-    public function deactivateProductOfferById(int $idProductOffer): ProductOfferTransfer
+    public function deactivateProductOfferById(int $idProductOffer): ?ProductOfferTransfer
     {
-        $productOfferTransfer = $this->getProductOfferById($idProductOffer);
+        $productOfferTransfer = new ProductOfferTransfer();
+        $productOfferTransfer->setIdProductOffer($idProductOffer);
+        $productOfferTransfer->setIsActive(false);
 
-        if (!$productOfferTransfer->getIsActive()) {
-            return $productOfferTransfer;
-        }
-
-        $productOfferTransfer = $this->productOfferRepository->deactivateProductOffer($productOfferTransfer);
-
-        return $productOfferTransfer;
-    }
-
-    /**
-     * @param int $idProductOffer
-     *
-     * @throws \Spryker\Zed\ProductOffer\Business\Exception\ProductOfferNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer
-     */
-    protected function getProductOfferById(int $idProductOffer): ProductOfferTransfer
-    {
-        $productOfferCriteriaFilterTransfer = new ProductOfferCriteriaFilterTransfer();
-        $productOfferCriteriaFilterTransfer->setIdProductOffer($idProductOffer);
-        $productOfferTransfer = $this->productOfferRepository->findOne($productOfferCriteriaFilterTransfer);
-
-        if (!$productOfferTransfer) {
-            throw new ProductOfferNotFoundException(sprintf(
-                'Product offer with ID "%d" not found.',
-                $idProductOffer
-            ));
-        }
-        $productOfferTransfer->requireIdProductOffer();
-
-        return $productOfferTransfer;
+        return $this->productOfferEntityManager->updateProductOffer($productOfferTransfer);
     }
 }
