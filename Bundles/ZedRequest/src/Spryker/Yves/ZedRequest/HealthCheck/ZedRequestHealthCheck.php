@@ -38,12 +38,12 @@ class ZedRequestHealthCheck implements HealthCheckInterface
             /** @var \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer $healthCheckServiceResponseTransfer */
             $healthCheckServiceResponseTransfer = $this->zedRequestClient
                 ->call('/zed-request/gateway/health-check', $healthCheckServiceResponseTransfer);
-
-            return $healthCheckServiceResponseTransfer;
         } catch (Exception $e) {
             return $healthCheckServiceResponseTransfer
                 ->setStatus(false)
                 ->setMessage($e->getMessage());
         }
+
+        return $healthCheckServiceResponseTransfer;
     }
 }

@@ -31,12 +31,18 @@ class HealthCheckCommunicationTester extends Actor
     use _generated\HealthCheckCommunicationTesterActions;
 
     /**
-     * @param bool $isHealthCheckEnabled
-     *
      * @return void
      */
-    public function updateHealthCheckEndpointStatus(bool $isHealthCheckEnabled = false): void
+    public function enableHealthCheckEndpoints(): void
     {
-        $this->setConfig(HealthCheckConstants::HEALTH_CHECK_ENABLED, $isHealthCheckEnabled);
+        $this->setConfig(HealthCheckConstants::HEALTH_CHECK_ENABLED, true);
+    }
+
+    /**
+     * @return void
+     */
+    public function disabledHealthCheckEndpoints(): void
+    {
+        $this->setConfig(HealthCheckConstants::HEALTH_CHECK_ENABLED, true);
     }
 }

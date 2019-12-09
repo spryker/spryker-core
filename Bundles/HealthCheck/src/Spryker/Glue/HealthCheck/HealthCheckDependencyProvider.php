@@ -15,8 +15,6 @@ use Spryker\Glue\Kernel\Container;
  */
 class HealthCheckDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const SERVICE_HEALTH_CHECK = 'SERVICE_HEALTH_CHECK';
-
     public const PLUGINS_HEALTH_CHECK = 'PLUGINS_HEALTH_CHECK';
 
     /**
@@ -26,22 +24,7 @@ class HealthCheckDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container): Container
     {
-        $container = $this->addHealthCheckService($container);
         $container = $this->addHealthCheckPlugins($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function addHealthCheckService(Container $container): Container
-    {
-        $container->set(static::SERVICE_HEALTH_CHECK, function (Container $container) {
-            return $container->getLocator()->healthCheck()->service();
-        });
 
         return $container;
     }

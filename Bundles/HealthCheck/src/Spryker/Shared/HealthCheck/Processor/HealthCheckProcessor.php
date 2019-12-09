@@ -9,7 +9,6 @@ namespace Spryker\Shared\HealthCheck\Processor;
 
 use Generated\Shared\Transfer\HealthCheckRequestTransfer;
 use Generated\Shared\Transfer\HealthCheckResponseTransfer;
-use Spryker\Service\HealthCheck\HealthCheckServiceInterface;
 use Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface;
 use Spryker\Shared\HealthCheck\Validator\ValidatorInterface;
 
@@ -26,9 +25,9 @@ class HealthCheckProcessor implements HealthCheckProcessorInterface
     protected $chainFilter;
 
     /**
-     * @var \Spryker\Service\HealthCheck\HealthCheckServiceInterface
+     * @var \Spryker\Shared\HealthCheck\Processor\ResponseProcessorInterface
      */
-    protected $healthCheckService;
+    protected $responseProcessor;
 
     /**
      * @var \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[]
@@ -38,18 +37,18 @@ class HealthCheckProcessor implements HealthCheckProcessorInterface
     /**
      * @param \Spryker\Shared\HealthCheck\Validator\ValidatorInterface $validator
      * @param \Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface $chainFilter
-     * @param \Spryker\Service\HealthCheck\HealthCheckServiceInterface $healthCheckService
+     * @param \Spryker\Shared\HealthCheck\Processor\ResponseProcessorInterface $responseProcessor
      * @param \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[] $healthCheckPlugins
      */
     public function __construct(
         ValidatorInterface $validator,
         ChainFilterInterface $chainFilter,
-        HealthCheckServiceInterface $healthCheckService,
+        ResponseProcessorInterface $responseProcessor,
         array $healthCheckPlugins
     ) {
         $this->validator = $validator;
         $this->chainFilter = $chainFilter;
-        $this->healthCheckService = $healthCheckService;
+        $this->responseProcessor = $responseProcessor;
         $this->healthCheckPlugins = $healthCheckPlugins;
     }
 
@@ -64,7 +63,7 @@ class HealthCheckProcessor implements HealthCheckProcessorInterface
         $isValidaRequestedServices = $this->validator->validate($this->healthCheckPlugins, $healthCheckRequestTransfer);
 
         if ($isValidaRequestedServices === false) {
-            return $this->healthCheckService->processNonExistingServiceName();
+            return $this->responseProcessor->processNonExistingServiceName();
         }
 
         $filteredHealthCheckPlugins = $this->chainFilter->filter($this->healthCheckPlugins, $healthCheckRequestTransfer);
@@ -105,6 +104,6 @@ class HealthCheckProcessor implements HealthCheckProcessorInterface
             $healthCheckServiceResponseTransfers[] = $healthCheckServiceResponseTransfer;
         }
 
-        return $this->healthCheckService->processOutput($healthCheckServiceResponseTransfers);
+        return $this->responseProcessor->processOutput($healthCheckServiceResponseTransfers);
     }
 }

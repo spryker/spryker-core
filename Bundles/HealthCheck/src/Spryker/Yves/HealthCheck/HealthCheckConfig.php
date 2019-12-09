@@ -9,6 +9,16 @@ namespace Spryker\Yves\HealthCheck;
 
 use Spryker\Yves\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\HealthCheck\HealthCheckConfig getSharedConfig()
+ */
 class HealthCheckConfig extends AbstractBundleConfig
 {
+    /**
+     * @return bool
+     */
+    public function isHealthCheckEnabled(): bool
+    {
+        return $this->getSharedConfig()->isHealthCheckEnabled();
+    }
 }

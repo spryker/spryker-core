@@ -16,4 +16,12 @@ class HealthCheckConfig extends AbstractBundleConfig
 {
     public const RESOURCE_HEALTH_CHECK = 'health-check';
     public const CONTROLLER_HEALTH_CHECK = 'health-check-resource';
+
+    /**
+     * @return bool
+     */
+    public function isHealthCheckEnabled(): bool
+    {
+        return $this->getSharedConfig()->isHealthCheckEnabled();
+    }
 }

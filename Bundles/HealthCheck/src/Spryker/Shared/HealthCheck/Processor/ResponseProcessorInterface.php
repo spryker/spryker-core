@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\HealthCheck;
+namespace Spryker\Shared\HealthCheck\Processor;
 
 use Generated\Shared\Transfer\HealthCheckResponseTransfer;
 
-interface HealthCheckServiceInterface
+interface ResponseProcessorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer[] $healthCheckServiceResponseTransfers

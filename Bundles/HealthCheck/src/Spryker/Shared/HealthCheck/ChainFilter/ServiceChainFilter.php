@@ -12,16 +12,16 @@ use Generated\Shared\Transfer\HealthCheckRequestTransfer;
 class ServiceChainFilter implements ChainFilterInterface, ChainFilterAddInterface
 {
     /**
-     * @var \Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface[]
+     * @var \Spryker\Shared\HealthCheck\ChainFilter\FilterInterface[]
      */
     protected $filters = [];
 
     /**
-     * @param \Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface $filter
+     * @param \Spryker\Shared\HealthCheck\ChainFilter\FilterInterface $filter
      *
      * @return $this
      */
-    public function addFilter(ChainFilterInterface $filter)
+    public function addFilter(FilterInterface $filter)
     {
         $this->filters[] = $filter;
 
@@ -36,8 +36,8 @@ class ServiceChainFilter implements ChainFilterInterface, ChainFilterAddInterfac
      */
     public function filter(array $healthCheckPlugins, HealthCheckRequestTransfer $healthCheckRequestTransfer): array
     {
-        foreach ($this->filters as $chainFilter) {
-            $healthCheckPlugins = $chainFilter->filter($healthCheckPlugins, $healthCheckRequestTransfer);
+        foreach ($this->filters as $filter) {
+            $healthCheckPlugins = $filter->filter($healthCheckPlugins, $healthCheckRequestTransfer);
         }
 
         return $healthCheckPlugins;

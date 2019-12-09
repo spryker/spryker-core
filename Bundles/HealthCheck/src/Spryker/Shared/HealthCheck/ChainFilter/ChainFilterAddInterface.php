@@ -10,9 +10,9 @@ namespace Spryker\Shared\HealthCheck\ChainFilter;
 interface ChainFilterAddInterface
 {
     /**
-     * @param \Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface $chainFilter
+     * @param \Spryker\Shared\HealthCheck\ChainFilter\FilterInterface $filter
      *
      * @return $this
      */
-    public function addFilter(ChainFilterInterface $chainFilter);
+    public function addFilter(FilterInterface $filter);
 }

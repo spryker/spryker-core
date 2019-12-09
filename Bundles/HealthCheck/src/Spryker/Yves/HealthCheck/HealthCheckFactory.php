@@ -7,16 +7,21 @@
 
 namespace Spryker\Yves\HealthCheck;
 
-use Spryker\Service\HealthCheck\HealthCheckServiceInterface;
 use Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface;
 use Spryker\Shared\HealthCheck\ChainFilter\Filter\ServiceNameFilter;
+use Spryker\Shared\HealthCheck\ChainFilter\FilterInterface;
 use Spryker\Shared\HealthCheck\ChainFilter\ServiceChainFilter;
 use Spryker\Shared\HealthCheck\Processor\HealthCheckProcessor;
 use Spryker\Shared\HealthCheck\Processor\HealthCheckProcessorInterface;
+use Spryker\Shared\HealthCheck\Processor\ResponseProcessor;
+use Spryker\Shared\HealthCheck\Processor\ResponseProcessorInterface;
 use Spryker\Shared\HealthCheck\Validator\ServiceNameValidator;
 use Spryker\Shared\HealthCheck\Validator\ValidatorInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 
+/**
+ * @method \Spryker\Yves\HealthCheck\HealthCheckConfig getConfig()
+ */
 class HealthCheckFactory extends AbstractFactory
 {
     /**
@@ -27,7 +32,7 @@ class HealthCheckFactory extends AbstractFactory
         return new HealthCheckProcessor(
             $this->createServiceNameValidator(),
             $this->createServiceChainFilter(),
-            $this->getHealthCheckService(),
+            $this->createResponseProcessor(),
             $this->getHealthCheckPlugins()
         );
     }
@@ -53,19 +58,21 @@ class HealthCheckFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface
+     * @return \Spryker\Shared\HealthCheck\ChainFilter\FilterInterface
      */
-    public function createServiceNameFilter(): ChainFilterInterface
+    public function createServiceNameFilter(): FilterInterface
     {
         return new ServiceNameFilter();
     }
 
     /**
-     * @return \Spryker\Service\HealthCheck\HealthCheckServiceInterface
+     * @return \Spryker\Shared\HealthCheck\Processor\ResponseProcessorInterface
      */
-    public function getHealthCheckService(): HealthCheckServiceInterface
+    public function createResponseProcessor(): ResponseProcessorInterface
     {
-        return $this->getProvidedDependency(HealthCheckDependencyProvider::SERVICE_HEALTH_CHECK);
+        return new ResponseProcessor(
+            $this->getConfig()->isHealthCheckEnabled()
+        );
     }
 
     /**

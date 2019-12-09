@@ -29,7 +29,7 @@ class HealthCheckCest
      */
     public function testForbiddenHealthCheckStatusResponse(HealthCheckCommunicationTester $i): void
     {
-        $i->updateHealthCheckEndpointStatus();
+        $i->disabledHealthCheckEndpoints();
         $i->amOnPage(HealthCheckPage::URL_INDEX);
         $i->seeResponseCodeIs(403);
     }
@@ -41,7 +41,7 @@ class HealthCheckCest
      */
     public function testSuccessHealthCheckStatusResponse(HealthCheckCommunicationTester $i): void
     {
-        $i->updateHealthCheckEndpointStatus(true);
+        $i->enableHealthCheckEndpoints();
         $i->amOnPage(HealthCheckPage::URL_INDEX);
         $i->seeResponseCodeIs(200);
     }
@@ -53,7 +53,7 @@ class HealthCheckCest
      */
     public function testSuccessHealthCheckStatusResponseForWithFilter(HealthCheckCommunicationTester $i): void
     {
-        $i->updateHealthCheckEndpointStatus(true);
+        $i->enableHealthCheckEndpoints();
         $i->amOnPage(HealthCheckPage::URL_INDEX_SERVICES);
         $i->seeResponseCodeIs(400);
     }

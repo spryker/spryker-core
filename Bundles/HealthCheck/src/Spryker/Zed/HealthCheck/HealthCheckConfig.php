@@ -14,4 +14,11 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
  */
 class HealthCheckConfig extends AbstractBundleConfig
 {
+    /**
+     * @return bool
+     */
+    public function isHealthCheckEnabled(): bool
+    {
+        return $this->getSharedConfig()->isHealthCheckEnabled();
+    }
 }

@@ -8,9 +8,9 @@
 namespace Spryker\Shared\HealthCheck\ChainFilter\Filter;
 
 use Generated\Shared\Transfer\HealthCheckRequestTransfer;
-use Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface;
+use Spryker\Shared\HealthCheck\ChainFilter\FilterInterface;
 
-class ServiceNameFilter implements ChainFilterInterface
+class ServiceNameFilter implements FilterInterface
 {
     /**
      * @param \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[] $healthCheckPlugins

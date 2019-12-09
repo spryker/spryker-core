@@ -5,24 +5,36 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\HealthCheck\Processor;
+namespace Spryker\Shared\HealthCheck\Processor;
 
 use Generated\Shared\Transfer\HealthCheckResponseTransfer;
-use Spryker\Service\HealthCheck\HealthCheckConfig;
+use Symfony\Component\HttpFoundation\Response;
 
 class ResponseProcessor implements ResponseProcessorInterface
 {
-    /**
-     * @var \Spryker\Service\HealthCheck\HealthCheckConfig
-     */
-    protected $healthCheckConfig;
+    protected const HEALTH_CHECK_SUCCESS_STATUS_CODE = Response::HTTP_OK;
+    protected const HEALTH_CHECK_SUCCESS_STATUS_MESSAGE = 'healthy';
+
+    protected const HEALTH_CHECK_UNAVAILABLE_STATUS_CODE = Response::HTTP_SERVICE_UNAVAILABLE;
+    protected const HEALTH_CHECK_UNAVAILABLE_STATUS_MESSAGE = 'unhealthy';
+
+    protected const HEALTH_CHECK_FORBIDDEN_STATUS_CODE = Response::HTTP_FORBIDDEN;
+    protected const HEALTH_CHECK_FORBIDDEN_STATUS_MESSAGE = 'HealthCheck endpoints are disabled for all applications.';
+
+    protected const HEALTH_CHECK_BAD_REQUEST_STATUS_CODE = Response::HTTP_BAD_REQUEST;
+    protected const HEALTH_CHECK_BAD_REQUEST_STATUS_MESSAGE = 'Requested services not found.';
 
     /**
-     * @param \Spryker\Service\HealthCheck\HealthCheckConfig $healthCheckConfig
+     * @var bool
      */
-    public function __construct(HealthCheckConfig $healthCheckConfig)
+    protected $isHealthCheckEnabled;
+
+    /**
+     * @param bool $isHealthCheckEnabled
+     */
+    public function __construct(bool $isHealthCheckEnabled)
     {
-        $this->healthCheckConfig = $healthCheckConfig;
+        $this->isHealthCheckEnabled = $isHealthCheckEnabled;
     }
 
     /**
@@ -32,7 +44,7 @@ class ResponseProcessor implements ResponseProcessorInterface
      */
     public function processOutput(array $healthCheckServiceResponseTransfers): HealthCheckResponseTransfer
     {
-        if ($this->healthCheckConfig->isHealthCheckEnabled() === false) {
+        if ($this->isHealthCheckEnabled === false) {
             return $this->createForbiddenHealthCheckResponseTransfer();
         }
 
@@ -48,8 +60,8 @@ class ResponseProcessor implements ResponseProcessorInterface
     public function processNonExistingServiceName(): HealthCheckResponseTransfer
     {
         return (new HealthCheckResponseTransfer())
-            ->setMessage($this->healthCheckConfig->getBadRequestHealthCheckStatusMessage())
-            ->setStatusCode($this->healthCheckConfig->getBadRequestHealthCheckStatusCode());
+            ->setMessage(static::HEALTH_CHECK_BAD_REQUEST_STATUS_MESSAGE)
+            ->setStatusCode(static::HEALTH_CHECK_BAD_REQUEST_STATUS_CODE);
     }
 
     /**
@@ -60,8 +72,8 @@ class ResponseProcessor implements ResponseProcessorInterface
     protected function createHealthCheckResponseTransfer(array $healthCheckServiceResponseTransfers): HealthCheckResponseTransfer
     {
         $healthCheckResponseTransfer = (new HealthCheckResponseTransfer())
-            ->setStatus($this->healthCheckConfig->getSuccessHealthCheckStatusMessage())
-            ->setStatusCode($this->healthCheckConfig->getSuccessHealthCheckStatusCode());
+            ->setStatus(static::HEALTH_CHECK_SUCCESS_STATUS_MESSAGE)
+            ->setStatusCode(static::HEALTH_CHECK_SUCCESS_STATUS_CODE);
 
         foreach ($healthCheckServiceResponseTransfers as $healthCheckServiceResponseTransfer) {
             $healthCheckResponseTransfer->addHealthCheckServiceResponse($healthCheckServiceResponseTransfer);
@@ -93,8 +105,8 @@ class ResponseProcessor implements ResponseProcessorInterface
     protected function createForbiddenHealthCheckResponseTransfer(): HealthCheckResponseTransfer
     {
         return (new HealthCheckResponseTransfer())
-            ->setStatusCode($this->healthCheckConfig->getForbiddenHealthCheckStatusCode())
-            ->setMessage($this->healthCheckConfig->getForbiddenHealthCheckStatusMessage());
+            ->setStatusCode(static::HEALTH_CHECK_FORBIDDEN_STATUS_CODE)
+            ->setMessage(static::HEALTH_CHECK_FORBIDDEN_STATUS_MESSAGE);
     }
 
     /**
@@ -105,7 +117,7 @@ class ResponseProcessor implements ResponseProcessorInterface
     protected function updateHealthCheckResponseTransferWithUnavailableHealthCheckStatus(HealthCheckResponseTransfer $healthCheckResponseTransfer): HealthCheckResponseTransfer
     {
         return $healthCheckResponseTransfer
-            ->setStatusCode($this->healthCheckConfig->getUnavailableHealthCheckStatusCode())
-            ->setStatus($this->healthCheckConfig->getUnavailableHealthCheckStatusMessage());
+            ->setStatusCode(static::HEALTH_CHECK_UNAVAILABLE_STATUS_CODE)
+            ->setStatus(static::HEALTH_CHECK_UNAVAILABLE_STATUS_MESSAGE);
     }
 }
