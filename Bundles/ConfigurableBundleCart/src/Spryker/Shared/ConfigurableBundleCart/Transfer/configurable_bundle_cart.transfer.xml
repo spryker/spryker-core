@@ -21,6 +21,11 @@
         <property name="quantityPerSlot" type="int"/>
     </transfer>
 
+    <transfer name="ConfiguredBundleValidationRequest">
+        <property name="templateUuid" type="string"/>
+        <property name="slotUuids" type="string[]" singular="slotUuid"/>
+    </transfer>
+
     <transfer name="Quote">
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
