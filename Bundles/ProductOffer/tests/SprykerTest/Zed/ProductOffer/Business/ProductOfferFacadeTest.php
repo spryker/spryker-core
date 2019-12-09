@@ -48,7 +48,7 @@ class ProductOfferFacadeTest extends Unit
     {
         // Arrange
         $productOfferTransfer = $this->tester->haveProductOffer([
-            ProductOfferTransfer::FK_MERCHANT => $this->tester->haveMerchant()->getIdMerchant()
+            ProductOfferTransfer::FK_MERCHANT => $this->tester->haveMerchant()->getIdMerchant(),
         ]);
         $productOfferCriteriaFilterTransfer = new ProductOfferCriteriaFilterTransfer();
         $productOfferCriteriaFilterTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
@@ -67,7 +67,7 @@ class ProductOfferFacadeTest extends Unit
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
         $productOfferTransfer = (new ProductOfferBuilder([
-            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant()
+            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
         ]))->build();
         $productOfferTransfer->setIdProductOffer(null);
 

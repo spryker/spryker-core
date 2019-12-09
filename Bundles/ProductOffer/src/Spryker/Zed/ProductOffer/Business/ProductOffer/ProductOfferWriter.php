@@ -30,8 +30,6 @@ class ProductOfferWriter implements ProductOfferWriterInterface
     /**
      * @param int $idProductOffer
      *
-     * @throws \Spryker\Zed\ProductOffer\Business\Exception\ProductOfferNotFoundException
-     *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
     public function activateProductOfferById(int $idProductOffer): ProductOfferTransfer
@@ -49,8 +47,6 @@ class ProductOfferWriter implements ProductOfferWriterInterface
 
     /**
      * @param int $idProductOffer
-     *
-     * @throws \Spryker\Zed\ProductOffer\Business\Exception\ProductOfferNotFoundException
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */

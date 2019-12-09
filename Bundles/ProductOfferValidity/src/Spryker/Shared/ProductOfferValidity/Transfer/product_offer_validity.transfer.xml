@@ -16,4 +16,8 @@
     <transfer name="ProductOffer">
     </transfer>
 
+    <transfer name="ProductOfferCriteriaFilter">
+        <property name="idProductOffer" type="int"/>
+    </transfer>
+
 </transfers>

@@ -28,6 +28,7 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 class ProductOfferValidityFacadeTest extends Unit
 {
     use LocatorHelperTrait;
+
     /**
      * @var \SprykerTest\Zed\ProductOfferValidity\ProductOfferValidityBusinessTester
      */
