@@ -15,7 +15,6 @@
     "spryker/money": "^2.0.0",
     "spryker/product-page-search-extension": "^1.0.0",
     "spryker/search-extension": "^1.0.0",
-    "spryker/silex": "^2.0.0",
     "spryker/store": "^1.1.0",
     "spryker/symfony": "^3.0.0",
     "spryker/twig": "^3.0.0",

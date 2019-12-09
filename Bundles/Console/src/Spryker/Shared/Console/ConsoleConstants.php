@@ -20,4 +20,13 @@ interface ConsoleConstants
      * @api
      */
     public const CATCH_EXCEPTIONS = 'CONSOLE:CATCH_EXCEPTIONS';
+
+    /**
+     * Specification:
+     * - If true, the console application is in debug mode.
+     * - If false, the console application will run in normal mode.
+     *
+     * @api
+     */
+    public const IS_DEBUG_ENABLED = 'CONSOLE:IS_DEBUG_ENABLED';
 }

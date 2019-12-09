@@ -30,7 +30,7 @@ class RouterHelper extends Module
     protected const SERVICE_ROUTER = 'routers';
 
     /**
-     * @var \Spryker\Yves\Router\Route\RouteCollection
+     * @var \Spryker\Yves\Router\Route\RouteCollection|null
      */
     protected $routeCollection;
 
@@ -117,6 +117,6 @@ class RouterHelper extends Module
      */
     public function _after(TestInterface $test): void
     {
-        $this->routeCollection;
+        $this->routeCollection = null;
     }
 }

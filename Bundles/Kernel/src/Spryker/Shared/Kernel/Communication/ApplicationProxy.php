@@ -16,7 +16,7 @@ use Symfony\Cmf\Component\Routing\ChainRouter;
 use Symfony\Component\Routing\RouterInterface;
 
 if (class_exists(Application::class)) {
-    class ApplicationManInTheMiddle extends Application
+    class ApplicationProxy extends Application
     {
         use TranslationTrait;
         use TwigTrait;
@@ -59,8 +59,8 @@ if (class_exists(Application::class)) {
         }
 
         /**
-         * @deprecated Use `\Spryker\Zed\Router\RouterDependencyProvider::getRouterPlugins()` instead.
-         * @deprecated Use `\Spryker\Yves\Router\RouterDependencyProvider::getRouterPlugins()` instead.
+         * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::getRouterPlugins()} instead.
+         * @deprecated Use {@link \Spryker\Yves\Router\RouterDependencyProvider::getRouterPlugins()} instead.
          *
          * @param \Symfony\Component\Routing\RouterInterface $router The router
          * @param int $priority The priority of the router
@@ -78,7 +78,7 @@ if (class_exists(Application::class)) {
         }
     }
 } else {
-    class ApplicationManInTheMiddle
+    class ApplicationProxy
     {
     }
 }

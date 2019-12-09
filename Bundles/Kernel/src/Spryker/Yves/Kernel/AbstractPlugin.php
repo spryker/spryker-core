@@ -8,9 +8,9 @@
 namespace Spryker\Yves\Kernel;
 
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
+use Spryker\Shared\Kernel\Container\GlobalContainer;
 use Spryker\Yves\Kernel\ClassResolver\Config\BundleConfigResolver;
 use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
-use Spryker\Yves\Kernel\Plugin\Pimple;
 
 abstract class AbstractPlugin
 {
@@ -32,7 +32,7 @@ abstract class AbstractPlugin
     private $config;
 
     /**
-     * @var \Spryker\Service\Container\Container|null
+     * @var \Spryker\Service\Container\ContainerInterface|null
      */
     protected static $container;
 
@@ -150,12 +150,12 @@ abstract class AbstractPlugin
     }
 
     /**
-     * @return \Spryker\Service\Container\Container
+     * @return \Spryker\Service\Container\ContainerInterface
      */
     protected function getApplication()
     {
         if (static::$container === null) {
-            static::$container = (new Pimple())->getApplication();
+            static::$container = (new GlobalContainer())->getContainer();
         }
 
         return static::$container;

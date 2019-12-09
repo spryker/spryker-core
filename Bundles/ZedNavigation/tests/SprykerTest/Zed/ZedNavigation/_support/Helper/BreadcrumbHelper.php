@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ZedNavigation\Helper;
 
 use Codeception\Module;
 use SprykerTest\Shared\Testify\Helper\ZedBootstrap;
+use SprykerTest\Zed\Testify\Helper\ApplicationHelper;
 
 class BreadcrumbHelper extends Module
 {
@@ -37,17 +38,11 @@ class BreadcrumbHelper extends Module
      */
     public function seeBreadcrumbNavigation(string $breadcrumb): void
     {
-        if ($this->isPresentationSuite) {
-            $this->checkWithWebdriver($breadcrumb);
-        }
-
-        if (!$this->isPresentationSuite) {
-            $this->checkWithFramework($breadcrumb);
-        }
+        $this->checkBreadcrumbNavigation($breadcrumb);
     }
 
     /**
-     * @return \Codeception\Module|\Codeception\Module\WebDriver|\SprykerTest\Shared\Testify\Helper\ZedBootstrap
+     * @return \Codeception\Module|\Codeception\Module\WebDriver|\SprykerTest\Zed\Testify\Helper\ApplicationHelper|\SprykerTest\Shared\Testify\Helper\ZedBootstrap
      */
     private function getDriver()
     {
@@ -55,27 +50,11 @@ class BreadcrumbHelper extends Module
             return $this->getModule('WebDriver');
         }
 
+        if ($this->hasModule('\\' . ApplicationHelper::class)) {
+            return $this->getModule('\\' . ApplicationHelper::class);
+        }
+
         return $this->getModule('\\' . ZedBootstrap::class);
-    }
-
-    /**
-     * @param string $breadcrumb
-     *
-     * @return void
-     */
-    private function checkWithWebdriver(string $breadcrumb): void
-    {
-        $this->checkBreadcrumbNavigation($breadcrumb);
-    }
-
-    /**
-     * @param string $breadcrumb
-     *
-     * @return void
-     */
-    private function checkWithFramework(string $breadcrumb): void
-    {
-        $this->checkBreadcrumbNavigation($breadcrumb);
     }
 
     /**

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Kernel\Communication;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Kernel\ClassResolver\Communication\CommunicationFactoryResolver;
 use Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigResolver;
 use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
@@ -18,16 +17,12 @@ use Spryker\Zed\Kernel\RepositoryResolverAwareTrait;
 abstract class AbstractPlugin
 {
     use RepositoryResolverAwareTrait;
+    use FactoryResolverAwareTrait;
 
     /**
      * @var \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     private $facade;
-
-    /**
-     * @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
-     */
-    private $factory;
 
     /**
      * @var \Spryker\Zed\Kernel\AbstractBundleConfig
@@ -89,37 +84,6 @@ abstract class AbstractPlugin
         $this->factory = $factory;
 
         return $this;
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
-     */
-    protected function getFactory()
-    {
-        if ($this->factory === null) {
-            $this->factory = $this->resolveFactory();
-        }
-
-        return $this->factory;
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
-     */
-    private function resolveFactory()
-    {
-        /** @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory $factory */
-        $factory = $this->getFactoryResolver()->resolve($this);
-
-        return $factory;
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\ClassResolver\Communication\CommunicationFactoryResolver
-     */
-    private function getFactoryResolver()
-    {
-        return new CommunicationFactoryResolver();
     }
 
     /**

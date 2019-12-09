@@ -9,7 +9,6 @@ namespace Spryker\Yves\ProductReview\Twig;
 
 use Spryker\Client\ProductReview\ProductReviewClientInterface;
 use Spryker\Shared\Twig\TwigExtension;
-use Spryker\Yves\Kernel\Application;
 use Twig\Environment;
 use Twig\TwigFunction;
 
@@ -24,18 +23,18 @@ class ProductAbstractReviewTwigExtension extends TwigExtension
     protected $productReviewClient;
 
     /**
-     * @var \Spryker\Yves\Kernel\Application
+     * @var string
      */
-    protected $application;
+    protected $locale;
 
     /**
      * @param \Spryker\Client\ProductReview\ProductReviewClientInterface $productReviewClient
-     * @param \Spryker\Yves\Kernel\Application $application
+     * @param string $locale
      */
-    public function __construct(ProductReviewClientInterface $productReviewClient, Application $application)
+    public function __construct(ProductReviewClientInterface $productReviewClient, string $locale)
     {
         $this->productReviewClient = $productReviewClient;
-        $this->application = $application;
+        $this->locale = $locale;
     }
 
     /**
@@ -96,7 +95,7 @@ class ProductAbstractReviewTwigExtension extends TwigExtension
      */
     protected function getLocale()
     {
-        return $this->application['locale'];
+        return $this->locale;
     }
 
     /**

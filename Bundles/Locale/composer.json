@@ -31,6 +31,7 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Yves\\Locale\\Helper\\": "tests/SprykerTest/Yves/Locale/_support/Helper/",
       "SprykerTest\\Zed\\Locale\\Helper\\": "tests/SprykerTest/Zed/Locale/_support/Helper/"
     }
   },

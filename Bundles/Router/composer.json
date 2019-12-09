@@ -17,19 +17,18 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/event-dispatcher": "*",
-    "spryker/silex": "*",
     "spryker/testify": "*",
     "spryker/util-text": "*"
   },
   "suggest": {
     "spryker/event-dispatcher": "If you want to use the RouterLocaleEventDispatcher plugin.",
-    "spryker/silex": "Deprecated dependency try to not use it anymore.",
     "spryker/util-text": "If you want to use the RouterEnhancer plugins."
   },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Yves\\Router\\Helper\\": "tests/SprykerTest/Yves/Router/_support/Helper/"
+      "SprykerTest\\Yves\\Router\\Helper\\": "tests/SprykerTest/Yves/Router/_support/Helper/",
+      "SprykerTest\\Zed\\Router\\Helper\\": "tests/SprykerTest/Zed/Router/_support/Helper/"
     }
   },
   "autoload-dev": {

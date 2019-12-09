@@ -10,7 +10,6 @@
     "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.3.0",
     "spryker/messenger-extension": "^1.0.0",
-    "spryker/silex": "^2.2.0",
     "spryker/symfony": "^3.0.0",
     "spryker/translator-extension": "^1.0.0",
     "spryker/twig": "^3.4.0",
@@ -21,6 +20,7 @@
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
     "spryker/installer": "*",
+    "spryker/silex": "^2.2.0",
     "spryker/testify": "*"
   },
   "suggest": {

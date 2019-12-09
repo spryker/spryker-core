@@ -7,48 +7,17 @@
 
 namespace SprykerTest\Yves\EventDispatcher\Helper;
 
-use Codeception\Module;
 use Codeception\Stub;
-use Codeception\TestInterface;
-use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
 use Spryker\Yves\EventDispatcher\EventDispatcherFactory;
 use Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin;
+use SprykerTest\Shared\EventDispatcher\Helper\AbstractEventDispatcherHelper;
 use SprykerTest\Yves\Testify\Helper\ApplicationHelperTrait;
 use SprykerTest\Yves\Testify\Helper\FactoryHelperTrait;
 
-class EventDispatcherHelper extends Module
+class EventDispatcherHelper extends AbstractEventDispatcherHelper
 {
     use ApplicationHelperTrait;
     use FactoryHelperTrait;
-
-    protected const MODULE_NAME = 'EventDispatcher';
-
-    /**
-     * @var \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface[]
-     */
-    protected $eventDispatcherPlugins = [];
-
-    /**
-     * @param \Codeception\TestInterface $test
-     *
-     * @return void
-     */
-    public function _before(TestInterface $test): void
-    {
-        $this->getApplicationHelper()->addApplicationPlugin(
-            $this->getEventDispatcherApplicationPluginStub()
-        );
-    }
-
-    /**
-     * @param \Codeception\TestInterface $test
-     *
-     * @return void
-     */
-    public function _after(TestInterface $test): void
-    {
-        $this->eventDispatcherPlugins = [];
-    }
 
     /**
      * @return \Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin
@@ -63,18 +32,6 @@ class EventDispatcherHelper extends Module
         ]);
 
         return $eventDispatcherApplicationPlugin;
-    }
-
-    /**
-     * @param \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface $eventDispatcherPlugin
-     *
-     * @return $this
-     */
-    public function addEventDispatcherPlugin(EventDispatcherPluginInterface $eventDispatcherPlugin)
-    {
-        $this->eventDispatcherPlugins[] = $eventDispatcherPlugin;
-
-        return $this;
     }
 
     /**

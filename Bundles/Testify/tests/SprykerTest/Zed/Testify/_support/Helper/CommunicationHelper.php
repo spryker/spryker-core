@@ -15,8 +15,12 @@ use Exception;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Testify\Locator\Business\BusinessLocator as Locator;
 use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 
+/**
+ * @deprecated Use {@link \SprykerTest\Zed\Testify\Helper\Communication\CommunicationHelper} instead.
+ */
 class CommunicationHelper extends Module
 {
     protected const COMMUNICATION_FACTORY_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\Communication\%3$sCommunicationFactory';
@@ -52,6 +56,14 @@ class CommunicationHelper extends Module
         $moduleName = lcfirst($namespaceParts[2]);
 
         return $this->getLocator()->$moduleName()->facade();
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\LocatorLocatorInterface|\Generated\Zed\Ide\AutoCompletion|\Generated\Service\Ide\AutoCompletion
+     */
+    public function getLocator()
+    {
+        return new Locator();
     }
 
     /**

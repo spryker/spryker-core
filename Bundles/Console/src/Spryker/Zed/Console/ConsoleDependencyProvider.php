@@ -49,6 +49,21 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function provideCommunicationLayerDependencies(Container $container)
+    {
+        $container = $this->addCommands($container);
+        $container = $this->addEventSubscriber($container);
+        $container = $this->addApplicationPlugins($container);
+        $container = $this->addConsoleHookPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addCommands(Container $container)
     {
         $container->set(static::COMMANDS, function (Container $container) {

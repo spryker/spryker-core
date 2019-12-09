@@ -69,7 +69,10 @@ use Spryker\Glue\GlueApplication\Serialize\Encoder\EncoderInterface;
 use Spryker\Glue\GlueApplication\Serialize\Encoder\JsonEncoder;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Shared\Kernel\Communication\Application;
+use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\Application\Application as ApplicationApplication;
+use Spryker\Shared\Application\ApplicationInterface;
+use Spryker\Shared\Kernel\Container\ContainerProxy;
 
 /**
  * @method \Spryker\Glue\GlueApplication\GlueApplicationConfig getConfig()
@@ -391,9 +394,9 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Communication\Application
+     * @return \Spryker\Service\Container\ContainerInterface
      */
-    public function getGlueApplication(): Application
+    public function getGlueApplication(): ContainerInterface
     {
         return $this->getProvidedDependency(GlueApplicationDependencyProvider::APPLICATION_GLUE);
     }
@@ -484,5 +487,29 @@ class GlueApplicationFactory extends AbstractFactory
     public function getRestUserFinderPlugins(): array
     {
         return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_REST_USER_FINDER);
+    }
+
+    /**
+     * @return \Spryker\Shared\Application\ApplicationInterface
+     */
+    public function createApplication(): ApplicationInterface
+    {
+        return new ApplicationApplication($this->createServiceContainer(), $this->getApplicationPlugins());
+    }
+
+    /**
+     * @return \Spryker\Service\Container\ContainerInterface
+     */
+    public function createServiceContainer(): ContainerInterface
+    {
+        return new ContainerProxy(['logger' => null, 'debug' => $this->getConfig()->isDebugModeEnabled(), 'charset' => 'UTF-8']);
+    }
+
+    /**
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     */
+    public function getApplicationPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_APPLICATION);
     }
 }

@@ -10,6 +10,6 @@ namespace Spryker\Shared\Kernel\Communication;
 /**
  * Deprecated: Use {@link \Spryker\Shared\Application\Application} instead.
  */
-class Application extends ApplicationManInTheMiddle
+class Application extends ApplicationProxy
 {
 }

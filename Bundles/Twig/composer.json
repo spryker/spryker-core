@@ -20,6 +20,7 @@
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/event-dispatcher": "*",
+    "spryker/gui": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
@@ -31,7 +32,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\Twig\\Helper\\": "tests/SprykerTest/Zed/Twig/_support/Helper/"
     }
   },
   "autoload-dev": {
