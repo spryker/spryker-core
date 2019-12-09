@@ -10,42 +10,12 @@ namespace Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
-use Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface;
-use Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
 class GuestCartRestResponseBuilder extends AbstractCartRestResponseBuilder implements GuestCartRestResponseBuilderInterface
 {
-    protected const PATTERN_GUEST_CART_ITEM_RESOURCE_SELF_LINK = '%s/%s/%s/%s';
-    protected const KEY_REST_RESOURCE_SELF_LINK = 'self';
-
-    /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface
-     */
-    protected $cartsResourceMapper;
-
-    /**
-     * @var \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface
-     */
-    protected $cartItemsResourceMapper;
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartsResourceMapperInterface $cartsResourceMapper
-     * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartItemsResourceMapperInterface $cartItemsResourceMapper
-     */
-    public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder,
-        CartsResourceMapperInterface $cartsResourceMapper,
-        CartItemsResourceMapperInterface $cartItemsResourceMapper
-    ) {
-        parent::__construct($restResourceBuilder, $cartsResourceMapper);
-        $this->cartsResourceMapper = $cartsResourceMapper;
-        $this->cartItemsResourceMapper = $cartItemsResourceMapper;
-    }
-
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
@@ -65,17 +35,19 @@ class GuestCartRestResponseBuilder extends AbstractCartRestResponseBuilder imple
         $cartResource = $this->restResourceBuilder->createRestResource(
             CartsRestApiConfig::RESOURCE_GUEST_CARTS,
             $quoteTransfer->getUuid(),
-            $this->cartsResourceMapper->mapQuoteTransferToRestCartsAttributesTransfer($quoteTransfer)
+            $this->cartMapper->mapQuoteTransferToRestCartsAttributesTransfer($quoteTransfer)
         );
 
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $guestCartItemResource = $this->createGuestCartItemResource(
-                $itemTransfer,
-                $cartResource->getId(),
-                $localeName
-            );
+        $cartResource->setPayload($quoteTransfer);
 
-            $cartResource->addRelationship($guestCartItemResource);
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $cartResource->addRelationship(
+                $this->createGuestCartItemResource(
+                    $itemTransfer,
+                    $cartResource->getId(),
+                    $localeName
+                )
+            );
         }
 
         return $this->createEmptyGuestCartRestResponse()->addResource($cartResource);
@@ -96,12 +68,16 @@ class GuestCartRestResponseBuilder extends AbstractCartRestResponseBuilder imple
         $itemResource = $this->restResourceBuilder->createRestResource(
             CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
             $itemTransfer->getGroupKey(),
-            $this->cartItemsResourceMapper->mapCartItemAttributes($itemTransfer, $localeName)
+            $this->cartItemsMapper->mapItemTransferToRestItemsAttributesTransfer(
+                $itemTransfer,
+                $localeName
+            )
         );
+
         $itemResource->addLink(
-            static::KEY_REST_RESOURCE_SELF_LINK,
+            RestLinkInterface::LINK_SELF,
             sprintf(
-                static::PATTERN_GUEST_CART_ITEM_RESOURCE_SELF_LINK,
+                '%s/%s/%s/%s',
                 CartsRestApiConfig::RESOURCE_GUEST_CARTS,
                 $cartResourceId,
                 CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
