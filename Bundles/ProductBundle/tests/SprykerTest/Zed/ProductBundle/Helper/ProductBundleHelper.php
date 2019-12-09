@@ -11,6 +11,7 @@ use Codeception\Module;
 use Generated\Shared\DataBuilder\ProductBundleBuilder;
 use Generated\Shared\DataBuilder\ProductForBundleBuilder;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ProductBundleHelper extends Module
@@ -54,7 +55,7 @@ class ProductBundleHelper extends Module
     /**
      * @return \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface
      */
-    private function getProductBundleFacade()
+    public function getProductBundleFacade(): ProductBundleFacadeInterface
     {
         return $this->getLocator()->productBundle()->facade();
     }

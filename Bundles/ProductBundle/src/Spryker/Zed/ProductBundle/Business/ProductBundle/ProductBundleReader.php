@@ -51,7 +51,7 @@ class ProductBundleReader implements ProductBundleReaderInterface
     public function findBundledProductsByIdProductConcrete($idProductConcrete)
     {
         return new ArrayObject(
-            $this->productBundleRepository->findBundledProductsByIdProductConcrete($idProductConcrete)
+            $this->productBundleRepository->getBundledProductsByIdProductConcrete($idProductConcrete)
         );
     }
 

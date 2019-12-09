@@ -22,8 +22,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ProductBundleBeforeUpdateListener extends AbstractPlugin implements EventHandlerInterface
 {
     /**
-     * Specification
-     * - Sets `isActive` to false if all bundled products wasn't active, if the product is a product bundle.
+     * {@inheritDoc}
+     * - Sets `isActive` to false if all bundled products weren't active, if the product is a product bundle.
      * - Updates bundle availability, if the product is a bundled product, only if `isActive` was modified.
      *
      * @api
@@ -39,28 +39,30 @@ class ProductBundleBeforeUpdateListener extends AbstractPlugin implements EventH
             return;
         }
 
-        $this->deactivateProductBundleIfAnyBundledProductsWereInactive($productConcreteTransfer);
+        $productConcreteTransfer = $this->deactivateProductBundleIfAnyBundledProductsWereInactive($productConcreteTransfer);
         $this->updateBundleAvailability($productConcreteTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function deactivateProductBundleIfAnyBundledProductsWereInactive(ProductConcreteTransfer $productConcreteTransfer): void
+    protected function deactivateProductBundleIfAnyBundledProductsWereInactive(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         if ($productConcreteTransfer->getProductBundle() === null) {
-            return;
+            return $productConcreteTransfer;
         }
 
-        foreach ($this->findBundledProducts($productConcreteTransfer) as $bundledProductTransfer) {
+        foreach ($this->getBundledProducts($productConcreteTransfer) as $bundledProductTransfer) {
             if (!$bundledProductTransfer->getIsActive()) {
                 $productConcreteTransfer->setIsActive(false);
 
-                return;
+                return $productConcreteTransfer;
             }
         }
+
+        return $productConcreteTransfer;
     }
 
     /**
@@ -70,7 +72,7 @@ class ProductBundleBeforeUpdateListener extends AbstractPlugin implements EventH
      */
     protected function updateBundleAvailability(ProductConcreteTransfer $productConcreteTransfer): void
     {
-        if ($productConcreteTransfer->getProductBundle() !== null) {
+        if ($productConcreteTransfer->getProductBundle() === null) {
             return;
         }
 
@@ -88,7 +90,7 @@ class ProductBundleBeforeUpdateListener extends AbstractPlugin implements EventH
      *
      * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
-    protected function findBundledProducts(ProductConcreteTransfer $productConcreteTransfer): array
+    protected function getBundledProducts(ProductConcreteTransfer $productConcreteTransfer): array
     {
         return $this->getFacade()
             ->findBundledProductsByIdProductConcrete($productConcreteTransfer->getIdProductConcrete())

@@ -24,7 +24,7 @@ interface ProductBundleRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
      */
-    public function findBundledProductsByIdProductConcrete(int $idProductConcrete): array;
+    public function getBundledProductsByIdProductConcrete(int $idProductConcrete): array;
 
     /**
      * @param \Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer
