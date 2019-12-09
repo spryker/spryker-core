@@ -5,8 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
+
 // @deprecated Use `\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface` instead.
 class_alias(
-    'Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface',
+    QueryInterface::class,
     'Spryker\Client\Search\Dependency\Plugin\QueryInterface'
 );

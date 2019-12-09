@@ -5,7 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+use Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface;
+
+// @deprecated Use `Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface` instead.
 class_alias(
-    'Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface',
+    ResultFormatterPluginInterface::class,
     'Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface'
 );

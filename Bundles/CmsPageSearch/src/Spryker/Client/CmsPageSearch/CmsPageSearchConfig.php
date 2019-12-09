@@ -76,6 +76,9 @@ class CmsPageSearchConfig extends AbstractBundleConfig
      */
     public function getFullTextBoostedBoostingValue(): int
     {
-        return $this->get(static::FULL_TEXT_BOOSTED_BOOSTING_VALUE, static::FULL_TEXT_BOOSTED_BOOSTING_VALUE_DEPRECATED);
+        return $this->get(
+            static::FULL_TEXT_BOOSTED_BOOSTING_VALUE,
+            $this->get(static::FULL_TEXT_BOOSTED_BOOSTING_VALUE_DEPRECATED)
+        );
     }
 }
