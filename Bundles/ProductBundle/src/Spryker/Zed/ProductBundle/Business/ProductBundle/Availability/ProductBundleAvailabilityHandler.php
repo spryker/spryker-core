@@ -204,19 +204,6 @@ class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandl
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
-    protected function findBundledItemAvailabilityEntityBySku($bundledItemSku, $idStore)
-    {
-        return $this->availabilityQueryContainer
-            ->querySpyAvailabilityBySku($bundledItemSku, $idStore)
-            ->findOne();
-    }
-
-    /**
-     * @param string $bundledItemSku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
-     */
     protected function findBundledItemAvailabilityBySku(
         string $bundledItemSku,
         StoreTransfer $storeTransfer

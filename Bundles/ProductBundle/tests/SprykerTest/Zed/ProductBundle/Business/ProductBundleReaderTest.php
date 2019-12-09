@@ -95,7 +95,8 @@ class ProductBundleReaderTest extends Unit
     }
 
     /**
-<<<<<<< HEAD
+     * <<<<<<< HEAD
+     *
      * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface|null $productBundleQueryContainerMock
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface|null $productBundleToAvailabilityFacadeMock
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface|null $storeFacadeMock
