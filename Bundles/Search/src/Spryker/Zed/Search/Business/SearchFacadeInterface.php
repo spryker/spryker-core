@@ -56,9 +56,12 @@ interface SearchFacadeInterface
 
     /**
      * Specification:
-     * - Removes the current index
+     * - Removes the current index if no indexName is passed.
+     * - Removes the passed indexName.
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::deleteIndex()` instead.
      *
      * @return \Elastica\Response
      */
@@ -70,10 +73,12 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $key
      * @param string $type
      *
-     * @return \Elastica\Document
+     * @return \Elastica\Document|mixed (@deprecated Only mixed will be supported with the next major)
      */
     public function getDocument($key, $type);
 
@@ -88,14 +93,14 @@ interface SearchFacadeInterface
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return \Elastica\ResultSet
+     * @return array|\Elastica\ResultSet|mixed (@deprecated Only mixed will be supported with the next major)
      */
     public function searchKeys($searchString, $limit = null, $offset = null);
 
     /**
      * @api
      *
-     * @deprecated Use transformPageMapToDocumentByMapperName() instead.
+     * @deprecated Will be removed without replacement.
      *
      * Specification:
      * - Transforms a raw data array into an Elasticsearch "page" mapping type document
@@ -116,6 +121,8 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param array $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $mapperName
@@ -135,6 +142,8 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\Search\Business\SearchFacadeInterface::generateSourceMap()` instead.
+     *
      * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return void
@@ -143,9 +152,26 @@ interface SearchFacadeInterface
 
     /**
      * Specification:
+     * - Loads schema definition json files.
+     * - Creates or updates map classes by found schema definition files.
+     * - The generated map classes are not store specific.
+     * - Previously generated files will be removed.
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
+     * @return void
+     */
+    public function generateSourceMap(LoggerInterface $messenger): void;
+
+    /**
+     * Specification:
      * - Creates a Snapshot.
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::createSnapshot()` instead.
      *
      * @param string $repositoryName
      * @param string $snapshotName
@@ -161,6 +187,8 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::existsSnapshot()` instead.
+     *
      * @param string $repositoryName
      * @param string $snapshotName
      *
@@ -173,6 +201,8 @@ interface SearchFacadeInterface
      * - Deletes a Snapshot.
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::deleteSnapshot()` instead.
      *
      * @param string $repositoryName
      * @param string $snapshotName
@@ -187,6 +217,8 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::existsSnapshotRepository()` instead.
+     *
      * @param string $repositoryName
      *
      * @return bool
@@ -198,6 +230,8 @@ interface SearchFacadeInterface
      * - Creates a Snapshot repository.
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::createSnapshotRepository()` instead.
      *
      * @param string $repositoryName
      * @param string $type
@@ -213,6 +247,8 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::restoreSnapshot()` instead.
+     *
      * @param string $repositoryName
      * @param string $snapshotName
      * @param array $options
@@ -227,6 +263,8 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::closeIndex()` instead.
+     *
      * @return bool
      */
     public function closeIndex();
@@ -236,6 +274,8 @@ interface SearchFacadeInterface
      * - Opens an Index.
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::openIndex()` instead.
      *
      * @return bool
      */
@@ -247,6 +287,8 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::closeIndex()` instead.
+     *
      * @return bool
      */
     public function closeAllIndices();
@@ -256,6 +298,8 @@ interface SearchFacadeInterface
      * - Copies one index to another index.
      *
      * @api
+     *
+     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::copyIndex()` instead.
      *
      * @param string $source
      * @param string $target
@@ -273,11 +317,25 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\Search\Business\SearchFacadeInterface::installSources()` instead.
+     *
      * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return void
      */
     public function installIndexes(LoggerInterface $messenger): void;
+
+    /**
+     * Specification:
+     * - Sets up search sources based on the loaded schema definitions if they don't exist.
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
+     * @return void
+     */
+    public function installSources(LoggerInterface $messenger): void;
 
     /**
      * Specification:
