@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CartNoteProductBundleConnector;
 
+use Spryker\Client\CartNoteProductBundleConnector\Dependency\Client\CartNoteProductBundleConnectorToProductBundleClientInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class CartNoteProductBundleConnectorFactory extends AbstractFactory
@@ -14,7 +15,7 @@ class CartNoteProductBundleConnectorFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\CartNoteProductBundleConnector\Dependency\Client\CartNoteProductBundleConnectorToProductBundleClientInterface
      */
-    public function getProductBundleClient()
+    public function getProductBundleClient(): CartNoteProductBundleConnectorToProductBundleClientInterface
     {
         return $this->getProvidedDependency(CartNoteProductBundleConnectorDependencyProvider::CLIENT_PRODUCT_BUNDLE);
     }
