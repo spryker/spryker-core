@@ -29,7 +29,7 @@ class HealthCheckCest
      */
     public function testForbiddenHealthCheckStatusResponse(HealthCheckCommunicationTester $i): void
     {
-        $i->disabledHealthCheckEndpoints();
+        $i->disableHealthCheckEndpoints();
         $i->amOnPage(HealthCheckPage::URL_INDEX);
         $i->seeResponseCodeIs(403);
     }
