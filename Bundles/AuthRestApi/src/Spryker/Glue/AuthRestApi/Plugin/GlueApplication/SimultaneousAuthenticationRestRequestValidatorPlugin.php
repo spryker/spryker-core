@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\AuthRestApi\Plugin;
+namespace Spryker\Glue\AuthRestApi\Plugin\GlueApplication;
 
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -20,7 +20,8 @@ class SimultaneousAuthenticationRestRequestValidatorPlugin extends AbstractPlugi
 {
     /**
      * {@inheritDoc}
-     * - Validates request containing Authentication and X-Anonymous-Customer-Unique-Id headers at the same time.
+     * - Validates request for Authentication and X-Anonymous-Customer-Unique-Id headers being provided simultaneously.
+     * - Will return RestErrorCollectionTransfer with error in case both headers are present in the request.
      *
      * @api
      *
