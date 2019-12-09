@@ -7,7 +7,7 @@
         <property name="idProductOffer" type="int"/>
         <property name="concreteSku" type="string"/>
         <property name="productOfferReference" type="string"/>
-        <property name="isActive" type="boolean"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
     <transfer name="ProductOfferCollection">
