@@ -29,7 +29,7 @@ class ProductOfferPostProductViewAvailabilityStorageExpandPlugin extends Abstrac
      */
     public function postExpand(ProductViewTransfer $productViewTransfer): ProductViewTransfer
     {
-        if ($productViewTransfer->getProductOfferReference()) {
+        if (!$productViewTransfer->getProductOfferReference()) {
             return $productViewTransfer;
         }
 
@@ -40,7 +40,7 @@ class ProductOfferPostProductViewAvailabilityStorageExpandPlugin extends Abstrac
         $availabilityStorageTransfer = $this->getClient()
             ->findAvailabilityByProductOfferReference($productViewTransfer->getProductOfferReference(), $storeTransfer->getName());
 
-        $productViewTransfer->setAvailable($availabilityStorageTransfer ? $availabilityStorageTransfer->getAvailability() : false);
+        $productViewTransfer->setAvailable($availabilityStorageTransfer ? $availabilityStorageTransfer->getAvailability()->isPositive() : false);
 
         return $productViewTransfer;
     }

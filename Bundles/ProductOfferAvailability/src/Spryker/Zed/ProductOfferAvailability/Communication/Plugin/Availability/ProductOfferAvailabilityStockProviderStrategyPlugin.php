@@ -63,6 +63,7 @@ class ProductOfferAvailabilityStockProviderStrategyPlugin extends AbstractPlugin
             ->requireProductOfferReference();
 
         $productOfferAvailabilityRequestTransfer = (new ProductOfferAvailabilityRequestTransfer())
+            ->setSku($sku)
             ->setStore($storeTransfer)
             ->setProductOfferReference($productAvailabilityCriteriaTransfer->getProductOffer()->getProductOfferReference());
 
