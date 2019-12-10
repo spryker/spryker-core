@@ -15,4 +15,12 @@ interface ProductOfferAvailabilityStorageToEventBehaviorFacadeInterface
      * @return array
      */
     public function getEventTransferIds(array $eventTransfers);
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param string $columnName
+     *
+     * @return array
+     */
+    public function getEventTransfersOriginalValues(array $eventTransfers, string $columnName): array;
 }

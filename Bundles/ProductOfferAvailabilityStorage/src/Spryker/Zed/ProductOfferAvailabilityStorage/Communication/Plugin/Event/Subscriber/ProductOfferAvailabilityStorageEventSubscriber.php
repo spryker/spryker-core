@@ -12,6 +12,7 @@ use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductOfferAvailability\Dependency\ProductOfferAvailabilityEvents;
 use Spryker\Zed\ProductOfferAvailabilityStorage\Communication\Plugin\Event\Listener\OmsProductReservationStoragePublishListener;
+use Spryker\Zed\ProductOfferAvailabilityStorage\Communication\Plugin\Event\Listener\OmsProductReservationStorageUnpublishListener;
 use Spryker\Zed\ProductOfferAvailabilityStorage\Communication\Plugin\Event\Listener\ProductOfferStockStoragePublishListener;
 use Spryker\Zed\ProductOfferAvailabilityStorage\Communication\Plugin\Event\Listener\ProductOfferStoragePublishListener;
 
@@ -36,6 +37,7 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
     {
         $this->addOmsProductReservationCreateListener($eventCollection)
             ->addOmsProductReservationUpdateListener($eventCollection)
+            ->addOmsProductReservationDeleteListener($eventCollection)
             ->addProductOfferPublishListener($eventCollection)
             ->addProductOfferStockCreateListener($eventCollection)
             ->addProductOfferStockUpdateListener($eventCollection)
@@ -53,6 +55,18 @@ class ProductOfferAvailabilityStorageEventSubscriber extends AbstractPlugin impl
     protected function addOmsProductReservationCreateListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection->addListenerQueued(ProductOfferAvailabilityEvents::ENTITY_SPY_OMS_PRODUCT_RESERVATION_CREATE, new OmsProductReservationStoragePublishListener());
+
+        return $this;
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return $this
+     */
+    protected function addOmsProductReservationDeleteListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(ProductOfferAvailabilityEvents::ENTITY_SPY_OMS_PRODUCT_RESERVATION_DELETE, new OmsProductReservationStorageUnpublishListener());
 
         return $this;
     }

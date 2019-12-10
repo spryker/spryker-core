@@ -24,11 +24,11 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class ProductOfferAvailabilityStorageRepository extends AbstractRepository implements ProductOfferAvailabilityStorageRepositoryInterface
 {
     /**
-     * @param int[] $productOfferStockIds
+     * @param string[] $productOfferStockSkus
      *
      * @return \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer[]
      */
-    public function getProductOfferAvailabilityRequestsByProductOfferStockIds(array $productOfferStockIds): array
+    public function getProductOfferAvailabilityRequestsByProductOfferStockSkus(array $productOfferStockSkus): array
     {
         $productOfferStockPropelQuery = $this->getFactory()
             ->getProductOfferStockPropelQuery()
@@ -38,7 +38,7 @@ class ProductOfferAvailabilityStorageRepository extends AbstractRepository imple
                     ->joinStore()
                 ->endUse()
             ->endUse()
-            ->filterByIdProductOfferStock_In($productOfferStockIds);
+            ->filterBySku_In($productOfferStockSkus);
 
         $productOfferAvailabilityRequestsData = $this->addProductOfferAvailabilityRequestSelectColumns($productOfferStockPropelQuery)
             ->find()

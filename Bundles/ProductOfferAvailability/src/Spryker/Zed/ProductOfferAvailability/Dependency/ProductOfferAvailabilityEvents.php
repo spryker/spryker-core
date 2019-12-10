@@ -59,6 +59,14 @@ interface ProductOfferAvailabilityEvents
 
     /**
      * Specification:
+     * - Represents spy_oms_product_reservation entity deletion.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_OMS_PRODUCT_RESERVATION_DELETE = 'Entity.spy_product_offer_stock.delete';
+
+    /**
+     * Specification:
      * - Represents spy_oms_product_reservation entity update.
      *
      * @api
