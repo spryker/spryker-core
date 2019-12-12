@@ -31,11 +31,11 @@ class PriceProductMatcher implements PriceProductMatcherInterface
      *
      * @return bool
      */
-    public function isProductPrice(PriceProductTransfer $priceProductTransfer, ItemTransfer $itemTransfer): bool
+    public function isPriceProductMatchingItem(PriceProductTransfer $priceProductTransfer, ItemTransfer $itemTransfer): bool
     {
         foreach ($this->priceProductMatcherStrategyPlugins as $priceProductMatcherStrategyPlugin) {
             if ($priceProductMatcherStrategyPlugin->isApplicable($priceProductTransfer, $itemTransfer)) {
-                return $priceProductMatcherStrategyPlugin->isProductPrice($priceProductTransfer, $itemTransfer);
+                return $priceProductMatcherStrategyPlugin->isPriceProductMatchingItem($priceProductTransfer, $itemTransfer);
             }
         }
 

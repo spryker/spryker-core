@@ -120,13 +120,18 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
     {
         foreach ($productOfferAvailabilityRequestTransfers as $productOfferAvailabilityRequestTransfer) {
             $productOfferAvailabilityTransfer = $this->productOfferAvailabilityFacade->findProductConcreteAvailabilityForRequest($productOfferAvailabilityRequestTransfer);
-
             $productOfferAvailabilityStorageEntity = $this->productOfferAvailabilityStorageRepository->findProductOfferAvailabilityStorageByProductOfferReferenceAndStoreName(
                 $productOfferAvailabilityRequestTransfer->getProductOfferReference(),
                 $productOfferAvailabilityRequestTransfer->getStore()->getName()
             );
 
-            if ($productOfferAvailabilityStorageEntity) {
+            if (!$productOfferAvailabilityTransfer && $productOfferAvailabilityStorageEntity) {
+                $productOfferAvailabilityStorageEntity->delete();
+
+                return;
+            }
+
+            if (!$productOfferAvailabilityStorageEntity) {
                 $productOfferAvailabilityStorageEntity = new SpyProductOfferAvailabilityStorage();
             }
 
@@ -155,7 +160,7 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
         ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer,
         ProductOfferAvailabilityStorageTransfer $productOfferAvailabilityStorageTransfer
     ): ProductOfferAvailabilityStorageTransfer {
-         return $productOfferAvailabilityStorageTransfer->setAvailability($productConcreteAvailabilityTransfer ? $productConcreteAvailabilityTransfer->getAvailability() : 0);
+         return $productOfferAvailabilityStorageTransfer->setAvailability($productConcreteAvailabilityTransfer->getAvailability());
     }
 
     /**

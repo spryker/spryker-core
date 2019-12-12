@@ -21,7 +21,7 @@ class ProductOfferAvailabilityStockProviderStrategyPlugin extends AbstractPlugin
 {
     /**
      * {@inheritDoc}
-     * - Checks if product offer availability requested, and strategy should be applied.
+     * - Returns true if ProductAvailabilityCriteriaTransfer contains product offer reference.
      *
      * @api
      *

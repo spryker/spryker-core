@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\PriceProductOffer\src\Spryker\Shared\PriceProductOffer;
+namespace Spryker\Shared\PriceProductOffer;
 
 class PriceProductOfferConfig
 {
@@ -15,5 +15,5 @@ class PriceProductOfferConfig
      *
      * @api
      */
-    public const DIMENSION_TYPE = 'OFFER';
+    public const DIMENSION_TYPE_PRODUCT_OFFER = 'PRODUCT_OFFER';
 }

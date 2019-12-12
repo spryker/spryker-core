@@ -134,5 +134,7 @@ class ProductOfferAvailabilitySynchronizationDataBulkPlugin extends AbstractPlug
         $synchronizationDataTransfer->setData($productOfferAvailabilityStorageEntityTransfer->getData());
         $synchronizationDataTransfer->setKey($productOfferAvailabilityStorageEntityTransfer->getKey());
         $synchronizationDataTransfer->setStore($productOfferAvailabilityStorageEntityTransfer->getStore());
+
+        return $synchronizationDataTransfer;
     }
 }

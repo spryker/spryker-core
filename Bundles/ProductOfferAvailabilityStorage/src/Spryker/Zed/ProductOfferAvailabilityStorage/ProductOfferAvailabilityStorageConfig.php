@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductOfferAvailabilityStorage;
 
-use Pyz\Zed\Synchronization\SynchronizationConfig;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductOfferAvailabilityStorageConfig extends AbstractBundleConfig
@@ -17,7 +16,7 @@ class ProductOfferAvailabilityStorageConfig extends AbstractBundleConfig
      */
     public function isSendingToQueue(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -25,6 +24,6 @@ class ProductOfferAvailabilityStorageConfig extends AbstractBundleConfig
      */
     public function getProductOfferAvailabilitySynchronizationPoolName(): ?string
     {
-        return SynchronizationConfig::DEFAULT_SYNCHRONIZATION_POOL_NAME;
+        return null;
     }
 }

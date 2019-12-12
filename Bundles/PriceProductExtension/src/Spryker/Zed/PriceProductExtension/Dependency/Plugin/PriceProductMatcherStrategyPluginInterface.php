@@ -36,5 +36,5 @@ interface PriceProductMatcherStrategyPluginInterface
      *
      * @return bool
      */
-    public function isProductPrice(PriceProductTransfer $priceProductTransfer, ItemTransfer $itemTransfer): bool;
+    public function isPriceProductMatchingItem(PriceProductTransfer $priceProductTransfer, ItemTransfer $itemTransfer): bool;
 }

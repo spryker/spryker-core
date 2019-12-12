@@ -35,7 +35,10 @@ class ProductOfferPriceProductFilterPlugin extends AbstractPlugin implements Pri
         }
 
         $priceProductTransfers = array_filter($priceProductTransfers, function (PriceProductTransfer $priceProductTransfer) use ($priceProductFilterTransfer) {
-            return !($priceProductTransfer->getPriceDimension()->getProductOfferReference() && $priceProductTransfer->getPriceDimension()->getProductOfferReference() !== $priceProductFilterTransfer->getProductOffer()->getProductOfferReference());
+            $productOfferReference = $priceProductTransfer->getPriceDimension()->getProductOfferReference();
+            $filterProductOfferReference = $priceProductFilterTransfer->getProductOffer()->getProductOfferReference();
+
+            return !($productOfferReference && $productOfferReference !== $filterProductOfferReference);
         });
 
         $selectedOfferHasPrice = false;

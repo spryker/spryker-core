@@ -8,31 +8,41 @@
 namespace Spryker\Client\ProductOfferAvailabilityStorage\Communication\Plugin\AvailabilityStorage;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\PostProductViewAvailabilityStorageExpandPluginInterface;
+use Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\AvailabilityProviderStoragePluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Client\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageFactory getFactory()
  * @method \Spryker\Client\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageClientInterface getClient()
  */
-class ProductOfferPostProductViewAvailabilityStorageExpandPlugin extends AbstractPlugin implements PostProductViewAvailabilityStorageExpandPluginInterface
+class ProductOfferAvailabilityStorageProviderPlugin extends AbstractPlugin implements AvailabilityProviderStoragePluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Expands ProductViewTransfer with product offer availability.
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     * @return bool
      */
-    public function postExpand(ProductViewTransfer $productViewTransfer): ProductViewTransfer
+    public function isApplicable(ProductViewTransfer $productViewTransfer): bool
     {
-        if (!$productViewTransfer->getProductOfferReference()) {
-            return $productViewTransfer;
-        }
+        return (bool)$productViewTransfer->getProductOfferReference();
+    }
 
+    /**
+     * {@inheritDoc}
+     * - Returns true if product offer available by current store and provided ProductViewTransfer.productOfferReference.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return bool
+     */
+    public function isProductAvailable(ProductViewTransfer $productViewTransfer): bool
+    {
         $storeTransfer = $this->getFactory()
             ->getStoreClient()
             ->getCurrentStore();
@@ -40,8 +50,6 @@ class ProductOfferPostProductViewAvailabilityStorageExpandPlugin extends Abstrac
         $availabilityStorageTransfer = $this->getClient()
             ->findAvailabilityByProductOfferReference($productViewTransfer->getProductOfferReference(), $storeTransfer->getName());
 
-        $productViewTransfer->setAvailable($availabilityStorageTransfer ? $availabilityStorageTransfer->getAvailability()->isPositive() : false);
-
-        return $productViewTransfer;
+        return $availabilityStorageTransfer ? $availabilityStorageTransfer->getAvailability()->isPositive() : false;
     }
 }

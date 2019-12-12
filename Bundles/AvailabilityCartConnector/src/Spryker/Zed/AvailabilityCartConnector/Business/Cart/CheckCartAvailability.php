@@ -159,13 +159,14 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    protected function findProductConcreteAvailability(ItemTransfer $itemTransfer, StoreTransfer $storeTransfer, $productConcreteAvailabilityTransfer): Decimal
+    protected function findProductConcreteAvailability(ItemTransfer $itemTransfer, StoreTransfer $storeTransfer, ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer): Decimal
     {
         $productConcreteAvailabilityTransfer = $this->availabilityFacade
-            ->findOrCreateProductConcreteAvailabilityBySkuForStore($itemTransfer->getSku(), $storeTransfer, $productConcreteAvailabilityTransfer);
+            ->findOrCreateProductConcreteAvailabilityBySkuForStore($itemTransfer->getSku(), $storeTransfer, $productAvailabilityCriteriaTransfer);
 
         if ($productConcreteAvailabilityTransfer !== null) {
             return $productConcreteAvailabilityTransfer->getAvailability();

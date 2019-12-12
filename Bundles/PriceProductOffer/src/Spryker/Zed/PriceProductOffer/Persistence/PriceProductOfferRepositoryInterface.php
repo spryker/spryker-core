@@ -7,15 +7,12 @@
 
 namespace Spryker\Zed\PriceProductOffer\Persistence;
 
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
-
 interface PriceProductOfferRepositoryInterface
 {
     /**
      * @param string[] $skus
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function getPriceProductOfferTransfers(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array;
+    public function getPriceProductOfferTransfers(array $skus): array;
 }
